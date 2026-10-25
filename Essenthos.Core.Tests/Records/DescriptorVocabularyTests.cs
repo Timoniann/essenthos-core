@@ -67,7 +67,7 @@ public sealed class DescriptorVocabularyTests
     [InlineData(DescriptorPhrasings.Ukrainian, "killed-by", "загинула від руки ")]
     [InlineData(DescriptorPhrasings.Ukrainian, "prophet-to", "пророчиця ")]
     [InlineData(DescriptorPhrasings.Ukrainian, "servant-of", "служниця ")]
-    [InlineData(DescriptorPhrasings.German, "prophet-to", "Prophetin für ")]
+    [InlineData(DescriptorPhrasings.German, "prophet-to", "Prophetin ")]
     [InlineData(DescriptorPhrasings.German, "inherited-by", "deren Erbe war ")]
     [InlineData(DescriptorPhrasings.Spanish, "buried-in", "sepultada en ")]
     [InlineData(DescriptorPhrasings.Spanish, "prophet-to", "profetisa de ")]
@@ -350,7 +350,7 @@ public sealed class DescriptorVocabularyTests
     [InlineData("deu", "leader-of", "people", "genitive=Israeliten", "Anführer der Israeliten")]
     [InlineData("spa", "leader-of", "people", "nominative=israelitas", "líder de los israelitas")]
     [InlineData("ukr", "leader-of", "people", "genitive=ізраїльтян", "вождь ізраїльтян")]
-    [InlineData("eng", "leader-of", "people", "nominative=Israelites", "leader of Israelites")]
+    [InlineData("eng", "leader-of", "people", "nominative=Israelites", "leader of the Israelites")]
     [InlineData("spa", "of-people", "people", "nominative=moabitas", "del pueblo de los moabitas")]
     [InlineData("ukr", "son-of", "person", "genitive=Єссея", "син Єссея")]
     public void ANameIsSaidWithWhatItsLanguageNeedsAroundIt(

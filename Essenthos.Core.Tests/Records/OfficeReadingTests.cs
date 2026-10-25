@@ -194,8 +194,8 @@ public sealed class OfficeLineTests : IDisposable
         await Describe();
 
         string.Concat((await Descriptors.Of(_db, "joshua", "eng", default))!.Parts.Select(p => p.Text))
-            .Should().Be("leader of Israelites, son of Nun, of the tribe of Ephraim, servant of Moses");
+            .Should().Be("leader of the Israelites, son of Nun, of the tribe of Ephraim, servant of Moses");
         string.Concat((await Descriptors.Of(_db, "nehemiah", "eng", default))!.Parts.Select(p => p.Text))
-            .Should().StartWith("governor of Judahites, son of Hacaliah");
+            .Should().StartWith("governor of the Judahites, son of Hacaliah");
     }
 }

@@ -157,6 +157,435 @@
           "label": "Johanan",
           "hebrewStrongNumber": "H3110",
           "why": "'The sons of Josiah were, the firstborn Johanan, the second Jehoiakim, the third Zedekiah, the fourth Shallum' (1CH 3:15): Johanan is the firstborn, who never reigned; King Jehoahaz is the fourth, Shallum (JER 22:11). The name is the firstborn's, and his own record bears it."
+      },
+      {
+          "entity": "james-2",
+          "sourceId": "person:James_2",
+          "label": "Levi",
+          "hebrewStrongNumber": "H3878",
+          "why": "No verse calls James the son of Alphaeus Levi. Levi the son of Alphaeus is the publican called from the receipt of custom (MRK 2:14; LUK 5:27), whom his own record holds; James the son of Alphaeus is one of the Twelve (MAT 10:3)."
+      }
+  ],
+  "bynames": [
+      {
+          "entity": "simon",
+          "reference": "JHN 1:42",
+          "names": {
+              "eng": [
+                  "Cephas"
+              ],
+              "ukr": [
+                  "Кифа"
+              ],
+              "rus": [
+                  "Кифа"
+              ],
+              "deu": [
+                  "Kephas"
+              ],
+              "spa": [
+                  "Cephas"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Thou art Simon the son of Jona: thou shalt be called Cephas, which is by interpretation, A stone' (JHN 1:42)."
+      },
+      {
+          "entity": "thomas",
+          "reference": "JHN 11:16",
+          "names": {
+              "eng": [
+                  "Didymus"
+              ],
+              "ukr": [
+                  "Близнюк"
+              ],
+              "rus": [
+                  "Близнец"
+              ],
+              "deu": [
+                  "Zwilling"
+              ],
+              "spa": [
+                  "Dídimo"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Then said Thomas, which is called Didymus, unto his fellowdisciples' (JHN 11:16)."
+      },
+      {
+          "entity": "judas",
+          "reference": "LUK 22:3",
+          "names": {
+              "eng": [
+                  "Iscariot"
+              ],
+              "ukr": [
+                  "Іскаріот"
+              ],
+              "rus": [
+                  "Искариот"
+              ],
+              "deu": [
+                  "Ischariot"
+              ],
+              "spa": [
+                  "Iscariote"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Then entered Satan into Judas surnamed Iscariot, being of the number of the twelve' (LUK 22:3)."
+      },
+      {
+          "entity": "simon-2",
+          "reference": "LUK 6:15",
+          "names": {
+              "eng": [
+                  "Zelotes"
+              ],
+              "ukr": [
+                  "Зилот"
+              ],
+              "rus": [
+                  "Зилот"
+              ],
+              "deu": [
+                  "Zelotes"
+              ],
+              "spa": [
+                  "Celador"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Simon called Zelotes' (LUK 6:15); Matthew and Mark call him Simon the Canaanite (MAT 10:4)."
+      },
+      {
+          "entity": "thaddaeus",
+          "reference": "MAT 10:3",
+          "names": {
+              "eng": [
+                  "Lebbaeus"
+              ],
+              "ukr": [
+                  "Леввій"
+              ],
+              "rus": [
+                  "Леввей"
+              ],
+              "deu": [
+                  "Lebbäus"
+              ],
+              "spa": [
+                  "Lebeo"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Lebbaeus, whose surname was Thaddaeus' (MAT 10:3), as the Received Text and the King James read it."
+      },
+      {
+          "entity": "james",
+          "reference": "MRK 3:17",
+          "names": {
+              "eng": [
+                  "Boanerges"
+              ],
+              "ukr": [
+                  "Воанергес"
+              ],
+              "rus": [
+                  "Воанергес"
+              ],
+              "deu": [
+                  "Bnehargem"
+              ],
+              "spa": [
+                  "Boanerges"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'James the son of Zebedee, and John the brother of James; and he surnamed them Boanerges, which is, The sons of thunder' (MRK 3:17)."
+      },
+      {
+          "entity": "john-2",
+          "reference": "MRK 3:17",
+          "names": {
+              "eng": [
+                  "Boanerges"
+              ],
+              "ukr": [
+                  "Воанергес"
+              ],
+              "rus": [
+                  "Воанергес"
+              ],
+              "deu": [
+                  "Bnehargem"
+              ],
+              "spa": [
+                  "Boanerges"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'James the son of Zebedee, and John the brother of James; and he surnamed them Boanerges, which is, The sons of thunder' (MRK 3:17)."
+      },
+      {
+          "entity": "john-5",
+          "reference": "ACT 12:12",
+          "names": {
+              "eng": [
+                  "Mark"
+              ],
+              "ukr": [
+                  "Марк"
+              ],
+              "rus": [
+                  "Марк"
+              ],
+              "deu": [
+                  "Markus"
+              ],
+              "spa": [
+                  "Marcos"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Mary the mother of John, whose surname was Mark' (ACT 12:12)."
+      },
+      {
+          "entity": "joseph-11",
+          "reference": "ACT 1:23",
+          "names": {
+              "eng": [
+                  "Barsabas",
+                  "Justus"
+              ],
+              "ukr": [
+                  "Варсава",
+                  "Юст"
+              ],
+              "rus": [
+                  "Варсава",
+                  "Иуст"
+              ],
+              "deu": [
+                  "Barsabas",
+                  "Just"
+              ],
+              "spa": [
+                  "Barsabas",
+                  "Justo"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Joseph called Barsabas, who was surnamed Justus' (ACT 1:23)."
+      },
+      {
+          "entity": "judas-5",
+          "reference": "ACT 15:22",
+          "names": {
+              "eng": [
+                  "Barsabas"
+              ],
+              "ukr": [
+                  "Варсавва"
+              ],
+              "rus": [
+                  "Варсава"
+              ],
+              "deu": [
+                  "Barsabas"
+              ],
+              "spa": [
+                  "Barsabas"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Judas surnamed Barsabas and Silas, chief men among the brethren' (ACT 15:22)."
+      },
+      {
+          "entity": "jesus-2",
+          "reference": "COL 4:11",
+          "names": {
+              "eng": [
+                  "Justus"
+              ],
+              "ukr": [
+                  "Юст"
+              ],
+              "rus": [
+                  "Иуст"
+              ],
+              "deu": [
+                  "Just"
+              ],
+              "spa": [
+                  "Justo"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'And Jesus, which is called Justus, who are of the circumcision' (COL 4:11)."
+      },
+      {
+          "entity": "simeon-4",
+          "reference": "ACT 13:1",
+          "names": {
+              "eng": [
+                  "Niger"
+              ],
+              "ukr": [
+                  "Ніґер"
+              ],
+              "rus": [
+                  "Нигер"
+              ],
+              "deu": [
+                  "Niger"
+              ],
+              "spa": [
+                  "Niger"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Simeon that was called Niger' (ACT 13:1)."
+      },
+      {
+          "entity": "gideon",
+          "reference": "JDG 6:32",
+          "names": {
+              "eng": [
+                  "Jerubbaal"
+              ],
+              "ukr": [
+                  "Єруббаал"
+              ],
+              "rus": [
+                  "Иероваал"
+              ],
+              "deu": [
+                  "Jerubbaal"
+              ],
+              "spa": [
+                  "Jerobaal"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Therefore on that day he called him Jerubbaal, saying, Let Baal plead against him' (JDG 6:32)."
+      },
+      {
+          "entity": "solomon",
+          "reference": "2SA 12:25",
+          "names": {
+              "eng": [
+                  "Jedidiah"
+              ],
+              "ukr": [
+                  "Єдід'я"
+              ],
+              "rus": [
+                  "Иедидиа"
+              ],
+              "deu": [
+                  "Jedidja"
+              ],
+              "spa": [
+                  "Jedidiah"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'He sent by the hand of Nathan the prophet; and he called his name Jedidiah, because of the LORD' (2SA 12:25)."
+      },
+      {
+          "entity": "daniel-2",
+          "reference": "DAN 1:7",
+          "names": {
+              "eng": [
+                  "Belteshazzar"
+              ],
+              "ukr": [
+                  "Валтасар"
+              ],
+              "rus": [
+                  "Валтасар"
+              ],
+              "deu": [
+                  "Beltsazar"
+              ],
+              "spa": [
+                  "Beltsasar"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'For he gave unto Daniel the name of Belteshazzar' (DAN 1:7)."
+      },
+      {
+          "entity": "jacob",
+          "reference": "GEN 32:28",
+          "names": {
+              "eng": [
+                  "Israel"
+              ],
+              "ukr": [
+                  "Ізраїль"
+              ],
+              "rus": [
+                  "Израиль"
+              ],
+              "deu": [
+                  "Israel"
+              ],
+              "spa": [
+                  "Israel"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Thy name shall be called no more Jacob, but Israel' (GEN 32:28)."
+      },
+      {
+          "entity": "esau",
+          "reference": "GEN 25:30",
+          "names": {
+              "eng": [
+                  "Edom"
+              ],
+              "ukr": [
+                  "Едом"
+              ],
+              "rus": [
+                  "Едом"
+              ],
+              "deu": [
+                  "Edom"
+              ],
+              "spa": [
+                  "Edom"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Therefore was his name called Edom' (GEN 25:30)."
+      },
+      {
+          "entity": "benjamin",
+          "reference": "GEN 35:18",
+          "names": {
+              "eng": [
+                  "Benoni"
+              ],
+              "ukr": [
+                  "Бен-Оні"
+              ],
+              "rus": [
+                  "Бенони"
+              ],
+              "deu": [
+                  "Ben-Oni"
+              ],
+              "spa": [
+                  "Benoni"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'She called his name Benoni: but his father called him Benjamin' (GEN 35:18)."
+      },
+      {
+          "entity": "joseph",
+          "reference": "GEN 41:45",
+          "names": {
+              "eng": [
+                  "Zaphnath-paaneah"
+              ],
+              "ukr": [
+                  "Цофнат-Панеах"
+              ],
+              "rus": [
+                  "Цафнаф-панеах"
+              ],
+              "spa": [
+                  "Zaphnath-paaneah"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'And Pharaoh called Joseph's name Zaphnath-paaneah' (GEN 41:45); Luther renders the name, so the German has none."
       }
   ]
 }

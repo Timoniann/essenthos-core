@@ -137,9 +137,11 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 
         var joined = await db.TitleBearers
             .Where(b => wanted.Contains(b.Title!.Slug))
-            .Select(b => new { Title = b.Title!.Slug, Bearer = b.Bearer!.Slug })
+            .Include(b => b.Title)
+            .Include(b => b.Bearer)
             .ToListAsync(cancellationToken);
-        var already = joined.Select(b => (b.Title, b.Bearer)).ToHashSet();
+        var already = joined.Select(b => (b.Title!.Slug, b.Bearer!.Slug)).ToHashSet();
+        var renamed = 0;
 
         int retitled = 0, written = 0, retired = 0, bearers = 0, missing = 0;
         foreach (var title in decision.Titles)
@@ -175,6 +177,13 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
             {
                 if (already.Contains((title.Slug, bearer.Slug)))
                 {
+                    var held = joined.First(b => b.Title!.Slug == title.Slug && b.Bearer!.Slug == bearer.Slug);
+                    if (!SameNames(TitleCalled.Read(held.Called), bearer.Called))
+                    {
+                        held.Called = TitleCalled.Write(bearer.Called);
+                        renamed++;
+                    }
+
                     continue;
                 }
 
@@ -197,6 +206,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
                     CanonicalChapter = verse.Chapter,
                     CanonicalVerse = verse.Verse,
                     Note = bearer.Why,
+                    Called = TitleCalled.Write(bearer.Called),
                     Source = source,
                 });
                 already.Add((title.Slug, bearer.Slug));
@@ -223,7 +233,7 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 
         var outcome = new TitleOutcome(
             retitled == 0 && written == 0 && retired == 0 && bearers == 0 && missing == 0 && forms == 0
-            && byText is null,
+            && renamed == 0 && byText is null,
             retitled,
             written,
             retired,
@@ -267,6 +277,12 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         };
 
     private const string OwnSourceId = "essenthos:title:";
+
+    /// <summary>Whether two sets of names per language say the same, however the database ordered them.</summary>
+    private static bool SameNames(IReadOnlyDictionary<string, string>? held, IReadOnlyDictionary<string, string>? wanted) =>
+        (held?.Count ?? 0) == (wanted?.Count ?? 0)
+        && (wanted ?? new Dictionary<string, string>()).All(pair =>
+            held is not null && held.TryGetValue(pair.Key, out var name) && name == pair.Value);
 
     /// <summary>
     /// What each title is called in a reader's language, where the file says: the nominative, held as

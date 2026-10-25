@@ -143,7 +143,16 @@ internal static class FamilyTies
     };
 
     /// <summary>
-    /// The order the line says its clauses in: offices, parents, spouses, children, siblings, then the rest.
+    /// What the text calls someone before anything else, which the line says first: the title they
+    /// bear (<em>Christ</em>, <em>Archangel</em>, <em>Giant</em>) and whose God the God of Israel is called.
+    /// </summary>
+    private static readonly IReadOnlySet<string> Called = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.BearsTitle, DescriptorRelations.GodOf,
+    };
+
+    /// <summary>
+    /// The order the line says its clauses in: what the text calls the person, offices, parents, spouses, children, siblings, then the rest.
     /// Within each family group a relation's clauses stand together, the person's own first and in the
     /// order written, the other records' after them in the order of their verses; the rest keep the
     /// order they were written in.
@@ -158,7 +167,7 @@ internal static class FamilyTies
             .ToDictionary(g => g.Key, g => g.Min(p => p.Position), StringComparer.Ordinal);
         return placed
             .OrderBy(p => Rank(p.Clause.Relation))
-            .ThenBy(p => Rank(p.Clause.Relation) is Office || (Rank(p.Clause.Relation) == Rest && p.Clause.Relation != DescriptorRelations.AncestorOf)
+            .ThenBy(p => Rank(p.Clause.Relation) is Office or Title || (Rank(p.Clause.Relation) == Rest && p.Clause.Relation != DescriptorRelations.AncestorOf)
                 ? p.Position
                 : first[p.Clause.Relation])
             .ThenBy(p => p.Position)
@@ -167,7 +176,8 @@ internal static class FamilyTies
 
     /// <summary>Where a relation stands in the line: offices, parents, spouses, children, siblings, the rest.</summary>
     public static int Rank(string relation) =>
-        Offices.Contains(relation) ? Office
+        Called.Contains(relation) ? Title
+        : Offices.Contains(relation) ? Office
         : Parents.Contains(relation) ? 0
         : Spouses.Contains(relation) ? 1
         : Children.Contains(relation) ? ChildrenRank
@@ -182,4 +192,7 @@ internal static class FamilyTies
 
     /// <summary>The offices, before the family.</summary>
     private const int Office = -1;
+
+    /// <summary>What the text calls the person, before the offices.</summary>
+    private const int Title = -2;
 }

@@ -54,12 +54,13 @@ internal static partial class DescriptorPhrasings
             [(Ukrainian, DescriptorRelations.SupporterOf)] = new("покровителька ", Genitive),
             [(Ukrainian, DescriptorRelations.HeirOf)] = new("спадкоємиця ", Genitive),
             [(Ukrainian, DescriptorRelations.CousinOf)] = new("двоюрідна родичка ", Genitive),
+            [(Ukrainian, DescriptorRelations.ChosenInPlaceOf)] = new("обрана замість ", Genitive),
 
             // Прамати rather than a feminine of предок: the word Ukrainian has for a woman a
             // line descends from.
             [(Ukrainian, DescriptorRelations.AncestorOf)] = new("прамати ", Genitive),
 
-            [(German, DescriptorRelations.ProphetTo)] = new("Prophetin für ", Nominative),
+            [(German, DescriptorRelations.ProphetTo)] = new("Prophetin ", Genitive),
             [(German, DescriptorRelations.ServantOf)] = new("Magd ", Genitive),
             [(German, DescriptorRelations.MasterOf)] = new("Herrin ", Genitive),
             [(German, DescriptorRelations.DiscipleOf)] = new("Jüngerin ", Genitive),
@@ -101,5 +102,6 @@ internal static partial class DescriptorPhrasings
             [(Spanish, DescriptorRelations.HeirOf)] = new("heredera de ", Nominative),
             [(Spanish, DescriptorRelations.CousinOf)] = new("prima de ", Nominative),
             [(Spanish, DescriptorRelations.AncestorOf)] = new("antepasada de ", Nominative),
+            [(Spanish, DescriptorRelations.ChosenInPlaceOf)] = new("elegida en lugar de ", Nominative),
         };
 }

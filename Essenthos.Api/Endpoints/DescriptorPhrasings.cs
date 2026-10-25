@@ -234,6 +234,8 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ExiledBy] = new("carried into exile by ", Nominative),
             [DescriptorRelations.AngelOf] = new("angel of ", Nominative),
             [DescriptorRelations.BearsTitle] = new(string.Empty, Nominative),
+            [DescriptorRelations.GodOf] = new("God of ", Nominative),
+            [DescriptorRelations.ChosenInPlaceOf] = new("chosen in place of ", Nominative),
             [DescriptorRelations.OfTribe] = new("of the tribe of ", Nominative),
             [DescriptorRelations.OfPeople] = new("one of the ", Nominative),
             [DescriptorRelations.FromPlace] = new("from ", Nominative),
@@ -332,6 +334,8 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ExiledBy] = new("у полоні в ", Genitive),
             [DescriptorRelations.AngelOf] = new("ангел ", Genitive),
             [DescriptorRelations.BearsTitle] = new(string.Empty, Nominative),
+            [DescriptorRelations.GodOf] = new("Бог ", Genitive),
+            [DescriptorRelations.ChosenInPlaceOf] = new("обраний замість ", Genitive),
             [DescriptorRelations.OfTribe] = new("з племені ", Genitive),
             [DescriptorRelations.OfPeople] = new("з народу ", Genitive),
             [DescriptorRelations.FromPlace] = new("з ", Genitive),
@@ -400,7 +404,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.CousinOf] = new("Vetter ", Genitive),
             [DescriptorRelations.KingOf] = new("König ", Genitive),
             [DescriptorRelations.QueenOf] = new("Königin ", Genitive),
-            [DescriptorRelations.ProphetTo] = new("Prophet für ", Nominative),
+            [DescriptorRelations.ProphetTo] = new("Prophet ", Genitive),
             [DescriptorRelations.PriestOf] = new("Priester ", Genitive),
             [DescriptorRelations.JudgeOf] = new("Richter ", Genitive),
             [DescriptorRelations.LeaderOf] = new("Anführer ", Genitive),
@@ -437,6 +441,8 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ExiledBy] = new("in die Verbannung geführt von ", Nominative),
             [DescriptorRelations.AngelOf] = new("Engel ", Genitive),
             [DescriptorRelations.BearsTitle] = new(string.Empty, Nominative),
+            [DescriptorRelations.GodOf] = new("Gott ", Genitive),
+            [DescriptorRelations.ChosenInPlaceOf] = new("erwählt an Stelle von ", Nominative),
             [DescriptorRelations.OfTribe] = new("vom Stamm ", Nominative),
             [DescriptorRelations.OfPeople] = new("aus dem Volk der ", Nominative),
             [DescriptorRelations.FromPlace] = new("aus ", Locative),
@@ -528,6 +534,8 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ExiledBy] = new("llevado al exilio por ", Nominative),
             [DescriptorRelations.AngelOf] = new("ángel de ", Nominative),
             [DescriptorRelations.BearsTitle] = new(string.Empty, Nominative),
+            [DescriptorRelations.GodOf] = new("Dios de ", Nominative),
+            [DescriptorRelations.ChosenInPlaceOf] = new("elegido en lugar de ", Nominative),
             [DescriptorRelations.OfTribe] = new("de la tribu de ", Nominative),
             [DescriptorRelations.OfPeople] = new("del pueblo de los ", Nominative),
             [DescriptorRelations.FromPlace] = new("de ", Nominative),
@@ -600,6 +608,15 @@ internal static partial class DescriptorPhrasings
         var before = phrasing.Before;
         var form = cases?.GetValueOrDefault(phrasing.Case);
 
+        if (language == English)
+        {
+            var said = form ?? englishName;
+            return (kind == EntityKind.People && before.Length > 0 && Plural(said)
+                    && !before.EndsWith("the ", StringComparison.Ordinal)
+                ? before + "the "
+                : before, said);
+        }
+
         if (language == German && form is null && cases is not null)
         {
             if (phrasing.Case == Genitive && cases.GetValueOrDefault(Nominative) is { } nominative)
@@ -645,4 +662,11 @@ internal static partial class DescriptorPhrasings
 
     private static bool Articled(string form) =>
         GermanArticles.Any(article => form.StartsWith(article, StringComparison.Ordinal));
+
+    /// <summary>
+    /// A people's English name that is a plural and carries no article of its own, which English
+    /// says with one: <em>prophet to the Israelites</em>, never <em>prophet to Israelites</em>.
+    /// </summary>
+    private static bool Plural(string name) =>
+        name.EndsWith('s') && !name.StartsWith("The ", StringComparison.OrdinalIgnoreCase);
 }

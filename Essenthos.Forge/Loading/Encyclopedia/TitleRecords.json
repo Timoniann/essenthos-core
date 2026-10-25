@@ -595,7 +595,14 @@
         {
           "slug": "jesus",
           "reference": "MAT 1:16",
-          "why": "Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ."
+          "why": "Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ.",
+          "called": {
+            "eng": "Christ",
+            "ukr": "Христос",
+            "rus": "Христос",
+            "deu": "Christus",
+            "spa": "Cristo"
+          }
         }
       ]
     },
@@ -634,6 +641,108 @@
           "slug": "michael-9",
           "reference": "JUD 1:9",
           "why": "Yet Michael the archangel, when contending with the devil he disputed about the body of Moses."
+        }
+      ]
+    },
+    {
+      "slug": "giant",
+      "name": "Giant",
+      "distinguisher": "a man of great stature, as the text calls the Nephilim, the Rephaim and the Anakim, and those born to the giant in Gath (GEN 6:4; DEU 2:11; 2SA 21:22)",
+      "notes": "Three Hebrew words are rendered giants. Nephilim: 'there were giants in the earth in those days' (GEN 6:4), and the spies saw 'the giants, the sons of Anak, which come of the giants' (NUM 13:33). Rephaim, a people of the land before Israel, 'accounted giants, as the Anakims', whom the Moabites call Emims (DEU 2:10-11) and the Ammonites Zamzummims (DEU 2:20); of their remnant was Og king of Bashan, whose bedstead of iron was nine cubits long (DEU 3:11). And ha-rapha, 'the giant' in Gath, to whom were born Ishbi-benob, Saph, Goliath the Gittite and a man of great stature with six fingers on every hand and six toes on every foot, who fell by the hand of David and of his servants (2SA 21:16-22); Chronicles names Lahmi the brother of Goliath among them (1CH 20:5-8). Goliath's height was six cubits and a span (1SA 17:4).",
+      "why": "The owner ruled that every giant's line says giant, as an angel's says angel: the text's own word for them, held as the title the archangel is, joined to each giant at the verse that calls him or his people so.",
+      "source": "Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records",
+      "localNames": {
+        "ukr": "Велетень",
+        "rus": "Исполин",
+        "deu": "Riese",
+        "spa": "Gigante"
+      },
+      "names": [
+        {
+          "label": "Giant",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": null,
+          "greekTransliterated": null,
+          "meaning": "a man of great stature",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "goliath",
+          "reference": "2SA 21:22",
+          "why": "These four were born to the giant in Gath, and fell by the hand of David, and by the hand of his servants; Goliath the Gittite is one of them (2SA 21:19)."
+        },
+        {
+          "slug": "ishbibenob",
+          "reference": "2SA 21:16",
+          "why": "And Ishbi-benob, which was of the sons of the giant, the weight of whose spear weighed three hundred shekels of brass."
+        },
+        {
+          "slug": "saph",
+          "reference": "2SA 21:18",
+          "why": "Then Sibbechai the Hushathite slew Saph, which was of the sons of the giant."
+        },
+        {
+          "slug": "lahmi",
+          "reference": "1CH 20:8",
+          "why": "These were born unto the giant in Gath; and they fell by the hand of David, and by the hand of his servants; Lahmi the brother of Goliath is one of them (1CH 20:5)."
+        },
+        {
+          "slug": "og",
+          "reference": "DEU 3:11",
+          "why": "For only Og king of Bashan remained of the remnant of giants; behold, his bedstead was a bedstead of iron."
+        },
+        {
+          "slug": "anak",
+          "reference": "NUM 13:33",
+          "why": "And there we saw the giants, the sons of Anak, which come of the giants."
+        },
+        {
+          "slug": "arba",
+          "reference": "JOS 14:15",
+          "why": "And the name of Hebron before was Kirjath-arba; which Arba was a great man among the Anakims."
+        },
+        {
+          "slug": "ahiman",
+          "reference": "NUM 13:33",
+          "why": "And there we saw the giants, the sons of Anak, which come of the giants; Ahiman, Sheshai and Talmai, the children of Anak, were in Hebron (NUM 13:22)."
+        },
+        {
+          "slug": "sheshai",
+          "reference": "NUM 13:33",
+          "why": "And there we saw the giants, the sons of Anak, which come of the giants; Ahiman, Sheshai and Talmai, the children of Anak, were in Hebron (NUM 13:22)."
+        },
+        {
+          "slug": "talmai",
+          "reference": "NUM 13:33",
+          "why": "And there we saw the giants, the sons of Anak, which come of the giants; Ahiman, Sheshai and Talmai, the children of Anak, were in Hebron (NUM 13:22)."
+        },
+        {
+          "slug": "anakim",
+          "reference": "DEU 2:11",
+          "why": "Which also were accounted giants, as the Anakims; but the Moabites call them Emims.",
+          "called": {
+            "eng": "Giants",
+            "ukr": "Велетні",
+            "rus": "Исполины",
+            "deu": "Riesen",
+            "spa": "Gigantes"
+          }
+        },
+        {
+          "slug": "emims",
+          "reference": "DEU 2:11",
+          "why": "Which also were accounted giants, as the Anakims; but the Moabites call them Emims.",
+          "called": {
+            "eng": "Giants",
+            "ukr": "Велетні",
+            "rus": "Исполины",
+            "deu": "Riesen",
+            "spa": "Gigantes"
+          }
         }
       ]
     }

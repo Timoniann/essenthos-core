@@ -399,6 +399,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Entity>(entity =>
         {
             entity.Property(e => e.Kind).HasConversion(EnumStorage.EntityKind);
+            entity.Property(e => e.Byname).HasColumnType("jsonb");
 
             entity.HasOne(e => e.Origin)
                 .WithMany()
@@ -862,6 +863,8 @@ public class AppDbContext : DbContext
         // Either end going away takes the row with it: a bearer is a statement about both records.
         modelBuilder.Entity<TitleBearer>(entity =>
         {
+            entity.Property(b => b.Called).HasColumnType("jsonb");
+
             entity.HasOne(b => b.Title)
                 .WithMany()
                 .HasForeignKey(b => b.TitleEntityId)

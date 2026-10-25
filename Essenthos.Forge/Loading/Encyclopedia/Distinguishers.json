@@ -1,5 +1,5 @@
 {
-  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09, those the table of nations and the unread Hebrew names add on 2026-10-12, and the archangel's on 2026-10-25",
+  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09, those the table of nations and the unread Hebrew names add on 2026-10-12, and the archangel's and the giant's on 2026-10-25",
   "records": [
     {
       "slug": "tabernacle",
@@ -917,6 +917,13 @@
       "ukr": "титул помазаного на служіння, єврейською машіах, грецькою Христос: так названо помазаного священика, Саула, Давида, Кира та Ісуса",
       "deu": "der Titel dessen, der zu einem Amt gesalbt ist, hebräisch Maschiach, griechisch Christos: so heißen der gesalbte Priester, Saul, David, Kyrus und Jesus",
       "spa": "el título del ungido para un oficio, en hebreo mashiaj y en griego Christos: se da al sacerdote ungido, a Saúl, a David, a Ciro y a Jesús"
+    },
+    {
+      "slug": "giant",
+      "english": "a man of great stature, as the text calls the Nephilim, the Rephaim and the Anakim, and those born to the giant in Gath (GEN 6:4; DEU 2:11; 2SA 21:22)",
+      "ukr": "людина великого зросту, як текст називає нефілимів, рефаїв, синів Енака і тих, хто народився від Рафи в Ґаті (GEN 6:4; DEU 2:11; 2SA 21:22)",
+      "deu": "ein Mann von großer Gestalt, wie der Text die Nephilim, die Rephaim und die Enakiter nennt und die dem Rapha zu Gath Geborenen (GEN 6:4; DEU 2:11; 2SA 21:22)",
+      "spa": "un hombre de gran estatura, como el texto llama a los nefilim, a los refaím y a los anaceos, y a los nacidos del gigante en Gath (GEN 6:4; DEU 2:11; 2SA 21:22)"
     },
     {
       "slug": "archangel",

@@ -163,7 +163,7 @@ internal static class Descriptors
 
         var subjects = await db.Entities
             .Where(e => wanted.Contains(e.Slug))
-            .Select(e => new { e.Id, e.Slug, e.Kind, e.Sex })
+            .Select(e => new { e.Id, e.Slug, e.Kind, e.Sex, e.Byname })
             .ToListAsync(cancellationToken);
         var people = subjects.Where(e => e.Kind == EntityKind.Person && !FamilyEndpoints.Deities.Contains(e.Slug))
             .Select(e => e.Id)
@@ -172,7 +172,7 @@ internal static class Descriptors
         var siblings = await SharedParents.Siblings(db, people, cancellationToken);
 
         if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0
-            && subjects.All(e => e.Kind != EntityKind.Place))
+            && subjects.All(e => e.Kind != EntityKind.Place && e.Byname is null))
         {
             return [];
         }
@@ -297,6 +297,7 @@ internal static class Descriptors
             ? c with { TargetEnglishName = heading.Name }
             : c)];
         taught = taught.HeadedAs(headings);
+        clauses = await CalledByTheTitle(db, clauses, named, cancellationToken);
 
         if (distinguish)
         {
@@ -316,8 +317,9 @@ internal static class Descriptors
             {
                 Taught = taught,
                 OtherDisciples = taught.Others.GetValueOrDefault(subject.Id),
+                Byname = Bynamed(Bynames.Read(subject.Byname), named),
             };
-            if (said.Count == 0 && facts.Children is null)
+            if (said.Count == 0 && facts.Children is null && facts.Byname is null)
             {
                 continue;
             }
@@ -630,7 +632,7 @@ internal static class Descriptors
         CancellationToken cancellationToken)
     {
         string Shown(Clause clause) =>
-            forms.GetValueOrDefault(clause.TargetEntityId)?.GetValueOrDefault(GrammaticalCases.Nominative)
+            CasesOf(clause, forms)?.GetValueOrDefault(GrammaticalCases.Nominative)
             ?? clause.TargetEnglishName;
 
         var clashes = clauses
@@ -823,6 +825,24 @@ internal static class Descriptors
                 References = verses is { Count: > 0 } ? [.. verses] : null,
                 At = placed ? claimed : null,
             });
+        }
+
+        if (facts.Byname is { } byname)
+        {
+            parts.Add(new DescriptorPartResponse(DescriptorPhrasings.Called(language, facts.Sex)));
+            for (var at = 0; at < byname.Names.Count; at++)
+            {
+                if (at > 0)
+                {
+                    parts.Add(new DescriptorPartResponse(at == byname.Names.Count - 1
+                        ? $" {DescriptorPhrasings.Conjunction(language)} "
+                        : DescriptorPhrasings.Separator));
+                }
+
+                parts.Add(new DescriptorPartResponse(byname.Names[at]));
+            }
+
+            Said(DescriptorPhrasings.CalledRelation, 0, [byname.Verse], placed: true);
         }
 
         var children = facts.Children is null;
@@ -1039,7 +1059,7 @@ internal static class Descriptors
         var parts = new List<DescriptorPartResponse>();
         var said = run.Select(item => (Item: item, Phrasing: bare ? Bare : item.Phrasing)).Select(one => (one.Item, one.Phrasing,
             Said: DescriptorPhrasings.Say(language, one.Phrasing, one.Item.First.TargetKind,
-                forms.GetValueOrDefault(one.Item.First.TargetEntityId), one.Item.First.TargetEnglishName))).ToList();
+                CasesOf(one.Item.First, forms), one.Item.First.TargetEnglishName))).ToList();
         var lists = Runs(said, (a, b) => a.Phrasing == b.Phrasing
                                          && a.Phrasing.After.Length == 0
                                          && b.Said.Before.StartsWith(b.Phrasing.Before, StringComparison.Ordinal)).ToList();
@@ -1050,7 +1070,7 @@ internal static class Descriptors
             for (var place = 0; place < list.Count; place++)
             {
                 var (item, phrasing, (before, name)) = list[place];
-                var target = Target(item.First, forms.GetValueOrDefault(item.First.TargetEntityId));
+                var target = Target(item.First, CasesOf(item.First, forms));
                 if (place == 0)
                 {
                     if (before.Length > 0)
@@ -1229,7 +1249,7 @@ internal static class Descriptors
         new(
             clause.Ordinal,
             clause.Relation,
-            Target(clause, forms.GetValueOrDefault(clause.TargetEntityId)),
+            Target(clause, CasesOf(clause, forms)),
             new VerseRefResponse(
                 clause.Book,
                 BookReferences.Name(clause.Book),
@@ -1316,6 +1336,9 @@ internal static class Descriptors
 
         /// <summary>How many disciples the records give the line's teacher beyond the companies he taught.</summary>
         public int OtherDisciples { get; init; }
+
+        /// <summary>What the text calls the person beside the heading, which the line says first.</summary>
+        public Byname? Byname { get; init; }
     }
 
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>
@@ -1368,6 +1391,68 @@ internal static class Descriptors
         /// line's language (<see cref="Distinctions"/>); null where the line names no other so.
         /// </summary>
         public string? Distinction { get; init; }
+
+        /// <summary>
+        /// The name the clause says its target by where it is not the target's own: the name the text
+        /// calls a bearer by the title (<em>Christ</em> of the Anointed), in the line's names language.
+        /// </summary>
+        public IReadOnlyDictionary<string, string>? Called { get; init; }
+    }
+
+    /// <summary>The bynames a line says first, in its names language, and the verse that gives them.</summary>
+    internal sealed record Byname(IReadOnlyList<string> Names, VerseRefResponse Verse);
+
+    /// <summary>A record's bynames in this language, or null where its text prints none.</summary>
+    private static Byname? Bynamed(Bynames? held, string named) =>
+        held?.Names.GetValueOrDefault(named) is { Count: > 0 } names
+            ? new Byname(names, new VerseRefResponse(
+                held.Book, BookReferences.Name(held.Book), BookReferences.Slug(held.Book), held.Chapter, held.Verse))
+            : null;
+
+    /// <summary>The cases a clause says its target in: the name the clause calls it by, or the target's own.</summary>
+    private static IReadOnlyDictionary<string, string>? CasesOf(
+        Clause clause,
+        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms) =>
+        clause.Called ?? forms.GetValueOrDefault(clause.TargetEntityId);
+
+    /// <summary>
+    /// The bears-title clauses whose bearer the text calls by the title in words of its own, given
+    /// those words: <em>Jesus, who is called Christ</em> (MAT 1:16) bears the Anointed and is said
+    /// Christ. A language the bearer's names do not cover is said by the English one.
+    /// </summary>
+    private static async Task<List<Clause>> CalledByTheTitle(
+        AppDbContext db,
+        List<Clause> clauses,
+        string named,
+        CancellationToken cancellationToken)
+    {
+        var borne = clauses.Where(c => c.Relation == DescriptorRelations.BearsTitle).ToList();
+        if (borne.Count == 0)
+        {
+            return clauses;
+        }
+
+        var bearers = borne.Select(c => c.SubjectId).Distinct().ToList();
+        var titles = borne.Select(c => c.TargetEntityId).Distinct().ToList();
+        var rows = await db.TitleBearers
+            .Where(b => bearers.Contains(b.BearerEntityId) && titles.Contains(b.TitleEntityId) && b.Called != null)
+            .Select(b => new { b.BearerEntityId, b.TitleEntityId, b.Called })
+            .ToListAsync(cancellationToken);
+        if (rows.Count == 0)
+        {
+            return clauses;
+        }
+
+        var called = rows.ToDictionary(r => (r.BearerEntityId, r.TitleEntityId), r => TitleCalled.Read(r.Called));
+        return [.. clauses.Select(c => c.Relation == DescriptorRelations.BearsTitle
+                                      && called.GetValueOrDefault((c.SubjectId, c.TargetEntityId)) is { } names
+                                      && (names.GetValueOrDefault(named) ?? names.GetValueOrDefault(DescriptorPhrasings.English)) is { } name
+            ? c with
+            {
+                Called = new Dictionary<string, string>(StringComparer.Ordinal) { [GrammaticalCases.Nominative] = name },
+                TargetEnglishName = names.GetValueOrDefault(DescriptorPhrasings.English) ?? c.TargetEnglishName,
+            }
+            : c)];
     }
 }
 
