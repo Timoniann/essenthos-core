@@ -250,6 +250,49 @@ public sealed class StoryPlacesTests : IDisposable
         place.Roles.Should().Equal("lived");
     }
 
+    [Theory]
+    [InlineData("jeremiah-6", 24, true)]
+    [InlineData("jeremiah-6", 25, false)]
+    [InlineData("jeremiah-6", 26, false)]
+    [InlineData("ezekiel", 26, true)]
+    [InlineData("daniel-2", 27, true)]
+    [InlineData("jonah", 32, true)]
+    [InlineData("amos", 30, true)]
+    [InlineData("job", 18, true)]
+    [InlineData("saul-2", 45, true)]
+    [InlineData("saul-2", 57, true)]
+    [InlineData("saul-2", 58, false)]
+    [InlineData("simon", 60, true)]
+    [InlineData("simon", 45, false)]
+    [InlineData("david", 19, false)]
+    [InlineData("jeremiah-6", 1, true)]
+    public void ABookNamedAfterAPersonTellsTheirStory(string slug, int book, bool tells) =>
+        EncyclopediaEndpoints.TellsAStory(book, slug).Should().Be(tells);
+
+    [Fact]
+    public async Task APlaceNamedWithAPersonInTheirOwnBookIsInTheStory()
+    {
+        var jeremiah = Record(EntityKind.Person, "jeremiah-6", "Jeremiah");
+        var other = Record(EntityKind.Person, "baruch", "Baruch");
+        var tahpanhes = Place("tahpanhes", "Tahpanhes");
+        var babylon = Place("babylon", "Babylon");
+        _db.SaveChanges();
+        Verse(jeremiah, 24, 43, 8);
+        Verse(other, 24, 43, 8);
+        Verse(tahpanhes, 24, 43, 8);
+        Verse(jeremiah, 26, 1, 1);
+        Verse(babylon, 26, 1, 1);
+        _db.SaveChanges();
+
+        var his = (await EncyclopediaEndpoints.StoryPlaces(_db, jeremiah.Id, null, null, 20))
+            .Items.ToDictionary(p => p.Slug);
+        var baruchs = await EncyclopediaEndpoints.StoryPlaces(_db, other.Id, null, null, 20);
+
+        (his["tahpanhes"].Group, his["tahpanhes"].StoryVerses).Should().Be(("story", 1));
+        his["babylon"].Group.Should().Be("other-books");
+        baruchs.Items.Single().Group.Should().Be("other-books");
+    }
+
     [Fact]
     public async Task ARecordWithNoPlacesHasAnEmptyList()
     {
