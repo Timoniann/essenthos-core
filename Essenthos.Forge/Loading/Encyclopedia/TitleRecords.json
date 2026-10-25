@@ -598,6 +598,44 @@
           "why": "Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ."
         }
       ]
+    },
+    {
+      "slug": "archangel",
+      "name": "Archangel",
+      "distinguisher": "chief angel: a title the text gives by name only to Michael (JUD 1:9)",
+      "notes": "Archangelos, 'chief angel', stands twice in the New Testament: 'Michael the archangel', contending with the devil about the body of Moses (JUD 1:9), and 'the voice of the archangel' with which the Lord shall descend from heaven (1TH 4:16), where no name is given. The Old Testament has no such word; Daniel calls Michael 'one of the chief princes' (DAN 10:13) and 'the great prince which standeth for the children of thy people' (DAN 12:1).",
+      "why": "The owner ruled that Michael is the archangel, as Jude calls him (JUD 1:9), and that the title stands beside the other titles the text gives, joined to its bearer where a verse names both.",
+      "source": "Essenthos, on the project owner's decision of 2026-10-25 that Michael is the archangel the text calls him, and that the archangel is collected as a title like the others",
+      "words": [
+        {
+          "strong": "G743"
+        }
+      ],
+      "localNames": {
+        "ukr": "Архангел",
+        "rus": "Архангел",
+        "deu": "Erzengel",
+        "spa": "Arcángel"
+      },
+      "names": [
+        {
+          "label": "Archangel",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": "ἀρχάγγελος",
+          "greekTransliterated": "archangelos",
+          "meaning": "chief angel",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": "G743"
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "michael-9",
+          "reference": "JUD 1:9",
+          "why": "Yet Michael the archangel, when contending with the devil he disputed about the body of Moses."
+        }
+      ]
     }
   ],
   "rulings": [

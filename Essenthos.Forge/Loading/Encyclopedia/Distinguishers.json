@@ -1,5 +1,5 @@
 {
-  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09, and those the table of nations and the unread Hebrew names add on 2026-10-12",
+  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09, those the table of nations and the unread Hebrew names add on 2026-10-12, and the archangel's on 2026-10-25",
   "records": [
     {
       "slug": "tabernacle",
@@ -917,6 +917,13 @@
       "ukr": "титул помазаного на служіння, єврейською машіах, грецькою Христос: так названо помазаного священика, Саула, Давида, Кира та Ісуса",
       "deu": "der Titel dessen, der zu einem Amt gesalbt ist, hebräisch Maschiach, griechisch Christos: so heißen der gesalbte Priester, Saul, David, Kyrus und Jesus",
       "spa": "el título del ungido para un oficio, en hebreo mashiaj y en griego Christos: se da al sacerdote ungido, a Saúl, a David, a Ciro y a Jesús"
+    },
+    {
+      "slug": "archangel",
+      "english": "chief angel: a title the text gives by name only to Michael (JUD 1:9)",
+      "ukr": "головний ангел: титул, який текст на ім'я дає лише Михаїлові (JUD 1:9)",
+      "deu": "oberster Engel: ein Titel, den der Text namentlich nur Michael gibt (JUD 1:9)",
+      "spa": "ángel principal: un título que el texto da por nombre solo a Miguel (JUD 1:9)"
     },
     {
       "slug": "daughter",

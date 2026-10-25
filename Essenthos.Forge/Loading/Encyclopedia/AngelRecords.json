@@ -1,0 +1,32 @@
+{
+  "decidedBy": "the project owner, 2026-10-25, written onto the records by claude-opus-5-5 on 2026-10-25",
+  "policy": "Michael is the archangel, as Jude calls him (JUD 1:9), and Gabriel is an angel, as Luke and Daniel call him; that tradition counts Gabriel among the archangels is said on his record as tradition, not as the text.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-10-25 that Michael is the archangel and Gabriel an angel, as the text calls them",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "JUD 1:9",
+      "position": 3,
+      "surface": "Μιχαὴλ",
+      "strongNumber": "G3413",
+      "existing": "michael-9",
+      "says": {
+        "notes": "Daniel calls him 'one of the chief princes' (DAN 10:13), 'Michael your prince' (DAN 10:21) and 'the great prince which standeth for the children of thy people' (DAN 12:1). Jude calls him 'Michael the archangel', who contended with the devil about the body of Moses (JUD 1:9), and in Revelation 'Michael and his angels' fight against the dragon (REV 12:7). He is the only archangel the text names."
+      },
+      "why": "'Yet Michael the archangel, when contending with the devil': the archangel of Daniel's visions and of Revelation 12."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 1:19",
+      "position": 9,
+      "surface": "Γαβριὴλ",
+      "strongNumber": "G1043",
+      "existing": "gabriel",
+      "says": {
+        "notes": "Gabriel is named four times. In Daniel he is sent to make Daniel understand the vision (DAN 8:16), and 'the man Gabriel' comes to him about the time of the evening oblation (DAN 9:21). In Luke he is the angel of the Lord who appeared to Zacharias (LUK 1:11) and said 'I am Gabriel, that stand in the presence of God' (LUK 1:19), and the angel sent from God to Mary in Nazareth (LUK 1:26). Tradition counts him among the archangels; the text calls him an angel, and the only archangel it names is Michael (JUD 1:9)."
+      },
+      "why": "'I am Gabriel, that stand in the presence of God': the angel sent to Zacharias and to Mary, whom Daniel saw."
+    }
+  ]
+}

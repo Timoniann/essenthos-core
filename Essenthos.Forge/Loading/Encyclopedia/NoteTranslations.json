@@ -2450,5 +2450,41 @@
     "model": "claude-opus-5-5",
     "effort": null,
     "at": "2026-10-21"
+  },
+  {
+    "file": "AngelRecords.json",
+    "slug": "michael-9",
+    "sha256": "037772d892f07a8bad693fc0337a6e36159c4307c073bd5a365873d3abfed267",
+    "english": "Daniel calls him 'one of the chief princes' (DAN 10:13), 'Michael your prince' (DAN 10:21) and 'the great prince which standeth for the children of thy people' (DAN 12:1). Jude calls him 'Michael the archangel', who contended with the devil about the body of Moses (JUD 1:9), and in Revelation 'Michael and his angels' fight against the dragon (REV 12:7). He is the only archangel the text names.",
+    "ukr": "Даниїл називає його «одним з перших князів» (DAN 10:13), «Михаїлом, князем вашим» (DAN 10:21) і «великим князем, що стоїть за синів твого народу» (DAN 12:1). Юда називає його «архангелом Михаїлом», що сперечався з дияволом за Мойсеєве тіло (JUD 1:9), а в Об'явленні «Михаїл та його ангели» воюють проти дракона (REV 12:7). Він — єдиний архангел, якого текст називає на ім'я.",
+    "deu": "Daniel nennt ihn „einen der vornehmsten Fürsten“ (DAN 10:13), „Michael, euren Fürsten“ (DAN 10:21) und „den großen Fürsten, der für die Kinder deines Volkes steht“ (DAN 12:1). Judas nennt ihn „Michael, den Erzengel“, der mit dem Teufel um den Leib des Mose stritt (JUD 1:9), und in der Offenbarung kämpfen „Michael und seine Engel“ gegen den Drachen (REV 12:7). Er ist der einzige Erzengel, den der Text mit Namen nennt.",
+    "spa": "Daniel lo llama «uno de los principales príncipes» (DAN 10:13), «Miguel vuestro príncipe» (DAN 10:21) y «el gran príncipe que está por los hijos de tu pueblo» (DAN 12:1). Judas lo llama «el arcángel Miguel», que contendía con el diablo por el cuerpo de Moisés (JUD 1:9), y en el Apocalipsis «Miguel y sus ángeles» luchan contra el dragón (REV 12:7). Es el único arcángel que el texto nombra.",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-25"
+  },
+  {
+    "file": "AngelRecords.json",
+    "slug": "gabriel",
+    "sha256": "c5b485a43fd6c824cde52c2e6413d5aae849cd13db8bc84a004f479050901c3a",
+    "english": "Gabriel is named four times. In Daniel he is sent to make Daniel understand the vision (DAN 8:16), and 'the man Gabriel' comes to him about the time of the evening oblation (DAN 9:21). In Luke he is the angel of the Lord who appeared to Zacharias (LUK 1:11) and said 'I am Gabriel, that stand in the presence of God' (LUK 1:19), and the angel sent from God to Mary in Nazareth (LUK 1:26). Tradition counts him among the archangels; the text calls him an angel, and the only archangel it names is Michael (JUD 1:9).",
+    "ukr": "Гавриїла названо чотири рази. У Даниїла його послано пояснити Даниїлові видіння (DAN 8:16), і «муж Гавриїл» приходить до нього в час вечірньої жертви (DAN 9:21). У Луки він — ангел Господній, що з'явився Захарії (LUK 1:11) і сказав: «Я Гавриїл, що стою перед Богом» (LUK 1:19), і ангел, посланий від Бога до Марії в Назарет (LUK 1:26). Традиція зараховує його до архангелів; текст називає його ангелом, а єдиний архангел, якого він називає на ім'я, — Михаїл (JUD 1:9).",
+    "deu": "Gabriel wird viermal genannt. Bei Daniel wird er gesandt, Daniel das Gesicht verstehen zu lassen (DAN 8:16), und „der Mann Gabriel“ kommt zu ihm um die Zeit des Abendopfers (DAN 9:21). Bei Lukas ist er der Engel des Herrn, der Zacharias erschien (LUK 1:11) und sagte: „Ich bin Gabriel, der vor Gott steht“ (LUK 1:19), und der Engel, der von Gott zu Maria nach Nazareth gesandt wurde (LUK 1:26). Die Überlieferung zählt ihn zu den Erzengeln; der Text nennt ihn einen Engel, und der einzige Erzengel, den er mit Namen nennt, ist Michael (JUD 1:9).",
+    "spa": "Gabriel es nombrado cuatro veces. En Daniel es enviado para hacer que Daniel entienda la visión (DAN 8:16), y «el varón Gabriel» llega a él a la hora del sacrificio de la tarde (DAN 9:21). En Lucas es el ángel del Señor que se apareció a Zacarías (LUK 1:11) y dijo: «Yo soy Gabriel, que estoy delante de Dios» (LUK 1:19), y el ángel enviado por Dios a María en Nazaret (LUK 1:26). La tradición lo cuenta entre los arcángeles; el texto lo llama ángel, y el único arcángel que nombra es Miguel (JUD 1:9).",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-25"
+  },
+  {
+    "file": "TitleRecords.json",
+    "slug": "archangel",
+    "sha256": "00fce17582a0bc98bc953bc24e000536f72bf58efe4aae9791cc80c967757e46",
+    "english": "Archangelos, 'chief angel', stands twice in the New Testament: 'Michael the archangel', contending with the devil about the body of Moses (JUD 1:9), and 'the voice of the archangel' with which the Lord shall descend from heaven (1TH 4:16), where no name is given. The Old Testament has no such word; Daniel calls Michael 'one of the chief princes' (DAN 10:13) and 'the great prince which standeth for the children of thy people' (DAN 12:1).",
+    "ukr": "Архангелос, «головний ангел», стоїть у Новому Завіті двічі: «архангел Михаїл», що сперечався з дияволом за Мойсеєве тіло (JUD 1:9), і «голос архангела», з яким Господь зійде з неба (1TH 4:16), де ім'я не назване. У Старому Завіті такого слова немає; Даниїл називає Михаїла «одним з перших князів» (DAN 10:13) і «великим князем, що стоїть за синів твого народу» (DAN 12:1).",
+    "deu": "Archangelos, „oberster Engel“, steht im Neuen Testament zweimal: „Michael, der Erzengel“, der mit dem Teufel um den Leib des Mose stritt (JUD 1:9), und „die Stimme des Erzengels“, mit der der Herr vom Himmel herabkommen wird (1TH 4:16), wo kein Name genannt wird. Das Alte Testament kennt dieses Wort nicht; Daniel nennt Michael „einen der vornehmsten Fürsten“ (DAN 10:13) und „den großen Fürsten, der für die Kinder deines Volkes steht“ (DAN 12:1).",
+    "spa": "Archangelos, «ángel principal», aparece dos veces en el Nuevo Testamento: «el arcángel Miguel», que contendía con el diablo por el cuerpo de Moisés (JUD 1:9), y «la voz del arcángel» con la que el Señor descenderá del cielo (1TH 4:16), donde no se da ningún nombre. El Antiguo Testamento no tiene esa palabra; Daniel llama a Miguel «uno de los principales príncipes» (DAN 10:13) y «el gran príncipe que está por los hijos de tu pueblo» (DAN 12:1).",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-25"
   }
 ]
