@@ -164,6 +164,19 @@ public sealed class StatisticalCrossingTests : IDisposable
     }
 
     [Fact]
+    public async Task ASweepOfNoTextWithdrawsNothing()
+    {
+        // What an EVIDENTIA replay asks for: it can make no crossing, so it looks for none.
+        var crossing = Link(_english, 6, _greek, 7, LinkMethod.Aligner, LinkMethod.Aligner);
+        Link(_english, 6, _greek, 6, LinkMethod.Aligner, LinkMethod.Aligner);
+
+        var outcome = await _loader.Load(swept: new HashSet<int>());
+
+        outcome.Withdrawn.Should().Be(0);
+        (await Stands(crossing)).Should().BeTrue();
+    }
+
+    [Fact]
     public async Task ARefreshOfATextTheCorpusDoesNotHoldWithdrawsNothing()
     {
         var crossing = Link(_english, 6, _greek, 7, LinkMethod.Aligner, LinkMethod.Aligner);

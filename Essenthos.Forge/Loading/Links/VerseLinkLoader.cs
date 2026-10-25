@@ -364,10 +364,12 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
     /// <param name="swept">
     /// The texts whose aligner links are looked over for a crossing no verse link joins; null for
-    /// <paramref name="refresh"/>'s, or every text's where that is null too. A writer that adds no
-    /// aligner link and takes no verse link away — an EVIDENTIA replay — can make no new crossing, so
-    /// it names its own pair rather than sweep the whole corpus's aligner links after every line
-    /// (23–66 s each on cold rebuild attempt 7, and none of those sweeps withdrew a link: PRB-1191).
+    /// <paramref name="refresh"/>'s, or every text's where that is null too, and none when empty. A
+    /// writer that adds no aligner link and takes no verse link away — an EVIDENTIA replay — can
+    /// make no new crossing, so it sweeps nothing rather than the whole corpus's aligner links after
+    /// every line (part of the 23–66 s each took on cold rebuild attempt 7, and none of those sweeps
+    /// withdrew a link: PRB-1191). Naming its own pair is no narrower: BHSA and Nestle are one side
+    /// of nearly every aligner link.
     /// </param>
     public async Task<VerseLinkOutcome> Load(
         CancellationToken cancellationToken = default, IReadOnlySet<int>? refresh = null, IReadOnlySet<int>? swept = null)
@@ -392,6 +394,11 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     public async Task<int> WithdrawStatisticalCrossings(
         IReadOnlySet<int>? texts = null, CancellationToken cancellationToken = default)
     {
+        if (texts is { Count: 0 })
+        {
+            return 0;
+        }
+
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         await using (var find = new NpgsqlCommand(StrayCrossings, connection))
