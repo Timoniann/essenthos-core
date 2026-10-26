@@ -166,6 +166,14 @@ public sealed class PersonPresenceTests : IDisposable
         (await _loader.Load(File(Finding(), Finding(place: "old-hebron", addresses: [10_005_006])))).Written.Should().Be(0);
     }
 
+    [Theory]
+    [InlineData("PSA 63:0", true)]
+    [InlineData("PSA 63:0-1", true)]
+    [InlineData("GEN 1:0", false)]
+    [InlineData("PSA 63:-1", false)]
+    public void PsalmTitlesRetainTheirCanonicalZeroVerse(string reference, bool valid) =>
+        (ScriptureSpan.TryParse(reference) is not null).Should().Be(valid);
+
     [Fact]
     [Trait("Category", "Corpus")]
     public async Task TheEntireAdmittedFileCreatesItsSitesAndReplaysWithoutRewriting()
@@ -174,6 +182,7 @@ public sealed class PersonPresenceTests : IDisposable
         System.IO.File.Exists(path).Should().BeTrue("the admitted presence dataset must be published before this proof");
         var file = JsonSerializer.Deserialize<PresenceFile>(await System.IO.File.ReadAllTextAsync(path),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        file.Sites.Single(s => s.Slug == "wilderness-of-judah").Passages!.Select(p => p.Reference).Should().Contain("PSA 63:0");
         await _db.Database.ExecuteSqlRawAsync("DELETE FROM entity");
         _db.ChangeTracker.Clear();
         var people = file.Records.Select(r => r.Person).Distinct().ToHashSet();
