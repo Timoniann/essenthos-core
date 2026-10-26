@@ -131,13 +131,22 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
         }
 
-        var read = Read(ancient, modern);
+        var supplement = LocationSupplement.Read();
+        var read = supplement.Apply(Read(ancient, modern));
+        var bindings = supplement.Bindings.ToDictionary(b => b.Slug, StringComparer.Ordinal);
+        var regions = supplement.Regions.ToDictionary(r => r.Slug, StringComparer.Ordinal);
+        var additionalSlugs = bindings.Keys.Concat(regions.Keys).ToList();
 
         var places = await db.Entities
-            .Where(e => e.Kind == EntityKind.Place && e.OpenBibleId != null)
-            .Select(e => new { e.Id, e.OpenBibleId })
+            .Where(e => e.Kind == EntityKind.Place && (e.OpenBibleId != null || additionalSlugs.Contains(e.Slug)))
+            .Select(e => new { e.Id, e.Slug, e.OpenBibleId })
             .ToListAsync(cancellationToken);
-        var byOpenBibleId = places.ToLookup(p => p.OpenBibleId!, p => p.Id, StringComparer.Ordinal);
+        supplement.ValidateBindings(ancient, places.Select(p => p.Slug).ToHashSet(StringComparer.Ordinal));
+        foreach (var place in places)
+            if (bindings.TryGetValue(place.Slug, out var binding) && place.OpenBibleId is { } held && held != binding.AncientId)
+                throw new InvalidDataException($"{place.Slug} already holds a different gazetteer identity.");
+        var byOpenBibleId = places.Where(p => p.OpenBibleId != null || bindings.ContainsKey(p.Slug))
+            .ToLookup(p => p.OpenBibleId ?? bindings[p.Slug].AncientId, p => p.Id, StringComparer.Ordinal);
 
         var locations = new List<PlaceLocation>(read.Located.Count);
         var unheld = read.Located.Count(located => !byOpenBibleId.Contains(located.PlaceId));
@@ -152,7 +161,7 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                 Score = located.Score,
                 ModernId = located.ModernId,
                 CoordinatesSource = located.CoordinatesSource,
-                Source = Source,
+                Source = Source + (supplement.Points.Any(p => p.ModernId == located.ModernId) ? "; coordinates: " + located.CoordinatesSource : ""),
             }));
         }
 
@@ -179,9 +188,29 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                     Withheld = answer.Withheld,
                     Grounds = [.. answer.Grounds],
                     CoordinatesSource = answer.CoordinatesSource,
-                    Source = Source,
+                    Source = Source + (supplement.Points.Any(p => p.ModernId == answer.ModernId) ? "; coordinates: " + answer.CoordinatesSource : ""),
                 }));
             }
+        }
+
+        foreach (var place in places.Where(p => regions.ContainsKey(p.Slug)))
+        {
+            var region = regions[place.Slug];
+            if (locations.Any(l => l.EntityId == place.Id) || candidates.Any(c => c.EntityId == place.Id)
+                || !LocationSupplement.ValidPoint(region.Lon, region.Lat) || string.IsNullOrWhiteSpace(region.Credit))
+                throw new InvalidDataException($"The representative region conflicts with a held answer: {place.Slug}.");
+            // No scholarly identification score was supplied: zero is unscored, never an invented probability.
+            locations.Add(new PlaceLocation
+            {
+                EntityId = place.Id, Longitude = region.Lon, Latitude = region.Lat, Kind = "representative-point",
+                Score = 0, ModernId = region.ModernId, CoordinatesSource = region.Credit, Source = region.Credit,
+            });
+            candidates.Add(new PlaceCandidate
+            {
+                EntityId = place.Id, Rank = 0, Score = 0, ModernId = region.ModernId, Site = region.Site,
+                Longitude = region.Lon, Latitude = region.Lat, Kind = "representative-point", SiteType = "region",
+                CoordinatesSource = region.Credit, Source = region.Credit,
+            });
         }
 
         if (await Holds(locations, candidates, cancellationToken))

@@ -221,6 +221,7 @@ internal static partial class EncyclopediaEndpoints
                 r.Rank == 0,
                 r.Grounds)
             {
+                CoordinatesSource = r.CoordinatesSource,
                 Through = r.ThroughOpenBibleId is { } id && through.TryGetValue(id, out var place)
                     ? new EntityTribeResponse(
                         place.Slug, EnumSpelling.Of(place.Kind), place.Name, names.GetValueOrDefault(place.Id))

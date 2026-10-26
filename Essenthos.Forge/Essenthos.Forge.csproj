@@ -135,6 +135,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\VerseReadings.json" />
         <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\LocationSupplements.json" />
         <Content Remove="Loading\Encyclopedia\ObservanceRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObservanceRecords.json" />
         <Content Remove="Loading\Encyclopedia\NarrativeRecords.json" />
