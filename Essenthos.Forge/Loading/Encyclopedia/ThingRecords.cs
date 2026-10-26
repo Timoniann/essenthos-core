@@ -301,7 +301,7 @@ internal sealed record ScriptureSpan(int Book, int FromChapter, int? FromVerse, 
         }
 
         var range = text[(space + 1)..].Split('-');
-        if (range.Length is < 1 or > 2 || Point(range[0]) is not { } start)
+        if (range.Length is < 1 or > 2 || Point(range[0], book == 19) is not { } start)
         {
             return null;
         }
@@ -313,7 +313,7 @@ internal sealed record ScriptureSpan(int Book, int FromChapter, int? FromVerse, 
         {
             if (range[1].Contains(':'))
             {
-                if (Point(range[1]) is not { } end)
+                if (Point(range[1], book == 19) is not { } end)
                 {
                     return null;
                 }
@@ -340,7 +340,7 @@ internal sealed record ScriptureSpan(int Book, int FromChapter, int? FromVerse, 
             : new ScriptureSpan(book, fromChapter, fromVerse, toChapter, toVerse, nth);
     }
 
-    private static (int Chapter, int? Verse)? Point(string written)
+    private static (int Chapter, int? Verse)? Point(string written, bool includesPsalmTitle)
     {
         var parts = written.Split(':');
         if (parts.Length is < 1 or > 2 || !int.TryParse(parts[0], out var chapter) || chapter < 1)
@@ -353,6 +353,6 @@ internal sealed record ScriptureSpan(int Book, int FromChapter, int? FromVerse, 
             return (chapter, null);
         }
 
-        return int.TryParse(parts[1], out var verse) && verse >= 1 ? (chapter, verse) : null;
+        return int.TryParse(parts[1], out var verse) && verse >= (includesPsalmTitle ? 0 : 1) ? (chapter, verse) : null;
     }
 }

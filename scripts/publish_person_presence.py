@@ -72,11 +72,11 @@ def build():
         citations = proposal['held_citations']
         passages = []
         for citation in citations:
-            _, book, chapter, number = citation['verse'].split(':')
             assert citation['quote'] in citation['text']
-            passage = dict(reference=f'{BOOKS[int(book)-1]} {chapter}:{number}', role='key')
-            if passage not in passages:
-                passages.append(passage)
+            for book, chapter, number in citation['canonical_addresses']:
+                passage = dict(reference=f'{BOOKS[book-1]} {chapter}:{number}', role='key')
+                if passage not in passages:
+                    passages.append(passage)
         sites.append(dict(
             slug=record['slug'], kind=record['kind'], subtype=record.get('subtype') if record['kind'] == 'object' else None,
             name=record['name'], names=record['names'],
