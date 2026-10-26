@@ -13,6 +13,15 @@ namespace Essenthos.Core.Verbs;
 /// </summary>
 internal static partial class ForgeVerbs
 {
+    /// <summary>Apply only admitted person-presence findings to an already loaded encyclopedia.</summary>
+    private static async Task<int> PersonPresence(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<PersonPresenceLoader>()
+            .Load(forge.Resources, CancellationToken.None));
+        return 0;
+    }
+
     /// <summary>Where the places are, for a corpus loaded before the gazetteer's points were.</summary>
     private static async Task<int> Locate(ForgeRun forge, string[] args)
     {

@@ -295,7 +295,7 @@ internal static partial class EncyclopediaEndpoints
         var held = await db.PersonPresences.AsNoTracking().Where(p => p.PersonId == person)
             .Select(p => new { p.PlaceId, p.Category, p.Addresses }).ToListAsync(cancellationToken);
         var ids = held.Select(p => p.PlaceId).Distinct().ToList();
-        var places = await db.Entities.Where(e => ids.Contains(e.Id) && e.Kind == EntityKind.Place)
+        var places = await db.Entities.Where(e => ids.Contains(e.Id) && (e.Kind == EntityKind.Place || e.Kind == EntityKind.Object))
             .Select(e => new
             {
                 e.Id, e.Slug, e.Name, e.PlaceKind,
