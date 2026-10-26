@@ -3198,6 +3198,64 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("period_definition", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonPresence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.PrimitiveCollection<int[]>("Addresses")
+                        .IsRequired()
+                        .HasColumnType("integer[]")
+                        .HasColumnName("addresses");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("category");
+
+                    b.Property<string>("Evidence")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("evidence");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer")
+                        .HasColumnName("person_id");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("place_id");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("Id")
+                        .HasName("pk_person_presence");
+
+                    b.HasIndex("PlaceId")
+                        .HasDatabaseName("ix_person_presence_place_id");
+
+                    b.HasIndex("PersonId", "PlaceId", "Category")
+                        .IsUnique()
+                        .HasDatabaseName("ix_person_presence_person_id_place_id_category");
+
+                    b.ToTable("person_presence", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_person_presence_category", "category IN ('present', 'buried')");
+
+                            t.HasCheckConstraint("ck_person_presence_evidence", "cardinality(addresses) > 0 AND jsonb_typeof(evidence) = 'array' AND jsonb_array_length(evidence) > 0");
+
+                            t.HasCheckConstraint("ck_person_presence_source", "length(btrim(source)) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PlaceCandidate", b =>
                 {
                     b.Property<int>("EntityId")
@@ -6335,6 +6393,27 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_period_definition_period_authority_authority_id");
 
                     b.Navigation("Authority");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonPresence", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_person_presence_entity_person_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Place")
+                        .WithMany()
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_person_presence_entity_place_id");
+
+                    b.Navigation("Person");
+
+                    b.Navigation("Place");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PlaceCandidate", b =>
