@@ -1,0 +1,32 @@
+{
+  "readBy": "Essenthos Codex agent reading held geographical names, Bible citations and named independent coordinate sources on the owner's instruction, 2026-10-26; no new LLM calls",
+  "bindings": [
+    {"slug":"abelofbethmaachah","ancientId":"abffcaa","name":"Abel-beth-maacah","reference":"2SA 20:14"},
+    {"slug":"antipatris","ancientId":"a7b2e63","name":"Aphek 2","reference":"ACT 23:31"},
+    {"slug":"baaleofjudah","ancientId":"a66f19c","name":"Baale-judah","reference":"2SA 6:2"},
+    {"slug":"bethabara","ancientId":"a6e060d","name":"Bethany 2","reference":"JHN 1:28"},
+    {"slug":"galeed","ancientId":"a694ea2","name":"Mizpah 4","reference":"GEN 31:47"},
+    {"slug":"harosheth","ancientId":"a49c017","name":"Harosheth-hagoyim","reference":"JDG 4:2"},
+    {"slug":"judaea","ancientId":"a149f13","name":"Judea 1","reference":"MAT 2:1"},
+    {"slug":"kadeshbarnea","ancientId":"ac2cef0","name":"Kadesh-barnea","reference":"NUM 13:26"},
+    {"slug":"kirjathhuzoth","ancientId":"aeb19d6","name":"Kiriath-huzoth","reference":"NUM 22:39"},
+    {"slug":"melita","ancientId":"a57835d","name":"Malta","reference":"ACT 28:1"},
+    {"slug":"pasdammim","ancientId":"aafd7c4","name":"Ephes-dammim","reference":"1CH 11:13"},
+    {"slug":"pergamos","ancientId":"a75d2c1","name":"Pergamum","reference":"REV 2:12"},
+    {"slug":"sechu","ancientId":"a4052df","name":"Secu","reference":"1SA 19:22"},
+    {"slug":"shushan","ancientId":"a033b84","name":"Susa","reference":"EST 1:2"},
+    {"slug":"telaim","ancientId":"a6ef6a9","name":"Telem","reference":"1SA 15:4"},
+    {"slug":"vale-of-siddim","ancientId":"a4a5cce","name":"Valley of Siddim","reference":"GEN 14:3"},
+    {"slug":"zaanaim","ancientId":"a0c4f5e","name":"Zaanannim","reference":"JDG 4:11"},
+    {"slug":"zelah","ancientId":"a597dd0","name":"Zela","reference":"2SA 21:14"},
+    {"slug":"zoheleth","ancientId":"a8bb3d8","name":"Serpent’s Stone","reference":"1KI 1:9"}
+  ],
+  "points": [
+    {"modernId":"m25a76c","site":"Jabal al Naba","lon":35.74611111111111,"lat":31.76222222222222,"credit":"PCGN, Jordan Toponymic Factfile 2025, p.8; Contains public sector information licensed under the Open Government Licence v3.0; https://assets.publishing.service.gov.uk/media/694152af5431f4f94d7f0aca/Jordan_Toponymic_Factfile.pdf"},
+    {"modernId":"m83f9b8","site":"Tell Abu Sefeh","lon":32.3543,"lat":30.8606,"credit":"Drews and Han, 2010, Dynamics of Wind Setdown at Suez and the Eastern Nile Delta, Table 1; CC BY; https://doi.org/10.1371/journal.pone.0012481"},
+    {"modernId":"m5d9754","site":"Sarepta","lon":35.295833333333,"lat":33.4575,"credit":"Wikidata Q616837, revision 2521611391, P625; CC0 1.0; https://www.wikidata.org/wiki/Special:EntityData/Q616837.json?revision=2521611391"}
+  ],
+  "regions": [
+    {"slug":"wilderness-of-judah","site":"Judaean Desert","modernId":"wikidata:Q2046004","lon":35.3,"lat":31.7,"credit":"Wikidata Q2046004, revision 2549290202, P625; CC0 1.0; https://www.wikidata.org/wiki/Special:EntityData/Q2046004.json?revision=2549290202"}
+  ]
+}

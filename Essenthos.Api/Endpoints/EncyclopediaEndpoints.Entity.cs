@@ -108,7 +108,7 @@ internal static partial class EncyclopediaEndpoints
                             e.Location.Longitude,
                             e.Location.Latitude,
                             e.Location.Kind,
-                            e.Location.Score / ScoreScale),
+                            e.Location.Score / ScoreScale) { CoordinatesSource = e.Location.CoordinatesSource },
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 

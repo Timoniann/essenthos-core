@@ -383,7 +383,10 @@ internal record EntityTitleResponse(
 /// The gazetteer's score for the identification, over a thousand: 0.5 and above is high confidence
 /// and 1 very high. Not clamped, because the source's score is not — it runs past 1 and below 0.
 /// </param>
-internal record EntityLocationResponse(double Lon, double Lat, string Kind, double Confidence);
+internal record EntityLocationResponse(double Lon, double Lat, string Kind, double Confidence)
+{
+    public string? CoordinatesSource { get; init; }
+}
 
 /// <param name="References">How many verses name the place, as on its page.</param>
 /// <param name="Chapters">
@@ -512,6 +515,8 @@ internal record PlaceCandidateResponse(
     bool Likeliest,
     IList<string> Grounds)
 {
+    public string? CoordinatesSource { get; init; }
+
     /// <summary>The ancient place this answer takes the place to be, where it is that: Babylon of Revelation, Rome.</summary>
     public EntityTribeResponse? Through { get; init; }
 }
