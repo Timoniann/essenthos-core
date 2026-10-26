@@ -70,6 +70,18 @@ public sealed class PersonPresenceTests : IDisposable
     }
 
     [Fact]
+    public async Task AdmittedBuildingsAppearBesideGeographicalPlaces()
+    {
+        Record("named-house", EntityKind.Object);
+        await _db.SaveChangesAsync();
+        await _loader.Load(File(Finding(place: "named-house")));
+        var result = await EncyclopediaEndpoints.StoryPlaces(_db, _person.Id, null, null, 20);
+        result.Items.Single().Slug.Should().Be("named-house");
+        result.Items.Single().Roles.Should().Equal("event");
+        result.Items.Single().Verses.Should().ContainSingle();
+    }
+
+    [Fact]
     public async Task BurialIsKeptApartFromLivingPresence()
     {
         await _loader.Load(File(Finding("buried")));
@@ -192,9 +204,10 @@ public sealed class PersonPresenceTests : IDisposable
         foreach (var slug in places) Record(slug, EntityKind.Place);
         await _db.SaveChangesAsync();
         var outcome = await _loader.Load(file);
-        outcome.Total.Should().Be(1947);
+        file.Records.Count.Should().BeGreaterThanOrEqualTo(1947);
+        outcome.Total.Should().Be(file.Records.Count);
         (await _db.Entities.CountAsync(e => e.SourceId.StartsWith("essenthos:thing:"))).Should().Be(18);
-        (await _db.PersonPresences.CountAsync(p => p.Category == "buried")).Should().Be(69);
+        (await _db.PersonPresences.CountAsync(p => p.Category == "buried")).Should().Be(file.Records.Count(p => p.Category == "buried"));
         var before = await Fingerprint();
         var repeated = await _loader.Load(file);
         repeated.Written.Should().Be(0);

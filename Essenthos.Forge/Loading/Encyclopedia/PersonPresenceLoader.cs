@@ -67,7 +67,7 @@ internal sealed class PersonPresenceLoader(AppDbContext db, ThingLoader sites)
             foreach (var row in file.Records)
             {
                 if (!entities.TryGetValue(row.Person, out var person) || person.Kind != EntityKind.Person
-                    || !entities.TryGetValue(row.Place, out var place) || place.Kind != EntityKind.Place)
+                    || !entities.TryGetValue(row.Place, out var place) || place.Kind is not (EntityKind.Place or EntityKind.Object))
                     throw new InvalidDataException($"Unknown or wrong-kind presence identity: {row.Person}/{row.Place}.");
                 wanted.Add(new PersonPresence
                 {

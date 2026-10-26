@@ -189,6 +189,7 @@ internal static partial class ForgeVerbs
 
         // The encyclopedia's steps one at a time, for a corpus already loaded.
         new("locate", "", "Put the places on the map from OpenBible.", Locate),
+        new("person-presence", "", "Apply only published, cited person-presence findings to the encyclopedia.", PersonPresence, Most: 0),
         new("dillmann", "", "Load Dillmann's lexicon of Ge'ez.", Dillmann),
         new("dillmann-measure", "[--sample <file>]", "How many Ge'ez words reach Dillmann's lexicon. Reads only.",
             DillmannMeasure),

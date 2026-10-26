@@ -89,12 +89,17 @@ def build():
         row = pairs[key]
         row['addresses'] = sorted(row['addresses'])
         records.append(row)
-    return dict(
+    payload = dict(
         version=1,
         source='Essenthos: claude-sonnet-5-5 independent chapter readings and model/agent adjudication, 2026-10-26; owner instructed integration; model provenance retained, not independently measured certainty.',
         admission=dict(instruction='Інтегруй в core', date='2026-10-26', task='TSK-1246', sourceResultsSha256=parent['source_results_sha256'], sourceInputs=parent['inputs'], newModelCalls=0),
         records=records, sites=sites,
     )
+    admission_path = ROOT / 'Resources/Essenthos/person-presence-admission.json'
+    if admission_path.exists():
+        import compile_presence_closure
+        payload = compile_presence_closure.apply(payload, read(admission_path), MAIN, jobs)
+    return payload
 
 
 def main():
@@ -112,7 +117,8 @@ def main():
         assert TARGET.read_text(encoding='utf-8') == body
     summary = dict(pairs=len(payload['records']), persons=len({r['person'] for r in payload['records']}),
                    sites=len(payload['sites']), sha256=sha(TARGET), new_model_calls=0)
-    (REVIEW / 'integration-compiled.json').write_text(json.dumps(summary, indent=2)+'\n', encoding='utf-8')
+    report_folder = MAIN / payload['admission']['closure']['source'] if 'closure' in payload['admission'] else REVIEW
+    (report_folder / 'integration-compiled.json').write_text(json.dumps(summary, indent=2)+'\n', encoding='utf-8')
     print(json.dumps(summary))
 
 
