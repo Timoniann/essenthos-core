@@ -9,9 +9,7 @@ using Xunit;
 namespace Essenthos.Core.Tests.Reader;
 
 /// <summary>
-/// The places of a person's story: every place named in a verse that names the person, counted by
-/// the verses the two share, and every place a tie or a dated event puts the person in, each with
-/// what it was in the story.
+/// The legacy list of places named alongside a record, retained for records other than persons.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StoryPlacesTests : IDisposable
@@ -90,7 +88,7 @@ public sealed class StoryPlacesTests : IDisposable
     [Fact]
     public async Task EveryPlaceOfTheStoryIsListedTheMostSharedVersesFirst()
     {
-        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
+        var places = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20);
 
         places.Items.Select(p => (p.Slug, p.SharedVerses)).Should().Equal(
             ("jerusalem", 3), ("bethlehem", 1), ("hebron", 1), ("ziklag", 0));
@@ -100,7 +98,7 @@ public sealed class StoryPlacesTests : IDisposable
     [Fact]
     public async Task EachPlaceSaysWhatItWasInTheStory()
     {
-        var places = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+        var places = (await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20))
             .Items.ToDictionary(p => p.Slug);
 
         places["bethlehem"].Roles.Should().Equal("born");
@@ -118,7 +116,7 @@ public sealed class StoryPlacesTests : IDisposable
         Verse(other, FirstSamuel, 19, 18);
         _db.SaveChanges();
 
-        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
+        var places = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20);
 
         places.Items.Single(p => p.Slug == "ramah").Roles.Should().Equal("named-together");
     }
@@ -126,8 +124,8 @@ public sealed class StoryPlacesTests : IDisposable
     [Fact]
     public async Task TheSharedVersesAreInCanonicalOrderAndCappedAtWhatWasAsked()
     {
-        var all = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
-        var two = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 2);
+        var all = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20);
+        var two = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 2);
 
         all.Items[0].Verses.Select(v => (v.BookOrdinal, v.Chapter, v.Verse)).Should().Equal(
             (SecondSamuel, 5, 5), (SecondSamuel, 5, 6), (FirstKings, 2, 10));
@@ -138,7 +136,7 @@ public sealed class StoryPlacesTests : IDisposable
     [Fact]
     public async Task APlaceWithoutAPointIsListedWithoutOne()
     {
-        var places = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+        var places = (await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20))
             .Items.ToDictionary(p => p.Slug);
 
         places["ziklag"].Lon.Should().BeNull();
@@ -150,7 +148,7 @@ public sealed class StoryPlacesTests : IDisposable
     [Fact]
     public async Task ThePlacesAreNamedInTheLanguageAskedFor()
     {
-        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, "ukr", "ukr", 20);
+        var places = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, "ukr", "ukr", 20);
 
         places.Items.Single(p => p.Slug == "jerusalem").LocalName.Should().Be("Єрусалим");
     }
@@ -174,7 +172,7 @@ public sealed class StoryPlacesTests : IDisposable
     [Fact]
     public async Task EveryPlaceOfTheStoryIsInTheStoryGroup()
     {
-        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
+        var places = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20);
 
         places.Items.Should().OnlyContain(p => p.Group == "story");
         places.Items.Select(p => (p.Slug, p.StoryVerses)).Should().Equal(
@@ -200,7 +198,7 @@ public sealed class StoryPlacesTests : IDisposable
         Verse(antioch, Acts, 11, 26);
         _db.SaveChanges();
 
-        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
+        var places = await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20);
 
         places.Items.Select(p => (p.Slug, p.Group, p.SharedVerses, p.StoryVerses)).Should().Equal(
             ("jerusalem", "story", 3, 3),
@@ -224,7 +222,7 @@ public sealed class StoryPlacesTests : IDisposable
         Verse(jerusalem, Psalms, 122, 3);
         _db.SaveChanges();
 
-        var place = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+        var place = (await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20))
             .Items.Single(p => p.Slug == "jerusalem");
 
         place.Group.Should().Be("story");
@@ -242,7 +240,7 @@ public sealed class StoryPlacesTests : IDisposable
         Tie(_david, anathoth, DescriptorRelations.FromPlace);
         _db.SaveChanges();
 
-        var place = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+        var place = (await EncyclopediaEndpoints.NamedPlaces(_db, _david.Id, null, null, 20))
             .Items.Single(p => p.Slug == "anathoth");
 
         place.Group.Should().Be("story");
@@ -284,9 +282,9 @@ public sealed class StoryPlacesTests : IDisposable
         Verse(babylon, 26, 1, 1);
         _db.SaveChanges();
 
-        var his = (await EncyclopediaEndpoints.StoryPlaces(_db, jeremiah.Id, null, null, 20))
+        var his = (await EncyclopediaEndpoints.NamedPlaces(_db, jeremiah.Id, null, null, 20))
             .Items.ToDictionary(p => p.Slug);
-        var baruchs = await EncyclopediaEndpoints.StoryPlaces(_db, other.Id, null, null, 20);
+        var baruchs = await EncyclopediaEndpoints.NamedPlaces(_db, other.Id, null, null, 20);
 
         (his["tahpanhes"].Group, his["tahpanhes"].StoryVerses).Should().Be(("story", 1));
         his["babylon"].Group.Should().Be("other-books");
@@ -299,7 +297,7 @@ public sealed class StoryPlacesTests : IDisposable
         var nobody = Record(EntityKind.Person, "nobody", "Nobody");
         _db.SaveChanges();
 
-        var places = await EncyclopediaEndpoints.StoryPlaces(_db, nobody.Id, null, null, 20);
+        var places = await EncyclopediaEndpoints.NamedPlaces(_db, nobody.Id, null, null, 20);
 
         places.Total.Should().Be(0);
         places.Items.Should().BeEmpty();

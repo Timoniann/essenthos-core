@@ -659,9 +659,9 @@ internal record EntityPlacesResponse(int Total, IList<EntityPlaceResponse> Items
 /// record; <c>other-books</c> where it is only named together with the record in the other books
 /// (wisdom, prophets, letters, Revelation).
 /// </param>
-/// <param name="SharedVerses">How many verses name both the record and the place.</param>
+/// <param name="SharedVerses">For a person, the distinct cited evidence verses; otherwise verses naming both records.</param>
 /// <param name="StoryVerses">
-/// How many of them are in Genesis to Esther, the Gospels, Acts or a book named after the record.
+/// For a person, the cited evidence count. For other records, shared verses in books telling a story.
 /// </param>
 /// <param name="Verses">The first of those verses, in canonical order; at most as many as asked for.</param>
 /// <param name="Roles">

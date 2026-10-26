@@ -260,6 +260,8 @@ public class AppDbContext : DbContext
     public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
 
     /// <summary>What a person is known for, clause by clause, each with the verses that say it.</summary>
+    public DbSet<PersonPresence> PersonPresences { get; set; } = null!;
+
     public DbSet<EntityKnownFor> EntityKnownFor { get; set; } = null!;
 
     public DbSet<EntityKnownForText> EntityKnownForTexts { get; set; } = null!;
@@ -614,6 +616,18 @@ public class AppDbContext : DbContext
                     "end_chapter > canonical_chapter OR (end_chapter = canonical_chapter "
                     + "AND (canonical_verse IS NULL OR end_verse IS NULL OR end_verse >= canonical_verse))");
                 t.HasCheckConstraint("ck_entity_passage_source_not_empty", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<PersonPresence>(entity =>
+        {
+            entity.HasOne(p => p.Person).WithMany().HasForeignKey(p => p.PersonId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(p => p.Place).WithMany().HasForeignKey(p => p.PlaceId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("person_presence", t =>
+            {
+                t.HasCheckConstraint("ck_person_presence_category", "category IN ('present', 'buried')");
+                t.HasCheckConstraint("ck_person_presence_evidence", "cardinality(addresses) > 0 AND jsonb_typeof(evidence) = 'array' AND jsonb_array_length(evidence) > 0");
+                t.HasCheckConstraint("ck_person_presence_source", "length(btrim(source)) > 0");
             });
         });
 

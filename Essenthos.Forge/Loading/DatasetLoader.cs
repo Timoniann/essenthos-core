@@ -673,6 +673,12 @@ internal sealed class DatasetLoader(
             {
                 Files = [$"Essenthos/review/{KnownForReviewList.FileName}"],
             }),
+            .. In(LoadModules.Records, new LoadStep("person-presence", async cancellationToken =>
+            {
+                using var scope = services.CreateScope();
+                var loader = scope.ServiceProvider.GetRequiredService<PersonPresenceLoader>();
+                status.Record(await loader.Load(resources, cancellationToken));
+            }) { Files = [$"Essenthos/{PersonPresenceLoader.FileName}"] }),
             .. In(LoadModules.Verify, new LoadStep("verify", async cancellationToken =>
             {
                 // The index answers from what it read the first time it was asked, and until now that

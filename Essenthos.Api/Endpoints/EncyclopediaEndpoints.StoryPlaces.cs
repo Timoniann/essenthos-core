@@ -123,17 +123,24 @@ internal static partial class EncyclopediaEndpoints
     }
 
     /// <summary>
-    /// Every place named in a verse that also names this record, and every place its dated events
-    /// happen at or its ties put it in, whether or not a verse names the two together. Each with
-    /// how many verses name both, the first of them, what the place was in the story, and whether
-    /// it is a place of the story at all: one a role gives or a verse of a book that tells a story
-    /// (or of the record's own book) names, before those only named together elsewhere.
-    ///
-    /// The verses are the ones the record's own list of verses shows, so a count here is a count
-    /// of verses a reader can find there. The places named alongside come from one query, a
-    /// semi-join of the place layer on the record's verses; the ties and events are two small reads.
+    /// A person's admitted bodily visits and burials, with the passages supporting each finding.
+    /// Records of other kinds retain their list of places named alongside them.
     /// </summary>
     internal static async Task<EntityPlacesResponse> StoryPlaces(
+        AppDbContext db,
+        int entityId,
+        string? language,
+        string? prose,
+        int verses,
+        CancellationToken cancellationToken = default)
+    {
+        var kind = await db.Entities.Where(e => e.Id == entityId).Select(e => e.Kind).FirstOrDefaultAsync(cancellationToken);
+        return kind == EntityKind.Person
+            ? await PresencePlaces(db, entityId, language, prose, verses, cancellationToken)
+            : await NamedPlaces(db, entityId, language, prose, verses, cancellationToken);
+    }
+
+    internal static async Task<EntityPlacesResponse> NamedPlaces(
         AppDbContext db,
         int entityId,
         string? language,
@@ -281,6 +288,44 @@ internal static partial class EncyclopediaEndpoints
     }
 
     internal sealed record SharedAddress(int EntityId, int Address);
+
+    private static async Task<EntityPlacesResponse> PresencePlaces(
+        AppDbContext db, int person, string? language, string? prose, int verses, CancellationToken cancellationToken)
+    {
+        var held = await db.PersonPresences.AsNoTracking().Where(p => p.PersonId == person)
+            .Select(p => new { p.PlaceId, p.Category, p.Addresses }).ToListAsync(cancellationToken);
+        var ids = held.Select(p => p.PlaceId).Distinct().ToList();
+        var places = await db.Entities.Where(e => ids.Contains(e.Id) && e.Kind == EntityKind.Place)
+            .Select(e => new
+            {
+                e.Id, e.Slug, e.Name, e.PlaceKind,
+                Location = e.Location == null ? null : new { e.Location.Longitude, e.Location.Latitude, e.Location.Kind, e.Location.Score },
+            }).ToListAsync(cancellationToken);
+        var local = await EntityNames.Of(db, ids, language, cancellationToken);
+        var bySource = await EntityNames.NamedOnlyBySource(db, ids, language, local, cancellationToken);
+        var told = await Distinguished(db,
+            [.. places.Select(p => (p.Slug, Shown: local.GetValueOrDefault(p.Id) ?? p.Name))],
+            ReaderLanguages.Prose(prose, language), language, cancellationToken);
+        var take = Math.Clamp(verses, 0, MostSharedVersesShown);
+        var items = places.Select(place =>
+        {
+            var findings = held.Where(p => p.PlaceId == place.Id).ToList();
+            var addresses = findings.SelectMany(p => p.Addresses).Distinct().Order().ToList();
+            var roles = new List<string>();
+            if (findings.Any(p => p.Category == "present")) roles.Add(StoryRoles.Event);
+            if (findings.Any(p => p.Category == "buried")) roles.Add(StoryRoles.Buried);
+            return new EntityPlaceResponse(place.Slug, place.Name, StoryGroups.Story,
+                addresses.Count, addresses.Count, [.. addresses.Take(take).Select(VerseAt)], roles)
+            {
+                LocalName = local.GetValueOrDefault(place.Id), NameFromSource = bySource.Contains(place.Id),
+                Distinguisher = told.GetValueOrDefault(place.Slug), PlaceKind = place.PlaceKind,
+                Lon = place.Location?.Longitude, Lat = place.Location?.Latitude, Kind = place.Location?.Kind,
+                Confidence = place.Location is { } at ? at.Score / ScoreScale : null,
+            };
+        }).OrderByDescending(p => p.SharedVerses)
+            .ThenBy(p => p.LocalName ?? p.Name, StringComparer.CurrentCulture).ThenBy(p => p.Slug, StringComparer.Ordinal).ToList();
+        return new EntityPlacesResponse(items.Count, items);
+    }
 
     private static VerseRefResponse VerseAt(int address) =>
         BookReferences.At(address / BookStride, address % BookStride / ChapterStride, address % ChapterStride)!;
