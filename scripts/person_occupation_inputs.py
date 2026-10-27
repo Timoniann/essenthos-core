@@ -10,9 +10,19 @@ import subprocess
 
 MAIN = Path(__file__).resolve().parents[3]
 BASE_NAME = "person-presence-sonnet55-2026-10-26-v3"
-RUN_NAME = "person-occupations-sonnet55-2026-10-27-v1"
+PRIOR_RUN_NAME = "person-occupations-sonnet55-2026-10-27-v1"
+RUN_NAME = "person-occupations-sonnet55-2026-10-27-v2"
 PRIORITY = ("KJV", "BSB", "NESTLE1904", "TISCH", "GEEZ81")
 CORPORA = set(PRIORITY) | {"BHSA"}
+IDENTITY_BRIDGES = {
+    'saul-2': ((44, 13, 9), ('KJV', 'BSB', 'NESTLE1904')),
+    'simon': ((40, 4, 18), ('KJV', 'BSB', 'NESTLE1904')),
+    'john-5': ((44, 12, 12), ('KJV', 'BSB', 'NESTLE1904')),
+    'abram': ((1, 17, 5), ('KJV', 'BSB', 'BHSA')),
+    'sarai': ((1, 17, 15), ('KJV', 'BSB', 'BHSA')),
+    'jacob': ((1, 32, 28), ('KJV', 'BSB', 'BHSA')),
+    'joshua': ((4, 13, 16), ('KJV', 'BSB', 'BHSA')),
+}
 AUTHOR_HINTS = {18: "job", 23: "isaiah", 24: "jeremiah-6", 26: "ezekiel", 27: "daniel-2",
  28: "hosea", 29: "joel-11", 30: "amos", 31: "obadiah-12", 32: "jonah", 33: "micah-4",
  34: "nahum", 35: "habakkuk", 36: "zephaniah-3", 37: "haggai", 38: "zechariah-13",
@@ -91,6 +101,55 @@ def opening_candidate(book, refs):
 
 
 def export_current(run):
+    raise ValueError('v2 reuses the frozen v1 current index; no live export is permitted')
+
+
+def import_frozen_index(main, run):
+    prior = main/'Resources/Essenthos/generation'/PRIOR_RUN_NAME
+    manifest = read(prior/'source-manifest.json')
+    run.mkdir(parents=True, exist_ok=True)
+    prior_run = read(prior/'run-manifest.json')
+    for name in ('current-index.jsonl', 'current-index-manifest.json', 'pilot-cases.json'):
+        source = prior/name
+        expected = manifest['source_hashes'].get(str(source.relative_to(main)).replace('\\','/'))
+        if expected and sha(source) != expected:
+            raise ValueError('Frozen v1 source changed: '+name)
+        if name in prior_run['source_sha256'] and sha(source) != prior_run['source_sha256'][name]:
+            raise ValueError('Frozen v1 run input changed: '+name)
+        target = run/name
+        if target.exists() and sha(target) != sha(source):
+            raise ValueError('v2 bootstrap file conflicts with frozen v1: '+name)
+        if not target.exists():
+            shutil.copyfile(source, target)
+
+
+def add_identity_bridges(packet, verses, by_address):
+    supplied = {v['key']:v for v in packet['verses']}
+    bridge_rows = []
+    for person in packet['persons']:
+        bridge = IDENTITY_BRIDGES.get(person['slug'])
+        if not bridge:
+            continue
+        address, editions = bridge
+        names = sorted(name for name in by_address.get(address, []) if verses[name]['text'] in editions)
+        if {verses[name]['text'] for name in names} != set(editions):
+            raise ValueError('Required identity witness missing: '+person['slug'])
+        for name in names:
+            row = verses[name]
+            if name in supplied:
+                if supplied[name]['role'] != 'event':
+                    supplied[name]['role'] = 'identity'
+            else:
+                supplied[name] = dict(key=name, body=row['body'], canonical=row['canonical'],
+                    canonicalAddresses=row['canonicalAddresses'], role='identity')
+        bridge_rows.append(dict(person_slug=person['slug'], canonical=list(address), keys=names,
+            purpose='Explicit name equivalence only; not occupation proof outside event focus'))
+    packet['verses'] = list(supplied.values())
+    packet['source_metadata']['identity_bridges'] = bridge_rows
+    return packet
+
+
+def legacy_export_current_disabled(run):
     target = run / 'current-index.jsonl'
     if target.exists():
         raise ValueError('Current export already frozen; no repeated live query')
@@ -183,6 +242,7 @@ def prepare(main, run):
     if (run/'jobs.jsonl').exists():
         raise ValueError('Packets already frozen; use verify to replay')
     base = main/'Resources/Essenthos/generation'/BASE_NAME
+    import_frozen_index(main, run)
     current_manifest = read(run/'current-index-manifest.json')
     if sha(run/'current-index.jsonl') != current_manifest['sha256']:
         raise ValueError('Current index hash mismatch')
@@ -267,7 +327,7 @@ def prepare(main, run):
                 assigned[slug].append(job_id)
                 for address in targets[slug]:
                     reference_jobs[slug][address].append(job_id)
-            jobs.append(dict(job_id=job_id, persons=persons, verses=packet_verses,
+            packet = dict(job_id=job_id, persons=persons, verses=[dict(v) for v in packet_verses],
                 focus_keys=sorted(event_keys), source_metadata=dict(primary_text=text,
                     printed_focus=[book, chapter], canonical_focus_chapters=sorted(focus_chapters),
                     parallel_diagnostics=diagnostics, identity_author_hint=author,
@@ -275,7 +335,8 @@ def prepare(main, run):
                         keys=[name for name in sorted(event_keys) if name.startswith('BHSA:')]),
                         NESTLE1904=dict(status='not_applicable' if not 40 <= book <= 66 else 'partial' if diagnostics.get('NESTLE1904',{}).get('missing') else 'complete',
                         keys=[name for name in sorted(event_keys) if name.startswith('NESTLE1904:')])),
-                    identity_hint_is_not_authorship_proof=True)))
+                    identity_hint_is_not_authorship_proof=True))
+            jobs.append(add_identity_bridges(packet, verses, by_address))
     with (run/'jobs.jsonl').open('w', encoding='utf-8', newline='\n') as output:
         for job in jobs:
             output.write(json.dumps(job, ensure_ascii=False, separators=(',', ':')) + '\n')
@@ -294,6 +355,15 @@ def prepare(main, run):
     pilot_chapters = {(1,4),(2,1),(2,31),(9,16),(30,7),(40,4),(43,12),(44,16),(44,18),(46,4),(51,4)}
     write(run/'pilot-candidate-jobs.json', [job['job_id'] for job in jobs
         if tuple(job['source_metadata']['printed_focus']) in pilot_chapters])
+    write(run/'identity-bridge-proof.json', dict(scope='Bounded known-rename check of frozen person metadata; no new identity or occupation claim',
+        bridges=[dict(slug=slug, canonical=list(address), editions=list(editions),
+            verses=[dict(key=name,body=verses[name]['body'],canonicalAddresses=verses[name]['canonicalAddresses'])
+                for name in sorted(by_address[address]) if verses[name]['text'] in editions])
+            for slug,(address,editions) in IDENTITY_BRIDGES.items()],
+        metadata_only_not_added=['bilhan-2 description names a parent alias, not Bilhan alias',
+            'mary-5 description names John/Mark, not Mary alias',
+            'jehoahaz-2/Shallum requires a separate identity chain; no guessed equivalence added'],
+        policy='A bridge remains identity-only unless its verse already belongs to event focus. It cannot make a past action an occupation or establish cessation.'))
     source_paths = [base/'export.jsonl', base/'export-manifest.json', base/'jobs.jsonl', base/'persons.json', base/'manifest.json',
                     base/'paratext-excluded.json', run/'current-index.jsonl', run/'current-index-manifest.json']
     licence_paths = ['Resources/bible4u/LICENCE.md', 'Resources/KingJames2006/LICENCE.md',
@@ -308,10 +378,12 @@ def prepare(main, run):
         shutil.copyfile(main/relative, destination)
         copied_licences.append(str(destination.relative_to(run)).replace('\\','/'))
     source_paths += [main/r['source'] for r in exclusions]
+    prior = main/'Resources/Essenthos/generation'/PRIOR_RUN_NAME
+    source_paths += [prior/'source-manifest.json', prior/'current-index.jsonl', prior/'current-index-manifest.json', prior/'pilot-cases.json']
     for filename, field in [('jobs.jsonl','jobs_sha256'), ('persons.json','persons_sha256')]:
         if sha(base/filename) != read(base/'manifest.json')[field]:
             raise ValueError('Prior frozen artifact changed: '+filename)
-    manifest = dict(version='occupations-input-v1', at=dt.datetime.now(dt.timezone.utc).isoformat(),
+    manifest = dict(version='occupations-input-v2', at=dt.datetime.now(dt.timezone.utc).isoformat(),
         source_hashes={str(path.relative_to(main)).replace('\\','/'):sha(path) for path in source_paths},
         source_code_sha256=sha(__file__), frozen_corpus=export_manifest,
         coverage=dict(persons=len(people), aliases=sum(bool(p['aliasOf']) for p in people.values()),
@@ -330,11 +402,17 @@ def prepare(main, run):
             witness='One preferred held reading per reference plus complete printed focus chapters in BHSA OT/NESTLE1904 NT and BSB where held; primary previous/next chapters and identity-only opening context.',
             limitations='Not every translation/variant or unindexed mention is independently reread. Missing parallel addresses are explicit, not fabricated. No Hebrew NT is invented. No occupation conclusions are copied from metadata.',
             identity='Names, descriptors, aliases, title definitions and author hints are metadata only, never scriptural evidence.'),
-        outputs={name:sha(run/name) for name in ['jobs.jsonl','persons.json','coverage.json','existing-roles.json','paratext-excluded.json','index-delta.json','missing-references.json','pilot-candidate-jobs.json'] + copied_licences},
+        outputs={name:sha(run/name) for name in ['jobs.jsonl','persons.json','coverage.json','existing-roles.json','paratext-excluded.json','index-delta.json','missing-references.json','pilot-candidate-jobs.json','pilot-cases.json','identity-bridge-proof.json'] + copied_licences},
         input_bytes=(run/'jobs.jsonl').stat().st_size,
         input_chars=sum(len(json.dumps(j,ensure_ascii=False,separators=(',',':'))) for j in jobs))
     write(run/'source-manifest.json', manifest)
     verify(main, run)
+    frozen_code = run/'input-preparation-source'
+    frozen_code.mkdir(exist_ok=True)
+    shutil.copyfile(__file__, frozen_code/Path(__file__).name)
+    test_source = Path(__file__).with_name('test_person_occupation_inputs.py')
+    if test_source.exists():
+        shutil.copyfile(test_source, frozen_code/test_source.name)
     print(json.dumps({k:manifest[k] for k in ('coverage','input_bytes','input_chars')}, ensure_ascii=False))
 
 
@@ -351,6 +429,7 @@ def verify(main, run):
     inventory = read(run/'persons.json')
     jobs = [json.loads(line) for line in (run/'jobs.jsonl').read_text(encoding='utf-8').splitlines()]
     validate_coverage(inventory, jobs)
+    validate_identity_bridges(jobs)
     print(json.dumps(dict(valid=True, persons=len(inventory), jobs=len(jobs), jobs_sha256=sha(run/'jobs.jsonl'))))
 
 
@@ -385,15 +464,31 @@ def validate_coverage(inventory, jobs):
     return True
 
 
+def validate_identity_bridges(jobs):
+    for job in jobs:
+        verses = {v['key']:v for v in job['verses']}
+        for person in job['persons']:
+            if person['slug'] not in IDENTITY_BRIDGES:
+                continue
+            address, editions = IDENTITY_BRIDGES[person['slug']]
+            for edition in editions:
+                held = [v for v in verses.values() if v['key'].startswith(edition+':') and tuple(address) in map(tuple,v['canonicalAddresses'])]
+                if not held:
+                    raise ValueError('Missing rename identity bridge for '+person['slug'])
+                for verse in held:
+                    expected = 'event' if verse['key'] in job['focus_keys'] else 'identity'
+                    if verse['role'] != expected:
+                        raise ValueError('Rename bridge used as event/context outside focus')
+    return True
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('mode', choices=['export-current','prepare','verify'])
+    parser.add_argument('mode', choices=['prepare','verify'])
     parser.add_argument('--main', type=Path, default=MAIN)
     args = parser.parse_args()
     run = args.main/'Resources/Essenthos/generation'/RUN_NAME
-    if args.mode == 'export-current':
-        export_current(run)
-    elif args.mode == 'prepare':
+    if args.mode == 'prepare':
         prepare(args.main, run)
     else:
         verify(args.main, run)
