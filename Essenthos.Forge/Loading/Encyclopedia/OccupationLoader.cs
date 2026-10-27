@@ -26,7 +26,7 @@ internal sealed record OccupationLoadOutcome(int Written, int Removed, int Total
 internal sealed class OccupationLoader(AppDbContext db)
 {
     internal static readonly string[] Languages = ["eng", "ukr", "deu", "spa"];
-    internal static readonly string[] Categories = ["trade", "office", "military_role", "religious_role"];
+    internal static readonly string[] Categories = ["trade", "office", "military_role", "religious_role", "heavenly_role"];
     internal static readonly JsonSerializerOptions Shape = new(JsonSerializerDefaults.Web)
     {
         UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,

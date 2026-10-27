@@ -154,7 +154,7 @@
     "ELB1905": "Elberfelder Bibel 1905",
     "RV1909": "Reina-Valera 1909"
   },
-  "occupation": {"description":"{{name}}: Menschen in der Bibel und die Verse, die ihre Tätigkeit oder Rolle nennen."},
+  "occupation": {"description":"{{name}}: Menschen in der Bibel und die Verse, die ihre Tätigkeit oder Rolle nennen.","heavenlyRole":"Himmlische Rolle"},
   "page": {
     "occupations": {"title":"Berufe und Rollen","description":"Handwerke, Ämter und Rollen der Menschen in der Bibel mit den Versen, die sie nennen."},
     "texts": {

@@ -22,7 +22,7 @@ internal sealed record PersonOccupationsResponse(string PersonSlug, int Total, I
 
 internal static class OccupationEndpoints
 {
-    private static readonly string[] Categories = ["trade", "office", "military_role", "religious_role"];
+    private static readonly string[] Categories = ["trade", "office", "military_role", "religious_role", "heavenly_role"];
     private const int MostPerPage = 100;
 
     public static void MapOccupations(this IEndpointRouteBuilder routes)

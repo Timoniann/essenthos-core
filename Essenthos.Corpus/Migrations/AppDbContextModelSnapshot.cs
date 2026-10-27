@@ -2976,7 +2976,7 @@ namespace Essenthos.Core.Migrations
 
                     b.ToTable("occupation", null, t =>
                         {
-                            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role')");
+                            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role', 'heavenly_role')");
                         });
                 });
 
