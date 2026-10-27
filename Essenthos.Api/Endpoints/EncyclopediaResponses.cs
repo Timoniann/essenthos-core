@@ -649,7 +649,20 @@ internal record EntityReferenceResponse(
     bool Names,
     string Kind);
 
-internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResponse> Items);
+internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResponse> Items)
+{
+    /// <summary>
+    /// Every book the verses are in, with how many and the first, the most first and books with as many
+    /// in canonical order: counted from the same verses the pages list, and sent with the first page
+    /// only. Null on every other page.
+    /// </summary>
+    public IList<EntityReferenceBookResponse>? Books { get; init; }
+}
+
+/// <param name="Count">The verses of the book that name the record, each verse once.</param>
+/// <param name="Chapter">The chapter of the first of them, to open the book at.</param>
+/// <param name="Verse">The first of them.</param>
+internal record EntityReferenceBookResponse(BookRefResponse Book, int Count, int Chapter, int Verse);
 
 /// <summary>
 /// The places of one record's story: those of the <c>story</c> group first, then those of

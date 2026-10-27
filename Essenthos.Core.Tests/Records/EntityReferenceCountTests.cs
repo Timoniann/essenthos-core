@@ -73,6 +73,17 @@ public sealed class EntityReferenceCountTests : IDisposable
     }
 
     [Fact]
+    public async Task TheBooksCountEachVerseOnceTheBookWithMostFirst()
+    {
+        var books = await EncyclopediaEndpoints.ReferenceBooks(
+            _db.EntityVerses.Shown().Where(v => v.EntityId == _entity.Id), CancellationToken.None);
+
+        books.Select(b => (b.Book.Slug, b.Count, b.Chapter, b.Verse)).Should().Equal(
+            ("matthew", 2, 20, 30),
+            ("mark", 1, 1, 1));
+    }
+
+    [Fact]
     public async Task TheEntityListCountsTheSameWay()
     {
         var summary = await _db.Entities
