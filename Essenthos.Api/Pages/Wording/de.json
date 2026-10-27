@@ -154,7 +154,9 @@
     "ELB1905": "Elberfelder Bibel 1905",
     "RV1909": "Reina-Valera 1909"
   },
+  "occupation": {"description":"{{name}}: Menschen in der Bibel und die Verse, die ihre Tätigkeit oder Rolle nennen."},
   "page": {
+    "occupations": {"title":"Berufe und Rollen","description":"Handwerke, Ämter und Rollen der Menschen in der Bibel mit den Versen, die sie nennen."},
     "texts": {
       "title": "Bibeltexte und Übersetzungen",
       "description": "Jede Bibel hier — der hebräische und griechische Text, die alten Übersetzungen und die neuen — und was jede von ihnen ist."

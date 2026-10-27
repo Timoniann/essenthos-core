@@ -29,6 +29,7 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
     private const string Records = "records-";
     private const string Events = "events";
     private const string Periods = "periods";
+    private const string Occupations = "occupations";
     private const string Lexicon = "lexicon-";
     private const string Extension = ".xml";
 
@@ -66,7 +67,7 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         }
 
         names.AddRange(RecordKinds.Keys.Select(kind => Records + kind));
-        names.AddRange([Events, Periods]);
+        names.AddRange([Events, Periods, Occupations]);
         names.AddRange(Lexicons.Keys.Select(lexicon => Lexicon + lexicon));
         return names;
     }
@@ -187,6 +188,13 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         {
             var slugs = await db.Events.OrderBy(e => e.Slug).Select(e => e.Slug).ToListAsync(cancellationToken);
             return [.. slugs.Select(slug => $"/events/{slug}")];
+        }
+
+        if (name == Occupations)
+        {
+            var slugs = await db.Occupations.Where(o => o.People.Any()).OrderBy(o => o.Slug)
+                .Select(o => o.Slug).ToListAsync(cancellationToken);
+            return [.. slugs.Select(slug => $"/occupations/{slug}")];
         }
 
         if (name == Periods)

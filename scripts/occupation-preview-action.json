@@ -1,0 +1,11 @@
+{
+  "kind": "action",
+  "name": "occupation-interface-preview",
+  "project": "essenthos-core",
+  "description": "Offline frozen source snapshot, reviewed occupation preview compilation and verification; no model calls or database access",
+  "command": "python ${root}/scripts/publish_occupation_preview.py ${mode}",
+  "params": [
+    {"type":"text","name":"root","default":".worktrees/occupations-publication","pattern":"^(\\.|\\.worktrees/[A-Za-z0-9_-]+)$","raw":false},
+    {"type":"enum","name":"mode","values":["snapshot","inspect","compile","verify"],"default":"verify"}
+  ]
+}
