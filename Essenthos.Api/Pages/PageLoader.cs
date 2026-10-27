@@ -93,6 +93,8 @@ internal sealed class PageLoader(
             PageKind.Chapter => await Chapter(address, wording, cancellationToken),
             PageKind.Verse => await Verse(address, wording, cancellationToken),
             PageKind.Record => await Record(address, wording, cancellationToken),
+            PageKind.OccupationCatalogue => await OccupationCatalogue(address, wording, cancellationToken),
+            PageKind.Occupation => await Occupation(address, wording, cancellationToken),
             PageKind.FamilyTree => await FamilyTree(address, wording, cancellationToken),
             PageKind.Event => await Event(address, wording, cancellationToken),
             PageKind.Period => await Period(address, wording, cancellationToken),
@@ -102,6 +104,26 @@ internal sealed class PageLoader(
             PageKind.Section => PageViews.Section(language, wording, address),
             _ => null,
         } ?? PageViews.NotFound(language, wording);
+    }
+
+    private async Task<PageContent> OccupationCatalogue(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    {
+        var catalogue = await OccupationEndpoints.Catalogue(db, address.Language.Corpus, address.Language.Corpus,
+            address.Query is { Length: > 120 } query ? query[..120] : address.Query, address.Category, address.Skip, 100, cancellationToken);
+        return PageViews.OccupationCatalogue(address.Language, wording, catalogue, address.Indexed);
+    }
+
+    private async Task<PageContent?> Occupation(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    {
+        var occupation = await OccupationEndpoints.Detail(db, address.Slug!, address.Language.Corpus,
+            address.Language.Corpus, take: 100, cancellationToken: cancellationToken);
+        if (occupation is null) return null;
+        var references = occupation.People.SelectMany(p => p.Verses).Distinct().ToList();
+        var labels = new Dictionary<VerseRefResponse, string>();
+        foreach (var reference in references)
+            labels[reference] = wording.Reference(await BookName(address.Language, wording, reference.BookOrdinal, cancellationToken),
+                reference.Chapter, reference.Verse);
+        return PageViews.Occupation(address.Language, wording, occupation, labels);
     }
 
     /// <summary>

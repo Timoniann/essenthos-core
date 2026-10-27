@@ -11,6 +11,8 @@ internal enum PageKind
     Chapter,
     Verse,
     Record,
+    OccupationCatalogue,
+    Occupation,
     FamilyTree,
     Event,
     Period,
@@ -43,6 +45,7 @@ internal static class PageSections
         new("lexicon", "/lexicon", Queries: ["q"]),
         new(Syntax, "/syntax", Queries: ["on", "feature", "word", "book"]),
         new(Encyclopedia, "/encyclopedia", Queries: ["q"]),
+        new("occupations", "/occupations", Queries: ["q", "category", "skip"]),
         new(FamilyTree, "/family-tree"),
         new("genealogyOfJesus", "/genealogies/jesus"),
         new("events", "/events"),
@@ -92,6 +95,10 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
 
     /// <summary>What was searched for, on a search page.</summary>
     public string? Query { get; init; }
+
+    public string? Category { get; init; }
+
+    public int Skip { get; init; }
 
     /// <summary>A reader's own page, or a list a query picked: a page to open and never one to index.</summary>
     public bool Private { get; init; }
@@ -171,6 +178,19 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
 
             case ["events", var slug]:
                 return new PageAddress(language, PageKind.Event, $"/events/{slug}") { Slug = slug };
+
+            case ["occupations"]:
+                query.TryGetValue("q", out var occupationQuery);
+                query.TryGetValue("category", out var category);
+                var skip = query.TryGetValue("skip", out var offset) && int.TryParse(offset, out var parsed) ? Math.Max(0, parsed) : 0;
+                return new PageAddress(language, PageKind.OccupationCatalogue, "/occupations")
+                {
+                    Query = occupationQuery, Category = category, Skip = skip,
+                    Private = !string.IsNullOrEmpty(occupationQuery) || !string.IsNullOrEmpty(category) || skip > 0,
+                };
+
+            case ["occupations", var slug]:
+                return new PageAddress(language, PageKind.Occupation, $"/occupations/{slug}") { Slug = slug };
 
             case ["periods", var slug]:
                 return new PageAddress(language, PageKind.Period, $"/periods/{slug}") { Slug = slug };
