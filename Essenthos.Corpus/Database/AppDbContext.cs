@@ -636,7 +636,7 @@ public class AppDbContext : DbContext
         });
 
         modelBuilder.Entity<Occupation>(entity => entity.ToTable("occupation", t =>
-            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role')")));
+            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role', 'heavenly_role')")));
         modelBuilder.Entity<OccupationLabel>(entity =>
         {
             entity.HasOne(l => l.Occupation).WithMany(o => o.Labels).HasForeignKey(l => l.OccupationId);

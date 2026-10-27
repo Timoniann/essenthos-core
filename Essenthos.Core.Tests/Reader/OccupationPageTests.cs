@@ -87,6 +87,24 @@ public sealed class OccupationPageTests : IDisposable
     }
 
     [Theory]
+    [InlineData("en", "Heavenly role")]
+    [InlineData("uk", "Небесна роль")]
+    [InlineData("de", "Himmlische Rolle")]
+    [InlineData("es", "Función celestial")]
+    public async Task HeavenlyCategoryIsClearlyMarkedBeforeClientScriptsRun(string locale, string marker)
+    {
+        var occupation = await _db.Occupations.SingleAsync(o => o.Slug == "physician");
+        occupation.Category = "heavenly_role";
+        await _db.SaveChangesAsync();
+        var wording = PageWording.Compiled(locale);
+        var language = SiteLanguage.All.Single(l => l.Code == locale);
+        var catalogue = await Loader().Load(PageAddress.Parse(language.Path("/occupations")), wording, default);
+        WebUtility.HtmlDecode(catalogue.Body).Should().Contain(marker);
+        var page = await Loader().Load(PageAddress.Parse(language.Path("/occupations/physician")), wording, default);
+        WebUtility.HtmlDecode(page.Body).Should().Contain(marker);
+    }
+
+    [Theory]
     [InlineData("q", "Arzt")]
     [InlineData("category", "trade")]
     [InlineData("skip", "100")]

@@ -154,7 +154,7 @@
     "ELB1905": "Elberfelder Bible 1905",
     "RV1909": "Reina-Valera 1909"
   },
-  "occupation": {"description":"{{name}}: people in the Bible and the verses that name their occupation or role."},
+  "occupation": {"description":"{{name}}: people in the Bible and the verses that name their occupation or role.","heavenlyRole":"Heavenly role"},
   "page": {
     "occupations": {"title":"Occupations and roles","description":"Explore the trades, offices and roles of the people in the Bible, with the verses that name them."},
     "texts": {

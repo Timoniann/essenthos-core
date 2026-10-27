@@ -156,7 +156,7 @@
     "ELB1905": "Biblia de Elberfeld 1905",
     "RV1909": "Reina-Valera 1909"
   },
-  "occupation": {"description":"{{name}}: personas de la Biblia y los versículos que mencionan su oficio o función."},
+  "occupation": {"description":"{{name}}: personas de la Biblia y los versículos que mencionan su oficio o función.","heavenlyRole":"Función celestial"},
   "page": {
     "occupations": {"title":"Oficios y funciones","description":"Explora los oficios, cargos y funciones de las personas de la Biblia, con los versículos que los mencionan."},
     "texts": {

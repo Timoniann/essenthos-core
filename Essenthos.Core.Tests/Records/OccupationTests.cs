@@ -84,6 +84,21 @@ public sealed class OccupationTests : IDisposable
     }
 
     [Fact]
+    public async Task HeavenlyRolesRemainSeparateFromEarthlyOccupationsInPublicationAndQueries()
+    {
+        var file = Publication();
+        var heavenly = file.Occupations[0] with { Slug = "heavenly-high-priest", Category = "heavenly_role" };
+        await Load(file with { Occupations = [.. file.Occupations, heavenly],
+            Assertions = [.. file.Assertions, new("other", heavenly.Slug, [Witness()])] });
+        var heaven = await OccupationEndpoints.Catalogue(_db, category: "heavenly_role");
+        heaven.Items.Should().ContainSingle().Which.Category.Should().Be("heavenly_role");
+        heaven.Categories.Single(c => c.Category == "heavenly_role").PersonCount.Should().Be(1);
+        (await OccupationEndpoints.Catalogue(_db, category: "trade")).Items.Single().Slug.Should().Be("physician");
+        (await OccupationEndpoints.Person(_db, "other"))!.Items.Single().Occupation.Category.Should().Be("heavenly_role");
+        (await OccupationEndpoints.Person(_db, "luke"))!.Items.Should().OnlyContain(p => p.Occupation.Category == "trade");
+    }
+
+    [Fact]
     public async Task CategoryCountsCountOnePersonOnceAcrossSeveralOccupations()
     {
         var file = Publication();
@@ -259,6 +274,7 @@ public sealed class OccupationTests : IDisposable
             (await response.Content.ReadAsStringAsync()).Should().Contain("physician");
         }
         (await client.GetAsync("/v1/occupations?category=unknown")).StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        (await client.GetAsync("/v1/occupations?category=heavenly_role")).StatusCode.Should().Be(HttpStatusCode.OK);
         (await client.GetAsync("/v1/occupations?q=" + new string('x', 121))).StatusCode.Should().Be(HttpStatusCode.BadRequest);
         (await client.GetAsync("/v1/entities/missing/occupations")).StatusCode.Should().Be(HttpStatusCode.NotFound);
         await app.StopAsync();
