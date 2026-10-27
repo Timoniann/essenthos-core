@@ -261,6 +261,10 @@ public class AppDbContext : DbContext
 
     /// <summary>What a person is known for, clause by clause, each with the verses that say it.</summary>
     public DbSet<PersonPresence> PersonPresences { get; set; } = null!;
+    public DbSet<Occupation> Occupations { get; set; } = null!;
+    public DbSet<OccupationLabel> OccupationLabels { get; set; } = null!;
+    public DbSet<PersonOccupation> PersonOccupations { get; set; } = null!;
+    public DbSet<OccupationWitness> OccupationWitnesses { get; set; } = null!;
 
     public DbSet<EntityKnownFor> EntityKnownFor { get; set; } = null!;
 
@@ -628,6 +632,28 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint("ck_person_presence_category", "category IN ('present', 'buried')");
                 t.HasCheckConstraint("ck_person_presence_evidence", "cardinality(addresses) > 0 AND jsonb_typeof(evidence) = 'array' AND jsonb_array_length(evidence) > 0");
                 t.HasCheckConstraint("ck_person_presence_source", "length(btrim(source)) > 0");
+            });
+        });
+
+        modelBuilder.Entity<Occupation>(entity => entity.ToTable("occupation", t =>
+            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role')")));
+        modelBuilder.Entity<OccupationLabel>(entity =>
+        {
+            entity.HasOne(l => l.Occupation).WithMany(o => o.Labels).HasForeignKey(l => l.OccupationId);
+            entity.ToTable("occupation_label", t => t.HasCheckConstraint("ck_occupation_label_language", "language IN ('eng', 'ukr', 'deu', 'spa')"));
+        });
+        modelBuilder.Entity<PersonOccupation>(entity =>
+        {
+            entity.HasOne(p => p.Person).WithMany().HasForeignKey(p => p.PersonId);
+            entity.HasOne(p => p.Occupation).WithMany(o => o.People).HasForeignKey(p => p.OccupationId);
+        });
+        modelBuilder.Entity<OccupationWitness>(entity =>
+        {
+            entity.HasOne(w => w.PersonOccupation).WithMany(p => p.Witnesses).HasForeignKey(w => w.PersonOccupationId);
+            entity.ToTable("occupation_witness", t =>
+            {
+                t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity')");
+                t.HasCheckConstraint("ck_occupation_witness_address", "canonical_book BETWEEN 1 AND 93 AND canonical_chapter > 0 AND canonical_verse >= 0");
             });
         });
 

@@ -2945,6 +2945,160 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.Occupation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("category");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.HasKey("Id")
+                        .HasName("pk_occupation");
+
+                    b.HasIndex("Category")
+                        .HasDatabaseName("ix_occupation_category");
+
+                    b.HasIndex("Slug")
+                        .IsUnique()
+                        .HasDatabaseName("ix_occupation_slug");
+
+                    b.ToTable("occupation", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role')");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.OccupationLabel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Feminine")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("feminine");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.Property<string>("Masculine")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("masculine");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<int>("OccupationId")
+                        .HasColumnType("integer")
+                        .HasColumnName("occupation_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_occupation_label");
+
+                    b.HasIndex("OccupationId", "Language")
+                        .IsUnique()
+                        .HasDatabaseName("ix_occupation_label_occupation_id_language");
+
+                    b.ToTable("occupation_label", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_occupation_label_language", "language IN ('eng', 'ukr', 'deu', 'spa')");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.OccupationWitness", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<int>("CanonicalVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_verse");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("kind");
+
+                    b.Property<int>("PersonOccupationId")
+                        .HasColumnType("integer")
+                        .HasColumnName("person_occupation_id");
+
+                    b.Property<string>("Quote")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("quote");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("reference");
+
+                    b.Property<string>("SourceSha256")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source_sha256");
+
+                    b.Property<string>("SourceText")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source_text");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("text");
+
+                    b.HasKey("Id")
+                        .HasName("pk_occupation_witness");
+
+                    b.HasIndex("PersonOccupationId")
+                        .HasDatabaseName("ix_occupation_witness_person_occupation_id");
+
+                    b.ToTable("occupation_witness", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_occupation_witness_address", "canonical_book BETWEEN 1 AND 93 AND canonical_chapter > 0 AND canonical_verse >= 0");
+
+                            t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity')");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
                 {
                     b.Property<int>("Id")
@@ -3196,6 +3350,51 @@ namespace Essenthos.Core.Migrations
                         .HasDatabaseName("ix_period_definition_region");
 
                     b.ToTable("period_definition", (string)null);
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonOccupation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OccupationId")
+                        .HasColumnType("integer")
+                        .HasColumnName("occupation_id");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer")
+                        .HasColumnName("person_id");
+
+                    b.Property<string>("Provenance")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("provenance");
+
+                    b.Property<string>("PublicationId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("publication_id");
+
+                    b.Property<string>("PublicationSha256")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("publication_sha256");
+
+                    b.HasKey("Id")
+                        .HasName("pk_person_occupation");
+
+                    b.HasIndex("OccupationId")
+                        .HasDatabaseName("ix_person_occupation_occupation_id");
+
+                    b.HasIndex("PersonId", "OccupationId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_person_occupation_person_id_occupation_id");
+
+                    b.ToTable("person_occupation", (string)null);
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonPresence", b =>
@@ -6352,6 +6551,30 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Entity");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.OccupationLabel", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Occupation", "Occupation")
+                        .WithMany("Labels")
+                        .HasForeignKey("OccupationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_occupation_label_occupation_occupation_id");
+
+                    b.Navigation("Occupation");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.OccupationWitness", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.PersonOccupation", "PersonOccupation")
+                        .WithMany("Witnesses")
+                        .HasForeignKey("PersonOccupationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_occupation_witness_person_occupations_person_occupation_id");
+
+                    b.Navigation("PersonOccupation");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Event", "EndEvent")
@@ -6393,6 +6616,27 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_period_definition_period_authority_authority_id");
 
                     b.Navigation("Authority");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonOccupation", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Occupation", "Occupation")
+                        .WithMany("People")
+                        .HasForeignKey("OccupationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_person_occupation_occupation_occupation_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_person_occupation_entity_person_id");
+
+                    b.Navigation("Occupation");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonPresence", b =>
@@ -7102,9 +7346,21 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Words");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.Occupation", b =>
+                {
+                    b.Navigation("Labels");
+
+                    b.Navigation("People");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PeriodAuthority", b =>
                 {
                     b.Navigation("Periods");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonOccupation", b =>
+                {
+                    b.Navigation("Witnesses");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.RulerVerdict", b =>

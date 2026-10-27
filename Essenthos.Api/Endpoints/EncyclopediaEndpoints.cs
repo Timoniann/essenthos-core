@@ -443,5 +443,6 @@ internal static partial class EncyclopediaEndpoints
         MapStoryPlaces(routes);
         MapEvents(routes);
         MapChronology(routes);
+        routes.MapOccupations();
     }
 }

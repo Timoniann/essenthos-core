@@ -13,6 +13,20 @@ namespace Essenthos.Core.Verbs;
 /// </summary>
 internal static partial class ForgeVerbs
 {
+    private static async Task<int> OccupationPreviewSeed(ForgeRun forge, string[] args)
+    {
+        OccupationPreview.Guard(forge.DatabaseConnection);
+        using var scope = forge.Scope();
+        await OccupationPreview.Seed(scope.ServiceProvider.GetRequiredService<AppDbContext>(), args[1], args[2], args[3]);
+        Console.WriteLine("Reviewed occupation preview seeded on isolated test server.");
+        return 0;
+    }
+    private static async Task<int> Occupations(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OccupationLoader>().Load(args[1], args[2]));
+        return 0;
+    }
     /// <summary>Apply only admitted person-presence findings to an already loaded encyclopedia.</summary>
     private static async Task<int> PersonPresence(ForgeRun forge, string[] args)
     {

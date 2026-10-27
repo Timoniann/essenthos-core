@@ -196,6 +196,7 @@ builder.Services.AddScoped<DistinguisherLoader>();
 builder.Services.AddScoped<NoteTranslationLoader>();
 builder.Services.AddScoped<KnownForLoader>();
 builder.Services.AddScoped<PersonPresenceLoader>();
+builder.Services.AddScoped<OccupationLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddSingleton(_ => ReviewLists.Read(builder.Configuration));
 builder.Services.AddScoped<MisfiledVerseLoader>();
