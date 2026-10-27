@@ -218,6 +218,44 @@ public sealed class VerseMarkTests : IDisposable
             .BeEquivalentTo([god.Id, _db.WordAt(hebrew, 1, 1, 3).Id]);
     }
 
+    /// <summary>
+    /// A list of where a Strong number stands quotes each verse in the reader's text: the word marked
+    /// there is the one rendering the original word that carries the number, found by its link and
+    /// not by its spelling — <em>God</em> twice in a verse with one of them linked marks only that one.
+    /// </summary>
+    [Fact]
+    public async Task MarksTheWordRenderingAStrongNumberWhereTheListAsksForIt()
+    {
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
+        var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng",
+            (1, 1, ["In", "beginning", "God", "created", "God's", "world"]));
+        _db.SaveChanges();
+        _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
+        var link = new Link
+        {
+            FromTextId = english.Id, ToTextId = hebrew.Id, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StrongNumber, Confidence = 0.9, Provenance = new() { Source = "a test" },
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 3), Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 3), Side = LinkSide.To });
+        _db.SaveChanges();
+        var key = VerseEndpoints.Address.BookStride + VerseEndpoints.Address.ChapterStride + 1;
+
+        var quoted = (await VerseEndpoints.Read(_db, english.Id, [key], null, default, "H430")).Should().ContainSingle().Subject;
+        quoted.Marks.Should().Equal(new VerseMarkResponse(13, 16));
+        quoted.Text[13..16].Should().Be("God");
+
+        var own = (await VerseEndpoints.Read(_db, hebrew.Id, [key], null, default, "H430")).Should().ContainSingle().Subject;
+        own.Marks.Should().ContainSingle();
+        own.Text[own.Marks![0].Start..own.Marks[0].End].Should().Be("אֱלֹהִים");
+
+        (await VerseEndpoints.Read(_db, english.Id, [key], null, default, "H7225")).Should().ContainSingle()
+            .Which.Marks.Should().BeEmpty();
+        (await VerseEndpoints.Read(_db, english.Id, [key], null, default)).Should().ContainSingle()
+            .Which.Marks.Should().BeNull();
+    }
+
     [Fact]
     public void SendsMarksOnlyWhereTheyWereAskedFor()
     {
