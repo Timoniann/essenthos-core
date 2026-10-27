@@ -14,7 +14,7 @@ Each finding requires source-bound exact quotations, identity evidence, a focus-
 
 ## Operations
 
-Use registered avioniq actions/services from the control folder. The managed service `person-occupations-sonnet55` executes the exact frozen code snapshot, not a mutable worktree. Its stop hook writes a stop request and cancels unfinished provider batches. `person-occupations` provides prepare/pilot/report/cancel operations; do not run a second paid controller alongside the managed service.
+Use registered avioniq actions/services from the control folder. The managed service `person-occupations-sonnet55` executes the exact frozen code snapshot, not a mutable worktree. Its stop hook writes a stop request and cancels unfinished provider batches. `person-occupations` provides pilot/report/cancel operations against that snapshot; do not run a second paid controller alongside the managed service. Preparation is already frozen; a changed future run requires its own explicitly prepared version.
 
 The shared main `scripts/claude_api.py` supplies the owner's key and usage ledger. Actual model must equal `claude-sonnet-5-5`; no subscription, model fallback or automatic SDK retries. Separate `person-occupations-TSK-1250-draft` and `-check` labels share one $100 cap. Drafts have a $70 subcap to preserve verifier budget. Pilot is capped at $10 within the same total. One provider batch is active at a time; reservation uses a conservative input/output upper bound before submitting. Unknown cost, unknown request outcome, changed source/code or exhausted retries fail closed.
 
