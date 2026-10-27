@@ -14,7 +14,7 @@ import unicodedata
 from pathlib import Path
 
 MAIN=Path('C:/Users/timon/Projects/Essenthos/essenthos-core')
-OUT=MAIN/'Resources/Essenthos/generation/person-occupations-sonnet55-2026-10-27-v1'
+OUT=MAIN/'Resources/Essenthos/generation/person-occupations-sonnet55-2026-10-27-v2'
 MODEL='claude-sonnet-5-5'
 LABEL='person-occupations-TSK-1250'
 CAP=100.0
@@ -34,6 +34,8 @@ or being a recipient is not automatically a profession. Do not infer author/scri
 a letter once or its book title. Named actual writers need explicit identity verses, not hints.
 Keep a job left behind as a sourced past role, not a lifetime/current claim. Plans, commands and
 future promises alone do not establish a held role. A negated role is not a positive profession.
+Use past only if the passage explicitly establishes that the occupation ceased. A description
+of earlier work followed by a calling does not itself prove the trade ended; use unspecified.
 
 Read the supplied BHSA for OT and NESTLE1904 for NT when available; compare the actual noun and
 subject against translations. Quote the original for every supported finding when provided.
@@ -44,8 +46,12 @@ and professional-prophet nuances: retain differences, not a false global 'never 
 Literal trades and held secular/religious offices can count, including women's trades and former
 roles. A prophet, apostle, priest, ruler, soldier or steward is a role in its proper category,
 not necessarily a paid modern profession. An office already held in metadata still needs textual
-proof here; do not drop a trade merely because the person also held an office. Metaphorical
-shepherd/king for God, parable characters, generic groups and spiritual slavery are not human
+proof here; do not drop a trade merely because the person also held an office.
+An entrusted duty, including holding a group's money bag, does not by itself establish an office
+or a professional appointment. Preserve such a duty in not_occupations, not office. Do not upgrade
+one repeated task to a title merely to fit the four finding categories. The Greek tekton is a
+craftsman; preserve its breadth instead of requiring a wood-specific carpenter trade.
+Metaphorical shepherd/king for God, parable characters, generic groups and spiritual slavery are not human
 jobs. Moral labels such as Judas 'a thief', social status, kinship, epithets and one-off deeds
 belong in not_occupations, not trade. A literal label overlapping trade and epithet (harlot,
 sorcerer) can remain needs_review; the owner has not decided its display policy.
@@ -56,7 +62,10 @@ Copy actual edition verse keys, Hebrew/Greek letters and marks. Unicode NFC equi
 is allowed, no mark stripping, paraphrases, joined snippets or ellipses. Cite the whole essential
 identity/context bridge. Source_term may be null if it cannot be copied exactly. Labels are
 concise English and Ukrainian; role_key is a reusable lowercase ASCII hyphenated concept, never
-a person's name. Keep genuine identity/vocation/text ambiguity in needs_review. Return Ukrainian
+a person's name. In attribution_uk state WHO attributes the role (narrator, self-description,
+named speaker, opponents or crowd); preserve questions and accusations as such rather than
+silently turning quoted speech into a narrator's categorical statement.
+Keep genuine identity/vocation/text ambiguity in needs_review. Return Ukrainian
 reasons. These are model readings for review, never human acceptance or live data admission.'''
 CHECK_SYSTEM=SYSTEM+'''
 You are an independent verifier. Proposed draft facts are hypotheses, not evidence. Decide every
@@ -72,6 +81,7 @@ F={'type':'object','additionalProperties':False,'properties':{
     'category':{'type':'string','enum':['trade','office','military_role','religious_role']},
     'role_key':{'type':'string'},'label_en':{'type':'string'},'label_uk':{'type':'string'},
     'source_term':{'type':['string','null']},
+    'attribution_uk':{'type':'string'},
     'basis':{'type':'string','enum':['explicit','context_identity']},
     'time_scope':{'type':'string','enum':['unspecified','past','present_in_passage']},
     'evidence':{'type':'array','items':Q,'minItems':1},'identity_evidence':{'type':'array','items':Q,'minItems':1},
@@ -135,7 +145,7 @@ def finding_errors(finding,packet):
     for field in ('category','basis','time_scope'):
         if finding[field] not in F['properties'][field]['enum']:errors.append('invalid '+field)
     if not re.fullmatch('[a-z][a-z0-9-]{1,63}',finding['role_key']):errors.append('invalid role_key')
-    for field in ('label_en','label_uk','reason_uk'):
+    for field in ('label_en','label_uk','attribution_uk','reason_uk'):
         if not isinstance(finding[field],str) or not finding[field].strip():errors.append('missing '+field)
     errors+=quotes_ok(finding['evidence'],packet)+quotes_ok(finding['identity_evidence'],packet)
     evidence=finding['evidence']
@@ -194,13 +204,13 @@ def model_packet(job):
     return {'job_id':job['job_id'],'persons':[{k:p.get(k) for k in ('slug','name','identity_hint','aliasOf')} for p in job['persons']],
         'focus_keys':job['focus_keys'],
         'verses':[{k:v[k] for k in ('key','body','canonical','canonicalAddresses','role') if k in v} for v in job['verses']],
-        'source_metadata':{k:job['source_metadata'].get(k) for k in ('primary_text','printed_focus','canonical_focus_chapters','identity_hint_is_not_authorship_proof')}}
+        'source_metadata':{k:job['source_metadata'].get(k) for k in ('primary_text','printed_focus','canonical_focus_chapters','identity_hint_is_not_authorship_proof','identity_bridges')}}
 
 
 def prepare():
     source=read(OUT/'source-manifest.json');policy=read(OUT/'occupation-policy.json');pilot=read(OUT/'pilot-cases.json')
-    assert sha(OUT/'source-manifest.json')=='d849a4717193d68800bb62805e58245ddb1b187024a82b072eece52b5f0f1af5'
-    assert sha(OUT/'jobs.jsonl')=='b608eaaeddd2c943d5345848c0b96c770d0ecde64c4717914fd05ed1e07515d7'
+    assert sha(OUT/'source-manifest.json')=='1a1fa99342bf811cd238d65afece125cc15095f4e565bdad17dd4eb966e121d0'
+    assert sha(OUT/'jobs.jsonl')=='0cb172d19bb57c6c35bbd76e0f116c6c343563bdca898e5cc5e9fbc01c8a52d8'
     jobs=[json.loads(line) for line in (OUT/'jobs.jsonl').read_text(encoding='utf-8').splitlines() if line.strip()]
     persons=read(OUT/'persons.json')
     if isinstance(persons,dict):persons=persons['persons']
@@ -485,6 +495,10 @@ def report():
         'draft_findings':draft_findings,'checked_findings':sum(len(p['findings']) for p in result.values()),
         'occupation_groups':sum(len(p['occupations']) for p in result.values()),
         'human_accepted':False,'live_corpus_changed':False}
+    status['pilot_jobs']=len(m['pilot_jobs'])
+    status['pilot_draft_complete']=sum(phase_path('draft','checked',j['job_id']).exists() for j in m['pilot_jobs'])
+    status['pilot_check_complete']=sum(phase_path('check','checked',j['job_id']).exists() for j in m['pilot_jobs'])
+    status['budget_scope']='Includes v1 pilot, v2 pilot, all drafts, checks and retries under shared task labels'
     dump(OUT/'results.json',{'summary':status,'persons':list(result.values())});dump(OUT/'status.json',status)
     print(json.dumps(status),flush=True)
 

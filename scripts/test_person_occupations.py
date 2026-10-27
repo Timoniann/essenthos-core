@@ -17,6 +17,7 @@ class OccupationTests(unittest.TestCase):
 
     def finding(self):
         return {'category':'trade','role_key':'physician','label_en':'physician','label_uk':'лікар',
+            'attribution_uk':'Автор листа називає Луку лікарем.',
             'source_term':'ἰατρὸς','basis':'explicit','time_scope':'present_in_passage',
             'evidence':[{'verse':'KJV:51:4:14','quote':'Luke, the beloved physician'},
                 {'verse':'NESTLE1904:51:4:14','quote':'Λουκᾶς ὁ ἰατρὸς'}],
@@ -87,6 +88,10 @@ class OccupationTests(unittest.TestCase):
     def test_profession_key_is_normalized(self):
         finding=self.finding();finding['role_key']='A Physician!'
         self.assertIn('invalid role_key',p.finding_errors(finding,self.packet()))
+
+    def test_speaker_attribution_cannot_be_omitted(self):
+        finding=self.finding();finding['attribution_uk']=''
+        self.assertIn('missing attribution_uk',p.finding_errors(finding,self.packet()))
 
     def test_check_covers_each_actual_draft_fact_once(self):
         packet=self.packet();packet['draft_facts']=p.facts_from_draft(self.answer())

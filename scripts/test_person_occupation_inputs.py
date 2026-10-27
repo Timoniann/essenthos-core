@@ -87,5 +87,50 @@ class CurrentIndexTests(unittest.TestCase):
         self.assertEqual(result['added_reference_sources'],{'new':1})
 
 
+class RenameBridgeTests(unittest.TestCase):
+    def setUp(self):
+        self.keys = [edition+':44:13:9' for edition in ('KJV','BSB','NESTLE1904')]
+        self.sources = {name:dict(text=name.split(':')[0],body='Saul who is also called Paul',
+            canonical=[44,13,9],canonicalAddresses=[[44,13,9]]) for name in self.keys}
+        self.addresses = {(44,13,9):self.keys}
+        self.packet = dict(persons=[dict(slug='saul-2')],verses=[],focus_keys=[],source_metadata={})
+
+    def test_all_held_languages_are_identity_only(self):
+        result=packets.add_identity_bridges(self.packet,self.sources,self.addresses)
+        self.assertEqual(set(self.keys),{v['key'] for v in result['verses']})
+        self.assertTrue(all(v['role']=='identity' for v in result['verses']))
+        self.assertEqual([],result['focus_keys'])
+        self.assertTrue(packets.validate_identity_bridges([result]))
+
+    def test_missing_required_witness_fails_closed(self):
+        self.addresses[(44,13,9)]=self.keys[:2]
+        with self.assertRaisesRegex(ValueError,'Required identity witness missing'):
+            packets.add_identity_bridges(self.packet,self.sources,self.addresses)
+
+    def test_existing_event_is_not_demoted(self):
+        self.packet['focus_keys']=self.keys[:1]
+        self.packet['verses']=[dict(key=self.keys[0],**self.sources[self.keys[0]],role='event')]
+        result=packets.add_identity_bridges(self.packet,self.sources,self.addresses)
+        self.assertEqual('event',result['verses'][0]['role'])
+        self.assertTrue(packets.validate_identity_bridges([result]))
+
+    def test_existing_context_becomes_identity_without_duplicate(self):
+        self.packet['verses']=[dict(key=self.keys[0],**self.sources[self.keys[0]],role='context')]
+        result=packets.add_identity_bridges(self.packet,self.sources,self.addresses)
+        self.assertEqual(3,len(result['verses']))
+        self.assertTrue(all(v['role']=='identity' for v in result['verses']))
+
+    def test_bridge_may_not_be_promoted_outside_focus(self):
+        result=packets.add_identity_bridges(self.packet,self.sources,self.addresses)
+        result['verses'][0]['role']='event'
+        with self.assertRaisesRegex(ValueError,'outside focus'):
+            packets.validate_identity_bridges([result])
+
+    def test_unlisted_person_does_not_inherit_a_bridge(self):
+        self.packet['persons']=[dict(slug='saul')]
+        result=packets.add_identity_bridges(self.packet,self.sources,self.addresses)
+        self.assertEqual([],result['verses'])
+
+
 if __name__ == '__main__':
     unittest.main()

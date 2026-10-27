@@ -4,11 +4,13 @@ The owner authorized preparing and launching Sonnet 5.5 readings for all current
 
 ## Frozen run
 
-`Resources/Essenthos/generation/person-occupations-sonnet55-2026-10-27-v1` contains the immutable current person/index export, source packets, policy, held-out pilot cases, code snapshots, request/response evidence and checkpoints. There are 3,176 persons, 27,821 indexed references and 1,393 jobs; 85 persons without indexed references remain explicit incomplete-source cases. This is all indexed references, not a claim that every unindexed textual mention has been discovered.
+`Resources/Essenthos/generation/person-occupations-sonnet55-2026-10-27-v2` contains the immutable current person/index export, source packets, policy, held-out pilot cases, code snapshots, request/response evidence and checkpoints. There are 3,176 persons, 27,821 indexed references and 1,393 jobs; 85 persons without indexed references remain explicit incomplete-source cases. This is all indexed references, not a claim that every unindexed textual mention has been discovered.
+
+The preserved v1 pilot cost $1.696009 and did not launch the full queue: semantic review found a missing Saul/Paul identity bridge and a money-bag duty promoted to an office. V2 reuses the exact frozen current index without another live query and adds exact held name-equivalence witnesses for seven records as identity-only context. A bridge never establishes a profession outside focus. Duties remain separate from offices; past work requires explicit cessation before it is labelled past. Findings also preserve speaker attribution. V1 and v2 share the same budget labels and $100 total; changing the version does not reset spending.
 
 The source export includes BHSA OT, NESTLE1904 NT, BSB and primary reading context, with secondary canonical mappings and copied license notices. Existing name/role/author metadata is not profession evidence. Expected pilot answers never go into model prompts. Literal trades, offices, military and religious roles are distinct. Moral labels, status, one-off acts and metaphors remain excluded or review observations. The pending owner question about moral designations in the person line is not answered by this run.
 
-Each finding requires source-bound exact quotations, identity evidence, a focus-chapter profession witness and an original-language witness when supplied. NFC equivalence is allowed; stripping marks, paraphrases and invented quotations are rejected. Positive drafts receive a second independent model reading. Empty drafts bypass a paid positive-fact verifier; absence of a finding is not proof of no profession.
+Each finding requires source-bound exact quotations, identity evidence, a focus-chapter profession witness, speaker attribution and an original-language witness when supplied. NFC equivalence is allowed; stripping marks, paraphrases and invented quotations are rejected. Positive drafts receive a second independent model reading. Empty drafts bypass a paid positive-fact verifier; absence of a finding is not proof of no profession.
 
 ## Operations
 
