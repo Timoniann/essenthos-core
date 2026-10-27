@@ -2,6 +2,7 @@ using System.Globalization;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Strong;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,9 @@ internal record VerseTextResponse(BookRefResponse Book, int Chapter, int Verse, 
     public string? Label { get; init; }
 
     /// <summary>
-    /// Where the verse names the entity the request asked about, in order and never overlapping.
-    /// Null when no entity was asked about; empty where this text names it nowhere in the verse, or
-    /// carries no word-level annotation to say so.
+    /// Where the verse names the entity the request asked about, or has the word of the Strong number
+    /// it asked about, in order and never overlapping. Null when neither was asked about; empty where
+    /// this text has nothing to mark in the verse, or carries no word-level annotation or link to say so.
     /// </summary>
     public IList<VerseMarkResponse>? Marks { get; init; }
 
@@ -85,6 +86,7 @@ internal static class VerseEndpoints
             [FromQuery] string? corpus,
             [FromQuery] string? refs,
             [FromQuery] string? entity,
+            [FromQuery] string? strong,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -151,8 +153,19 @@ internal static class VerseEndpoints
                 }
             }
 
+            string? number = null;
+            if (strong is { Length: > 0 } && named is null)
+            {
+                number = StrongNumbers.Normalize(strong);
+                if (number is null)
+                {
+                    return Results.BadRequest(new ProblemResponse(
+                        $"\"{strong}\" is not a Strong number. Write a language letter and digits, as H430 or G26."));
+                }
+            }
+
             var keys = wanted.Select(address => address.Key).Distinct().ToList();
-            var found = await Read(db, text.Id, keys, named, cancellationToken);
+            var found = await Read(db, text.Id, keys, named, cancellationToken, number);
 
             var answered = found
                 .Select(verse => (verse.Book.Ordinal * Address.BookStride)
@@ -182,13 +195,19 @@ internal static class VerseEndpoints
     /// it; a verse that merely runs on into the address answers only where nothing is placed there.
     /// Otherwise a text that joins two verses into one would print the joined verse twice over.
     /// </para>
+    ///
+    /// <para>
+    /// With a Strong number and no entity, the words marked are those that carry the number or render
+    /// a word that does, by the links alone: a list of where a word stands shows it in each verse.
+    /// </para>
     /// </summary>
     internal static async Task<List<VerseTextResponse>> Read(
         AppDbContext db,
         int textId,
         IReadOnlyCollection<int> keys,
         string? named,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? strong = null)
     {
         // The book narrows the match to what the placement index can find; the packed number then
         // picks the addresses out of those books, on the same arithmetic the encyclopedia orders by.
@@ -243,10 +262,14 @@ internal static class VerseEndpoints
 
         var stated = await StatedNumbers(db, verseIds, cancellationToken);
 
-        var naming = named is null
-            ? []
-            : await Naming(db, words.Values.SelectMany(list => list.Select(word => word.Id)), named, cancellationToken);
+        var wordIds = words.Values.SelectMany(list => list.Select(word => word.Id)).ToList();
+        var naming = named is not null
+            ? await Naming(db, wordIds, named, cancellationToken)
+            : strong is not null
+                ? await Numbered(db, wordIds, [strong], cancellationToken)
+                : [];
         var spellings = named is null ? [] : await Spellings(db, textId, named, cancellationToken);
+        var marking = named is not null || strong is not null;
 
         return chosen
             .GroupBy(place => new { place.Key, place.CanonicalBook, place.CanonicalChapter, place.CanonicalVerse })
@@ -283,7 +306,7 @@ internal static class VerseEndpoints
                     string.Concat(joined.Select(word => word.Surface + word.Trailer)).Trim())
                 {
                     Label = label,
-                    Marks = named is null
+                    Marks = !marking
                         ? null
                         : Marks(Spelled(
                             [.. joined.Select(word => new MarkedWord(word.Surface, word.Trailer, naming.Contains(word.Id)))],
@@ -453,15 +476,25 @@ internal static class VerseEndpoints
             .Where(w => wordIds.Contains(w.Id) && w.StrongNumber != null && numbers.Contains(w.StrongNumber))
             .Select(w => w.Id)
             .ToListAsync(cancellationToken);
-        var rendering = await db.LinkWords
+
+        // In two reads rather than one correlated query: asked as one, the planner started from
+        // every word carrying a common number (G2316, H853) and took five seconds over a page.
+        var sides = await db.LinkWords
             .Where(side => wordIds.Contains(side.WordId)
-                           && (side.Link!.Relation == LinkRelation.Renders || side.Link.Relation == LinkRelation.Equals)
-                           && db.LinkWords.Any(other => other.LinkId == side.LinkId
-                                                        && other.Side != side.Side
-                                                        && other.Word!.StrongNumber != null
-                                                        && numbers.Contains(other.Word.StrongNumber)))
-            .Select(side => side.WordId)
+                           && (side.Link!.Relation == LinkRelation.Renders || side.Link.Relation == LinkRelation.Equals))
+            .Select(side => new { side.LinkId, side.WordId, side.Side })
             .ToListAsync(cancellationToken);
+        var linkIds = sides.Select(side => side.LinkId).Distinct().ToList();
+        var carrying = (await db.LinkWords
+                .Where(other => linkIds.Contains(other.LinkId)
+                                && other.Word!.StrongNumber != null
+                                && numbers.Contains(other.Word.StrongNumber))
+                .Select(other => new { other.LinkId, other.Side })
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+        var rendering = sides
+            .Where(side => carrying.Contains(new { side.LinkId, Side = side.Side == LinkSide.From ? LinkSide.To : LinkSide.From }))
+            .Select(side => side.WordId);
         return [.. own, .. rendering];
     }
 
