@@ -47,6 +47,8 @@ internal static partial class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
+            var books = Math.Max(0, skip ?? 0) == 0 ? await ReferenceBooks(references, cancellationToken) : null;
+
             var byAddress = namings
                 .GroupBy(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                               + v.CanonicalVerse)
@@ -70,7 +72,30 @@ internal static partial class EncyclopediaEndpoints
                             at.Any(v => v.Names),
                             ReferenceKinds.Of(at.Select(v => (v.Source, v.Names))));
                     }),
-                ]));
+                ])
+            {
+                Books = books,
+            });
         });
     }
+
+    /// <summary>
+    /// The books a record's verses are in, each verse once: how many and the first, the book with the
+    /// most first and books with as many in canonical order.
+    /// </summary>
+    internal static async Task<List<EntityReferenceBookResponse>> ReferenceBooks(
+        IQueryable<EntityVerse> references,
+        CancellationToken cancellationToken) =>
+        [
+            .. (await Addresses(references)
+                    .GroupBy(address => address / BookStride)
+                    .Select(g => new { Book = g.Key, Count = g.Count(), First = g.Min() })
+                    .ToListAsync(cancellationToken))
+                .OrderByDescending(book => book.Count).ThenBy(book => book.Book)
+                .Select(book => new EntityReferenceBookResponse(
+                    new BookRefResponse(book.Book, BookReferences.Name(book.Book), BookReferences.Slug(book.Book)),
+                    book.Count,
+                    book.First % BookStride / ChapterStride,
+                    book.First % ChapterStride)),
+        ];
 }

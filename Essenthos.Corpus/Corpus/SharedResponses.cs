@@ -448,6 +448,12 @@ internal record EntityRelationshipResponse(
     public string? LocalDistinguisher { get; init; }
 
     /// <summary>
+    /// The counterpart's line as its own page says it, in the language asked for: the words of its
+    /// descriptor, where it has one. Null where it has none, and the row says its distinguisher.
+    /// </summary>
+    public string? Line { get; init; }
+
+    /// <summary>
     /// Where the counterpart's name first stands in the cited verse, as the King James orders it, on a
     /// row whose verse another row of the page cites too: the order a list in one verse names them in.
     /// Null on every other row.

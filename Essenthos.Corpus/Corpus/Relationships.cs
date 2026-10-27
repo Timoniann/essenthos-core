@@ -112,23 +112,31 @@ internal static class Relationships
             .Select(r => r.Slug)
             .Distinct()
             .ToList();
+
+        // The verses first and the names in them after: starting from the names reads every word that
+        // names one of these people in every text before the King James's few are kept, which for
+        // Jesus's page is a hundred thousand rows.
+        var verses = (await db.Verses
+                .Where(v => v.Text!.Slug == OrderText
+                            && books.Contains(v.Book!.CanonicalOrdinal)
+                            && chapters.Contains(v.ChapterNumber)
+                            && numbers.Contains(v.Number))
+                .Select(v => new { v.Id, Book = v.Book!.CanonicalOrdinal, Chapter = v.ChapterNumber, Verse = v.Number })
+                .ToListAsync(cancellationToken))
+            .Where(v => shared.Contains((v.Book, v.Chapter, v.Verse)))
+            .ToDictionary(v => v.Id, v => (v.Book, v.Chapter, v.Verse));
+        if (verses.Count == 0)
+        {
+            return rows;
+        }
+
+        var ids = verses.Keys.ToList();
         var named = await db.WordEntities
-            .Where(n => slugs.Contains(n.Entity!.Slug)
-                        && n.Word!.Text!.Slug == OrderText
-                        && books.Contains(n.Word.Verse!.Book!.CanonicalOrdinal)
-                        && chapters.Contains(n.Word.Verse.ChapterNumber)
-                        && numbers.Contains(n.Word.Verse.Number))
-            .Select(n => new
-            {
-                n.Entity!.Slug,
-                Book = n.Word!.Verse!.Book!.CanonicalOrdinal,
-                Chapter = n.Word.Verse.ChapterNumber,
-                Verse = n.Word.Verse.Number,
-                n.Word.Position,
-            })
+            .Where(n => ids.Contains(n.Word!.VerseId) && slugs.Contains(n.Entity!.Slug))
+            .Select(n => new { n.Entity!.Slug, n.Word!.VerseId, n.Word.Position })
             .ToListAsync(cancellationToken);
         var first = named
-            .GroupBy(n => (n.Slug, n.Book, n.Chapter, n.Verse))
+            .GroupBy(n => (n.Slug, verses[n.VerseId].Book, verses[n.VerseId].Chapter, verses[n.VerseId].Verse))
             .ToDictionary(g => g.Key, g => g.Min(n => n.Position));
 
         return

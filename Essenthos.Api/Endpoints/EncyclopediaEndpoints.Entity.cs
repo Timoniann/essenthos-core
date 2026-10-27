@@ -239,12 +239,26 @@ internal static partial class EncyclopediaEndpoints
                 ],
                 words,
                 cancellationToken);
+
+            // The record's own line and the people's it is related to, in one reading, so a row says who
+            // each one is as their own page does, in the reader's language. A people's, a place's or a
+            // title's line is not read here: the sex of a name asks every word that names it, and the
+            // Israelites are named ninety thousand times.
+            var described = await Descriptors.Of(
+                db,
+                [entity.Slug, .. related.Where(r => r.Kind == EnumSpelling.Of(EntityKind.Person)).Select(r => r.Slug)],
+                words,
+                cancellationToken,
+                language);
             related =
             [
                 .. related.Select(r => r with
                 {
                     Distinguisher = OursOnlyRecords.Line(readByUs, r.Slug, r.Distinguisher),
                     LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, r.Slug),
+                    Line = described.GetValueOrDefault(r.Slug) is { } line
+                        ? string.Concat(line.Parts.Select(part => part.Text))
+                        : null,
                 }),
             ];
             alternatives =
@@ -306,8 +320,7 @@ internal static partial class EncyclopediaEndpoints
                 Forms = own.GetValueOrDefault(entity.Slug),
                 TribeRecord = await TribeRecord(
                     db, mine is null ? entity.Tribe : mine.Tribe, language, cancellationToken, entity.Slug),
-                Descriptor = await Descriptors.Of(
-                    db, entity.Slug, words, cancellationToken, language),
+                Descriptor = described.GetValueOrDefault(entity.Slug),
                 Location = entity.Location,
                 Locations = entity.Kind == EntityKind.Place
                     ? await Candidates(db, entity.Id, language, cancellationToken)

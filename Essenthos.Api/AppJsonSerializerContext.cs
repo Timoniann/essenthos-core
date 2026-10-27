@@ -223,6 +223,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(List<EntityRelationshipWitnessResponse>))]
 [JsonSerializable(typeof(EntityReferenceResponse))]
 [JsonSerializable(typeof(EntityReferenceListResponse))]
+[JsonSerializable(typeof(EntityReferenceBookResponse))]
+[JsonSerializable(typeof(IList<EntityReferenceBookResponse>))]
 [JsonSerializable(typeof(EntityPlacesResponse))]
 [JsonSerializable(typeof(EntityPlaceResponse))]
 [JsonSerializable(typeof(IList<EntityPlaceResponse>))]
