@@ -4582,10 +4582,6 @@ namespace Essenthos.Core.Migrations
                     b.HasKey("StrongNumber")
                         .HasName("pk_strong_profile");
 
-                    b.HasIndex("StrongNumber")
-                        .IsUnique()
-                        .HasDatabaseName("ix_strong_profile_strong_number");
-
                     b.ToTable("strong_profile", null, t =>
                         {
                             t.HasComment("A compiler's part of speech, gender, occurrence count and first verse for a Hebrew Strong entry. His analysis, not Strong's and not this corpus's: verify compares the count with BHSA's.");
@@ -5522,13 +5518,16 @@ namespace Essenthos.Core.Migrations
                     b.HasKey("Id")
                         .HasName("pk_verse_reference");
 
-                    b.HasIndex("VerseId")
+                    b.HasIndex("CanonicalBook", "CanonicalChapter", "CanonicalVerse")
+                        .HasDatabaseName("ix_verse_reference_canonical_book_canonical_chapter_canonical_");
+
+                    b.HasIndex(new[] { "VerseId" }, "ix_verse_reference_one_primary_per_verse")
                         .IsUnique()
                         .HasDatabaseName("ix_verse_reference_one_primary_per_verse")
                         .HasFilter("\"is_primary\"");
 
-                    b.HasIndex("CanonicalBook", "CanonicalChapter", "CanonicalVerse")
-                        .HasDatabaseName("ix_verse_reference_canonical_book_canonical_chapter_canonical_");
+                    b.HasIndex(new[] { "VerseId" }, "ix_verse_reference_verse_id")
+                        .HasDatabaseName("ix_verse_reference_verse_id");
 
                     b.ToTable("verse_reference", (string)null);
                 });
@@ -5605,11 +5604,9 @@ namespace Essenthos.Core.Migrations
 
                     NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("NormalisedText"), new[] { "Surface", "Lemma", "TextId" });
 
-                    b.HasIndex("StrongNumber")
-                        .HasDatabaseName("ix_word_strong_number");
-
                     b.HasIndex("TextId", "GraphicalText")
-                        .HasDatabaseName("ix_word_text_id_graphical_text");
+                        .HasDatabaseName("ix_word_text_id_graphical_text")
+                        .HasFilter("graphical_text IS NOT NULL");
 
                     b.HasIndex("TextId", "NormalisedText")
                         .HasDatabaseName("ix_word_text_id_normalised_text");
@@ -5665,9 +5662,6 @@ namespace Essenthos.Core.Migrations
                     b.HasIndex("EntityId")
                         .HasDatabaseName("ix_word_entity_entity_id");
 
-                    b.HasIndex("WordId")
-                        .HasDatabaseName("ix_word_entity_word_id");
-
                     b.HasIndex("WordId", "EntityId")
                         .IsUnique()
                         .HasDatabaseName("ix_word_entity_word_id_entity_id");
@@ -5717,9 +5711,6 @@ namespace Essenthos.Core.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_word_entity_claim");
-
-                    b.HasIndex("WordEntityId")
-                        .HasDatabaseName("ix_word_entity_claim_word_entity_id");
 
                     b.HasIndex("WordEntityId", "Method", "Source")
                         .IsUnique()
@@ -5855,9 +5846,6 @@ namespace Essenthos.Core.Migrations
                     b.HasKey("Id")
                         .HasName("pk_word_parsing");
 
-                    b.HasIndex("WordId")
-                        .HasDatabaseName("ix_word_parsing_word_id");
-
                     b.HasIndex("WordId", "Source")
                         .IsUnique()
                         .HasDatabaseName("ix_word_parsing_word_id_source");
@@ -5914,10 +5902,7 @@ namespace Essenthos.Core.Migrations
                         .HasName("pk_word_strong");
 
                     b.HasIndex("Number")
-                        .HasDatabaseName("ix_word_strong_number1");
-
-                    b.HasIndex("WordId")
-                        .HasDatabaseName("ix_word_strong_word_id");
+                        .HasDatabaseName("ix_word_strong_number");
 
                     b.HasIndex("WordId", "Number", "Method")
                         .IsUnique()

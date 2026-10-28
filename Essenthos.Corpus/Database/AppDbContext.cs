@@ -1175,6 +1175,12 @@ public class AppDbContext : DbContext
                 .HasDatabaseName("ix_word_normalised_text_lemmatised")
                 .HasFilter("lemma IS NOT NULL")
                 .IncludeProperties(w => new { w.Surface, w.Lemma, w.TextId });
+
+            // Only a word printed as several rows has a graphical text, about one in thirty, and a
+            // lookup by it always names one; the others would be dead weight in the index.
+            entity.HasIndex(w => new { w.TextId, w.GraphicalText })
+                .HasDatabaseName("ix_word_text_id_graphical_text")
+                .HasFilter("graphical_text IS NOT NULL");
         });
 
         modelBuilder.Entity<VerseReference>(entity =>
@@ -1187,10 +1193,16 @@ public class AppDbContext : DbContext
             // Exactly one primary placement per verse. The other invariant — that no two verses of
             // one text claim the same primary placement — spans a join and belongs to the
             // verification pass.
-            entity.HasIndex(r => r.VerseId)
+            entity.HasIndex(r => r.VerseId, "ix_verse_reference_one_primary_per_verse")
                 .IsUnique()
                 .HasFilter("\"is_primary\"")
                 .HasDatabaseName("ix_verse_reference_one_primary_per_verse");
+
+            // Every placement of a verse, primary or not. Deleting a verse cascades through it; the
+            // partial index above cannot answer that, and without this each deleted verse reads the
+            // whole table.
+            entity.HasIndex(r => r.VerseId, "ix_verse_reference_verse_id")
+                .HasDatabaseName("ix_verse_reference_verse_id");
         });
 
         modelBuilder.Entity<StatedVerseNumber>(entity =>
