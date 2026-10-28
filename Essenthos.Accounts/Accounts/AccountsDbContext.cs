@@ -73,6 +73,8 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             account.Property(a => a.About).HasMaxLength(Limits.About);
             account.Property(a => a.Locale).HasMaxLength(16);
             account.Property(a => a.ProviderPhotoUrl).HasMaxLength(1024);
+            account.Property(a => a.RecentBookmarkColors).HasDefaultValueSql("'{}'::text[]");
+            account.Property(a => a.OwnBookmarkColors).HasDefaultValueSql("'{}'::text[]");
             account.HasIndex(a => a.Revision);
             account.HasMany(a => a.Credentials).WithOne(c => c.Account).HasForeignKey(c => c.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -364,6 +366,12 @@ public static class Limits
 
     /// <summary>How many texts one account keeps as favourites: more than anyone moves between.</summary>
     public const int FavoriteTextsPerAccount = 200;
+
+    /// <summary>How many of the bookmark colours used last an account remembers: one row of swatches.</summary>
+    public const int RecentBookmarkColors = 8;
+
+    /// <summary>How many colours of their own an account keeps: a palette, not a colour store.</summary>
+    public const int OwnBookmarkColors = 24;
 
     /// <summary>A suggestion's main text: a long letter, not a manuscript.</summary>
     public const int SuggestionBody = 10_000;

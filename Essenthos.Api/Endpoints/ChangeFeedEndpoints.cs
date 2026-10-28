@@ -48,7 +48,8 @@ internal static class ChangeFeedEndpoints
         // revisions are one sequence, so merging them in order and cutting the page is exact.
         var profile = await db.Accounts.AsNoTracking()
             .Where(a => a.Id == account && a.Revision > since)
-            .Select(a => new ProfileChange(a.Revision, a.DisplayName, a.About, a.Locale, a.PhotoVersion))
+            .Select(a => new ProfileChange(
+                a.Revision, a.DisplayName, a.About, a.Locale, a.PhotoVersion, a.RecentBookmarkColors, a.OwnBookmarkColors))
             .FirstOrDefaultAsync(cancellationToken);
 
         var bookmarks = await db.Bookmarks.IgnoreQueryFilters().AsNoTracking()
@@ -130,7 +131,7 @@ internal static class ChangeFeedEndpoints
 
 /// <param name="Revision">The last revision in this answer, or the one asked about when nothing changed. Store it and send it next.</param>
 /// <param name="More">Whether the answer stopped at the page's limit and there are further changes to ask for from <paramref name="Revision"/>.</param>
-/// <param name="Profile">The account's own name, about line and language, when they changed.</param>
+/// <param name="Profile">The account's own name, about line, language and bookmark colours, when they changed.</param>
 internal record ChangesResponse(
     long Revision,
     bool More,
@@ -140,7 +141,14 @@ internal record ChangesResponse(
     IReadOnlyList<FavoriteTextChange> FavoriteTexts,
     IReadOnlyList<DeviceChange> Devices);
 
-internal record ProfileChange(long Revision, string DisplayName, string? About, string? Locale, int PhotoVersion);
+internal record ProfileChange(
+    long Revision,
+    string DisplayName,
+    string? About,
+    string? Locale,
+    int PhotoVersion,
+    IReadOnlyList<string> RecentBookmarkColors,
+    IReadOnlyList<string> OwnBookmarkColors);
 
 /// <param name="DeletedAt">When the reader removed it; then <paramref name="Bookmark"/> is null.</param>
 internal record BookmarkChange(Guid Id, long Revision, DateTimeOffset? DeletedAt, BookmarkResponse? Bookmark);
