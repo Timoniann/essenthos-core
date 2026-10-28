@@ -95,6 +95,45 @@ public sealed class StrongRenderingLoaderTests : IDisposable
             (God, 2, "thy god", 1));
     }
 
+    /// <summary>
+    /// An aligner links a word at a time: אֱלֹהֶיךָ reached by one link to <em>thy</em> and another to
+    /// <em>God</em> is still one place rendered <em>thy god</em>, never a rendering <em>thy</em> beside
+    /// it, so the phrases of a place add up to the places reached.
+    /// </summary>
+    [Fact]
+    public async Task APlaceLinkedAWordAtATimeIsOnePhraseNotOnePerLink()
+    {
+        var aligned = Corpus.Add(_db, "ALIGNED", TextKind.Translation, "en", (1, 1, ["created", "God", "thy", "God"]));
+        await _db.SaveChangesAsync();
+        Renders([2], [2], aligned);
+        Renders([3], [3], aligned);
+        Renders([3], [4], aligned);
+        await _db.SaveChangesAsync();
+
+        await _loader.Load();
+
+        (await _db.StrongRenderings.AsNoTracking().Where(r => r.TextId == aligned.Id).OrderBy(r => r.Rank)
+                .Select(r => new { r.Phrase, r.Uses }).ToListAsync())
+            .Select(r => (r.Phrase, r.Uses)).Should().Equal(("god", 1), ("thy god", 1));
+        (await StrongRenderingCounts.Count(_db, aligned.Id, [God], 40, default))
+            .Select(r => (r.Phrase, r.Uses)).Should().Equal(("god", 1), ("thy god", 1));
+        (await StrongBookEndpoints.InBook(_db, God, 1, aligned.Id, aligned.Slug, default)).Renderings.Should()
+            .Equal(new StrongRenderingResponse("god", 1), new StrongRenderingResponse("thy god", 1));
+    }
+
+    /// <summary>The places behind one rendering are the words its phrase is counted from, and no other.</summary>
+    [Fact]
+    public async Task ARenderingLeadsToThePlacesItIsCountedFrom()
+    {
+        var thyGod = _db.WordAt(_hebrew, 1, 1, 3).Id;
+        var god = _db.WordAt(_hebrew, 1, 1, 2).Id;
+
+        (await StrongRenderingCounts.RenderedAs(_db, God, _english.Id, _hebrew.Id, "thy god", default)).Should().Equal(thyGod);
+        (await StrongRenderingCounts.RenderedAs(_db, God, _english.Id, _hebrew.Id, " God ", default)).Should().Equal(god);
+        (await StrongRenderingCounts.RenderedAs(_db, God, _english.Id, _hebrew.Id, "thy", default)).Should().BeEmpty();
+        (await StrongRenderingCounts.RenderedAs(_db, Create, _english.Id, _hebrew.Id, "god", default)).Should().BeEmpty();
+    }
+
     /// <summary>The startup pipeline runs on every load, and a load that counts the same writes nothing.</summary>
     /// <summary>
     /// <em>God</em> and <em>thy God</em> are one rendering of אֱלֹהִים: the pronoun is the Hebrew's

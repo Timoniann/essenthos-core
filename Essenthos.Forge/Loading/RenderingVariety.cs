@@ -9,8 +9,8 @@ namespace Essenthos.Core.Loading;
 /// reduced to their stems; null where the text's language has no list of those words here.
 /// </param>
 /// <param name="RenderingLinks">
-/// The links whose phrase carries at least one word of its own: the denominator the renderings are
-/// counted over. Links that write only a pronoun or a particle are outside it.
+/// The occurrences whose phrase carries at least one word of its own: the denominator the renderings
+/// are counted over. Occurrences rendered only by a pronoun or a particle are outside it.
 /// </param>
 internal sealed record Variety(int Phrases, int? Renderings, int RenderingLinks);
 

@@ -171,13 +171,13 @@ internal static class StrongBookEndpoints
     }
 
     /// <summary>
-    /// The phrases one text writes for the number in one book, counted from the links on the number's
-    /// words there — the same grouping by link as the entry page's renderings, bounded by the book.
+    /// The phrases one text writes for the number in one book, one for each of the number's words there
+    /// the text renders — the same phrases as the entry page's renderings, bounded by the book.
     /// </summary>
     private const string PhrasesInBook =
-        """
+        $"""
         WITH pairs AS (
-            SELECT DISTINCT s.link_id, s.side
+            SELECT DISTINCT s.link_id, s.side, sw.strong_number AS number, sw.id AS original
             FROM word sw
             JOIN verse sv ON sv.id = sw.verse_id
             JOIN book sb ON sb.id = sv.book_id
@@ -189,14 +189,7 @@ internal static class StrongBookEndpoints
               AND (l.from_text_id = @text OR l.to_text_id = @text)
               AND l.relation IN ('renders', 'equals')
         ),
-        rendered AS (
-            SELECT p.link_id, string_agg(lower(w.text), ' ' ORDER BY v.number, w.position) AS phrase
-            FROM pairs p
-            JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
-            JOIN word w ON w.id = o.word_id AND w.text_id = @text
-            JOIN verse v ON v.id = w.verse_id
-            GROUP BY p.link_id
-        )
+        {StrongRenderingCounts.Rendered}
         SELECT phrase, count(*) AS uses
         FROM rendered
         WHERE phrase IS NOT NULL

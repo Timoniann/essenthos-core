@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace Essenthos.Core.Corpus;
 
-/// <summary>One phrase a translation writes for a Strong number, its place among them and how many links write it.</summary>
+/// <summary>One phrase a translation writes for a Strong number, its place among them and how many of the number's words it renders.</summary>
 internal sealed record StrongRenderingCount(string Number, int Rank, string Phrase, int Uses);
 
 /// <summary>
@@ -37,18 +37,19 @@ internal sealed record StrongTextCount(
 internal sealed record StrongBookCount(string Number, int Book, int Count);
 
 /// <summary>
-/// The whole phrase each link renders, not each word of it separately, and the commonest few of them
-/// for each number — for one number on the entry page, for a page of them on the lexicon's cards, and
-/// for every number at once when the load counts the cards ahead of the reader.
+/// The whole phrase each occurrence is rendered by, not each word of it separately, and the commonest
+/// few of them for each number — for one number on the entry page, for a page of them on the lexicon's
+/// cards, and for every number at once when the load counts the cards ahead of the reader.
 ///
 /// Counting words alone reports אֱלֹהֶיךָ as <em>god</em> 2,284 times and <em>thy</em> 342, which
 /// reads as noise and is not: a Hebrew word carries its pronoun and its construct relation inside
 /// itself, so <em>thy God</em> is one rendering of one word and splitting it in two destroys the very
-/// thing the link recorded. Grouped by link it reads as what it is — <em>god</em> 684, <em>thy
-/// god</em> 319, <em>of god</em> 317.
+/// thing the links record. Grouped by the word of the original it reads as what it is — <em>god</em>
+/// 684, <em>thy god</em> 319, <em>of god</em> 317 — whether one link carries the phrase, as a
+/// publisher's tagging does, or an aligner links it a word at a time.
 ///
 /// <para>
-/// A link counts for a number when a word carrying it stands on the side facing this text's words,
+/// A phrase counts for a number when a word carrying it stands on the side facing this text's words,
 /// in the one edition of each original language the text is most fully joined to
 /// (<see cref="LinkedOriginals.Primary"/>). A translation linked to three Greek editions renders each
 /// Greek word three times over, once per edition, and counting all three reported every phrase three
@@ -79,16 +80,31 @@ internal static class StrongRenderingCounts
 
     private const string Rendering = "l.relation IN ('renders', 'equals')";
 
-    private const string Ranked =
+    /// <summary>
+    /// Each occurrence's phrase: every word of the text linked to one word of the edition, in the
+    /// order the text prints them, from <c>pairs</c> (<c>link_id</c>, <c>side</c>, <c>number</c>,
+    /// <c>original</c>). One phrase per occurrence, not per link: an aligner links a word at a time,
+    /// so וְהַאֲבַדְתִּיךְ is three links to <em>Я</em>, <em>тебе</em> and <em>вигублю</em>, and
+    /// counted by link it read as three renderings of one place.
+    /// </summary>
+    internal const string Rendered =
         """
         rendered AS (
-            SELECT p.number, string_agg(lower(w.text), ' ' ORDER BY v.number, w.position) AS phrase
-            FROM pairs p
-            JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
-            JOIN word w ON w.id = o.word_id AND w.text_id = @text
-            JOIN verse v ON v.id = w.verse_id
-            GROUP BY p.number, p.link_id
+            SELECT number, original, string_agg(lower(text), ' ' ORDER BY verse_number, position, id) AS phrase
+            FROM (
+                SELECT DISTINCT p.number, p.original, w.id, w.text, v.number AS verse_number, w.position
+                FROM pairs p
+                JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
+                JOIN word w ON w.id = o.word_id AND w.text_id = @text
+                JOIN verse v ON v.id = w.verse_id
+            ) rendering
+            GROUP BY number, original
         )
+        """;
+
+    private const string Ranked =
+        $"""
+        {Rendered}
         SELECT number, rank, phrase, uses
         FROM (
             SELECT number, phrase, count(*) AS uses,
@@ -104,7 +120,7 @@ internal static class StrongRenderingCounts
     private const string OfNumbers =
         $"""
          WITH pairs AS (
-             SELECT DISTINCT s.link_id, sw.strong_number AS number, s.side
+             SELECT DISTINCT s.link_id, sw.strong_number AS number, s.side, sw.id AS original
              FROM word sw
              JOIN link_word s ON s.word_id = sw.id
              JOIN link l ON l.id = s.link_id
@@ -151,7 +167,7 @@ internal static class StrongRenderingCounts
 
     private const string OfSides =
         $"""
-         WITH pairs AS (SELECT DISTINCT link_id, number, side FROM strong_side),
+         WITH pairs AS (SELECT DISTINCT link_id, number, side, word_id AS original FROM strong_side),
          {Ranked}
          """;
 
@@ -253,6 +269,54 @@ internal static class StrongRenderingCounts
         command.Parameters.AddWithValue("numbers", numbers.ToArray());
 
         return await Read(command, Phrase, cancellationToken);
+    }
+
+    /// <summary>
+    /// Started from the pair's links as well as the number's words, both materialised and hashed: from
+    /// the words alone, every link word of a common number was looked up in the link table one at a
+    /// time — 88,000 for H430, most of them other texts' — which took 2–20 s with a cold cache.
+    /// </summary>
+    private const string OfPhrase =
+        $"""
+         WITH numbered AS MATERIALIZED (
+             SELECT id FROM word WHERE strong_number = @number AND text_id = @witness
+         ),
+         pair AS MATERIALIZED (
+             SELECT l.id
+             FROM link l
+             WHERE ((l.from_text_id = @text AND l.to_text_id = @witness)
+                    OR (l.to_text_id = @text AND l.from_text_id = @witness))
+               AND {Rendering}
+         ),
+         pairs AS (
+             SELECT DISTINCT s.link_id, s.side, @number AS number, s.word_id AS original
+             FROM pair p
+             JOIN link_word s ON s.link_id = p.id
+             WHERE s.word_id IN (SELECT id FROM numbered)
+         ),
+         {Rendered}
+         SELECT original FROM rendered WHERE phrase = lower(@phrase) ORDER BY original
+         """;
+
+    /// <summary>
+    /// The words of <paramref name="witnessId"/> carrying <paramref name="number"/> that the text renders
+    /// with exactly <paramref name="phrase"/>, as the phrases are counted: the places behind one row of
+    /// the entry page's renderings.
+    /// </summary>
+    public static async Task<List<long>> RenderedAs(
+        AppDbContext db,
+        string number,
+        int textId,
+        int witnessId,
+        string phrase,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(OfPhrase, await Open(db, cancellationToken));
+        command.Parameters.AddWithValue("number", number);
+        command.Parameters.AddWithValue("text", textId);
+        command.Parameters.AddWithValue("witness", witnessId);
+        command.Parameters.AddWithValue("phrase", phrase.Trim());
+        return await Read(command, reader => reader.GetInt64(0), cancellationToken);
     }
 
     /// <summary>
