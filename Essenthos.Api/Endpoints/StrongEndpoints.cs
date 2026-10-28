@@ -119,6 +119,8 @@ internal static class StrongEndpoints
             [FromQuery] int? book,
             [FromQuery] int? skip,
             [FromQuery] int? take,
+            [FromQuery] string? rendering,
+            [FromQuery] string? renderedIn,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -130,6 +132,29 @@ internal static class StrongEndpoints
             }
 
             var words = db.Words.Where(w => w.StrongNumber == canonical);
+            if (rendering is { Length: > 0 })
+            {
+                // The places behind one row of the renderings: the edition's words the text renders
+                // with exactly this phrase, counted as the renderings are.
+                if (renderedIn is not { Length: > 0 })
+                {
+                    return Results.BadRequest(new ProblemResponse(
+                        "Name the text the rendering is written in, as ?renderedIn=KJV."));
+                }
+
+                if (await canon.Text(renderedIn, cancellationToken) is not { } translation)
+                {
+                    return Results.NotFound(new ProblemResponse($"There is no text \"{renderedIn}\"."));
+                }
+
+                var witness = LinkedOriginals.WitnessFor(
+                    LinkedOriginals.Primary(await LinkedOriginals.Of(db, translation.Id, cancellationToken)), canonical);
+                var rendered = witness is null
+                    ? []
+                    : await StrongRenderingCounts.RenderedAs(
+                        db, canonical, translation.Id, witness.Id, rendering, cancellationToken);
+                words = words.Where(w => rendered.Contains(w.Id));
+            }
             if (corpus is { Length: > 0 })
             {
                 // Resolved rather than compared to the column, so that a spelling the corpus does
