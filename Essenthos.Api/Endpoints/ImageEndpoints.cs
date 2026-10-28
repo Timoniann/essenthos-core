@@ -48,8 +48,19 @@ internal static class ImageEndpoints
     /// <summary>The folder under the pictures holding their smaller copies, one folder per width.</summary>
     public const string SizedFolder = "sized";
 
-    /// <summary>The widths a picture is copied at, narrowest first; a request between two gets the wider.</summary>
-    public static readonly int[] SizedWidths = [128, 256, 512, 1024];
+    /// <summary>
+    /// The widths a picture is copied at, narrowest first; a request between two gets the wider. Each is
+    /// about a quarter wider than the one before, so the copy a screen is given is never much wider
+    /// than the one it asked for.
+    /// </summary>
+    public static readonly int[] SizedWidths = [64, 80, 96, 128, 160, 192, 256, 320, 384, 512, 640, 768, 1024];
+
+    /// <summary>
+    /// How a copy is made, in its name: Lanczos-3, WebP quality 85 up to 256 pixels wide and 80 past it
+    /// (<see cref="PictureCopies.Quality"/>). It changes whenever the making does,
+    /// so that a copy made the old way is never served again; those are left on disk to be deleted.
+    /// </summary>
+    public const string CopyRecipe = "l3q85-80";
 
     private const string SizedExtension = ".webp";
 
@@ -90,11 +101,15 @@ internal static class ImageEndpoints
             ? Path.GetFullPath(Path.Combine(contentRootPath, configured))
             : Path.Combine(folder, SizedFolder);
 
-    public static void MapImages(this IEndpointRouteBuilder routes, PictureCopies copies)
+    /// <param name="crops">
+    /// The busts the corpus states for each picture: a <c>crop</c> is cut only where it is one of them,
+    /// so the copies stay bounded by the pictures' rows, not by what an address can say.
+    /// </param>
+    public static void MapImages(this IEndpointRouteBuilder routes, PictureCopies copies, PictureCrops crops)
     {
         var root = Root(copies.Folder);
 
-        routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], async (string file, string? v, int? w, HttpContext context) =>
+        routes.MapMethods("/images/{**file}", [HttpMethods.Get, HttpMethods.Head], async (string file, string? v, int? w, string? crop, HttpContext context) =>
         {
             var path = Path.GetFullPath(Path.Combine(root, file));
             if (!path.StartsWith(root, PathComparison)
@@ -105,13 +120,16 @@ internal static class ImageEndpoints
             }
 
             context.Response.Headers.XContentTypeOptions = "nosniff";
-            if (w is { } width && await copies.Serve(file, path, v, width, context.RequestAborted) is { } copy)
+            var cut = crop is null ? null : PictureCrop.Parse(crop);
+            var stated = cut is { } square && await crops.Allows(file, square, context.RequestAborted);
+            if (w is { } width && await copies.Serve(file, path, v, width, stated ? cut : null, context.RequestAborted) is { } copy)
             {
-                context.Response.Headers.CacheControl = Immutable;
+                // A crop the corpus does not state gets the whole picture, small, and only for an hour.
+                context.Response.Headers.CacheControl = crop is null || stated ? Immutable : Revalidated;
                 return Results.File(copy, ContentTypes[Path.GetExtension(copy)]);
             }
 
-            context.Response.Headers.CacheControl = v is not null && w is null ? Immutable : Revalidated;
+            context.Response.Headers.CacheControl = v is not null && w is null && crop is null ? Immutable : Revalidated;
             return Results.File(path, contentType, lastModified: File.GetLastWriteTimeUtc(path));
         });
     }
@@ -123,15 +141,18 @@ internal static class ImageEndpoints
 
     /// <summary>
     /// Where the copy of a picture at a width is kept, relative to the pictures' folder: under the
-    /// width's own folder, at the picture's path with its digest before a <c>.webp</c> of its own.
+    /// width's own folder, at the picture's path with its digest, the square it was cut to if any, and
+    /// <see cref="CopyRecipe"/> before a <c>.webp</c> of its own.
     /// </summary>
-    public static string SizedPath(string file, string digest, int width) => $"{SizedFolder}/{CopyPath(file, digest, width)}";
+    public static string SizedPath(string file, string digest, int width, PictureCrop? crop = null) =>
+        $"{SizedFolder}/{CopyPath(file, digest, width, crop)}";
 
     /// <summary>The same, relative to the folder the copies are kept in.</summary>
-    public static string CopyPath(string file, string digest, int width)
+    public static string CopyPath(string file, string digest, int width, PictureCrop? crop = null)
     {
         var extension = Path.GetExtension(file);
-        return $"{width}/{file[..^extension.Length]}.{digest}{SizedExtension}";
+        var cut = crop is { } square ? $".c{square.Left}-{square.Top}-{square.Side}" : "";
+        return $"{width}/{file[..^extension.Length]}.{digest}{cut}.{CopyRecipe}{SizedExtension}";
     }
 
     /// <summary>
@@ -139,7 +160,7 @@ internal static class ImageEndpoints
     /// digest names, where there is one; null where it is not made, or the address carries no digest
     /// to know it by.
     /// </summary>
-    public static string? Sized(string folder, string file, string? digest, int width)
+    public static string? Sized(string folder, string file, string? digest, int width, PictureCrop? crop = null)
     {
         var root = Root(folder);
         if (digest is not { Length: > 0 and <= 64 } || !digest.All(char.IsAsciiHexDigitLower)
@@ -148,7 +169,7 @@ internal static class ImageEndpoints
             return null;
         }
 
-        var path = Path.GetFullPath(Path.Combine(root, SizedPath(file, digest, sized)));
+        var path = Path.GetFullPath(Path.Combine(root, SizedPath(file, digest, sized, crop)));
         return path.StartsWith(root, PathComparison) && File.Exists(path) ? path : null;
     }
 
@@ -198,14 +219,14 @@ internal static class ImageEndpoints
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, null, null, null, null, null, null,
                     i.FocusX, i.FocusY)
                 {
-                    Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight),
+                    Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight, i.Width, i.Height),
                 }
                 : new EntityImageResponse(
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Local ?? i.Caption, i.Credit,
                     i.CreditUrl, i.Licence, i.LicenceUrl, i.Source, i.FocusX, i.FocusY)
                 {
                     CaptionLanguage = i.Local is null ? null : language,
-                    Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight),
+                    Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight, i.Width, i.Height),
                 }),
         ];
     }
@@ -221,8 +242,8 @@ internal static class ImageEndpoints
             .Where(i => i.Role == Primary && slugs.Contains(i.Entity!.Slug) && (generated || i.Kind != Generated))
             .Select(i => new
             {
-                i.Entity!.Slug, i.File, i.Digest, i.Kind, i.FocusX, i.FocusY, i.BustX, i.BustY, i.BustWidth,
-                i.BustHeight,
+                i.Entity!.Slug, i.File, i.Digest, i.Kind, i.Width, i.Height, i.FocusX, i.FocusY, i.BustX, i.BustY,
+                i.BustWidth, i.BustHeight,
             })
             .ToListAsync(cancellationToken);
 
@@ -233,7 +254,9 @@ internal static class ImageEndpoints
                 group => group.OrderBy(i => i.Kind == Generated ? 0 : 1)
                     .Select(i => new EntityThumbnailResponse(Url(i.File, i.Digest), i.Kind, i.FocusX, i.FocusY)
                     {
-                        Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight),
+                        Width = i.Width,
+                        Height = i.Height,
+                        Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight, i.Width, i.Height),
                     })
                     .First(),
                 StringComparer.Ordinal);
@@ -285,6 +308,15 @@ internal sealed record EntityImageResponse(
 /// <summary>The picture an entity leads with, as small as a list needs it: where it is and what kind.</summary>
 internal sealed record EntityThumbnailResponse(string Url, string Kind, double? FocusX, double? FocusY)
 {
+    /// <summary>
+    /// The picture's own width in pixels, with <see cref="Height"/>: a card that crops a broad picture
+    /// into a tall frame draws it wider than the frame, and asks for a copy that wide.
+    /// </summary>
+    public int Width { get; init; }
+
+    /// <summary>The picture's own height in pixels.</summary>
+    public int Height { get; init; }
+
     /// <summary>A person's head and shoulders, which is what a thumbnail shows; null on a place or a thing.</summary>
     public PictureBustResponse? Bust { get; init; }
 }
@@ -295,8 +327,21 @@ internal sealed record EntityThumbnailResponse(string Url, string Kind, double? 
 /// </summary>
 internal sealed record PictureBustResponse(double X, double Y, double Width, double Height)
 {
-    public static PictureBustResponse? Of(double? x, double? y, double? width, double? height) =>
+    /// <summary>
+    /// The same square in the picture's pixels, as <c>left,top,side</c>: an address's <c>crop</c>, which
+    /// is served the bust alone, cut and made small, instead of the whole picture shifted in a frame.
+    /// Null where the picture's size is not known.
+    /// </summary>
+    public string? Crop { get; init; }
+
+    /// <param name="pictureWidth">The picture's width in pixels, which the bust's crop is measured in.</param>
+    /// <param name="pictureHeight">Its height in pixels.</param>
+    public static PictureBustResponse? Of(
+        double? x, double? y, double? width, double? height, int pictureWidth = 0, int pictureHeight = 0) =>
         x is { } left && y is { } top && width is { } across && height is { } down
             ? new PictureBustResponse(left, top, across, down)
+            {
+                Crop = PictureCrop.Of(pictureWidth, pictureHeight, left, top, across)?.ToString(),
+            }
             : null;
 }

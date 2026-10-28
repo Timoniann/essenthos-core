@@ -12,13 +12,19 @@ namespace Essenthos.Core.Endpoints;
 /// made it ahead of time, then in the cache folder, and made into the cache only when neither has it.
 /// What can be made is bounded: only at <see cref="ImageEndpoints.SizedWidths"/>, only from a picture
 /// under the pictures' folder that is not itself a copy, and only under the digest of that picture's
-/// actual bytes, so no address anyone can write fills the disk with more than four copies a picture.
+/// actual bytes, so no address anyone can write fills the disk with more than one copy a picture at each
+/// of those widths.
 /// </para>
 /// </summary>
 internal sealed class PictureCopies
 {
-    /// <summary>The WebP quality the pre-warming script writes at, so a copy looks the same whoever made it.</summary>
-    private const int Quality = 80;
+    /// <summary>
+    /// The WebP quality a copy this wide is written at, as the pre-warming script writes it, so a copy
+    /// looks the same whoever made it. At 80 a face a few dozen pixels across loses its eyes to the
+    /// encoder's blocks, so the small copies take 85, a fifth more bytes; a wide copy is drawn shrunk
+    /// and keeps 80.
+    /// </summary>
+    internal static int Quality(int width) => width <= 256 ? 85 : 80;
 
     private const int DigestLength = 12;
 
@@ -59,7 +65,12 @@ internal sealed class PictureCopies
     /// </summary>
     /// <param name="file">The picture's path under the pictures' folder, as it was asked for.</param>
     /// <param name="path">The same, resolved, and already known to be a picture inside the folder.</param>
-    public async Task<string?> Serve(string file, string path, string? digest, int width, CancellationToken cancellationToken)
+    /// <param name="crop">
+    /// The square to cut it to first, already known to be one the corpus states; the copy is then that
+    /// square, no wider than the square itself.
+    /// </param>
+    public async Task<string?> Serve(
+        string file, string path, string? digest, int width, PictureCrop? crop, CancellationToken cancellationToken)
     {
         if (digest is not { Length: DigestLength } || !digest.All(char.IsAsciiHexDigitLower))
         {
@@ -70,12 +81,12 @@ internal sealed class PictureCopies
         string? target = null;
         if (sized is { } copyWidth)
         {
-            if (ImageEndpoints.Sized(Folder, file, digest, copyWidth) is { } premade)
+            if (ImageEndpoints.Sized(Folder, file, digest, copyWidth, crop) is { } premade)
             {
                 return premade;
             }
 
-            target = Path.GetFullPath(Path.Combine(_cache, ImageEndpoints.CopyPath(file, digest, copyWidth)));
+            target = Path.GetFullPath(Path.Combine(_cache, ImageEndpoints.CopyPath(file, digest, copyWidth, crop)));
             if (!target.StartsWith(_cache, ImageEndpoints.PathComparison))
             {
                 return null;
@@ -92,12 +103,21 @@ internal sealed class PictureCopies
             return null;
         }
 
-        if (sized is not { } made || target is null || picture.Width <= made)
+        if (crop is { } square)
+        {
+            if (sized is null || target is null
+                || square.Left + square.Side > picture.Width || square.Top + square.Side > picture.Height)
+            {
+                return null;
+            }
+        }
+        else if (sized is not { } whole || target is null || picture.Width <= whole)
         {
             return picture.Width > 0 ? path : null;
         }
 
-        var making = _making.GetOrAdd(target, key => new Lazy<Task<bool>>(() => Make(path, digest, made, key)));
+        var made = sized.Value;
+        var making = _making.GetOrAdd(target, key => new Lazy<Task<bool>>(() => Make(path, digest, made, crop, key)));
         try
         {
             return await making.Value.WaitAsync(cancellationToken) ? target : null;
@@ -133,8 +153,8 @@ internal sealed class PictureCopies
 
         using var data = SKData.CreateCopy(bytes);
         using var codec = SKCodec.Create(data);
-        var width = codec is null ? 0 : Upright(codec).Width;
-        return _pictures[path] = new Picture(info.LastWriteTimeUtc, info.Length, Digest(bytes), width);
+        var size = codec is null ? default : Upright(codec);
+        return _pictures[path] = new Picture(info.LastWriteTimeUtc, info.Length, Digest(bytes), size.Width, size.Height);
     }
 
     /// <summary>
@@ -142,7 +162,7 @@ internal sealed class PictureCopies
     /// request never reads half a copy. The bytes are hashed again here, from the same read that is
     /// resized, so a picture replaced meanwhile is never kept under its old digest.
     /// </summary>
-    private async Task<bool> Make(string path, string digest, int width, string target)
+    private async Task<bool> Make(string path, string digest, int width, PictureCrop? crop, string target)
     {
         await _slots.WaitAsync();
         var partial = $"{target}.{Guid.NewGuid():N}.part";
@@ -154,7 +174,7 @@ internal sealed class PictureCopies
             }
 
             var bytes = await File.ReadAllBytesAsync(path);
-            if (Digest(bytes) != digest || Resize(bytes, width) is not { } copy)
+            if (Digest(bytes) != digest || Resize(bytes, width, crop) is not { } copy)
             {
                 return false;
             }
@@ -184,11 +204,10 @@ internal sealed class PictureCopies
     }
 
     /// <summary>
-    /// The picture turned as its camera recorded, halved while it is at least twice the width, and
-    /// resampled the rest of the way: halving averages every pixel it drops, where one long step
-    /// would skip most of them and shimmer.
+    /// The picture turned as its camera recorded, cut to <paramref name="crop"/> if one is given, then
+    /// made smaller by <see cref="PictureResampler"/>; a square smaller than the width is kept as it is.
     /// </summary>
-    internal static byte[]? Resize(byte[] bytes, int width)
+    internal static byte[]? Resize(byte[] bytes, int width, PictureCrop? crop = null)
     {
         using var data = SKData.CreateCopy(bytes);
         using var codec = SKCodec.Create(data);
@@ -197,31 +216,36 @@ internal sealed class PictureCopies
             return null;
         }
 
-        var current = Turn(decoded, codec.EncodedOrigin);
-        if (!ReferenceEquals(current, decoded))
+        var upright = Turn(decoded, codec.EncodedOrigin);
+        if (!ReferenceEquals(upright, decoded))
         {
             decoded.Dispose();
         }
 
-        try
+        using (upright)
         {
-            var height = Math.Max(1, (int)Math.Round((double)current.Height * width / current.Width, MidpointRounding.ToEven));
-            while (current.Width >= width * 2)
+            if (crop is { } square)
             {
-                var half = current.Resize(
-                    current.Info.WithSize((current.Width + 1) / 2, (current.Height + 1) / 2),
-                    new SKSamplingOptions(SKFilterMode.Linear));
-                current.Dispose();
-                current = half;
+                using var part = new SKBitmap();
+                if (!upright.ExtractSubset(part, SKRectI.Create(square.Left, square.Top, square.Side, square.Side))
+                    || part.Copy() is not { } cut)
+                {
+                    return null;
+                }
+
+                using (cut)
+                {
+                    var side = Math.Min(width, square.Side);
+                    using var smallerCut = side == square.Side ? cut.Copy() : PictureResampler.Resize(cut, side, side);
+                    using var encodedCut = smallerCut.Encode(SKEncodedImageFormat.Webp, Quality(side));
+                    return encodedCut?.ToArray();
+                }
             }
 
-            using var smaller = current.Resize(current.Info.WithSize(width, height), new SKSamplingOptions(SKCubicResampler.Mitchell));
-            using var encoded = smaller.Encode(SKEncodedImageFormat.Webp, Quality);
+            var height = Math.Max(1, (int)Math.Round((double)upright.Height * width / upright.Width, MidpointRounding.ToEven));
+            using var smaller = PictureResampler.Resize(upright, width, height);
+            using var encoded = smaller.Encode(SKEncodedImageFormat.Webp, Quality(width));
             return encoded?.ToArray();
-        }
-        finally
-        {
-            current.Dispose();
         }
     }
 
@@ -256,12 +280,14 @@ internal sealed class PictureCopies
         var upright = new SKBitmap(turned);
         using var canvas = new SKCanvas(upright);
         canvas.SetMatrix(matrix);
-        canvas.DrawBitmap(bitmap, 0, 0);
+        // A quarter turn or a mirror lands every pixel on a pixel, so the nearest one is exact.
+        canvas.DrawBitmap(bitmap, 0, 0, new SKSamplingOptions(SKFilterMode.Nearest));
         return upright;
     }
 
     private static string Digest(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes))[..DigestLength];
 
     /// <param name="Width">Its width as drawn, after its orientation; 0 where it cannot be decoded.</param>
-    private sealed record Picture(DateTime Written, long Length, string Digest, int Width);
+    /// <param name="Height">Its height as drawn.</param>
+    private sealed record Picture(DateTime Written, long Length, string Digest, int Width, int Height);
 }

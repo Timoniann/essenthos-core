@@ -22,7 +22,9 @@ Three things reach the server, separately:
   release naming a picture the server does not have is refused before it is swapped in. The smaller
   copies a list or an avatar is served are made by the API itself, on the first request for each, and
   kept in the `image-cache` volume; any made ahead with `python scripts/picture-sizes.py` travel with
-  the pictures and are served instead, which only spares their first readers the wait.
+  the pictures and are served instead, which only spares their first readers the wait. A copy's name
+  carries how it was made (`ImageEndpoints.CopyRecipe`); when that changes, the copies made the old way
+  are never served again, and the volume (and `Resources/Images/sized`) can be emptied of them.
 - **the downloads** — `forge export`, then `forge publish` (which sends them with the corpus) or
   `forge publish-downloads --to dev|prod` on its own. See **The downloads**, below.
 
