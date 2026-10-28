@@ -65,6 +65,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
 builder.Services.AddSingleton<ContextWeightsCache>();
+builder.Services.AddSingleton<StartupWarmup>();
 builder.Services.AddSingleton<DatasetCountsCache>();
 builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
@@ -175,14 +176,16 @@ v1.MapDevices();
 v1.MapBookmarks();
 v1.MapChapterBookmarks();
 v1.MapFavoriteTexts();
+v1.MapBookmarkColors();
 v1.MapChanges();
 v1.MapSuggestions();
 v1.MapAdmin();
 v1.MapCspReports();
 v1.MapPages();
 
-// Every chapter's context is weighed against counts over the whole Bible; counting them as the
-// process starts spares the first reader to open the panel the wait.
-app.Lifetime.ApplicationStarted.Register(() => _ = app.Services.GetRequiredService<ContextWeightsCache>().Warm());
+// What the first reader after a start would wait for is done as the process starts, once it is
+// already serving: the counts kept for the process's lifetime and the code of the first pages.
+app.Lifetime.ApplicationStarted.Register(() =>
+    app.Services.GetRequiredService<StartupWarmup>().Start(app.Lifetime.ApplicationStopping));
 
 app.Run();

@@ -56,6 +56,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(FavoriteTextOrder))]
 [JsonSerializable(typeof(FavoriteTextResponse))]
 [JsonSerializable(typeof(FavoriteTextsResponse))]
+[JsonSerializable(typeof(BookmarkColorsPut))]
+[JsonSerializable(typeof(BookmarkColorsResponse))]
 [JsonSerializable(typeof(ChangesResponse))]
 [JsonSerializable(typeof(ProfileChange))]
 [JsonSerializable(typeof(BookmarkChange))]

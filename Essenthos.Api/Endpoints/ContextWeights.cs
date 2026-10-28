@@ -232,7 +232,7 @@ internal sealed class ContextWeights
     private static int Key(int book, int chapter, int verse) => (book * 1000 + chapter) * 1000 + verse;
 }
 
-/// <summary>The weights, counted once and kept: as the process starts, or on the first chapter asked for.</summary>
+/// <summary>The weights, counted once and kept: as the process starts (<see cref="StartupWarmup"/>), or on the first chapter asked for.</summary>
 internal sealed class ContextWeightsCache(IServiceScopeFactory scopes, ILogger<ContextWeightsCache> logger)
 {
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -262,19 +262,6 @@ internal sealed class ContextWeightsCache(IServiceScopeFactory scopes, ILogger<C
         finally
         {
             _gate.Release();
-        }
-    }
-
-    /// <summary>Counts the weights ahead of the first reader; a failure here is retried by that reader's request.</summary>
-    public async Task Warm()
-    {
-        try
-        {
-            await Get(CancellationToken.None);
-        }
-        catch (Exception exception)
-        {
-            logger.LogWarning(exception, "The Chapter Context's weights could not be counted ahead of the first request");
         }
     }
 }

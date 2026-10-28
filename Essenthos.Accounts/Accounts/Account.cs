@@ -39,6 +39,15 @@ public class Account : IRevised
     /// </summary>
     public bool Admin { get; set; }
 
+    /// <summary>
+    /// The bookmark colours the reader used last, newest first: a named colour or <c>#rrggbb</c>. The
+    /// account's rather than a device's, so the colours a reader reaches for are the same on each.
+    /// </summary>
+    public List<string> RecentBookmarkColors { get; set; } = [];
+
+    /// <summary>The colours the reader keeps as their own, each <c>#rrggbb</c>, in the order they added them.</summary>
+    public List<string> OwnBookmarkColors { get; set; } = [];
+
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset UpdatedAt { get; set; }

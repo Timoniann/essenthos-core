@@ -55,6 +55,13 @@ namespace Essenthos.Core.Accounts.Migrations
                         .HasColumnType("character varying(16)")
                         .HasColumnName("locale");
 
+                    b.PrimitiveCollection<List<string>>("OwnBookmarkColors")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text[]")
+                        .HasColumnName("own_bookmark_colors")
+                        .HasDefaultValueSql("'{}'::text[]");
+
                     b.Property<int>("PhotoVersion")
                         .HasColumnType("integer")
                         .HasColumnName("photo_version");
@@ -63,6 +70,13 @@ namespace Essenthos.Core.Accounts.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("character varying(1024)")
                         .HasColumnName("provider_photo_url");
+
+                    b.PrimitiveCollection<List<string>>("RecentBookmarkColors")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text[]")
+                        .HasColumnName("recent_bookmark_colors")
+                        .HasDefaultValueSql("'{}'::text[]");
 
                     b.Property<long>("Revision")
                         .HasColumnType("bigint")

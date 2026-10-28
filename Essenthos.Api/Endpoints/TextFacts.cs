@@ -11,33 +11,44 @@ namespace Essenthos.Core.Endpoints;
 ///
 /// Every one of these is a sweep of a table millions of rows long — the link table alone takes a
 /// second and a half to group — and none of it changes while the process runs, because the corpus
-/// is read-only here. So it is counted once, for every text together, and each query runs on its own
-/// connection so the first reader waits for the slowest of them rather than for their sum.
+/// is read-only here. So it is counted once, for every text together, as the process starts
+/// (<see cref="StartupWarmup"/>) or for the first reader who asks. The queries run two at a time, each
+/// on its own connection: every one of them is split across the database's own workers already, and
+/// all nine at once made each so slow that one ran past the statement timeout.
 ///
 /// A word the edition prints no letters for is counted nowhere, so every share of the words is a
 /// share of the words a reader can see.
 /// </summary>
 internal sealed class TextFacts(IServiceScopeFactory scopes)
 {
+    private const int AtOnce = 2;
+
     private readonly SemaphoreSlim _gate = new(1, 1);
+    private readonly SemaphoreSlim _running = new(AtOnce, AtOnce);
     private IReadOnlyDictionary<int, TextTally>? _tallies;
 
-    public async Task<TextTally> Of(int textId, CancellationToken cancellationToken)
+    public async Task<TextTally> Of(int textId, CancellationToken cancellationToken) =>
+        (await Tallies(cancellationToken)).GetValueOrDefault(textId) ?? TextTally.Empty;
+
+    /// <summary>Counts every text now, if nothing has asked yet: what the start of the process does.</summary>
+    public Task Load(CancellationToken cancellationToken) => Tallies(cancellationToken);
+
+    private async Task<IReadOnlyDictionary<int, TextTally>> Tallies(CancellationToken cancellationToken)
     {
-        if (_tallies is null)
+        if (_tallies is { } tallies)
         {
-            await _gate.WaitAsync(cancellationToken);
-            try
-            {
-                _tallies ??= await Count(cancellationToken);
-            }
-            finally
-            {
-                _gate.Release();
-            }
+            return tallies;
         }
 
-        return _tallies.GetValueOrDefault(textId) ?? TextTally.Empty;
+        await _gate.WaitAsync(cancellationToken);
+        try
+        {
+            return _tallies ??= await Count(cancellationToken);
+        }
+        finally
+        {
+            _gate.Release();
+        }
     }
 
     private async Task<IReadOnlyDictionary<int, TextTally>> Count(CancellationToken cancellationToken)
@@ -94,13 +105,14 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
             .ToListAsync(cancellationToken));
 
         // Only the links somebody stated carry a source worth naming; the aligner's are this
-        // project's own inference and their source strings number in the thousands.
+        // project's own inference and their source strings number in the thousands. Joined before
+        // it is made distinct, so Postgres splits it across its workers: grouping the links by
+        // provenance first runs on one core and takes most of the five seconds a statement is
+        // allowed, where this takes under a second and a half.
         var stated = Query(async db => (await db.Links
                 .Where(l => l.Method != LinkMethod.Aligner)
-                .GroupBy(l => new { l.FromTextId, l.ToTextId, l.ProvenanceId })
-                .Select(g => g.Key)
-                .Join(db.Provenances, k => k.ProvenanceId, p => p.Id,
-                    (k, p) => new { k.FromTextId, k.ToTextId, p.Source })
+                .Join(db.Provenances, l => l.ProvenanceId, p => p.Id,
+                    (l, p) => new { l.FromTextId, l.ToTextId, p.Source })
                 .Distinct()
                 .ToListAsync(cancellationToken))
             .Select(row => new SourceRow(row.FromTextId, row.ToTextId, row.Source))
@@ -186,8 +198,16 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
 
     private async Task<T> Query<T>(Func<AppDbContext, Task<T>> query)
     {
-        await using var scope = scopes.CreateAsyncScope();
-        return await query(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+        await _running.WaitAsync();
+        try
+        {
+            await using var scope = scopes.CreateAsyncScope();
+            return await query(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+        }
+        finally
+        {
+            _running.Release();
+        }
     }
 
     /// <summary>The feature a BHSA word keeps its pronunciation under.</summary>
