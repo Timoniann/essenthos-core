@@ -1,6 +1,7 @@
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Pages;
@@ -122,9 +123,28 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
     public static string RecordPath(EntityKind kind, string slug) =>
         $"/{RecordRoutes.First(route => route.Value == kind).Key}/{slug}";
 
-    /// <param name="kind">The kind as the API spells it, <c>person</c>.</param>
-    public static string RecordPath(string kind, string slug) =>
-        $"/{RecordRoutes.First(route => EnumSpelling.Of(route.Value) == kind).Key}/{slug}";
+    /// <summary>
+    /// The page a name in a record's line stands for: a record's, or an occupation's. Null for a kind
+    /// the site has no page for, so the name is said without a link rather than the page failing.
+    /// </summary>
+    /// <param name="kind">The kind as the API spells it, <c>person</c> or <c>occupation</c>.</param>
+    public static string? TargetPath(string kind, string slug)
+    {
+        if (kind == OccupationLines.TargetKind)
+        {
+            return $"/occupations/{slug}";
+        }
+
+        foreach (var (route, recordKind) in RecordRoutes)
+        {
+            if (EnumSpelling.Of(recordKind) == kind)
+            {
+                return $"/{route}/{slug}";
+            }
+        }
+
+        return null;
+    }
 
     public static string ChapterPath(int book, int chapter) => $"/read/{BookReferences.Slug(book)}/{chapter}";
 

@@ -291,7 +291,7 @@ internal sealed class PageLoader(
                 ? []
                 : [.. descriptor.Parts.Select(part => new LinePart(
                     part.Text,
-                    part.Entity is { } target ? PageAddress.RecordPath(target.Kind, target.Slug) : null))],
+                    part.Entity is { } target ? PageAddress.TargetPath(target.Kind, target.Slug) : null))],
             tally.References,
             mentions)
         {
