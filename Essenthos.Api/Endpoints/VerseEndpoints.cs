@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -87,6 +87,7 @@ internal static class VerseEndpoints
             [FromQuery] string? refs,
             [FromQuery] string? entity,
             [FromQuery] string? strong,
+            [FromQuery] string? occupation,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -165,7 +166,13 @@ internal static class VerseEndpoints
             }
 
             var keys = wanted.Select(address => address.Key).Distinct().ToList();
-            var found = await Read(db, text.Id, keys, named, cancellationToken, number);
+            if (occupation is { Length: > 0 } && named is null)
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    "An occupation is marked as one person's: ask with entity=<person> beside occupation=<slug>."));
+            }
+
+            var found = await Read(db, text.Id, keys, named, cancellationToken, number, occupation);
 
             var answered = found
                 .Select(verse => (verse.Book.Ordinal * Address.BookStride)
@@ -207,7 +214,8 @@ internal static class VerseEndpoints
         IReadOnlyCollection<int> keys,
         string? named,
         CancellationToken cancellationToken,
-        string? strong = null)
+        string? strong = null,
+        string? occupation = null)
     {
         // The book narrows the match to what the placement index can find; the packed number then
         // picks the addresses out of those books, on the same arithmetic the encyclopedia orders by.
@@ -263,12 +271,14 @@ internal static class VerseEndpoints
         var stated = await StatedNumbers(db, verseIds, cancellationToken);
 
         var wordIds = words.Values.SelectMany(list => list.Select(word => word.Id)).ToList();
-        var naming = named is not null
-            ? await Naming(db, wordIds, named, cancellationToken)
-            : strong is not null
-                ? await Numbered(db, wordIds, [strong], cancellationToken)
-                : [];
-        var spellings = named is null ? [] : await Spellings(db, textId, named, cancellationToken);
+        var naming = named is not null && occupation is { Length: > 0 }
+            ? await Working(db, wordIds, named, occupation, cancellationToken)
+            : named is not null
+                ? await Naming(db, wordIds, named, cancellationToken)
+                : strong is not null
+                    ? await Numbered(db, wordIds, [strong], cancellationToken)
+                    : [];
+        var spellings = named is null || occupation is { Length: > 0 } ? [] : await Spellings(db, textId, named, cancellationToken);
         var marking = named is not null || strong is not null;
 
         return chosen
@@ -410,6 +420,24 @@ internal static class VerseEndpoints
             .Select(annotation => annotation.Key)
             .ToHashSet();
     }
+
+    /// <summary>
+    /// The words that name a person's occupation in these verses: the ones the occupations step marked,
+    /// which are the words of a cited quotation carrying the occupation's number and the words the links
+    /// say render them. Nothing is guessed here either.
+    /// </summary>
+    private static async Task<HashSet<long>> Working(
+        AppDbContext db,
+        IReadOnlyCollection<long> wordIds,
+        string person,
+        string occupation,
+        CancellationToken cancellationToken) =>
+        [.. await db.OccupationWords
+            .Where(w => wordIds.Contains(w.WordId)
+                        && w.PersonOccupation!.Person!.Slug == person
+                        && w.PersonOccupation.Occupation!.Slug == occupation)
+            .Select(w => w.WordId)
+            .ToListAsync(cancellationToken)];
 
     /// <summary>
     /// How this text spells the entity where its words are known to name it, folded: the forms the

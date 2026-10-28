@@ -1,5 +1,7 @@
 # The hundred held occupation candidates
 
+> These bundles are now history: the reviewed inventory is `Resources/Essenthos/person-occupations.json`, loaded by the `occupations` step (docs/occupation-publication.md). The SHA-pinned `occupations <bundle> <sha256>` verb and the `occupation-preview` verb no longer exist.
+
 The fixed review is `Resources/Essenthos/generation/occupation-held-review-2026-10-27-v1`. It preserves the previous full admitted bundle, all original paid outputs and the immutable review snapshot. The registered `occupation-held-review` action prepares source contexts, records explicit lead decisions and compiles the replacement. It makes no model requests or database calls. The source verse index is an offline aid for these hundred cases, not a corpus coverage audit.
 
 `manifest.json` binds the hundred original dispositions, source packets, retained full verse bodies and person catalogue. `decisions.json` records a concrete disposition and exact reviewed context for every candidate. Earlier draft dispositions remain as numbered revisions. A recorded review cannot be revised after `admission.json` is present. `research.json` keeps primary scholarly research links and independent conclusions; no external commentary/translation is loaded as evidence. Published full quotations are the already licensed held primary texts.

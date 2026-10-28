@@ -170,8 +170,9 @@ internal static class Descriptors
             .ToList();
         var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
         var siblings = await SharedParents.Siblings(db, people, cancellationToken);
+        var work = await OccupationLines.Of(db, people, spoken, cancellationToken);
 
-        if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0
+        if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0 && work.Count == 0
             && subjects.All(e => e.Kind != EntityKind.Place && e.Byname is null))
         {
             return [];
@@ -324,8 +325,9 @@ internal static class Descriptors
                 Taught = taught,
                 OtherDisciples = taught.Others.GetValueOrDefault(subject.Id),
                 Byname = Bynamed(Bynames.Read(subject.Byname), named),
+                Work = work.GetValueOrDefault(subject.Id) ?? [],
             };
-            if (said.Count == 0 && facts.Children is null && facts.Byname is null)
+            if (said.Count == 0 && facts.Children is null && facts.Byname is null && facts.Work.Count == 0)
             {
                 continue;
             }
@@ -852,10 +854,49 @@ internal static class Descriptors
             Said(DescriptorPhrasings.CalledRelation, 0, [byname.Verse], placed: true);
         }
 
+        // The person's trades, then what the text calls them, each as one clause of its own words
+        // whose every name is the occupation's page.
+        var worked = facts.Work.Count == 0;
+        void Work()
+        {
+            foreach (var group in facts.Work.GroupBy(work => work.Relation))
+            {
+                var from = parts.Count;
+                Separate(parts);
+                var said = group.ToList();
+                for (var at = 0; at < said.Count; at++)
+                {
+                    if (at > 0)
+                    {
+                        parts.Add(new DescriptorPartResponse(at == said.Count - 1
+                            ? $" {DescriptorPhrasings.Conjunction(language)} "
+                            : DescriptorPhrasings.Separator));
+                    }
+
+                    var word = facts.Sex == SharedParents.Female ? said[at].Feminine : said[at].Masculine;
+                    parts.Add(new DescriptorPartResponse(word)
+                    {
+                        Entity = new DescriptorTargetResponse(OccupationLines.TargetKind, said[at].Slug, word, said[at].English),
+                    });
+                }
+
+                // The first verse saying each, as a clause cites one; the person's section has them all.
+                Said(group.Key, from, [.. said.Where(work => work.Verses.Count > 0).Select(work => work.Verses[0])
+                    .DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse))], placed: true);
+            }
+
+            worked = true;
+        }
+
         var children = facts.Children is null;
         foreach (var run in Runs(items, (a, b) => a.First.Relation == b.First.Relation))
         {
             var relation = run[0].First.Relation;
+            if (!worked && FamilyTies.Rank(relation) >= 0)
+            {
+                Work();
+            }
+
             if (!children && FamilyTies.Rank(relation) > FamilyTies.ChildrenRank)
             {
                 Children([]);
@@ -924,6 +965,11 @@ internal static class Descriptors
             }
 
             claimed += run.Sum(item => item.Clauses.Count);
+        }
+
+        if (!worked)
+        {
+            Work();
         }
 
         if (!children)
@@ -1347,6 +1393,9 @@ internal static class Descriptors
 
         /// <summary>What the text calls the person beside the heading, which the line says first.</summary>
         public Byname? Byname { get; init; }
+
+        /// <summary>The person's trades and what the text calls them, said after the offices.</summary>
+        public IReadOnlyList<OccupationLines.Work> Work { get; init; } = [];
     }
 
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>

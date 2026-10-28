@@ -39,9 +39,9 @@ public sealed class OccupationPageTests : IDisposable
         var occupation = new Occupation { Slug = "physician", Category = "trade" };
         for (var i = 0; i < SiteLanguage.All.Count; i++)
             occupation.Labels.Add(new OccupationLabel { Language = SiteLanguage.All[i].Corpus, Name = Names[i], Masculine = Names[i], Feminine = Names[i] });
-        occupation.People.Add(new PersonOccupation { Person = person, PublicationId = "reviewed", PublicationSha256 = new string('a', 64), Provenance = "{}",
+        occupation.People.Add(new PersonOccupation { Person = person, Source = "test",
             Witnesses = [new OccupationWitness { Kind = "profession", Text = "KJV", Reference = "COL 4:14", CanonicalBook = 51,
-                CanonicalChapter = 4, CanonicalVerse = 14, Quote = "beloved physician", SourceText = "Luke, the beloved physician", SourceSha256 = new string('b', 64) }] });
+                CanonicalChapter = 4, CanonicalVerse = 14, Quote = "beloved physician" }] });
         _db.Occupations.Add(occupation);
         _db.Occupations.Add(new Occupation { Slug = "unpublished", Category = "office" });
         _db.SaveChanges();

@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Corpus;
+﻿namespace Essenthos.Core.Corpus;
 
 /// <summary>
 /// The records more than one endpoint group answers with. Everything else lives beside the
@@ -321,7 +321,18 @@ internal record TextWordResponse(
     /// its own, which is nearly every word.
     /// </summary>
     public AttachedResponse? Attached { get; init; }
+
+    /// <summary>
+    /// The occupations this word names, as a verse saying it does: <em>physician</em> of Colossians 4:14
+    /// is Luke's. Null for a word that names none, which is nearly every word.
+    /// </summary>
+    public IReadOnlyList<WordRoleResponse>? Roles { get; init; }
 }
+
+/// <param name="Occupation">The occupation's slug: <c>physician</c>.</param>
+/// <param name="Category"><c>trade</c>, <c>office</c>, <c>military_role</c>, <c>religious_role</c>, <c>heavenly_role</c> or <c>designation</c>.</param>
+/// <param name="Person">Whose it is, by slug.</param>
+internal record WordRoleResponse(string Occupation, string Category, string Person);
 
 /// <param name="Kind">
 /// <c>attached</c> where the word writes its head's inflection or function, <c>phrase-member</c>
