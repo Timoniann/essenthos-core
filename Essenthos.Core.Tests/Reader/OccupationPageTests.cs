@@ -86,6 +86,18 @@ public sealed class OccupationPageTests : IDisposable
         }
     }
 
+    [Fact]
+    public async Task APersonsPageLinksTheTradeItsLineNamesToTheOccupationsPageInEveryLanguage()
+    {
+        for (var i = 0; i < SiteLanguage.All.Count; i++)
+        {
+            var language = SiteLanguage.All[i];
+            var page = await Loader().Load(PageAddress.Parse(language.Path("/people/luke")), PageWording.Compiled(language.Code), default);
+            page.Status.Should().Be(200, $"the {language.Code} page of a person whose line names a trade renders");
+            page.Body.ToLowerInvariant().Should().Contain($"<a href=\"{language.Path("/occupations/physician")}\">{Names[i].ToLowerInvariant()}</a>");
+        }
+    }
+
     [Theory]
     [InlineData("en", "Heavenly role")]
     [InlineData("uk", "Небесна роль")]

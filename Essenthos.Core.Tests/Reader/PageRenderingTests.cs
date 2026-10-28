@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Pages;
 using FluentAssertions;
 using Xunit;
@@ -145,6 +146,32 @@ public sealed class PageRenderingTests
 
         address.Kind.ToString().Should().Be(kind);
         address.English.Should().Be(english);
+    }
+
+    [Theory]
+    [InlineData("person", "jethro", "/people/jethro")]
+    [InlineData("people", "levites", "/peoples/levites")]
+    [InlineData("observance", "passover", "/observances/passover")]
+    [InlineData("occupation", "shepherd", "/occupations/shepherd")]
+    [InlineData("deity", "baal", null)]
+    [InlineData("", "nothing", null)]
+    public void ANameInARecordsLineLinksToItsPageOrToNothing(string kind, string slug, string? path)
+    {
+        PageAddress.TargetPath(kind, slug).Should().Be(path);
+    }
+
+    [Fact]
+    public void ANameInARecordsLineWithNoPageIsSaidAsPlainWords()
+    {
+        var line = new LinePart[]
+        {
+            new("shepherd", "/occupations/shepherd"), new(", "), new("servant of "), new("someone", PageAddress.TargetPath("deity", "x")),
+        };
+        var page = PageViews.Record(SiteLanguage.Ukrainian, Ukrainian,
+            new RecordView(EntityKind.Person, "moses", "Мойсей",
+                "shepherd, servant of someone", line, 0, []));
+
+        page.Body.Should().Contain("<p><a href=\"/uk/occupations/shepherd\">shepherd</a>, servant of someone</p>");
     }
 
     [Fact]
