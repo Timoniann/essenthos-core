@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.Alexandrinus;
 
@@ -312,7 +313,7 @@ internal static partial class NtvmrTranscription
             }
         }
 
-        var surface = letters.ToString().Normalize(NormalizationForm.FormC);
+        var surface = UnicodeNormalization.Composed(letters.ToString());
         return surface == Omitted ? string.Empty : surface;
     }
 

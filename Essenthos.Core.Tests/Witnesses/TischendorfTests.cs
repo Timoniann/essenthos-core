@@ -1,4 +1,4 @@
-using System.Text;
+using Essenthos.Core.Utils;
 using System.Text.Json;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Strong;
@@ -148,7 +148,7 @@ public sealed class TischendorfTests
         Loaded.Value.Books.SelectMany(book => book.Chapters).SelectMany(chapter => chapter.Verses)
             .SelectMany(verse => verse.Words)
             .Should().OnlyContain(word =>
-                word.Lemma != null && word.Lemma == word.Lemma.Normalize(NormalizationForm.FormC));
+                word.Lemma != null && UnicodeNormalization.IsComposed(word.Lemma));
 
     /// <summary>
     /// The word as printed rather than as corrected. The Kethiv is Tischendorf's and the Qere is the
@@ -265,5 +265,24 @@ public sealed class TischendorfTests
         singular.Should().NotBeEmpty()
             .And.OnlyContain(word => word.StrongNumber == "G4771" || word.StrongNumber == "G5210");
         singular.Should().Contain(word => word.StrongNumber == "G4771");
+    }
+}
+
+/// <summary>Tischendorf's lines as the reader takes them, without the corpus.</summary>
+public sealed class TischendorfLineTests
+{
+    /// <summary>
+    /// A lemma is an identifier, and a decomposed one joins to nothing; the reader composes every
+    /// spelling it is given, so a release that arrives decomposed is stored as the others are.
+    /// </summary>
+    [Fact]
+    public void ADecomposedSpellingIsComposed()
+    {
+        var word = TischendorfReader.Read("MT 1:1.1 C βίβλος βίβλος N-NSF 976 βίβλος ! βίβλος\n")
+            .Verses.Single().Words.Single();
+
+        word.Kethiv.Should().Be("βίβλος");
+        word.Lemma.Should().Be("βίβλος");
+        word.StrongLemma.Should().Be("βίβλος");
     }
 }

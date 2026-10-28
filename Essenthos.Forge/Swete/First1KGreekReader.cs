@@ -1,4 +1,4 @@
-using System.Text;
+using Essenthos.Core.Utils;
 using System.Xml.Linq;
 
 namespace Essenthos.Core.Swete;
@@ -156,36 +156,13 @@ internal static class First1KGreekReader
     }
 
     /// <summary>
-    /// NFC, spelled out for the letters these files write. The transcription accents with oxia where
-    /// every other book of the edition, composed by its converter, writes tonos — the same accent,
-    /// which Unicode decomposes one into the other — and a word spelled with each would fold,
-    /// compare and link as two words. <see cref="string.Normalize()"/> alone is not enough: under
-    /// invariant globalization, which the tests run in, it leaves these letters as they are.
+    /// NFC. The transcription accents with oxia where every other book of the edition, composed by
+    /// its converter, writes tonos — the same accent, which Unicode decomposes one into the other — and
+    /// in Genesis it writes some breathings and accents as combining marks after their vowel. A word
+    /// spelled either way would fold, compare and link as two words, and an accent left after the
+    /// letter before a line-end hyphen would stop the two halves being joined.
     /// </summary>
-    private static string Composed(string token)
-    {
-        var builder = new StringBuilder(token.Length);
-        foreach (var letter in token)
-        {
-            builder.Append(Singletons.GetValueOrDefault(letter, letter));
-        }
-
-        return builder.ToString().Normalize(NormalizationForm.FormC);
-    }
-
-    /// <summary>
-    /// The Greek characters Unicode maps to another by canonical decomposition, one to one: the
-    /// polytonic block's oxia vowels to the tonos ones, and the ano teleia and the question mark to
-    /// the punctuation they are defined as.
-    /// </summary>
-    private static readonly Dictionary<char, char> Singletons = new()
-    {
-        ['\u1F71'] = '\u03AC', ['\u1F73'] = '\u03AD', ['\u1F75'] = '\u03AE', ['\u1F77'] = '\u03AF',
-        ['\u1F79'] = '\u03CC', ['\u1F7B'] = '\u03CD', ['\u1F7D'] = '\u03CE', ['\u1FBB'] = '\u0386',
-        ['\u1FC9'] = '\u0388', ['\u1FCB'] = '\u0389', ['\u1FD3'] = '\u0390', ['\u1FDB'] = '\u038A',
-        ['\u1FE3'] = '\u03B0', ['\u1FEB'] = '\u038E', ['\u1FF9'] = '\u038C', ['\u1FFB'] = '\u038F',
-        ['\u1FBE'] = '\u03B9', ['\u0387'] = '\u00B7', ['\u037E'] = '\u003B',
-    };
+    private static string Composed(string token) => UnicodeNormalization.Composed(token);
 
     /// <summary>
     /// A block's edges are a word boundary; an inline mark's are not, because a bracket closes before

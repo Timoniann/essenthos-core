@@ -36,6 +36,18 @@ public class NameListTests
         NameLists.Alike(NameLists.Skeleton(one, oneLanguage), NameLists.Skeleton(other, otherLanguage))
             .Should().BeGreaterThanOrEqualTo(NameLists.LeastLikeness);
 
+    /// <summary>
+    /// A letter written with a mark is read as its letter: the ñ of a Spanish spelling is n, the Ŕ of a
+    /// Latin one r, and a ç the sibilant it writes in Darby's names, so Mahçaï keeps the s of מַחְסֵיָה.
+    /// </summary>
+    [Theory]
+    [InlineData("Mahçaï", "מַחְסֵיָה")]
+    [InlineData("Peña", "Pena")]
+    [InlineData("\u0154achel", "Rachel")]
+    [InlineData("\u03A1\u0314\u03B1\u03C7\u03B7\u0301\u03BB", "\u1FEC\u03B1\u03C7\u03AE\u03BB")]
+    public void AMarkedLetterIsReadAsItsLetter(string marked, string plain) =>
+        NameLists.Skeleton(marked).Should().Be(NameLists.Skeleton(plain));
+
     /// <summary>The Septuagint read a dalet in עֵרִי; nothing in the letters says Ἀηδείς is Eri.</summary>
     [Theory]
     [InlineData("Ἀηδεὶς", "ערי")]

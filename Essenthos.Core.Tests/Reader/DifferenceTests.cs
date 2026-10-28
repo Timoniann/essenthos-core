@@ -153,6 +153,10 @@ public sealed class DifferenceDegreeTests
     [Theory]
     [InlineData("LORD,", "eng", "lord")]
     [InlineData("Ёлка", "rus", "елка")]
+    [InlineData("Él", "spa", "el")]
+    [InlineData("a\u0301", "spa", "a")]
+    [InlineData("мой", "rus", "мой")]
+    [InlineData("Її", "ukr", "її")]
     [InlineData("שָּׁמַ֛יִם", "hbo", "שמימ")]
     [InlineData("Ἐν", "grc", "εν")]
     public void AWordIsComparedByItsLetters(string surface, string language, string letters) =>

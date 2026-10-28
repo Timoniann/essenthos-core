@@ -433,16 +433,27 @@ internal static class DifferenceEndpoints
         }
 
         var letters = new StringBuilder(surface.Length);
-        foreach (var c in surface.Normalize(NormalizationForm.FormD))
+        foreach (var rune in surface.EnumerateRunes())
         {
-            if (char.IsLetterOrDigit(c))
+            var written = rune.ToString();
+            foreach (var c in Cyrillic(rune) ? written : UnicodeNormalization.Decomposed(written))
             {
-                letters.Append(char.ToLowerInvariant(c));
+                if (char.IsLetterOrDigit(c))
+                {
+                    letters.Append(char.ToLowerInvariant(c));
+                }
             }
         }
 
         return letters.ToString().Replace('ё', 'е');
     }
+
+    /// <summary>
+    /// A Cyrillic letter is kept whole: й, ї and ў are letters of their alphabets, not и, і and у
+    /// with a diacritic, and мой and мои are two words. Only ё, which Russian prints or leaves out at
+    /// will, is folded onto е.
+    /// </summary>
+    private static bool Cyrillic(Rune rune) => rune.Value is >= 0x0400 and <= 0x052F;
 
     /// <summary>Whether any link at all joins the two texts, in either direction.</summary>
     private static async Task<bool> Linked(AppDbContext db, int a, int b, CancellationToken cancellationToken) =>

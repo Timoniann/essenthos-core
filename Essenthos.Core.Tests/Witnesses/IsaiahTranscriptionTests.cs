@@ -80,6 +80,20 @@ public class First1KGreekReaderTests
              </div>
              """).Should().Equal("48.1.1 Ἠσαίας·");
 
+    /// <summary>
+    /// Swete's Genesis writes some breathings and accents as combining marks after their vowel. They are
+    /// composed, and an accent the printer left before a line-end hyphen no longer stops the two halves
+    /// being read as one word.
+    /// </summary>
+    [Fact]
+    public void CombiningMarksAreComposedAndTheWordIsJoinedAcrossTheLine() =>
+        Read("""
+             <div type="textpart" subtype="chapter" n="26">
+             <div type="textpart" subtype="verse" n="7"><p>ε&#x0313;πηρω&#x0301;-
+             <lb n="6"/> τησαν δὲ ε&#x0313;λα&#x0301;λησεν</p></div>
+             </div>
+             """).Should().Equal("48.26.7 ἐπηρώτησαν", "48.26.7 δὲ", "48.26.7 ἐλάλησεν");
+
     [Fact]
     public void AnOpeningBracketStandsAlone() =>
         Read("""
