@@ -1,13 +1,13 @@
 {
   "Alexandrinus": {
-    "bytes": 6036599,
-    "files": 10,
-    "sha256": "961c8080d47419f873b8d52042d5b3a89241044f53a02f3e3c6b20bda404f824"
+    "bytes": 6032440,
+    "files": 9,
+    "sha256": "5b9c527a621867c11f5e993039e2e75e2ccfff874f937f1eb7a6efb6ea0efb19"
   },
   "Almeida1911": {
-    "bytes": 5188215,
-    "files": 3,
-    "sha256": "d3f73402053231c3411cad0cc5cf4337fb18a59e83688705b33a0a1231d0b1cd"
+    "bytes": 5184474,
+    "files": 2,
+    "sha256": "44aca6756ba277473ed66faf49b23048d85985e7974a50fc5394d497bc049107"
   },
   "AmericanStandard1901": {
     "bytes": 19357510,
@@ -40,9 +40,9 @@
     "sha256": "7e6aaa7e7f7aac37733bb117df2ec09dfc5a8e90086d0186bfafdb27c6d08768"
   },
   "BiblicaUkrainian2022": {
-    "bytes": 2134658,
-    "files": 30,
-    "sha256": "c4f75235471b502fc34eb61c942defa524aed3df0625c1adae0e0adf9f023391"
+    "bytes": 2131478,
+    "files": 29,
+    "sha256": "b298b63cc6558c15ae060659598da5894df8cfe7bf600c10e5fc881cab946808"
   },
   "BrentonEnglish": {
     "bytes": 4467523,
@@ -60,9 +60,9 @@
     "sha256": "53219a167c7e9aea4cebe3218c5ee1a6794795434def0e22f753f5c172324c8d"
   },
   "ClearBible": {
-    "bytes": 1326694987,
-    "files": 103,
-    "sha256": "1fc235c38d7d66d11c0350b00df46dd9bafc7430d0892969e5d0e4d5d8f90fff"
+    "bytes": 1326683562,
+    "files": 102,
+    "sha256": "6276b639803981e002b249c941943045061edf15a6b1e721a612a5bf161120a6"
   },
   "DarbyFrench": {
     "bytes": 3431375,
@@ -90,9 +90,9 @@
     "sha256": "6d6165ae6a757bd8ae8277599a0d238c13e57bb98426804b7c616cbd8cd98f3f"
   },
   "ElizabethBible": {
-    "bytes": 2181718,
-    "files": 8,
-    "sha256": "c1f3bc6ac38e5cfa3c2c3285e1c9220fb414c4eeaa166e51f0bbf9fe3a072546"
+    "bytes": 2178500,
+    "files": 7,
+    "sha256": "82f27bdc75cf6b36f0b506d41bedf1aa28f637f6bd66ab2e9a961f0af3f11956"
   },
   "Geneva1599": {
     "bytes": 4447845,
@@ -149,6 +149,11 @@
     "files": 4,
     "sha256": "f6da274e9a13417996327282e84761ef1ef6c6f445e6630ec1db6a395f33f965"
   },
+  "Models": {
+    "bytes": 105626406,
+    "files": 16,
+    "sha256": "e7e07c174d9e6536d104a3359a967ed03cd424586cdbad4b786e431766fd4123"
+  },
   "MorphGnt": {
     "bytes": 8938504,
     "files": 28,
@@ -170,9 +175,9 @@
     "sha256": "e6b39b02e268a1b540cff8d8e0ac954721653fad16d901c2c58f21c7fbd19bad"
   },
   "OpenBible": {
-    "bytes": 14847145,
-    "files": 4,
-    "sha256": "dd3e31041750708cf4a70ded443fb3fc254118f2f80882dd86c9b67d701e19af"
+    "bytes": 200533638,
+    "files": 6,
+    "sha256": "2869859a610d0c3fd7f8cb11475b84dc2c0aaf308198693e262ab5292cc01e9f"
   },
   "OpenBibleCrossReferences": {
     "bytes": 8316252,
@@ -194,6 +199,11 @@
     "files": 3,
     "sha256": "b1e2a9cc6d57ea781214f6933118a81e86f4cc744e11e2d2c54b67438c4ddbac"
   },
+  "PlaceLocationSources": {
+    "bytes": 1066648,
+    "files": 5,
+    "sha256": "1be84641a9a0b54c654deca555b9d138153a82ad086ee79b85e11fd1e873e15d"
+  },
   "ReinaValera1909": {
     "bytes": 12465900,
     "files": 67,
@@ -205,9 +215,9 @@
     "sha256": "ce666d8c7b89f00fd0c5fbe2209373c852ab6db4fe8ade7602ba198432c9cfe0"
   },
   "SBLGNT": {
-    "bytes": 1795210,
-    "files": 31,
-    "sha256": "c95b75b7ec55b4aaf147c2ccf8ed63fdbb97e528c1c17d59ee853d6c2609d89a"
+    "bytes": 1792491,
+    "files": 30,
+    "sha256": "b36dd971285114f8b05a2dbfc0b4d3688f51bab32f4f596327168a04aa295ff2"
   },
   "STEPBible": {
     "bytes": 70208423,
@@ -240,9 +250,9 @@
     "sha256": "5e26d19541098089aef77125db21311603d9b9394428bfd21a4283e5ae088f30"
   },
   "SenseReadings": {
-    "bytes": 3342878,
+    "bytes": 4043203,
     "files": 26,
-    "sha256": "3b6c9bc2b19064e8ac5f69f9ea8364f7ca5e4472817ac8125eddd617c669466d"
+    "sha256": "625c3ec1f7f071d3b67d14bed6312ce6066ef816715953cc23963c0bae1c890e"
   },
   "Septuagint": {
     "bytes": 7207010,
@@ -250,9 +260,9 @@
     "sha256": "4e797384dcc7916fdd54d58dcb730853af3994d9d62a238d7fb6d4558fed83c8"
   },
   "Sinaiticus": {
-    "bytes": 5526188,
-    "files": 4,
-    "sha256": "1de31c5cb442cb26642b632f6558ff15a0cea32c7ab1b0aabbf41ef165f07a89"
+    "bytes": 5522914,
+    "files": 3,
+    "sha256": "8ee2f81c7894deda265cec70d5d196fa976eb61be5ae5b4e9eed797bcba48db6"
   },
   "Strong": {
     "bytes": 9072609,
@@ -260,9 +270,9 @@
     "sha256": "ab3f349ae0a0e3b585d17425749803f3c61699ba4bcc5d72f36ae411de121d3c"
   },
   "Swete": {
-    "bytes": 13038334,
-    "files": 61,
-    "sha256": "9e5e793e158155ef13b75208c1438a8402d2a7ae18f36477bf25e07597d2cc76"
+    "bytes": 13024761,
+    "files": 60,
+    "sha256": "66f1be40e479aef041027008fdfff0a23a3e89682c6a47649464ca670b42a773"
   },
   "SweteScans": {
     "bytes": 386558821,
@@ -305,9 +315,9 @@
     "sha256": "1c4f93ad52cb63f8a3e8f6f2b30947fa78b036302ca8fb0a9799c2527b87f54c"
   },
   "UDPipe": {
-    "bytes": 80744638,
-    "files": 8,
-    "sha256": "93b2a167aced03f91bfbaf6039899f29965fbc8042c00881792ff6538e97f013"
+    "bytes": 376578877,
+    "files": 23,
+    "sha256": "f6d264b06ab42164fa7918c8b06a20339221461e282281619dec9803c677b42b"
   },
   "VanDyck1865": {
     "bytes": 7822806,
@@ -315,9 +325,9 @@
     "sha256": "fa9ac5dbc91f682346afa650ee064883d656a2e57ad5cd1f0d51fd4165cb3988"
   },
   "Vaticanus": {
-    "bytes": 4866260,
-    "files": 4,
-    "sha256": "a019d4449e3196759272a363d4c73fcdfec4c26ef6f81736f40acfbd657e899c"
+    "bytes": 4863612,
+    "files": 3,
+    "sha256": "bbae99f0cd1aadba2f48a013688b42bd785eda621096bff700d2231b9701e4f5"
   },
   "Versification": {
     "bytes": 5790928,
