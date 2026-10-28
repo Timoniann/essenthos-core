@@ -51,7 +51,11 @@ public static class DatasetEndpoints
                     dataset.Contains is null
                         ? []
                         : [.. dataset.Contains.Select(work => new WorkResponse(
-                            work.Name, work.Author, work.Licence, work.LicenceUrl, work.Covers))]);
+                            work.Name, work.Author, work.Licence, work.LicenceUrl, work.Covers))])
+                {
+                    Terms = ReuseTerms.Of(licence.Item1),
+                    RightsHolderUrl = dataset.HolderUrl,
+                };
             }).ToList();
 
             return Results.Ok(new DatasetListResponse(answers, [.. tally.Undeclared]));
@@ -176,7 +180,8 @@ public static class DatasetEndpoints
         return [.. rows.Select(row => (row.Source, row.Rows))];
     }
 
-    private static int Of(IEnumerable<(string Source, int Rows)> counted, Datasets.Dataset dataset) =>
+    /// <summary>The rows credited to this dataset: each row once, to the dataset with the longest claim on it.</summary>
+    internal static int Of(IEnumerable<(string Source, int Rows)> counted, Datasets.Dataset dataset) =>
         counted.Where(row => Datasets.Claims(dataset, row.Source)).Sum(row => row.Rows);
 
     private static IEnumerable<(string Source, int Rows)> Undeclared(
@@ -218,7 +223,17 @@ public record DatasetResponse(
     string? Citation,
     string? Obliges,
     DatasetCounts Counts,
-    IList<WorkResponse> Contains);
+    IList<WorkResponse> Contains)
+{
+    /// <summary>
+    /// What its licence lets a reader do, in one word: <c>free</c>, <c>by</c>, <c>by-sa</c>,
+    /// <c>by-nc</c>, <c>by-nc-sa</c> or <c>own</c>. See <see cref="ReuseTerms"/>.
+    /// </summary>
+    public string Terms { get; init; } = ReuseTerms.Own;
+
+    /// <summary>The rights holder's own site, where it is not <see cref="Url"/>; null otherwise.</summary>
+    public string? RightsHolderUrl { get; init; }
+}
 
 /// <param name="Covers">Which part of the dataset is this work's, so the credit lands on the right rows.</param>
 public record WorkResponse(

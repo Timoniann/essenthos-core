@@ -75,7 +75,11 @@ internal sealed class DownloadsCatalogue(string? folder, string? baseUrl, ILogge
             manifest.Fingerprint,
             [.. manifest.Texts.Select(t => new DownloadResponse(
                 t.Slug, t.Name, t.NameNative, t.Language, t.Kind, t.Licence, t.LicenceUrl, t.RightsHolder, t.Citation,
-                t.Books, t.Verses, Of(t.File), Of(t.Attribution)))]);
+                t.Books, t.Verses, Of(t.File), Of(t.Attribution))
+            {
+                Terms = TextRights.Terms(t.Slug, t.Licence, t.Redistribution),
+                TermsNote = TextRights.Note(t.Slug),
+            })]);
     }
 
     /// <summary>
@@ -128,7 +132,14 @@ internal record DownloadResponse(
     int Books,
     int Verses,
     DownloadFile File,
-    DownloadFile Attribution);
+    DownloadFile Attribution)
+{
+    /// <summary>What the text's licence lets a reader do with the file, as the text listings word it.</summary>
+    public string? Terms { get; init; }
+
+    /// <summary>What the licence's name leaves unsaid, keyed by interface language; null for most texts.</summary>
+    public IReadOnlyDictionary<string, string>? TermsNote { get; init; }
+}
 
 /// <param name="Url">Where it can be fetched, or null while no address for the files is configured.</param>
 /// <param name="Sha256">The checksum a downloader can compare the file with.</param>

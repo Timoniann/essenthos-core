@@ -93,6 +93,25 @@ internal record CorpusResponse(
     public string? Redistribution { get; init; }
 
     /// <summary>
+    /// What the licence lets a reader do, in one word a page says in the reader's language:
+    /// <c>free</c>, <c>by</c>, <c>by-sa</c>, <c>by-nc</c>, <c>by-nc-sa</c> or <c>own</c> (terms of
+    /// the source's own, or none stated). See <see cref="ReuseTerms"/>.
+    /// </summary>
+    public string? Terms { get; init; }
+
+    /// <summary>
+    /// What the licence's name leaves unsaid, in a sentence or two keyed by interface language —
+    /// a public domain that holds in one country, a copy whose terms add a condition. Null for most.
+    /// </summary>
+    public IReadOnlyDictionary<string, string>? TermsNote { get; init; }
+
+    /// <summary>
+    /// The rights holder's own site, where the text was read from a copy somebody else serves.
+    /// Null where none is known.
+    /// </summary>
+    public string? RightsHolderUrl { get; init; }
+
+    /// <summary>
     /// The other identifiers this text answers to, where other Bible software spells it
     /// differently: the Synodal is <c>SYNO</c> at YouVersion as well
     /// as <c>RUSV</c> here. Any of them may be sent in a path or in <c>?corpora=</c>, and

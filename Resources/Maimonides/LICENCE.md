@@ -11,7 +11,7 @@ not carried in the repository; `python scripts/maimonides.py --fetch` puts them 
 |---|---|---|
 | The count and its numbers | Maimonides, *Sefer HaMitzvot*, read in the Hebrew of the Warsaw 1883 edition | Public domain by age |
 | The titles and the verse references | Moses Hyamson's English of the list of commandments that opens the *Mishneh Torah* (Bloch, New York, 1937–1949) | Public domain (see below) |
-| Which of Hyamson's numbers answers to which of the *Sefer HaMitzvot*'s, the verses moved to the English numbering, and the five references marked *ours* | This project | CC BY 4.0, as the rest of what Essenthos makes |
+| Which of Hyamson's numbers answers to which of the *Sefer HaMitzvot*'s, the verses moved to the English numbering, and the five references marked *ours* | This project | The licence of Essenthos's own work (CC BY-NC 4.0 as of 2026-10-28) |
 
 Both texts were taken from Sefaria's API on **2026-09-23**:
 
@@ -53,3 +53,21 @@ this project moved or supplied.
   verse in brackets and without the explanation that follows it. Nothing is reworded.
 - The titles are English only. No translation into the other languages the reader offers is in the
   public domain, and none has been made here.
+
+## Which English this is, checked again on 2026-10-28
+
+The English is Hyamson's translation of the *Mishneh Torah*'s list, not a translation of the *Sefer
+HaMitzvot*: Sefaria holds no Hyamson *Sefer HaMitzvot*. Its version lists, read through its API on
+2026-10-28:
+
+- `api/texts/versions/Sefer_HaMitzvot`: the Hebrew "Sefer HaMitzvot, Warsaw 1883" (Public Domain),
+  and in English only Francis Nataf's "Sefaria Edition 2021" (licence "unknown"), the "Sefaria
+  Community Translation" (CC0) and four partial or borrowed versions marked "unknown".
+- `api/texts/versions/Mishneh_Torah,_Positive_Mitzvot`: among others "The Mishneh Torah by
+  Maimonides. trans. by Moses Hyamson, 1937-1949", Public Domain, source
+  <https://www.nli.org.il/he/books/NNL_ALEPH002108865> — the version the four files under `sefaria/`
+  name in their own `versions` field.
+
+So the credit names Hyamson's *Mishneh Torah* for the titles and the Hebrew *Sefer HaMitzvot* for the
+count, and links Sefaria's *Mishneh Torah* list rather than its *Sefer HaMitzvot*, whose English is
+not what is shown.
