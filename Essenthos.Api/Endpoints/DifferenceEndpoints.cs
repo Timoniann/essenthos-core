@@ -433,16 +433,40 @@ internal static class DifferenceEndpoints
         }
 
         var letters = new StringBuilder(surface.Length);
-        foreach (var c in surface.Normalize(NormalizationForm.FormD))
+        foreach (var c in surface)
         {
-            if (char.IsLetterOrDigit(c))
+            if (c < FirstDecomposable || Cyrillic(c) || char.IsSurrogate(c))
             {
-                letters.Append(char.ToLowerInvariant(c));
+                Keep(letters, c);
+                continue;
+            }
+
+            foreach (var part in UnicodeNormalization.Decomposed(c.ToString()))
+            {
+                Keep(letters, part);
             }
         }
 
         return letters.ToString().Replace('ё', 'е');
     }
+
+    /// <summary>The first character Unicode decomposes: everything before it is already its letters.</summary>
+    private const char FirstDecomposable = 'À';
+
+    private static void Keep(StringBuilder letters, char c)
+    {
+        if (char.IsLetterOrDigit(c))
+        {
+            letters.Append(char.ToLowerInvariant(c));
+        }
+    }
+
+    /// <summary>
+    /// A Cyrillic letter is kept whole: й, ї and ў are letters of their alphabets, not и, і and у
+    /// with a diacritic, and мой and мои are two words. Only ё, which Russian prints or leaves out at
+    /// will, is folded onto е.
+    /// </summary>
+    private static bool Cyrillic(char c) => c is >= 'Ѐ' and <= 'ԯ';
 
     /// <summary>Whether any link at all joins the two texts, in either direction.</summary>
     private static async Task<bool> Linked(AppDbContext db, int a, int b, CancellationToken cancellationToken) =>

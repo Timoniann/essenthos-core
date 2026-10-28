@@ -300,6 +300,30 @@ public sealed class FamilyLineTests : IDisposable
             .Which.ThroughSpouse.Should().Be(InLaws.Wife);
     }
 
+    /// <summary>
+    /// A people's line agrees with its plural subject: the Anakim are Anak's descendants and lived in
+    /// Hebron, not a descendant who lived there (DEU 2:10-11; JOS 14:15).
+    /// </summary>
+    [Fact]
+    public async Task APeoplesLineIsSaidInThePlural()
+    {
+        _forms.Clear();
+        Person("anakim", "Anakim", null, ("ukr", "анаківці", "анаківців"));
+        Person("anak", "Anak", Male, ("ukr", "Енак", "Енака"), ("deu", "Enak", "Enaks"), ("spa", "Anac", null));
+        Person("hebron", "Hebron", null, ("ukr", "Хеврон", "Хеврону"), ("deu", "Hebron", "Hebrons"), ("spa", "Hebrón", null));
+        _people["anakim"].Kind = EntityKind.People;
+        _db.SaveChanges();
+        AddForms();
+        Tie("anakim", DescriptorRelations.DescendantOf, "anak");
+        Tie("anakim", DescriptorRelations.LivedIn, "hebron");
+        await _db.SaveChangesAsync();
+
+        (await Line("anakim", "ukr")).Should().Contain("нащадки Енака").And.Contain("жили у ").And.NotContain("жив у ");
+        (await Line("anakim", "deu")).Should().Contain("Nachkommen Enaks").And.Contain("wohnten in Hebron");
+        (await Line("anakim", "spa")).Should().Contain("descendientes de Anac").And.Contain("habitaron en Hebrón");
+        (await Line("anakim", "eng")).Should().Contain("descendants of Anak").And.Contain("lived in Hebron");
+    }
+
     private async Task<string> Line(string slug, string language) =>
         string.Concat((await Descriptors.Of(_db, slug, language, default))!.Parts.Select(p => p.Text));
 

@@ -1,6 +1,7 @@
 using System.Text;
 using Essenthos.Core.Door43;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -222,6 +223,7 @@ internal static class InterlinearJoin
         var here = 0;
         var taken = new HashSet<int>();
         var language = original[0].Language;
+        var writings = original.Select(word => Written(word.Written, language)).ToArray();
 
         foreach (var span in verse.Spans)
         {
@@ -231,7 +233,7 @@ internal static class InterlinearJoin
             var byNumber = false;
             if (failure == InterlinearSpanFailure.None)
             {
-                (theirs, loose, failure) = FindOriginal(original, span, language);
+                (theirs, loose, failure) = FindOriginal(original, writings, span, language);
                 if (failure != InterlinearSpanFailure.None
                     && ByNumber(original, span, verse.Originals, language) is { Count: > 0 } numbered)
                 {
@@ -304,13 +306,14 @@ internal static class InterlinearJoin
     /// </summary>
     private static (List<int> Words, bool Loose, InterlinearSpanFailure Failure) FindOriginal(
         IReadOnlyList<InterlinearWord> words,
+        string[] writings,
         AlignmentSpan span,
         string language)
     {
         var morphemes = span.Morphemes;
         var written = morphemes.Select(morpheme => Written(morpheme, language)).ToArray();
         var folded = morphemes.Select(morpheme => WordFolding.Fold(morpheme, language)).ToArray();
-        var byLetters = Places(words, folded, word => word.Folded);
+        var byLetters = Places(words.Count, folded, at => words[at].Folded);
         if (byLetters.Count == 0)
         {
             return ([], false, InterlinearSpanFailure.OriginalWordAbsent);
@@ -318,7 +321,7 @@ internal static class InterlinearJoin
 
         var stated = span.Occurrences > 0 ? span.Occurrences : 1;
         var occurrence = span.Occurrence > 0 ? span.Occurrence : 1;
-        var byWriting = Places(words, written, word => Written(word.Written, language));
+        var byWriting = Places(words.Count, written, at => writings[at]);
         var (places, loose) = byWriting.Count == stated
             ? (byWriting, false)
             : byLetters.Count == stated
@@ -420,15 +423,15 @@ internal static class InterlinearJoin
     /// divided twice, not a word the witness lacks.
     /// </summary>
     private static List<List<int>> Places(
-        IReadOnlyList<InterlinearWord> words,
+        int count,
         string[] morphemes,
-        Func<InterlinearWord, string> form)
+        Func<int, string> form)
     {
         var places = new List<List<int>>();
-        for (var start = 0; start < words.Count; start++)
+        for (var start = 0; start < count; start++)
         {
             var used = new List<int>(morphemes.Length);
-            if (Spells(words, start, morphemes, 0, form, used))
+            if (Spells(count, start, morphemes, 0, form, used))
             {
                 places.Add(used);
             }
@@ -438,11 +441,11 @@ internal static class InterlinearJoin
     }
 
     private static bool Spells(
-        IReadOnlyList<InterlinearWord> words,
+        int count,
         int at,
         string[] morphemes,
         int from,
-        Func<InterlinearWord, string> form,
+        Func<int, string> form,
         List<int> used)
     {
         if (from == morphemes.Length)
@@ -450,12 +453,12 @@ internal static class InterlinearJoin
             return true;
         }
 
-        if (at >= words.Count)
+        if (at >= count)
         {
             return false;
         }
 
-        var word = form(words[at]);
+        var word = form(at);
         if (word.Length == 0)
         {
             // BHSA keeps the article a preposition swallowed as a word with nothing printed; it
@@ -466,7 +469,7 @@ internal static class InterlinearJoin
             }
 
             used.Add(at);
-            if (Spells(words, at + 1, morphemes, from, form, used))
+            if (Spells(count, at + 1, morphemes, from, form, used))
             {
                 return true;
             }
@@ -487,7 +490,7 @@ internal static class InterlinearJoin
             if (spelled.Length == word.Length)
             {
                 used.Add(at);
-                if (Spells(words, at + 1, morphemes, through + 1, form, used))
+                if (Spells(count, at + 1, morphemes, through + 1, form, used))
                 {
                     return true;
                 }
@@ -505,7 +508,7 @@ internal static class InterlinearJoin
     /// </summary>
     private static string Written(string word, string language)
     {
-        var normal = word.Normalize(NormalizationForm.FormC);
+        var normal = UnicodeNormalization.Composed(word);
         return language == "grc"
             ? normal.ToLowerInvariant().Replace('’', '\'').Replace('ʼ', '\'').Replace('᾽', '\'')
             : normal;

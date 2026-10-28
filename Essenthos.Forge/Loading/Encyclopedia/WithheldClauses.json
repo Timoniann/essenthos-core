@@ -87,13 +87,6 @@
       "why": "Not written while BibleData's rows for the pair said: becher father elioenai-3; elioenai-3 son becher. This corpus holds for the pair: becher father-of elioenai-3 (1CH 7:8, a model)."
     },
     {
-      "entity": "eshtemoa-2",
-      "relation": "son-of",
-      "target": "hodiah",
-      "reference": "1CH 4:19",
-      "why": "Not written while BibleData's rows for the pair said: eshtemoa-2 grandson hodiah, which the owner removed; hodiah grandfather eshtemoa-2, which the owner removed. This corpus holds for the pair: hodiah mother-of eshtemoa-2 (1CH 4:19, a model)."
-    },
-    {
       "entity": "hananiah-9",
       "relation": "descendant-of",
       "target": "jeremiah-7",
@@ -127,13 +120,6 @@
       "target": "abram",
       "reference": "1CH 1:32",
       "why": "Read at the same confidence as wife-of (GEN 25:1 calls her Abraham's wife, 1CH 1:32 his concubine), so the two would stand disputed and neither be written. BibleData's row said wife, which settled the pair as wife-of; this reading is held so that wife-of stays written."
-    },
-    {
-      "entity": "machir",
-      "relation": "wife-of",
-      "target": "maacah-5",
-      "reference": "1CH 7:15",
-      "why": "Not written while BibleData's rows for the pair said: maacah-5 wife machir; machir husband maacah-5. This corpus holds for the pair: maacah-5 wife-of machir (1CH 7:16, a model)."
     },
     {
       "entity": "manasseh-2",

@@ -295,3 +295,34 @@ public sealed class CodexLoadTests : IDisposable
         }
     }
 }
+
+/// <summary>An INTF transcription read without the corpus, on a page made up here.</summary>
+public sealed class NtvmrWordTests
+{
+    /// <summary>
+    /// A letter typed with its mark as a second character is stored composed, as every other word of
+    /// the manuscripts is, so that it compares and folds as the same word.
+    /// </summary>
+    [Fact]
+    public void AWordIsStoredComposed()
+    {
+        var path = Path.GetTempFileName();
+        try
+        {
+            File.WriteAllText(path,
+                """
+                <TEI xmlns="http://www.tei-c.org/ns/1.0"><text><body><div type="book">
+                <ab n="B04K1V1"><w>ε&#x0313;ν</w> <w>αρχη</w><pc>&#x0387;</pc></ab>
+                </div></body></text></TEI>
+                """);
+            var words = NtvmrTranscription.Books(path, 1, NtvmrTranscription.Alexandrinus)
+                .Single().Chapters.Single().Verses.Single().Words;
+
+            words.Select(word => word.Surface).Should().Equal("ἐν", "αρχη");
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
+}

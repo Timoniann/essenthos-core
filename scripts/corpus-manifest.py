@@ -71,10 +71,12 @@ if selected:
     if missing:
         raise SystemExit('Unknown corpus folder(s): ' + ', '.join(sorted(missing)))
 
-# The aligner's own trained workspaces (Resources/Alignments): ours, not a fetched source, ten gigabytes
-# rewritten whenever a pair is trained again. The backup mirrors them; a fingerprint of them would only
-# ever say that a training ran.
-generated = {'Alignments'}
+# What the project makes rather than fetches, which the backup mirrors and a fingerprint would only ever
+# say had been made again: the aligner's trained workspaces (Resources/Alignments, ten gigabytes
+# rewritten whenever a pair is trained), the encyclopedia's own files and the owner's console log and
+# review lists (Resources/Essenthos, written on every decision and every generation run), and the
+# pictures (Resources/Images, drawn, sized and chosen again whenever a portrait or a model changes).
+generated = {'Alignments', 'Essenthos', 'Images'}
 
 for name in sorted(selected if selected is not None else available):
     d = os.path.join(root, name)

@@ -52,6 +52,25 @@ public sealed partial class GenealogyReadingTests
         Claims("maacah-3").Should().Contain(c => c.Relation == "mother-of" && c.Target == "abijam");
     }
 
+    /// <summary>
+    /// A line says every clause of its record, so a clause that contradicts a decided relationship stays
+    /// on the page however the relationships settle. Eshtemoa is Hodiah's grandson, as Hodiah's decided
+    /// record says (1CH 4:19); Machir is Maachah's husband (1CH 7:15-16); Mordecai is Esther's cousin, the
+    /// owner's decision, and not her father (EST 2:7).
+    /// </summary>
+    [Fact]
+    public void ALineSaysTheRelationTheDecidedRecordsSay()
+    {
+        Claims("eshtemoa-2").Should().ContainSingle(c => c.Target == "hodiah")
+            .Which.Should().Match<DescriptorClaimRecord>(c => c.Relation == "grandson-of" && c.DecidedBy != null);
+        Claims("hodiah").Should().Contain(c => c.Relation == "grandfather-of" && c.Target == "eshtemoa-2");
+        Claims("machir").Should().ContainSingle(c => c.Target == "maacah-5")
+            .Which.Should().Match<DescriptorClaimRecord>(c => c.Relation == "husband-of" && c.DecidedBy != null);
+        Claims("mordecai-2").Where(c => c.Target == "hadassah").Select(c => c.Relation).Should().Equal("cousin-of");
+        OwnRelationshipLoader.WithheldClauses().Clauses.Should().NotContain(c =>
+            (c.Entity == "eshtemoa-2" && c.Target == "hodiah") || (c.Entity == "machir" && c.Target == "maacah-5"));
+    }
+
     /// <summary>Joseph's Jacob and Heli, and Zerubbabel's Shealtiel, are fathers the text gives, each decided.</summary>
     [Fact]
     public void TheTwoFathersTheTextGivesAreBothDecided()

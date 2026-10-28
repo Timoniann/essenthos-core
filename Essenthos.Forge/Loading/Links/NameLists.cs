@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text;
+using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -438,13 +439,13 @@ internal static class NameLists
     }
 
     /// <summary>
-    /// The letters of a word, lower case and without marks. The build runs with invariant
-    /// globalization, under which decomposing does nothing, so a consonant written with its mark in one
-    /// character — the ῥ of Ῥαχήλ and Ῥώμη — keeps it and has to be read as itself.
+    /// The letters of a word, lower case and without marks: the ῥ of Ῥαχήλ is ρ and the ñ of a Spanish
+    /// spelling n. A ç is an s, the sibilant it writes in the French and Portuguese names (Darby's
+    /// Asçaël and Besçor for עֲשָׂהאֵל and בְּשׂוֹר), not the c its cedilla sits on.
     /// </summary>
     private static string Plain(string written)
     {
-        var decomposed = written.ToLowerInvariant().Normalize(NormalizationForm.FormD);
+        var decomposed = UnicodeNormalization.Decomposed(written.ToLowerInvariant().Replace('ç', 's'));
         var plain = new StringBuilder(decomposed.Length);
         foreach (var letter in decomposed)
         {
@@ -489,7 +490,7 @@ internal static class NameLists
             'm' or 'μ' or 'м' or 'מ' or 'ם' => "M",
             'n' or 'ν' or 'н' or 'נ' or 'ן' => "N",
             'p' or 'f' or 'π' or 'φ' or 'п' or 'ф' or 'פ' or 'ף' => "P",
-            'r' or 'ρ' or 'ῥ' or 'ῤ' or 'р' or 'ר' => "R",
+            'r' or 'ρ' or 'р' or 'ר' => "R",
             's' or 'z' or 'σ' or 'ς' or 'ζ' or 'с' or 'з' or 'ж' or 'ц' or 'ш' or 'щ'
                 or 'ס' or 'צ' or 'ץ' or 'ש' or 'ז' => "S",
             't' or 'θ' or 'τ' or 'т' or 'ט' or 'ת' => "T",

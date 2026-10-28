@@ -1,9 +1,9 @@
-using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Utils;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -46,7 +46,7 @@ public sealed class SpelledNameLoaderTests : IDisposable
         Lemma(3, Paul, "G3972");
         Lemma(4, "τίμιος", "G5093");
 
-        Add("timothy", "Timothy", Timothy.Normalize(NormalizationForm.FormD), null);
+        Add("timothy", "Timothy", UnicodeNormalization.Decomposed(Timothy), null);
         Add("apollos", "Apollos", Apollos, null);
         Add("apollos-2", "Apollos of Corinth", Apollos, null);
         Add("paul", "Paul", Paul, "G3972");

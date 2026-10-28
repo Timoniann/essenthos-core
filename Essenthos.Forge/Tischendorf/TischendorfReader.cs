@@ -1,4 +1,4 @@
-using System.Text;
+using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.Tischendorf;
 
@@ -173,7 +173,7 @@ internal static class TischendorfReader
     /// side of it cost a day: GLAUx's Greek lemmas arrived decomposed and Nestle's were composed, so
     /// every join between the two by lemma returned nothing at all.
     /// </summary>
-    private static string Normalised(string value) => value.Normalize(NormalizationForm.FormC);
+    private static string Normalised(string value) => UnicodeNormalization.Composed(value);
 
     private static (int Chapter, int Number, int Index) Reference(string reference, string line)
     {

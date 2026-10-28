@@ -5,7 +5,9 @@ namespace Essenthos.Core.Endpoints;
 /// <summary>
 /// What a clause says of a woman, where the language says it of her in the feminine: Sarah is
 /// <em>похована у Махпелі</em>, not <em>похований</em>, Rahab <em>жила у Єрихоні</em>, Deborah a
-/// <em>пророчиця</em>, a <em>Prophetin</em> and a <em>profetisa</em>.
+/// <em>пророчиця</em>, a <em>Prophetin</em> and a <em>profetisa</em>. And what it says of a people,
+/// which agrees with a plural: the Anakim <em>жили у Хевроні</em>, <em>wohnten in Hebron</em> and
+/// <em>habitaron en Hebrón</em>, and are the <em>descendants of Anak</em>.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -25,14 +27,84 @@ namespace Essenthos.Core.Endpoints;
 internal static partial class DescriptorPhrasings
 {
     /// <summary>
-    /// The phrasing for this relation said of a subject of this sex, where the language has a feminine
-    /// for it and the subject is a woman; null where the table's own phrasing stands.
+    /// The phrasing for this relation said of this subject: the plural where the subject is a people
+    /// and the language agrees with it, the feminine where the subject is a woman and the language has
+    /// one; null where the table's own phrasing stands.
     /// </summary>
-    public static Phrasing? OfSubject(string? language, string relation, string? sex) =>
-        language is not null && sex == SharedParents.Female
-                             && Feminine.TryGetValue((language, relation), out var phrasing)
-            ? phrasing
-            : null;
+    public static Phrasing? OfSubject(string? language, string relation, string? sex, bool people) =>
+        language is null ? null
+        : people ? OfAPeople.GetValueOrDefault((language, relation))
+        : sex == SharedParents.Female ? Feminine.GetValueOrDefault((language, relation))
+        : null;
+
+    /// <summary>
+    /// The relations a people is said to have whose words agree with their subject, in the plural. A
+    /// relation absent here is said one way of one and of many: <em>з племені</em>,
+    /// <em>begraben in</em>, <em>Förderer</em>, and the plural <c>struck-by</c> and
+    /// <c>descendants-of</c>, which are said of a people only.
+    /// </summary>
+    internal static IReadOnlyDictionary<(string Language, string Relation), Phrasing> OfAPeople { get; } =
+        new Dictionary<(string, string), Phrasing>
+        {
+            [(English, DescriptorRelations.AncestorOf)] = new("ancestors of ", Nominative),
+            [(English, DescriptorRelations.DescendantOf)] = new("descendants of ", Nominative),
+            [(English, DescriptorRelations.ServantOf)] = new("servants of ", Nominative),
+            [(English, DescriptorRelations.AllyOf)] = new("allies of ", Nominative),
+            [(English, DescriptorRelations.SupporterOf)] = new("supporters of ", Nominative),
+            [(English, DescriptorRelations.CompanionOf)] = new("companions of ", Nominative),
+            [(English, DescriptorRelations.FounderOf)] = new("founders of ", Nominative),
+            [(English, DescriptorRelations.HeirOf)] = new("heirs of ", Nominative),
+            [(English, DescriptorRelations.LeaderOf)] = new("leaders of ", Nominative),
+            [(English, DescriptorRelations.MasterOf)] = new("masters of ", Nominative),
+            [(English, DescriptorRelations.DiscipleOf)] = new("disciples of ", Nominative),
+            [(English, DescriptorRelations.KillerOf)] = new("killers of ", Nominative),
+
+            [(Ukrainian, DescriptorRelations.LivedIn)] = new("жили у ", Locative),
+            [(Ukrainian, DescriptorRelations.BuriedIn)] = new("поховані у ", Locative),
+            [(Ukrainian, DescriptorRelations.SupportedBy)] = new("мали підтримку від ", Genitive),
+            [(Ukrainian, DescriptorRelations.ChosenInPlaceOf)] = new("обрані замість ", Genitive),
+            [(Ukrainian, DescriptorRelations.AncestorOf)] = new("предки ", Genitive),
+            [(Ukrainian, DescriptorRelations.DescendantOf)] = new("нащадки ", Genitive),
+            [(Ukrainian, DescriptorRelations.ServantOf)] = new("слуги ", Genitive),
+            [(Ukrainian, DescriptorRelations.AllyOf)] = new("союзники ", Genitive),
+            [(Ukrainian, DescriptorRelations.SupporterOf)] = new("покровителі ", Genitive),
+            [(Ukrainian, DescriptorRelations.CompanionOf)] = new("товариші ", Genitive),
+            [(Ukrainian, DescriptorRelations.FounderOf)] = new("засновники ", Genitive),
+            [(Ukrainian, DescriptorRelations.HeirOf)] = new("спадкоємці ", Genitive),
+            [(Ukrainian, DescriptorRelations.LeaderOf)] = new("вожді ", Genitive),
+            [(Ukrainian, DescriptorRelations.MasterOf)] = new("господарі ", Genitive),
+            [(Ukrainian, DescriptorRelations.DiscipleOf)] = new("учні ", Genitive),
+            [(Ukrainian, DescriptorRelations.KillerOf)] = new("вбивці ", Genitive),
+
+            [(German, DescriptorRelations.LivedIn)] = new("wohnten in ", Locative),
+            [(German, DescriptorRelations.AncestorOf)] = new("Vorfahren ", Genitive),
+            [(German, DescriptorRelations.DescendantOf)] = new("Nachkommen ", Genitive),
+            [(German, DescriptorRelations.ServantOf)] = new("Knechte ", Genitive),
+            [(German, DescriptorRelations.AllyOf)] = new("Verbündete ", Genitive),
+            [(German, DescriptorRelations.CompanionOf)] = new("Gefährten ", Genitive),
+            [(German, DescriptorRelations.HeirOf)] = new("Erben ", Genitive),
+            [(German, DescriptorRelations.MasterOf)] = new("Herren ", Genitive),
+            [(German, DescriptorRelations.KillerOf)] = new("töteten ", Nominative),
+
+            [(Spanish, DescriptorRelations.LivedIn)] = new("habitaron en ", Nominative),
+            [(Spanish, DescriptorRelations.BuriedIn)] = new("sepultados en ", Nominative),
+            [(Spanish, DescriptorRelations.SupportedBy)] = new("sostenidos por ", Nominative),
+            [(Spanish, DescriptorRelations.CreatedBy)] = new("creados por ", Nominative),
+            [(Spanish, DescriptorRelations.ExiledBy)] = new("llevados al exilio por ", Nominative),
+            [(Spanish, DescriptorRelations.ChosenInPlaceOf)] = new("elegidos en lugar de ", Nominative),
+            [(Spanish, DescriptorRelations.AncestorOf)] = new("antepasados de ", Nominative),
+            [(Spanish, DescriptorRelations.DescendantOf)] = new("descendientes de ", Nominative),
+            [(Spanish, DescriptorRelations.ServantOf)] = new("siervos de ", Nominative),
+            [(Spanish, DescriptorRelations.AllyOf)] = new("aliados de ", Nominative),
+            [(Spanish, DescriptorRelations.SupporterOf)] = new("benefactores de ", Nominative),
+            [(Spanish, DescriptorRelations.CompanionOf)] = new("compañeros de ", Nominative),
+            [(Spanish, DescriptorRelations.FounderOf)] = new("fundadores de ", Nominative),
+            [(Spanish, DescriptorRelations.HeirOf)] = new("herederos de ", Nominative),
+            [(Spanish, DescriptorRelations.LeaderOf)] = new("líderes de ", Nominative),
+            [(Spanish, DescriptorRelations.MasterOf)] = new("amos de ", Nominative),
+            [(Spanish, DescriptorRelations.DiscipleOf)] = new("discípulos de ", Nominative),
+            [(Spanish, DescriptorRelations.KillerOf)] = new("dieron muerte a ", Nominative),
+        };
 
     internal static IReadOnlyDictionary<(string Language, string Relation), Phrasing> Feminine { get; } =
         new Dictionary<(string, string), Phrasing>

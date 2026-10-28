@@ -62,6 +62,22 @@ public class InterlinearJoinTests
         pairs.Single().To.Should().Equal(101);
     }
 
+    /// <summary>
+    /// BHSA writes a word's points in the order they were keyed, the source in Unicode's canonical
+    /// order. The two are one spelling, so the source's count of it picks the word where the bare
+    /// letters, which another word of the verse shares, cannot.
+    /// </summary>
+    [Fact]
+    public void ASpellingWhosePointsStandInAnotherOrderIsTheSameSpelling()
+    {
+        var (pairs, _) = Join(
+            [Ukrainian("небо")],
+            [Hebrew("\u05E9\u05BC\u05C1\u05B8\u05DE\u05B7\u05D9\u05B4\u05DD"), Hebrew("\u05E9\u05C1\u05B8\u05DE\u05B8\u05D9\u05DD")],
+            Span("\u05E9\u05B8\u05BC\u05C1\u05DE\u05B7\u05D9\u05B4\u05DD", "небо", occurrence: 1, occurrences: 1));
+
+        pairs.Single().To.Should().Equal(101);
+    }
+
     [Fact]
     public void AnArticleBhsaHoldsWithNothingPrintedGoesWithTheWordItStandsIn()
     {
