@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Database.Entities;
 
@@ -14,7 +13,6 @@ namespace Essenthos.Core.Database.Entities;
 /// verification compares the two for every number rather than serving either as the other.
 /// </para>
 /// </summary>
-[Index(nameof(StrongNumber), IsUnique = true)]
 public class StrongProfile
 {
     [Key]

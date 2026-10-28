@@ -39,7 +39,6 @@ namespace Essenthos.Core.Database.Entities;
 /// men called Zechariah, and it has to be expressible.
 /// </para>
 /// </summary>
-[Index(nameof(WordId))]
 [Index(nameof(EntityId))]
 [Index(nameof(WordId), nameof(EntityId), IsUnique = true)]
 public class WordEntity
@@ -87,7 +86,6 @@ public class WordEntity
 /// who checked. Flattened into one column they are indistinguishable; kept apart, a word two of them
 /// agree on is visibly better evidenced than a word only one proposed.
 /// </summary>
-[Index(nameof(WordEntityId))]
 [Index(nameof(WordEntityId), nameof(Method), nameof(Source), IsUnique = true)]
 public class WordEntityClaim
 {

@@ -31,7 +31,6 @@ namespace Essenthos.Core.Database.Entities;
 /// candidates rather than one answer.
 /// </para>
 /// </summary>
-[Index(nameof(WordId))]
 [Index(nameof(Number))]
 [Index(nameof(WordId), nameof(Number), nameof(Method), IsUnique = true)]
 public class WordStrong

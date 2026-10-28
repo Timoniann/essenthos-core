@@ -32,7 +32,6 @@ namespace Essenthos.Core.Database.Entities;
 /// plus our inference that it is the same word.
 /// </para>
 /// </summary>
-[Index(nameof(WordId))]
 [Index(nameof(WordId), nameof(Source), IsUnique = true)]
 public class WordParsing
 {
