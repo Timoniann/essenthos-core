@@ -55,7 +55,7 @@ public sealed class OccupationPageTests : IDisposable
     }
 
     private PageLoader Loader() => new(_db, new EmptyCanon(), new SiteSettingsFile(Path.Combine(_folder, "settings.json"),
-        NullLogger<SiteSettingsFile>.Instance), _cache);
+        NullLogger<SiteSettingsFile>.Instance), _cache, new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance));
 
     [Fact]
     public async Task EveryLocaleHasRealCatalogueDetailTitlesCanonicalAlternatesAndReaderLinks()
@@ -162,6 +162,7 @@ public sealed class OccupationPageTests : IDisposable
         builder.Services.AddSingleton<PageCache>();
         builder.Services.AddSingleton(new SiteSettingsFile(Path.Combine(_folder, "settings.json"), NullLogger<SiteSettingsFile>.Instance));
         builder.Services.AddSingleton<PageShell>();
+        builder.Services.AddSingleton(new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance));
         builder.Services.AddScoped<PageLoader>();
         builder.Services.AddScoped<Sitemaps>();
         await using var app = builder.Build();
@@ -174,6 +175,11 @@ public sealed class OccupationPageTests : IDisposable
         html.Should().Contain("<title>Лікар · Essenthos</title>").And.Contain("/uk/read/colossians/4/14");
         (await client.GetAsync("/v1/pages/occupations/missing")).StatusCode.Should().Be(HttpStatusCode.NotFound);
         (await client.GetAsync("/v1/sitemaps/occupations.xml")).StatusCode.Should().Be(HttpStatusCode.OK);
+        using var unfollowed = new HttpClient(new HttpClientHandler { AllowAutoRedirect = false }) { BaseAddress = client.BaseAddress };
+        var respelled = await unfollowed.GetAsync("/v1/pages/uk/occupations/physician/");
+        respelled.StatusCode.Should().Be(HttpStatusCode.PermanentRedirect);
+        respelled.Headers.Location!.OriginalString.Should().Be("/uk/occupations/physician");
+        (await unfollowed.GetAsync("/v1/pages/uk/")).StatusCode.Should().Be(HttpStatusCode.OK, "the Ukrainian home page is /uk/");
         await app.StopAsync();
     }
 

@@ -240,6 +240,8 @@ services:
       DEV_CSP: ${DEV_CSP:-report-only}
       # Whether production's /count reaches the page counter (on) or is answered and dropped (off).
       SITE_ANALYTICS: ${SITE_ANALYTICS:-off}
+      # The key the site serves at /<key>.txt for IndexNow; empty serves nothing.
+      INDEXNOW_KEY: ${INDEXNOW_KEY:-}
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
       DEV_USER: ${DEV_USER:?set DEV_USER}
       DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:?set DEV_PASSWORD_HASH with `docker run --rm caddy:2.10-alpine caddy hash-password`}

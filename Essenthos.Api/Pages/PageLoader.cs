@@ -73,7 +73,8 @@ internal sealed class PageLoader(
     AppDbContext db,
     ICanonIndex canon,
     SiteSettingsFile settings,
-    PageCache cache)
+    PageCache cache,
+    DownloadsCatalogue downloads)
 {
     /// <summary>How many of a record's verses its page links to; the page itself lists them all.</summary>
     private const int VersesNamed = 8;
@@ -101,6 +102,8 @@ internal sealed class PageLoader(
             PageKind.Strong => await Strong(address, wording, cancellationToken),
             PageKind.Text => await Text(address, wording, cancellationToken),
             PageKind.Search => PageViews.Search(wording, address.Query!),
+            PageKind.Section when address.Section?.Key == "downloads" =>
+                PageViews.Downloads(language, wording, address, downloads.Current()),
             PageKind.Section => PageViews.Section(language, wording, address),
             _ => null,
         } ?? PageViews.NotFound(language, wording);
@@ -230,6 +233,17 @@ internal sealed class PageLoader(
             return null;
         }
 
+        // A record folded into another is found by its old address too, and sent to the one that stays,
+        // so a search engine moves what it knew of the old page to the new rather than keeping both.
+        if (entity.Slug != address.Slug)
+        {
+            return PageViews.NotFound(address.Language, wording) with
+            {
+                Status = StatusCodes.Status301MovedPermanently,
+                MovedTo = PageAddress.RecordPath(entity.Kind, entity.Slug),
+            };
+        }
+
         var language = address.Language;
         var localDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken))
             .GetValueOrDefault(entity.Id);
@@ -282,7 +296,34 @@ internal sealed class PageLoader(
             mentions)
         {
             Image = await Picture(entity.Slug, cancellationToken),
+            Coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null,
+            SameAs = await SameAs(entity.Id, cancellationToken),
         });
+    }
+
+    private async Task<(double Latitude, double Longitude)?> Coordinates(int entityId, CancellationToken cancellationToken) =>
+        await db.PlaceLocations
+            .Where(l => l.EntityId == entityId)
+            .Select(l => new { l.Latitude, l.Longitude })
+            .FirstOrDefaultAsync(cancellationToken) is { } at
+            ? (at.Latitude, at.Longitude)
+            : null;
+
+    /// <summary>The record's Wikidata item and its Wikipedia articles in the site's languages.</summary>
+    private async Task<IReadOnlyList<string>> SameAs(int entityId, CancellationToken cancellationToken)
+    {
+        var articles = await db.EntityWikipedia
+            .Where(w => w.EntityId == entityId)
+            .OrderBy(w => w.Language)
+            .Select(w => new { w.Language, w.Title, w.Qid })
+            .ToListAsync(cancellationToken);
+        return
+        [
+            .. articles.Select(a => a.Qid).Where(qid => !string.IsNullOrEmpty(qid)).Distinct()
+                .Select(qid => $"https://www.wikidata.org/wiki/{qid}"),
+            .. articles.Where(a => SiteLanguage.All.Any(language => language.Code == a.Language))
+                .Select(a => WikipediaLinks.Address(a.Language, a.Title)),
+        ];
     }
 
     private async Task<PageContent?> FamilyTree(PageAddress address, PageWording wording, CancellationToken cancellationToken) =>
@@ -331,7 +372,7 @@ internal sealed class PageLoader(
         var said = language.IsEnglish && !string.IsNullOrWhiteSpace(found.Description) ? found.Description : null;
         return PageViews.Named(
             language, wording, $"/events/{found.Slug}", found.Name,
-            said ?? wording.Text("event.description", ("name", found.Name)), said, links, image);
+            said ?? wording.Text("event.description", ("name", found.Name)), said, links, image, section: "events");
     }
 
     private async Task<PageContent?> Period(PageAddress address, PageWording wording, CancellationToken cancellationToken)
@@ -367,7 +408,7 @@ internal sealed class PageLoader(
         var said = language.IsEnglish && !string.IsNullOrWhiteSpace(found.Notes) ? found.Notes : null;
         return PageViews.Named(
             language, wording, $"/periods/{found.Slug}", found.Name,
-            said ?? wording.Text("period.description", ("name", found.Name)), said, links);
+            said ?? wording.Text("period.description", ("name", found.Name)), said, links, section: "timeline");
     }
 
     private async Task<PageContent?> Strong(PageAddress address, PageWording wording, CancellationToken cancellationToken)
@@ -422,7 +463,12 @@ internal sealed class PageLoader(
             name,
             wording.Text(original ? "text.original" : "text.translation", ("name", name)),
             TextSummaries.For(text.Slug)?.GetValueOrDefault(language.Code),
-            opening);
+            opening,
+            section: "texts",
+            about: (link, _) => StructuredData.Node("Book",
+                ("name", name),
+                ("inLanguage", StructuredData.LanguageTag(text.Language)),
+                ("url", link($"/texts/{text.Slug}"))));
     }
 
     /// <summary>A record by any address it has had, with the name a page in this language gives it.</summary>

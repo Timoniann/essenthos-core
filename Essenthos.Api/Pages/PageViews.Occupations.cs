@@ -24,6 +24,7 @@ internal static partial class PageViews
         return Page(StatusCodes.Status200OK, wording.Titled(title), title, description, body) with
         {
             Canonical = indexed ? "/occupations" : null, Indexed = indexed,
+            PageType = "CollectionPage", Trail = [Start, new Crumb(title, "/occupations")],
         };
     }
 
@@ -50,6 +51,7 @@ internal static partial class PageViews
         return Page(StatusCodes.Status200OK, wording.Titled(occupation.Name), occupation.Name, description, body) with
         {
             Canonical = $"/occupations/{occupation.Slug}", Type = "article",
+            Trail = Trail(wording, "occupations", occupation.Name, $"/occupations/{occupation.Slug}"),
         };
     }
 }

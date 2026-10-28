@@ -77,10 +77,17 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         await using var xml = XmlWriter.Create(output, Writing);
         await xml.WriteStartDocumentAsync();
         await xml.WriteStartElementAsync(null, "sitemapindex", Namespace);
+        var modified = await LastModified(cancellationToken);
         foreach (var name in await Names(cancellationToken))
         {
             await xml.WriteStartElementAsync(null, "sitemap", Namespace);
             await xml.WriteElementStringAsync(null, "loc", Namespace, $"{origin}/sitemaps/{name}{Extension}");
+            if (modified is { } at)
+            {
+                await xml.WriteElementStringAsync(null, "lastmod", Namespace,
+                    at.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", System.Globalization.CultureInfo.InvariantCulture));
+            }
+
             await xml.WriteEndElementAsync();
         }
 
@@ -216,6 +223,16 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
                 .Select(number => $"/strong/{number}"),
         ];
     }
+
+    /// <summary>
+    /// When the lists last changed: every one of them is made from the corpus, so when the release being
+    /// served was built. No date is claimed for a single address, since nothing records when one page's
+    /// words last changed, and a search engine trusts a date only while every date it is given is true.
+    /// </summary>
+    private Task<DateTimeOffset?> LastModified(CancellationToken cancellationToken) =>
+        cache.Remember("sitemap:modified", PageCache.Corpus, () =>
+            db.CorpusReleases.OrderByDescending(r => r.BuiltAt).Select(r => (DateTimeOffset?)r.BuiltAt)
+                .FirstOrDefaultAsync(cancellationToken));
 
     private async Task<IReadOnlyList<int>> BooksWithText(CancellationToken cancellationToken)
     {

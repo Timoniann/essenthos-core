@@ -167,6 +167,28 @@
 	}
 }
 
+# The key that lets the site tell Bing, Yandex and the other IndexNow engines which pages changed:
+# the file /<key>.txt holding the key, which each of them fetches once to check that whoever sends
+# addresses owns the site. INDEXNOW_KEY unset answers nothing but an empty /.txt.
+(indexnow) {
+	@indexnow path /{$INDEXNOW_KEY}.txt
+	handle @indexnow {
+		header Content-Type "text/plain; charset=utf-8"
+		respond "{$INDEXNOW_KEY}" 200
+	}
+}
+
+# A hostname that serves only the API is no page to be found by: its robots.txt keeps every crawler
+# out, and anything it answers says not to index it.
+(unlisted) {
+	header X-Robots-Tag "noindex, nofollow"
+	handle /robots.txt {
+		respond "User-agent: *
+Disallow: /
+" 200
+	}
+}
+
 (site) {
 	encode zstd gzip
 
@@ -193,7 +215,11 @@
 	import site {$SITE_CSP:off}
 	import analytics-{$SITE_ANALYTICS:off}
 	import downloads /srv/downloads
+	import indexnow
+	# The API's answers are data for the reader's script, which a search engine running it still
+	# fetches; they are never pages of their own in a search result.
 	handle /v1/* {
+		header X-Robots-Tag "noindex"
 		import api api
 	}
 	import pages api web
@@ -201,6 +227,7 @@
 
 {$API_DOMAIN} {
 	import site off
+	import unlisted
 	import downloads /srv/downloads
 	import api api
 }

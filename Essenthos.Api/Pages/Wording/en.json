@@ -3,7 +3,7 @@
   "titled": "{{title}} · Essenthos",
   "home": {
     "title": "Essenthos — the Bible beside its Hebrew and Greek, word by word",
-    "description": "Read the Bible beside the Hebrew and Greek it was translated from, word by word, with a lexicon, an encyclopedia of people and places, a timeline and a map."
+    "description": "Read the Bible beside the Hebrew and Greek it was translated from, word by word, with Strong's Dictionary, an encyclopedia of people and places, a timeline and a map."
   },
   "quoted": "“{{text}}”",
   "chapterVerse": "{{chapter}}:{{verse}}",
@@ -93,7 +93,14 @@
     "83": "Odes",
     "84": "Psalms of Solomon",
     "85": "1 Enoch",
-    "86": "Jubilees"
+    "86": "Jubilees",
+    "87": "1 Meqabyan",
+    "88": "2 Meqabyan",
+    "89": "3 Meqabyan",
+    "90": "4 Baruch",
+    "91": "Messale",
+    "92": "Tagsas",
+    "93": "Song of the Three"
   },
   "beside": {
     "hebrew": "Read it beside the Hebrew, word by word.",
@@ -147,22 +154,75 @@
     "query": "“{{query}}” — search the Bible"
   },
   "textName": {
+    "ALEX": "Codex Alexandrinus",
+    "ALM1911": "Almeida Bible (1911)",
+    "ASV": "American Standard Version",
+    "AVD1865": "Van Dyck Bible",
+    "BBE": "Bible in Basic English",
+    "BHSA": "Biblia Hebraica Stuttgartensia",
+    "BRENTON": "Brenton's English Septuagint",
+    "BSB": "Berean Standard Bible",
+    "CSLELIZABETH": "Elizabeth Bible (Church Slavonic)",
+    "CUV": "Chinese Union Version",
+    "CUVS": "Chinese Union Version (simplified)",
+    "DRA": "Douay-Rheims Bible",
+    "ELB1905": "Elberfelder Bible 1905",
+    "GEEZ81": "The Ethiopic Bible (Ge'ez)",
+    "GNV1599": "Geneva Bible",
+    "GRCBRENT": "Brenton's Septuagint",
+    "IRV2019": "Indian Revised Version (Hindi)",
+    "IRVASM": "Indian Revised Version (Assamese)",
+    "IRVBEN": "Indian Revised Version (Bengali)",
+    "IRVGUJ": "Indian Revised Version (Gujarati)",
+    "IRVKAN": "Indian Revised Version (Kannada)",
+    "IRVMAL": "Indian Revised Version (Malayalam)",
+    "IRVMAR": "Indian Revised Version (Marathi)",
+    "IRVPAN": "Indian Revised Version (Punjabi)",
+    "IRVTAM": "Indian Revised Version (Tamil)",
+    "IRVTEL": "Indian Revised Version (Telugu)",
+    "IRVURD": "Indian Revised Version (Urdu, in Devanagari)",
+    "JND2024": "Darby Bible (French)",
+    "JPS1917": "JPS Tanakh (1917)",
+    "KJV": "King James Version",
+    "KRV": "Korean Revised Version",
+    "LSG1910": "Louis Segond Bible",
+    "LUTH1912": "Luther Bible 1912",
+    "NESTLE1904": "Nestle 1904 Greek New Testament",
+    "NPU2022": "New Ukrainian Translation",
+    "OHCB": "Open Hausa Contemporary Bible",
+    "OTTLEY": "Ottley's Isaiah (Codex Alexandrinus)",
+    "RLT2018": "Revised Literal Translation",
+    "RP2018": "Robinson-Pierpont Byzantine Textform",
+    "RUSV": "Russian Synodal Version",
+    "RV1909": "Reina-Valera 1909",
+    "SBLGNT": "SBL Greek New Testament",
+    "SCH1951": "Schlachter Bible 1951",
+    "SIN": "Codex Sinaiticus",
+    "SP": "The Samaritan Pentateuch",
+    "SWETE": "Swete's Septuagint",
+    "SWETEOG": "Swete's Old Greek Daniel",
+    "TISCH": "Tischendorf's Greek New Testament (8th edition)",
+    "TR1550": "Stephanus 1550 Textus Receptus",
+    "TR1894": "Scrivener 1894 Textus Receptus",
+    "TYN1534": "Tyndale New Testament",
     "UBIO": "Ohienko Bible",
     "UKR1871": "Kulish Bible",
-    "NPU2022": "New Ukrainian Translation",
-    "LUTH1912": "Luther Bible 1912",
-    "ELB1905": "Elberfelder Bible 1905",
-    "RV1909": "Reina-Valera 1909"
+    "ULT": "unfoldingWord Literal Text",
+    "UST": "unfoldingWord Simplified Text",
+    "VAT": "Codex Vaticanus",
+    "VIGLT": "Vietnamese Literal Text",
+    "VULGCLEM": "Clementine Vulgate",
+    "WEB": "World English Bible",
+    "WH1881": "Westcott-Hort 1881 Greek New Testament",
+    "YLT": "Young's Literal Translation"
   },
-  "occupation": {"description":"{{name}}: people in the Bible and the verses that name their occupation or role.","heavenlyRole":"Heavenly role"},
   "page": {
-    "occupations": {"title":"Occupations and roles","description":"Explore the trades, offices and roles of the people in the Bible, with the verses that name them."},
     "texts": {
       "title": "Bible texts and translations",
       "description": "Every Bible here — the Hebrew and Greek, the ancient translations and the modern ones — and what each one is."
     },
     "lexicon": {
-      "title": "Lexicon of Biblical Hebrew and Greek",
+      "title": "Strong's Dictionary of Biblical Hebrew and Greek",
       "description": "Strong's dictionary: every Hebrew and Greek word of the Bible, what it means, and every verse that uses it."
     },
     "syntax": {
@@ -243,7 +303,7 @@
     },
     "api": {
       "title": "API",
-      "description": "How to read the texts, the lexicon and the encyclopedia from your own program."
+      "description": "How to read the texts, Strong's Dictionary and the encyclopedia from your own program."
     },
     "suggestions": {
       "title": "Suggestions and ideas",
@@ -268,6 +328,21 @@
     "notFound": {
       "title": "No such page",
       "description": "That address does not match anything here."
+    },
+    "varied": {
+      "title": "Words translated in the most ways",
+      "description": "The Hebrew and Greek words a translation renders most variously, with their commonest renderings and how many places each covers."
+    },
+    "occupations": {
+      "title": "Occupations and roles",
+      "description": "Explore the trades, offices and roles of the people in the Bible, with the verses that name them."
     }
+  },
+  "occupation": {
+    "description": "{{name}}: people in the Bible and the verses that name their occupation or role.",
+    "heavenlyRole": "Heavenly role"
+  },
+  "dataset": {
+    "description": "{{name}}: the whole text (verses: {{verses}}, books: {{books}}) as one JSON Lines file, with a second file beside it saying who made the text and on what terms it may be passed on."
   }
 }

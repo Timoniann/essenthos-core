@@ -298,8 +298,42 @@ To see what a crawler sees:
     curl -s https://essenthos.org/uk/read/mark/3/3 | grep -E '<title>|canonical|hreflang'
     curl -s https://essenthos.org/robots.txt
 
-and give `https://essenthos.org/sitemap.xml` to Google Search Console and Bing Webmaster Tools once.
-Dev asks for a password and says `noindex`, so nothing there is indexed or previewed.
+Dev asks for a password and says `noindex`, so nothing there is indexed or previewed; so does
+`api.essenthos.org`, whose `robots.txt` keeps every crawler out, and every `/v1` answer on the site
+carries `X-Robots-Tag: noindex`, since it is data for the page and never a page itself.
+
+What else a page carries for search engines:
+
+- **Structured data** (JSON-LD, `Pages/StructuredData.cs`): the site's name and logo on the home page,
+  the trail to every page (`BreadcrumbList`), and what a page is about — a `Person` or a `Place` with
+  its coordinates and its Wikidata item, a lexicon entry as a `DefinedTerm`, a verse and its chapter
+  and book, a text as a `Book`, and each text on `/downloads` as a `Dataset` with its licence and file.
+  No `Event` and no sitelinks search box: Google checks events for a date and an address a Bible event
+  has not got, and retired the search box in 2024. Check a page with Google's Rich Results Test.
+- **`max-image-preview:large`** on every indexed page, so a result may show its picture full width.
+- **One address per page**: another spelling (`/read/MRK/3`, `/strong/h430`, `/uk`, a trailing slash,
+  `?v=3`) is redirected permanently to the page's own, and a record folded into another is redirected
+  to the one that stays.
+- **The sitemap index** dates each list by the corpus release being served; no single address is
+  dated, since nothing records when one page's words changed.
+
+### Search engines: once, by the owner
+
+1. **Google Search Console** (search.google.com/search-console): add a *Domain* property
+   `essenthos.org` and verify it with the DNS TXT record it shows, at the DNS provider. A Domain
+   property covers `essenthos.org`, its subdomains, http and https. Then *Sitemaps* → submit
+   `https://essenthos.org/sitemap.xml`.
+2. **Bing Webmaster Tools** (bing.com/webmasters): *Import from Google Search Console*, which verifies
+   the site and brings the sitemap; otherwise add the site and verify by the DNS CNAME record it shows.
+3. **IndexNow** (Bing, Yandex, Naver, Seznam and others; not Google): make a key once with
+   `openssl rand -hex 16`, put it in `.env` as `INDEXNOW_KEY`, `docker compose up -d proxy`, and check
+   `https://essenthos.org/<key>.txt` answers with it. Then, after the first publication,
+   `./scripts/indexnow.ps1 -Key <key> -All -WhatIf` and without `-WhatIf` (about 270,000 addresses in 27
+   batches); after a later publication, only the lists that changed (`-Sitemap records-people`).
+4. **Yandex Webmaster** (webmaster.yandex.com), optional: add the site and verify by the DNS TXT record
+   it shows; it reads the same sitemap and takes IndexNow.
+
+Nothing here needs a tag in the page: every verification is a DNS record.
 
 ## The database's extensions
 
