@@ -35,6 +35,11 @@ public sealed class PictureCopyTests : IAsyncLifetime
 
     private HttpClient _http = new();
 
+    /// <summary>The one bust the corpus states for the picture: a square near its top left.</summary>
+    private static readonly PictureCrop Bust = new(40, 40, 200);
+
+    private int _cropReads;
+
     public async Task InitializeAsync()
     {
         _pictures = Path.Combine(_scratch, "Images");
@@ -67,14 +72,14 @@ public sealed class PictureCopyTests : IAsyncLifetime
         response.Headers.CacheControl!.ToString().Should().Contain("immutable");
         using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
         (copy.Width, copy.Height).Should().Be((128, 85), "a copy keeps the picture's proportions");
-        File.Exists(Path.Combine(_cache, "128", "generated", $"aaron.{_digest}.webp")).Should().BeTrue();
+        File.Exists(Path.Combine(_cache, "128", "generated", $"aaron.{_digest}.{ImageEndpoints.CopyRecipe}.webp")).Should().BeTrue();
     }
 
     [Fact]
     public async Task AKeptCopyIsServedFromTheCacheAfter()
     {
         (await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w=200")).EnsureSuccessStatusCode();
-        var kept = Path.Combine(_cache, "256", "generated", $"aaron.{_digest}.webp");
+        var kept = Path.Combine(_cache, "256", "generated", $"aaron.{_digest}.{ImageEndpoints.CopyRecipe}.webp");
         byte[] marked = [.. File.ReadAllBytes(kept), 1, 2, 3];
         File.WriteAllBytes(kept, marked);
 
@@ -85,10 +90,10 @@ public sealed class PictureCopyTests : IAsyncLifetime
     public async Task ACopyMadeAheadBesideThePicturesIsServedAndNoneIsMade()
     {
         byte[] premade = [9, 9, 9];
-        Write($"sized/512/generated/aaron.{_digest}.webp", premade);
+        Write($"sized/320/generated/aaron.{_digest}.{ImageEndpoints.CopyRecipe}.webp", premade);
 
         (await _http.GetByteArrayAsync($"/v1/images/generated/aaron.png?v={_digest}&w=300")).Should().Equal(premade);
-        Directory.Exists(Path.Combine(_cache, "512")).Should().BeFalse();
+        Directory.Exists(Path.Combine(_cache, "320")).Should().BeFalse();
     }
 
     [Fact]
@@ -99,7 +104,60 @@ public sealed class PictureCopyTests : IAsyncLifetime
 
         responses.Should().AllSatisfy(bytes => bytes.Should().Equal(responses[0]));
         Directory.GetFiles(Path.Combine(_cache, "512"), "*", SearchOption.AllDirectories).Should().ContainSingle()
-            .Which.Should().EndWith($"aaron.{_digest}.webp", "a half-written copy is never left behind");
+            .Which.Should().EndWith($"aaron.{_digest}.{ImageEndpoints.CopyRecipe}.webp", "a half-written copy is never left behind");
+    }
+
+    [Fact]
+    public async Task ABustTheCorpusStatesIsCutAndMadeSmall()
+    {
+        var response = await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w=128&crop={Bust}");
+
+        response.Headers.CacheControl!.ToString().Should().Contain("immutable");
+        using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
+        (copy.Width, copy.Height).Should().Be((128, 128));
+        using var picture = SKBitmap.Decode(_picture);
+        var middle = picture.GetPixel(Bust.Left + Bust.Side / 2, Bust.Top + Bust.Side / 2);
+        copy.GetPixel(64, 64).Red.Should().BeCloseTo(middle.Red, 6, "the copy is the bust, not the whole picture");
+        copy.GetPixel(64, 64).Green.Should().BeCloseTo(middle.Green, 6);
+        File.Exists(Path.Combine(_cache, "128", "generated", $"aaron.{_digest}.c40-40-200.{ImageEndpoints.CopyRecipe}.webp"))
+            .Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task ABustSmallerThanTheWidthIsKeptAtItsOwnSize()
+    {
+        using var copy = SKBitmap.Decode(
+            await _http.GetByteArrayAsync($"/v1/images/generated/aaron.png?v={_digest}&w=384&crop={Bust}"));
+
+        (copy.Width, copy.Height).Should().Be((200, 200));
+    }
+
+    [Theory]
+    [InlineData("0,0,200")]
+    [InlineData("40,40,201")]
+    [InlineData("1,2")]
+    [InlineData("-1,0,200")]
+    public async Task ACropTheCorpusDoesNotStateIsNeverCut(string crop)
+    {
+        var response = await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w=128&crop={crop}");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Headers.CacheControl!.ToString().Should().NotContain("immutable");
+        using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
+        (copy.Width, copy.Height).Should().Be((128, 85), "the whole picture, small");
+        Directory.GetFiles(_cache, "*.c*-*", SearchOption.AllDirectories).Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task TheCorpusIsAskedOnceForTheBustsOfAPicture()
+    {
+        for (var i = 0; i < 3; i++)
+        {
+            (await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w=128&crop={Bust}")).EnsureSuccessStatusCode();
+            (await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w=128&crop=0,0,200")).EnsureSuccessStatusCode();
+        }
+
+        _cropReads.Should().Be(1, "a crop it does not hold is asked again only once a minute");
     }
 
     [Theory]
@@ -173,8 +231,14 @@ public sealed class PictureCopyTests : IAsyncLifetime
         builder.Logging.ClearProviders();
         builder.Services.AddSingleton(services =>
             new PictureCopies(_pictures, cache, services.GetRequiredService<ILogger<PictureCopies>>()));
+        var crops = new PictureCrops((file, _) =>
+        {
+            Interlocked.Increment(ref _cropReads);
+            return Task.FromResult<IReadOnlySet<PictureCrop>>(
+                file == "generated/aaron.png" ? new HashSet<PictureCrop> { Bust } : new HashSet<PictureCrop>());
+        });
         var app = builder.Build();
-        app.MapGroup("/v1").MapImages(app.Services.GetRequiredService<PictureCopies>());
+        app.MapGroup("/v1").MapImages(app.Services.GetRequiredService<PictureCopies>(), crops);
         await app.StartAsync();
         return (app, new HttpClient { BaseAddress = new Uri(app.Urls.First()) });
     }

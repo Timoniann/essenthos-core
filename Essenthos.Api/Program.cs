@@ -73,6 +73,7 @@ builder.Services.AddSingleton(services => DownloadsCatalogue.From(
     builder.Configuration, builder.Environment.ContentRootPath, services.GetRequiredService<ILogger<DownloadsCatalogue>>()));
 builder.Services.AddSingleton(services =>
     new PictureCopies(images, pictureCache, services.GetRequiredService<ILogger<PictureCopies>>()));
+builder.Services.AddSingleton(services => PictureCrops.FromCorpus(services.GetRequiredService<IServiceScopeFactory>()));
 
 // Each page of the reader written out for a search engine or a link preview, which the proxy asks
 // for before it falls back to the plain application.
@@ -163,7 +164,7 @@ v1.MapLandPeriods();
 v1.MapKings();
 v1.MapContext();
 v1.MapBookAbout();
-v1.MapImages(app.Services.GetRequiredService<PictureCopies>());
+v1.MapImages(app.Services.GetRequiredService<PictureCopies>(), app.Services.GetRequiredService<PictureCrops>());
 v1.MapSettings();
 v1.MapDownloads();
 v1.MapCommandments();

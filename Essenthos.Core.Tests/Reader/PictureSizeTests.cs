@@ -19,16 +19,18 @@ public sealed class PictureSizeTests : IDisposable
     public PictureSizeTests()
     {
         Write("generated/aaron.webp");
-        Write($"sized/256/generated/aaron.{Digest}.webp");
-        Write($"sized/128/openbible/gerar.i1.{Digest}.webp");
+        Write($"sized/256/generated/aaron.{Digest}.{ImageEndpoints.CopyRecipe}.webp");
+        Write($"sized/128/openbible/gerar.i1.{Digest}.{ImageEndpoints.CopyRecipe}.webp");
     }
 
     public void Dispose() => Directory.Delete(_folder, recursive: true);
 
     [Theory]
-    [InlineData(1, 128)]
+    [InlineData(1, 64)]
+    [InlineData(65, 80)]
     [InlineData(128, 128)]
-    [InlineData(129, 256)]
+    [InlineData(129, 160)]
+    [InlineData(200, 256)]
     [InlineData(1024, 1024)]
     public void AWidthIsServedByTheNarrowestCopyAsWideAsIt(int asked, int served) =>
         ImageEndpoints.SizedWidth(asked).Should().Be(served);
@@ -39,19 +41,54 @@ public sealed class PictureSizeTests : IDisposable
 
     [Fact]
     public void ACopyIsNamedByThePictureItWasMadeFrom() =>
-        ImageEndpoints.SizedPath("openbible/gerar.i1.jpg", Digest, 128).Should().Be($"sized/128/openbible/gerar.i1.{Digest}.webp");
+        ImageEndpoints.SizedPath("openbible/gerar.i1.jpg", Digest, 128).Should().Be($"sized/128/openbible/gerar.i1.{Digest}.l3q85-80.webp");
+
+    [Fact]
+    public void ACopyOfABustIsNamedByItsSquare() =>
+        ImageEndpoints.SizedPath("generated/aaron.webp", Digest, 128, new PictureCrop(205, 11, 634)).Should()
+            .Be($"sized/128/generated/aaron.{Digest}.c205-11-634.l3q85-80.webp");
+
+    [Fact]
+    public void ABustIsCutInThePicturesOwnPixels() =>
+        PictureCrop.Of(1024, 1536, 0.200375, 0.007425, 0.61875).Should().Be(new PictureCrop(205, 11, 634));
+
+    [Fact]
+    public void ABustRunningPastAnEdgeIsCutInsideThePicture()
+    {
+        PictureCrop.Of(200, 200, 0.8, 0, 0.5).Should().Be(new PictureCrop(160, 0, 40));
+        PictureCrop.Of(0, 0, 0.2, 0, 0.6).Should().BeNull("a picture of no known size has no pixels to cut");
+    }
+
+    [Theory]
+    [InlineData("205,11,634", true)]
+    [InlineData("205,11", false)]
+    [InlineData("205,11,6", false)]
+    [InlineData("205,11,634,1", false)]
+    [InlineData("-5,11,634", false)]
+    [InlineData("205,11,1e3", false)]
+    [InlineData("999999,1,634", false)]
+    public void ACropIsThreeWholeNumbers(string text, bool read) =>
+        (PictureCrop.Parse(text) is not null).Should().Be(read);
+
+    [Fact]
+    public void ACopyMadeAnOlderWayIsNotServed()
+    {
+        Write($"sized/512/generated/aaron.{Digest}.webp");
+
+        ImageEndpoints.Sized(_folder, "generated/aaron.webp", Digest, 400).Should().BeNull();
+    }
 
     [Fact]
     public void ACopyIsFoundByItsWidthAndTheDigestOfItsPicture()
     {
         ImageEndpoints.Sized(_folder, "generated/aaron.webp", Digest, 200).Should()
-            .Be(Path.GetFullPath(Path.Combine(_folder, "sized", "256", "generated", $"aaron.{Digest}.webp")));
-        ImageEndpoints.Sized(_folder, "openbible/gerar.i1.jpg", Digest, 90).Should().NotBeNull();
+            .Be(Path.GetFullPath(Path.Combine(_folder, "sized", "256", "generated", $"aaron.{Digest}.l3q85-80.webp")));
+        ImageEndpoints.Sized(_folder, "openbible/gerar.i1.jpg", Digest, 120).Should().NotBeNull();
     }
 
     [Theory]
     [InlineData("fedcba987654", 200)]
-    [InlineData(Digest, 100)]
+    [InlineData(Digest, 90)]
     [InlineData(Digest, 2000)]
     [InlineData(null, 200)]
     [InlineData("0123456789AB", 200)]
@@ -75,13 +112,15 @@ public sealed class PictureSizeTests : IDisposable
     }
 
     [Fact]
-    public void TheScriptMakesTheCopiesAtTheWidthsTheApiServes()
+    public void TheScriptMakesTheCopiesAtTheWidthsTheApiServesAndNamesThemAsItDoes()
     {
         var script = File.ReadAllText(Path.Combine(Checkout(), "scripts", "picture-sizes.py"));
         var widths = Regex.Match(script, @"^WIDTHS = \(([^)]*)\)", RegexOptions.Multiline).Groups[1].Value;
 
         widths.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Select(int.Parse)
             .Should().Equal(ImageEndpoints.SizedWidths);
+        Regex.Match(script, @"^RECIPE = '([^']*)'", RegexOptions.Multiline).Groups[1].Value
+            .Should().Be(ImageEndpoints.CopyRecipe);
     }
 
     private void Write(string file)
