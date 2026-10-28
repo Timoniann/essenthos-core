@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -46,6 +47,12 @@ internal sealed record RecordView(
     IReadOnlyList<VerseMention> FirstVerses)
 {
     public string? Image { get; init; }
+
+    /// <summary>Where a place is, as its gazetteer's best answer puts it; null for anything else.</summary>
+    public (double Latitude, double Longitude)? Coordinates { get; init; }
+
+    /// <summary>The same thing elsewhere: its Wikidata item and its Wikipedia articles.</summary>
+    public IReadOnlyList<string> SameAs { get; init; } = [];
 }
 
 internal sealed record StrongView(string Number, string? Lemma, string? Transliteration, string? Definition, string? Derivation);
@@ -154,12 +161,30 @@ internal static partial class PageViews
         var beside = Beside(t, OriginalOf(verse.Book));
         var description = AroundQuote(t, verse.Text, quote => t.Text("verse.description",
             ("reference", reference), ("text", verse.TextName), ("quote", quote), ("beside", beside)));
+        var versePath = PageAddress.VersePath(verse.Book, verse.Chapter, verse.Verse);
         return Page(StatusCodes.Status200OK, t.Titled(title), reference, description, body) with
         {
-            Canonical = PageAddress.VersePath(verse.Book, verse.Chapter, verse.Verse),
+            Canonical = versePath,
             Type = "article",
+            PageType = "ItemPage",
+            Trail = [Start, new Crumb(chapter, PageAddress.ChapterPath(verse.Book, verse.Chapter)), new Crumb(reference, versePath)],
+            About = (link, _) => StructuredData.Node("CreativeWork",
+                ("name", reference),
+                ("text", verse.Text),
+                ("url", link(versePath)),
+                ("isPartOf", ChapterNode(link, verse.Book, verse.BookName, verse.Chapter, verse.TextName))),
         };
     }
+
+    /// <summary>A chapter as part of its book, and the book as part of the Bible it is read in.</summary>
+    private static JsonObject ChapterNode(Func<string, string> link, int book, string bookName, int chapter, string textName) =>
+        StructuredData.Node("Chapter",
+            ("name", $"{bookName} {chapter}"),
+            ("position", chapter),
+            ("url", link(PageAddress.ChapterPath(book, chapter))),
+            ("isPartOf", StructuredData.Node("Book",
+                ("name", bookName),
+                ("isPartOf", StructuredData.Node("Book", ("name", textName))))));
 
     public static PageContent Chapter(SiteLanguage language, PageWording t, ChapterView chapter)
     {
@@ -195,10 +220,13 @@ internal static partial class PageViews
             ? AroundQuote(t, opening, quote => t.Text("chapter.description",
                 ("reference", reference), ("text", chapter.TextName), ("opening", quote), ("beside", beside)))
             : t.Text("chapter.plain", ("reference", reference), ("beside", beside));
+        var chapterPath = PageAddress.ChapterPath(chapter.Book, chapter.Chapter);
         return Page(StatusCodes.Status200OK, t.Titled(reference), reference, description, body) with
         {
-            Canonical = PageAddress.ChapterPath(chapter.Book, chapter.Chapter),
+            Canonical = chapterPath,
             Type = "article",
+            Trail = [Start, new Crumb(reference, chapterPath)],
+            About = (link, _) => ChapterNode(link, chapter.Book, chapter.BookName, chapter.Chapter, chapter.TextName),
         };
     }
 
@@ -252,6 +280,7 @@ internal static partial class PageViews
 
         body.Close("article");
         var description = Fitted(line, fit => Closed($"{record.Name}: {fit}") + (verses is null ? "" : " " + verses));
+        var recordPath = PageAddress.RecordPath(record.Kind, record.Slug);
         return Page(
             StatusCodes.Status200OK,
             t.Titled($"{record.Name}{Separator}{Shortened(line, TitleLineLength)}"),
@@ -259,10 +288,44 @@ internal static partial class PageViews
             description,
             body) with
         {
-            Canonical = PageAddress.RecordPath(record.Kind, record.Slug),
+            Canonical = recordPath,
             Image = record.Image,
             Type = "article",
+            PageType = "ItemPage",
+            Trail = Trail(t, PageSections.Encyclopedia, record.Name, recordPath),
+            About = (link, _) => RecordNode(link, record, line),
         };
+    }
+
+    /// <summary>
+    /// A record as schema.org knows it: a person, a place, a term — and anything else as a thing, since
+    /// the types search engines check most strictly, such as an event, ask for what a Bible record has
+    /// not got: a date, an address, a ticket.
+    /// </summary>
+    private static JsonObject RecordNode(Func<string, string> link, RecordView record, string line)
+    {
+        var node = StructuredData.Node(
+            record.Kind switch
+            {
+                EntityKind.Person => "Person",
+                EntityKind.Place => "Place",
+                EntityKind.Term or EntityKind.Title => "DefinedTerm",
+                _ => "Thing",
+            },
+            ("name", record.Name),
+            ("description", WithoutCitations(line)),
+            ("url", link(PageAddress.RecordPath(record.Kind, record.Slug))));
+        if (record.Coordinates is { } at)
+        {
+            node["geo"] = StructuredData.Node("GeoCoordinates", ("latitude", at.Latitude), ("longitude", at.Longitude));
+        }
+
+        if (record.SameAs.Count > 0)
+        {
+            node["sameAs"] = new JsonArray([.. record.SameAs.Select(address => (JsonNode)address)]);
+        }
+
+        return node;
     }
 
     public static PageContent FamilyTree(SiteLanguage language, PageWording t, string english, string name, string? image)
@@ -278,6 +341,7 @@ internal static partial class PageViews
         {
             Canonical = english,
             Image = image,
+            Trail = Trail(t, PageSections.FamilyTree, title, english),
         };
     }
 
@@ -298,10 +362,23 @@ internal static partial class PageViews
         }
 
         body.Close("article");
+        var strongPath = $"/strong/{entry.Number}";
+        var lexicon = PageSections.Named("lexicon");
         return Page(StatusCodes.Status200OK, t.Titled(head), head, description, body) with
         {
-            Canonical = $"/strong/{entry.Number}",
+            Canonical = strongPath,
             Type = "article",
+            PageType = "ItemPage",
+            Trail = Trail(t, lexicon.Key, head, strongPath),
+            About = (link, _) => StructuredData.Node("DefinedTerm",
+                ("name", entry.Lemma ?? entry.Number),
+                ("alternateName", entry.Transliteration),
+                ("termCode", entry.Number),
+                ("description", entry.Definition is { Length: > 0 } definition ? PageHtml.Plain(definition) : null),
+                ("url", link(strongPath)),
+                ("inDefinedTermSet", StructuredData.Node("DefinedTermSet",
+                    ("name", t.Text($"page.{lexicon.Key}.title")),
+                    ("url", link(lexicon.Path))))),
         };
     }
 
@@ -314,7 +391,9 @@ internal static partial class PageViews
         string description,
         string? said,
         IEnumerable<(string Href, string Text)> links,
-        string? image = null)
+        string? image = null,
+        string? section = null,
+        Described? about = null)
     {
         var body = Open(language)
             .Open("nav").Link(language.Path("/"), PageContent.SiteName).Close("nav")
@@ -342,6 +421,9 @@ internal static partial class PageViews
             Canonical = english,
             Image = image,
             Type = "article",
+            PageType = about is null ? "WebPage" : "ItemPage",
+            Trail = Trail(t, section, name, english),
+            About = about,
         };
     }
 
@@ -373,6 +455,7 @@ internal static partial class PageViews
         return Page(StatusCodes.Status200OK, t.Text("home.title"), PageContent.SiteName, description, body) with
         {
             Canonical = "/",
+            IsHome = true,
         };
     }
 
@@ -392,6 +475,8 @@ internal static partial class PageViews
         {
             Canonical = address.Indexed ? address.English : null,
             Indexed = address.Indexed,
+            PageType = SectionTypes.GetValueOrDefault(key, "WebPage"),
+            Trail = [Start, new Crumb(title, address.English)],
         };
     }
 
@@ -428,6 +513,28 @@ internal static partial class PageViews
                     ? $"{BookReferences.Name(book.Ordinal)} {code.Groups[2].Value}"
                     : code.Value)
             .Trim();
+
+    /// <summary>The first step of every trail.</summary>
+    private static readonly Crumb Start = new(PageContent.SiteName, "/");
+
+    /// <summary>The site's pages that are lists of what it holds, or say who it is or how to reach it.</summary>
+    private static readonly IReadOnlyDictionary<string, string> SectionTypes = new Dictionary<string, string>
+    {
+        ["texts"] = "CollectionPage",
+        ["lexicon"] = "CollectionPage",
+        [PageSections.Encyclopedia] = "CollectionPage",
+        ["occupations"] = "CollectionPage",
+        ["events"] = "CollectionPage",
+        ["downloads"] = "CollectionPage",
+        ["about"] = "AboutPage",
+        ["contact"] = "ContactPage",
+    };
+
+    /// <summary>The home page, the section a page is listed in where it has one, and the page.</summary>
+    private static IReadOnlyList<Crumb> Trail(PageWording t, string? section, string name, string english) =>
+        section is null
+            ? [Start, new Crumb(name, english)]
+            : [Start, new Crumb(t.Text($"page.{section}.title"), PageSections.Named(section).Path), new Crumb(name, english)];
 
     private static readonly string[] HomeSections =
     [

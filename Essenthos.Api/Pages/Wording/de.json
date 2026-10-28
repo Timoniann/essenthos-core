@@ -3,7 +3,7 @@
   "titled": "{{title}} · Essenthos",
   "home": {
     "title": "Essenthos — die Bibel neben dem hebräischen und griechischen Urtext, Wort für Wort",
-    "description": "Lesen Sie die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort — mit Lexikon, einer Enzyklopädie der Personen und Orte, Zeitleiste und Karte."
+    "description": "Lesen Sie die Bibel neben dem hebräischen und griechischen Text, aus dem sie übersetzt wurde, Wort für Wort — mit dem Strong-Wörterbuch, einer Enzyklopädie der Personen und Orte, Zeitleiste und Karte."
   },
   "quoted": "„{{text}}“",
   "chapterVerse": "{{chapter}},{{verse}}",
@@ -93,7 +93,14 @@
     "83": "Oden",
     "84": "Psalmen Salomos",
     "85": "1. Henoch",
-    "86": "Jubiläen"
+    "86": "Jubiläen",
+    "87": "1 Meqabyan",
+    "88": "2 Meqabyan",
+    "89": "3 Meqabyan",
+    "90": "4 Baruch",
+    "91": "Messale",
+    "92": "Tagsas",
+    "93": "Gesang der drei Männer"
   },
   "beside": {
     "hebrew": "Neben dem hebräischen Urtext lesen, Wort für Wort.",
@@ -147,22 +154,75 @@
     "query": "„{{query}}“ — in der Bibel suchen"
   },
   "textName": {
+    "ALEX": "Codex Alexandrinus",
+    "ALM1911": "Almeida-Bibel (1911)",
+    "ASV": "American Standard Version",
+    "AVD1865": "Van-Dyck-Bibel",
+    "BBE": "Bibel in einfachem Englisch",
+    "BHSA": "Biblia Hebraica Stuttgartensia",
+    "BRENTON": "Brentons englische Septuaginta",
+    "BSB": "Berean Standard Bible",
+    "CSLELIZABETH": "Elisabeth-Bibel (Kirchenslawisch)",
+    "CUV": "Chinesische Union-Übersetzung",
+    "CUVS": "Chinesische Union-Übersetzung (vereinfacht)",
+    "DRA": "Douay-Rheims-Bibel",
+    "ELB1905": "Elberfelder Bibel 1905",
+    "GEEZ81": "Äthiopische Bibel (Ge'ez)",
+    "GNV1599": "Genfer Bibel",
+    "GRCBRENT": "Septuaginta (Ausgabe Brenton)",
+    "IRV2019": "Indische revidierte Übersetzung (Hindi)",
+    "IRVASM": "Indische revidierte Übersetzung (Assamesisch)",
+    "IRVBEN": "Indische revidierte Übersetzung (Bengalisch)",
+    "IRVGUJ": "Indische revidierte Übersetzung (Gujarati)",
+    "IRVKAN": "Indische revidierte Übersetzung (Kannada)",
+    "IRVMAL": "Indische revidierte Übersetzung (Malayalam)",
+    "IRVMAR": "Indische revidierte Übersetzung (Marathi)",
+    "IRVPAN": "Indische revidierte Übersetzung (Panjabi)",
+    "IRVTAM": "Indische revidierte Übersetzung (Tamil)",
+    "IRVTEL": "Indische revidierte Übersetzung (Telugu)",
+    "IRVURD": "Indische revidierte Übersetzung (Urdu, in Devanagari)",
+    "JND2024": "Darby-Bibel (Französisch)",
+    "JPS1917": "Tanach der Jewish Publication Society (1917)",
+    "KJV": "King-James-Bibel",
+    "KRV": "Koreanische revidierte Übersetzung",
+    "LSG1910": "Louis-Segond-Bibel",
+    "LUTH1912": "Lutherbibel 1912",
+    "NESTLE1904": "Griechisches Neues Testament nach Nestle 1904",
+    "NPU2022": "Neue ukrainische Übersetzung",
+    "OHCB": "Zeitgenössische Bibel auf Hausa",
+    "OTTLEY": "Ottleys Jesaja (Codex Alexandrinus)",
+    "RLT2018": "Revidierte wörtliche Übersetzung",
+    "RP2018": "Byzantinischer Text nach Robinson und Pierpont",
+    "RUSV": "Russische Synodalübersetzung",
+    "RV1909": "Reina-Valera 1909",
+    "SBLGNT": "Griechisches Neues Testament der Society of Biblical Literature",
+    "SCH1951": "Schlachter-Bibel 1951",
+    "SIN": "Codex Sinaiticus",
+    "SP": "Samaritanischer Pentateuch",
+    "SWETE": "Swetes Septuaginta",
+    "SWETEOG": "Swetes altgriechischer Daniel",
+    "TISCH": "Griechisches Neues Testament nach Tischendorf (8. Auflage)",
+    "TR1550": "Textus Receptus des Stephanus 1550",
+    "TR1894": "Textus Receptus nach Scrivener 1894",
+    "TYN1534": "Neues Testament nach Tyndale",
     "UBIO": "Ohijenko-Bibel",
     "UKR1871": "Kulisch-Bibel",
-    "NPU2022": "Neue ukrainische Übersetzung",
-    "LUTH1912": "Lutherbibel 1912",
-    "ELB1905": "Elberfelder Bibel 1905",
-    "RV1909": "Reina-Valera 1909"
+    "ULT": "Wörtlicher Text von unfoldingWord",
+    "UST": "Vereinfachter Text von unfoldingWord",
+    "VAT": "Codex Vaticanus",
+    "VIGLT": "Vietnamesischer wörtlicher Text",
+    "VULGCLEM": "Clementinische Vulgata",
+    "WEB": "World English Bible",
+    "WH1881": "Griechisches Neues Testament nach Westcott und Hort 1881",
+    "YLT": "Youngs wörtliche Übersetzung"
   },
-  "occupation": {"description":"{{name}}: Menschen in der Bibel und die Verse, die ihre Tätigkeit oder Rolle nennen.","heavenlyRole":"Himmlische Rolle"},
   "page": {
-    "occupations": {"title":"Berufe und Rollen","description":"Handwerke, Ämter und Rollen der Menschen in der Bibel mit den Versen, die sie nennen."},
     "texts": {
       "title": "Bibeltexte und Übersetzungen",
       "description": "Jede Bibel hier — der hebräische und griechische Text, die alten Übersetzungen und die neuen — und was jede von ihnen ist."
     },
     "lexicon": {
-      "title": "Lexikon des biblischen Hebräisch und Griechisch",
+      "title": "Strong-Wörterbuch des biblischen Hebräisch und Griechisch",
       "description": "Strongs Wörterbuch: jedes hebräische und griechische Wort der Bibel, was es bedeutet, und jeder Vers, in dem es vorkommt."
     },
     "syntax": {
@@ -243,7 +303,7 @@
     },
     "api": {
       "title": "API",
-      "description": "Wie Sie die Texte, das Lexikon und die Enzyklopädie aus Ihrem eigenen Programm lesen."
+      "description": "Wie Sie die Texte, das Strong-Wörterbuch und die Enzyklopädie aus Ihrem eigenen Programm lesen."
     },
     "suggestions": {
       "title": "Vorschläge und Ideen",
@@ -268,6 +328,21 @@
     "notFound": {
       "title": "Diese Seite gibt es nicht",
       "description": "Diese Adresse passt zu nichts hier."
+    },
+    "varied": {
+      "title": "Am vielfältigsten übersetzte Wörter",
+      "description": "Die hebräischen und griechischen Wörter, die eine Übersetzung am vielfältigsten wiedergibt, mit ihren häufigsten Wiedergaben und der Zahl ihrer Stellen."
+    },
+    "occupations": {
+      "title": "Berufe und Rollen",
+      "description": "Handwerke, Ämter und Rollen der Menschen in der Bibel mit den Versen, die sie nennen."
     }
+  },
+  "occupation": {
+    "description": "{{name}}: Menschen in der Bibel und die Verse, die ihre Tätigkeit oder Rolle nennen.",
+    "heavenlyRole": "Himmlische Rolle"
+  },
+  "dataset": {
+    "description": "{{name}}: der vollständige Text (Verse: {{verses}}, Bücher: {{books}}) als eine JSON-Lines-Datei, dazu eine zweite Datei, die sagt, wer den Text geschaffen hat und unter welchen Bedingungen er weitergegeben werden darf."
   }
 }

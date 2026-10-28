@@ -46,6 +46,11 @@ internal static class PageEndpoints
                 return Results.Redirect(english + request.QueryString, permanent: true, preserveMethod: true);
             }
 
+            if (Respelled(address, "/" + path, query) is { } spelled)
+            {
+                return Results.Redirect(spelled, permanent: true, preserveMethod: true);
+            }
+
             if (await shell.Get(cancellationToken) is not { } reading)
             {
                 return Results.Text(
@@ -61,6 +66,11 @@ internal static class PageEndpoints
                 ? await cache.Remember($"page:{address.Language.Code}:{address.Kind}:{address.English}", PageCache.Page,
                     () => loader.Load(address, wording, cancellationToken), made => made.Body.Length * sizeof(char))
                 : await loader.Load(address, wording, cancellationToken);
+            if (page.MovedTo is { } moved)
+            {
+                return Results.Redirect(address.Language.Path(moved) + request.QueryString, permanent: true, preserveMethod: true);
+            }
+
             var html = PageHtml.Render(reading.Html, page, address.Language, Origin(context, configuration));
 
             context.Response.Headers.CacheControl = "no-cache";
@@ -107,7 +117,7 @@ internal static class PageEndpoints
     /// </summary>
     public static string Robots(string origin)
     {
-        var robots = new StringBuilder("User-agent: *\nAllow: /\nDisallow: /v1/me\n");
+        var robots = new StringBuilder("User-agent: *\nAllow: /\nDisallow: /v1/me\nDisallow: /count\n");
         foreach (var language in SiteLanguage.All)
         {
             foreach (var page in Private)
@@ -119,6 +129,32 @@ internal static class PageEndpoints
         }
 
         return robots.Append("\nSitemap: ").Append(origin).Append("/sitemap.xml\n").ToString();
+    }
+
+    /// <summary>
+    /// The page's one address where it was asked for by another spelling — <c>/read/MRK/3</c>,
+    /// <c>/strong/h430</c>, <c>/read/mark/3?v=3</c>, <c>/uk</c> for <c>/uk/</c>, a trailing slash —
+    /// with the rest of the query kept; null where it was asked for as it is spelled, or is a page
+    /// nobody indexes. A permanent redirect rather than only a canonical link, so a search engine and
+    /// whoever copies the address both end at the one spelling.
+    /// </summary>
+    public static string? Respelled(PageAddress address, string path, IReadOnlyDictionary<string, string> query)
+    {
+        if (!address.Indexed || address.Kind is PageKind.FamilyTree or PageKind.Search)
+        {
+            return null;
+        }
+
+        var spelled = address.Language.Path(address.English);
+        if (spelled == path)
+        {
+            return null;
+        }
+
+        var kept = query.Where(pair => pair.Key != "v" || address.Kind != PageKind.Verse)
+            .Select(pair => $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}")
+            .ToList();
+        return kept.Count == 0 ? spelled : $"{spelled}?{string.Join('&', kept)}";
     }
 
     private static string Origin(HttpContext context, IConfiguration configuration) =>

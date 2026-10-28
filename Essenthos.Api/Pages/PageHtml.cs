@@ -25,6 +25,23 @@ internal sealed record PageContent(int Status, string Title, string Heading, str
     /// <summary><c>article</c> for a page about one thing, <c>website</c> for the rest.</summary>
     public string Type { get; init; } = "website";
 
+    /// <summary>The schema.org kind of page: <c>WebPage</c>, or a narrower one such as <c>ItemPage</c>.</summary>
+    public string PageType { get; init; } = "WebPage";
+
+    public bool IsHome { get; init; }
+
+    /// <summary>The way here from the home page, this page last; fewer than two steps is no trail.</summary>
+    public IReadOnlyList<Crumb> Trail { get; init; } = [];
+
+    /// <summary>The one thing the page is about, for its structured data.</summary>
+    public Described? About { get; init; }
+
+    /// <summary>Whatever else the page describes in full, such as the datasets on the downloads page.</summary>
+    public IReadOnlyList<Described> Nodes { get; init; } = [];
+
+    /// <summary>The English address this page has moved to, where the one asked for is a record's old address.</summary>
+    public string? MovedTo { get; init; }
+
     public static string Titled(string heading) => $"{heading} · {SiteName}";
 }
 
@@ -90,6 +107,15 @@ internal static partial class PageHtml
     /// <summary>The site's own preview picture, which the reader's build serves from its root.</summary>
     public const string DefaultImage = "/og-image.png";
 
+    /// <summary>
+    /// What an indexed page tells search engines beyond the default: a result may show its picture at
+    /// full width. The reader's script writes the same.
+    /// </summary>
+    public const string Indexable = "max-image-preview:large";
+
+    /// <summary>The id of the structured data's script element, by which the reader's script finds it.</summary>
+    public const string StructuredDataId = "structured-data";
+
     private const int DefaultImageWidth = 1200;
     private const int DefaultImageHeight = 630;
 
@@ -142,10 +168,7 @@ internal static partial class PageHtml
         var head = new StringBuilder();
         head.Append("<title>").Append(Escape(page.Title)).Append("</title>\n");
         Meta(head, "name", "description", page.Description);
-        if (!page.Indexed)
-        {
-            Meta(head, "name", "robots", "noindex, follow");
-        }
+        Meta(head, "name", "robots", page.Indexed ? Indexable : "noindex, follow");
 
         if (page.Canonical is { } canonical)
         {
@@ -181,7 +204,15 @@ internal static partial class PageHtml
         Meta(head, "name", "twitter:card", "summary_large_image");
         Meta(head, "name", "twitter:title", page.Heading);
         Meta(head, "name", "twitter:description", page.Description);
+        Meta(head, "property", "og:image:alt", page.Heading);
         Meta(head, "name", "twitter:image", image);
+        Meta(head, "name", "twitter:image:alt", page.Heading);
+        if (StructuredData.Of(page, language, origin) is { } described)
+        {
+            head.Append("<script type=\"application/ld+json\" id=\"").Append(StructuredDataId).Append("\">")
+                .Append(described).Append("</script>\n");
+        }
+
         head.Append(Style).Append('\n');
         return head.ToString();
     }
@@ -214,7 +245,7 @@ internal static partial class PageHtml
 
     /// <summary>What the shell says about the site in general, which a page says about itself instead.</summary>
     [GeneratedRegex(
-        """[ \t]*(?:<title\b[^>]*>[\s\S]*?</title>|<meta\b[^>]*\b(?:name|property)\s*=\s*"(?:description|robots|og:[^"]*|twitter:[^"]*)"[^>]*>|<link\b[^>]*\brel\s*=\s*"(?:canonical|alternate)"[^>]*>)[ \t]*\r?\n?""",
+        """[ \t]*(?:<title\b[^>]*>[\s\S]*?</title>|<meta\b[^>]*\b(?:name|property)\s*=\s*"(?:description|robots|og:[^"]*|twitter:[^"]*)"[^>]*>|<link\b[^>]*\brel\s*=\s*"(?:canonical|alternate)"[^>]*>|<script\b[^>]*\btype\s*=\s*"application/ld\+json"[^>]*>[\s\S]*?</script>)[ \t]*\r?\n?""",
         RegexOptions.IgnoreCase)]
     private static partial Regex Taken();
 

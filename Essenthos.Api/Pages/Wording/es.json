@@ -3,7 +3,7 @@
   "titled": "{{title}} · Essenthos",
   "home": {
     "title": "Essenthos — la Biblia junto a su hebreo y su griego, palabra por palabra",
-    "description": "Lea la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra, con un léxico, una enciclopedia de personas y lugares, una cronología y un mapa."
+    "description": "Lea la Biblia junto al texto hebreo y griego del que se tradujo, palabra por palabra, con el Diccionario Strong, una enciclopedia de personas y lugares, una cronología y un mapa."
   },
   "quoted": "«{{text}}»",
   "chapterVerse": "{{chapter}}:{{verse}}",
@@ -93,7 +93,14 @@
     "83": "Odas",
     "84": "Salmos de Salomón",
     "85": "1 Enoc",
-    "86": "Jubileos"
+    "86": "Jubileos",
+    "87": "1 Meqabyan",
+    "88": "2 Meqabyan",
+    "89": "3 Meqabyan",
+    "90": "4 Baruc",
+    "91": "Messale",
+    "92": "Tagsas",
+    "93": "Cántico de los tres jóvenes"
   },
   "beside": {
     "hebrew": "Léalo junto al original hebreo, palabra por palabra.",
@@ -149,22 +156,75 @@
     "query": "«{{query}}» — buscar en la Biblia"
   },
   "textName": {
+    "ALEX": "Códice Alejandrino",
+    "ALM1911": "Biblia de Almeida (1911)",
+    "ASV": "Versión Estándar Americana",
+    "AVD1865": "Biblia de Van Dyck",
+    "BBE": "Biblia en inglés básico",
+    "BHSA": "Biblia Hebraica Stuttgartensia",
+    "BRENTON": "Septuaginta inglesa de Brenton",
+    "BSB": "Biblia Estándar de Berea",
+    "CSLELIZABETH": "Biblia de Isabel (eslavo eclesiástico)",
+    "CUV": "Versión de la Unión China",
+    "CUVS": "Versión de la Unión China (simplificada)",
+    "DRA": "Biblia de Douay-Reims",
+    "ELB1905": "Biblia de Elberfeld 1905",
+    "GEEZ81": "Biblia etíope (ge'ez)",
+    "GNV1599": "Biblia de Ginebra",
+    "GRCBRENT": "Septuaginta (edición de Brenton)",
+    "IRV2019": "Versión Revisada India (hindi)",
+    "IRVASM": "Versión Revisada India (asamés)",
+    "IRVBEN": "Versión Revisada India (bengalí)",
+    "IRVGUJ": "Versión Revisada India (guyaratí)",
+    "IRVKAN": "Versión Revisada India (canarés)",
+    "IRVMAL": "Versión Revisada India (malayalam)",
+    "IRVMAR": "Versión Revisada India (maratí)",
+    "IRVPAN": "Versión Revisada India (panyabí)",
+    "IRVTAM": "Versión Revisada India (tamil)",
+    "IRVTEL": "Versión Revisada India (telugu)",
+    "IRVURD": "Versión Revisada India (urdu, en devanagari)",
+    "JND2024": "Biblia de Darby (francés)",
+    "JPS1917": "Tanaj de la Jewish Publication Society (1917)",
+    "KJV": "Biblia del Rey Jacobo",
+    "KRV": "Versión Revisada Coreana",
+    "LSG1910": "Biblia de Louis Segond",
+    "LUTH1912": "Biblia de Lutero 1912",
+    "NESTLE1904": "Nuevo Testamento griego de Nestle 1904",
+    "NPU2022": "Nueva Traducción Ucraniana",
+    "OHCB": "Biblia contemporánea en hausa",
+    "OTTLEY": "Isaías de Ottley (Códice Alejandrino)",
+    "RLT2018": "Traducción Literal Revisada",
+    "RP2018": "Texto bizantino de Robinson y Pierpont",
+    "RUSV": "Versión Sinodal Rusa",
+    "RV1909": "Reina-Valera 1909",
+    "SBLGNT": "Nuevo Testamento griego de la Society of Biblical Literature",
+    "SCH1951": "Biblia de Schlachter 1951",
+    "SIN": "Códice Sinaítico",
+    "SP": "Pentateuco samaritano",
+    "SWETE": "Septuaginta de Swete",
+    "SWETEOG": "Daniel griego antiguo de Swete",
+    "TISCH": "Nuevo Testamento griego de Tischendorf (8.ª edición)",
+    "TR1550": "Textus Receptus de Estéfano 1550",
+    "TR1894": "Textus Receptus de Scrivener 1894",
+    "TYN1534": "Nuevo Testamento de Tyndale",
     "UBIO": "Biblia de Ohienko",
     "UKR1871": "Biblia de Kulish",
-    "NPU2022": "Nueva Traducción Ucraniana",
-    "LUTH1912": "Biblia de Lutero 1912",
-    "ELB1905": "Biblia de Elberfeld 1905",
-    "RV1909": "Reina-Valera 1909"
+    "ULT": "Texto literal de unfoldingWord",
+    "UST": "Texto simplificado de unfoldingWord",
+    "VAT": "Códice Vaticano",
+    "VIGLT": "Texto literal vietnamita",
+    "VULGCLEM": "Vulgata Clementina",
+    "WEB": "World English Bible",
+    "WH1881": "Nuevo Testamento griego de Westcott y Hort 1881",
+    "YLT": "Traducción literal de Young"
   },
-  "occupation": {"description":"{{name}}: personas de la Biblia y los versículos que mencionan su oficio o función.","heavenlyRole":"Función celestial"},
   "page": {
-    "occupations": {"title":"Oficios y funciones","description":"Explora los oficios, cargos y funciones de las personas de la Biblia, con los versículos que los mencionan."},
     "texts": {
       "title": "Textos y traducciones de la Biblia",
       "description": "Cada Biblia que hay aquí —el hebreo y el griego, las traducciones antiguas y las modernas— y qué es cada una."
     },
     "lexicon": {
-      "title": "Léxico del hebreo y el griego bíblicos",
+      "title": "Diccionario Strong del hebreo y el griego bíblicos",
       "description": "El diccionario de Strong: cada palabra hebrea y griega de la Biblia, lo que significa y cada versículo que la usa."
     },
     "syntax": {
@@ -245,7 +305,7 @@
     },
     "api": {
       "title": "API",
-      "description": "Cómo leer los textos, el léxico y la enciclopedia desde su propio programa."
+      "description": "Cómo leer los textos, el Diccionario Strong y la enciclopedia desde su propio programa."
     },
     "suggestions": {
       "title": "Sugerencias e ideas",
@@ -270,6 +330,21 @@
     "notFound": {
       "title": "No existe esa página",
       "description": "Esa dirección no corresponde a nada de aquí."
+    },
+    "varied": {
+      "title": "Palabras traducidas de más maneras",
+      "description": "Las palabras hebreas y griegas que una traducción vierte de las formas más variadas, con sus traducciones más frecuentes y cuántos lugares abarca cada una."
+    },
+    "occupations": {
+      "title": "Oficios y funciones",
+      "description": "Explora los oficios, cargos y funciones de las personas de la Biblia, con los versículos que los mencionan."
     }
+  },
+  "occupation": {
+    "description": "{{name}}: personas de la Biblia y los versículos que mencionan su oficio o función.",
+    "heavenlyRole": "Función celestial"
+  },
+  "dataset": {
+    "description": "{{name}}: el texto completo (versículos: {{verses}}, libros: {{books}}) en un archivo JSON Lines, con un segundo archivo que dice quién hizo el texto y en qué condiciones puede compartirse."
   }
 }
