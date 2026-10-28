@@ -144,6 +144,66 @@ public sealed class DatasetAttributionTests
         evidentia.Citation.Should().Contain("http://hdl.handle.net/11234/1-3131");
     }
 
+    /// <summary>
+    /// The names pass and the translators' supplied words are this project's reading; a link no
+    /// declaration claims is shown on the sources page as credited to no one.
+    /// </summary>
+    [Fact]
+    public void TheNamesPassIsClaimedAsOurOwn() =>
+        Datasets.Of(NamesFirstPass.Source).Should().Be(Datasets.Own);
+
+    [Fact]
+    public void EveryEditionsSuppliedWordsAreClaimedAsOurOwn() =>
+        SuppliedWordAbsences.Editions.Should().NotBeEmpty()
+            .And.OnlyContain(edition => Datasets.Of(edition.Source) == Datasets.Own);
+
+    /// <summary>
+    /// The geocoding's prefix begins the cross references' source string. Each row belongs to one
+    /// dataset, the one with the longer claim, and is counted under it alone.
+    /// </summary>
+    [Fact]
+    public void ACrossReferenceIsCreditedToTheCrossReferencesAloneNotToTheGeocoding()
+    {
+        Datasets.Of(CrossReferenceSets.OpenBibleSource).Should().Be("openbible-cross-references");
+        Datasets.Of("OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0")
+            .Should().Be("openbible");
+
+        List<(string Source, int Rows)> rows =
+        [
+            (CrossReferenceSets.OpenBibleSource, 344_799),
+            ("OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0", 272),
+        ];
+        DatasetEndpoints.Of(rows, Of("openbible")).Should().Be(272);
+        DatasetEndpoints.Of(rows, Of("openbible-cross-references")).Should().Be(344_799);
+    }
+
+    /// <summary>
+    /// No two declarations may credit the same row: whichever prefix is longest wins, so two
+    /// datasets claiming the very same prefix would leave the second one counting nothing.
+    /// </summary>
+    [Fact]
+    public void NoTwoDatasetsClaimTheSamePrefix() =>
+        Datasets.All
+            .SelectMany(dataset => dataset.Prefixes.Select(prefix => (dataset.Id, Prefix: prefix)))
+            .GroupBy(claim => claim.Prefix, StringComparer.Ordinal)
+            .Where(group => group.Select(claim => claim.Id).Distinct().Count() > 1)
+            .Should().BeEmpty();
+
+    /// <summary>
+    /// Sefaria holds no Hyamson translation of the Sefer HaMitzvot. The count is read in that book's
+    /// Hebrew, and the English titles are Hyamson's translation of the Mishneh Torah's own list, and
+    /// the credit says which is which.
+    /// </summary>
+    [Fact]
+    public void TheCommandmentsCreditHyamsonsMishnehTorahForTheEnglish()
+    {
+        var maimonides = Of("maimonides");
+
+        maimonides.Author.Should().Contain("Hyamson").And.Contain("Mishneh Torah").And.Contain("Sefer HaMitzvot");
+        maimonides.Url.Should().Contain("Mishneh_Torah");
+        Datasets.Of(Sources.Maimonides).Should().Be("maimonides");
+    }
+
     [Fact]
     public void ThePossessivePassIsClaimedAsOurOwn() =>
         Datasets.Of(PossessivePass.Source).Should().Be(Datasets.Own);

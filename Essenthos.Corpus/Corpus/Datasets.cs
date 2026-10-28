@@ -141,10 +141,14 @@ public static class Datasets
         string[]? Methods = null,
         Work[]? Contains = null,
         string? Citation = null,
-        string? Obliges = null)
+        string? Obliges = null,
+        string? HolderUrl = null)
     {
         /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
         public IEnumerable<string> Prefixes => Methods is null ? [Prefix] : [Prefix, .. Methods];
+
+        /// <summary>What its licence lets a reader do, as <see cref="ReuseTerms"/> words it.</summary>
+        public string Terms => ReuseTerms.Of(Licence);
     }
 
     /// <param name="Covers">Which part of the dataset is this work's, so the credit lands on the right rows.</param>
@@ -200,14 +204,19 @@ public static class Datasets
             + "which is Stephenson's work.",
             "Ussher's Annals of the World"),
 
-        // The count is Maimonides' and the English is Hyamson's; which of Hyamson's numbers answers
-        // to which of the count's, and where a verse had to move to the English numbering, is this
-        // project's and is said on the row. Resources/Maimonides/LICENCE.md has the reading.
+        // The count is the Sefer HaMitzvot's, read in its Hebrew; the English is Hyamson's
+        // translation of the Mishneh Torah's own list of the same commandments, since Sefaria holds
+        // no Hyamson Sefer HaMitzvot. Sefaria marks both versions Public Domain. Which of Hyamson's
+        // numbers answers to which of the count's, and where a verse had to move to the English
+        // numbering, is this project's and is said on the row. Resources/Maimonides/LICENCE.md has
+        // the reading.
         new("maimonides", "Maimonides' count of the commandments",
-            "Moses Maimonides, in Moses Hyamson's English of 1937–1949, read from Sefaria",
+            "Moses Maimonides: the count from the Hebrew of his Sefer HaMitzvot (Warsaw, 1883), the "
+            + "titles from Moses Hyamson's English of the list that opens his Mishneh Torah (New York, "
+            + "1937–1949), both read from Sefaria",
             "Public Domain",
             "https://en.wikipedia.org/wiki/Public_domain",
-            "https://www.sefaria.org/Sefer_HaMitzvot",
+            "https://www.sefaria.org/Mishneh_Torah%2C_Positive_Mitzvot",
             "The 613 commandments of the Torah, 248 positive and 365 negative, numbered as the Sefer "
             + "HaMitzvot counts them, each with the verses it rests on. The titles are Hyamson's "
             + "English of the list that opens the Mishneh Torah, shortened and not reworded. Where a "
@@ -258,7 +267,7 @@ public static class Datasets
             + "and archaeological ages, so the text can be read against what else was happening. "
             + "It also says which Wikipedia article each person, place and thing is, so a page can "
             + "send the reader on to it in their own language.",
-            "Wikidata"),
+            "Wikidata", HolderUrl: "https://www.wikidata.org/"),
 
         // Public domain, and attributed on every band anyway: the period's own authority is named
         // where its dates are shown, and this is the credit for having gathered them.
@@ -779,7 +788,10 @@ public static class Datasets
             + "correspondences no source states — the two Greek editions joined on the Strong "
             + "numbers both of them tag, the two Hebrew witnesses and the two Septuagints joined on "
             + "the letters each pair writes alike, and the English function words the tagging "
-            + "skips, recovered from the morphology the Greek states. Every one of them carries a "
+            + "skips, recovered from the morphology the Greek states; the names a translation prints, "
+            + "placed on the words of the original that name the same person, place or people; and the "
+            + "words a translation's own italics or brackets set apart as its translators', marked as "
+            + "absent from the original. Every one of them carries a "
             + "confidence, which is how it is told apart from testimony. And the parallel passages — "
             + "Samuel and Kings beside Chronicles, the psalms written twice, the first three gospels — "
             + "found where two passages share a long run of the same words in the Hebrew or the Greek.",
@@ -799,6 +811,20 @@ public static class Datasets
                 + "argument that replaced it",
                 "the gentilic Strong's Dictionary derives, resolving to exactly one people",
                 "a reading of the verse naming a people the encyclopedia did not hold",
+
+                // Names placed on the original's words by whom both texts name, by their letters and
+                // by the text's own spellings: inferred here, at a confidence, from no one's links.
+                "the names of the verse, placed by whom both texts name",
+
+                // A translation's words its own marks set apart as the translators' (italics, square
+                // brackets), stated absent from the originals. The marks are the edition's; reading
+                // them as absences, and against which witness, is ours. Each row names its edition.
+                "Almeida 1911, the words its italics print as the translator's own",
+                "American Standard Version 1901, the words its italics print as the revisers' own",
+                "Reina-Valera 1909, the words its italics print as the translators' own",
+                "Russian Synodal, the words its square brackets mark as the translators' own",
+                "Biblica Open New Ukrainian Translation 2022, the words it marks as added",
+                "Brenton 1844, the words its italics print as the translator's own",
                 // Literally how the rows begin, because these double as the source-string
                 // prefixes the dataset claims: the English of the lexicon is public domain and the
                 // rendering into a reader's language is this project's, so the row names the model,
@@ -819,13 +845,37 @@ public static class Datasets
     /// <summary>Which dataset a row's source string belongs to, or null if none claims it.</summary>
     public static string? Of(string? source) => Match(source)?.Id;
 
-    public static Dataset? Match(string? source) =>
-        source is null
-            ? null
-            : Array.Find(All, d => Claims(d, source));
+    /// <summary>
+    /// The one dataset a row's source string belongs to: the one whose claiming prefix is longest.
+    /// One prefix can begin another — the geocoding's <c>"OpenBible.info"</c> begins the cross
+    /// references' <c>"OpenBible.info Cross References"</c> — and the longer is the more particular
+    /// claim, so a row is never credited to both, nor to whichever happens to be listed first.
+    /// </summary>
+    public static Dataset? Match(string? source)
+    {
+        if (source is null)
+        {
+            return null;
+        }
 
-    /// <summary>Whether a dataset's declaration reaches a row carrying this source string.</summary>
-    public static bool Claims(Dataset dataset, string source) =>
-        dataset.Prefixes.Any(prefix => source.StartsWith(prefix, StringComparison.Ordinal));
+        Dataset? best = null;
+        var length = -1;
+        foreach (var dataset in All)
+        {
+            foreach (var prefix in dataset.Prefixes)
+            {
+                if (prefix.Length > length && source.StartsWith(prefix, StringComparison.Ordinal))
+                {
+                    best = dataset;
+                    length = prefix.Length;
+                }
+            }
+        }
+
+        return best;
+    }
+
+    /// <summary>Whether a row carrying this source string is credited to this dataset, and to no other.</summary>
+    public static bool Claims(Dataset dataset, string source) => ReferenceEquals(Match(source), dataset);
 
 }
