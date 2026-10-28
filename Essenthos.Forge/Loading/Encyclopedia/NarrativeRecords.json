@@ -1,5 +1,5 @@
 {
-  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse. On 2026-10-21 the owner asked for the garden in Eden as a place of its own and for the Nephilim to have their own page. The same day he asked that Jesus be said to have taught the Twelve, the Seventy and many other disciples, so the two companies have their own pages and the Twelve their members.",
+  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse. On 2026-10-21 the owner asked for the garden in Eden as a place of its own and for the Nephilim to have their own page. The same day he asked that Jesus be said to have taught the Twelve, the Seventy and many other disciples, so the two companies have their own pages and the Twelve their members. On 2026-10-28 he asked that Pharaoh's daughter of Exodus 2 and Jephthah's daughter of Judges 11 have pages of their own.",
   "records": [
     {
       "slug": "serpent-of-eden",
@@ -703,6 +703,141 @@
         }
       ],
       "why": "Read verse by verse by claude-opus-5-5 on 2026-10-21, on the project owner's word of that day that Jesus taught twelve disciples, seventy and many more, not four. ἑβδομήκοντα is named as this company in the two verses that tell of it, LUK 10:1 and 10:17."
+    },
+    {
+      "slug": "pharaohs-daughter",
+      "kind": "person",
+      "name": "Pharaoh's daughter",
+      "names": {
+        "eng": "Pharaoh's daughter",
+        "ukr": "Фараонова дочка",
+        "deu": "die Tochter Pharaos",
+        "rus": "Дочь фараонова",
+        "spa": "la hija de Faraón"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "фараонової дочки",
+          "locative": "фараоновій дочці"
+        },
+        "deu": {
+          "genitive": "der Tochter Pharaos"
+        },
+        "rus": {
+          "genitive": "дочери фараоновой",
+          "locative": "дочери фараоновой"
+        }
+      },
+      "distinguisher": "who drew Moses out of the water, named him and took him for her son (EXO 2:5-10)",
+      "notes": "The daughter of Pharaoh came down to wash herself at the river, saw the ark among the flags and sent her maid to fetch it; when she opened it and saw the child weeping, she had compassion on him and said, This is one of the Hebrews' children (EXO 2:5-6). At the word of the child's sister she sent for a nurse of the Hebrew women, and the child's mother nursed him for wages (EXO 2:7-9). When the child grew he was brought to her, and he became her son; she called his name Moses, because, she said, I drew him out of the water (EXO 2:10). Stephen recalls that Pharaoh's daughter took him up and nourished him for her own son (ACT 7:21), and Hebrews that Moses, when he was come to years, refused to be called the son of Pharaoh's daughter (HEB 11:24). The text does not give her name. A later tradition identifies her with Bithiah the daughter of Pharaoh, whom Mered took (1CH 4:18); no verse says they are one woman.",
+      "called": [
+        {
+          "label": "Pharaoh's daughter",
+          "hebrew": "בַּת־פַּרְעֹה",
+          "hebrewTransliterated": "bat-par'oh",
+          "meaning": "EXO 2:5"
+        },
+        {
+          "label": "Pharaoh's daughter",
+          "greek": "θυγάτηρ Φαραώ",
+          "greekTransliterated": "thygatēr Pharaō",
+          "meaning": "ACT 7:21; HEB 11:24"
+        },
+        {
+          "label": "Фараонова дочка"
+        },
+        {
+          "label": "Дочь фараонова"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "EXO 2:5-10",
+          "role": "key"
+        },
+        {
+          "reference": "ACT 7:21",
+          "role": "key"
+        },
+        {
+          "reference": "HEB 11:24",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H1323",
+          "only": [
+            "EXO 2:5-10"
+          ]
+        },
+        {
+          "strong": "G2364",
+          "only": [
+            "ACT 7:21",
+            "HEB 11:24"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by claude-opus-5-5 on 2026-10-28, on the project owner's instruction of that day that Pharaoh's daughter of Exodus 2 have her own page. בַּת stands once in each of EXO 2:5, 7, 8, 9 and 10, and every one is she, the daughter of the Pharaoh of Moses' birth; the daughter of Levi of EXO 2:1 is Moses' mother and is left out. θυγάτηρ of ACT 7:21 and HEB 11:24 recalls her by the same phrase. Bithiah, the daughter of Pharaoh whom Mered took (1CH 4:18), stays a person of her own: identifying the two is a later tradition, said in the notes, and no verse makes it. The name rows carry no Strong number, so that Pharaoh's H6547 gains no further bearer."
+    },
+    {
+      "slug": "jephthahs-daughter",
+      "kind": "person",
+      "name": "Jephthah's daughter",
+      "names": {
+        "eng": "Jephthah's daughter",
+        "ukr": "Дочка Їфтаха",
+        "deu": "die Tochter Jephthahs",
+        "rus": "Дочь Иеффая",
+        "spa": "la hija de Jephté"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "дочки Їфтаха",
+          "locative": "дочці Їфтаха"
+        },
+        "deu": {
+          "genitive": "der Tochter Jephthahs"
+        },
+        "rus": {
+          "genitive": "дочери Иеффая",
+          "locative": "дочери Иеффая"
+        }
+      },
+      "distinguisher": "Jephthah's only child, who came out to meet him with timbrels and dances, and whom the daughters of Israel went yearly to lament (JDG 11:34, 40)",
+      "notes": "Jephthah vowed a vow unto the LORD that whatsoever came forth of the doors of his house to meet him, when he returned in peace from the children of Ammon, should surely be the LORD's, and he would offer it up for a burnt offering (JDG 11:30-31). When he came to his house at Mizpeh, his daughter came out to meet him with timbrels and with dances; she was his only child, and beside her he had neither son nor daughter (JDG 11:34). He rent his clothes and said, Alas, my daughter! for I have opened my mouth unto the LORD, and I cannot go back (JDG 11:35). She answered, My father, if thou hast opened thy mouth unto the LORD, do to me according to that which hath proceeded out of thy mouth, and asked to be let alone two months to bewail her virginity upon the mountains with her fellows (JDG 11:36-38). At the end of two months she returned unto her father, who did with her according to his vow which he had vowed: and she knew no man (JDG 11:39). It became a custom in Israel that the daughters of Israel went yearly to lament the daughter of Jephthah the Gileadite four days in a year (JDG 11:39-40). The text does not give her name. Readers have long differed on whether the vow was kept by a burnt offering or by her living out her days unmarried in the LORD's service; the text says that he did with her according to his vow and that she knew no man.",
+      "called": [
+        {
+          "label": "Jephthah's daughter",
+          "hebrew": "בַת יִפְתָּח",
+          "hebrewTransliterated": "vat yiftach",
+          "meaning": "JDG 11:40"
+        },
+        {
+          "label": "Дочка Їфтаха"
+        },
+        {
+          "label": "Дочь Иеффая"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "JDG 11:30-40",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H1323",
+          "only": [
+            "JDG 11:34#1",
+            "JDG 11:35",
+            "JDG 11:40#2"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by claude-opus-5-5 on 2026-10-28, on the project owner's instruction of that day that Jephthah's daughter have her own page. בַּת is she at JDG 11:34 (the first: 'his daughter came out to meet him'), JDG 11:35 ('Alas, my daughter') and JDG 11:40 (the second: 'the daughter of Jephthah'); the second of JDG 11:34 ('neither son nor daughter') and the first of JDG 11:40 ('the daughters of Israel') are not. The name row carries no Strong number, so that Jephthah's H3316 gains no further bearer."
     }
   ],
   "refers": [
