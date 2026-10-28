@@ -248,6 +248,12 @@ internal static class Descriptors
             ? c with { SharedParent = parent }
             : c)];
 
+        var marriages = await InLaws.Through(db, clauses, cancellationToken);
+        clauses = [.. clauses.Select(c => c.Relation is DescriptorRelations.BrotherInLawOf or DescriptorRelations.SisterInLawOf
+                                          && marriages.TryGetValue((c.SubjectId, c.TargetEntityId), out var spouse)
+            ? c with { ThroughSpouse = spouse }
+            : c)];
+
         var taught = await Companies(db, clauses, cancellationToken);
         var targets = clauses.Select(c => c.TargetEntityId)
             .Concat(taught.Members.Values.SelectMany(members => members.Select(m => m.Id)))
@@ -795,6 +801,7 @@ internal static class Descriptors
             if (!index.TryGetValue(key, out var item))
             {
                 phrasing = DescriptorPhrasings.ByTheSharedParent(language, clause.Relation, clause.SharedParent) ?? phrasing;
+                phrasing = DescriptorPhrasings.ByTheSpouse(language, clause.Relation, clause.ThroughSpouse) ?? phrasing;
                 var place = clause.Relation is DescriptorRelations.SonOf or DescriptorRelations.DaughterOf
                     ? facts.Places.GetValueOrDefault(clause.TargetEntityId)
                     : null;
@@ -1265,6 +1272,7 @@ internal static class Descriptors
             Witness = clause.Witness,
             Original = clause.Original,
             SharedParent = clause.SharedParent,
+            ThroughSpouse = clause.ThroughSpouse,
             Stated = clause.Stated,
         };
 
@@ -1367,6 +1375,9 @@ internal static class Descriptors
 
         /// <summary>For a half-sibling, whether the two share a father or a mother, where the corpus knows.</summary>
         public string? SharedParent { get; init; }
+
+        /// <summary>For a brother- or sister-in-law, whether the tie runs through the target's wife or husband (<see cref="InLaws"/>).</summary>
+        public string? ThroughSpouse { get; init; }
 
         public string? Original { get; init; }
 
@@ -1609,6 +1620,14 @@ internal record DescriptorClaimResponse(
     /// <c>mother</c>, which a language with a word for each says. Null otherwise.
     /// </summary>
     public string? SharedParent { get; init; }
+
+    /// <summary>
+    /// For a brother- or sister-in-law, the marriage the tie runs through where the line can tell:
+    /// <c>wife</c> where the subject is a sibling of the target's wife, <c>husband</c> where of the
+    /// target's husband, which a language with a word for each side says (<see cref="InLaws"/>).
+    /// Null otherwise.
+    /// </summary>
+    public string? ThroughSpouse { get; init; }
 
     /// <summary>
     /// Where the claim was written on the other person's record and is read here from this side, the

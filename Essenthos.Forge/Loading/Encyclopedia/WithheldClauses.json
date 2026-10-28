@@ -108,13 +108,6 @@
       "why": "Not written while BibleData's rows for the pair said: harim-2 ancestor malchijah-6; harim-2 father malchijah-6; malchijah-6 descendant harim-2; malchijah-6 son harim-2. This corpus holds for the pair: malchijah-6 son-of harim-2 (NEH 3:11, the owner)."
     },
     {
-      "entity": "hobab",
-      "relation": "father-in-law-of",
-      "target": "moses",
-      "reference": "NUM 10:29",
-      "why": "Not written while BibleData's rows for the pair said: hobab brother-in-law moses; moses brother-in-law hobab. This corpus holds for the pair: moses brother-in-law-of hobab (NUM 10:29, the owner)."
-    },
-    {
       "entity": "hushim-2",
       "relation": "descendant-of",
       "target": "ehi",
