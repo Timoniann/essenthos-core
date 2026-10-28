@@ -265,6 +265,7 @@ public class AppDbContext : DbContext
     public DbSet<OccupationLabel> OccupationLabels { get; set; } = null!;
     public DbSet<PersonOccupation> PersonOccupations { get; set; } = null!;
     public DbSet<OccupationWitness> OccupationWitnesses { get; set; } = null!;
+    public DbSet<OccupationWord> OccupationWords { get; set; } = null!;
 
     public DbSet<EntityKnownFor> EntityKnownFor { get; set; } = null!;
 
@@ -636,7 +637,8 @@ public class AppDbContext : DbContext
         });
 
         modelBuilder.Entity<Occupation>(entity => entity.ToTable("occupation", t =>
-            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role', 'heavenly_role')")));
+            t.HasCheckConstraint("ck_occupation_category",
+                "category IN ('trade', 'office', 'military_role', 'religious_role', 'heavenly_role', 'designation')")));
         modelBuilder.Entity<OccupationLabel>(entity =>
         {
             entity.HasOne(l => l.Occupation).WithMany(o => o.Labels).HasForeignKey(l => l.OccupationId);
@@ -646,6 +648,13 @@ public class AppDbContext : DbContext
         {
             entity.HasOne(p => p.Person).WithMany().HasForeignKey(p => p.PersonId);
             entity.HasOne(p => p.Occupation).WithMany(o => o.People).HasForeignKey(p => p.OccupationId);
+            entity.ToTable("person_occupation", t => t.HasCheckConstraint("ck_person_occupation_source", "length(btrim(source)) > 0"));
+        });
+        modelBuilder.Entity<OccupationWord>(entity =>
+        {
+            entity.HasOne(w => w.PersonOccupation).WithMany(p => p.Words).HasForeignKey(w => w.PersonOccupationId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(w => w.Word).WithMany().HasForeignKey(w => w.WordId).OnDelete(DeleteBehavior.Cascade);
         });
         modelBuilder.Entity<OccupationWitness>(entity =>
         {

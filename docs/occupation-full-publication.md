@@ -1,5 +1,7 @@
 # Full occupation publication
 
+> These bundles are now history: the reviewed inventory is `Resources/Essenthos/person-occupations.json`, loaded by the `occupations` step (docs/occupation-publication.md). The SHA-pinned `occupations <bundle> <sha256>` verb and the `occupation-preview` verb no longer exist.
+
 `scripts/publish_person_occupations.py` prepares source-bound review packets from the completed occupation reading, validates explicit role and person-context decisions, and compiles the admitted publication. It makes no model requests or database calls. Use the registered `occupation-full-review` action; `occupation-full-check` runs the offline guards.
 
 The first immutable review directory is `Resources/Essenthos/generation/occupation-full-publication-2026-10-27-v1`. Its `manifest.json` binds the copied result, person catalogue and every original source packet. `groups.json` retains 1,281 person/category/raw-role groups and 2,040 positive contexts. `taxonomy.json` maps every one of the 308 category/key combinations to a canonical four-language concept or an explicit hold. `decisions/part-a.json` and `part-b.json` contain a source disposition for every group, with selected context identifiers. A model's earlier acceptance is not a source-review decision.

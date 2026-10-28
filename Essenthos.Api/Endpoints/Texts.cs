@@ -357,6 +357,17 @@ internal static class Texts
             .Select(side => new { side.WordId, side.Role, HeadId = side.HeadWordId!.Value, Head = side.HeadWord!.Surface })
             .ToListAsync(cancellationToken);
 
+        var roles = await db.OccupationWords
+            .Where(w => ids.Contains(w.WordId))
+            .Select(w => new
+            {
+                w.WordId,
+                Occupation = w.PersonOccupation!.Occupation!.Slug,
+                w.PersonOccupation.Occupation.Category,
+                Person = w.PersonOccupation.Person!.Slug,
+            })
+            .ToListAsync(cancellationToken);
+
         return new Reached(
             own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached),
             strongest,
@@ -376,6 +387,13 @@ internal static class Texts
                         .ThenBy(row => row.HeadId)
                         .Select(row => new AttachedResponse(EnumSpelling.Of(row.Role!.Value), row.HeadId, row.Head))
                         .First()),
+            Roles = roles
+                .GroupBy(row => row.WordId)
+                .ToDictionary(
+                    group => group.Key,
+                    group => (IReadOnlyList<WordRoleResponse>)[.. group
+                        .OrderBy(row => row.Person, StringComparer.Ordinal).ThenBy(row => row.Occupation, StringComparer.Ordinal)
+                        .Select(row => new WordRoleResponse(row.Occupation, row.Category, row.Person))]),
         };
     }
 
@@ -460,6 +478,9 @@ internal static class Texts
 
         /// <summary>For each word that goes with another word of its text, that word and how.</summary>
         public Dictionary<long, AttachedResponse> Attached { get; init; } = [];
+
+        /// <summary>For each word naming a person's occupation in a verse that says it, whose and which.</summary>
+        public Dictionary<long, IReadOnlyList<WordRoleResponse>> Roles { get; init; } = [];
     }
 
     private sealed record GlossWanted(
@@ -842,6 +863,7 @@ internal static class Texts
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
             GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
             Attached = counterparts.Attached.GetValueOrDefault(id),
+            Roles = counterparts.Roles.GetValueOrDefault(id),
             Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
             Entities = counterparts.Named.GetValueOrDefault(id) ?? [],
         };

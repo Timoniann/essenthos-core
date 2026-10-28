@@ -2964,6 +2964,11 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("slug");
 
+                    b.PrimitiveCollection<string[]>("StrongNumbers")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("strong_numbers");
+
                     b.HasKey("Id")
                         .HasName("pk_occupation");
 
@@ -2976,7 +2981,7 @@ namespace Essenthos.Core.Migrations
 
                     b.ToTable("occupation", null, t =>
                         {
-                            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role', 'heavenly_role')");
+                            t.HasCheckConstraint("ck_occupation_category", "category IN ('trade', 'office', 'military_role', 'religious_role', 'heavenly_role', 'designation')");
                         });
                 });
 
@@ -3070,16 +3075,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("reference");
 
-                    b.Property<string>("SourceSha256")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source_sha256");
-
-                    b.Property<string>("SourceText")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source_text");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("text")
@@ -3097,6 +3092,36 @@ namespace Essenthos.Core.Migrations
 
                             t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity')");
                         });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.OccupationWord", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("PersonOccupationId")
+                        .HasColumnType("integer")
+                        .HasColumnName("person_occupation_id");
+
+                    b.Property<long>("WordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("word_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_occupation_word");
+
+                    b.HasIndex("WordId")
+                        .HasDatabaseName("ix_occupation_word_word_id");
+
+                    b.HasIndex("PersonOccupationId", "WordId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_occupation_word_person_occupation_id_word_id");
+
+                    b.ToTable("occupation_word", (string)null);
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
@@ -3369,20 +3394,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("person_id");
 
-                    b.Property<string>("Provenance")
+                    b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("provenance");
-
-                    b.Property<string>("PublicationId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("publication_id");
-
-                    b.Property<string>("PublicationSha256")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("publication_sha256");
+                        .HasColumnName("source");
 
                     b.HasKey("Id")
                         .HasName("pk_person_occupation");
@@ -3394,7 +3409,10 @@ namespace Essenthos.Core.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_person_occupation_person_id_occupation_id");
 
-                    b.ToTable("person_occupation", (string)null);
+                    b.ToTable("person_occupation", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_person_occupation_source", "length(btrim(source)) > 0");
+                        });
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonPresence", b =>
@@ -6560,6 +6578,27 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("PersonOccupation");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.OccupationWord", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.PersonOccupation", "PersonOccupation")
+                        .WithMany("Words")
+                        .HasForeignKey("PersonOccupationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_occupation_word_person_occupations_person_occupation_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Word", "Word")
+                        .WithMany()
+                        .HasForeignKey("WordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_occupation_word_words_word_id");
+
+                    b.Navigation("PersonOccupation");
+
+                    b.Navigation("Word");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Event", "EndEvent")
@@ -7346,6 +7385,8 @@ namespace Essenthos.Core.Migrations
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PersonOccupation", b =>
                 {
                     b.Navigation("Witnesses");
+
+                    b.Navigation("Words");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.RulerVerdict", b =>

@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -18,12 +18,16 @@ internal sealed record OccupationDetailResponse(OccupationSummaryResponse Occupa
     IList<OccupationPractitionerResponse> People);
 internal sealed record PersonOccupationResponse(OccupationSummaryResponse Occupation, string RoleName,
     IList<VerseRefResponse> Verses, IList<OccupationWitnessResponse> Witnesses);
-internal sealed record PersonOccupationsResponse(string PersonSlug, int Total, IList<PersonOccupationResponse> Items);
+internal sealed record PersonOccupationsResponse(string PersonSlug, int Total, IList<PersonOccupationResponse> Items)
+{
+    /// <summary>Who they are, named as the chosen text names them, for a client that has only the slug.</summary>
+    public EntitySummaryResponse? Person { get; init; }
+}
 
 internal static class OccupationEndpoints
 {
-    private static readonly string[] Categories = ["trade", "office", "military_role", "religious_role", "heavenly_role"];
-    private const int MostPerPage = 100;
+    private static readonly string[] Categories = ["trade", "office", "military_role", "religious_role", "heavenly_role", "designation"];
+    private const int MostPerPage = 200;
 
     public static void MapOccupations(this IEndpointRouteBuilder routes)
     {
@@ -108,6 +112,7 @@ internal static class OccupationEndpoints
         var summaries = await db.Entities.Where(e => ids.Contains(e.Id)).Select(EncyclopediaEndpoints.Summary)
             .ToDictionaryAsync(e => e.Slug, cancellationToken);
         var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
+        var lines = await Descriptors.Of(db, named.Select(p => p.Slug), ReaderLanguages.Prose(prose, language), cancellationToken, language);
         var sexes = await OursOnlyRecords.SexesOf(db, ids, cancellationToken);
         var assertions = await db.PersonOccupations.AsNoTracking().Where(p => p.OccupationId == label.OccupationId && ids.Contains(p.PersonId))
             .Include(p => p.Witnesses).ToDictionaryAsync(p => p.PersonId, cancellationToken);
@@ -115,7 +120,7 @@ internal static class OccupationEndpoints
         return new(new(label.Occupation!.Slug, label.Occupation.Category, label.Name, label.Description, total), total, offset, limit,
             named.Select(p =>
             {
-                var summary = summaries[p.Slug] with { LocalName = p.LocalName };
+                var summary = summaries[p.Slug] with { LocalName = p.LocalName, Descriptor = lines.GetValueOrDefault(p.Slug) };
                 if (renamed.TryGetValue(p.Id, out var heads))
                     summary = summary with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled };
                 var evidence = Witnesses(assertions[p.Id]);
@@ -127,9 +132,16 @@ internal static class OccupationEndpoints
     internal static async Task<PersonOccupationsResponse?> Person(AppDbContext db, string slug, string? language = null,
         string? prose = null, CancellationToken cancellationToken = default)
     {
-        var person = await db.Entities.Where(e => e.Slug == slug && e.Kind == EntityKind.Person)
+        var current = await MergedAddresses.Current(db, slug, cancellationToken);
+        var person = await db.Entities.Where(e => e.Slug == current && e.Kind == EntityKind.Person)
             .Select(e => new { e.Id, e.Slug, e.Sex }).SingleOrDefaultAsync(cancellationToken);
         if (person is null) return null;
+        var summary = await db.Entities.Where(e => e.Id == person.Id).Select(EncyclopediaEndpoints.Summary).SingleAsync(cancellationToken);
+        var local = await EntityNames.Localised(db, db.Entities.Where(e => e.Id == person.Id), language)
+            .Select(p => p.LocalName).FirstOrDefaultAsync(cancellationToken);
+        summary = summary with { LocalName = local };
+        if ((await RenamedHeadings.Of(db, [person.Id], language, cancellationToken)).TryGetValue(person.Id, out var heads))
+            summary = summary with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled };
         var sex = person.Sex ?? (await OursOnlyRecords.SexesOf(db, [person.Id], cancellationToken)).GetValueOrDefault(person.Id);
         var words = Words(language, prose);
         var rows = await db.PersonOccupations.AsNoTracking().Where(p => p.PersonId == person.Id)
@@ -139,13 +151,14 @@ internal static class OccupationEndpoints
         var totals = await db.PersonOccupations.Where(p => ids.Contains(p.OccupationId)).GroupBy(p => p.OccupationId)
             .Select(g => new { Id = g.Key, Count = g.Select(p => p.PersonId).Distinct().Count() })
             .ToDictionaryAsync(g => g.Id, cancellationToken);
-        return new(person.Slug, rows.Count, rows.Select(p =>
+        return new(person.Slug, rows.Count, [.. rows.Select(p =>
         {
             var label = p.Occupation!.Labels.Single(l => l.Language == words);
             var evidence = Witnesses(p);
             return new PersonOccupationResponse(new(p.Occupation.Slug, p.Occupation.Category, label.Name, label.Description,
                 totals[p.OccupationId].Count), Role(label, sex), Verses(evidence), evidence);
-        }).OrderBy(p => p.Occupation.Name, StringComparer.Ordinal).ThenBy(p => p.Occupation.Slug, StringComparer.Ordinal).ToList());
+        }).OrderBy(p => Array.IndexOf(Categories, p.Occupation.Category)).ThenBy(p => p.Occupation.Name, StringComparer.Ordinal)
+            .ThenBy(p => p.Occupation.Slug, StringComparer.Ordinal)]) { Person = summary };
     }
 
     private static string Role(OccupationLabel label, string? sex) =>
