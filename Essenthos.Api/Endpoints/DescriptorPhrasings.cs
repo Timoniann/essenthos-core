@@ -160,6 +160,28 @@ internal static partial class DescriptorPhrasings
             [(Ukrainian, DescriptorRelations.HalfSisterOf, SharedParents.Mother)] = new("єдиноутробна сестра ", Genitive),
         };
 
+    /// <summary>
+    /// A brother- or sister-in-law said by the marriage the tie runs through, in a language that has
+    /// a word for each side: Ukrainian <em>шурин</em> for a wife's brother, <em>дівер</em> for a
+    /// husband's, <em>зовиця</em> for a husband's sister. Null where the side is not known or the
+    /// language says it one way either side — <em>Schwager</em>, <em>cuñado</em>, and Ukrainian
+    /// <em>своячка</em> for a wife's sister — and the table's own phrasing stands.
+    /// </summary>
+    /// <param name="spouse">One of <see cref="InLaws"/>'s <c>Wife</c> or <c>Husband</c>.</param>
+    public static Phrasing? ByTheSpouse(string? language, string relation, string? spouse) =>
+        language is not null && spouse is not null
+                             && SiblingsInLaw.TryGetValue((language, relation, spouse), out var phrasing)
+            ? phrasing
+            : null;
+
+    private static readonly IReadOnlyDictionary<(string Language, string Relation, string Spouse), Phrasing> SiblingsInLaw =
+        new Dictionary<(string, string, string), Phrasing>
+        {
+            [(Ukrainian, DescriptorRelations.BrotherInLawOf, InLaws.Wife)] = new("шурин ", Genitive),
+            [(Ukrainian, DescriptorRelations.BrotherInLawOf, InLaws.Husband)] = new("дівер ", Genitive),
+            [(Ukrainian, DescriptorRelations.SisterInLawOf, InLaws.Husband)] = new("зовиця ", Genitive),
+        };
+
 
     /// <summary>
     /// English, which needs no form but the name as it stands — and, because of that, no possessive
@@ -284,8 +306,8 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.DaughterInLawOf] = new("невістка ", Genitive),
 
             // Свояк and своячка are the members of the sibling-in-law set that do not say which
-            // side of the marriage the tie runs through; шурин and дівер both do, and the claim
-            // does not.
+            // side of the marriage the tie runs through; шурин and дівер both do, and are said
+            // where the line can tell the side (ByTheSpouse).
             [DescriptorRelations.BrotherInLawOf] = new("свояк ", Genitive),
             [DescriptorRelations.SisterInLawOf] = new("своячка ", Genitive),
             [DescriptorRelations.ConcubineOf] = new("наложниця ", Genitive),

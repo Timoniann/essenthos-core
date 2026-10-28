@@ -264,6 +264,42 @@ public sealed class FamilyLineTests : IDisposable
     public async Task GodIsNobodysFatherOnAFamilyLine() =>
         (await Descriptors.Of(_db, "yhvh", "eng", default)).Should().BeNull();
 
+    /// <summary>
+    /// Hobab is Reuel's son and Zipporah is Reuel's daughter and Moses' wife (NUM 10:29; EXO 2:21), so
+    /// in Ukrainian he is Moses' шурин, which only a wife's brother is. Aaron, Moses' brother, is
+    /// Zipporah's дівер; Moses, whose tie to Hobab runs through his own wife, stays свояк.
+    /// </summary>
+    [Fact]
+    public async Task ABrotherInLawIsSaidByTheMarriageTheTieRunsThrough()
+    {
+        _forms.Clear();
+        Person("reuel", "Reuel", Male, ("ukr", "Реуїл", "Реуїла"));
+        Person("hobab", "Hobab", Male, ("ukr", "Ховав", "Ховава"), ("deu", "Hobab", "Hobabs"));
+        Person("zipporah", "Zipporah", Female, ("ukr", "Ціппора", "Ціппори"));
+        Person("moses", "Moses", Male, ("ukr", "Мойсей", "Мойсея"), ("deu", "Mose", "Moses"), ("spa", "Moisés", null));
+        Person("aaron", "Aaron", Male, ("ukr", "Аарон", "Аарона"));
+        _db.SaveChanges();
+        AddForms();
+        Tie("hobab", DescriptorRelations.SonOf, "reuel");
+        Tie("zipporah", DescriptorRelations.DaughterOf, "reuel");
+        Tie("moses", DescriptorRelations.HusbandOf, "zipporah");
+        Tie("hobab", DescriptorRelations.BrotherInLawOf, "moses", LinkMethod.Manual);
+        Tie("moses", DescriptorRelations.BrotherInLawOf, "hobab", LinkMethod.Manual);
+        Tie("aaron", DescriptorRelations.BrotherOf, "moses");
+        Tie("aaron", DescriptorRelations.BrotherInLawOf, "zipporah");
+        await _db.SaveChangesAsync();
+
+        (await Line("hobab", "ukr")).Should().Contain("шурин Мойсея").And.NotContain("свояк");
+        (await Line("hobab", "eng")).Should().Contain("brother-in-law of Moses");
+        (await Line("hobab", "deu")).Should().Contain("Schwager Moses");
+        (await Line("hobab", "spa")).Should().Contain("cuñado de Moisés");
+        (await Line("moses", "ukr")).Should().Contain("свояк Ховава");
+        (await Line("aaron", "ukr")).Should().Contain("дівер Ціппори");
+        var hobab = (await Descriptors.Of(_db, "hobab", "ukr", default))!;
+        hobab.Claims.Should().ContainSingle(c => c.Relation == DescriptorRelations.BrotherInLawOf)
+            .Which.ThroughSpouse.Should().Be(InLaws.Wife);
+    }
+
     private async Task<string> Line(string slug, string language) =>
         string.Concat((await Descriptors.Of(_db, slug, language, default))!.Parts.Select(p => p.Text));
 
