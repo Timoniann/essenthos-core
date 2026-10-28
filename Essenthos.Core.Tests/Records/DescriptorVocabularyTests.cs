@@ -48,9 +48,9 @@ public sealed class DescriptorVocabularyTests
     /// case, so a line listing names under one phrase reads the forms it would read of a man.
     /// </summary>
     [Fact]
-    public void EveryFeminineReplacesAPhrasingOfItsLanguageAndAsksForTheSameCase()
+    public void EveryFeminineAndPluralReplacesAPhrasingOfItsLanguageAndAsksForTheSameCase()
     {
-        foreach (var ((language, relation), feminine) in DescriptorPhrasings.Feminine)
+        foreach (var ((language, relation), feminine) in DescriptorPhrasings.Feminine.Concat(DescriptorPhrasings.OfAPeople))
         {
             var phrasings = DescriptorPhrasings.For(language);
             phrasings.Should().NotBeNull("{0} must be a language the encyclopedia speaks", language);
@@ -73,9 +73,28 @@ public sealed class DescriptorVocabularyTests
     [InlineData(DescriptorPhrasings.Spanish, "prophet-to", "profetisa de ")]
     public void AWomanIsSaidInTheFeminine(string language, string relation, string before)
     {
-        DescriptorPhrasings.OfSubject(language, relation, "female")!.Before.Should().Be(before);
-        DescriptorPhrasings.OfSubject(language, relation, "male").Should().BeNull();
-        DescriptorPhrasings.OfSubject(language, relation, null).Should().BeNull();
+        DescriptorPhrasings.OfSubject(language, relation, "female", people: false)!.Before.Should().Be(before);
+        DescriptorPhrasings.OfSubject(language, relation, "male", people: false).Should().BeNull();
+        DescriptorPhrasings.OfSubject(language, relation, null, people: false).Should().BeNull();
+    }
+
+    /// <summary>
+    /// A people agrees with a plural: the Anakim <em>жили у Хевроні</em>, not <em>жив</em>, and are the
+    /// <em>descendants</em> of Anak in every language.
+    /// </summary>
+    [Theory]
+    [InlineData(DescriptorPhrasings.Ukrainian, "lived-in", "жили у ")]
+    [InlineData(DescriptorPhrasings.Ukrainian, "buried-in", "поховані у ")]
+    [InlineData(DescriptorPhrasings.Ukrainian, "descendant-of", "нащадки ")]
+    [InlineData(DescriptorPhrasings.German, "lived-in", "wohnten in ")]
+    [InlineData(DescriptorPhrasings.German, "servant-of", "Knechte ")]
+    [InlineData(DescriptorPhrasings.Spanish, "lived-in", "habitaron en ")]
+    [InlineData(DescriptorPhrasings.Spanish, "buried-in", "sepultados en ")]
+    [InlineData(DescriptorPhrasings.English, "descendant-of", "descendants of ")]
+    public void APeopleIsSaidInThePlural(string language, string relation, string before)
+    {
+        DescriptorPhrasings.OfSubject(language, relation, null, people: true)!.Before.Should().Be(before);
+        DescriptorPhrasings.OfSubject(language, relation, null, people: false).Should().BeNull();
     }
 
     [Fact]

@@ -326,6 +326,7 @@ internal static class Descriptors
                 OtherDisciples = taught.Others.GetValueOrDefault(subject.Id),
                 Byname = Bynamed(Bynames.Read(subject.Byname), named),
                 Work = work.GetValueOrDefault(subject.Id) ?? [],
+                People = subject.Kind == EntityKind.People,
             };
             if (said.Count == 0 && facts.Children is null && facts.Byname is null && facts.Work.Count == 0)
             {
@@ -796,7 +797,7 @@ internal static class Descriptors
                 continue;
             }
 
-            phrasing = DescriptorPhrasings.OfSubject(language, clause.Relation, facts.Sex) ?? phrasing;
+            phrasing = DescriptorPhrasings.OfSubject(language, clause.Relation, facts.Sex, facts.People) ?? phrasing;
             var plain = phrasing;
 
             var key = (clause.Relation, clause.TargetEntityId);
@@ -1396,6 +1397,9 @@ internal static class Descriptors
 
         /// <summary>The person's trades and what the text calls them, said after the offices.</summary>
         public IReadOnlyList<OccupationLines.Work> Work { get; init; } = [];
+
+        /// <summary>Whether the line is a people's, whose clauses agree with a plural subject.</summary>
+        public bool People { get; init; }
     }
 
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>
