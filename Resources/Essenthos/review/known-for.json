@@ -3373,14 +3373,14 @@
       "verses": 44,
       "clauses": [
         {
-          "english": "made his sons pass before Samuel, but the LORD chose none of them",
-          "ukr": "провів своїх синів перед Самуїлом, але Господь не вибрав жодного з них",
-          "deu": "ließ seine Söhne an Samuel vorübergehen, aber der HERR erwählte keinen von ihnen",
-          "spa": "hizo pasar a sus hijos delante de Samuel, pero el SEÑOR no eligió a ninguno de ellos",
+          "english": "made his sons pass before Samuel, who anointed the youngest, David, as king",
+          "ukr": "провів своїх синів перед Самуїлом, і той помазав наймолодшого, Давида, на царя",
+          "deu": "ließ seine Söhne an Samuel vorübergehen, der den jüngsten, David, zum König salbte",
+          "spa": "hizo pasar a sus hijos delante de Samuel, quien ungió al menor, David, como rey",
           "references": [
-            "1SA 16:8-10"
+            "1SA 16:1-13"
           ],
-          "renderingsChanged": "Changed «привів... перед Самуїла» to «провів... перед Самуїлом» to keep the sense of making them pass before him."
+          "renderingsChanged": null
         },
         {
           "english": "sent his son David to Saul",
@@ -3418,7 +3418,7 @@
       },
       "decision": {
         "answer": "approved",
-        "note": "approved by the owner in chat 2026-10-25 after a spot check",
+        "note": "approved by the owner in chat 2026-10-25 after a spot check; the first clause rewritten from 1SA 16:1-13 on his word of 2026-10-29, which said the LORD chose none of the sons where he chose David",
         "at": "2026-10-25T17:35:50.265Z"
       }
     },
