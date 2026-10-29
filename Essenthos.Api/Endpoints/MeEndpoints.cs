@@ -15,10 +15,16 @@ internal static class MeEndpoints
     {
         var me = routes.MapGroup("/me").RequireAuthorization();
 
+        // Every page asks who is reading. Nobody signed in is an answer, not a refusal, so it is no
+        // content rather than a 401 the browser logs as an error on every visitor's every page. A
+        // session whose account is gone is still refused.
         me.MapGet("", async (HttpContext context, AccountsDbContext db, Admins admins) =>
-            await Describe(db, admins, context.User.AccountId(), context.RequestAborted) is { } account
-                ? Results.Ok(account)
-                : Results.Unauthorized());
+            context.User.Identity?.IsAuthenticated != true
+                ? Results.NoContent()
+                : await Describe(db, admins, context.User.AccountId(), context.RequestAborted) is { } account
+                    ? Results.Ok(account)
+                    : Results.Unauthorized())
+            .AllowAnonymous();
 
         me.MapPatch("", async (HttpContext context, AccountsDbContext db, Admins admins, MeUpdate update) =>
         {
