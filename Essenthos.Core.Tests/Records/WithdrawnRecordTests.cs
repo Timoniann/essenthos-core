@@ -170,6 +170,47 @@ public sealed class WithdrawnRecordTests : IDisposable
         PeopleFiles.Read().Refused.Should().Contain(refusal => refusal.Number == "H4344");
     }
 
+    /// <summary>
+    /// Strong's fifth Zimri is the land of Jeremiah 25:25, which the gazetteer's place already holds: the
+    /// person page it made held no verse and offered Zimran on one side only (PRB-1348). The shipped list
+    /// takes it from a loaded corpus, name row and all, leaves the place and the other Zimris, and a
+    /// second run takes nothing.
+    /// </summary>
+    [Fact]
+    public async Task TheEmptyZimriOfJeremiahIsWithdrawnAndThePlaceAndTheMenStay()
+    {
+        var zimri = Record("zimri-5", "essenthos:zimri5", "Essenthos, from the bearers Strong's Dictionary enumerates under the name");
+        zimri.Kind = EntityKind.Person;
+        zimri.Distinguisher = "A name among the mingled peoples in Jeremiah, possibly the same as Zimran";
+        var king = Record("zimri-2", "person:Zimri_2", "Essenthos, from the bearers Strong's Dictionary enumerates under the name");
+        king.Kind = EntityKind.Person;
+        Record("zimri-4", "openbible:a5bbf9c", "OpenBible.info Bible Geocoding");
+        _db.SaveChanges();
+        _db.EntityNames.Add(new EntityName { EntityId = zimri.Id, Label = "Zimri", HebrewStrongNumber = "H2174", Kind = "proper name" });
+        _db.SaveChanges();
+
+        (await Loader().Load()).Withdrawn.Should().BeGreaterThanOrEqualTo(1);
+
+        (await Slugs()).Should().NotContain("zimri-5").And.Contain(["zimri-2", "zimri-4"]);
+        (await _db.EntityNames.AnyAsync(n => n.EntityId == zimri.Id)).Should().BeFalse();
+        (await Loader().Load()).Withdrawn.Should().Be(0);
+    }
+
+    /// <summary>
+    /// No line a register gives a bearer offers another person as possibly the same unless the record is
+    /// withdrawn: a line said on one page only is a one-sided identity (RUL-0201).
+    /// </summary>
+    [Fact]
+    public void NoRegisterLineOffersAnotherPersonOnARecordThatStays()
+    {
+        var withdrawn = WithdrawnRecordLoader.Read().Select(record => record.SourceId).ToHashSet(StringComparer.Ordinal);
+
+        RegisterLines.All
+            .Where(line => line.Line.Contains("same as", StringComparison.OrdinalIgnoreCase) && !withdrawn.Contains(line.SourceId))
+            .Select(line => $"{line.SourceId}: {line.Line}")
+            .Should().BeEmpty();
+    }
+
     [Fact]
     public async Task ASecondRunWithdrawsNothingMore()
     {
