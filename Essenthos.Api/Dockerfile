@@ -29,7 +29,11 @@ ARG BUILD_CONFIGURATION=Release
 # itself; given here, it ends up after the + of the informational version, which /v1/health/version
 # reports so whoever deploys can tell what an environment runs.
 ARG SOURCE_COMMIT=
-RUN dotnet publish "Essenthos.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false ${SOURCE_COMMIT:+/p:SourceRevisionId=$SOURCE_COMMIT}
+# For the image's own architecture only (BuildKit sets TARGETARCH): without it the native libraries of
+# every platform SkiaSharp and the rest ship for are published too, Windows' among them, which was
+# 470 of the image's 530 MB of application.
+ARG TARGETARCH
+RUN dotnet publish "Essenthos.Api.csproj" -c $BUILD_CONFIGURATION -a $TARGETARCH --self-contained false -o /app/publish /p:UseAppHost=false ${SOURCE_COMMIT:+/p:SourceRevisionId=$SOURCE_COMMIT}
 
 FROM base AS final
 WORKDIR /app
