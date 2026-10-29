@@ -628,6 +628,7 @@
   "generated/solomon.webp": { "digest": "bdb317a91e81", "face": [0.3516, 0.1934, 0.0908, 0.0742], "by": "detector" },
   "generated/sosthenes.webp": { "digest": "86ad281de5d2", "face": [0.4307, 0.3281, 0.1494, 0.1328], "by": "detector" },
   "generated/sosthenes-the-brother.webp": { "digest": "f9864bbb32b7", "face": [0.3955, 0.1016, 0.1904, 0.1523], "by": "detector" },
+  "generated/sosthenes-the-brother-2.webp": { "digest": "c79562de2221", "face": [0.3721, 0.1016, 0.1846, 0.1621], "by": "detector" },
   "generated/stephanas.webp": { "digest": "791032090c2a", "face": [0.4248, 0.1562, 0.1465, 0.1426], "by": "detector" },
   "generated/stephen.webp": { "digest": "fc8886bd36d9", "face": [0.3369, 0.1602, 0.1436, 0.127], "by": "detector" },
   "generated/syntyche.webp": { "digest": "132fcbd89eb0", "face": [0.334, 0.2305, 0.1611, 0.1328], "by": "detector" },
