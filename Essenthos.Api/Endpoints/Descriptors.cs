@@ -778,34 +778,10 @@ internal static class Descriptors
     {
         foreach (var (target, heading) in headings)
         {
-            var held = forms.GetValueOrDefault(target);
-            if (EntityNames.Local(named) is null)
+            if (RenamedHeadings.Forms(heading, forms.GetValueOrDefault(target), named) is { } said)
             {
-                if (held is not null)
-                {
-                    forms[target] = new Dictionary<string, string>(StringComparer.Ordinal)
-                    {
-                        [GrammaticalCases.Nominative] = heading.Name,
-                    };
-                }
-
-                continue;
+                forms[target] = said;
             }
-
-            if (heading.LocalName is not { } local
-                || string.Equals(local, held?.GetValueOrDefault(GrammaticalCases.Nominative), StringComparison.Ordinal)
-                || (RenamedHeadings.Declines(named) && heading.LocalGenitive is null))
-            {
-                continue;
-            }
-
-            var cases = new Dictionary<string, string>(StringComparer.Ordinal) { [GrammaticalCases.Nominative] = local };
-            if (heading.LocalGenitive is { } genitive)
-            {
-                cases[GrammaticalCases.Genitive] = genitive;
-            }
-
-            forms[target] = cases;
         }
     }
 

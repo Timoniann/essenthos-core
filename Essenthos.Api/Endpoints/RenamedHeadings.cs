@@ -161,6 +161,40 @@ internal static class RenamedHeadings
             });
     }
 
+    /// <summary>
+    /// The forms a person is said by under the heading, in the language of <paramref name="named"/>:
+    /// the heading itself where the language has no forms of its own, the local heading and its
+    /// printed genitive where it declines one, and the forms held for the filed name where the heading
+    /// gives nothing better. Null where the filed name's forms are null and nothing replaces them.
+    /// </summary>
+    public static IReadOnlyDictionary<string, string>? Forms(
+        RenamedHeading heading,
+        IReadOnlyDictionary<string, string>? held,
+        string named)
+    {
+        if (EntityNames.Local(named) is null)
+        {
+            return held is null
+                ? null
+                : new Dictionary<string, string>(StringComparer.Ordinal) { [GrammaticalCases.Nominative] = heading.Name };
+        }
+
+        if (heading.LocalName is not { } local
+            || string.Equals(local, held?.GetValueOrDefault(GrammaticalCases.Nominative), StringComparison.Ordinal)
+            || (Declines(named) && heading.LocalGenitive is null))
+        {
+            return held;
+        }
+
+        var cases = new Dictionary<string, string>(StringComparer.Ordinal) { [GrammaticalCases.Nominative] = local };
+        if (heading.LocalGenitive is { } genitive)
+        {
+            cases[GrammaticalCases.Genitive] = genitive;
+        }
+
+        return cases;
+    }
+
     /// <summary>Whether a phrase in this language that wants a genitive needs a spelling of its own for it.</summary>
     public static bool Declines(string? language) => EntityNames.Local(language) is { } local && NameCases.Declining.Contains(local);
 
