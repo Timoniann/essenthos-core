@@ -212,6 +212,7 @@ builder.Services.AddScoped<NameConsensusPass>();
 builder.Services.AddScoped<StrongRenderingLoader>();
 builder.Services.AddScoped<SearchFormLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
+builder.Services.AddScoped<PeopleAncestorLoader>();
 builder.Services.AddScoped<DuplicateRecordLoader>();
 builder.Services.AddScoped<RefiledTieLoader>();
 builder.Services.AddSingleton<DatasetStatus>();

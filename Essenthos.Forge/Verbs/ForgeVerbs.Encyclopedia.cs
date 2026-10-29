@@ -433,6 +433,7 @@ internal static partial class ForgeVerbs
         logger.LogInformation("{Outcome}", await records.GetRequiredService<OwnReferenceLoader>().Load());
         logger.LogInformation("{Outcome}", await records.GetRequiredService<EntityDescriptorLoader>().Load(resources));
         logger.LogInformation("{Outcome}", await records.GetRequiredService<OwnRelationshipLoader>().Load());
+        logger.LogInformation("{Outcome}", await records.GetRequiredService<PeopleAncestorLoader>().Load());
         logger.LogInformation("{Outcome}", await records.GetRequiredService<EntityNameFormLoader>().Load(resources));
         logger.LogInformation("{Outcome}", await records.GetRequiredService<DuplicateRecordLoader>().Load());
         logger.LogInformation("{Outcome}", await records.GetRequiredService<WithdrawnRecordLoader>().Load());

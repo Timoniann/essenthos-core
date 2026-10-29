@@ -171,6 +171,7 @@ internal static class Descriptors
         var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
         var siblings = await SharedParents.Siblings(db, people, cancellationToken);
         var work = await OccupationLines.Of(db, people, spoken, cancellationToken);
+        own.AddRange(await Descents(db, subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id).ToList(), own, cancellationToken));
 
         if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0 && work.Count == 0
             && subjects.All(e => e.Kind != EntityKind.Place && e.Byname is null))
@@ -588,6 +589,51 @@ internal static class Descriptors
     }
 
     private sealed record Person(int Id, EntityKind Kind, string Slug, string Name, string? Distinguisher, string? Sex);
+
+    /// <summary>
+    /// Whom a people came from where no clause of its line says it and Strong's Dictionary derives its
+    /// name from one man's: <em>descendants of Moab</em>. His statement carries no verse, so the claim
+    /// cites none.
+    /// </summary>
+    private static async Task<List<Clause>> Descents(
+        AppDbContext db,
+        List<int> peoples,
+        IReadOnlyList<Clause> own,
+        CancellationToken cancellationToken)
+    {
+        if (peoples.Count == 0)
+        {
+            return [];
+        }
+
+        var said = own.Where(c => c.Relation == DescriptorRelations.DescendantsOf).Select(c => c.SubjectId).ToHashSet();
+        var rows = await db.EntityRelationships
+            .Where(r => peoples.Contains(r.FromEntityId)
+                        && r.Type == DescriptorRelations.DescendantsOf
+                        && r.Method == LinkMethod.StatedBySource
+                        && r.To!.Kind == EntityKind.Person)
+            .Select(r => new Clause(
+                r.From!.Slug,
+                0,
+                r.Type,
+                r.ToEntityId,
+                r.To!.Kind,
+                r.To.Slug,
+                r.To.Name,
+                r.To.Distinguisher,
+                0,
+                0,
+                0,
+                r.Method,
+                r.Confidence,
+                r.Source)
+            {
+                SubjectId = r.FromEntityId,
+                TargetSex = r.To.Sex,
+            })
+            .ToListAsync(cancellationToken);
+        return [.. rows.Where(c => !said.Contains(c.SubjectId))];
+    }
 
     /// <summary>A clause no record wrote and the line works out, with the verses it rests on.</summary>
     private static Clause Derived(
@@ -1304,12 +1350,14 @@ internal static class Descriptors
             clause.Ordinal,
             clause.Relation,
             Target(clause, CasesOf(clause, forms)),
-            new VerseRefResponse(
-                clause.Book,
-                BookReferences.Name(clause.Book),
-                BookReferences.Slug(clause.Book),
-                clause.Chapter,
-                clause.Verse),
+            clause.Book == 0
+                ? null
+                : new VerseRefResponse(
+                    clause.Book,
+                    BookReferences.Name(clause.Book),
+                    BookReferences.Slug(clause.Book),
+                    clause.Chapter,
+                    clause.Verse),
             EnumSpelling.Of(clause.Method),
             clause.Confidence,
             clause.Source,
@@ -1646,7 +1694,7 @@ internal record DescriptorClaimResponse(
     int Ordinal,
     string Relation,
     DescriptorTargetResponse Target,
-    VerseRefResponse Reference,
+    VerseRefResponse? Reference,
     string Method,
     double? Confidence,
     string Source,

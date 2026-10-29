@@ -323,16 +323,15 @@ public class EntityClaim
 /// <summary>
 /// Who else a record might be, where the evidence does not decide.
 ///
-/// Judges 4:11 calls Hobab Moses' father-in-law and Numbers 10:29 calls him the son of Reuel, whom
-/// Exodus 2:18 calls the father-in-law; the Hebrew word carries both father-in-law and
-/// brother-in-law, and the question is old and open. A corpus that must answer it picks one and
-/// looks certain. A corpus that may not answer it says nothing and looks empty. This is the third
+/// 1 Chronicles 2:18 names Jerioth beside Azubah, Caleb's wife, and calls the sons that follow
+/// "hers"; whether Jerioth is a second wife, Azubah under another name, a daughter or no name at all,
+/// the verse does not settle. A corpus that must answer it picks one and looks certain. A corpus that may not answer it says nothing and looks empty. This is the third
 /// thing: the record names the man, and names the man it might instead be, and says why nobody can
 /// tell.
 ///
 /// <para>
 /// It is on the record rather than on the occurrence because it is a statement about the person —
-/// <em>this Hobab may be Reuel under a second name</em> is true wherever he is named, not only in
+/// <em>Jerioth may be Azubah under a second name</em> is true wherever she is named, not only in
 /// the verse that raised it. Where the alternative is somebody the encyclopedia does not hold,
 /// <see cref="AlternativeEntityId"/> is null and <see cref="Describes"/> is all there is, which is
 /// the same shape as the rest of this corpus's silences.
@@ -517,9 +516,10 @@ public static class RelationshipCategories
 /// edge list stands here.
 ///
 /// <para>
-/// **Every row names the verse it read.** That is a database constraint rather than a habit: every
-/// method but <see cref="LinkMethod.StatedBySource"/> carries an address, and nothing writes a row
-/// by that method.
+/// **Every row names the verse it read**, but one kind. That is a database constraint rather than a
+/// habit: every method but <see cref="LinkMethod.StatedBySource"/> carries an address, and the only
+/// rows of that method are a people's descent from the man Strong's Dictionary derives its name
+/// from, which is his statement and no verse's.
 /// </para>
 /// </remarks>
 [Index(nameof(FromEntityId))]
