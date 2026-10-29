@@ -13,11 +13,19 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// The date of the run, which with <paramref name="Model"/> is the whole of who said this. Both end
 /// up on every row, so a pass is identifiable and removable.
 /// </param>
+/// <param name="Replaces">
+/// Set on a correction only: language to case to the form a pass wrongly gave, which
+/// <paramref name="Names"/> replaces wherever the corpus holds exactly that form. A form somebody else
+/// wrote is left alone.
+/// </param>
+/// <param name="PrintedIn">On a correction, the text whose spelling it is: <c>the Reina-Valera 1909</c>.</param>
 internal sealed record NameFormRecord(
     string Entity,
     IReadOnlyDictionary<string, Dictionary<string, string>>? Names,
     string Model,
-    string AskedAt);
+    string AskedAt,
+    IReadOnlyDictionary<string, Dictionary<string, string>>? Replaces = null,
+    string? PrintedIn = null);
 
 /// <summary>
 /// Where the name-form files are read from, and what one line of one has to be.

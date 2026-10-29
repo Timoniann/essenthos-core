@@ -1,0 +1,11 @@
+{"entity": "abram", "names": {"spa": {"nominative": "Abram"}}, "replaces": {"spa": {"nominative": "Abraham"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "joshua", "names": {"spa": {"nominative": "Josué"}}, "replaces": {"spa": {"nominative": "Jesuá"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "deuel", "names": {"spa": {"nominative": "Dehuel"}}, "replaces": {"spa": {"nominative": "Reuel"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "enoch-2", "names": {"spa": {"nominative": "Henoch"}}, "replaces": {"spa": {"nominative": "Hanoch"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "hanoch-2", "names": {"spa": {"nominative": "Hanoch"}}, "replaces": {"spa": {"nominative": "Henoch"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "ahaziah-2", "names": {"spa": {"nominative": "Ochôzías"}}, "replaces": {"spa": {"nominative": "Joachâz"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "micaiah", "names": {"spa": {"nominative": "Michêas"}}, "replaces": {"spa": {"nominative": "Michâs"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "micaiah-3", "names": {"spa": {"nominative": "Michêas"}}, "replaces": {"spa": {"nominative": "Michâs"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "micah-4", "names": {"spa": {"nominative": "Miqueas"}}, "replaces": {"spa": {"nominative": "Michêas"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "reuel-2", "names": {"spa": {"nominative": "Ragüel"}}, "replaces": {"spa": {"nominative": "Jether"}}, "printedIn": "the Reina-Valera 1909", "model": "Essenthos", "askedAt": "2026-10-29"}
+{"entity": "adah-wife-of-esau", "names": {"deu": {"nominative": "Ada", "genitive": "Adas"}}, "replaces": {"deu": {"nominative": "Basmath", "genitive": "Basmaths"}}, "printedIn": "the Luther Bible 1912", "model": "Essenthos", "askedAt": "2026-10-29"}
