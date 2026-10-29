@@ -292,6 +292,18 @@ internal static partial class EncyclopediaEndpoints
             var locations = entity.Kind == EntityKind.Place
                 ? await Candidates(db, entity.Id, language, cancellationToken, words)
                 : null;
+            // A name the page's heading does not already say is given as the reader's texts print it.
+            var otherNames = names
+                .Where(n => !EntityNames.IsTitle(n.Kind)
+                            && !string.Equals(n.Label, entity.Name, StringComparison.OrdinalIgnoreCase)
+                            && !string.Equals(n.Label, renamed?.Name, StringComparison.OrdinalIgnoreCase))
+                .Select(n => new BorneName(n.Label, NameSpellings.Numbers(n.HebrewStrongNumber, n.GreekStrongNumber)))
+                .Where(n => n.Numbers.Count > 0)
+                .ToList();
+            var spelled = otherNames.Count == 0
+                ? []
+                : await NameSpellings.Of(
+                    db, entity.Id, otherNames, language, localNames.GetValueOrDefault(entity.Id), cancellationToken);
             var lemmas = await HebrewLemmas(db, names.Where(n => n.Hebrew is null).Select(n => n.HebrewStrongNumber), cancellationToken);
             var glosses = await EntityNameTranslations.Of(
                 db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
@@ -332,6 +344,7 @@ internal static partial class EncyclopediaEndpoints
                             ? glosses.GetValueOrDefault(n.Label)
                             : null,
                         LocalMeaning = n.Meaning is { } meaning ? glosses.GetValueOrDefault(meaning) : null,
+                        Printed = spelled.GetValueOrDefault(n.Label),
                     }),
                 ],
                 related,

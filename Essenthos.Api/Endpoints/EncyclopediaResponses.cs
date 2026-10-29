@@ -655,6 +655,13 @@ internal record EntityNameResponse(
 
     /// <summary>The meaning in the reader's language, where it has been rendered.</summary>
     public string? LocalMeaning { get; init; }
+
+    /// <summary>
+    /// A name other than the one the record is headed by, as the texts of the reader's language print
+    /// it, in its nominative: Joses as <em>Йосип</em>, Abram on the page headed Abraham as <em>Аврам</em>.
+    /// Null in English, for a title, and where no text of the language prints the name.
+    /// </summary>
+    public string? Printed { get; init; }
 }
 
 
