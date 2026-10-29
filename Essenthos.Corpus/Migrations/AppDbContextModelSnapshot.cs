@@ -4592,7 +4592,7 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("language");
 
-                    b.Property<int>("Occurrences")
+                    b.Property<int?>("Occurrences")
                         .HasColumnType("integer")
                         .HasColumnName("occurrences");
 
@@ -4610,11 +4610,13 @@ namespace Essenthos.Core.Migrations
 
                     b.ToTable("strong_profile", null, t =>
                         {
-                            t.HasComment("A compiler's part of speech, gender, occurrence count and first verse for a Hebrew Strong entry. His analysis, not Strong's and not this corpus's: verify compares the count with BHSA's.");
+                            t.HasComment("A compiler's part of speech, gender, occurrence count and first verse for a Hebrew Strong entry. His analysis, not Strong's and not this corpus's: verify compares the count with BHSA's. A Greek entry's part of speech and gender are a lexicon's, which counts nothing.");
+
+                            t.HasCheckConstraint("ck_strong_profile_counted", "(occurrences IS NULL) = (language = 'grc')");
 
                             t.HasCheckConstraint("ck_strong_profile_first", "(first_book IS NULL) = (first_chapter IS NULL) AND (first_book IS NULL) = (first_verse IS NULL)");
 
-                            t.HasCheckConstraint("ck_strong_profile_language", "language IN ('hbo', 'arc')");
+                            t.HasCheckConstraint("ck_strong_profile_language", "language IN ('hbo', 'arc', 'grc')");
 
                             t.HasCheckConstraint("ck_strong_profile_occurrences", "occurrences >= 0");
 

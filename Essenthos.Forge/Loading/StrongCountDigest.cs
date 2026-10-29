@@ -31,7 +31,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal sealed class StrongCountDigest
 {
-    public const int Version = 1;
+    public const int Version = 2;
 
     private const string PairSums =
         """
@@ -70,6 +70,7 @@ internal sealed class StrongCountDigest
     private readonly IReadOnlyDictionary<int, string> _verses;
     private readonly IReadOnlyDictionary<int, string> _books;
     private readonly string _classes;
+    private readonly IReadOnlySet<int> _numbered;
 
     private StrongCountDigest(
         IReadOnlyDictionary<int, (string Slug, string Name, TextKind Kind, string Language)> texts,
@@ -77,8 +78,10 @@ internal sealed class StrongCountDigest
         IReadOnlyDictionary<int, string> words,
         IReadOnlyDictionary<int, string> verses,
         IReadOnlyDictionary<int, string> books,
-        string classes)
+        string classes,
+        IReadOnlySet<int> numbered)
     {
+        _numbered = numbered;
         _texts = texts;
         _pairs = pairs;
         _words = words;
@@ -119,7 +122,10 @@ internal sealed class StrongCountDigest
             await Sums(connection, WordSums, cancellationToken),
             await Sums(connection, VerseSums, cancellationToken),
             await Sums(connection, BookSums, cancellationToken),
-            Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', lines)))));
+            Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', lines)))),
+            (await db.Texts.Where(t => db.Words.Any(w => w.TextId == t.Id && w.StrongNumber != null))
+                .Select(t => t.Id)
+                .ToListAsync(cancellationToken)).ToHashSet());
     }
 
     /// <summary>
@@ -137,7 +143,10 @@ internal sealed class StrongCountDigest
                     other.Value.Name,
                     other.Value.Language,
                     other.Value.Kind,
-                    (int)(Links(textId, other.Key) + Links(other.Key, textId)))));
+                    (int)(Links(textId, other.Key) + Links(other.Key, textId)))
+                {
+                    Numbered = _numbered.Contains(other.Key),
+                }));
 
     /// <summary>Everything the text's phrases, reach, methods and reach by book are counted from.</summary>
     public string Phrases(int textId)

@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Essenthos.Core.Database;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.StepBible;
 using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +10,7 @@ namespace Essenthos.Core.Loading;
 
 /// <param name="Relations">Rows the sources state, written or found already there.</param>
 /// <param name="Unclassified">Of them, references whose words none of the kinds reads.</param>
-/// <param name="Profiles">Hebrew entries the compiler profiles, or 0 where his file is not there.</param>
+/// <param name="Profiles">Entries a compiler or a lexicon profiles, or 0 where neither file is there.</param>
 internal sealed record StrongRelationOutcome(
     bool AlreadyLoaded,
     int Relations,
@@ -20,13 +22,14 @@ internal sealed record StrongRelationOutcome(
         AlreadyLoaded
             ? $"the {Relations} relations between Strong's entries and {Profiles} profiles are already loaded"
             : $"{Relations} relations between Strong's entries, {Unclassified} of them in words no kind reads, " +
-              $"and {Profiles} profiles of the Hebrew, in {Elapsed}";
+              $"and {Profiles} profiles of the Hebrew and the Greek, in {Elapsed}";
 }
 
 /// <summary>
 /// The relations Strong states between his entries, which the lexicon's own load flattens into the
 /// derivation's prose, and the compiler's root lists and profiles of the Hebrew beside them under his
-/// own name. A step of its own rather than part of the lexicon's load, which loads once and never
+/// own name, with STEPBible's part of speech of each Greek entry under its. A step of its own rather
+/// than part of the lexicon's load, which loads once and never
 /// again: this one reads the files on every load and writes a table only where the reading changed,
 /// each in one transaction, so a corpus loaded before it existed reaches it without the lexicon and
 /// everything keyed on it being reloaded.
@@ -41,7 +44,8 @@ internal sealed class StrongRelationLoader(AppDbContext db, ILogger<StrongRelati
         string hebrewPath,
         string greekPath,
         string? compiledPath,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        string? greekLexiconPath = null)
     {
         var started = Stopwatch.StartNew();
         var parser = new StrongXmlParser();
@@ -63,7 +67,13 @@ internal sealed class StrongRelationLoader(AppDbContext db, ILogger<StrongRelati
         }
 
         stated.AddRange((compiled?.Roots ?? []).Select(r => Row(r, CompiledHebrewStrongs.Source)));
-        var profiles = compiled?.Profiles ?? [];
+        List<StrongProfile> profiles =
+        [
+            .. compiled?.Profiles ?? [],
+            .. greekLexiconPath is not null && File.Exists(greekLexiconPath)
+                ? BriefGreekParts.Read(greekLexiconPath, Sources.BriefGreekLexicon)
+                : [],
+        ];
 
         var unclassified = stated.Count(r => r.Kind == StrongRelationKinds.Unclassified);
         var relationsHeld = await RelationsHold(stated, cancellationToken);

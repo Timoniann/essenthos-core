@@ -316,7 +316,7 @@ internal sealed class DatasetLoader(
             "bible4u",
             .. EbibleTextSource.Definitions.Keys.Select(folder => (StepFile)folder),
             .. EnglishTextSource.Definitions.Keys.Select(folder => (StepFile)folder),
-            "Door43", AlmeidaTextSource.Folder, "ClearBible/data/hau",
+            "Door43", AlmeidaTextSource.Folder, "ClearBible/data/hau", "Berean",
             .. SwordTextSource.Texts.Values.Select(text => (StepFile)text.Folder),
         ];
 
@@ -481,7 +481,7 @@ internal sealed class DatasetLoader(
                 },
                 new LoadStep("lexicon-relations", cancellationToken => RelateTheLexiconsEntries(resources, cancellationToken))
                 {
-                    Files = ["Strong", $"BibleData2026/{Strong.CompiledHebrewStrongs.File}"],
+                    Files = ["Strong", $"BibleData2026/{Strong.CompiledHebrewStrongs.File}", "STEPBibleLexicons/TBESG.txt"],
                 }),
             .. In(LoadModules.SyntaxFrame,
                 new LoadStep("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)) { Files = ["etcbc"] },
@@ -803,7 +803,8 @@ internal sealed class DatasetLoader(
             ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"),
             ResourcePaths.File(resources, "Strong", "StrongGreek.xml"),
             ResourcePaths.File(resources, "BibleData2026", Strong.CompiledHebrewStrongs.File),
-            cancellationToken));
+            cancellationToken,
+            ResourcePaths.File(resources, "STEPBibleLexicons", "TBESG.txt")));
     }
 
     /// <summary>
@@ -1641,7 +1642,8 @@ internal sealed class DatasetLoader(
         }
 
         // The unfoldingWord Literal Text, the Almeida, the Indian Revised Version and the Hausa print a
-        // title before the first verse, as the six English texts do.
+        // title before the first verse, as the six English texts do; the Berean prints it inside the
+        // first verse and its tables mark it.
         foreach (var read in (Func<TextSource>[])
                  [
                      .. EnglishTextSource.Definitions.Keys.Select(folder =>
@@ -1651,6 +1653,9 @@ internal sealed class DatasetLoader(
                      .. Door43TextSource.Definitions.Keys.Select(folder =>
                          (Func<TextSource>)(() => Door43TextSource.Read(Path.Combine(resources, "Door43", folder)))),
                      () => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible")),
+                     () => BereanTextSource.Read(
+                         ResourcePaths.File(resources, "Berean", "bsb.txt"),
+                         ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")),
                  ])
         {
             using var scope = services.CreateScope();

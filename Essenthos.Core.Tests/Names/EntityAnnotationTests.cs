@@ -769,6 +769,31 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// A set one of whose occurrences names nobody names nothing. The Synodal numbers the three
+    /// <em>сын-</em> words of 1 Chronicles 8:40 against all five בֵּן of the verse, and only
+    /// <em>the sons of Benjamin</em> names anybody; read as one name written five times, the set
+    /// put the Benjamites on all three Russian words, though which of them renders that one is
+    /// exactly what the numbering cannot say.
+    /// </summary>
+    [Fact]
+    public async Task ASetWhoseWitnessSideNamesOnlySomeOfItsWordsNamesNothing()
+    {
+        var unnamed = _db.WordAt(_hebrew, 1, 19, 2);
+        unnamed.Morphology = JsonDocument.Parse("""{"pos": "subs"}""");
+        _db.SaveChanges();
+        var first = _db.WordAt(_english, 1, 19, 1);
+        var second = _db.WordAt(_english, 1, 19, 3);
+        Set([_db.WordAt(_hebrew, 1, 19, 1), unnamed], [first, _db.WordAt(_english, 1, 19, 2), second]);
+
+        var named = await Load();
+
+        named.Should().ContainKey(_db.WordAt(_hebrew, 1, 19, 1).Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(unnamed.Id);
+        named.Should().NotContainKey(first.Id);
+        named.Should().NotContainKey(second.Id);
+    }
+
+    /// <summary>
     /// And what it is worth is the link, which is what the set is worth. A numbering that cannot
     /// pair a repeated name is a weak claim about each of the words, and the row has to say so.
     /// </summary>
