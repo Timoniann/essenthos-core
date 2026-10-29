@@ -281,6 +281,12 @@ internal sealed class DatasetLoader(
     ];
 
     /// <summary>
+    /// How far the annotations have been carried over the links: the steps that carry read it only to know
+    /// which links are newer, and write it as they end, so it is their log, not their input.
+    /// </summary>
+    private const string CarryMarkTable = "carry_mark";
+
+    /// <summary>
     /// Every step of the load, in order, each under the name <c>load --from</c> resumes at, with the module
     /// <c>load --only</c> can name it by and the files under Resources it reads. A text is its own step,
     /// named by its slug; nothing is read from disk until a step runs.
@@ -565,7 +571,7 @@ internal sealed class DatasetLoader(
                     Files = [new StepFile("Essenthos/places", "Dataset:PlaceRegisterPath")],
                 },
                 new LoadStep("person-register", cancellationToken => TellTheNamesakesApart(resources, cancellationToken)) { Files = [persons] },
-                new LoadStep("annotations", SayWhichWordNamesWhom)),
+                new LoadStep("annotations", SayWhichWordNamesWhom) { Logs = [CarryMarkTable] }),
             .. In(LoadModules.Records,
                 new LoadStep("own-records", cancellationToken => WriteTheRecordsNobodyElseHolds(resources, cancellationToken)) { Files = [senseReadings] },
                 new LoadStep("register-rematch", cancellationToken => MatchTheRegisterToTheOwnRecords(resources, cancellationToken)) { Files = [persons] },
@@ -621,7 +627,7 @@ internal sealed class DatasetLoader(
                     Files = [new StepFile("Essenthos/name-forms", "Dataset:NameFormsPath")],
                 },
                 new LoadStep("fold-records", FoldTheRecordsWrittenTwice)),
-            .. In(LoadModules.Names, new LoadStep("settled-names", SayAgainWhichWordNamesWhom)),
+            .. In(LoadModules.Names, new LoadStep("settled-names", SayAgainWhichWordNamesWhom) { Logs = [CarryMarkTable] }),
             .. In(LoadModules.Records,
                 new LoadStep("own-lines", RenderOurOwnLinesInEveryLanguage),
                 new LoadStep("name-glosses", cancellationToken => RenderTheTitlesAndGlossesOfNames(resources, cancellationToken))
@@ -1785,7 +1791,9 @@ internal sealed class DatasetLoader(
             new FileDigests(resources, environment.ContentRootPath, configuration, logger),
             RecipeCode(),
             logger);
-        var outcomes = await marks.Run(lines, _everyRecipeLine, (line, token) => Replay(line, connectionString, resources, token), cancellationToken);
+        var outcomes = await marks.Run(
+            lines, _everyRecipeLine, (line, token) => Replay(line, connectionString, resources, token), cancellationToken,
+            TakeBackWhatTheRecipeWroteAndTheCorpusRefuses);
 
         // A load that goes through the steps again to settle has already run every line once.
         _everyRecipeLine = false;
@@ -1796,6 +1804,31 @@ internal sealed class DatasetLoader(
 
     /// <summary>Whether this load was asked to run every step, the recipe's lines included.</summary>
     private bool _everyRecipeLine;
+
+    /// <summary>
+    /// How long one recipe line may run before it is taken for hung and stopped. The longest measured are a
+    /// reload's cascade (16 min) and an aligner trained during a rebuild (a few minutes a pair).
+    /// </summary>
+    private const int DefaultRecipeLineMinutes = 90;
+
+    /// <summary>
+    /// What the steps after the recipe take back of what its lines write — a rendering a reviewer refused, a
+    /// pair of names the letters no longer read as one, the aligner's rendering of a word the edition prints as
+    /// its translators' own — taken back before the recipe ends. Its lines write them again whenever they run;
+    /// were they taken back only by the later steps, every line reading those texts would find them moved
+    /// outside the recipe at the next pass, and write them again.
+    /// </summary>
+    private async Task TakeBackWhatTheRecipeWroteAndTheCorpusRefuses(CancellationToken cancellationToken)
+    {
+        using var scope = services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        logger.LogInformation("Recipe: {Outcome}", await RejectedRenderings.Withdraw(db, cancellationToken));
+        logger.LogInformation("Recipe: {Outcome}", await NameListPass.WithdrawUnlike(db, cancellationToken));
+        foreach (var outcome in await SuppliedWordAbsences.State(db, cancellationToken))
+        {
+            logger.LogInformation("Recipe: {Outcome}", outcome);
+        }
+    }
 
     /// <summary>
     /// The code each recipe line's verb runs, with how the recipe decides what a line is replayed as and
@@ -1845,7 +1878,28 @@ internal sealed class DatasetLoader(
         {
             using var process = System.Diagnostics.Process.Start(Recipe.Process(step, connectionString, resources, statements))
                                 ?? throw new InvalidOperationException($"The Forge could not be started for `{step}`.");
-            await process.WaitForExitAsync(cancellationToken);
+            var limit = TimeSpan.FromMinutes(configuration.GetValue("Dataset:RecipeLineMinutes", DefaultRecipeLineMinutes));
+            using (var waiting = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+            {
+                waiting.CancelAfter(limit);
+                try
+                {
+                    await process.WaitForExitAsync(waiting.Token);
+                }
+                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+                {
+                    logger.LogError(
+                        "Recipe: `{Step}` (process {Pid}) has run {Minutes} min, longer than any line is allowed "
+                        + "(Dataset:RecipeLineMinutes); it is stopped", step, process.Id, limit.TotalMinutes);
+                    process.Kill(entireProcessTree: true);
+                    await process.WaitForExitAsync(CancellationToken.None);
+                    throw new TimeoutException(
+                        $"The recorded run `{step}` ran longer than {limit.TotalMinutes} min and was stopped. Run it by hand " +
+                        "to see whether it finishes; if it hangs again, take a stack of it (dotnet-stack report -p <pid>) " +
+                        "before stopping it. The load goes on from this line next time.");
+                }
+            }
+
             if (process.ExitCode != 0)
             {
                 throw new InvalidOperationException(

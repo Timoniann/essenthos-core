@@ -37,8 +37,9 @@ public sealed class RecipeMarksTests : IDisposable
         _connectionString = _db.Database.GetConnectionString()!;
 
         // The class's tests share its database, one after another.
-        Execute("TRUNCATE load_step_mark, table_fingerprint, link, provenance, strong_entry CASCADE")
+        Execute("TRUNCATE load_step_mark, table_fingerprint, link, provenance, strong_entry, entity CASCADE")
             .GetAwaiter().GetResult();
+        Execute("DELETE FROM book WHERE text_id IN (SELECT id FROM text WHERE slug LIKE 'RM_')").GetAwaiter().GetResult();
         foreach (var slug in Slugs.Where(slug => !_db.Texts.Any(text => text.Slug == slug)))
         {
             _db.Texts.Add(new Text { Slug = slug, Name = slug, Kind = TextKind.Translation, Language = "en" });
@@ -200,10 +201,72 @@ public sealed class RecipeMarksTests : IDisposable
         (await Ran(recipe)).Should().BeEmpty();
     }
 
-    private async Task<List<string>> Ran(IReadOnlyList<string> recipe, bool everything = false)
+    /// <summary>
+    /// A line that writes back the rows that were there (a replace that gives the same answer) has left its
+    /// texts as it found them, so the lines after it that read them do not run.
+    /// </summary>
+    [Fact]
+    public async Task ALineThatWritesBackTheRowsThereRunsNoLineAfterIt()
+    {
+        string[] recipe = ["fake RMA RMB", "rewrite RMB RMC", "fake RMC RMD"];
+        await Ran(recipe);
+
+        await Link("RMA", "RMB", "written by a later step");
+
+        (await Ran(recipe)).Should().Equal("fake RMA RMB", "rewrite RMB RMC");
+        (await Ran(recipe)).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A name written on a word moves the text's names and nothing else of it: the lines whose statements read
+    /// names run, and a line that only reads the text's links does not.
+    /// </summary>
+    [Fact]
+    public async Task ANameWrittenOnAWordRunsOnlyTheLinesThatReadNames()
+    {
+        string[] recipe = ["fake RMA RMB", "fake RMA RMC", "fake RMB RMD"];
+        _heard["fake RMA RMB"] = ["link", "word", "word_entity"];
+        _heard["fake RMA RMC"] = ["link", "link_word", "word"];
+        _heard["fake RMB RMD"] = ["link"];
+        var text = await _db.Texts.SingleAsync(t => t.Slug == "RMA");
+        _db.AddBook(text, 1, "Genesis", (1, 1, ["Adam"]));
+        await _db.SaveChangesAsync();
+        await Ran(recipe);
+
+        var adam = new Entity { Kind = EntityKind.Person, Slug = "rm-adam", Name = "Adam", SourceId = "rm-adam", Source = "a test" };
+        _db.Entities.Add(adam);
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = (await _db.Words.SingleAsync(w => w.TextId == text.Id)).Id, Entity = adam, Method = LinkMethod.Manual, Source = "a test",
+        });
+        await _db.SaveChangesAsync();
+
+        (await Ran(recipe)).Should().Equal("fake RMA RMB");
+        (await Ran(recipe)).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// What the recipe takes back before it ends (<c>finish</c>) is part of what it leaves: the line that wrote
+    /// it does not run again at the next load, though it would write it again.
+    /// </summary>
+    [Fact]
+    public async Task WhatTheRecipeTakesBackBeforeItEndsDoesNotRunItsLinesAgain()
+    {
+        string[] recipe = ["fake RMA RMB", "fake RMB RMC"];
+        Task TakeBack(CancellationToken cancellationToken) =>
+            Execute("DELETE FROM link WHERE provenance_id IN (SELECT id FROM provenance WHERE source = 'fake RMB RMC')");
+
+        (await Ran(recipe, finish: TakeBack)).Should().Equal(recipe);
+        (await Scalar("SELECT count(*) FROM link")).Should().Be(1);
+
+        (await Ran(recipe, finish: TakeBack)).Should().BeEmpty();
+    }
+
+    private async Task<List<string>> Ran(
+        IReadOnlyList<string> recipe, bool everything = false, Func<CancellationToken, Task>? finish = null)
     {
         _ran.Clear();
-        await Marks().Run(Lines(recipe), everything, Run, CancellationToken.None);
+        await Marks().Run(Lines(recipe), everything, Run, CancellationToken.None, finish);
         return [.. _ran];
     }
 
@@ -248,6 +311,10 @@ public sealed class RecipeMarksTests : IDisposable
         if (await Scalar($"SELECT count(*) FROM provenance WHERE source = '{line.Command}'") == 0)
         {
             await Link(line.Texts[0], line.Texts[^1], line.Command);
+        }
+        else if (line.Step.Verb == "rewrite")
+        {
+            await Execute($"UPDATE link SET confidence = confidence WHERE provenance_id IN (SELECT id FROM provenance WHERE source = '{line.Command}')");
         }
 
         return new RecipeRun(true, _heard.GetValueOrDefault(line.Command, []).ToHashSet(StringComparer.Ordinal));

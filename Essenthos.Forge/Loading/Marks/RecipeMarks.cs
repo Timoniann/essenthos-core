@@ -25,18 +25,21 @@ internal sealed record RecipeLineOutcome(string Command, bool Ran, string Why, T
 ///
 /// <para>
 /// **A line reads the corpus as the lines before it left it.** What it is keyed on for each text it reads
-/// is a chain: the text's generation, then the contribution of every line before it that reads the text.
-/// A line's contribution is the key of its last run that wrote rows of its texts, so a line whose rerun
-/// writes nothing leaves everything after it as it was. A line's own writes, and the writes of a line
-/// after it, never move what it is keyed on: they come after it.
+/// is a chain: the generations of the parts of the text its statements read (<see cref="TextDigests.Parts"/>),
+/// then the contribution of every line before it that reads the text. A line's contribution is the digest
+/// of what it can write of its texts (their words, their names, their pairs with each other) as its last run
+/// that changed them left it, so a line whose rerun writes nothing, or writes back the rows that were there,
+/// leaves everything after it as it was. A line's own writes, and the
+/// writes of a line after it, never move what it is keyed on: they come after it.
 /// </para>
 ///
 /// <para>
 /// **A change from outside the recipe moves the texts it touched.** Each text's rows are digested when the
-/// recipe starts (<see cref="TextDigests"/>) and compared with their digest when the recipe last
-/// finished; a text that differs was moved by a load step, or a Forge verb, since, and its generation
-/// moves, so exactly the lines reading it run. The other tables a line's statements named count whole,
-/// the same way. A table no line reads moves nothing.
+/// recipe starts (<see cref="TextDigests"/>), part by part, and compared with their digest when the recipe
+/// last finished; a part that differs was moved by a load step, or a Forge verb, since, and its generation
+/// moves, so exactly the lines reading that part of the text run: a name written on a word runs the lines
+/// whose statements read names, not every line that aligns the text. The other tables a line's statements
+/// named count whole, the same way. A table no line reads moves nothing.
 /// </para>
 ///
 /// <para>
@@ -52,7 +55,7 @@ internal sealed class RecipeMarks(
     ILogger logger)
 {
     /// <summary>Raised when every line must run again for a reason nothing else shows.</summary>
-    public const int Version = 1;
+    public const int Version = 2;
 
     private static readonly JsonSerializerOptions Json = new() { WriteIndented = false };
 
@@ -61,14 +64,20 @@ internal sealed class RecipeMarks(
 
     /// <summary>
     /// Runs the lines in order, each through <paramref name="run"/> unless its mark says nothing it reads
-    /// moved (or <paramref name="everything"/>). Stops at the first line that throws; the lines before it
-    /// keep their marks.
+    /// moved (or <paramref name="everything"/>), then <paramref name="finish"/>. Stops at the first line that
+    /// throws; the lines before it keep their marks.
     /// </summary>
+    /// <param name="finish">
+    /// What the recipe does after its last line and before it digests the texts it leaves: the passes that
+    /// take back what the lines wrote and the corpus refuses, so that what the recipe leaves is already what
+    /// they would leave, and a later step taking it back does not move the lines' texts every time they run.
+    /// </param>
     public async Task<IReadOnlyList<RecipeLineOutcome>> Run(
         IReadOnlyList<RecipeLine> lines,
         bool everything,
         Func<RecipeLine, CancellationToken, Task<RecipeRun>> run,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        Func<CancellationToken, Task>? finish = null)
     {
         await tables.Open(cancellationToken);
         await Read(cancellationToken);
@@ -76,7 +85,8 @@ internal sealed class RecipeMarks(
 
         var measuring = Stopwatch.GetTimestamp();
         var otherTables = tables.Tables.Where(Counted).ToList();
-        var texts = await TextDigests.Of(connectionString, null, cancellationToken);
+        var pieces = await TextDigests.Read(connectionString, null, among: false, cancellationToken);
+        var texts = TextDigests.PartsOf(pieces, null);
         var sums = await tables.Of(otherTables, cancellationToken);
         var outside = Generations(texts, sums);
         logger.LogInformation(
@@ -94,6 +104,7 @@ internal sealed class RecipeMarks(
         }
 
         var outcomes = new List<RecipeLineOutcome>();
+        var current = new Dictionary<TextDigests.Piece, string>(pieces.Sums);
         var chain = new Dictionary<string, string>(StringComparer.Ordinal);
         var changedBy = new Dictionary<string, string>(StringComparer.Ordinal);
         var wroteAny = false;
@@ -102,7 +113,8 @@ internal sealed class RecipeMarks(
             foreach (var line in lines)
             {
                 _marks.TryGetValue(line.Command, out var mark);
-                var inputs = InputsOf(line, mark?.Tables ?? [], chain, cancellationToken);
+                var parts = mark?.Inputs.Parts ?? TextDigests.Parts;
+                var inputs = InputsOf(line, mark?.Tables ?? [], parts, chain, cancellationToken);
                 var key = inputs.Digest();
                 string? contribution;
                 if (!everything && mark is not null && mark.Key == key)
@@ -114,7 +126,7 @@ internal sealed class RecipeMarks(
                 {
                     var why = everything ? "every line was asked for"
                         : mark is null ? "no mark says what it last ran on"
-                        : Moved(mark.Inputs, inputs, outside, changedBy);
+                        : Moved(mark.Inputs, inputs, parts, outside, changedBy);
                     logger.LogInformation("Recipe: `{Command}` runs: {Why}", line.Command, why);
                     await Forget(line.Command, cancellationToken);
                     _marks.Remove(line.Command);
@@ -125,16 +137,21 @@ internal sealed class RecipeMarks(
                     var took = Stopwatch.GetElapsedTime(started);
                     var after = await tables.Writes(cancellationToken);
                     var wrote = TextDigests.Tables.Any(table => after.GetValueOrDefault(table) != before.GetValueOrDefault(table));
+                    wroteAny |= wrote;
 
-                    contribution = wrote ? key : mark?.Contribution;
+                    // What the line changed, not that it wrote: a run that writes back the rows that were there
+                    // leaves the lines after it as they were.
+                    var changed = wrote ? await Changed(line, current, cancellationToken) : [];
+                    contribution = changed.Count == 0 ? mark?.Contribution : Contribution(line, changed, mark?.Contribution);
+                    wrote = changed.Count > 0;
                     var read = ran.Started
                         ? ran.Heard.Where(Counted).Where(table => _inputs.ContainsKey("table:" + table)).Order(StringComparer.Ordinal).ToArray()
                         : mark?.Tables ?? [];
-                    if (!read.SequenceEqual(mark?.Tables ?? []))
+                    var named = ran.Started ? PartsNamed(ran.Heard) : parts;
+                    if (!read.SequenceEqual(mark?.Tables ?? []) || !named.SequenceEqual(parts))
                     {
-                        inputs = InputsOf(line, read, chain, cancellationToken);
+                        inputs = InputsOf(line, read, named, chain, cancellationToken);
                         key = inputs.Digest();
-                        contribution = wrote ? key : contribution;
                     }
 
                     await Keep(new Mark(line.Command, key, contribution, [.. line.Texts], read, inputs), cancellationToken);
@@ -145,13 +162,9 @@ internal sealed class RecipeMarks(
                             wrote ? "wrote rows of " + string.Join(", ", line.Texts.Take(8)) + (line.Texts.Count > 8 ? ", ..." : "") : "wrote nothing");
                     }
 
-                    if (wrote)
+                    foreach (var text in changed.Keys)
                     {
-                        wroteAny = true;
-                        foreach (var text in line.Texts)
-                        {
-                            changedBy[text] = line.Command;
-                        }
+                        changedBy[text] = line.Command;
                     }
 
                     outcomes.Add(new RecipeLineOutcome(line.Command, true, why, took, wrote));
@@ -161,7 +174,7 @@ internal sealed class RecipeMarks(
                 {
                     foreach (var text in line.Texts)
                     {
-                        chain[text] = Digest($"{Chain(chain, text)}\n{line.Command}\n{contribution}");
+                        chain[text] = Digest($"{chain.GetValueOrDefault(text, string.Empty)}\n{line.Command}\n{For(contribution, text)}");
                     }
                 }
             }
@@ -171,11 +184,19 @@ internal sealed class RecipeMarks(
                 await Forget(command, cancellationToken);
                 _marks.Remove(command);
             }
+
+            if (finish is not null)
+            {
+                var before = await tables.Writes(cancellationToken);
+                await finish(cancellationToken);
+                var after = await tables.Writes(cancellationToken);
+                wroteAny |= TextDigests.Tables.Any(table => after.GetValueOrDefault(table) != before.GetValueOrDefault(table));
+            }
         }
         finally
         {
             // What the lines wrote is what the lines after them are keyed on, never a change from outside.
-            var settledTexts = wroteAny ? await TextDigests.Of(connectionString, null, CancellationToken.None) : texts;
+            var settledTexts = wroteAny ? await TextDigests.PartsOf(connectionString, null, CancellationToken.None) : texts;
             var settledTables = await tables.Of(otherTables, CancellationToken.None);
             await Settle(settledTexts, settledTables);
         }
@@ -218,7 +239,7 @@ internal sealed class RecipeMarks(
 
         var line = lines[index];
         var moved = line.Texts
-            .Where(text => !_inputs.TryGetValue("text:" + text, out var input) || input.Settled != before.GetValueOrDefault(text))
+            .Where(text => Settled(text) is not { } settled || settled != before.GetValueOrDefault(text))
             .ToList();
         var read = heard.Where(Counted).Order(StringComparer.Ordinal).ToArray();
         if (moved.Count > 0 || read.Any(table => !_inputs.ContainsKey("table:" + table)))
@@ -236,18 +257,18 @@ internal sealed class RecipeMarks(
             {
                 foreach (var text in earlier.Texts)
                 {
-                    chain[text] = Digest($"{Chain(chain, text)}\n{earlier.Command}\n{contribution}");
+                    chain[text] = Digest($"{chain.GetValueOrDefault(text, string.Empty)}\n{earlier.Command}\n{For(contribution, text)}");
                 }
             }
         }
 
-        var inputs = InputsOf(line, read, chain, cancellationToken);
+        var inputs = InputsOf(line, read, PartsNamed(heard), chain, cancellationToken);
         var key = inputs.Digest();
         var writes = await tables.Writes(cancellationToken);
         var wrote = TextDigests.Tables.Any(table => writes.GetValueOrDefault(table) != writesBefore.GetValueOrDefault(table));
         _marks.TryGetValue(command, out var old);
-        await Keep(new Mark(command, key, wrote ? key : old?.Contribution, [.. line.Texts], read, inputs), cancellationToken);
-        await Settle(await TextDigests.Of(connectionString, line.Texts, cancellationToken), new Dictionary<string, string>());
+        await Keep(new Mark(command, key, wrote ? await Left(line, cancellationToken) : old?.Contribution, [.. line.Texts], read, inputs), cancellationToken);
+        await Settle(await TextDigests.PartsOf(connectionString, line.Texts, cancellationToken), new Dictionary<string, string>());
         logger.LogInformation("The recipe's marks take `{Command}` in: the next load does not run it again", command);
         return true;
     }
@@ -261,11 +282,11 @@ internal sealed class RecipeMarks(
     /// Moves the generation of every text and table whose rows are not what they were when the recipe last
     /// finished, and returns their names.
     /// </summary>
-    private HashSet<string> Generations(IReadOnlyDictionary<string, string> texts, IReadOnlyDictionary<string, string> sums)
+    private HashSet<string> Generations(
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> texts, IReadOnlyDictionary<string, string> sums)
     {
         var moved = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var (name, now) in texts.Select(text => ("text:" + text.Key, text.Value))
-                     .Concat(sums.Select(table => ("table:" + table.Key, table.Value))))
+        foreach (var (name, now) in Named(texts).Concat(sums.Select(table => ("table:" + table.Key, table.Value))))
         {
             if (_inputs.TryGetValue(name, out var input) && input.Settled == now)
             {
@@ -283,7 +304,12 @@ internal sealed class RecipeMarks(
         return moved;
     }
 
-    private Inputs InputsOf(RecipeLine line, IReadOnlyList<string> read, Dictionary<string, string> chain, CancellationToken cancellationToken) =>
+    private Inputs InputsOf(
+        RecipeLine line,
+        IReadOnlyList<string> read,
+        IReadOnlyList<string> parts,
+        Dictionary<string, string> chain,
+        CancellationToken cancellationToken) =>
         new(
             Version,
             code(line.Step.Verb),
@@ -291,19 +317,130 @@ internal sealed class RecipeMarks(
                 files.Of(line.Files, cancellationToken).ToDictionary(file => file.Name, file => file.Digest, StringComparer.Ordinal),
                 StringComparer.Ordinal),
             new SortedDictionary<string, string>(
-                line.Texts.Distinct(StringComparer.Ordinal).ToDictionary(text => text, text => Chain(chain, text), StringComparer.Ordinal),
+                line.Texts.Distinct(StringComparer.Ordinal).ToDictionary(text => text, text => Chain(chain, text, parts), StringComparer.Ordinal),
                 StringComparer.Ordinal),
             new SortedDictionary<string, string>(
                 read.ToDictionary(table => table, table => _inputs.TryGetValue("table:" + table, out var input) ? input.Generation : "absent", StringComparer.Ordinal),
-                StringComparer.Ordinal));
+                StringComparer.Ordinal))
+        {
+            Parts = parts,
+        };
 
-    private string Chain(Dictionary<string, string> chain, string text) =>
-        chain.TryGetValue(text, out var value) ? value
-        : _inputs.TryGetValue("text:" + text, out var input) ? input.Generation
-        : "absent";
+    /// <summary>
+    /// A text as a line reads it: the generations of the parts it reads, then what every line before it that
+    /// reads the text left.
+    /// </summary>
+    private string Chain(Dictionary<string, string> chain, string text, IReadOnlyList<string> parts) =>
+        Digest(string.Join(
+            '\n',
+            [
+                .. parts.Select(part => $"{part} {(_inputs.TryGetValue(PartName(text, part), out var input) ? input.Generation : "absent")}"),
+                chain.GetValueOrDefault(text, string.Empty),
+            ]));
+
+    /// <summary>The parts of a text a line's statements read; all of them where they named none of a text's tables.</summary>
+    private static IReadOnlyList<string> PartsNamed(IEnumerable<string> heard)
+    {
+        var named = heard.Where(TextDigests.PartOf.ContainsKey).Select(table => TextDigests.PartOf[table]).ToHashSet(StringComparer.Ordinal);
+        return named.Count == 0 ? TextDigests.Parts : [.. TextDigests.Parts.Where(named.Contains)];
+    }
+
+    /// <summary>What a line left of its texts: each text's digest as its run left it, a line a text.</summary>
+    private async Task<string> Left(RecipeLine line, CancellationToken cancellationToken)
+    {
+        var left = await TextDigests.Of(connectionString, line.Texts, cancellationToken);
+        return string.Join('\n', left.OrderBy(text => text.Key, StringComparer.Ordinal).Select(text => $"{text.Key} {text.Value}"));
+    }
+
+    /// <summary>
+    /// The texts of a line that wrote whose rows it changed, each with the digest of what the line can write
+    /// of it as it left it: its own words and names and its pairs with the line's other texts.
+    /// <paramref name="current"/> holds those pieces as the lines before it left them, and is moved on.
+    /// </summary>
+    private async Task<Dictionary<string, string>> Changed(
+        RecipeLine line, Dictionary<TextDigests.Piece, string> current, CancellationToken cancellationToken)
+    {
+        var mine = line.Texts.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var after = (await TextDigests.Read(connectionString, line.Texts, among: true, cancellationToken)).Sums;
+        var gone = current.Keys.Where(piece => mine.Contains(piece.From) && (piece.To is null || mine.Contains(piece.To)))
+            .Where(piece => !after.ContainsKey(piece))
+            .ToList();
+        var moved = after.Where(piece => current.GetValueOrDefault(piece.Key) != piece.Value).Select(piece => piece.Key)
+            .Concat(gone)
+            .ToList();
+        foreach (var piece in gone)
+        {
+            current.Remove(piece);
+        }
+
+        foreach (var piece in moved.Where(after.ContainsKey))
+        {
+            current[piece] = after[piece];
+        }
+
+        return moved
+            .SelectMany(piece => piece.To is { } to ? new[] { piece.From, to } : [piece.From])
+            .Distinct(StringComparer.Ordinal)
+            .ToDictionary(
+                text => text,
+                text => TextDigests.Digest(after.Where(piece => piece.Key.From == text || piece.Key.To == text)),
+                StringComparer.Ordinal);
+    }
+
+    /// <summary>
+    /// A line's contribution once it changed <paramref name="changed"/>: each of those texts as it left
+    /// them, and for each other text of the line what its last contribution said of it.
+    /// </summary>
+    private static string Contribution(RecipeLine line, IReadOnlyDictionary<string, string> changed, string? last) =>
+        string.Join('\n', line.Texts.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).Select(text =>
+            $"{text} {(changed.TryGetValue(text, out var digest) ? digest : last is null ? "unchanged" : For(last, text))}"));
+
+    /// <summary>
+    /// What a line's contribution says of one of its texts: that text's digest as the line left it, so a line
+    /// after it reading only that text does not run because the line's other text moved.
+    /// </summary>
+    private static string For(string contribution, string text)
+    {
+        foreach (var entry in contribution.Split('\n'))
+        {
+            if (entry.Length > text.Length && entry.StartsWith(text, StringComparison.Ordinal) && entry[text.Length] == ' ')
+            {
+                return entry[(text.Length + 1)..];
+            }
+        }
+
+        return contribution;
+    }
+
+    /// <summary>A text's digest whole as the recipe last left it, or null where it has none.</summary>
+    private string? Settled(string text)
+    {
+        var parts = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var part in TextDigests.Parts)
+        {
+            if (!_inputs.TryGetValue(PartName(text, part), out var input))
+            {
+                return null;
+            }
+
+            parts[part] = input.Settled;
+        }
+
+        return TextDigests.Whole(parts);
+    }
+
+    private static string PartName(string text, string part) => $"text:{text}/{part}";
+
+    private static IEnumerable<(string Name, string Digest)> Named(IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> texts) =>
+        texts.SelectMany(text => text.Value.Select(part => (PartName(text.Key, part.Key), part.Value)));
 
     /// <summary>What moved between a mark's inputs and the inputs now, in a line.</summary>
-    private static string Moved(Inputs then, Inputs now, IReadOnlySet<string> outside, IReadOnlyDictionary<string, string> changedBy)
+    private static string Moved(
+        Inputs then,
+        Inputs now,
+        IReadOnlyList<string> parts,
+        IReadOnlySet<string> outside,
+        IReadOnlyDictionary<string, string> changedBy)
     {
         var moved = new List<string>();
         if (then.Version != now.Version)
@@ -320,7 +457,8 @@ internal sealed class RecipeMarks(
         moved.AddRange(then.Files.Keys.Except(now.Files.Keys).Select(file => $"file {file} no longer read"));
         moved.AddRange(now.Texts
             .Where(text => then.Texts.GetValueOrDefault(text.Key) != text.Value)
-            .Select(text => outside.Contains("text:" + text.Key) ? $"text {text.Key}, moved outside the recipe"
+            .Select(text => parts.Where(part => outside.Contains(PartName(text.Key, part))).ToList() is { Count: > 0 } outsideParts
+                ? $"text {text.Key}, its {string.Join(" and ", outsideParts)} moved outside the recipe"
                 : changedBy.TryGetValue(text.Key, out var by) ? $"text {text.Key}, which `{by}` changed"
                 : $"text {text.Key} (a line before it that reads it was added, taken out, moved or wrote)"));
         moved.AddRange(now.Tables
@@ -402,9 +540,10 @@ internal sealed class RecipeMarks(
         _marks[mark.Command] = mark;
     }
 
-    private async Task Settle(IReadOnlyDictionary<string, string> texts, IReadOnlyDictionary<string, string> sums)
+    private async Task Settle(
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> texts, IReadOnlyDictionary<string, string> sums)
     {
-        var rows = texts.Select(text => ("text:" + text.Key, text.Value))
+        var rows = Named(texts)
             .Concat(sums.Select(table => ("table:" + table.Key, table.Value)))
             .Select(entry => (Name: entry.Item1, Generation: _inputs.TryGetValue(entry.Item1, out var input) ? input.Generation : Digest($"\n{entry.Item2}"), Settled: entry.Item2))
             .ToList();
@@ -439,6 +578,9 @@ internal sealed class RecipeMarks(
         IReadOnlyDictionary<string, string> Texts,
         IReadOnlyDictionary<string, string> Tables)
     {
+        /// <summary>The parts of its texts the line's statements read (<see cref="TextDigests.Parts"/>); null in a mark made before they were told apart.</summary>
+        public IReadOnlyList<string>? Parts { get; init; }
+
         public static readonly Inputs Empty = new(
             0, string.Empty, new Dictionary<string, string>(), new Dictionary<string, string>(), new Dictionary<string, string>());
 
