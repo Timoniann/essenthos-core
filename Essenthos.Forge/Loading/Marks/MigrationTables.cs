@@ -186,6 +186,12 @@ internal sealed partial class MigrationTables(IReadOnlyDictionary<string, IReadO
                     tables.Add(rename.Name);
                     tables.Add(rename.NewName ?? rename.Name);
                     continue;
+                case RenameIndexOperation { Table: { } renamed }:
+                    tables.Add(renamed);
+                    continue;
+                case DropIndexOperation { Table: { } dropped }:
+                    tables.Add(dropped);
+                    continue;
                 case DropTableOperation drop:
                     tables.Add(drop.Name);
                     continue;

@@ -199,6 +199,8 @@ public sealed class LoadMarksTests : IDisposable
         var read = corpus.Touches;
         read.Should().HaveCount((int)applied);
         read["20261029091002_PlacesMayHaveNoScoreAndCreditTheirCoordinates"].Should().BeEquivalentTo(["place_location", "place_candidate"]);
+        read["20261028000011_WordIndexesFitTheirLookups"].Should().BeEquivalentTo(
+            ["word", "word_strong", "word_parsing", "word_entity", "word_entity_claim", "strong_profile", "verse_reference"]);
     }
 
     /// <summary>
