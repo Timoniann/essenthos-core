@@ -2534,5 +2534,17 @@
     "model": "claude-opus-5-5",
     "effort": null,
     "at": "2026-10-28"
+  },
+  {
+    "file": "EshtemoaRecords.json",
+    "slug": "eshtemoa-2",
+    "sha256": "83544853f86b593fb436c6526bb2a0fc2c9cb0bade222a1c12afd891949085d3",
+    "english": "Eshtemoa is named among 'the sons of the wife of Hodiah the sister of Naham' (1CH 4:19). His name is also the name of a town of Judah (JOS 15:50; 21:14), which his line is held to have founded.",
+    "ukr": "Ештемоа названо серед «синів жінки Годійї, сестри Нахама» (1CH 4:19). Його ім'я — також назва міста в Юді (JOS 15:50; 21:14), яке, як вважають, заснував його рід.",
+    "deu": "Eschtemoa wird unter „den Söhnen der Frau Hodijas, der Schwester Nahams“ genannt (1CH 4:19). Sein Name ist auch der Name einer Stadt in Juda (JOS 15:50; 21:14), die sein Geschlecht gegründet haben soll.",
+    "spa": "Estemoa se nombra entre «los hijos de la mujer de Hodías, hermana de Naham» (1CH 4:19). Su nombre es también el de una ciudad de Judá (JOS 15:50; 21:14), que se tiene por fundada por su linaje.",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-29"
   }
 ]
