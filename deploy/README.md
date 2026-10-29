@@ -1,20 +1,28 @@
 # The server
 
-One machine running everything in containers: Postgres, production and dev side by side, Caddy in
-front, and optionally the page counter. The design and its reasons are DOC-0205, except where it put
+One machine running everything in containers: Postgres, production, Caddy in front, and optionally
+the page counter. Dev can run beside production on a machine that turns it on (**Dev**, below); the
+production server, Hetzner 2.29.125.205 (guide `production-server`), runs production only. The design and its reasons are DOC-0205, except where it put
 the data on the machine's own disk — it now lives on an attached volume, as below; the publication of
 the corpus is DOC-0203; the page counter is DOC-0211.
 
     essenthos.org          the reader, and its API at /v1
     api.essenthos.org      the same API, for the mobile app and other clients
-    dev.essenthos.org      dev's reader and API, behind a password
+    dev.essenthos.org      dev's reader and API, behind a password, where dev runs
     devapi.essenthos.org   dev's API alone, behind the same password
 
-Three things reach the server, separately:
+Four things reach the server, separately, all from the workstation; the server pulls nothing of ours
+and needs neither git nor a registry login:
 
+- **the images** — `scripts/send-images.ps1`, which runs the checks on each commit, builds the API
+  image from an essenthos-core commit and the reader's from an essenthos-web commit, as those commits
+  hold them, and loads them into the server's Docker as `essenthos-api:<commit>` and
+  `essenthos-web:<commit>` (**Shipping code**, below);
 - **the code** — `scripts/deploy.ps1`, which copies this folder's files as that commit holds them,
-  never as they stand on disk, and sets the image tags CI pushed for it;
-- **the corpus** — `forge publish --to dev`, then `--to prod`, from the machine that built it. The
+  never as they stand on disk, and starts the images by those tags. It refuses a tag the server has
+  not been sent;
+- **the corpus** — `forge publish --to prod` (first `--to dev`, where a dev runs), from the machine
+  that built it. The
   release carries the rows that name the pictures of people and places; publishing also sends the
   picture files, from this machine's `Resources/Images`, into `/srv/essenthos/images/corpus_dev` or
   `…/corpus`, which the API mounts read-only at `/images`. Only new or changed files travel, nothing
@@ -33,6 +41,58 @@ server:
 
     docker compose --env-file .env.rehearsal -f compose.yaml -f compose.rehearsal.yaml up -d
     forge publish --to rehearsal-dev ; forge publish --to rehearsal
+
+(`.env.rehearsal` turns dev on, as in **Dev**, below, for `rehearsal-dev` to have somewhere to go.)
+
+## Shipping code
+
+There is no CI: GitHub keeps the repositories and builds nothing (owner, 2026-10-29, NOT-0213). The
+checks on this machine are the only gate, and the images are built here, after them, from the exact
+commits that passed:
+
+    # each repository's commit, full hashes
+    $core = git -C essenthos-core rev-parse main
+    $web  = git -C essenthos-web  rev-parse main
+
+    # 1. check, build and send: core-check-isolated and web-check-isolated on a temporary worktree at
+    #    each commit, then docker build from the commit as committed, then docker save | ssh docker load
+    ./scripts/send-images.ps1 -Server deploy@2.29.125.205 -Commit $core -WebCommit $web
+
+    # 2. start them: deploy/ from the core commit, and the two tags into .env
+    ./scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit $core -WebCommit $web
+
+Each image is optional: `-Commit` alone, or `-WebCommit` alone, sends one; `deploy.ps1` without
+`-WebCommit` leaves the reader as it is. `-SkipChecks` sends without checking, for a commit whose checks
+were just run on that very commit; a tag the server already has is refused unless `-Force`. Both scripts
+take `-WhatIf`, which says what they would do and touches nothing.
+
+The images are built for `linux/amd64`, the server's architecture (`-Platform` for another). Measured
+2026-10-29 (TSK-1002), the whole of a release takes about ten minutes:
+
+| Step | API | Reader |
+|---|---|---|
+| checks on the commit | `core-check-isolated`, ~2.5 min | `web-check-isolated`, ~1 min |
+| build | 110 s (44 s once the base images are cached) | 216 s, 170 of them the map's close-up relief |
+| sent (compressed layers) | 110 MB, about 22 s | 110 MB, 19 s |
+| on the server's disk | 390 MB | 268 MB |
+
+The uplink carried about 5 MB/s. The API's figures are for an image published for its own architecture
+only (`-a $TARGETARCH` in its Dockerfile); before that it carried every platform's native libraries and
+was 268 MB to send (55 s) and 1.04 GB on disk. `docker save` writes the layers already gzip-compressed as Docker
+stores them, so the stream is sent as it is: gzip over it saved 0.6%. Every send carries the whole
+image, base layers included; the server stores a layer once, however many tags use it.
+
+**Rollback** is `deploy.ps1` again with the previous hashes: every image sent stays on the server until
+it is removed. To see what is there, and to remove tags no longer wanted (never the two `.env` names):
+
+    ssh deploy@2.29.125.205 'docker image ls essenthos-api; docker image ls essenthos-web'
+    ssh deploy@2.29.125.205 'docker image rm essenthos-api:<old commit>'
+
+A new release adds roughly its own application layers, tens of MB, so keep the last few and prune by
+hand when `df -h /` asks for it.
+
+The reader's page counter is compiled into its bundle, so it is a build switch:
+`send-images.ps1 … -AnalyticsEndpoint /count` (**Page counts**, below).
 
 ## The machine
 
@@ -81,10 +141,19 @@ restores a fifth beside them before the swap, so plan for five copies, 60–75 G
 
 Check current pricing at the provider; nothing here depends on a particular plan.
 
-**Production and dev run on the same machine**, in the same compose project and the same Postgres, as
-separate databases, roles and containers. Dev is behind a password and tells search engines to stay
-away. The cost is honest: a publication to dev competes with production for disk and memory while it
-runs, and restarting Postgres restarts both.
+**Dev**, where it runs at all, runs on the same machine as production, in the same compose project and
+the same Postgres, as separate databases, roles and containers, behind a password and telling search
+engines to stay away. **The production server runs none** (TSK-1002): `api-dev-migrate`, `api-dev` and
+`web-dev` are in the compose profile `dev`, which is off unless `.env` names it, and Caddy serves dev's
+two hostnames only when `.env` says `DEV_SITES=on`. Turning dev on is every commented dev line at the
+end of `env.example` together: `COMPOSE_PROFILES=dev`, `DEV_SITES=on`, the dev domains, its front door
+and its two database passwords. initdb creates dev's roles only when both passwords are set at the
+first start; added later, they are the statements in `initdb/10-roles.sh`, run by hand. On a machine
+without dev, `deploy.ps1 -Environment dev` is refused, and Forge's `dev` target and the console's dev
+environment have nowhere to go — a dev for rehearsing a publication is a separate small machine, made
+for the day. Forge's `prod` target still names `dev` as the one a release must reach first
+(`Publish:Targets:prod:After`); with no dev, `forge publish --to prod` needs `--without-rehearsal`. The cost of dev beside production is honest: a publication to dev competes with production
+for disk and memory while it runs, and restarting Postgres restarts both.
 
 **TLS is automatic.** Caddy obtains a certificate for every hostname from Let's Encrypt on its first
 start and renews it on its own; there is no certificate to buy or to copy. It needs the DNS records to
@@ -134,10 +203,10 @@ new machine does not ask for them again.
 
 9. **First deploy and first corpus:**
 
-        ./scripts/deploy.ps1 -Server deploy@<droplet> -Environment prod -Commit <core sha> -WebCommit <web sha>
+        ./scripts/send-images.ps1 -Server deploy@<server> -Commit <core sha> -WebCommit <web sha>
+        ./scripts/deploy.ps1 -Server deploy@<server> -Environment prod -Commit <core sha> -WebCommit <web sha>
         forge release
-        forge publish --to dev
-        forge publish --to prod
+        forge publish --to prod --without-rehearsal   # no dev to publish to first; see Dev, above
 
    Until the first publication the API answers `/v1/health/ready` with 503: there is no corpus yet.
    The first publication to each environment also sends every picture, about 180 MB.
@@ -154,8 +223,9 @@ A bigger plan, a dedicated CPU, or a machine that died: the volume carries the s
    fresh Ubuntu, and if they do not, `chown -R deploy /srv/essenthos` — except `postgres/`, which
    belongs to the container's own user and must be left alone.
 5. Point the DNS records at the new address, update `Publish:Targets:*:Ssh` if the address changed,
-   and run `scripts/deploy.ps1` for prod and for dev. The corpus, the accounts, the pictures and the
-   certificates are already there.
+   and run `scripts/send-images.ps1` and `scripts/deploy.ps1` for the commits production ran — the
+   images live on the machine's own disk and do not move with the volume. The corpus, the accounts, the
+   pictures and the certificates are already there.
 
 ## Optional: Hetzner Cloud instead of DigitalOcean
 
@@ -193,22 +263,25 @@ needed, and it changes three things that have to be done together:
 
 | To | Run |
 |---|---|
-| ship code to dev | `scripts/deploy.ps1 -Environment dev -Commit <sha> [-WebCommit <sha>]` |
-| ship code to production | the same with `-Environment prod` |
-| undo a code deploy | the same with the previous commit |
-| ship a corpus | `forge release`, `forge publish --to dev`, look at dev, `forge publish --to prod` |
+| check, build and send the images | `scripts/send-images.ps1 -Server deploy@<server> -Commit <sha> [-WebCommit <sha>]` |
+| ship code to production | `scripts/deploy.ps1 -Server deploy@<server> -Environment prod -Commit <sha> [-WebCommit <sha>]`, after the send |
+| ship code to dev, where a dev runs | the same with `-Environment dev` (refused on the production server) |
+| undo a code deploy | `scripts/deploy.ps1` with the previous commits; their images are still on the server |
+| ship a corpus | `forge release`, then `forge publish --to dev` and a look at dev where a dev runs, `forge publish --to prod` |
 | undo a corpus | `forge rollback --to prod` |
 | ship the downloads alone | `forge export`, then `forge publish-downloads --to dev`, look at `dev…/downloads/manifest.json`, then `--to prod` |
 | see what is where | `forge releases`, `forge releases --on prod` |
 
-Each of these can be tried first: `scripts/deploy.ps1 … -WhatIf` and `forge release | publish | rollback
-… --dry-run` say what they would do and touch nothing.
+Each of these can be tried first: `scripts/send-images.ps1 … -WhatIf`, `scripts/deploy.ps1 … -WhatIf` and
+`forge release | publish | rollback … --dry-run` say what they would do and touch nothing.
 
 The owner's console (`Essenthos.Desk`) has a Deployment section that runs the same commands, behind a
 confirmation that says what will happen (production also wants its name typed), and records every run
 in `Resources/Essenthos/owner-changes.jsonl` under section `deploy`. It shows what each environment
 runs by asking `/v1/health/version` (the API's commit and corpus release) and `/version.json` (the
-reader's commit), both of which the images carry from the `SOURCE_COMMIT` build argument CI passes.
+reader's commit), both of which the images carry from the `SOURCE_COMMIT` build argument
+`send-images.ps1` passes. The console does not send images: run `send-images.ps1` before its code
+deploy, which is otherwise refused for the missing tag.
 Dev is behind a password; to let the console read dev's versions, give it the same user and password
 in user secrets as `Desk:Deploy:Environments:dev:User` and `…:Password` — otherwise it reports dev as
 answering behind its password and nothing more.
@@ -362,10 +435,11 @@ this and not Attriax, and what was checked, is DOC-0211. Dev is never counted.
 It takes four switches, because the reader's bundle, the proxy, the counter and the privacy page must
 agree:
 
-1. **The reader's image**: in the essenthos-web repository's GitHub settings, add the Actions variable
-   `ANALYTICS_ENDPOINT` = `/count`. CI then builds the bundle with it, which starts sending one request
-   per page and makes the privacy page say what is counted. Without it nothing is sent and the privacy
-   page says nothing is counted.
+1. **The reader's image**, built with the counter's address: `scripts/send-images.ps1 … -WebCommit
+   <sha> -AnalyticsEndpoint /count`, then deployed. That bundle sends one request per page and its
+   privacy page says what is counted. Built without it, nothing is sent and the privacy page says
+   nothing is counted. The tag names only the commit, so a reader image rebuilt with the switch flipped
+   is sent with `-Force`.
 2. **The counter's settings in `.env`**:
 
         COMPOSE_PROFILES=analytics          # offsite,analytics if the off-site copy is on too
@@ -400,8 +474,8 @@ agree:
 The nightly backup dumps `essenthos_stats` beside the accounts databases once it exists, and skips it
 while it does not.
 
-To turn counting off: `SITE_ANALYTICS=off` and `docker compose up -d proxy` stops it at once; removing
-the Actions variable stops the next bundle sending anything and takes the section off the privacy page.
+To turn counting off: `SITE_ANALYTICS=off` and `docker compose up -d proxy` stops it at once; a reader
+image sent without `-AnalyticsEndpoint` sends nothing and takes the section off the privacy page.
 
 ## Backups
 

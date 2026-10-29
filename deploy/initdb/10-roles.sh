@@ -3,7 +3,7 @@
 # skips everything in docker-entrypoint-initdb.d. Changing a password later is ALTER ROLE, not an edit
 # to .env.
 #
-# Four roles, one pair per environment, and no role shared between two things:
+# Two roles per environment, and no role shared between two things:
 #
 #   essenthos_reader[_dev]   the API's view of the corpus. `forge publish` grants it SELECT on each
 #                            release it restores, and nothing else, so the API cannot write the corpus
@@ -17,18 +17,26 @@
 set -eu
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres \
-	-v reader="$READER_PASSWORD" -v reader_dev="$READER_DEV_PASSWORD" \
-	-v app="$APP_PASSWORD" -v app_dev="$APP_DEV_PASSWORD" <<'SQL'
+	-v reader="$READER_PASSWORD" -v app="$APP_PASSWORD" <<'SQL'
 CREATE ROLE essenthos_reader LOGIN PASSWORD :'reader';
-CREATE ROLE essenthos_reader_dev LOGIN PASSWORD :'reader_dev';
 CREATE ROLE essenthos_app LOGIN PASSWORD :'app';
-CREATE ROLE essenthos_app_dev LOGIN PASSWORD :'app_dev';
 
 CREATE DATABASE essenthos_app OWNER essenthos_app;
-CREATE DATABASE essenthos_app_dev OWNER essenthos_app_dev;
 REVOKE ALL ON DATABASE essenthos_app FROM PUBLIC;
+SQL
+
+# Dev's pair, only on a machine that runs dev: both passwords set in .env. The production server has
+# none; dev added to a server later needs the same statements run by hand.
+if [ -n "${READER_DEV_PASSWORD:-}" ] && [ -n "${APP_DEV_PASSWORD:-}" ]; then
+	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres \
+		-v reader_dev="$READER_DEV_PASSWORD" -v app_dev="$APP_DEV_PASSWORD" <<'SQL'
+CREATE ROLE essenthos_reader_dev LOGIN PASSWORD :'reader_dev';
+CREATE ROLE essenthos_app_dev LOGIN PASSWORD :'app_dev';
+
+CREATE DATABASE essenthos_app_dev OWNER essenthos_app_dev;
 REVOKE ALL ON DATABASE essenthos_app_dev FROM PUBLIC;
 SQL
+fi
 
 # The page counter's database, only where one is wanted: STATS_PASSWORD set in .env. It holds counts
 # by page, referrer and country and nothing that names a reader, owned by a role that can reach no

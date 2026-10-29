@@ -46,7 +46,8 @@ public sealed class DownloadsHostingTests
     public void EachSiteServesItsOwnEnvironmentsFolder()
     {
         var caddyfile = Deploy("Caddyfile");
-        var blocks = Regex.Matches(caddyfile, @"^\{\$(?<site>[A-Z_]+)\} \{(?<body>[\s\S]*?)^\}", RegexOptions.Multiline)
+        // Dev's sites sit one level in, inside the snippet that switches them on.
+        var blocks = Regex.Matches(caddyfile, @"^(?<indent>\t?)\{\$(?<site>[A-Z_]+)\} \{(?<body>[\s\S]*?)^\k<indent>\}", RegexOptions.Multiline)
             .ToDictionary(m => m.Groups["site"].Value, m => m.Groups["body"].Value);
 
         blocks["SITE_DOMAIN"].Should().Contain("import downloads /srv/downloads\n");
