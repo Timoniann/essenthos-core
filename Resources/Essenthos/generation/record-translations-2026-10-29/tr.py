@@ -13,6 +13,7 @@ for the reader to render and link. «G-d» stays elided as the source writes it:
     python tr.py items                     # export/ -> items.json (what is to be rendered, with its context)
     python tr.py batch <ukr|deu|spa> [--limit N] [--redo]
     python tr.py collect <batch-id>
+    python tr.py flag <language> <ids-file> <reason>   # answers read and found wrong, for the next --redo
     python tr.py assemble                  # answers -> Resources/Essenthos/translations/record-texts.json
     python tr.py spent
 
@@ -37,7 +38,7 @@ import claude_api  # noqa: E402
 MODEL = 'claude-sonnet-5-5'
 EFFORT = 'low'
 LABEL = 'record-translations-PRB-1035'
-CAP_USD = 10.0
+CAP_USD = 20.0
 PROMPT_VERSION = 'v2'
 RAW = HERE / 'raw'
 OUT = HERE.parents[1] / 'translations' / 'record-texts.json'
@@ -76,8 +77,8 @@ ORDINAL = {code: i + 1 for i, code in enumerate(CODES)}
 
 _codes = '|'.join(sorted(CODE_OF, key=len, reverse=True))
 _names = '|'.join(sorted(NAME_OF, key=len, reverse=True))
-CODE_REF = re.compile(rf"(?<![\w-])({_codes}) (\d{{1,3}}):(\d{{1,3}})(?:[-–](?:(\d{{1,3}}):)?(\d{{1,3}}))?")
-NAME_REF = re.compile(rf"(?<![\w-])({_names}) (\d{{1,3}}):(\d{{1,3}})(?:[-–](?:(\d{{1,3}}):)?(\d{{1,3}}))?")
+CODE_REF = re.compile(rf"(?<![\w-])({_codes}) (\d{{1,3}}):(\d{{1,3}})(?:[-–] ?(?:(\d{{1,3}}):)?(\d{{1,3}}))?")
+NAME_REF = re.compile(rf"(?<![\w-])({_names}) (\d{{1,3}}):(\d{{1,3}})(?:[-–] ?(?:(\d{{1,3}}):)?(\d{{1,3}}))?")
 CHAPTER_REF = re.compile(rf"(?<![\w-])({_codes}|{_names}) \d{{1,3}}(?![\d:])")
 # A bare "22:51" after a cited book, inside the same run of references ("2SA 19:21; 22:51").
 BARE_AFTER = re.compile(r"^[;,]\s*(\d{1,3}):(\d{1,3})(?:[-–](\d{1,3}))?")
@@ -216,6 +217,12 @@ def read_items():
     return items
 
 
+# Two Spanish nominatives the corpus holds are not the Reina-Valera's names for these records (PRB-1343):
+# Joshua son of Nun is held as «Jesuá» (Ezra's Jeshua) and Abram as «Abraham». A request carries the
+# Reina-Valera's spelling instead.
+NAME_FIXES = {('joshua', 'spa'): 'Josué', ('abram', 'spa'): 'Abram'}
+
+
 def glossary():
     """English name -> {language: {forms}} over every record, and source id -> {language: form}."""
     by_name = collections.defaultdict(lambda: collections.defaultdict(set))
@@ -223,13 +230,14 @@ def glossary():
     for slug, kind, name, source_id, language, form in csv.reader(open(EXPORT / 'name_forms.csv', encoding='utf-8')):
         if kind not in ('person', 'place', 'people'):
             continue
+        form = NAME_FIXES.get((slug, language), form)
         by_name[name][language].add(form)
         by_source[source_id][language] = form
         by_source[f'slug:{slug}'][language] = form
     return by_name, by_source
 
 
-TOKEN = re.compile(r"\b([A-Z][a-z]+)_(\d+)\b")
+TOKEN = re.compile(r"\b([A-Z][a-z]+(?:-[a-z]+)*)_(\d+)\b")
 CAPITALISED = re.compile(r"\b[A-Z][a-z'’-]+(?: (?:of |the )?[A-Z][a-z'’-]+)*")
 
 
@@ -505,6 +513,18 @@ def cmd_revalidate():
         print(language, len(have), 'answers,', bad, 'refused')
 
 
+def cmd_flag(language, ids_file, reason):
+    """Mark answers read and found wrong by a person, so the next --redo sends them again with the reason."""
+    ids = {line.strip() for line in Path(ids_file).read_text(encoding='utf-8').splitlines() if line.strip()}
+    have = answers(language)
+    for item_id in ids:
+        have[item_id]['problems'] = [reason]
+    with (RAW / f'{language}.jsonl').open('w', encoding='utf-8') as out:
+        for row in sorted(have.values(), key=lambda r: r['id']):
+            out.write(json.dumps(row, ensure_ascii=False) + '\n')
+    print(f'{len(ids)} {language} answers flagged')
+
+
 def cmd_assemble():
     items = load_items()
     rendered = {language: answers(language) for language in LANGS}
@@ -544,6 +564,8 @@ def main(argv):
         cmd_collect(rest[0])
     elif verb == 'revalidate':
         cmd_revalidate()
+    elif verb == 'flag':
+        cmd_flag(rest[0], rest[1], rest[2])
     elif verb == 'assemble':
         cmd_assemble()
     elif verb == 'spent':
