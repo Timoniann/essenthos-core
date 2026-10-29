@@ -65,6 +65,45 @@ public sealed class OwnRecordReloadTests(WitnessDatabase database) : OwnRecordTe
     }
 
     /// <summary>
+    /// An alternative a rulings file no longer lists leaves the record on the next load, though the
+    /// file itself is recorded and skipped: Hobab is not Reuel under a second name. An alternative a
+    /// title wrote under its own source is not the rulings' to take back, and a second load writes
+    /// nothing.
+    /// </summary>
+    [Fact]
+    public async Task AnAlternativeTheRulingsNoLongerListLeavesTheRecordAndATitlesStays()
+    {
+        await Load();
+
+        var hobab = await Db.Entities.SingleAsync(e => e.Slug == "hobab");
+        var reuel = new Entity { Kind = EntityKind.Person, Slug = "reuel-2", Name = "Reuel", SourceId = "reuel-2", Source = "a test" };
+        Db.Entities.Add(reuel);
+        await Db.SaveChangesAsync();
+        var owner = SenseReadingFiles.Rulings().Source;
+        Db.EntityAlternatives.Add(new EntityAlternative
+        {
+            EntityId = hobab.Id, AlternativeEntityId = reuel.Id, Reason = "one man under two names", Source = owner,
+        });
+        Db.EntityAlternatives.Add(new EntityAlternative
+        {
+            EntityId = hobab.Id, Describes = "somebody else", Reason = "a title's doubt", Source = "a title, as a test",
+        });
+        await Db.SaveChangesAsync();
+        var listed = SenseReadingFiles.AllRulings().SelectMany(f => f.Rulings).Sum(r => r.Alternatives?.Count ?? 0);
+
+        await Load();
+
+        (await Db.EntityAlternatives.Where(a => a.EntityId == hobab.Id).Select(a => a.Source).ToListAsync())
+            .Should().Equal("a title, as a test");
+        (await Db.EntityAlternatives.CountAsync(a => a.Source != "a title, as a test")).Should().Be(listed);
+
+        var held = await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id).Select(a => a.Id).ToListAsync();
+        await Load();
+        (await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id).Select(a => a.Id).ToListAsync())
+            .Should().Equal(held);
+    }
+
+    /// <summary>
     /// The woman's record was listed by a dataset and is headed, described and read by us, so the
     /// page credits the ruling and not the dataset, on a database that loaded the ruling before the
     /// credit moved as well as on a cold one. The dataset's listing stays as a claim.
