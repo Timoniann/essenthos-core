@@ -1006,7 +1006,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         var votersLoaded = await db.Texts
             .Where(t => t.Slug == Voted || t.Slug == FirstVoter || t.Slug == SecondVoter)
             .CountAsync(cancellationToken) == 3;
-        var profiled = await db.StrongProfiles.CountAsync(cancellationToken);
+        var profiled = await db.StrongProfiles.CountAsync(p => p.Occurrences != null, cancellationToken);
 
         // A test measures inside a transaction its rows were never committed from, and only the
         // connection holding it can see them.

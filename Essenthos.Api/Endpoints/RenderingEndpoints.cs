@@ -240,7 +240,8 @@ internal static class RenderingEndpoints
     /// One row per occurrence of the spellings and word of an original a renders or equals link
     /// puts opposite it. The number is the word's own, or the one carried beside it where the
     /// witness states none on the word — the Septuagint's are all of that kind — and the lemma
-    /// stands in where there is neither.
+    /// stands in where there is neither. The place is where the verse stands in the shared frame,
+    /// which is what a sample opens: the New Ukrainian Translation prints Psalm 37:4 as 36:4.
     /// </summary>
     private static async Task<List<LinkedRow>> Rows(
         AppDbContext db,
@@ -251,7 +252,10 @@ internal static class RenderingEndpoints
     {
         const string sql =
             """
-            SELECT h.id, h.text, b.canonical_ordinal, v.chapter_number, v.number,
+            SELECT h.id, h.text,
+                   coalesce(placed.canonical_book, b.canonical_ordinal),
+                   coalesce(placed.canonical_chapter, v.chapter_number),
+                   coalesce(placed.canonical_verse, v.number),
                    l.id, l.method, ow.text_id,
                    coalesce(ow.strong_number,
                             (SELECT min(ws.number) FROM word_strong ws WHERE ws.word_id = ow.id)),
@@ -259,6 +263,7 @@ internal static class RenderingEndpoints
             FROM word h
             JOIN verse v ON v.id = h.verse_id
             JOIN book b ON b.id = v.book_id
+            LEFT JOIN verse_reference placed ON placed.verse_id = v.id AND placed.is_primary
             JOIN link_word s ON s.word_id = h.id
             JOIN link l ON l.id = s.link_id AND l.relation IN ('renders', 'equals')
             JOIN link_word o ON o.link_id = l.id AND o.side <> s.side

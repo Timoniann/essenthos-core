@@ -1,5 +1,6 @@
 using Essenthos.Core.Berean;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Usfm;
 using FluentAssertions;
 using Xunit;
@@ -105,6 +106,45 @@ public class ParagraphMarkTests
         finally
         {
             File.Delete(tables);
+        }
+    }
+
+    /// <summary>
+    /// bsb.txt prints a psalm's title inside its first verse with no mark; the tables open the
+    /// title's row with the psalm-heading class, and that is what says the verse holds one, so the
+    /// frame can place it at the title's address as well as its own.
+    /// </summary>
+    [Fact]
+    public void TheBereanMarksTheVerseItsTablesOpenWithAPsalmsHeading()
+    {
+        var tables = Path.GetTempFileName();
+        var edition = Path.GetTempFileName();
+        try
+        {
+            File.WriteAllLines(tables,
+            [
+                "header",
+                Row(english: 1, verse: 14000, reference: "Psalm 3:1", par: "<p class=|pshdg|>", rendering: " A Psalm "),
+                Row(english: 2, verse: 14000, reference: "", par: "", rendering: " of David. "),
+                Row(english: 3, verse: 14000, reference: "", par: "<p class=|indent1stline|>", rendering: " O LORD, "),
+                Row(english: 4, verse: 14001, reference: "Psalm 3:2", par: "<p class=|indent1|>", rendering: " Many "),
+            ]);
+            File.WriteAllLines(edition,
+            [
+                "Verse	Berean Standard Bible",
+                "Psalm 3:1	A Psalm of David. O LORD,",
+                "Psalm 3:2	Many",
+            ]);
+
+            var verses = BereanTextSource.Read(edition, tables).Books.Single().Chapters.Single().Verses;
+
+            verses.Select(verse => (verse.Number, verse.MarksASuperscription)).Should()
+                .Equal((1, true), (2, false));
+        }
+        finally
+        {
+            File.Delete(tables);
+            File.Delete(edition);
         }
     }
 

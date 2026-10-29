@@ -619,10 +619,10 @@ internal static class StrongEndpoints
     }
 
     /// <summary>
-    /// A compiler's part of speech, gender and first verse for a Hebrew entry, credited to him. The
-    /// verse is named as BHSA names its book, which is the edition the Hebrew is read in. His count
-    /// is not served: verify compares it with BHSA's own, and a reader shown one would not know the
-    /// other disagrees.
+    /// A compiler's part of speech, gender and first verse for a Hebrew entry, credited to him, or a
+    /// lexicon's part of speech and gender for a Greek one, credited to it. The verse is named as
+    /// BHSA names its book, which is the edition the Hebrew is read in. His count is not served:
+    /// verify compares it with BHSA's own, and a reader shown one would not know the other disagrees.
     /// </summary>
     internal static async Task<StrongProfileResponse?> Profile(
         AppDbContext db,
@@ -649,6 +649,7 @@ internal static class StrongEndpoints
             profile.Gender,
             profile.Source)
         {
+            Credit = Datasets.Credited(profile.Source)?.Name,
             First = book is null || profile.FirstChapter is null || profile.FirstVerse is null
                 ? null
                 : new StrongFirstVerseResponse(profile.FirstBook!.Value, book.Name, book.Slug,
@@ -846,10 +847,13 @@ internal record StrongRelationResponse(
     public StrongGlossTranslationResponse? Translation { get; init; }
 }
 
-/// <param name="Language"><c>hbo</c> or <c>arc</c>.</param>
-/// <param name="Source">Whose analysis it is: a compiler's, never Strong's.</param>
+/// <param name="Language"><c>hbo</c>, <c>arc</c> or <c>grc</c>.</param>
+/// <param name="Source">Whose analysis it is: a compiler's or a lexicon's, never Strong's.</param>
 internal record StrongProfileResponse(string Language, string? PartOfSpeech, string? Gender, string Source)
 {
+    /// <summary>The dataset's short name, as the sources page lists it: <em>BibleData</em>.</summary>
+    public string? Credit { get; init; }
+
     /// <summary>The first verse the compiler finds the word in, on the shared frame.</summary>
     public StrongFirstVerseResponse? First { get; init; }
 }

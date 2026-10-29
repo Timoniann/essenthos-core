@@ -32,6 +32,9 @@ internal static partial class BereanParagraphs
     private const int Paragraph = 15;
     private const int Rendering = 18;
 
+    /// <summary>The class the tables give the row that opens a psalm's heading.</summary>
+    private const string PsalmHeadingClass = "|pshdg|";
+
     /// <summary>The widest column this reads.</summary>
     private const int Columns = Rendering + 1;
 
@@ -80,13 +83,30 @@ internal static partial class BereanParagraphs
     /// <returns>For each verse that has any, the one-based positions of the words a break opens.</returns>
     public static Dictionary<string, Dictionary<int, TextBreak>> Read(
         string tablesPath,
+        IReadOnlyDictionary<string, List<BereanWord>> published) =>
+        Layout(tablesPath, published).Breaks;
+
+    /// <summary>
+    /// The breaks <see cref="Read"/> places, and the verses whose words the tables open with a
+    /// psalm's heading: bsb.txt prints <em>A Psalm of David, when he fled…</em> inside Psalm 3:1
+    /// with nothing to say where the title ends, and the tables' <c>pshdg</c> class is the
+    /// edition's own statement that the verse holds one.
+    /// </summary>
+    public static BereanLayout Layout(
+        string tablesPath,
         IReadOnlyDictionary<string, List<BereanWord>> published)
     {
         var placed = new Dictionary<string, Dictionary<int, TextBreak>>(StringComparer.Ordinal);
+        var headed = new HashSet<string>(StringComparer.Ordinal);
         var unplaced = new List<string>();
 
         foreach (var (reference, rows) in Verses(tablesPath))
         {
+            if (rows.Any(row => row.PsalmHeading))
+            {
+                headed.Add(reference);
+            }
+
             if (!published.TryGetValue(reference, out var words))
             {
                 continue;
@@ -145,10 +165,10 @@ internal static partial class BereanParagraphs
                 + "tables and bsb.txt are no longer the same edition. Fetch both from the same release.");
         }
 
-        return placed;
+        return new BereanLayout(placed, headed);
     }
 
-    private readonly record struct Row(int EnglishOrder, TextBreak? Break, string English);
+    private readonly record struct Row(int EnglishOrder, TextBreak? Break, string English, bool PsalmHeading);
 
     /// <summary>Each verse's rows in the order the Berean prints its English, padding rows included.</summary>
     private static IEnumerable<(string Reference, List<Row> Rows)> Verses(string path)
@@ -183,7 +203,8 @@ internal static partial class BereanParagraphs
             }
 
             int.TryParse(cells[EnglishOrder].Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var order);
-            rows.Add(new Row(order, Break(cells[Paragraph]), cells[Rendering]));
+            rows.Add(new Row(order, Break(cells[Paragraph]), cells[Rendering],
+                cells[Paragraph].Contains(PsalmHeadingClass, StringComparison.Ordinal)));
         }
 
         if (rows.Count > 0)
@@ -220,3 +241,9 @@ internal static partial class BereanParagraphs
     private static TextBreak? Stronger(TextBreak? held, TextBreak? next) =>
         held == TextBreak.Paragraph || next is null ? held : next;
 }
+
+/// <param name="Breaks">For each verse that has any, the one-based positions of the words a break opens.</param>
+/// <param name="PsalmHeadings">The references of the verses that hold a psalm's heading.</param>
+internal sealed record BereanLayout(
+    Dictionary<string, Dictionary<int, TextBreak>> Breaks,
+    IReadOnlySet<string> PsalmHeadings);

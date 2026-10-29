@@ -148,6 +148,27 @@ public sealed class WordRenderingsTests : IDisposable
             .Should().Equal((1, 1, "loveth"), (1, 2, "Loved"));
     }
 
+    /// <summary>
+    /// A sample opens the verse it quotes, so it is addressed by where the verse stands in the
+    /// frame, not by the number the translation prints: the New Ukrainian Translation's Psalm 36:4
+    /// is the frame's 37:4.
+    /// </summary>
+    [Fact]
+    public async Task SamplesAreAddressedByTheFrameNotByTheTranslationsOwnNumbers()
+    {
+        var renumbered = _db.VerseReferences.Single(r =>
+            r.Verse!.TextId == _english.Id && r.Verse.ChapterNumber == 1 && r.Verse.Number == 2);
+        renumbered.CanonicalChapter = 2;
+        renumbered.CanonicalVerse = 3;
+        await _db.SaveChangesAsync();
+
+        var nestle = (await RenderingEndpoints.Behind(_db, _english.Id, ["loveth", "loved"], default))[0];
+
+        nestle.Originals.Single(original => original.StrongNumber == Agapao).Samples
+            .Select(place => (place.Chapter, place.Verse, place.Text))
+            .Should().Equal((1, 1, "loveth"), (2, 3, "Loved"));
+    }
+
     [Fact]
     public async Task AWordNothingIsLinkedToHasNoWitness()
     {
@@ -223,7 +244,8 @@ public sealed class WordRenderingsTests : IDisposable
 
 /// <summary>
 /// How a typed word becomes the spellings a text prints: gathered by the stem the alignment reduces
-/// words with, or matched as spelled where the language has no stemmer.
+/// words with, by their endings in Russian and Ukrainian, or matched as spelled where the language
+/// has no stemmer.
 /// </summary>
 public sealed class WordFormsTests
 {
@@ -246,9 +268,8 @@ public sealed class WordFormsTests
     }
 
     /// <summary>
-    /// The Slavic stemmer takes <em>любов</em> down to <em>люб</em>, which is also where <em>любі</em>
-    /// (dear) and the verb land; the noun's own forms are the ones kept, however the apostrophe of
-    /// <em>любов'ю</em> is written.
+    /// <em>любов</em>, <em>любі</em> (dear) and the verb share letters and no ending; the noun's own
+    /// forms are the ones kept, however the apostrophe of <em>любов'ю</em> is written.
     /// </summary>
     [Fact]
     public void ASlavicNounKeepsItsOwnFormsAndNotItsNeighbours()
@@ -267,6 +288,54 @@ public sealed class WordFormsTests
 
         index.Matching("любити", exact: false).Select(form => form.Text).Should()
             .Equal("любить", "любити", "любив");
+    }
+
+    /// <summary>
+    /// The aligner's stemmer lands <em>завітати</em> (to visit) on <em>завіт</em> (covenant) and
+    /// reads <em>завіти</em> as an infinitive; the concordance asked about the noun answers the
+    /// noun's forms, and in a text that prints only the verb, nothing.
+    /// </summary>
+    [Fact]
+    public void ASlavicNounDoesNotGatherTheVerbMadeFromIt()
+    {
+        var forms = new WordForm[]
+        {
+            new("завіт", 28), new("завіту", 20), new("завіти", 5), new("завітом", 3), new("завітати", 1),
+            new("завітаю", 1),
+        };
+
+        new FormIndex("ukr", forms).Matching("Завіт", exact: false).Select(form => form.Text).Should()
+            .Equal("завіт", "завіту", "завіти", "завітом");
+        new FormIndex("ukr", [new("завітати", 1), new("завітаю", 1), new("заповіт", 42)])
+            .Matching("завіт", exact: false).Should().BeEmpty();
+        new FormIndex("ukr", forms).Matching("завітати", exact: false).Select(form => form.Text).Should()
+            .Equal("завітати", "завітаю");
+    }
+
+    [Fact]
+    public void ASlavicNounKeepsTheCasesWhoseEndingsAVerbCouldHave()
+    {
+        var index = new FormIndex("ukr",
+        [
+            new("земля", 219), new("землі", 1500), new("землю", 700), new("землею", 40), new("земляна", 1),
+        ]);
+
+        index.Matching("земля", exact: false).Select(form => form.Text).Should()
+            .Equal("землі", "землю", "земля", "землею");
+    }
+
+    [Fact]
+    public void ARussianNounDoesNotGatherTheVerbMadeFromIt()
+    {
+        var index = new FormIndex("rus",
+        [
+            new("свет", 60), new("света", 30), new("светом", 4), new("светит", 3), new("светил", 2),
+            new("светить", 1),
+        ]);
+
+        index.Matching("свет", exact: false).Select(form => form.Text).Should().Equal("свет", "света", "светом");
+        index.Matching("светить", exact: false).Select(form => form.Text).Should()
+            .Equal("светит", "светил", "светить");
     }
 
     [Fact]

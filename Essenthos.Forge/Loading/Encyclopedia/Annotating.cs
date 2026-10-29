@@ -403,7 +403,7 @@ internal static class Annotating
         """;
 
     /// <summary>
-    /// Whether every word on the seed's side of the set that names anybody names the seed's entity.
+    /// Whether every word on the seed's side of the set names the seed's entity.
     ///
     /// <para>
     /// One number can cover two records on that side. Joshua 19:47 writes דן four times under
@@ -417,6 +417,14 @@ internal static class Annotating
     /// </para>
     ///
     /// <para>
+    /// A word of that side that names nobody is the same choice. The Synodal numbers the three
+    /// <em>сын-</em> words of 1 Chronicles 8:40 against all five בֵּן of the verse, and only the
+    /// last, <em>the sons of Benjamin</em>, names anybody: the Benjamites, by a ruling. Read as one
+    /// name written five times, the set put the people on all three Russian words, though the
+    /// numbering cannot say which of them renders that one.
+    /// </para>
+    ///
+    /// <para>
     /// The seeds a pass has not yet settled are asked as well as the annotations already written,
     /// because a pass takes its own rows back before it seeds them again.
     /// </para>
@@ -424,6 +432,14 @@ internal static class Annotating
     private const string NamesOne =
         """
         NOT EXISTS (
+            SELECT 1 FROM link_word ours
+            WHERE ours.link_id = mine.link_id AND ours.side = mine.side
+              AND NOT EXISTS (SELECT 1 FROM word_entity named
+                              WHERE named.word_id = ours.word_id AND named.entity_id = seed.entity_id)
+              AND NOT EXISTS (SELECT 1 FROM pending_annotation named
+                              WHERE named.word_id = ours.word_id AND named.through IS NULL
+                                AND named.entity_id = seed.entity_id))
+        AND NOT EXISTS (
             SELECT 1 FROM link_word ours
             JOIN word_entity named ON named.word_id = ours.word_id
             WHERE ours.link_id = mine.link_id AND ours.side = mine.side

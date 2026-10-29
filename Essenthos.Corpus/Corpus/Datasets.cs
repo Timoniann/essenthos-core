@@ -788,8 +788,8 @@ public static class Datasets
                     + "lexicon is theirs."),
             ]),
 
-        // The short Greek glosses. Read for the one-word gloss column only; the Abbott-Smith entry
-        // beside it in the same file is not loaded.
+        // The short Greek glosses and each lexeme's part of speech. Read for the one-word gloss and
+        // the morphology code; the Abbott-Smith entry beside them in the same file is not loaded.
         new("stepbible-tbesg", "STEPBible Brief Greek Lexicon (TBESG)",
             "STEP Bible, based on work at Tyndale House, Cambridge",
             "CC BY 4.0",
@@ -799,7 +799,9 @@ public static class Datasets
             + "It numbers the Septuagint's vocabulary as well as the New Testament's, so a Greek Old "
             + "Testament word Strong never catalogued still has a meaning. A word reaches a gloss by its "
             + "dictionary form or by the Strong number its edition prints, and the reader is told which. "
-            + "Only the gloss is taken; the full lexicon entry beside it in the same file is not.",
+            + "The part of speech and gender a Greek entry shows are this lexicon's too, since Strong's "
+            + "Greek dictionary gives none. Only those are taken; the full lexicon entry beside them in "
+            + "the same file is not.",
             Sources.BriefGreekLexiconPrefix, Glossary: true, HolderUrl: StepBible,
             Obliges: "Attribution only, under CC BY 4.0. The file also asks that its data not be passed "
                 + "on as a copy but that others be referred to github.com/STEPBible, so a download of "

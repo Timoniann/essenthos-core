@@ -4,7 +4,7 @@ Fetched from <https://github.com/STEPBible/STEPBible-Data>, commit `ae39711d7843
 
 | stored file | upstream dataset | status |
 |---|---|---|
-| `TBESG.txt` | Translators Brief lexicon of Extended Strongs for Greek | **loaded**, the Gloss column only, into `lexicon_gloss` (2026-09-20) |
+| `TBESG.txt` | Translators Brief lexicon of Extended Strongs for Greek | **loaded**: the Gloss column into `lexicon_gloss` (2026-09-20); the Morph column, as each Greek entry's part of speech and gender, into `strong_profile` (2026-10-29) |
 | `TBESH.txt` | Translators Brief lexicon of Extended Strongs for Hebrew | **quarantined**, not loaded |
 | `TFLSJ-0-5624.txt` | Translators Formatted full LSJ Bible lexicon 0–5624 | candidate, not loaded |
 | `TFLSJ-extra.txt` | Translators Formatted full LSJ Bible lexicon extra | candidate, not loaded |
@@ -23,8 +23,10 @@ they are applied in any project. This copy is retained solely for evaluation. No
 meaning, or derived data may be loaded or published until that permission is obtained and recorded.
 
 **What is loaded from TBESG, and on what terms.** The owner approved loading it on 2026-09-20
-(FTR-0616). Only the one-word *Gloss* column is taken, with each entry's number and Greek form; the
-Abbott-Smith entry beside it is not. Every row carries the source string "STEPBible TBESG, the
+(FTR-0616). The one-word *Gloss* column is taken, with each entry's number and Greek form, and since
+2026-10-29 (PRB-1124) the *Morph* column of each number's first entry, read as a part of speech and
+gender for the Greek entry page, because Strong's Greek dictionary gives none; the Abbott-Smith
+entry beside them is not. Every row carries the source string "STEPBible TBESG, the
 Translators Brief lexicon of Extended Strongs for Greek, by Tyndale House, Cambridge, CC BY 4.0,
 read from STEPBible/STEPBible-Data at ae39711", and the dataset is declared as `stepbible-tbesg`, so
 the sources page credits STEP Bible / Tyndale House under CC BY 4.0 with a link to the repository.
