@@ -14,16 +14,39 @@ namespace Essenthos.Core.Loading.Marks;
 /// A pair counts for both its texts, so a text's digest also moves when another text's links to it move:
 /// that is what a composition measured on the other texts that state its target reads.
 /// </para>
+///
+/// <para>
+/// A text's rows are digested in three parts (<see cref="Parts"/>): its links, its words and the names on
+/// its words. A recipe line is keyed only on the parts its statements read, so a name written on a word
+/// runs the lines that read names and not every line that aligns the text.
+/// </para>
 /// </summary>
 internal static class TextDigests
 {
-    /// <summary>The tables whose rows a text's digest covers. A recipe line's other reads count whole.</summary>
-    public static readonly IReadOnlySet<string> Tables = new HashSet<string>(StringComparer.Ordinal)
+    /// <summary>The links of every pair the text is in, their words, claims and provenance, and its verse links.</summary>
+    public const string Links = "links";
+
+    /// <summary>The text's words, their Strong numbers and the groups they stand in.</summary>
+    public const string Words = "words";
+
+    /// <summary>The names on the text's words, and their claims.</summary>
+    public const string Names = "names";
+
+    /// <summary>Which part of a text each table's rows belong to.</summary>
+    public static readonly IReadOnlyDictionary<string, string> PartOf = new Dictionary<string, string>(StringComparer.Ordinal)
     {
         // A link's provenance is a lookup row its id points at, so the link's own row carries it.
-        "link", "link_word", "link_claim", "provenance", "verse_link", "verse_link_verse",
-        "word", "word_entity", "word_entity_claim", "word_strong", "word_group_word",
+        ["link"] = Links, ["link_word"] = Links, ["link_claim"] = Links, ["provenance"] = Links,
+        ["verse_link"] = Links, ["verse_link_verse"] = Links,
+        ["word"] = Words, ["word_strong"] = Words, ["word_group_word"] = Words,
+        ["word_entity"] = Names, ["word_entity_claim"] = Names,
     };
+
+    /// <summary>Every part, in the order a whole digest joins them.</summary>
+    public static readonly IReadOnlyList<string> Parts = [Links, Names, Words];
+
+    /// <summary>The tables whose rows a text's digest covers. A recipe line's other reads count whole.</summary>
+    public static readonly IReadOnlySet<string> Tables = new HashSet<string>(PartOf.Keys, StringComparer.Ordinal);
 
     private const string Hash = "count(*) || ':' || coalesce(sum(hashtextextended(x::text, 0)), 0)";
 
@@ -46,7 +69,70 @@ internal static class TextDigests
     /// way: a pair is read whole whichever of its texts is named).
     /// </summary>
     public static async Task<IReadOnlyDictionary<string, string>> Of(
-        string connectionString, IReadOnlyCollection<string>? only, CancellationToken cancellationToken)
+        string connectionString, IReadOnlyCollection<string>? only, CancellationToken cancellationToken) =>
+        (await PartsOf(connectionString, only, cancellationToken))
+        .ToDictionary(text => text.Key, text => Whole(text.Value), StringComparer.Ordinal);
+
+    /// <summary>The digest of every part of every text (or of the texts named only), by slug in capitals and part.</summary>
+    public static async Task<IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>>> PartsOf(
+        string connectionString, IReadOnlyCollection<string>? only, CancellationToken cancellationToken) =>
+        PartsOf(await Read(connectionString, only, among: false, cancellationToken), only);
+
+    /// <summary>
+    /// The parts of every text a set of pieces (<see cref="Pieces"/>) covers, or of the texts named only.
+    /// </summary>
+    public static IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> PartsOf(
+        Pieces pieces, IReadOnlyCollection<string>? only)
+    {
+        var lines = new Dictionary<(string Text, string Part), List<string>>();
+        foreach (var (key, piece) in pieces.Sums)
+        {
+            var line = $"{key} {piece}";
+            var part = PartOf[key.Table];
+            Add(key.From, part, line);
+            if (key.To is { } second && second != key.From)
+            {
+                Add(second, part, line);
+            }
+        }
+
+        return pieces.Texts
+            .Where(text => only is null || only.Contains(text, StringComparer.OrdinalIgnoreCase))
+            .ToDictionary(
+                text => text,
+                text => (IReadOnlyDictionary<string, string>)Parts.ToDictionary(
+                    part => part,
+                    part => Digest(lines.TryGetValue((text, part), out var own) ? own : []),
+                    StringComparer.Ordinal),
+                StringComparer.Ordinal);
+
+        void Add(string text, string part, string line)
+        {
+            if (!lines.TryGetValue((text, part), out var list))
+            {
+                lines[(text, part)] = list = [];
+            }
+
+            list.Add(line);
+        }
+    }
+
+    /// <summary>One table's rows of one text, or of one pair (from, to): the unit a recipe line's writes are measured in.</summary>
+    internal readonly record struct Piece(string Table, string From, string? To)
+    {
+        public override string ToString() => To is null ? $"{Table} {From}" : $"{Table} {From} {To}";
+    }
+
+    /// <summary>The sum of every piece read, and every text there is.</summary>
+    internal sealed record Pieces(IReadOnlyDictionary<Piece, string> Sums, IReadOnlyList<string> Texts);
+
+    /// <summary>
+    /// Every piece of every text (<paramref name="only"/> null), of the texts named and every pair either is in,
+    /// or, <paramref name="among"/>, of the texts named and only the pairs between two of them: what a line
+    /// over those texts can have written, read through the pair's index rather than the whole table.
+    /// </summary>
+    public static async Task<Pieces> Read(
+        string connectionString, IReadOnlyCollection<string>? only, bool among, CancellationToken cancellationToken)
     {
         var slugs = new Dictionary<int, string>();
         await using (var connection = new NpgsqlConnection(connectionString))
@@ -63,12 +149,13 @@ internal static class TextDigests
         var wanted = only is null
             ? null
             : slugs.Where(text => only.Contains(text.Value, StringComparer.OrdinalIgnoreCase)).Select(text => text.Key).ToArray();
+        var pair = among ? "AND" : "OR";
         string[] filters = wanted is null
             ? ["", "", "", "", ""]
             :
             [
-                "WHERE x.from_text_id = ANY(@texts) OR x.to_text_id = ANY(@texts)",
-                "WHERE l.from_text_id = ANY(@texts) OR l.to_text_id = ANY(@texts)",
+                $"WHERE x.from_text_id = ANY(@texts) {pair} x.to_text_id = ANY(@texts)",
+                $"WHERE l.from_text_id = ANY(@texts) {pair} l.to_text_id = ANY(@texts)",
                 "WHERE v.text_id = ANY(@texts)",
                 "WHERE x.text_id = ANY(@texts)",
                 "WHERE w.text_id = ANY(@texts)",
@@ -94,36 +181,21 @@ internal static class TextDigests
             return found;
         }));
 
-        var lines = new Dictionary<int, List<string>>();
-        foreach (var (from, to, table, sum) in rows.SelectMany(found => found))
-        {
-            var line = to is { } other ? $"{table} {Slug(from)} {Slug(other)} {sum}" : $"{table} {sum}";
-            Add(from, line);
-            if (to is { } second && second != from)
-            {
-                Add(second, line);
-            }
-        }
-
-        return slugs
-            .Where(text => wanted is null || wanted.Contains(text.Key))
-            .ToDictionary(
-                text => text.Value,
-                text => Digest(lines.TryGetValue(text.Key, out var own) ? own : []),
-                StringComparer.Ordinal);
-
-        void Add(int text, string line)
-        {
-            if (!lines.TryGetValue(text, out var list))
-            {
-                lines[text] = list = [];
-            }
-
-            list.Add(line);
-        }
+        return new Pieces(
+            rows.SelectMany(found => found).ToDictionary(
+                row => new Piece(row.Table, Slug(row.From), row.To is { } to ? Slug(to) : null), row => row.Sum),
+            [.. slugs.Values]);
 
         string Slug(int id) => slugs.TryGetValue(id, out var slug) ? slug : id.ToString(System.Globalization.CultureInfo.InvariantCulture);
     }
+
+    /// <summary>The digest of a set of pieces, in a stable order.</summary>
+    public static string Digest(IEnumerable<KeyValuePair<Piece, string>> pieces) =>
+        Digest([.. pieces.Select(piece => $"{piece.Key} {piece.Value}")]);
+
+    /// <summary>A text's digest whole, from the digests of its parts.</summary>
+    public static string Whole(IReadOnlyDictionary<string, string> parts) =>
+        Digest([.. Parts.Select(part => $"{part} {parts.GetValueOrDefault(part, "absent")}")]);
 
     private static string Digest(List<string> lines) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', lines.Order(StringComparer.Ordinal)))));

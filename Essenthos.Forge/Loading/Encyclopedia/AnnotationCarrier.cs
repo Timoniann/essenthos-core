@@ -314,6 +314,19 @@ internal sealed class AnnotationCarrier(
     private const string Unscoped = "DELETE FROM expected x WHERE NOT EXISTS (SELECT 1 FROM carry_scope s WHERE s.word_id = x.word_id)";
 
     /// <summary>
+    /// A word whose name was crossed back (<see cref="CrossedNameLoader"/>) is not given the other word's
+    /// name again. Its links are still crossed, so the carry reaches it with the crossed answer every time it
+    /// runs over its verse; written, it would be taken back again by the next crossing, and the two passes
+    /// would never leave the word alone.
+    /// </summary>
+    private const string CrossedBack =
+        """
+        DELETE FROM expected x
+        WHERE EXISTS (SELECT 1 FROM word_entity c
+                      WHERE c.word_id = x.word_id AND c.source = @crossed AND c.entity_id <> x.entity_id)
+        """;
+
+    /// <summary>
     /// The sources with an answer on a word of the scope or on a word that can seed one, on a row or
     /// in a claim: those whose carried rows the newer links can change.
     /// </summary>
@@ -479,6 +492,7 @@ internal sealed class AnnotationCarrier(
                 await Execute(connection, transaction, Unscoped, cancellationToken);
             }
 
+            await Execute(connection, transaction, CrossedBack, cancellationToken, ("crossed", CrossedNameLoader.Source));
             await pronouns.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
 
             var carried = await Scalar(connection, transaction, Carried(scoped), cancellationToken, parameters);

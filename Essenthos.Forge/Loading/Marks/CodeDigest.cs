@@ -24,6 +24,14 @@ namespace Essenthos.Core.Loading.Marks;
 /// actually taken, so one step's lambda does not make every step depend on every other. What is still
 /// outside — reflection, a file read by a name computed at run time — is what a step's version is for.
 /// </para>
+///
+/// <para>
+/// The database model is the exception to "used whole": building it names every mapped type, and a
+/// mapped type's constructor names the types of its collections, without running their code. So a mapped
+/// type, and the lambdas that configure it, count only for a step whose own code uses that type; what
+/// the model says about the tables is in the migrations, which move the marks of the steps reading the
+/// tables they touch (<see cref="MigrationTables"/>).
+/// </para>
 /// </summary>
 internal sealed partial class CodeDigest
 {
@@ -76,7 +84,80 @@ internal sealed partial class CodeDigest
         _resources = _ours
             .SelectMany(assembly => assembly.GetManifestResourceNames().Select(name => (name, assembly)))
             .ToDictionary(pair => pair.name, pair => pair.assembly, StringComparer.Ordinal);
+
+        var entities = new HashSet<Type>();
+        var builders = new HashSet<MethodBase>();
+        const BindingFlags declared = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static
+                                      | BindingFlags.Public | BindingFlags.NonPublic;
+        foreach (var type in _ours.SelectMany(Loadable))
+        {
+            if (Bases(type).Any(IsDbContext))
+            {
+                foreach (var property in type.GetProperties(declared))
+                {
+                    if (property.PropertyType is { IsGenericType: true } set
+                        && set.GetGenericTypeDefinition().FullName == "Microsoft.EntityFrameworkCore.DbSet`1"
+                        && _ours.Contains(set.GetGenericArguments()[0].Assembly))
+                    {
+                        entities.Add(set.GetGenericArguments()[0]);
+                    }
+                }
+
+                builders.UnionWith(type.GetMethods(declared).Where(method => method.Name == "OnModelCreating"));
+            }
+
+            foreach (var method in type.GetMethods(declared))
+            {
+                entities.UnionWith(Configured(method));
+            }
+        }
+
+        _entities = entities;
+        _modelBuilders = builders;
     }
+
+    /// <summary>The types the database model maps to tables.</summary>
+    private readonly IReadOnlySet<Type> _entities;
+
+    /// <summary>The methods that build the database model (a context's <c>OnModelCreating</c>).</summary>
+    private readonly IReadOnlySet<MethodBase> _modelBuilders;
+
+    /// <summary>
+    /// The types of this project a method configures, when it takes one of the model's builders for them
+    /// (<c>EntityTypeBuilder&lt;Word&gt;</c>): the lambdas the model is built with.
+    /// </summary>
+    private IReadOnlyList<Type> Configured(MethodBase method)
+    {
+        ParameterInfo[] parameters;
+        try
+        {
+            parameters = method.GetParameters();
+        }
+        catch (Exception exception) when (exception is FileNotFoundException or TypeLoadException)
+        {
+            return [];
+        }
+
+        return
+        [
+            .. parameters
+                .Select(parameter => parameter.ParameterType)
+                .Where(type => type.IsGenericType && type.Namespace == "Microsoft.EntityFrameworkCore.Metadata.Builders")
+                .SelectMany(type => type.GetGenericArguments())
+                .Where(type => _ours.Contains(type.Assembly)),
+        ];
+    }
+
+    /// <summary>
+    /// Whether a method builds the model: a context's <c>OnModelCreating</c>, a helper it hands the
+    /// model builder to, or a lambda configuring a mapped type.
+    /// </summary>
+    private bool BuildsTheModel(MethodBase method) =>
+        _modelBuilders.Contains(method)
+        || method.GetParameters().Any(parameter => parameter.ParameterType.FullName == "Microsoft.EntityFrameworkCore.ModelBuilder")
+        || Configured(method).Count > 0;
+
+    private static bool IsDbContext(Type type) => type.FullName == "Microsoft.EntityFrameworkCore.DbContext";
 
     /// <summary>The assemblies of this project the Forge is built from.</summary>
     public static CodeDigest ForTheForge() =>
@@ -96,13 +177,52 @@ internal sealed partial class CodeDigest
         var resources = new SortedSet<string>(StringComparer.Ordinal);
         var literals = new HashSet<string>(StringComparer.Ordinal);
         var queue = new Queue<MethodBase>();
+        var mapped = new HashSet<Type>();
+        var waiting = new Dictionary<Type, List<MethodBase>>();
+
+        void Mapped(Type type)
+        {
+            if (_entities.Contains(type) && mapped.Add(type))
+            {
+                foreach (var held in waiting.GetValueOrDefault(type) ?? [])
+                {
+                    Method(held);
+                }
+            }
+        }
+
+        void Wait(MethodBase method, IEnumerable<Type> until)
+        {
+            foreach (var type in until)
+            {
+                if (mapped.Contains(type))
+                {
+                    Method(method);
+                    return;
+                }
+            }
+
+            foreach (var type in until)
+            {
+                (waiting.TryGetValue(type, out var list) ? list : waiting[type] = []).Add(method);
+            }
+        }
 
         void Method(MethodBase method)
         {
             method = Definition(method);
-            if (_ours.Contains(method.Module.Assembly) && methods.Add(method))
+            if (_ours.Contains(method.Module.Assembly) && !IsSharedRegexState(method) && methods.Add(method))
             {
                 queue.Enqueue(method);
+                if (method.DeclaringType is { } declaring)
+                {
+                    Mapped(declaring);
+                    foreach (var builder in _modelBuilders.Where(builder => builder.DeclaringType == declaring))
+                    {
+                        Method(builder);
+                    }
+                }
+
                 foreach (var overriding in Overrides(method))
                 {
                     Method(overriding);
@@ -132,6 +252,8 @@ internal sealed partial class CodeDigest
                 return;
             }
 
+            Mapped(type);
+
             const BindingFlags all = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static
                                      | BindingFlags.Public | BindingFlags.NonPublic;
             foreach (var member in type.GetMethods(all).Cast<MethodBase>().Concat(type.GetConstructors(all)))
@@ -156,15 +278,36 @@ internal sealed partial class CodeDigest
         Closure(step, Method, new HashSet<object>(ReferenceEqualityComparer.Instance));
         while (queue.Count > 0)
         {
-            var body = Read(queue.Dequeue());
+            var method = queue.Dequeue();
+            var body = Read(method);
+            var model = BuildsTheModel(method);
+            var mapping = model || (method is ConstructorInfo && method.DeclaringType is { } built && _entities.Contains(built));
             foreach (var called in body.Methods)
             {
-                Method(called);
+                if (!mapping)
+                {
+                    Method(called);
+                }
+                else if (model && Configured(called) is { Count: > 0 } configured)
+                {
+                    Wait(called, configured);
+                }
+                else if (called.DeclaringType is { } owner && _entities.Contains(owner))
+                {
+                    Wait(called, [owner]);
+                }
+                else
+                {
+                    Method(called);
+                }
             }
 
             foreach (var type in body.Types)
             {
-                Whole(type);
+                if (!mapping || !NamesOnlyMappedTypes(type))
+                {
+                    Whole(type);
+                }
             }
 
             foreach (var resource in body.Resources)
@@ -432,6 +575,58 @@ internal sealed partial class CodeDigest
         }
     }
 
+    /// <summary>
+    /// Whether every type of this project in <paramref name="type"/> (itself, its element type, its
+    /// generic arguments) is one the model maps. The model builder names every mapped type and a mapped
+    /// type's constructor names the types of its collections; neither runs their code, so a step reaches
+    /// a mapped type, and the lambda configuring it, only through code of its own that uses it.
+    /// </summary>
+    private bool NamesOnlyMappedTypes(Type type)
+    {
+        var any = false;
+        var only = true;
+
+        void Visit(Type part)
+        {
+            while (part.HasElementType)
+            {
+                part = part.GetElementType()!;
+            }
+
+            if (part.IsGenericType)
+            {
+                foreach (var argument in part.GetGenericArguments())
+                {
+                    Visit(argument);
+                }
+
+                part = part.GetGenericTypeDefinition();
+            }
+
+            if (part.IsGenericParameter || !_ours.Contains(part.Assembly))
+            {
+                return;
+            }
+
+            any = true;
+            only &= _entities.Contains(part);
+        }
+
+        Visit(type);
+        return any && only;
+    }
+
+    /// <summary>
+    /// The static constructor of the regex source generator's shared helper class, which builds the
+    /// character sets of every generated regex in the assembly. Each set is a field named after its own
+    /// contents, so the code that uses one names what it holds; the constructor moves whenever any
+    /// regex anywhere is added, which is not a change to the steps that do not use it.
+    /// </summary>
+    private static bool IsSharedRegexState(MethodBase method) =>
+        method is ConstructorInfo { IsStatic: true, DeclaringType: { } type }
+        && type.Namespace == "System.Text.RegularExpressions.Generated"
+        && type.Name.EndsWith("__Utilities", StringComparison.Ordinal);
+
     private static IEnumerable<Type> Bases(Type type)
     {
         for (var at = type.BaseType; at is not null; at = at.BaseType)
@@ -531,13 +726,15 @@ internal sealed partial class CodeDigest
     }
 
     /// <summary>
-    /// A name as the source wrote it: the numbers the compiler gives its lambdas, closures, state machines
-    /// and local functions by their place in the file are dropped, since one step added above another must
-    /// not move the other's digest; what those members do is in their bodies, which are read anyway.
+    /// A name as the source wrote it: the numbers the compiler gives its lambdas, closures, state machines,
+    /// local functions and anonymous types by their place in the file or the assembly are dropped, and so
+    /// is the hash of the source file's path in the name of a file-local type (the regex generator's
+    /// helpers), since one step added above another, or a build from another folder, must not move the
+    /// other's digest; what those members do is in their bodies, which are read anyway.
     /// </summary>
     private static string Normal(string name) => name.Contains('<') ? Ordinal().Replace(name, "#") : name;
 
-    [GeneratedRegex(@"(?<=__|_|\||DisplayClass)\d+(_\d+)?")]
+    [GeneratedRegex(@"(?<=__|_|\||DisplayClass|AnonymousType)\d+(_\d+)?|(?<=>F)[0-9A-F]{64}(?=__)")]
     private static partial Regex Ordinal();
 
     private static bool IsClosure(Type type) =>

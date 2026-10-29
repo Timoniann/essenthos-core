@@ -3,6 +3,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Marks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -49,7 +50,14 @@ public sealed class LoadMarksTests : IDisposable
 
         // The class's tests share its database, one after another.
         Execute("TRUNCATE load_step_mark, table_fingerprint, provenance, strong_entry CASCADE").GetAwaiter().GetResult();
+        Execute(ForgetTheMigrations).GetAwaiter().GetResult();
     }
+
+    private const string Migration = "99990101000000_TouchesOneTable";
+
+    private const string ForgetTheMigrations = $"""DELETE FROM "__EFMigrationsHistory" WHERE migration_id LIKE '9999%'""";
+
+    private MigrationTables? _migrations;
 
     public void Dispose()
     {
@@ -114,6 +122,85 @@ public sealed class LoadMarksTests : IDisposable
         outcomes.Last(outcome => outcome.Ran).Moved.Should().BeEmpty();
         (await Scalar("SELECT count(*) FROM strong_entry WHERE strong_number = 'H9999'")).Should().Be(0);
         Ran(await Load()).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A migration moves the marks of the steps that read or wrote a table it touches, and no other; one
+    /// whose reach cannot be told, or that this build does not know, moves every mark.
+    /// </summary>
+    [Theory]
+    [InlineData("place_candidate", new string[0])]
+    [InlineData("strong_entry", new[] { Copier })]
+    [InlineData("provenance", new[] { Source, Copier, Reader })]
+    [InlineData(null, new[] { Source, Copier, Reader })]
+    [InlineData("unknown", new[] { Source, Copier, Reader })]
+    public async Task AMigrationRunsTheStepsThatReadATableItTouchesAndNoOther(string? touches, string[] run)
+    {
+        _migrations = new MigrationTables(new Dictionary<string, IReadOnlySet<string>?>
+        {
+            [Migration] = touches is null ? null : new HashSet<string> { touches },
+        });
+        try
+        {
+            await Settle();
+            var migration = touches == "unknown" ? "99990101000001_NotInThisBuild" : Migration;
+            await Execute($"""INSERT INTO "__EFMigrationsHistory" (migration_id, product_version) VALUES ('{migration}', '10.0.12')""");
+
+            var outcomes = await Load();
+
+            Ran(outcomes).Should().Equal(run);
+            outcomes.Where(outcome => outcome.Ran).Where(outcome => !outcome.Why.Contains("migration 9999")).Should().BeEmpty();
+            Ran(await Load()).Should().BeEmpty();
+        }
+        finally
+        {
+            await Execute(ForgetTheMigrations);
+        }
+    }
+
+    /// <summary>
+    /// Raw SQL in a migration touches the tables it names; a routine it defines, which any statement can
+    /// reach, or SQL naming no table touches everything.
+    /// </summary>
+    [Fact]
+    public async Task RawSqlInAMigrationTouchesTheTablesItNamesOrEverything()
+    {
+        MigrationTables.Tables([new SqlOperation { Sql = "UPDATE strong_entry SET lemma = NULL" }])
+            .Should().Contain(MigrationTables.Raw + "strong_entry");
+        MigrationTables.Tables([new SqlOperation { Sql = "CREATE OR REPLACE FUNCTION f() RETURNS int AS $$ SELECT 1 $$ LANGUAGE sql" }])
+            .Should().BeNull();
+        MigrationTables.Tables([new AddColumnOperation { Table = "place_candidate", Name = "x", ClrType = typeof(int) }])
+            .Should().BeEquivalentTo(["place_candidate"]);
+        MigrationTables.Tables([new EnsureSchemaOperation { Name = "other" }]).Should().BeNull();
+
+        _migrations = new MigrationTables(new Dictionary<string, IReadOnlySet<string>?>
+        {
+            [Migration] = MigrationTables.Tables([new SqlOperation { Sql = "REINDEX INDEX ix_nothing_known" }]),
+        });
+        try
+        {
+            await Settle();
+            await Execute($"""INSERT INTO "__EFMigrationsHistory" (migration_id, product_version) VALUES ('{Migration}', '10.0.12')""");
+            Ran(await Load()).Should().Equal(Source, Copier, Reader);
+        }
+        finally
+        {
+            await Execute(ForgetTheMigrations);
+        }
+    }
+
+    /// <summary>The migrations of the corpus are all read, and one that only changes columns touches only its tables.</summary>
+    [Fact]
+    public async Task EveryMigrationOfTheCorpusIsReadAndAColumnChangeTouchesItsTablesOnly()
+    {
+        var corpus = MigrationTables.OfTheCorpus();
+        var applied = await Scalar("""SELECT count(*) FROM "__EFMigrationsHistory" """);
+        applied.Should().BeGreaterThan(100);
+        var read = corpus.Touches;
+        read.Should().HaveCount((int)applied);
+        read["20261029091002_PlacesMayHaveNoScoreAndCreditTheirCoordinates"].Should().BeEquivalentTo(["place_location", "place_candidate"]);
+        read["20261028000011_WordIndexesFitTheirLookups"].Should().BeEquivalentTo(
+            ["word", "word_strong", "word_parsing", "word_entity", "word_entity_claim", "strong_profile", "verse_reference"]);
     }
 
     /// <summary>
@@ -373,7 +460,8 @@ public sealed class LoadMarksTests : IDisposable
             new TableFingerprints(_connectionString, 2, NullLogger.Instance),
             new FileDigests(_resources, _root, configuration),
             CodeDigest.ForTheForge(),
-            NullLogger.Instance);
+            NullLogger.Instance,
+            _migrations);
         await marks.Open(CancellationToken.None);
         steps ??= extra is null ? Steps() : [extra, .. Steps()];
         return await marks.Run(steps, everything, _ => { }, CancellationToken.None);

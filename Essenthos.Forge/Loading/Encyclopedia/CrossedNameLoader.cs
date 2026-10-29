@@ -53,11 +53,10 @@ internal sealed record CrossedNameOutcome(int Pairs, int Rewritten, IReadOnlyLis
 /// </para>
 ///
 /// <para>
-/// <strong>Re-runnable rather than run-once.</strong> Every carrying pass reaches these words again
-/// from the same crossed links and writes the crossed answer again, so this runs after each of them
-/// — at the end of the start-up pipeline and at the end of <see cref="AnnotationCarrier"/> — and
-/// takes the crossed row back each time. On a corpus already crossed back it finds nothing, because
-/// after the rewrite each word does spell its own name.
+/// <strong>Re-runnable rather than run-once.</strong> A pass that names words reaches these words again
+/// from the same crossed links, so this runs after them — at the end of the start-up pipeline and at the
+/// end of <see cref="AnnotationCarrier"/>. The carry leaves a word this crossed back alone, so on a
+/// corpus already crossed back it finds nothing, because each word does spell its own name.
 /// </para>
 /// </summary>
 internal sealed class CrossedNameLoader(AppDbContext db, ILogger<CrossedNameLoader> logger)
