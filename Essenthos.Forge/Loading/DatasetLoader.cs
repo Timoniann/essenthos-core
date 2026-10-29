@@ -688,6 +688,13 @@ internal sealed class DatasetLoader(
                 var loader = scope.ServiceProvider.GetRequiredService<OccupationLoader>();
                 status.Record(await loader.Load(resources, cancellationToken));
             }) { Files = [$"Essenthos/{OccupationLoader.FileName}"] }),
+            .. In(LoadModules.Records, new LoadStep("text-translations", async cancellationToken =>
+            {
+                status.Starting("the machine translations of the records' English");
+                using var scope = services.CreateScope();
+                var loader = scope.ServiceProvider.GetRequiredService<TextTranslationLoader>();
+                status.Record(await loader.Load(resources, cancellationToken));
+            }) { Files = [$"Essenthos/{TextTranslationLoader.Folder}"] }),
             .. In(LoadModules.Verify, new LoadStep("verify", async cancellationToken =>
             {
                 // The index answers from what it read the first time it was asked, and until now that

@@ -177,7 +177,7 @@ internal static partial class EncyclopediaEndpoints
                 .OrderBy(b => b.CanonicalBook).ThenBy(b => b.CanonicalChapter).ThenBy(b => b.CanonicalVerse)
                 .Select(b => new
                 {
-                    b.Bearer!.Slug, b.Bearer.Kind, b.Bearer.Name, b.Bearer.Distinguisher,
+                    b.BearerEntityId, b.Bearer!.Slug, b.Bearer.Kind, b.Bearer.Name, b.Bearer.Distinguisher,
                     b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Note,
                 })
                 .ToListAsync(cancellationToken);
@@ -187,7 +187,7 @@ internal static partial class EncyclopediaEndpoints
                 .OrderBy(b => b.Title!.Name)
                 .Select(b => new
                 {
-                    b.Title!.Slug, b.Title.Kind, b.Title.Name, b.Title.Distinguisher,
+                    b.TitleEntityId, b.Title!.Slug, b.Title.Kind, b.Title.Name, b.Title.Distinguisher,
                     b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Note,
                 })
                 .ToListAsync(cancellationToken);
@@ -275,13 +275,31 @@ internal static partial class EncyclopediaEndpoints
             ];
 
             var localNames = await EntityNames.Of(db, [entity.Id], language, cancellationToken);
+            var counterpartNames = titles.Count + bearers.Count == 0
+                ? []
+                : await EntityNames.Of(
+                    db, [.. titles.Select(t => t.TitleEntityId), .. bearers.Select(b => b.BearerEntityId)], language,
+                    cancellationToken);
+            var sourced = await TextTranslations.Of(
+                db,
+                [
+                    entity.ModernEquivalent, entity.Notes,
+                    .. bearers.Select(b => b.Note), .. titles.Select(t => t.Note),
+                ],
+                words,
+                cancellationToken);
             var renamed = (await RenamedHeadings.Of(db, [entity.Id], language, cancellationToken)).GetValueOrDefault(entity.Id);
             var locations = entity.Kind == EntityKind.Place
-                ? await Candidates(db, entity.Id, language, cancellationToken)
+                ? await Candidates(db, entity.Id, language, cancellationToken, words)
                 : null;
             var lemmas = await HebrewLemmas(db, names.Where(n => n.Hebrew is null).Select(n => n.HebrewStrongNumber), cancellationToken);
             var glosses = await EntityNameTranslations.Of(
                 db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
+
+            var ownNotes = mine is null
+                ? await NoteTranslations.Of(db, entity.Id, entity.Notes, words, cancellationToken)
+                : null;
+            var machineNotes = mine is null && ownNotes is null ? TextTranslations.In(sourced, entity.Notes) : null;
 
             return Results.Ok(new EntityResponse(
                 entity.Slug,
@@ -317,7 +335,8 @@ internal static partial class EncyclopediaEndpoints
                     }),
                 ],
                 related,
-                [.. events.Select(one => Event(one, placesNamed))],
+                await InTheReadersLanguage(
+                    db, [.. events.Select(one => Event(one, placesNamed))], language, words, cancellationToken),
                 [
                     .. stated.Select(row => new EntityReferenceSourceResponse(
                         Datasets.Of(row.Source), row.Source, row.References, row.Mentions,
@@ -361,6 +380,8 @@ internal static partial class EncyclopediaEndpoints
                         BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)
                     {
                         LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, b.Slug),
+                        LocalName = counterpartNames.GetValueOrDefault(b.BearerEntityId),
+                        LocalNote = TextTranslations.In(sourced, b.Note),
                     }),
                 ],
                 Titles =
@@ -370,12 +391,18 @@ internal static partial class EncyclopediaEndpoints
                         BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)
                     {
                         LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, t.Slug),
+                        LocalName = counterpartNames.GetValueOrDefault(t.TitleEntityId),
+                        LocalNote = TextTranslations.In(sourced, t.Note),
                     }),
                 ],
                 Subtype = entity.Subtype,
-                LocalNotes = mine is null
-                    ? await NoteTranslations.Of(db, entity.Id, entity.Notes, words, cancellationToken)
-                    : null,
+                LocalNotes = ownNotes ?? machineNotes,
+                LocalNotesMachine = ownNotes is null && machineNotes is not null,
+                LocalModernEquivalent = entity.Kind == EntityKind.Place
+                    ? PlaceToday.Of(entity.ModernEquivalent, locations, english =>
+                        TextTranslations.In(sourced, english)
+                        ?? locations?.FirstOrDefault(l => l.Site == english)?.LocalSite)
+                    : TextTranslations.In(sourced, entity.ModernEquivalent),
                 Passages = [.. passages.Select(Passage)],
                 Times =
                 [

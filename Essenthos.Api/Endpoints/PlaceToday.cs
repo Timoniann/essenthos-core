@@ -22,19 +22,25 @@ internal static partial class PlaceToday
     [GeneratedRegex(@"\p{Lu}[\p{L}’'‘\-]*(?: \p{Lu}[\p{L}’'‘\-]*)* \d+\b")]
     private static partial Regex CatalogueNumber();
 
-    public static string? Of(string? stated, IList<PlaceCandidateResponse>? answers)
+    public static string? Of(string? stated, IList<PlaceCandidateResponse>? answers) => Of(stated, answers, s => s);
+
+    /// <summary>
+    /// The same answer, said through <paramref name="say"/> — the reader's language — and null where
+    /// <paramref name="say"/> has no words for the English it chose.
+    /// </summary>
+    public static string? Of(string? stated, IList<PlaceCandidateResponse>? answers, Func<string, string?> say)
     {
         if (stated is null || answers?.FirstOrDefault(a => a.Likeliest) is not { Special: null, Site: { } likeliest })
         {
-            return WithoutCatalogueNumbers(stated);
+            return stated is null ? null : WithoutCatalogueNumbers(say(stated));
         }
 
         if (CatalogueNumber().IsMatch(stated))
         {
-            return likeliest;
+            return say(likeliest);
         }
 
-        return Elsewhere(stated, answers) is { } site ? site : stated;
+        return say(Elsewhere(stated, answers) is { } site ? site : stated);
     }
 
     /// <summary>

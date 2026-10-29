@@ -193,7 +193,8 @@ internal static class ContextEndpoints
             new BookRefResponse(book, BookReferences.Name(book), BookReferences.Slug(book)),
             chapter,
             entities,
-            [.. events.Select(row => EncyclopediaEndpoints.Event(row, NoPlaces))],
+            await EncyclopediaEndpoints.InTheReadersLanguage(
+                db, [.. events.Select(row => EncyclopediaEndpoints.Event(row, NoPlaces))], language, prose, cancellationToken),
             periods,
             dated,
             measures,

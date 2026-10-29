@@ -3,6 +3,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
@@ -111,6 +112,8 @@ internal static partial class EncyclopediaEndpoints
         // When world history arrives and this becomes megabytes, a windowed request earns its
         // complexity. Not before.
         routes.MapGet("/timeline", async (
+            [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
@@ -132,6 +135,9 @@ internal static partial class EncyclopediaEndpoints
                 })
                 .ToListAsync(cancellationToken);
 
+            var titles = await TextTranslations.Of(
+                db, events.SelectMany(e => new[] { e.Name, e.Region }), ReaderLanguages.Prose(prose, language),
+                cancellationToken);
             var years = await EventYears(db, db.EventDates, cancellationToken);
             var periods = await Periods(db, years, cancellationToken);
 
@@ -159,6 +165,8 @@ internal static partial class EncyclopediaEndpoints
                     {
                         Picture = pictures.ForEvent(e.EntitySlug, e.Location),
                         RegionAtTheTime = e.RegionAtTheTime,
+                        LocalName = TextTranslations.In(titles, e.Name),
+                        LocalRegion = TextTranslations.In(titles, e.Region),
                     }),
                 ],
                 [.. periods.Select(p => p with { Picture = pictures.ForPeriod(p.EntitySlug) })]));

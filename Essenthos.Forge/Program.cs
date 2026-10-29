@@ -195,6 +195,7 @@ builder.Services.AddScoped<WithdrawnRecordLoader>();
 builder.Services.AddScoped<ThingLoader>();
 builder.Services.AddScoped<DistinguisherLoader>();
 builder.Services.AddScoped<NoteTranslationLoader>();
+builder.Services.AddScoped<TextTranslationLoader>();
 builder.Services.AddScoped<KnownForLoader>();
 builder.Services.AddScoped<PersonPresenceLoader>();
 builder.Services.AddScoped<OccupationLoader>();

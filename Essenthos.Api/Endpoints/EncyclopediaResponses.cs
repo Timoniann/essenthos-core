@@ -245,6 +245,18 @@ internal record EntityResponse(
     /// </summary>
     public string? LocalNotes { get; init; }
 
+    /// <summary>
+    /// True where <see cref="LocalNotes"/> is a machine translation of a source's notes rather than a
+    /// rendering of our own, so the page can say it is one.
+    /// </summary>
+    public bool LocalNotesMachine { get; init; }
+
+    /// <summary>
+    /// <paramref name="ModernEquivalent"/> in the reader's language, a machine translation of the
+    /// gazetteer's words; null for an English reader and where none is held.
+    /// </summary>
+    public string? LocalModernEquivalent { get; init; }
+
     public EntityTribeResponse? TribeRecord { get; init; }
 
     /// <summary>
@@ -372,6 +384,12 @@ internal record EntityTitleResponse(
 {
     /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
+
+    /// <summary>The counterpart's name in the language asked for: a title as that language's texts call it.</summary>
+    public string? LocalName { get; init; }
+
+    /// <summary><paramref name="Note"/> in the reader's language, a machine translation; null where none is held.</summary>
+    public string? LocalNote { get; init; }
 }
 
 /// <param name="Kind">
@@ -533,6 +551,9 @@ internal record PlaceCandidateResponse(
 
     /// <summary>The dataset whose coordinates these are, where they are not the gazetteer's, as on the point.</summary>
     public string? CoordinatesBy { get; init; }
+
+    /// <summary><paramref name="Site"/> in the reader's language, a machine translation; null where none is held.</summary>
+    public string? LocalSite { get; init; }
 
     /// <summary>The ancient place this answer takes the place to be, where it is that: Babylon of Revelation, Rome.</summary>
     public EntityTribeResponse? Through { get; init; }
