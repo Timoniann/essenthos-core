@@ -70,6 +70,34 @@ internal sealed class TargetHost(ReleaseTarget target)
         ? $"{target.DataRoot.TrimEnd('/')}/images/{target.Database}"
         : Path.Combine(target.DataRoot, "images", target.Database);
 
+    /// <summary>The file whose presence makes the target's proxy answer with its maintenance page.</summary>
+    public string MaintenanceFlag => target.IsRemote
+        ? $"{target.DataRoot.TrimEnd('/')}/{target.Maintenance}"
+        : Path.Combine(target.DataRoot, target.Maintenance.Replace('/', Path.DirectorySeparatorChar));
+
+    /// <summary>Puts the maintenance page up, or takes it down.</summary>
+    public async Task Maintenance(bool on, CancellationToken cancellationToken)
+    {
+        if (!target.IsRemote)
+        {
+            if (on)
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(MaintenanceFlag)!);
+                await File.WriteAllTextAsync(MaintenanceFlag, string.Empty, cancellationToken);
+            }
+            else
+            {
+                File.Delete(MaintenanceFlag);
+            }
+
+            return;
+        }
+
+        var flag = Shell.QuoteForRemote(MaintenanceFlag);
+        var folder = Shell.QuoteForRemote(MaintenanceFlag[..MaintenanceFlag.LastIndexOf('/')]);
+        await Shell.Run("ssh", [.. SshOptions, target.Ssh, on ? $"mkdir -p {folder} && touch {flag}" : $"rm -f {flag}"], cancellationToken);
+    }
+
     /// <summary>The pictures the target has, by path, with their SHA-256; none where the folder is not there yet.</summary>
     public async Task<Dictionary<string, string>> Images(CancellationToken cancellationToken)
     {

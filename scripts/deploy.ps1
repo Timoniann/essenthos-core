@@ -12,8 +12,9 @@ checkout at another commit, would otherwise reach the server beside images built
 
 Nothing is built on the server and nothing is pulled for our images: `scripts/send-images.ps1` builds
 them on the workstation, after the local checks, and loads them into the server's Docker as
-`essenthos-api:<commit>` and `essenthos-web:<commit>`. This refuses a tag the server does not have and
-names that script. Images sent earlier stay on the server, so a rollback is running this again with
+`essenthos-api:<commit>` and `essenthos-web:<commit>`. -SendImages runs it first for whichever of the
+two tags the server lacks (with -AnalyticsEndpoint passed on); without it, this refuses a tag the server
+does not have and names that script. Images sent earlier stay on the server, so a rollback is running this again with
 the previous hashes. -Registry names a registry to pull from instead; nothing uses one today.
 
 Dev runs only on a machine whose .env turns it on (COMPOSE_PROFILES=dev, DEV_SITES=on). The production
@@ -24,6 +25,7 @@ server has no dev, and -Environment dev is refused there.
 .EXAMPLE
 ./scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit 1a2b3c4... -WebCommit 9f8e7d...
 ./scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit 1a2b3c4... -WhatIf
+./scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit 1a2b3c4... -WebCommit 9f8e7d... -SendImages
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param(
@@ -35,7 +37,11 @@ param(
     [string] $WebCommit,
     [string] $Root = '/srv/essenthos',
     # Empty: the images are the ones send-images.ps1 loaded on the server, by their local tags.
-    [string] $Registry = ''
+    [string] $Registry = '',
+    # Check, build and send whichever of the two images the server does not have yet, first.
+    [switch] $SendImages,
+    # Passed to send-images.ps1 for the reader's image: "/count" once page counts are on.
+    [string] $AnalyticsEndpoint = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -103,6 +109,17 @@ docker compose ps --format '{{.Service}}\t{{.Image}}\t{{.Status}}'
 "@
 
 $remote = $remote -replace "`r", ''
+
+if ($SendImages) {
+    if ($Registry) {
+        throw '-SendImages loads the images into the server directly; it has nothing to do with -Registry.'
+    }
+
+    $send = @{ Server = $Server; Commit = $Commit; OnlyMissing = $true; WhatIf = [bool] $WhatIfPreference }
+    if ($WebCommit) { $send.WebCommit = $WebCommit }
+    if ($AnalyticsEndpoint) { $send.AnalyticsEndpoint = $AnalyticsEndpoint }
+    & (Join-Path $PSScriptRoot 'send-images.ps1') @send
+}
 
 if (-not $PSCmdlet.ShouldProcess("$Environment on $Server", "Deploy API $Commit$(if ($WebCommit) { " and web $WebCommit" })")) {
     Write-Host "Would copy $($files.Count) files to ${Server}:$Root/deploy:"

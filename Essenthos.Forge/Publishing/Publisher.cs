@@ -20,7 +20,10 @@ namespace Essenthos.Core.Publishing;
 /// A release is a <c>pg_dump</c> of this machine's corpus with a <see cref="CorpusRelease"/> row inside
 /// it. Publishing restores it into a database nothing reads — <c>&lt;name&gt;_incoming</c> — runs the
 /// same gate <c>forge verify</c> runs, against that copy, on that machine, and only then renames it
-/// into place. The previous release stays beside it as the rollback, which is a rename and a restart.
+/// into place. Where the target has room, the previous release stays beside it as the rollback, which is
+/// a rename and a restart; where it has room for one copy (<see cref="ReleaseTarget.Copies"/>), the live
+/// corpus is dropped behind a maintenance page and the release restored in its place, and a rollback is
+/// publishing the earlier release again.
 ///
 /// Row-level patches were ruled out by measurement rather than taste: every rebuild renumbers every
 /// sequence key, so a diff between two builds is most of the corpus, and the whole corpus is a 376 MB
@@ -233,14 +236,14 @@ internal sealed class Publisher(
             return 1;
         }
 
-        if (target.After is { } after && !PublishedTo(record.Name).Contains(after))
+        if (Unaccepted(target, record.Name) is { } after)
         {
             if (!withoutRehearsal)
             {
                 logger.LogError(
                     "Release {Name} has not been published to {After}, and {Target} only takes releases {After} " +
-                    "has accepted. Publish it there first, or pass --without-rehearsal and own that",
-                    record.Name, after, target.Name, after);
+                    "has accepted. {Rehearse}, or pass --without-rehearsal and own that",
+                    record.Name, after, target.Name, after, HowToAccept(after, record.Name));
                 return 1;
             }
 
@@ -275,13 +278,159 @@ internal sealed class Publisher(
             return 1;
         }
 
+        var served = Ledger(target.Name).LastOrDefault().Release;
+        var placed = target.Copies == 1
+            ? await ReplaceInPlace(host, record, inContainer, pictures, served, cancellationToken)
+            : await SwapBeside(host, record, inContainer, pictures, started, cancellationToken);
+        if (!placed)
+        {
+            return 1;
+        }
+
+        await File.AppendAllTextAsync(
+            Path.Combine(Releases, $"{record.Name}.published"),
+            $"{target.Name}\t{DateTimeOffset.UtcNow:O}\n", cancellationToken);
+
+        if (target.KeepsPrevious)
+        {
+            logger.LogInformation(
+                "{Target} serves release {Name}; the one before it is {Previous}, and `forge rollback --to {Target}` " +
+                "puts it back. {Seconds:F0} s in all",
+                target.Name, record.Name, target.Previous, target.Name, (DateTimeOffset.UtcNow - started).TotalSeconds);
+        }
+        else
+        {
+            logger.LogInformation(
+                "{Target} serves release {Name} and keeps no copy of the one before it{Served}; `forge rollback --to {Target}` " +
+                "publishes that again from this machine. {Seconds:F0} s in all",
+                target.Name, record.Name, served is null || served == record.Name ? string.Empty : $" ({served})", target.Name,
+                (DateTimeOffset.UtcNow - started).TotalSeconds);
+        }
+
+        return 0;
+    }
+
+    /// <summary>
+    /// A target with room for an incoming copy beside the live one: restored and checked there, then
+    /// renamed into place in the second or two the API is stopped. A target that keeps two copies drops
+    /// the one it replaced afterwards, and any previous one before it restores.
+    /// </summary>
+    private async Task<bool> SwapBeside(
+        TargetHost host, ReleaseRecord record, string inContainer, IReadOnlyDictionary<string, string> pictures,
+        DateTimeOffset started, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        if (!target.KeepsPrevious)
+        {
+            await Drop(host, [target.Previous, target.Retired], cancellationToken);
+        }
+
+        if (!await RestoreAndCheck(host, record, inContainer, pictures, started, cancellationToken))
+        {
+            logger.LogError("The live corpus of {Target} is untouched", target.Name);
+            return false;
+        }
+
+        await Grant(host, cancellationToken);
+        await WithApiStopped(host, () => Swap(host, cancellationToken), cancellationToken);
+        if (!target.KeepsPrevious)
+        {
+            await Drop(host, [target.Previous], cancellationToken);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// A target with room for one corpus: the release is already uploaded while the site still serves;
+    /// then the maintenance page goes up, the API stops, the live corpus is dropped, and the release is
+    /// restored, checked as on any target, and renamed into place, and only then does the API start
+    /// and the page come down. A failure before the drop puts the site back as it was. A failure after
+    /// it leaves the page up and the API stopped, because there is no corpus to serve, and says which
+    /// publication brings it back.
+    /// </summary>
+    /// <param name="served">The release this machine last published to the target, which is what it is serving now.</param>
+    private async Task<bool> ReplaceInPlace(
+        TargetHost host, ReleaseRecord record, string inContainer, IReadOnlyDictionary<string, string> pictures,
+        string? served, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        logger.LogInformation(
+            "{Target} keeps one corpus copy: its maintenance page goes up now and comes down once {Name} is in place",
+            target.Name, record.Name);
+        await host.Maintenance(true, cancellationToken);
+        var down = DateTimeOffset.UtcNow;
+        var stopped = await StopApi(host, cancellationToken);
+        var dropped = false;
+        var placed = false;
+        try
+        {
+            await Drop(host, [target.Incoming, target.Previous, target.Retired], cancellationToken);
+            dropped = true;
+            logger.LogInformation("Dropping {Database} to make room for {Name}", target.Database, record.Name);
+            await Drop(host, [target.Database], cancellationToken);
+
+            if (!await RestoreAndCheck(host, record, inContainer, pictures, down, cancellationToken))
+            {
+                return false;
+            }
+
+            await Grant(host, cancellationToken);
+            await host.Sql("postgres",
+                $"ALTER DATABASE {TargetHost.Identifier(target.Incoming)} RENAME TO {TargetHost.Identifier(target.Database)}",
+                cancellationToken);
+            placed = true;
+        }
+        finally
+        {
+            if (placed || !dropped)
+            {
+                if (stopped)
+                {
+                    await host.Docker(["start", target.ApiContainer], CancellationToken.None, quiet: true);
+                    if (placed)
+                    {
+                        await WaitForApi(host, CancellationToken.None);
+                    }
+                }
+
+                await host.Maintenance(false, CancellationToken.None);
+                logger.LogInformation("The maintenance page of {Target} was up for {Seconds:F0} s", target.Name, (DateTimeOffset.UtcNow - down).TotalSeconds);
+            }
+            else
+            {
+                var earlier = served is not null && served != record.Name
+                    ? $"`forge publish --to {target.Name} --release {served}` for the release it served before"
+                    : $"`forge publish --to {target.Name} --release <name>` for an earlier release (`forge releases` lists them)";
+                logger.LogError(
+                    "{Target} has no corpus: {Database} was dropped and {Name} did not take its place. Its maintenance page " +
+                    "stays up and {Api} stays stopped. To recover, publish again from this machine: " +
+                    "`forge publish --to {Target} --release {Name}` once the cause above is fixed, or {Earlier}. " +
+                    "Either puts the corpus in place, starts {Api} and takes the page down",
+                    target.Name, target.Database, record.Name, target.ApiContainer, target.Name, record.Name, earlier, target.ApiContainer);
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Restores the release into <c>&lt;name&gt;_incoming</c> and checks it there: its label, its
+    /// pictures, the gate, and every reader's bookmark. False, said why, when any of them fails.
+    /// </summary>
+    private async Task<bool> RestoreAndCheck(
+        TargetHost host, ReleaseRecord record, string inContainer, IReadOnlyDictionary<string, string> pictures,
+        DateTimeOffset started, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
         var incoming = TargetHost.Identifier(target.Incoming);
         logger.LogInformation("Restoring into {Incoming}, which nothing reads", target.Incoming);
         await host.Sql("postgres", $"DROP DATABASE IF EXISTS {incoming} WITH (FORCE)", cancellationToken);
         await host.Sql("postgres", $"CREATE DATABASE {incoming}", cancellationToken);
         await host.Docker(
             ["exec", target.Container, "pg_restore", "-U", target.Superuser, "-d", target.Incoming,
-             "-j", "4", "--no-owner", "--no-privileges", "--exit-on-error", inContainer],
+             "-j", target.RestoreJobs.ToString(System.Globalization.CultureInfo.InvariantCulture),
+             "--no-owner", "--no-privileges", "--exit-on-error", inContainer],
             cancellationToken);
 
         // A restore carries no planner statistics, and without them the first reader after the swap
@@ -292,18 +441,17 @@ internal sealed class Publisher(
         var restored = await host.Sql(target.Incoming, "SELECT name FROM corpus_release", cancellationToken);
         if (restored != record.Name)
         {
-            logger.LogError("{Incoming} says it is release \"{Restored}\", not {Name}. Nothing was swapped",
+            logger.LogError("{Incoming} says it is release \"{Restored}\", not {Name}. It was not put in place",
                 target.Incoming, restored, record.Name);
-            return 1;
+            return false;
         }
 
         if (!await PicturesArePresent(host, pictures, cancellationToken))
         {
-            return 1;
+            return false;
         }
 
-        // The gate, on the target, against the copy about to be served. A failure stops here and the
-        // live corpus was never touched.
+        // The gate, on the target, against the copy about to be served.
         logger.LogInformation("Verifying {Incoming} on {Target}", target.Incoming, target.Name);
         var (connectionString, lease) = await host.Connect(target.Incoming, cancellationToken);
         await using (lease)
@@ -313,17 +461,17 @@ internal sealed class Publisher(
             var measures = await new CorpusCheck(restoredDb, loggers.CreateLogger<CorpusCheck>()).Measure(cancellationToken);
             if (!CorpusGate.Pass(measures, CorpusCheck.RenderedFloor, logger))
             {
-                logger.LogError("{Incoming} failed the gate on {Target}; the live corpus is untouched", target.Incoming, target.Name);
-                return 1;
+                logger.LogError("{Incoming} failed the gate on {Target}; it was not put in place", target.Incoming, target.Name);
+                return false;
             }
 
             if (Math.Abs(measures.Rendered - record.Rendered) > 1e-9)
             {
                 logger.LogError(
                     "{Incoming} measures {Rendered:P3} where the release measured {Expected:P3} when it was made. " +
-                    "The same bytes should measure the same; nothing was swapped",
+                    "The same bytes should measure the same; it was not put in place",
                     target.Incoming, measures.Rendered, record.Rendered);
-                return 1;
+                return false;
             }
         }
 
@@ -340,26 +488,33 @@ internal sealed class Publisher(
                         point.Text.Length == 0 ? "" : $" in {point.Text}", record.Name);
                 }
 
-                logger.LogError("{Count} bookmark addresses do not resolve in {Name}; the live corpus is untouched", lost.Count, record.Name);
-                return 1;
+                logger.LogError("{Count} bookmark addresses do not resolve in {Name}; it was not put in place", lost.Count, record.Name);
+                return false;
             }
 
             logger.LogInformation("Every bookmark in {App} finds its verse in {Name}", target.AppDatabase, record.Name);
         }
 
-        await Grant(host, cancellationToken);
-        await WithApiStopped(host, () => Swap(host, cancellationToken), cancellationToken);
-
-        await File.AppendAllTextAsync(
-            Path.Combine(Releases, $"{record.Name}.published"),
-            $"{target.Name}\t{DateTimeOffset.UtcNow:O}\n", cancellationToken);
-
-        logger.LogInformation(
-            "{Target} serves release {Name}; the one before it is {Previous}, and `forge rollback --to {Target}` " +
-            "puts it back. {Seconds:F0} s in all",
-            target.Name, record.Name, target.Previous, target.Name, (DateTimeOffset.UtcNow - started).TotalSeconds);
-        return 0;
+        return true;
     }
+
+    /// <summary>
+    /// The target a release still has to reach before this one takes it, or null when it needs none: it
+    /// has been there, or this target has served it before, which is what a rollback publishes.
+    /// </summary>
+    private string? Unaccepted(ReleaseTarget target, string release)
+    {
+        var published = PublishedTo(release);
+        return target.After is { } after && !published.Contains(after) && !published.Contains(target.Name) ? after : null;
+    }
+
+    /// <summary>What to run so that <paramref name="after"/> accepts the release.</summary>
+    private string HowToAccept(string after, string release) =>
+        configuration.GetValue<bool>($"Publish:Targets:{after}:Local")
+            ? $"{after} is the server's stack on this machine: start it in essenthos-core/deploy with " +
+              "`docker compose --env-file .env.rehearsal -f compose.yaml -f compose.rehearsal.yaml up -d` " +
+              $"(deploy/README.md says how to make .env.rehearsal), then run `forge publish --to {after} --release {release}`"
+            : $"Publish it there first with `forge publish --to {after} --release {release}`";
 
     private int DescribePublication(ReleaseTarget target, ReleaseRecord record, string dump, bool withoutRehearsal)
     {
@@ -369,10 +524,10 @@ internal sealed class Publisher(
             return 1;
         }
 
-        if (target.After is { } after && !PublishedTo(record.Name).Contains(after) && !withoutRehearsal)
+        if (Unaccepted(target, record.Name) is { } after && !withoutRehearsal)
         {
-            logger.LogError("Dry run: release {Name} has not been published to {After}, and {Target} only takes releases {After} has accepted",
-                record.Name, after, target.Name, after);
+            logger.LogError("Dry run: release {Name} has not been published to {After}, and {Target} only takes releases {After} has accepted. {Rehearse}",
+                record.Name, after, target.Name, after, HowToAccept(after, record.Name));
             return 1;
         }
 
@@ -380,14 +535,39 @@ internal sealed class Publisher(
         var pictures = Path.Combine(ResourcePaths.Read(configuration, environment.ContentRootPath), EntityImageLoader.Folder);
         var count = Directory.Exists(pictures) ? Directory.EnumerateFiles(pictures, "*", SearchOption.AllDirectories).Count() : 0;
         var where = target.IsRemote ? target.Ssh : "this machine";
-        logger.LogInformation("Dry run: publishing release {Name} ({Bytes:N0} bytes, built {BuiltAt:u}) to {Target} on {Where} would", record.Name, record.Bytes, record.BuiltAt, target.Name, where);
+        logger.LogInformation("Dry run: publishing release {Name} ({Bytes:N0} bytes, built {BuiltAt:u}) to {Target} on {Where}, which keeps {Copies} corpus {Noun}, would",
+            record.Name, record.Bytes, record.BuiltAt, target.Name, where, target.Copies, target.Copies == 1 ? "copy" : "copies");
         logger.LogInformation("  1. check the dump's SHA-256 against its record, and upload it unless {Target} already has it", target.Name);
         logger.LogInformation("  2. send whichever of the {Count:N0} pictures here {Target} lacks or has with other bytes, into {Folder}", count, target.Name, host.ImagesFolder);
         logger.LogInformation("  2b. check the export in {Export} against its manifest and send what {Target} lacks into {Downloads}, put the manifest in place, and only then take away the files no manifest names", ExportFolder, target.Name, host.DownloadsFolder);
-        logger.LogInformation("  3. restore it into {Incoming} in {Container}, which nothing reads, and check its label", target.Incoming, target.Container);
-        logger.LogInformation("  4. check every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse", target.Name);
-        logger.LogInformation("  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}",
-            target.Reader, target.ApiContainer, target.Incoming, target.Database, target.Database, target.Previous, target.ApiContainer);
+        if (target.Copies == 1)
+        {
+            logger.LogInformation("  3. put the maintenance page up ({Flag}) and stop {Api}; until step 6 the site shows that page", host.MaintenanceFlag, target.ApiContainer);
+            logger.LogInformation("  4. drop {Database}, and any {Incoming}, {Previous} or {Retired} left by an earlier publication",
+                target.Database, target.Incoming, target.Previous, target.Retired);
+            logger.LogInformation("  5. restore it into {Incoming} in {Container} with {Jobs} jobs, check its label and that every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse",
+                target.Incoming, target.Container, target.RestoreJobs, target.Name);
+            logger.LogInformation("  6. grant {Reader} reading and nothing else, rename {Incoming} to {Database}, start {Api}, wait for it to reach {Database}, and take the maintenance page down",
+                target.Reader, target.Incoming, target.Database, target.ApiContainer, target.Database);
+            logger.LogInformation("If step 3 or 4 fails before {Database} is dropped, {Api} starts again and the page comes down. If anything fails after, the page stays up and {Api} stopped until a publication succeeds: this one again, or the release served before",
+                target.Database, target.ApiContainer, target.ApiContainer);
+        }
+        else
+        {
+            if (!target.KeepsPrevious)
+            {
+                logger.LogInformation("  2c. drop any {Previous} left by an earlier publication", target.Previous);
+            }
+
+            logger.LogInformation("  3. restore it into {Incoming} in {Container} with {Jobs} jobs, which nothing reads, and check its label",
+                target.Incoming, target.Container, target.RestoreJobs);
+            logger.LogInformation("  4. check every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse", target.Name);
+            logger.LogInformation(target.KeepsPrevious
+                    ? "  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}"
+                    : "  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}, and drop {Previous}",
+                target.Reader, target.ApiContainer, target.Incoming, target.Database, target.Database, target.Previous, target.ApiContainer, target.Previous);
+        }
+
         logger.LogInformation("Nothing was uploaded, restored or swapped");
         return 0;
     }
@@ -549,10 +729,37 @@ internal sealed class Publisher(
         return false;
     }
 
-    /// <summary>Exchanges the live corpus and the previous one, and restarts the API onto it.</summary>
+    /// <summary>
+    /// Exchanges the live corpus and the previous one, and restarts the API onto it. A target that keeps
+    /// no previous copy is rolled back by publishing again, from this machine, the release this machine
+    /// published to it before the one it serves.
+    /// </summary>
     public async Task<int> Rollback(string targetName, CancellationToken cancellationToken, bool dryRun = false)
     {
         var target = ReleaseTarget.Read(configuration, targetName, Repository);
+        if (!target.KeepsPrevious)
+        {
+            var ledger = Ledger(target.Name);
+            var serving = ledger.LastOrDefault().Release;
+            var earlier = ledger.Select(entry => entry.Release).Reverse()
+                .FirstOrDefault(release => release != serving && File.Exists(Path.Combine(Releases, $"{release}.dump")));
+            if (serving is null || earlier is null)
+            {
+                logger.LogError(
+                    "{Target} keeps no previous corpus, so a rollback publishes an earlier release again, and this machine has " +
+                    "no release it published to {Target} before {Serving}. Publish one by name: `forge publish --to {Target} --release <name>` " +
+                    "(`forge releases` lists them)",
+                    target.Name, target.Name, serving ?? "anything", target.Name);
+                return 1;
+            }
+
+            logger.LogInformation(
+                "{Target} keeps no previous corpus, so rolling it back is publishing again, from this machine, the release it served " +
+                "before {Serving}: `forge publish --to {Target} --release {Earlier}`",
+                target.Name, serving, target.Name, earlier);
+            return await Publish(target.Name, earlier, withoutRehearsal: false, cancellationToken, dryRun);
+        }
+
         if (dryRun)
         {
             logger.LogInformation(
@@ -724,18 +931,7 @@ internal sealed class Publisher(
     private async Task WithApiStopped(TargetHost host, Func<Task> swap, CancellationToken cancellationToken)
     {
         var api = host.Target.ApiContainer;
-        var stopped = false;
-        try
-        {
-            await host.Docker(["stop", "--time", "15", api], cancellationToken, quiet: true);
-            stopped = true;
-        }
-        catch (InvalidOperationException exception)
-        {
-            // A first publication happens before there is an API to point at it; that is not a
-            // failure of the publication.
-            logger.LogWarning("Could not stop {Api}: {Message}", api, exception.Message.Split('\n')[^1]);
-        }
+        var stopped = await StopApi(host, cancellationToken);
 
         var started = DateTimeOffset.UtcNow;
         try
@@ -749,6 +945,58 @@ internal sealed class Publisher(
                 await host.Docker(["start", api], CancellationToken.None, quiet: true);
                 logger.LogInformation("{Api} was stopped for {Seconds:F1} s", api, (DateTimeOffset.UtcNow - started).TotalSeconds);
             }
+        }
+    }
+
+    /// <summary>Stops the target's API; false where there is none to stop.</summary>
+    private async Task<bool> StopApi(TargetHost host, CancellationToken cancellationToken)
+    {
+        var api = host.Target.ApiContainer;
+        try
+        {
+            await host.Docker(["stop", "--time", "15", api], cancellationToken, quiet: true);
+            return true;
+        }
+        catch (InvalidOperationException exception)
+        {
+            // A first publication happens before there is an API to point at it; that is not a
+            // failure of the publication.
+            logger.LogWarning("Could not stop {Api}: {Message}", api, exception.Message.Split('\n')[^1]);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Waits for the started API to connect to the corpus, which its warm-up does as it starts, so the
+    /// maintenance page does not come down onto an API still starting. Two minutes at most.
+    /// </summary>
+    private async Task WaitForApi(TargetHost host, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        var connected =
+            $"SELECT count(*) FROM pg_stat_activity WHERE datname = {TargetHost.Literal(target.Database)} AND usename = {TargetHost.Literal(target.Reader)}";
+        var since = DateTimeOffset.UtcNow;
+        while (DateTimeOffset.UtcNow - since < TimeSpan.FromMinutes(2))
+        {
+            if (await host.Sql("postgres", connected, cancellationToken) is { Length: > 0 } count && count != "0")
+            {
+                logger.LogInformation("{Api} reached {Database} {Seconds:F0} s after it started",
+                    target.ApiContainer, target.Database, (DateTimeOffset.UtcNow - since).TotalSeconds);
+                return;
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+        }
+
+        logger.LogWarning("{Api} has not connected to {Database} in two minutes; the maintenance page comes down anyway, so look at its /v1/health/ready",
+            target.ApiContainer, target.Database);
+    }
+
+    private static async Task Drop(TargetHost host, IEnumerable<string> databases, CancellationToken cancellationToken)
+    {
+        foreach (var database in databases)
+        {
+            await host.Sql("postgres", $"DROP DATABASE IF EXISTS {TargetHost.Identifier(database)} WITH (FORCE)", cancellationToken);
         }
     }
 
@@ -802,6 +1050,25 @@ internal sealed class Publisher(
         return File.Exists(ledger)
             ? File.ReadAllLines(ledger).Where(l => l.Length > 0).Select(l => l.Split('\t')[0]).ToHashSet()
             : new HashSet<string>();
+    }
+
+    /// <summary>Every publication of a release from this machine to <paramref name="target"/>, oldest first.</summary>
+    private List<(string Release, DateTimeOffset At)> Ledger(string target)
+    {
+        if (!Directory.Exists(Releases))
+        {
+            return [];
+        }
+
+        return Directory.GetFiles(Releases, "*.published")
+            .SelectMany(file => File.ReadAllLines(file)
+                .Select(line => line.Split('\t'))
+                .Where(parts => parts.Length == 2 && parts[0] == target)
+                .Select(parts => (Release: Path.GetFileNameWithoutExtension(file),
+                    At: DateTimeOffset.TryParse(parts[1], System.Globalization.CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.RoundtripKind, out var at) ? at : DateTimeOffset.MinValue)))
+            .OrderBy(entry => entry.At)
+            .ToList();
     }
 
     private string NextName()

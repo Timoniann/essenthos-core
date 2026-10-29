@@ -22,9 +22,9 @@ namespace Essenthos.Core.Publishing;
 /// </param>
 /// <param name="Container">The database container, by name.</param>
 /// <param name="Database">
-/// The name the API reads. The previous release is kept beside it as <c>&lt;name&gt;_previous</c> and
-/// an incoming one is restored as <c>&lt;name&gt;_incoming</c>, so nothing ever reads a corpus that is
-/// still arriving.
+/// The name the API reads. An incoming release is restored as <c>&lt;name&gt;_incoming</c>, so nothing
+/// ever reads a corpus that is still arriving, and on a target that keeps three copies the previous one
+/// stays beside it as <c>&lt;name&gt;_previous</c>.
 /// </param>
 /// <param name="Reader">The API's role, which is granted <c>SELECT</c> and nothing else.</param>
 /// <param name="Superuser">The role restores and swaps run as, over the container's local socket.</param>
@@ -37,8 +37,9 @@ namespace Essenthos.Core.Publishing;
 /// among it — and a process holding the old release's would serve a mixture.
 /// </param>
 /// <param name="After">
-/// A target this one only accepts releases from once they have been published there. Production names
-/// dev, so production receives the identical file dev accepted, or dev proved nothing.
+/// A target this one only accepts releases from once they have been published there, so it receives the
+/// identical file that target accepted. Production names the rehearsal, the server's stack on the
+/// workstation. A release this target has itself served before is accepted without it.
 /// </param>
 /// <param name="AppDatabase">
 /// The environment's accounts database, whose bookmarks must all still find their verse in a release
@@ -48,6 +49,22 @@ namespace Essenthos.Core.Publishing;
 /// The folder under the data root that holds the files <c>forge export</c> wrote, which the target's
 /// proxy serves read-only at <c>/downloads</c> and its API lists from. Unset, it is <c>downloads</c>, or
 /// <c>downloads_dev</c> for a corpus whose database name ends <c>_dev</c>, beside the pictures.
+/// </param>
+/// <param name="Copies">
+/// The most corpus databases the target ever holds. 3, the default: the live one, the previous one
+/// kept for <c>forge rollback</c>, and an incoming one restored beside them. 2: live and incoming, and
+/// the replaced one is dropped after the swap. 1: the live one is dropped and the incoming one restored
+/// in its place while the site shows its maintenance page. Below 3 a rollback is a publication of the
+/// earlier release from this machine.
+/// </param>
+/// <param name="RestoreJobs">
+/// How many jobs <c>pg_restore</c> runs at once, each building an index with up to the target's
+/// <c>maintenance_work_mem</c>. 4 by default; a server whose Postgres has a small memory limit takes
+/// fewer, because a restore killed for memory on a one-copy target leaves it with no corpus.
+/// </param>
+/// <param name="Maintenance">
+/// The file under the data root whose presence makes the target's proxy answer with the maintenance
+/// page, which a one-copy publication puts there while the target has no corpus.
 /// </param>
 internal sealed record ReleaseTarget(
     string Name,
@@ -63,8 +80,20 @@ internal sealed record ReleaseTarget(
     string? After,
     string? Password,
     string? AppDatabase = null,
-    string? Downloads = null)
+    string? Downloads = null,
+    int Copies = ReleaseTarget.MostCopies,
+    string Maintenance = ReleaseTarget.DefaultMaintenance,
+    int RestoreJobs = ReleaseTarget.DefaultRestoreJobs)
 {
+    public const int MostCopies = 3;
+
+    public const string DefaultMaintenance = "maintenance/on";
+
+    public const int DefaultRestoreJobs = 4;
+
+    /// <summary>Whether the target keeps the release before the live one, so a rollback is a rename.</summary>
+    public bool KeepsPrevious => Copies >= MostCopies;
+
     public string DownloadsName => Downloads is { Length: > 0 }
         ? Downloads
         : Database.EndsWith("_dev", StringComparison.Ordinal) ? "downloads_dev" : "downloads";
@@ -141,6 +170,33 @@ internal sealed record ReleaseTarget(
             section["After"] is { Length: > 0 } after ? after : null,
             section["Password"] is { Length: > 0 } password ? password : FromEnvFile(section["EnvFile"], repository),
             section["AppDatabase"] is { Length: > 0 } app ? app : null,
-            section["Downloads"] is { Length: > 0 } downloads ? downloads : null);
+            section["Downloads"] is { Length: > 0 } downloads ? downloads : null,
+            ReadCopies(section, name),
+            section["Maintenance"] is { Length: > 0 } maintenance ? maintenance.Trim('/', '\\') : DefaultMaintenance,
+            ReadRestoreJobs(section, name));
+    }
+
+    private static int ReadRestoreJobs(IConfigurationSection section, string name) =>
+        section["RestoreJobs"] is not { Length: > 0 } jobs
+            ? DefaultRestoreJobs
+            : int.TryParse(jobs, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var count)
+              && count is >= 1 and <= 16
+                ? count
+                : throw new InvalidOperationException(
+                    $"Publish:Targets:{name}:RestoreJobs is \"{jobs}\"; it is how many jobs pg_restore runs at once, 1 to 16.");
+
+    private static int ReadCopies(IConfigurationSection section, string name)
+    {
+        if (section["Copies"] is not { Length: > 0 } copies)
+        {
+            return MostCopies;
+        }
+
+        return int.TryParse(copies, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var count)
+               && count is >= 1 and <= MostCopies
+            ? count
+            : throw new InvalidOperationException(
+                $"Publish:Targets:{name}:Copies is \"{copies}\"; it takes 1 (the live corpus only, replaced while the " +
+                "site shows its maintenance page), 2 (live and incoming) or 3 (live, previous and incoming).");
     }
 }
