@@ -1,6 +1,7 @@
-# The whole of a server: one Postgres, production and dev side by side, and a reverse proxy in front.
+# The whole of a server: one Postgres, production, and a reverse proxy in front. Dev beside it only
+# where .env turns it on (COMPOSE_PROFILES=dev and DEV_SITES=on); the production server has none.
 #
-#   docker compose -f compose.yaml up -d                                  on the droplet
+#   docker compose -f compose.yaml up -d                                  on the server
 #   docker compose -f compose.yaml -f compose.rehearsal.yaml up -d        the same, on a workstation
 #
 # There is deliberately no compose.override.yaml: every file that applies is named on the command line,
@@ -10,9 +11,10 @@
 # is never committed; env.example lists what it must hold. A missing required value stops compose before
 # any container starts, rather than starting one with an empty password.
 #
-# Nothing here builds anything. The images are built by CI and pulled by tag, and the corpus arrives
-# as a release restored by `forge publish` from the machine that built it, which also puts the
-# pictures its rows name under HOST_DATA_ROOT/images.
+# Nothing here builds anything. Our two images are built on the workstation and sent to the server by
+# scripts/send-images.ps1, tagged by commit; nothing pulls them from a registry. The corpus arrives as
+# a release restored by `forge publish` from the machine that built it, which also puts the pictures
+# its rows name under HOST_DATA_ROOT/images.
 
 name: ${COMPOSE_PROJECT_NAME:-essenthos}
 
@@ -56,9 +58,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
       # Read by initdb/10-roles.sh on the first start only, to create the roles and the app databases.
       READER_PASSWORD: ${READER_PASSWORD:?set READER_PASSWORD}
-      READER_DEV_PASSWORD: ${READER_DEV_PASSWORD:?set READER_DEV_PASSWORD}
       APP_PASSWORD: ${APP_PASSWORD:?set APP_PASSWORD}
-      APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:?set APP_DEV_PASSWORD}
+      # Dev's pair, created only when both are set.
+      READER_DEV_PASSWORD: ${READER_DEV_PASSWORD:-}
+      APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:-}
       # The page counter's role and database, created only when this is set.
       STATS_PASSWORD: ${STATS_PASSWORD:-}
     # The database gets at most 4 GB of the droplet (owner, 2026-10-01), holding production's corpus and
@@ -171,29 +174,32 @@ services:
   web:
     <<: *web
 
+  # Dev: started only where COMPOSE_PROFILES names "dev". Not on the production server.
   api-dev-migrate:
+    profiles: ["dev"]
     image: ${API_DEV_IMAGE:-${API_IMAGE}}
     command: ["migrate"]
     restart: "no"
     logging: *logging
     environment:
       Database__ConnectionString: Host=db;Port=5432;Database=corpus_dev;Username=essenthos_reader_dev
-      Database__Password: ${READER_DEV_PASSWORD}
+      Database__Password: ${READER_DEV_PASSWORD:-}
       Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app_dev;Username=essenthos_app_dev
-      Accounts__Password: ${APP_DEV_PASSWORD}
+      Accounts__Password: ${APP_DEV_PASSWORD:-}
     depends_on:
       db:
         condition: service_healthy
 
   api-dev:
     <<: *api
+    profiles: ["dev"]
     image: ${API_DEV_IMAGE:-${API_IMAGE}}
     environment:
       Urls: http://+:8080
       Database__ConnectionString: Host=db;Port=5432;Database=corpus_dev;Username=essenthos_reader_dev
-      Database__Password: ${READER_DEV_PASSWORD}
+      Database__Password: ${READER_DEV_PASSWORD:-}
       Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app_dev;Username=essenthos_app_dev
-      Accounts__Password: ${APP_DEV_PASSWORD}
+      Accounts__Password: ${APP_DEV_PASSWORD:-}
       # Google takes several callback addresses on one client, so dev can share production's; GitHub
       # takes one per app, so dev has an app of its own.
       Authentication__Google__ClientId: ${GOOGLE_CLIENT_ID:-}
@@ -201,12 +207,12 @@ services:
       Authentication__GitHub__ClientId: ${GITHUB_DEV_CLIENT_ID:-}
       Authentication__GitHub__ClientSecret: ${GITHUB_DEV_CLIENT_SECRET:-}
       Accounts__BootstrapAdmins: ${ADMIN_EMAILS:-}
-      Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
+      Cors__AllowedOrigins__0: https://${DEV_DOMAIN:-}
       ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
       Downloads__Folder: /downloads
       Downloads__BaseUrl: /downloads
-      Site__Origin: https://${DEV_DOMAIN}
+      Site__Origin: https://${DEV_DOMAIN:-}
       Site__Shell: http://web-dev:8080/index.html
     volumes:
       - ${HOST_DATA_ROOT}/images/corpus_dev:/images:ro
@@ -220,6 +226,7 @@ services:
 
   web-dev:
     <<: *web
+    profiles: ["dev"]
     image: ${WEB_DEV_IMAGE:-${WEB_IMAGE}}
 
   proxy:
@@ -233,8 +240,10 @@ services:
     environment:
       SITE_DOMAIN: ${SITE_DOMAIN}
       API_DOMAIN: ${API_DOMAIN:?set API_DOMAIN}
-      DEV_DOMAIN: ${DEV_DOMAIN}
-      DEV_API_DOMAIN: ${DEV_API_DOMAIN:?set DEV_API_DOMAIN}
+      # Dev's two hostnames are served only when this is on; see the Caddyfile.
+      DEV_SITES: ${DEV_SITES:-off}
+      DEV_DOMAIN: ${DEV_DOMAIN:-}
+      DEV_API_DOMAIN: ${DEV_API_DOMAIN:-}
       # Each environment's Content-Security-Policy: off, report-only or enforce. See the Caddyfile.
       SITE_CSP: ${SITE_CSP:-off}
       DEV_CSP: ${DEV_CSP:-report-only}
@@ -243,8 +252,9 @@ services:
       # The key the site serves at /<key>.txt for IndexNow; empty serves nothing.
       INDEXNOW_KEY: ${INDEXNOW_KEY:-}
       ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
-      DEV_USER: ${DEV_USER:?set DEV_USER}
-      DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:?set DEV_PASSWORD_HASH with `docker run --rm caddy:2.10-alpine caddy hash-password`}
+      DEV_USER: ${DEV_USER:-}
+      # Made with `docker run --rm caddy:2.10-alpine caddy hash-password`.
+      DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:-}
     networks:
       default:
         ipv4_address: 10.89.0.2
@@ -259,11 +269,10 @@ services:
       # The downloads, served read-only at /downloads (see the Caddyfile).
       - ${HOST_DATA_ROOT}/downloads:/srv/downloads:ro
       - ${HOST_DATA_ROOT}/downloads_dev:/srv/downloads_dev:ro
+    # Only the start order; Caddy finds an upstream by name on each connection, dev's included.
     depends_on:
       - api
       - web
-      - api-dev
-      - web-dev
 
   backup:
     # The accounts databases are the only thing on this box that cannot be rebuilt, with the page
@@ -353,6 +362,7 @@ services:
 volumes:
   # On the machine's own disk rather than the data volume, since they hold nothing that cannot be made
   # again. A new volume takes the owner of the image's /image-cache, which is the user the API runs as.
+  # image-cache-dev is created only when the dev profile starts api-dev.
   image-cache:
   image-cache-dev:
 
