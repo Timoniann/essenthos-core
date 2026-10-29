@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -141,6 +142,31 @@ public sealed class StrayNameTests : IDisposable
         await _carrier.Carry();
 
         NamedOn(UkrainianWord(13, 12, 3)).Should().Equal(["david"], "Бога is capitalised in the middle of its sentence");
+    }
+
+    /// <summary>
+    /// The name resolution carries the place over the same faint links each time it runs. Had it written
+    /// what this pass takes back, the two would undo each other at every load and the load never settle.
+    /// </summary>
+    [Fact]
+    public async Task TheResolutionDoesNotWriteAgainWhatThisPassTakesBack()
+    {
+        var name = HebrewWord(13, 11, 3);
+        name.StrongNumber = "H6560";
+        name.Morphology = JsonDocument.Parse("""{"pos": "nmpr", "nameType": "topo"}""");
+        _db.EntityNames.Add(new EntityName { EntityId = _perezUzza.Id, Label = "Perez-uzza", HebrewStrongNumber = "H6560", Kind = "name" });
+        await _db.SaveChangesAsync();
+        var resolution = new EntityAnnotationLoader(
+            _db, NullLogger<EntityAnnotationLoader>.Instance, new PronounReferents(_db, NullLogger<PronounReferents>.Instance), _strays);
+
+        await resolution.Load();
+        var taken = await _strays.Withdraw();
+        await resolution.Load();
+
+        NamedOn(UkrainianWord(13, 11, 5)).Should().BeEmpty("так is no name, and Перец-Узза stands two words before it");
+        NamedOn(UkrainianWord(13, 11, 7)).Should().BeEmpty("зветься is no name either");
+        taken.Withdrawn.Should().Be(0, "the resolution never wrote what the pass would take back");
+        NamedOn(UkrainianWord(13, 11, 3)).Should().Equal("perezuzzah");
     }
 
     [Fact]

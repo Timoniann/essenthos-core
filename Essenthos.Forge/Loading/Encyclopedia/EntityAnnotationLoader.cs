@@ -188,9 +188,12 @@ internal sealed record AnnotationOutcome(
 internal sealed class EntityAnnotationLoader(
     AppDbContext db,
     ILogger<EntityAnnotationLoader> logger,
-    PronounReferents? pronouns = null)
+    PronounReferents? pronouns = null,
+    StrayNames? strays = null)
 {
     private readonly PronounReferents _pronouns = pronouns ?? new PronounReferents(db, NullLogger<PronounReferents>.Instance);
+
+    private readonly StrayNames _strays = strays ?? new StrayNames(db, NullLogger<StrayNames>.Instance);
 
     private const string Witness = EntityCandidates.Witness;
 
@@ -1063,7 +1066,7 @@ internal sealed class EntityAnnotationLoader(
         // A record a verse names wrongly is not named there to be taken off again by the next step.
         await Run(connection, transaction, MisplacedAnnotationLoader.Withhold, cancellationToken,
             await MisplacedAnnotationLoader.Withheld(db, cancellationToken));
-        await LeaveOutPronouns(connection, transaction, cancellationToken);
+        await LeaveOutWhatIsTakenBack(connection, transaction, cancellationToken);
 
         var settled = await Run(connection, transaction, Settle, cancellationToken,
             ("written", Written));
@@ -1310,20 +1313,24 @@ internal sealed class EntityAnnotationLoader(
 
     /// <summary>
     /// A pronoun the links carried a name onto is given it only where its verse settles who the pronoun
-    /// is, by the rule the pronoun pass takes names back by. Written anyway, that pass takes it back
-    /// later in the same load and this one writes it again on the next, burning an id for the same row
-    /// each time. Only the carried rows are judged, as the pronoun pass judges only those: a seed's own
-    /// claim keeps it.
+    /// is, by the rule the pronoun pass takes names back by, and a person or place a faint link carried
+    /// beside the word of the verse that names them is not given at all, by the rule of the pass that
+    /// takes those back (<see cref="StrayNames"/>). Written anyway, that pass takes it back later in the
+    /// same load and this one writes it again on the next, so the load never settles. Only the carried
+    /// rows are judged, as those passes judge only those: a seed's own claim keeps it.
     /// </summary>
-    private async Task LeaveOutPronouns(
+    private async Task LeaveOutWhatIsTakenBack(
         NpgsqlConnection connection,
         IDbContextTransaction transaction,
         CancellationToken cancellationToken)
     {
         await Run(connection, transaction,
-            "CREATE TEMP TABLE expected ON COMMIT DROP AS SELECT word_id, entity_id, confidence FROM pending_annotation",
+            "CREATE TEMP TABLE expected ON COMMIT DROP AS " +
+            "SELECT word_id, entity_id, confidence, through, link FROM pending_annotation",
             cancellationToken);
-        var left = await _pronouns.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
+        var npgsqlTransaction = (NpgsqlTransaction)transaction.GetDbTransaction();
+        var left = await _pronouns.LeaveOut(connection, npgsqlTransaction, cancellationToken)
+                   + await _strays.LeaveOutOfAPass(connection, npgsqlTransaction, cancellationToken);
         if (left > 0)
         {
             await Run(connection, transaction,

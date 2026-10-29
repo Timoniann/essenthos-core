@@ -60,7 +60,8 @@ internal sealed record StrayNameOutcome(
 /// <para>
 /// Rulings and readings of the word itself are never touched. It runs after every pass that carries,
 /// at the end of <see cref="AnnotationCarrier"/> and as the load's own step, and finds nothing the
-/// second time; a carry leaves such a row out before writing it (<see cref="LeaveOut"/>).
+/// second time; a carry leaves such a row out before writing it (<see cref="LeaveOut"/>), and so does the
+/// name resolution, which carries afresh every time it runs (<see cref="LeaveOutOfAPass"/>).
 /// </para>
 /// </summary>
 internal sealed class StrayNames(AppDbContext db, ILogger<StrayNames> logger)
@@ -207,6 +208,53 @@ internal sealed class StrayNames(AppDbContext db, ILogger<StrayNames> logger)
     public async Task<int> LeaveOut(NpgsqlConnection connection, NpgsqlTransaction transaction, CancellationToken cancellationToken)
     {
         await using (var judge = new NpgsqlCommand(JudgeExpected, connection, transaction))
+        {
+            await judge.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using var delete = new NpgsqlCommand(
+            "DELETE FROM expected x USING stray_judged j WHERE x.word_id = j.word_id AND x.entity_id = j.entity_id",
+            connection, transaction);
+        var left = await delete.ExecuteNonQueryAsync(cancellationToken);
+        if (left > 0)
+        {
+            logger.LogInformation("{Left} persons and places a faint link carried beside their named word were not written", left);
+        }
+
+        return left;
+    }
+
+    /// <summary>
+    /// What a pass is about to settle: <c>expected (word_id, entity_id, confidence, through, link)</c>, its
+    /// seeds with no <c>through</c> and the rows its links reach with the seed word each was reached from.
+    /// </summary>
+    private static class Settling
+    {
+        private const string Candidates =
+            """
+            SELECT x.word_id AS row_id, x.word_id, x.entity_id, x.confidence, x.through, x.link
+            FROM expected x
+            WHERE x.through IS NOT NULL
+            """;
+
+        private const string Named =
+            $"""
+             (SELECT word_id, entity_id, confidence, coalesce(note, '') LIKE '{Annotating.CarriedNote}' AS carried FROM word_entity
+              UNION ALL SELECT word_id, entity_id, confidence, through IS NOT NULL FROM expected)
+             """;
+
+        public static readonly string Judged = Judge(Candidates, Named);
+    }
+
+    /// <summary>
+    /// Leaves out of what a pass is about to settle the rows the test refuses (<see cref="Settling"/>), so
+    /// a pass that names words afresh each time it runs does not write again what <see cref="Withdraw"/>
+    /// took back.
+    /// </summary>
+    /// <returns>How many expected rows were left out.</returns>
+    public async Task<int> LeaveOutOfAPass(NpgsqlConnection connection, NpgsqlTransaction transaction, CancellationToken cancellationToken)
+    {
+        await using (var judge = new NpgsqlCommand(Settling.Judged, connection, transaction))
         {
             await judge.ExecuteNonQueryAsync(cancellationToken);
         }
