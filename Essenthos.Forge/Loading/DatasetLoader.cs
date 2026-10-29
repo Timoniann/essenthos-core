@@ -646,7 +646,9 @@ internal sealed class DatasetLoader(
                 new LoadStep("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
                 new LoadStep("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
                 new LoadStep("pronouns", TakeBackThePersonsAPronounDoesNotSettle),
+                new LoadStep("stray-names", TakeBackTheNamesCarriedBesideTheirOwnWord),
                 new LoadStep("consensus-namesakes", GiveTheConsensusNamesToTheBearerTheVerseNames),
+                new LoadStep("gentilic-renderings", NameTheGentilicsTheLinksMissed),
                 new LoadStep("edition-twins", NameTheSameWordInTheOtherEditions),
                 new LoadStep("spellings", CountHowEachTextSpellsEachName)),
             .. In(LoadModules.Derived,
@@ -2821,6 +2823,20 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
+    /// The persons and places a faint link carried onto a word that is not their name, beside the word of
+    /// the verse that is. After the consensus, whose names are often that word.
+    /// </summary>
+    private async Task TakeBackTheNamesCarriedBesideTheirOwnWord(CancellationToken cancellationToken)
+    {
+        status.Starting("the names carried beside the word that names them");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<StrayNames>().Withdraw(cancellationToken);
+        foreignNamesWithdrawn += outcome.Withdrawn;
+        status.Record(outcome.ToString());
+    }
+
+    /// <summary>
     /// A name the verses' consensus wrote for one man where the verse's own readings name another man
     /// of that name. After the consensus, and before the spellings are counted; the verse references
     /// are read again if this or the foreign-names step changed a word.
@@ -2861,6 +2877,19 @@ internal sealed class DatasetLoader(
     /// the Samaritan Pentateuch beside BHSA — where no pass named it. After every pass that names a
     /// word, and the verses read again off the words if it changed any.
     /// </summary>
+    /// <summary>
+    /// The gentilic of the original given to the word of a translation that renders it where no link
+    /// carried it there. Before the editions' twins, which give it on to the same word in another edition.
+    /// </summary>
+    private async Task NameTheGentilicsTheLinksMissed(CancellationToken cancellationToken)
+    {
+        status.Starting("the gentilics the links did not carry");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<GentilicRenderings>().Load(cancellationToken);
+        status.Record(outcome.ToString());
+    }
+
     private async Task NameTheSameWordInTheOtherEditions(CancellationToken cancellationToken)
     {
         status.Starting("the names of the same words in the other editions");

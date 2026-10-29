@@ -4,6 +4,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -107,8 +108,11 @@ internal sealed class AnnotationCarrier(
     ForeignNames foreign,
     EqualTwinNames twins,
     PronounReferents pronouns,
-    ILogger<AnnotationCarrier> logger)
+    ILogger<AnnotationCarrier> logger,
+    StrayNames? strays = null)
 {
+    private readonly StrayNames _strays = strays ?? new StrayNames(db, NullLogger<StrayNames>.Instance);
+
     /// <summary>
     /// How far two confidences may differ and still be the same number. They are products of
     /// doubles computed in two statements, so equality is asked to the ninth place rather than
@@ -379,6 +383,9 @@ internal sealed class AnnotationCarrier(
         // A person carried onto a pronoun the verse does not settle.
         await pronouns.Withdraw(cancellationToken);
 
+        // A person or place a faint link carried beside the word of the verse that names them.
+        await _strays.Withdraw(cancellationToken);
+
         // The other editions' twins of the words just named, which no link from a seed reaches.
         logger.LogInformation("{Outcome}", await twins.Load(cancellationToken));
 
@@ -494,6 +501,7 @@ internal sealed class AnnotationCarrier(
 
             await Execute(connection, transaction, CrossedBack, cancellationToken, ("crossed", CrossedNameLoader.Source));
             await pronouns.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
+            await _strays.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
 
             var carried = await Scalar(connection, transaction, Carried(scoped), cancellationToken, parameters);
             var taken = await Execute(connection, transaction, Withdraw(scoped), cancellationToken, parameters);
@@ -534,7 +542,7 @@ internal sealed class AnnotationCarrier(
         // carrying them would spread a name along links it never crossed; both are written again
         // from scratch once the carry is done.
         groups.AddRange(present
-            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source, EqualTwinNames.Source,
+            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source, EqualTwinNames.Source, GentilicRenderings.Source,
                 .. SenseReadingFiles.AllRulings().Where(file => !file.Carry).Select(file => file.Source)], StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .Select(source => (new[] { source }, false)));

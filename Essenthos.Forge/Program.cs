@@ -181,6 +181,8 @@ builder.Services.AddScoped<EqualTwinNames>();
 builder.Services.AddScoped<LexemeNameLoader>();
 builder.Services.AddScoped<ForeignNames>();
 builder.Services.AddScoped<PronounReferents>();
+builder.Services.AddScoped<StrayNames>();
+builder.Services.AddScoped<GentilicRenderings>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();
