@@ -136,6 +136,76 @@ public sealed class OwnRecordReloadTests(WitnessDatabase database) : OwnRecordTe
     }
 
     /// <summary>
+    /// A corpus loaded before an alternative said which side of the question it is on holds every row as
+    /// the record's own question. The next load marks the backs as backs in place, leaves the rulings'
+    /// own alternatives as they are, takes off the renderings of a reason it rewrites, and the load after
+    /// that writes nothing.
+    /// </summary>
+    [Fact]
+    public async Task ALoadedCorpusLearnsWhichSideOfTheQuestionEachAlternativeIsOn()
+    {
+        await Load();
+
+        var sides = await Db.EntityAlternatives.AsNoTracking()
+            .Select(a => new { a.Id, Record = a.Entity!.Slug, a.Back }).ToListAsync();
+        sides.Should().Contain(a => a.Record == "uzziah" && a.Back);
+        sides.Should().Contain(a => a.Record == "azariah-son-of-zephaniah" && !a.Back);
+
+        await Db.EntityAlternatives.ExecuteUpdateAsync(set => set.SetProperty(a => a.Back, false));
+        var seraiah = await Db.EntityAlternatives.SingleAsync(a => a.Entity!.Slug == "seraiah-6");
+        seraiah.Reason = "an older wording";
+        seraiah.ReasonRenderings = """{"ukr":"старе формулювання"}""";
+        seraiah.ReasonRenderedBy = "a test";
+        await Db.SaveChangesAsync();
+        Db.ChangeTracker.Clear();
+
+        await Load();
+
+        (await Db.EntityAlternatives.AsNoTracking()
+                .Select(a => new { a.Id, Record = a.Entity!.Slug, a.Back }).ToListAsync())
+            .Should().BeEquivalentTo(sides);
+        var rewritten = await Db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Id == seraiah.Id);
+        rewritten.Reason.Should().NotBe("an older wording");
+        rewritten.ReasonRenderings.Should().BeNull("a rendering of the old words is not a rendering of the new");
+        rewritten.ReasonRenderedBy.Should().BeNull();
+
+        var held = await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id)
+            .Select(a => new { a.Id, a.Back, a.Reason }).ToListAsync();
+        await Load();
+        (await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id).Select(a => new { a.Id, a.Back, a.Reason }).ToListAsync())
+            .Should().Equal(held);
+    }
+
+    /// <summary>
+    /// After the rulings, every alternative they write, backs included, is given its reason in Ukrainian,
+    /// German and Spanish from the shipped renderings; rendering again writes nothing, and the next load
+    /// of the rulings leaves the renderings where they are.
+    /// </summary>
+    [Fact]
+    public async Task EveryAlternativeTheRulingsWriteIsGivenItsReasonInEveryLanguageOnce()
+    {
+        await Load();
+        var reasons = new AlternativeReasonTranslationLoader(Db, Microsoft.Extensions.Logging.Abstractions.NullLogger<AlternativeReasonTranslationLoader>.Instance);
+
+        var first = await reasons.Load();
+
+        first.Written.Should().BeGreaterThan(30);
+        first.Unrendered.Should().Be(0, "every reason a file gives is rendered");
+        var uzziah = await Db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Entity!.Slug == "uzziah");
+        ReasonRenderings.Read(uzziah.ReasonRenderings).Should().ContainKeys("ukr", "deu", "spa");
+        uzziah.ReasonRenderedBy.Should().Contain("machine translation");
+
+        (await reasons.Load()).Written.Should().Be(0);
+        var held = await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id)
+            .Select(a => new { a.Id, a.ReasonRenderings }).ToListAsync();
+        Db.ChangeTracker.Clear();
+        await Load();
+        (await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id).Select(a => new { a.Id, a.ReasonRenderings }).ToListAsync())
+            .Should().Equal(held);
+        (await reasons.Load()).Written.Should().Be(0);
+    }
+
+    /// <summary>
     /// The woman's record was listed by a dataset and is headed, described and read by us, so the
     /// page credits the ruling and not the dataset, on a database that loaded the ruling before the
     /// credit moved as well as on a cold one. The dataset's listing stays as a claim.

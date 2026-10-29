@@ -1,0 +1,15 @@
+{
+ "decidedBy": "an agent (claude-opus-5-5) reading every rendering against the English and the cited verses, 2026-10-29, PRB-1347",
+ "corrections": [
+  {"id": "7f0a44736b8e", "language": "ukr", "from": "У надписі до Псалом 34 сказано", "to": "У надписі до 34-го псалма сказано", "why": "the book's nominative where the sentence needs the genitive"},
+  {"id": "a77512374a8d", "language": "ukr", "from": "на ім'я Левій, сина Алфея", "to": "на ім'я Левій, Алфеїв син", "why": "the apposition took the wrong case"},
+  {"id": "906bdd6b107d", "language": "ukr", "from": "а цей пророк — «сина Берехії»", "to": "а цей пророк — «син Берехії»", "why": "the predicate takes the nominative"},
+  {"id": "906bdd6b107d", "language": "deu", "from": "\"Sacharja, dem Sohn Berechjas\"", "to": "„der Sohn Berechjas“", "why": "the predicate takes the nominative, and the English quotes only 'the son of Berechiah'"},
+  {"id": "4d9709379270", "language": "deu", "from": "nennt Berechja als den Vater", "to": "nennt Barachias als den Vater", "why": "Matthew 23:35 names Barachias (Luther 1912: des Sohnes Barachias), not the prophet's father's Old Testament spelling"},
+  {"id": "4d9709379270", "language": "spa", "from": "profeta Zachârías", "to": "profeta Zacarías", "why": "the same prophet is spelled Zacarías everywhere else in these renderings, as the Reina-Valera spells him"},
+  {"id": "bb31b0ef4829", "language": "spa", "from": "después de Zachârías", "to": "después de Zacarías", "why": "as the Reina-Valera spells him, and as every other rendering here does"},
+  {"id": "ad5edacaa5d5", "language": "ukr", "from": "і BDB зазначає цю пропозицію", "to": "і словник Брауна, Драйвера і Бріґґса зазначає цю пропозицію", "why": "the lexicon's initials in Latin letters mean nothing to a Ukrainian reader"},
+  {"id": "37a097e34921", "language": "deu", "from": "des Joses, der Namen, die", "to": "des Joses – die Namen, die", "why": "the apposition took the genitive"},
+  {"id": "984b1705458a", "language": "deu", "from": "des Joses, der Namen, die", "to": "des Joses – die Namen, die", "why": "the apposition took the genitive"}
+ ]
+}

@@ -1,0 +1,509 @@
+{
+ "source": "Essenthos: machine translation by claude-sonnet-5-5 (effort medium, prompt v1), 2026-10-29, through the Claude API; quotations in the words of the Ohienko, Luther 1912 and Reina-Valera 1909 Bibles; ten phrases corrected on reading (corrections.json)",
+ "entries": [
+  {
+   "english": "1 Chronicles 16:5 names Jeiel twice, so two men, and the first stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "1 Хронік 16:5 називає Єіїла двічі, отже, це двоє людей, і перший стоїть там, де після Захарія стоїть Яазіїл, або Азіїл. Ніхто не показав, що це не одна й та сама людина, а лише що він не пасує до того вірша.",
+   "deu": "1. Chronik 16:5 nennt Jeiel zweimal, also zwei Männer, und der erste steht dort, wo nach Sacharja Jaesiel oder Asiel steht. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "1 Crónicas 16:5 nombra dos veces a Jehiel, de modo que son dos hombres, y el primero está donde Jaaziel, o Aziel, está después de Zacarías. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "1 Chronicles 3:15 names Josiah's firstborn Johanan, and lists Jehoahaz, who is Shallum (JER 22:11), fourth. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "1 Хронік 3:15 називає первородного сина Йосії Йохананом, а Єгоахаза, який є Шаллумом (Єремії 22:11), ставить четвертим. Ніхто не показав, що це не одна й та сама людина, а лише що він не пасує до цього вірша.",
+   "deu": "1. Chronik 3:15 nennt Johanan als Erstgeborenen Josias und führt Joahas, der Sallum ist (Jeremia 22:11), an vierter Stelle auf. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "1 Crónicas 3:15 nombra a Johanán como primogénito de Josías, y pone en cuarto lugar a Joachâz, que es Sallum (Jeremías 22:11). Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Hilkiah stood at Ezra's right hand when he read the law (NEH 8:4), some ninety years after this Hilkiah came up with Zerubbabel. The text does not say whether the two are one man.",
+   "ukr": "Хілкійя стояв праворуч від Ездри, коли той читав закон (Неемії 8:4), приблизно через дев'яносто років після того, як цей Хілкійя прийшов із Зоровавелем. Текст не каже, чи це одна й та сама людина.",
+   "deu": "Ein Hilkia stand zu Esras Rechten, als er das Gesetz las (Nehemia 8:4), etwa neunzig Jahre nachdem dieser Hilkia mit Serubabel heraufgezogen war. Der Text sagt nicht, ob die beiden ein und derselbe Mann sind.",
+   "spa": "Un Hilcías estaba a la mano derecha de Esdras cuando leyó la ley (Nehemías 8:4), unos noventa años después de que este Hilcías subiera con Zorobabel. El texto no dice si los dos son un mismo hombre."
+  },
+  {
+   "english": "A Hilkiah was among the chiefs of the priests who came up with Zerubbabel (NEH 12:7), some ninety years before Ezra read the law. The text does not say whether the two are one man.",
+   "ukr": "Хілкійя був серед голів священиків, що прийшли з Зоровавелем (Неемії 12:7), приблизно за дев'яносто років до того, як Ездра читав закон. Текст не каже, чи це одна й та сама людина.",
+   "deu": "Ein Hilkia war unter den Häuptern der Priester, die mit Serubbabel heraufkamen (Nehemia 12:7), etwa neunzig Jahre bevor Esra das Gesetz las. Der Text sagt nicht, ob die beiden ein und derselbe Mann sind.",
+   "spa": "Un Hilcías estaba entre los jefes de los sacerdotes que subieron con Zorobabel (Nehemías 12:7), unos noventa años antes de que Esdras leyera la ley. El texto no dice si los dos son un solo hombre."
+  },
+  {
+   "english": "A Jehiel was among the rulers of the house of God who gave to the priests at Josiah's Passover (2CH 35:8), some ninety years after Hezekiah's cleansing of the house of the LORD. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Єхіїл був серед зверхників Божого дому, які дали священикам на пасху за Йосії (2 Хронік 35:8), приблизно дев'яносто років після того, як Єзекія очистив Господній дім. Ніхто не показав, що це не одна й та сама людина, а лише що він не пасує до цього вірша.",
+   "deu": "Ein Jehiel gehörte zu den Fürsten des Hauses Gottes, die beim Passah Josias den Priestern gaben (2. Chronik 35:8), etwa neunzig Jahre nach Hiskias Reinigung des Hauses des HERRN. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Un Jehiel estuvo entre los príncipes de la casa de Dios que dieron a los sacerdotes para la pascua de Josías (2 Crónicas 35:8), unos noventa años después de que Ezechîas purificara la casa de Jehová. Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Jehoiada, the son of Benaiah and not his father, stands among the king's counsellors after Ahithophel (1CH 27:34). Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Єгояда, син Бенаї, а не його батько, стоїть серед царських радників по Ахітофелеві (1 Хронік 27:34). Ніхто не показав, що це не одна й та сама людина, а лише що він не пасує до того вірша.",
+   "deu": "Ein Jojada, der Sohn Benajas und nicht sein Vater, steht nach Ahitofel unter den Ratgebern des Königs (1. Chronik 27:34). Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Un Joiada, hijo de Benaías y no su padre, está entre los consejeros del rey después de Achitophel (1 Crónicas 27:34). Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Kish son of Abdi, a Merarite, served at Hezekiah's cleansing of the house of the LORD (2CH 29:12), centuries after this Kishi, the father of Ethan the singer under David. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Кіш, син Авді, мерарієць, служив під час очищення Господнього дому за Хізкійї (2 Хронік 29:12), через кілька століть після цього Кіші, батька співака Етана за Давида. Ніхто не показав, що це не одна й та сама людина, а лише те, що вона не пасує до того вірша.",
+   "deu": "Ein Kis, der Sohn Abdis, ein Merariter, diente bei der Reinigung des Hauses des HERRN unter Hiskia (2. Chronik 29:12), Jahrhunderte nach diesem Kisi, dem Vater des Sängers Ethan unter David. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu jenem Vers passt.",
+   "spa": "Un Cis hijo de Abdi, merarita, sirvió en la purificación de la casa de Jehová hecha por Ezequías (2 Crónicas 29:12), siglos después de este Chîsi, padre de Ethán el cantor en tiempo de David. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Michael stands generations back in Abihail's line (1CH 5:14), while this Michael is one of the brothers of a later day (1CH 5:13). Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Михаїл стоїть за кілька поколінь раніше в роду Авіхаїла (1 Хронік 5:14), а цей Михаїл є одним із братів пізнішого часу (1 Хронік 5:13). Ніхто не показав, що вони не є однією людиною, показано лише, що він не пасує до того вірша.",
+   "deu": "Ein Michael steht mehrere Generationen zurück in der Linie Abihails (1. Chronik 5:14), während dieser Michael einer der Brüder einer späteren Zeit ist (1. Chronik 5:13). Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu jenem Vers passt.",
+   "spa": "Un Michâel figura varias generaciones atrás en la línea de Abihail (1 Crónicas 5:14), mientras que este Michâel es uno de los hermanos de una época posterior (1 Crónicas 5:13). Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Zechariah blew a trumpet before the ark among the priests (1CH 15:24), apart from the Levite singers of the second degree to whom this one belongs (1CH 15:18-20). Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Один Захарій сурмив у сурму перед ковчегом серед священиків (1 Хронік 15:24), окремо від левітів-співаків другого чину, до яких належить цей (1 Хронік 15:18-20). Ніхто не показав, що це не одна й та сама людина, а лише те, що вона не пасує до того вірша.",
+   "deu": "Ein Sacharja blies unter den Priestern die Posaune vor der Lade (1. Chronik 15:24), abgesehen von den levitischen Sängern der zweiten Ordnung, zu denen dieser gehört (1. Chronik 15:18-20). Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu jenem Vers passt.",
+   "spa": "Un Zacarías tocaba la trompeta delante del arca entre los sacerdotes (1 Crónicas 15:24), aparte de los cantores levitas del segundo orden a los que pertenece este (1 Crónicas 15:18-20). Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Zechariah who had understanding in the visions of God taught King Uzziah (2CH 26:5), two centuries before this prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Захарій, що розумів Божі видіння, навчав царя Уззійю (2 Хронік 26:5), за два століття до цього пророка повернення з вигнання. Ніхто не показав, що це не одна людина, лише те, що він не пасує до того вірша.",
+   "deu": "Ein Sacharja, der Einsicht in die Gesichte Gottes hatte, unterwies den König Usia (2. Chronik 26:5), zwei Jahrhunderte vor diesem Propheten der Rückkehr aus dem Exil. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Un Zacarías que tenía entendimiento en las visiones de Dios instruyó al rey Uzías (2 Crónicas 26:5), dos siglos antes de este profeta del regreso del exilio. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A Zimmah is the father of the Gershonite Joah who served under Hezekiah (2CH 29:12), many generations after this Zimmah son of Jahath. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "Зімма є батьком ґершонівця Йоаха, який служив за Єзекії (2 Хронік 29:12), багато поколінь після цього Зімми, сина Яхатового. Ніхто не показав, що це не одна й та сама людина, а лише що він не пасує до цього вірша.",
+   "deu": "Ein Simma ist der Vater des Gersoniters Joah, der unter Hiskia diente (2. Chronik 29:12), viele Generationen nach diesem Simma, dem Sohn Jahaths. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Un Zimma es padre del gersonita Joah que sirvió bajo Ezechîas (2 Crónicas 29:12), muchas generaciones después de este Zimma hijo de Jahat. Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "A king named after his father would give the text as it stands, the Abimelech of Genesis 26 another man than the Abimelech of Genesis 20-21. Nothing in the text tells a name repeated in a line of kings from a title.",
+   "ukr": "Цар, названий на ім'я свого батька, дав би текст таким, яким він є: Авімелех із Буття 26 — інша людина, ніж Авімелех із Буття 20-21. Ніщо в тексті не відрізняє ім'я, повторене в роду царів, від титулу.",
+   "deu": "Ein nach seinem Vater benannter König würde den Text so ergeben, wie er dasteht: der Abimelech von 1. Mose 26 wäre ein anderer Mann als der Abimelech von 1. Mose 20-21. Nichts im Text unterscheidet einen Namen, der in einer Reihe von Königen wiederkehrt, von einem Titel.",
+   "spa": "Un rey que llevara el nombre de su padre daría el texto tal como está, siendo el Abimelech de Génesis 26 otro hombre distinto del Abimelech de Génesis 20-21. Nada en el texto distingue un nombre repetido en una línea de reyes de un título."
+  },
+  {
+   "english": "A second name of Azubah, the two joined by the same verb: Caleb begat children of Azubah his wife, who was also called Jerioth. It accounts for 'her sons' without needing a second woman, which is the difficulty every other reading has to answer.",
+   "ukr": "Друге ім'я Азуви, обидва з'єднані одним і тим самим дієсловом: Калев породив дітей від Азуви, своєї дружини, яку також звали Еріот. Це пояснює «її синів», не потребуючи другої жінки, а це є труднощем, на який мусить відповісти кожне інше прочитання.",
+   "deu": "Ein zweiter Name Asubas, die beiden durch dasselbe Verb verbunden: Kaleb zeugte Kinder mit Asuba, seiner Frau, die auch Jeriot genannt wurde. Das erklärt „ihre Söhne“, ohne eine zweite Frau zu brauchen; das ist die Schwierigkeit, auf die jede andere Deutung eine Antwort geben muss.",
+   "spa": "Un segundo nombre de Azuba, unidas ambas por el mismo verbo: Caleb engendró hijos de Azuba su mujer, que también se llamaba Jerioth. Explica «sus hijos» sin necesidad de una segunda mujer, que es la dificultad a la que toda otra lectura tiene que responder."
+  },
+  {
+   "english": "Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:2, 36:24), may be he, if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite.",
+   "ukr": "Ана, син Ців'она, батько Ісавової жінки Оголіваму (Буття 36:2, 36:24), може бути ним, якщо жінки Ісава з 26:34 і 36:2 — ті самі жінки під іншими іменами. Текст цього не каже, а 36:2 називає рід Ани хіввеянським.",
+   "deu": "Ana, der Sohn Zibeons, der Vater von Esaus Frau Oholibama (1. Mose 36:2, 36:24), kann er sein, wenn Esaus Frauen in 26:34 und 36:2 dieselben Frauen unter anderen Namen sind. Der Text sagt das nicht, und 36:2 nennt Anas Linie heviterisch.",
+   "spa": "Ana hijo de Zibeón, padre de Aholibama, mujer de Esaú (Génesis 36:2, 36:24), puede ser él, si las mujeres de Esaú de 26:34 y 36:2 son las mismas con otros nombres. El texto no lo dice, y 36:2 llama heveo al linaje de Ana."
+  },
+  {
+   "english": "Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:24), bears his name a generation later, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as either's. The text does not say whether the two are one man.",
+   "ukr": "Ана, син Ців'она, батько Ісавової дружини Оголівами (Буття 36:24), носить своє ім'я на покоління пізніше, і слова 1 Хронік 1:41 «сини Анині: Дішон» можна прочитати як про одного чи про другого. Текст не каже, чи це одна людина.",
+   "deu": "Ana, der Sohn Zibeons, der Vater von Esaus Frau Oholibama (1. Mose 36:24), trägt seinen Namen eine Generation später, und „Die Kinder Anas: Dison“ in 1. Chronik 1:41 könnte auf den einen oder den anderen bezogen werden. Der Text sagt nicht, ob die beiden ein und derselbe Mann sind.",
+   "spa": "Ana hijo de Zibeón, padre de Aholibama, mujer de Esaú (Génesis 36:24), lleva su nombre una generación después, y los «hijos de Ana; Disón» de 1 Crónicas 1:41 podrían entenderse como de uno o de otro. El texto no dice si los dos son un mismo hombre."
+  },
+  {
+   "english": "Arumah, where Abimelech dwelt (JDG 9:41), is a name of the same letters but one, and the two may be one town.",
+   "ukr": "Арума, де жив Авімелех (Суддів 9:41), — це ім'я, що відрізняється лише однією літерою, і ці два міста можуть бути одним містом.",
+   "deu": "Aruma, wo Abimelech wohnte (Richter 9:41), ist ein Name aus denselben Buchstaben bis auf einen, und beide können ein und dieselbe Stadt sein.",
+   "spa": "Aruma, donde habitó Abimelech (Jueces 9:41), es un nombre de las mismas letras salvo una, y los dos pueden ser un solo pueblo."
+  },
+  {
+   "english": "Azariah son of Zephaniah stands where he stands, in Heman's line (1CH 6:36), if the two lines are one line under other names.",
+   "ukr": "Азарія, син Цефанії, стоїть там, де він, у роду Гемана (1 Хронік 6:36), якщо обидва ряди є одним рядом під іншими іменами.",
+   "deu": "Asarja, der Sohn Zefanjas, steht dort, wo er steht, in der Linie Hemans (1. Chronik 6:36), wenn die beiden Linien unter anderen Namen eine einzige Linie sind.",
+   "spa": "Azarías hijo de Sophonías ocupa el lugar donde está, en la línea de Hemán (1 Crónicas 6:36), si las dos líneas son una sola bajo otros nombres."
+  },
+  {
+   "english": "Beeri the Hittite, the father of Esau's wife Judith (GEN 26:34), if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite.",
+   "ukr": "Беері, хіттеянин, батько Ісавової жінки Єгудити (Буття 26:34), якщо жінки Ісава з 26:34 і 36:2 — ті самі жінки під іншими іменами. Текст цього не каже, а 36:2 називає рід Ани хіввеянським.",
+   "deu": "Beeri, der Hethiter, der Vater von Esaus Frau Judith (1. Mose 26:34), falls Esaus Frauen in 26:34 und 36:2 dieselben Frauen unter anderen Namen sind. Der Text sagt es nicht, und 36:2 nennt die Sippe Anas heviterisch.",
+   "spa": "Beeri el heteo, padre de Judith, mujer de Esaú (Génesis 26:34), si las mujeres de Esaú de 26:34 y 36:2 son las mismas con otros nombres. El texto no lo dice, y 36:2 llama heveo al linaje de Ana."
+  },
+  {
+   "english": "Both accounts name him alike, Abimelech king of Gerar with Phicol the commander of his army, and neither says a new king has come. Against it, Isaac's dealings with him fall after Abraham's death (GEN 26:18), most of a lifetime after Abraham's, and the same two names recurring is as well explained by titles as by one very long reign.",
+   "ukr": "Обидва оповідання називають його однаково: Авімелех, цар Ґерару, з Піхолом, воєводою його війська, і жодне не каже, що настав новий цар. Проти цього: справи Ісака з ним припадають на час після смерті Авраама (Буття 26:18), майже ціле життя після днів Авраама, і те, що ті самі два імена повторюються, так само добре пояснюється титулами, як і одним дуже довгим царюванням.",
+   "deu": "Beide Berichte nennen ihn gleich, Abimelech, den König von Gerar, mit Pichol, dem Feldhauptmann seines Heeres, und keiner sagt, dass ein neuer König gekommen ist. Dagegen spricht, dass Isaaks Umgang mit ihm nach Abrahams Tod liegt (1. Mose 26:18), fast ein ganzes Leben nach Abrahams Zeit, und dass dieselben zwei Namen wiederkehren, lässt sich ebenso gut durch Titel erklären wie durch eine einzige sehr lange Regierung.",
+   "spa": "Ambos relatos lo nombran igual, Abimelech rey de Gerar con Phicol el jefe de su ejército, y ninguno dice que haya venido un nuevo rey. En contra, los tratos de Isaac con él caen después de la muerte de Abraham (Génesis 26:18), casi una vida entera después de los de Abraham, y la repetición de los mismos dos nombres se explica tan bien por títulos como por un solo reinado larguísimo."
+  },
+  {
+   "english": "Chronicles names Abijah's mother Michaiah the daughter of Uriel of Gibeah (2CH 13:2), where Kings names her Maachah the daughter of Abishalom (1KI 15:2). Nobody has shown that Uriel and Abishalom are not one man.",
+   "ukr": "Хроніки називають матір Авійї Міхая, дочка Уріїла з Ґів'ї (2 Хронік 13:2), а Царів називає її Мааха, дочка Авесалома (1 Царів 15:2). Ніхто не показав, що Уріїл і Авесалом не є однією людиною.",
+   "deu": "Die Chronik nennt Abias Mutter Michaja, die Tochter Uriels von Gibea (2. Chronik 13:2), wo die Königsbücher sie Maacha nennen, die Tochter Abisaloms (1. Könige 15:2). Niemand hat gezeigt, dass Uriel und Abisalom nicht ein und derselbe Mann sind.",
+   "spa": "Crónicas nombra a la madre de Abías Michâía hija de Uriel de Gabaa (2 Crónicas 13:2), donde Reyes la nombra Maachâ hija de Abisalom (1 Reyes 15:2). Nadie ha demostrado que Uriel y Abisalom no sean un mismo hombre."
+  },
+  {
+   "english": "Daniel 9:1 names Darius the son of Ahasuerus, of the seed of the Medes, and one Ahasuerus could stand for that verse, Ezra 4:6 and Esther. Against it: Ezra 4:5-7 places this Ahasuerus after Cyrus, and Darius was already sixty-two when Babylon fell before Cyrus reigned (DAN 5:31), so the text does not let them be one king.",
+   "ukr": "Даниїла 9:1 називає Дарія, сина Ахашвероша, з насіння мідян, і один Ахашверош міг би відповідати цьому віршеві, Ездри 4:6 та книзі Естер. Проти цього: Ездри 4:5-7 ставить цього Ахашвероша після Кіра, а Дарієві вже було шістдесят два роки, коли впав Вавилон, раніше ніж зацарював Кір (Даниїла 5:31), тож текст не дозволяє вважати їх одним царем.",
+   "deu": "Daniel 9:1 nennt Darius, den Sohn des Ahasveros, aus der Meder Stamm, und ein einziger Ahasveros könnte für diesen Vers, Esra 4:6 und Ester stehen. Dagegen spricht: Esra 4:5-7 stellt diesen Ahasveros nach Kores, und Darius war schon zweiundsechzig Jahre alt, als Babel fiel, bevor Kores regierte (Daniel 5:31); der Text lässt sie also nicht ein und derselbe König sein.",
+   "spa": "Daniel 9:1 nombra a Darío, hijo de Assuero, «de la nación de los Medos», y un Assuero podría corresponder a ese versículo, a Esdras 4:6 y a Ester. En contra: Esdras 4:5-7 sitúa a este Assuero después de Ciro, y Darío ya tenía sesenta y dos años cuando cayó Babilonia, antes de que reinara Ciro (Daniel 5:31), de modo que el texto no permite que sean un mismo rey."
+  },
+  {
+   "english": "Genesis 26:34 names Esau's wife Judith the daughter of Beeri the Hittite; Aholibamah may be the same woman under another name, though her father and her people are named otherwise.",
+   "ukr": "Буття 26:34 називає жінку Ісава Єгудитою, дочкою хіттеянина Беері; Оголівема може бути тією самою жінкою під іншим ім'ям, хоча її батька й її народ названо інакше.",
+   "deu": "1. Mose 26:34 nennt Esaus Frau Judith, die Tochter Beeris, des Hethiters; Oholibama kann dieselbe Frau unter anderem Namen sein, wenn auch ihr Vater und ihr Volk anders genannt werden.",
+   "spa": "Génesis 26:34 nombra a Judith, mujer de Esaú, hija de Beeri el heteo; Aholibama puede ser la misma mujer con otro nombre, aunque su padre y su pueblo se nombran de otro modo."
+  },
+  {
+   "english": "Genesis 26:34 names Esau's wife the daughter of Elon the Hittite Bashemath; Adah may be the same woman under another name.",
+   "ukr": "Буття 26:34 називає жінку Ісава, дочку хіттеянина Елона, Босматою; Ада може бути тією самою жінкою під іншим іменем.",
+   "deu": "1. Mose 26:34 nennt die Frau Esaus, die Tochter Elons, des Hethiters, Basmath; Ada kann dieselbe Frau unter einem anderen Namen sein.",
+   "spa": "Génesis 26:34 llama Basemat a la mujer de Esaú, hija de Elón el hetheo; Ada puede ser la misma mujer con otro nombre."
+  },
+  {
+   "english": "Genesis 28:9 names Esau's wife Mahalath the daughter of Ishmael, the sister of Nebajoth: the same father and the same brother.",
+   "ukr": "Буття 28:9 називає дружину Ісава Махалатою, дочкою Ізмаїла, сестрою Невайотовою: той самий батько й той самий брат.",
+   "deu": "1. Mose 28:9 nennt Esaus Frau Mahalath die Tochter Ismaels, die Schwester Nebajoths: derselbe Vater und derselbe Bruder.",
+   "spa": "Génesis 28:9 nombra a Mahaleth, mujer de Esaú, hija de Ismael, hermana de Nabaioth: el mismo padre y el mismo hermano."
+  },
+  {
+   "english": "Genesis 36:2 names Esau's wife Aholibamah the daughter of Anah; she may be the same woman under another name, though her father and her people are named otherwise.",
+   "ukr": "Буття 36:2 називає жінку Ісава Оголіваму, дочку Ани; вона може бути тією самою жінкою під іншим ім'ям, хоча її батька й її народ названо інакше.",
+   "deu": "1. Mose 36:2 nennt Esaus Frau Oholibama, die Tochter des Ana; sie könnte dieselbe Frau unter einem anderen Namen sein, obwohl ihr Vater und ihr Volk anders genannt werden.",
+   "spa": "Génesis 36:2 nombra a Aholibama, mujer de Esaú, hija de Ana; puede ser la misma mujer con otro nombre, aunque su padre y su pueblo se nombran de otro modo."
+  },
+  {
+   "english": "Genesis 36:20 and 1 Chronicles 1:38 count an Anah among the sons of Seir, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as his; Genesis 36:24 makes the father of Aholibamah Zibeon's son, the nephew of that Anah.",
+   "ukr": "Буття 36:20 та 1 Хронік 1:38 зараховують Ану до синів Сеїра, а слова 1 Хронік 1:41 «сини Анині: Дішон» можна розуміти як сказані про нього; Буття 36:24 робить батька Оголівеми сином Ців'она, небожем того Ани.",
+   "deu": "1. Mose 36:20 und 1. Chronik 1:38 zählen einen Ana unter die Söhne Seirs, und die Worte aus 1. Chronik 1:41 „Die Kinder Anas: Dison“ könnten als die seinen gelesen werden; 1. Mose 36:24 macht den Vater der Oholibama zum Sohn Zibeons, zum Neffen jenes Ana.",
+   "spa": "Génesis 36:20 y 1 Crónicas 1:38 cuentan a un Ana entre los hijos de Seir, y lo de 1 Crónicas 1:41, «Disón fué hijo de Ana», podría entenderse como suyo; Génesis 36:24 hace al padre de Aholibama hijo de Zibeón, sobrino de aquel Ana."
+  },
+  {
+   "english": "He stands where Shaul son of Uzziah stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names.",
+   "ukr": "Він стоїть там, де в роду Кегата стоїть Саул, син Уззійї (1 Хронік 6:24), якщо обидва ряди є одним рядом під іншими іменами.",
+   "deu": "Er steht dort, wo Saul, der Sohn Usias, in der Linie Kahaths steht (1. Chronik 6:24), wenn die beiden Linien unter anderen Namen eine einzige Linie sind.",
+   "spa": "Ocupa el lugar donde está Saúl hijo de Uzzia en la línea de Coath (1 Crónicas 6:24), si las dos líneas son una sola bajo otros nombres."
+  },
+  {
+   "english": "He stands where Uzziah son of Uriel stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names.",
+   "ukr": "Він стоїть там, де в роду Кегата стоїть Уззійя, син Уріїла (1 Хронік 6:24), якщо обидва ряди є одним рядом під іншими іменами.",
+   "deu": "Er steht dort, wo Usia, der Sohn Uriels, in der Linie Kahaths steht (1. Chronik 6:24), wenn die beiden Linien unter anderen Namen eine einzige Linie sind.",
+   "spa": "Ocupa el lugar donde está Uzzia hijo de Uriel en la línea de Coath (1 Crónicas 6:24), si las dos líneas son una sola bajo otros nombres."
+  },
+  {
+   "english": "Hosea 10:14 names Shalman, who spoiled Beth-arbel in the day of battle; the name is the first part of his, and he may be meant. The text does not say.",
+   "ukr": "Осії 10:14 називає Шалмана, який зруйнував Бет-Арбел «в час війни»; це ім'я є першою частиною його імені, і, можливо, мають на увазі його. Текст цього не каже.",
+   "deu": "Hosea 10:14 nennt Salman, der Beth-Arbel am Tag des Kampfes verwüstete; der Name ist der erste Teil seines Namens, und möglicherweise ist er gemeint. Der Text sagt es nicht.",
+   "spa": "Oseas 10:14 nombra a Salmán, que destruyó a Beth-arbel el día de la batalla; el nombre es la primera parte del suyo, y puede ser él a quien se refiere. El texto no lo dice."
+  },
+  {
+   "english": "In 1 Chronicles 11:36 Hepher the Mecherathite stands where Eliphelet the Maachathite stands in 2SA 23:34, and Ahijah the Pelonite where Eliam stands. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+   "ukr": "У 1 Хронік 11:36 мехар'янин Хефер стоїть там, де в 2 Самуїлова 23:34 стоїть Еліфелет маахатянин, а пелонянин Ахійя там, де стоїть Еліям. Ніхто не показав, що це не одна й та сама людина, а лише те, що вона не пасує до того вірша.",
+   "deu": "In 1. Chronik 11:36 steht Hepher, der Macherathiter, dort, wo in 2. Samuel 23:34 Eliphelet, der Maachathiter, steht, und Ahia, der Peloniter, dort, wo Eliam steht. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu jenem Vers passt.",
+   "spa": "En 1 Crónicas 11:36 Hepher el Mecherathita está donde en 2 Samuel 23:34 está Elipheleth el Maachathita, y Ahías el Pelonita donde está Eliam. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en ese versículo."
+  },
+  {
+   "english": "In 2SA 23:34 Eliam stands where Ahijah the Pelonite, the next name here, stands, and Hepher where Eliphelet the Maachathite stands. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "У 2 Самуїлова 23:34 Еліям стоїть там, де стоїть пелонянин Ахійя, наступне тут ім'я, а Хефер там, де стоїть Еліфелет маахатянин. Ніхто не показав, що це не одна й та сама людина, а лише те, що вона не пасує до цього вірша.",
+   "deu": "In 2. Samuel 23:34 steht Eliam dort, wo hier Ahia, der Peloniter, der nächste Name, steht, und Hepher dort, wo Eliphelet, der Maachathiter, steht. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu diesem Vers passt.",
+   "spa": "En 2 Samuel 23:34 Eliam está donde está Ahías el Pelonita, el nombre siguiente aquí, y Hepher donde está Elipheleth el Maachathita. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "Jehoahaz is Shallum, listed fourth in this same verse (JER 22:11), and the firstborn Johanan is named nowhere else. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Єгоахаз — це Шаллум, названий четвертим у цьому самому вірші (Єремії 22:11), а первісток Йоханан більше ніде не названий. Ніхто не показав, що це не одна й та сама людина, а лише те, що він не пасує до цього вірша.",
+   "deu": "Joahas ist Sallum, der in demselben Vers (Jeremia 22:11) an vierter Stelle aufgeführt wird, und der erstgeborene Johanan wird sonst nirgends genannt. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Joachâz es Sallum, citado en cuarto lugar en este mismo versículo (Jeremías 22:11), y el primogénito Johanán no se nombra en ningún otro lugar. Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que él no encaja en este versículo."
+  },
+  {
+   "english": "Jerioth, named beside her under the same verb (1CH 2:18), may be her second name: Caleb begat children of Azubah his wife, who was also called Jerioth. It accounts for 'her sons' without needing a second woman.",
+   "ukr": "Еріот, названа поруч із нею при тому самому дієслові (1 Хронік 2:18), може бути її другим іменем: Калев породив дітей від Азуви, своєї жінки, яку звали також Еріот. Це пояснює слова «її сини», не потребуючи другої жінки.",
+   "deu": "Jeriot, neben ihr unter demselben Verb genannt (1. Chronik 2:18), könnte ihr zweiter Name sein: Kaleb zeugte Kinder mit Asuba, seiner Frau, die auch Jeriot genannt wurde. Das erklärt „ihre Söhne“, ohne dass eine zweite Frau nötig wäre.",
+   "spa": "Jerioth, nombrada junto a ella bajo el mismo verbo (1 Crónicas 2:18), puede ser su segundo nombre: Caleb engendró hijos de Azuba su mujer, que se llamaba también Jerioth. Esto explica «los hijos de ella» sin necesidad de una segunda mujer."
+  },
+  {
+   "english": "Jesus speaks of Zacharias the son of Barachias, slain between the temple and the altar (MAT 23:35), and this prophet is 'the son of Berechiah' (ZEC 1:1); the Old Testament does not say how he died.",
+   "ukr": "Ісус говорить про Захарія, Варахіїного сина, якого замордували між храмом і жертівником (Матвія 23:35), а цей пророк — «син Берехії» (Захарії 1:1); Старий Заповіт не каже, як він помер.",
+   "deu": "Jesus spricht von Zacharias, dem Sohn Barachjas, der zwischen dem Tempel und dem Altar getötet wurde (Matthäus 23:35), und dieser Prophet ist „der Sohn Berechjas“ (Sacharja 1:1); das Alte Testament sagt nicht, wie er starb.",
+   "spa": "Jesús habla de Zacarías hijo de Barachîas, muerto entre el templo y el altar (Mateo 23:35), y este profeta es \"hijo de Berechîas\" (Zacarías 1:1); el Antiguo Testamento no dice cómo murió."
+  },
+  {
+   "english": "Jesus speaks of Zacharias the son of Barachias, slain between the temple and the altar (MAT 23:35; LUK 11:51), and this Zechariah was stoned 'in the court of the house of the LORD' (2CH 24:21); the verses name a different father.",
+   "ukr": "Ісус говорить про Захарія, сина Варахії, убитого між храмом і жертовником (Матвія 23:35; Луки 11:51), а цього Захарія було побито камінням «в подвір'ї Господнього дому» (2 Хронік 24:21); ці вірші називають іншого батька.",
+   "deu": "Jesus spricht von Zacharias, dem Sohn Barachjas, der zwischen dem Tempel und dem Altar getötet wurde (Matthäus 23:35; Lukas 11:51), und dieser Sacharja wurde gesteinigt „im Hofe am Hause des HERRN“ (2. Chronik 24:21); die Verse nennen einen anderen Vater.",
+   "spa": "Jesús habla de Zacarías hijo de Barachîas, muerto entre el templo y el altar (Mateo 23:35; Lucas 11:51), y este Zacarías fue apedreado «en el patio de la casa de Jehová» (2 Crónicas 24:21); los versículos nombran a un padre distinto."
+  },
+  {
+   "english": "Jezebel's 'Had Zimri peace, who slew his master?' (2KI 9:31) may be said to him, calling him by the name of the usurper she likens him to. On the other reading the word names that usurper.",
+   "ukr": "Слова Єзавелі «Чи все гаразд, Зімрі, убивце пана свого?» (2 Царів 9:31) можуть бути сказані йому, коли вона називає його іменем узурпатора, якому його прирівнює. За іншим прочитанням це слово називає того узурпатора.",
+   "deu": "Isebels Wort „Ist's Simri wohl gegangen, der seinen Herrn erwürgte?“ (2. Könige 9:31) kann zu ihm gesagt sein, indem sie ihn mit dem Namen des Thronräubers anredet, dem sie ihn gleichstellt. Nach der anderen Lesung nennt das Wort diesen Thronräuber.",
+   "spa": "Lo que dice Jezabel, «¿Sucedió bien á Zimri, que mató á su señor?» (2 Reyes 9:31), puede estar dicho a él, llamándolo por el nombre del usurpador al que lo compara. Según la otra lectura, la palabra nombra a ese usurpador."
+  },
+  {
+   "english": "Jezebel's words to Jehu, 'Had Zimri peace, who slew his master?' (2KI 9:31), may name him, the usurper whose end is the point of the taunt. On the other reading she is calling Jehu a second Zimri.",
+   "ukr": "Слова Єзавелі до Єгу: «Чи все гаразд, Зімрі, убивце пана свого?» (2 Царів 9:31) можуть називати його, самозванця, чий кінець і є сутністю глузування. За іншим розумінням вона називає Єгу другим Зімрі.",
+   "deu": "Isebels Worte an Jehu: „Ist's Simri wohl gegangen, der seinen Herrn erwürgte?“ (2. Könige 9:31) können ihn meinen, den Thronräuber, dessen Ende der Spitze des Spottes zugrunde liegt. Nach der anderen Deutung nennt sie Jehu einen zweiten Simri.",
+   "spa": "Las palabras de Jezabel a Jehú, «¿Sucedió bien á Zimri, que mató á su señor?» (2 Reyes 9:31), pueden nombrarlo a él, el usurpador cuyo fin es el punto de la burla. Según la otra lectura, ella llama a Jehú un segundo Zimri."
+  },
+  {
+   "english": "Joah here is Hezekiah's contemporary, and the Zimmah of 1CH 6:20 stands many generations earlier. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Йоах тут є сучасником Єзекії, а Зімма з 1 Хронік 6:20 стоїть на багато поколінь раніше. Ніхто не показав, що це не одна людина, лише те, що він не пасує до цього вірша.",
+   "deu": "Joach ist hier ein Zeitgenosse Hiskias, und der Simma aus 1. Chronik 6:20 steht viele Generationen früher. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Joah aquí es contemporáneo de Ezequías, y el Zimma de 1 Crónicas 6:20 está muchas generaciones antes. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "Joel son of Azariah stands where he stands, in Heman's line (1CH 6:36), if the two lines are one line under other names.",
+   "ukr": "Йоїл, син Азарії, стоїть там, де він стоїть, у роді Гемана (1 Хронік 6:36), якщо ці два роди — один рід під іншими іменами.",
+   "deu": "Joel, der Sohn Asarjas, steht dort, wo er steht, in Hemans Linie (1. Chronik 6:36), wenn die beiden Linien unter anderen Namen ein und dieselbe Linie sind.",
+   "spa": "Joel hijo de Azarías está donde está, en el linaje de Hemán (1 Crónicas 6:36), si los dos linajes son un solo linaje con otros nombres."
+  },
+  {
+   "english": "John 19:25 names Mary the wife of Cleophas among the women by the cross, where Matthew and Mark name the mother of James and Joses. The harmonies take them for one woman; the text does not say so.",
+   "ukr": "Івана 19:25 називає Марію Клеопову серед жінок під хрестом, там, де Матвій і Марко називають матір Якова та Йосипа. Гармонії євангелій уважають їх за одну жінку; текст цього не каже.",
+   "deu": "Johannes 19:25 nennt Maria, des Kleophas Weib, unter den Frauen beim Kreuz, wo Matthäus und Markus die Mutter des Jakobus und des Joses nennen. Die Evangelienharmonien halten sie für eine einzige Frau; der Text sagt es nicht.",
+   "spa": "Juan 19:25 nombra a María mujer de Cleofas entre las mujeres junto a la cruz, donde Mateo y Marcos nombran a la madre de Jacobo y de José. Las armonías las toman por una misma mujer; el texto no lo dice."
+  },
+  {
+   "english": "Josiah's Passover is some ninety years after Hezekiah's cleansing of the house of the LORD, and these rulers give to the priests. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Пасха Йосії настає приблизно через дев'яносто років після того, як Єзекія очистив дім Господній, і ці правителі дають священикам. Ніхто не показав, що це не одна людина, лише те, що він не пасує до цього вірша.",
+   "deu": "Josias Passa liegt etwa neunzig Jahre nach Hiskias Reinigung des Hauses des HERRN, und diese Obersten geben den Priestern. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "La pascua de Josías es unos noventa años después de la purificación de la casa de Jehová por Ezequías, y estos príncipes dan a los sacerdotes. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "Judges 9:31 has Zebul send messengers to Abimelech in Tormah, a name of the same letters but one, while Abimelech dwelt at Arumah (JDG 9:41); the two may be one town.",
+   "ukr": "Суддів 9:31 каже, що Зевул посилає послів до Авімелеха в Торму — назву, що відрізняється лише однією літерою, тоді як Авімелех жив в Арумі (Суддів 9:41); це може бути одне місто.",
+   "deu": "Richter 9:31 lässt Sebul Boten zu Abimelech nach Thorma senden, einem Namen aus denselben Buchstaben bis auf einen, während Abimelech in Aruma wohnte (Richter 9:41); die beiden könnten ein und dieselbe Stadt sein.",
+   "spa": "Jueces 9:31 hace que Zebul envíe mensajeros a Abimelech en Torma, un nombre de las mismas letras menos una, mientras que Abimelech habitaba en Aruma (Jueces 9:41); las dos pueden ser una misma ciudad."
+  },
+  {
+   "english": "Kishi the son of Abdi was the father of Ethan the singer under David, and Hezekiah's Kish lived centuries later. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Кіші, син Авді, був батьком співака Етана за Давида, а Кіш за Хізкійї жив через кілька століть. Ніхто не показав, що це не одна й та сама людина, а лише те, що вона не пасує до цього вірша.",
+   "deu": "Kisi, der Sohn Abdis, war der Vater des Sängers Ethan unter David, und Hiskias Kis lebte Jahrhunderte später. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu diesem Vers passt.",
+   "spa": "Chîsi hijo de Abdi era el padre de Ethán el cantor en tiempo de David, y Cis, el de Ezequías, vivió siglos después. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "Mark 15:40 and Matthew 27:56 name a Mary by the cross the mother of James and Joses, the names Mark 6:3 and Matthew 13:55 give two of the brothers of Jesus.",
+   "ukr": "Марка 15:40 і Матвія 27:56 називають якусь Марію біля хреста матір'ю Якова та Йосії; ці імена Марка 6:3 і Матвія 13:55 дають двом братам Ісуса.",
+   "deu": "Markus 15:40 und Matthäus 27:56 nennen eine Maria beim Kreuz die Mutter des Jakobus und des Joses – die Namen, die Markus 6:3 und Matthäus 13:55 für zwei der Brüder Jesu angeben.",
+   "spa": "Marcos 15:40 y Mateo 27:56 nombran junto a la cruz a una María, madre de Jacobo y de José, los nombres que Marcos 6:3 y Mateo 13:55 dan a dos de los hermanos de Jesús."
+  },
+  {
+   "english": "Mark 2:14 tells the same calling and the same meal of a publican named Levi the son of Alphaeus.",
+   "ukr": "Марка 2:14 розповідає те саме покликання й ту саму трапезу про митника на ім'я Левій, Алфеїв син.",
+   "deu": "Markus 2:14 erzählt dieselbe Berufung und dasselbe Mahl von einem Zöllner namens Levi, dem Sohn des Alphäus.",
+   "spa": "Marcos 2:14 cuenta el mismo llamamiento y la misma comida de un publicano llamado Leví, hijo de Alfeo."
+  },
+  {
+   "english": "Matthew 10:3 and Mark 3:18 list Thaddaeus where Luke lists Judas of James, and the harmonies take the two for one man. The text does not say so.",
+   "ukr": "Матвія 10:3 і Марка 3:18 називають Тадея там, де Лука називає Юду Якового, і гармонії євангелій вважають їх за одну людину. Текст цього не каже.",
+   "deu": "Matthäus 10:3 und Markus 3:18 nennen Thaddäus dort, wo Lukas Judas, den Sohn des Jakobus, nennt, und die Evangelienharmonien halten die beiden für einen Mann. Der Text sagt das nicht.",
+   "spa": "Mateo 10:3 y Marcos 3:18 ponen a Tadeo donde Lucas pone a Judas de Jacobo, y las armonías los toman por un solo hombre. El texto no lo dice."
+  },
+  {
+   "english": "Matthew 13:55 and Mark 6:3 name a James and a Joses among the brothers of Jesus.",
+   "ukr": "Матвія 13:55 і Марка 6:3 називають Якова та Йосію серед братів Ісуса.",
+   "deu": "Matthäus 13:55 und Markus 6:3 nennen einen Jakobus und einen Joses unter den Brüdern Jesu.",
+   "spa": "Mateo 13:55 y Marcos 6:3 nombran a un Jacobo y a un José entre los hermanos de Jesús."
+  },
+  {
+   "english": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus, beside a James.",
+   "ukr": "Матвія 13:55 і Марка 6:3 називають серед братів Ісуса Йосипа, поряд з Яковом.",
+   "deu": "Matthäus 13:55 und Markus 6:3 nennen unter den Brüdern Jesu einen Joses, neben einem Jakobus.",
+   "spa": "Mateo 13:55 y Marcos 6:3 nombran a un José entre los hermanos de Jesús, junto a un Jacobo."
+  },
+  {
+   "english": "Matthew 13:55 names James and Joses among the brothers of Jesus, whose mother is Mary. Matthew calls this Mary 'the other Mary' and the mother of James and Joses, not his mother; the text does not say whether she is.",
+   "ukr": "Матвія 13:55 називає Якова та Йосію серед братів Ісуса, матір'ю якого є Марія. Матвій називає цю Марію «другою Марією» та матір'ю Якова й Йосії, а не Його матір'ю; текст не каже, чи вона нею є.",
+   "deu": "Matthäus 13:55 nennt Jakobus und Joses unter den Brüdern Jesu, dessen Mutter Maria ist. Matthäus nennt diese Maria „die andere Maria“ und die Mutter des Jakobus und des Joses, nicht seine Mutter; der Text sagt nicht, ob sie es ist.",
+   "spa": "Mateo 13:55 nombra a Jacobo y a José entre los hermanos de Jesús, cuya madre es María. Mateo llama a esta María «la otra María» y madre de Jacobo y de José, no madre de él; el texto no dice si lo es."
+  },
+  {
+   "english": "Matthew 23:35 names Barachias the father of the Zacharias slain between the temple and the altar, the name of this father of the prophet Zechariah; whether that Zacharias is the prophet the text does not say.",
+   "ukr": "Матвія 23:35 називає Варахію батьком того Захарія, що був убитий між храмом і жертівником, — таке ім'я й у батька пророка Захарії; чи той Захарій є пророком, текст не каже.",
+   "deu": "Matthäus 23:35 nennt Barachias als den Vater des Zacharias, der zwischen dem Tempel und dem Altar getötet wurde; das ist der Name dieses Vaters des Propheten Sacharja; ob jener Zacharias der Prophet ist, sagt der Text nicht.",
+   "spa": "Mateo 23:35 nombra a Barachîas como padre del Zacarías muerto entre el templo y el altar, que es el nombre de este padre del profeta Zacarías; si aquel Zacarías es el profeta, el texto no lo dice."
+  },
+  {
+   "english": "Matthew 27:56 and Mark 15:40 name a Mary by the cross the mother of James and Joses, the names Matthew 13:55 and Mark 6:3 give two of the brothers of Jesus.",
+   "ukr": "Матвія 27:56 і Марка 15:40 називають якусь Марію біля хреста матір'ю Якова та Йосії — імена, які Матвія 13:55 і Марка 6:3 дають двом братам Ісуса.",
+   "deu": "Matthäus 27:56 und Markus 15:40 nennen eine Maria bei dem Kreuz die Mutter des Jakobus und des Joses – die Namen, die Matthäus 13:55 und Markus 6:3 für zwei der Brüder Jesu angeben.",
+   "spa": "Mateo 27:56 y Marcos 15:40 nombran junto a la cruz a una María, madre de Jacobo y de José, los nombres que Mateo 13:55 y Marcos 6:3 dan a dos de los hermanos de Jesús."
+  },
+  {
+   "english": "Matthew 9:9-10 tells the same calling and the same meal of a publican named Matthew.",
+   "ukr": "Матвія 9:9-10 розповідає про те саме покликання і ту саму трапезу митника на ймення Матвій.",
+   "deu": "Matthäus 9:9-10 erzählt dieselbe Berufung und dieselbe Mahlzeit von einem Zöllner namens Matthäus.",
+   "spa": "Mateo 9:9-10 cuenta el mismo llamamiento y la misma comida de un publicano llamado Mateo."
+  },
+  {
+   "english": "Matthew and Mark name Mary the mother of James and Joses among the women by the cross (MAT 27:56; MRK 15:40), where John names this Mary the wife of Cleophas (JHN 19:25). The harmonies take them for one woman; the text does not say so.",
+   "ukr": "Матвій і Марко називають Марію, матір Якова та Йосії, серед жінок біля хреста (Матвія 27:56; Марка 15:40), а Іван називає цю Марію дружиною Клеопи (Івана 19:25). Гармонії євангелій вважають їх за одну жінку; текст так не говорить.",
+   "deu": "Matthäus und Markus nennen Maria, die Mutter des Jakobus und des Joses, unter den Frauen beim Kreuz (Matthäus 27:56; Markus 15:40); Johannes nennt diese Maria dort die Frau des Kleophas (Johannes 19:25). Die Evangelienharmonien halten sie für eine einzige Frau; der Text sagt das nicht.",
+   "spa": "Mateo y Marcos nombran a María la madre de Jacobo y de José entre las mujeres que estaban junto a la cruz (Mateo 27:56; Marcos 15:40), donde Juan nombra a esta María como la mujer de Cleofas (Juan 19:25). Las armonías las toman por una sola mujer; el texto no lo dice."
+  },
+  {
+   "english": "Matthew names a Mary by the cross the mother of James and Joses (MAT 27:56), and names James and Joses among the brothers of Jesus (MAT 13:55). He calls her 'the other Mary', not Jesus' mother; the text does not say whether she is.",
+   "ukr": "Матвій називає якусь Марію біля хреста матір'ю Якова та Йосії (Матвія 27:56) і називає Якова та Йосію серед братів Ісуса (Матвія 13:55). Він називає її «другою Марією», а не матір'ю Ісуса; чи вона нею є, текст не говорить.",
+   "deu": "Matthäus nennt eine Maria beim Kreuz die Mutter des Jakobus und des Joses (Matthäus 27:56) und nennt Jakobus und Joses unter den Brüdern Jesu (Matthäus 13:55). Er nennt sie „die andere Maria“, nicht die Mutter Jesu; ob sie es ist, sagt der Text nicht.",
+   "spa": "Mateo nombra junto a la cruz a una María, madre de Jacobo y de José (Mateo 27:56), y nombra a Jacobo y a José entre los hermanos de Jesús (Mateo 13:55). La llama «la otra María», no la madre de Jesús; el texto no dice si lo es."
+  },
+  {
+   "english": "Nehemiah 12:16 names a Zechariah head of the house of Iddo in Joiakim's day, and this prophet was of Iddo's line (ZEC 1:1; EZR 5:1) a generation before. The text does not say they are one man.",
+   "ukr": "Неемії 12:16 називає Захарія головою дому Іддового за днів Йоякима, а цей пророк походив з роду Іддового (Захарії 1:1; Ездри 5:1) за покоління раніше. Текст не каже, що це одна людина.",
+   "deu": "Nehemia 12:16 nennt einen Sacharja als Haupt des Hauses Iddo in den Tagen Jojakims, und dieser Prophet stammte aus Iddos Geschlecht (Sacharja 1:1; Esra 5:1), eine Generation früher. Der Text sagt nicht, dass sie ein und derselbe Mann sind.",
+   "spa": "Nehemías 12:16 nombra a un Zacarías jefe de la casa de Iddo en los días de Joiacim, y este profeta era del linaje de Iddo (Zacarías 1:1; Esdras 5:1) una generación antes. El texto no dice que sean un mismo hombre."
+  },
+  {
+   "english": "Numbers 26:30 counts Iezer among the sons of Gilead, and 1 Chronicles 7:18 gives Abiezer to Gilead's sister. Read as each verse stands, they are two men of one family who share a name.",
+   "ukr": "Числа 26:30 зараховують Єзера до синів Ґілеада, а 1 Хронік 7:18 називає Авіезера сином сестри Ґілеада. Якщо читати кожен вірш так, як він стоїть, це двоє людей одного роду, які мають спільне ім'я.",
+   "deu": "4. Mose 26:30 zählt Hieser unter die Söhne Gileads, und 1. Chronik 7:18 gibt Abieser der Schwester Gileads. So gelesen, wie jeder Vers dasteht, sind es zwei Männer aus einer Familie, die denselben Namen tragen.",
+   "spa": "Números 26:30 cuenta a Jezer entre los hijos de Galaad, y 1 Crónicas 7:18 da Abiezer a la hermana de Galaad. Leídos tal como está cada versículo, son dos hombres de una misma familia que comparten nombre."
+  },
+  {
+   "english": "Numbers 26:30 has \"Iezer, the family of the Iezerites\" where Joshua 17:2 has \"the children of Abiezer\" in the same list of clans, and Gideon's clan is Abiezer (Judges 6:11, 6:34), so Iezer reads as Abiezer shortened. \"The sons of Gilead\" is then the clans of Gilead's house: by 1 Chronicles 7:18 he was the son of Gilead's sister.",
+   "ukr": "У Числа 26:30 є «Єзер рід Єзерів» там, де в Ісуса Навина 17:2 є «синам Авіезера» в тому самому переліку родів, а рід Гедеона — Авіезер (Суддів 6:11, 6:34), тож Єзер читається як скорочене Авіезер. «Ґілеадові сини» тоді — це роди дому Ґілеада: за 1 Хронік 7:18 він був сином сестри Ґілеада.",
+   "deu": "4. Mose 26:30 hat \"Hieser, daher kommt das Geschlecht der Hieseriter\", wo Josua 17:2 in derselben Aufzählung der Sippen \"den Kindern Abiesers\" hat, und Gideons Sippe ist Abieser (Richter 6:11, 6:34); so liest sich Diesar als verkürztes Abieser. \"Die Kinder Gileads\" sind dann die Sippen vom Haus Gileads: Nach 1. Chronik 7:18 war er der Sohn von Gileads Schwester.",
+   "spa": "Números 26:30 tiene \"Jezer, la familia de los Jezeritas\" donde Josué 17:2 tiene \"los hijos de Abiezer\" en la misma lista de clanes, y el clan de Gedeón es Abiezer (Jueces 6:11, 6:34), de modo que Jezer se lee como Abiezer abreviado. \"Los hijos de Galaad\" son entonces los clanes de la casa de Galaad: según 1 Crónicas 7:18 él era hijo de la hermana de Galaad."
+  },
+  {
+   "english": "One Ahasuerus could stand for Ezra 4:6, Esther and this verse. Against it: Ezra 4:5-7 places its Ahasuerus after Cyrus, and this one's son was already sixty-two when Babylon fell before Cyrus reigned, so the text does not let them be one king; which king of the Medes he was it does not say.",
+   "ukr": "Один Ахашверош міг би стояти і в Ездри 4:6, і в Естер, і в цьому вірші. Проти цього: Ездри 4:5-7 ставить свого Ахашвероша по Кірові, а син цього вже мав шістдесят два роки, коли впав Вавилон, перш ніж запанував Кір, тож текст не дозволяє їм бути одним царем; котрий це був цар мідян, він не каже.",
+   "deu": "Ein Ahasveros könnte für Esra 4:6, für Ester und für diesen Vers stehen. Dagegen spricht: Esra 4:5-7 setzt seinen Ahasveros nach Kores, und der Sohn dieses Ahasveros war schon zweiundsechzig, als Babel fiel, bevor Kores herrschte; so lässt der Text nicht zu, dass sie ein und derselbe König sind; welcher König der Meder er war, sagt er nicht.",
+   "spa": "Un solo Assuero podría corresponder a Esdras 4:6, a Ester y a este versículo. En contra: Esdras 4:5-7 coloca a su Assuero después de Ciro, y el hijo de este ya tenía sesenta y dos años cuando cayó Babilonia, antes de que reinara Ciro, de modo que el texto no permite que sean un mismo rey; de qué rey de los medos se trata, no lo dice."
+  },
+  {
+   "english": "Read as 'Azubah a woman, and (the daughter) of Jerioth', the second name says where the first came from rather than adding a person. Nothing in the clause supplies the missing word, which is what the reading has to assume.",
+   "ukr": "Якщо читати як «Азува, жінка, і (дочка) Еріот», то друге ім'я вказує, звідки походить перше, а не додає нової особи. Ніщо в цьому реченні не подає пропущеного слова, а саме його й доводиться припускати за такого читання.",
+   "deu": "Liest man es als „Asuba, eine Frau, und (die Tochter) von Jeriot“, so sagt der zweite Name, woher der erste kam, und fügt keine Person hinzu. Nichts im Satz liefert das fehlende Wort, und genau das muss diese Lesart voraussetzen.",
+   "spa": "Leído como «Azuba mujer, y (la hija) de Jerioth», el segundo nombre dice de dónde procedía el primero en vez de añadir una persona. Nada en la cláusula suple la palabra que falta, que es lo que la lectura tiene que suponer."
+  },
+  {
+   "english": "The Azariah who walked at the dedication of the wall (NEH 12:33) may be he, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of his house in Joiakim's day (NEH 12:12), so his walking at the dedication in 445 is hard to hold.",
+   "ukr": "Азарія, що йшов під час освячення муру (Неемії 12:33), може бути тим, кого Неемії 7:7 називає Азарією. Проти цього: його син Мерая був головою його роду за днів Йоякима (Неемії 12:12), тож його ходу під час освячення в 445 році важко припустити.",
+   "deu": "Der Asarja, der bei der Einweihung der Mauer ging (Nehemia 12:33), kann er sein, den Nehemia 7:7 Asarja nennt. Dagegen spricht: Sein Sohn Meraja war zur Zeit Jojakims Haupt seines Hauses (Nehemia 12:12), sodass sein Gehen bei der Einweihung im Jahr 445 schwer zu halten ist.",
+   "spa": "El Azarías que caminó en la dedicación del muro (Nehemías 12:33) puede ser él, a quien Nehemías 7:7 llama Azarías. En contra: su hijo Meraías era cabeza de su casa en los días de Joiacim (Nehemías 12:12), así que es difícil sostener que caminara en la dedicación en el año 445."
+  },
+  {
+   "english": "The Hebrew names him only once, and as one man. His name in the Septuagint's account of Abraham may be that translation bringing the two covenants at Beersheba into line with each other rather than a witness that the name was an office.",
+   "ukr": "Єврейський текст називає його лише один раз, і як одну людину. Його ім'я в розповіді Септуагінти про Авраама може бути наслідком того, що цей переклад узгоджує між собою два завіти в Беер-Шеві, а не свідченням того, що це ім'я було посадою.",
+   "deu": "Der hebräische Text nennt ihn nur einmal, und zwar als einen einzelnen Mann. Dass sein Name in der Darstellung der Septuaginta über Abraham steht, mag eher daran liegen, dass diese Übersetzung die beiden Bündnisse in Beerscheba einander angleicht, als dass es ein Zeugnis dafür wäre, dass der Name ein Amt war.",
+   "spa": "El hebreo lo nombra solo una vez, y como un solo hombre. Su nombre en el relato de la Septuaginta sobre Abraham puede ser esa traducción armonizando entre sí los dos pactos de Beer-seba, más bien que un testimonio de que el nombre era un cargo."
+  },
+  {
+   "english": "The Vulgate reads the clause this way, and an Arabic tradition with it: Caleb begat Jerioth of Azubah his wife, and 'her sons' are Jerioth's. It takes the feminine suffix in its nearest sense, at the cost of making the three Caleb's grandsons rather than his sons.",
+   "ukr": "Так читає це речення Вульгата, а з нею й арабська традиція: Калев породив Еріот від Азуви, своєї дружини, і «її сини» — це сини Еріот. Вона розуміє жіночий суфікс у найближчому його значенні, ціною того, що ці троє стають внуками Калева, а не його синами.",
+   "deu": "Die Vulgata liest den Satz so, und eine arabische Überlieferung mit ihr: Kaleb zeugte Jeriot von Asuba, seiner Frau, und „ihre Söhne“ sind die Söhne Jeriots. Sie nimmt das weibliche Suffix in seinem nächstliegenden Sinn, um den Preis, dass die drei Enkel Kalebs werden statt seiner Söhne.",
+   "spa": "La Vulgata lee así la cláusula, y con ella una tradición árabe: Caleb engendró a Jerioth de Azuba su mujer, y «sus hijos» son los de Jerioth. Toma el sufijo femenino en su sentido más cercano, a costa de hacer de los tres nietos de Caleb y no hijos suyos."
+  },
+  {
+   "english": "The head of a house who returned in 538, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of the house in Joiakim's day (NEH 12:12), so the father walking at the dedication in 445 is hard to hold.",
+   "ukr": "Голова дому, що повернувся 538 року, якого Неемії 7:7 називає Азарією. Проти цього: його син Мерая був головою дому за днів Йоякима (Неемії 12:12), тож важко вважати, що батько йшов на відкритті 445 року.",
+   "deu": "Das Haupt eines Vaterhauses, das 538 zurückkehrte und das Nehemia 7:7 Asarja nennt. Dagegen spricht: Sein Sohn Meraja war zur Zeit Jojakims Haupt des Vaterhauses (Nehemia 12:12); dass der Vater bei der Einweihung im Jahr 445 mitging, ist daher schwer zu halten.",
+   "spa": "El cabeza de casa que volvió en 538, a quien Nehemías 7:7 llama Azarías. En contra: su hijo Meraías era cabeza de la casa en los días de Joiacim (Nehemías 12:12), de modo que es difícil sostener que el padre caminara en la dedicación en 445."
+  },
+  {
+   "english": "The man she is speaking to. On the vocative reading the word names Jehu, addressed by the name of the usurper he is being likened to.",
+   "ukr": "Чоловік, до якого вона говорить. За кличним прочитанням це слово називає Єгу, до якого звертаються іменем узурпатора, з яким його порівнюють.",
+   "deu": "Der Mann, zu dem sie spricht. Nach der Lesart als Anrede nennt das Wort Jehu, angeredet mit dem Namen des Usurpators, mit dem er verglichen wird.",
+   "spa": "El hombre a quien ella habla. En la lectura vocativa la palabra nombra a Jehú, a quien se dirige con el nombre del usurpador con quien se le compara."
+  },
+  {
+   "english": "The name is the first part of Shalmaneser's, and the king of Assyria who besieged Samaria (2KI 17:3) may be meant; the text does not say.",
+   "ukr": "Це ім'я є першою частиною імені Салманасара, і, можливо, мається на увазі цар Ашшуру, що облягав Самарію (2 Царів 17:3); текст не каже.",
+   "deu": "Der Name ist der erste Teil des Namens Salmanasser, und gemeint sein kann der König von Assyrien, der Samaria belagerte (2. Könige 17:3); der Text sagt es nicht.",
+   "spa": "El nombre es la primera parte del de Salmanasar, y puede referirse al rey de Asiria que sitió Samaria (2 Reyes 17:3); el texto no lo dice."
+  },
+  {
+   "english": "The plainest reading of two names under one verb, and the one the translations print. Against it, the sons are then hers and not Azubah's, and the verse has named Azubah first and called her the wife.",
+   "ukr": "Це найпростіше прочитання двох імен при одному дієслові, і саме його подають переклади. Проти нього те, що тоді сини є її, а не Азуви, а вірш назвав першою Азуву й назвав її дружиною.",
+   "deu": "Das ist die schlichteste Lesart von zwei Namen unter einem Verb, und die Übersetzungen drucken sie so. Dagegen spricht: Die Söhne sind dann ihre und nicht die der Asuba, und der Vers hat Asuba zuerst genannt und sie die Frau genannt.",
+   "spa": "La lectura más sencilla de dos nombres bajo un mismo verbo, y la que imprimen las traducciones. En su contra, los hijos son entonces de ella y no de Azuba, y el versículo ha nombrado primero a Azuba y la ha llamado la mujer."
+  },
+  {
+   "english": "The prophet Zechariah is 'the son of Berechiah' (Zechariah 1:1), the father Matthew names; the Old Testament does not say how he died.",
+   "ukr": "Пророк Захарій — «син Берехії» (Захарії 1:1), батька, якого називає Матвій; Старий Заповіт не говорить, як він помер.",
+   "deu": "Der Prophet Sacharja ist „der Sohn Berechjas“ (Sacharja 1:1), des Vaters, den Matthäus nennt; das Alte Testament sagt nicht, wie er starb.",
+   "spa": "El profeta Zacarías es «hijo de Berechîas» (Zacarías 1:1), el padre que nombra Mateo; el Antiguo Testamento no dice cómo murió."
+  },
+  {
+   "english": "The prophet Zechariah was of Iddo's line (ZEC 1:1; EZR 5:1) and prophesied a generation before Joiakim, so he could be the head of Iddo's house that Nehemiah 12:16 names. The text does not say so.",
+   "ukr": "Пророк Захарій походив із роду Іддо (Захарії 1:1; Ездри 5:1) і пророкував за покоління до Йоякима, тож він міг бути главою дому Іддо, якого називає Неемії 12:16. Текст цього не каже.",
+   "deu": "Der Prophet Sacharja stammte aus der Linie Iddos (Sacharja 1:1; Esra 5:1) und weissagte eine Generation vor Jojakim, daher könnte er das Haupt von Iddos Haus sein, das Nehemia 12:16 nennt. Der Text sagt das nicht.",
+   "spa": "El profeta Zacarías era de la línea de Iddo (Zacarías 1:1; Esdras 5:1) y profetizó una generación antes de Joiacim, de modo que podría ser el jefe de la casa de Iddo que Nehemías 12:16 nombra. El texto no lo dice."
+  },
+  {
+   "english": "The prophet Zechariah's father is Berechiah (Zechariah 1:1), the same name; whether the Zacharias of Matthew 23:35 is the prophet the text does not say.",
+   "ukr": "Батько пророка Захарія — Берехія (Захарії 1:1), тобто те саме ім'я; чи є Захарій з Матвія 23:35 пророком, текст не говорить.",
+   "deu": "Der Vater des Propheten Sacharja ist Berechja (Sacharja 1:1), also derselbe Name; ob der Zacharias aus Matthäus 23:35 der Prophet ist, sagt der Text nicht.",
+   "spa": "El padre del profeta Zacarías es Berechîas (Zacarías 1:1), el mismo nombre; si el Zacarías de Mateo 23:35 es el profeta, el texto no lo dice."
+  },
+  {
+   "english": "The text gives the same name and the same office in both accounts and does not say they are two men; if Abimelech was one long-reigning king, one commander serving him throughout is possible.",
+   "ukr": "Текст подає те саме ім'я й той самий уряд в обох оповіданнях і не каже, що це двоє людей; якщо Авімелех був одним царем, який довго царював, то цілком можливо, що один воєвода служив йому весь той час.",
+   "deu": "Der Text nennt in beiden Berichten denselben Namen und dasselbe Amt und sagt nicht, dass es zwei Männer sind; wenn Abimelech ein einziger, lange regierender König war, ist ein einziger Feldhauptmann, der ihm die ganze Zeit diente, möglich.",
+   "spa": "El texto da el mismo nombre y el mismo cargo en ambos relatos y no dice que sean dos hombres; si Abimelech fue un solo rey de largo reinado, es posible que un solo comandante lo sirviera durante todo ese tiempo."
+  },
+  {
+   "english": "The title of Psalm 34 says David changed his behaviour before Abimelech, and 1 Samuel 21:10-15 tells the same flight before Achish king of Gath. If Abimelech is a title of the Philistine kings, the king of the psalm is Achish bearing it; if it is a name, the psalm's title and the history name the king differently.",
+   "ukr": "Напис над Псалмом 34 каже, що Давид змінив свою поведінку перед Авімелехом, а 1 Самуїлова 21:10-15 розповідає про ту саму втечу перед Ахішем, царем ґатським. Якщо Авімелех є титулом филистимських царів, то цар псалма — це Ахіш, що його носить; якщо це ім'я, то напис псалма та історія називають царя по-різному.",
+   "deu": "Die Überschrift von Psalm 34 sagt, David habe vor Abimelech seine Gebärde verstellt, und 1. Samuel 21:10-15 erzählt dieselbe Flucht zu Achis, dem König von Gat. Ist Abimelech ein Titel der philistäischen Könige, dann ist der König des Psalms Achis, der ihn trägt; ist es ein Name, dann nennen die Überschrift des Psalms und die Geschichte den König verschieden.",
+   "spa": "El título del Salmo 34 dice que David mudó su comportamiento delante de Abimelech, y 1 Samuel 21:10-15 cuenta la misma huida ante Achîs rey de Gath. Si Abimelech es un título de los reyes filisteos, el rey del salmo es Achîs que lo lleva; si es un nombre, el título del salmo y la historia nombran al rey de manera distinta."
+  },
+  {
+   "english": "The title of Psalm 34 says David changed his behaviour before Abimelech, where 1 Samuel 21:10-15 tells the same flight before him. If Abimelech is a title of the Philistine kings, he bore it there; if it is a name, the psalm's title and the history name the king differently.",
+   "ukr": "У надписі до 34-го псалма сказано, що Давид змінив свою поведінку перед Авімелехом, а 1 Самуїлова 21:10-15 розповідає про ту саму втечу перед ним. Якщо Авімелех — титул филистимських царів, він носив його там; якщо це ім'я, то надпис псалма та історія називають царя по-різному.",
+   "deu": "Die Überschrift von Psalm 34 sagt, David habe vor Abimelech seine Gebärde verstellt, wo 1. Samuel 21:10-15 dieselbe Flucht vor ihm erzählt. Ist Abimelech ein Titel der philistäischen Könige, so trug er ihn dort; ist es ein Name, so nennen die Überschrift des Psalms und die Geschichtserzählung den König verschieden.",
+   "spa": "El título del Salmo 34 dice que David cambió su conducta delante de Abimelech, donde 1 Samuel 21:10-15 cuenta la misma huida delante de él. Si Abimelech es un título de los reyes filisteos, lo llevó allí; si es un nombre, el título del salmo y la historia nombran al rey de modo distinto."
+  },
+  {
+   "english": "The usurper who killed Elah and reigned seven days in Tirzah, whose end is the point of the taunt. On this reading the word names him and Jehu is only being compared to him.",
+   "ukr": "Узурпатор, що вбив Елу й царював сім днів у Тірці, чий кінець і є суттю глуму. За цього прочитання слово називає його, а Єгу лише порівнюється з ним.",
+   "deu": "Der Thronräuber, der Ela tötete und sieben Tage in Tirza regierte, dessen Ende der Kern des Spottes ist. Nach dieser Lesart nennt das Wort ihn, und Jehu wird nur mit ihm verglichen.",
+   "spa": "El usurpador que mató a Ela y reinó siete días en Tirsa, cuyo fin es el punto de la burla. Según esta lectura, la palabra lo nombra a él y Jehú solo es comparado con él."
+  },
+  {
+   "english": "The verse calls this Jehoiada the son of Benaiah, not his father, and sets him among the king's counsellors. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Вірш називає цього Єгояду сином Бенаї, а не його батьком, і ставить його серед радників царя. Ніхто не показав, що це не одна людина, лише те, що він не пасує до цього вірша.",
+   "deu": "Der Vers nennt diesen Jojada den Sohn Benajas, nicht seinen Vater, und stellt ihn unter die Ratgeber des Königs. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "El versículo llama a este Joiada hijo de Benaía, no su padre, y lo pone entre los consejeros del rey. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "The verse names Jeiel twice, so two men, and this first one stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "У цьому вірші Єіїл названий двічі, отже це дві різні людини, і цей перший стоїть там, де після Захарія стоїть Яазіїл, або Азіїл. Ніхто не показав, що вони не є однією людиною, показано лише, що він не пасує до цього вірша.",
+   "deu": "Der Vers nennt Jeiel zweimal, also sind es zwei Männer, und dieser erste steht dort, wo nach Sacharja Jaesiel oder Asiel steht. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu diesem Vers passt.",
+   "spa": "El versículo nombra a Jeiel dos veces, de modo que son dos hombres, y este primero ocupa el lugar donde después de Zacarías está Jaaziel, o Aziel. Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "The verse sets this group among the priests, apart from the Levite singers of the second degree in 1CH 15:18-20. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Вірш ставить цю групу серед священиків, окремо від левітів-співаків другого ряду в 1 Хронік 15:18-20. Ніхто не показав, що це не одна й та сама людина, а лише те, що він не підходить до цього вірша.",
+   "deu": "Der Vers stellt diese Gruppe unter die Priester, getrennt von den levitischen Sängern der zweiten Ordnung in 1. Chronik 15:18-20. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu diesem Vers passt.",
+   "spa": "El versículo sitúa a este grupo entre los sacerdotes, aparte de los cantores levitas del segundo orden de 1 Crónicas 15:18-20. Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que él no encaja en este versículo."
+  },
+  {
+   "english": "This Michael stands generations back in Abihail's line, while the Michael of 1CH 5:13 is one of the brothers of a later day. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Цей Михаїл стоїть на кілька поколінь раніше в роді Авіхаїла, а Михаїл з 1 Хронік 5:13 — один із братів пізнішого часу. Ніхто не показав, що це не одна й та сама людина, а лише те, що вона не пасує до цього вірша.",
+   "deu": "Dieser Michael steht mehrere Generationen zurück in Abihails Linie, während der Michael von 1. Chronik 5:13 einer der Brüder einer späteren Zeit ist. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu diesem Vers passt.",
+   "spa": "Este Michâel está generaciones atrás en el linaje de Abihail, mientras que el Michâel de 1 Crónicas 5:13 es uno de los hermanos de un día posterior. Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "Tradition takes him for John the son of Zebedee, one of the Twelve. The book does not say which John he is.",
+   "ukr": "Переказ уважає його за Івана, сина Зеведеєвого, одного з Дванадцяти. Книга не каже, котрий він Іван.",
+   "deu": "Die Überlieferung hält ihn für Johannes, den Sohn des Zebedäus, einen der Zwölf. Das Buch sagt nicht, welcher Johannes er ist.",
+   "spa": "La tradición lo tiene por Juan el hijo de Zebedeo, uno de los Doce. El libro no dice de qué Juan se trata."
+  },
+  {
+   "english": "Tradition takes the John who saw the Revelation (REV 1:1, 1:9) for him. The book does not say which John it is.",
+   "ukr": "Передання вважає, що Іван, який бачив Об'явлення (Об'явлення 1:1, 1:9), є ним. Книга не каже, який це Іван.",
+   "deu": "Die Überlieferung hält den Johannes, der die Offenbarung schaute (Offenbarung 1:1, 1:9), für ihn. Das Buch sagt nicht, welcher Johannes es ist.",
+   "spa": "La tradición tiene por él al Juan que vio el Apocalipsis (Apocalipsis 1:1, 1:9). El libro no dice de qué Juan se trata."
+  },
+  {
+   "english": "Uriel of Gibeah may be another man than Abishalom, whose daughter Kings names as Abijam's mother (1KI 15:2). Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Уріїл із Ґів'и може бути іншою людиною, ніж Авесалом, чию дочку Книга Царів називає матір'ю Авійяма (1 Царів 15:2). Ніхто не показав, що це не одна людина, лише те, що він не пасує до цього вірша.",
+   "deu": "Uriel von Gibea kann ein anderer Mann sein als Abisalom, dessen Tochter die Könige als Mutter Abiams nennen (1. Könige 15:2). Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, sondern nur, dass er nicht zu diesem Vers passt.",
+   "spa": "Uriel de Gabaa puede ser otro hombre distinto de Abisalom, cuya hija nombra Reyes como la madre de Abías (1 Reyes 15:2). Nadie ha demostrado que los dos no sean un solo hombre, sino solo que no encaja en este versículo."
+  },
+  {
+   "english": "Uzziah's counsellor lived two centuries before the prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+   "ukr": "Дорадник Уззійї жив за двісті років до пророка часу повернення з вигнання. Ніхто не показав, що це не одна й та сама людина, а лише те, що він не підходить до цього вірша.",
+   "deu": "Usias Ratgeber lebte zwei Jahrhunderte vor dem Propheten der Rückkehr aus dem Exil. Niemand hat gezeigt, dass die beiden nicht ein und derselbe Mann sind, nur dass er nicht zu diesem Vers passt.",
+   "spa": "El consejero de Uzzías vivió dos siglos antes del profeta del regreso del destierro. Nadie ha demostrado que los dos no sean un mismo hombre, sino solo que él no encaja en este versículo."
+  },
+  {
+   "english": "Wellhausen proposed reading the clause otherwise, and BDB records the proposal under the name. An emendation is an answer about the text rather than about the person, and it is listed here because it is one of the ways the difficulty has been met.",
+   "ukr": "Велгаузен запропонував читати це речення інакше, і словник Брауна, Драйвера і Бріґґса зазначає цю пропозицію під цим іменем. Виправлення тексту — це відповідь про текст, а не про особу, і його наведено тут, бо це один зі способів, якими розв'язували цю складність.",
+   "deu": "Wellhausen schlug vor, den Satz anders zu lesen, und BDB verzeichnet den Vorschlag unter dem Namen. Eine Textänderung ist eine Antwort über den Text und nicht über die Person, und sie wird hier aufgeführt, weil sie eine der Weisen ist, wie man der Schwierigkeit begegnet ist.",
+   "spa": "Wellhausen propuso leer la cláusula de otro modo, y BDB registra la propuesta bajo el nombre. Una enmienda es una respuesta sobre el texto más que sobre la persona, y se incluye aquí porque es una de las maneras en que se ha afrontado la dificultad."
+  },
+  {
+   "english": "Zechariah the son of Jehoiada the priest was stoned 'in the court of the house of the LORD' (2 Chronicles 24:20-21), which is where Matthew and Luke place this death; the verses name a different father.",
+   "ukr": "Захарія, сина священика Єгояди, було побито камінням «в подвір'ї Господнього дому» (2 Хронік 24:20-21), а саме там Матвій і Лука поміщають цю смерть; ці вірші називають іншого батька.",
+   "deu": "Sacharja, der Sohn des Priesters Jojada, wurde „im Hofe am Hause des HERRN“ gesteinigt (2. Chronik 24:20-21); dorthin verlegen Matthäus und Lukas diesen Tod; die Verse nennen einen anderen Vater.",
+   "spa": "Zacarías, hijo de Joiada el sacerdote, fue apedreado «en el patio de la casa de Jehová» (2 Crónicas 24:20-21), que es donde Mateo y Lucas sitúan esta muerte; los versículos nombran a un padre distinto."
+  },
+  {
+   "english": "יְרִיעוֹת is the plural of the word for a curtain (H3407), and a midrashic reading takes the clause to be describing Azubah rather than naming a second person. Strong's Dictionary heads the form as a name, which is a lexicographer's decision about this verse and not an independent witness to it.",
+   "ukr": "יְרִיעוֹת — це множина слова на позначення завіси (H3407), і мідрашистське прочитання вважає, що застереження описує Азуву, а не називає другу особу. Словник Стронга подає цю форму як ім'я, а це рішення словникаря щодо цього вірша, а не незалежне свідчення про нього.",
+   "deu": "יְרִיעוֹת ist der Plural des Wortes für einen Vorhang (H3407), und eine midraschische Lesart versteht den Satzteil so, dass er Asuba beschreibt, statt eine zweite Person zu nennen. Strongs Wörterbuch führt die Form als Namen auf; das ist eine Entscheidung des Lexikographen über diesen Vers und kein unabhängiger Zeuge dafür.",
+   "spa": "יְרִיעוֹת es el plural de la palabra para cortina (H3407), y una lectura midrásica entiende que la cláusula describe a Azuba y no nombra a una segunda persona. El Diccionario de Strong encabeza la forma como nombre, lo cual es una decisión del lexicógrafo sobre este versículo y no un testigo independiente de él."
+  }
+ ]
+}

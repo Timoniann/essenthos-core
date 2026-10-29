@@ -235,10 +235,16 @@ internal static partial class EncyclopediaEndpoints
                         a.Describes,
                         a.Reason,
                         a.Source,
+                        a.Back,
+                        a.ReasonRenderings,
                     })
                     .ToListAsync(cancellationToken))
                 .Select(a => new EntityAlternativeResponse(
-                    a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source)))
+                    a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source))
+                {
+                    Back = a.Back,
+                    LocalReason = ReasonRenderings.In(a.ReasonRenderings, EntityNames.Local(words)),
+                })
                 .ToList();
 
             var readByUs = await OursOnlyRecords.Among(
@@ -382,7 +388,7 @@ internal static partial class EncyclopediaEndpoints
                         EnumSpelling.Of(c.Method), c.Confidence, c.Source, Datasets.Of(c.Source))),
                 ],
                 alternatives,
-                alternatives.Count > 0)
+                alternatives.Any(a => !a.Back))
             {
                 // A person headed by another name is said by it in the rows of the page: John companion of Barnabas.
                 Forms = renamed is null

@@ -1,0 +1,1094 @@
+[
+ {
+  "id": "0091b83095ab",
+  "sha256": "0091b83095ab184331ddb1bd974745c9fa9b87b2894364d1c2373d60c8f4e22a",
+  "english": "Chronicles names Abijah's mother Michaiah the daughter of Uriel of Gibeah (2CH 13:2), where Kings names her Maachah the daughter of Abishalom (1KI 15:2). Nobody has shown that Uriel and Abishalom are not one man.",
+  "said": [
+   {
+    "record": "abishalom",
+    "other": "uriel-of-gibeah",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "01ffbbaa77bc",
+  "sha256": "01ffbbaa77bce30dfcc763f99704ba292d9bfa7a6a001e5553df28c9610b3b75",
+  "english": "Jerioth, named beside her under the same verb (1CH 2:18), may be her second name: Caleb begat children of Azubah his wife, who was also called Jerioth. It accounts for 'her sons' without needing a second woman.",
+  "said": [
+   {
+    "record": "azubah-2",
+    "other": "jerioth",
+    "side": "back",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "0547c3b3f5a5",
+  "sha256": "0547c3b3f5a5959d2285bc788c26b06d65cabb343d4960d6398fe51c417e0dd2",
+  "english": "Tradition takes the John who saw the Revelation (REV 1:1, 1:9) for him. The book does not say which John it is.",
+  "said": [
+   {
+    "record": "john-2",
+    "other": "john-who-saw-the-revelation",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "08ba346ced01",
+  "sha256": "08ba346ced01737e3ff4e017deadb78e937bc38376682c3559fe9746a74267f0",
+  "english": "The verse names Jeiel twice, so two men, and this first one stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "jeiel-the-alamoth-psaltery-player",
+    "other": "jeiel-4",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "093b4798ea61",
+  "sha256": "093b4798ea619b44131243b7540fe9fcaca04fb5cebc0c146b5760a0de8257d9",
+  "english": "A Hilkiah stood at Ezra's right hand when he read the law (NEH 8:4), some ninety years after this Hilkiah came up with Zerubbabel. The text does not say whether the two are one man.",
+  "said": [
+   {
+    "record": "hilkiah-3",
+    "other": "hilkiah-at-ezras-right-hand",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "0963002bbac5",
+  "sha256": "0963002bbac58542a489532a952bad467374de336e74304dcb6384d3dc4ab265",
+  "english": "Matthew 9:9-10 tells the same calling and the same meal of a publican named Matthew.",
+  "said": [
+   {
+    "record": "levi-son-of-alphaeus",
+    "other": "matthew",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "0b01d5f34a45",
+  "sha256": "0b01d5f34a4596ae6446063aced1da3debdbb72e45b0c108d40b89155d93e14f",
+  "english": "A Michael stands generations back in Abihail's line (1CH 5:14), while this Michael is one of the brothers of a later day (1CH 5:13). Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "michael-2",
+    "other": "michael-the-gadite-forefather",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "0b043b5c3e79",
+  "sha256": "0b043b5c3e791f0184059b79f908859ea5a44cfe8fa679470db8a198904ad572",
+  "english": "Numbers 26:30 counts Iezer among the sons of Gilead, and 1 Chronicles 7:18 gives Abiezer to Gilead's sister. Read as each verse stands, they are two men of one family who share a name.",
+  "said": [
+   {
+    "record": "iezer",
+    "other": "a son of Gilead, and another man than the Abiezer whom Hammolecheth bore",
+    "side": "forward",
+    "file": "UnsettledRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "0d59cff13c11",
+  "sha256": "0d59cff13c1126513e98dab0aa96c1598cc4179312d39406b90ff7a3864b21e3",
+  "english": "The man she is speaking to. On the vocative reading the word names Jehu, addressed by the name of the usurper he is being likened to.",
+  "said": [
+   {
+    "record": "zimri-in-jezebels-cry",
+    "other": "jehu-2",
+    "side": "forward",
+    "file": "OwnRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "10c17a04540a",
+  "sha256": "10c17a04540a04679b560c39ec5df3d854f6f9a815f783a1a58f1c2183141ea8",
+  "english": "Jesus speaks of Zacharias the son of Barachias, slain between the temple and the altar (MAT 23:35; LUK 11:51), and this Zechariah was stoned 'in the court of the house of the LORD' (2CH 24:21); the verses name a different father.",
+  "said": [
+   {
+    "record": "zechariah-12",
+    "other": "zacharias-son-of-barachias",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "11a6bd1514a5",
+  "sha256": "11a6bd1514a5349a1fec6d5139078ceebe49290b7f37553d489b02a5a73c3f91",
+  "english": "Hosea 10:14 names Shalman, who spoiled Beth-arbel in the day of battle; the name is the first part of his, and he may be meant. The text does not say.",
+  "said": [
+   {
+    "record": "shalmaneser",
+    "other": "shalman",
+    "side": "back",
+    "file": "UnreadNameRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "152b92dba02c",
+  "sha256": "152b92dba02c33b2ad511a0c14a394260b8ccf3c7b125d1ddca7f31ef0ab4775",
+  "english": "The prophet Zechariah was of Iddo's line (ZEC 1:1; EZR 5:1) and prophesied a generation before Joiakim, so he could be the head of Iddo's house that Nehemiah 12:16 names. The text does not say so.",
+  "said": [
+   {
+    "record": "zechariah-25",
+    "other": "zechariah-13",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "1844aad7cf9a",
+  "sha256": "1844aad7cf9a42280b2adab97dec2c58651da34c21ba5a90b30ee2296d9b83f9",
+  "english": "The text gives the same name and the same office in both accounts and does not say they are two men; if Abimelech was one long-reigning king, one commander serving him throughout is possible.",
+  "said": [
+   {
+    "record": "phicol",
+    "other": "one man named Phicol, who commanded the army of Gerar under Abraham's Abimelech and again under Isaac's (GEN 21:22; 26:26)",
+    "side": "forward",
+    "file": "TitleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "1b27d5da9bb4",
+  "sha256": "1b27d5da9bb459dda30f3c264c6835325d6c8ef9a7301566b3279487ee74f701",
+  "english": "1 Chronicles 3:15 names Josiah's firstborn Johanan, and lists Jehoahaz, who is Shallum (JER 22:11), fourth. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "jehoahaz-2",
+    "other": "johanan-firstborn-of-josiah",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "28697854e021",
+  "sha256": "28697854e021406202542073484a270b15401c94b23378bf41b759fe769a5cc9",
+  "english": "The Vulgate reads the clause this way, and an Arabic tradition with it: Caleb begat Jerioth of Azubah his wife, and 'her sons' are Jerioth's. It takes the feminine suffix in its nearest sense, at the cost of making the three Caleb's grandsons rather than his sons.",
+  "said": [
+   {
+    "record": "jerioth",
+    "other": "the daughter of Caleb and Azubah, by whom the three sons came",
+    "side": "forward",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "29137b2ba1a1",
+  "sha256": "29137b2ba1a11a8dfc45c132be2652270804d1816949cc3873fa7f09be301f3b",
+  "english": "A Jehiel was among the rulers of the house of God who gave to the priests at Josiah's Passover (2CH 35:8), some ninety years after Hezekiah's cleansing of the house of the LORD. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "jehiel-4",
+    "other": "jehiel-ruler-of-the-house-of-god",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "2ccb7aa4a99d",
+  "sha256": "2ccb7aa4a99deedb2bc551104f1fca9c2b827f18172b02c6d7d6b9ca4098b0af",
+  "english": "Matthew 10:3 and Mark 3:18 list Thaddaeus where Luke lists Judas of James, and the harmonies take the two for one man. The text does not say so.",
+  "said": [
+   {
+    "record": "judas-of-james",
+    "other": "thaddaeus",
+    "side": "forward",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "376fd1ec7f2d",
+  "sha256": "376fd1ec7f2dba7e815a15d7f4fbd531b43a045ac53d189c3245849acfe0a885",
+  "english": "Both accounts name him alike, Abimelech king of Gerar with Phicol the commander of his army, and neither says a new king has come. Against it, Isaac's dealings with him fall after Abraham's death (GEN 26:18), most of a lifetime after Abraham's, and the same two names recurring is as well explained by titles as by one very long reign.",
+  "said": [
+   {
+    "record": "abimelech",
+    "other": "one king of Gerar whose own name was Abimelech, who dealt with Abraham (GEN 20-21) and again with Isaac (GEN 26)",
+    "side": "forward",
+    "file": "TitleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "37a097e34921",
+  "sha256": "37a097e34921b0b87544585a3f39bdd9160f4c9662a7ddd58a9b324713db0281",
+  "english": "Matthew 27:56 and Mark 15:40 name a Mary by the cross the mother of James and Joses, the names Matthew 13:55 and Mark 6:3 give two of the brothers of Jesus.",
+  "said": [
+   {
+    "record": "james-3",
+    "other": "james-son-of-mary",
+    "side": "back",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "3966e6535d3a",
+  "sha256": "3966e6535d3ab2c7ffcc6cdc8009d08079440aca3a79778540266e82d99a4a35",
+  "english": "A Zimmah is the father of the Gershonite Joah who served under Hezekiah (2CH 29:12), many generations after this Zimmah son of Jahath. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "zimmah",
+    "other": "zimmah-the-later-gershonite",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "3b8fc9646c40",
+  "sha256": "3b8fc9646c40f536ab42be0c60b3b0901c5a4477463a40c382e1f33aecf830ca",
+  "english": "Read as 'Azubah a woman, and (the daughter) of Jerioth', the second name says where the first came from rather than adding a person. Nothing in the clause supplies the missing word, which is what the reading has to assume.",
+  "said": [
+   {
+    "record": "jerioth",
+    "other": "the name of Azubah's father, naming whose daughter she was",
+    "side": "forward",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "3efcda0fcf8e",
+  "sha256": "3efcda0fcf8e9cb6101812a34a57e143a0681a4ce6145691705a157940826a7f",
+  "english": "Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:24), bears his name a generation later, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as either's. The text does not say whether the two are one man.",
+  "said": [
+   {
+    "record": "anah",
+    "other": "anah-son-of-zibeon",
+    "side": "back",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "44be416ef609",
+  "sha256": "44be416ef6097130b883cee168d2cd81f5f1d69592085affde08685c47f4afa0",
+  "english": "Judges 9:31 has Zebul send messengers to Abimelech in Tormah, a name of the same letters but one, while Abimelech dwelt at Arumah (JDG 9:41); the two may be one town.",
+  "said": [
+   {
+    "record": "arumah",
+    "other": "tormah",
+    "side": "back",
+    "file": "UnreadHebrewNameRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "45d81a4b51bc",
+  "sha256": "45d81a4b51bc3f38a68156aabb6d6e5e890edc598580967373c537f612e8413e",
+  "english": "Nehemiah 12:16 names a Zechariah head of the house of Iddo in Joiakim's day, and this prophet was of Iddo's line (ZEC 1:1; EZR 5:1) a generation before. The text does not say they are one man.",
+  "said": [
+   {
+    "record": "zechariah-13",
+    "other": "zechariah-25",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "465bdfcfe564",
+  "sha256": "465bdfcfe5649f34d71ef1addcc049b70bb7ae69328bf80924f76ff584104d96",
+  "english": "He stands where Shaul son of Uzziah stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names.",
+  "said": [
+   {
+    "record": "joel-son-of-azariah",
+    "other": "shaul-3",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "4a309f0297e4",
+  "sha256": "4a309f0297e46846cc41c97cd47fa607267512410a4b37828d415355b3881bbd",
+  "english": "Uzziah's counsellor lived two centuries before the prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "zechariah-who-taught-uzziah",
+    "other": "zechariah-13",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "4d90160d3e81",
+  "sha256": "4d90160d3e814866fe74d529eac30ec05b5378af9dd75fad45bb076ff65b8f06",
+  "english": "He stands where Uzziah son of Uriel stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names.",
+  "said": [
+   {
+    "record": "azariah-son-of-zephaniah",
+    "other": "uzziah",
+    "side": "forward",
+    "file": "NamesReadPerVerseRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "4d9709379270",
+  "sha256": "4d970937927072773cb58fd1ac9f5c88ddd4e72078a4e56e3f6ee3bad7389ed8",
+  "english": "Matthew 23:35 names Barachias the father of the Zacharias slain between the temple and the altar, the name of this father of the prophet Zechariah; whether that Zacharias is the prophet the text does not say.",
+  "said": [
+   {
+    "record": "berechiah-6",
+    "other": "barachias",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "511df9ea8f20",
+  "sha256": "511df9ea8f205f89fed29b17cb90f72e6c72cd87fe114e0298ca874bb3ee4707",
+  "english": "The head of a house who returned in 538, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of the house in Joiakim's day (NEH 12:12), so the father walking at the dedication in 445 is hard to hold.",
+  "said": [
+   {
+    "record": "azariah-of-the-wall-dedication",
+    "other": "seraiah-6",
+    "side": "forward",
+    "file": "OwnRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "53738b9c98ad",
+  "sha256": "53738b9c98ade747237e9d3895458fb225e3e9c1d77ef80009c30a34897b4f3b",
+  "english": "Jezebel's words to Jehu, 'Had Zimri peace, who slew his master?' (2KI 9:31), may name him, the usurper whose end is the point of the taunt. On the other reading she is calling Jehu a second Zimri.",
+  "said": [
+   {
+    "record": "zimri-2",
+    "other": "zimri-in-jezebels-cry",
+    "side": "back",
+    "file": "OwnRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "53a315be7e6f",
+  "sha256": "53a315be7e6fd8ba1b01eeae27014e20bb1333c7bfd192531b8ed119d7b0faaf",
+  "english": "Azariah son of Zephaniah stands where he stands, in Heman's line (1CH 6:36), if the two lines are one line under other names.",
+  "said": [
+   {
+    "record": "uzziah",
+    "other": "azariah-son-of-zephaniah",
+    "side": "back",
+    "file": "NamesReadPerVerseRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "5c71246a8797",
+  "sha256": "5c71246a8797aa4458bd4639496e2a6c69c7de8c79a0fb8f1808f7de46fceab2",
+  "english": "A second name of Azubah, the two joined by the same verb: Caleb begat children of Azubah his wife, who was also called Jerioth. It accounts for 'her sons' without needing a second woman, which is the difficulty every other reading has to answer.",
+  "said": [
+   {
+    "record": "jerioth",
+    "other": "azubah-2",
+    "side": "forward",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "5f68dba6b647",
+  "sha256": "5f68dba6b6474ba2a114e849ac8f89091ab17415da90ebabbba97cb58e48b78c",
+  "english": "יְרִיעוֹת is the plural of the word for a curtain (H3407), and a midrashic reading takes the clause to be describing Azubah rather than naming a second person. Strong's Dictionary heads the form as a name, which is a lexicographer's decision about this verse and not an independent witness to it.",
+  "said": [
+   {
+    "record": "jerioth",
+    "other": "not a name at all, but a description of the woman — from the curtains she wore, kept or made",
+    "side": "forward",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "6153068f7584",
+  "sha256": "6153068f75841b430518bada1a3766ad670da7da76a003ccd45cd15177e0d354",
+  "english": "The name is the first part of Shalmaneser's, and the king of Assyria who besieged Samaria (2KI 17:3) may be meant; the text does not say.",
+  "said": [
+   {
+    "record": "shalman",
+    "other": "shalmaneser",
+    "side": "forward",
+    "file": "UnreadNameRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "629a66c773b6",
+  "sha256": "629a66c773b6520c3b994443e8e865a807919e473d6e922dd0b7bf992076fa6e",
+  "english": "The verse sets this group among the priests, apart from the Levite singers of the second degree in 1CH 15:18-20. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "zechariah-the-trumpeting-priest",
+    "other": "zechariah-5",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "6663dc431d31",
+  "sha256": "6663dc431d3163a76206f102da548881823a241d43dd8524cf2b12bb81466a09",
+  "english": "Genesis 26:34 names Esau's wife the daughter of Elon the Hittite Bashemath; Adah may be the same woman under another name.",
+  "said": [
+   {
+    "record": "adah-wife-of-esau",
+    "other": "basemath",
+    "side": "forward",
+    "file": "UnsettledRecordsThird.json"
+   }
+  ]
+ },
+ {
+  "id": "67bba3f0ae60",
+  "sha256": "67bba3f0ae6003fa993ae6690a489c08e6e492299acc428feab36c06f380a1e6",
+  "english": "In 1 Chronicles 11:36 Hepher the Mecherathite stands where Eliphelet the Maachathite stands in 2SA 23:34, and Ahijah the Pelonite where Eliam stands. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "eliam-2",
+    "other": "hepher-the-mecherathite",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "6dae2c6e27aa",
+  "sha256": "6dae2c6e27aa786f98a901ebc9a049a4fa601b8217751021f6f596a64d988415",
+  "english": "Numbers 26:30 has \"Iezer, the family of the Iezerites\" where Joshua 17:2 has \"the children of Abiezer\" in the same list of clans, and Gideon's clan is Abiezer (Judges 6:11, 6:34), so Iezer reads as Abiezer shortened. \"The sons of Gilead\" is then the clans of Gilead's house: by 1 Chronicles 7:18 he was the son of Gilead's sister.",
+  "said": [
+   {
+    "record": "iezer",
+    "other": "the Abiezer whom Hammolecheth, Gilead's sister, bore (1 Chronicles 7:18), the same man under a shorter name",
+    "side": "forward",
+    "file": "UnsettledRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "74d9640d8272",
+  "sha256": "74d9640d8272fa11c862aea6efdbac8ef01cf43ab8794a1c8929a8a87c0a5597",
+  "english": "A Zechariah blew a trumpet before the ark among the priests (1CH 15:24), apart from the Levite singers of the second degree to whom this one belongs (1CH 15:18-20). Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "zechariah-5",
+    "other": "zechariah-the-trumpeting-priest",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "7558182d3e66",
+  "sha256": "7558182d3e66be56c27e58351928275288c589e9accf103eb270d08debe29b1c",
+  "english": "In 2SA 23:34 Eliam stands where Ahijah the Pelonite, the next name here, stands, and Hepher where Eliphelet the Maachathite stands. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "hepher-the-mecherathite",
+    "other": "eliam-2",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "76194228d1ff",
+  "sha256": "76194228d1ffd40c5f730d250b19ab28147784a2678363a007b686caf9fd4c49",
+  "english": "Arumah, where Abimelech dwelt (JDG 9:41), is a name of the same letters but one, and the two may be one town.",
+  "said": [
+   {
+    "record": "tormah",
+    "other": "arumah",
+    "side": "forward",
+    "file": "UnreadHebrewNameRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "7b0e18f30460",
+  "sha256": "7b0e18f30460f9000373cc0037c5b2a646fca983274f814afd73e8bf5eb19c8e",
+  "english": "Kishi the son of Abdi was the father of Ethan the singer under David, and Hezekiah's Kish lived centuries later. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "kish-son-of-abdi",
+    "other": "kishi",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "7c018abc1827",
+  "sha256": "7c018abc18273ad1c0392803937283cbc29e130ffeb4d4b086e1fcdcf86e18b0",
+  "english": "Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:2, 36:24), may be he, if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite.",
+  "said": [
+   {
+    "record": "beeri",
+    "other": "anah-son-of-zibeon",
+    "side": "back",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "7dbed36a351b",
+  "sha256": "7dbed36a351b92eb3db43de4951b0e919d5e1af69dd88bb6a6c436044c69b17c",
+  "english": "A Kish son of Abdi, a Merarite, served at Hezekiah's cleansing of the house of the LORD (2CH 29:12), centuries after this Kishi, the father of Ethan the singer under David. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "kishi",
+    "other": "kish-son-of-abdi",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "7f0a44736b8e",
+  "sha256": "7f0a44736b8ed07200db0d235ab0bcc95cda2c69d6bdac4235f9959206689306",
+  "english": "The title of Psalm 34 says David changed his behaviour before Abimelech, where 1 Samuel 21:10-15 tells the same flight before him. If Abimelech is a title of the Philistine kings, he bore it there; if it is a name, the psalm's title and the history name the king differently.",
+  "said": [
+   {
+    "record": "achish",
+    "other": "abimelech",
+    "side": "back",
+    "file": "TitleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "85e5c39910f4",
+  "sha256": "85e5c39910f46f72203e7baad611112d7274f33fa191138e4235f3f41b6905bd",
+  "english": "Joel son of Azariah stands where he stands, in Heman's line (1CH 6:36), if the two lines are one line under other names.",
+  "said": [
+   {
+    "record": "shaul-3",
+    "other": "joel-son-of-azariah",
+    "side": "back",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "8d0a5467d79b",
+  "sha256": "8d0a5467d79b509ab33e918cd369fe26cff2e9205281ff15f36f922d2af6c0e3",
+  "english": "This Michael stands generations back in Abihail's line, while the Michael of 1CH 5:13 is one of the brothers of a later day. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "michael-the-gadite-forefather",
+    "other": "michael-2",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "906bdd6b107d",
+  "sha256": "906bdd6b107d1258b544f68cfd5a27865b1b9a893e098e648350ede3de2751cc",
+  "english": "Jesus speaks of Zacharias the son of Barachias, slain between the temple and the altar (MAT 23:35), and this prophet is 'the son of Berechiah' (ZEC 1:1); the Old Testament does not say how he died.",
+  "said": [
+   {
+    "record": "zechariah-13",
+    "other": "zacharias-son-of-barachias",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "942c4dbb7fab",
+  "sha256": "942c4dbb7fab1d0c01413277973058f3d7d9411aceb56a88941a93b61b28ffec",
+  "english": "Genesis 36:2 names Esau's wife Aholibamah the daughter of Anah; she may be the same woman under another name, though her father and her people are named otherwise.",
+  "said": [
+   {
+    "record": "judith",
+    "other": "oholibamah-wife-of-esau",
+    "side": "back",
+    "file": "UnsettledRecordsThird.json"
+   }
+  ]
+ },
+ {
+  "id": "964865728923",
+  "sha256": "964865728923c2f47804410d98e2c78846ab8369f3a07ddea0d8eb4192905006",
+  "english": "The Hebrew names him only once, and as one man. His name in the Septuagint's account of Abraham may be that translation bringing the two covenants at Beersheba into line with each other rather than a witness that the name was an office.",
+  "said": [
+   {
+    "record": "ahuzzath",
+    "other": "one man named Ahuzzath, a friend of the king of Gerar in Isaac's day (GEN 26:26)",
+    "side": "forward",
+    "file": "TitleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "97ff8b77a8a1",
+  "sha256": "97ff8b77a8a181d2c60a6dc3eddc4320840b532ae49c9804a6dfe7e80406d07c",
+  "english": "Jehoahaz is Shallum, listed fourth in this same verse (JER 22:11), and the firstborn Johanan is named nowhere else. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "johanan-firstborn-of-josiah",
+    "other": "jehoahaz-2",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "984b1705458a",
+  "sha256": "984b1705458af34cb93dba83181cbd70fa930fdfdd0b02ae40f6132c4a8ce17c",
+  "english": "Mark 15:40 and Matthew 27:56 name a Mary by the cross the mother of James and Joses, the names Mark 6:3 and Matthew 13:55 give two of the brothers of Jesus.",
+  "said": [
+   {
+    "record": "joseph-7",
+    "other": "joses-son-of-mary",
+    "side": "back",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "9fd5521fec6d",
+  "sha256": "9fd5521fec6d17c92d93e11ceda34370a55b143954b3086a861a62e3ec72825d",
+  "english": "The usurper who killed Elah and reigned seven days in Tirzah, whose end is the point of the taunt. On this reading the word names him and Jehu is only being compared to him.",
+  "said": [
+   {
+    "record": "zimri-in-jezebels-cry",
+    "other": "zimri-2",
+    "side": "forward",
+    "file": "OwnRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "a15732d0eb29",
+  "sha256": "a15732d0eb296540aef3abb4d7a1d316dce6ad657ca9070be7bb8685943ab37d",
+  "english": "Daniel 9:1 names Darius the son of Ahasuerus, of the seed of the Medes, and one Ahasuerus could stand for that verse, Ezra 4:6 and Esther. Against it: Ezra 4:5-7 places this Ahasuerus after Cyrus, and Darius was already sixty-two when Babylon fell before Cyrus reigned (DAN 5:31), so the text does not let them be one king.",
+  "said": [
+   {
+    "record": "ahasuerus",
+    "other": "ahasuerus-father-of-darius",
+    "side": "back",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "a469f0581c4b",
+  "sha256": "a469f0581c4bb0d60c0879d173d1b2008fee2d9e655b7ce659c61036b19d4973",
+  "english": "The prophet Zechariah's father is Berechiah (Zechariah 1:1), the same name; whether the Zacharias of Matthew 23:35 is the prophet the text does not say.",
+  "said": [
+   {
+    "record": "barachias",
+    "other": "berechiah-6",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "a77512374a8d",
+  "sha256": "a77512374a8d148f3340f8a1b4f1077ddd32810d09d4d4a3df899bf1536f326a",
+  "english": "Mark 2:14 tells the same calling and the same meal of a publican named Levi the son of Alphaeus.",
+  "said": [
+   {
+    "record": "matthew",
+    "other": "levi-son-of-alphaeus",
+    "side": "back",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "a967687c300c",
+  "sha256": "a967687c300c084325f15e72fada3299217412995a0285ca793746ba9671c5bd",
+  "english": "Matthew names a Mary by the cross the mother of James and Joses (MAT 27:56), and names James and Joses among the brothers of Jesus (MAT 13:55). He calls her 'the other Mary', not Jesus' mother; the text does not say whether she is.",
+  "said": [
+   {
+    "record": "mary",
+    "other": "mary-7",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "ab06fae7acf8",
+  "sha256": "ab06fae7acf8cabf25039f383cb7a468e687c42baf8817f2fe11f4a25f1624d8",
+  "english": "The prophet Zechariah is 'the son of Berechiah' (Zechariah 1:1), the father Matthew names; the Old Testament does not say how he died.",
+  "said": [
+   {
+    "record": "zacharias-son-of-barachias",
+    "other": "zechariah-13",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "acede88941cf",
+  "sha256": "acede88941cf8799e6b9edbc5c861adb49dc1f4e8a8167c33299438a61076e9d",
+  "english": "Matthew 13:55 and Mark 6:3 name a James and a Joses among the brothers of Jesus.",
+  "said": [
+   {
+    "record": "james-son-of-mary",
+    "other": "james-3",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "ad5edacaa5d5",
+  "sha256": "ad5edacaa5d543d07b1b7733708a8d3d7f42e00d8b3b9ec6a31156bdafdb60ff",
+  "english": "Wellhausen proposed reading the clause otherwise, and BDB records the proposal under the name. An emendation is an answer about the text rather than about the person, and it is listed here because it is one of the ways the difficulty has been met.",
+  "said": [
+   {
+    "record": "jerioth",
+    "other": "a copyist's error, which the text has to be emended to repair",
+    "side": "forward",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "b0687bee7000",
+  "sha256": "b0687bee70003b7d2fe2af6ea0c7467ff9d5d1311d13c235f7c1e00c3a30a240",
+  "english": "Genesis 36:20 and 1 Chronicles 1:38 count an Anah among the sons of Seir, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as his; Genesis 36:24 makes the father of Aholibamah Zibeon's son, the nephew of that Anah.",
+  "said": [
+   {
+    "record": "anah-son-of-zibeon",
+    "other": "anah",
+    "side": "forward",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "b65dc5e23c7d",
+  "sha256": "b65dc5e23c7d8d0aa8ec9597ce768c50b3940c24b5fb97b7a7546ddacb362758",
+  "english": "Tradition takes him for John the son of Zebedee, one of the Twelve. The book does not say which John he is.",
+  "said": [
+   {
+    "record": "john-who-saw-the-revelation",
+    "other": "john-2",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "bb31b0ef4829",
+  "sha256": "bb31b0ef482997616f1cd3fd03fab8c2db516bdd52feb6c3590b36af4cdf2b86",
+  "english": "1 Chronicles 16:5 names Jeiel twice, so two men, and the first stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "jeiel-4",
+    "other": "jeiel-the-alamoth-psaltery-player",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "c3db779aa036",
+  "sha256": "c3db779aa036caeb11994cf2465cc7246f83145fd0e9c6d6a5d7380894c0c55b",
+  "english": "One Ahasuerus could stand for Ezra 4:6, Esther and this verse. Against it: Ezra 4:5-7 places its Ahasuerus after Cyrus, and this one's son was already sixty-two when Babylon fell before Cyrus reigned, so the text does not let them be one king; which king of the Medes he was it does not say.",
+  "said": [
+   {
+    "record": "ahasuerus-father-of-darius",
+    "other": "ahasuerus",
+    "side": "forward",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "c3e0ba86b021",
+  "sha256": "c3e0ba86b0215ab27d9ee48a69dd78cb2fbeede4d372eee93ca67a287ad4644b",
+  "english": "The title of Psalm 34 says David changed his behaviour before Abimelech, and 1 Samuel 21:10-15 tells the same flight before Achish king of Gath. If Abimelech is a title of the Philistine kings, the king of the psalm is Achish bearing it; if it is a name, the psalm's title and the history name the king differently.",
+  "said": [
+   {
+    "record": "abimelech",
+    "other": "achish",
+    "side": "forward",
+    "file": "TitleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "c6e1298e0234",
+  "sha256": "c6e1298e0234d9bdab162c65641244b1b48a97dac844d3006a53fe4c7120d905",
+  "english": "A king named after his father would give the text as it stands, the Abimelech of Genesis 26 another man than the Abimelech of Genesis 20-21. Nothing in the text tells a name repeated in a line of kings from a title.",
+  "said": [
+   {
+    "record": "abimelech",
+    "other": "two kings of Gerar, Abraham's and Isaac's, who both bore Abimelech as a personal name",
+    "side": "forward",
+    "file": "TitleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "caaed0f24c99",
+  "sha256": "caaed0f24c99ecce6f6a74f86f5b7e0a80942dfa94cb9e9dcd4073c2b8ac92b1",
+  "english": "Jezebel's 'Had Zimri peace, who slew his master?' (2KI 9:31) may be said to him, calling him by the name of the usurper she likens him to. On the other reading the word names that usurper.",
+  "said": [
+   {
+    "record": "jehu-2",
+    "other": "zimri-in-jezebels-cry",
+    "side": "back",
+    "file": "OwnRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "ce588eaad472",
+  "sha256": "ce588eaad472ae148e877e1027ac69a13902056cf4a39ee3b51c2222ed17f7a3",
+  "english": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus, beside a James.",
+  "said": [
+   {
+    "record": "joses-son-of-mary",
+    "other": "joseph-7",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsFifth.json"
+   }
+  ]
+ },
+ {
+  "id": "cf5d1df307e4",
+  "sha256": "cf5d1df307e48e18efd384c4e642eea93ff1108c29b49138270f232cda69da34",
+  "english": "Genesis 26:34 names Esau's wife Judith the daughter of Beeri the Hittite; Aholibamah may be the same woman under another name, though her father and her people are named otherwise.",
+  "said": [
+   {
+    "record": "oholibamah-wife-of-esau",
+    "other": "judith",
+    "side": "forward",
+    "file": "UnsettledRecordsThird.json"
+   }
+  ]
+ },
+ {
+  "id": "cff2b4c6ab13",
+  "sha256": "cff2b4c6ab1348c4dcf684f738e40b73e8f5bfcf62f4d458ce4f74fdaf34c440",
+  "english": "John 19:25 names Mary the wife of Cleophas among the women by the cross, where Matthew and Mark name the mother of James and Joses. The harmonies take them for one woman; the text does not say so.",
+  "said": [
+   {
+    "record": "mary-7",
+    "other": "mary-4",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "d04a9e62b4a2",
+  "sha256": "d04a9e62b4a2460fba96ff0fd5175f9ddc19f75e2a9d478e44fd7c09cc32f6b1",
+  "english": "A Jehoiada, the son of Benaiah and not his father, stands among the king's counsellors after Ahithophel (1CH 27:34). Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "jehoiada",
+    "other": "jehoiada-son-of-benaiah",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "d4165b24b4e5",
+  "sha256": "d4165b24b4e5793164e36d2945a6120684575abd3883d7d139ab79fff64e10f6",
+  "english": "Beeri the Hittite, the father of Esau's wife Judith (GEN 26:34), if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite.",
+  "said": [
+   {
+    "record": "anah-son-of-zibeon",
+    "other": "beeri",
+    "side": "forward",
+    "file": "SeveralPeopleRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "d58d986d4cd7",
+  "sha256": "d58d986d4cd7b0692078eef3da7703b81371b80c59d99856c21a4e43a9679491",
+  "english": "A Hilkiah was among the chiefs of the priests who came up with Zerubbabel (NEH 12:7), some ninety years before Ezra read the law. The text does not say whether the two are one man.",
+  "said": [
+   {
+    "record": "hilkiah-at-ezras-right-hand",
+    "other": "hilkiah-3",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "d86ec2fcea44",
+  "sha256": "d86ec2fcea44223dbf00b70a5e3e340c39f3cfd630c9da804ddc11d84c297393",
+  "english": "Matthew and Mark name Mary the mother of James and Joses among the women by the cross (MAT 27:56; MRK 15:40), where John names this Mary the wife of Cleophas (JHN 19:25). The harmonies take them for one woman; the text does not say so.",
+  "said": [
+   {
+    "record": "mary-4",
+    "other": "mary-7",
+    "side": "back",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "dc0ebf17e2f2",
+  "sha256": "dc0ebf17e2f230d3b022ccc0e7ce858af5409b50fbda700eff9a0fb78edf48c3",
+  "english": "Uriel of Gibeah may be another man than Abishalom, whose daughter Kings names as Abijam's mother (1KI 15:2). Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "uriel-of-gibeah",
+    "other": "abishalom",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "de0c898a0ba4",
+  "sha256": "de0c898a0ba40fcdfe83c240e5fb2a6348bc2f8d12a882b7b9f664d1b6b4ee84",
+  "english": "Joah here is Hezekiah's contemporary, and the Zimmah of 1CH 6:20 stands many generations earlier. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "zimmah-the-later-gershonite",
+    "other": "zimmah",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "e1b8fc3c89b4",
+  "sha256": "e1b8fc3c89b4e08b88691995aef5ef0208925e8879ea5e947f091e4c98762100",
+  "english": "Zechariah the son of Jehoiada the priest was stoned 'in the court of the house of the LORD' (2 Chronicles 24:20-21), which is where Matthew and Luke place this death; the verses name a different father.",
+  "said": [
+   {
+    "record": "zacharias-son-of-barachias",
+    "other": "zechariah-12",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "e47b45a247c8",
+  "sha256": "e47b45a247c8c2ba399e853a7347a13b62d135afcdff49baffcd31dbc773bfcf",
+  "english": "The plainest reading of two names under one verb, and the one the translations print. Against it, the sons are then hers and not Azubah's, and the verse has named Azubah first and called her the wife.",
+  "said": [
+   {
+    "record": "jerioth",
+    "other": "a second wife of Caleb, by whom Jesher, Shobab and Ardon were born",
+    "side": "forward",
+    "file": "UnsettledRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "e76fed37c724",
+  "sha256": "e76fed37c724bbbc57309a1d63a6b49cf7365329199e4e11eeac0a2eac82d815",
+  "english": "Matthew 13:55 names James and Joses among the brothers of Jesus, whose mother is Mary. Matthew calls this Mary 'the other Mary' and the mother of James and Joses, not his mother; the text does not say whether she is.",
+  "said": [
+   {
+    "record": "mary-7",
+    "other": "mary",
+    "side": "forward",
+    "file": "SeveralPeopleRecordsSecond.json"
+   }
+  ]
+ },
+ {
+  "id": "e876090a4c0d",
+  "sha256": "e876090a4c0d8e6665b6560d6f2394099268100375d8caad3beac441fc15db58",
+  "english": "The Azariah who walked at the dedication of the wall (NEH 12:33) may be he, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of his house in Joiakim's day (NEH 12:12), so his walking at the dedication in 445 is hard to hold.",
+  "said": [
+   {
+    "record": "seraiah-6",
+    "other": "azariah-of-the-wall-dedication",
+    "side": "back",
+    "file": "OwnRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "eb56593bee29",
+  "sha256": "eb56593bee29db777b97fed658c3cc60d3540c2b56c4eb0620e9e41f4c28739b",
+  "english": "Josiah's Passover is some ninety years after Hezekiah's cleansing of the house of the LORD, and these rulers give to the priests. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "jehiel-ruler-of-the-house-of-god",
+    "other": "jehiel-4",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "ed0654bfaaec",
+  "sha256": "ed0654bfaaecfed447206284bc384259d4efcc3c4ea285698805582e151171c3",
+  "english": "A Zechariah who had understanding in the visions of God taught King Uzziah (2CH 26:5), two centuries before this prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit that verse.",
+  "said": [
+   {
+    "record": "zechariah-13",
+    "other": "zechariah-who-taught-uzziah",
+    "side": "back",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ },
+ {
+  "id": "f159eacba020",
+  "sha256": "f159eacba0205b48b18df6181005dee18c8f08f8ae7640eb6fd2735285b499a5",
+  "english": "Genesis 28:9 names Esau's wife Mahalath the daughter of Ishmael, the sister of Nebajoth: the same father and the same brother.",
+  "said": [
+   {
+    "record": "basemath-daughter-of-ishmael",
+    "other": "mahalath",
+    "side": "forward",
+    "file": "UnsettledRecordsThird.json"
+   }
+  ]
+ },
+ {
+  "id": "fcb5d2dc3ca0",
+  "sha256": "fcb5d2dc3ca0416d7e3f14aeb0421ab3a708bddf6af3829911d144a9249fdbfc",
+  "english": "The verse calls this Jehoiada the son of Benaiah, not his father, and sets him among the king's counsellors. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+  "said": [
+   {
+    "record": "jehoiada-son-of-benaiah",
+    "other": "jehoiada",
+    "side": "forward",
+    "file": "ReviewRecords.json"
+   }
+  ]
+ }
+]

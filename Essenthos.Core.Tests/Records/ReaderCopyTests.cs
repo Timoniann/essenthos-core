@@ -110,6 +110,13 @@ public sealed partial class ReaderCopyTests : IDisposable
             Add($"{rendered.Slug} notes in Spanish", rendered.Spa);
         }
 
+        foreach (var rendered in AlternativeReasonTranslationLoader.Read().Entries)
+        {
+            Add("an alternative's reason in Ukrainian", rendered.Ukr);
+            Add("an alternative's reason in German", rendered.Deu);
+            Add("an alternative's reason in Spanish", rendered.Spa);
+        }
+
         said.Should().HaveCountGreaterThan(1000, "every file a record's reader copy comes from is read");
         said.Where(one => Settling().IsMatch(one.Text))
             .Select(one => $"{one.Where}: {Settling().Match(one.Text).Value}")

@@ -196,8 +196,11 @@ internal record EntityCoverageResponse(int Canon, IList<EntityLayerCoverageRespo
 /// loud what a record without them is quietly assuming.
 /// </param>
 /// <param name="Unsettled">
-/// Whether the identification is open. Derived from <paramref name="Alternatives"/> rather than
-/// stored beside it, so the flag and the list cannot come apart.
+/// Whether it is open who this record is: one of <paramref name="Alternatives"/> is said of this
+/// record itself rather than <see cref="EntityAlternativeResponse.Back"/>. False on a record whose
+/// alternatives are all the other side of another record's question — Mary the mother of Jesus, whom
+/// the Mary of Matthew 27:56 may be — and on a record with none. Derived from the list rather than
+/// stored beside it, so the two cannot come apart.
 /// </param>
 internal record EntityResponse(
     string Slug,
@@ -618,6 +621,18 @@ internal record EntityAlternativeResponse(
 {
     /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
+
+    /// <summary>
+    /// True where this is said here because the question is about the other record: whether the Mary of
+    /// Matthew 27:56 is this Mary. Who this record is is not in doubt.
+    /// </summary>
+    public bool Back { get; init; }
+
+    /// <summary>
+    /// <paramref name="Reason"/> in the language asked for, a machine translation of exactly that English;
+    /// null for an English reader and where none is held, when the English is what the page shows.
+    /// </summary>
+    public string? LocalReason { get; init; }
 }
 
 /// <summary>

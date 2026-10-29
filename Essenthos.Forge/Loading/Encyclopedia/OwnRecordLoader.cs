@@ -413,8 +413,8 @@ internal sealed class OwnRecordLoader(
             .ToHashSet(StringComparer.Ordinal);
         var apart = SenseReadingFiles.HeldApart().Pairs;
 
-        var listed = new Dictionary<(string Record, string Source, string Other), (string Reason, bool Named)>();
-        void List(string record, string source, string? slug, string? describes, string reason)
+        var listed = new Dictionary<(string Record, string Source, string Other), (string Reason, bool Named, bool Back)>();
+        void List(string record, string source, string? slug, string? describes, string reason, bool back = false)
         {
             var other = slug ?? describes;
             if (other is null || other == record || (slug is not null && apart.Any(pair => pair.Joins(record, slug))))
@@ -422,7 +422,7 @@ internal sealed class OwnRecordLoader(
                 return;
             }
 
-            listed.TryAdd((record, source, other), (reason, slug is not null));
+            listed.TryAdd((record, source, other), (reason, slug is not null, back));
         }
 
         foreach (var file in files)
@@ -437,7 +437,7 @@ internal sealed class OwnRecordLoader(
 
             if (alternative is { Slug: { } other, Back: { } back })
             {
-                List(other, file.Source, record, null, back);
+                List(other, file.Source, record, null, back, back: true);
             }
         }
 
@@ -446,7 +446,7 @@ internal sealed class OwnRecordLoader(
         {
             if (alternative is { Slug: { } other, Back: { } back })
             {
-                List(other, title.Source ?? decision.Source, title.Slug, null, back);
+                List(other, title.Source ?? decision.Source, title.Slug, null, back, back: true);
             }
         }
 
@@ -465,11 +465,21 @@ internal sealed class OwnRecordLoader(
 
         var stale = held.Where(a => !listed.ContainsKey((a.Record, a.Row.Source, a.Other!))).ToList();
         var reworded = held
-            .Where(a => listed.TryGetValue((a.Record, a.Row.Source, a.Other!), out var said) && said.Reason != a.Row.Reason)
+            .Where(a => listed.TryGetValue((a.Record, a.Row.Source, a.Other!), out var said)
+                        && (said.Reason != a.Row.Reason || said.Back != a.Row.Back))
             .ToList();
         foreach (var alternative in reworded)
         {
-            alternative.Row.Reason = listed[(alternative.Record, alternative.Row.Source, alternative.Other!)].Reason;
+            var said = listed[(alternative.Record, alternative.Row.Source, alternative.Other!)];
+            if (alternative.Row.Reason != said.Reason)
+            {
+                // A rendering of the old English would be served as the new one's; the own-lines step renders it again.
+                alternative.Row.Reason = said.Reason;
+                alternative.Row.ReasonRenderings = null;
+                alternative.Row.ReasonRenderedBy = null;
+            }
+
+            alternative.Row.Back = said.Back;
         }
 
         var there = held.Select(a => (a.Record, a.Row.Source, a.Other!)).ToHashSet();
@@ -483,7 +493,7 @@ internal sealed class OwnRecordLoader(
             .Where(e => slugs.Contains(e.Slug))
             .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
         var written = new List<string>();
-        foreach (var ((record, source, other), (reason, named)) in missing)
+        foreach (var ((record, source, other), (reason, named, back)) in missing)
         {
             if (!ids.TryGetValue(record, out var id) || (named && !ids.ContainsKey(other)))
             {
@@ -497,6 +507,7 @@ internal sealed class OwnRecordLoader(
                 Describes = named ? null : other,
                 Reason = reason,
                 Source = source,
+                Back = back,
             });
             written.Add($"{record} ({other})");
         }
@@ -510,7 +521,7 @@ internal sealed class OwnRecordLoader(
         await db.SaveChangesAsync(cancellationToken);
         logger.LogInformation(
             "Alternatives made what the rulings say: {Written} written ({WrittenRecords}), {Removed} no file lists "
-            + "any more taken off ({RemovedRecords}), {Reworded} reasons rewritten",
+            + "any more taken off ({RemovedRecords}), {Reworded} reasons or sides rewritten",
             written.Count, string.Join(", ", written),
             stale.Count, string.Join(", ", stale.Select(a => $"{a.Record} ({a.Other})")),
             reworded.Count);
