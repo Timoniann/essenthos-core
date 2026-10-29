@@ -58,6 +58,9 @@ internal sealed partial class PageWording
     /// <summary>What a reader of this language calls a book when citing it, where the wording names it.</summary>
     public string? CitedBook(int ordinal) => Find($"books.{ordinal}");
 
+    /// <summary>The text at a dotted key, or null where the wording has none.</summary>
+    public string? Optional(string key) => Find(key);
+
     /// <summary>
     /// The plural category of a whole number, as <c>Intl.PluralRules</c> gives it for each language
     /// the site speaks: Ukrainian has one, few and many; Spanish sets a million and its multiples apart.

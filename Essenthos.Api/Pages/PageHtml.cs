@@ -128,7 +128,8 @@ internal static partial class PageHtml
         ".prerendered h1{font-size:1.8rem;line-height:1.2;margin:0 0 .75rem}" +
         ".prerendered nav,.prerendered .source{font:14px/1.5 'IBM Plex Sans',system-ui,sans-serif;margin:1rem 0}" +
         ".prerendered p{margin:0 0 .75rem}.prerendered a{color:inherit}.prerendered ul{padding-left:1.2rem}" +
-        ".prerendered blockquote{margin:1rem 0;font-size:1.25rem}.prerendered sup{margin-right:.25em;opacity:.6}</style>";
+        ".prerendered blockquote{margin:1rem 0;font-size:1.25rem}.prerendered sup{margin-right:.25em;opacity:.6}" +
+        ".prerendered .outline{white-space:pre-line}</style>";
 
     public static string Escape(string text)
     {

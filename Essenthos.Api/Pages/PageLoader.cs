@@ -417,7 +417,7 @@ internal sealed class PageLoader(
         var language = address.Language;
         var entry = await db.StrongEntries
             .Where(e => e.StrongNumber == number)
-            .Select(e => new { e.StrongNumber, e.Lemma, e.Transliteration, e.Definition, e.Derivation })
+            .Select(e => new { e.StrongNumber, e.Lemma, e.Transliteration, e.Definition, e.Derivation, e.DetailedDefinition })
             .FirstOrDefaultAsync(cancellationToken);
         if (entry is null)
         {
@@ -431,14 +431,15 @@ internal sealed class PageLoader(
             ? null
             : await db.StrongEntryTranslations
                 .Where(t => t.StrongNumber == number && t.Language == language.Corpus)
-                .Select(t => new { t.Definition, t.Derivation })
+                .Select(t => new { t.Definition, t.Derivation, t.DetailedDefinition })
                 .FirstOrDefaultAsync(cancellationToken);
         return PageViews.Strong(language, wording, new StrongView(
             entry.StrongNumber,
             entry.Lemma,
             entry.Transliteration,
             translated?.Definition ?? entry.Definition,
-            translated?.Derivation ?? entry.Derivation));
+            translated?.Derivation ?? entry.Derivation,
+            translated?.DetailedDefinition ?? entry.DetailedDefinition));
     }
 
     private async Task<PageContent?> Text(PageAddress address, PageWording wording, CancellationToken cancellationToken)

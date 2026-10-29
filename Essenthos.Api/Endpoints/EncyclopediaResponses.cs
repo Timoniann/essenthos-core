@@ -429,6 +429,9 @@ internal record PlacePointResponse(
     public string? Distinguisher { get; init; }
 }
 
+/// <summary>How many of the map's places a chapter names.</summary>
+internal record ChapterPlacesResponse(int Count);
+
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
 internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items)
 {
