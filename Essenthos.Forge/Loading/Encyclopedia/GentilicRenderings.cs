@@ -50,7 +50,10 @@ internal sealed record GentilicRenderingOutcome(
 /// ancestor, in another verse (<see cref="Alike"/>): <em>ґів'онянин</em> like <em>ґів'онітяни</em> of
 /// 2 Samuel 21 and like <em>Ґів'он</em>. Only a spelling the text names them with at least half the
 /// times it writes it counts, so <em>sons</em> of <em>the sons of Levi</em> and <em>Краю</em> of
-/// <em>the land of Canaan</em>, which a link carried the people onto now and then, spell nobody;</item>
+/// <em>the land of Canaan</em>, which a link carried the people onto now and then, spell nobody. The
+/// people's own name in the text's language (<c>entity_name_form</c>) counts as it is: the Gibeathite
+/// and the Gederathite of 1 Chronicles 12:3-4 are the only ones Scripture names, and
+/// <em>ґів'янина</em> is read by <em>ґів'яни</em>;</item>
 /// <item>it is the only such word in the verse.</item>
 /// </list>
 ///
@@ -136,6 +139,12 @@ internal sealed class GentilicRenderings(AppDbContext db, ILogger<GentilicRender
             FROM spelled s
             WHERE 2 * s.named >= (SELECT count(*) FROM word same
                                   WHERE same.text_id = s.text_id AND same.normalised_text = s.form)
+            UNION ALL
+            SELECT DISTINCT t.id, f.entity_id, ARRAY[]::integer[], {Folded("f.form")}
+            FROM text t
+            JOIN entity_name_form f ON f.language = t.language
+            WHERE t.id IN (SELECT DISTINCT text_id FROM there)
+              AND f.entity_id IN (SELECT people FROM occurrence)
         ),
         candidate AS (
             SELECT x.*, count(*) OVER (PARTITION BY x.text_id, x.people, x.book, x.chapter, x.verse) AS rivals

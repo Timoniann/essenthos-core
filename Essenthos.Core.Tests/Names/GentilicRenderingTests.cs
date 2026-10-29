@@ -28,6 +28,7 @@ public sealed class GentilicRenderingTests : IDisposable
     private readonly Entity _gibeonites;
     private readonly Entity _gibeon;
     private readonly Entity _ishmaiah;
+    private readonly Entity _gibeathites;
 
     public GentilicRenderingTests(WitnessDatabase database)
     {
@@ -39,18 +40,22 @@ public sealed class GentilicRenderingTests : IDisposable
             (12, 4, ["יִשְׁמַעְיָה", "הַגִּבְעֹנִי", "גִּבֹּור"]),
             (21, 2, ["הַגִּבְעֹנִים", "לֹא"]),
             (9, 35, ["בְּגִבְעֹון", "יָשְׁבוּ"]),
-            (11, 1, ["הַגִּבְעֹנִי", "וְהַגִּבְעֹנִי"]));
+            (11, 1, ["הַגִּבְעֹנִי", "וְהַגִּבְעֹנִי"]),
+            (12, 3, ["שְׁמָעָה", "הַגִּבְעָתִי"]));
         _ukrainian = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr",
             (12, 4, ["і", "ґів'онянин", "Їшмая", "лицар"]),
             (21, 2, ["а", "ґів'онітяни", "не"]),
             (9, 35, ["і", "в", "Ґів'оні", "сиділи"]),
-            (11, 1, ["ґів'онянин", "ґів'онеянин"]));
+            (11, 1, ["ґів'онянин", "ґів'онеянин"]),
+            (12, 3, ["сини", "ґів'янина", "Шемаї"]));
         _db.SaveChanges();
         _db.Database.ExecuteSqlRaw("UPDATE word SET normalised_text = lower(text)");
 
         _gibeon = Record(EntityKind.Place, "gibeon", "Gibeon", null);
         _gibeonites = Record(EntityKind.People, "gibeonites", "Gibeonites", _gibeon);
         _ishmaiah = Record(EntityKind.Person, "ishmaiah-2", "Ishmaiah", null);
+        _gibeathites = Record(EntityKind.People, "gibeathites", "Gibeathites", null);
+        var shemaah = Record(EntityKind.Person, "shemaah", "Shemaah", null);
         _db.StrongGentilics.Add(new StrongGentilic
         {
             StrongNumber = "H1393", OriginNumber = "H1391", Kind = "patrial", OriginEntityId = _gibeon.Id,
@@ -73,6 +78,15 @@ public sealed class GentilicRenderingTests : IDisposable
         Name(UkrainianWord(12, 4, 3), _ishmaiah, Ukrainian);
         Name(UkrainianWord(21, 2, 2), _gibeonites, Ukrainian);
         Name(UkrainianWord(9, 35, 3), _gibeon, Ukrainian);
+        HebrewWord(12, 3, 2).StrongNumber = "H1395";
+        _db.StrongGentilics.Add(new StrongGentilic
+        {
+            StrongNumber = "H1395", OriginNumber = "H1390", Kind = "patrial", PeopleEntityId = _gibeathites.Id,
+            Statement = "patrial from H1390", Source = "a test",
+        });
+        Name(HebrewWord(12, 3, 1), shemaah, Hebrew);
+        Name(HebrewWord(12, 3, 2), _gibeathites, Hebrew);
+        Name(UkrainianWord(12, 3, 3), shemaah, Ukrainian);
         _db.SaveChanges();
     }
 
@@ -173,6 +187,44 @@ public sealed class GentilicRenderingTests : IDisposable
         NamedOn(UkrainianWord(12, 4, 2)).Should().Equal("gibeonites");
         NamedOn(_db.WordAt(english, 12, 4, 1)).Should().BeEmpty("the gentilic stands on a word no link reached it from, and goes no further");
     }
+
+    /// <summary>
+    /// The Gibeathite of 1 Chronicles 12:3, the only one Scripture names, and Gibeah not a record the
+    /// gentilic is tied to: no other verse spells them, and the record's own name in the text's
+    /// language is all there is to read the word by.
+    /// </summary>
+    [Fact]
+    public async Task ThePeoplesOwnNameInTheTextsLanguageSpellsIt()
+    {
+        FormOf(_gibeathites, "ukr", "ґів'яни");
+        await _db.SaveChangesAsync();
+
+        var outcome = await _pass.Load();
+        var second = await _pass.Load();
+
+        NamedOn(UkrainianWord(12, 3, 2)).Should().Equal("gibeathites");
+        NamedOn(UkrainianWord(12, 3, 1)).Should().BeEmpty("сини is spelled like nothing the Gibeathites are called");
+        outcome.Written.Should().Be(2);
+        (second.Written, second.Withdrawn).Should().Be((0, 0));
+    }
+
+    [Fact]
+    public async Task ANameInAnotherLanguageSpellsNothing()
+    {
+        FormOf(_gibeathites, "rus", "ґів'яни");
+        await _db.SaveChangesAsync();
+
+        await _pass.Load();
+
+        NamedOn(UkrainianWord(12, 3, 2)).Should().BeEmpty("the form is not the text's language");
+    }
+
+    private void FormOf(Entity entity, string language, string form) =>
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = entity.Id, Language = language, GrammaticalCase = GrammaticalCases.Nominative, Form = form,
+            Method = LinkMethod.Manual, Source = "a test",
+        });
 
     private Entity Record(EntityKind kind, string slug, string name, Entity? origin)
     {

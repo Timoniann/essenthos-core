@@ -2873,11 +2873,6 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The name a word carries, given to the same word in another edition — Swete beside Brenton,
-    /// the Samaritan Pentateuch beside BHSA — where no pass named it. After every pass that names a
-    /// word, and the verses read again off the words if it changed any.
-    /// </summary>
-    /// <summary>
     /// The gentilic of the original given to the word of a translation that renders it where no link
     /// carried it there. Before the editions' twins, which give it on to the same word in another edition.
     /// </summary>
@@ -2890,6 +2885,11 @@ internal sealed class DatasetLoader(
         status.Record(outcome.ToString());
     }
 
+    /// <summary>
+    /// The name a word carries, given to the same word in another edition — Swete beside Brenton,
+    /// the Samaritan Pentateuch beside BHSA — where no pass named it. After every pass that names a
+    /// word, and the verses read again off the words if it changed any.
+    /// </summary>
     private async Task NameTheSameWordInTheOtherEditions(CancellationToken cancellationToken)
     {
         status.Starting("the names of the same words in the other editions");
