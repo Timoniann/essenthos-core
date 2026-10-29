@@ -113,10 +113,7 @@ internal static class TextusReceptusTextSource
         foreach (var (file, canonical) in Canon)
         {
             position++;
-            var verses = UtrReader.Read(
-                File.ReadAllText(Path.Combine(folder, "parsed", $"{file}.UTR")),
-                edition,
-                Brackets.Subscription);
+            var verses = UtrReader.Read(File.ReadAllText(Path.Combine(folder, "parsed", $"{file}.UTR")), edition);
 
             var name = BibleBookAbbreviation.GetByOrdinal(canonical)?.FullName.Full
                        ?? throw new InvalidOperationException(

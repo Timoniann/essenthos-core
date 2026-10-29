@@ -13,26 +13,6 @@ public enum Edition
 }
 
 /// <summary>
-/// What a square bracket means in the file being read, which is not the same in the two
-/// collections this reader serves and cannot be worked out from the bracket.
-/// </summary>
-public enum Brackets
-{
-    /// <summary>
-    /// It marks the word it encloses, and the word is part of the text. Westcott and Hort bracket
-    /// a word they doubted -- [o], [kai] -- and the edition keeps it with the doubt recorded.
-    /// </summary>
-    Word,
-
-    /// <summary>
-    /// It encloses a scribal subscription, which is a note about the letter and not a word of it.
-    /// Stephanus prints one after the amen of fourteen epistles; every bracket in those 27 files
-    /// is one of these and there are no others.
-    /// </summary>
-    Subscription,
-}
-
-/// <summary>
 /// Which side of every variant group to take, where a Robinson parse offers two.
 ///
 /// The Textus Receptus files answer this with <see cref="Edition"/> because the two sides there are
@@ -137,17 +117,17 @@ internal static partial class UtrReader
     private const string Unnumbered = "0";
 
     public static IReadOnlyList<UtrVerse> Read(
-        string content, Edition edition, Brackets brackets = Brackets.Word) =>
-        Read(content, edition == Edition.Stephanus1550 ? Reading.First : Reading.Second, brackets);
+        string content, Edition edition) =>
+        Read(content, edition == Edition.Stephanus1550 ? Reading.First : Reading.Second);
 
     public static IReadOnlyList<UtrVerse> Read(
-        string content, Reading reading, Brackets brackets = Brackets.Word)
+        string content, Reading reading)
     {
         var verses = new List<UtrVerse>(1_200);
 
         foreach (var (chapter, number, body) in Verses(content))
         {
-            verses.Add(new UtrVerse(chapter, number, Words(body, reading, brackets, chapter, number)));
+            verses.Add(new UtrVerse(chapter, number, Words(body, reading, chapter, number)));
         }
 
         return verses;
@@ -189,7 +169,7 @@ internal static partial class UtrReader
     }
 
     private static List<UtrWord> Words(
-        string body, Reading reading, Brackets brackets, int chapter, int verse)
+        string body, Reading reading, int chapter, int verse)
     {
         var tokens = body.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
         var words = new List<UtrWord>(32);
@@ -215,7 +195,7 @@ internal static partial class UtrReader
                 continue;
             }
 
-            words.AddRange(Variant(tokens, ref at, reading, brackets, chapter, verse, words)
+            words.AddRange(Variant(tokens, ref at, reading, chapter, verse, words)
                 .Select(word => word with { Segment = segment }));
         }
 
@@ -232,7 +212,7 @@ internal static partial class UtrReader
     /// rather than a word of its own and has to reach back — see the tags-only branch below.
     /// </param>
     private static List<UtrWord> Variant(
-        string[] tokens, ref int at, Reading reading, Brackets brackets, int chapter, int verse,
+        string[] tokens, ref int at, Reading reading, int chapter, int verse,
         List<UtrWord> words)
     {
         // The opening pipe starts the first alternative, so the list begins empty rather than with
@@ -276,14 +256,9 @@ internal static partial class UtrReader
 
         // The scribal subscription -- "written to Philemon from Rome by Onesimus" -- which
         // Stephanus prints after the amen of fourteen epistles and brackets, against nothing on
-        // the other side. It is a note about the letter rather than a word of it, so neither
-        // edition takes words from here. Every square bracket in the 27 files is one of these: the
-        // opening token is "[prov" fourteen times and nothing else, and the fourteen closes are the
-        // last word of each subscription.
-        if (brackets == Brackets.Subscription && chosen.Count > 0 && chosen[0].StartsWith('['))
-        {
-            return [];
-        }
+        // the other side, is read with its brackets: the edition-marks step takes them out and
+        // makes the words a subscription group, which says they are a note about the letter and
+        // not a word of it. Every square bracket in the 27 files is one of these.
 
         // 52 groups offer a word against nothing — this is where the two editions genuinely differ
         // rather than spelling one word two ways, and it is the whole reason a second Greek witness

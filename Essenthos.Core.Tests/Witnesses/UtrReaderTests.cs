@@ -44,30 +44,33 @@ public class UtrReaderTests
 
     /// <summary>
     /// Stephanus prints a scribal subscription after the amen of fourteen epistles -- who the
-    /// letter was written to, from where, and by whose hand -- and brackets it. It is a note about
-    /// the letter, not a word of it, and neither edition should gain a word from it. Read as words
-    /// it put "[prov qessalonikeiv deutera egrafh apo aqhnwn" into the last verse of 2 Thessalonians.
+    /// letter was written to, from where, and by whose hand -- and brackets it, against nothing in
+    /// Scrivener. Its words are read with their brackets, which the edition-marks step takes out
+    /// as it makes them a subscription group: a note about the letter, kept to be read and searched.
+    /// Read without them, a load from nothing lost the fourteen subscriptions the corpus shows.
     ///
     /// The fixture is Philemon 1:25 as the file writes it, subscription and all.
     /// </summary>
-    [Theory]
-    [InlineData(Edition.Stephanus1550)]
-    [InlineData(Edition.Scrivener1894)]
-    public void AScribalSubscriptionIsNotWordsOfTheLetter(Edition edition)
+    [Fact]
+    public void AScribalSubscriptionIsStephanussWordsInItsBracketsAndNotScriveners()
     {
-        var verse = UtrReader.Read(
+        const string philemon =
             """
             1:25 h 3588 {T-NSF} cariv 5485 {N-NSF} meta 3326 {PREP} tou 3588 {T-GSN}
              pneumatov 4151 {N-GSN} umwn 4771 {P-2GP} amhn 281 {HEB} | [prov 4314 {PREP}
              filhmona 5371 {N-ASM} egrafh 1125 5648 {V-2API-3S} apo 575 {PREP} rwmhv 4516
              {N-GSF} dia 1223 {PREP} onhsimou 3682 {N-GSM} oiketou] 3610 {N-GSM} | |
-            """,
-            edition,
-            Brackets.Subscription)[0];
+            """;
 
-        verse.Words.Should().HaveCount(7);
-        verse.Words[^1].Surface.Should().Be("amhn");
-        verse.Words.Should().NotContain(word => word.Surface.Contains('[') || word.Surface.Contains(']'));
+        var scrivener = UtrReader.Read(philemon, Edition.Scrivener1894)[0];
+        scrivener.Words.Should().HaveCount(7);
+        scrivener.Words[^1].Surface.Should().Be("amhn");
+
+        var stephanus = UtrReader.Read(philemon, Edition.Stephanus1550)[0];
+        stephanus.Words.Should().HaveCount(15);
+        stephanus.Words[6].Surface.Should().Be("amhn");
+        stephanus.Words[7].Surface.Should().Be("[prov");
+        stephanus.Words[^1].Surface.Should().Be("oiketou]");
     }
 
     /// <summary>The first alternative is Stephanus and the second is Scrivener, in every group.</summary>
