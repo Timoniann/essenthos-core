@@ -127,7 +127,9 @@ try {
     tar -xf $archive -C $staging
 
     Write-Host "Copying $($files.Count) files of $Commit to ${Server}:$Root/deploy"
-    ssh @ssh $Server "mkdir -p '$Root/deploy/initdb'"
+    # The folders the deploy user writes into later (the updating page's switch, what `forge publish`
+    # sends) are made here, as that user: a folder Docker makes for a mount is root's, and refuses it.
+    ssh @ssh $Server "mkdir -p '$Root/deploy/initdb' '$Root/maintenance' '$Root/releases' '$Root/downloads' '$Root/images/corpus'"
     foreach ($file in $files) {
         scp -q @ssh (Join-Path $staging 'deploy' $file) "${Server}:$Root/deploy/$file"
     }

@@ -1,453 +1,288 @@
 # The server
 
-One machine running everything in containers: Postgres, production, Caddy in front, and optionally
-the page counter. Dev can run beside production on a machine that turns it on (**Dev**, below); the
-production server, Hetzner 2.29.125.205 (guide `production-server`), runs production only. The design and its reasons are DOC-0205, except where it put
-the data on the machine's own disk — it now lives on an attached volume, as below; the publication of
-the corpus is DOC-0203; the page counter is DOC-0211.
+One Hetzner machine runs production in containers: Postgres, the API, the reader, Caddy in front, a
+nightly backup, and optionally the page counter. No dev runs on it (TSK-1002): the rehearsal of a
+publication is the same stack on the workstation (**Rehearsal**, below). Access, state and history of
+the machine are in the guide `production-server`; the corpus's publication is DOC-0203; the page
+counter is DOC-0211.
 
-    essenthos.org          the reader, and its API at /v1
-    api.essenthos.org      the same API, for the mobile app and other clients
-    dev.essenthos.org      dev's reader and API, behind a password, where dev runs
-    devapi.essenthos.org   dev's API alone, behind the same password
+    http://2.29.125.205    the reader and its API at /v1, plain http, no sign-in   (SITE_IP)
+    essenthos.org          the reader and its API at /v1, with TLS                  (SITE_DOMAIN)
+    api.essenthos.org      the same API, for the mobile app and other clients      (API_DOMAIN)
 
 Four things reach the server, separately, all from the workstation; the server pulls nothing of ours
 and needs neither git nor a registry login:
 
-- **the images** — `scripts/send-images.ps1`, which runs the checks on each commit, builds the API
-  image from an essenthos-core commit and the reader's from an essenthos-web commit, as those commits
-  hold them, and loads them into the server's Docker as `essenthos-api:<commit>` and
-  `essenthos-web:<commit>` (**Shipping code**, below);
-- **the code** — `scripts/deploy.ps1`, which copies this folder's files as that commit holds them,
-  never as they stand on disk, and starts the images by those tags. It refuses a tag the server has
-  not been sent;
-- **the corpus** — `forge publish --to prod` (first `--to dev`, where a dev runs), from the machine
-  that built it. The
-  release carries the rows that name the pictures of people and places; publishing also sends the
-  picture files, from this machine's `Resources/Images`, into `/srv/essenthos/images/corpus_dev` or
-  `…/corpus`, which the API mounts read-only at `/images`. Only new or changed files travel, nothing
-  is ever removed — the previous release, which a rollback puts back, names pictures too — and a
-  release naming a picture the server does not have is refused before it is swapped in. The smaller
-  copies a list or an avatar is served are made by the API itself, on the first request for each, and
-  kept in the `image-cache` volume; any made ahead with `python scripts/picture-sizes.py` travel with
-  the pictures and are served instead, which only spares their first readers the wait. A copy's name
-  carries how it was made (`ImageEndpoints.CopyRecipe`); when that changes, the copies made the old way
-  are never served again, and the volume (and `Resources/Images/sized`) can be emptied of them.
-- **the downloads** — `forge export`, then `forge publish` (which sends them with the corpus) or
-  `forge publish-downloads --to dev|prod` on its own. See **The downloads**, below.
-
-Everything below can be rehearsed on a workstation first, and should be before anything changes on the
-server:
-
-    docker compose --env-file .env.rehearsal -f compose.yaml -f compose.rehearsal.yaml up -d
-    forge publish --to rehearsal-dev ; forge publish --to rehearsal
-
-(`.env.rehearsal` turns dev on, as in **Dev**, below, for `rehearsal-dev` to have somewhere to go.)
-
-## Shipping code
-
-There is no CI: GitHub keeps the repositories and builds nothing (owner, 2026-10-29, NOT-0213). The
-checks on this machine are the only gate, and the images are built here, after them, from the exact
-commits that passed:
-
-    # each repository's commit, full hashes
-    $core = git -C essenthos-core rev-parse main
-    $web  = git -C essenthos-web  rev-parse main
-
-    # 1. check, build and send: core-check-isolated and web-check-isolated on a temporary worktree at
-    #    each commit, then docker build from the commit as committed, then docker save | ssh docker load
-    ./scripts/send-images.ps1 -Server deploy@2.29.125.205 -Commit $core -WebCommit $web
-
-    # 2. start them: deploy/ from the core commit, and the two tags into .env
-    ./scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit $core -WebCommit $web
-
-Each image is optional: `-Commit` alone, or `-WebCommit` alone, sends one; `deploy.ps1` without
-`-WebCommit` leaves the reader as it is. `-SkipChecks` sends without checking, for a commit whose checks
-were just run on that very commit; a tag the server already has is refused unless `-Force`. Both scripts
-take `-WhatIf`, which says what they would do and touches nothing.
-
-The images are built for `linux/amd64`, the server's architecture (`-Platform` for another). Measured
-2026-10-29 (TSK-1002), the whole of a release takes about ten minutes:
-
-| Step | API | Reader |
-|---|---|---|
-| checks on the commit | `core-check-isolated`, ~2.5 min | `web-check-isolated`, ~1 min |
-| build | 110 s (44 s once the base images are cached) | 216 s, 170 of them the map's close-up relief |
-| sent (compressed layers) | 110 MB, about 22 s | 110 MB, 19 s |
-| on the server's disk | 390 MB | 268 MB |
-
-The uplink carried about 5 MB/s. The API's figures are for an image published for its own architecture
-only (`-a $TARGETARCH` in its Dockerfile); before that it carried every platform's native libraries and
-was 268 MB to send (55 s) and 1.04 GB on disk. `docker save` writes the layers already gzip-compressed as Docker
-stores them, so the stream is sent as it is: gzip over it saved 0.6%. Every send carries the whole
-image, base layers included; the server stores a layer once, however many tags use it.
-
-**Rollback** is `deploy.ps1` again with the previous hashes: every image sent stays on the server until
-it is removed. To see what is there, and to remove tags no longer wanted (never the two `.env` names):
-
-    ssh deploy@2.29.125.205 'docker image ls essenthos-api; docker image ls essenthos-web'
-    ssh deploy@2.29.125.205 'docker image rm essenthos-api:<old commit>'
-
-A new release adds roughly its own application layers, tens of MB, so keep the last few and prune by
-hand when `df -h /` asks for it.
-
-The reader's page counter is compiled into its bundle, so it is a build switch:
-`send-images.ps1 … -AnalyticsEndpoint /count` (**Page counts**, below).
+- **the images**: `scripts/send-images.ps1` checks each commit, builds the API image from an
+  essenthos-core commit and the reader's from an essenthos-web commit, and loads them into the server's
+  Docker as `essenthos-api:<commit>` and `essenthos-web:<commit>`;
+- **the code**: `scripts/deploy.ps1` copies this folder's files as that commit holds them and starts
+  the images by those tags (**Shipping code**);
+- **the corpus**: `forge publish`, which also sends the pictures its rows name into
+  `/srv/essenthos/images/corpus` (**Shipping the corpus**);
+- **the downloads**: `forge export`, then `forge publish` or `forge publish-downloads` (**The downloads**).
 
 ## The machine
 
-**Data on a volume, everything else replaceable.** The machine has two disks:
+Hetzner Cloud, Helsinki: x86_64, 2 vCPU, 3.7 GiB of memory with a 4 GB swap file, one 38 GB disk.
+Everything the server keeps is under `HOST_DATA_ROOT=/srv/essenthos`, on that disk:
 
-| | What is on it | If it is lost |
+| Under /srv/essenthos | What |
+|---|---|
+| `deploy/` | this folder's files and `.env` |
+| `postgres/` | the database: the one corpus copy, the accounts, the page counts |
+| `releases/`, `images/corpus/`, `downloads/` | what `forge publish` sends |
+| `backups/`, `backup-key/`, `rclone/` | the encrypted dumps, the public key, the off-site remote |
+| `caddy/` | certificates |
+| `maintenance/` | the updating page's switch (**The updating page**) |
+
+Nothing on the disk is unique but the accounts, which the backups protect (**Backups**). The corpus is
+an artefact, published again from the workstation; Hetzner's own server backups (+20%) are optional.
+
+### Memory
+
+The budget is chosen in `.env`, never by editing `compose.yaml`. Each value left out takes the 8 GB
+machine's default; `env.example` holds the 4 GB machine's, which this server runs:
+
+| `.env` | 4 GB (this server) | 8 GB (default) |
 |---|---|---|
-| the machine's own disk | Ubuntu, Docker, the images and containers it pulled | make a new machine; nothing on it is unique |
-| an attached **Block Storage volume**, mounted at `/srv/essenthos` | Postgres's data directory, the releases, the pictures, the backups, the certificates, the rclone and backup-key folders, and `deploy/` with its `.env` | this is the server; it is what the backups below protect |
+| `DB_MEM_LIMIT` | 2g | 4g |
+| `DB_SHARED_BUFFERS` | 768MB | 2GB |
+| `DB_EFFECTIVE_CACHE_SIZE` | 1536MB | 3GB |
+| `DB_WORK_MEM` | 16MB | 32MB |
+| `DB_MAINTENANCE_WORK_MEM` | 256MB | 256MB |
+| `DB_PARALLEL_WORKERS` (per gather) | 1 | 2 |
+| `DB_SHM_SIZE` | 512mb | 1gb |
+| `API_MEM_LIMIT` | 768m | 1g |
+| `WEB_MEM_LIMIT` | 128m | 128m |
+| `ANALYTICS_MEM_LIMIT` | 128m | 256m |
 
-So the machine can be replaced at any time: create a new one, attach the volume, install Docker, run
-the deploy — the site comes back with its corpus, its accounts, its certificates and its settings
-(**Moving to a new machine**, below). `HOST_DATA_ROOT` in `.env` is the volume's mount point.
+The limits add up to 2.9 GiB (3.0 with the counter) of the machine's 3.7, which leaves about 850 MB
+for Ubuntu, Docker, Caddy and the backup container, with the swap file as the safety net. Why the 8 GB figures are what
+they are is in `compose.yaml` (TSK-0920, PRB-0926). On 4 GB, heavy requests (search, the parallel view,
+entity pages) are slower; the owner accepts that for the alpha. Time them once on the server and record
+the figures on TSK-1002; if they take seconds, rescale the machine and drop the `DB_*`/`*_MEM_LIMIT`
+lines. Restoring a release builds one index per parallel `pg_restore` job, each with up to
+`maintenance_work_mem`: four jobs at 256MB beside 768 MB of shared buffers come close to the 2g limit.
 
-**Backups do not come from the provider's machine backups.** DigitalOcean's droplet backups (and
-Hetzner's server backups) copy the machine's own disk and **not an attached volume**, and the machine's
-own disk holds nothing worth restoring. What protects the data:
+### Disk
 
-1. **The encrypted nightly dumps** of the accounts databases (and the page counts, where the counter is
-   on), written to the volume by the `backup` service — **Backups**, below;
-2. **their off-site copy**: the owner's console copies the newest of them to his own machine every day
-   it runs (**Backups**, below), and the `backup-offsite` service can copy them to an rclone remote as
-   well — either is what survives the volume itself being lost;
-3. optionally, **volume snapshots**, which catch the whole volume at once — the corpus releases and the
-   pictures included, which saves re-publishing them after a disaster. Take one by hand before anything
-   risky, or schedule them; keep them **four weeks at most**, since the privacy page promises that no
-   copy of deleted account data outlives about six weeks.
+The server keeps **one corpus copy** (owner, 2026-10-29): a publication drops the live corpus and
+restores the new release in its place, with the updating page up meanwhile, and a rollback is publishing
+the previous release again. A published copy is 12–15 GB in Postgres; with the images (about 0.4 GB
+per API and 0.3 GB per reader kept), the pictures (~180 MB), the releases uploaded for restore, the
+backups and the logs, it fits the 38 GB disk. Check `df -h /` before a publication. When it no longer
+fits: **When more space is needed**, below.
 
-The corpus itself needs no backup: it is an artefact, re-published from the workstation that built it.
+### Firewall
 
-**Size.** A published corpus is about **12–15 GB per copy** in Postgres, and the server holds four:
-production's current release and the previous one a rollback puts back, and dev's pair. A publication
-restores a fifth beside them before the swap, so plan for five copies, 60–75 GB, plus the pictures
-(about 180 MB per environment), the releases uploaded for restore, the backups and the logs.
+Hetzner's Cloud Firewall, when the owner sets it up, allows 22, 80 and 443 (TCP) and 443 (UDP) inbound
+and nothing else. ufw is no protection here: **Docker's published ports bypass ufw**, so whatever
+compose publishes on `0.0.0.0` is open whatever ufw says. That is why Postgres (5432) and the counter's
+dashboard (8081) are published on `127.0.0.1` only and reached through an ssh tunnel; keep any new port
+the same.
 
-- **Volume: 100 GB or more.** A volume can be grown later without moving anything (resize it at the
-  provider, then `resize2fs` on the machine); it cannot be shrunk.
-- **Machine: start with a shared-CPU 8 GB / 4 vCPU.** `compose.yaml` caps Postgres at 4 GB,
-  with `shared_buffers=2GB`, `effective_cache_size=3GB`, `work_mem=32MB`,
-  `maintenance_work_mem=256MB` and two parallel workers. The remaining machine memory serves both
-  API environments and the proxy. A **4 GB / 2 vCPU** machine needs a separately measured smaller
-  database limit that leaves room for those other containers and the operating system; the present
-  compose settings are not a whole-machine 4 GB budget.
-- **Later**, when readers are many or the CPU graph stays high, move to a dedicated-CPU plan: that is a
-  new machine and the same volume, which is exactly the move the layout above makes cheap.
+## Addresses: the bare IP and the domain
 
-Check current pricing at the provider; nothing here depends on a particular plan.
+`.env` names where the site answers, and Caddy serves only what it names:
 
-**Dev**, where it runs at all, runs on the same machine as production, in the same compose project and
-the same Postgres, as separate databases, roles and containers, behind a password and telling search
-engines to stay away. **The production server runs none** (TSK-1002): `api-dev-migrate`, `api-dev` and
-`web-dev` are in the compose profile `dev`, which is off unless `.env` names it, and Caddy serves dev's
-two hostnames only when `.env` says `DEV_SITES=on`. Turning dev on is every commented dev line at the
-end of `env.example` together: `COMPOSE_PROFILES=dev`, `DEV_SITES=on`, the dev domains, its front door
-and its two database passwords. initdb creates dev's roles only when both passwords are set at the
-first start; added later, they are the statements in `initdb/10-roles.sh`, run by hand. On a machine
-without dev, `deploy.ps1 -Environment dev` is refused, and Forge's `dev` target and the console's dev
-environment have nowhere to go — a dev for rehearsing a publication is a separate small machine, made
-for the day. Forge's `prod` target still names `dev` as the one a release must reach first
-(`Publish:Targets:prod:After`); with no dev, `forge publish --to prod` needs `--without-rehearsal`. The cost of dev beside production is honest: a publication to dev competes with production
-for disk and memory while it runs, and restarting Postgres restarts both.
+| `.env` | Serves |
+|---|---|
+| `SITE_IP=2.29.125.205` | `http://2.29.125.205`: the reader, the API at `/v1`, the downloads. Plain http. |
+| `SITE_DOMAIN`, `API_DOMAIN`, `ACME_EMAIL` | the reader on the domain and the API on its own hostname, with TLS |
 
-**TLS is automatic.** Caddy obtains a certificate for every hostname from Let's Encrypt on its first
-start and renews it on its own; there is no certificate to buy or to copy. It needs the DNS records to
-point at the machine and ports 80 and 443 to be open when it starts, and `ACME_EMAIL` in `.env` for the
-expiry warnings Let's Encrypt sends if renewal ever fails. The certificates are kept on the volume, so a
-new machine does not ask for them again.
+Both can be on at once. **While there is no domain**, `.env` has `SITE_IP=2.29.125.205` and
+`SITE_DOMAIN`, `API_DOMAIN` and `ACME_EMAIL` empty (the lines present, with nothing after `=`). The
+reader calls the API on its own origin (`/v1`), so nothing in the images depends on the address.
 
-## Once: the machine (DigitalOcean)
+On the bare address:
 
-1. **The volume.** Create a Block Storage volume of 100 GB or more, in the region nearest the readers,
-   ext4, "manually format and mount" — this step formats it.
-2. **The droplet.** Ubuntu 24.04, Basic, 8 GB / 4 vCPU (see **Size**), in **the same region**, with your
-   SSH key, and attach the volume to it. Droplet backups can stay off: they would not include the volume.
-3. **Mount the volume at `/srv/essenthos`**, by its id so a second volume never takes its place:
+- **sign-in is not offered**: the proxy answers `/v1/auth/providers` with none, since Google and
+  GitHub send a reader back only to a registered https address;
+- **nothing is indexed**: every answer says `noindex` and `robots.txt` keeps crawlers out;
+- with no domain set, each page's canonical and language links name the address it was asked on; once
+  the domain is set, they name the domain on both.
 
-        ls /dev/disk/by-id/ | grep DO_Volume          # scsi-0DO_Volume_<name>
-        sudo mkfs.ext4 /dev/disk/by-id/scsi-0DO_Volume_<name>   # a new, empty volume only — never on one with data
-        sudo mkdir -p /srv/essenthos
-        echo '/dev/disk/by-id/scsi-0DO_Volume_<name> /srv/essenthos ext4 defaults,nofail,discard,noatime 0 2' | sudo tee -a /etc/fstab
-        sudo mount -a && df -h /srv/essenthos
+**Switching the domain on**, once it is bought:
 
-   `nofail` lets the machine boot without the volume; Docker then finds `/srv/essenthos` empty, so if
-   the site comes up with no corpus after a reboot, check `df -h /srv/essenthos` first.
-4. **Firewall.** A DigitalOcean cloud firewall on the droplet allowing inbound 22, 80 and 443 (TCP) and
-   443 (UDP), and nothing else. Postgres and the page counter's dashboard are bound to the droplet's
-   loopback and are reached through ssh.
-5. **DNS.** A records (and AAAA, if the droplet has IPv6) for `essenthos.org`, `api`, `dev` and `devapi`
-   pointing at the droplet. Caddy obtains the certificates on first start; it needs the names to
-   resolve first.
-6. **Docker**, from Docker's own apt repository (docs.docker.com/engine/install/ubuntu), and a user for
-   deploying:
+1. DNS: A records (and AAAA for `2a01:4f9:c015:b780::1`) for the domain and `api.` pointing at the
+   server.
+2. `.env`: `SITE_DOMAIN=essenthos.org`, `API_DOMAIN=api.essenthos.org`, `ACME_EMAIL=<address>`.
+   Keep `SITE_IP` to go on answering on the address, or empty it.
+3. `cd /srv/essenthos/deploy && docker compose up -d`: the proxy and the API are recreated with the
+   new values, and Caddy obtains the certificates on its first request to each name (ports 80 and 443
+   must be open and the names must resolve first). The certificates are kept in `caddy/`.
+4. Sign-in, if wanted: the provider's callback is `https://<domain>/v1/auth/google/callback` (and
+   `/github/callback`); then `GOOGLE_CLIENT_ID`/`_SECRET`, `GITHUB_CLIENT_ID`/`_SECRET` in `.env` and
+   `docker compose up -d api`.
+5. Search engines: **Search engines: once, by the owner**, below.
 
-        adduser --disabled-password deploy && usermod -aG docker deploy
-        mkdir -p /srv/essenthos/deploy /srv/essenthos/downloads /srv/essenthos/downloads_dev \
-                 /srv/essenthos/images/corpus /srv/essenthos/images/corpus_dev && chown -R deploy /srv/essenthos
-        # then put your public key in /home/deploy/.ssh/authorized_keys
+## The updating page
 
-7. **The .env.** Copy `env.example` to `/srv/essenthos/deploy/.env` and fill it in. Every password
-   fresh: `openssl rand -base64 32 | tr -d '/+='`. The Postgres passwords are read once, when the
-   database is first created; changing one later is `ALTER ROLE`, not an edit here.
-8. **On this machine**, the addresses Forge publishes to:
+While the one corpus copy is replaced, every site answers every request with a short page in Ukrainian,
+English, German and Spanish, status **503** with `Retry-After: 300`, so a reader sees "we are updating"
+and a crawler comes back later. Only `/v1/health/*` still reaches the API, so a publisher can watch it
+come back. The switch is a file; Caddy looks for it on every request, so it takes effect at once, with
+no reload:
 
-        dotnet user-secrets set "Publish:Targets:dev:Ssh" "deploy@<droplet>" --project Essenthos.Forge
-        dotnet user-secrets set "Publish:Targets:prod:Ssh" "deploy@<droplet>" --project Essenthos.Forge
-        dotnet user-secrets set "Publish:Targets:dev:Password" "<POSTGRES_PASSWORD>" --project Essenthos.Forge
+    ssh deploy@2.29.125.205 'mkdir -p /srv/essenthos/maintenance && touch /srv/essenthos/maintenance/on'   # on
+    ssh deploy@2.29.125.205 'rm -f /srv/essenthos/maintenance/on'                                           # off
+
+`forge publish` to a one-copy target turns it on and off itself (`Publish:Targets:<target>:Maintenance`,
+default `maintenance/on` under the target's data root). The page is in the Caddyfile (`&(updating)`).
+`deploy.ps1` makes the folder as the deploy user; a folder Docker makes for a mount is root's, and the
+`touch` above would be refused.
+
+## Shipping code
+
+There is no CI: GitHub keeps the repositories and builds nothing (NOT-0213). The checks on the
+workstation are the gate, and the images are built there from the exact commits that passed:
+
+    $core = git -C essenthos-core rev-parse main
+    $web  = git -C essenthos-web  rev-parse main
+
+    # check, build and send: the checks on a temporary worktree at each commit, docker build from the
+    # commit as committed, docker save | ssh docker load
+    ./scripts/send-images.ps1 -Server deploy@2.29.125.205 -Commit $core -WebCommit $web
+
+    # start them: deploy/ from the core commit, the two tags into .env, docker compose up -d
+    ./scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit $core -WebCommit $web
+
+Each image is optional (`-Commit` alone or `-WebCommit` alone). `-SkipChecks` sends without checking;
+a tag the server already has is refused unless `-Force`; both scripts take `-WhatIf`. `deploy.ps1`
+refuses before touching anything when `.env` is missing or a tag was not sent. Images are built for
+`linux/amd64`. Measured 2026-10-29: about ten minutes for both, 110 MB sent per image at ~5 MB/s.
+
+**Rollback** is `deploy.ps1` with the previous hashes: sent images stay until removed by hand
+(`docker image rm essenthos-api:<old commit>`, never the two named in `.env`). Keep the last few and
+prune when `df -h /` asks for it.
+
+## Shipping the corpus
+
+A corpus reaches production only after the **rehearsal** on the workstation has taken the same release
+(owner, 2026-10-29): Forge's `prod` target names `rehearsal` as the one a release must reach first
+(`Publish:Targets:prod:After`).
+
+    forge release                    # verify this machine's corpus, label it, dump it into .releases/
+    forge publish --to rehearsal     # the rehearsal stack below; look at it
+    forge publish --to prod          # one copy: the updating page is up while the copy is replaced
+
+Every Forge command takes `--dry-run`. The first publication sends every picture (~180 MB); later ones
+only what changed. Until the first publication the API answers `/v1/health/ready` with 503. A rollback
+is `forge publish --to prod --release <earlier>` (`forge releases` lists them).
+
+## Rehearsal
+
+The same `compose.yaml` on the workstation, with `compose.rehearsal.yaml` for what a Windows Docker
+needs (Postgres in a named volume). Its `.env.rehearsal` beside them is `env.example` with
+`COMPOSE_PROJECT_NAME=essenthos-rehearsal` (the container names Forge's `rehearsal` target uses),
+`HOST_DATA_ROOT` at the checkout's `.rehearsal` folder (the target's `DataRoot`), ports of its own
+(`PROXY_HTTP_PORT`, `PROXY_HTTPS_PORT`, `POSTGRES_HOST_PORT`, clear of 5278–5289 and 5437–5439),
+`SITE_IP=localhost`, the images to rehearse, and passwords made for it:
+
+    docker compose --env-file .env.rehearsal -f compose.yaml -f compose.rehearsal.yaml up -d
+
+`SITE_IP=localhost` serves the address mode at `http://localhost:<PROXY_HTTP_PORT>`; a
+`SITE_DOMAIN` ending in `.localhost` serves the domain mode with Caddy's own local certificates. A
+deploy, a publication, the updating page and a rollback are run here before anything changes on the
+server.
+
+## Once: the machine
+
+Done on 2026-10-29 as root, on the owner's word (guide `production-server`): Ubuntu 26.04, Docker and
+Compose from Docker's apt repository, the 4 GB swap file, fail2ban, Docker's log rotation, the user
+`deploy` in the `docker` group with the owner's key, and `/srv/essenthos` owned by `deploy`. Left:
+
+1. **`.env`**: copy `env.example` to `/srv/essenthos/deploy/.env` and fill it in. Every password
+   fresh (`openssl rand -base64 32 | tr -d '/+='`). The Postgres passwords are read once, when the
+   database is first created; changing one later is `ALTER ROLE`.
+2. **On the workstation**, where Forge publishes:
+
+        dotnet user-secrets set "Publish:Targets:prod:Ssh" "deploy@2.29.125.205" --project Essenthos.Forge
         dotnet user-secrets set "Publish:Targets:prod:Password" "<POSTGRES_PASSWORD>" --project Essenthos.Forge
 
-9. **First deploy and first corpus:**
-
-        ./scripts/send-images.ps1 -Server deploy@<server> -Commit <core sha> -WebCommit <web sha>
-        ./scripts/deploy.ps1 -Server deploy@<server> -Environment prod -Commit <core sha> -WebCommit <web sha>
-        forge release
-        forge publish --to prod --without-rehearsal   # no dev to publish to first; see Dev, above
-
-   Until the first publication the API answers `/v1/health/ready` with 503: there is no corpus yet.
-   The first publication to each environment also sends every picture, about 180 MB.
-
-## Moving to a new machine
-
-A bigger plan, a dedicated CPU, or a machine that died: the volume carries the server.
-
-1. On the old machine, if it still runs: `cd /srv/essenthos/deploy && docker compose down`, then
-   `sudo umount /srv/essenthos`, and detach the volume at the provider.
-2. Create the new machine in the volume's region and attach the volume. Do **not** format it.
-3. Mount it at `/srv/essenthos` exactly as in step 3 above, without the `mkfs` line.
-4. Install Docker and the `deploy` user as in step 6, without `mkdir` and `chown`; the ids match on a
-   fresh Ubuntu, and if they do not, `chown -R deploy /srv/essenthos` — except `postgres/`, which
-   belongs to the container's own user and must be left alone.
-5. Point the DNS records at the new address, update `Publish:Targets:*:Ssh` if the address changed,
-   and run `scripts/send-images.ps1` and `scripts/deploy.ps1` for the commits production ran — the
-   images live on the machine's own disk and do not move with the volume. The corpus, the accounts, the
-   pictures and the certificates are already there.
-
-## Optional: Hetzner Cloud instead of DigitalOcean
-
-Hetzner Cloud offers the same shape — a VM, a Volume, a Firewall — usually for less; check current
-pricing and pick the location nearest the readers (its EU locations keep the data in the EU). Only the
-creation steps differ; `compose.yaml`, the Caddyfile, the `.env` and every command after step 5 are the
-same:
-
-- **Volume**: create it in the server's location; Hetzner can format it (ext4) and mount it itself,
-  but mount it at `/srv/essenthos` by hand as in step 3 so the path is the one everything expects —
-  its device is `/dev/disk/by-id/scsi-0HC_Volume_<id>`.
-- **Server**: Ubuntu 24.04, a shared-vCPU plan with 8 GB (or 4 GB, see **Size**), your SSH key. Its
-  own backups, like DigitalOcean's, do not include the volume.
-- **Firewall**: a Hetzner Cloud Firewall with the same rules as step 4, applied to the server.
-- **Snapshots**: Hetzner snapshots servers, not volumes (check whether that has changed). There the
-  nightly dumps and their off-site copy are the whole backup, and after a disaster the corpus is
-  re-published from the workstation.
-
-## Optional: Cloudflare in front
-
-Cloudflare's free plan can sit in front of the machine as DNS and a caching, filtering proxy. It is not
-needed, and it changes three things that have to be done together:
-
-- **Certificates**: set SSL/TLS to **Full (strict)**, and leave "Always Use HTTPS" off — Caddy already
-  redirects, and Let's Encrypt's renewal must reach Caddy over plain HTTP. Create the records grey
-  (DNS only) first, let Caddy obtain its certificates, then turn the proxy on.
-- **Readers' addresses**: with the proxy on, every connection comes from Cloudflare. Before turning it
-  on, Caddy must be told to trust Cloudflare's published address ranges and to take the reader's address
-  from `CF-Connecting-IP` (Caddy's global `servers { trusted_proxies … client_ip_headers … }`) —
-  otherwise the API's per-reader limits treat every reader as one, and the page counter sees one
-  visitor. That change is not in the Caddyfile yet.
-- **The privacy page** must then name Cloudflare, which sees every request.
+3. **First deploy and first corpus**: `send-images.ps1`, `deploy.ps1`, then **Shipping the corpus**.
+4. **The backup key** (**Backups**, below), and the firewall when the owner wants it.
 
 ## Every time
 
 | To | Run |
 |---|---|
-| check, build and send the images | `scripts/send-images.ps1 -Server deploy@<server> -Commit <sha> [-WebCommit <sha>]` |
-| ship code to production | `scripts/deploy.ps1 -Server deploy@<server> -Environment prod -Commit <sha> [-WebCommit <sha>]`, after the send |
-| ship code to dev, where a dev runs | the same with `-Environment dev` (refused on the production server) |
-| undo a code deploy | `scripts/deploy.ps1` with the previous commits; their images are still on the server |
-| ship a corpus | `forge release`, then `forge publish --to dev` and a look at dev where a dev runs, `forge publish --to prod` |
-| undo a corpus | `forge rollback --to prod` |
-| ship the downloads alone | `forge export`, then `forge publish-downloads --to dev`, look at `dev…/downloads/manifest.json`, then `--to prod` |
+| check, build and send the images | `scripts/send-images.ps1 -Server deploy@2.29.125.205 -Commit <sha> [-WebCommit <sha>]` |
+| ship code | `scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit <sha> [-WebCommit <sha>]` |
+| undo a code deploy | `scripts/deploy.ps1` with the previous commits |
+| ship a corpus | `forge release`, `forge publish --to rehearsal`, a look, `forge publish --to prod` |
+| undo a corpus | `forge publish --to prod --release <earlier>` |
+| ship the downloads alone | `forge export`, `forge publish-downloads --to rehearsal`, then `--to prod` |
 | see what is where | `forge releases`, `forge releases --on prod` |
+| look at the server | `ssh deploy@2.29.125.205 'df -h /; free -h; cd /srv/essenthos/deploy && docker compose ps'` |
 
-Each of these can be tried first: `scripts/send-images.ps1 … -WhatIf`, `scripts/deploy.ps1 … -WhatIf` and
-`forge release | publish | rollback … --dry-run` say what they would do and touch nothing.
-
-The owner's console (`Essenthos.Desk`) has a Deployment section that runs the same commands, behind a
-confirmation that says what will happen (production also wants its name typed), and records every run
-in `Resources/Essenthos/owner-changes.jsonl` under section `deploy`. It shows what each environment
-runs by asking `/v1/health/version` (the API's commit and corpus release) and `/version.json` (the
-reader's commit), both of which the images carry from the `SOURCE_COMMIT` build argument
-`send-images.ps1` passes. The console does not send images: run `send-images.ps1` before its code
-deploy, which is otherwise refused for the missing tag.
-Dev is behind a password; to let the console read dev's versions, give it the same user and password
-in user secrets as `Desk:Deploy:Environments:dev:User` and `…:Password` — otherwise it reports dev as
-answering behind its password and nothing more.
-
-A publication stops the API for the second or two the rename takes; Caddy holds requests through it.
-Measured on the rehearsal under continuous traffic: 2,230 requests, none failed, the slowest 5.4 s.
+The owner's console (`Essenthos.Desk`) has a Deployment section that runs the same commands behind a
+confirmation and records each run in `owner-changes.jsonl`; it reads what runs from
+`/v1/health/version` and `/version.json`, which the images carry from `SOURCE_COMMIT`. It does not send
+images: run `send-images.ps1` first.
 
 ## The downloads
 
-The texts that may be passed on are offered as files, one per text with a file beside it saying who made
-it and on what terms. They are made on this machine, from the corpus it holds, and live on the server
-beside the pictures:
+The texts that may be passed on, one file per text with its attribution beside it, made on the
+workstation by `forge export` (into `.exports`, with a `manifest.json` naming each file's size and
+checksum) and sent by `forge publish` with the corpus or by `forge publish-downloads` alone. They land in
+`/srv/essenthos/downloads` and are served at `/downloads/…` on every address of the site; the API lists
+them at `/v1/downloads`.
 
-| | Where on the server | Served at |
-|---|---|---|
-| production | `/srv/essenthos/downloads` | `https://essenthos.org/downloads/…` and `https://api.essenthos.org/downloads/…` |
-| dev | `/srv/essenthos/downloads_dev` | `https://dev.essenthos.org/downloads/…` and `https://devapi.essenthos.org/downloads/…`, behind dev's password |
-
-**Making and sending them.** `forge export` writes the files into `.exports` in this checkout (or
-`--to <folder>`, or `Export:Path`), with a `manifest.json` that names every file with its size and
-checksum. `forge publish --to dev|prod` sends the export together with the corpus, before it swaps the
-corpus in; `forge publish-downloads --to dev|prod` sends the export without a corpus (`--dry-run` only
-checks it). With no export in the folder, a publication leaves the server's downloads as they are.
-
-**What the send does, in this order:**
-
-1. It checks the export against its own manifest: every file the manifest names must be there with the
-   size and checksum it states, and no name may point out of the folder. If one is not, **nothing is
-   sent** and the publication stops.
-2. It sends the files the server lacks. A file's name carries the first digits of its checksum
-   (`KJV.fad704a8bc0f.jsonl.gz`), so a file that changed has a new name and the old one is left alone.
-3. It asks the server for what it now holds and puts the new `manifest.json` in place, in one move, only
-   if every file the manifest names is there as stated.
-4. Only then does it take away the files no manifest names any more (the older versions of a text, or a
-   text that is no longer exported), and the folders that leaves empty.
-
-So at no moment does the list the site shows name a file that is not there, and a reader who opened the
-list a minute before a publication still finds every file it promised. Sending the same export twice
-sends and removes nothing.
-
-**How readers get them.** The API reads the manifest from the same folder (mounted read-only; set by
-`Downloads__Folder`) and lists the texts at `/v1/downloads`, each with a link under `Downloads__BaseUrl`,
-which is `/downloads` in `compose.yaml`: a link on the site's own address. The proxy serves that folder
-read-only at `/downloads/*` on the reader's address and on the API's, for production and for dev. A file
-is offered as a download under its plain name (`KJV.jsonl.gz`, `KJV-ATTRIBUTION.txt`) and may be kept
-by a browser or a cache for a year, since its bytes never change; the manifest is kept for five
-minutes. Nothing lists a folder: a path that is not a file answers 404. Because the links are on the
-site's own address, the Content-Security-Policy needs nothing added.
-
-**Rehearsing it.** With the rehearsal stack up (above), run `forge export` and `forge publish-downloads --to rehearsal-dev`
-(the rehearsal targets send to the rehearsal's own data root). Then `https://dev.essenthos.localhost:8443/downloads/manifest.json` (with dev's password) answers with its
-five-minute cache, a text's file with the year's and its plain name, `/downloads/` with a 404, and
-`/v1/downloads` lists the same files.
+The send checks the export against its manifest and sends nothing if a file is missing or differs; sends
+only files the server lacks (a name carries the first digits of its checksum, so a changed file is a new
+name); swaps the new manifest in, in one move, once every file it names is there; and only then removes
+files no manifest names. So the list the site shows never names a missing file. A text's file is served
+under its plain name and may be cached for a year; the manifest for five minutes; nothing lists a folder.
 
 ## Pages for search engines and link previews
 
-The reader is one script, and crawlers and link-preview bots do not reliably run it. So every page of
-the site is written out by the API first — its title, description, canonical address and its
-addresses in the other three languages, Open Graph and Twitter tags, and the page's essentials (the
-verse, the chapter's text in the language's own Bible, a record's name, line and first verses) inside
-`#root`, where the application's first render replaces them. Caddy routes it (`(pages)` in the
-Caddyfile):
+Crawlers do not reliably run the reader's script, so the API writes every page first: title,
+description, canonical and language links, Open Graph tags, structured data and the page's essentials
+inside `#root`. Caddy routes it (`(pages)` in the Caddyfile):
 
 | Request | Goes to |
 |---|---|
-| `/v1/*` | the API, as before |
+| `/v1/*` | the API |
 | `/robots.txt`, `/sitemap.xml`, `/sitemaps/*` | the API, as `/v1/robots.txt` and so on |
-| `/assets/*`, and anything with a file extension | the web container, as before |
-| every other `GET` — a page | the API, as `/v1/pages/<the address>` |
+| `/assets/*`, and anything with a file extension | the web container |
+| every other `GET` (a page) | the API, as `/v1/pages/<the address>` |
 
-A page the API answers with a server error or a refusal, or does not answer within two seconds, is
-served by the web container as the plain application, so the API being down or restarting costs the
-preview and never the page. An address that names nothing is the API's `404`, carrying the
-application's own not-found page.
-
-The API reads the reader's `index.html` from the web container (`Site__Shell` in `compose.yaml`) and
-every absolute link names `Site__Origin`; both are set there from `SITE_DOMAIN` and `DEV_DOMAIN`, so
-`.env` needs nothing new. The page wording — each language's titles and descriptions — is the reader's
-own `meta` namespace, read from `/meta/<language>.json` beside `index.html` where the web build
-publishes it, and from the copy compiled into the API (`Essenthos.Api/Pages/Wording/`) where it does
-not. A page is kept ten minutes once written; a reader redeploy is picked up within a minute.
-
-When the reader gains a public page at a new address, add it to `PageSections` in
-`Essenthos.Api/Pages/PageAddress.cs` — until then that address is answered `404` to a search engine,
-although a reader who follows a link still gets the page.
-
-To see what a crawler sees:
-
-    curl -s https://essenthos.org/uk/read/mark/3/3 | grep -E '<title>|canonical|hreflang'
-    curl -s https://essenthos.org/robots.txt
-
-Dev asks for a password and says `noindex`, so nothing there is indexed or previewed; so does
-`api.essenthos.org`, whose `robots.txt` keeps every crawler out, and every `/v1` answer on the site
-carries `X-Robots-Tag: noindex`, since it is data for the page and never a page itself.
-
-What else a page carries for search engines:
-
-- **Structured data** (JSON-LD, `Pages/StructuredData.cs`): the site's name and logo on the home page,
-  the trail to every page (`BreadcrumbList`), and what a page is about — a `Person` or a `Place` with
-  its coordinates and its Wikidata item, a lexicon entry as a `DefinedTerm`, a verse and its chapter
-  and book, a text as a `Book`, and each text on `/downloads` as a `Dataset` with its licence and file.
-  No `Event` and no sitelinks search box: Google checks events for a date and an address a Bible event
-  has not got, and retired the search box in 2024. Check a page with Google's Rich Results Test.
-- **`max-image-preview:large`** on every indexed page, so a result may show its picture full width.
-- **One address per page**: another spelling (`/read/MRK/3`, `/strong/h430`, `/uk`, a trailing slash,
-  `?v=3`) is redirected permanently to the page's own, and a record folded into another is redirected
-  to the one that stays.
-- **The sitemap index** dates each list by the corpus release being served; no single address is
-  dated, since nothing records when one page's words changed.
+A page the API answers with a server error or a refusal, or not within two seconds, is served by the
+web container as the plain application, so the API restarting costs the preview and never the page.
+A new public page of the reader needs its address in `PageSections` (`Essenthos.Api/Pages/PageAddress.cs`).
 
 ### Search engines: once, by the owner
 
-1. **Google Search Console** (search.google.com/search-console): add a *Domain* property
-   `essenthos.org` and verify it with the DNS TXT record it shows, at the DNS provider. A Domain
-   property covers `essenthos.org`, its subdomains, http and https. Then *Sitemaps* → submit
-   `https://essenthos.org/sitemap.xml`.
-2. **Bing Webmaster Tools** (bing.com/webmasters): *Import from Google Search Console*, which verifies
-   the site and brings the sitemap; otherwise add the site and verify by the DNS CNAME record it shows.
-3. **IndexNow** (Bing, Yandex, Naver, Seznam and others; not Google): make a key once with
-   `openssl rand -hex 16`, put it in `.env` as `INDEXNOW_KEY`, `docker compose up -d proxy`, and check
-   `https://essenthos.org/<key>.txt` answers with it. Then, after the first publication,
-   `./scripts/indexnow.ps1 -Key <key> -All -WhatIf` and without `-WhatIf` (about 270,000 addresses in 27
-   batches); after a later publication, only the lists that changed (`-Sitemap records-people`).
-4. **Yandex Webmaster** (webmaster.yandex.com), optional: add the site and verify by the DNS TXT record
-   it shows; it reads the same sitemap and takes IndexNow.
+On the domain only; the bare address asks not to be indexed.
 
-Nothing here needs a tag in the page: every verification is a DNS record.
+1. **Google Search Console**: a *Domain* property for the domain, verified by the DNS TXT record it
+   shows; then submit `https://<domain>/sitemap.xml`.
+2. **Bing Webmaster Tools**: *Import from Google Search Console*.
+3. **IndexNow** (Bing, Yandex and others): `openssl rand -hex 16` into `.env` as `INDEXNOW_KEY`,
+   `docker compose up -d proxy`, check `https://<domain>/<key>.txt`; after a publication,
+   `./scripts/indexnow.ps1 -Key <key> -All` (or `-Sitemap <list>` for what changed).
 
 ## The database's extensions
 
-The corpus compares spellings with `similarity()` from `pg_trgm`, a contrib module of Postgres itself,
-and one migration creates it. Creating an extension needs a superuser or the database's owner, and the
-roles that restore and read a release are neither, so the container creates it instead:
-`initdb/00-extensions.sh` puts it into `template1` on the first start, as the superuser, and every
-database created afterwards has it — each release `forge publish` restores, and the app databases.
-The workstation's own `compose.yaml` does the same through `../initdb`, into the corpus database and
-`template1`.
-
-Both run only when the data directory is created. On a server whose Postgres was initialised before
-the script existed, run it once by hand:
+The corpus uses `pg_trgm`. `initdb/00-extensions.sh` creates it in `template1` when the data directory
+is first created, so every database restored later has it. On a Postgres created before that script:
 
     docker compose exec db psql -U postgres -d template1 -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
 
 ## Page counts
 
-Off until turned on. When on, production's pages are counted by a GoatCounter on this machine — which
-page, the referring site, the country, the kind of browser, system and screen, and the language — with
-no cookie, nothing kept in the reader's browser, and the reader's address never written anywhere. Why
-this and not Attriax, and what was checked, is DOC-0211. Dev is never counted.
+Off until turned on. When on, a GoatCounter on this machine counts production's pages (page, referring
+site, country, browser, system, screen class, language) with no cookie and without writing the reader's
+address anywhere (DOC-0211). Four switches, which must agree:
 
-It takes four switches, because the reader's bundle, the proxy, the counter and the privacy page must
-agree:
-
-1. **The reader's image**, built with the counter's address: `scripts/send-images.ps1 … -WebCommit
-   <sha> -AnalyticsEndpoint /count`, then deployed. That bundle sends one request per page and its
-   privacy page says what is counted. Built without it, nothing is sent and the privacy page says
-   nothing is counted. The tag names only the commit, so a reader image rebuilt with the switch flipped
-   is sent with `-Force`.
-2. **The counter's settings in `.env`**:
-
-        COMPOSE_PROFILES=analytics          # offsite,analytics if the off-site copy is on too
-        SITE_ANALYTICS=on
-        STATS_PASSWORD=<a fresh password>
-
-3. **Its database.** On a new server `initdb` creates it on the first start from `STATS_PASSWORD`. On a
-   server whose Postgres already exists, once, from `/srv/essenthos/deploy`:
+1. the reader's image built with `send-images.ps1 … -AnalyticsEndpoint /count` (`-Force` to resend a
+   tag), then deployed;
+2. `.env`: `COMPOSE_PROFILES=analytics` (`offsite,analytics` with the off-site copy), `SITE_ANALYTICS=on`,
+   `STATS_PASSWORD=<fresh>`;
+3. its database: created by initdb on a new Postgres; on an existing one, once, from
+   `/srv/essenthos/deploy`:
 
         docker compose exec -T db psql -U postgres -v ON_ERROR_STOP=1 \
           -v stats="$(grep '^STATS_PASSWORD=' .env | cut -d= -f2-)" <<'SQL'
@@ -456,157 +291,96 @@ agree:
         REVOKE ALL ON DATABASE essenthos_stats FROM PUBLIC;
         SQL
 
-   (psql fills in `:'stats'` in what it reads, never in a `-c` command, hence the here-document.)
-   Then `docker compose up -d`.
+   then `docker compose up -d`;
+4. its settings, through a tunnel (`ssh -L 8081:127.0.0.1:8081 deploy@2.29.125.205`, then
+   `http://localhost:8081`): the first visit makes the owner's sign-in; then **Data retention** 730
+   days, as the privacy page says, and **Language** ticked.
 
-4. **The counter's settings**, through an ssh tunnel — its dashboard is on the machine's loopback only:
-
-        ssh -L 8081:127.0.0.1:8081 deploy@<droplet>
-        # then open http://localhost:8081 on this machine
-
-   The first visit asks for a site name (`essenthos.org`), an email and a password: that is the owner's
-   sign-in to the dashboard, which never leaves the tunnel. Then, under **Settings**:
-   - **Data retention**: `730` days. The privacy page says counts are kept two years; the default keeps
-     them forever.
-   - **Data collection**: tick **Language** if the readers' languages are wanted (the privacy page says
-     they are counted); leave **Sessions** on, which is what tells one visit from another, in memory.
-
-The nightly backup dumps `essenthos_stats` beside the accounts databases once it exists, and skips it
-while it does not.
-
-To turn counting off: `SITE_ANALYTICS=off` and `docker compose up -d proxy` stops it at once; a reader
-image sent without `-AnalyticsEndpoint` sends nothing and takes the section off the privacy page.
+Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`.
 
 ## Backups
 
-The corpus needs none: it is an artefact, rebuilt from sources this machine keeps. `essenthos_app` —
-accounts, and later what readers write — is the only thing on the server that cannot be rebuilt; the
-page counts in `essenthos_stats` are backed up beside it where the counter is on.
+Only `essenthos_app` (accounts, and later what readers write) cannot be rebuilt; the page counts in
+`essenthos_stats` are backed up beside it where the counter is on.
 
-- The `backup` service dumps them every night into `/srv/essenthos/backups`, on the volume, and keeps
-  each dump **14 days** (`BACKUP_KEEP_DAYS`), not a day more — **except while that database's backups
-  are failing**: a database whose latest run failed keeps every dump it has until a run succeeds again,
-  so an outage (the database down, the key expired, the disk full) never ages out the last good dump.
-  That is the only way a dump outlives 14 days, and it lasts only as long as the outage; the first
-  successful run removes everything past the window.
-- **Every dump is encrypted as it is written**, with gpg, to a public key in `/srv/essenthos/backup-key/`.
-  No dump is ever on the disk in the clear, so neither a volume snapshot nor a stolen disk yields a
-  reader's email or reading history. The private key is never on the server. **Without a key a run
-  writes nothing and fails**, every database `FAILED` in its log; plain dumps are written only when
-  `.env` sets `BACKUP_ALLOW_UNENCRYPTED=yes`, and the next run with a key encrypts and removes the plain
-  dumps it replaces.
-- **A failure is visible**: each database that succeeds gets `/srv/essenthos/backups/.last-success-<database>`,
-  and the container's healthcheck (`backup.sh --check`) turns it **unhealthy** once any of them is older
-  than 26 hours (`BACKUP_STALE_HOURS`) — `docker compose ps backup` shows it. `backup.sh --once` exits
-  non-zero on a failed run, as does `backup-offsite.sh --once`.
-- **Off the machine**: the `backup-offsite` service copies the encrypted dumps to an rclone remote every
-  hour and removes a copy there once it is 14 days old and its dump is gone from here, so the off-site
-  copy is kept exactly as long as the dump here — through an outage too. Only `*.dump.gpg` files are
-  sent. It runs only when `.env` turns it on — and since the volume is the one place the dumps are
-  written, it is what survives losing the volume.
-- **To the owner's machine**: the console's Backups section (`Essenthos.Desk`) copies the newest
-  encrypted dump of each database into `E:\Projects\Essenthos\server-backups` on a button, and on its
-  own once a day while the console runs. It connects exactly as the deploy does — `ssh` with the
-  owner's key to the `Publish:Targets:prod:Ssh` address — lists the folder, fetches each file with
-  `cat` and checks it against the server's `sha256sum`. It never fetches a `*.dump`, so nothing in the
-  clear ever leaves the server, and nothing is decrypted on the way. It keeps as many copies of each
-  database as the owner sets, and none but the newest older than 14 days. The folders are
-  `Desk:Backups:Folder` and `Desk:Backups:Remote` in its `appsettings.json`.
-- A change to `backup.sh` or `backup-offsite.sh` reaches a running container only when it restarts:
-  `docker compose up -d --force-recreate backup backup-offsite` after a deploy that changed either.
+- The `backup` service dumps them every night into `/srv/essenthos/backups` and keeps each dump 14 days
+  (`BACKUP_KEEP_DAYS`), except while a database's backups fail: then it keeps every dump it has until a
+  run succeeds, so an outage never ages out the last good one.
+- **Every dump is encrypted as it is written** to the public key in `/srv/essenthos/backup-key/`; the
+  private key is never on the server. **Without a key a run writes nothing and fails**, unless `.env`
+  says `BACKUP_ALLOW_UNENCRYPTED=yes`.
+- A failure is visible: the container turns **unhealthy** once a database's last good dump is older
+  than 26 hours (`BACKUP_STALE_HOURS`); `docker compose ps backup` shows it.
+- **Off the machine**: the owner's console copies the newest encrypted dump of each database to
+  `E:\Projects\Essenthos\server-backups` on a button and once a day while it runs (over ssh to
+  `Publish:Targets:prod:Ssh`, checked against the server's `sha256sum`). The `backup-offsite` service can
+  copy them to an rclone remote as well.
+- A changed `backup.sh` or `backup-offsite.sh` reaches its container only on
+  `docker compose up -d --force-recreate backup backup-offsite`.
 
 ### Once: the key
 
-On your own machine, never on the server, make a key pair that exists only for these backups:
+On the owner's machine, never on the server:
 
     gpg --quick-generate-key "Essenthos backups" rsa4096 encr never
     gpg --armor --export "Essenthos backups" > essenthos-backups.asc
     gpg --armor --export-secret-keys "Essenthos backups" > essenthos-backups-SECRET.asc
 
-Keep `essenthos-backups-SECRET.asc` and its passphrase where the rest of what cannot be rebuilt is kept —
-E:, and one more place that is not this PC. Without it no backup can be read, by anyone, including you.
-Then put the **public** half on the server and restart the service:
+Keep the secret half and its passphrase on E: and in one more place that is not this PC: without it no
+backup can be read by anyone. Then send the **public** half:
 
-    ssh deploy@<droplet> 'mkdir -p /srv/essenthos/backup-key'
-    scp essenthos-backups.asc deploy@<droplet>:/srv/essenthos/backup-key/
-    ssh deploy@<droplet> 'cd /srv/essenthos/deploy && docker compose up -d --force-recreate backup &&
+    ssh deploy@2.29.125.205 'mkdir -p /srv/essenthos/backup-key'
+    scp essenthos-backups.asc deploy@2.29.125.205:/srv/essenthos/backup-key/
+    ssh deploy@2.29.125.205 'cd /srv/essenthos/deploy && docker compose up -d --force-recreate backup &&
       docker compose logs --tail 5 backup'
 
-The log says `encrypted` beside each dump. Only one `.asc` file belongs in that folder.
+The log says `encrypted` beside each dump. Only one `.asc` belongs in that folder.
 
-### Once: the off-site copy
+### Once: the off-site copy (optional)
 
-Anything rclone can write to works: an S3-compatible bucket (DigitalOcean Spaces, Hetzner Object
-Storage, Backblaze B2, Cloudflare R2) or a host reached over ssh. Make a bucket or a folder that holds
-nothing else, and a key for it that can write, list and delete there and nowhere else. Then write the
-remote into `/srv/essenthos/rclone/rclone.conf` on the server, `chmod 600` it, and name it in `.env`:
-
-    # /srv/essenthos/rclone/rclone.conf — a bucket (provider: DigitalOcean, Cloudflare, Other; B2 speaks S3 too)
-    [offsite]
-    type = s3
-    provider = DigitalOcean
-    endpoint = fra1.digitaloceanspaces.com
-    access_key_id = <key>
-    secret_access_key = <secret>
-
-    # …or a host over ssh, with a key made for this and nothing else
-    [offsite]
-    type = sftp
-    host = <host>
-    user = <user>
-    key_file = /config/rclone/id_ed25519
-
-    # .env
-    COMPOSE_PROFILES=offsite                 # offsite,analytics with the page counter
-    BACKUP_OFFSITE=offsite:<bucket or folder>/essenthos
-
-    docker compose up -d backup-offsite && docker compose logs --tail 5 backup-offsite
-
-Give the bucket a lifecycle rule deleting objects after 15 days as well, so a copy expires even if the
-service stops — knowing that it also removes, during an outage, the off-site copy of a dump the server is
-still holding. The privacy page promises that the backups are encrypted and that deleted data is gone
-from every one of them within six weeks: a copy kept anywhere has to keep to that.
+Any rclone remote that holds nothing else, with a key that can write, list and delete there only
+(Hetzner Object Storage, Backblaze B2, Cloudflare R2, or a host over sftp). Write it into
+`/srv/essenthos/rclone/rclone.conf` as `[offsite]`, `chmod 600` it, then in `.env`
+`COMPOSE_PROFILES=offsite` and `BACKUP_OFFSITE=offsite:<bucket or folder>/essenthos`, and
+`docker compose up -d backup-offsite`. Copies there are removed once 14 days old and gone here; give the
+bucket a 15-day lifecycle rule as well. The privacy page promises deleted data is gone from every backup
+within six weeks: a copy kept anywhere keeps to that.
 
 ### Restoring
 
-**A restore has to be run once on the server before the backup is believed.** Into a scratch database,
-never over the live one. Only the private key can open a dump, so it is decrypted on your machine and
-streamed back into `pg_restore`, and the dump is never on the server in the clear:
+Run once before the backup is believed, into a scratch database, never over the live one. The dump is
+decrypted on the owner's machine and streamed in, never in the clear on the server:
 
-    scp deploy@<droplet>:/srv/essenthos/backups/essenthos_app-<stamp>.dump.gpg .   # or use the console's copy on E:
-    gpg --import essenthos-backups-SECRET.asc        # once, on the machine that restores
-    gpg --decrypt essenthos_app-<stamp>.dump.gpg | ssh deploy@<droplet> 'cd /srv/essenthos/deploy &&
+    scp deploy@2.29.125.205:/srv/essenthos/backups/essenthos_app-<stamp>.dump.gpg .   # or the console's copy on E:
+    gpg --decrypt essenthos_app-<stamp>.dump.gpg | ssh deploy@2.29.125.205 'cd /srv/essenthos/deploy &&
       docker compose exec -T backup sh -c "createdb -h db restore_test && pg_restore -h db -d restore_test &&
         psql -h db -d restore_test -c \"\dt\" && dropdb -h db restore_test"'
 
-A dump written through gpg was written to a pipe, so `pg_restore` reads it front to back: one table can
-still be restored out of it with `-t`, but not in parallel with `-j`.
+The recovery path is rehearsed on the workstation with synthetic accounts by
+`avioniq services run core-backup-rehearsal --set root=. --set output=backup-rehearsal`; that does not
+replace one restore from the real server.
 
-The unencrypted procedure was run on the rehearsal on 2026-09-18. The encrypted stream was also
-rehearsed locally before release; neither rehearsal establishes recovery on a server that has not
-been provisioned.
+## When more space is needed
 
-Run the current account-schema recovery check through the registered action:
+When one copy plus everything else no longer fits the 38 GB disk, or two copies are wanted again
+(`Publish:Targets:prod:Copies`): attach a Hetzner Volume (network storage, slower than the local disk,
+priced per GB), formatted ext4, and move the data onto it.
 
-    avioniq services run core-backup-rehearsal --set root=. --set output=backup-rehearsal
+    ls /dev/disk/by-id/ | grep HC_Volume                       # scsi-0HC_Volume_<id>
+    sudo mkfs.ext4 /dev/disk/by-id/scsi-0HC_Volume_<id>        # a new, empty volume only
+    sudo mkdir -p /mnt/essenthos && echo '/dev/disk/by-id/scsi-0HC_Volume_<id> /mnt/essenthos ext4 defaults,nofail,discard,noatime 0 2' | sudo tee -a /etc/fstab
+    sudo mount -a
+    cd /srv/essenthos/deploy && docker compose down
+    sudo rsync -aHAX /srv/essenthos/ /mnt/essenthos/           # postgres/ keeps its owner
+    # then mount the volume at /srv/essenthos instead (edit fstab), docker compose up -d
 
-It uses synthetic accounts in isolated workstation databases, the pinned deployment Postgres client
-image, and an ephemeral key pair. The private key is mounted only in the client that decrypts; the
-backup process sees only the public key. The real backup script runs with `--once`: without a key it
-fails and writes nothing, with `BACKUP_ALLOW_UNENCRYPTED=yes` it writes a plain dump, and with the key it
-writes only encrypted files, prunes expired files, removes older plain backups and stamps
-`.last-success-<database>`, which `--check` accepts and refuses once it is 27 hours old. An unreachable
-database fails the run, keeps its three-week-old dump and stamps nothing, and the daemon reports the
-failed run and carries on. Decryption streams directly
-into a fresh database. Every restored table is compared with the original, and the check exercises
-the restored data-protection key, existing cookie and bearer sessions, expired and revoked sessions,
-the revision sequence and an unchanged migration rerun. A corrupt dump is refused in another isolated
-candidate while the original account data stays intact. Temporary databases, files and private keys
-are removed; the TRX result is kept under `TestResults/<output>`. The offsite script is also run once
-against a local isolated rclone destination, checking encrypted-only copying, expired-copy removal, that
-a copy of a dump still held here stays, and that an unconfigured remote exits non-zero.
+A volume can be grown later (resize at Hetzner, then `resize2fs`), never shrunk. Hetzner's server
+backups do not include a volume. Rescaling the machine instead ("CPU and RAM only" keeps the disk) is
+a few minutes in the console; afterwards drop the 4 GB lines from `.env`.
 
-This requires Docker and the registered workstation database to be available. It does not contact a
-production host or external backup destination, publish a corpus or modify real accounts. Before the first
-public release, repeat recovery against a real encrypted server backup in a scratch database and
-verify the configured daily schedule and the owner's offsite download separately.
+## Optional: Cloudflare in front
+
+Not needed. If ever: SSL/TLS **Full (strict)** with "Always Use HTTPS" off; the records grey until Caddy
+has its certificates; Caddy told to trust Cloudflare's ranges and read `CF-Connecting-IP` (global
+`servers { trusted_proxies … client_ip_headers … }`, not in the Caddyfile yet), or every reader is one
+address to the API's limits and the counter; and the privacy page names Cloudflare.
