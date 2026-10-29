@@ -134,7 +134,10 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         var path = Path.Combine(folder, File);
         if (await db.Events.AnyAsync(e => e.Source == Source, cancellationToken))
         {
-            logger.LogInformation("The Annals are already loaded; nothing to do");
+            var reworded = await Reword(cancellationToken);
+            logger.LogInformation(
+                "The Annals are already loaded; {Reworded} notes lost the sentence on how their row is placed",
+                reworded);
             return new AnnalsOutcome(true, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
@@ -220,7 +223,7 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
                 CanonicalChapter = chapter,
                 CanonicalVerse = verse,
                 Realm = Realms.Scripture,
-                Notes = Note(cited, isRange, reckoned is null ? row["am_year"] : null, stated, year, madeBy),
+                Notes = Note(cited, reckoned is null ? row["am_year"] : null, stated, year, madeBy),
                 Source = Source,
             }, reckoned, stated, number));
         }
@@ -375,6 +378,32 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         return ahead == JulianPeriodAhead || ahead == JulianPeriodAhead + 1 ? year : null;
     }
 
+    /// <summary>
+    /// The sentences an earlier load wrote after the citation about how the row was placed. They
+    /// spoke of this corpus's bookkeeping, not of Ussher, and are taken out of a corpus loaded with them.
+    /// </summary>
+    internal static readonly string[] Placement =
+    [
+        " This row is anchored on the first verse of that citation; the citation is his and the " +
+        "resolution into book, chapter and verse is Essenthos's.",
+        " The citation is his and the resolution into book, chapter and verse is Essenthos's.",
+    ];
+
+    /// <summary>Takes <see cref="Placement"/> out of the notes that still say it; none on a second run.</summary>
+    internal async Task<int> Reword(CancellationToken cancellationToken)
+    {
+        var reworded = 0;
+        foreach (var sentence in Placement)
+        {
+            reworded += await db.Events
+                .Where(e => e.Source == Source && e.Notes != null && e.Notes.Contains(sentence))
+                .ExecuteUpdateAsync(s => s.SetProperty(e => e.Notes, e => e.Notes!.Replace(sentence, "")),
+                    cancellationToken);
+        }
+
+        return reworded;
+    }
+
     /// <summary>How many years the Julian Period runs ahead of the common era: AD 1 is its 4714th.</summary>
     private const int JulianPeriodAhead = 4713;
 
@@ -394,14 +423,10 @@ internal sealed partial class UssherAnnalsLoader(AppDbContext db, ILogger<Ussher
         $" His anno mundi column reads {written} where its own Gregorian and Julian Period columns both give " +
         $"AD {year}, so no year of his reckoning is written here.";
 
-    private static string Note(string cited, bool isRange, string? contradicted, int? stated, int year, string? madeBy)
+    internal static string Note(string cited, string? contradicted, int? stated, int year, string? madeBy)
     {
         var note = new StringBuilder(220);
-        note.Append("Ussher cites ").Append(cited).Append(". ");
-        note.Append(isRange
-            ? "This row is anchored on the first verse of that citation; the citation is his and the " +
-              "resolution into book, chapter and verse is Essenthos's."
-            : "The citation is his and the resolution into book, chapter and verse is Essenthos's.");
+        note.Append("Ussher cites ").Append(cited).Append('.');
 
         if (contradicted is not null)
         {
