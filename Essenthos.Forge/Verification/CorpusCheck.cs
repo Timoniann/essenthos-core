@@ -43,8 +43,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// Where the corpus already stands, less a margin. A floor is for catching a load that lost
     /// something, so it is set below today's number rather than above it — an aspiration in this
     /// position fails every build until somebody raises it, and then it is ignored.
+    /// The owner set it to 60 % on 2026-10-30 for the alpha, when the corpus stood at 79.2 % against
+    /// the old 80 % (PRB-1248); why it dropped below 80 is still to be found.
     /// </summary>
-    public const double RenderedFloor = 0.80;
+    public const double RenderedFloor = 0.60;
 
     /// <summary>
     /// Hebrew prefixes and the object marker. A translation renders these inside the word they
