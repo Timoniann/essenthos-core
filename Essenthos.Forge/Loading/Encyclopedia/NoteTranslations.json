@@ -2666,5 +2666,29 @@
     "model": "claude-opus-5-5",
     "effort": null,
     "at": "2026-10-29"
+  },
+  {
+    "file": "TwoSidedIdentityRecords.json",
+    "slug": "bartholomew",
+    "sha256": "afc02a4926c3132df9c5eeb34784435393996fa4b33f32a06b7ce8f903698b88",
+    "english": "He may also be Nathanael of Cana in Galilee, whom Philip brought to Jesus (JHN 1:45-49; 21:2), as a tradition identifies him: Matthew, Mark and Luke name Bartholomew beside Philip, and John never names Bartholomew; the text does not say.",
+    "ukr": "Це може бути й Натанаїл із Кани Галілейської, якого Пилип привів до Ісуса (JHN 1:45-49; 21:2), — так його ототожнює передання: Матвій, Марко й Лука називають Варфоломія поруч із Пилипом, а Іван ніде не називає Варфоломія; текст цього не каже.",
+    "deu": "Er könnte auch Nathanael aus Kana in Galiläa sein, den Philippus zu Jesus brachte (JHN 1:45-49; 21:2), wie eine Überlieferung ihn gleichsetzt: Matthäus, Markus und Lukas nennen Bartholomäus neben Philippus, und Johannes nennt Bartholomäus nirgends; der Text sagt es nicht.",
+    "spa": "Podría ser también Natanael de Caná de Galilea, a quien Felipe llevó a Jesús (JHN 1:45-49; 21:2), como lo identifica una tradición: Mateo, Marcos y Lucas nombran a Bartolomé junto a Felipe, y Juan no nombra nunca a Bartolomé; el texto no lo dice.",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-29"
+  },
+  {
+    "file": "TwoSidedIdentityRecords.json",
+    "slug": "bithia",
+    "sha256": "b4e83662a9198c548ceb4edf3ccde869eb7b36dc4cd27038df3cda3b2951fef2",
+    "english": "She may also be the daughter of Pharaoh who drew Moses out of the water and took him for her son (EXO 2:5-10), as a later tradition identifies her; the text does not say.",
+    "ukr": "Це може бути й фараонова дочка, що витягла Мойсея з води й прийняла його за сина (EXO 2:5-10), — так її ототожнює пізніше передання; текст цього не каже.",
+    "deu": "Sie könnte auch die Tochter Pharaos sein, die Mose aus dem Wasser zog und ihn als ihren Sohn annahm (EXO 2:5-10), wie eine spätere Überlieferung sie gleichsetzt; der Text sagt es nicht.",
+    "spa": "Podría ser también la hija de Faraón que sacó a Moisés de las aguas y lo prohijó (EXO 2:5-10), como la identifica una tradición posterior; el texto no lo dice.",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-29"
   }
 ]

@@ -1,0 +1,11 @@
+{
+  "policy": "Where one person may be another, both pages say so (RUL-0201). Where the owner has ruled that two are different people, neither page offers the other, however alike the two look.",
+  "pairs": [
+    {
+      "one": "hobab",
+      "other": "reuel-2",
+      "why": "Hobab the son of Raguel the Midianite, Moses' father-in-law (NUM 10:29), is not Reuel, whom the text also calls Jethro: the son is not the father under a second name.",
+      "decidedBy": "the project owner, 2026-10-29 (PRB-1325)"
+    }
+  ]
+}

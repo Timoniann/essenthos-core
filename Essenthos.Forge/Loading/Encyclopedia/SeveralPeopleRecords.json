@@ -41,7 +41,8 @@
       "alternatives": [
         {
           "slug": "ahasuerus",
-          "reason": "One Ahasuerus could stand for Ezra 4:6, Esther and this verse. Against it: Ezra 4:5-7 places its Ahasuerus after Cyrus, and this one's son was already sixty-two when Babylon fell before Cyrus reigned, so the text does not let them be one king; which king of the Medes he was it does not say."
+          "reason": "One Ahasuerus could stand for Ezra 4:6, Esther and this verse. Against it: Ezra 4:5-7 places its Ahasuerus after Cyrus, and this one's son was already sixty-two when Babylon fell before Cyrus reigned, so the text does not let them be one king; which king of the Medes he was it does not say.",
+          "back": "Daniel 9:1 names Darius the son of Ahasuerus, of the seed of the Medes, and one Ahasuerus could stand for that verse, Ezra 4:6 and Esther. Against it: Ezra 4:5-7 places this Ahasuerus after Cyrus, and Darius was already sixty-two when Babylon fell before Cyrus reigned (DAN 5:31), so the text does not let them be one king."
         }
       ],
       "why": "Daniel 9:1 dates the vision to 'the first year of Darius the son of Ahasuerus, of the seed of the Medes'. The king of Esther and of Ezra 4:6 reigns after Cyrus; the father of the Mede who received the kingdom at Babylon's fall is another man."
@@ -62,11 +63,13 @@
       "alternatives": [
         {
           "slug": "beeri",
-          "reason": "Beeri the Hittite, the father of Esau's wife Judith (GEN 26:34), if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite."
+          "reason": "Beeri the Hittite, the father of Esau's wife Judith (GEN 26:34), if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite.",
+          "back": "Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:2, 36:24), may be he, if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite."
         },
         {
           "slug": "anah",
-          "reason": "Genesis 36:20 and 1 Chronicles 1:38 count an Anah among the sons of Seir, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as his; Genesis 36:24 makes the father of Aholibamah Zibeon's son, the nephew of that Anah."
+          "reason": "Genesis 36:20 and 1 Chronicles 1:38 count an Anah among the sons of Seir, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as his; Genesis 36:24 makes the father of Aholibamah Zibeon's son, the nephew of that Anah.",
+          "back": "Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:24), bears his name a generation later, and 1 Chronicles 1:41's 'sons of Anah; Dishon' could be read as either's. The text does not say whether the two are one man."
         }
       ],
       "why": "Genesis 36:24 names this Anah as the son of Zibeon, the one who found the mules in the wilderness. The encyclopedia held him on its record of Beeri the Hittite, and his uncle of the same name, the son of Seir, on another."

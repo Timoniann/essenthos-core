@@ -381,12 +381,25 @@ internal sealed class OwnRecordLoader(
     }
 
     /// <summary>
-    /// An alternative a rulings file no longer lists, taken off its record. A file is applied once and
-    /// then skipped whole, so an alternative later taken out of a file would otherwise stay on the
-    /// record for good. Only alternatives written under a rulings file's source are compared, and
-    /// none of the titles' own (<see cref="TitleLoader"/> writes and rewrites those under the title
-    /// decision's sources, one of which a rulings file shares). An alternative the files list is
-    /// left as it stands, so a second run writes nothing.
+    /// A record's alternatives made what the files say, on every run. A file is applied once and then
+    /// skipped whole, so an alternative later taken out of a file, or added to one, would otherwise
+    /// stay as the first application left it.
+    ///
+    /// <para>
+    /// The files list two kinds. An alternative a ruling gives its record, under the file's source; and
+    /// its <see cref="OwnAlternative.Back"/>, the same possibility said on the other record's page under
+    /// the same source, because if A may be B then B may be A (RUL-0201). A title's alternative has its
+    /// back here too, while the alternative itself stays <see cref="TitleLoader"/>'s, which writes and
+    /// rewrites the alternatives of a title record under the title decision's sources (one of which a
+    /// rulings file shares). Two records the owner has held apart are never joined, whichever file
+    /// lists them.
+    /// </para>
+    ///
+    /// <para>
+    /// What is listed and missing is written where both records are held; what is held and no longer
+    /// listed is taken off; a reason the file has rewritten is rewritten. What the files list as it
+    /// stands is left alone, so a second run writes nothing.
+    /// </para>
     /// </summary>
     private async Task<int> Realternate(
         IReadOnlyList<OwnRecordRulings> files,
@@ -395,41 +408,113 @@ internal sealed class OwnRecordLoader(
         var decision = SenseReadingFiles.Titles();
         var titled = decision.Titles.Select(title => title.Source ?? decision.Source).Append(decision.Source)
             .ToHashSet(StringComparer.Ordinal);
+        var titles = decision.Titles.Select(title => title.Slug).ToHashSet(StringComparer.Ordinal);
         var sources = files.Select(file => file.Source).Where(source => !titled.Contains(source))
             .ToHashSet(StringComparer.Ordinal);
-        var listed = files
-            .Where(file => sources.Contains(file.Source))
-            .SelectMany(file => file.Rulings
-                .SelectMany(ruling => (ruling.Alternatives ?? []).Select(alternative => (
-                    Record: ruling.Create?.Slug ?? ruling.Existing!,
-                    file.Source,
-                    Other: alternative.Slug ?? alternative.Describes))))
-            .ToHashSet();
+        var apart = SenseReadingFiles.HeldApart().Pairs;
 
-        var held = await db.EntityAlternatives
-            .Where(a => sources.Contains(a.Source))
-            .Select(a => new
+        var listed = new Dictionary<(string Record, string Source, string Other), (string Reason, bool Named)>();
+        void List(string record, string source, string? slug, string? describes, string reason)
+        {
+            var other = slug ?? describes;
+            if (other is null || other == record || (slug is not null && apart.Any(pair => pair.Joins(record, slug))))
             {
-                Row = a,
-                Record = a.Entity!.Slug,
-                Other = a.Alternative == null ? a.Describes : a.Alternative.Slug,
-            })
-            .ToListAsync(cancellationToken);
-        var stale = held
-            .Where(a => !listed.Contains((a.Record, a.Row.Source, a.Other)))
-            .Select(a => a.Row)
+                return;
+            }
+
+            listed.TryAdd((record, source, other), (reason, slug is not null));
+        }
+
+        foreach (var file in files)
+        foreach (var ruling in file.Rulings)
+        foreach (var alternative in ruling.Alternatives ?? [])
+        {
+            var record = ruling.Create?.Slug ?? ruling.Existing!;
+            if (sources.Contains(file.Source))
+            {
+                List(record, file.Source, alternative.Slug, alternative.Describes, alternative.Reason);
+            }
+
+            if (alternative is { Slug: { } other, Back: { } back })
+            {
+                List(other, file.Source, record, null, back);
+            }
+        }
+
+        foreach (var title in decision.Titles)
+        foreach (var alternative in title.Alternatives ?? [])
+        {
+            if (alternative is { Slug: { } other, Back: { } back })
+            {
+                List(other, title.Source ?? decision.Source, title.Slug, null, back);
+            }
+        }
+
+        var held = (await db.EntityAlternatives
+                .Where(a => sources.Contains(a.Source) || titled.Contains(a.Source))
+                .Select(a => new
+                {
+                    Row = a,
+                    Record = a.Entity!.Slug,
+                    Other = a.Alternative == null ? a.Describes : a.Alternative.Slug,
+                })
+                .ToListAsync(cancellationToken))
+            .Where(a => sources.Contains(a.Row.Source)
+                        || (a.Row.AlternativeEntityId is not null && titles.Contains(a.Other!) && !titles.Contains(a.Record)))
             .ToList();
-        if (stale.Count == 0)
+
+        var stale = held.Where(a => !listed.ContainsKey((a.Record, a.Row.Source, a.Other!))).ToList();
+        var reworded = held
+            .Where(a => listed.TryGetValue((a.Record, a.Row.Source, a.Other!), out var said) && said.Reason != a.Row.Reason)
+            .ToList();
+        foreach (var alternative in reworded)
+        {
+            alternative.Row.Reason = listed[(alternative.Record, alternative.Row.Source, alternative.Other!)].Reason;
+        }
+
+        var there = held.Select(a => (a.Record, a.Row.Source, a.Other!)).ToHashSet();
+        var missing = listed.Where(pair => !there.Contains(pair.Key)).ToList();
+        var slugs = missing
+            .SelectMany(pair => new[] { pair.Key.Record, pair.Value.Named ? pair.Key.Other : null })
+            .OfType<string>()
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        var ids = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
+        var written = new List<string>();
+        foreach (var ((record, source, other), (reason, named)) in missing)
+        {
+            if (!ids.TryGetValue(record, out var id) || (named && !ids.ContainsKey(other)))
+            {
+                continue;
+            }
+
+            db.EntityAlternatives.Add(new EntityAlternative
+            {
+                EntityId = id,
+                AlternativeEntityId = named ? ids[other] : null,
+                Describes = named ? null : other,
+                Reason = reason,
+                Source = source,
+            });
+            written.Add($"{record} ({other})");
+        }
+
+        if (stale.Count == 0 && reworded.Count == 0 && written.Count == 0)
         {
             return 0;
         }
 
-        db.EntityAlternatives.RemoveRange(stale);
+        db.EntityAlternatives.RemoveRange(stale.Select(a => a.Row));
         await db.SaveChangesAsync(cancellationToken);
         logger.LogInformation(
-            "{Removed} alternatives no rulings file lists any more were taken off their records: {Records}",
-            stale.Count, string.Join(", ", held.Where(a => stale.Contains(a.Row)).Select(a => $"{a.Record} ({a.Other})")));
-        return stale.Count;
+            "Alternatives made what the rulings say: {Written} written ({WrittenRecords}), {Removed} no file lists "
+            + "any more taken off ({RemovedRecords}), {Reworded} reasons rewritten",
+            written.Count, string.Join(", ", written),
+            stale.Count, string.Join(", ", stale.Select(a => $"{a.Record} ({a.Other})")),
+            reworded.Count);
+        return written.Count + stale.Count + reworded.Count;
     }
 
     /// <summary>

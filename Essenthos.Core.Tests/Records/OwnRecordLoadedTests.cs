@@ -107,15 +107,43 @@ public sealed class OwnRecordLoadedTests(WitnessDatabase database) : OwnRecordTe
         foreach (var ruling in Rulings.Where(r => r.Alternatives is { Count: > 0 }))
         {
             var slug = ruling.Create?.Slug ?? ruling.Existing!;
-            var alternatives = await Db.EntityAlternatives
-                .Include(a => a.Alternative)
-                .Where(a => a.Entity!.Slug == slug)
-                .ToListAsync();
+            var listed = ruling.Alternatives!.Select(a => a.Slug ?? a.Describes).ToHashSet();
+            var alternatives = (await Db.EntityAlternatives
+                    .Include(a => a.Alternative)
+                    .Where(a => a.Entity!.Slug == slug)
+                    .ToListAsync())
+                .Where(a => listed.Contains(a.Alternative?.Slug ?? a.Describes))
+                .ToList();
 
             alternatives.Should().HaveCount(ruling.Alternatives!.Count);
             alternatives.Should().OnlyContain(a => a.Alternative != null || a.Describes != null);
             alternatives.Should().OnlyContain(a => a.Reason.Length > 0);
             alternatives.Should().OnlyContain(a => a.Source.StartsWith("Essenthos"));
+        }
+    }
+
+    /// <summary>
+    /// If A may be B, B may be A: every alternative naming a record is said on that record too, pointing
+    /// back, in the words the file writes from its side and under the same source (RUL-0201).
+    /// </summary>
+    [Fact]
+    public async Task EveryAlternativeIsSaidBackOnTheRecordItNames()
+    {
+        var backs = SenseReadingFiles.AllRulings()
+            .SelectMany(file => file.Rulings.SelectMany(ruling => (ruling.Alternatives ?? [])
+                .Where(a => a is { Slug: not null, Back: not null })
+                .Select(a => (Record: a.Slug!, Other: ruling.Create?.Slug ?? ruling.Existing!, a.Back, file.Source))))
+            .ToList();
+        backs.Should().HaveCountGreaterThan(30);
+
+        var held = await Db.EntityAlternatives
+            .Where(a => a.Alternative != null)
+            .Select(a => new { Record = a.Entity!.Slug, Other = a.Alternative!.Slug, a.Reason, a.Source })
+            .ToListAsync();
+        foreach (var back in backs)
+        {
+            held.Should().ContainSingle(a => a.Record == back.Record && a.Other == back.Other, back.ToString())
+                .Which.Should().Be(new { back.Record, back.Other, Reason = back.Back!, back.Source });
         }
     }
 

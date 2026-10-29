@@ -195,7 +195,26 @@ internal sealed record OwnRecord(
     string? Distinguisher,
     string? Notes);
 
-internal sealed record OwnAlternative(string? Slug, string? Describes, string Reason);
+/// <summary>Who else a record may be, as its page says it.</summary>
+/// <param name="Back">
+/// What the other record's page says in return, where <see cref="Slug"/> names a record: if A may be
+/// B, B may be A, and a reader who reaches B is told so too (RUL-0201). Written from B's side, because
+/// a reason that explains B from A's page reads wrong on B's. Required wherever the other record is
+/// held, unless the two are held apart (<see cref="HeldApartRecords"/>).
+/// </param>
+internal sealed record OwnAlternative(string? Slug, string? Describes, string Reason, string? Back = null);
+
+/// <summary>
+/// Two records the owner has ruled are not one person, so that neither page offers the other however
+/// alike they look: Hobab is not Reuel, whom the text also calls Jethro.
+/// </summary>
+internal sealed record HeldApartRecords(string Policy, IReadOnlyList<HeldApartPair> Pairs);
+
+/// <param name="DecidedBy">Who ruled it, and when.</param>
+internal sealed record HeldApartPair(string One, string Other, string Why, string DecidedBy)
+{
+    public bool Joins(string a, string b) => (One == a && Other == b) || (One == b && Other == a);
+}
 
 /// <param name="Method">
 /// What kind of thing decided these. The owner's own rulings and the review's are the same shape and
@@ -696,6 +715,10 @@ internal static class SenseReadingFiles
     /// </summary>
     public static OwnRecordRulings DatasetRecordRulings() => Embedded<OwnRecordRulings>(DatasetRecordResource);
 
+    /// <summary>The records the owner has ruled are two people, which no alternative may join.</summary>
+    public static HeldApartRecords HeldApart() =>
+        Embedded<HeldApartRecords>("Essenthos.Core.Loading.Encyclopedia.HeldApartRecords.json");
+
     /// <summary>Every rulings file, in the order they were decided.</summary>
     public static IReadOnlyList<OwnRecordRulings> AllRulings() =>
     [
@@ -741,6 +764,7 @@ internal static class SenseReadingFiles
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.LukeLordRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.PaulsCircleRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.AntipatrisRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.TwoSidedIdentityRecords.json"),
     ];
 
     private static T Embedded<T>(string name)

@@ -91,7 +91,8 @@
       "alternatives": [
         {
           "slug": "zechariah-13",
-          "reason": "The prophet Zechariah was of Iddo's line (ZEC 1:1; EZR 5:1) and prophesied a generation before Joiakim, so he could be the head of Iddo's house that Nehemiah 12:16 names. The text does not say so."
+          "reason": "The prophet Zechariah was of Iddo's line (ZEC 1:1; EZR 5:1) and prophesied a generation before Joiakim, so he could be the head of Iddo's house that Nehemiah 12:16 names. The text does not say so.",
+          "back": "Nehemiah 12:16 names a Zechariah head of the house of Iddo in Joiakim's day, and this prophet was of Iddo's line (ZEC 1:1; EZR 5:1) a generation before. The text does not say they are one man."
         }
       ],
       "why": "Nehemiah 12:16 names the Zechariah who headed the house of Iddo under Joiakim; whether he is the prophet the verse does not say, so he keeps his own record with the prophet as the open alternative."
@@ -112,11 +113,13 @@
       "alternatives": [
         {
           "slug": "zechariah-12",
-          "reason": "Zechariah the son of Jehoiada the priest was stoned 'in the court of the house of the LORD' (2 Chronicles 24:20-21), which is where Matthew and Luke place this death; the verses name a different father."
+          "reason": "Zechariah the son of Jehoiada the priest was stoned 'in the court of the house of the LORD' (2 Chronicles 24:20-21), which is where Matthew and Luke place this death; the verses name a different father.",
+          "back": "Jesus speaks of Zacharias the son of Barachias, slain between the temple and the altar (MAT 23:35; LUK 11:51), and this Zechariah was stoned 'in the court of the house of the LORD' (2CH 24:21); the verses name a different father."
         },
         {
           "slug": "zechariah-13",
-          "reason": "The prophet Zechariah is 'the son of Berechiah' (Zechariah 1:1), the father Matthew names; the Old Testament does not say how he died."
+          "reason": "The prophet Zechariah is 'the son of Berechiah' (Zechariah 1:1), the father Matthew names; the Old Testament does not say how he died.",
+          "back": "Jesus speaks of Zacharias the son of Barachias, slain between the temple and the altar (MAT 23:35), and this prophet is 'the son of Berechiah' (ZEC 1:1); the Old Testament does not say how he died."
         }
       ],
       "why": "Matthew 23:35 and Luke 11:51 name a Zacharias killed between the temple and the altar. The encyclopedia held him on its record of the prophet; the father's name points to the prophet and the manner of death to Zechariah son of Jehoiada, and the text does not settle which, if either."
@@ -137,7 +140,8 @@
       "alternatives": [
         {
           "slug": "berechiah-6",
-          "reason": "The prophet Zechariah's father is Berechiah (Zechariah 1:1), the same name; whether the Zacharias of Matthew 23:35 is the prophet the text does not say."
+          "reason": "The prophet Zechariah's father is Berechiah (Zechariah 1:1), the same name; whether the Zacharias of Matthew 23:35 is the prophet the text does not say.",
+          "back": "Matthew 23:35 names Barachias the father of the Zacharias slain between the temple and the altar, the name of this father of the prophet Zechariah; whether that Zacharias is the prophet the text does not say."
         }
       ],
       "why": "Matthew 23:35 names Barachias as the father of the Zacharias slain between the temple and the altar. Which Zacharias that is stays open, and so does whether his father is the prophet's."
@@ -156,11 +160,13 @@
       "alternatives": [
         {
           "slug": "mary",
-          "reason": "Matthew 13:55 names James and Joses among the brothers of Jesus, whose mother is Mary. Matthew calls this Mary 'the other Mary' and the mother of James and Joses, not his mother; the text does not say whether she is."
+          "reason": "Matthew 13:55 names James and Joses among the brothers of Jesus, whose mother is Mary. Matthew calls this Mary 'the other Mary' and the mother of James and Joses, not his mother; the text does not say whether she is.",
+          "back": "Matthew names a Mary by the cross the mother of James and Joses (MAT 27:56), and names James and Joses among the brothers of Jesus (MAT 13:55). He calls her 'the other Mary', not Jesus' mother; the text does not say whether she is."
         },
         {
           "slug": "mary-4",
-          "reason": "John 19:25 names Mary the wife of Cleophas among the women by the cross, where Matthew and Mark name the mother of James and Joses. The harmonies take them for one woman; the text does not say so."
+          "reason": "John 19:25 names Mary the wife of Cleophas among the women by the cross, where Matthew and Mark name the mother of James and Joses. The harmonies take them for one woman; the text does not say so.",
+          "back": "Matthew and Mark name Mary the mother of James and Joses among the women by the cross (MAT 27:56; MRK 15:40), where John names this Mary the wife of Cleophas (JHN 19:25). The harmonies take them for one woman; the text does not say so."
         }
       ],
       "why": "Matthew 27:56 names 'Mary the mother of James and Joses' beside Mary Magdalene. The encyclopedia held her occurrences on its record of Jesus' mother, which the verses do not say she is."
@@ -181,7 +187,8 @@
       "alternatives": [
         {
           "slug": "john-2",
-          "reason": "Tradition takes him for John the son of Zebedee, one of the Twelve. The book does not say which John he is."
+          "reason": "Tradition takes him for John the son of Zebedee, one of the Twelve. The book does not say which John he is.",
+          "back": "Tradition takes the John who saw the Revelation (REV 1:1, 1:9) for him. The book does not say which John it is."
         }
       ],
       "why": "Revelation 1:1, 1:4, 1:9 and 22:8 name the John who saw the Revelation. The encyclopedia held him on its record of the son of Zebedee, an identification the book does not make."
