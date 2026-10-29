@@ -4,7 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Corpus;
 
-internal sealed record LinkedOriginal(int Id, string Slug, string Name, string Language, TextKind Kind, int Links);
+internal sealed record LinkedOriginal(int Id, string Slug, string Name, string Language, TextKind Kind, int Links)
+{
+    /// <summary>Whether any word of the edition carries a Strong number, which is what a count is counted by.</summary>
+    public bool Numbered { get; init; } = true;
+}
 
 /// <summary>
 /// The originals a text is linked to, which is what every count of how a translation renders an
@@ -47,7 +51,10 @@ internal static class LinkedOriginals
                 t.Language,
                 t.Kind,
                 db.Links.Count(l => l.FromTextId == textId && l.ToTextId == t.Id)
-                + db.Links.Count(l => l.FromTextId == t.Id && l.ToTextId == textId)))
+                + db.Links.Count(l => l.FromTextId == t.Id && l.ToTextId == textId))
+            {
+                Numbered = db.Words.Any(w => w.TextId == t.Id && w.StrongNumber != null),
+            })
             .ToListAsync(cancellationToken);
 
         return Ordered(originals);
@@ -66,9 +73,17 @@ internal static class LinkedOriginals
             .ThenBy(original => original.Slug, StringComparer.Ordinal),
     ];
 
-    /// <summary>The first of each language in <see cref="Of"/>.</summary>
+    /// <summary>
+    /// The first of each language in <see cref="Of"/> whose words carry Strong numbers, or the first
+    /// where none does. A count is counted by the numbers, so an edition without them counts
+    /// nothing: the Ethiopic is joined to Swete's Septuagint more than to any Greek New Testament,
+    /// and counted over Swete it reached no Greek number at all.
+    /// </summary>
     public static List<LinkedOriginal> Primary(IEnumerable<LinkedOriginal> originals) =>
-        [.. originals.GroupBy(original => original.Language).Select(language => language.First())];
+    [
+        .. originals.GroupBy(original => original.Language)
+            .Select(language => language.FirstOrDefault(original => original.Numbered) ?? language.First()),
+    ];
 
     /// <summary>
     /// The one edition a count of how the text reaches <paramref name="number"/> is made over: the first

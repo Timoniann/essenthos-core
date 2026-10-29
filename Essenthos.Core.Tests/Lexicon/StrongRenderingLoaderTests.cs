@@ -121,6 +121,42 @@ public sealed class StrongRenderingLoaderTests : IDisposable
             .Equal(new StrongRenderingResponse("god", 1), new StrongRenderingResponse("thy god", 1));
     }
 
+    /// <summary>
+    /// A text joined more fully to an edition whose words carry no numbers — the Ethiopic to Swete's
+    /// Septuagint — is counted over the edition of that language that carries them; counted over the
+    /// other, it reached no number at all.
+    /// </summary>
+    [Fact]
+    public async Task ATextIsCountedOverTheEditionWhoseWordsCarryTheNumbers()
+    {
+        var unnumbered = Corpus.Add(_db, "AAA", TextKind.CriticalEdition, "hbo", (1, 1, ["בָּרָא", "אֱלֹהִים", "אֱלֹהֶיךָ", "אֶת"]));
+        await _db.SaveChangesAsync();
+        for (var position = 1; position <= 4; position++)
+        {
+            var link = new Link
+            {
+                FromTextId = _english.Id, ToTextId = unnumbered.Id, Relation = LinkRelation.Renders,
+                Method = LinkMethod.Aligner, Confidence = 0.5, Provenance = new() { Source = "a test" },
+            };
+            _db.Links.Add(link);
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_english, 1, 1, position), Side = LinkSide.From });
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(unnumbered, 1, 1, position), Side = LinkSide.To });
+        }
+
+        await _db.SaveChangesAsync();
+
+        await _loader.Load();
+
+        (await Kept()).Should().Equal(
+            (Create, 1, "created", 1),
+            (God, 1, "god", 1),
+            (God, 2, "thy god", 1));
+        (await _db.StrongReaches.Where(r => r.TextId == _english.Id).Select(r => r.WitnessId).Distinct().ToListAsync())
+            .Should().Equal(_hebrew.Id);
+        LinkedOriginals.Primary(await LinkedOriginals.Of(_db, _english.Id, default)).Select(o => o.Slug).Should()
+            .Equal("BHSA");
+    }
+
     /// <summary>The places behind one rendering are the words its phrase is counted from, and no other.</summary>
     [Fact]
     public async Task ARenderingLeadsToThePlacesItIsCountedFrom()
