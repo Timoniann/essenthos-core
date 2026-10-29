@@ -591,9 +591,11 @@ internal static class Descriptors
     private sealed record Person(int Id, EntityKind Kind, string Slug, string Name, string? Distinguisher, string? Sex);
 
     /// <summary>
-    /// Whom a people came from where no clause of its line says it and Strong's Dictionary derives its
-    /// name from one man's: <em>descendants of Moab</em>. His statement carries no verse, so the claim
-    /// cites none.
+    /// Whom a people came from where no clause of its line says it: the person its record names as its
+    /// origin, which Strong's Dictionary states for a gentilic (<em>Moabites</em>, his patronymic of
+    /// Moab's name) and the owner's file for a tribe. It is that statement and no verse's, so the claim
+    /// cites none, and it is credited to whoever made it: Strong where his claim stands on the record,
+    /// otherwise the record's own source.
     /// </summary>
     private static async Task<List<Clause>> Descents(
         AppDbContext db,
@@ -606,33 +608,30 @@ internal static class Descriptors
             return [];
         }
 
-        var said = own.Where(c => c.Relation == DescriptorRelations.DescendantsOf).Select(c => c.SubjectId).ToHashSet();
-        var rows = await db.EntityRelationships
-            .Where(r => peoples.Contains(r.FromEntityId)
-                        && r.Type == DescriptorRelations.DescendantsOf
-                        && r.Method == LinkMethod.StatedBySource
-                        && r.To!.Kind == EntityKind.Person)
-            .Select(r => new Clause(
-                r.From!.Slug,
-                0,
-                r.Type,
-                r.ToEntityId,
-                r.To!.Kind,
-                r.To.Slug,
-                r.To.Name,
-                r.To.Distinguisher,
-                0,
-                0,
-                0,
-                r.Method,
-                r.Confidence,
-                r.Source)
+        var said = own.Where(c => c.Relation is DescriptorRelations.DescendantsOf or DescriptorRelations.DescendantOf)
+            .Select(c => c.SubjectId)
+            .ToHashSet();
+        var origins = await db.Entities
+            .Where(e => peoples.Contains(e.Id) && e.Origin != null && e.Origin.Kind == EntityKind.Person)
+            .Select(e => new
             {
-                SubjectId = r.FromEntityId,
-                TargetSex = r.To.Sex,
+                e.Id,
+                e.Slug,
+                e.Source,
+                Stated = e.Claims.Where(c => c.Method == LinkMethod.StatedBySource).Select(c => c.Source).FirstOrDefault(),
+                Origin = new Person(e.Origin!.Id, e.Origin.Kind, e.Origin.Slug, e.Origin.Name, e.Origin.Distinguisher, e.Origin.Sex),
             })
             .ToListAsync(cancellationToken);
-        return [.. rows.Where(c => !said.Contains(c.SubjectId))];
+
+        return
+        [
+            .. origins.Where(o => !said.Contains(o.Id)).Select(o => Derived(
+                    o.Slug, o.Id, null, DescriptorRelations.DescendantsOf, o.Origin, [], null, o.Stated ?? o.Source)
+                with
+                {
+                    Method = o.Stated is null ? LinkMethod.Manual : LinkMethod.StatedBySource,
+                }),
+        ];
     }
 
     /// <summary>A clause no record wrote and the line works out, with the verses it rests on.</summary>

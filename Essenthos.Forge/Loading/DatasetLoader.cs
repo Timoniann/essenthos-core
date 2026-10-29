@@ -630,7 +630,6 @@ internal sealed class DatasetLoader(
                 },
                 new LoadStep("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
                 new LoadStep("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
-                new LoadStep("people-ancestors", SayWhomThePeoplesCameFrom),
                 new LoadStep("kin-statements", cancellationToken => CountTheChildrenTheVersesCount(resources, cancellationToken)) { Files = ["Essenthos/kin"] }),
             .. In(LoadModules.Names, new LoadStep("crossed-names", CrossBackTheNamesGivenToEachOther)),
             .. In(LoadModules.Records, new LoadStep("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom)),
@@ -2425,20 +2424,6 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnRelationshipLoader>();
-        status.Record(await loader.Load(cancellationToken));
-    }
-
-    /// <summary>
-    /// The person each people came from, where Strong's Dictionary derives the people's name from
-    /// his and no verse already says it. After the relationships read off the clauses, which are the
-    /// statements it gives way to.
-    /// </summary>
-    private async Task SayWhomThePeoplesCameFrom(CancellationToken cancellationToken)
-    {
-        status.Starting("whom the peoples came from");
-
-        using var scope = services.CreateScope();
-        var loader = scope.ServiceProvider.GetRequiredService<PeopleAncestorLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

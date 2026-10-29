@@ -516,10 +516,9 @@ public static class RelationshipCategories
 /// edge list stands here.
 ///
 /// <para>
-/// **Every row names the verse it read**, but one kind. That is a database constraint rather than a
-/// habit: every method but <see cref="LinkMethod.StatedBySource"/> carries an address, and the only
-/// rows of that method are a people's descent from the man Strong's Dictionary derives its name
-/// from, which is his statement and no verse's.
+/// **Every row names the verse it read.** That is a database constraint rather than a habit: every
+/// method but <see cref="LinkMethod.StatedBySource"/> carries an address, and nothing writes a row
+/// by that method.
 /// </para>
 /// </remarks>
 [Index(nameof(FromEntityId))]
