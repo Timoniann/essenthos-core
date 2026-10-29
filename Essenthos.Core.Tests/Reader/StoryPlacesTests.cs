@@ -9,7 +9,8 @@ using Xunit;
 namespace Essenthos.Core.Tests.Reader;
 
 /// <summary>
-/// The legacy list of places named alongside a record, retained for records other than persons.
+/// The places of a record's story: the list of places named alongside it for records other than
+/// persons, and a person's presence readings merged with his ties and dated events.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StoryPlacesTests : IDisposable
@@ -289,6 +290,33 @@ public sealed class StoryPlacesTests : IDisposable
         (his["tahpanhes"].Group, his["tahpanhes"].StoryVerses).Should().Be(("story", 1));
         his["babylon"].Group.Should().Be("other-books");
         baruchs.Items.Single().Group.Should().Be("other-books");
+    }
+
+    /// <summary>
+    /// A person's places are the presence readings with the verses' own ties and dated events beside
+    /// them: where he lived, was born, died and was buried stays on his page whether or not a reading
+    /// found him there, each place with the verses of every finding.
+    /// </summary>
+    [Fact]
+    public async Task APersonsPlacesMergeThePresenceReadingsWithWhereTheVersesSayHeLivedWasBornDiedAndWasBuried()
+    {
+        var hebron = _db.Entities.Local.Single(e => e.Slug == "hebron");
+        _db.PersonPresences.Add(new PersonPresence
+        {
+            PersonId = _david.Id, PlaceId = hebron.Id, Category = "present", Addresses = [10002001],
+            Source = "a test", Evidence = """[{"quote": "David went up to Hebron"}]""",
+        });
+        _db.SaveChanges();
+
+        var places = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+            .Items.ToDictionary(p => p.Slug);
+
+        places.Keys.Should().BeEquivalentTo(["hebron", "ziklag", "jerusalem", "bethlehem"]);
+        places["hebron"].Roles.Should().Equal("lived", "event");
+        places["hebron"].Verses.Select(v => (v.Chapter, v.Verse)).Should().Equal((2, 1), (5, 5));
+        places["ziklag"].Roles.Should().Equal("lived");
+        places["jerusalem"].Roles.Should().Equal("died", "buried");
+        places["bethlehem"].Roles.Should().Equal("born");
     }
 
     [Fact]
