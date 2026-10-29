@@ -104,7 +104,9 @@ public sealed class TextDeclarationTests : IAsyncLifetime
                               + "work even when the text under it is nobody's.");
         Add("UBIO", note: TextDeclarations.Notes.Single(r => r.Slug == "UBIO").Was + appended);
         Add("GRCBRENT", note: definitions["GRCBRENT"].RightsNote);
-        var web = Add("WEB", note: definitions["WEB"].RightsNote,
+        var named = TextDeclarations.Notes.Single(r => r.Slug == "WEB");
+        var web = Add("WEB", name: "World English Bible",
+            note: definitions["WEB"].RightsNote!.Replace(named.Now, named.Was!, StringComparison.Ordinal) + appended,
             edition: "The updated edition, protocanon only, which renders the divine name as LORD; the copy loaded is "
                      + "eBible's of 2026-08-26");
         TextPartSources.Add(web, TextDeclarations.Parts.Single(r => r.Slug == "WEB").Was!);
@@ -124,6 +126,8 @@ public sealed class TextDeclarationTests : IAsyncLifetime
         texts["GRCBRENT"].Citation.Should().Be(definitions["GRCBRENT"].Citation);
         TextPartSources.Of(texts["GRCBRENT"]).Should().Equal(BrentonEdits.GlauxPart);
         texts["WEB"].Edition.Should().Be(definitions["WEB"].Edition);
+        texts["WEB"].Name.Should().Be("World English Bible (edited)");
+        texts["WEB"].RightsNote.Should().Be(definitions["WEB"].RightsNote + appended);
         TextPartSources.Of(texts["WEB"]).Should().Equal(DeuterocanonTextSource.WorldEnglishSource);
         texts["BHSA"].RightsNote.Should().Be(definitions["BHSA"].RightsNote);
         texts["VIGLT"].RightsHolder.Should().Be(definitions["VIGLT"].RightsHolder);
@@ -131,12 +135,14 @@ public sealed class TextDeclarationTests : IAsyncLifetime
         (await loader.Load()).Changes.Should().Be(0, "a second pass finds every declaration already corrected");
     }
 
-    private Text Add(string slug, string? note, string? citation = null, string? edition = null, string? holder = null)
+    private Text Add(
+        string slug, string? note, string? citation = null, string? edition = null, string? holder = null,
+        string? name = null)
     {
         var text = new Text
         {
             Slug = slug,
-            Name = slug,
+            Name = name ?? slug,
             Language = "und",
             Kind = TextKind.Translation,
             RightsNote = note,

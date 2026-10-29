@@ -7,6 +7,7 @@ namespace Essenthos.Core.Loading;
 /// <summary>A declaration field a text takes whole from its definition: nothing after its first load writes it.</summary>
 internal enum TextField
 {
+    Name,
     About,
     Citation,
     Edition,
@@ -37,7 +38,7 @@ internal sealed record TextDeclarationOutcome(int Texts, int Changes)
 }
 
 /// <summary>
-/// What a text says about itself — its citation, rights note, edition, holder and part sources —
+/// What a text says about itself — its name, citation, rights note, edition, holder and part sources —
 /// brought in line with its definition on a corpus that loaded the text before the definition changed.
 /// A text is declared once, when its words are first written, so a corrected definition reaches a
 /// corpus already holding the text only through here. A cold load writes the definitions as they are
@@ -144,6 +145,7 @@ internal sealed class TextDeclarationLoader(AppDbContext db, ILogger<TextDeclara
     {
         var (stored, defined) = field switch
         {
+            TextField.Name => (text.Name, definition.Name),
             TextField.About => (text.About, definition.About),
             TextField.Citation => (text.Citation, definition.Citation),
             TextField.Edition => (text.Edition, definition.Edition),
@@ -158,6 +160,9 @@ internal sealed class TextDeclarationLoader(AppDbContext db, ILogger<TextDeclara
 
         switch (field)
         {
+            case TextField.Name:
+                text.Name = defined!;
+                break;
             case TextField.About:
                 text.About = defined;
                 break;

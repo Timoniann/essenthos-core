@@ -1,0 +1,32 @@
+{
+  "decidedBy": "the project owner, 2026-10-29, written onto the records by claude-opus-5-5 on 2026-10-29",
+  "policy": "Antipatris has a page of its own, at the same point on the map as Aphek: Herod the Great rebuilt Aphek of the Sharon and named it Antipatris. Each page says so of the other.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-10-29 that Antipatris, Herod's rebuilding of Aphek, keeps a page of its own",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 23:31",
+      "position": 17,
+      "surface": "Ἀντιπατρίδα",
+      "strongNumber": "G494",
+      "existing": "antipatris",
+      "says": {
+        "notes": "The town Herod the Great rebuilt on the site of Aphek and named after his father Antipater; it stands where Aphek stood (1SA 4:1)."
+      },
+      "why": "'Then the soldiers, as it was commanded them, took Paul, and brought him by night to Antipatris' (ACT 23:31)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 4:1",
+      "position": 25,
+      "surface": "אֲפֵֽק",
+      "strongNumber": "H663",
+      "existing": "aphek-2",
+      "says": {
+        "notes": "Herod the Great later rebuilt the town on this site and named it Antipatris, after his father Antipater (ACT 23:31)."
+      },
+      "why": "'And the Philistines pitched in Aphek' (1SA 4:1): Aphek of the Sharon, on whose site Herod built Antipatris."
+    }
+  ]
+}

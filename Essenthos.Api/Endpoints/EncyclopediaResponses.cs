@@ -237,6 +237,12 @@ internal record EntityResponse(
     /// <summary>The place this one is only another name for, where the gazetteer says so.</summary>
     public EntityTribeResponse? AnotherNameFor { get; init; }
 
+    /// <summary>The place whose site this town was built on, standing at the same point on the map.</summary>
+    public EntityTribeResponse? BuiltOnSiteOf { get; init; }
+
+    /// <summary>The town later built on this place's site, standing at the same point on the map.</summary>
+    public EntityTribeResponse? BuiltOnItsSite { get; init; }
+
     /// <summary>
     /// <paramref name="Notes"/> in the reader's language, where this corpus wrote them and they were
     /// rendered from the English the record says now. Null for an English reader, for a dataset's

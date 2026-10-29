@@ -1582,6 +1582,34 @@
       "ukr": "маахатянин, один із синів жінки Годійї, сестри Нахама (1CH 4:19)",
       "deu": "der Maachatiter, ein Sohn der Frau Hodijas, der Schwester Nahams (1CH 4:19)",
       "spa": "el maacateo, hijo de la mujer de Hodías, hermana de Naham (1CH 4:19)"
+    },
+    {
+      "slug": "sosthenes",
+      "english": "the chief ruler of the synagogue at Corinth, beaten before Gallio's judgment seat (ACT 18:17)",
+      "ukr": "старший синагоги в Коринті, якого били перед судом Галліона (ACT 18:17)",
+      "deu": "der Vorsteher der Synagoge in Korinth, der vor dem Richterstuhl Gallios geschlagen wurde (ACT 18:17)",
+      "spa": "el principal de la sinagoga de Corinto, golpeado delante del tribunal de Galión (ACT 18:17)"
+    },
+    {
+      "slug": "sosthenes-the-brother",
+      "english": "'our brother', with whom Paul writes his first letter to the Corinthians (1CO 1:1)",
+      "ukr": "«брат», разом із яким Павло пише свій перший лист до коринтян (1CO 1:1)",
+      "deu": "„der Bruder“, mit dem Paulus seinen ersten Brief an die Korinther schreibt (1CO 1:1)",
+      "spa": "«el hermano», con quien Pablo escribe su primera carta a los corintios (1CO 1:1)"
+    },
+    {
+      "slug": "epaphras",
+      "english": "of Colossae, from whom the Colossians learned the gospel, Paul's fellow prisoner (COL 1:7; 4:12; PHM 1:23)",
+      "ukr": "з Колосів, від якого колоссяни навчилися євангелії, співв'язень Павла (COL 1:7; 4:12; PHM 1:23)",
+      "deu": "aus Kolossä, von dem die Kolosser das Evangelium lernten, Mitgefangener des Paulus (COL 1:7; 4:12; PHM 1:23)",
+      "spa": "de Colosas, de quien los colosenses aprendieron el evangelio, compañero de prisión de Pablo (COL 1:7; 4:12; PHM 1:23)"
+    },
+    {
+      "slug": "gaius-of-corinth",
+      "english": "Paul's host at Corinth and the host of the whole church, whom Paul baptized (ROM 16:23; 1CO 1:14)",
+      "ukr": "господар Павла в Коринті й усієї церкви, якого Павло охрестив (ROM 16:23; 1CO 1:14)",
+      "deu": "der Gastgeber des Paulus in Korinth und der ganzen Gemeinde, den Paulus taufte (ROM 16:23; 1CO 1:14)",
+      "spa": "el que hospedaba a Pablo en Corinto y a toda la iglesia, a quien Pablo bautizó (ROM 16:23; 1CO 1:14)"
     }
   ]
 }
