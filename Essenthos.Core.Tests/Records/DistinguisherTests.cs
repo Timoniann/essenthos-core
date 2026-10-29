@@ -47,6 +47,13 @@ public partial class DistinguisherTests
             lines[ruling.Existing!] = ruling.Says!.Distinguisher!;
         }
 
+        // Eshtemoa's line is the owner's reading of 1CH 4:19, written by his ruling.
+        foreach (var ruling in SenseReadingFiles.AllRulings().Single(f => f.Rulings.Any(r => r.Existing == "eshtemoa-2"
+                     && r.Says?.Distinguisher is not null)).Rulings)
+        {
+            lines[ruling.Existing!] = ruling.Says!.Distinguisher!;
+        }
+
         // A record a ruling created is ours from the start, unless it was later folded into another.
         var folded = DuplicateRecordLoader.Read().Merges.Select(m => m.Folds).ToHashSet(StringComparer.Ordinal);
         foreach (var created in SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)

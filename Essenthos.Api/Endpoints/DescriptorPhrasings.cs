@@ -657,6 +657,21 @@ internal static partial class DescriptorPhrasings
             return (before, englishName);
         }
 
+        // A name that carries its own article (the Nephilim's Die Nephilim, Los nefilim) gives it up
+        // to the phrase's, or to the one the grammar adds, and keeps it lower-case otherwise.
+        if (OwnArticle(language, form) is { } article)
+        {
+            var rest = form[(article.Length + 1)..];
+            form = EndsWithAnArticle(language, before)
+                   || (language == German && kind == EntityKind.People && phrasing.Case == Genitive)
+                ? rest
+                : $"{article.ToLowerInvariant()} {rest}";
+            if (EndsWithAnArticle(language, before))
+            {
+                return (before, form);
+            }
+        }
+
         if (language == German && kind == EntityKind.People && phrasing.Case == Genitive && !Articled(form))
         {
             return (before + "der ", form);
@@ -684,6 +699,25 @@ internal static partial class DescriptorPhrasings
 
     private static bool Articled(string form) =>
         GermanArticles.Any(article => form.StartsWith(article, StringComparison.Ordinal));
+
+    private static readonly string[] SpanishArticles = ["el ", "la ", "los ", "las "];
+
+    private static string[]? ArticlesOf(string language) =>
+        language == German ? GermanArticles : language == Spanish ? SpanishArticles : null;
+
+    /// <summary>The definite article a name begins with, as it is written there, or null.</summary>
+    private static string? OwnArticle(string language, string form) =>
+        ArticlesOf(language)?.FirstOrDefault(article => form.Length > article.Length
+                                                        && form.StartsWith(article, StringComparison.OrdinalIgnoreCase))
+            is { } article
+            ? form[..(article.Length - 1)]
+            : null;
+
+    /// <summary>Whether the words before a name end in an article, or in Spanish in <em>del</em> or <em>al</em>.</summary>
+    private static bool EndsWithAnArticle(string language, string before) =>
+        ArticlesOf(language) is { } articles
+        && (articles.Any(article => before.EndsWith(" " + article, StringComparison.Ordinal) || before == article)
+            || (language == Spanish && (before.EndsWith(" del ", StringComparison.Ordinal) || before.EndsWith(" al ", StringComparison.Ordinal))));
 
     /// <summary>
     /// A people's English name that is a plural and carries no article of its own, which English

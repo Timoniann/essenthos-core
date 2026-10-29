@@ -161,6 +161,7 @@ internal sealed class OwnRecordLoader(
 
         var labelled = await Label(files, words, cancellationToken);
         await Rehead(files, cancellationToken);
+        await Realternate(files, cancellationToken);
 
         if (pending.Count == 0)
         {
@@ -377,6 +378,58 @@ internal sealed class OwnRecordLoader(
         }
 
         return moved;
+    }
+
+    /// <summary>
+    /// An alternative a rulings file no longer lists, taken off its record. A file is applied once and
+    /// then skipped whole, so an alternative later taken out of a file would otherwise stay on the
+    /// record for good. Only alternatives written under a rulings file's source are compared, and
+    /// none of the titles' own (<see cref="TitleLoader"/> writes and rewrites those under the title
+    /// decision's sources, one of which a rulings file shares). An alternative the files list is
+    /// left as it stands, so a second run writes nothing.
+    /// </summary>
+    private async Task<int> Realternate(
+        IReadOnlyList<OwnRecordRulings> files,
+        CancellationToken cancellationToken)
+    {
+        var decision = SenseReadingFiles.Titles();
+        var titled = decision.Titles.Select(title => title.Source ?? decision.Source).Append(decision.Source)
+            .ToHashSet(StringComparer.Ordinal);
+        var sources = files.Select(file => file.Source).Where(source => !titled.Contains(source))
+            .ToHashSet(StringComparer.Ordinal);
+        var listed = files
+            .Where(file => sources.Contains(file.Source))
+            .SelectMany(file => file.Rulings
+                .SelectMany(ruling => (ruling.Alternatives ?? []).Select(alternative => (
+                    Record: ruling.Create?.Slug ?? ruling.Existing!,
+                    file.Source,
+                    Other: alternative.Slug ?? alternative.Describes))))
+            .ToHashSet();
+
+        var held = await db.EntityAlternatives
+            .Where(a => sources.Contains(a.Source))
+            .Select(a => new
+            {
+                Row = a,
+                Record = a.Entity!.Slug,
+                Other = a.Alternative == null ? a.Describes : a.Alternative.Slug,
+            })
+            .ToListAsync(cancellationToken);
+        var stale = held
+            .Where(a => !listed.Contains((a.Record, a.Row.Source, a.Other)))
+            .Select(a => a.Row)
+            .ToList();
+        if (stale.Count == 0)
+        {
+            return 0;
+        }
+
+        db.EntityAlternatives.RemoveRange(stale);
+        await db.SaveChangesAsync(cancellationToken);
+        logger.LogInformation(
+            "{Removed} alternatives no rulings file lists any more were taken off their records: {Records}",
+            stale.Count, string.Join(", ", held.Where(a => stale.Contains(a.Row)).Select(a => $"{a.Record} ({a.Other})")));
+        return stale.Count;
     }
 
     /// <summary>

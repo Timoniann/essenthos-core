@@ -317,7 +317,12 @@ internal static partial class EncyclopediaEndpoints
                 alternatives,
                 alternatives.Count > 0)
             {
-                Forms = own.GetValueOrDefault(entity.Slug),
+                // A person headed by another name is said by it in the rows of the page: John companion of Barnabas.
+                Forms = renamed is null
+                    ? own.GetValueOrDefault(entity.Slug)
+                    : RenamedHeadings.Forms(renamed, own.GetValueOrDefault(entity.Slug), language ?? string.Empty) is { } headed
+                        ? new Dictionary<string, string>(headed, StringComparer.Ordinal)
+                        : null,
                 TribeRecord = await TribeRecord(
                     db, mine is null ? entity.Tribe : mine.Tribe, language, cancellationToken, entity.Slug),
                 Descriptor = described.GetValueOrDefault(entity.Slug),

@@ -171,6 +171,7 @@ internal static class Descriptors
         var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
         var siblings = await SharedParents.Siblings(db, people, cancellationToken);
         var work = await OccupationLines.Of(db, people, spoken, cancellationToken);
+        own.AddRange(await Descents(db, subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id).ToList(), own, cancellationToken));
 
         if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0 && work.Count == 0
             && subjects.All(e => e.Kind != EntityKind.Place && e.Byname is null))
@@ -589,6 +590,50 @@ internal static class Descriptors
 
     private sealed record Person(int Id, EntityKind Kind, string Slug, string Name, string? Distinguisher, string? Sex);
 
+    /// <summary>
+    /// Whom a people came from where no clause of its line says it: the person its record names as its
+    /// origin, which Strong's Dictionary states for a gentilic (<em>Moabites</em>, his patronymic of
+    /// Moab's name) and the owner's file for a tribe. It is that statement and no verse's, so the claim
+    /// cites none, and it is credited to whoever made it: Strong where his claim stands on the record,
+    /// otherwise the record's own source.
+    /// </summary>
+    private static async Task<List<Clause>> Descents(
+        AppDbContext db,
+        List<int> peoples,
+        IReadOnlyList<Clause> own,
+        CancellationToken cancellationToken)
+    {
+        if (peoples.Count == 0)
+        {
+            return [];
+        }
+
+        var said = own.Where(c => c.Relation is DescriptorRelations.DescendantsOf or DescriptorRelations.DescendantOf)
+            .Select(c => c.SubjectId)
+            .ToHashSet();
+        var origins = await db.Entities
+            .Where(e => peoples.Contains(e.Id) && e.Origin != null && e.Origin.Kind == EntityKind.Person)
+            .Select(e => new
+            {
+                e.Id,
+                e.Slug,
+                e.Source,
+                Stated = e.Claims.Where(c => c.Method == LinkMethod.StatedBySource).Select(c => c.Source).FirstOrDefault(),
+                Origin = new Person(e.Origin!.Id, e.Origin.Kind, e.Origin.Slug, e.Origin.Name, e.Origin.Distinguisher, e.Origin.Sex),
+            })
+            .ToListAsync(cancellationToken);
+
+        return
+        [
+            .. origins.Where(o => !said.Contains(o.Id)).Select(o => Derived(
+                    o.Slug, o.Id, null, DescriptorRelations.DescendantsOf, o.Origin, [], null, o.Stated ?? o.Source)
+                with
+                {
+                    Method = o.Stated is null ? LinkMethod.Manual : LinkMethod.StatedBySource,
+                }),
+        ];
+    }
+
     /// <summary>A clause no record wrote and the line works out, with the verses it rests on.</summary>
     private static Clause Derived(
         string slug,
@@ -732,34 +777,10 @@ internal static class Descriptors
     {
         foreach (var (target, heading) in headings)
         {
-            var held = forms.GetValueOrDefault(target);
-            if (EntityNames.Local(named) is null)
+            if (RenamedHeadings.Forms(heading, forms.GetValueOrDefault(target), named) is { } said)
             {
-                if (held is not null)
-                {
-                    forms[target] = new Dictionary<string, string>(StringComparer.Ordinal)
-                    {
-                        [GrammaticalCases.Nominative] = heading.Name,
-                    };
-                }
-
-                continue;
+                forms[target] = said;
             }
-
-            if (heading.LocalName is not { } local
-                || string.Equals(local, held?.GetValueOrDefault(GrammaticalCases.Nominative), StringComparison.Ordinal)
-                || (RenamedHeadings.Declines(named) && heading.LocalGenitive is null))
-            {
-                continue;
-            }
-
-            var cases = new Dictionary<string, string>(StringComparer.Ordinal) { [GrammaticalCases.Nominative] = local };
-            if (heading.LocalGenitive is { } genitive)
-            {
-                cases[GrammaticalCases.Genitive] = genitive;
-            }
-
-            forms[target] = cases;
         }
     }
 
@@ -1304,12 +1325,14 @@ internal static class Descriptors
             clause.Ordinal,
             clause.Relation,
             Target(clause, CasesOf(clause, forms)),
-            new VerseRefResponse(
-                clause.Book,
-                BookReferences.Name(clause.Book),
-                BookReferences.Slug(clause.Book),
-                clause.Chapter,
-                clause.Verse),
+            clause.Book == 0
+                ? null
+                : new VerseRefResponse(
+                    clause.Book,
+                    BookReferences.Name(clause.Book),
+                    BookReferences.Slug(clause.Book),
+                    clause.Chapter,
+                    clause.Verse),
             EnumSpelling.Of(clause.Method),
             clause.Confidence,
             clause.Source,
@@ -1646,7 +1669,7 @@ internal record DescriptorClaimResponse(
     int Ordinal,
     string Relation,
     DescriptorTargetResponse Target,
-    VerseRefResponse Reference,
+    VerseRefResponse? Reference,
     string Method,
     double? Confidence,
     string Source,

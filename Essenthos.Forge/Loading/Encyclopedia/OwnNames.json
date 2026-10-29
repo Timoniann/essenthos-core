@@ -164,6 +164,13 @@
           "label": "Levi",
           "hebrewStrongNumber": "H3878",
           "why": "No verse calls James the son of Alphaeus Levi. Levi the son of Alphaeus is the publican called from the receipt of custom (MRK 2:14; LUK 5:27), whom his own record holds; James the son of Alphaeus is one of the Twelve (MAT 10:3)."
+      },
+      {
+          "entity": "reuel-2",
+          "sourceId": "person:Reuel_2",
+          "label": "Hobab",
+          "hebrewStrongNumber": "H2246",
+          "why": "'Hobab, the son of Raguel the Midianite, Moses' father in law' (NUM 10:29): Hobab is Reuel's son, not Reuel under a second name. The project owner ruled on 2026-10-29 that they are two men; the name is Hobab's, and his own record bears it."
       }
   ],
   "bynames": [
