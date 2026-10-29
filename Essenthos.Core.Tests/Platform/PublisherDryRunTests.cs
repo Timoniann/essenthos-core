@@ -243,7 +243,7 @@ public sealed class PublisherDryRunTests : IDisposable
     }
 
     [Fact]
-    public void ProductionKeepsOneCopyAndIsGatedOnTheRehearsalOfTheServerOnThisMachine()
+    public void ProductionKeepsTwoCopiesOnItsVolumeAndIsGatedOnTheRehearsalOfTheServerOnThisMachine()
     {
         var checkout = TestResources.Checkout();
         var forge = new ConfigurationBuilder()
@@ -253,8 +253,8 @@ public sealed class PublisherDryRunTests : IDisposable
         var prod = ReleaseTarget.Read(forge, "prod", checkout);
         var rehearsal = ReleaseTarget.Read(forge, "rehearsal", checkout);
 
-        (prod.Copies, prod.After, prod.RestoreJobs).Should().Be((1, "rehearsal", 2),
-            "the server's Postgres has 2 GB, and four index builds beside its buffers can exhaust it after the live copy is gone");
+        (prod.Copies, prod.After, prod.RestoreJobs).Should().Be((2, "rehearsal", 2),
+            "the server's 80 GB volume holds the new copy beside the served one, and its Postgres has 2 GB, which four index builds beside its buffers can exhaust");
         (rehearsal.Local, rehearsal.Copies, rehearsal.After, rehearsal.RestoreJobs).Should().Be((true, 1, (string?)null, 2),
             "the rehearsal is the server's stack on this machine, replaced the same way and needing nothing before it");
         (rehearsal.Database, rehearsal.Reader, rehearsal.AppDatabase).Should().Be((prod.Database, prod.Reader, prod.AppDatabase));
