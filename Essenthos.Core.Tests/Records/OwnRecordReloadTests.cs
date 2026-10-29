@@ -105,6 +105,37 @@ public sealed class OwnRecordReloadTests(WitnessDatabase database) : OwnRecordTe
     }
 
     /// <summary>
+    /// A corpus that loaded a rulings file before it said the alternative back gets the back on its
+    /// next load, though the file is recorded and skipped, and a reason the file rewrote is rewritten;
+    /// the load after that writes nothing.
+    /// </summary>
+    [Fact]
+    public async Task AnAlternativeSaidBackLaterReachesALoadedCorpus()
+    {
+        await Load();
+
+        var uzziah = await Db.EntityAlternatives.SingleAsync(a => a.Entity!.Slug == "uzziah");
+        var seraiah = await Db.EntityAlternatives.SingleAsync(a => a.Entity!.Slug == "seraiah-6");
+        var said = seraiah.Reason;
+        Db.EntityAlternatives.Remove(uzziah);
+        seraiah.Reason = "an older wording";
+        await Db.SaveChangesAsync();
+
+        await Load();
+
+        (await Db.EntityAlternatives.Where(a => a.Entity!.Slug == "uzziah")
+                .Select(a => new { a.Alternative!.Slug, a.Source }).SingleAsync())
+            .Should().Be(new { Slug = "azariah-son-of-zephaniah", uzziah.Source });
+        (await Db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Id == seraiah.Id)).Reason.Should().Be(said);
+
+        var held = await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id)
+            .Select(a => new { a.Id, a.Reason }).ToListAsync();
+        await Load();
+        (await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id).Select(a => new { a.Id, a.Reason }).ToListAsync())
+            .Should().Equal(held);
+    }
+
+    /// <summary>
     /// The woman's record was listed by a dataset and is headed, described and read by us, so the
     /// page credits the ruling and not the dataset, on a database that loaded the ruling before the
     /// credit moved as well as on a cold one. The dataset's listing stays as a claim.

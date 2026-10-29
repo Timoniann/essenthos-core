@@ -1,0 +1,32 @@
+{
+  "decidedBy": "the project owner, 2026-10-29 (RUL-0201), written onto the records by claude-opus-5-5 on 2026-10-29",
+  "policy": "Where one person may be another, both pages say so, so that a reader on either page sees that the text does not tell whether they are namesakes or one man. Nathanael's page says a tradition identifies him with Bartholomew, and Pharaoh's daughter's that a tradition identifies her with Bithiah; Bartholomew's and Bithiah's pages say the same of them.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's rule of 2026-10-29 that a possible identity is stated on every person it may join",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 10:3",
+      "position": 3,
+      "surface": "Βαρθολομαῖος",
+      "strongNumber": "G918",
+      "existing": "bartholomew",
+      "says": {
+        "notes": "He may also be Nathanael of Cana in Galilee, whom Philip brought to Jesus (JHN 1:45-49; 21:2), as a tradition identifies him: Matthew, Mark and Luke name Bartholomew beside Philip, and John never names Bartholomew; the text does not say."
+      },
+      "why": "'Philip, and Bartholomew' (MAT 10:3): Bartholomew of the twelve, whom Nathanael's page names as the man a tradition identifies him with."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 4:18",
+      "position": 23,
+      "surface": "בִּתְיָ֣ה",
+      "strongNumber": "H1332",
+      "existing": "bithia",
+      "says": {
+        "notes": "She may also be the daughter of Pharaoh who drew Moses out of the water and took him for her son (EXO 2:5-10), as a later tradition identifies her; the text does not say."
+      },
+      "why": "'Bithiah the daughter of Pharaoh, which Mered took' (1CH 4:18): the woman Pharaoh's daughter's page names as the one a later tradition identifies her with."
+    }
+  ]
+}

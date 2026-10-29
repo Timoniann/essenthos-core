@@ -92,7 +92,8 @@
       "alternatives": [
         {
           "slug": "hilkiah-3",
-          "reason": "The Hilkiah at Ezra's right hand was Ezra's contemporary, and Ezra's forefather of that name lived before the exile. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "A Hilkiah was among the chiefs of the priests who came up with Zerubbabel (NEH 12:7), some ninety years before Ezra read the law. The text does not say whether the two are one man.",
+          "back": "A Hilkiah stood at Ezra's right hand when he read the law (NEH 8:4), some ninety years after this Hilkiah came up with Zerubbabel. The text does not say whether the two are one man."
         }
       ],
       "why": "The model read hilkiah-3. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at high confidence, naming the referent as a man standing at Ezra's right at the Law reading: A contemporary of Ezra, not Ezra's pre-exilic great-grandfather; the record wrongly merges the two."
@@ -203,7 +204,8 @@
       "alternatives": [
         {
           "slug": "jehoahaz-2",
-          "reason": "Jehoahaz is Shallum, listed fourth in this same verse (JER 22:11), and the firstborn Johanan is named nowhere else. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "Jehoahaz is Shallum, listed fourth in this same verse (JER 22:11), and the firstborn Johanan is named nowhere else. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "1 Chronicles 3:15 names Josiah's firstborn Johanan, and lists Jehoahaz, who is Shallum (JER 22:11), fourth. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read jehoahaz-2. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at high confidence, naming the referent as Johanan, eldest son of Josiah who never reigned: Jehoahaz is Shallum, listed fourth in this same verse (Jer 22:11); the firstborn Johanan is otherwise unknown."
@@ -224,7 +226,8 @@
       "alternatives": [
         {
           "slug": "michael-2",
-          "reason": "This Michael stands generations back in Abihail's line, while the Michael of 1CH 5:13 is one of the brothers of a later day. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "This Michael stands generations back in Abihail's line, while the Michael of 1CH 5:13 is one of the brothers of a later day. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Michael stands generations back in Abihail's line (1CH 5:14), while this Michael is one of the brothers of a later day (1CH 5:13). Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read michael-2. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as an earlier Gadite, son of Jeshishai and ancestor of Abihail: This Michael stands generations back in Abihail's pedigree, not the contemporary brother the record is anchored to in v.13."
@@ -254,7 +257,8 @@
       "alternatives": [
         {
           "slug": "eliam-2",
-          "reason": "In 2SA 23:34 Eliam stands where Ahijah the Pelonite, the next name here, stands, and Hepher where Eliphelet the Maachathite stands. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "In 2SA 23:34 Eliam stands where Ahijah the Pelonite, the next name here, stands, and Hepher where Eliphelet the Maachathite stands. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "In 1 Chronicles 11:36 Hepher the Mecherathite stands where Eliphelet the Maachathite stands in 2SA 23:34, and Ahijah the Pelonite where Eliam stands. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read eliam-2. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at high confidence, naming the referent as Hepher the Mecherathite, one of David's warriors: In 2SA 23:34 Eliam matches Ahijah the Pelonite, the next name here; Hepher answers to Eliphelet's Maachathite epithet."
@@ -275,7 +279,8 @@
       "alternatives": [
         {
           "slug": "zechariah-5",
-          "reason": "The verse sets this group among the priests, apart from the Levite singers of the second degree in 1CH 15:18-20. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "The verse sets this group among the priests, apart from the Levite singers of the second degree in 1CH 15:18-20. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Zechariah blew a trumpet before the ark among the priests (1CH 15:24), apart from the Levite singers of the second degree to whom this one belongs (1CH 15:18-20). Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read zechariah-5. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as a priest who blew trumpets before the ark: Verse marks this group as priests, distinct from the second-degree Levite singers of vv.18-20."
@@ -296,7 +301,8 @@
       "alternatives": [
         {
           "slug": "jeiel-4",
-          "reason": "The verse names Jeiel twice, so two men, and this first one stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "The verse names Jeiel twice, so two men, and this first one stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "1 Chronicles 16:5 names Jeiel twice, so two men, and the first stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read jeiel-4. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as Jaaziel/Aziel, the Alamoth psaltery player of 1CH 15:18,20: Verse names Jeiel twice, so two men; this first one stands in Jaaziel/Aziel's slot after Zechariah."
@@ -317,7 +323,8 @@
       "alternatives": [
         {
           "slug": "jehoiada",
-          "reason": "The verse calls this Jehoiada the son of Benaiah, not his father, and sets him among the king's counsellors. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "The verse calls this Jehoiada the son of Benaiah, not his father, and sets him among the king's counsellors. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Jehoiada, the son of Benaiah and not his father, stands among the king's counsellors after Ahithophel (1CH 27:34). Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read jehoiada. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as Jehoiada son of Benaiah, David's later counsellor: Verse names Jehoiada as son of Benaiah, not his father; a distinct man in the counsellor list."
@@ -338,7 +345,8 @@
       "alternatives": [
         {
           "slug": "abishalom",
-          "reason": "Uriel of Gibeah may be another man than Abishalom, whose daughter Kings names as Abijam's mother (1KI 15:2). Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "Uriel of Gibeah may be another man than Abishalom, whose daughter Kings names as Abijam's mother (1KI 15:2). Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "Chronicles names Abijah's mother Michaiah the daughter of Uriel of Gibeah (2CH 13:2), where Kings names her Maachah the daughter of Abishalom (1KI 15:2). Nobody has shown that Uriel and Abishalom are not one man."
         }
       ],
       "why": "The model read abishalom. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as Uriel of Gibeah, father of Michaiah/Maacah, Abijah's maternal grandfather: Uriel of Gibeah is a distinct man from Abishalom, whose daughter's line Kings traces; encyclopedia merged two names."
@@ -368,7 +376,8 @@
       "alternatives": [
         {
           "slug": "zechariah-13",
-          "reason": "Uzziah's counsellor lived two centuries before the prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "Uzziah's counsellor lived two centuries before the prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Zechariah who had understanding in the visions of God taught King Uzziah (2CH 26:5), two centuries before this prophet of the return from exile. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read zechariah-13. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as Uzziah's pre-exilic mentor, understanding in visions of God: Uzziah's counsellor lived two centuries before the post-exilic prophet; the record conflates two distinct men."
@@ -398,7 +407,8 @@
       "alternatives": [
         {
           "slug": "kishi",
-          "reason": "Kishi the son of Abdi was the father of Ethan the singer under David, and Hezekiah's Kish lived centuries later. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "Kishi the son of Abdi was the father of Ethan the singer under David, and Hezekiah's Kish lived centuries later. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Kish son of Abdi, a Merarite, served at Hezekiah's cleansing of the house of the LORD (2CH 29:12), centuries after this Kishi, the father of Ethan the singer under David. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read kishi. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as a Merarite Levite, son of Abdi, in Hezekiah's day: Kishi son of Abdi fathered Ethan the singer under David; Hezekiah's Kish is centuries later, a distinct man."
@@ -419,7 +429,8 @@
       "alternatives": [
         {
           "slug": "zimmah",
-          "reason": "Joah here is Hezekiah's contemporary, and the Zimmah of 1CH 6:20 stands many generations earlier. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "Joah here is Hezekiah's contemporary, and the Zimmah of 1CH 6:20 stands many generations earlier. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Zimmah is the father of the Gershonite Joah who served under Hezekiah (2CH 29:12), many generations after this Zimmah son of Jahath. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read zimmah. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as a later Gershonite Levite, father of the Joah serving under Hezekiah: Joah here is Hezekiah's contemporary; the Zimmah of 1CH 6:20 stands many generations earlier, so this is another man."
@@ -440,7 +451,8 @@
       "alternatives": [
         {
           "slug": "jehiel-4",
-          "reason": "Josiah's Passover is some ninety years after Hezekiah's cleansing of the house of the LORD, and these rulers give to the priests. Nobody has shown that the two are not one man, only that he does not fit this verse."
+          "reason": "Josiah's Passover is some ninety years after Hezekiah's cleansing of the house of the LORD, and these rulers give to the priests. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+          "back": "A Jehiel was among the rulers of the house of God who gave to the priests at Josiah's Passover (2CH 35:8), some ninety years after Hezekiah's cleansing of the house of the LORD. Nobody has shown that the two are not one man, only that he does not fit that verse."
         }
       ],
       "why": "The model read jehiel-4. The audit of 2026-09-06 by claude-opus-5 under prompt audit-1 overturned it at medium confidence, naming the referent as a ruler of the temple (priest) under Josiah, distinct from the Hemanite Levite: Josiah's Passover is some ninety years after Hezekiah's cleansing, and these rulers give to the priests."

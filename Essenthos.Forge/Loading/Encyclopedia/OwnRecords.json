@@ -35,7 +35,8 @@
       "alternatives": [
         {
           "slug": "seraiah-6",
-          "reason": "The head of a house who returned in 538, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of the house in Joiakim's day (NEH 12:12), so the father walking at the dedication in 445 is hard to hold."
+          "reason": "The head of a house who returned in 538, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of the house in Joiakim's day (NEH 12:12), so the father walking at the dedication in 445 is hard to hold.",
+          "back": "The Azariah who walked at the dedication of the wall (NEH 12:33) may be he, whom Nehemiah 7:7 calls Azariah. Against it: his son Meraiah was head of his house in Joiakim's day (NEH 12:12), so his walking at the dedication in 445 is hard to hold."
         }
       ],
       "why": "The owner ruled a new record with notes on who he might theoretically be, rather than a forced merge onto either candidate."
@@ -71,11 +72,13 @@
       "alternatives": [
         {
           "slug": "zimri-2",
-          "reason": "The usurper who killed Elah and reigned seven days in Tirzah, whose end is the point of the taunt. On this reading the word names him and Jehu is only being compared to him."
+          "reason": "The usurper who killed Elah and reigned seven days in Tirzah, whose end is the point of the taunt. On this reading the word names him and Jehu is only being compared to him.",
+          "back": "Jezebel's words to Jehu, 'Had Zimri peace, who slew his master?' (2KI 9:31), may name him, the usurper whose end is the point of the taunt. On the other reading she is calling Jehu a second Zimri."
         },
         {
           "slug": "jehu-2",
-          "reason": "The man she is speaking to. On the vocative reading the word names Jehu, addressed by the name of the usurper he is being likened to."
+          "reason": "The man she is speaking to. On the vocative reading the word names Jehu, addressed by the name of the usurper he is being likened to.",
+          "back": "Jezebel's 'Had Zimri peace, who slew his master?' (2KI 9:31) may be said to him, calling him by the name of the usurper she likens him to. On the other reading the word names that usurper."
         }
       ],
       "why": "The owner ruled a new entity whose description says what it is, with the alternatives kept beside it rather than one of them chosen."

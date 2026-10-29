@@ -60,6 +60,7 @@ public sealed partial class ReaderCopyTests : IDisposable
             {
                 Add($"{slug} alternative", alternative.Reason);
                 Add($"{slug} alternative", alternative.Describes);
+                Add($"{alternative.Slug} alternative", alternative.Back);
             }
         }
 
@@ -70,6 +71,7 @@ public sealed partial class ReaderCopyTests : IDisposable
             foreach (var alternative in title.Alternatives ?? [])
             {
                 Add($"{title.Slug} alternative", alternative.Reason);
+                Add($"{alternative.Slug} alternative", alternative.Back);
             }
 
             foreach (var bearer in title.Bearers ?? [])
@@ -198,10 +200,10 @@ public sealed partial class ReaderCopyTests : IDisposable
             "(http://www.wikidata.org/entity/Q223644): 29 years from 967 BCE.");
 
         var rewritten = await _db.EntityAlternatives.AsNoTracking().SingleAsync();
-        rewritten.Reason.Should().Be(SenseReadingFiles.AllRulings()
-            .SelectMany(file => file.Rulings)
-            .Single(r => r.Create?.Slug == "hilkiah-at-ezras-right-hand")
-            .Alternatives!.Single().Reason);
+        rewritten.Reason.Should().Be(
+            "The Hilkiah at Ezra's right hand was Ezra's contemporary, and Ezra's forefather of that name lived " +
+            "before the exile. Nobody has shown that the two are not one man, only that he does not fit this verse.",
+            "the migration writes the words the file had then; the own-records step makes it what the file says now");
     }
 
     private void Clear()
