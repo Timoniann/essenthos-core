@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -135,13 +136,22 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
         var read = supplement.Apply(Read(ancient, modern));
         var regions = supplement.Regions.ToDictionary(r => r.Slug, StringComparer.Ordinal);
         var regionSlugs = regions.Keys.ToList();
+        var laterTowns = SharedSites.All.Select(s => s.Later).ToList();
 
         var places = await db.Entities
-            .Where(e => e.Kind == EntityKind.Place && (e.OpenBibleId != null || regionSlugs.Contains(e.Slug)))
+            .Where(e => e.Kind == EntityKind.Place
+                        && (e.OpenBibleId != null || regionSlugs.Contains(e.Slug) || laterTowns.Contains(e.Slug)))
             .Select(e => new { e.Id, e.Slug, e.OpenBibleId })
             .ToListAsync(cancellationToken);
+        var bySlug = places.ToDictionary(p => p.Slug, StringComparer.Ordinal);
+        // A town built on an earlier one's site stands at that site's point and takes its answers.
+        var builtOn = SharedSites.All
+            .Where(s => bySlug.ContainsKey(s.Later) && bySlug.GetValueOrDefault(s.Earlier)?.OpenBibleId is not null)
+            .Select(s => (OpenBibleId: bySlug[s.Earlier].OpenBibleId!, bySlug[s.Later].Id));
         var byOpenBibleId = places.Where(p => p.OpenBibleId != null)
-            .ToLookup(p => p.OpenBibleId!, p => p.Id, StringComparer.Ordinal);
+            .Select(p => (OpenBibleId: p.OpenBibleId!, p.Id))
+            .Concat(builtOn)
+            .ToLookup(p => p.OpenBibleId, p => p.Id, StringComparer.Ordinal);
 
         var locations = new List<PlaceLocation>(read.Located.Count);
         var unheld = read.Located.Count(located => !byOpenBibleId.Contains(located.PlaceId));

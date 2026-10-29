@@ -136,6 +136,36 @@ public sealed class LocationSupplementTests : IDisposable
         (await Fingerprint()).Should().Equal(before);
     }
 
+    /// <summary>
+    /// Antipatris has a page of its own and no gazetteer entry: Herod built it on Aphek's site, and it
+    /// stands at Aphek's point with Aphek's answers, while Aphek keeps its own.
+    /// </summary>
+    [Fact]
+    public async Task ATownBuiltOnAnEarlierPlacesSiteStandsAtThatSitesPoint()
+    {
+        Place("aphek-2","a7b2e63");
+        Place("antipatris",null);
+        await _db.SaveChangesAsync();
+        var loader = new OpenBibleLocationLoader(_db,NullLogger<OpenBibleLocationLoader>.Instance);
+        await loader.Load(_folder);
+
+        var places = await _db.Entities.Include(e => e.Location).Where(e => e.Slug=="aphek-2" || e.Slug=="antipatris")
+            .ToDictionaryAsync(e => e.Slug);
+        var aphek = places["aphek-2"].Location!;
+        var antipatris = places["antipatris"].Location!;
+        antipatris.Should().NotBeNull();
+        (antipatris.Longitude, antipatris.Latitude, antipatris.ModernId, antipatris.Kind)
+            .Should().Be((aphek.Longitude, aphek.Latitude, aphek.ModernId, aphek.Kind));
+        var answers = await _db.PlaceCandidates.AsNoTracking().OrderBy(c => c.Rank).ToListAsync();
+        answers.Where(c => c.EntityId == places["antipatris"].Id).Select(c => c.ModernId)
+            .Should().Equal(answers.Where(c => c.EntityId == places["aphek-2"].Id).Select(c => c.ModernId));
+        places["antipatris"].OpenBibleId.Should().BeNull("the town takes the site's point, not its gazetteer entry");
+
+        var before = await Fingerprint();
+        (await loader.Load(_folder)).AlreadyLoaded.Should().BeTrue();
+        (await Fingerprint()).Should().Equal(before);
+    }
+
     private void Place(string slug,string? gazetteer) => _db.Entities.Add(new Entity
     {
         Slug=slug,Name=slug,Kind=EntityKind.Place,Source="test",SourceId="test:"+slug,OpenBibleId=gazetteer,

@@ -235,7 +235,7 @@ internal static class EnglishTextSource
         }),
 
         ["WorldEnglish"] = new(FirstBook: 1, LastBook: 66, Definition(
-            WorldEnglish, "engwebp", "World English Bible", "eng", null, "Byzantine") with
+            WorldEnglish, "engwebp", "World English Bible (edited)", "eng", null, "Byzantine") with
         {
             Translators =
                 "Michael Paul Johnson and the volunteers of eBible.org, revising the American "
@@ -271,7 +271,7 @@ internal static class EnglishTextSource
                 + "text not be called the World English Bible. Tokenising it and normalising its "
                 + "punctuation is a change, so nothing served from these rows is the World English "
                 + "Bible — it is this corpus's reading of it, which is what the row says of every "
-                + "text here.",
+                + "text here, and it is named the World English Bible (edited) for that reason.",
             Citation =
                 "The World English Bible, eBible.org, updated edition, in the digital edition "
                 + "eBible.org publishes as engwebp. World English Bible is a trademark of eBible.org.",

@@ -1,0 +1,173 @@
+{
+  "decidedBy": "the project owner, 2026-10-29, written onto the records by claude-opus-5-5 on 2026-10-29",
+  "policy": "Sosthenes is not Crispus and Epaphras is not Epaphroditus: the text names them as different men. Where the text does not join the men of one name it holds them apart, a record per group of verses that belong together: Sosthenes the ruler of the synagogue (ACT 18:17) and Sosthenes our brother (1CO 1:1); Gaius the Macedonian (ACT 19:29), Gaius of Corinth (ROM 16:23; 1CO 1:14) and the Gaius of 3 John (3JN 1:1); Erastus whom Paul sent into Macedonia and who stayed at Corinth (ACT 19:22; 2TI 4:20) and Erastus the chamberlain of the city (ROM 16:23). Each says whom some identify him with.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-10-29 that the men of Paul's circle the text does not join are held apart",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 18:17",
+      "position": 4,
+      "surface": "Σωσθένην",
+      "strongNumber": "G4988",
+      "create": {
+        "slug": "sosthenes",
+        "kind": "person",
+        "name": "Sosthenes",
+        "distinguisher": "the chief ruler of the synagogue at Corinth, beaten before Gallio's judgment seat (ACT 18:17)",
+        "notes": "He may also be 'Sosthenes our brother', with whom Paul writes his first letter to the Corinthians (1CO 1:1), as many identify him; the text does not say."
+      },
+      "corrects": "crispus",
+      "why": "'Then all the Greeks took Sosthenes, the chief ruler of the synagogue, and beat him before the judgment seat' (ACT 18:17): Acts names Crispus the chief ruler of the synagogue in 18:8 and Sosthenes in 18:17, two men."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "1CO 1:1",
+      "position": 10,
+      "surface": "Σωσθένης",
+      "strongNumber": "G4988",
+      "create": {
+        "slug": "sosthenes-the-brother",
+        "kind": "person",
+        "name": "Sosthenes",
+        "distinguisher": "'our brother', with whom Paul writes his first letter to the Corinthians (1CO 1:1)",
+        "notes": "He may also be Sosthenes the chief ruler of the synagogue at Corinth, whom the Greeks beat before Gallio's judgment seat (ACT 18:17), as many identify him; the text does not say."
+      },
+      "corrects": "crispus",
+      "why": "'Paul, called to be an apostle of Jesus Christ through the will of God, and Sosthenes our brother' (1CO 1:1): Sosthenes, not Crispus, and not joined by the text to the ruler of the synagogue of ACT 18:17."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "COL 1:7",
+      "position": 4,
+      "surface": "Ἐπαφρᾶ",
+      "strongNumber": "G1889",
+      "create": {
+        "slug": "epaphras",
+        "kind": "person",
+        "name": "Epaphras",
+        "distinguisher": "of Colossae, from whom the Colossians learned the gospel, Paul's fellow prisoner (COL 1:7; 4:12; PHM 1:23)",
+        "notes": "He may also be Epaphroditus, the messenger of the Philippians (PHP 2:25; 4:18), as some identify him, Epaphras being a short form of that name; the text does not say."
+      },
+      "corrects": "epaphroditus",
+      "why": "'As ye also learned of Epaphras our dear fellowservant' (COL 1:7): Epaphras of Colossae, whom the text does not call Epaphroditus, the messenger of the Philippians (PHP 2:25)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "COL 4:12",
+      "position": 3,
+      "surface": "Ἐπαφρᾶς",
+      "strongNumber": "G1889",
+      "existing": "epaphras",
+      "corrects": "epaphroditus",
+      "why": "'Epaphras, who is one of you, a servant of Christ, saluteth you' (COL 4:12)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "PHM 1:23",
+      "position": 3,
+      "surface": "Ἐπαφρᾶς",
+      "strongNumber": "G1889",
+      "existing": "epaphras",
+      "corrects": "epaphroditus",
+      "why": "'There salute thee Epaphras, my fellowprisoner in Christ Jesus' (PHM 1:23)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "PHP 2:25",
+      "position": 4,
+      "surface": "Ἐπαφρόδιτον",
+      "strongNumber": "G1891",
+      "existing": "epaphroditus",
+      "says": {
+        "notes": "He may also be Epaphras of Colossae, Paul's fellow prisoner (COL 1:7; 4:12; PHM 1:23), as some identify him, Epaphras being a short form of his name; the text does not say."
+      },
+      "why": "'Epaphroditus, my brother, and companion in labour, and fellowsoldier, but your messenger' (PHP 2:25): the messenger of the Philippians, apart from Epaphras of Colossae."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 19:29",
+      "position": 14,
+      "surface": "Γάϊον",
+      "strongNumber": "G1050",
+      "existing": "gaius",
+      "says": {
+        "notes": "He may also be Gaius of Corinth, Paul's host, whom Paul baptized (ROM 16:23; 1CO 1:14), as some identify him; the text does not say."
+      },
+      "why": "'Having caught Gaius and Aristarchus, men of Macedonia, Paul's companions in travel' (ACT 19:29): the Macedonian, whom the text does not join to the Gaius of Corinth or of 3 John."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ROM 16:23",
+      "position": 3,
+      "surface": "Γάϊος",
+      "strongNumber": "G1050",
+      "create": {
+        "slug": "gaius-of-corinth",
+        "kind": "person",
+        "name": "Gaius",
+        "distinguisher": "Paul's host at Corinth and the host of the whole church, whom Paul baptized (ROM 16:23; 1CO 1:14)",
+        "notes": "He may also be the Macedonian Gaius, Paul's companion in travel (ACT 19:29), or the Gaius to whom the third letter of John is written (3JN 1:1), as some identify him; the text does not say."
+      },
+      "corrects": "gaius",
+      "why": "'Gaius mine host, and of the whole church, saluteth you' (ROM 16:23): Paul's host, whom he baptized at Corinth (1CO 1:14); the text does not make him the Macedonian of ACT 19:29."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "1CO 1:14",
+      "position": 10,
+      "surface": "Γάϊον",
+      "strongNumber": "G1050",
+      "existing": "gaius-of-corinth",
+      "corrects": "gaius",
+      "why": "'I thank God that I baptized none of you, but Crispus and Gaius' (1CO 1:14): Gaius of Corinth."
+    },
+    {
+      "text": "KJV",
+      "reference": "3JN 1:1",
+      "position": 6,
+      "surface": "Gaius",
+      "strongNumber": "G1050",
+      "existing": "gaius-4",
+      "says": {
+        "notes": "He may also be Gaius of Corinth, Paul's host, whom Paul baptized (ROM 16:23; 1CO 1:14), as some identify him; the text does not say."
+      },
+      "corrects": "gaius",
+      "why": "'The elder unto the wellbeloved Gaius, whom I love in the truth' (3JN 1:1): the Gaius of 3 John, whom the text does not join to another."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 19:22",
+      "position": 12,
+      "surface": "Ἔραστον",
+      "strongNumber": "G2037",
+      "existing": "erastus",
+      "says": {
+        "notes": "He may also be Erastus the chamberlain of the city (ROM 16:23), as some identify him; the text does not say."
+      },
+      "why": "'So he sent into Macedonia two of them that ministered unto him, Timotheus and Erastus' (ACT 19:22)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "2TI 4:20",
+      "position": 1,
+      "surface": "Ἔραστος",
+      "strongNumber": "G2037",
+      "existing": "erastus",
+      "corrects": "erastus-2",
+      "why": "'Erastus abode at Corinth' (2TI 4:20): the Erastus Paul sent ahead with Timothy and who was with him on his journeys, whom the text does not call the chamberlain of the city."
+    },
+    {
+      "text": "KJV",
+      "reference": "ROM 16:23",
+      "position": 11,
+      "surface": "Erastus",
+      "strongNumber": "G2037",
+      "existing": "erastus-2",
+      "says": {
+        "notes": "He may also be the Erastus whom Paul sent into Macedonia with Timothy and who stayed at Corinth (ACT 19:22; 2TI 4:20), as some identify him; the text does not say."
+      },
+      "why": "'Erastus the chamberlain of the city saluteth you' (ROM 16:23): the city's treasurer, whom the text does not join to the Erastus of ACT 19:22 and 2TI 4:20."
+    }
+  ]
+}

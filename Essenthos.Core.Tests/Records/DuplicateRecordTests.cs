@@ -853,6 +853,29 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Men of Paul's circle the text names apart, or does not join, are held apart: Sosthenes is not
+    /// Crispus, Epaphras is not Epaphroditus, and each Gaius and Erastus keeps only his own verses.
+    /// Antipatris keeps its own page and its verse, and is folded into nothing.
+    /// </summary>
+    [Theory]
+    [InlineData("crispus", "sosthenes", "Sosthenes", "ACT 18:17")]
+    [InlineData("crispus", "sosthenes-the-brother", null, "1CO 1:1")]
+    [InlineData("epaphroditus", "epaphras", "Epaphras", "COL 1:7|COL 4:12|PHM 1:23")]
+    [InlineData("gaius", "gaius-of-corinth", null, "ROM 16:23|1CO 1:14")]
+    [InlineData("gaius", "gaius-4", null, "3JN 1:1")]
+    [InlineData("erastus-2", "erastus", null, "ACT 19:22|2TI 4:20")]
+    [InlineData("aphek-2", "antipatris", null, "ACT 23:31")]
+    public void ARecordHoldingMenTheTextDoesNotJoinIsParted(string from, string to, string? name, string verses)
+    {
+        var list = DuplicateRecordLoader.Read();
+
+        var split = list.Splits!.Single(s => s.From == from && s.To == to);
+        split.Name.Should().Be(name);
+        split.Verses.Should().Equal(verses.Split('|'));
+        list.Merges.Should().NotContain(m => m.Folds == to || m.Folds == from);
+    }
+
+    /// <summary>
     /// The register's spellings no held text writes in a reader's language — the Greek New Testament's
     /// Gomorrha and Charran, Kirjath-arba, the two Barsabbas records — fold into the record the text
     /// names under the Hebrew or Greek, and are folded nowhere else.

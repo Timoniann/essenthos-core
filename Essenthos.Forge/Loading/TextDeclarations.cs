@@ -24,7 +24,7 @@ internal static class TextDeclarations
         new("BSB", TextField.Citation),
         new("ALM1911", TextField.Citation),
         new("GRCBRENT", TextField.Citation),
-        new("WEB", TextField.Edition),
+        new("WEB", TextField.Name, TextField.Edition),
         new("VIGLT", TextField.RightsHolder),
     ];
 
@@ -83,6 +83,10 @@ internal static class TextDeclarations
             + "edition has not been asked of them. Everything known about who made it and who published it is "
             + "recorded here in the meantime.",
             Bible4uTextSource.Definitions.Values.Single(d => d.Slug == "UBIO").RightsNote!),
+        new("WEB",
+            "which is what the row says of every text here.",
+            "which is what the row says of every text here, and it is named the World English Bible (edited) for "
+            + "that reason."),
         new("BHSA", null),
         new("TR1550", null),
         new("TR1894", null),

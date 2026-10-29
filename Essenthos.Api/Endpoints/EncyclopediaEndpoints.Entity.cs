@@ -64,6 +64,29 @@ internal static partial class EncyclopediaEndpoints
         return new EntityTribeResponse(found.Slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(id));
     }
 
+    /// <summary>
+    /// The place a town was built on the site of, or the town later built on a place's site, with its
+    /// name in the reader's language.
+    /// </summary>
+    internal static async Task<EntityTribeResponse?> SharedSite(
+        AppDbContext db, string? slug, string? language, CancellationToken cancellationToken)
+    {
+        if (slug is null)
+        {
+            return null;
+        }
+
+        var found = await db.Entities.Where(e => e.Slug == slug)
+            .Select(e => new { e.Id, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken);
+        if (found is null)
+        {
+            return null;
+        }
+
+        var names = await EntityNames.Of(db, [found.Id], language, cancellationToken);
+        return new EntityTribeResponse(slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(found.Id));
+    }
+
     /// <summary>One entity's page.</summary>
     private static void MapEntity(IEndpointRouteBuilder routes)
     {
@@ -342,6 +365,10 @@ internal static partial class EncyclopediaEndpoints
                 Location = entity.Location,
                 Locations = locations,
                 AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
+                BuiltOnSiteOf = await SharedSite(
+                    db, SharedSites.All.FirstOrDefault(s => s.Later == entity.Slug)?.Earlier, language, cancellationToken),
+                BuiltOnItsSite = await SharedSite(
+                    db, SharedSites.All.FirstOrDefault(s => s.Earlier == entity.Slug)?.Later, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
                 LocalName = renamed is null ? localNames.GetValueOrDefault(entity.Id) : renamed.LocalName,
                 AlsoCalled = renamed?.AlsoCalled,

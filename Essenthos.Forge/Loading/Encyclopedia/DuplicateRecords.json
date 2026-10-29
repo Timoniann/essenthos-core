@@ -1454,14 +1454,6 @@
       "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
     },
     {
-      "strongNumber": "G494",
-      "keeps": "aphek-2",
-      "folds": "antipatris",
-      "why": "Antipatris, where the soldiers brought Paul by night (ACT 23:31), is the town the gazetteer files under Aphek at Tell Ras el Ain, with ACT 23:31 among Aphek's verses: Herod's Antipatris stood on the site of Aphek of the Sharon. The kept record already holds ACT 23:31.",
-      "confidence": 0.85,
-      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
-    },
-    {
       "strongNumber": "G962",
       "keeps": "bethany-2",
       "folds": "bethabara",
@@ -2169,9 +2161,10 @@
       "to": "erastus",
       "name": null,
       "verses": [
-        "ACT 19:22"
+        "ACT 19:22",
+        "2TI 4:20"
       ],
-      "why": "Acts 19:22 is the Erastus whom Paul sent into Macedonia with Timothy, held as erastus; the verse does not call him the city's chamberlain."
+      "why": "Acts 19:22 is the Erastus whom Paul sent into Macedonia with Timothy, held as erastus, and 2 Timothy 4:20's Erastus who 'abode at Corinth' is the companion of his journeys; neither verse calls him the city's chamberlain of Romans 16:23, and the project owner ruled on 2026-10-29 that the two are held apart."
     },
     {
       "from": "horam",
@@ -2902,6 +2895,63 @@
         "GEN 14:10"
       ],
       "why": "GEN 14:3, 8 and 10 name the vale of Siddim, 'which is the salt sea' (14:3): a valley the sea later covered, where the kings of the plain fought and fell into its slimepits, and not the sea. Its name and the two verses that name only the vale go to it; 14:3, which names both, stays with the sea as well."
+    },
+    {
+      "from": "crispus",
+      "to": "sosthenes",
+      "name": "Sosthenes",
+      "verses": [
+        "ACT 18:17"
+      ],
+      "why": "Acts names two rulers of the synagogue at Corinth, Crispus (18:8) and Sosthenes (18:17); nothing makes them one man."
+    },
+    {
+      "from": "crispus",
+      "to": "sosthenes-the-brother",
+      "name": null,
+      "verses": [
+        "1CO 1:1"
+      ],
+      "why": "'Sosthenes our brother', with whom Paul writes 1 Corinthians (1CO 1:1), is not Crispus, and the text does not make him the ruler of the synagogue of ACT 18:17; the project owner ruled on 2026-10-29 that men of one name the text does not join are held apart."
+    },
+    {
+      "from": "epaphroditus",
+      "to": "epaphras",
+      "name": "Epaphras",
+      "verses": [
+        "COL 1:7",
+        "COL 4:12",
+        "PHM 1:23"
+      ],
+      "why": "Epaphras of Colossae, 'one of you' (COL 4:12) and Paul's fellow prisoner (PHM 1:23), is not Epaphroditus, the messenger of the Philippians (PHP 2:25; 4:18): the text names them as two men."
+    },
+    {
+      "from": "gaius",
+      "to": "gaius-of-corinth",
+      "name": null,
+      "verses": [
+        "ROM 16:23",
+        "1CO 1:14"
+      ],
+      "why": "Gaius, Paul's host at Corinth (ROM 16:23), whom he baptized (1CO 1:14), is not made by the text the Macedonian of ACT 19:29; the project owner ruled on 2026-10-29 that they are held apart."
+    },
+    {
+      "from": "gaius",
+      "to": "gaius-4",
+      "name": null,
+      "verses": [
+        "3JN 1:1"
+      ],
+      "why": "The Gaius to whom 3 John is written (3JN 1:1) is held as gaius-4; the text does not join him to the Macedonian of ACT 19:29."
+    },
+    {
+      "from": "aphek-2",
+      "to": "antipatris",
+      "name": null,
+      "verses": [
+        "ACT 23:31"
+      ],
+      "why": "Antipatris, where the soldiers brought Paul by night (ACT 23:31), is Herod's town built on the site of Aphek, and keeps its own page and its own verse by the project owner's ruling of 2026-10-29; the gazetteer files the verse under Aphek."
     }
   ]
 }
