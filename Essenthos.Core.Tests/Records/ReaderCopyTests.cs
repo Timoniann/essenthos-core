@@ -110,7 +110,7 @@ public sealed partial class ReaderCopyTests : IDisposable
             Add($"{rendered.Slug} notes in Spanish", rendered.Spa);
         }
 
-        foreach (var rendered in AlternativeReasonTranslationLoader.Read().Entries)
+        foreach (var rendered in PossibleIdentityPageTests.Reasons().Entries)
         {
             Add("an alternative's reason in Ukrainian", rendered.Ukr);
             Add("an alternative's reason in German", rendered.Deu);

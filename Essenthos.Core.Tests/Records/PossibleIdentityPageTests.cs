@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -49,8 +50,16 @@ public sealed class PossibleIdentityPageTests : IDisposable
     public async Task TheRecordTheQuestionIsAboutIsUnsettledAndTheOneItMayBeIsNot()
     {
         var (mary, other) = Pair();
-        await new AlternativeReasonTranslationLoader(_db, NullLogger<AlternativeReasonTranslationLoader>.Instance)
-            .Load(new AlternativeReasonTranslations("a test rendering", [new(Back, Rendered, "Die Maria", "La María")]), default);
+        var back = EnglishNotes.Digest(Back);
+        await new TextTranslationLoader(_db, NullLogger<TextTranslationLoader>.Instance).Load(
+            new Dictionary<(string Language, string Sha), (string Text, string Source)>
+            {
+                [("ukr", back)] = (Rendered, "a test rendering"),
+                [("deu", back)] = ("Die Maria", "a test rendering"),
+                [("spa", back)] = ("La María", "a test rendering"),
+            },
+            1,
+            default);
 
         await using var app = await Host();
         using var client = new HttpClient { BaseAddress = new Uri(app.Urls.Single()) };
@@ -64,45 +73,23 @@ public sealed class PossibleIdentityPageTests : IDisposable
 
         var answer = await Get(client, $"/v1/entities/{mary.Slug}?language=ukr");
         answer.GetProperty("unsettled").GetBoolean().Should().BeFalse("who the mother of Jesus is, is not in doubt");
-        var back = answer.GetProperty("alternatives").EnumerateArray().Single();
-        back.GetProperty("back").GetBoolean().Should().BeTrue();
-        back.GetProperty("slug").GetString().Should().Be(other.Slug);
-        back.GetProperty("reason").GetString().Should().Be(Back);
-        back.GetProperty("localReason").GetString().Should().Be(Rendered);
+        var answered = answer.GetProperty("alternatives").EnumerateArray().Single();
+        answered.GetProperty("back").GetBoolean().Should().BeTrue();
+        answered.GetProperty("slug").GetString().Should().Be(other.Slug);
+        answered.GetProperty("reason").GetString().Should().Be(Back);
+        answered.GetProperty("localReason").GetString().Should().Be(Rendered);
 
         (await Get(client, $"/v1/entities/{mary.Slug}?language=eng")).GetProperty("alternatives").EnumerateArray()
             .Single().GetProperty("localReason").ValueKind.Should().Be(JsonValueKind.Null, "the English is the reason");
         (await Get(client, $"/v1/entities/{mary.Slug}?language=ukr&prose=deu")).GetProperty("alternatives")
             .EnumerateArray().Single().GetProperty("localReason").GetString().Should().Be("Die Maria",
                 "the reason is prose, in the interface's language");
-    }
 
-    [Fact]
-    public async Task AReasonIsRenderedOnceAndARewrittenOneLosesItsRendering()
-    {
-        Pair();
-        var file = new AlternativeReasonTranslations("a test rendering", [new(Back, Rendered, "Die Maria", "La María")]);
-
-        var first = await Loader().Load(file, default);
-        first.Written.Should().Be(1);
-        first.Unrendered.Should().Be(1, "the forward reason has no entry");
-        var row = await _db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Reason == Back);
-        ReasonRenderings.Read(row.ReasonRenderings).Should().BeEquivalentTo(
-            new Dictionary<string, string> { ["ukr"] = Rendered, ["deu"] = "Die Maria", ["spa"] = "La María" });
-        row.ReasonRenderedBy.Should().Be("a test rendering");
-
-        var again = await Loader().Load(file, default);
-        again.Written.Should().Be(0);
-        again.Cleared.Should().Be(0);
-
-        await _db.EntityAlternatives.Where(a => a.Id == row.Id)
+        await _db.EntityAlternatives.Where(a => a.Reason == Back)
             .ExecuteUpdateAsync(set => set.SetProperty(a => a.Reason, "A reason said otherwise since."));
-        _db.ChangeTracker.Clear();
-        var rewritten = await Loader().Load(file, default);
-        rewritten.Cleared.Should().Be(1);
-        var cleared = await _db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Id == row.Id);
-        cleared.ReasonRenderings.Should().BeNull();
-        cleared.ReasonRenderedBy.Should().BeNull();
+        (await Get(client, $"/v1/entities/{mary.Slug}?language=ukr")).GetProperty("alternatives").EnumerateArray()
+            .Single().GetProperty("localReason").ValueKind.Should().Be(JsonValueKind.Null,
+                "a rendering of the old words is not a rendering of the new");
     }
 
     /// <summary>
@@ -119,17 +106,21 @@ public sealed class PossibleIdentityPageTests : IDisposable
             .SelectMany(alternative => new[] { alternative.Reason, alternative.Back })
             .OfType<string>()
             .ToHashSet(StringComparer.Ordinal);
-        var file = AlternativeReasonTranslationLoader.Read();
+        var file = Reasons();
         file.Source.Should().Contain("machine translation");
 
         var rendered = file.Entries.ToDictionary(entry => entry.English, StringComparer.Ordinal);
         said.Where(reason => !rendered.ContainsKey(reason)).Should().BeEmpty();
         rendered.Keys.Where(english => !said.Contains(english)).Should().BeEmpty();
-        file.Entries.Where(entry => entry.Languages().Count != 3).Select(entry => entry.English).Should().BeEmpty();
+        file.Entries.Where(entry => entry.Rendered().Count() != 3).Select(entry => entry.English).Should().BeEmpty();
     }
 
-    private AlternativeReasonTranslationLoader Loader() =>
-        new(_db, NullLogger<AlternativeReasonTranslationLoader>.Instance);
+    /// <summary>The shipped renderings of the alternatives' reasons, one file among the records' translations.</summary>
+    internal static TextTranslationLoader.TextTranslationFile Reasons()
+    {
+        var path = TestResources.Shipped(Path.Combine("Essenthos", TextTranslationLoader.Folder, "alternative-reasons.json"));
+        return TextTranslationLoader.Read(File.ReadAllText(path), path);
+    }
 
     private (Entity Mary, Entity Other) Pair()
     {
@@ -180,5 +171,9 @@ public sealed class PossibleIdentityPageTests : IDisposable
         return entity;
     }
 
-    private void Clear() => _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+    private void Clear()
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Database.ExecuteSqlRaw("DELETE FROM text_translation");
+    }
 }

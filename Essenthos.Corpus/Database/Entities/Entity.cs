@@ -381,15 +381,6 @@ public class EntityAlternative
     /// </summary>
     public bool Back { get; set; }
 
-    /// <summary>
-    /// <see cref="Reason"/> in the reader's languages, machine translations of exactly this English:
-    /// JSON, language code (<c>ukr</c>, <c>deu</c>, <c>spa</c>) to text. Null where none is held.
-    /// </summary>
-    public string? ReasonRenderings { get; set; }
-
-    /// <summary>What rendered <see cref="ReasonRenderings"/>: the model, the prompt and the date.</summary>
-    public string? ReasonRenderedBy { get; set; }
-
     public override string ToString() =>
         $"EntityAlternative({EntityId} may be {AlternativeEntityId?.ToString() ?? Describes})";
 }

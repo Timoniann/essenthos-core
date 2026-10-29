@@ -647,14 +647,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("reason");
 
-                    b.Property<string>("ReasonRenderedBy")
-                        .HasColumnType("text")
-                        .HasColumnName("reason_rendered_by");
-
-                    b.Property<string>("ReasonRenderings")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("reason_renderings");
-
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnType("text")

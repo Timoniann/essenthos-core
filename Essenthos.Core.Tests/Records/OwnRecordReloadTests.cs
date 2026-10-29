@@ -154,8 +154,6 @@ public sealed class OwnRecordReloadTests(WitnessDatabase database) : OwnRecordTe
         await Db.EntityAlternatives.ExecuteUpdateAsync(set => set.SetProperty(a => a.Back, false));
         var seraiah = await Db.EntityAlternatives.SingleAsync(a => a.Entity!.Slug == "seraiah-6");
         seraiah.Reason = "an older wording";
-        seraiah.ReasonRenderings = """{"ukr":"старе формулювання"}""";
-        seraiah.ReasonRenderedBy = "a test";
         await Db.SaveChangesAsync();
         Db.ChangeTracker.Clear();
 
@@ -166,8 +164,6 @@ public sealed class OwnRecordReloadTests(WitnessDatabase database) : OwnRecordTe
             .Should().BeEquivalentTo(sides);
         var rewritten = await Db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Id == seraiah.Id);
         rewritten.Reason.Should().NotBe("an older wording");
-        rewritten.ReasonRenderings.Should().BeNull("a rendering of the old words is not a rendering of the new");
-        rewritten.ReasonRenderedBy.Should().BeNull();
 
         var held = await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id)
             .Select(a => new { a.Id, a.Back, a.Reason }).ToListAsync();
@@ -177,32 +173,22 @@ public sealed class OwnRecordReloadTests(WitnessDatabase database) : OwnRecordTe
     }
 
     /// <summary>
-    /// After the rulings, every alternative they write, backs included, is given its reason in Ukrainian,
-    /// German and Spanish from the shipped renderings; rendering again writes nothing, and the next load
-    /// of the rulings leaves the renderings where they are.
+    /// Every alternative the rulings write, backs included, has its reason in Ukrainian, German and
+    /// Spanish among the shipped renderings, found by its English.
     /// </summary>
     [Fact]
-    public async Task EveryAlternativeTheRulingsWriteIsGivenItsReasonInEveryLanguageOnce()
+    public async Task EveryAlternativeTheRulingsWriteHasItsReasonInEveryLanguage()
     {
         await Load();
-        var reasons = new AlternativeReasonTranslationLoader(Db, Microsoft.Extensions.Logging.Abstractions.NullLogger<AlternativeReasonTranslationLoader>.Instance);
+        var rendered = PossibleIdentityPageTests.Reasons().Entries
+            .Where(entry => entry.Rendered().Count() == 3)
+            .Select(entry => entry.English)
+            .ToHashSet(StringComparer.Ordinal);
 
-        var first = await reasons.Load();
+        var reasons = await Db.EntityAlternatives.AsNoTracking().Select(a => a.Reason).ToListAsync();
 
-        first.Written.Should().BeGreaterThan(30);
-        first.Unrendered.Should().Be(0, "every reason a file gives is rendered");
-        var uzziah = await Db.EntityAlternatives.AsNoTracking().SingleAsync(a => a.Entity!.Slug == "uzziah");
-        ReasonRenderings.Read(uzziah.ReasonRenderings).Should().ContainKeys("ukr", "deu", "spa");
-        uzziah.ReasonRenderedBy.Should().Contain("machine translation");
-
-        (await reasons.Load()).Written.Should().Be(0);
-        var held = await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id)
-            .Select(a => new { a.Id, a.ReasonRenderings }).ToListAsync();
-        Db.ChangeTracker.Clear();
-        await Load();
-        (await Db.EntityAlternatives.AsNoTracking().OrderBy(a => a.Id).Select(a => new { a.Id, a.ReasonRenderings }).ToListAsync())
-            .Should().Equal(held);
-        (await reasons.Load()).Written.Should().Be(0);
+        reasons.Should().HaveCountGreaterThan(30);
+        reasons.Where(reason => !rendered.Contains(reason)).Should().BeEmpty();
     }
 
     /// <summary>

@@ -2374,10 +2374,6 @@ internal sealed class DatasetLoader(
         status.Starting("the notes of our own records in every language");
         var notes = scope.ServiceProvider.GetRequiredService<NoteTranslationLoader>();
         status.Record(await notes.Load(cancellationToken));
-
-        status.Starting("why a record may be another, in every language");
-        var reasons = scope.ServiceProvider.GetRequiredService<AlternativeReasonTranslationLoader>();
-        status.Record(await reasons.Load(cancellationToken));
     }
 
     /// <summary>
