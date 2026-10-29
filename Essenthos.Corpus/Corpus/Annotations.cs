@@ -186,14 +186,14 @@ internal static class Annotations
     }
 
     /// <summary>The source word an annotation was carried from, as its note writes it.</summary>
-    private static long? CarriedFrom(string? note)
+    internal static long? CarriedFrom(string? note)
     {
         var match = note is null ? null : Carried.Match(note);
         return match is { Success: true } && long.TryParse(match.Groups[1].ValueSpan, out var id) ? id : null;
     }
 
     /// <summary>The number a source-word annotation's note leads with, where the word row carries none.</summary>
-    private static string? LeadingNumber(string? note)
+    internal static string? LeadingNumber(string? note)
     {
         var match = note is null ? null : Leading.Match(note);
         return match is { Success: true } ? match.Groups[1].Value : null;

@@ -99,6 +99,29 @@ internal record EventResponse(
     /// and the same answer, because both are the default reckoning's.
     /// </summary>
     public string Era { get; init; } = "BCE";
+
+    /// <summary>
+    /// The title in the reader's language, a machine translation of <see cref="Name"/>; null for an
+    /// English reader and where none is held. Never the source's words, and shown as a translation.
+    /// </summary>
+    public string? LocalName { get; init; }
+
+    /// <summary>The description in the reader's language, a machine translation, as <see cref="LocalName"/>.</summary>
+    public string? LocalDescription { get; init; }
+
+    /// <summary>The source's notes in the reader's language, a machine translation, as <see cref="LocalName"/>.</summary>
+    public string? LocalNotes { get; init; }
+
+    /// <summary>
+    /// Where it happened in the reader's language: the name the reader's text gives the place
+    /// <see cref="LocationSlug"/> names, or else a machine translation of the source's words.
+    /// </summary>
+    public string? LocalLocation { get; init; }
+
+    /// <summary>The region and the country of the time in the reader's language, machine translations.</summary>
+    public string? LocalRegion { get; init; }
+
+    public string? LocalRegionAtTheTime { get; init; }
 }
 
 /// <param name="Calculation">
@@ -142,6 +165,12 @@ internal record EventDateResponse(
     /// gives an age for — so a year and an age shown together are always one reckoning's.
     /// </summary>
     public int? AgeAtEvent { get; init; }
+
+    /// <summary>The arithmetic in the reader's language, a machine translation; null where none is held.</summary>
+    public string? LocalCalculation { get; init; }
+
+    /// <summary>The notes on this reckoning's date in the reader's language, a machine translation.</summary>
+    public string? LocalNotes { get; init; }
 }
 
 /// <summary>
@@ -323,6 +352,12 @@ internal record TimelineEventResponse(
     /// last known. See <see cref="EventResponse.RegionAtTheTime"/>.
     /// </summary>
     public string? RegionAtTheTime { get; init; }
+
+    /// <summary>The title in the reader's language, a machine translation; null where none is held.</summary>
+    public string? LocalName { get; init; }
+
+    /// <summary>The region in the reader's language, a machine translation; null where none is held.</summary>
+    public string? LocalRegion { get; init; }
 }
 
 /// <param name="Level">

@@ -214,7 +214,7 @@ internal static partial class EncyclopediaEndpoints
     /// none.
     /// </summary>
     internal static async Task<IList<PlaceCandidateResponse>?> Candidates(
-        AppDbContext db, int entityId, string? language, CancellationToken cancellationToken)
+        AppDbContext db, int entityId, string? language, CancellationToken cancellationToken, string? words = null)
     {
         var rows = await db.PlaceCandidates
             .Where(c => c.EntityId == entityId)
@@ -241,6 +241,7 @@ internal static partial class EncyclopediaEndpoints
         var names = through.Count == 0
             ? []
             : await EntityNames.Of(db, [.. through.Values.Select(e => e.Id)], language, cancellationToken);
+        var sites = await TextTranslations.Of(db, rows.Select(r => r.Site), words ?? language, cancellationToken);
 
         return
         [
@@ -260,6 +261,7 @@ internal static partial class EncyclopediaEndpoints
             {
                 CoordinatesSource = r.CoordinatesSource,
                 CoordinatesBy = r.CoordinatesDataset,
+                LocalSite = TextTranslations.In(sites, r.Site),
                 Through = r.ThroughOpenBibleId is { } id && through.TryGetValue(id, out var place)
                     ? new EntityTribeResponse(
                         place.Slug, EnumSpelling.Of(place.Kind), place.Name, names.GetValueOrDefault(place.Id))

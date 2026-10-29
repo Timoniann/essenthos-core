@@ -22,6 +22,8 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? realm,
             [FromQuery] int? skip,
             [FromQuery] int? take,
+            [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -57,7 +59,8 @@ internal static partial class EncyclopediaEndpoints
             var places = await PlacesNamed(db, page.Select(row => EventLocation.Of(row.Event)), cancellationToken);
             var aged = await Aged(db, page, cancellationToken);
 
-            return Results.Ok(new EventListResponse(total, [.. aged.Select(row => Event(row, places))]));
+            return Results.Ok(new EventListResponse(total, await InTheReadersLanguage(
+                db, [.. aged.Select(row => Event(row, places))], language, prose, cancellationToken)));
         });
 
         // One event, with everything the trimmed timeline payload leaves out.
@@ -67,6 +70,8 @@ internal static partial class EncyclopediaEndpoints
         // fetched when asked for rather than carried for everything on the chance it is.
         routes.MapGet("/events/{slug}", async (
             string slug,
+            [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -77,7 +82,8 @@ internal static partial class EncyclopediaEndpoints
             }
 
             var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
-            return Results.Ok(Event((await Aged(db, [row], cancellationToken))[0], places));
+            var one = Event((await Aged(db, [row], cancellationToken))[0], places);
+            return Results.Ok((await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0]);
         });
     }
 
@@ -277,6 +283,64 @@ internal static partial class EncyclopediaEndpoints
         year ?? (statedYear is not { } stated ? null
             : stated > 0 ? lastBeforeTheCommonEra + stated
             : lastBeforeTheCommonEra + stated + 1);
+
+    /// <summary>
+    /// The events with what the source wrote in English rendered in the reader's language where a
+    /// machine translation of it is held — title, description, notes, region, each reckoning's
+    /// arithmetic — and the place named as the reader's text names it. The source's words stay beside
+    /// them. One read for the translations and one for the places, whatever the number of events.
+    /// </summary>
+    internal static async Task<IList<EventResponse>> InTheReadersLanguage(
+        AppDbContext db,
+        IReadOnlyList<EventResponse> events,
+        string? language,
+        string? prose,
+        CancellationToken cancellationToken)
+    {
+        var words = ReaderLanguages.Prose(prose, language);
+        if (events.Count == 0 || (EntityNames.Local(words) is null && EntityNames.Local(language) is null))
+        {
+            return [.. events];
+        }
+
+        var rendered = await TextTranslations.Of(
+            db,
+            events.SelectMany(e => new[] { e.Name, e.Description, e.Notes, e.Location, e.Region, e.RegionAtTheTime }
+                .Concat(e.Dates.SelectMany(d => new[] { d.Calculation, d.Notes }))),
+            words,
+            cancellationToken);
+
+        var slugs = events.Select(e => e.LocationSlug).OfType<string>().Distinct().ToList();
+        var places = slugs.Count == 0
+            ? []
+            : await db.Entities.Where(e => slugs.Contains(e.Slug)).Select(e => new { e.Id, e.Slug })
+                .ToListAsync(cancellationToken);
+        var named = await EntityNames.Of(db, [.. places.Select(p => p.Id)], language, cancellationToken);
+        var placeNames = places.Where(p => named.ContainsKey(p.Id)).ToDictionary(p => p.Slug, p => named[p.Id]);
+
+        return
+        [
+            .. events.Select(e => e with
+            {
+                LocalName = TextTranslations.In(rendered, e.Name),
+                LocalDescription = TextTranslations.In(rendered, e.Description),
+                LocalNotes = TextTranslations.In(rendered, e.Notes),
+                LocalLocation = e.LocationSlug is { } slug && placeNames.TryGetValue(slug, out var place)
+                    ? place
+                    : TextTranslations.In(rendered, e.Location),
+                LocalRegion = TextTranslations.In(rendered, e.Region),
+                LocalRegionAtTheTime = TextTranslations.In(rendered, e.RegionAtTheTime),
+                Dates =
+                [
+                    .. e.Dates.Select(d => d with
+                    {
+                        LocalCalculation = TextTranslations.In(rendered, d.Calculation),
+                        LocalNotes = TextTranslations.In(rendered, d.Notes),
+                    }),
+                ],
+            }),
+        ];
+    }
 
     internal static EventResponse Event(EventRow row, IReadOnlyDictionary<EventLocation, string> places) =>
         Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates, places);

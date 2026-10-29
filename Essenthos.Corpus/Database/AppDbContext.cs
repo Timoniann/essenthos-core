@@ -256,6 +256,9 @@ public class AppDbContext : DbContext
     /// <summary>The notes of our own records in a reader's language, keyed by the English they render.</summary>
     public DbSet<EntityNoteTranslation> EntityNoteTranslations { get; set; } = null!;
 
+    /// <summary>Machine translations of the English records carry from their sources, keyed by that English.</summary>
+    public DbSet<TextTranslation> TextTranslations { get; set; } = null!;
+
     /// <summary>The passages an object's or an observance's page sends a reader to.</summary>
     public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
 
