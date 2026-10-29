@@ -70,6 +70,7 @@ builder.Services.AddScoped<PsalmOpeningLoader>();
 builder.Services.AddScoped<VerseEndingLoader>();
 builder.Services.AddScoped<SweteRestorationLoader>();
 builder.Services.AddScoped<TextRepairLoader>();
+builder.Services.AddScoped<TextDeclarationLoader>();
 builder.Services.AddScoped<EditionBoundaryRepairLoader>();
 builder.Services.AddScoped<BrentonDivisionLoader>();
 builder.Services.AddScoped<BrentonEditLoader>();

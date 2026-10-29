@@ -44,7 +44,9 @@ public sealed class LocationSupplementTests : IDisposable
         after.Skip(1).Should().Equal(before.Skip(1));
         after[0].Latitude.Should().BeApproximately(31 + 45/60.0 + 44/3600.0, 1e-10);
         after[0].Longitude.Should().BeApproximately(35 + 44/60.0 + 46/3600.0, 1e-10);
-        after[0].CoordinatesSource.Should().Contain("PCGN").And.Contain("Open Government Licence");
+        after[0].CoordinatesSource.Should().Be("pcgn");
+        after[0].CoordinatesDataset.Should().Be("pcgn");
+        after[0].CoordinatesCredit.Should().Contain("PCGN").And.Contain("Open Government Licence");
         fixedReading.Located.Single(p => p.PlaceId == "aefaa2d").ModernId.Should().Be("m25a76c");
     }
 
@@ -63,20 +65,9 @@ public sealed class LocationSupplementTests : IDisposable
     }
 
     [Fact]
-    public void EveryNameBindingIsPinnedToTheNamedEntryAndItsBibleVerse()
-    {
-        var active = _supplement.Bindings.Select(b => b.Slug).ToHashSet();
-        _supplement.ValidateBindings(Path.Combine(_folder,"ancient.jsonl"),active);
-        var bad = _supplement with { Bindings = [new LocationBinding("shushan","a033b84","Susa","GEN 1:1")] };
-        var act = () => bad.ValidateBindings(Path.Combine(_folder,"ancient.jsonl"),active);
-        act.Should().Throw<InvalidDataException>();
-        _supplement.Bindings.Should().NotContain(b => b.Slug == "tahtimhodshi" || b.Slug == "land-of-israel" || b.Slug == "garden-of-eden");
-    }
-
-    [Fact]
     public void AnUnmatchedModernIdentityCannotReceiveAnotherSitesCoordinates()
     {
-        var bad = _supplement with { Points = [new IndependentPoint("m25a76c","Rujm Siyaghah",35.7,31.7,"test source")] };
+        var bad = _supplement with { Points = [new IndependentPoint("m25a76c","Rujm Siyaghah",35.7,31.7,"pcgn","test source")] };
         var act = () => bad.Apply(Reading());
         act.Should().Throw<InvalidDataException>();
     }
@@ -121,23 +112,25 @@ public sealed class LocationSupplementTests : IDisposable
     }
 
     [Fact]
-    public async Task MissingBindingsAndNewRegionReachTheDatabaseAndReplayPreservesEveryRow()
+    public async Task TheSupplementReachesTheDatabaseAndATwinWithoutTheGazetteersIdBorrowsNoPoint()
     {
-        foreach (var binding in _supplement.Bindings)
-            Place(binding.Slug,null);
+        Place("shushan",null);
+        Place("susa","a033b84");
         Place("mountnebo","aefaa2d");
         Place("wilderness-of-judah",null);
         await _db.SaveChangesAsync();
         var loader = new OpenBibleLocationLoader(_db,NullLogger<OpenBibleLocationLoader>.Instance);
         await loader.Load(_folder);
         var nebo = await _db.Entities.Include(e => e.Location).SingleAsync(e => e.Slug=="mountnebo");
-        nebo.Location!.CoordinatesSource.Should().Contain("PCGN");
-        var susa = await _db.Entities.Include(e => e.Location).SingleAsync(e => e.Slug=="shushan");
-        susa.Location.Should().NotBeNull();
-        susa.OpenBibleId.Should().BeNull("the evidence binding does not overwrite source record identity");
+        nebo.Location!.CoordinatesDataset.Should().Be("pcgn");
+        nebo.Location.Source.Should().StartWith("OpenBible.info").And.Contain("PCGN");
+        (await _db.Entities.Include(e => e.Location).SingleAsync(e => e.Slug=="susa")).Location.Should().NotBeNull();
+        (await _db.Entities.Include(e => e.Location).SingleAsync(e => e.Slug=="shushan")).Location
+            .Should().BeNull("a record is located by its own gazetteer id, never by its twin's");
         var region = await _db.Entities.Include(e=>e.Location).SingleAsync(e=>e.Slug=="wilderness-of-judah");
         region.Location!.Kind.Should().Be("representative-point");
-        region.Location.Score.Should().Be(0,"Wikidata supplies no scholarly agreement score");
+        region.Location.Score.Should().BeNull("Wikidata supplies no scholarly agreement score");
+        region.Location.CoordinatesDataset.Should().Be("wikidata");
         var before = await Fingerprint();
         (await loader.Load(_folder)).AlreadyLoaded.Should().BeTrue();
         (await Fingerprint()).Should().Equal(before);
@@ -151,8 +144,8 @@ public sealed class LocationSupplementTests : IDisposable
     private async Task<string[]> Fingerprint() =>
     [
         .. await _db.PlaceLocations.AsNoTracking().OrderBy(l=>l.EntityId)
-            .Select(l=>l.EntityId+"|"+l.ModernId+"|"+l.Longitude+"|"+l.Latitude+"|"+l.Score+"|"+l.CoordinatesSource+"|"+l.Source).ToArrayAsync(),
+            .Select(l=>l.EntityId+"|"+l.ModernId+"|"+l.Longitude+"|"+l.Latitude+"|"+l.Score+"|"+l.CoordinatesSource+"|"+l.CoordinatesDataset+"|"+l.Source).ToArrayAsync(),
         .. await _db.PlaceCandidates.AsNoTracking().OrderBy(l=>l.EntityId).ThenBy(l=>l.Rank)
-            .Select(l=>l.EntityId+"|"+l.Rank+"|"+l.ModernId+"|"+l.Longitude+"|"+l.Latitude+"|"+l.Score+"|"+l.CoordinatesSource+"|"+l.Source).ToArrayAsync(),
+            .Select(l=>l.EntityId+"|"+l.Rank+"|"+l.ModernId+"|"+l.Longitude+"|"+l.Latitude+"|"+l.Score+"|"+l.CoordinatesSource+"|"+l.CoordinatesDataset+"|"+l.Source).ToArrayAsync(),
     ];
 }

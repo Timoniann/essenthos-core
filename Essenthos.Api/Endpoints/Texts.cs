@@ -80,7 +80,7 @@ internal static class Texts
         SourceUrl = text.SourceUrl,
         Redistribution = EnumSpelling.Of(text.Redistribution),
         Terms = TextRights.Terms(text.Slug, text.Licence, EnumSpelling.Of(text.Redistribution)),
-        TermsNote = TextRights.Note(text.Slug),
+        TermsNote = TextRights.Served(text.Slug, text.Licence, EnumSpelling.Of(text.Redistribution)),
         RightsHolderUrl = TextRights.HolderUrl(text.Slug),
         Translators = text.Translators,
         Editors = text.Editors,

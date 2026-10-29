@@ -372,6 +372,10 @@ public sealed class DescriptorVocabularyTests
     [InlineData("eng", "leader-of", "people", "nominative=Israelites", "leader of the Israelites")]
     [InlineData("spa", "of-people", "people", "nominative=moabitas", "del pueblo de los moabitas")]
     [InlineData("ukr", "son-of", "person", "genitive=Єссея", "син Єссея")]
+    [InlineData("deu", "of-people", "people", "nominative=Die Nephilim", "aus dem Volk der Nephilim")]
+    [InlineData("spa", "of-people", "people", "nominative=Los nefilim", "del pueblo de los nefilim")]
+    [InlineData("deu", "descendants-of", "people", "genitive=Die Nephilim", "Nachkommen der Nephilim")]
+    [InlineData("spa", "descendants-of", "people", "nominative=Los nefilim", "descendientes de los nefilim")]
     public void ANameIsSaidWithWhatItsLanguageNeedsAroundIt(
         string language, string relation, string kind, string forms, string expected)
     {

@@ -126,6 +126,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\AdamEveRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnerMarkRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\AngelRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\EshtemoaRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\LukeLordRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\TwelveRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />

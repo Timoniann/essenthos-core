@@ -79,6 +79,47 @@ internal static partial class LineSpellings
     private static readonly IReadOnlyDictionary<string, string> NameLines =
         new Dictionary<string, string>(StringComparer.Ordinal) { ["TRUE"] = "true" };
 
+    /// <summary>
+    /// Whole titles and glosses that a slip of the dictionary's English leaves wrong after everything
+    /// above: a verb that does not agree, a stray semicolon or quote, a misspelled place, a name in
+    /// lower case, and two that misread their Hebrew (the King of the South of DAN 11:6, the serpent of
+    /// old of REV 12:9). Matched whole, so nothing else is touched.
+    /// </summary>
+    internal static readonly IReadOnlyDictionary<string, string> NameCorrections =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["daughter [of the] prince [of] the south"] = "daughter [of the] king [of] the south",
+            ["[my] G-d [El] sit in judgment"] = "[my] G-d [El] sits in judgment",
+            ["G-d [El] is given"] = "G-d [El] has given",
+            ["Euphrates (mighty river of Mesopotamia);"] = "Euphrates (mighty river of Mesopotamia)",
+            ["mount of earth"] = "mound of earth",
+            ["y-h-v-h lead"] = "y-h-v-h leads",
+            ["Lukios the Cyrene"] = "Lucius of Cyrene",
+            ["dissention"] = "dissension",
+            ["a district of Arabia Petra"] = "a district of Arabia Petraea",
+            ["fond of horses;"] = "fond of horses",
+            ["weaver, embroider"] = "weaver, embroiderer",
+            ["[poss.] G-d had restored"] = "[poss.] G-d has restored",
+            ["the adversary, accuser, one who opposes, slanderer;"] = "the adversary, accuser, one who opposes, slanderer",
+            ["adversary, accuser, one who opposes, slanderer;"] = "adversary, accuser, one who opposes, slanderer",
+            ["y-h-v-h pays back, [poss.] he restores peace offering of y-h-v-h"] = "y-h-v-h pays back, [poss.] he restores; peace offering of y-h-v-h",
+            ["y-h-v-h pays back [poss.] he restores peace offering of y-h-v-h"] = "y-h-v-h pays back, [poss.] he restores; peace offering of y-h-v-h",
+            ["y-h-v-h has heard' or 'famous'"] = "y-h-v-h has heard, or famous",
+            ["sin is his father"] = "Sin is his father",
+            ["simon the zealous"] = "Simon the Zealot",
+            ["friend [of] god"] = "friend [of] God",
+            ["(of G-d) the Maker, the Creator;"] = "(of G-d) the Maker, the Creator",
+            ["Glory [or Emminence] of Israel"] = "Glory [or Eminence] of Israel",
+            ["john the immerser"] = "John the immerser",
+            ["king herod"] = "king Herod",
+            ["the from-law"] = "the lawgiver",
+            ["[my]son beloved"] = "[my] son beloved",
+            ["savior, deliverer, rescuer;"] = "savior, deliverer, rescuer",
+            ["learned writer, scribe, secretary. → scribe; secretary."] = "learned writer, scribe, secretary",
+            ["great prince of abiyliyn"] = "great prince of Abilene",
+            ["the serpent [of] the east"] = "the serpent [of] old",
+        };
+
     /// <summary>A title or the gloss of a name spelled right, or the line itself.</summary>
     public static string? Name(string? line)
     {
@@ -118,7 +159,7 @@ internal static partial class LineSpellings
             corrected = corrected[..^1];
         }
 
-        return corrected;
+        return NameCorrections.GetValueOrDefault(corrected, corrected);
     }
 
     [GeneratedRegex(" {2,}")]

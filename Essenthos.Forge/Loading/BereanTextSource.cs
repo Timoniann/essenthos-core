@@ -60,7 +60,8 @@ internal static class BereanTextSource
                      + "template chrome, so the licensing page is the one believed — and both are "
                      + "recorded rather than one of them chosen quietly.",
         Citation = "The Holy Bible, Berean Standard Bible, BSB. Produced in cooperation with Bible Hub, " +
-                   "Discovery Bible, unfoldingWord, Bible Aquifer and OpenBible.com. Public domain.",
+                   "Discovery Bible, unfoldingWord, Bible Aquifer, OpenBible.com, and the Berean Bible " +
+                   "Translation Committee. Public domain.",
     };
 
     /// <summary>

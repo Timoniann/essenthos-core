@@ -460,6 +460,9 @@ internal sealed class DatasetLoader(
             Text(ClearBible.ClearBibleTextSource.Definition.Slug, ClearBible.ClearBibleTextSource.Definition.Name,
                 () => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible")), "ClearBible/data/hau"),
 
+            // A definition corrected after its text was loaded reaches the stored declaration here.
+            .. In(LoadModules.Texts, new LoadStep("text-declarations", DeclareTheTextsAgain)),
+
             // Whether to analyse depends on whether a text step wrote words in this run, not on anything stored.
             new LoadStep("statistics", async cancellationToken =>
             {
@@ -3028,6 +3031,16 @@ internal sealed class DatasetLoader(
         var all = await db.EntityVerses.CountAsync(cancellationToken);
         logger.LogInformation(
             "{Naming} of {All} listed verses name their entity; {Changed} rows changed", naming, all, changed);
+    }
+
+    private async Task DeclareTheTextsAgain(CancellationToken cancellationToken)
+    {
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<TextDeclarationLoader>().Load(cancellationToken);
+        if (outcome.Changes > 0)
+        {
+            status.Record(outcome.ToString());
+        }
     }
 
     private async Task Load(string what, Func<TextSource> read, CancellationToken cancellationToken)

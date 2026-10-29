@@ -52,13 +52,14 @@ internal static class ClearBibleTextSource
             + "Biblica publishes its Open texts under Creative Commons Attribution-ShareAlike 4.0, as it does the "
             + "Open New Ukrainian Translation this corpus already holds, and the more restrictive statement is "
             + "the one taken. ShareAlike binds an adaptation of this text, such as its searchable form, and not "
-            + "the texts it is read beside. The text is served unchanged and under Biblica's name and mark. "
+            + "the texts it is read beside. The text is rebuilt from those token files, which hold its words and "
+            + "punctuation and none of its paragraphs, headings or notes. "
             + "\"Biblica\" is a trademark registered in the United States Patent and Trademark Office by "
             + "Biblica, Inc., used with permission.",
         Citation =
-            "Biblica® Open Hausa Contemporary Bible, copyright © 2020 by Biblica, Inc., CC BY-SA 4.0, in the token "
+            "Open Hausa Contemporary Bible, copyright © 2009, 2020 by Biblica, Inc., CC BY-SA 4.0, in the token "
             + "files of Clear Bible's Alignments release data-latest. The original work by Biblica, Inc. is "
-            + "available at open.bible.",
+            + "available for free at www.biblica.com and open.bible.",
     };
 
     /// <summary>The token files of one translation, Old Testament first.</summary>

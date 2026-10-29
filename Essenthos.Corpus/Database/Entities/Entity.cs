@@ -179,15 +179,25 @@ public class PlaceLocation
 
     /// <summary>
     /// The gazetteer's own score for the identification, as it states it: best read as thousandths,
-    /// 500 and above high confidence, and able to run past 1000 or below zero.
+    /// 500 and above high confidence, and able to run past 1000 or below zero. Null where the point
+    /// comes from a source that scores nothing, which is silence and not doubt.
     /// </summary>
-    public int Score { get; set; }
+    public int? Score { get; set; }
 
     /// <summary>The gazetteer's identifier for the modern location the point is read from.</summary>
     public required string ModernId { get; set; }
 
-    /// <summary>Whom the gazetteer credits for these coordinates — <c>wikidata</c>, <c>daahl</c>.</summary>
+    /// <summary>
+    /// A short code for whom the coordinates come from: the gazetteer's own credit — <c>wikidata</c>,
+    /// <c>daahl</c> — or, where another source gave them, that source's dataset id.
+    /// </summary>
     public required string CoordinatesSource { get; set; }
+
+    /// <summary>
+    /// The declared dataset whose coordinates these are, where they are not the gazetteer's own: the
+    /// point a reader is shown has to be credited to whoever measured it. Null for the gazetteer's.
+    /// </summary>
+    public string? CoordinatesDataset { get; set; }
 
     public required string Source { get; set; }
 
@@ -212,8 +222,9 @@ public class PlaceCandidate
     /// <summary>
     /// The gazetteer's score, read as thousandths as <see cref="PlaceLocation.Score"/> is: how much of
     /// current scholarship takes this answer. Below zero where more of it rejects the answer than holds it.
+    /// Null where the answer comes from a source that scores nothing.
     /// </summary>
-    public int Score { get; set; }
+    public int? Score { get; set; }
 
     /// <summary>The gazetteer's identifier for the modern site; null for an answer that is no site.</summary>
     public string? ModernId { get; set; }
@@ -274,6 +285,9 @@ public class PlaceCandidate
     /// <summary>Whom the gazetteer credits for the coordinates, as on <see cref="PlaceLocation"/>.</summary>
     public string? CoordinatesSource { get; set; }
 
+    /// <summary>The declared dataset whose coordinates these are, as on <see cref="PlaceLocation"/>.</summary>
+    public string? CoordinatesDataset { get; set; }
+
     public required string Source { get; set; }
 
     public override string ToString() => $"PlaceCandidate({EntityId} #{Rank} {Site ?? Special})";
@@ -323,16 +337,15 @@ public class EntityClaim
 /// <summary>
 /// Who else a record might be, where the evidence does not decide.
 ///
-/// Judges 4:11 calls Hobab Moses' father-in-law and Numbers 10:29 calls him the son of Reuel, whom
-/// Exodus 2:18 calls the father-in-law; the Hebrew word carries both father-in-law and
-/// brother-in-law, and the question is old and open. A corpus that must answer it picks one and
-/// looks certain. A corpus that may not answer it says nothing and looks empty. This is the third
+/// 1 Chronicles 2:18 names Jerioth beside Azubah, Caleb's wife, and calls the sons that follow
+/// "hers"; whether Jerioth is a second wife, Azubah under another name, a daughter or no name at all,
+/// the verse does not settle. A corpus that must answer it picks one and looks certain. A corpus that may not answer it says nothing and looks empty. This is the third
 /// thing: the record names the man, and names the man it might instead be, and says why nobody can
 /// tell.
 ///
 /// <para>
 /// It is on the record rather than on the occurrence because it is a statement about the person —
-/// <em>this Hobab may be Reuel under a second name</em> is true wherever he is named, not only in
+/// <em>Jerioth may be Azubah under a second name</em> is true wherever she is named, not only in
 /// the verse that raised it. Where the alternative is somebody the encyclopedia does not hold,
 /// <see cref="AlternativeEntityId"/> is null and <see cref="Describes"/> is all there is, which is
 /// the same shape as the rest of this corpus's silences.

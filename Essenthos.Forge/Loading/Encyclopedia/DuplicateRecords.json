@@ -1324,6 +1324,158 @@
       "why": "The four lists of the Twelve have one place for him: Matthew names 'Lebbaeus, whose surname was Thaddaeus' (MAT 10:3) and Mark 'Thaddaeus' (MRK 3:18), where Luke and Acts name 'Judas of James' (LUK 6:16; ACT 1:13), and John calls him 'Judas, not Iscariot' (JHN 14:22).",
       "source": "the project owner's ruling of 2026-10-25 that Thaddaeus and Judas of James are one man, decided 2026-10-25",
       "method": "manual"
+    },
+    {
+      "strongNumber": "H7800",
+      "keeps": "susa",
+      "folds": "shushan",
+      "why": "Shushan the palace, where Ahasuerus reigned and Esther was queen (EST 1:2), where Nehemiah served (NEH 1:1) and Daniel saw his vision (DAN 8:2), is Susa: both records hold these verses, and Shushan is the King James's spelling of the city the gazetteer surveys as Susa.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H6762",
+      "keeps": "zela",
+      "folds": "zelah",
+      "why": "Zelah of Benjamin, where Saul and Jonathan were buried in the sepulchre of Kish (2SA 21:14), is the town of JOS 18:28: both records hold exactly these two verses, under the King James's spelling and the modern one.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "G2449",
+      "keeps": "judea",
+      "folds": "judaea",
+      "why": "Judaea of the New Testament, where Jesus was born (MAT 2:1) and John preached (MAT 3:1), is the land the kept record holds as Judea: every verse the register's record holds is one the kept record holds, under the King James's spelling and the modern one.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "G3194",
+      "keeps": "malta",
+      "folds": "melita",
+      "why": "Melita, the island where Paul was shipwrecked (ACT 28:1), is Malta: both records hold that verse alone.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "G4010",
+      "keeps": "pergamum",
+      "folds": "pergamos",
+      "why": "Pergamos, one of the seven churches of Asia (REV 1:11, 2:12), is Pergamum: both records hold exactly these verses, under the King James's spelling and the modern one.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H7906",
+      "keeps": "secu",
+      "folds": "sechu",
+      "why": "Sechu, where Saul came to the great well on his way to Naioth (1SA 19:22), is Secu: both records hold that verse alone.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H2923",
+      "keeps": "telem-2",
+      "folds": "telaim",
+      "why": "Saul numbered the people in Telaim (1SA 15:4), which the gazetteer takes to be Telem in the south of Judah (JOS 15:24); the kept record already holds 1SA 15:4, and the register's Telaim holds that verse alone.",
+      "confidence": 0.9,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H6815",
+      "keeps": "zaanannim",
+      "folds": "zaanaim",
+      "why": "The plain of Zaanaim by Kedesh, where Heber the Kenite pitched his tent (JDG 4:11), is Zaanannim on the border of Naphtali (JOS 19:33): one Hebrew name, and both records hold exactly these two verses.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H6947",
+      "keeps": "kadesh",
+      "folds": "kadeshbarnea",
+      "why": "Kadesh-barnea, whence the spies were sent (NUM 32:8, DEU 1:19, JOS 14:6-7), is the Kadesh of the wilderness of Zin (NUM 20:1): the kept record already carries the name Kadesh-barnea and holds every verse the register's record holds.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H7155",
+      "keeps": "kiriathhuzoth",
+      "folds": "kirjathhuzoth",
+      "why": "Kirjath-huzoth, where Balak brought Balaam (NUM 22:39), is Kiriath-huzoth: both records hold that verse alone, under two spellings of one name.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H62",
+      "keeps": "abelbethmaacah",
+      "folds": "abelofbethmaachah",
+      "why": "Abel of Beth-maachah, which Ben-hadad and Tiglath-pileser took (1KI 15:20, 2KI 15:29), is the city of Abel-beth-maacah where Joab besieged Sheba (2SA 20:14-15): the kept record holds both of the register's verses.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H1184",
+      "keeps": "baalejudah",
+      "folds": "baaleofjudah",
+      "why": "Baale of Judah, from which David brought up the ark (2SA 6:2), is Baale-judah: both records hold that verse alone.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H6450",
+      "keeps": "ephesdammim",
+      "folds": "pasdammim",
+      "why": "Pas-dammim, where the Philistines gathered against David (1CH 11:13), is Ephes-dammim of 1SA 17:1: the kept record already carries the name Pasdammim and holds 1CH 11:13.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H2800",
+      "keeps": "haroshethhagoyim",
+      "folds": "harosheth",
+      "why": "Harosheth of the Gentiles, where Sisera dwelt (JDG 4:2, 4:13, 4:16), is Harosheth-hagoyim: both records hold exactly these three verses.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H7708",
+      "keeps": "valleyofsiddim",
+      "folds": "vale-of-siddim",
+      "why": "The vale of Siddim, where the kings of the plain fought (GEN 14:3, 14:8, 14:10), is the Valley of Siddim the gazetteer surveys: both records hold exactly these three verses.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H2120",
+      "keeps": "serpentsstone",
+      "folds": "zoheleth",
+      "why": "The stone of Zoheleth by En-rogel, where Adonijah made his feast (1KI 1:9), is the Serpent's Stone the gazetteer surveys at that verse, which already carries the names Zoheleth and Stone of Zoheleth.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "G494",
+      "keeps": "aphek-2",
+      "folds": "antipatris",
+      "why": "Antipatris, where the soldiers brought Paul by night (ACT 23:31), is the town the gazetteer files under Aphek at Tell Ras el Ain, with ACT 23:31 among Aphek's verses: Herod's Antipatris stood on the site of Aphek of the Sharon. The kept record already holds ACT 23:31.",
+      "confidence": 0.85,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "G962",
+      "keeps": "bethany-2",
+      "folds": "bethabara",
+      "why": "Bethabara beyond Jordan, where John was baptizing (JHN 1:28), is the place the modern translations print as Bethany beyond the Jordan in the same verse: both records hold that verse alone.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H1567",
+      "keeps": "mizpah-4",
+      "folds": "galeed",
+      "why": "The heap Jacob called Galeed and Laban Jegar-sahadutha 'was the name of it called Galeed; and Mizpah' (GEN 31:47-49): one heap of witness, which the kept record holds with GEN 31:47-48 and the name Jegar Sahadutha.",
+      "confidence": 1.0,
+      "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
     }
   ],
   "declined": [

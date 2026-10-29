@@ -32,4 +32,8 @@ public static class TextPartSources
         text.PartSources = JsonSerializer.Serialize(sources.Append(source).ToList(), Json);
         return true;
     }
+
+    /// <summary>Credits exactly <paramref name="sources"/> on the text, in their order.</summary>
+    public static void Replace(Text text, IReadOnlyList<TextPartSource> sources) =>
+        text.PartSources = sources.Count == 0 ? null : JsonSerializer.Serialize(sources.ToList(), Json);
 }

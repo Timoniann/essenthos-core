@@ -22,7 +22,30 @@ internal static partial class EncyclopediaEndpoints
             AppDbContext db,
             CancellationToken cancellationToken) =>
             Results.Ok(await Map(db, language, cancellationToken, prose, variants ?? false)));
+
+        // How many of the map's places a chapter names: the reader's link to the map under a chapter
+        // says so, and fetching the whole map to count them was most of what a chapter downloaded.
+        routes.MapGet("/places/map/{book}/{chapter:int}", async (
+            string book,
+            int chapter,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+            BookReferences.ResolveOrdinal(book) is { } ordinal
+                ? Results.Ok(new ChapterPlacesResponse(await LocatedIn(db, ordinal, chapter, cancellationToken)))
+                : ApiResults.NotFound(BookReferences.FormatHint(book)));
     }
+
+    /// <summary>
+    /// The places with a point that a chapter names: those whose <see cref="PlacePointResponse.Chapters"/>
+    /// on the map hold it, counted without drawing the map.
+    /// </summary>
+    internal static Task<int> LocatedIn(AppDbContext db, int book, int chapter, CancellationToken cancellationToken) =>
+        db.EntityVerses.Shown()
+            .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter)
+            .Where(v => db.PlaceLocations.Any(l => l.EntityId == v.EntityId))
+            .Select(v => v.EntityId)
+            .Distinct()
+            .CountAsync(cancellationToken);
 
     /// <summary>
     /// Every located place, alphabetical, with the number of verses that name it so a map can size
@@ -50,6 +73,7 @@ internal static partial class EncyclopediaEndpoints
                 l.Kind,
                 l.Score,
                 l.Source,
+                l.CoordinatesDataset,
                 References = l.Entity.Verses
                     .AsQueryable().Where(ShownVerses.IsShown)
                     .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
@@ -82,9 +106,22 @@ internal static partial class EncyclopediaEndpoints
             ? await Variants(db, [.. ids], language, cancellationToken)
             : (null, null);
 
+        // Every candidate's coordinates are counted, not only the points': a ring on the map is drawn
+        // where its source measured it too.
+        var measured = await db.PlaceCandidates
+            .Where(c => c.CoordinatesDataset != null && c.Longitude != null)
+            .Select(c => c.CoordinatesDataset!)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
         return new PlaceMapResponse(
             places.Count,
-            [.. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()],
+            [
+                .. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()
+                    .Concat(places.Select(p => p.CoordinatesDataset).OfType<string>())
+                    .Concat(measured)
+                    .Distinct(StringComparer.Ordinal),
+            ],
             [
                 .. places.Select(p => new PlacePointResponse(
                     p.Slug, p.Name, p.Longitude, p.Latitude, p.Kind, p.Score / ScoreScale, p.References,
@@ -222,6 +259,7 @@ internal static partial class EncyclopediaEndpoints
                 r.Grounds)
             {
                 CoordinatesSource = r.CoordinatesSource,
+                CoordinatesBy = r.CoordinatesDataset,
                 Through = r.ThroughOpenBibleId is { } id && through.TryGetValue(id, out var place)
                     ? new EntityTribeResponse(
                         place.Slug, EnumSpelling.Of(place.Kind), place.Name, names.GetValueOrDefault(place.Id))
@@ -260,7 +298,7 @@ internal static partial class EncyclopediaEndpoints
             ? await db.Entities
                 .Where(e => shared.Contains(e.Slug))
                 .Select(e => new { e.Slug, Said = e.Distinguisher ?? e.ModernEquivalent })
-                .ToDictionaryAsync(e => e.Slug, e => e.Said, cancellationToken)
+                .ToDictionaryAsync(e => e.Slug, e => PlaceToday.WithoutCatalogueNumbers(e.Said), cancellationToken)
             : [];
 
         var told = new Dictionary<string, string>(StringComparer.Ordinal);

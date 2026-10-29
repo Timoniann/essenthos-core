@@ -77,6 +77,10 @@ internal static class TextusReceptusTextSource
                     + "followed. He first published it in 1881 as The New Testament in the Original "
                     + "Greek according to the Text followed in the Authorised Version; the 1894 "
                     + "printing read here appeared three years after his death.",
+            RightsNote = RobinsonsNotice,
+            Citation = "F. H. A. Scrivener, The New Testament in the Original Greek according to the Text "
+                       + "followed in the Authorised Version, 1894, in the transcription by Maurice A. Robinson "
+                       + "(byztxt/greektext-textus-receptus).",
         }
         : new TextDefinition(
             Slug: Slug(edition),
@@ -103,7 +107,20 @@ internal static class TextusReceptusTextSource
                     + "edition that became the Received Text, which is why it and the Scrivener stand "
                     + "beside each other here: they are two states of one tradition, and the places "
                     + "where they differ are the places where the King James followed somebody else.",
+            RightsNote = RobinsonsNotice,
+            Citation = "Robert Estienne, Novum Testamentum, Paris 1550, in the transcription by Maurice A. "
+                       + "Robinson (byztxt/greektext-textus-receptus).",
         };
+
+    /// <summary>
+    /// What Robinson's notice asks of a copy of his transcription: his name, the editors' and the
+    /// title kept with it, and the notice itself.
+    /// </summary>
+    private const string RobinsonsNotice =
+        "Transcribed by Maurice A. Robinson, whose notice asks that the editors' names, the title and the "
+        + "notice be kept with any reproduction: \"Anyone is permitted to copy and distribute this text or "
+        + "any portion of this text. All rights to this text are released to everyone and no one can reduce "
+        + "these rights at any time.\"";
 
     public static TextSource Read(string folder, Edition edition)
     {

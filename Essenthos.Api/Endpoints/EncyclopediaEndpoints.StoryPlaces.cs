@@ -289,18 +289,79 @@ internal static partial class EncyclopediaEndpoints
 
     internal sealed record SharedAddress(int EntityId, int Address);
 
+    /// <summary>
+    /// A person's places: where the presence readings put them bodily or buried them, beside where a
+    /// verse says they lived, came from or were buried and where their birth and death are dated. The
+    /// sourced ties and events are merged into the readings, never replaced by them: Laban lived in
+    /// Haran (GEN 27:43) whether or not a reading of his chapters found him there.
+    /// </summary>
     private static async Task<EntityPlacesResponse> PresencePlaces(
         AppDbContext db, int person, string? language, string? prose, int verses, CancellationToken cancellationToken)
     {
         var held = await db.PersonPresences.AsNoTracking().Where(p => p.PersonId == person)
             .Select(p => new { p.PlaceId, p.Category, p.Addresses }).ToListAsync(cancellationToken);
-        var ids = held.Select(p => p.PlaceId).Distinct().ToList();
-        var places = await db.Entities.Where(e => ids.Contains(e.Id) && (e.Kind == EntityKind.Place || e.Kind == EntityKind.Object))
+
+        var tiedTypes = TiedRoles.Keys.ToList();
+        var ties = await db.EntityRelationships
+            .Where(r => r.FromEntityId == person && r.To!.Kind == EntityKind.Place && tiedTypes.Contains(r.Type))
+            .Select(r => new { r.ToEntityId, r.Type, r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse })
+            .ToListAsync(cancellationToken);
+
+        var events = await db.Events
+            .Where(e => e.EntityId == person && e.Location != null && (e.Kind == "Birth" || e.Kind == "Death"))
+            .Select(e => new { e.Kind, e.Location, e.LocationBook, e.LocationChapter, e.LocationVerse })
+            .ToListAsync(cancellationToken);
+        var located = events
+            .Select(e => (e.Kind, At: EventLocation.Of(e.Location, e.LocationBook, e.LocationChapter, e.LocationVerse)))
+            .ToList();
+        var named = await PlacesNamed(db, located.Select(e => e.At), cancellationToken);
+        var eventSlugs = located
+            .Select(e => e.At is { } at ? named.GetValueOrDefault(at) : null)
+            .OfType<string>()
+            .Distinct()
+            .ToList();
+
+        var ids = held.Select(p => p.PlaceId).Concat(ties.Select(t => t.ToEntityId)).Distinct().ToList();
+        var places = await db.Entities
+            .Where(e => (ids.Contains(e.Id) && (e.Kind == EntityKind.Place || e.Kind == EntityKind.Object))
+                        || (e.Kind == EntityKind.Place && eventSlugs.Contains(e.Slug)))
             .Select(e => new
             {
                 e.Id, e.Slug, e.Name, e.PlaceKind,
                 Location = e.Location == null ? null : new { e.Location.Longitude, e.Location.Latitude, e.Location.Kind, e.Location.Score },
             }).ToListAsync(cancellationToken);
+        ids = [.. places.Select(p => p.Id)];
+
+        var roles = places.ToDictionary(p => p.Id, _ => new HashSet<string>(StringComparer.Ordinal));
+        var addresses = places.ToDictionary(p => p.Id, _ => new SortedSet<int>());
+        foreach (var finding in held.Where(p => roles.ContainsKey(p.PlaceId)))
+        {
+            roles[finding.PlaceId].Add(finding.Category == "buried" ? StoryRoles.Buried : StoryRoles.Event);
+            addresses[finding.PlaceId].UnionWith(finding.Addresses);
+        }
+
+        foreach (var tie in ties.Where(t => roles.ContainsKey(t.ToEntityId)))
+        {
+            roles[tie.ToEntityId].Add(TiedRoles[tie.Type]);
+            if (tie is { CanonicalBook: { } book, CanonicalChapter: { } chapter, CanonicalVerse: { } verse })
+            {
+                addresses[tie.ToEntityId].Add((book * BookStride) + (chapter * ChapterStride) + verse);
+            }
+        }
+
+        var bySlug = places.ToDictionary(p => p.Slug, p => p.Id, StringComparer.Ordinal);
+        foreach (var (kind, at) in located)
+        {
+            if (at is { } location && named.GetValueOrDefault(location) is { } slug && bySlug.TryGetValue(slug, out var id))
+            {
+                roles[id].Add(kind == "Birth" ? StoryRoles.Born : StoryRoles.Died);
+                if (location.Book is { } book && location.Chapter is { } chapter && location.Verse is { } verse)
+                {
+                    addresses[id].Add((book * BookStride) + (chapter * ChapterStride) + verse);
+                }
+            }
+        }
+
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
         var bySource = await EntityNames.NamedOnlyBySource(db, ids, language, local, cancellationToken);
         var told = await Distinguished(db,
@@ -309,18 +370,14 @@ internal static partial class EncyclopediaEndpoints
         var take = Math.Clamp(verses, 0, MostSharedVersesShown);
         var items = places.Select(place =>
         {
-            var findings = held.Where(p => p.PlaceId == place.Id).ToList();
-            var addresses = findings.SelectMany(p => p.Addresses).Distinct().Order().ToList();
-            var roles = new List<string>();
-            if (findings.Any(p => p.Category == "present")) roles.Add(StoryRoles.Event);
-            if (findings.Any(p => p.Category == "buried")) roles.Add(StoryRoles.Buried);
+            var at = addresses[place.Id].ToList();
             return new EntityPlaceResponse(place.Slug, place.Name, StoryGroups.Story,
-                addresses.Count, addresses.Count, [.. addresses.Take(take).Select(VerseAt)], roles)
+                at.Count, at.Count, [.. at.Take(take).Select(VerseAt)], [.. StoryRoles.Order.Where(roles[place.Id].Contains)])
             {
                 LocalName = local.GetValueOrDefault(place.Id), NameFromSource = bySource.Contains(place.Id),
                 Distinguisher = told.GetValueOrDefault(place.Slug), PlaceKind = place.PlaceKind,
                 Lon = place.Location?.Longitude, Lat = place.Location?.Latitude, Kind = place.Location?.Kind,
-                Confidence = place.Location is { } at ? at.Score / ScoreScale : null,
+                Confidence = place.Location is { } point ? point.Score / ScoreScale : null,
             };
         }).OrderByDescending(p => p.SharedVerses)
             .ThenBy(p => p.LocalName ?? p.Name, StringComparer.CurrentCulture).ThenBy(p => p.Slug, StringComparer.Ordinal).ToList();

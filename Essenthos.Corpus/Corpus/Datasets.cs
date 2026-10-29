@@ -123,6 +123,26 @@ public static class Datasets
     /// Flattening that to one author and one licence would put the wrong name on 6,070 rows and
     /// the wrong terms on all of them.
     /// </param>
+    /// <param name="LinkClaims">
+    /// Whether this dataset is counted by the claims it makes on links somebody else drew: a second
+    /// answer beside the link's own, which neither makes a link nor carries one's source string.
+    /// </param>
+    /// <param name="Frame">
+    /// Whether this dataset is the verse numbering every text is placed by, counted by the texts it places.
+    /// </param>
+    /// <param name="Changes">
+    /// What this project changed in the dataset, one sentence each, where its terms ask for the changes
+    /// to be noted where those who use the result can read them.
+    /// </param>
+    /// <param name="OwnWork">
+    /// Whether this is this project's own work, published under the licence the owner sets for all of
+    /// it; <c>Licence</c> is what stands until he has set one.
+    /// </param>
+    /// <param name="Unlisted">
+    /// Declared so that the rows it stands behind are accounted for, and named to no reader: not on the
+    /// sources page, not as the credit on a link. The owner ruled so on 2026-10-29 for the numberings
+    /// and taggings used until something else replaces them.
+    /// </param>
     public sealed record Dataset(
         string Id,
         string Name,
@@ -142,7 +162,12 @@ public static class Datasets
         Work[]? Contains = null,
         string? Citation = null,
         string? Obliges = null,
-        string? HolderUrl = null)
+        string? HolderUrl = null,
+        bool LinkClaims = false,
+        bool Frame = false,
+        string[]? Changes = null,
+        bool OwnWork = false,
+        bool Unlisted = false)
     {
         /// <summary>Every source-string prefix this dataset claims, its own name first.</summary>
         public IEnumerable<string> Prefixes => Methods is null ? [Prefix] : [Prefix, .. Methods];
@@ -159,18 +184,33 @@ public static class Datasets
         string LicenceUrl,
         string Covers);
 
+    /// <summary>The BibleData commit the files on disk were taken from (Resources/BibleData2026/LICENCE.md).</summary>
+    private const string BibleDataCommit =
+        "https://github.com/BradyStephenson/bible-data/tree/8799b409c82a5d4acebba3be5107d6eff7c85d78";
+
+    /// <summary>How the BibleData release asks to be cited, for everything it carries.</summary>
+    private const string BibleDataCitation =
+        "Stephenson, B. (2026). BibleData: Structured Datasets from the Holy Bible "
+        + "(1.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.19539956";
+
+    /// <summary>What STEP Bible asks to be credited by: its name, linked to its own site.</summary>
+    private const string StepBible = "https://www.stepbible.org/";
+
+    /// <summary>The terms of the RLT module, as its configuration states them (rlt.conf).</summary>
+    private const string RevisedLiteralTerms =
+        "CrossWire distributes the module under \"GPL\", naming no version, and Michael W. Jones, Sr. "
+        + "grants \"a general public license to use this text for any purpose\".";
+
     public static readonly Dataset[] All =
     [
         new("bibledata", "BibleData", "Brady Stephenson", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
-            "https://github.com/BradyStephenson/bible-data",
+            BibleDataCommit,
             "The people the text names, and a chronology of the Old Testament in which every year "
             + "is computed from a verse and shows its arithmetic. Its "
             + "places are marked in progress by its author and read that way here: 118 of them, "
             + "named but not placed, and referenced only through Genesis and Exodus.",
-            "BibleData by",
-            Citation: "Stephenson, B. (2026). BibleData: Structured Datasets from the Holy Bible "
-                + "(1.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.19539956"),
+            "BibleData by", Citation: BibleDataCitation),
 
         // The place layer, which the dataset above marks in progress: 118 places referenced only
         // through Genesis and Exodus against 1,342 across 61 books. Attribution 4.0 is why this and
@@ -195,14 +235,14 @@ public static class Datasets
             "James Ussher, 1650, in Edmund Pierce's English of 1658, transcribed by Brady Stephenson",
             "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
-            "https://github.com/BradyStephenson/bible-data",
+            BibleDataCommit,
             "The New Testament chronology, and the only one here: the computed reckoning is "
             + "arithmetic over the genealogies and stops at Artaxerxes, where Ussher goes on by "
             + "reading the consular lists and Josephus beside Scripture. One seventeenth-century "
             + "reckoning, drawn as his and never as the axis. Ussher's own text is out of copyright "
             + "by age; the Attribution licence covers the transcription into numbered paragraphs, "
             + "which is Stephenson's work.",
-            "Ussher's Annals of the World"),
+            "Ussher's Annals of the World", Citation: BibleDataCitation),
 
         // The count is the Sefer HaMitzvot's, read in its Hebrew; the English is Hyamson's
         // translation of the Mishneh Torah's own list of the same commandments, since Sefaria holds
@@ -231,12 +271,12 @@ public static class Datasets
             "Orville J. Nave, 1896, transcribed by Brady Stephenson",
             "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
-            "https://github.com/BradyStephenson/bible-data",
+            BibleDataCommit,
             "Some five thousand subjects and the verses Nave filed under each, which the reader "
             + "shows beside a chapter as the topics its verses are filed under. Nave's index of 1896 "
             + "is out of copyright; the Attribution licence covers the transcription, which is "
             + "Stephenson's work.",
-            Sources.NavesPrefix),
+            Sources.NavesPrefix, Citation: BibleDataCitation),
 
         // Off in the reader until the reader turns it on, and then the set it opens on. The page
         // offering the file says CC BY and so does the file's own first line; neither names a
@@ -266,8 +306,34 @@ public static class Datasets
             "World history on the same axis: battles, cities founded, dynasties, writing systems "
             + "and archaeological ages, so the text can be read against what else was happening. "
             + "It also says which Wikipedia article each person, place and thing is, so a page can "
-            + "send the reader on to it in their own language.",
+            + "send the reader on to it in their own language, and gives the coordinates of a few "
+            + "places the gazetteer cannot.",
             "Wikidata", HolderUrl: "https://www.wikidata.org/"),
+
+        // Coordinates measured by someone other than the gazetteer, for sites whose gazetteer point is
+        // OpenStreetMap's and cannot be held: the identification stays the gazetteer's, the point is
+        // theirs and is credited where it is shown. No row carries their name as its source, so the
+        // prefix claims nothing; they are counted by the points (Resources/PlaceLocationSources).
+        new("pcgn", "Jordan Toponymic Factfile", "UK Permanent Committee on Geographical Names",
+            "Open Government Licence v3.0",
+            "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+            "https://assets.publishing.service.gov.uk/media/694152af5431f4f94d7f0aca/Jordan_Toponymic_Factfile.pdf",
+            "The coordinates of Jabal an Naba, Mount Nebo, from the gazetteer table of the factfile's 2025 "
+            + "edition (page 8).",
+            "UK Permanent Committee on Geographical Names",
+            Citation: "Contains public sector information licensed under the Open Government Licence v3.0.",
+            Obliges: "The statement 'Contains public sector information licensed under the Open Government "
+                     + "Licence v3.0.' and a link to the licence, wherever the coordinates are used.",
+            HolderUrl: "https://www.gov.uk/government/organisations/permanent-committee-on-geographical-names"),
+
+        new("drews-han-2010", "Dynamics of Wind Setdown at Suez and the Eastern Nile Delta",
+            "Carl Drews and Weiqing Han, PLOS ONE 5(8): e12481, 2010", "CC BY",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://doi.org/10.1371/journal.pone.0012481",
+            "The coordinates of Tell Abu Sefeh in the eastern Nile Delta, from the article's Table 1.",
+            "Carl Drews and Weiqing Han",
+            Citation: "Drews C, Han W (2010) Dynamics of Wind Setdown at Suez and the Eastern Nile Delta. "
+                      + "PLoS ONE 5(8): e12481. https://doi.org/10.1371/journal.pone.0012481"),
 
         // Public domain, and attributed on every band anyway: the period's own authority is named
         // where its dates are shown, and this is the credit for having gathered them.
@@ -291,11 +357,11 @@ public static class Datasets
             Obliges: "NonCommercial: the links this source states, and anything published from "
                 + "them, may not be used commercially."),
 
-        // The heaviest condition on anything in the corpus, and the reason it is written out rather
-        // than left to be read off the licence name: share-alike reaches back out of the database
-        // onto whatever the corpus publishes from these links, and the trademark clause is
-        // unfoldingWord's own and appears in no licence at all.
-        new("unfoldingword", "Ukrainian Bible Interlinear Ogienko", "unfoldingWord", "CC BY-SA 4.0",
+        // Share-alike reaches back out of the database onto whatever the corpus publishes from these
+        // links. The release's manifest names uk_gt as its creator and publisher, with the Door43
+        // World Missions Community contributing; its LICENSE.md is the plain CC BY-SA 4.0 summary.
+        new("unfoldingword", "Ukrainian Bible Interlinear Ogienko",
+            "uk_gt, the Ukrainian team on Door43, with the Door43 World Missions Community", "CC BY-SA 4.0",
             "https://creativecommons.org/licenses/by-sa/4.0/",
             "https://git.door43.org/uk_ts/uk_ubio",
             "Which Ukrainian word renders which Greek or Hebrew word, stated by people. Small "
@@ -303,9 +369,7 @@ public static class Datasets
             + "correspondence any Slavic text had — so it is what every model here is calibrated on.",
             "unfoldingWord's Ukrainian", Links: true,
             Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the "
-                + "corpus's own form of these links is offered under CC BY-SA 4.0 in turn. "
-                + "unfoldingWord's terms add that a derivative work must remove the unfoldingWord® "
-                + "trademark, so the mark is not carried on them."),
+                + "corpus's own form of these links is offered under CC BY-SA 4.0 in turn."),
 
         // The same publisher, the same format and the same terms as the entry above, and a different
         // work: an English translation aligned by unfoldingWord's own team rather than a Ukrainian one
@@ -350,7 +414,9 @@ public static class Datasets
             + "same, a link carries both their names.",
             "BSOJ's alignment of the Van Dyck", Links: true,
             Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's "
-                + "own form of these links is offered under CC BY-SA 4.0 in turn."),
+                + "own form of these links is offered under CC BY-SA 4.0 in turn, with the credit \"The "
+                + "original work by unfoldingWord is available from unfoldingword.org/ult\" that the "
+                + "release's licence asks for, and without the unfoldingWord® trademark."),
 
         new("unfoldingword-ust", "unfoldingWord Simplified Text alignment", "unfoldingWord", "CC BY-SA 4.0",
             "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -402,7 +468,10 @@ public static class Datasets
         // in its README and its LICENSE.md, but the per-set TOML is the statement closest to the
         // bytes and the more restrictive where they differ — the Arabic ONAV set says CC BY-SA 4.0
         // and is excluded on that.
-        new("clearbible", "Clear Bible Alignments", "BiblioNexus", "CC BY 4.0",
+        new("clearbible", "Clear Bible Alignments",
+            "Clear Bible, Inc.; each set is credited to the holder it names — BiblioNexus, Biblica, Inc. "
+            + "or the United Bible Societies — or to the team that made it",
+            "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/Clear-Bible/Alignments",
             "Which English word of the Berean renders which Greek word, aligned by hand by a team "
@@ -468,7 +537,7 @@ public static class Datasets
             + "from elsewhere and only the tagging is taken from here — and the tagging is all this "
             + "supplies: which tagged word pairs with which Greek word is matched within the verse "
             + "by this project, at a confidence, and no part of that pairing is stated by anyone.",
-            "Zefania KJV+", Links: true),
+            "Zefania KJV+", Links: true, Unlisted: true),
 
         // The same footing as the entry above and the same words for it. eBible's Public Domain line
         // is over the package; nobody names who tagged the words or on what terms. toledot.info,
@@ -487,7 +556,7 @@ public static class Datasets
             + "all this supplies: which tagged word pairs with which original word is matched within "
             + "the verse by this project, at a confidence, and no part of that pairing is stated by "
             + "anyone.",
-            "the Strong numbers LUTH1912 carries", Links: true),
+            "the Strong numbers LUTH1912 carries", Links: true, Unlisted: true),
 
         // Used as an input to the mapping and nothing more, and the declaration says so: the only
         // terms anyone states for this numbering permit use of the work unmodified, for a purpose
@@ -505,10 +574,10 @@ public static class Datasets
             + "the corpus holds only the links drawn from it, each carrying a confidence, because a "
             + "number is a lemma and which occurrence a word renders is this project's inference.",
             Sources.SynodalStrongCredit, Links: true,
-            Obliges: "NonCommercial: the notice forbids any use for profit, so these links, and anything "
-                + "published from them, may not be used commercially. The notice also permits use only "
-                + "of the work unmodified and for propagating the gospel; the corpus holds neither the "
-                + "tagged text nor its numbers, only correspondences derived from them."),
+            Obliges: "Bob Jones University's notice of 1996 permits use of the work unmodified, for the "
+                + "purpose of propagating the gospel, and not for profit. The corpus holds neither the "
+                + "tagged text nor its numbers, only the correspondences drawn from them, and credits "
+                + "Bob Jones University on every link drawn from them."),
 
         // Released by FHL under the GNU FDL, which permits this use without asking. They are read the
         // way the Synodal's numbering is — for one run, never stored — so nothing of the numbering
@@ -516,8 +585,8 @@ public static class Datasets
         new("fhl-cuv-strong", "Strong numbering of the Chinese Union Version",
             "the Faith Hope Love foundation (信望愛), in its Chinese Bible Online Library project; the copy read "
             + "is CrossWire's ChiUn and ChiUns modules, rebuilt from bible.fhl.net in 2021",
-            "GNU Free Documentation License",
-            "https://www.gnu.org/licenses/fdl-1.3.html",
+            "GNU Free Documentation License (the version is not named)",
+            "https://www.gnu.org/licenses/fdl.html",
             "https://www.fhl.net/gb/fhl/fhl8.html",
             "Which words of the Chinese Union Version render which Hebrew or Greek word, matched within the "
             + "verse on the Strong numbers FHL keyed to the spans of its transcription. The numbering is read "
@@ -543,7 +612,7 @@ public static class Datasets
             + "the Strong numbers Rubén Gómez keyed to its words. The numbering is read for the length of one run "
             + "and never stored or served: the corpus holds only the links drawn from it, each carrying a "
             + "confidence, and only on the words Clear Bible's hand-made alignment leaves.",
-            Sources.ReinaValeraStrongCredit, Links: true,
+            Sources.ReinaValeraStrongCredit, Links: true, Unlisted: true,
             Obliges: "Used for the mapping alone, by the owner's ruling of 2026-09-20: the numbers are shown nowhere "
                 + "and the tagged text is not copied; Gómez is credited on every link drawn from them."),
 
@@ -562,7 +631,7 @@ public static class Datasets
             + "eBible, and never stored or served: the corpus holds only the links drawn from it, each "
             + "carrying a confidence, because a number is a lemma and which occurrence a word renders is "
             + "this project's inference.",
-            Sources.SegondStrongCredit, Links: true,
+            Sources.SegondStrongCredit, Links: true, Unlisted: true,
             Obliges: "The module's terms are a permission granted to CrossWire to distribute it; the corpus "
                 + "distributes neither the module nor its numbers, only correspondences derived from them."),
 
@@ -590,7 +659,7 @@ public static class Datasets
             + "verse on the Strong numbers Concordances et Traductions de la Bible keyed to it. The "
             + "numbering is read from the module the text is loaded from, for the length of one run, and "
             + "never stored: the corpus holds the links drawn from it, each carrying a confidence.",
-            Sources.DarbyFrenchStrongCredit, Links: true),
+            Sources.DarbyFrenchStrongCredit, Links: true, Unlisted: true),
 
         new("schlachter-strong", "Strong numbering of the Schlachter Bible 1951",
             "not named by anyone; the copy read is CrossWire's GerSch module, version 2.1",
@@ -601,7 +670,7 @@ public static class Datasets
             + "the verse on the Strong numbers the module puts on them. The numbering is read from the "
             + "module the text is loaded from, for the length of one run, and never stored: the corpus "
             + "holds the links drawn from it, each carrying a confidence.",
-            Sources.SchlachterStrongCredit, Links: true,
+            Sources.SchlachterStrongCredit, Links: true, Unlisted: true,
             Obliges: "NonCommercial: the module is distributed for non-commercial use only, so these links, "
                 + "and anything published from them, may not be used commercially."),
 
@@ -616,7 +685,7 @@ public static class Datasets
             + "read from the module the text is loaded from, for the length of one run, and never stored: "
             + "the corpus holds the links drawn from it, each carrying a confidence.",
             Sources.RevisedLiteralStrongCredit, Links: true,
-            Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
+            Obliges: RevisedLiteralTerms),
 
         new("byzantine-apparatus", "Apparatus to the Byzantine Textform",
             "Maurice A. Robinson and William G. Pierpont; the ByzTxt repository's beta-code files, release v3.3.2",
@@ -640,7 +709,7 @@ public static class Datasets
             + "and the Greek word itself. Read for the length of one run and never stored; a place is linked "
             + "only where Scrivener's or Stephanus's printing holds that Greek word there.",
             Sources.RevisedLiteralPositionCredit, Links: true,
-            Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
+            Obliges: RevisedLiteralTerms),
 
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
@@ -651,6 +720,10 @@ public static class Datasets
             + "the lexical table is taken: GLAUx's own Greek text is not loaded, and its lemmas are "
             + "applied to the Brenton text already served.",
             "GLAUx", Lemmas: Sources.BrentonSeptuagintSlug,
+            Citation: "Keersmaekers, Alek (2021): The GLAUx corpus: methodological issues in designing a long-term, "
+                + "diverse, multi-layered corpus of Ancient Greek. Proceedings of the 2nd International Workshop on "
+                + "Computational Approaches to Historical Language Change 2021, 39–50. Online: Association for "
+                + "Computational Linguistics. doi:10.18653/v1/2021.lchange-1.6.",
             Obliges: "ShareAlike: the lemmas taken from here, and anything published from them, are "
                 + "offered under CC BY-SA 3.0 in turn. Only the lexical table is taken and the "
                 + "Brenton text it annotates is public domain, which is what keeps the clause on "
@@ -658,7 +731,7 @@ public static class Datasets
 
         // Two second analyses of the Greek New Testament, each a row per Nestle word in
         // word_parsing. Both licences require attribution, and MACULA's names the exact string.
-        new("macula", "MACULA Greek Linguistic Datasets", "Biblica, Inc., published by Clear Bible",
+        new("macula", "MACULA Greek Linguistic Datasets", "© 2022-2024 by Biblica, Inc., published by Clear Bible",
             "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/Clear-Bible/macula-greek",
@@ -717,7 +790,8 @@ public static class Datasets
 
         // The short Greek glosses. Read for the one-word gloss column only; the Abbott-Smith entry
         // beside it in the same file is not loaded.
-        new("stepbible-tbesg", "STEPBible Brief Greek Lexicon (TBESG)", "STEP Bible, Tyndale House, Cambridge",
+        new("stepbible-tbesg", "STEPBible Brief Greek Lexicon (TBESG)",
+            "STEP Bible, based on work at Tyndale House, Cambridge",
             "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/STEPBible/STEPBible-Data",
@@ -726,10 +800,72 @@ public static class Datasets
             + "Testament word Strong never catalogued still has a meaning. A word reaches a gloss by its "
             + "dictionary form or by the Strong number its edition prints, and the reader is told which. "
             + "Only the gloss is taken; the full lexicon entry beside it in the same file is not.",
-            Sources.BriefGreekLexiconPrefix, Glossary: true,
+            Sources.BriefGreekLexiconPrefix, Glossary: true, HolderUrl: StepBible,
             Obliges: "Attribution only, under CC BY 4.0. The file also asks that its data not be passed "
                 + "on as a copy but that others be referred to github.com/STEPBible, so a download of "
                 + "the corpus should point there rather than carry the glosses."),
+
+        // The verse numbering every text is placed by. Its header asks that changes come with a note of
+        // them that those who use the result can read, and the corpus changes it: Changes is that note,
+        // kept beside TvtmsCorrections and TvtmsSupplements, which make the changes.
+        new("tvtms", "TVTMS: Translators Versification Traditions with Methodology for Standardisation",
+            "STEP Bible, based on work at Tyndale House, Cambridge",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/STEPBible/STEPBible-Data",
+            "Which verse of one numbering is which verse of another — the Hebrew, the Greek, the Latin and "
+            + "the English traditions — with the tests that tell an edition's numbering apart. It is what "
+            + "puts every verse of every text here at one shared address, so the same words stand side by "
+            + "side however each text numbers them.",
+            "TVTMS", Frame: true, HolderUrl: StepBible,
+            Obliges: "Attribution, under CC BY 4.0. The data asks that changes made to it come with a note "
+                + "of them, which is the list of changes here, and that others be referred to "
+                + "github.com/STEPBible for the data itself.",
+            Changes:
+            [
+                "Malachi's last three verses in the Greek numberings (Brenton's 3:22-24, Swete's 4:4-6) are "
+                + "placed by their words: Elijah, the turning of hearts, then the law of Moses. The data placed "
+                + "each where the next one belongs.",
+                "The oracle against Ammon, which the Greek prints as Jeremiah 30:1-5, is placed with Jeremiah "
+                + "49:1-5 of the Hebrew. The data named it 30:17-21.",
+                "In the Song of the Three (Daniel 3), the Greek and Latin 3:77-78 are placed springs before "
+                + "seas, and the Greek 3:80-81 birds before beasts, as every edition here prints them.",
+                "Brenton's Jeremiah 25 and 30-32: Edom, Ammon, Kedar and Damascus in chapter 30, Elam ending "
+                + "at 25:20, and the cup of wrath as 32:15-38. Added; the data describes none of it.",
+                "Proverbs 24 in Brenton and Swete, where they print the sayings of Agur and of Lemuel's "
+                + "mother, and Swete's chapters numbered straight on past the verses the Greek leaves out. "
+                + "Added.",
+                "Brenton's division of Leviticus 8:18-30. Added.",
+                "Swete's 2 Samuel 19 under the English numbers, his altar on Ebal as Joshua 9:3-8, and his "
+                + "order at the end of Joshua. Added.",
+                "The unclean birds of Leviticus 11:13-19 in both Greek editions, which name the ostrich, the "
+                + "owl and the gull before the raven. Added.",
+                "The Reina-Valera of 1909 as eBible publishes it: the Spanish division inside the English "
+                + "verse count, with the empty verses that leaves. Added.",
+                "Kulish's Bible of 1903, which divides some forty chapters in its own way. Added.",
+                "The Synodal as bible4u publishes it: Song of Songs 1, Psalm 90, Isaiah 3, Esther 1 and "
+                + "Revelation 20. Added.",
+                "Ohienko's Psalm 65 as bible4u publishes it, numbered from the title. Added.",
+                "The Segond of 1910 at the end of Job and in Ecclesiastes 11-12. Added.",
+                "Brenton's English Nehemiah 4, numbered as the English Bibles number it. Added.",
+            ]),
+
+        // The second answer to what the Hebrew of a verse says, beside the Open Hebrew Bible's, and the
+        // gloss EVIDENTIA reads a Hebrew word by. Its rows are claims on links others drew, so it is
+        // counted by those. The publisher's licence page is the statement it is loaded under;
+        // Resources/STEPBible/LICENCE.md has all three of STEP's statements.
+        new("tahot", "TAHOT: Translators Amalgamated Hebrew Old Testament",
+            "STEP Bible, based on work at Tyndale House, Cambridge",
+            "CC BY-NC 3.0",
+            "https://creativecommons.org/licenses/by-nc/3.0/",
+            "https://github.com/STEPBible/STEPBible-Data",
+            "What each Hebrew word and each of its prefixes means where it stands, as Tyndale House "
+            + "scholars glossed the Hebrew Old Testament. Beside the Open Hebrew Bible's answer to which "
+            + "Hebrew word a King James word renders, it is a second and independent one, and it is the "
+            + "gloss a Hebrew word is read by when a translation's words are weighed against it.",
+            Sources.TahotPrefix, LinkClaims: true, HolderUrl: StepBible,
+            Obliges: "NonCommercial: STEP Bible's datasets may be used freely in projects that are not for "
+                + "profit, with attribution to Tyndale House, Cambridge."),
 
         // The Ge'ez words' own meanings. Dillmann's book is long out of copyright; the digital
         // edition is not, and its ShareAlike binds what is derived from it here, which the owner
@@ -752,29 +888,20 @@ public static class Datasets
                 + "form of which entry, and anything made from the entries, is shared under CC BY-NC-SA 4.0 "
                 + "too."),
 
-        // The links an EVIDENTIA run proposed and a reviewer accepted. The rules are this project's;
-        // the lemma, part of speech and parse they read off a translation's words come from UDPipe
-        // where the text has no tagging of its own, and the owner accepted the ShareAlike of those
-        // models for what is derived from them.
-        new("evidentia", "EVIDENTIA", "this project, reading the words with UDPipe and the UD models of "
-            + "Milan Straka and Jana Straková (ÚFAL, Charles University) and of bnosac",
-            "CC BY-SA 4.0; CC BY-NC-SA 4.0 where the Ukrainian, Russian, German or Spanish model analysed the words",
-            "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-            "http://hdl.handle.net/11234/1-3131",
+        // The links an EVIDENTIA run proposed and a reviewer accepted: this project's own work, under the
+        // one licence the owner set for all of it (2026-10-29). UDPipe's analysis is evidence the rules
+        // read, credited in the description, and is not what is published.
+        new("evidentia", "EVIDENTIA", "this project",
+            "CC BY-NC 4.0",
+            "https://creativecommons.org/licenses/by-nc/4.0/",
+            "https://essenthos.org",
             "Word correspondences between a translation and its original that this project's rules "
             + "proposed and a reviewer accepted, each with the rule that proposed it, the confidence of "
             + "its tier and the run it came from. Where a translation carries no tagging of its own, the "
-            + "rules read its words through UDPipe: the dictionary form, the part of speech and the "
-            + "parse of each word are the analyser's, and the correspondence is ours.",
-            Sources.EvidentiaRunPrefix, Links: true,
-            Citation: "Straka, Milan and Straková, Jana, 2019, Universal Dependencies 2.5 Models for UDPipe "
-                + "(2019-12-06), LINDAT/CLARIAH-CZ digital library at the Institute of Formal and Applied "
-                + "Linguistics (ÚFAL), Faculty of Mathematics and Physics, Charles University, "
-                + "http://hdl.handle.net/11234/1-3131.",
-            Obliges: "ShareAlike: the lemmas, parts of speech and parses UDPipe gave, and the links they "
-                + "stand as evidence under, are offered under CC BY-SA 4.0 in turn; anything derived from "
-                + "the Ukrainian, Russian, German or Spanish model also under CC BY-NC-SA 4.0, so it may not "
-                + "be used commercially. The model that analysed each word is recorded with its run."),
+            + "rules read its words through UDPipe and the Universal Dependencies models of Milan Straka "
+            + "and Jana Straková (ÚFAL, Charles University, http://hdl.handle.net/11234/1-3131) and of "
+            + "bnosac, which give the dictionary form, the part of speech and the parse of each word.",
+            Sources.EvidentiaRunPrefix, Links: true, OwnWork: true),
 
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
@@ -784,7 +911,9 @@ public static class Datasets
         new(Own, "Essenthos", "this project", null, null,
             "https://essenthos.org",
             "What this project works out for itself. Corrections and separations it makes to the "
-            + "datasets it carries, each recorded on the row it changed; and the word "
+            + "datasets it carries, each recorded on the row it changed — a correction to a text or a "
+            + "dataset whose licence asks for adaptations to be shared alike is shared under that "
+            + "licence, as the source's own; and the word "
             + "correspondences no source states — the two Greek editions joined on the Strong "
             + "numbers both of them tag, the two Hebrew witnesses and the two Septuagints joined on "
             + "the letters each pair writes alike, and the English function words the tagging "
@@ -795,7 +924,7 @@ public static class Datasets
             + "confidence, which is how it is told apart from testimony. And the parallel passages — "
             + "Samuel and Kings beside Chronicles, the psalms written twice, the first three gospels — "
             + "found where two passages share a long run of the same words in the Hebrew or the Greek.",
-            "Essenthos", Links: true, Methods:
+            "Essenthos", Links: true, OwnWork: true, Methods:
             [
                 "the Strong numbers both editions carry",
                 "the words left over once the Strong numbers were paired",
@@ -874,6 +1003,12 @@ public static class Datasets
 
         return best;
     }
+
+    /// <summary>
+    /// The dataset a reader is told a row comes from: the one <see cref="Match"/> finds, unless it is
+    /// one the corpus names to no reader.
+    /// </summary>
+    public static Dataset? Credited(string? source) => Match(source) is { Unlisted: false } dataset ? dataset : null;
 
     /// <summary>Whether a row carrying this source string is credited to this dataset, and to no other.</summary>
     public static bool Claims(Dataset dataset, string source) => ReferenceEquals(Match(source), dataset);

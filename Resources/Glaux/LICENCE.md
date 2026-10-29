@@ -1,7 +1,7 @@
 # xml/, metadata.txt — the GLAUx treebank, Septuagint books only
 
 **GLAUx — the Greek Language Automated corpus**, by **Alek Keersmaekers**.
-<https://github.com/perseids-publications/glaux-trees>.
+<https://github.com/alekkeersmaekers/glaux>, which is what `scripts/fetch-glaux.ps1` fetches.
 
 **Licence: CC BY-SA 3.0.** Share-alike, and the only share-alike annotation in the
 corpus.

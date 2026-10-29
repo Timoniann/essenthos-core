@@ -354,8 +354,9 @@ internal static class DeuterocanonTextSource
         "Public Domain",
         "https://ebible.org/eng-web/copyright.htm",
         "https://ebible.org/find/details.php?id=eng-web",
-        "The deuterocanonical books — Tobit, Judith, Wisdom, Sirach, Baruch, 1 to 4 Maccabees, 1 and 2 Esdras, "
-        + "the Prayer of Manasseh and Psalm 151 — from the Classic edition, whose other books are not read.");
+        "The deuterocanonical books — Tobit, Judith, Wisdom, Sirach, Baruch, the Letter of Jeremiah, 1 to 4 "
+        + "Maccabees, 1 and 2 Esdras, the Prayer of Manasseh and Psalm 151 — from the Classic edition, whose "
+        + "other books are not read.");
 
     public static readonly TextDefinition BrentonDefinition = new(
         Slug: BrentonEnglish,
@@ -395,8 +396,8 @@ internal static class DeuterocanonTextSource
             "Public domain: Brenton died in 1862, and eBible states it in its catalogue, on its copyright page "
             + "and in the copy of that page inside the archive (\"Published in 1851, and now in the Public "
             + "Domain\"). eBible's transcription corrects the 1870 diglot against the 1844 English and, for the "
-            + "Apocrypha, the Authorized Version, and lists every correction in an errata file that is kept "
-            + "beside the data and not loaded, with Brenton's two prefaces and his table of Jeremiah's chapters.",
+            + "Apocrypha, the Authorized Version, and lists every correction in an errata file, which is not "
+            + "loaded; neither are Brenton's two prefaces and his table of Jeremiah's chapters.",
         Citation =
             "The Septuagint Version of the Old Testament and Apocrypha, with an English translation, by Sir "
             + "Lancelot Charles Lee Brenton, London: Samuel Bagster and Sons, 1851, in the digital edition "

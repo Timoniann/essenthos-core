@@ -1,0 +1,21 @@
+{
+  "decidedBy": "the project owner, 2026-10-29, written onto the record by claude-opus-5-5 on 2026-10-29",
+  "policy": "Eshtemoa of 1 Chronicles 4:19 is one of the sons of the wife of Hodiah, as the King James, the JPS, the NIV and Ohienko read the verse, and not Hodiah's grandson; his name is also the town his line founded.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-10-29 that Eshtemoa of 1 Chronicles 4:19 is a son of the wife of Hodiah",
+  "rulings": [
+    {
+      "text": "KJV",
+      "reference": "1CH 4:19",
+      "position": 19,
+      "surface": "Eshtemoa",
+      "strongNumber": null,
+      "existing": "eshtemoa-2",
+      "says": {
+        "distinguisher": "the Maachathite, a son of the wife of Hodiah, the sister of Naham (1CH 4:19)",
+        "notes": "Eshtemoa is named among 'the sons of the wife of Hodiah the sister of Naham' (1CH 4:19). His name is also the name of a town of Judah (JOS 15:50; 21:14), which his line is held to have founded."
+      },
+      "why": "'And the sons of his wife Hodiah the sister of Naham, the father of Keilah the Garmite, and Eshtemoa the Maachathite' (1CH 4:19): the Hebrew prints no 'father of' before Eshtemoa, so he is one of the sons."
+    }
+  ]
+}

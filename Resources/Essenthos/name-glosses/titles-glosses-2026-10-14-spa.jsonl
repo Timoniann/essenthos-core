@@ -439,7 +439,7 @@
 {"english": "Your Holy One", "spa": "tu Santo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Your holy servant Jesus", "spa": "tu santo siervo Jesús", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Your Teacher", "spa": "vuestro Maestro", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "daughter [of the] prince [of] the south", "spa": "hija [del] rey [del] sur", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "daughter [of the] king [of] the south", "spa": "hija [del] rey [del] sur", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "land flowing [with] milk and honey", "spa": "tierra que fluye [con] leche y miel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "mountain [of] the god", "spa": "monte [de] Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "river [of] Egypt", "spa": "río [de] Egipto", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -878,7 +878,7 @@
 {"english": "y-h-v-h is [my] G-d", "spa": "Jehová es [mi] Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h is G-d", "spa": "Jehová es Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is [my] king", "spa": "Dios [El] es [mi] rey", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[my] G-d [El] sit in judgment", "spa": "[mi] Dios [El] se sienta a juzgar", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[my] G-d [El] sits in judgment", "spa": "[mi] Dios [El] se sienta a juzgar", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is fine gold or G-d crushes", "spa": "Dios [El] es oro fino o Dios aplasta", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] distinguish him!", "spa": "¡Dios [El] lo distinga!", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is [my] deliverance", "spa": "Dios [El] es [mi] liberación", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -892,7 +892,7 @@
 {"english": "G-d [El] is [my] Rock", "spa": "Dios [El] es [mi] Roca", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] has possessed", "spa": "Dios [El] ha adquirido", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is pleasantness", "spa": "Dios [El] es deleite", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "G-d [El] is given", "spa": "Dios [El] ha dado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "G-d [El] has given", "spa": "Dios [El] ha dado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] creates", "spa": "Dios [El] crea", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "terebinth of Paran", "spa": "terebinto de Parán", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is deliverance", "spa": "Dios [El] es liberación", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -930,7 +930,7 @@
 {"english": "with [him is] Baal", "spa": "con [él está] Baal", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hire [of a prostitute?]", "spa": "paga [de una ramera?]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "gift or hire", "spa": "don o paga", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Euphrates (mighty river of Mesopotamia);", "spa": "Eufrates (río caudaloso de Mesopotamia)", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Euphrates (mighty river of Mesopotamia)", "spa": "Eufrates (río caudaloso de Mesopotamia)", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "lucky", "spa": "afortunado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "living one", "spa": "la viviente", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "desire", "spa": "deseo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -981,7 +981,7 @@
 {"english": "exile", "spa": "exilio", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "complete", "spa": "completo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "to overwhelm with water", "spa": "anegar con agua", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "mount of earth", "spa": "montón de tierra", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "mound of earth", "spa": "montón de tierra", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "spotted sand grouse", "spa": "ganga moteada", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h has hidden", "spa": "Jehová ha escondido", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "garden plant", "spa": "planta de huerto", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1163,7 +1163,7 @@
 {"english": "mountain goat", "spa": "cabra montés", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "snatch up", "spa": "arrebatar", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] will see", "spa": "Dios [El] verá", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h lead", "spa": "Jehová guía", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "y-h-v-h leads", "spa": "Jehová guía", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] gives joy", "spa": "Dios [El] da alegría", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[G-d] gives joy", "spa": "[Dios] da alegría", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "wait for G-d [El]; [poss.] may G-d [El] show himself friendly", "spa": "espera en Dios [El]; [posiblemente] muéstrese Dios [El] favorable", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1323,7 +1323,7 @@
 {"english": "no compassion", "spa": "no compadecida", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "to cover, enfold", "spa": "cubrir, envolver", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "of Lot", "spa": "de Lot", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Lukios the Cyrene", "spa": "Lucio de Cirene", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Lucius of Cyrene", "spa": "Lucio de Cirene", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "almond tree", "spa": "almendro", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[perhaps] dull, stupid", "spa": "[quizá] torpe, necio", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "ornaments", "spa": "adornos", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1377,7 +1377,7 @@
 {"english": "gift, something given", "spa": "don, algo dado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "gift of Yah", "spa": "don de Yah", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "well built", "spa": "bien edificado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "dissention", "spa": "disensión", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "dissension", "spa": "disensión", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] does good", "spa": "Dios [El] hace bien", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] bought as slave", "spa": "[posiblemente] comprado como esclavo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hired hand", "spa": "jornalero", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1409,7 +1409,7 @@
 {"english": "Who is like Yah[weh]?", "spa": "¿Quién como Yah[weh]?", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Who is like G-d [El]?", "spa": "¿Quién como Dios [El]?", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "quarrel, strife, contention", "spa": "riña, contienda, disputa", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "a district of Arabia Petra", "spa": "un distrito de la Arabia Pétrea", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "a district of Arabia Petraea", "spa": "un distrito de la Arabia Pétrea", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "tower of flock", "spa": "torre del rebaño", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "from the right hand", "spa": "de la mano derecha", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "rods", "spa": "varas", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1524,7 +1524,7 @@
 {"english": "G-d’s opening", "spa": "abertura de Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "worker, wage earner", "spa": "trabajador, asalariado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "face of God [El]", "spa": "rostro de Dios [El]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "fond of horses;", "spa": "aficionado a los caballos", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "fond of horses", "spa": "aficionado a los caballos", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the black man", "spa": "el hombre negro", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "steely; spider", "spa": "acerado; araña", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "millstone; plowman; harelip", "spa": "piedra de molino; labrador; labio leporino", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1542,7 +1542,7 @@
 {"english": "[poss.] beating down; y-h-v-h rules", "spa": "[posiblemente] el que abate; Jehová gobierna", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "spacious, broad", "spa": "espacioso, amplio", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "compassion", "spa": "compasión", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "weaver, embroider", "spa": "tejedor, bordador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "weaver, embroiderer", "spa": "tejedor, bordador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "high, exalted", "spa": "alto, exaltado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Ra created him", "spa": "Ra lo creó", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] one healed", "spa": "[posiblemente] el sanado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1580,7 +1580,7 @@
 {"english": "reward [given by G-d], [poss.] hired hand", "spa": "recompensa [dada por Dios], [posiblemente] jornalero", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] one who looks to y-h-v-h", "spa": "[posiblemente] el que mira a Jehová", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "peace", "spa": "paz", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[poss.] G-d had restored", "spa": "[posiblemente] Dios ha restaurado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[poss.] G-d has restored", "spa": "[posiblemente] Dios ha restaurado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "restored", "spa": "restaurado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] he restores", "spa": "[posiblemente] él restaura", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "little spark", "spa": "chispita", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1593,8 +1593,8 @@
 {"english": "princess", "spa": "princesa", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "burning one, serpent", "spa": "el ardiente, serpiente", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "firm, faithful king; the king is legitimate", "spa": "rey firme y fiel; el rey es legítimo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "the adversary, accuser, one who opposes, slanderer;", "spa": "el adversario, acusador, el que se opone, calumniador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "adversary, accuser, one who opposes, slanderer;", "spa": "adversario, acusador, el que se opone, calumniador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "the adversary, accuser, one who opposes, slanderer", "spa": "el adversario, acusador, el que se opone, calumniador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "adversary, accuser, one who opposes, slanderer", "spa": "adversario, acusador, el que se opone, calumniador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "asked [dedicated?] to G-d", "spa": "pedido [¿dedicado?] a Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "asked, [poss.] dedicated to G-d", "spa": "pedido, [posiblemente] dedicado a Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "exalted", "spa": "exaltado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1647,8 +1647,7 @@
 {"english": "he seeks y-h-v-h", "spa": "él busca a Jehová", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "missile [a weapon], sprout", "spa": "proyectil [un arma], retoño", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "to send", "spa": "enviar", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h pays back, [poss.] he restores peace offering of y-h-v-h", "spa": "Jehová retribuye, [posiblemente] él restaura; ofrenda de paz de Jehová", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h pays back [poss.] he restores peace offering of y-h-v-h", "spa": "Jehová retribuye, [posiblemente] él restaura; ofrenda de paz de Jehová", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "y-h-v-h pays back, [poss.] he restores; peace offering of y-h-v-h", "spa": "Jehová retribuye, [posiblemente] él restaura; ofrenda de paz de Jehová", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "one plucked out, drawn out", "spa": "el arrancado, sacado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "triplet; [poss.] obedient or gentle", "spa": "trillizo; [posiblemente] obediente o apacible", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is [my] peace", "spa": "Dios [El] es [mi] paz", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1672,11 +1671,11 @@
 {"english": "[poss.] obedient or gentle; third [part, child?], triplet", "spa": "[posiblemente] obediente o apacible; tercero [¿parte, hijo?], trillizo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "he has heard or obedient one", "spa": "él ha oído o el obediente", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guardian, watcher", "spa": "guardiana, vigilante", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h has heard' or 'famous'", "spa": "Jehová ha oído o famoso", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "y-h-v-h has heard, or famous", "spa": "Jehová ha oído o famoso", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guardian, watchman", "spa": "guardiana, centinela", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guardianess, watch woman", "spa": "guardiana, vigilante", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "one given to Shemesh", "spa": "el entregado a Shemesh", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "sin is his father", "spa": "Sin es su padre", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Sin is his father", "spa": "Sin es su padre", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Shinar = Babylonia", "spa": "Sinar = Babilonia", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "flowing abundance", "spa": "abundancia que fluye", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "beautiful, fair", "spa": "hermosa, bella", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1696,7 +1695,7 @@
 {"english": "he has heard or obedient one, son of Jonah", "spa": "él ha oído o el obediente, hijo de Jonás", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Simon [the] man [from] Kirioth", "spa": "Simón, [el] hombre [de] Keriot", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "he has heard or obedient one, rock", "spa": "él ha oído o el obediente, roca", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "simon the zealous", "spa": "Simón el Celador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Simon the Zealot", "spa": "Simón el Celador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] belonging to Sisam", "spa": "[posiblemente] perteneciente a Sisam", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] y-h-v-h is my hiding place", "spa": "[posiblemente] Jehová es mi escondedero", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hostility", "spa": "hostilidad", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1732,7 +1731,7 @@
 {"english": "one from the right [not left], hence southerner", "spa": "uno de la derecha [no de la izquierda], de ahí sureño", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[perhaps] desire", "spa": "[quizá] deseo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[special name of G-d] will provide", "spa": "[Jehová] proveerá", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "friend [of] god", "spa": "amigo de Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "friend [of] God", "spa": "amigo de Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my trust is in the son of [the temple] Esharra", "spa": "mi confianza está en el hijo [del templo] Esharra", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Hiddekel = Tigris, \"arrow\"", "spa": "Hiddekel = Tigris, «flecha»", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hope", "spa": "esperanza", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1847,7 +1846,7 @@
 {"english": "prince [of] the army", "spa": "príncipe [del] ejército", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "creator", "spa": "creador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the Creator", "spa": "el Creador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "(of G-d) the Maker, the Creator;", "spa": "(de Dios) el Hacedor, el Creador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "(of G-d) the Maker, the Creator", "spa": "(de Dios) el Hacedor, el Creador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "creator [of] Israel", "spa": "creador [de] Israel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my daughter", "spa": "hija mía", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "David [my] servant", "spa": "David, [mi] siervo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1892,7 +1891,7 @@
 {"english": "G-d our savior", "spa": "Dios nuestro salvador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [who] hides himself", "spa": "Dios [que] se esconde", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] with us", "spa": "Dios [El] con nosotros", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Glory [or Emminence] of Israel", "spa": "Gloria [o Eminencia] de Israel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Glory [or Eminence] of Israel", "spa": "Gloria [o Eminencia] de Israel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "governor of a province", "spa": "gobernador de una provincia", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "governor [of] Judah", "spa": "gobernador [de] Judá", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[head of the] garrison", "spa": "[jefe de la] guarnición", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1921,7 +1920,7 @@
 {"english": "Yeshua the Messiah", "spa": "Yeshúa el Mesías", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Yeshua of Nazareth", "spa": "Yeshúa de Nazaret", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Yeshua the Galilean", "spa": "Yeshúa el galileo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "john the immerser", "spa": "Juan el que sumerge", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "John the immerser", "spa": "Juan el que sumerge", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "judge [of] all the land", "spa": "juez [de] toda la tierra", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Adonijah", "spa": "rey Adonías", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Agrippa the king", "spa": "Agripa el rey", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1933,7 +1932,7 @@
 {"english": "king Cyrus", "spa": "rey Ciro", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Darius King", "spa": "Darío rey", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king David", "spa": "rey David", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "king herod", "spa": "rey Herodes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "king Herod", "spa": "rey Herodes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Jehoash", "spa": "rey Joas", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Jehoiachin", "spa": "rey Joachin", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Jehoiakim", "spa": "rey Joacim", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2034,7 +2033,7 @@
 {"english": "king Solomon", "spa": "rey Salomón", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Uzziah the king", "spa": "Uzzías el rey", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Zedekiah", "spa": "rey Sedecías", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "the from-law", "spa": "el legislador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "the lawgiver", "spa": "el legislador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "law, instruction", "spa": "ley, instrucción", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "light", "spa": "luz", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "lord", "spa": "señor", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2073,7 +2072,7 @@
 {"english": "mighty one", "spa": "el poderoso", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "mighty one [of] Jacob", "spa": "el poderoso [de] Jacob", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [the] Highest", "spa": "Dios [el] Altísimo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[my]son beloved", "spa": "[mi] hijo amado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[my] son beloved", "spa": "[mi] hijo amado", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "faithful", "spa": "fiel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my king", "spa": "mi rey", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[my] messenger", "spa": "[mi] mensajero", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2131,8 +2130,8 @@
 {"english": "rock; stone mass, rocky crag; a title of G-d, with a focus of stability, and possibly as a place of security and safety", "spa": "roca; masa de piedra, peñasco; título de Dios que destaca la estabilidad y quizá un lugar de seguridad y amparo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "rock [of] Israel", "spa": "roca [de] Israel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "lord/ruler of [the] kings [of] the land", "spa": "señor/soberano de [los] reyes [de] la tierra", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "savior, deliverer, rescuer;", "spa": "salvador, libertador, rescatador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "learned writer, scribe, secretary. → scribe; secretary.", "spa": "escritor docto, escriba, secretario", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "savior, deliverer, rescuer", "spa": "salvador, libertador, rescatador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "learned writer, scribe, secretary", "spa": "escritor docto, escriba, secretario", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "servant [of the] living G-d", "spa": "siervo [del] Dios viviente", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "shepherd", "spa": "pastor", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "shepherd of Israel", "spa": "pastor de Israel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2149,7 +2148,7 @@
 {"english": "a potentate, sovereign, prince", "spa": "un potentado, soberano, príncipe", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "stone [of] Israel", "spa": "piedra [de] Israel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "ruler of a fourth part", "spa": "gobernante de una cuarta parte", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "great prince of abiyliyn", "spa": "gran príncipe de Abilinia", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "great prince of Abilene", "spa": "gran príncipe de Abilinia", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "great prince of the Galilee", "spa": "gran príncipe de Galilea", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "great prince of the land of Ituraea and Trachonitis", "spa": "gran príncipe de la tierra de Iturea y Traconite", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "accuser", "spa": "acusador", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2193,7 +2192,7 @@
 {"english": "the rock", "spa": "la roca", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "root [of] David", "spa": "raíz [de] David", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the serpent", "spa": "la serpiente", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "the serpent [of] the east", "spa": "la serpiente [de] antaño", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "the serpent [of] old", "spa": "la serpiente [de] antaño", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "servant of G-d", "spa": "siervo de Dios", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "servant of the LORD", "spa": "siervo de Jehová", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son [of] Jesse", "spa": "hijo [de] Isaí", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}

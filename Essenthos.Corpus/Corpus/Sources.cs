@@ -168,6 +168,9 @@ internal static class Sources
 
     public const string BriefGreekLexiconPrefix = "STEPBible TBESG";
 
+    /// <summary>What every claim drawn from STEPBible's TAHOT begins with.</summary>
+    public const string TahotPrefix = "TAHOT by STEP Bible";
+
     /// <summary>
     /// What every row of the Ge'ez lexicon carries: whose lexicon, whose digitisation, which commit
     /// of it, and on what terms.

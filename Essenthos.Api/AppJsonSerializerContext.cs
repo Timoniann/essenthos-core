@@ -201,6 +201,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(EntitySpellingResponse))]
 [JsonSerializable(typeof(IList<EntitySpellingResponse>))]
 [JsonSerializable(typeof(PlaceMapResponse))]
+[JsonSerializable(typeof(ChapterPlacesResponse))]
 [JsonSerializable(typeof(PlacePointResponse))]
 [JsonSerializable(typeof(IList<PlacePointResponse>))]
 [JsonSerializable(typeof(List<PlacePointResponse>))]

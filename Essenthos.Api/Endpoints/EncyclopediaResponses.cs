@@ -382,10 +382,17 @@ internal record EntityTitleResponse(
 /// <param name="Confidence">
 /// The gazetteer's score for the identification, over a thousand: 0.5 and above is high confidence
 /// and 1 very high. Not clamped, because the source's score is not — it runs past 1 and below 0.
+/// Null where the point's source scores nothing, which says nothing about doubt.
 /// </param>
-internal record EntityLocationResponse(double Lon, double Lat, string Kind, double Confidence)
+internal record EntityLocationResponse(double Lon, double Lat, string Kind, double? Confidence)
 {
     public string? CoordinatesSource { get; init; }
+
+    /// <summary>
+    /// The dataset of <c>/v1/datasets</c> whose coordinates these are, where they are not the
+    /// gazetteer's own, so the point can be credited to whoever measured it. Null for the gazetteer's.
+    /// </summary>
+    public string? CoordinatesBy { get; init; }
 }
 
 /// <param name="References">How many verses name the place, as on its page.</param>
@@ -400,7 +407,7 @@ internal record PlacePointResponse(
     double Lon,
     double Lat,
     string Kind,
-    double Confidence,
+    double? Confidence,
     int References,
     IList<int> Chapters)
 {
@@ -429,7 +436,13 @@ internal record PlacePointResponse(
     public string? Distinguisher { get; init; }
 }
 
-/// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
+/// <summary>How many of the map's places a chapter names.</summary>
+internal record ChapterPlacesResponse(int Count);
+
+/// <param name="Datasets">
+/// Whose points these are, as declared dataset ids, for the credit a map owes: the gazetteer's, and
+/// every source that gave some of the coordinates.
+/// </param>
 internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items)
 {
     /// <summary>
@@ -452,7 +465,7 @@ internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlaceP
 /// <param name="Site">What the site is called today, as the gazetteer names it.</param>
 /// <param name="Kind">What the point stands for, as <see cref="PlacePointResponse.Kind"/>.</param>
 /// <param name="Confidence">The gazetteer's score for this answer over a thousand, as on the point.</param>
-internal record PlaceVariantResponse(string Slug, string? Site, double Lon, double Lat, string Kind, double Confidence)
+internal record PlaceVariantResponse(string Slug, string? Site, double Lon, double Lat, string Kind, double? Confidence)
 {
     /// <summary>How far round the point the place is taken to lie, in kilometres, where the gazetteer says.</summary>
     public double? RadiusKm { get; init; }
@@ -492,7 +505,8 @@ internal record PlaceUnlocatedResponse(string Slug, string Name, int References,
 /// <param name="Withheld">True for a site the gazetteer names whose point this corpus does not hold.</param>
 /// <param name="Confidence">
 /// The gazetteer's score for the answer over a thousand: how much of current scholarship takes it.
-/// Below zero where more of it rejects the answer than holds it.
+/// Below zero where more of it rejects the answer than holds it; null where the answer's source scores
+/// nothing.
 /// </param>
 /// <param name="Likeliest">True for the first answer, the one the place's point is where it has one.</param>
 /// <param name="Grounds">
@@ -511,11 +525,14 @@ internal record PlaceCandidateResponse(
     string? Relation,
     string? Special,
     bool Withheld,
-    double Confidence,
+    double? Confidence,
     bool Likeliest,
     IList<string> Grounds)
 {
     public string? CoordinatesSource { get; init; }
+
+    /// <summary>The dataset whose coordinates these are, where they are not the gazetteer's, as on the point.</summary>
+    public string? CoordinatesBy { get; init; }
 
     /// <summary>The ancient place this answer takes the place to be, where it is that: Babylon of Revelation, Rome.</summary>
     public EntityTribeResponse? Through { get; init; }

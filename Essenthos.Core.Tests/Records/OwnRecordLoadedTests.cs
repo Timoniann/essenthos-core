@@ -94,8 +94,8 @@ public sealed class OwnRecordLoadedTests(WitnessDatabase database) : OwnRecordTe
     }
 
     /// <summary>
-    /// The shape the owner asked for on Judges 4:11: the word names Hobab, and the record says out
-    /// loud that he may be Reuel. A silence and a guess are both worse answers than a named doubt.
+    /// A record whose identification the text leaves open says out loud who else it may be. A
+    /// silence and a guess are both worse answers than a named doubt.
     ///
     /// An alternative names a record where the encyclopedia holds one and describes it where it does
     /// not — Jerioth may be Azubah, who has a page, and may equally be no name at all, which has

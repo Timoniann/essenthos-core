@@ -439,7 +439,7 @@
 {"english": "Your Holy One", "deu": "dein Heiliger", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Your holy servant Jesus", "deu": "dein heiliger Knecht Jesus", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Your Teacher", "deu": "euer Meister", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "daughter [of the] prince [of] the south", "deu": "Tochter [des] Königs [des] Südens", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "daughter [of the] king [of] the south", "deu": "Tochter [des] Königs [des] Südens", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "land flowing [with] milk and honey", "deu": "Land, [darin] Milch und Honig fließt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "mountain [of] the god", "deu": "Berg Gottes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "river [of] Egypt", "deu": "Bach Ägyptens", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -878,7 +878,7 @@
 {"english": "y-h-v-h is [my] G-d", "deu": "der HERR ist [mein] Gott", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h is G-d", "deu": "der HERR ist Gott", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is [my] king", "deu": "Gott [El] ist [mein] König", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[my] G-d [El] sit in judgment", "deu": "[mein] Gott [El] sitzt zu Gericht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[my] G-d [El] sits in judgment", "deu": "[mein] Gott [El] sitzt zu Gericht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is fine gold or G-d crushes", "deu": "Gott [El] ist feines Gold oder Gott zermalmt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] distinguish him!", "deu": "Gott [El] zeichne ihn aus!", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is [my] deliverance", "deu": "Gott [El] ist [meine] Befreiung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -892,7 +892,7 @@
 {"english": "G-d [El] is [my] Rock", "deu": "Gott [El] ist [mein] Fels", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] has possessed", "deu": "Gott [El] hat erworben", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is pleasantness", "deu": "Gott [El] ist Lieblichkeit", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "G-d [El] is given", "deu": "Gott [El] hat gegeben", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "G-d [El] has given", "deu": "Gott [El] hat gegeben", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] creates", "deu": "Gott [El] schafft", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "terebinth of Paran", "deu": "Terebinthe von Paran", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is deliverance", "deu": "Gott [El] ist Befreiung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -930,7 +930,7 @@
 {"english": "with [him is] Baal", "deu": "mit [ihm ist] Baal", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hire [of a prostitute?]", "deu": "Lohn [einer Hure?]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "gift or hire", "deu": "Gabe oder Lohn", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Euphrates (mighty river of Mesopotamia);", "deu": "Euphrat (mächtiger Strom Mesopotamiens)", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Euphrates (mighty river of Mesopotamia)", "deu": "Euphrat (mächtiger Strom Mesopotamiens)", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "lucky", "deu": "glücklich", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "living one", "deu": "die Lebendige", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "desire", "deu": "Verlangen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -981,7 +981,7 @@
 {"english": "exile", "deu": "Verbannung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "complete", "deu": "vollständig", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "to overwhelm with water", "deu": "mit Wasser überfluten", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "mount of earth", "deu": "Erdhügel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "mound of earth", "deu": "Erdhügel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "spotted sand grouse", "deu": "geflecktes Flughuhn", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h has hidden", "deu": "der HERR hat verborgen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "garden plant", "deu": "Gartenpflanze", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1163,7 +1163,7 @@
 {"english": "mountain goat", "deu": "Bergziege", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "snatch up", "deu": "wegraffen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] will see", "deu": "Gott [El] wird sehen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h lead", "deu": "der HERR führt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "y-h-v-h leads", "deu": "der HERR führt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] gives joy", "deu": "Gott [El] gibt Freude", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[G-d] gives joy", "deu": "[Gott] gibt Freude", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "wait for G-d [El]; [poss.] may G-d [El] show himself friendly", "deu": "harre auf Gott [El]; [vielleicht] möge Gott [El] sich freundlich zeigen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1323,7 +1323,7 @@
 {"english": "no compassion", "deu": "nicht erbarmt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "to cover, enfold", "deu": "bedecken, einhüllen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "of Lot", "deu": "Lots", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Lukios the Cyrene", "deu": "Lucius von Kyrene", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Lucius of Cyrene", "deu": "Lucius von Kyrene", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "almond tree", "deu": "Mandelbaum", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[perhaps] dull, stupid", "deu": "[vielleicht] stumpf, dumm", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "ornaments", "deu": "Schmuckstücke", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1377,7 +1377,7 @@
 {"english": "gift, something given", "deu": "Gabe, etwas Gegebenes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "gift of Yah", "deu": "Gabe Jahs", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "well built", "deu": "gut gebaut", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "dissention", "deu": "Zwietracht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "dissension", "deu": "Zwietracht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] does good", "deu": "Gott [El] tut Gutes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] bought as slave", "deu": "[vielleicht] als Sklave gekauft", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hired hand", "deu": "Tagelöhner", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1409,7 +1409,7 @@
 {"english": "Who is like Yah[weh]?", "deu": "Wer ist wie Jah[we]?", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Who is like G-d [El]?", "deu": "Wer ist wie Gott [El]?", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "quarrel, strife, contention", "deu": "Zank, Streit, Hader", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "a district of Arabia Petra", "deu": "ein Bezirk des Steinigen Arabien", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "a district of Arabia Petraea", "deu": "ein Bezirk des Steinigen Arabien", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "tower of flock", "deu": "Herdenturm", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "from the right hand", "deu": "von der rechten Hand", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "rods", "deu": "Stäbe", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1524,7 +1524,7 @@
 {"english": "G-d’s opening", "deu": "Gottes Öffnung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "worker, wage earner", "deu": "Arbeiter, Lohnarbeiter", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "face of God [El]", "deu": "Angesicht Gottes [El]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "fond of horses;", "deu": "Pferdeliebhaber", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "fond of horses", "deu": "Pferdeliebhaber", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the black man", "deu": "der Schwarze", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "steely; spider", "deu": "stählern; Spinne", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "millstone; plowman; harelip", "deu": "Mühlstein; Pflüger; Hasenscharte", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1542,7 +1542,7 @@
 {"english": "[poss.] beating down; y-h-v-h rules", "deu": "[vielleicht] niederschlagend; der HERR herrscht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "spacious, broad", "deu": "geräumig, weit", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "compassion", "deu": "Erbarmen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "weaver, embroider", "deu": "Weber, Sticker", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "weaver, embroiderer", "deu": "Weber, Sticker", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "high, exalted", "deu": "hoch, erhaben", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Ra created him", "deu": "Ra hat ihn geschaffen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] one healed", "deu": "[vielleicht] ein Geheilter", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1580,7 +1580,7 @@
 {"english": "reward [given by G-d], [poss.] hired hand", "deu": "Lohn [von Gott gegeben], [vielleicht] Tagelöhner", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] one who looks to y-h-v-h", "deu": "[vielleicht] einer, der auf den HERRN schaut", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "peace", "deu": "Friede", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[poss.] G-d had restored", "deu": "[vielleicht] Gott hat wiederhergestellt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[poss.] G-d has restored", "deu": "[vielleicht] Gott hat wiederhergestellt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "restored", "deu": "wiederhergestellt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] he restores", "deu": "[vielleicht] er stellt wieder her", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "little spark", "deu": "kleiner Funke", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1593,8 +1593,8 @@
 {"english": "princess", "deu": "Fürstin", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "burning one, serpent", "deu": "der Brennende, Schlange", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "firm, faithful king; the king is legitimate", "deu": "fester, treuer König; der König ist rechtmäßig", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "the adversary, accuser, one who opposes, slanderer;", "deu": "der Widersacher, Verkläger, einer, der sich widersetzt, Verleumder", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "adversary, accuser, one who opposes, slanderer;", "deu": "Widersacher, Verkläger, einer, der sich widersetzt, Verleumder", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "the adversary, accuser, one who opposes, slanderer", "deu": "der Widersacher, Verkläger, einer, der sich widersetzt, Verleumder", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "adversary, accuser, one who opposes, slanderer", "deu": "Widersacher, Verkläger, einer, der sich widersetzt, Verleumder", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "asked [dedicated?] to G-d", "deu": "von Gott erbeten [geweiht?]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "asked, [poss.] dedicated to G-d", "deu": "erbeten, [vielleicht] Gott geweiht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "exalted", "deu": "erhaben", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1647,8 +1647,7 @@
 {"english": "he seeks y-h-v-h", "deu": "er sucht den HERRN", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "missile [a weapon], sprout", "deu": "Geschoss [eine Waffe], Spross", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "to send", "deu": "senden", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h pays back, [poss.] he restores peace offering of y-h-v-h", "deu": "der HERR vergilt, [vielleicht] er stellt wieder her; Dankopfer des HERRN", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h pays back [poss.] he restores peace offering of y-h-v-h", "deu": "der HERR vergilt, [vielleicht] er stellt wieder her; Dankopfer des HERRN", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "y-h-v-h pays back, [poss.] he restores; peace offering of y-h-v-h", "deu": "der HERR vergilt, [vielleicht] er stellt wieder her; Dankopfer des HERRN", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "one plucked out, drawn out", "deu": "ein Herausgerissener, Herausgezogener", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "triplet; [poss.] obedient or gentle", "deu": "Drilling; [vielleicht] gehorsam oder sanft", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is [my] peace", "deu": "Gott [El] ist [mein] Friede", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1672,11 +1671,11 @@
 {"english": "[poss.] obedient or gentle; third [part, child?], triplet", "deu": "[vielleicht] gehorsam oder sanft; dritter [Teil, Kind?], Drilling", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "he has heard or obedient one", "deu": "er hat gehört oder ein Gehorsamer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guardian, watcher", "deu": "Hüterin, Wächterin", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h has heard' or 'famous'", "deu": "der HERR hat gehört oder berühmt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "y-h-v-h has heard, or famous", "deu": "der HERR hat gehört oder berühmt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guardian, watchman", "deu": "Hüterin, Wächterin", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guardianess, watch woman", "deu": "Hüterin, Wächterin", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "one given to Shemesh", "deu": "einer, der dem Schemesch gegeben ist", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "sin is his father", "deu": "Sin ist sein Vater", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Sin is his father", "deu": "Sin ist sein Vater", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Shinar = Babylonia", "deu": "Sinear = Babylonien", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "flowing abundance", "deu": "strömender Überfluss", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "beautiful, fair", "deu": "schön, hübsch", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1696,7 +1695,7 @@
 {"english": "he has heard or obedient one, son of Jonah", "deu": "er hat gehört oder ein Gehorsamer, Sohn des Jona", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Simon [the] man [from] Kirioth", "deu": "Simon, [der] Mann [aus] Kerioth", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "he has heard or obedient one, rock", "deu": "er hat gehört oder ein Gehorsamer, Fels", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "simon the zealous", "deu": "Simon der Eiferer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Simon the Zealot", "deu": "Simon der Eiferer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] belonging to Sisam", "deu": "[vielleicht] dem Sisam gehörig", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] y-h-v-h is my hiding place", "deu": "[vielleicht] der HERR ist mein Versteck", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hostility", "deu": "Feindschaft", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1732,7 +1731,7 @@
 {"english": "one from the right [not left], hence southerner", "deu": "einer von der Rechten [nicht Linken], daher Südländer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[perhaps] desire", "deu": "[vielleicht] Verlangen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[special name of G-d] will provide", "deu": "[der HERR] wird versorgen", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "friend [of] god", "deu": "Freund Gottes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "friend [of] God", "deu": "Freund Gottes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my trust is in the son of [the temple] Esharra", "deu": "mein Vertrauen ist auf den Sohn [des Tempels] Escharra", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Hiddekel = Tigris, \"arrow\"", "deu": "Hiddekel = Tigris, „Pfeil“", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "hope", "deu": "Hoffnung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1847,7 +1846,7 @@
 {"english": "prince [of] the army", "deu": "Fürst [des] Heeres", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "creator", "deu": "Schöpfer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the Creator", "deu": "der Schöpfer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "(of G-d) the Maker, the Creator;", "deu": "(von Gott) der Macher, der Schöpfer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "(of G-d) the Maker, the Creator", "deu": "(von Gott) der Macher, der Schöpfer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "creator [of] Israel", "deu": "Schöpfer [Israels]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my daughter", "deu": "meine Tochter", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "David [my] servant", "deu": "David, [mein] Knecht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1892,7 +1891,7 @@
 {"english": "G-d our savior", "deu": "Gott, unser Retter", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [who] hides himself", "deu": "Gott, [der] sich verbirgt", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] with us", "deu": "Gott [El] mit uns", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Glory [or Emminence] of Israel", "deu": "Herrlichkeit [oder Erhabenheit] Israels", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "Glory [or Eminence] of Israel", "deu": "Herrlichkeit [oder Erhabenheit] Israels", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "governor of a province", "deu": "Statthalter einer Provinz", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "governor [of] Judah", "deu": "Statthalter [von] Juda", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[head of the] garrison", "deu": "[Befehlshaber der] Besatzung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1921,7 +1920,7 @@
 {"english": "Yeshua the Messiah", "deu": "Jeschua der Messias", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Yeshua of Nazareth", "deu": "Jeschua von Nazareth", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Yeshua the Galilean", "deu": "Jeschua der Galiläer", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "john the immerser", "deu": "Johannes der Eintaucher", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "John the immerser", "deu": "Johannes der Eintaucher", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "judge [of] all the land", "deu": "Richter [der] ganzen Erde", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Adonijah", "deu": "König Adonia", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Agrippa the king", "deu": "Agrippa, der König", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1933,7 +1932,7 @@
 {"english": "king Cyrus", "deu": "König Kores", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Darius King", "deu": "Darius, König", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king David", "deu": "König David", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "king herod", "deu": "König Herodes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "king Herod", "deu": "König Herodes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Jehoash", "deu": "König Joas", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Jehoiachin", "deu": "König Jojachin", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Jehoiakim", "deu": "König Jojakim", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2034,7 +2033,7 @@
 {"english": "king Solomon", "deu": "König Salomo", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Uzziah the king", "deu": "Usia, der König", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Zedekiah", "deu": "König Zedekia", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "the from-law", "deu": "der Gesetzgeber", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "the lawgiver", "deu": "der Gesetzgeber", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "law, instruction", "deu": "Gesetz, Weisung", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "light", "deu": "Licht", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "lord", "deu": "Herr", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2073,7 +2072,7 @@
 {"english": "mighty one", "deu": "der Mächtige", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "mighty one [of] Jacob", "deu": "der Mächtige [Jakobs]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [the] Highest", "deu": "Gott, [der] Höchste", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[my]son beloved", "deu": "[mein] Sohn, der geliebte", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[my] son beloved", "deu": "[mein] Sohn, der geliebte", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "faithful", "deu": "treu", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my king", "deu": "mein König", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[my] messenger", "deu": "[mein] Bote", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2131,8 +2130,8 @@
 {"english": "rock; stone mass, rocky crag; a title of G-d, with a focus of stability, and possibly as a place of security and safety", "deu": "Fels; Steinmasse, Felszacke; ein Titel Gottes mit Betonung der Beständigkeit und vielleicht als Ort der Sicherheit und Geborgenheit", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "rock [of] Israel", "deu": "Fels [Israels]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "lord/ruler of [the] kings [of] the land", "deu": "Herr/Herrscher über [die] Könige [der] Erde", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "savior, deliverer, rescuer;", "deu": "Retter, Befreier, Erretter", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "learned writer, scribe, secretary. → scribe; secretary.", "deu": "gelehrter Schreiber, Schriftgelehrter, Sekretär", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "savior, deliverer, rescuer", "deu": "Retter, Befreier, Erretter", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "learned writer, scribe, secretary", "deu": "gelehrter Schreiber, Schriftgelehrter, Sekretär", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "servant [of the] living G-d", "deu": "Knecht [des] lebendigen Gottes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "shepherd", "deu": "Hirte", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "shepherd of Israel", "deu": "Hirte Israels", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2149,7 +2148,7 @@
 {"english": "a potentate, sovereign, prince", "deu": "ein Machthaber, Herrscher, Fürst", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "stone [of] Israel", "deu": "Stein [Israels]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "ruler of a fourth part", "deu": "Herrscher über ein Viertel", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "great prince of abiyliyn", "deu": "großer Fürst von Abilene", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "great prince of Abilene", "deu": "großer Fürst von Abilene", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "great prince of the Galilee", "deu": "großer Fürst von Galiläa", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "great prince of the land of Ituraea and Trachonitis", "deu": "großer Fürst des Landes Ituräa und Trachonitis", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "accuser", "deu": "Verkläger", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2193,7 +2192,7 @@
 {"english": "the rock", "deu": "der Fels", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "root [of] David", "deu": "Wurzel [Davids]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the serpent", "deu": "die Schlange", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "the serpent [of] the east", "deu": "die Schlange [der] Vorzeit", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "the serpent [of] old", "deu": "die Schlange [der] Vorzeit", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "servant of G-d", "deu": "Knecht Gottes", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "servant of the LORD", "deu": "Knecht des HERRN", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son [of] Jesse", "deu": "Sohn [Isais]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}

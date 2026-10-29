@@ -155,9 +155,30 @@ internal record NumberedAddressResponse(int Chapter, int Verse, int FrameChapter
 
 internal static class ReadEndpoints
 {
+    /// <summary>
+    /// A text as the list every page asks for gives it: what a reader picks it by, shows beside it and
+    /// credits it with, without the paragraphs only a page about the texts reads.
+    /// </summary>
+    internal static CorpusResponse Brief(CorpusResponse corpus) => corpus with
+    {
+        About = null,
+        Summary = null,
+        Tagline = null,
+        Citation = null,
+        RightsNote = null,
+        TermsNote = null,
+        PartSources = null,
+    };
+
     public static void MapRead(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/corpora", async (AppDbContext db, ICanonIndex canon, CancellationToken cancellationToken) =>
+        // brief=true leaves out what only a page about the texts reads — what each is, its citation, its
+        // rights in full — which is three quarters of the list's bytes, and every page asks for the list.
+        routes.MapGet("/corpora", async (
+            [FromQuery] bool? brief,
+            AppDbContext db,
+            ICanonIndex canon,
+            CancellationToken cancellationToken) =>
         {
             var entries = await canon.Texts(cancellationToken);
             var texts = await db.Texts.OrderBy(t => t.Slug).ToListAsync(cancellationToken);
@@ -171,6 +192,7 @@ internal static class ReadEndpoints
                     Summary = TextSummaries.For(text.Slug),
                     Tagline = TextTaglines.For(text.Slug),
                 })
+                .Select(corpus => brief == true ? Brief(corpus) : corpus)
                 .ToList();
 
             return Results.Ok(new CorpusListResponse(items));

@@ -78,7 +78,7 @@ internal sealed class DownloadsCatalogue(string? folder, string? baseUrl, ILogge
                 t.Books, t.Verses, Of(t.File), Of(t.Attribution))
             {
                 Terms = TextRights.Terms(t.Slug, t.Licence, t.Redistribution),
-                TermsNote = TextRights.Note(t.Slug),
+                TermsNote = TextRights.Served(t.Slug, t.Licence, t.Redistribution),
             })]);
     }
 

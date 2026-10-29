@@ -50,6 +50,11 @@ public sealed class LineSpellingsTests
     [InlineData("King Ahasureus", "King Ahasuerus")]
     [InlineData("might god [El]", "mighty G-d [El]")]
     [InlineData("G-d has filled with joy or [the object of] joy is G-d”", "G-d has filled with joy or [the object of] joy is G-d")]
+    [InlineData("daughter [of the] prince [of] the south", "daughter [of the] king [of] the south")]
+    [InlineData("Lukios the Cyrene", "Lucius of Cyrene")]
+    [InlineData("the from-law", "the lawgiver")]
+    [InlineData("y-h-v-h pays back [poss.] he restores peace offering of y-h-v-h", "y-h-v-h pays back, [poss.] he restores; peace offering of y-h-v-h")]
+    [InlineData("learned writer, scribe, secretary. → scribe; secretary.", "learned writer, scribe, secretary")]
     public void ASlipInANameIsPutRight(string line, string right)
     {
         LineSpellings.Name(line).Should().Be(right);
@@ -61,10 +66,26 @@ public sealed class LineSpellingsTests
     [InlineData("valley [of the] plain (?)")]
     [InlineData("[my] father is good")]
     [InlineData("son of Deker [piercing]")]
+    [InlineData("prince [of] the south")]
     [InlineData(null)]
     public void ANameSpelledRightIsLeftAlone(string? line)
     {
         LineSpellings.Name(line).Should().Be(line);
+    }
+
+    /// <summary>Every whole title or gloss put right has its rendering in every language keyed by what it now says.</summary>
+    [Fact]
+    public void EveryTitleOrGlossPutRightIsRenderedByWhatItNowSays()
+    {
+        var folder = TestResources.Shipped("Essenthos/name-glosses");
+        foreach (var file in Directory.EnumerateFiles(folder, "titles-glosses-*.jsonl"))
+        {
+            var english = File.ReadLines(file).Where(l => l.Length > 0)
+                .Select(l => System.Text.Json.JsonDocument.Parse(l).RootElement.GetProperty("english").GetString())
+                .ToHashSet();
+            english.Should().Contain(LineSpellings.NameCorrections.Values, Path.GetFileName(file));
+            english.Should().NotContain(LineSpellings.NameCorrections.Keys, Path.GetFileName(file));
+        }
     }
 
     [Fact]

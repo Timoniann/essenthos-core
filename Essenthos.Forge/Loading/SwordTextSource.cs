@@ -242,12 +242,10 @@ internal static class SwordTextSource
                 + "the edition prints at the head of a paragraph is printed here too.",
             RightsNote =
                 "CrossWire publishes the module as Public Domain, and its description says the 2024 text "
-                + "is free of rights as BPC provides it. The Strong numbers in the module are the work of "
-                + "Concordances et Traductions de la Bible (concordance.bible); they are read to draw "
-                + "links and are not stored on the words.",
+                + "is free of rights as BPC provides it.",
             Citation =
                 "La Sainte Bible, traduction J.N. Darby, révision BPC 2024 (JND v2.0), as CrossWire "
-                + "publishes it in the SWORD module FreJND, with the Strong numbers of concordance.bible.",
+                + "publishes it in the SWORD module FreJND.",
         }),
 
         ["GerSch"] = new(Path.Combine("Schlachter1951", "GerSch"), SwordSegmentation.Spaced, new TextDefinition(
@@ -281,9 +279,7 @@ internal static class SwordTextSource
             RightsNote =
                 "The 1951 revision is the Geneva Bible Society's (Copyright 1951 Genfer Bibelgesellschaft, "
                 + "as the module's description prints it), and CrossWire publishes it under "
-                + "\"Copyrighted; Free non-commercial distribution\". It is served for that use only. "
-                + "Nobody is named for the Strong numbers in the module; they are read to draw links and "
-                + "are not stored on the words.",
+                + "\"Copyrighted; Free non-commercial distribution\". It is served for that use only.",
             Citation =
                 "Die Heilige Schrift des Alten und Neuen Testaments, übersetzt von F. E. Schlachter, "
                 + "Neue Überarbeitung 1951, © Genfer Bibelgesellschaft, as CrossWire publishes it in the "

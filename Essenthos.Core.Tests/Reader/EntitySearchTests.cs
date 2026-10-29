@@ -313,6 +313,22 @@ public sealed class EntitySearchTests : IDisposable
         english[_abram.Id].Should().Be(new RenamedHeading("Abraham", null, "Abram", null));
     }
 
+    /// <summary>
+    /// The rows of Barnabas's page name him as the page does: <em>Іван супутник Варнави</em>, never
+    /// <em>Йосипа</em>, and in English by the heading.
+    /// </summary>
+    [Fact]
+    public void ARenamedPersonsOwnFormsAreTheHeadings()
+    {
+        var barnabas = new RenamedHeading("Barnabas", "Варнава", "Joseph", "Йосип") { LocalGenitive = "Варнави" };
+        var filed = new Dictionary<string, string> { ["nominative"] = "Йосип", ["genitive"] = "Йосипа" };
+
+        RenamedHeadings.Forms(barnabas, filed, "ukr").Should().BeEquivalentTo(
+            new Dictionary<string, string> { ["nominative"] = "Варнава", ["genitive"] = "Варнави" });
+        RenamedHeadings.Forms(barnabas, new Dictionary<string, string> { ["nominative"] = "Joseph" }, "eng")
+            .Should().BeEquivalentTo(new Dictionary<string, string> { ["nominative"] = "Barnabas" });
+    }
+
     /// <summary><em>Elijah the Tishbite</em> says which Elijah; it does not rename him.</summary>
     [Fact]
     public async Task ANameWithAnEpithetIsNotARenaming() =>

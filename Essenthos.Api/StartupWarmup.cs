@@ -39,6 +39,7 @@ internal sealed class StartupWarmup(
     internal static readonly string[] Requests =
     [
         "/v1/corpora",
+        "/v1/corpora?brief=true",
         "/v1/parallel/genesis/1?corpora=KJV,BHSA",
         "/v1/context/genesis/1?language=en",
         "/v1/entities/moses?language=en",
