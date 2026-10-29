@@ -14,7 +14,7 @@ internal sealed record CommitInfo(string Sha, string? Subject, string? At);
 
 /// <param name="Key"><c>core</c> or <c>web</c>.</param>
 /// <param name="Head">The tip of the branch that is deployed from, here.</param>
-/// <param name="Pushed">That branch as GitHub last had it when this machine pushed or fetched, which is what CI builds images from.</param>
+/// <param name="Pushed">That branch as GitHub last had it when this machine pushed or fetched; GitHub only keeps a copy, and builds nothing.</param>
 /// <param name="Unpushed">Commits on the branch here that GitHub does not have yet.</param>
 internal sealed record RepositoryState(string Key, bool Found, CommitInfo? Head, CommitInfo? Pushed, int? Unpushed);
 
@@ -34,7 +34,11 @@ internal sealed record SetupStep(string Key, bool? Done);
 internal sealed record DeployPlan(string? Server, CommitInfo? Commit, CommitInfo? WebCommit, string? Release, string? ReleaseBuiltAt, long? ReleaseBytes);
 
 /// <param name="Kind"><c>code</c>, <c>codeBack</c>, <c>corpus</c>, <c>rollback</c> or <c>release</c>.</param>
-/// <param name="Blocked">Why it cannot run now, as a key the page words: <c>address</c>, <c>password</c>, <c>notPushed</c>, <c>noRelease</c>, <c>devFirst</c>, <c>noPrevious</c>, <c>running</c>.</param>
+/// <param name="Blocked">
+/// Why it cannot run now, as a key the page words: <c>address</c>, <c>password</c>, <c>noCommit</c>, <c>noRelease</c>,
+/// <c>rehearsalFirst</c> (the release has not been through the rehearsal on this machine), <c>devFirst</c> (nor through
+/// the remote target production names instead), <c>noPrevious</c>, <c>running</c>.
+/// </param>
 internal sealed record DeployAction(string Kind, bool Enabled, string? Blocked, DeployPlan? Plan);
 
 /// <param name="Code">The last code deploy that succeeded, from the change log.</param>
@@ -43,10 +47,11 @@ internal sealed record DeployMarks(DeployMark? Code, DeployMark? Corpus);
 
 internal sealed record DeployMark(string At, string? Commit, string? WebCommit, string? Release);
 
-/// <param name="Key"><c>local</c>, <c>dev</c> or <c>prod</c>.</param>
+/// <param name="Key"><c>local</c>, or an environment under <c>Desk:Deploy:Environments</c>: <c>prod</c>, <c>rehearsal</c>, <c>dev</c>.</param>
 /// <param name="Site">The address it is reached at.</param>
-/// <param name="Configured">Whether this machine knows how to reach the server over ssh; always true for this machine.</param>
+/// <param name="Configured">Whether this machine knows how to reach the server over ssh; always true for this machine and for the rehearsal on it.</param>
 /// <param name="Reach"><c>up</c>, <c>empty</c> (it answers and has no corpus), <c>locked</c> (behind the dev password), <c>down</c>, or <c>unknown</c> where there is no address to ask.</param>
+/// <param name="Copies">How many corpus copies its target keeps (Forge's <c>Publish:Targets:&lt;name&gt;:Copies</c>): 1 means a publication shows the maintenance page while it replaces the corpus, and a rollback publishes the earlier release again. Null for this machine.</param>
 internal sealed record EnvironmentState(
     string Key,
     string? Site,
@@ -60,7 +65,8 @@ internal sealed record EnvironmentState(
     DeployMarks Last,
     IReadOnlyList<Behind> Behind,
     IReadOnlyList<SetupStep> Setup,
-    IReadOnlyList<DeployAction> Actions);
+    IReadOnlyList<DeployAction> Actions,
+    int? Copies = null);
 
 /// <param name="State"><c>succeeded</c>, <c>failed</c>, <c>running</c>, or <c>interrupted</c> where the console stopped before the run did.</param>
 internal sealed record DeployHistoryEntry(
@@ -98,16 +104,19 @@ internal sealed record DeployRequest(
     string? Note);
 
 /// <summary>
-/// Where the site runs and what reaches it: this machine, dev and production, what code and which
-/// corpus each has, what the branch here holds that they do not, and the runs that move code and
-/// corpus to them — <c>scripts/deploy.ps1</c> and <c>forge release | publish | rollback</c>, each
-/// the same command a person would type, started one at a time through the console's runner and
-/// recorded in the change log.
+/// Where the site runs and what reaches it: this machine, production, the rehearsal of the server on
+/// this machine and a dev where one exists, what code and which corpus each has, what the branch here
+/// holds that they do not, and the runs that move code and corpus to them —
+/// <c>scripts/deploy.ps1 -SendImages</c> (check, build and send the images from this machine, then start
+/// them) and <c>forge release | publish | rollback</c>, each the same command a person would type,
+/// started one at a time through the console's runner and recorded in the change log.
 ///
 /// <para>
 /// A server's address and database password are read from the same configuration Forge reads
-/// (<c>Publish:Targets:&lt;name&gt;</c>, in user secrets) and only their presence is ever reported.
-/// The addresses the site is reached at are under <c>Desk:Deploy:Environments</c>.
+/// (<c>Publish:Targets:&lt;name&gt;</c>: Forge's appsettings.json beneath this console's own
+/// configuration and the user secrets) and only their presence is ever reported. The addresses the
+/// site is reached at are under <c>Desk:Deploy:Environments</c>; one with <c>Enabled: false</c> is
+/// not shown, which is how a machine without dev shows production alone.
 /// </para>
 /// </summary>
 internal sealed class Deployment(
@@ -157,6 +166,17 @@ internal sealed class Deployment(
     private string Releases => configuration["Publish:ReleasesPath"] is { Length: > 0 } releases
         ? Path.GetFullPath(Path.Combine(paths.Repository, releases))
         : Path.Combine(paths.Repository, ".releases");
+
+    /// <summary>
+    /// Forge's publish targets as Forge sees them: its appsettings.json in the checkout, with this
+    /// console's configuration and the user secrets the two share over it.
+    /// </summary>
+    private IConfiguration Targets => _targets ??= new ConfigurationBuilder()
+        .AddJsonFile(Path.Combine(paths.Repository, "Essenthos.Forge", "appsettings.json"), optional: true, reloadOnChange: false)
+        .AddConfiguration(configuration)
+        .Build();
+
+    private IConfiguration? _targets;
 
     public void Dispose() => _http.Dispose();
 
@@ -231,7 +251,9 @@ internal sealed class Deployment(
     }
 
     private IEnumerable<string> RemoteNames() =>
-        configuration.GetSection("Desk:Deploy:Environments").GetChildren().Select(c => c.Key);
+        configuration.GetSection("Desk:Deploy:Environments").GetChildren()
+            .Where(c => !bool.TryParse(c["Enabled"], out var enabled) || enabled)
+            .Select(c => c.Key);
 
     private async Task<EnvironmentState> Environment(
         string name,
@@ -264,9 +286,11 @@ internal sealed class Deployment(
         var section = configuration.GetSection($"Desk:Deploy:Environments:{name}");
         var site = section["Site"];
         var targetName = section["Target"] is { Length: > 0 } t ? t : name;
-        var target = configuration.GetSection($"Publish:Targets:{targetName}");
+        var target = Targets.GetSection($"Publish:Targets:{targetName}");
+        var onThisMachine = bool.TryParse(target["Local"], out var isLocal) && isLocal;
         var ssh = target["Ssh"] is { Length: > 0 } address ? address : null;
-        var hasPassword = target["Password"] is { Length: > 0 };
+        var hasPassword = target["Password"] is { Length: > 0 }
+                          || (onThisMachine && target["EnvFile"] is { Length: > 0 } envFile && File.Exists(Path.Combine(paths.Repository, envFile)));
         var credentials = section["User"] is { Length: > 0 } user && section["Password"] is { Length: > 0 } secret
             ? new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{user}:{secret}")))
             : null;
@@ -282,41 +306,57 @@ internal sealed class Deployment(
 
         var newest = releases.LastOrDefault();
         var after = target["After"] is { Length: > 0 } a ? a : null;
+        var afterHere = after is not null && bool.TryParse(Targets[$"Publish:Targets:{after}:Local"], out var rehearsal) && rehearsal;
+        var copies = int.TryParse(target["Copies"], out var count) ? count : 3;
         var answering = remote.Reach is "up" or "empty" or "locked";
         var setup = new List<SetupStep>
         {
-            new("address", ssh is not null),
+            new("address", onThisMachine || ssh is not null),
             new("password", hasPassword),
             new("answering", site is null ? null : answering),
-            new("pushed", core.Pushed is not null),
             new("corpus", remote.Reach == "up" ? remote.Release is not null : remote.Reach == "empty" ? false : null),
         };
 
         string? Blocked(params (bool Failing, string Reason)[] checks) =>
             running is not null ? "running" : checks.FirstOrDefault(c => c.Failing).Reason;
 
-        var codePlan = new DeployPlan(ssh, core.Pushed, web.Pushed, null, null, null);
+        // A release the target has served before needs no rehearsal: that is what a rollback publishes.
+        var unaccepted = after is not null && newest is not null
+            && newest.PublishedTo.All(p => p.Target != after && p.Target != targetName);
+        var corpusPlan = new DeployPlan(onThisMachine ? null : ssh, null, null, newest?.Name, newest?.BuiltAt, newest?.Bytes);
+        var noAddress = !onThisMachine && ssh is null;
+        var corpusAction = Action(CorpusAction, corpusPlan, Blocked(
+            (noAddress, "address"),
+            (!hasPassword, "password"),
+            (newest is null, "noRelease"),
+            (unaccepted, afterHere ? "rehearsalFirst" : "devFirst")));
+        var rollbackAction = Action(RollbackAction, new DeployPlan(onThisMachine ? null : ssh, null, null, null, null, null), Blocked((noAddress, "address")));
+        if (onThisMachine)
+        {
+            // The server's stack on this machine takes corpus releases; its code is whatever images it was started with.
+            return new EnvironmentState(
+                name, site, true, remote.Reach, coreCommit ?? Unknown(remote.Commit), remote.BuiltAt,
+                webCommit ?? Unknown(remote.WebCommit), remote.Release, remote.ReleaseBuiltAt, last, behindList,
+                setup.Where(s => s.Key != "address").ToList(), [corpusAction, rollbackAction], copies);
+        }
+
+        var codePlan = new DeployPlan(ssh, core.Head, web.Head, null, null, null);
         var previous = PreviousCode(history, name);
         var backPlan = previous is null
             ? null
             : new DeployPlan(ssh, await Known(paths.Repository, previous.Commit, cancellationToken),
                 previous.WebCommit is null ? null : await Known(WebRepository, previous.WebCommit, cancellationToken), null, null, null);
-        var corpusPlan = new DeployPlan(ssh, null, null, newest?.Name, newest?.BuiltAt, newest?.Bytes);
         var actions = new List<DeployAction>
         {
-            Action(CodeAction, codePlan, Blocked((ssh is null, "address"), (core.Pushed is null, "notPushed"))),
-            Action(CorpusAction, corpusPlan, Blocked(
-                (ssh is null, "address"),
-                (!hasPassword, "password"),
-                (newest is null, "noRelease"),
-                (after is not null && newest is not null && newest.PublishedTo.All(p => p.Target != after), "devFirst"))),
-            Action(RollbackAction, new DeployPlan(ssh, null, null, null, null, null), Blocked((ssh is null, "address"))),
+            Action(CodeAction, codePlan, Blocked((ssh is null, "address"), (core.Head is null, "noCommit"))),
+            corpusAction,
+            rollbackAction,
             Action(CodeBackAction, backPlan, Blocked((ssh is null, "address"), (backPlan?.Commit is null, "noPrevious"))),
         };
 
         return new EnvironmentState(
             name, site, ssh is not null, remote.Reach, coreCommit ?? Unknown(remote.Commit), remote.BuiltAt,
-            webCommit ?? Unknown(remote.WebCommit), remote.Release, remote.ReleaseBuiltAt, last, behindList, setup, actions);
+            webCommit ?? Unknown(remote.WebCommit), remote.Release, remote.ReleaseBuiltAt, last, behindList, setup, actions, copies);
     }
 
     private static DeployAction Action(string kind, DeployPlan? plan, string? blocked) =>
@@ -327,7 +367,8 @@ internal sealed class Deployment(
     private ProcessStartInfo Command(DeployAction action, string environment, bool dryRun)
     {
         var plan = action.Plan;
-        var target = configuration[$"Desk:Deploy:Environments:{environment}:Target"] is { Length: > 0 } t ? t : environment;
+        var settings = configuration.GetSection($"Desk:Deploy:Environments:{environment}");
+        var target = settings["Target"] is { Length: > 0 } t ? t : environment;
         List<string> arguments;
         string[] program;
         switch (action.Kind)
@@ -339,6 +380,9 @@ internal sealed class Deployment(
                     "-NoProfile", "-File", Path.Combine(paths.Repository, "scripts", "deploy.ps1"),
                     "-Server", plan!.Server!, "-Environment", environment, "-Commit", plan.Commit!.Sha,
                     .. plan.WebCommit is { } web ? new[] { "-WebCommit", web.Sha } : [],
+                    // Checks, builds and sends whichever of the two images the server lacks, first.
+                    "-SendImages",
+                    .. settings["AnalyticsEndpoint"] is { Length: > 0 } counter ? new[] { "-AnalyticsEndpoint", counter } : [],
                     .. dryRun ? new[] { "-WhatIf" } : [],
                 ];
                 break;
@@ -517,8 +561,9 @@ internal sealed class Deployment(
     {
         "address" => "this machine does not know the server's address.",
         "password" => "the database password the publication checks the release with is not set on this machine.",
-        "notPushed" => "the branch is not on GitHub, so there is no image built from it.",
+        "noCommit" => "the branch to deploy from is not in the checkout here.",
         "noRelease" => "no corpus release has been made on this machine.",
+        "rehearsalFirst" => "production only takes a release the rehearsal on this machine has already accepted.",
         "devFirst" => "production only takes a release dev has already accepted.",
         "noPrevious" => "there is no earlier code deploy to return to.",
         "running" => "another run has not finished.",

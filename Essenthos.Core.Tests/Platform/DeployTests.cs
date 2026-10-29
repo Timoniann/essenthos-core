@@ -98,12 +98,20 @@ public sealed class DeployTests : IAsyncLifetime
             $"--Desk:Deploy:Environments:prod:Site={site.TrimEnd('/')}/down",
             "--Desk:Deploy:Environments:prod:Target=prod",
             $"--Desk:Deploy:Environments:staging:Site={site.TrimEnd('/')}/down",
+            // The server's stack on this machine: no address, no site to ask.
+            "--Desk:Deploy:Environments:rehearsal:Target=rehearsal",
+            // An environment this machine has no use for.
+            $"--Desk:Deploy:Environments:gone:Site={site}",
+            "--Desk:Deploy:Environments:gone:Enabled=false",
             $"--Publish:ReleasesPath={Releases}",
             "--Publish:Targets:dev:Ssh=deploy@192.0.2.1",
             "--Publish:Targets:dev:Password=not-a-password",
             "--Publish:Targets:prod:Ssh=deploy@192.0.2.1",
             "--Publish:Targets:prod:Password=not-a-password",
-            "--Publish:Targets:prod:After=dev",
+            "--Publish:Targets:prod:After=rehearsal",
+            "--Publish:Targets:prod:Copies=1",
+            "--Publish:Targets:rehearsal:Local=true",
+            "--Publish:Targets:rehearsal:Password=not-a-password",
             "--Database:ConnectionString=Host=localhost;Port=5437;Database=unused;Username=unused",
             "--Database:Password=unused",
         ], contentRoot: _root);
@@ -151,7 +159,15 @@ public sealed class DeployTests : IAsyncLifetime
         var prod = state.Environments.Single(e => e.Key == "prod");
         prod.Reach.Should().Be("down");
         prod.Setup.Single(s => s.Key == "answering").Done.Should().BeFalse();
-        prod.Actions.Single(a => a.Kind == "corpus").Blocked.Should().Be("devFirst", "the release has not been to dev");
+        prod.Actions.Single(a => a.Kind == "corpus").Blocked.Should().Be("rehearsalFirst", "the release has not been through the rehearsal");
+        prod.Setup.Select(s => s.Key).Should().NotContain("pushed", "GitHub builds nothing; the images are made here");
+
+        var rehearsal = state.Environments.Single(e => e.Key == "rehearsal");
+        (rehearsal.Configured, rehearsal.Reach).Should().Be((true, "unknown"));
+        rehearsal.Actions.Select(a => (a.Kind, a.Enabled)).Should().Equal(("corpus", true), ("rollback", true));
+
+        state.Environments.Select(e => e.Key).Should().NotContain("gone");
+        (prod.Copies, dev.Copies, local.Copies).Should().Be((1, 3, (int?)null), "the page words a one-copy publication as a replacement");
 
         var core = state.Repositories.Single(r => r.Key == "core");
         (core.Head!.Sha, core.Pushed!.Sha, core.Unpushed).Should().Be((_coreHead, _coreHead, 0));
@@ -184,7 +200,8 @@ public sealed class DeployTests : IAsyncLifetime
         finished.Lines.Should().Contain("pretending to deploy");
         Called().Should().ContainSingle().Which.Should().Equal(
             "pwsh", "-NoProfile", "-File", Path.Combine(Repository, "scripts", "deploy.ps1"),
-            "-Server", "deploy@192.0.2.1", "-Environment", "dev", "-Commit", _coreHead, "-WebCommit", _webHead, "-WhatIf");
+            "-Server", "deploy@192.0.2.1", "-Environment", "dev", "-Commit", _coreHead, "-WebCommit", _webHead,
+            "-SendImages", "-WhatIf");
 
         var logged = await Logged(2);
         logged.Select(e => (e.Section, e.Action, e.Target)).Should().AllBeEquivalentTo(("deploy", "code", "environment/dev"));
@@ -196,6 +213,29 @@ public sealed class DeployTests : IAsyncLifetime
         after.History.Should().ContainSingle().Which.Should().Match<DeployHistoryEntry>(h =>
             h.State == "succeeded" && h.DryRun && h.Commit == _coreHead && h.Environment == "dev");
         after.Environments.Single(e => e.Key == "dev").Last.Code.Should().BeNull("a dry run deployed nothing");
+    }
+
+    [Fact]
+    public async Task ACommitGitHubDoesNotHaveIsDeployedAsItIsHere()
+    {
+        var local = Commit(Repository, "Not pushed");
+
+        var code = (await Read()).Environments.Single(e => e.Key == "prod").Actions.Single(a => a.Kind == "code");
+
+        (code.Enabled, code.Plan!.Commit!.Sha).Should().Be((true, local));
+    }
+
+    [Fact]
+    public async Task TheRehearsalAcceptingAReleaseLetsProductionTakeIt()
+    {
+        File.WriteAllText(Path.Combine(Releases, $"{Release}.published"), "rehearsal\t2026-09-21T09:00:00Z\n");
+
+        var corpus = (await Read()).Environments.Single(e => e.Key == "prod").Actions.Single(a => a.Kind == "corpus");
+
+        (corpus.Enabled, corpus.Blocked).Should().Be((true, (string?)null));
+        var started = await Start(new { action = "corpus", environment = "rehearsal", dryRun = true, release = Release });
+        await Finished(started.Run!.Id);
+        Called().Should().ContainSingle().Which.Should().ContainInOrder("publish", "--to", "rehearsal", "--release", Release, "--dry-run");
     }
 
     [Fact]

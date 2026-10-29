@@ -19,7 +19,8 @@ and `web-check-isolated`, the same checks run while working. They are the only g
 -SkipChecks leaves them out, for a commit whose checks were just run.
 
 A tag the server already has is refused, since a commit's image should not change once it is there;
--Force builds and sends it again.
+-Force builds and sends it again, and -OnlyMissing leaves it as it is and sends the other, which is how
+`deploy.ps1 -SendImages` and the owner's console call this.
 
 -WhatIf says what it would check, build and send, and touches nothing: no ssh, no build.
 
@@ -42,7 +43,9 @@ param(
     [string] $AnalyticsEndpoint = '',
     [string] $Platform = 'linux/amd64',
     [switch] $SkipChecks,
-    [switch] $Force
+    [switch] $Force,
+    # Leave a tag the server already has as it is, instead of refusing it.
+    [switch] $OnlyMissing
 )
 
 $ErrorActionPreference = 'Stop'
@@ -106,6 +109,9 @@ if (-not $PSCmdlet.ShouldProcess($Server, "Build and send $($plan -join ' and ')
         }
         Write-Host "  build   docker build --platform $Platform -f $($image.Dockerfile) --build-arg SOURCE_COMMIT=$($image.Commit) $($image.BuildArgs -join ' ') <the commit, archived>"
         Write-Host "  send    docker save $($image.Tag) | ssh $Server docker load"
+        if ($OnlyMissing) {
+            Write-Host "  (none of it if the server already has $($image.Tag))"
+        }
     }
     Write-Host 'Nothing was checked, built or sent.'
     return
@@ -113,7 +119,14 @@ if (-not $PSCmdlet.ShouldProcess($Server, "Build and send $($plan -join ' and ')
 
 $probe = (($images | ForEach-Object { "docker image inspect $($_.Tag) >/dev/null 2>&1 && echo $($_.Tag);" }) -join ' ') + ' true'
 $present = @(ssh @ssh $Server $probe | Where-Object { $_ })
-if ($present -and -not $Force) {
+if ($present -and $OnlyMissing -and -not $Force) {
+    Write-Host "The server already has $($present -join ' and '); left as it is."
+    $images = @($images | Where-Object { $present -notcontains $_.Tag })
+    if (-not $images) {
+        return
+    }
+}
+elseif ($present -and -not $Force) {
     throw "The server already has $($present -join ' and '). Deploy it with scripts/deploy.ps1, or send it again with -Force."
 }
 
