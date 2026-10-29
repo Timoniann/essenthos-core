@@ -72,8 +72,18 @@ internal static class FamilyEndpoints
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
         var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
-        var lines = await EntityDistinguishers.OfSlugs(
-            db, [.. people.Select(p => p.Slug)], ReaderLanguages.Prose(prose, language), cancellationToken);
+        var words = ReaderLanguages.Prose(prose, language);
+        var lines = await EntityDistinguishers.OfSlugs(db, [.. people.Select(p => p.Slug)], words, cancellationToken);
+        // Most people have no stored line in the language asked for; the line the index phrases from
+        // their descriptor tells their namesakes apart instead. Only its words travel: the descriptor
+        // whole, with every name's forms and every clause's verses, is some 18 KB a person.
+        var spoken = DescriptorPhrasings.Spoken(words);
+        var described = await Descriptors.Of(
+            db,
+            people.Where(p => EntityDistinguishers.For(ours, lines, p.Slug) is null).Select(p => p.Slug),
+            words,
+            cancellationToken,
+            language);
         var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
         var order = slugs.Select((slug, index) => (slug, index)).ToDictionary(p => p.slug, p => p.index, StringComparer.Ordinal);
 
@@ -104,6 +114,9 @@ internal static class FamilyEndpoints
                     ])
                 {
                     LocalDistinguisher = EntityDistinguishers.For(ours, lines, p.Slug),
+                    DescriptorLine = described.TryGetValue(p.Slug, out var descriptor) && descriptor.Language == spoken
+                        ? string.Concat(descriptor.Parts.Select(part => part.Text)).Trim() is { Length: > 0 } said ? said : null
+                        : null,
                     Thumbnail = pictured.GetValueOrDefault(p.Slug),
                     AlsoCalled = renamed.TryGetValue(p.Id, out var also) ? also.AlsoCalled : null,
                 }),
@@ -142,6 +155,14 @@ internal sealed record FamilyMemberResponse(
 {
     /// <summary>Our own line under the name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
+
+    /// <summary>
+    /// What the corpus says the person is, in the words of the language asked for, as the index
+    /// phrases it — <em>дочка Ізмаїла, дружина Ісава</em> — where there is no
+    /// <see cref="LocalDistinguisher"/>; null where there is one, where nothing is said, or where it
+    /// could only be said in another language.
+    /// </summary>
+    public string? DescriptorLine { get; init; }
 
     /// <summary>The picture the person's page leads with, to show small; null where there is none.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
