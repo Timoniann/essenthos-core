@@ -45,6 +45,44 @@ public sealed class PageRenderingTests
     private static string VersePage(string text) =>
         PageHtml.Render(Shell, PageViews.Verse(SiteLanguage.Ukrainian, Ukrainian, Mark33(text)), SiteLanguage.Ukrainian, Origin);
 
+    /// <summary>
+    /// A section whose page opens on a longer lead than its description says the lead, as the reader's
+    /// page does, and only its description where the wording has no lead.
+    /// </summary>
+    [Fact]
+    public void ASectionSaysItsLeadWhereTheWordingHasOne()
+    {
+        const string Wording = """
+            { "page": { "encyclopedia": { "title": "People", "description": "Short.", "lead": "Everyone the text names, at length." } } }
+            """;
+        var address = PageAddress.Parse("/encyclopedia");
+
+        var led = PageViews.Section(SiteLanguage.English, PageWording.Parse("en", Wording), address);
+        var plain = PageViews.Section(SiteLanguage.English, PageWording.Parse("en", Wording.Replace(", \"lead\": \"Everyone the text names, at length.\"", "")), address);
+
+        led.Body.Should().Contain("<p>Everyone the text names, at length.</p>");
+        led.Description.Should().Be("Short.");
+        plain.Body.Should().Contain("<p>Short.</p>");
+    }
+
+    /// <summary>
+    /// A Strong page sets out the lexicon's numbered senses a line each, as the reader's page does, so
+    /// the text a reader sees first is the same height before the script runs as after it.
+    /// </summary>
+    [Fact]
+    public void AStrongPageSetsOutItsSensesALineEach()
+    {
+        var page = PageViews.Strong(SiteLanguage.English, PageWording.Compiled("en"), new StrongView(
+            "H430", "אֱלֹהִים", "ʼĕlôhîym", "gods in the ordinary sense", "plural of H433",
+            "1) (plural)\n1a) rulers, judges\n2) (plural intensive-singular meaning)"));
+
+        var html = PageHtml.Render(Shell, page, SiteLanguage.English, Origin);
+
+        html.Should().Contain("<p>gods in the ordinary sense</p><p class=\"outline\">1) (plural)\n1a) rulers, judges\n2)")
+            .And.Contain(".prerendered .outline{white-space:pre-line}")
+            .And.Contain("<p>plural of H433</p>");
+    }
+
     [Fact]
     public void AVersePageInUkrainianIsTitledWithItsAddressTheVerseAndTheText()
     {

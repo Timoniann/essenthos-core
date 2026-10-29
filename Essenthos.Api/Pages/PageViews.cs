@@ -55,7 +55,14 @@ internal sealed record RecordView(
     public IReadOnlyList<string> SameAs { get; init; } = [];
 }
 
-internal sealed record StrongView(string Number, string? Lemma, string? Transliteration, string? Definition, string? Derivation);
+/// <param name="Outline">The lexicon's numbered senses, a line each, as the reader's page sets them out.</param>
+internal sealed record StrongView(
+    string Number,
+    string? Lemma,
+    string? Transliteration,
+    string? Definition,
+    string? Derivation,
+    string? Outline = null);
 
 internal sealed record BookLink(int Ordinal, string Name);
 
@@ -356,9 +363,19 @@ internal static partial class PageViews
         var body = Open(language)
             .Open("nav").Link(language.Path("/"), PageContent.SiteName).Close("nav")
             .Element("h1", head);
-        foreach (var said in new[] { entry.Definition, entry.Derivation }.Where(said => !string.IsNullOrWhiteSpace(said)))
+        if (!string.IsNullOrWhiteSpace(entry.Definition))
         {
-            body.Element("p", said!);
+            body.Element("p", entry.Definition);
+        }
+
+        if (!string.IsNullOrWhiteSpace(entry.Outline))
+        {
+            body.Element("p", entry.Outline, "outline");
+        }
+
+        if (!string.IsNullOrWhiteSpace(entry.Derivation))
+        {
+            body.Element("p", entry.Derivation);
         }
 
         body.Close("article");
@@ -468,7 +485,7 @@ internal static partial class PageViews
             ? Open(language)
                 .Open("nav").Link(language.Path("/"), PageContent.SiteName).Close("nav")
                 .Element("h1", title)
-                .Element("p", description)
+                .Element("p", t.Optional($"page.{key}.lead") ?? description)
                 .Close("article")
             : null;
         return Page(StatusCodes.Status200OK, t.Titled(title), title, description, body) with
