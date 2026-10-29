@@ -133,20 +133,15 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
 
         var supplement = LocationSupplement.Read();
         var read = supplement.Apply(Read(ancient, modern));
-        var bindings = supplement.Bindings.ToDictionary(b => b.Slug, StringComparer.Ordinal);
         var regions = supplement.Regions.ToDictionary(r => r.Slug, StringComparer.Ordinal);
-        var additionalSlugs = bindings.Keys.Concat(regions.Keys).ToList();
+        var regionSlugs = regions.Keys.ToList();
 
         var places = await db.Entities
-            .Where(e => e.Kind == EntityKind.Place && (e.OpenBibleId != null || additionalSlugs.Contains(e.Slug)))
+            .Where(e => e.Kind == EntityKind.Place && (e.OpenBibleId != null || regionSlugs.Contains(e.Slug)))
             .Select(e => new { e.Id, e.Slug, e.OpenBibleId })
             .ToListAsync(cancellationToken);
-        supplement.ValidateBindings(ancient, places.Select(p => p.Slug).ToHashSet(StringComparer.Ordinal));
-        foreach (var place in places)
-            if (bindings.TryGetValue(place.Slug, out var binding) && place.OpenBibleId is { } held && held != binding.AncientId)
-                throw new InvalidDataException($"{place.Slug} already holds a different gazetteer identity.");
-        var byOpenBibleId = places.Where(p => p.OpenBibleId != null || bindings.ContainsKey(p.Slug))
-            .ToLookup(p => p.OpenBibleId ?? bindings[p.Slug].AncientId, p => p.Id, StringComparer.Ordinal);
+        var byOpenBibleId = places.Where(p => p.OpenBibleId != null)
+            .ToLookup(p => p.OpenBibleId!, p => p.Id, StringComparer.Ordinal);
 
         var locations = new List<PlaceLocation>(read.Located.Count);
         var unheld = read.Located.Count(located => !byOpenBibleId.Contains(located.PlaceId));
@@ -161,7 +156,8 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                 Score = located.Score,
                 ModernId = located.ModernId,
                 CoordinatesSource = located.CoordinatesSource,
-                Source = Source + (supplement.Points.Any(p => p.ModernId == located.ModernId) ? "; coordinates: " + located.CoordinatesSource : ""),
+                CoordinatesDataset = located.CoordinatesDataset,
+                Source = Credited(located.CoordinatesCredit),
             }));
         }
 
@@ -188,7 +184,8 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                     Withheld = answer.Withheld,
                     Grounds = [.. answer.Grounds],
                     CoordinatesSource = answer.CoordinatesSource,
-                    Source = Source + (supplement.Points.Any(p => p.ModernId == answer.ModernId) ? "; coordinates: " + answer.CoordinatesSource : ""),
+                    CoordinatesDataset = answer.CoordinatesDataset,
+                    Source = Credited(answer.CoordinatesCredit),
                 }));
             }
         }
@@ -199,17 +196,18 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             if (locations.Any(l => l.EntityId == place.Id) || candidates.Any(c => c.EntityId == place.Id)
                 || !LocationSupplement.ValidPoint(region.Lon, region.Lat) || string.IsNullOrWhiteSpace(region.Credit))
                 throw new InvalidDataException($"The representative region conflicts with a held answer: {place.Slug}.");
-            // No scholarly identification score was supplied: zero is unscored, never an invented probability.
+            // The source places the region and scores nothing, so the point carries no score at all.
             locations.Add(new PlaceLocation
             {
                 EntityId = place.Id, Longitude = region.Lon, Latitude = region.Lat, Kind = "representative-point",
-                Score = 0, ModernId = region.ModernId, CoordinatesSource = region.Credit, Source = region.Credit,
+                Score = null, ModernId = region.ModernId, CoordinatesSource = region.Dataset,
+                CoordinatesDataset = region.Dataset, Source = region.Credit,
             });
             candidates.Add(new PlaceCandidate
             {
-                EntityId = place.Id, Rank = 0, Score = 0, ModernId = region.ModernId, Site = region.Site,
+                EntityId = place.Id, Rank = 0, Score = null, ModernId = region.ModernId, Site = region.Site,
                 Longitude = region.Lon, Latitude = region.Lat, Kind = "representative-point", SiteType = "region",
-                CoordinatesSource = region.Credit, Source = region.Credit,
+                CoordinatesSource = region.Dataset, CoordinatesDataset = region.Dataset, Source = region.Credit,
             });
         }
 
@@ -260,27 +258,39 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                && heldCandidates.Select(Row).ToHashSet().SetEquals(candidates.Select(Row));
     }
 
+    /// <summary>The gazetteer's credit, and where another source gave the coordinates, that source's too.</summary>
+    private static string Credited(string? coordinates) => coordinates is null ? Source : $"{Source}; coordinates: {coordinates}";
+
     private static string Row(PlaceLocation l) =>
         string.Join('\u001f',
-            l.EntityId, Exact(l.Longitude), Exact(l.Latitude), l.Kind, l.Score, l.ModernId, l.CoordinatesSource, l.Source);
+            l.EntityId, Exact(l.Longitude), Exact(l.Latitude), l.Kind, l.Score, l.ModernId, l.CoordinatesSource,
+            l.CoordinatesDataset, l.Source);
 
     private static string Row(PlaceCandidate c) =>
         string.Join('\u001f',
             c.EntityId, c.Rank, c.Score, c.ModernId, c.Site, Exact(c.Longitude), Exact(c.Latitude), c.Kind,
             c.RadiusMeters, c.SiteType, c.Relation, c.ThroughOpenBibleId, c.Special, c.Withheld,
-            string.Join(',', c.Grounds), c.CoordinatesSource, c.Source);
+            string.Join(',', c.Grounds), c.CoordinatesSource, c.CoordinatesDataset, c.Source);
 
     private static string Exact(double? value) => value?.ToString("R", CultureInfo.InvariantCulture) ?? "";
 
     /// <param name="PlaceId">The gazetteer's identifier for the ancient place — what an entity holds.</param>
+    /// <param name="Score">Null where the source of the point scores nothing.</param>
     internal sealed record Located(
         string PlaceId,
         double Longitude,
         double Latitude,
         string Kind,
-        int Score,
+        int? Score,
         string ModernId,
-        string CoordinatesSource);
+        string CoordinatesSource)
+    {
+        /// <summary>The declared dataset whose coordinates these are, where they are not the gazetteer's.</summary>
+        public string? CoordinatesDataset { get; init; }
+
+        /// <summary>Where in that dataset they were read, for the row's own credit.</summary>
+        public string? CoordinatesCredit { get; init; }
+    }
 
     /// <summary>One answer to where a place was, as <see cref="PlaceCandidate"/> holds it.</summary>
     internal sealed record Candidate(
@@ -298,7 +308,14 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
         string? Special,
         string? Withheld,
         IReadOnlyList<string> Grounds,
-        string? CoordinatesSource);
+        string? CoordinatesSource)
+    {
+        /// <summary>The declared dataset whose coordinates these are, where they are not the gazetteer's.</summary>
+        public string? CoordinatesDataset { get; init; }
+
+        /// <summary>Where in that dataset they were read, for the row's own credit.</summary>
+        public string? CoordinatesCredit { get; init; }
+    }
 
     /// <param name="Candidates">Every place's answers, the likeliest first, by the gazetteer's id.</param>
     /// <param name="NoSite">Places whose likeliest answer is that they are no located place.</param>

@@ -142,7 +142,9 @@ internal static partial class OpenBibleThumbnails
 
     /// <summary>
     /// The gazetteer's description with its inline <c>&lt;modern&gt;</c> and <c>&lt;ancient&gt;</c>
-    /// tags taken off, which is what it says to do before using one as alternative text.
+    /// tags taken off, which is what it says to do before using one as alternative text. An ancient
+    /// place is written with the number its catalogue tells namesakes apart by — <em>a plain in
+    /// Goshen 1</em> — and the number comes off with the tag: it is no part of the name.
     /// </summary>
     internal static string? Caption(string? description)
     {
@@ -151,12 +153,15 @@ internal static partial class OpenBibleThumbnails
             return null;
         }
 
-        var plain = InlineTag().Replace(description, string.Empty).Trim();
+        var plain = InlineTag().Replace(CatalogueNumber().Replace(description, "$1$2"), string.Empty).Trim();
         return plain.Length == 0 ? null : char.ToUpperInvariant(plain[0]) + plain[1..];
     }
 
     [GeneratedRegex("</?(?:modern|ancient)\\b[^>]*>")]
     private static partial Regex InlineTag();
+
+    [GeneratedRegex(@"(<ancient\b[^>]*>[^<]*?)\s+\d+(</ancient>)")]
+    private static partial Regex CatalogueNumber();
 }
 
 /// <summary>

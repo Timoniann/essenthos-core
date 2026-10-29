@@ -1,38 +1,35 @@
 using System.Reflection;
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
-internal sealed record LocationBinding(string Slug, string AncientId, string Name, string Reference);
-internal sealed record IndependentPoint(string ModernId, string Site, double Lon, double Lat, string Credit);
-internal sealed record IndependentRegion(string Slug, string Site, string ModernId, double Lon, double Lat, string Credit);
-internal sealed record LocationSupplement(
-    IReadOnlyList<LocationBinding> Bindings, IReadOnlyList<IndependentPoint> Points, IReadOnlyList<IndependentRegion> Regions)
+/// <param name="Dataset">The declared dataset the coordinates are credited to, as <see cref="Datasets"/> names it.</param>
+/// <param name="Credit">Where in that dataset they were read: the page, the table, the revision.</param>
+internal sealed record IndependentPoint(string ModernId, string Site, double Lon, double Lat, string Dataset, string Credit);
+
+/// <param name="Dataset">The declared dataset the point is credited to, as <see cref="Datasets"/> names it.</param>
+internal sealed record IndependentRegion(
+    string Slug, string Site, string ModernId, double Lon, double Lat, string Dataset, string Credit);
+
+/// <summary>
+/// Coordinates read from a named source other than the gazetteer, for sites whose gazetteer point
+/// is OpenStreetMap's and so cannot be held, and one region the gazetteer does not place at all.
+/// The identification, its rank and its score stay the gazetteer's; only the point is another's,
+/// and it is credited to that other source.
+/// </summary>
+internal sealed record LocationSupplement(IReadOnlyList<IndependentPoint> Points, IReadOnlyList<IndependentRegion> Regions)
 {
     public static LocationSupplement Read()
     {
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(
             "Essenthos.Core.Loading.Encyclopedia.LocationSupplements.json")
             ?? throw new InvalidOperationException("The location supplement is not embedded.");
-        return JsonSerializer.Deserialize<LocationSupplement>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
-    }
-
-    public void ValidateBindings(string ancientFile, IReadOnlySet<string> activeSlugs)
-    {
-        var needed = Bindings.Where(b => activeSlugs.Contains(b.Slug)).ToList();
-        var source = new Dictionary<string, (string? Name, HashSet<string> Verses)>();
-        foreach (var line in File.ReadLines(ancientFile).Where(l => l.Length > 0))
-        {
-            using var doc = JsonDocument.Parse(line);
-            var root = doc.RootElement;
-            var id = root.GetProperty("id").GetString()!;
-            if (needed.Any(b => b.AncientId == id))
-                source[id] = (root.GetProperty("friendly_id").GetString(),
-                    root.GetProperty("verses").EnumerateArray().Select(v => v.GetProperty("usx").GetString()!).ToHashSet(StringComparer.Ordinal));
-        }
-        foreach (var binding in needed)
-            if (!source.TryGetValue(binding.AncientId, out var row) || row.Name != binding.Name || !row.Verses.Contains(binding.Reference))
-                throw new InvalidDataException($"The place binding {binding.Slug}/{binding.AncientId} no longer matches its named, cited source.");
+        var supplement = JsonSerializer.Deserialize<LocationSupplement>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        foreach (var dataset in supplement.Points.Select(p => p.Dataset).Concat(supplement.Regions.Select(r => r.Dataset)))
+            if (!Datasets.All.Any(d => d.Id == dataset && !d.Unlisted))
+                throw new InvalidDataException($"The location supplement credits \"{dataset}\", which is no declared dataset.");
+        return supplement;
     }
 
     public OpenBibleLocationLoader.Reading Apply(OpenBibleLocationLoader.Reading reading)
@@ -51,7 +48,8 @@ internal sealed record LocationSupplement(
                     answers[i] = candidate with
                     {
                         Longitude = patch.Lon, Latitude = patch.Lat, Kind = "point", Withheld = null,
-                        CoordinatesSource = patch.Credit,
+                        CoordinatesSource = patch.Dataset, CoordinatesDataset = patch.Dataset,
+                        CoordinatesCredit = patch.Credit,
                     };
                 }
         }
@@ -60,7 +58,11 @@ internal sealed record LocationSupplement(
         {
             var first = answers[0];
             if (first is { Special: null, Withheld: null, Longitude: { } lon, Latitude: { } lat, Kind: { } kind })
-                located.Add(new OpenBibleLocationLoader.Located(id, lon, lat, kind, first.Score, first.ModernId!, first.CoordinatesSource!));
+                located.Add(new OpenBibleLocationLoader.Located(id, lon, lat, kind, first.Score, first.ModernId!, first.CoordinatesSource!)
+                {
+                    CoordinatesDataset = first.CoordinatesDataset,
+                    CoordinatesCredit = first.CoordinatesCredit,
+                });
         }
         return reading with
         {

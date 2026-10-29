@@ -94,6 +94,11 @@ public static class DatasetEndpoints
         var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
         var crossReferences = await Counted(db.CrossReferences.Select(r => r.Source), cancellationToken);
         var texts = await db.Texts.CountAsync(cancellationToken);
+        var points = await db.PlaceCandidates
+            .Where(c => c.CoordinatesDataset != null && c.Longitude != null)
+            .GroupBy(c => c.CoordinatesDataset!)
+            .Select(group => new { Dataset = group.Key, Rows = group.Count() })
+            .ToDictionaryAsync(row => row.Dataset, row => row.Rows, StringComparer.Ordinal, cancellationToken);
 
         var counted = new List<(Datasets.Dataset Dataset, DatasetCounts Counts)>();
         foreach (var dataset in Datasets.All)
@@ -148,12 +153,13 @@ public static class DatasetEndpoints
             {
                 Claims = dataset.LinkClaims ? await Claims(db, dataset, cancellationToken) : 0,
                 Texts = dataset.Frame ? texts : 0,
+                Points = points.GetValueOrDefault(dataset.Id),
             };
 
             if (counts is
                 {
                     Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
-                    Commandments: 0, Topics: 0, CrossReferences: 0, Claims: 0, Texts: 0,
+                    Commandments: 0, Topics: 0, CrossReferences: 0, Claims: 0, Texts: 0, Points: 0,
                 })
             {
                 continue;
@@ -302,6 +308,12 @@ public record DatasetCounts(
 
     /// <summary>Texts placed in the shared verse numbering by this dataset.</summary>
     public int Texts { get; init; }
+
+    /// <summary>
+    /// Points on the map whose coordinates this dataset measured, where it is not the gazetteer that
+    /// identified the place: every answer a place's page shows with a point, its likeliest included.
+    /// </summary>
+    public int Points { get; init; }
 }
 
 /// <param name="Source">

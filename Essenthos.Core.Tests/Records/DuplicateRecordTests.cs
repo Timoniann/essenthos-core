@@ -130,6 +130,10 @@ public sealed class DuplicateRecordTests : IDisposable
     [InlineData("jobesh", "jabeshgilead")]
     [InlineData("allonbachuth", "allonbacuth")]
     [InlineData("padan", "paddanaram")]
+    [InlineData("shushan", "susa")]
+    [InlineData("judaea", "judea")]
+    [InlineData("galeed", "mizpah-4")]
+    [InlineData("vale-of-siddim", "valleyofsiddim")]
     public async Task APlaceTheRegisterSpeltAsStrongDoesFoldsIntoTheHeldPlace(string alias, string canonical)
     {
         var pair = DuplicateRecordLoader.Read().Merges.Single(m => m.Folds == alias);

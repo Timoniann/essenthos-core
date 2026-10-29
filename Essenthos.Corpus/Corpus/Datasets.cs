@@ -306,8 +306,34 @@ public static class Datasets
             "World history on the same axis: battles, cities founded, dynasties, writing systems "
             + "and archaeological ages, so the text can be read against what else was happening. "
             + "It also says which Wikipedia article each person, place and thing is, so a page can "
-            + "send the reader on to it in their own language.",
+            + "send the reader on to it in their own language, and gives the coordinates of a few "
+            + "places the gazetteer cannot.",
             "Wikidata", HolderUrl: "https://www.wikidata.org/"),
+
+        // Coordinates measured by someone other than the gazetteer, for sites whose gazetteer point is
+        // OpenStreetMap's and cannot be held: the identification stays the gazetteer's, the point is
+        // theirs and is credited where it is shown. No row carries their name as its source, so the
+        // prefix claims nothing; they are counted by the points (Resources/PlaceLocationSources).
+        new("pcgn", "Jordan Toponymic Factfile", "UK Permanent Committee on Geographical Names",
+            "Open Government Licence v3.0",
+            "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+            "https://assets.publishing.service.gov.uk/media/694152af5431f4f94d7f0aca/Jordan_Toponymic_Factfile.pdf",
+            "The coordinates of Jabal an Naba, Mount Nebo, from the gazetteer table of the factfile's 2025 "
+            + "edition (page 8).",
+            "UK Permanent Committee on Geographical Names",
+            Citation: "Contains public sector information licensed under the Open Government Licence v3.0.",
+            Obliges: "The statement 'Contains public sector information licensed under the Open Government "
+                     + "Licence v3.0.' and a link to the licence, wherever the coordinates are used.",
+            HolderUrl: "https://www.gov.uk/government/organisations/permanent-committee-on-geographical-names"),
+
+        new("drews-han-2010", "Dynamics of Wind Setdown at Suez and the Eastern Nile Delta",
+            "Carl Drews and Weiqing Han, PLOS ONE 5(8): e12481, 2010", "CC BY",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://doi.org/10.1371/journal.pone.0012481",
+            "The coordinates of Tell Abu Sefeh in the eastern Nile Delta, from the article's Table 1.",
+            "Carl Drews and Weiqing Han",
+            Citation: "Drews C, Han W (2010) Dynamics of Wind Setdown at Suez and the Eastern Nile Delta. "
+                      + "PLoS ONE 5(8): e12481. https://doi.org/10.1371/journal.pone.0012481"),
 
         // Public domain, and attributed on every band anyway: the period's own authority is named
         // where its dates are shown, and this is the credit for having gathered them.
