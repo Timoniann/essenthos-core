@@ -135,6 +135,48 @@ public sealed class FamilyEndpointTests : IDisposable
     public void ARequestNamingNobodyIsRefused(string? slugs) =>
         FamilyEndpoints.Requested(slugs).Should().BeNull();
 
+    /// <summary>
+    /// A Ukrainian tree tells namesakes apart by the index's line where nobody rendered one for the
+    /// person: Basemath is Ishmael's daughter. Where a rendered line exists it is the line, and the
+    /// index's is not sent beside it.
+    /// </summary>
+    [Fact]
+    public async Task APersonWithNoRenderedLineCarriesTheIndexDescriptor()
+    {
+        var ishmael = Person("ishmael", "male");
+        var basemath = Person("basemath", "female");
+        var esau = Person("esau", "male");
+        esau.Distinguisher = "son of Isaac";
+        await _db.SaveChangesAsync();
+        Tie(basemath, "daughter-of", ishmael);
+        _db.EntityDescriptors.Add(new EntityDescriptor
+        {
+            EntityId = basemath.Id,
+            TargetEntityId = ishmael.Id,
+            Relation = "daughter-of",
+            Ordinal = 1,
+            CanonicalBook = 1,
+            CanonicalChapter = 28,
+            CanonicalVerse = 9,
+            Method = LinkMethod.Manual,
+            Source = "a test",
+        });
+        _db.EntityDistinguishers.Add(new EntityDistinguisher
+        {
+            Entity = esau, Language = "ukr", Text = "син Ісака", English = "son of Isaac", Source = "Essenthos, a test",
+        });
+        await _db.SaveChangesAsync();
+
+        var family = await FamilyEndpoints.Family(_db, ["basemath", "esau"], "ukr", default, prose: "ukr");
+
+        var daughter = family.People.Single(p => p.Slug == "basemath");
+        daughter.LocalDistinguisher.Should().BeNull();
+        daughter.DescriptorLine.Should().StartWith("дочка ");
+        var son = family.People.Single(p => p.Slug == "esau");
+        son.LocalDistinguisher.Should().Be("син Ісака");
+        son.DescriptorLine.Should().BeNull();
+    }
+
     [Fact]
     public void ARequestNamesEachPersonOnce() =>
         FamilyEndpoints.Requested("moses, aaron,moses").Should().Equal("moses", "aaron");
