@@ -1,4 +1,4 @@
-using Essenthos.Core.Database;
+﻿using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Strong;
@@ -181,8 +181,50 @@ public sealed class StrongRelationLoaderTests : IDisposable
         served.Should().BeEquivalentTo(new Endpoints.StrongProfileResponse("arc", "noun", "masculine", CompiledHebrewStrongs.Source)
         {
             First = new Endpoints.StrongFirstVerseResponse(26, "Ezekiel", "eze", 4, 15),
+            Credit = "BibleData",
         });
         (await Endpoints.StrongEndpoints.Profile(_db, "G1", CancellationToken.None)).Should().BeNull();
+    }
+
+    /// <summary>
+    /// Strong's Greek dictionary gives no part of speech; STEPBible's TBESG gives every lexeme one,
+    /// and the entry shows it under TBESG's name, with no count it never made. A number filed under
+    /// two entries takes the first.
+    /// </summary>
+    [Fact]
+    public async Task A_greek_entry_takes_its_part_of_speech_from_the_brief_lexicon()
+    {
+        var lexicon = Path.Combine(_folder, "TBESG.txt");
+        File.WriteAllLines(lexicon,
+        [
+            "eStrong	dStrong	uStrong	Greek	Transliteration	Morph	Gloss	Abbott-Smith",
+            "G0001	G0001G =	G0001G	α, Ἀλφα	Alpha	G:N-LI	Alpha	(AS)",
+            "G0001	G0001H = a Meaning of	G0001G	α	a	G:INJ	ah!	(AS)",
+            "G0025	G0025 =	G0025	ἀγαπάω	agapaō	G:V	to love	(AS)",
+            "G4102	G4102G =	G4102G	πίστις	pistis	G:N-F	faith	(AS)",
+            "G0002	G0002 =	G0002	Ἀαρών	Aarōn	N:N-M-P	Aaron	(AS)",
+            "G3361	G3361 =	G3361	μή	mē	G:PRT-N	not	(AS)",
+            "G9999	G9999 =	G9999	x	x		nothing	(AS)",
+        ]);
+
+        var outcome = await _loader.Load(HebrewPath, GreekPath, null, CancellationToken.None, lexicon);
+
+        outcome.Profiles.Should().Be(5);
+        (await _db.StrongProfiles.OrderBy(p => p.StrongNumber).ToListAsync())
+            .Select(p => (p.StrongNumber, p.Language, p.PartOfSpeech, p.Gender, p.Occurrences))
+            .Should().Equal(
+                ("G1", "grc", "letter", (string?)null, (int?)null),
+                ("G2", "grc", "noun proper", "masculine", null),
+                ("G25", "grc", "verb", null, null),
+                ("G3361", "grc", "particle negative", null, null),
+                ("G4102", "grc", "noun", "feminine", null));
+        (await _loader.Load(HebrewPath, GreekPath, null, CancellationToken.None, lexicon)).AlreadyLoaded.Should().BeTrue();
+
+        var served = await Endpoints.StrongEndpoints.Profile(_db, "G4102", CancellationToken.None);
+        served.Should().BeEquivalentTo(new Endpoints.StrongProfileResponse("grc", "noun", "feminine", global::Essenthos.Core.Corpus.Sources.BriefGreekLexicon)
+        {
+            Credit = "STEPBible Brief Greek Lexicon (TBESG)",
+        });
     }
 
     [Fact]
