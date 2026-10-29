@@ -29,8 +29,11 @@ internal sealed class LoadMarks(
     TableFingerprints tables,
     FileDigests files,
     CodeDigest code,
-    ILogger logger) : IDisposable
+    ILogger logger,
+    MigrationTables? migrations = null) : IDisposable
 {
+    private readonly MigrationTables _migrations = migrations ?? MigrationTables.OfTheCorpus();
+
     private readonly Dictionary<string, Mark> _marks = new(StringComparer.Ordinal);
     private readonly Dictionary<string, (string Digest, IReadOnlyList<string> Lines)> _code = new(StringComparer.Ordinal);
 
@@ -92,14 +95,30 @@ internal sealed class LoadMarks(
             return new Decision(step, false, why, step.Version, codeDigest, fileDigests);
         }
 
-        var sums = await tables.Of(mark.Reads, cancellationToken);
-        var now = new Inputs(step.Version, codeDigest, fileDigests, new SortedDictionary<string, string>(sums.ToDictionary(), StringComparer.Ordinal));
+        var sums = new SortedDictionary<string, string>((await tables.Of(mark.Reads, cancellationToken)).ToDictionary(), StringComparer.Ordinal);
+        string? migrated = null;
+        if (mark.Inputs.Tables.TryGetValue(TableFingerprints.Migrations, out var history)
+            && sums.TryGetValue(TableFingerprints.Migrations, out var historyNow)
+            && history != historyNow)
+        {
+            var (unrelated, why) = await _migrations.Since(connectionString, history, mark.Reads, tables.Tables, cancellationToken);
+            if (unrelated)
+            {
+                sums[TableFingerprints.Migrations] = history;
+            }
+            else
+            {
+                migrated = why;
+            }
+        }
+
+        var now = new Inputs(step.Version, codeDigest, fileDigests, sums);
         if (now.Digest() == mark.InputDigest)
         {
             return new Decision(step, true, $"nothing it reads moved since {mark.At.ToLocalTime():yyyy-MM-dd HH:mm}", step.Version, codeDigest, fileDigests);
         }
 
-        return new Decision(step, false, Moved(mark.Inputs, now, CodeMoved(step), _movedBy), step.Version, codeDigest, fileDigests);
+        return new Decision(step, false, Moved(mark.Inputs, now, CodeMoved(step), _movedBy, migrated), step.Version, codeDigest, fileDigests);
     }
 
     /// <summary>
@@ -398,7 +417,8 @@ internal sealed class LoadMarks(
     }
 
     /// <summary>What moved between the inputs a mark recorded and the inputs now, in a line.</summary>
-    private static string Moved(Inputs then, Inputs now, string? codeMoved, IReadOnlyDictionary<string, string> movedBy)
+    private static string Moved(
+        Inputs then, Inputs now, string? codeMoved, IReadOnlyDictionary<string, string> movedBy, string? migrated)
     {
         var moved = new List<string>();
         if (then.Version != now.Version)
@@ -417,7 +437,9 @@ internal sealed class LoadMarks(
         moved.AddRange(then.Files.Keys.Except(now.Files.Keys).Select(file => $"file {file} no longer read"));
         moved.AddRange(now.Tables
             .Where(table => then.Tables.GetValueOrDefault(table.Key) != table.Value)
-            .Select(table => movedBy.TryGetValue(table.Key, out var by) ? $"table {table.Key}, which {by} changed" : $"table {table.Key}"));
+            .Select(table => table.Key == TableFingerprints.Migrations && migrated is not null
+                ? migrated
+                : movedBy.TryGetValue(table.Key, out var by) ? $"table {table.Key}, which {by} changed" : $"table {table.Key}"));
         return moved.Count == 0
             ? "its inputs moved"
             : string.Join(", ", moved.Take(10)) + (moved.Count > 10 ? $" and {moved.Count - 10} more" : "");
