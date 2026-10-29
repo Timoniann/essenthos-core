@@ -36,13 +36,13 @@ x-api: &api
       condition: service_healthy
   # The API holds nothing but the canonical frame and a pool of connections; this stops a leak in it
   # from taking memory the database's page cache is using.
-  mem_limit: 1g
+  mem_limit: ${API_MEM_LIMIT:-1g}
 
 x-web: &web
   image: ${WEB_IMAGE:?set WEB_IMAGE to the essenthos-web image tag to run}
   restart: unless-stopped
   logging: *logging
-  mem_limit: 128m
+  mem_limit: ${WEB_MEM_LIMIT:-128m}
 
 services:
   db:
@@ -64,36 +64,36 @@ services:
       APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:-}
       # The page counter's role and database, created only when this is set.
       STATS_PASSWORD: ${STATS_PASSWORD:-}
-    # The database gets at most 4 GB of the droplet (owner, 2026-10-01), holding production's corpus and
-    # its rollback, dev's pair and the app databases in one shared_buffers pool. Measured in a 4 GB
-    # container (TSK-0920): verify peaks at 2.9 GB with these settings, the reader is as fast as with
-    # no limit, and 3 or 4 GB of shared_buffers bought nothing measurable. maintenance_work_mem 1GB got
-    # a publication's pg_restore -j 4 killed for memory (PRB-0926); 256MB restores in about four minutes.
-    mem_limit: 4g
+    # The memory budget is .env's (DB_* below; deploy/README.md, "Memory"). The defaults are the 8 GB
+    # machine's: the database gets at most 4 GB (owner, 2026-10-01). Measured in a 4 GB container
+    # (TSK-0920): verify peaks at 2.9 GB with these settings, the reader is as fast as with no limit,
+    # and 3 or 4 GB of shared_buffers bought nothing measurable. env.example holds the 4 GB machine's
+    # budget. maintenance_work_mem 1GB got a publication's pg_restore -j 4 killed for
+    # memory (PRB-0926); 256MB restores in about four minutes.
+    mem_limit: ${DB_MEM_LIMIT:-4g}
     command:
       - postgres
       - -c
-      - shared_buffers=2GB
+      - shared_buffers=${DB_SHARED_BUFFERS:-2GB}
       - -c
-      - effective_cache_size=3GB
+      - effective_cache_size=${DB_EFFECTIVE_CACHE_SIZE:-3GB}
       - -c
-      - work_mem=32MB
+      - work_mem=${DB_WORK_MEM:-32MB}
       - -c
-      - maintenance_work_mem=256MB
+      - maintenance_work_mem=${DB_MAINTENANCE_WORK_MEM:-256MB}
       - -c
       - max_wal_size=4GB
       - -c
       - random_page_cost=1.1
       - -c
-      - max_parallel_workers_per_gather=2
+      - max_parallel_workers_per_gather=${DB_PARALLEL_WORKERS:-2}
     # A parallel hash's workers share memory through /dev/shm, which Docker caps at 64 MB, and what is
     # used there counts against mem_limit. The gate a publication runs peaked at 1,085 MB on the
-    # workstation with twice this work_mem; with two workers per gather it stays under 1 GB.
-    shm_size: 1gb
+    # workstation with twice the 8 GB work_mem; with two workers per gather it stays under 1 GB.
+    shm_size: ${DB_SHM_SIZE:-1gb}
     volumes:
-      # On the attached Block Storage volume, with everything else under HOST_DATA_ROOT, so a new
-      # machine takes over the data by having the volume attached. Droplet backups do not include
-      # a volume: what protects this is the nightly dumps below and their off-site copy.
+      # Under HOST_DATA_ROOT with everything else the server keeps. What protects it is the nightly
+      # dumps below and their off-site copy; the corpus in it is re-published from the workstation.
       - ${POSTGRES_DATA:-${HOST_DATA_ROOT:?set HOST_DATA_ROOT}/postgres}:/var/lib/postgresql
       - ./initdb:/docker-entrypoint-initdb.d:ro
       # Where `forge publish` uploads a release; pg_restore reads it from here.
@@ -140,7 +140,8 @@ services:
       Authentication__GitHub__ClientSecret: ${GITHUB_CLIENT_SECRET:-}
       # The first admins, by verified address, comma-separated; the admin area names the rest.
       Accounts__BootstrapAdmins: ${ADMIN_EMAILS:-}
-      Cors__AllowedOrigins__0: https://${SITE_DOMAIN:?set SITE_DOMAIN}
+      # The reader calls the API on its own origin, so this only matters to another site's script.
+      Cors__AllowedOrigins__0: ${SITE_DOMAIN:+https://${SITE_DOMAIN}}
       # The proxy terminates TLS and passes the reader's address on. Its headers are believed from its
       # address alone: the API is limited per reader by that address, and a header anyone else could
       # write would let them be any reader they liked. Without it the API believes every request came
@@ -153,8 +154,9 @@ services:
       Downloads__BaseUrl: /downloads
       # Each page of the reader written out for search engines and link previews: the address every
       # absolute link names, and the reader's own index.html, read from the web container so the page
-      # always names the scripts that container serves.
-      Site__Origin: https://${SITE_DOMAIN}
+      # always names the scripts that container serves. With no domain it is empty, and each page names
+      # the address it was asked on.
+      Site__Origin: ${SITE_DOMAIN:+https://${SITE_DOMAIN}}
       Site__Shell: http://web:8080/index.html
     volumes:
       # The pictures the corpus's rows name. The rows arrive in the release; `forge publish` puts the
@@ -238,8 +240,15 @@ services:
     restart: unless-stopped
     logging: *logging
     environment:
-      SITE_DOMAIN: ${SITE_DOMAIN}
-      API_DOMAIN: ${API_DOMAIN:?set API_DOMAIN}
+      # The bare address, served over plain http while it is set; see the Caddyfile.
+      SITE_IP: ${SITE_IP:-}
+      IP_SITE: ${SITE_IP:+on}
+      # The domain and the API's hostname, with TLS, while SITE_DOMAIN is set.
+      SITE_DOMAIN: ${SITE_DOMAIN:-}
+      API_DOMAIN: ${API_DOMAIN:-}
+      DOMAIN_SITES: ${SITE_DOMAIN:+on}
+      # Let's Encrypt writes here about a certificate it could not renew.
+      ACME_EMAIL: ${ACME_EMAIL:-}
       # Dev's two hostnames are served only when this is on; see the Caddyfile.
       DEV_SITES: ${DEV_SITES:-off}
       DEV_DOMAIN: ${DEV_DOMAIN:-}
@@ -251,7 +260,6 @@ services:
       SITE_ANALYTICS: ${SITE_ANALYTICS:-off}
       # The key the site serves at /<key>.txt for IndexNow; empty serves nothing.
       INDEXNOW_KEY: ${INDEXNOW_KEY:-}
-      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL, the address Let's Encrypt writes to about expiring certificates}
       DEV_USER: ${DEV_USER:-}
       # Made with `docker run --rm caddy:2.10-alpine caddy hash-password`.
       DEV_PASSWORD_HASH: ${DEV_PASSWORD_HASH:-}
@@ -269,6 +277,8 @@ services:
       # The downloads, served read-only at /downloads (see the Caddyfile).
       - ${HOST_DATA_ROOT}/downloads:/srv/downloads:ro
       - ${HOST_DATA_ROOT}/downloads_dev:/srv/downloads_dev:ro
+      # The updating page's switch: the file `on` in it (see the Caddyfile).
+      - ${HOST_DATA_ROOT}/maintenance:/srv/maintenance:ro
     # Only the start order; Caddy finds an upstream by name on each connection, dev's included.
     depends_on:
       - api
@@ -326,7 +336,7 @@ services:
     image: arp242/goatcounter:2.7.0@sha256:791df3317bf5ce379511181a4802aaf29127a318b372d4fe39ec59e1c5af44be
     restart: unless-stopped
     logging: *logging
-    mem_limit: 256m
+    mem_limit: ${ANALYTICS_MEM_LIMIT:-256m}
     # lib/pq reads the password from PGPASSWORD, so it is in neither the command line nor a log line.
     command:
       - serve
@@ -342,7 +352,7 @@ services:
       db:
         condition: service_healthy
 
-  # The encrypted dumps copied off the droplet, and the copies there kept as long as the dumps are here.
+  # The encrypted dumps copied off the machine, and the copies there kept as long as the dumps are here.
   # Off unless COMPOSE_PROFILES in .env names it, because where the copy goes is the owner's to choose and
   # to pay for; the remote is defined in rclone.conf beside the data, never in this file.
   backup-offsite:
@@ -360,8 +370,8 @@ services:
       - ${HOST_DATA_ROOT}/rclone:/config/rclone:ro
 
 volumes:
-  # On the machine's own disk rather than the data volume, since they hold nothing that cannot be made
-  # again. A new volume takes the owner of the image's /image-cache, which is the user the API runs as.
+  # In Docker's own storage rather than under HOST_DATA_ROOT, since they hold nothing that cannot be
+  # made again. A new volume takes the owner of the image's /image-cache, which is the user the API runs as.
   # image-cache-dev is created only when the dev profile starts api-dev.
   image-cache:
   image-cache-dev:

@@ -1,17 +1,66 @@
-# The edge: TLS for both environments, the reader at /, the API at /v1, on one origin per environment,
-# and the API alone on a hostname of its own.
+# The edge: the reader at /, the API at /v1, on one origin per environment, and the API alone on a
+# hostname of its own.
 #
-#   SITE_DOMAIN      essenthos.org          the reader, and its API at /v1
+#   SITE_IP          2.29.125.205           the reader and its API over plain http, no sign-in
+#   SITE_DOMAIN      essenthos.org          the reader, and its API at /v1, with TLS
 #   API_DOMAIN       api.essenthos.org      the same API, for the mobile app and anybody else's client
 #   DEV_DOMAIN       dev.essenthos.org      dev's reader and API, behind a password
 #   DEV_API_DOMAIN   devapi.essenthos.org   dev's API alone, behind the same password
+#
+# Each group is served only where .env names it: compose passes IP_SITE=on when SITE_IP is set and
+# DOMAIN_SITES=on when SITE_DOMAIN is, and an empty switch imports the empty snippet. The bare address
+# and the domain can be served together.
 #
 # The reader uses /v1 on its own origin rather than api.essenthos.org, and that is the point: the
 # browser never makes a cross-origin request, CORS has nothing to decide, and the session cookie is
 # first-party. The API hostname serves exactly the same process, so nothing is duplicated.
 
+# Quoted, so that with no domain, and so no address set, it is an empty value rather than none.
 {
-	email {$ACME_EMAIL}
+	email "{$ACME_EMAIL}"
+}
+
+# While a corpus is replaced (one copy on the server), every site answers this page with 503: when
+# HOST_DATA_ROOT/maintenance/on exists, mounted at /srv/maintenance. It is looked for on each request,
+# so creating or removing the file switches it at once, with no reload (deploy/README.md, "The
+# updating page"). The API's health stays reachable, so whoever is publishing can see it come back.
+&(updating) {
+	# A named route keeps only its first directive unless they are wrapped in one route (Caddy 2.10).
+	route {
+		header {
+			Content-Type "text/html; charset=utf-8"
+			Cache-Control no-store
+			Retry-After 300
+		}
+		respond <<HTML
+		<!doctype html>
+		<html lang="uk">
+		<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="noindex">
+		<title>Essenthos</title>
+		<style>
+		body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 17px/1.5 Georgia, serif; background: #faf8f3; color: #2b2721; }
+		main { max-width: 32rem; padding: 2rem 1.5rem; }
+		h1 { font-size: 1.6rem; font-weight: normal; margin: 0 0 1.5rem; }
+		p { margin: 0 0 1rem; }
+		p + p { color: #6b645a; }
+		@media (prefers-color-scheme: dark) { body { background: #1d1b18; color: #ece6db; } p + p { color: #a39b8f; } }
+		</style>
+		</head>
+		<body>
+		<main>
+		<h1>Essenthos</h1>
+		<p lang="uk">Оновлюємо сайт. Повернемося за кілька хвилин.</p>
+		<p lang="en">We are updating the site. Back in a few minutes.</p>
+		<p lang="de">Wir aktualisieren die Website. In wenigen Minuten sind wir zurück.</p>
+		<p lang="es">Estamos actualizando el sitio. Volvemos en unos minutos.</p>
+		</main>
+		</body>
+		</html>
+		HTML 503
+	}
 }
 
 (api) {
@@ -209,28 +258,72 @@ Disallow: /
 	handle @sourcemaps {
 		respond 404
 	}
+
+	# invoke runs before every handle, whatever its matcher, so nothing gets past the updating page.
+	@updating {
+		file {
+			root /srv/maintenance
+			try_files /on
+		}
+		not path /v1/health/*
+	}
+	invoke @updating updating
 }
 
-{$SITE_DOMAIN} {
-	import site {$SITE_CSP:off}
-	import analytics-{$SITE_ANALYTICS:off}
-	import downloads /srv/downloads
-	import indexnow
-	# The API's answers are data for the reader's script, which a search engine running it still
-	# fetches; they are never pages of their own in a search result.
-	handle /v1/* {
-		header X-Robots-Tag "noindex"
+# The site on the server's bare address, over plain http, while there is no domain and beside it once
+# there is. Not to be indexed: the domain is the site's address. Sign-in is not offered, since the
+# providers send a reader back only to a registered https address.
+(ip-site-on) {
+	http://{$SITE_IP} {
+		import site {$SITE_CSP:off}
+		import unlisted
+		import analytics-{$SITE_ANALYTICS:off}
+		import downloads /srv/downloads
+		handle /v1/auth/providers {
+			header Content-Type "application/json; charset=utf-8"
+			respond `{"providers":[]}` 200
+		}
+		handle /v1/* {
+			import api api
+		}
+		import pages api web
+	}
+}
+
+(ip-site-) {
+}
+
+import ip-site-{$IP_SITE}
+
+# The site on its domain, with TLS: Caddy asks Let's Encrypt for each name on its first start, which
+# needs the DNS records to point here first.
+(domain-sites-on) {
+	{$SITE_DOMAIN} {
+		import site {$SITE_CSP:off}
+		import analytics-{$SITE_ANALYTICS:off}
+		import downloads /srv/downloads
+		import indexnow
+		# The API's answers are data for the reader's script, which a search engine running it still
+		# fetches; they are never pages of their own in a search result.
+		handle /v1/* {
+			header X-Robots-Tag "noindex"
+			import api api
+		}
+		import pages api web
+	}
+
+	{$API_DOMAIN} {
+		import site off
+		import unlisted
+		import downloads /srv/downloads
 		import api api
 	}
-	import pages api web
 }
 
-{$API_DOMAIN} {
-	import site off
-	import unlisted
-	import downloads /srv/downloads
-	import api api
+(domain-sites-) {
 }
+
+import domain-sites-{$DOMAIN_SITES}
 
 # Dev is the rehearsal of a publication, not a second public site, so it asks for a password — and
 # tells search engines to stay away in case the password is ever shared.

@@ -10,7 +10,7 @@ services:
     volumes:
       # Postgres will not initialise its data directory on a Windows bind mount — it cannot set the
       # permissions it insists on — so the rehearsal keeps it in a named volume. The server keeps it on
-      # the droplet's disk, under HOST_DATA_ROOT.
+      # its own disk, under HOST_DATA_ROOT.
       - rehearsal-postgres:/var/lib/postgresql
 
 volumes:
