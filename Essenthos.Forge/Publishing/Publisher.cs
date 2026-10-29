@@ -279,6 +279,9 @@ internal sealed class Publisher(
         }
 
         var served = Ledger(target.Name).LastOrDefault().Release;
+        // The owner's choice (2026-10-30): a release the target's rehearsal already took has been through the
+        // gate on these same bytes there, so the target does not measure it again behind its updating page.
+        rehearsedOn = target.After is { } rehearsal && PublishedTo(record.Name).Contains(rehearsal) ? rehearsal : null;
         var placed = target.Copies == 1
             ? await ReplaceInPlace(host, record, inContainer, pictures, served, cancellationToken)
             : await SwapBeside(host, record, inContainer, pictures, started, cancellationToken);
@@ -315,6 +318,9 @@ internal sealed class Publisher(
     /// renamed into place in the second or two the API is stopped. A target that keeps two copies drops
     /// the one it replaced afterwards, and any previous one before it restores.
     /// </summary>
+    /// <summary>The rehearsal that already took the release being published, when there is one.</summary>
+    private string? rehearsedOn;
+
     private async Task<bool> SwapBeside(
         TargetHost host, ReleaseRecord record, string inContainer, IReadOnlyDictionary<string, string> pictures,
         DateTimeOffset started, CancellationToken cancellationToken)
@@ -451,27 +457,36 @@ internal sealed class Publisher(
             return false;
         }
 
-        // The gate, on the target, against the copy about to be served.
-        logger.LogInformation("Verifying {Incoming} on {Target}", target.Incoming, target.Name);
-        var (connectionString, lease) = await host.Connect(target.Incoming, cancellationToken);
-        await using (lease)
+        if (rehearsedOn is { } rehearsal)
         {
-            await using var restoredDb = new AppDbContext(
-                new DbContextOptionsBuilder<AppDbContext>().UseNpgsql(connectionString).Options);
-            var measures = await new CorpusCheck(restoredDb, loggers.CreateLogger<CorpusCheck>()).Measure(cancellationToken);
-            if (!CorpusGate.Pass(measures, CorpusCheck.RenderedFloor, logger))
+            logger.LogInformation(
+                "{Name} passed the gate on {Rehearsal}, and {Incoming} restored the same bytes; the gate is not run again on {Target}",
+                record.Name, rehearsal, target.Incoming, target.Name);
+        }
+        else
+        {
+            // The gate, on the target, against the copy about to be served.
+            logger.LogInformation("Verifying {Incoming} on {Target}", target.Incoming, target.Name);
+            var (connectionString, lease) = await host.Connect(target.Incoming, cancellationToken);
+            await using (lease)
             {
-                logger.LogError("{Incoming} failed the gate on {Target}; it was not put in place", target.Incoming, target.Name);
-                return false;
-            }
+                await using var restoredDb = new AppDbContext(
+                    new DbContextOptionsBuilder<AppDbContext>().UseNpgsql(connectionString).Options);
+                var measures = await new CorpusCheck(restoredDb, loggers.CreateLogger<CorpusCheck>()).Measure(cancellationToken);
+                if (!CorpusGate.Pass(measures, CorpusCheck.RenderedFloor, logger))
+                {
+                    logger.LogError("{Incoming} failed the gate on {Target}; it was not put in place", target.Incoming, target.Name);
+                    return false;
+                }
 
-            if (Math.Abs(measures.Rendered - record.Rendered) > 1e-9)
-            {
-                logger.LogError(
-                    "{Incoming} measures {Rendered:P3} where the release measured {Expected:P3} when it was made. " +
-                    "The same bytes should measure the same; it was not put in place",
-                    target.Incoming, measures.Rendered, record.Rendered);
-                return false;
+                if (Math.Abs(measures.Rendered - record.Rendered) > 1e-9)
+                {
+                    logger.LogError(
+                        "{Incoming} measures {Rendered:P3} where the release measured {Expected:P3} when it was made. " +
+                        "The same bytes should measure the same; it was not put in place",
+                        target.Incoming, measures.Rendered, record.Rendered);
+                    return false;
+                }
             }
         }
 
@@ -531,6 +546,10 @@ internal sealed class Publisher(
             return 1;
         }
 
+        var gate = target.After is { } rehearsal && PublishedTo(record.Name).Contains(rehearsal)
+            ? $"skip the gate ({rehearsal} ran it on these bytes)"
+            : "run the gate against it there";
+
         var host = new TargetHost(target);
         var pictures = Path.Combine(ResourcePaths.Read(configuration, environment.ContentRootPath), EntityImageLoader.Folder);
         var count = Directory.Exists(pictures) ? Directory.EnumerateFiles(pictures, "*", SearchOption.AllDirectories).Count() : 0;
@@ -545,8 +564,8 @@ internal sealed class Publisher(
             logger.LogInformation("  3. put the maintenance page up ({Flag}) and stop {Api}; until step 6 the site shows that page", host.MaintenanceFlag, target.ApiContainer);
             logger.LogInformation("  4. drop {Database}, and any {Incoming}, {Previous} or {Retired} left by an earlier publication",
                 target.Database, target.Incoming, target.Previous, target.Retired);
-            logger.LogInformation("  5. restore it into {Incoming} in {Container} with {Jobs} jobs, check its label and that every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse",
-                target.Incoming, target.Container, target.RestoreJobs, target.Name);
+            logger.LogInformation("  5. restore it into {Incoming} in {Container} with {Jobs} jobs, check its label and that every picture it names is on {Target}, {Gate}, and check every bookmark finds its verse",
+                target.Incoming, target.Container, target.RestoreJobs, target.Name, gate);
             logger.LogInformation("  6. grant {Reader} reading and nothing else, rename {Incoming} to {Database}, start {Api}, wait for it to reach {Database}, and take the maintenance page down",
                 target.Reader, target.Incoming, target.Database, target.ApiContainer, target.Database);
             logger.LogInformation("If step 3 or 4 fails before {Database} is dropped, {Api} starts again and the page comes down. If anything fails after, the page stays up and {Api} stopped until a publication succeeds: this one again, or the release served before",
@@ -561,7 +580,7 @@ internal sealed class Publisher(
 
             logger.LogInformation("  3. restore it into {Incoming} in {Container} with {Jobs} jobs, which nothing reads, and check its label",
                 target.Incoming, target.Container, target.RestoreJobs);
-            logger.LogInformation("  4. check every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse", target.Name);
+            logger.LogInformation("  4. check every picture it names is on {Target}, {Gate}, and check every bookmark finds its verse", target.Name, gate);
             logger.LogInformation(target.KeepsPrevious
                     ? "  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}"
                     : "  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}, and drop {Previous}",
