@@ -179,15 +179,25 @@ public class PlaceLocation
 
     /// <summary>
     /// The gazetteer's own score for the identification, as it states it: best read as thousandths,
-    /// 500 and above high confidence, and able to run past 1000 or below zero.
+    /// 500 and above high confidence, and able to run past 1000 or below zero. Null where the point
+    /// comes from a source that scores nothing, which is silence and not doubt.
     /// </summary>
-    public int Score { get; set; }
+    public int? Score { get; set; }
 
     /// <summary>The gazetteer's identifier for the modern location the point is read from.</summary>
     public required string ModernId { get; set; }
 
-    /// <summary>Whom the gazetteer credits for these coordinates — <c>wikidata</c>, <c>daahl</c>.</summary>
+    /// <summary>
+    /// A short code for whom the coordinates come from: the gazetteer's own credit — <c>wikidata</c>,
+    /// <c>daahl</c> — or, where another source gave them, that source's dataset id.
+    /// </summary>
     public required string CoordinatesSource { get; set; }
+
+    /// <summary>
+    /// The declared dataset whose coordinates these are, where they are not the gazetteer's own: the
+    /// point a reader is shown has to be credited to whoever measured it. Null for the gazetteer's.
+    /// </summary>
+    public string? CoordinatesDataset { get; set; }
 
     public required string Source { get; set; }
 
@@ -212,8 +222,9 @@ public class PlaceCandidate
     /// <summary>
     /// The gazetteer's score, read as thousandths as <see cref="PlaceLocation.Score"/> is: how much of
     /// current scholarship takes this answer. Below zero where more of it rejects the answer than holds it.
+    /// Null where the answer comes from a source that scores nothing.
     /// </summary>
-    public int Score { get; set; }
+    public int? Score { get; set; }
 
     /// <summary>The gazetteer's identifier for the modern site; null for an answer that is no site.</summary>
     public string? ModernId { get; set; }
@@ -273,6 +284,9 @@ public class PlaceCandidate
 
     /// <summary>Whom the gazetteer credits for the coordinates, as on <see cref="PlaceLocation"/>.</summary>
     public string? CoordinatesSource { get; set; }
+
+    /// <summary>The declared dataset whose coordinates these are, as on <see cref="PlaceLocation"/>.</summary>
+    public string? CoordinatesDataset { get; set; }
 
     public required string Source { get; set; }
 

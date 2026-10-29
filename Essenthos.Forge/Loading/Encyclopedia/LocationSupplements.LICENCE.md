@@ -1,9 +1,9 @@
 # Geographic supplements, 26 October 2026
 
 The OpenBible identifications and their scores retain their existing CC BY 4.0
-source. Nineteen record/name bindings were read against the gazetteer's named
-entries and their exact Bible citations; they do not merge records or change any
-presence verdict. The original withheld OSM points remain excluded.
+source. The original withheld OSM points remain excluded. A place is located only
+through its own gazetteer id: the nineteen records of 26 October that borrowed a
+twin's id are folded into that twin instead (`DuplicateRecords.json`).
 
 Three independent coordinate readings replace only the point of the same named
 modern feature, without changing the identification's rank, score or alternatives:
@@ -30,10 +30,12 @@ modern feature, without changing the identification's rank, score or alternative
 **Wilderness of Judah / Judaean Desert:** Wikidata Q2046004, revision 2549290202,
 P625 (31.7 N, 35.3 E), from that same held CC0 snapshot. This is a representative
 point of the named region, with no invented border, camp location, radius or
-scholarly probability. Its score is zero because this source supplies no score;
-it is not assigned a percentage of scholarly agreement.
+scholarly probability. It carries no score, because this source supplies none; it
+is not assigned a percentage of scholarly agreement.
 
 The exact downloaded PCGN/PLOS/terms bytes and their SHA-256 manifest are held
-under `Resources/PlaceLocationSources/2026-10-26`. Source attributions accompany
-the primary and alternative coordinate responses. Source reading does not mean
+under `Resources/PlaceLocationSources/2026-10-26`, with their licence beside them
+(`Resources/PlaceLocationSources/LICENCE.md`). Each point names its dataset
+(`pcgn`, `drews-han-2010`, `wikidata`), stored as the row's `coordinates_dataset`
+and served as `coordinatesBy`, and the map and the place's page credit it. Source reading does not mean
 either institution endorses Essenthos or the biblical identifications.

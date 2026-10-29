@@ -3483,6 +3483,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("rank");
 
+                    b.Property<string>("CoordinatesDataset")
+                        .HasColumnType("text")
+                        .HasColumnName("coordinates_dataset");
+
                     b.Property<string>("CoordinatesSource")
                         .HasColumnType("text")
                         .HasColumnName("coordinates_source");
@@ -3516,7 +3520,7 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("relation");
 
-                    b.Property<int>("Score")
+                    b.Property<int?>("Score")
                         .HasColumnType("integer")
                         .HasColumnName("score");
 
@@ -3574,6 +3578,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("entity_id");
 
+                    b.Property<string>("CoordinatesDataset")
+                        .HasColumnType("text")
+                        .HasColumnName("coordinates_dataset");
+
                     b.Property<string>("CoordinatesSource")
                         .IsRequired()
                         .HasColumnType("text")
@@ -3597,7 +3605,7 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("modern_id");
 
-                    b.Property<int>("Score")
+                    b.Property<int?>("Score")
                         .HasColumnType("integer")
                         .HasColumnName("score");
 

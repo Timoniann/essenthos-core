@@ -50,6 +50,7 @@ internal static partial class EncyclopediaEndpoints
                 l.Kind,
                 l.Score,
                 l.Source,
+                l.CoordinatesDataset,
                 References = l.Entity.Verses
                     .AsQueryable().Where(ShownVerses.IsShown)
                     .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
@@ -82,9 +83,22 @@ internal static partial class EncyclopediaEndpoints
             ? await Variants(db, [.. ids], language, cancellationToken)
             : (null, null);
 
+        // Every candidate's coordinates are counted, not only the points': a ring on the map is drawn
+        // where its source measured it too.
+        var measured = await db.PlaceCandidates
+            .Where(c => c.CoordinatesDataset != null && c.Longitude != null)
+            .Select(c => c.CoordinatesDataset!)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
         return new PlaceMapResponse(
             places.Count,
-            [.. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()],
+            [
+                .. places.Select(p => p.Source).Distinct().Select(Datasets.Of).OfType<string>()
+                    .Concat(places.Select(p => p.CoordinatesDataset).OfType<string>())
+                    .Concat(measured)
+                    .Distinct(StringComparer.Ordinal),
+            ],
             [
                 .. places.Select(p => new PlacePointResponse(
                     p.Slug, p.Name, p.Longitude, p.Latitude, p.Kind, p.Score / ScoreScale, p.References,
@@ -222,6 +236,7 @@ internal static partial class EncyclopediaEndpoints
                 r.Grounds)
             {
                 CoordinatesSource = r.CoordinatesSource,
+                CoordinatesBy = r.CoordinatesDataset,
                 Through = r.ThroughOpenBibleId is { } id && through.TryGetValue(id, out var place)
                     ? new EntityTribeResponse(
                         place.Slug, EnumSpelling.Of(place.Kind), place.Name, names.GetValueOrDefault(place.Id))
@@ -260,7 +275,7 @@ internal static partial class EncyclopediaEndpoints
             ? await db.Entities
                 .Where(e => shared.Contains(e.Slug))
                 .Select(e => new { e.Slug, Said = e.Distinguisher ?? e.ModernEquivalent })
-                .ToDictionaryAsync(e => e.Slug, e => e.Said, cancellationToken)
+                .ToDictionaryAsync(e => e.Slug, e => PlaceToday.WithoutCatalogueNumbers(e.Said), cancellationToken)
             : [];
 
         var told = new Dictionary<string, string>(StringComparer.Ordinal);

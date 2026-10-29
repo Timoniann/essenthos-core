@@ -108,7 +108,11 @@ internal static partial class EncyclopediaEndpoints
                             e.Location.Longitude,
                             e.Location.Latitude,
                             e.Location.Kind,
-                            e.Location.Score / ScoreScale) { CoordinatesSource = e.Location.CoordinatesSource },
+                            e.Location.Score / ScoreScale)
+                        {
+                            CoordinatesSource = e.Location.CoordinatesSource,
+                            CoordinatesBy = e.Location.CoordinatesDataset,
+                        },
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -272,6 +276,10 @@ internal static partial class EncyclopediaEndpoints
 
             var localNames = await EntityNames.Of(db, [entity.Id], language, cancellationToken);
             var renamed = (await RenamedHeadings.Of(db, [entity.Id], language, cancellationToken)).GetValueOrDefault(entity.Id);
+            var locations = entity.Kind == EntityKind.Place
+                ? await Candidates(db, entity.Id, language, cancellationToken)
+                : null;
+            var lemmas = await HebrewLemmas(db, names.Where(n => n.Hebrew is null).Select(n => n.HebrewStrongNumber), cancellationToken);
             var glosses = await EntityNameTranslations.Of(
                 db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
 
@@ -279,11 +287,13 @@ internal static partial class EncyclopediaEndpoints
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
                 renamed?.Name ?? entity.Name,
-                mine is null ? entity.Distinguisher : mine.Line,
+                mine is not null ? mine.Line
+                    : entity.Kind == EntityKind.Place ? PlaceToday.Line(entity.Distinguisher, entity.ModernEquivalent, locations)
+                    : entity.Distinguisher,
                 sex,
                 mine is null ? entity.Tribe : mine.Tribe,
                 entity.PlaceKind,
-                entity.ModernEquivalent,
+                entity.Kind == EntityKind.Place ? PlaceToday.Of(entity.ModernEquivalent, locations) : entity.ModernEquivalent,
                 mine is null ? entity.Notes : null,
                 entity.OpenBibleId,
                 entity.Origin,
@@ -294,7 +304,10 @@ internal static partial class EncyclopediaEndpoints
                 tally.Disputed,
                 [
                     .. names.Select(n => new EntityNameResponse(
-                        n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,
+                        n.Label,
+                        n.Hebrew ?? Lemma(lemmas, n.HebrewStrongNumber)?.Lemma,
+                        n.Hebrew is null ? Lemma(lemmas, n.HebrewStrongNumber)?.Transliteration : n.HebrewTransliterated,
+                        n.Greek, n.GreekTransliterated,
                         n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)
                     {
                         LocalLabel = n.Kind is { } kind && EntityNameTranslations.RenderedKinds.Contains(kind)
@@ -322,9 +335,7 @@ internal static partial class EncyclopediaEndpoints
                     db, mine is null ? entity.Tribe : mine.Tribe, language, cancellationToken, entity.Slug),
                 Descriptor = described.GetValueOrDefault(entity.Slug),
                 Location = entity.Location,
-                Locations = entity.Kind == EntityKind.Place
-                    ? await Candidates(db, entity.Id, language, cancellationToken)
-                    : null,
+                Locations = locations,
                 AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
                 LocalName = renamed is null ? localNames.GetValueOrDefault(entity.Id) : renamed.LocalName,
@@ -371,6 +382,32 @@ internal static partial class EncyclopediaEndpoints
             });
         });
     }
+
+    /// <summary>
+    /// The Hebrew of each name that carries one Hebrew Strong number and no Hebrew of its own: the
+    /// lexicon's headword for that number, and its transliteration. A name the register made from
+    /// the lexicon is that entry's name, so its headword is the name as the Hebrew writes it.
+    /// </summary>
+    internal static async Task<Dictionary<string, (string Lemma, string? Transliteration)>> HebrewLemmas(
+        AppDbContext db, IEnumerable<string?> numbers, CancellationToken cancellationToken)
+    {
+        var wanted = numbers.OfType<string>().Where(n => Numbers(n).Count == 1).Distinct(StringComparer.Ordinal).ToList();
+        if (wanted.Count == 0)
+        {
+            return [];
+        }
+
+        return (await db.StrongEntries
+                .Where(s => wanted.Contains(s.StrongNumber) && s.Lemma != null)
+                .Select(s => new { s.StrongNumber, s.Lemma, s.Transliteration })
+                .ToListAsync(cancellationToken))
+            .GroupBy(s => s.StrongNumber, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => (g.First().Lemma!, g.First().Transliteration), StringComparer.Ordinal);
+    }
+
+    private static (string Lemma, string? Transliteration)? Lemma(
+        IReadOnlyDictionary<string, (string Lemma, string? Transliteration)> lemmas, string? number) =>
+        number is not null && lemmas.TryGetValue(number, out var lemma) ? lemma : null;
 
     /// <summary>
     /// Every text's spellings of one entity, a text's heading first. The texts in the corpus's own
