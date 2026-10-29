@@ -1,0 +1,134 @@
+{
+  "decidedBy": "an agent reading each verse of Luke on the project owner's instruction to name whom the text names, 2026-10-29",
+  "policy": "Where Luke's narrator, or someone speaking to him, calls Jesus the Lord, ὁ κύριος names Jesus. The κύριος of a parable and the Lord of the Old Testament quotations are not ruled.",
+  "method": "manual",
+  "source": "Essenthos, Luke's 'the Lord' read against each verse by claude-opus-5-5 on the project owner's instruction, 2026-10-29",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 7:13",
+      "position": 5,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And when the Lord saw her, he had compassion on her' (LUK 7:13): Jesus, who raises the widow's son at Nain (7:11-15)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 10:39",
+      "position": 14,
+      "surface": "Κυρίου",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'Mary, which also sat at Jesus' feet' (LUK 10:39): the Lord at whose feet she sits is Jesus, whom Martha received (10:38)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 10:41",
+      "position": 6,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And Jesus answered and said unto her, Martha, Martha' (LUK 10:41): the Lord who answers Martha is Jesus."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 11:39",
+      "position": 4,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And the Lord said unto him, Now do ye Pharisees' (LUK 11:39): Jesus, at the Pharisee's table (11:37)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 12:42",
+      "position": 4,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And the Lord said, Who then is that faithful and wise steward' (LUK 12:42): Jesus answering Peter (12:41); the second κύριος of the verse is the steward's lord in the parable and is not ruled."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 13:15",
+      "position": 5,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'The Lord then answered him, and said, Thou hypocrite' (LUK 13:15): Jesus, who healed the woman on the sabbath (13:10-14)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 17:5",
+      "position": 6,
+      "surface": "Κυρίῳ",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And the apostles said unto the Lord, Increase our faith' (LUK 17:5): Jesus, whom his disciples address (17:1)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 17:6",
+      "position": 4,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And the Lord said, If ye had faith as a grain of mustard seed' (LUK 17:6): Jesus answering the apostles."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 18:6",
+      "position": 4,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And the Lord said, Hear what the unjust judge saith' (LUK 18:6): Jesus, telling the parable (18:1)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 19:8",
+      "position": 7,
+      "surface": "Κύριον",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And Zacchaeus stood, and said unto the Lord' (LUK 19:8): Jesus, at whose house Zacchaeus stands (19:5-7)."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 19:8",
+      "position": 14,
+      "surface": "Κύριε",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'Behold, Lord, the half of my goods I give to the poor' (LUK 19:8): Zacchaeus addresses Jesus."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 22:61",
+      "position": 4,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And the Lord turned, and looked upon Peter' (LUK 22:61): Jesus, as Peter denies him the third time."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 22:61",
+      "position": 15,
+      "surface": "Κυρίου",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'And Peter remembered the word of the Lord, how he had said unto him' (LUK 22:61): Jesus' word of 22:34."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 24:34",
+      "position": 6,
+      "surface": "Κύριος",
+      "strongNumber": "G2962",
+      "existing": "jesus",
+      "why": "'The Lord is risen indeed, and hath appeared to Simon' (LUK 24:34): the risen Jesus."
+    }
+  ]
+}
