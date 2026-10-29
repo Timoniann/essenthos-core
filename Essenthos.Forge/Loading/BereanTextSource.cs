@@ -72,7 +72,8 @@ internal static class BereanTextSource
     /// for Matthew 17:21 should be told it is empty here rather than that it does not exist.
     ///
     /// The paragraphs come from the translation tables, where the edition prints them, and are
-    /// left out when no tables are given.
+    /// left out when no tables are given; so is which verse holds a psalm's title, which bsb.txt
+    /// prints inside the verse without a mark.
     /// </summary>
     public static TextSource Read(string path, string? tablesPath = null)
     {
@@ -84,9 +85,9 @@ internal static class BereanTextSource
         var published = BereanWords.Verses(path)
             .Select(verse => (verse.Reference, Words: BereanWords.Split(verse.Text)))
             .ToList();
-        var paragraphs = tablesPath is null
-            ? []
-            : BereanParagraphs.Read(tablesPath, published.ToDictionary(
+        var layout = tablesPath is null
+            ? new BereanLayout([], new HashSet<string>())
+            : BereanParagraphs.Layout(tablesPath, published.ToDictionary(
                 verse => verse.Reference, verse => verse.Words, StringComparer.Ordinal));
 
         foreach (var (reference, verseWords) in published)
@@ -99,7 +100,7 @@ internal static class BereanTextSource
 
             names.TryAdd(book, BibleBookAbbreviation.GetByOrdinal(book)?.FullName.Full ?? reference);
 
-            var breaks = paragraphs.GetValueOrDefault(reference);
+            var breaks = layout.Breaks.GetValueOrDefault(reference);
             var words = verseWords
                 .Select((word, at) => new WordDraft(
                     word.Surface,
@@ -119,7 +120,10 @@ internal static class BereanTextSource
                 chapters[chapter] = verses;
             }
 
-            verses.Add(new VerseDraft(verse, words));
+            verses.Add(new VerseDraft(verse, words)
+            {
+                MarksASuperscription = layout.PsalmHeadings.Contains(reference),
+            });
         }
 
         var drafts = books
