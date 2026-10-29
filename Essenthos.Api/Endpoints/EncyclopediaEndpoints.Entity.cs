@@ -295,8 +295,7 @@ internal static partial class EncyclopediaEndpoints
             // A name the page's heading does not already say is given as the reader's texts print it.
             var otherNames = names
                 .Where(n => !EntityNames.IsTitle(n.Kind)
-                            && !string.Equals(n.Label, entity.Name, StringComparison.OrdinalIgnoreCase)
-                            && !string.Equals(n.Label, renamed?.Name, StringComparison.OrdinalIgnoreCase))
+                            && !string.Equals(n.Label, renamed?.Name ?? entity.Name, StringComparison.OrdinalIgnoreCase))
                 .Select(n => new BorneName(n.Label, NameSpellings.Numbers(n.HebrewStrongNumber, n.GreekStrongNumber)))
                 .Where(n => n.Numbers.Count > 0)
                 .ToList();
