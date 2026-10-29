@@ -273,7 +273,7 @@ public class OttleyTests
     {
         Book.Chapters.Should().HaveCount(66);
         Book.Chapters.Sum(chapter => chapter.Verses.Count).Should().Be(1288);
-        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27189);
+        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27192);
 
         var missing = Book.Chapters.SelectMany(chapter =>
             Enumerable.Range(1, chapter.Verses.Max(v => v.Number))
@@ -291,7 +291,7 @@ public class OttleyTests
 
     [Theory]
     [InlineData(2, 20, "τῇ ἡμέρᾳ ἐκείνῃ ἐκβαλεῖ", "προσκυνεῖν, τοῖς ματαίοις καὶ ταῖς νυκτερίσιν,")]
-    [InlineData(2, 21, "τοῦ εἰσελθεῖν εἷς τὰς τρώγλας", "θραῦσαι τὴν γῆν.")]
+    [InlineData(2, 21, "τοῦ εἰσελθεῖν εἰς τὰς τρώγλας", "θραῦσαι τὴν γῆν.")]
     [InlineData(12, 6, "ἀγαλλιᾶσθε καὶ εὐφραίνεσθε", "ἐν μέσῳ σου.")]
     [InlineData(44, 28, "ὁ λέγων Κύρῳ φρονεῖν", "θεμελιώσω.")]
     public void AVerseTheTranscriptionRanOnOpensWhereOttleyNumbersIt(int chapter, int verse, string opening, string end) =>
