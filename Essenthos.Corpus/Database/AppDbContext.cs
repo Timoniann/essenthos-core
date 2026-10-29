@@ -728,6 +728,8 @@ public class AppDbContext : DbContext
             });
         });
 
+        modelBuilder.Entity<EventDate>().Property(d => d.CalculationParts).HasColumnType("jsonb");
+
         modelBuilder.Entity<EntityAlternative>(entity =>
         {
             entity.HasOne(a => a.Entity)

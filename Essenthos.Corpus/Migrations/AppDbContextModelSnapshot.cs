@@ -2043,6 +2043,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("calculation");
 
+                    b.Property<string>("CalculationParts")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("calculation_parts");
+
                     b.Property<int>("ChronologyId")
                         .HasColumnType("integer")
                         .HasColumnName("chronology_id");

@@ -12,9 +12,12 @@ internal sealed record SeptuagintOutcome(
     int Unplaced,
     TimeSpan Elapsed)
 {
+    /// <summary>On a corpus that holds the reckonings, the dates whose arithmetic was written again.</summary>
+    public int Reworded { get; init; }
+
     public override string ToString() =>
         AlreadyLoaded
-            ? "the Septuagint reckonings are already loaded"
+            ? $"the Septuagint reckonings are already loaded; {Reworded} dates' arithmetic written again"
             : $"{Reckonings} Septuagint reckonings computed from the Greek of Genesis 5 and 11, with " +
               $"{Dates} dates and {Unplaced} of the base reckoning's events left undated, in {Elapsed}";
 }
@@ -69,10 +72,8 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
     {
         var started = Stopwatch.StartNew();
         var slugs = Definitions.Select(d => d.Slug).ToList();
-        if (await db.Chronologies.AnyAsync(c => slugs.Contains(c.Slug), cancellationToken))
-        {
-            return new SeptuagintOutcome(true, 0, 0, 0, TimeSpan.Zero);
-        }
+        var loaded = await db.Chronologies.Where(c => slugs.Contains(c.Slug))
+            .ToDictionaryAsync(c => c.Slug, StringComparer.Ordinal, cancellationToken);
 
         var brentonFolder = Path.Combine(resources, "Septuagint");
         var sweteFolder = Path.Combine(resources, "Swete");
@@ -105,11 +106,18 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
         var cainan = await Cainan(cancellationToken);
         var written = 0;
         var unplaced = 0;
+        var reworded = 0;
 
         foreach (var definition in Definitions)
         {
             var computed = Reckon(definition, reckoning.LastYearBeforeTheCommonEra, dated, cainan,
                 Edition(definition, editions[SeptuagintTextSource.Slug], editions[SweteTextSource.Slug]));
+
+            if (loaded.TryGetValue(definition.Slug, out var held))
+            {
+                reworded += await Reword(held, computed.Dates, cancellationToken);
+                continue;
+            }
 
             db.Chronologies.Add(computed.Chronology);
             await db.SaveChangesAsync(cancellationToken);
@@ -125,10 +133,47 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
             unplaced = computed.Unplaced;
         }
 
-        var outcome = new SeptuagintOutcome(false, Definitions.Length, written, unplaced, started.Elapsed);
+        var outcome = new SeptuagintOutcome(loaded.Count == Definitions.Length, Definitions.Length - loaded.Count,
+            written, unplaced, started.Elapsed) { Reworded = reworded };
         logger.LogInformation("Loaded the Septuagint reckonings: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>
+    /// A reckoning already loaded is given the arithmetic, sentence and parts, a load now writes for it;
+    /// the dates themselves stay. A second run writes nothing.
+    /// </summary>
+    private async Task<int> Reword(Chronology chronology, IReadOnlyList<EventDate> computed, CancellationToken cancellationToken)
+    {
+        var held = await db.EventDates.Where(d => d.ChronologyId == chronology.Id)
+            .ToDictionaryAsync(d => d.EventId, cancellationToken);
+        var reworded = 0;
+        foreach (var date in computed)
+        {
+            if (!held.TryGetValue(date.EventId, out var row)
+                || (row.Calculation == date.Calculation && Same(row.CalculationParts, date.CalculationParts)))
+            {
+                continue;
+            }
+
+            row.Calculation = date.Calculation;
+            row.CalculationParts = date.CalculationParts;
+            reworded++;
+        }
+
+        if (reworded > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return reworded;
+    }
+
+    /// <summary>Whether two parts say the same, read back from the database's own spelling of the JSON.</summary>
+    private static bool Same(string? held, string? wanted) =>
+        (held is null && wanted is null)
+        || (held is not null && wanted is not null
+            && Arithmetic.Write(Arithmetic.Read(held)!) == Arithmetic.Write(Arithmetic.Read(wanted)!));
 
     internal sealed record BaseDate(
         int EventId,
@@ -230,6 +275,7 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
                     EventId = eventId,
                     Year = year.Year,
                     Calculation = year.Calculation,
+                    CalculationParts = Arithmetic.Write(year.Working),
                     Citation = year.Citation,
                 });
             }
@@ -280,6 +326,24 @@ internal sealed class SeptuagintReckoningLoader(AppDbContext db, ILogger<Septuag
                       $"the {SeptuagintReckoning.Number(genealogies)} the Greek of Genesis 5 and 11 adds before Abram, less the " +
                       $"{templeGap - temple} by which 1 Kings 6:1 reads {temple} years from the Exodus to the Temple against " +
                       $"{templeGap} = {SeptuagintReckoning.Number(row.Year + shift)}",
+                CalculationParts = Arithmetic.Write(side == SeptuagintSide.Exodus
+                    ? new Arithmetic(Arithmetic.Forward, row.Year + shift)
+                    {
+                        Base = row.Year,
+                        Shift = genealogies,
+                        Abram = Named(SeptuagintReckoning.AbramBorn),
+                        AbramThere = abramBase,
+                        AbramHere = abram,
+                    }
+                    : new Arithmetic(Arithmetic.Temple, row.Year + shift)
+                    {
+                        Base = row.Year,
+                        Shift = afterTemple,
+                        Genealogies = genealogies,
+                        Less = templeGap - temple,
+                        TempleYears = temple,
+                        BaseTempleYears = templeGap,
+                    }),
                 Citation = side == SeptuagintSide.Exodus ? "Genesis 5; Genesis 11" : "Genesis 5; Genesis 11; 1 Kings 6:1",
             });
         }
