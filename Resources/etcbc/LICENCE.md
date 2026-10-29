@@ -5,7 +5,7 @@ and Computer**, VU University Amsterdam. <https://github.com/ETCBC/bhsa>,
 <https://shebanq.ancient-data.org>.
 
 **Licence: CC BY-NC 4.0** — <https://creativecommons.org/licenses/by-nc/4.0/>.
-NonCommercial, and the only text in this corpus that is.
+NonCommercial, as the Samaritan Pentateuch and the Schlachter Bible of 1951 are too.
 
 The README of `ETCBC/bhsa` states it in as many words:
 

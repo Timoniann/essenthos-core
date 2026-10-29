@@ -175,7 +175,7 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
 
         var credited = stated
             .Where(row => row.From == id || row.To == id)
-            .Select(row => new { Other = row.From == id ? row.To : row.From, Dataset = Datasets.Match(row.Source) })
+            .Select(row => new { Other = row.From == id ? row.To : row.From, Dataset = Datasets.Credited(row.Source) })
             .Where(row => row.Dataset is not null && row.Dataset.Id != Datasets.Own)
             .ToLookup(row => row.Other, row => row.Dataset!);
 

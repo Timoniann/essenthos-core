@@ -230,7 +230,7 @@ internal static class RenderingEndpoints
             .ToListAsync(cancellationToken);
 
         return sources
-            .Select(row => new { row.Other, Dataset = Datasets.Match(row.Source) })
+            .Select(row => new { row.Other, Dataset = Datasets.Credited(row.Source) })
             .Where(row => row.Dataset is not null)
             .DistinctBy(row => (row.Other, row.Dataset!.Id))
             .ToLookup(row => row.Other, row => new TextCreditResponse(row.Dataset!.Name, row.Dataset.Author));

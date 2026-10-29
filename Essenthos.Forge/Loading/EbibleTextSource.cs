@@ -113,13 +113,10 @@ internal static class EbibleTextSource
                 + "own decision surviving the revision. It arrives tagged: 365,350 of its 696,963 "
                 + "words carry a Strong number.",
             RightsNote =
-                "Settled for the text and unstated for the tagging, and the two are worth keeping "
-                + "apart. Luther died in 1546 and the 1912 revisers were a church commission whose "
+                "Luther died in 1546 and the 1912 revisers were a church commission whose "
                 + "work is more than a century old, so the text is out of copyright by any "
                 + "arithmetic; eBible says Public Domain in its catalogue, on the copyright page and "
-                + "in the copy of that page shipped inside the archive. None of the three says who "
-                + "assigned the Strong numbers or under what terms eBible obtained them, and a "
-                + "tagging layer is somebody's work even when the text under it is nobody's.",
+                + "in the copy of that page shipped inside the archive.",
             Citation =
                 "Die Bibel nach der Übersetzung Martin Luthers, revised text of 1912, in the digital "
                 + "edition eBible.org publishes as deu1912.",
@@ -175,31 +172,21 @@ internal static class EbibleTextSource
                 + "licensed by the verse. This is the 1909, and its Greek is the Textus Receptus "
                 + "throughout — the heavenly witnesses of 1 John 5:7 are printed, and so are Acts "
                 + "8:37, Matthew 17:21 and 18:11, Luke 17:36, John 5:4 and the doxology of the "
-                + "Lord's Prayer. It arrives tagged more thoroughly than the German — 671,228 of its "
-                + "703,737 words stand under a Strong number — and that tagging is not loaded, "
-                + "because it is Rubén Gómez's work and eBible publishes it without his name on it. "
-                + "What is loaded from the annotation is the 3,501 spans it marks as words the "
-                + "translators supplied, which are the italics of a printed Reina-Valera and are the "
+                + "Lord's Prayer. The 3,501 spans its annotation marks as words the translators "
+                + "supplied are kept: they are the italics of a printed Reina-Valera and are the "
                 + "edition's own. "
                 + "It is the one text here that is not placed in the English numbering. eBible "
                 + "renumbered both German files and recorded what each verse is called at home; it "
                 + "did neither for this one, so 18 verse slots stand empty where the Spanish's own "
                 + "division runs ahead of the English, the chapter after each seam is one to three "
-                + "verses late, and its last verse holds two. Nothing is missing. Measured against "
-                + "Luther by the Strong numbers both carry, 216 of 31,102 verses are at an address "
-                + "other than the one the German uses for the same words, in ten chapters — "
+                + "verses late, and its last verse holds two. Nothing is missing. 216 of its 31,102 "
+                + "verses are at an address other than the one Luther's German uses for the same "
+                + "words, in ten chapters — "
                 + "Numbers 13 and 30, 1 Samuel 24, 2 Chronicles 33, Job 39 and 40, Hosea 12, "
                 + "Jonah 2, 1 Kings 22 and 1 Chronicles 21.",
             RightsNote =
                 "The text is public domain and says so in all three of eBible's places, and Valera "
-                + "died in 1602. The Strong tagging that arrives with it is not, and is not loaded. "
-                + "It is Rubén Gómez's, established by comparison rather than assumed: eBible tags "
-                + "3 John 1:12 as Todos|G5259,G3956 and misma|G5259,G0846, and bibliaparalela "
-                + "publishes those same numbers on those same phrases as \"Reina-Valera 1909 con "
-                + "números de Strong, cortesía de Rubén Gómez, utilizado con permiso\". His stated "
-                + "terms are that the layer goes to software publishers and not to individuals and "
-                + "that the module must be locked; CrossWire carries it encrypted as \"Copyrighted; "
-                + "Permission to distribute granted to CrossWire\". eBible names him nowhere.",
+                + "died in 1602.",
             Citation =
                 "Santa Biblia, Antigua versión de Casiodoro de Reina revisada por Cipriano de Valera, "
                 + "revisión de 1909, in the digital edition eBible.org publishes as spaRV1909.",
@@ -227,9 +214,7 @@ internal static class EbibleTextSource
                 "The text is public domain and says so in all three of eBible's places, and Segond died in "
                 + "1885. The Strong tagging that arrives with it is not loaded. eBible names nobody for "
                 + "it, and it is not a claim about words: \"créa les\" both carry H1254 and \"et la "
-                + "terre\" all three H8064 in Genesis 1:1. CrossWire's Strong-numbered Segond credits its "
-                + "numbers to Concordances et Traductions de la Bible, 2026, under \"Copyrighted; "
-                + "Permission to distribute granted to CrossWire\". The book introductions and section "
+                + "terre\" all three H8064 in Genesis 1:1. The book introductions and section "
                 + "headings of eBible's edition are its editors' and are not loaded either.",
             Citation =
                 "La Sainte Bible, traduction de Louis Segond, révision de 1910, in the digital edition "
@@ -317,7 +302,9 @@ internal static class EbibleTextSource
                 "Новий Завіт і Книга Псалмів, Бібліка® Відкрита Новий Переклад Українською™ © 2022 Biblica, Inc. "
                 + "New Testament and Psalms, Biblica® Open New Ukrainian Translation™ Copyright © 2022 by Biblica, "
                 + "Inc., CC BY-SA 4.0, in the digital edition eBible.org publishes as ukronpu. The original work by "
-                + "Biblica, Inc. is available for free at www.biblica.com and open.bible.",
+                + "Biblica, Inc. is available for free at www.biblica.com and open.bible. «Biblica» (Бібліка) є "
+                + "товарною знакою зареєстрованою в бюро патентів та торгових марок США компанією «Biblica, Inc.» "
+                + "Використовуються з дозволу.",
         },
     };
 

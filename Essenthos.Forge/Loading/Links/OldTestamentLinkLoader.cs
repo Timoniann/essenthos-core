@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -116,8 +117,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// it never makes a link <c>stated-by-source</c> — it is a second, independent answer to what
     /// the Hebrew says, and the claim it writes records that rather than upgrading the link.
     /// </summary>
-    private const string StatedSource =
-        "TAHOT by STEP Bible, www.STEPBible.org, based on work at Tyndale House Cambridge, CC BY-NC 3.0";
+    internal const string StatedSource =
+        Sources.TahotPrefix + ", www.STEPBible.org, based on work at Tyndale House Cambridge, CC BY-NC 3.0";
 
     /// <summary>What the second claim asserts, as against what the link's own claim asserts.</summary>
     private const string StatedNote =

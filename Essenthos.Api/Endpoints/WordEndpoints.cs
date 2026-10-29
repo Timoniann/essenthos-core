@@ -226,7 +226,7 @@ internal static class WordEndpoints
                             .Select(method => EnumSpelling.Of(method))
                             .Order(StringComparer.Ordinal),
                     ],
-                    Datasets.Match(row.Source)?.Name)),
+                    Datasets.Credited(row.Source)?.Name)),
         ];
     }
 

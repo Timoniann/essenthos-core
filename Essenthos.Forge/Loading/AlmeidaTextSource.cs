@@ -81,16 +81,15 @@ internal static partial class AlmeidaTextSource
             + "3 John 1:15 are recorded at the addresses the English gives those words. The printing numbers "
             + "Mark 4:34 as 31, which is read as the misprint it is.",
         RightsNote =
-            "Public domain: Almeida died in 1691 and the revisers worked in the nineteenth century. Project "
-            + "Gutenberg states \"Public domain in the USA\" on the eBook's page, and its licence at the head "
-            + "and foot of the file concerns its own name and trademark, which are not reproduced. The "
+            "Public domain: Almeida died in 1691 and the revisers worked in the nineteenth century, and the "
+            + "page the transcription is published on states \"Public domain in the USA\". The "
             + "transcription is the work of the Online Distributed Proofreading Team (Júlio Reis, abi278 and "
             + "Sergio Queiroz) from page images at Faithofgod.net. The section headings, marginal dates and "
             + "parallel passages the printing sets over the text are its editors' and are not loaded.",
         Citation =
             "A Biblia Sagrada, contendo o Velho e o Novo Testamento, traduzida em portuguez por João Ferreira "
             + "d'Almeida, edição revista e corrigida, Lisboa: Deposito das Escripturas Sagradas, 1911, as "
-            + "transcribed by Project Gutenberg, eBook #62383.",
+            + "transcribed by the Online Distributed Proofreading Team.",
     };
 
     /// <summary>

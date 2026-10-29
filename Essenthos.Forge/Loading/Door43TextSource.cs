@@ -81,7 +81,8 @@ internal static class Door43TextSource
                     + "not loaded.",
                 Citation =
                     "unfoldingWord® Simplified Text, release 91, copyright 2022 by unfoldingWord, CC BY-SA 4.0, "
-                    + "git.door43.org/unfoldingWord/en_ust.",
+                    + "git.door43.org/unfoldingWord/en_ust. Based on A Translation for Translators by Ellis W. "
+                    + "Deibler, Jr., CC BY-SA 4.0, git.door43.org/Door43/T4T.",
             },
 
             ["vi_glt"] = new(
@@ -94,7 +95,7 @@ internal static class Door43TextSource
                 Versification: Versification.English,
                 PublishedYear: 2025,
                 SourceUrl: "https://git.door43.org/vi_gl/vi_glt/src/tag/v1",
-                RightsHolder: "Far East Broadcasting Company",
+                RightsHolder: "Door43 World Missions Community; published by the Far East Broadcasting Company",
                 Licence: "CC-BY-SA-4.0",
                 LicenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
                 Redistribution: Redistribution.ShareAlike,

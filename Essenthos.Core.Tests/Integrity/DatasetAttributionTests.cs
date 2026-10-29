@@ -2,6 +2,7 @@
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links.Evidentia;
 using FluentAssertions;
 using Xunit;
@@ -71,17 +72,107 @@ public sealed class DatasetAttributionTests
             .Should().ContainSingle().Which.Id.Should().Be(Datasets.Own);
 
     /// <summary>
-    /// unfoldingWord's condition is not in any Creative Commons licence: a derivative work must
-    /// remove their trademark. It reaches the reader only if it is written down beside the licence
-    /// that does not contain it.
+    /// The Ukrainian interlinear is the Ukrainian team's on Door43, as its manifest says, and its
+    /// licence file is the plain CC BY-SA 4.0 summary: share-alike is owed, and no trademark
+    /// condition, which is unfoldingWord's own and belongs to its own releases.
     /// </summary>
     [Fact]
-    public void TheUkrainianInterlinearCarriesTheTrademarkCondition()
+    public void TheUkrainianInterlinearIsCreditedToTheTeamThatMadeIt()
     {
         var door43 = Of("unfoldingword");
 
         door43.Licence.Should().Be("CC BY-SA 4.0");
-        door43.Obliges.Should().Contain("ShareAlike").And.Contain("trademark");
+        door43.Author.Should().Contain("uk_gt").And.Contain("Door43 World Missions Community");
+        door43.Obliges.Should().Contain("ShareAlike").And.NotContain("trademark");
+    }
+
+    /// <summary>
+    /// The numberings and taggings the owner ruled on 2026-10-29 are used and named to no reader: no
+    /// entry on the sources page and no credit on a link. Their rows are still claimed, so they are
+    /// not reported as undeclared either.
+    /// </summary>
+    [Theory]
+    [InlineData("gomez-rv1909-strong", Sources.ReinaValeraStrongCredit)]
+    [InlineData("concordance-segond-strong", Sources.SegondStrongCredit)]
+    [InlineData("concordance-darby-strong", Sources.DarbyFrenchStrongCredit)]
+    [InlineData("schlachter-strong", Sources.SchlachterStrongCredit)]
+    [InlineData("zefaniakjv", "Zefania KJV+ Strong numbers, matched within the verse against NESTLE1904")]
+    [InlineData("luther1912-strong", "the Strong numbers LUTH1912 carries, paired within the verse")]
+    public void TheNumberingsTheOwnerRuledOnAreNamedToNoReader(string dataset, string source)
+    {
+        Of(dataset).Unlisted.Should().BeTrue();
+        Datasets.Of(source).Should().Be(dataset);
+        Datasets.Credited(source).Should().BeNull();
+    }
+
+    [Fact]
+    public void OnlyTheNumberingsTheOwnerRuledOnAreUnlisted() =>
+        Datasets.All.Where(dataset => dataset.Unlisted).Select(dataset => dataset.Id).Should().BeEquivalentTo(
+            "gomez-rv1909-strong", "concordance-segond-strong", "concordance-darby-strong", "schlachter-strong",
+            "zefaniakjv", "luther1912-strong");
+
+    /// <summary>
+    /// Bob Jones University's numbering stays in use and is credited, and its terms are said as its
+    /// notice says them, not as a licence name would sum them up.
+    /// </summary>
+    [Fact]
+    public void TheSynodalNumberingIsCreditedToBobJonesUniversityOnItsNoticesTerms()
+    {
+        var bju = Of("bju-synodal-strong");
+
+        bju.Unlisted.Should().BeFalse();
+        bju.Author.Should().StartWith("Bob Jones University");
+        bju.Obliges.Should().StartWith("Bob Jones University's notice of 1996")
+            .And.Contain("unmodified").And.Contain("propagating the gospel").And.Contain("not for profit");
+        Datasets.Credited(Sources.SynodalStrongCredit).Should().BeSameAs(bju);
+    }
+
+    /// <summary>
+    /// The verse numbering every text is placed by, and the Hebrew glosses beside the Old Testament
+    /// mapping, are STEP Bible's, and both are credited; the numbering with the note of changes its
+    /// header asks for, one for each correction the corpus makes to it.
+    /// </summary>
+    [Fact]
+    public void TheVersificationFrameIsCreditedWithANoteOfTheChangesMadeToIt()
+    {
+        var tvtms = Of("tvtms");
+
+        tvtms.Frame.Should().BeTrue();
+        tvtms.Licence.Should().Be("CC BY 4.0");
+        tvtms.HolderUrl.Should().Be("https://www.stepbible.org/");
+        tvtms.Changes.Should().NotBeNullOrEmpty();
+
+        string[] corrected = ["Malachi", "Jeremiah", "Daniel"];
+        corrected.Should().OnlyContain(book => tvtms.Changes!.Any(change => change.Contains(book)));
+
+        var schemes = TvtmsSupplements.All.Select(supplement => supplement.Scheme).Distinct().ToList();
+        schemes.Should().OnlyContain(scheme => NotedAs.ContainsKey(scheme),
+            "a numbering added to the frame is a change the note of changes has to name");
+        schemes.Should().OnlyContain(scheme => tvtms.Changes!.Any(change => change.Contains(NotedAs[scheme])));
+    }
+
+    /// <summary>How the note of changes names the edition each added numbering describes.</summary>
+    private static readonly Dictionary<string, string> NotedAs = new(StringComparer.Ordinal)
+    {
+        ["Brenton"] = "Brenton's",
+        ["Swete"] = "Swete",
+        ["ReinaValera1909"] = "Reina-Valera",
+        ["Kulish"] = "Kulish",
+        ["Synodal1876"] = "Synodal",
+        ["Ohienko1962"] = "Ohienko",
+        ["Segond1910"] = "Segond",
+        ["BrentonEnglish"] = "Brenton's English",
+    };
+
+    [Fact]
+    public void TheHebrewGlossesAreCreditedForTheClaimsTheyMake()
+    {
+        var tahot = Of("tahot");
+
+        tahot.LinkClaims.Should().BeTrue();
+        tahot.Licence.Should().Be("CC BY-NC 3.0");
+        tahot.Obliges.Should().Contain("NonCommercial");
+        Datasets.Credited(OldTestamentLinkLoader.StatedSource).Should().BeSameAs(tahot);
     }
 
     /// <summary>
@@ -140,8 +231,25 @@ public sealed class DatasetAttributionTests
         Datasets.Of(EvidentiaLinkWriter.RuleSource(run, rules, kind)).Should().Be("evidentia");
         var evidentia = Of("evidentia");
         evidentia.Links.Should().BeTrue();
-        evidentia.Obliges.Should().Contain("CC BY-SA 4.0").And.Contain("CC BY-NC-SA 4.0");
-        evidentia.Citation.Should().Contain("http://hdl.handle.net/11234/1-3131");
+        evidentia.Covers.Should().Contain("UDPipe").And.Contain("http://hdl.handle.net/11234/1-3131");
+    }
+
+    /// <summary>
+    /// EVIDENTIA is this project's own work, under the one licence the owner approved for all of it,
+    /// and its declaration says nothing else.
+    /// </summary>
+    [Fact]
+    public void EvidentiaIsOurOwnWorkUnderOneLicence()
+    {
+        var evidentia = Of("evidentia");
+
+        evidentia.OwnWork.Should().BeTrue();
+        evidentia.Author.Should().Be("this project");
+        evidentia.Licence.Should().Be("CC BY-NC 4.0");
+        evidentia.LicenceUrl.Should().Be("https://creativecommons.org/licenses/by-nc/4.0/");
+        evidentia.Obliges.Should().BeNull();
+        evidentia.Citation.Should().BeNull();
+        evidentia.Terms.Should().Be(ReuseTerms.NonCommercial);
     }
 
     /// <summary>
