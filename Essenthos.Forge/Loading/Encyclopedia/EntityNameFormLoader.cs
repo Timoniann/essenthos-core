@@ -45,7 +45,10 @@ internal sealed record NameFormOutcome(
           $"over {Files} files in {Elapsed}. {Skipped} records added no missing form, " +
           $"{Replaced} forms were superseded by a later file, " +
           $"{Repaired} forms replaced one that carried its own preposition, and {Bared} forms had " +
-          $"one taken off on the way in. Refused: {Refused}.";
+          $"one taken off on the way in, {Corrected} put right to the spelling a text prints. Refused: {Refused}.";
+
+    /// <summary>Forms a correction put back to the spelling a text prints, in place of one a pass got wrong.</summary>
+    public int Corrected { get; init; }
 }
 
 /// <summary>
@@ -119,7 +122,7 @@ internal sealed class EntityNameFormLoader(
         var held = await Held(entities.Values, cancellationToken);
 
         int unknownEntity = 0, unknownCase = 0, empty = 0, alreadyHeld = 0, mixedScripts = 0;
-        int skipped = 0, repaired = 0, bared = 0, replaced = 0;
+        int skipped = 0, repaired = 0, bared = 0, replaced = 0, corrected = 0;
 
         // What this run has settled per form rather than per entity: the row it wrote, or null
         // where the corpus already held a sound one. Two files naming one entity is ordinary here
@@ -127,7 +130,9 @@ internal sealed class EntityNameFormLoader(
         // second record fills what the first left out and overwrites only what it also says.
         var decided = new Dictionary<(int Entity, string Language, string Case), EntityNameForm?>();
 
-        foreach (var record in records)
+        // The corrections go last, whatever file they are in, so no pass's record restores a form
+        // one of them took back.
+        foreach (var record in records.OrderBy(r => r.Replaces is not null))
         {
             if (!entities.TryGetValue(record.Entity, out var entityId))
             {
@@ -172,6 +177,45 @@ internal sealed class EntityNameFormLoader(
                     }
 
                     var key = (entityId, language, grammaticalCase);
+                    if (record.Replaces?.GetValueOrDefault(language)?.GetValueOrDefault(grammaticalCase) is { } wrong)
+                    {
+                        var current = decided.GetValueOrDefault(key) ?? held.GetValueOrDefault(key);
+                        if (current is not null && current.Form != wrong)
+                        {
+                            if (current.Form != form)
+                            {
+                                alreadyHeld++;
+                            }
+
+                            continue;
+                        }
+
+                        if (current is null)
+                        {
+                            current = new EntityNameForm
+                            {
+                                EntityId = entityId,
+                                Language = language,
+                                GrammaticalCase = grammaticalCase,
+                                Form = form,
+                                Method = LinkMethod.StatedBySource,
+                                Source = Printed(record, wrong),
+                            };
+                            db.EntityNameForms.Add(current);
+                            held[key] = current;
+                        }
+
+                        current.Form = form;
+                        current.Method = LinkMethod.StatedBySource;
+                        current.Confidence = null;
+                        current.Run = null;
+                        current.Source = Printed(record, wrong);
+                        decided[key] = current;
+                        corrected++;
+                        changed = true;
+                        continue;
+                    }
+
                     if (decided.TryGetValue(key, out var earlier))
                     {
                         if (earlier is null)
@@ -255,7 +299,10 @@ internal sealed class EntityNameFormLoader(
             AlreadyLoaded: forms == 0 && skipped == records.Count && missing == 0,
             NoFiles: false,
             files, records.Count, replaced, skipped, wrote, forms, repaired, bared, refused,
-            started.Elapsed);
+            started.Elapsed)
+        {
+            Corrected = corrected,
+        };
 
         if (missing > 0)
         {
@@ -295,6 +342,11 @@ internal sealed class EntityNameFormLoader(
     /// </summary>
     private static string Source(NameFormRecord record) =>
         $"{SourcePrefix} {record.Model}, asked {record.AskedAt}";
+
+    /// <summary>How a correction's form is sourced: the text that prints it, and the form it took the place of.</summary>
+    internal static string Printed(NameFormRecord record, string wrong) =>
+        $"{record.Model}, as {record.PrintedIn ?? "the texts of the language"} prints it, where it was «{wrong}», " +
+        $"checked {record.AskedAt}";
 
     /// <summary>
     /// Which entity each slug the files name is, in one query rather than one per record.

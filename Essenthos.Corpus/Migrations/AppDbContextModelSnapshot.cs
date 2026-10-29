@@ -647,14 +647,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("reason");
 
-                    b.Property<string>("ReasonRenderedBy")
-                        .HasColumnType("text")
-                        .HasColumnName("reason_rendered_by");
-
-                    b.Property<string>("ReasonRenderings")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("reason_renderings");
-
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnType("text")
@@ -2050,6 +2042,10 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Calculation")
                         .HasColumnType("text")
                         .HasColumnName("calculation");
+
+                    b.Property<string>("CalculationParts")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("calculation_parts");
 
                     b.Property<int>("ChronologyId")
                         .HasColumnType("integer")

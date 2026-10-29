@@ -53,14 +53,7 @@ internal sealed class TextTranslationLoader(AppDbContext db, ILogger<TextTransla
         var wanted = new Dictionary<(string Language, string Sha), (string Text, string Source)>();
         foreach (var file in files)
         {
-            var read = JsonSerializer.Deserialize<TextTranslationFile>(
-                await File.ReadAllTextAsync(file, cancellationToken), Shape)
-                ?? throw new InvalidDataException($"{file} holds no translations file");
-            if (string.IsNullOrWhiteSpace(read.Source))
-            {
-                throw new InvalidDataException($"{file} does not say what rendered it: give it a \"source\"");
-            }
-
+            var read = Read(await File.ReadAllTextAsync(file, cancellationToken), file);
             foreach (var entry in read.Entries)
             {
                 var sha = EnglishNotes.Digest(entry.English);
@@ -120,15 +113,25 @@ internal sealed class TextTranslationLoader(AppDbContext db, ILogger<TextTransla
         return new TextTranslationOutcome(written, removed, files, wanted.Count, started.Elapsed);
     }
 
+    /// <summary>One file of renderings, from its JSON; <paramref name="file"/> names it in what is refused.</summary>
+    internal static TextTranslationFile Read(string json, string file)
+    {
+        var read = JsonSerializer.Deserialize<TextTranslationFile>(json, Shape)
+                   ?? throw new InvalidDataException($"{file} holds no translations file");
+        return string.IsNullOrWhiteSpace(read.Source)
+            ? throw new InvalidDataException($"{file} does not say what rendered it: give it a \"source\"")
+            : read;
+    }
+
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 
-    private sealed record TextTranslationFile(string Source, IReadOnlyList<TextTranslationEntry> Entries);
+    internal sealed record TextTranslationFile(string Source, IReadOnlyList<TextTranslationEntry> Entries);
 
-    private sealed record TextTranslationEntry(string English, string? Ukr, string? Deu, string? Spa)
+    internal sealed record TextTranslationEntry(string English, string? Ukr, string? Deu, string? Spa)
     {
         public IEnumerable<(string Language, string Text)> Rendered()
         {

@@ -225,25 +225,26 @@ internal static partial class EncyclopediaEndpoints
                 .OrderBy(o => o.Id)
                 .ToListAsync(cancellationToken);
 
-            var alternatives = (await db.EntityAlternatives
-                    .Where(a => a.EntityId == entity.Id)
-                    .Select(a => new
-                    {
-                        Slug = a.Alternative == null ? null : a.Alternative.Slug,
-                        Name = a.Alternative == null ? null : a.Alternative.Name,
-                        Distinguisher = a.Alternative == null ? null : a.Alternative.Distinguisher,
-                        a.Describes,
-                        a.Reason,
-                        a.Source,
-                        a.Back,
-                        a.ReasonRenderings,
-                    })
-                    .ToListAsync(cancellationToken))
+            var held = await db.EntityAlternatives
+                .Where(a => a.EntityId == entity.Id)
+                .Select(a => new
+                {
+                    Slug = a.Alternative == null ? null : a.Alternative.Slug,
+                    Name = a.Alternative == null ? null : a.Alternative.Name,
+                    Distinguisher = a.Alternative == null ? null : a.Alternative.Distinguisher,
+                    a.Describes,
+                    a.Reason,
+                    a.Source,
+                    a.Back,
+                })
+                .ToListAsync(cancellationToken);
+            var reasons = await TextTranslations.Of(db, held.Select(a => a.Reason), words, cancellationToken);
+            var alternatives = held
                 .Select(a => new EntityAlternativeResponse(
                     a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source))
                 {
                     Back = a.Back,
-                    LocalReason = ReasonRenderings.In(a.ReasonRenderings, EntityNames.Local(words)),
+                    LocalReason = TextTranslations.In(reasons, a.Reason),
                 })
                 .ToList();
 

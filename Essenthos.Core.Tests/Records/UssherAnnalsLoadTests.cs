@@ -219,4 +219,50 @@ public sealed class UssherAnnalsLoadTests : IClassFixture<UssherAnnalsLoadTests.
         outcome.AlreadyLoaded.Should().BeTrue();
         (await _db.Events.CountAsync()).Should().Be(before);
     }
+
+    /// <summary>
+    /// A note gives Ussher's citation and what his columns say, never how this corpus placed the row:
+    /// a reader is told what the source says, not what our loader did with it.
+    /// </summary>
+    [Fact]
+    public async Task ANoteGivesHisCitationAndNothingOfHowTheRowWasPlaced()
+    {
+        var notes = await _db.Events
+            .Where(e => e.Source == UssherAnnalsLoader.Source)
+            .Select(e => e.Notes!)
+            .ToListAsync();
+
+        notes.Should().NotBeEmpty().And.OnlyContain(n => n.StartsWith("Ussher cites "));
+        notes.Should().NotContain(n => n.Contains("anchored") || n.Contains("Essenthos"));
+        notes.Should().Contain(n => n.Contains("-") && !n.Contains(". "),
+            "a range is cited as he cited it, with nothing after the citation");
+    }
+
+    /// <summary>A corpus loaded with the placement sentences loses them at the next run, and only once.</summary>
+    [Fact]
+    public async Task ACorpusLoadedWithThePlacementSentencesLosesThemOnce()
+    {
+        var annal = await _db.Events
+            .Where(e => e.Source == UssherAnnalsLoader.Source && e.Notes!.Contains("-"))
+            .OrderBy(e => e.Id)
+            .FirstAsync();
+        var now = annal.Notes!;
+        var other = await _db.Events
+            .Where(e => e.Source == UssherAnnalsLoader.Source && e.Id != annal.Id)
+            .OrderBy(e => e.Id)
+            .FirstAsync();
+        var otherNow = other.Notes!;
+        var at = now.IndexOf('.') + 1;
+        annal.Notes = now.Insert(at, UssherAnnalsLoader.Placement[0]);
+        other.Notes = otherNow.Insert(otherNow.IndexOf('.') + 1, UssherAnnalsLoader.Placement[1]);
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        var loader = new UssherAnnalsLoader(_db, NullLogger<UssherAnnalsLoader>.Instance);
+
+        (await loader.Reword(CancellationToken.None)).Should().Be(2);
+        (await _db.Events.AsNoTracking().SingleAsync(e => e.Id == annal.Id)).Notes.Should().Be(now);
+        (await _db.Events.AsNoTracking().SingleAsync(e => e.Id == other.Id)).Notes.Should().Be(otherNow);
+        (await loader.Reword(CancellationToken.None)).Should().Be(0);
+    }
 }

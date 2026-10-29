@@ -367,6 +367,37 @@ public sealed class NameFormTests : IDisposable
         (await Form("broadwall", "deu", GrammaticalCases.Genitive))!.Form.Should().Be("der breiten Mauer");
     }
 
+    /// <summary>
+    /// A correction puts a form a pass got wrong back to the spelling its text prints: whichever file
+    /// it is in, over a form this run wrote or one the corpus already held, and only where the held form
+    /// is exactly the wrong one. A second run changes nothing.
+    /// </summary>
+    [Fact]
+    public async Task ACorrectionReplacesExactlyTheWrongFormAndOnlyOnce()
+    {
+        _db.EntityNameForms.Add(Held("moses", "spa", GrammaticalCases.Nominative, "Aarón"));
+        _db.EntityNameForms.Add(Held("levites", "spa", GrammaticalCases.Nominative, "levitas de Leví"));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Decline("corrections");
+
+        outcome.Corrected.Should().Be(2);
+        var aaron = await Form("aaron", "spa", GrammaticalCases.Nominative);
+        aaron!.Form.Should().Be("Aarón", "the correction comes after the pass whatever the files' order");
+        aaron.Method.Should().Be(LinkMethod.StatedBySource);
+        aaron.Confidence.Should().BeNull();
+        aaron.Source.Should().Be("Essenthos, as the Reina-Valera 1909 prints it, where it was «Moisés», checked 2026-10-29");
+        (await Form("aaron", "deu", GrammaticalCases.Nominative))!.Form.Should().Be("Aaron");
+        (await Form("moses", "spa", GrammaticalCases.Nominative))!.Form.Should().Be("Moisés", "the corpus held the wrong one");
+        (await Form("levites", "spa", GrammaticalCases.Nominative))!.Form.Should().Be("levitas de Leví",
+            "a form other than the wrong one is somebody else's word");
+
+        _db.ChangeTracker.Clear();
+        (await Decline("corrections")).Corrected.Should().Be(0);
+        (await Form("aaron", "spa", GrammaticalCases.Nominative))!.Form.Should().Be("Aarón");
+        (await Form("moses", "spa", GrammaticalCases.Nominative))!.Form.Should().Be("Moisés");
+    }
+
     /// <summary>A row as the descriptor pass left it, which is what the corpus holds today.</summary>
     private EntityNameForm Held(
         string slug, string language, string grammaticalCase, string form) =>

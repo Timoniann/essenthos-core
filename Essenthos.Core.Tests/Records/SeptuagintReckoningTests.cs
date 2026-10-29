@@ -141,6 +141,13 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
 
         years["Birth_Seth_1"].Calculation.Should().Be("Birth_Seth_1 is Birth_Adam_1 (1) + 230 (Genesis 5:3) = 231");
         years["Birth_Seth_1"].Citation.Should().Be("Genesis 5:3");
+        years["Birth_Seth_1"].Working.Should().BeEquivalentTo(new Arithmetic(Arithmetic.Counted, 231)
+        {
+            Event = "Birth_Seth_1",
+            From = "Birth_Adam_1",
+            FromYear = 1,
+            Terms = [new ArithmeticTerm(1, 230, 1, 5, 3)],
+        });
     }
 }
 
@@ -316,6 +323,49 @@ public sealed class SeptuagintReckoningLoadTests
             .Load(Path.GetDirectoryName(TestResources.SeptuagintFolder)!);
 
         again.AlreadyLoaded.Should().BeTrue();
+        again.Reworded.Should().Be(0);
         (await _db.EventDates.CountAsync()).Should().Be(before);
+    }
+
+    /// <summary>
+    /// Every date the Greek's arithmetic reaches keeps that arithmetic in its parts as well as in its
+    /// English sentence, so a page can say it in the reader's language: the parts arrive where the
+    /// sentence does.
+    /// </summary>
+    [Fact]
+    public async Task EveryWorkedDateKeepsItsArithmeticInParts()
+    {
+        var dates = await _db.EventDates
+            .Where(d => d.Chronology!.Slug.StartsWith("septuagint") && d.Calculation != null)
+            .Select(d => new { d.Year, d.Calculation, d.CalculationParts })
+            .ToListAsync();
+
+        dates.Should().HaveCountGreaterThan(1000);
+        foreach (var date in dates)
+        {
+            var working = Arithmetic.Read(date.CalculationParts);
+            working.Should().NotBeNull(date.Calculation);
+            working!.Year.Should().Be(date.Year!.Value, date.Calculation);
+        }
+
+        dates.Select(d => Arithmetic.Read(d.CalculationParts)!.Kind).Distinct()
+            .Should().BeEquivalentTo([Arithmetic.Counted, Arithmetic.Forward, Arithmetic.Temple]);
+    }
+
+    /// <summary>A corpus loaded before the parts existed is given them at the next load, and only once.</summary>
+    [Fact]
+    public async Task ACorpusLoadedWithoutThePartsIsGivenThemOnce()
+    {
+        var septuagint = _db.EventDates.Where(d => d.Chronology!.Slug.StartsWith("septuagint") && d.CalculationParts != null);
+        var worked = await septuagint.CountAsync();
+        await septuagint.ExecuteUpdateAsync(set => set.SetProperty(d => d.CalculationParts, (string?)null));
+        _db.ChangeTracker.Clear();
+        var resources = Path.GetDirectoryName(TestResources.SeptuagintFolder)!;
+
+        var first = await new SeptuagintReckoningLoader(_db, NullLogger<SeptuagintReckoningLoader>.Instance).Load(resources);
+        first.Reworded.Should().Be(worked);
+        _db.ChangeTracker.Clear();
+        var second = await new SeptuagintReckoningLoader(_db, NullLogger<SeptuagintReckoningLoader>.Instance).Load(resources);
+        second.Reworded.Should().Be(0, "the database's own spelling of the JSON is the same parts");
     }
 }

@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Database.Entities;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -21,8 +22,8 @@ internal sealed record SeptuagintTerm(string Reading, int Sign = 1);
 /// <param name="From">The event it counts from; null for the creation, which is year 1.</param>
 internal sealed record SeptuagintRule(string Event, string? From, params SeptuagintTerm[] Terms);
 
-/// <summary>A year this reckoning gives, with the sentence that shows how.</summary>
-internal sealed record SeptuagintYear(int Year, string Calculation, string? Citation);
+/// <summary>A year this reckoning gives, with the sentence that shows how and that sentence's parts.</summary>
+internal sealed record SeptuagintYear(int Year, string Calculation, string? Citation, Arithmetic Working);
 
 /// <summary>What a reckoning makes of the base chronology's events it is not computed for.</summary>
 internal enum SeptuagintSide
@@ -243,6 +244,8 @@ internal static partial class SeptuagintReckoning
                 ? $"{names(rule.Event)} is year 1"
                 : $"{names(rule.Event)} is {names(rule.From)} ({Number(year)})";
             var cited = new List<string>();
+            var terms = new List<ArithmeticTerm>(rule.Terms.Length);
+            var from = rule.From is null ? (int?)null : year;
 
             foreach (var term in rule.Terms)
             {
@@ -250,6 +253,7 @@ internal static partial class SeptuagintReckoning
                 year += term.Sign * value;
                 said += $" {(term.Sign < 0 ? "−" : "+")} {Number(value)} ({reading.Reference})";
                 cited.Add(reading.Reference);
+                terms.Add(new ArithmeticTerm(term.Sign, value, reading.Book, reading.Chapter, reading.Verse));
             }
 
             if (rule.Terms.Length > 0)
@@ -257,7 +261,15 @@ internal static partial class SeptuagintReckoning
                 said += $" = {Number(year)}";
             }
 
-            years[rule.Event] = new SeptuagintYear(year, said, cited.Count > 0 ? string.Join("; ", cited) : null);
+            var working = new Arithmetic(Arithmetic.Counted, year)
+            {
+                Event = names(rule.Event),
+                From = rule.From is null ? null : names(rule.From),
+                FromYear = from,
+                Terms = terms,
+            };
+            years[rule.Event] = new SeptuagintYear(
+                year, said, cited.Count > 0 ? string.Join("; ", cited) : null, working);
         }
 
         return years;

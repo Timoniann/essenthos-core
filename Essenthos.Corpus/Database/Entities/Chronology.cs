@@ -111,6 +111,12 @@ public class EventDate
     /// </summary>
     public string? Calculation { get; set; }
 
+    /// <summary>
+    /// <see cref="Calculation"/> in its parts, where this corpus worked it out itself: an
+    /// <see cref="Arithmetic"/> as JSON, which a reader's language says in its own words.
+    /// </summary>
+    public string? CalculationParts { get; set; }
+
     /// <summary>The page, paragraph or line this rests on in the work it came from.</summary>
     public string? Citation { get; set; }
 

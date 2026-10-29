@@ -202,7 +202,6 @@ internal static partial class ForgeVerbs
     {
         using var notesScope = forge.Scope();
         Console.WriteLine(await notesScope.ServiceProvider.GetRequiredService<NoteTranslationLoader>().Load());
-        Console.WriteLine(await notesScope.ServiceProvider.GetRequiredService<AlternativeReasonTranslationLoader>().Load());
         return 0;
     }
 

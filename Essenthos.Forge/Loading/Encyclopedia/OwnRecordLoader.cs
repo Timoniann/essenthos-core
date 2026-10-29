@@ -471,14 +471,7 @@ internal sealed class OwnRecordLoader(
         foreach (var alternative in reworded)
         {
             var said = listed[(alternative.Record, alternative.Row.Source, alternative.Other!)];
-            if (alternative.Row.Reason != said.Reason)
-            {
-                // A rendering of the old English would be served as the new one's; the own-lines step renders it again.
-                alternative.Row.Reason = said.Reason;
-                alternative.Row.ReasonRenderings = null;
-                alternative.Row.ReasonRenderedBy = null;
-            }
-
+            alternative.Row.Reason = said.Reason;
             alternative.Row.Back = said.Back;
         }
 

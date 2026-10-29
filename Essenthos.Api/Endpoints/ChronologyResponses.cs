@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -168,6 +169,16 @@ internal record EventDateResponse(
 
     /// <summary>The arithmetic in the reader's language, a machine translation; null where none is held.</summary>
     public string? LocalCalculation { get; init; }
+
+    /// <summary>
+    /// The arithmetic in its parts, where this corpus worked it out itself, so a page can say it in the
+    /// reader's language: the events' names are the reader's language's where a rendering is held.
+    /// </summary>
+    public Arithmetic? Working { get; init; }
+
+    /// <summary>The parts as stored, read into <see cref="Working"/> once the row is in memory.</summary>
+    [JsonIgnore]
+    public string? Parts { get; init; }
 
     /// <summary>The notes on this reckoning's date in the reader's language, a machine translation.</summary>
     public string? LocalNotes { get; init; }

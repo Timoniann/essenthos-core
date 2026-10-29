@@ -193,6 +193,7 @@ internal static partial class EncyclopediaEndpoints
                     d.Notes)
                 {
                     Stated = d.StatedYear != null,
+                    Parts = d.CalculationParts,
                 })
                 .ToList());
 
@@ -306,7 +307,7 @@ internal static partial class EncyclopediaEndpoints
         var rendered = await TextTranslations.Of(
             db,
             events.SelectMany(e => new[] { e.Name, e.Description, e.Notes, e.Location, e.Region, e.RegionAtTheTime }
-                .Concat(e.Dates.SelectMany(d => new[] { d.Calculation, d.Notes }))),
+                .Concat(e.Dates.SelectMany(d => new[] { d.Calculation, d.Notes, d.Working?.Event, d.Working?.From, d.Working?.Abram }))),
             words,
             cancellationToken);
 
@@ -336,6 +337,12 @@ internal static partial class EncyclopediaEndpoints
                     {
                         LocalCalculation = TextTranslations.In(rendered, d.Calculation),
                         LocalNotes = TextTranslations.In(rendered, d.Notes),
+                        Working = d.Working is not { } working ? null : working with
+                        {
+                            Event = TextTranslations.In(rendered, working.Event) ?? working.Event,
+                            From = TextTranslations.In(rendered, working.From) ?? working.From,
+                            Abram = TextTranslations.In(rendered, working.Abram) ?? working.Abram,
+                        },
                     }),
                 ],
             }),
@@ -431,6 +438,7 @@ internal static partial class EncyclopediaEndpoints
         IList<EventDateResponse> dates,
         IReadOnlyDictionary<EventLocation, string> places)
     {
+        dates = [.. dates.Select(d => d.Parts is null ? d : d with { Working = Arithmetic.Read(d.Parts), Parts = null })];
         var reckoning = dates.FirstOrDefault(d => d.Chronology == defaultChronology);
 
         return new EventResponse(
