@@ -739,6 +739,8 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(a => a.AlternativeEntityId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            entity.Property(a => a.ReasonRenderings).HasColumnType("jsonb");
         });
 
         modelBuilder.Entity<RulerReign>(entity =>

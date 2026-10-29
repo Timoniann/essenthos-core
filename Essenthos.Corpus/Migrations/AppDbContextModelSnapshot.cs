@@ -630,6 +630,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("alternative_entity_id");
 
+                    b.Property<bool>("Back")
+                        .HasColumnType("boolean")
+                        .HasColumnName("back");
+
                     b.Property<string>("Describes")
                         .HasColumnType("text")
                         .HasColumnName("describes");
@@ -642,6 +646,14 @@ namespace Essenthos.Core.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("reason");
+
+                    b.Property<string>("ReasonRenderedBy")
+                        .HasColumnType("text")
+                        .HasColumnName("reason_rendered_by");
+
+                    b.Property<string>("ReasonRenderings")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("reason_renderings");
 
                     b.Property<string>("Source")
                         .IsRequired()

@@ -84,6 +84,12 @@
       "sourceId": "essenthos:macbannites",
       "why": "Strong's H4344 is a patrial from Machbena, and the only text with the word is 1 Chronicles 12:13, where Machbannai is a man of David's Gadites. No text names a people by it, and the record was made only from the dictionary's derivation.",
       "ownRecord": "the lead, 2026-10-08, deciding option (a) of PRB-0476: no text names that people, H4344 is the man Machbannai"
+    },
+    {
+      "slug": "zimri-5",
+      "sourceId": "essenthos:zimri5",
+      "why": "Strong's fifth Zimri (H2174) is the Zimri of Jeremiah 25:25, 'all the kings of Zimri', set among the kings of the mingled people (JER 25:20-25). The verse names a land and its kings, not a man, and the gazetteer's place Zimri already holds that word and verse. The person record held no verse, no word and no relationship; its line, possibly the same as Zimran, said of the land what Strong's says of it (a people perhaps descended from Zimran, Abraham's son by Keturah, GEN 25:2; 1CH 1:32), which is no identity of two people.",
+      "ownRecord": "an agent (claude-opus-5-5) reading JER 25:25 and Strong's H2174 on the project owner's instruction of 2026-10-29 to fix the Zimran / zimri-5 record (PRB-1348)"
     }
   ]
 }

@@ -374,6 +374,22 @@ public class EntityAlternative
 
     public required string Source { get; set; }
 
+    /// <summary>
+    /// True where this is the other side of a question about another record: the Mary of Matthew 27:56
+    /// may be Mary the mother of Jesus, and Mary's page says so back. Who Mary is is not in doubt; only
+    /// whether the other one is she. False on the record the question is about.
+    /// </summary>
+    public bool Back { get; set; }
+
+    /// <summary>
+    /// <see cref="Reason"/> in the reader's languages, machine translations of exactly this English:
+    /// JSON, language code (<c>ukr</c>, <c>deu</c>, <c>spa</c>) to text. Null where none is held.
+    /// </summary>
+    public string? ReasonRenderings { get; set; }
+
+    /// <summary>What rendered <see cref="ReasonRenderings"/>: the model, the prompt and the date.</summary>
+    public string? ReasonRenderedBy { get; set; }
+
     public override string ToString() =>
         $"EntityAlternative({EntityId} may be {AlternativeEntityId?.ToString() ?? Describes})";
 }
