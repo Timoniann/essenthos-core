@@ -381,89 +381,55 @@ internal sealed class OwnRecordLoader(
     }
 
     /// <summary>
-    /// Who else each ruled record might be, made what the files say now. A file is applied once and
+    /// An alternative a rulings file no longer lists, taken off its record. A file is applied once and
     /// then skipped whole, so an alternative later taken out of a file would otherwise stay on the
-    /// record for good. Only alternatives written under a rulings file's source are compared: the
-    /// titles' own, written by <see cref="TitleLoader"/> under theirs, are left alone.
+    /// record for good. Only alternatives written under a rulings file's source are compared, and
+    /// none of the titles' own (<see cref="TitleLoader"/> writes and rewrites those under the title
+    /// decision's sources, one of which a rulings file shares). An alternative the files list is
+    /// left as it stands, so a second run writes nothing.
     /// </summary>
     private async Task<int> Realternate(
         IReadOnlyList<OwnRecordRulings> files,
         CancellationToken cancellationToken)
     {
-        var sources = files.Select(file => file.Source).ToHashSet(StringComparer.Ordinal);
-        var wanted = files
+        var decision = SenseReadingFiles.Titles();
+        var titled = decision.Titles.Select(title => title.Source ?? decision.Source).Append(decision.Source)
+            .ToHashSet(StringComparer.Ordinal);
+        var sources = files.Select(file => file.Source).Where(source => !titled.Contains(source))
+            .ToHashSet(StringComparer.Ordinal);
+        var listed = files
+            .Where(file => sources.Contains(file.Source))
             .SelectMany(file => file.Rulings
-                .Where(ruling => ruling.Alternatives is { Count: > 0 })
-                .SelectMany(ruling => ruling.Alternatives!.Select(alternative => (
+                .SelectMany(ruling => (ruling.Alternatives ?? []).Select(alternative => (
                     Record: ruling.Create?.Slug ?? ruling.Existing!,
                     file.Source,
-                    Alternative: alternative))))
-            .ToList();
+                    Other: alternative.Slug ?? alternative.Describes))))
+            .ToHashSet();
 
-        var slugs = wanted
-            .SelectMany(w => new[] { w.Record, w.Alternative.Slug })
-            .OfType<string>()
-            .Distinct()
-            .ToList();
-        var bySlug = await db.Entities
-            .Where(e => slugs.Contains(e.Slug))
-            .ToDictionaryAsync(e => e.Slug, cancellationToken);
         var held = await db.EntityAlternatives
             .Where(a => sources.Contains(a.Source))
+            .Select(a => new
+            {
+                Row = a,
+                Record = a.Entity!.Slug,
+                Other = a.Alternative == null ? a.Describes : a.Alternative.Slug,
+            })
             .ToListAsync(cancellationToken);
-
-        var kept = new HashSet<int>();
-        int added = 0, reasoned = 0;
-        foreach (var (record, source, alternative) in wanted)
+        var stale = held
+            .Where(a => !listed.Contains((a.Record, a.Row.Source, a.Other)))
+            .Select(a => a.Row)
+            .ToList();
+        if (stale.Count == 0)
         {
-            if (!bySlug.TryGetValue(record, out var referent))
-            {
-                continue;
-            }
-
-            var other = alternative.Slug is null ? null : bySlug.GetValueOrDefault(alternative.Slug);
-            var describes = other is null ? alternative.Describes ?? alternative.Slug : null;
-            var standing = held.FirstOrDefault(a =>
-                !kept.Contains(a.Id)
-                && a.EntityId == referent.Id
-                && a.Source == source
-                && a.AlternativeEntityId == other?.Id
-                && a.Describes == describes);
-            if (standing is not null)
-            {
-                kept.Add(standing.Id);
-                if (standing.Reason != alternative.Reason)
-                {
-                    standing.Reason = alternative.Reason;
-                    reasoned++;
-                }
-
-                continue;
-            }
-
-            db.EntityAlternatives.Add(new EntityAlternative
-            {
-                EntityId = referent.Id,
-                AlternativeEntityId = other?.Id,
-                Describes = describes,
-                Reason = alternative.Reason,
-                Source = source,
-            });
-            added++;
+            return 0;
         }
 
-        var stale = held.Where(a => !kept.Contains(a.Id)).ToList();
         db.EntityAlternatives.RemoveRange(stale);
-
-        if (stale.Count + added + reasoned > 0)
-        {
-            await db.SaveChangesAsync(cancellationToken);
-            logger.LogInformation(
-                "Alternatives made what the rulings say: {Removed} taken back, {Added} added",
-                stale.Count, added);
-        }
-
-        return stale.Count + added + reasoned;
+        await db.SaveChangesAsync(cancellationToken);
+        logger.LogInformation(
+            "{Removed} alternatives no rulings file lists any more were taken off their records: {Records}",
+            stale.Count, string.Join(", ", held.Where(a => stale.Contains(a.Row)).Select(a => $"{a.Record} ({a.Other})")));
+        return stale.Count;
     }
 
     /// <summary>
