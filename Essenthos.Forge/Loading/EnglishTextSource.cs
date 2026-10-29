@@ -241,8 +241,8 @@ internal static class EnglishTextSource
                 "Michael Paul Johnson and the volunteers of eBible.org, revising the American "
                 + "Standard Version of 1901",
             Edition =
-                "The updated edition, protocanon only, which renders the divine name as LORD; the "
-                + "copy loaded is eBible's of 2026-08-26",
+                "The updated edition, which renders the divine name as LORD; the copy loaded is "
+                + "eBible's of 2026-08-26, with the deuterocanon from the Classic edition",
             About =
                 "The only modern English translation here, and the one English text in the corpus "
                 + "whose New Testament comes from the Byzantine Majority Text — Robinson and "

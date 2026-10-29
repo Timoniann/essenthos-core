@@ -63,8 +63,9 @@ No condition of any kind. `swordName` = `engjps1917eb`, `FCBHID` = `ENGJPS`.
 
 ## Why the statement is believable, and which copy it covers
 
-A 1917 American publication is out of copyright in the United States on the 1929 line, and Margolis,
-the last of the board to die, died in 1932, which settles life-plus-seventy as well.
+A 1917 American publication is out of copyright in the United States on the 1929 line. Margolis died
+in 1932; Adler (1940), Philipson (1949) and Schulman (1955) died after him, and the last of the board
+more than seventy years ago, which settles life-plus-seventy as well.
 
 **Whose digitisation it is matters as much as whose translation.** The 1917 text is free; a
 particular transcription of it need not be, and two well-known ones are claimed:

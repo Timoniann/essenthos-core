@@ -85,6 +85,10 @@ internal static class SeptuagintTextSource
         Edition = SeptuagintEdition,
         About = SeptuagintAbout,
         RightsNote = $"{BrentonDivisions.Note} {BrentonEdits.Note}",
+        Citation = "The Septuagint Version of the Old Testament, according to the Vatican Text, by Sir Lancelot "
+                   + "Charles Lee Brenton, London: Samuel Bagster and Sons, 1844-1851, in the digital edition "
+                   + "eBible.org publishes as grcbrent.",
+        PartSources = [BrentonEdits.GlauxPart],
     };
 
     /// <summary>

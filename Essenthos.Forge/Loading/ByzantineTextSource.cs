@@ -87,8 +87,10 @@ internal static class ByzantineTextSource
                      + "files rather than Robinson's own about this edition. His own permission notice "
                      + "for the Byzantine Textform contradicts itself — a 2005 compilation copyright in "
                      + "the header, all rights released two paragraphs later — and asks that the editors' "
-                     + "names, the title and the disclaimer be kept with any reproduction. That is a "
-                     + "request rather than a condition, and it is met.",
+                     + "names, the title and the disclaimer be kept with any reproduction. The notice "
+                     + "reads: \"Anyone is permitted to copy and distribute this text or any portion of "
+                     + "this text. All rights to this text are released to everyone and no one can reduce "
+                     + "these rights at any time.\"",
         Citation = "Robinson, M. A., & Pierpont, W. G. (2018). The New Testament in the Original "
                    + "Greek: Byzantine Textform.",
     };

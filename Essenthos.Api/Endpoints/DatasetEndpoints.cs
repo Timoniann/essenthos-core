@@ -34,8 +34,8 @@ public static class DatasetEndpoints
             var answers = tally.Counted.Select(counted =>
             {
                 var dataset = counted.Dataset;
-                var licence = dataset.Id == Datasets.Own
-                    ? (settings.OwnWorkLicence?.Name, settings.OwnWorkLicence?.Url)
+                var licence = dataset.OwnWork && settings.OwnWorkLicence is { } own
+                    ? (own.Name, own.Url)
                     : (dataset.Licence, dataset.LicenceUrl);
                 return new DatasetResponse(
                     dataset.Id,
@@ -55,6 +55,7 @@ public static class DatasetEndpoints
                 {
                     Terms = ReuseTerms.Of(licence.Item1),
                     RightsHolderUrl = dataset.HolderUrl,
+                    Changes = dataset.Changes ?? [],
                 };
             }).ToList();
 
@@ -92,10 +93,16 @@ public static class DatasetEndpoints
         var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);
         var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
         var crossReferences = await Counted(db.CrossReferences.Select(r => r.Source), cancellationToken);
+        var texts = await db.Texts.CountAsync(cancellationToken);
 
         var counted = new List<(Datasets.Dataset Dataset, DatasetCounts Counts)>();
         foreach (var dataset in Datasets.All)
         {
+            if (dataset.Unlisted)
+            {
+                continue;
+            }
+
             // A dataset that annotates a text rather than contributing rows is counted by the
             // words it annotates. Only GLAUx does this today, and its licence is share-alike,
             // so a dataset that fell out of this list for having no rows would be the one whose
@@ -137,12 +144,16 @@ public static class DatasetEndpoints
                 dataset.Parsings ? Of(parsings, dataset) : 0,
                 Of(commandments, dataset),
                 Of(topics, dataset),
-                Of(crossReferences, dataset));
+                Of(crossReferences, dataset))
+            {
+                Claims = dataset.LinkClaims ? await Claims(db, dataset, cancellationToken) : 0,
+                Texts = dataset.Frame ? texts : 0,
+            };
 
             if (counts is
                 {
                     Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
-                    Commandments: 0, Topics: 0, CrossReferences: 0,
+                    Commandments: 0, Topics: 0, CrossReferences: 0, Claims: 0, Texts: 0,
                 })
             {
                 continue;
@@ -178,6 +189,25 @@ public static class DatasetEndpoints
             .ToListAsync(cancellationToken);
 
         return [.. rows.Select(row => (row.Source, row.Rows))];
+    }
+
+    /// <summary>
+    /// The claims this dataset makes on links somebody else drew. The provenances it claims are few and
+    /// found first, so the claims are counted by the provenance they cite.
+    /// </summary>
+    private static async Task<int> Claims(AppDbContext db, Datasets.Dataset dataset, CancellationToken cancellationToken)
+    {
+        var provenances = (await db.Provenances
+                .Where(p => p.Source.StartsWith(dataset.Prefix))
+                .Select(p => new { p.Id, p.Source })
+                .ToListAsync(cancellationToken))
+            .Where(p => Datasets.Claims(dataset, p.Source))
+            .Select(p => p.Id)
+            .ToList();
+
+        return provenances.Count == 0
+            ? 0
+            : await db.LinkClaims.CountAsync(claim => provenances.Contains(claim.ProvenanceId), cancellationToken);
     }
 
     /// <summary>The rows credited to this dataset: each row once, to the dataset with the longest claim on it.</summary>
@@ -233,6 +263,12 @@ public record DatasetResponse(
 
     /// <summary>The rights holder's own site, where it is not <see cref="Url"/>; null otherwise.</summary>
     public string? RightsHolderUrl { get; init; }
+
+    /// <summary>
+    /// What this project changed in the dataset, one sentence each, where its terms ask for a note of
+    /// the changes; empty for the rest.
+    /// </summary>
+    public IList<string> Changes { get; init; } = [];
 }
 
 /// <param name="Covers">Which part of the dataset is this work's, so the credit lands on the right rows.</param>
@@ -259,7 +295,14 @@ public record DatasetCounts(
     int Parsings,
     int Commandments,
     int Topics,
-    int CrossReferences);
+    int CrossReferences)
+{
+    /// <summary>Claims made on links somebody else drew: a second answer beside the link's own.</summary>
+    public int Claims { get; init; }
+
+    /// <summary>Texts placed in the shared verse numbering by this dataset.</summary>
+    public int Texts { get; init; }
+}
 
 /// <param name="Source">
 /// The source string as the rows carry it. A dataset that reaches the database without being

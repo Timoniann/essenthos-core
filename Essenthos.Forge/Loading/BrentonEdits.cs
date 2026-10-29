@@ -1,4 +1,5 @@
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
@@ -47,6 +48,19 @@ internal static class BrentonEdits
         "Modified: where eBible's file prints words twice (Exodus 33:10, Job 3:14) or loses a clause between "
         + "two that end alike (1 Esdras 8:17-18), Essenthos reads the verses as Brenton's English, Swete and the "
         + "GLAUx treebank's Greek read them, in GLAUx's words.";
+
+    /// <summary>
+    /// Whose words the clause of 1 Esdras 8:17-18 is in: the Greek Wikisource text GLAUx annotates, under
+    /// the licence GLAUx's metadata gives that text.
+    /// </summary>
+    public static readonly TextPartSource GlauxPart = new(
+        "GLAUx (the Greek Wikisource text of 1 Esdras it annotates)",
+        "Alek Keersmaekers and the GLAUx contributors, and the contributors to Greek Wikisource",
+        "CC BY-SA 3.0",
+        "https://creativecommons.org/licenses/by-sa/3.0/",
+        "https://github.com/alekkeersmaekers/glaux",
+        "The words of 1 Esdras 8:17-18 that the file the text is loaded from loses between two clauses that "
+        + "end alike.");
 
     public static readonly IReadOnlyList<BrentonEdit> All =
     [

@@ -105,7 +105,8 @@ internal static partial class WestcottHortTextSource
                      + "file carries both at 1,653 places. Only the text is loaded. A transcription "
                      + "that silently preferred the other side would be a different edition under the "
                      + "same name, which is what the CrossWire module does with Nestle-Aland readings.",
-        Citation = "Westcott, B. F., & Hort, F. J. A. (1881). The New Testament in the Original Greek.",
+        Citation = "Westcott, B. F., & Hort, F. J. A. (1881). The New Testament in the Original Greek. "
+                   + "Parsed transcription by Maurice A. Robinson.",
     };
 
     public static TextSource Read(string folder)

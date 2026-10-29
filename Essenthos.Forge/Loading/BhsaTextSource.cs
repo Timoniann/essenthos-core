@@ -46,6 +46,8 @@ internal static class BhsaTextSource
                 + "building since the 1970s: part of speech, stem, state, and the clause and phrase "
                 + "structure every syntactic query in this corpus is asked of. Nobody translated it; "
                 + "what is edited here is the encoding and the annotation, not the words.",
+        RightsNote = "The text under the annotation is the Biblia Hebraica Stuttgartensia, whose rights "
+                     + "the Deutsche Bibelgesellschaft holds; the ETCBC directs commercial enquiries to it.",
 
         // Not a courtesy. The ETCBC asks that anything published from BHSA cite the dataset by
         // its DOI, and a licence name and a URL cannot carry that, which is why this field

@@ -43,8 +43,8 @@ not a condition:
 > the present editors' names and the title associated with this text as well as this disclaimer be
 > retained in any subsequent reproduction
 
-That request is honoured here: the editor is named in `Endpoints/Datasets.cs`, in the two
-`text` rows for Stephanus 1550 and Scrivener 1894, and in this file.
+That request is honoured here: the transcriber is named, with the notice, in the citation and the
+rights note of the two `text` rows for Stephanus 1550 and Scrivener 1894, and in this file.
 
 **The re-wrappings are more restrictive than the original.** The CrossWire SWORD module and the
 Zefania build of the same text both carry CC BY-NC-SA over data that is public domain at source.

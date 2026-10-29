@@ -97,6 +97,30 @@ internal static class TextRights
     public static IReadOnlyDictionary<string, string>? Note(string slug) =>
         Listed.TryGetValue(slug, out var entry) ? entry.Note : null;
 
+    /// <summary>
+    /// The note a reader is shown beside the terms: the listed one, and for a text shared alike, that a
+    /// correction made here is part of the text and goes under its licence rather than under ours.
+    /// </summary>
+    /// <param name="redistribution">The recorded permission, spelled as the API spells it.</param>
+    public static IReadOnlyDictionary<string, string>? Served(string slug, string? licence, string? redistribution)
+    {
+        var note = Note(slug);
+        if (Terms(slug, licence, redistribution) is not (ReuseTerms.ShareAlike or ReuseTerms.NonCommercialShareAlike))
+        {
+            return note;
+        }
+
+        return note is null
+            ? CorrectionsShareTheLicence
+            : CorrectionsShareTheLicence.ToDictionary(line => line.Key, line => $"{note[line.Key]} {line.Value}");
+    }
+
+    private static readonly IReadOnlyDictionary<string, string> CorrectionsShareTheLicence = Say(
+        "Any corrections Essenthos makes to this text are shared under the text's own licence.",
+        "Будь-які виправлення, які Essenthos вносить у цей текст, поширюються за власною ліцензією тексту.",
+        "Korrekturen, die Essenthos an diesem Text vornimmt, stehen unter der eigenen Lizenz des Textes.",
+        "Las correcciones que Essenthos hace a este texto se comparten con la licencia propia del texto.");
+
     /// <summary>Every slug listed, for the test that checks each is a text the corpus loads.</summary>
     internal static IEnumerable<string> Slugs => Listed.Keys;
 
