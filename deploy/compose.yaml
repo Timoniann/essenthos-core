@@ -135,6 +135,10 @@ services:
       # an 8 GB machine; on the 4 GB budget a chapter's first, cold read of two texts took 7.6 s and was
       # stopped with a 503 (PRB-1375), so env.example raises it there.
       Database__StatementTimeoutSeconds: ${API_STATEMENT_TIMEOUT_SECONDS:-5}
+      # What the warm-up may spend as the API starts (StartupWarmup.cs). The corpus does not change under a
+      # running API, so the datasets' counts are kept until it restarts (DatasetEndpoints.cs).
+      Warmup__Seconds: ${API_WARMUP_SECONDS:-60}
+      Datasets__KeepCountsMinutes: "0"
       # Accounts, which the API owns and writes, through a role that owns that database and no other.
       Accounts__ConnectionString: Host=db;Port=5432;Database=essenthos_app;Username=essenthos_app
       Accounts__Password: ${APP_PASSWORD}

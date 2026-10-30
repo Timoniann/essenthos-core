@@ -1,10 +1,12 @@
 using System.Net;
 using Essenthos.Core.Accounts;
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Database;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Xunit;
@@ -207,6 +209,23 @@ public sealed class RateLimitTests
 
         var unlimited = Configuration(new() { [StatementTimeout.ConfigurationKey] = "0" });
         StatementTimeout.Apply("Host=localhost;Database=x", unlimited).Should().Be("Host=localhost;Database=x");
+    }
+
+    [Fact]
+    public async Task ACountOverTheWholeCorpusIsNotStoppedByTheTimeout()
+    {
+        var connection = StatementTimeout.Apply(
+            new NpgsqlConnectionStringBuilder(DatabaseConnectionForTests()) { Database = "postgres" }.ConnectionString,
+            Configuration(new() { [StatementTimeout.ConfigurationKey] = "1" }));
+        var options = new DbContextOptionsBuilder<AppDbContext>().UseNpgsql(connection).Options;
+        await using var db = new AppDbContext(options);
+
+        var answer = await StatementTimeout.Unhurried(
+            db,
+            () => db.Database.SqlQueryRaw<int>("SELECT 7 AS \"Value\" FROM pg_sleep(1.5)").SingleAsync(),
+            CancellationToken.None);
+
+        answer.Should().Be(7);
     }
 
     private static RateLimitSettings Limits(
