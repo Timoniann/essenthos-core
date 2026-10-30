@@ -298,6 +298,9 @@ address anywhere (DOC-0211). Four switches, which must agree:
 
 Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`.
 
+To read them without the tunnel: an A record for the hostname, then `STATS_DOMAIN=stats.essenthos.org` in
+`.env` and `docker compose up -d proxy`. It asks for the counter's own sign-in.
+
 ## Backups
 
 Only `essenthos_app` (accounts, and later what readers write) cannot be rebuilt; the page counts in
