@@ -329,13 +329,19 @@ internal sealed record DatasetTally(
     IReadOnlyList<UndeclaredResponse> Undeclared);
 
 /// <summary>
-/// The dataset counts, kept for a few minutes. Every page that credits a source asks for them and they
-/// cost the database most of a second; a published corpus does not change under a running API, and a
-/// corpus loaded on a workstation is counted afresh a few minutes later.
+/// The dataset counts, kept for a few minutes, or for the life of the process where
+/// <c>Datasets:KeepCountsMinutes</c> is 0. Every page that credits a source asks for them and they sweep
+/// the link table: most of a second on a workstation, half a minute on a small server. A published
+/// corpus does not change under a running API, and a corpus loaded on a workstation is counted afresh
+/// a few minutes later.
 /// </summary>
-internal sealed class DatasetCountsCache(IServiceScopeFactory scopes)
+internal sealed class DatasetCountsCache(IServiceScopeFactory scopes, IConfiguration configuration)
 {
-    private static readonly TimeSpan Lifetime = TimeSpan.FromMinutes(5);
+    public const string ConfigurationKey = "Datasets:KeepCountsMinutes";
+
+    private readonly TimeSpan? _lifetime = configuration.GetValue(ConfigurationKey, 5) is > 0 and var minutes
+        ? TimeSpan.FromMinutes(minutes)
+        : null;
 
     private readonly SemaphoreSlim _gate = new(1, 1);
 
@@ -358,7 +364,8 @@ internal sealed class DatasetCountsCache(IServiceScopeFactory scopes)
 
             await using var scope = scopes.CreateAsyncScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var fresh = await DatasetEndpoints.Count(db, cancellationToken);
+            var fresh = await StatementTimeout.Unhurried(
+                db, () => DatasetEndpoints.Count(db, cancellationToken), cancellationToken);
             _kept = (fresh, DateTimeOffset.UtcNow);
             return fresh;
         }
@@ -369,5 +376,7 @@ internal sealed class DatasetCountsCache(IServiceScopeFactory scopes)
     }
 
     private DatasetTally? Fresh() =>
-        _kept is { } kept && DateTimeOffset.UtcNow - kept.CountedAt < Lifetime ? kept.Tally : null;
+        _kept is { } kept && (_lifetime is not { } lifetime || DateTimeOffset.UtcNow - kept.CountedAt < lifetime)
+            ? kept.Tally
+            : null;
 }

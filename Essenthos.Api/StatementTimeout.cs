@@ -1,4 +1,6 @@
 using System.Globalization;
+using Essenthos.Core.Database;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Essenthos.Core;
@@ -37,6 +39,19 @@ internal static class StatementTimeout
         var setting = $"-c statement_timeout={(seconds * 1000).ToString(CultureInfo.InvariantCulture)}";
         builder.Options = string.IsNullOrWhiteSpace(builder.Options) ? setting : $"{builder.Options} {setting}";
         return builder.ConnectionString;
+    }
+
+    /// <summary>
+    /// Runs a count over the whole corpus without the limit. Such a count is made once and then kept,
+    /// so stopping it costs more than letting it finish: a machine too small to finish within the limit
+    /// would never keep the answer, and would start the same sweep again for every reader (PRB-1375).
+    /// </summary>
+    public static async Task<T> Unhurried<T>(
+        AppDbContext db, Func<Task<T>> count, CancellationToken cancellationToken)
+    {
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.Database.ExecuteSqlRawAsync("SET LOCAL statement_timeout = 0", cancellationToken);
+        return await count();
     }
 
     /// <summary>

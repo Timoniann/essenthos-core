@@ -22,6 +22,7 @@ namespace Essenthos.Core;
 internal sealed class StartupWarmup(
     IServiceScopeFactory scopes,
     TextFacts facts,
+    DatasetCountsCache datasets,
     ContextWeightsCache weights,
     IServer server,
     IConfiguration configuration,
@@ -80,6 +81,7 @@ internal sealed class StartupWarmup(
         var steps = new (string What, Func<CancellationToken, Task> Run)[]
         {
             ("the texts' facts", facts.Load),
+            ("the datasets' counts", datasets.Get),
             ("the Chapter Context's weights", weights.Get),
             ("the first pages", Pages),
         };

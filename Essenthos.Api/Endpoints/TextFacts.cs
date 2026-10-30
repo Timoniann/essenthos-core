@@ -202,7 +202,8 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
         try
         {
             await using var scope = scopes.CreateAsyncScope();
-            return await query(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            return await StatementTimeout.Unhurried(db, () => query(db), CancellationToken.None);
         }
         finally
         {
