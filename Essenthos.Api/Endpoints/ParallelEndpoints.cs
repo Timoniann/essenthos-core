@@ -349,7 +349,10 @@ internal static class ParallelEndpoints
         CancellationToken cancellationToken)
     {
         var rows = await db.LinkWords
-            .Where(side => side.Word!.Verse!.References.Any(r => r.IsPrimary
+            // The text's own verses first: without this bound the planner may walk every link between
+            // the two texts, half a million for KJV and BSB (2.5 s on the server, 45 ms with it; PRB-1375).
+            .Where(side => side.Word!.Verse!.TextId == textId
+                           && side.Word.Verse.References.Any(r => r.IsPrimary
                                                                  && r.CanonicalBook == canonicalBook
                                                                  && r.CanonicalChapter == canonicalChapter)
                            && ((side.Side == LinkSide.From
