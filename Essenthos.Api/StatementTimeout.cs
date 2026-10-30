@@ -24,6 +24,8 @@ internal static class StatementTimeout
         "The query took longer than the API allows and was stopped. Narrow it — fewer or longer search terms, " +
         "a book or a range of books — and ask again.";
 
+    private static readonly TimeSpan LongestCount = TimeSpan.FromMinutes(20);
+
     /// <summary>Postgres's code for a statement cancelled by <c>statement_timeout</c>.</summary>
     private const string QueryCanceled = "57014";
 
@@ -45,10 +47,12 @@ internal static class StatementTimeout
     /// Runs a count over the whole corpus without the limit. Such a count is made once and then kept,
     /// so stopping it costs more than letting it finish: a machine too small to finish within the limit
     /// would never keep the answer, and would start the same sweep again for every reader (PRB-1375).
+    /// The client's own wait for an answer is lifted with it, or it gives up first, after 30 seconds.
     /// </summary>
     public static async Task<T> Unhurried<T>(
         AppDbContext db, Func<Task<T>> count, CancellationToken cancellationToken)
     {
+        db.Database.SetCommandTimeout(LongestCount);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await db.Database.ExecuteSqlRawAsync("SET LOCAL statement_timeout = 0", cancellationToken);
         return await count();
