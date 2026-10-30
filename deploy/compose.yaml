@@ -251,6 +251,8 @@ services:
       SITE_DOMAIN: ${SITE_DOMAIN:-}
       API_DOMAIN: ${API_DOMAIN:-}
       DOMAIN_SITES: ${SITE_DOMAIN:+on}
+      STATS_DOMAIN: ${STATS_DOMAIN:-}
+      STATS_SITE: ${STATS_DOMAIN:+on}
       # Let's Encrypt writes here about a certificate it could not renew.
       ACME_EMAIL: ${ACME_EMAIL:-}
       # Dev's two hostnames are served only when this is on; see the Caddyfile.

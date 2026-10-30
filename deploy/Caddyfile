@@ -325,6 +325,26 @@ import ip-site-{$IP_SITE}
 
 import domain-sites-{$DOMAIN_SITES}
 
+# The page counts on a hostname of their own, behind the counter's own sign-in, so the owner needs no
+# tunnel. Served only where .env names STATS_DOMAIN. Unlike /count this one passes cookies: it is the
+# sign-in. Its records are never pages of a search result.
+(stats-site-on) {
+	{$STATS_DOMAIN} {
+		import site off
+		import unlisted
+		handle {
+			reverse_proxy analytics:8080 {
+				header_up X-Real-IP {client_ip}
+			}
+		}
+	}
+}
+
+(stats-site-) {
+}
+
+import stats-site-{$STATS_SITE}
+
 # Dev is the rehearsal of a publication, not a second public site, so it asks for a password — and
 # tells search engines to stay away in case the password is ever shared.
 #
