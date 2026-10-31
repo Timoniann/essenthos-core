@@ -268,6 +268,8 @@ services:
       DEV_CSP: ${DEV_CSP:-report-only}
       # Whether production's /count reaches the page counter (on) or is answered and dropped (off).
       SITE_ANALYTICS: ${SITE_ANALYTICS:-off}
+      # Whether production's POST /count reaches Umami (on) or is answered and dropped (off).
+      SITE_UMAMI: ${SITE_UMAMI:-off}
       # The key the site serves at /<key>.txt for IndexNow; empty serves nothing.
       INDEXNOW_KEY: ${INDEXNOW_KEY:-}
       DEV_USER: ${DEV_USER:-}
@@ -311,7 +313,7 @@ services:
       PGUSER: postgres
       PGPASSWORD: ${POSTGRES_PASSWORD}
       # A database the server does not have is skipped, so the counter's is named whether it is on or not.
-      BACKUP_DATABASES: essenthos_app essenthos_app_dev essenthos_stats
+      BACKUP_DATABASES: essenthos_app essenthos_app_dev essenthos_stats essenthos_umami
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
       BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-3}
       # Without a key in backup-key/ a run writes nothing and fails, unless this is "yes".
@@ -364,6 +366,93 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  # The page counter's successor: Umami, on its own database and role on the same Postgres, with no
+  # ClickHouse. It stores a row per page view and per reader's day: the page, the referring site, country,
+  # region, city, browser, system, device, screen and language, under a hash of address, browser, date and
+  # APP_SECRET (SALT_ROTATION=day, read in v3.4.1's api/send/route.ts and lib/crypto.ts). The address itself
+  # is not stored. The location comes from the GeoLite2-City file inside the image, so nothing is looked up
+  # elsewhere, and telemetry and the update check are off.
+  #
+  # Only POST /count reaches it from a site (see the Caddyfile); STATS_DOMAIN is the dashboard. Published on
+  # no port. CLIENT_IP_HEADER makes the proxy's header the only one believed, and SKIP_LOCATION_HEADERS
+  # refuses the location headers a CDN would write, which here only a visitor could.
+  #
+  # Three one-shots before the server, each safe to run again: the role and database, the migrations, then
+  # the admin's password and the site's row, so the default admin/umami is never live. Keeping them apart
+  # also keeps the migration's memory out of the server's start (SKIP_DB_CHECK).
+  # Re-pin with
+  #   docker buildx imagetools inspect ghcr.io/umami-software/umami:<version> --format '{{.Manifest.Digest}}'
+  umami-database:
+    profiles: ["analytics"]
+    image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
+    restart: "no"
+    logging: *logging
+    entrypoint: ["/bin/sh", "/umami-setup.sh", "database"]
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      UMAMI_DB_PASSWORD: ${UMAMI_DB_PASSWORD:-}
+      UMAMI_APP_SECRET: ${UMAMI_APP_SECRET:-}
+      UMAMI_ADMIN_PASSWORD: ${UMAMI_ADMIN_PASSWORD:-}
+    volumes:
+      - ./umami-setup.sh:/umami-setup.sh:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  umami-migrate:
+    profiles: ["analytics"]
+    image: ghcr.io/umami-software/umami:3.4.1@sha256:e69d1a7932e9dab0fc523edc7be1f3a53f3c261f57856fc2167ae74a8fc022e8
+    restart: "no"
+    logging: *logging
+    command: ["sh", "-c", "PATH=/app/node_modules/.bin:$$PATH exec node scripts/check-db.js"]
+    environment:
+      DATABASE_URL: postgresql://essenthos_umami:${UMAMI_DB_PASSWORD:-}@db:5432/essenthos_umami
+    depends_on:
+      umami-database:
+        condition: service_completed_successfully
+
+  umami-setup:
+    profiles: ["analytics"]
+    image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
+    restart: "no"
+    logging: *logging
+    entrypoint: ["/bin/sh", "/umami-setup.sh", "site"]
+    environment:
+      PGHOST: db
+      PGUSER: essenthos_umami
+      PGDATABASE: essenthos_umami
+      PGPASSWORD: ${UMAMI_DB_PASSWORD:-}
+      UMAMI_ADMIN_PASSWORD: ${UMAMI_ADMIN_PASSWORD:-}
+      SITE_DOMAIN: ${SITE_DOMAIN:-}
+    volumes:
+      - ./umami-setup.sh:/umami-setup.sh:ro
+    depends_on:
+      umami-migrate:
+        condition: service_completed_successfully
+
+  umami:
+    profiles: ["analytics"]
+    image: ghcr.io/umami-software/umami:3.4.1@sha256:e69d1a7932e9dab0fc523edc7be1f3a53f3c261f57856fc2167ae74a8fc022e8
+    restart: unless-stopped
+    logging: *logging
+    mem_limit: ${UMAMI_MEM_LIMIT:-512m}
+    environment:
+      DATABASE_URL: postgresql://essenthos_umami:${UMAMI_DB_PASSWORD:-}@db:5432/essenthos_umami
+      APP_SECRET: ${UMAMI_APP_SECRET:-}
+      SALT_ROTATION: day
+      CLIENT_IP_HEADER: x-real-ip
+      SKIP_LOCATION_HEADERS: "1"
+      SKIP_DB_CHECK: "1"
+      DISABLE_TELEMETRY: "1"
+      DISABLE_UPDATES: "1"
+      PRIVATE_MODE: "1"
+      NODE_OPTIONS: --max-old-space-size=${UMAMI_NODE_HEAP_MB:-256}
+    depends_on:
+      umami-setup:
+        condition: service_completed_successfully
 
   # Once a night: the access log compressed and rotated so that none of it outlives ACCESS_LOG_KEEP_DAYS,
   # and Umami's rows older than UMAMI_KEEP_DAYS deleted, since Umami has no retention of its own. Unhealthy

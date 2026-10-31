@@ -80,6 +80,24 @@ public sealed class ServerEdgeTests
     }
 
     [Fact]
+    public void AnEventReachesUmamiThroughOnePathWithAnAddressOnlyTheProxyWrites()
+    {
+        var caddyfile = Deploy("Caddyfile");
+        var compose = Deploy("compose.yaml");
+        var route = caddyfile[caddyfile.IndexOf("(count-event-on) {", StringComparison.Ordinal)..caddyfile.IndexOf("(count-event-off) {", StringComparison.Ordinal)];
+
+        route.Should().Contain("@event method POST").And.Contain("rewrite * /api/send").And.Contain("reverse_proxy umami:3000")
+            .And.Contain("header_up X-Real-IP {client_ip}").And.Contain("max_size 8KB").And.Contain("respond 204");
+        Regex.Matches(caddyfile, @"reverse_proxy umami:3000").Count.Should().Be(2, "the event and the dashboard's own hostname, nothing else");
+
+        var umami = Service(compose, "umami");
+        umami.Should().Contain("SALT_ROTATION: day").And.Contain("CLIENT_IP_HEADER: x-real-ip").And.Contain("SKIP_LOCATION_HEADERS")
+            .And.Contain("DISABLE_TELEMETRY").And.Contain("DISABLE_UPDATES").And.NotContain("ports:");
+        umami.Should().Contain("@sha256:", "pinned by digest");
+        Service(compose, "backup").Should().Contain("essenthos_umami");
+    }
+
+    [Fact]
     public void TheDatabasesServiceIsNotChangedByItsSettings()
     {
         var db = Service(Deploy("compose.yaml"), "db");

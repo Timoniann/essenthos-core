@@ -64,7 +64,7 @@ catch {
 }
 
 # Only what the commit tracks goes: .env and the rehearsal's files stay where they are.
-$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/housekeeping.sh', 'deploy/initdb')
+$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/housekeeping.sh', 'deploy/umami-setup.sh', 'deploy/initdb')
 $files = @(git -C $repository ls-tree -r --name-only --full-tree $Commit -- @shipped |
     ForEach-Object { $_.Substring('deploy/'.Length) })
 
@@ -85,6 +85,10 @@ $preflight = @(
 )
 if ($Environment -eq 'dev') {
     $preflight += "grep -Eq '^COMPOSE_PROFILES=(.*,)?dev(,|`$)' .env || { echo 'No dev on this machine: its .env does not turn the dev profile on (deploy/README.md).' >&2; exit 1; }"
+}
+foreach ($key in 'UMAMI_DB_PASSWORD', 'UMAMI_ADMIN_PASSWORD', 'UMAMI_APP_SECRET') {
+    # The analytics profile's start stops on any of them, after the proxy may have been recreated.
+    $preflight += "if grep -Eq '^COMPOSE_PROFILES=(.*,)?analytics(,|`$)' .env; then grep -Eq '^$key=.+' .env || { echo '.env has no value for $key, which the analytics profile needs (deploy/README.md, Page counts).' >&2; exit 1; }; fi"
 }
 if (-not $Registry) {
     foreach ($image in @($api, $web) | Where-Object { $_ }) {

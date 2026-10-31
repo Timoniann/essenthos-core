@@ -1,7 +1,7 @@
 # The server
 
 One Hetzner machine runs production in containers: Postgres, the API, the reader, Caddy in front, a
-nightly backup, and optionally the page counter. No dev runs on it (TSK-1002): the rehearsal of a
+nightly backup, the nightly housekeeping of what must not be kept, and optionally the page counters. No dev runs on it (TSK-1002): the rehearsal of a
 publication is the same stack on the workstation (**Rehearsal**, below). Access, state and history of
 the machine are in the guide `production-server`; the corpus's publication is DOC-0203; the page
 counter is DOC-0211.
@@ -57,9 +57,16 @@ machine's default; `env.example` holds the 4 GB machine's, which this server run
 | `API_MEM_LIMIT` | 768m | 1g |
 | `WEB_MEM_LIMIT` | 128m | 128m |
 | `ANALYTICS_MEM_LIMIT` | 128m | 256m |
+| `UMAMI_MEM_LIMIT` | 384m | 512m |
+| `UMAMI_NODE_HEAP_MB` | 192 | 256 |
 
-The limits add up to 2.9 GiB (3.0 with the counter) of the machine's 3.7, which leaves about 850 MB
-for Ubuntu, Docker, Caddy and the backup container, with the swap file as the safety net. Why the 8 GB figures are what
+The limits add up to 2.9 GiB (3.0 with GoatCounter, 3.4 with Umami beside it) of the machine's 3.7, which
+leaves about 300 MB for Ubuntu, Docker, Caddy and the backup container during the week the two counters
+run together, and 430 MB once GoatCounter goes, with the swap file as the safety net. A limit is not use:
+Umami measured on the rehearsal (2026-11-01, Postgres 18.1, no corpus) holds 75 to 180 MiB at rest from
+cold, 125 to 265 MiB at rest after a burst, under 300 MiB during 5,000 events at 139 to 177 a second, and never
+hit its limit's kill. With a 128 MB heap it dies at start: V8 needs more than that to load. What it holds comes
+out of the corpus's page cache. Why the 8 GB figures are what
 they are is in `compose.yaml` (TSK-0920, PRB-0926). On 4 GB, heavy requests (search, the parallel view,
 entity pages) are slower; the owner accepts that for the alpha. Time them once on the server and record
 the figures on TSK-1002; if they take seconds, rescale the machine and drop the `DB_*`/`*_MEM_LIMIT`
@@ -351,9 +358,33 @@ is first created, so every database restored later has it. On a Postgres created
 
 ## Page counts
 
-Off until turned on. When on, a GoatCounter on this machine counts production's pages (page, referring
-site, country, browser, system, screen class, language) with no cookie and without writing the reader's
-address anywhere (DOC-0211). Four switches, which must agree:
+Off until turned on. Umami on this machine records each page view of production's: page, referring
+page, browser, system, device, screen, language, country, region, city, under a code made of the address,
+browser, date and `UMAMI_APP_SECRET`, with no cookie and without writing the address. GoatCounter runs
+beside it (DOC-0211) until the two have been compared for a week.
+
+**Umami** needs nothing done by hand beyond `.env`: `SITE_UMAMI=on`, `UMAMI_DB_PASSWORD`,
+`UMAMI_ADMIN_PASSWORD` and `UMAMI_APP_SECRET`, each fresh, and `docker compose up -d`. Its one-shots make
+its role and database, migrate them, put the admin's password in place of the default, and make the site's
+row, before the server starts. Sign in at `STATS_DOMAIN` as `admin` (the password is in `.env`, on the
+server, read with an editor and not printed). It is in the nightly backup, and `housekeeping` deletes its
+rows older than `UMAMI_KEEP_DAYS` (730).
+
+Only `POST /count` reaches it from the site; `/api/send` and the rest of Umami answer there as any other
+address does. Any visitor can send it made-up events, as with every counter on a public page: an event names
+its own `ip`, `userAgent` and `timestamp`, which the proxy cannot see into. Bodies stop at 8 KB.
+
+To stop counting with Umami: `SITE_UMAMI=off`, `docker compose up -d proxy`, and optionally
+`docker compose stop umami`. Its database stays until dropped by hand. To read what it holds without its
+dashboard: `docker compose exec db psql -U postgres -d essenthos_umami`.
+
+**Comparing them**: the reader's build sends both counters each page view while `VITE_ANALYTICS_ENDPOINT`
+is `/count`. Compare visits per day after a week, keeping in mind that GoatCounter's session lasts eight
+hours and Umami's visit up to an hour, and that Umami counts sessions per day. Then a later commit removes
+the GET from `analytics.ts`, the `analytics` service and its Caddy route, and `SITE_ANALYTICS=off`.
+`essenthos_stats` stays until the owner says to drop it.
+
+**GoatCounter**, four switches, which must agree:
 
 1. the reader's image built with `send-images.ps1 … -AnalyticsEndpoint /count` (`-Force` to resend a
    tag), then deployed;
@@ -374,15 +405,13 @@ address anywhere (DOC-0211). Four switches, which must agree:
    `http://localhost:8081`): the first visit makes the owner's sign-in; then **Data retention** 730
    days, as the privacy page says, and **Language** ticked.
 
-Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`.
-
-To read them without the tunnel: an A record for the hostname, then `STATS_DOMAIN=stats.essenthos.org` in
-`.env` and `docker compose up -d proxy`. It asks for the counter's own sign-in.
+Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`. Its dashboard is only through the tunnel
+now: `STATS_DOMAIN` serves Umami's.
 
 ## Backups
 
 Only `essenthos_app` (accounts, and later what readers write) cannot be rebuilt; the page counts in
-`essenthos_stats` are backed up beside it where the counter is on.
+`essenthos_stats` and `essenthos_umami` are backed up beside it where each counter is on.
 
 - The `backup` service dumps them every night into `/srv/essenthos/backups` and keeps each dump 14 days
   (`BACKUP_KEEP_DAYS`), except while a database's backups fail: then it keeps every dump it has until a
