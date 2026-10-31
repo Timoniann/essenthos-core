@@ -276,6 +276,7 @@ services:
     networks:
       default:
         ipv4_address: 10.89.0.2
+      edge: {}
     ports:
       - "${PROXY_HTTP_PORT:-80}:80"
       - "${PROXY_HTTPS_PORT:-443}:443"
@@ -389,9 +390,21 @@ volumes:
 # One network, with the proxy at a fixed address the APIs are told to believe and every other container
 # given one from the upper half. The API is published on no port, so the proxy is the only thing that
 # reaches it from outside.
+#
+# The second network is IPv6 alone and holds the proxy alone. A published port forwards an IPv6 client to
+# a container's IPv6 address with the client's own address kept; a container with none gets the connection
+# through docker-proxy, from the bridge's address, and every IPv6 reader looks like one. The API stays out
+# of it: the proxy still reaches it from 10.89.0.2, the only address it believes. Its name resolves there
+# alone, so no connection goes to it over IPv6.
 networks:
   default:
     ipam:
       config:
         - subnet: 10.89.0.0/24
           ip_range: 10.89.0.128/25
+  edge:
+    enable_ipv4: false
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: fd89:e55e:7405::/64

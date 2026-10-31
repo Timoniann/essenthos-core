@@ -187,6 +187,10 @@ needs (Postgres in a named volume). Its `.env.rehearsal` beside them is `env.exa
 deploy, a publication, the updating page and a rollback are run here before anything changes on the
 server.
 
+Docker Desktop does not show what an IPv6 reader's connection looks like: its machine has no listener on
+`[::]` for a published port. To see that, run the same compose file in a `docker:<server's version>-dind`
+container with a client network given a public-looking IPv6 subnet (**Readers on IPv6**).
+
 ## Once: the machine
 
 Done on 2026-10-29 as root, on the owner's word (guide `production-server`): Ubuntu 26.04, Docker and
@@ -263,6 +267,27 @@ On the domain only; the bare address asks not to be indexed.
 3. **IndexNow** (Bing, Yandex and others): `openssl rand -hex 16` into `.env` as `INDEXNOW_KEY`,
    `docker compose up -d proxy`, check `https://<domain>/<key>.txt`; after a publication,
    `./scripts/indexnow.ps1 -Key <key> -All` (or `-Sitemap <list>` for what changed).
+
+## Readers on IPv6
+
+Docker forwards a published port to a container's IPv6 address and keeps the client's address, but a
+container with none gets the connection through `docker-proxy`, from the bridge's address, and every IPv6
+reader looks like one. So the proxy alone also sits on the network `edge`, which is IPv6 and nothing else.
+IPv4 readers and the proxy's way to the API are unchanged: the API believes only `10.89.0.2`, and its name
+resolves only on `default`.
+
+`dockerd` turns `net.ipv6.conf.all.forwarding` on when `edge` is created. On a host that takes its IPv6
+default route from router advertisements that would lose the route; this server has `accept_ra=0` and a
+static address. Check it before relying on this anywhere else.
+
+From outside, on a network with IPv6 (a phone without Wi-Fi, a VPS): open a page, then look at the last
+line of the access log, whose `remote_ip` must be that network's /48 and not `10.89.…`. Every IPv6 reader
+then also has a rate-limit bucket per /64 and a country.
+
+To undo it: deploy the previous commit, whose compose file has no `edge`, or remove `edge: {}` from the
+proxy's networks in `/srv/essenthos/deploy/compose.yaml`, then `docker compose up -d proxy`, then
+`docker network rm essenthos_edge`. Removing the AAAA records is the other way out: IPv6-only readers
+without NAT64 lose the site, everyone else falls back to IPv4 at once.
 
 ## The database's extensions
 

@@ -54,6 +54,19 @@ public sealed class ServerEdgeTests
     }
 
     [Fact]
+    public void OnlyTheProxyIsOnTheIpv6NetworkAndItKeepsTheAddressTheApiBelieves()
+    {
+        var compose = Deploy("compose.yaml");
+        var proxy = Service(compose, "proxy");
+        var networks = compose[compose.IndexOf("\nnetworks:\n", StringComparison.Ordinal)..];
+
+        proxy.Should().Contain("ipv4_address: 10.89.0.2").And.Contain("edge: {}");
+        networks.Should().Contain("enable_ipv4: false").And.Contain("enable_ipv6: true");
+        Regex.Matches(compose, @"^      edge:", RegexOptions.Multiline).Count.Should().Be(1, "the API must not reach the proxy over IPv6");
+        Service(compose, "api").Should().Contain("ForwardedHeaders__KnownProxies: 10.89.0.2");
+    }
+
+    [Fact]
     public void TheMemoryBudgetIsEnvsWithTheEightGigabyteMachineAsTheDefault()
     {
         var compose = Deploy("compose.yaml");
