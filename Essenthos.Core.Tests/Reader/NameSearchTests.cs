@@ -100,6 +100,19 @@ public sealed class NameSearchTests : IDisposable
     public async Task TheFamiliarFormAndTheLatinSpellingFindTheRecord(string typed) =>
         (await Found(typed)).Should().Equal("rameses");
 
+    [Theory]
+    [InlineData("Raquel")]
+    [InlineData("raquel")]
+    public async Task TheSpellingANameFormGaveUpForTheTextsPrintStillFindsTheRecord(string typed)
+    {
+        var rachel = Record("rachel", "Rachel");
+        _db.SaveChanges();
+        Printed(_db.Texts.Single(t => t.Slug == "UBIO"), rachel, "Rachêl");
+        _db.SaveChanges();
+
+        (await Found(typed)).Should().Equal("rachel");
+    }
+
     [Fact]
     public async Task ANearSpellingIsLookedForOnlyWhereNothingIsCalledThat()
     {
