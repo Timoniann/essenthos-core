@@ -1,0 +1,22 @@
+{
+  "decidedBy": "the project owner, 2026-11-01, written onto the record by claude-opus-5-5 on 2026-11-01",
+  "policy": "Junia of Romans 16:7 is a woman, and the page says the texts differ.",
+  "method": "manual",
+  "carry": false,
+  "source": "Essenthos, on the project owner's ruling of 2026-11-01 that Junia of Romans 16:7 is a woman and that the texts differ",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "ROM 16:7",
+      "position": 4,
+      "surface": "Ἰουνίαν",
+      "strongNumber": "G2458",
+      "existing": "junias",
+      "says": {
+        "name": "Junia",
+        "notes": "The texts differ on this name (ROM 16:7): Nestle 1904, the SBL Greek New Testament and the King James print the feminine, Junia; Tischendorf, Luther 1912 and the American Standard Version the masculine, Junias; the editions printed without accents can be read either way."
+      },
+      "why": "'Salute Andronicus and Junia' (ROM 16:7): the owner's word on 2026-11-01. Nestle prints the feminine Ἰουνίαν, Tischendorf the masculine Ἰουνιᾶν; the record was headed by the dataset's masculine."
+    }
+  ]
+}

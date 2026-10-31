@@ -179,28 +179,17 @@ internal static class Descriptors
             return [];
         }
 
-        // The sex our own rows state, for the people the dataset gives none: the subject a written
-        // tie is turned for, and the child or sibling a count has to call a son or a daughter.
-        var unsexed = written.Where(c => c.SubjectSex is null).Select(c => c.SubjectId)
-            .Concat(own.Where(c => c.TargetSex is null && FamilyTies.Counts(c.Relation)).Select(c => c.TargetEntityId))
-            .Concat(subjects.Where(e => e.Sex is null).Select(e => e.Id))
-            .Concat(siblings.Select(s => s.Sibling))
-            .Distinct()
-            .ToList();
-        var sexes = await OursOnlyRecords.SexesOf(db, unsexed, cancellationToken);
-        string? SexOf(int id, string? held) => held ?? sexes.GetValueOrDefault(id);
-
         var turned = written
-            .Select(c => FamilyTies.Turn(c.Relation, SexOf(c.SubjectId, c.SubjectSex)) is { } relation
+            .Select(c => FamilyTies.Turn(c.Relation, c.SubjectSex) is { } relation
                 ? c with { Relation = relation, TargetSex = FamilyTies.SexOfTheWriter(c.Relation) ?? c.TargetSex }
                 : null)
             .OfType<Clause>()
             .ToList();
-        var clauses = FamilyTies.Folded([.. own.Select(c => c with { TargetSex = SexOf(c.TargetEntityId, c.TargetSex) }), .. turned]);
+        var clauses = FamilyTies.Folded([.. own, .. turned]);
         clauses = await PlaceLines.Located(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id)], cancellationToken);
 
         // The brothers and sisters the parents give, where no clause says so of the pair already.
-        var subjectSex = subjects.ToDictionary(e => e.Id, e => SexOf(e.Id, e.Sex));
+        var subjectSex = subjects.ToDictionary(e => e.Id, e => e.Sex);
         var subjectSlugs = subjects.ToDictionary(e => e.Id, e => e.Slug);
         var tied = clauses.Where(c => FamilyTies.Siblings.Contains(c.Relation))
             .Select(c => (c.SubjectId, c.TargetEntityId))
@@ -215,7 +204,7 @@ internal static class Descriptors
             s.Subject,
             subjectSex[s.Subject],
             subjectSex[s.Subject] == SharedParents.Male ? DescriptorRelations.BrotherOf : DescriptorRelations.SisterOf,
-            kin[s.Sibling] with { Sex = SexOf(s.Sibling, kin[s.Sibling].Sex) },
+            kin[s.Sibling],
             [s.Theirs, s.Mine],
             s.Confidence,
             ByTheParents)));

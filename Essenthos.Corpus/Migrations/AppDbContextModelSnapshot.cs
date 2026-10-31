@@ -552,6 +552,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("NameGender")
+                        .HasColumnType("text")
+                        .HasColumnName("name_gender");
+
                     b.Property<string>("Notes")
                         .HasColumnType("text")
                         .HasColumnName("notes");
@@ -571,6 +575,10 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Sex")
                         .HasColumnType("text")
                         .HasColumnName("sex");
+
+                    b.Property<string>("SexSource")
+                        .HasColumnType("text")
+                        .HasColumnName("sex_source");
 
                     b.Property<string>("Slug")
                         .IsRequired()

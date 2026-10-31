@@ -69,6 +69,12 @@ internal static class RenamedHeadings
     /// </summary>
     private const double HeadingShare = 1.0 / 3.0;
 
+    /// <summary>
+    /// Records whose heading a person ruled against the name their verses are filed under: Junia, whose
+    /// one verse the dataset files as Junias, stays Junia.
+    /// </summary>
+    private static readonly HashSet<string> RuledHeadings = ["person:Junias_1"];
+
     public static async Task<Dictionary<int, RenamedHeading>> Of(
         AppDbContext db,
         IReadOnlyCollection<int> ids,
@@ -84,7 +90,7 @@ internal static class RenamedHeadings
             .Where(e => ids.Contains(e.Id) && e.Kind == EntityKind.Person)
             .Select(e => new { e.Id, e.Name, e.SourceId })
             .ToListAsync(cancellationToken);
-        people.RemoveAll(p => DivineRecords.Contains(p.SourceId));
+        people.RemoveAll(p => DivineRecords.Contains(p.SourceId) || RuledHeadings.Contains(p.SourceId));
         var personIds = people.Select(p => p.Id).ToList();
         if (personIds.Count == 0)
         {

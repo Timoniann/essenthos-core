@@ -63,6 +63,12 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
     private const string Capitalised = "'yhvh', 'jesus', 'holy-spirit'";
 
     /// <summary>
+    /// The sex a pronoun is judged against: the one the record was given, not one read off its
+    /// relationships or its name.
+    /// </summary>
+    private const string StatedSex = "CASE WHEN e.sex_source IS NULL THEN e.sex END";
+
+    /// <summary>
     /// The rows carried onto pronouns that are not clear, as temp tables the caller reads.
     /// </summary>
     /// <param name="candidates">
@@ -79,7 +85,7 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
          CREATE TEMP TABLE pronoun_carried ON COMMIT DROP AS
          SELECT a.row_id, a.entity_id, w.id AS word_id, w.text AS surface, w.position, w.verse_id, w.text_id,
                 t.slug AS text_slug, t.language, v.book_id, v.chapter_number, v.number,
-                e.slug AS person, e.kind AS kind, e.sex, pronoun.sex AS says,
+                e.slug AS person, e.kind AS kind, {StatedSex} AS sex, pronoun.sex AS says,
                 before.trailer AS before
          FROM ({candidates}) a
          JOIN entity e ON e.id = a.entity_id AND e.kind IN ('person', 'title', 'place', 'people')
@@ -91,7 +97,7 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
          LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1;
 
          CREATE TEMP TABLE pronoun_named ON COMMIT DROP AS
-         SELECT DISTINCT p.row_id, a.entity_id, e.sex
+         SELECT DISTINCT p.row_id, a.entity_id, {StatedSex} AS sex
          FROM pronoun_carried p
          JOIN verse around ON around.text_id = p.text_id AND around.book_id = p.book_id
               AND around.chapter_number = p.chapter_number AND around.number IN (p.number, p.number - 1)

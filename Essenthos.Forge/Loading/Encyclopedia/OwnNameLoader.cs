@@ -351,7 +351,11 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
 /// <summary>The embedded list, as a file.</summary>
 internal sealed record OwnNames(IReadOnlyList<OwnName> Names, IReadOnlyList<CorrectedNumber>? Numbers,
     IReadOnlyList<CorrectedNameForm>? Forms = null, IReadOnlyList<CorrectedNameKind>? Kinds = null,
-    IReadOnlyList<DroppedName>? Drops = null, IReadOnlyList<OwnByname>? Bynames = null);
+    IReadOnlyList<DroppedName>? Drops = null, IReadOnlyList<OwnByname>? Bynames = null,
+    IReadOnlyList<RuledSex>? Sexes = null);
+
+/// <summary>A person's sex as a person ruled it, whatever anything else says of it, with why.</summary>
+internal sealed record RuledSex(string Entity, string SourceId, string Sex, string Why);
 
 /// <summary>
 /// What the text calls a person beside the heading, at the verse that says it, as each language's

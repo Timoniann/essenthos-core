@@ -2690,5 +2690,17 @@
     "model": "claude-opus-5-5",
     "effort": null,
     "at": "2026-10-29"
-  }
+  },
+ {
+  "file": "JuniaRecords.json",
+  "slug": "junias",
+  "sha256": "4bccc774e1aeaf814e0b44b8cf2b99511626a778f63084be0f4b8aab1b2fa337",
+  "english": "The texts differ on this name (ROM 16:7): Nestle 1904, the SBL Greek New Testament and the King James print the feminine, Junia; Tischendorf, Luther 1912 and the American Standard Version the masculine, Junias; the editions printed without accents can be read either way.",
+  "ukr": "Тексти розходяться щодо цього імені (ROM 16:7): Nestle 1904, SBL Greek New Testament і King James друкують жіночу форму, Юнія; Тишендорф, Лютер 1912 і American Standard Version — чоловічу, Юній; видання без наголосів можна прочитати і так, і так.",
+  "deu": "Die Texte gehen bei diesem Namen auseinander (ROM 16:7): Nestle 1904, das SBL Greek New Testament und die King James drucken die weibliche Form, Junia; Tischendorf, Luther 1912 und die American Standard Version die männliche, Junias; die ohne Akzente gedruckten Ausgaben lassen beides zu.",
+  "spa": "Los textos difieren en este nombre (ROM 16:7): Nestle 1904, el SBL Greek New Testament y la King James imprimen la forma femenina, Junia; Tischendorf, Lutero 1912 y la American Standard Version la masculina, Junias; las ediciones impresas sin acentos admiten ambas lecturas.",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-11-01T00:00:00+00:00"
+ }
 ]

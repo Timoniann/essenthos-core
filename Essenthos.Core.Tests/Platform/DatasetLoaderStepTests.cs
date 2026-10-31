@@ -117,6 +117,13 @@ public sealed class DatasetLoaderStepTests : IDisposable
             "descriptors", "fold-records", "refiled-ties", "own-relationships", "relationship-verses");
     }
 
+    /// <summary>A person's sex is read off the relationships, and the pronouns are judged after it.</summary>
+    [Fact]
+    public void ThePersonsSexesAreWrittenFromTheRelationshipsBeforeThePronouns()
+    {
+        Loader().StepNames().Should().ContainInOrder("own-relationships", "person-sexes", "pronouns");
+    }
+
     [Fact]
     public async Task AStepThatIsNotThereIsRefusedBeforeAnythingRuns()
     {
