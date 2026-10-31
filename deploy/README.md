@@ -34,6 +34,7 @@ Everything the server keeps is under `HOST_DATA_ROOT=/srv/essenthos`, on that di
 | `releases/`, `images/corpus/`, `downloads/` | what `forge publish` sends |
 | `backups/`, `backup-key/`, `rclone/` | the encrypted dumps, the public key, the off-site remote |
 | `caddy/` | certificates |
+| `logs/caddy/` | the access log and its compressed days (**Reading the logs**) |
 | `maintenance/` | the updating page's switch (**The updating page**) |
 
 Nothing on the disk is unique but the accounts, which the backups protect (**Backups**). The corpus is
@@ -288,6 +289,58 @@ To undo it: deploy the previous commit, whose compose file has no `edge`, or rem
 proxy's networks in `/srv/essenthos/deploy/compose.yaml`, then `docker compose up -d proxy`, then
 `docker network rm essenthos_edge`. Removing the AAAA records is the other way out: IPv6-only readers
 without NAT64 lose the site, everyone else falls back to IPv4 at once.
+
+## Reading the logs
+
+**The access log**: one JSON line per request in `/srv/essenthos/logs/caddy/access.log`, written by Caddy
+as root, with time, method, host, path, status, duration and size, and the address cut to its /24 or /48.
+No query and no headers. `housekeeping` compresses the day into `daily-<date>.log.gz` each night at 02:00
+UTC and removes what is older than `ACCESS_LOG_KEEP_DAYS` (28), and Caddy rolls the file at 100 MiB,
+keeping 5. From `/srv/essenthos/deploy`:
+
+    docker compose exec proxy tail -f /var/log/caddy/access.log
+    # the slowest requests of today, by path
+    docker compose exec -T proxy cat /var/log/caddy/access.log |
+      jq -r '[.duration, .status, .request.method, .request.uri] | @tsv' | sort -rn | head -20
+    # the requests per status of an earlier day
+    docker compose exec -T housekeeping sh -c 'gzip -dc /logs/daily-2026-11-01.log.gz' | jq .status | sort | uniq -c
+
+Whatever Caddy logs beyond that goes to `docker compose logs proxy`, through the same filter.
+
+**Slow statements**: every statement over 500 ms, in `docker compose logs db`, with its text and duration
+and without its parameters, since a slow search's are a reader's own words. To see them while debugging,
+in one session: `SET log_parameter_max_length = -1`.
+
+    docker compose logs --since 1h db | grep 'duration:'
+
+**What each kind of statement costs**, once the database has started with `pg_stat_statements` loaded.
+`shared_blk_read_time` is there because of `track_io_timing`: it is the time spent waiting for the disk,
+which on this machine is most of a slow read. Numbers count from `pg_stat_statements_reset()` or the last
+start.
+
+    docker compose exec -T db psql -U postgres -c "
+      SELECT d.datname, s.calls, round(s.total_exec_time) AS total_ms, round(s.mean_exec_time) AS mean_ms,
+             round(s.shared_blk_read_time) AS disk_ms, s.shared_blks_read, left(s.query, 80) AS query
+      FROM pg_stat_statements s JOIN pg_database d ON d.oid = s.dbid
+      ORDER BY s.total_exec_time DESC LIMIT 20"
+
+**The settings** are written by `initdb/20-observability.sh` with `ALTER SYSTEM` rather than as flags in
+`compose.yaml`, because a changed flag recreates the database's container at the next deploy, and a restart
+costs readers the cache. On a database older than the script, once, without a restart:
+
+    docker compose exec -T db sh /docker-entrypoint-initdb.d/20-observability.sh
+
+| Setting | Takes effect |
+|---|---|
+| `log_min_duration_statement`, `log_parameter_max_length`, `track_io_timing` | at once, on the reload in the script |
+| `shared_preload_libraries = pg_stat_statements`, `pg_stat_statements.max` | at the next start of the database |
+
+Until that start, `SELECT * FROM pg_stat_statements` answers that the library is not loaded, and nothing
+else differs. **Do not restart for it alone.** A restart drops 768 MB of shared buffers and every open
+connection: the API answers errors for the seconds Postgres takes to come back, the first read of each
+chapter goes to the disk again (7.6 s for two texts on this budget, PRB-1375), and the counts the API warmed
+up are read again when the API itself is restarted. The next rescale or Postgres upgrade brings it. To undo:
+`ALTER SYSTEM RESET` each, then `SELECT pg_reload_conf()`, and the library leaves at the next start.
 
 ## The database's extensions
 

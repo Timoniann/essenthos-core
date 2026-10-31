@@ -67,6 +67,31 @@ public sealed class ServerEdgeTests
     }
 
     [Fact]
+    public void TheAccessLogKeepsNoWholeAddressNoQueryAndNoHeaders()
+    {
+        var caddyfile = Deploy("Caddyfile");
+        var log = caddyfile[caddyfile.IndexOf("(access-log) {", StringComparison.Ordinal)..];
+        log = log[..log.IndexOf("\n}\n", StringComparison.Ordinal)];
+
+        log.Should().Contain("request>remote_ip ip_mask 24 48").And.Contain("request>client_ip ip_mask 24 48")
+            .And.Contain("request>headers delete").And.Contain("resp_headers delete").And.Contain("request>uri regexp \\?.* \"\"");
+        caddyfile.Should().Contain("(site) {\n\timport access-log");
+        Service(Deploy("compose.yaml"), "housekeeping").Should().Contain("ACCESS_LOG_KEEP_DAYS:-28");
+    }
+
+    [Fact]
+    public void TheDatabasesServiceIsNotChangedByItsSettings()
+    {
+        var db = Service(Deploy("compose.yaml"), "db");
+
+        db.Should().NotContain("shared_preload_libraries").And.NotContain("UMAMI", "a change here restarts the database at the next deploy");
+        File.ReadAllText(Path.Combine(Checkout(), "deploy", "initdb", "20-observability.sh")).Should()
+            .Contain("ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements'")
+            .And.Contain("ALTER SYSTEM SET log_min_duration_statement = '500ms'")
+            .And.Contain("ALTER SYSTEM SET log_parameter_max_length = 0");
+    }
+
+    [Fact]
     public void TheMemoryBudgetIsEnvsWithTheEightGigabyteMachineAsTheDefault()
     {
         var compose = Deploy("compose.yaml");

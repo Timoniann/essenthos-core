@@ -290,6 +290,8 @@ services:
       - ${HOST_DATA_ROOT}/downloads_dev:/srv/downloads_dev:ro
       # The updating page's switch: the file `on` in it (see the Caddyfile).
       - ${HOST_DATA_ROOT}/maintenance:/srv/maintenance:ro
+      # The access log (see the Caddyfile); housekeeping below rotates it.
+      - ${HOST_DATA_ROOT}/logs/caddy:/var/log/caddy
     # Only the start order; Caddy finds an upstream by name on each connection, dev's included.
     depends_on:
       - api
@@ -362,6 +364,34 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  # Once a night: the access log compressed and rotated so that none of it outlives ACCESS_LOG_KEEP_DAYS,
+  # and Umami's rows older than UMAMI_KEEP_DAYS deleted, since Umami has no retention of its own. Unhealthy
+  # once its last good run is older than a day and a bit.
+  housekeeping:
+    image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
+    restart: unless-stopped
+    logging: *logging
+    mem_limit: 64m
+    init: true
+    entrypoint: ["/bin/sh", "/housekeeping.sh"]
+    environment:
+      HOUSEKEEPING_HOUR_UTC: ${HOUSEKEEPING_HOUR_UTC:-2}
+      ACCESS_LOG_KEEP_DAYS: ${ACCESS_LOG_KEEP_DAYS:-28}
+      UMAMI_KEEP_DAYS: ${UMAMI_KEEP_DAYS:-730}
+      PGHOST: db
+      PGUSER: essenthos_umami
+      PGDATABASE: essenthos_umami
+      PGPASSWORD: ${UMAMI_DB_PASSWORD:-}
+    healthcheck:
+      test: ["CMD", "sh", "/housekeeping.sh", "--check"]
+      interval: 15m
+      timeout: 30s
+      retries: 1
+      start_period: 26h
+    volumes:
+      - ./housekeeping.sh:/housekeeping.sh:ro
+      - ${HOST_DATA_ROOT}/logs/caddy:/logs
 
   # The encrypted dumps copied off the machine, and the copies there kept as long as the dumps are here.
   # Off unless COMPOSE_PROFILES in .env names it, because where the copy goes is the owner's to choose and

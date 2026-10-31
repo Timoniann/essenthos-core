@@ -64,7 +64,7 @@ catch {
 }
 
 # Only what the commit tracks goes: .env and the rehearsal's files stay where they are.
-$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/initdb')
+$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/housekeeping.sh', 'deploy/initdb')
 $files = @(git -C $repository ls-tree -r --name-only --full-tree $Commit -- @shipped |
     ForEach-Object { $_.Substring('deploy/'.Length) })
 
@@ -146,7 +146,7 @@ try {
     Write-Host "Copying $($files.Count) files of $Commit to ${Server}:$Root/deploy"
     # The folders the deploy user writes into later (the updating page's switch, what `forge publish`
     # sends) are made here, as that user: a folder Docker makes for a mount is root's, and refuses it.
-    ssh @ssh $Server "mkdir -p '$Root/deploy/initdb' '$Root/maintenance' '$Root/releases' '$Root/downloads' '$Root/images/corpus'"
+    ssh @ssh $Server "mkdir -p '$Root/deploy/initdb' '$Root/maintenance' '$Root/releases' '$Root/downloads' '$Root/images/corpus' '$Root/logs/caddy'"
     foreach ($file in $files) {
         scp -q @ssh (Join-Path $staging 'deploy' $file) "${Server}:$Root/deploy/$file"
     }
