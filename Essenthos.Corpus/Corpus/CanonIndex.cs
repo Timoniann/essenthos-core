@@ -170,7 +170,7 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
             // with the two columns ORed it can use neither index. A probe per text is no better:
             // for a text with many links the planner chooses a scan of the link table and expects a
             // match in the first rows. As a semi-join from the few rows of text, each direction is
-            // an index probe per text and always was on the live corpus.
+            // an index probe per text.
             var linked = (await db.Texts
                     .Where(t => db.Links.Any(l => l.FromTextId == t.Id))
                     .Select(t => t.Id)
