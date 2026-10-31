@@ -165,22 +165,21 @@ internal sealed class CanonIndex(IServiceScopeFactory scopes) : ICanonIndex
             using var scope = scopes.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            // Whether a text has any links at all is asked one text at a time, on purpose. Written
-            // as a correlated subquery inside the projection below, it is evaluated once per row
-            // of the join — 586 times, once for every book of every text — and each evaluation
-            // scans the 4.9-million-row link table, because a filter that ORs two columns can use
-            // neither index. That was 46 seconds against a 30-second command timeout: /v1/corpora
-            // stopped answering the moment Swete's 51 books pushed it over. Asked here it is
-            // twenty-six index probes over thirteen texts, and each one is a millisecond.
-            var linked = new HashSet<int>();
-            foreach (var id in await db.Texts.Select(t => t.Id).ToListAsync(cancellationToken))
-            {
-                if (await db.Links.AnyAsync(l => l.FromTextId == id, cancellationToken)
-                    || await db.Links.AnyAsync(l => l.ToTextId == id, cancellationToken))
-                {
-                    linked.Add(id);
-                }
-            }
+            // Whether a text has any links at all is asked of the texts as a set, one direction at a
+            // time. Inside the projection below it is evaluated once per book of every text, and
+            // with the two columns ORed it can use neither index. A probe per text is no better:
+            // for a text with many links the planner chooses a scan of the link table and expects a
+            // match in the first rows. As a semi-join from the few rows of text, each direction is
+            // an index probe per text and always was on the live corpus.
+            var linked = (await db.Texts
+                    .Where(t => db.Links.Any(l => l.FromTextId == t.Id))
+                    .Select(t => t.Id)
+                    .ToListAsync(cancellationToken))
+                .ToHashSet();
+            linked.UnionWith(await db.Texts
+                .Where(t => db.Links.Any(l => l.ToTextId == t.Id))
+                .Select(t => t.Id)
+                .ToListAsync(cancellationToken));
 
             var texts = (await db.Texts
                     .OrderBy(t => t.Slug)

@@ -468,11 +468,14 @@ internal static class DifferenceEndpoints
     /// </summary>
     private static bool Cyrillic(char c) => c is >= 'Ѐ' and <= 'ԯ';
 
-    /// <summary>Whether any link at all joins the two texts, in either direction.</summary>
-    private static async Task<bool> Linked(AppDbContext db, int a, int b, CancellationToken cancellationToken) =>
-        await db.Links.AnyAsync(
-            l => (l.FromTextId == a && l.ToTextId == b) || (l.FromTextId == b && l.ToTextId == a),
-            cancellationToken);
+    /// <summary>
+    /// Whether any link at all joins the two texts, in either direction. Two questions rather than
+    /// one with an OR: each direction is an index probe, and the OR is a scan of the whole link
+    /// table for a pair with no links, because the planner expects a match in the first rows.
+    /// </summary>
+    internal static async Task<bool> Linked(AppDbContext db, int a, int b, CancellationToken cancellationToken) =>
+        await db.Links.AnyAsync(l => l.FromTextId == a && l.ToTextId == b, cancellationToken)
+        || await db.Links.AnyAsync(l => l.FromTextId == b && l.ToTextId == a, cancellationToken);
 
     /// <summary>
     /// The text both are linked to, where nothing links them to each other: the Ukrainian and the
