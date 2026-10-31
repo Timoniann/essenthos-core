@@ -108,6 +108,9 @@ if (args is ["migrate", ..] || app.Environment.IsDevelopment())
     }
 }
 
+// Outermost, so the time and the status are what the reader got, a refusal or a fault included.
+app.UseRequestTiming(app.Configuration);
+
 app.UseProxies(proxies);
 
 app.UseExceptionHandler(handler => handler.Run(async context =>
