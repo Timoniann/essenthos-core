@@ -688,6 +688,12 @@ internal static partial class DescriptorPhrasings
             }
         }
 
+        if (language == German && kind == EntityKind.People && before.EndsWith("Stamm ", StringComparison.Ordinal)
+            && GermanPlurals.Any(ending => form.EndsWith(ending, StringComparison.Ordinal)))
+        {
+            return (before + "der ", form);
+        }
+
         if (language == Spanish && kind == EntityKind.People && before.EndsWith(" de ", StringComparison.Ordinal)
             && form.EndsWith('s'))
         {
@@ -696,6 +702,12 @@ internal static partial class DescriptorPhrasings
 
         return (AgreeWithWhatFollows(before, form), form);
     }
+
+    /// <summary>
+    /// The endings of a people's German name that is a plural: <em>vom Stamm der Leviten</em>, where
+    /// a tribe called by one name stays bare, <em>vom Stamm Asser</em>.
+    /// </summary>
+    private static readonly string[] GermanPlurals = ["iter", "äer", "ten"];
 
     private static bool Articled(string form) =>
         GermanArticles.Any(article => form.StartsWith(article, StringComparison.Ordinal));

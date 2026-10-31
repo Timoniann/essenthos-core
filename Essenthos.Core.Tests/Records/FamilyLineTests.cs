@@ -324,6 +324,58 @@ public sealed class FamilyLineTests : IDisposable
         (await Line("anakim", "eng")).Should().Contain("descendants of Anak").And.Contain("lived in Hebron");
     }
 
+    /// <summary>
+    /// A line names one ancestor once, in every language: the people keeps its descent and the person
+    /// the tribe, the tribe being the man or a people named from him. Another man's descent stays.
+    /// </summary>
+    [Fact]
+    public async Task ALineSaysOneAncestorOnce()
+    {
+        _forms.Clear();
+        Person("tribes-judah", "Judah", Male, ("ukr", "Юда", "Юди"), ("deu", "Juda", "Judas"), ("spa", "Judá", null));
+        Person("tribes-judahites", "Judahites", null, ("ukr", "юдеї", "юдеїв"));
+        Person("tribes-dan", "Dan", Male, ("ukr", "Дан", "Дана"), ("deu", "Dan", "Dans"), ("spa", "Dan", null));
+        Person("tribes-adnah", "Adnah", Male);
+        Person("tribes-levi", "Levi", Male, ("ukr", "Левій", "Левія"), ("deu", "Levi", "Levis"), ("spa", "Leví", null));
+        Person("tribes-levites", "Levites", null, ("ukr", "Левити", "Левитів"), ("deu", "Leviten", null), ("spa", "Levitas", null));
+        Person("tribes-bani", "Bani", Male);
+        Person("tribes-kohath", "Kohath", Male, ("ukr", "Кегат", "Кегата"), ("deu", "Kahath", "Kahaths"), ("spa", "Coat", null));
+        Person("tribes-kohathites", "Kohathites", null);
+        _people["tribes-judahites"].Kind = EntityKind.People;
+        _people["tribes-kohathites"].Kind = EntityKind.People;
+        _people["tribes-levites"].Kind = EntityKind.People;
+        _db.SaveChanges();
+        _people["tribes-levites"].OriginEntityId = _people["tribes-levi"].Id;
+        _db.SaveChanges();
+        AddForms();
+        Tie("tribes-judahites", DescriptorRelations.DescendantsOf, "tribes-judah");
+        Tie("tribes-judahites", DescriptorRelations.OfTribe, "tribes-judah");
+        Tie("tribes-adnah", DescriptorRelations.OfTribe, "tribes-dan");
+        Tie("tribes-adnah", DescriptorRelations.DescendantOf, "tribes-dan");
+        Tie("tribes-bani", DescriptorRelations.OfTribe, "tribes-levites");
+        Tie("tribes-bani", DescriptorRelations.DescendantOf, "tribes-levi");
+        Tie("tribes-kohathites", DescriptorRelations.DescendantsOf, "tribes-kohath");
+        Tie("tribes-kohathites", DescriptorRelations.OfTribe, "tribes-levites");
+        await _db.SaveChangesAsync();
+
+        (await Line("tribes-judahites", "eng")).Should().Be("descendants of Judah");
+        (await Line("tribes-judahites", "ukr")).Should().Be("нащадки Юди");
+        (await Line("tribes-judahites", "deu")).Should().Be("Nachkommen Judas");
+        (await Line("tribes-judahites", "spa")).Should().Be("descendientes de Judá");
+        (await Line("tribes-adnah", "eng")).Should().Be("of the tribe of Dan");
+        (await Line("tribes-adnah", "ukr")).Should().Be("з племені Дана");
+        (await Line("tribes-adnah", "deu")).Should().Be("vom Stamm Dan");
+        (await Line("tribes-adnah", "spa")).Should().Be("de la tribu de Dan");
+        (await Line("tribes-bani", "eng")).Should().Be("of the tribe of the Levites");
+        (await Line("tribes-bani", "ukr")).Should().Be("з племені Левитів");
+        (await Line("tribes-bani", "deu")).Should().Be("vom Stamm der Leviten");
+        (await Line("tribes-bani", "spa")).Should().Be("de la tribu de los Levitas");
+        (await Line("tribes-kohathites", "eng")).Should().Contain("descendants of Kohath").And.Contain("of the tribe of the Levites");
+
+        var claims = (await Descriptors.Of(_db, "tribes-bani", "eng", default))!.Claims;
+        claims.Should().ContainSingle().Which.Relation.Should().Be(DescriptorRelations.OfTribe);
+    }
+
     private async Task<string> Line(string slug, string language) =>
         string.Concat((await Descriptors.Of(_db, slug, language, default))!.Parts.Select(p => p.Text));
 
