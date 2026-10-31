@@ -137,6 +137,25 @@ if ($Database) {
     $receipt.parts += [ordered]@{ kind = 'dump'; name = 'essenthos_core'; bytes = $size }
 }
 
+# The server's dumps of readers' accounts, which sit on the same volume as their database (PRB-1397).
+# They arrive encrypted and stay so. Kept as long as the server keeps them, because the privacy page
+# promises deleted data is gone from every backup within six weeks. An unreachable server is reported
+# and does not fail the rest: the parts above are the ones with no other copy.
+$server = 'deploy@2.29.125.205'
+$to = Join-Path $Destination 'server-backups'
+New-Item -ItemType Directory -Path $to -Force | Out-Null
+scp -q -o BatchMode=yes -o ConnectTimeout=15 "${server}:/srv/essenthos/backups/*.dump.gpg" "$to\" 2>&1 | Out-Null
+if ($LASTEXITCODE -eq 0) {
+    Get-ChildItem $to -Filter '*.dump.gpg' | Where-Object { $_.LastWriteTime -lt $startedAt.AddDays(-14) -and $_.Name -match '-(\d{8})T' -and [datetime]::ParseExact($Matches[1], 'yyyyMMdd', $null) -lt $startedAt.AddDays(-14) } | Remove-Item
+    $dumps = Get-ChildItem $to -Filter '*.dump.gpg' | Measure-Object -Property Length -Sum
+    Write-Host ("  {0,-16} {1,8:N1} MB  {2} encrypted dumps" -f 'server dumps', ($dumps.Sum / 1MB), $dumps.Count)
+    $receipt.parts += [ordered]@{ kind = 'mirror'; name = 'server-backups'; files = $dumps.Count; bytes = $dumps.Sum }
+}
+else {
+    Write-Warning 'The server could not be reached, so its dumps were not copied this time.'
+    $receipt.parts += [ordered]@{ kind = 'mirror'; name = 'server-backups'; failed = $true }
+}
+
 $receipt.finishedAt = (Get-Date).ToString('o')
 $receipt.seconds = [math]::Round(((Get-Date) - $startedAt).TotalSeconds)
 $receipt | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $Destination 'BACKUP.json')
