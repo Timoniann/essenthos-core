@@ -55,6 +55,39 @@ public sealed class NamesReadAgainTests
     }
 
     /// <summary>
+    /// Where the text names the generation between, the man above it is no second father: Jahath's
+    /// father is Libni and Zimmah's Shimei, each with his grandfather, and Jeroham is Pashhur's descendant.
+    /// </summary>
+    [Fact]
+    public void TheGenerationTheTextNamesIsNotPassedOver()
+    {
+        Claims("jahath-2").Should().Contain(c => c.Relation == "son-of" && c.Target == "libni")
+            .And.Contain(c => c.Relation == "grandson-of" && c.Target == "gershon" && c.DecidedBy != null)
+            .And.Contain(c => c.Relation == "grandfather-of" && c.Target == "zimmah" && c.DecidedBy != null)
+            .And.NotContain(c => c.Target == "gershon" && c.Relation != "grandson-of")
+            .And.NotContain(c => c.Relation == "father-of" && c.Target == "zimmah");
+        Claims("zimmah").Should().Contain(c => c.Relation == "son-of" && c.Target == "shimei-8")
+            .And.Contain(c => c.Relation == "grandson-of" && c.Target == "jahath-2" && c.DecidedBy != null)
+            .And.NotContain(c => c.Relation == "son-of" && c.Target == "jahath-2");
+        Claims("jeroham-3").Should().Contain(c => c.Relation == "son-of" && c.Target == "pelaliah")
+            .And.Contain(c => c.Relation == "descendant-of" && c.Target == "pashhur-the-priest" && c.DecidedBy != null)
+            .And.NotContain(c => c.Relation == "son-of" && c.Target == "pashhur");
+    }
+
+    /// <summary>
+    /// The Dishon of Anah's sons at 1 Chronicles 1:41 is Anah's, not Seir's son of the same name, and
+    /// the Michael of 1 Chronicles 5:14 is the forefather, not the brother of 5:13.
+    /// </summary>
+    [Fact]
+    public void ARowOfOneVerseStandsOnTheManTheVerseNames()
+    {
+        Claims("anah-son-of-zibeon").Should().ContainSingle(c => c.Relation == "father-of")
+            .Which.Should().Match<DescriptorClaimRecord>(c => c.Target == "dishon-2" && c.Reference == "GEN 36:25; 1CH 1:41");
+        Claims("michael-2").Should().NotContain(c => c.Reference == "1CH 5:14");
+        Claims("michael-the-gadite-forefather").Should().Contain(c => c.Relation == "father-of" && c.Target == "gilead-3");
+    }
+
+    /// <summary>
     /// 1 Chronicles 7:12 and 7:15 print Shuppim beside Huppim: Maachah is his sister, not Muppim's, and
     /// the verses the dataset listed under Muppim are his.
     /// </summary>
