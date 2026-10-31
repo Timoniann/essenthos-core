@@ -213,7 +213,7 @@ internal static class EntityNames
     /// </remarks>
     public static IQueryable<Entity> Matching(AppDbContext db, IQueryable<Entity> entities, string q)
     {
-        var familiar = Familiar(q);
+        var familiar = FamiliarOpening(q);
         var ids = Typed(q)
             .Select(typed => Named(db, typed, titles: true))
             .Aggregate((all, one) => all.Concat(one))
@@ -232,12 +232,14 @@ internal static class EntityNames
         AppDbContext db, IQueryable<Entity> entities, string q, CancellationToken cancellationToken)
     {
         var familiar = Familiar(q);
+        var opening = FamiliarOpening(q);
         var hits = Typed(q)
             .Select(one => Tagged(Named(db, one, titles: false), NameHit.Named)
                 .Concat(Tagged(Titled(db, one), NameHit.Titled))
                 .Concat(Tagged(CalledExactly(db, one), NameHit.Called)))
             .Aggregate((all, one) => all.Concat(one))
-            .Concat(Tagged(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id), NameHit.Familiar));
+            .Concat(Tagged(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id), NameHit.Familiar))
+            .Concat(Tagged(db.Entities.Where(e => opening.Contains(e.Slug)).Select(e => e.Id), NameHit.Named));
 
         var found = await hits
             .Where(hit => entities.Any(e => e.Id == hit.Id))
@@ -317,6 +319,9 @@ internal static class EntityNames
 
     private static List<string> Familiar(string q) =>
         [.. FamiliarNames.Of(q).Concat(TitleWords.Without(q) is { } name ? FamiliarNames.Of(name) : [])];
+
+    private static List<string> FamiliarOpening(string q) =>
+        [.. FamiliarNames.Opening(q).Concat(TitleWords.Without(q) is { } name ? FamiliarNames.Opening(name) : []).Distinct()];
 
     /// <summary>
     /// A pattern finding what was typed at the start of a word: at the start of the name, or after

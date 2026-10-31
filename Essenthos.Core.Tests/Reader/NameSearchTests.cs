@@ -113,6 +113,29 @@ public sealed class NameSearchTests : IDisposable
         (await Found(typed)).Should().Equal("rachel");
     }
 
+    /// <summary>A part of a kept spelling finds the record as a part of any other name does; letters inside it do not.</summary>
+    [Theory]
+    [InlineData("Raqu", true)]
+    [InlineData("raque", true)]
+    [InlineData("quel", false)]
+    public async Task TheStartOfAKeptSpellingFindsTheRecord(string typed, bool found)
+    {
+        var rachel = Record("rachel", "Rachel");
+        _db.SaveChanges();
+        Printed(_db.Texts.Single(t => t.Slug == "UBIO"), rachel, "Rachêl");
+        _db.SaveChanges();
+
+        (await Found(typed)).Contains("rachel").Should().Be(found);
+    }
+
+    [Fact]
+    public void AWordInsideAKeptSpellingOpensItToo()
+    {
+        FamiliarNames.Opening("Tabor").Should().Contain("aznothtabor");
+        FamiliarNames.Opening("not").Should().NotContain("aznothtabor");
+        FamiliarNames.Opening(" ").Should().BeEmpty();
+    }
+
     [Fact]
     public async Task ANearSpellingIsLookedForOnlyWhereNothingIsCalledThat()
     {
