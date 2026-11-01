@@ -614,6 +614,32 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
              SELECT count(*) FROM entity_relationship
              WHERE method = '{EnumSpelling.Of(LinkMethod.StatedBySource)}' OR source LIKE 'BibleData%'
              """),
+        // Two places of one name are told apart by what their lines say first, in each language a
+        // reader has: the first clause of our own reading, the line this project wrote, or the line
+        // and the site the gazetteer gives, each rendered where a rendering is held.
+        ("places of one name a reader cannot tell apart",
+            """
+            WITH said AS (
+                SELECT e.id, lower(e.name) AS name, language.code,
+                       coalesce(
+                           (SELECT d.relation || ' ' || d.target_entity_id FROM entity_descriptor d
+                            WHERE d.entity_id = e.id ORDER BY d.ordinal LIMIT 1),
+                           CASE WHEN language.code = 'eng' THEN coalesce(e.distinguisher, e.modern_equivalent) END,
+                           (SELECT l.text FROM entity_distinguisher l
+                            WHERE l.entity_id = e.id AND l.language = language.code AND l.english = e.distinguisher),
+                           (SELECT t.text FROM text_translation t
+                            WHERE t.language = language.code
+                              AND t.english_sha256 = encode(sha256(convert_to(e.distinguisher, 'UTF8')), 'hex')),
+                           (SELECT t.text FROM text_translation t
+                            WHERE t.language = language.code
+                              AND t.english_sha256 = encode(sha256(convert_to(e.modern_equivalent, 'UTF8')), 'hex'))) AS line
+                FROM entity e
+                CROSS JOIN (VALUES ('eng'), ('ukr'), ('deu'), ('spa')) AS language (code)
+                WHERE e.kind = 'place')
+            SELECT count(*) FROM said a
+            JOIN said b ON a.name = b.name AND a.code = b.code AND a.id < b.id
+            WHERE a.line IS NOT DISTINCT FROM b.line
+            """),
         ("verses with no canonical reference",
             """
             SELECT count(*) FROM verse v

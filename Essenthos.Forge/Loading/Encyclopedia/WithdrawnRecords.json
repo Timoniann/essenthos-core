@@ -90,6 +90,82 @@
       "sourceId": "essenthos:zimri5",
       "why": "Strong's fifth Zimri (H2174) is the Zimri of Jeremiah 25:25, 'all the kings of Zimri', set among the kings of the mingled people (JER 25:20-25). The verse names a land and its kings, not a man, and the gazetteer's place Zimri already holds that word and verse. The person record held no verse, no word and no relationship; its line, possibly the same as Zimran, said of the land what Strong's says of it (a people perhaps descended from Zimran, Abraham's son by Keturah, GEN 25:2; 1CH 1:32), which is no identity of two people.",
       "ownRecord": "an agent (claude-opus-5-5) reading JER 25:25 and Strong's H2174 on the project owner's instruction of 2026-10-29 to fix the Zimran / zimri-5 record (PRB-1348)"
+    },
+    {
+      "slug": "gibbar-2",
+      "sourceId": "openbible:af0ee3a",
+      "why": "'The children of Gibbar' (EZR 2:20) names a man, whom the person record holds with the word; the place record holds neither word nor clause, only a gazetteer picture.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "gibea-2",
+      "sourceId": "openbible:ad15169",
+      "why": "'The father of Gibea' (1CH 2:49): the word stands on the record of Gibea, son of Sheva; the place record holds no word.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "lehem",
+      "sourceId": "openbible:a9ea180",
+      "why": "1CH 4:22 prints Jashubilehem, and that record holds the word. No held text prints a Lehem there.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "mezahab-2",
+      "sourceId": "openbible:a3498b5",
+      "why": "'The daughter of Mezahab' (GEN 36:39; 1CH 1:50) names a person, whose record holds the words. The place record holds none.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "nebo-4",
+      "sourceId": "openbible:ac51ba3",
+      "why": "'Of the sons of Nebo' (EZR 10:43) names a family's forefather: the person record stands for it, and the word goes to him. The place record holds no word.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5",
+      "ownRecord": "claude-opus-5-5 reading the verses on the project owner's word of 2026-11-01"
+    },
+    {
+      "slug": "gamad",
+      "sourceId": "openbible:a764256",
+      "why": "'The Gammadims were in thy towers' (EZK 27:11) names men, whom the people record Gammadims holds with the word. The place record holds none.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "ephron-2",
+      "sourceId": "openbible:a9a6f72",
+      "why": "JOS 18:15 reads 'the border went out on the west': the Hebrew has the common word and no held text prints Ephron. The gazetteer's entry follows an English footnote.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5",
+      "ownRecord": "claude-opus-5-5 reading the verses on the project owner's word of 2026-11-01"
+    },
+    {
+      "slug": "mahalab",
+      "sourceId": "openbible:ac6f1a8",
+      "why": "JOS 19:29 reads 'from the coast to Achzib': the Hebrew has a common word and no held text prints a name there.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "nohah-2",
+      "sourceId": "openbible:ab4d194",
+      "why": "JDG 20:43 reads 'trode them down with ease': a common word, and no held text prints Nohah there. Nohah is the son of Benjamin.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "river-2",
+      "sourceId": "openbible:a3bb384",
+      "why": "'Rehoboth by the river' (GEN 36:37; 1CH 1:48): a common noun in the name of Rehoboth, which keeps the verses. The word names no river the text calls River.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5"
+    },
+    {
+      "slug": "bether-2",
+      "sourceId": "openbible:a6c8205",
+      "why": "The gazetteer's second Bether cites no verse and holds no word. Nothing in any held text stands on it; the Bether of SNG 2:17 stays.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5",
+      "ownRecord": "claude-opus-5-5 reading the verses on the project owner's word of 2026-11-01"
+    },
+    {
+      "slug": "hammath-2",
+      "sourceId": "openbible:abd2a8d",
+      "why": "'The Kenites that came of Hemath, the father of the house of Rechab' (1CH 2:55) names a man: the word goes to the person record written for him.",
+      "ownerRuled": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все', read per record by claude-opus-5-5",
+      "ownRecord": "claude-opus-5-5 reading the verses on the project owner's word of 2026-11-01"
     }
   ]
 }

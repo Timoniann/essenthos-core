@@ -44,13 +44,6 @@ public sealed class PlaceCardTests : IDisposable
     }
 
     [Fact]
-    public void AGazetteerEntryNamedByItsCatalogueNumberIsNamedByTheSiteItsPointIsAt()
-    {
-        PlaceToday.Of("about 20 km around Goshen 3", [Answer("Dahriya", true), Answer("Qantir", false)]).Should().Be("Dahriya");
-        PlaceToday.Of("within 10 km of Mount Hor 1", [Answer("Har Zin", true)]).Should().Be("Har Zin");
-    }
-
-    [Fact]
     public void ANameThatContradictsNothingStands()
     {
         PlaceToday.Of("Tel Beer Sheva (near Bir es Seba)", [Answer("Tel Beer Sheva", true)]).Should().Be("Tel Beer Sheva (near Bir es Seba)");
@@ -64,25 +57,15 @@ public sealed class PlaceCardTests : IDisposable
     {
         PlaceToday.Line("Khirbet Ibn Naser", "Khirbet Ibn Naser", [Answer("Khirbet el Mefjir", true), Answer("Khirbet Ibn Naser", false)])
             .Should().Be("Khirbet el Mefjir");
-        PlaceToday.Line("about 20 km around Goshen 3", "about 20 km around Goshen 3", [Answer("Dahriya", true)])
-            .Should().Be("about 20 km around Goshen");
         PlaceToday.Line("a town of Benjamin", "Khirbet Ibn Naser", [Answer("Khirbet el Mefjir", true), Answer("Khirbet Ibn Naser", false)])
             .Should().Be("a town of Benjamin");
     }
 
     [Fact]
-    public void APlacesLineLosesTheCatalogueNumbersOfTheNamesItMentions()
-    {
-        PlaceToday.WithoutCatalogueNumbers("about 20 km around Goshen 3").Should().Be("about 20 km around Goshen");
-        PlaceToday.WithoutCatalogueNumbers("within 10 km of Mount Hor 1").Should().Be("within 10 km of Mount Hor");
-        PlaceToday.WithoutCatalogueNumbers("about 20 km around Dahriya").Should().Be("about 20 km around Dahriya");
-    }
-
-    [Fact]
-    public void WithoutALikeliestSiteTheStoredNameStandsWithoutCatalogueNumbers()
+    public void WithoutALikeliestSiteTheStoredNameStands()
     {
         PlaceToday.Of("Khirbet Haiyan", null).Should().Be("Khirbet Haiyan");
-        PlaceToday.Of("within 10 km of Rimmon 1", [Answer(null, true, "not-a-place"), Answer("Rimmon", false)])
+        PlaceToday.Of("within 10 km of Rimmon", [Answer(null, true, "not-a-place"), Answer("Rimmon", false)])
             .Should().Be("within 10 km of Rimmon");
         PlaceToday.Of("Qaryat as Salamiyah", [Answer(null, true, "not-a-proper-name"), Answer("Qaryat as Salamiyah", false)])
             .Should().Be("Qaryat as Salamiyah");

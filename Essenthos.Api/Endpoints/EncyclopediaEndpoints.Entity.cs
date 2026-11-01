@@ -44,9 +44,12 @@ internal static partial class EncyclopediaEndpoints
         return new EntityTribeResponse(found.Slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(found.Id));
     }
 
-    /// <summary>The place a place is only another name for, with its name in the reader's language.</summary>
+    /// <summary>
+    /// The place a place is only another name for, with its name in the reader's language. A place of
+    /// the same name is no other name: the source's phrase there says only that it may be that place.
+    /// </summary>
     internal static async Task<EntityTribeResponse?> AnotherNameFor(
-        AppDbContext db, int? target, string? language, CancellationToken cancellationToken)
+        AppDbContext db, int? target, string name, string? language, CancellationToken cancellationToken)
     {
         if (target is not { } id)
         {
@@ -55,7 +58,7 @@ internal static partial class EncyclopediaEndpoints
 
         var found = await db.Entities.Where(e => e.Id == id)
             .Select(e => new { e.Slug, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken);
-        if (found is null)
+        if (found is null || found.Name == name)
         {
             return null;
         }
@@ -398,7 +401,7 @@ internal static partial class EncyclopediaEndpoints
                 Descriptor = described.GetValueOrDefault(entity.Slug),
                 Location = entity.Location,
                 Locations = locations,
-                AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
+                AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, entity.Name, language, cancellationToken),
                 BuiltOnSiteOf = await SharedSite(
                     db, SharedSites.All.FirstOrDefault(s => s.Later == entity.Slug)?.Earlier, language, cancellationToken),
                 BuiltOnItsSite = await SharedSite(

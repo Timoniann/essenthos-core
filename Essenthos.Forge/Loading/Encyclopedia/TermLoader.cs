@@ -12,15 +12,23 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// Verse references added: one per entry and canonical verse, however many times the word stands in it.
 /// </param>
 /// <param name="Moved">The dataset's verse rows moved off the divine name onto the word the verse says.</param>
-internal sealed record TermOutcome(bool AlreadyLoaded, int Written, int Referenced, TimeSpan Elapsed, int Moved = 0)
+internal sealed record TermOutcome(
+    bool AlreadyLoaded, int Written, int Referenced, TimeSpan Elapsed, int Moved = 0, int Retyped = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "the words for God are already entries of their own, with their verses"
             : $"{Written} words for God written as entries of their own and {Referenced} verse references " +
               $"read off every word BHSA numbers with them, and {Moved} of the dataset's rows on the divine " +
-              $"name moved to the word for God the verse says, in {Elapsed}";
+              $"name moved to the word for God the verse says, and {Retyped} places the gazetteer lists " +
+              $"that are a word of the text held as terms, in {Elapsed}";
 }
+
+/// <summary>A place the gazetteer lists that the owner has ruled is a word of the text, not a place.</summary>
+/// <param name="SourceId">The record's source id, which does not change when its kind does.</param>
+/// <param name="StrongNumber">The Hebrew number of the word, which gives the term its name row.</param>
+/// <param name="RuledBy">Who ruled it, and when.</param>
+internal sealed record PlaceThatIsAWord(string SourceId, string StrongNumber, string RuledBy);
 
 /// <summary>
 /// The words the text uses of God and of gods — elohim, el, eloah — as entries of their own.
@@ -103,6 +111,19 @@ internal sealed class TermLoader(AppDbContext db, ILogger<TermLoader> logger)
     ];
 
     /// <summary>
+    /// The places the gazetteer lists that are a word of the text. Azazel is the word of the second lot
+    /// on the Day of Atonement (LEV 16:8-10), which the King James renders scapegoat; the owner ruled
+    /// on 2026-11-01 (PRB-1417) that it is a term and not a place. The record keeps its address, its
+    /// verses and its line; it leaves the places list and the map. Retyped in place, so a slug that
+    /// has been linked to still resolves; the place layer reads only records of kind place, so a
+    /// warm load does not write it again.
+    /// </summary>
+    internal static readonly IReadOnlyList<PlaceThatIsAWord> Retyped =
+    [
+        new("openbible:ab9a5ec", "H5799", "the project owner, 2026-11-01, on PRB-1417: a term, not a place"),
+    ];
+
+    /// <summary>
     /// Every verse in which BHSA numbers a word with the entry, once per verse, on the record whose
     /// name row carries the number.
     /// </summary>
@@ -165,6 +186,7 @@ internal sealed class TermLoader(AppDbContext db, ILogger<TermLoader> logger)
     public async Task<TermOutcome> Load(CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
+        var retyped = await RetypeThePlacesThatAreWords(cancellationToken);
         var numbers = Terms.Select(t => t.StrongNumber).ToList();
 
         var entries = await db.StrongEntries
@@ -176,7 +198,7 @@ internal sealed class TermLoader(AppDbContext db, ILogger<TermLoader> logger)
                 "Strong's Dictionary holds none of {Numbers}, so the words for God have nothing to be read " +
                 "from. The lexicon is an earlier step of the same pipeline",
                 string.Join(", ", numbers));
-            return new TermOutcome(false, 0, 0, started.Elapsed);
+            return new TermOutcome(false, 0, 0, started.Elapsed, Retyped: retyped);
         }
 
         var held = (await db.Entities
@@ -246,9 +268,51 @@ internal sealed class TermLoader(AppDbContext db, ILogger<TermLoader> logger)
             cancellationToken);
 
         var outcome = new TermOutcome(
-            written == 0 && referenced == 0 && moved == 0, written, referenced, started.Elapsed, moved);
+            written == 0 && referenced == 0 && moved == 0 && retyped == 0,
+            written, referenced, started.Elapsed, moved, retyped);
         logger.LogInformation("The words for God: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// Each listed place held as a term: its kind changed, the place's own columns cleared, a name row
+    /// from Strong's entry added where it has none. Nothing else of the record moves.
+    /// </summary>
+    private async Task<int> RetypeThePlacesThatAreWords(CancellationToken cancellationToken)
+    {
+        var retyped = 0;
+        foreach (var word in Retyped)
+        {
+            var record = await db.Entities.Include(e => e.Names)
+                .FirstOrDefaultAsync(e => e.SourceId == word.SourceId && e.Kind == EntityKind.Place, cancellationToken);
+            if (record is null)
+            {
+                continue;
+            }
+
+            record.Kind = EntityKind.Term;
+            record.PlaceKind = null;
+            if (!record.Names.Any(n => n.HebrewStrongNumber == word.StrongNumber))
+            {
+                var entry = await db.StrongEntries.FirstOrDefaultAsync(e => e.StrongNumber == word.StrongNumber, cancellationToken);
+                record.Names.Add(new EntityName
+                {
+                    Label = record.Name,
+                    Hebrew = entry?.Lemma,
+                    HebrewTransliterated = entry?.Transliteration,
+                    Meaning = entry?.Definition,
+                    HebrewStrongNumber = word.StrongNumber,
+                    Kind = NameKind,
+                });
+            }
+
+            await db.PlaceLocations.Where(p => p.EntityId == record.Id).ExecuteDeleteAsync(cancellationToken);
+            retyped++;
+            logger.LogInformation("{Slug} is held as a term, not a place: {RuledBy}", record.Slug, word.RuledBy);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return retyped;
     }
 
     /// <summary>The slug asked for, or the first numbered one nobody holds.</summary>

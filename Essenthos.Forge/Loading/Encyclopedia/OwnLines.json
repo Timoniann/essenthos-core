@@ -591,10 +591,10 @@
     },
     {
       "slug": "hazazontamar",
-      "english": "where the Amorites dwelt whom Chedorlaomer smote (GEN 14:7); the same as En-gedi (2CH 20:2)",
-      "ukr": "місце, де жили амореї, яких побив Кедорлаомер (GEN 14:7); те саме, що Ен-Ґеді (2CH 20:2)",
-      "deu": "wo die Amoriter wohnten, die Kedorlaomer schlug (GEN 14:7); dasselbe wie En-Gedi (2CH 20:2)",
-      "spa": "donde habitaban los amorreos a quienes hirió Quedorlaomer (GEN 14:7); lo mismo que En-gadi (2CH 20:2)"
+      "english": "where the Amorites dwelt whom Chedorlaomer smote (GEN 14:7)",
+      "ukr": "місце, де жили амореї, яких побив Кедорлаомер (GEN 14:7)",
+      "deu": "wo die Amoriter wohnten, die Kedorlaomer schlug (GEN 14:7)",
+      "spa": "donde habitaban los amorreos a quienes hirió Quedorlaomer (GEN 14:7)"
     },
     {
       "slug": "thelordwillprovide",
@@ -714,6 +714,370 @@
       "ukr": "край на сході, де Господь Бог насадив сад і звідки виходила ріка, щоб напувати його (GEN 2:8-10)",
       "deu": "das Land im Osten, in dem Gott der HERR einen Garten pflanzte und aus dem ein Strom ausging, ihn zu bewässern (GEN 2:8-10)",
       "spa": "la tierra al oriente donde Jehová Dios plantó un huerto, y de la que salía un río para regarlo (GEN 2:8-10)"
+    },
+    {
+      "slug": "aroer-4",
+      "english": "the home of Hothan the Aroerite, whose sons were among David's mighty men (1CH 11:44)",
+      "ukr": "дім Хотама ароер'янина, чиї сини були серед Давидових лицарів (1CH 11:44)",
+      "deu": "die Heimat Hothams, des Aroeriters, dessen Söhne unter Davids Helden waren (1CH 11:44)",
+      "spa": "la tierra de Hotam aroerita, cuyos hijos estaban entre los valientes de David (1CH 11:44)"
+    },
+    {
+      "slug": "bethlehem-3",
+      "english": "the home of Ibzan, who judged Israel and was buried there (JDG 12:8-10)",
+      "ukr": "дім Івцана, що судив Ізраїля і був там похований (JDG 12:8-10)",
+      "deu": "die Heimat Ebzans, der Israel richtete und dort begraben wurde (JDG 12:8-10)",
+      "spa": "la tierra de Ibzán, que juzgó a Israel y fue sepultado allí (JDG 12:8-10)"
+    },
+    {
+      "slug": "gath-3",
+      "english": "the home of Obed-edom the Gittite, at whose house David left the ark (2SA 6:10; 1CH 13:13)",
+      "ukr": "дім Овед-Едома ґаттянина, у чиїй оселі Давид залишив ковчег (2SA 6:10; 1CH 13:13)",
+      "deu": "die Heimat Obed-Edoms, des Gathiters, in dessen Haus David die Lade ließ (2SA 6:10; 1CH 13:13)",
+      "spa": "la tierra de Obed-edom geteo, en cuya casa dejó David el arca (2SA 6:10; 1CH 13:13)"
+    },
+    {
+      "slug": "gedor-6",
+      "english": "whose father Judah's genealogy says was Jered (1CH 4:18)",
+      "ukr": "чиїм батьком родовід Юди називає Єреда (1CH 4:18)",
+      "deu": "als dessen Vater das Geschlechtsregister Judas Jered nennt (1CH 4:18)",
+      "spa": "cuyo padre, dice la genealogía de Judá, fue Jered (1CH 4:18)"
+    },
+    {
+      "slug": "hamath-3",
+      "english": "from which the king of Assyria brought men to settle Samaria (2KI 17:24)",
+      "ukr": "звідки асирійський цар привів людей, щоб оселити в Самарії (2KI 17:24)",
+      "deu": "woher der König von Assyrien Leute brachte, um sie in Samaria anzusiedeln (2KI 17:24)",
+      "spa": "de donde el rey de Asiria trajo gente para poblar Samaria (2KI 17:24)"
+    },
+    {
+      "slug": "jezreel-5",
+      "english": "the home of Ahinoam, David's wife (1SA 25:43)",
+      "ukr": "дім Ахіноами, Давидової жінки (1SA 25:43)",
+      "deu": "die Heimat Ahinoams, der Frau Davids (1SA 25:43)",
+      "spa": "la tierra de Ahinoam, mujer de David (1SA 25:43)"
+    },
+    {
+      "slug": "jokmeam",
+      "english": "the far end of Baana's district under Solomon (1KI 4:12)",
+      "ukr": "дальній край округи Баани за Соломона (1KI 4:12)",
+      "deu": "das äußerste Ende des Bezirks Baanas unter Salomo (1KI 4:12)",
+      "spa": "el extremo del distrito de Baana bajo Salomón (1KI 4:12)"
+    },
+    {
+      "slug": "mizpah-4",
+      "english": "the heap of witness between Jacob and Laban, called Galeed and Mizpah (GEN 31:47-49)",
+      "ukr": "купа каміння на свідчення між Яковом і Лаваном, названа Ґал'ед і Міцпа (GEN 31:47-49)",
+      "deu": "der Steinhaufe zum Zeugnis zwischen Jakob und Laban, genannt Galed und Mizpa (GEN 31:47-49)",
+      "spa": "el majano de testimonio entre Jacob y Labán, llamado Galaad y Mizpa (GEN 31:47-49)"
+    },
+    {
+      "slug": "ramah-9",
+      "english": "the home of Shimei the Ramathite, over David's vineyards (1CH 27:27)",
+      "ukr": "дім Шім'ї раматянина, що наглядав за Давидовими виноградниками (1CH 27:27)",
+      "deu": "die Heimat Simeis, des Ramathiters, der über Davids Weinberge gesetzt war (1CH 27:27)",
+      "spa": "la tierra de Simei ramatita, encargado de las viñas de David (1CH 27:27)"
+    },
+    {
+      "slug": "ain-3",
+      "english": "a city given to the Levites, named with Juttah and Beth-shemesh (JOS 21:16)",
+      "ukr": "місто, дане левитам, назване з Юттою і Бет-Шемешем (JOS 21:16)",
+      "deu": "eine den Leviten gegebene Stadt, mit Jutta und Beth-Semes genannt (JOS 21:16)",
+      "spa": "una ciudad dada a los levitas, nombrada con Juta y Bet-semes (JOS 21:16)"
+    },
+    {
+      "slug": "cabul-2",
+      "english": "the land of the cities Solomon gave to Hiram, who called them Cabul (1KI 9:11-13)",
+      "ukr": "земля міст, що їх Соломон дав Хірамові, а той назвав їх Кавул (1KI 9:11-13)",
+      "deu": "das Land der Städte, die Salomo Hiram gab und die dieser Kabul nannte (1KI 9:11-13)",
+      "spa": "la tierra de las ciudades que Salomón dio a Hiram, quien las llamó Cabul (1KI 9:11-13)"
+    },
+    {
+      "slug": "ephraim-4",
+      "english": "the wood of Ephraim, where David's men fought the army of Israel (2SA 18:6)",
+      "ukr": "Єфремів ліс, де Давидові люди билися з військом Ізраїля (2SA 18:6)",
+      "deu": "der Wald Ephraim, wo Davids Leute gegen das Heer Israels kämpften (2SA 18:6)",
+      "spa": "el bosque de Efraín, donde los hombres de David pelearon contra el ejército de Israel (2SA 18:6)"
+    },
+    {
+      "slug": "judea",
+      "english": "the Judaea of the Gospels and Acts, under Herod and under Pilate the governor (MAT 2:1; LUK 3:1)",
+      "ukr": "Юдея Євангелій і Дій, за Ірода й за намісника Пилата (MAT 2:1; LUK 3:1)",
+      "deu": "das Judäa der Evangelien und der Apostelgeschichte, unter Herodes und dem Landpfleger Pilatus (MAT 2:1; LUK 3:1)",
+      "spa": "la Judea de los Evangelios y los Hechos, bajo Herodes y el gobernador Pilato (MAT 2:1; LUK 3:1)"
+    },
+    {
+      "slug": "syria-2",
+      "english": "the land whose governor was Cyrenius at the first taxing, through which Paul went (LUK 2:2; ACT 15:41)",
+      "ukr": "край, де намісником був Квіріній за першого перепису, яким ходив Павло (LUK 2:2; ACT 15:41)",
+      "deu": "das Land, dessen Landpfleger bei der ersten Schätzung Cyrenius war und das Paulus durchzog (LUK 2:2; ACT 15:41)",
+      "spa": "la tierra de la que Cirenio era gobernador en el primer censo, por la que pasó Pablo (LUK 2:2; ACT 15:41)"
+    },
+    {
+      "slug": "south-3",
+      "english": "the realm of the king of the south in Daniel's vision (DAN 11:5)",
+      "ukr": "царство південного царя у видінні Даниїла (DAN 11:5)",
+      "deu": "das Reich des Königs gegen Mittag in Daniels Gesicht (DAN 11:5)",
+      "spa": "el reino del rey del sur en la visión de Daniel (DAN 11:5)"
+    },
+    {
+      "slug": "dibon-3",
+      "english": "the waters of Dimon, full of blood in the burden of Moab (ISA 15:9)",
+      "ukr": "води Дімону, повні крові в пророцтві про Моава (ISA 15:9)",
+      "deu": "die Wasser von Dimon, voll Blut in der Last über Moab (ISA 15:9)",
+      "spa": "las aguas de Dimón, llenas de sangre en la profecía sobre Moab (ISA 15:9)"
+    },
+    {
+      "slug": "migdol-3",
+      "english": "the tower of the prophecy against Egypt, 'from the tower of Syene' (EZK 29:10; 30:6)",
+      "ukr": "башта з пророцтва на Єгипет, «від башти Сієни» (EZK 29:10; 30:6)",
+      "deu": "der Turm der Weissagung gegen Ägypten, „vom Turm zu Syene“ (EZK 29:10; 30:6)",
+      "spa": "la torre de la profecía contra Egipto, «desde la torre de Sevene» (EZK 29:10; 30:6)"
+    },
+    {
+      "slug": "sela-3",
+      "english": "the Sela from which the lamb is sent to the ruler of the land (ISA 16:1)",
+      "ukr": "Села, звідки посилають ягня до володаря краю (ISA 16:1)",
+      "deu": "das Sela, von dem aus das Lamm dem Landesherrscher gesandt wird (ISA 16:1)",
+      "spa": "la Sela desde donde se envía el cordero al señor de la tierra (ISA 16:1)"
+    },
+    {
+      "slug": "tamar-4",
+      "english": "the town Solomon built, which the Hebrew writes Tamar where the King James prints Tadmor (1KI 9:18)",
+      "ukr": "місто, що його збудував Соломон; єврейський текст пише Тамар там, де King James має Тадмор (1KI 9:18)",
+      "deu": "die Stadt, die Salomo baute; der hebräische Text schreibt Thamar, wo die King James Tadmor druckt (1KI 9:18)",
+      "spa": "la ciudad que edificó Salomón; el hebreo escribe Tamar donde la King James imprime Tadmor (1KI 9:18)"
+    },
+    {
+      "slug": "bethsaida-2",
+      "english": "the Bethsaida the disciples crossed to, where a blind man was brought to Jesus (MRK 6:45; 8:22)",
+      "ukr": "Віфсаїда, куди переправилися учні й де привели до Ісуса сліпого (MRK 6:45; 8:22)",
+      "deu": "das Bethsaida, zu dem die Jünger hinüberfuhren und wo ein Blinder zu Jesus gebracht wurde (MRK 6:45; 8:22)",
+      "spa": "la Betsaida a la que cruzaron los discípulos, donde trajeron un ciego a Jesús (MRK 6:45; 8:22)"
+    },
+    {
+      "slug": "kir",
+      "english": "to which the king of Assyria carried the people of Damascus captive (2KI 16:9; AMO 1:5)",
+      "ukr": "куди асирійський цар повів у полон людей Дамаску (2KI 16:9; AMO 1:5)",
+      "deu": "wohin der König von Assyrien die Leute von Damaskus gefangen führte (2KI 16:9; AMO 1:5)",
+      "spa": "adonde el rey de Asiria llevó cautiva a la gente de Damasco (2KI 16:9; AMO 1:5)"
+    },
+    {
+      "slug": "redsea",
+      "english": "the Red Sea that took the locusts, by which Israel camped after Elim (EXO 10:19; NUM 33:10)",
+      "ukr": "Червоне море, що поглинуло сарану, біля якого Ізраїль таборував після Еліму (EXO 10:19; NUM 33:10)",
+      "deu": "das Schilfmeer, das die Heuschrecken aufnahm und an dem Israel nach Elim lagerte (EXO 10:19; NUM 33:10)",
+      "spa": "el mar Rojo que tragó la langosta, junto al que acampó Israel después de Elim (EXO 10:19; NUM 33:10)"
+    },
+    {
+      "slug": "hazazontamar-2",
+      "english": "which the messengers to Jehoshaphat say is En-gedi (2CH 20:2)",
+      "ukr": "про який посланці до Йосафата кажуть, що це Ен-Ґеді (2CH 20:2)",
+      "deu": "von dem die Boten an Josaphat sagen, es sei Engedi (2CH 20:2)",
+      "spa": "de la que los mensajeros a Josafat dicen que es Engadi (2CH 20:2)"
+    },
+    {
+      "slug": "rehoboth",
+      "english": "the well Isaac dug, for which they strove not (GEN 26:22)",
+      "ukr": "криниця, яку викопав Ісак і за яку не сперечалися (GEN 26:22)",
+      "deu": "der Brunnen, den Isaak grub und um den sie nicht zankten (GEN 26:22)",
+      "spa": "el pozo que cavó Isaac, por el que no riñeron (GEN 26:22)"
+    },
+    {
+      "slug": "rehoboth-2",
+      "english": "Rehoboth by the river, the home of Saul king of Edom (GEN 36:37; 1CH 1:48)",
+      "ukr": "Реховот над рікою, дім Саула, царя Едому (GEN 36:37; 1CH 1:48)",
+      "deu": "Rehoboth am Strom, die Heimat Sauls, des Königs von Edom (GEN 36:37; 1CH 1:48)",
+      "spa": "Rehobot junto al río, tierra de Saúl, rey de Edom (GEN 36:37; 1CH 1:48)"
+    },
+    {
+      "slug": "kadesh-2",
+      "english": "the land of Tahtim-hodshi on Joab's way round to number the people (2SA 24:6)",
+      "ukr": "край Тахтім-Ходші на шляху Йоава, що обходив, щоб перелічити народ (2SA 24:6)",
+      "deu": "das Land Thachtim-Hodsi auf Joabs Weg, das Volk zu zählen (2SA 24:6)",
+      "spa": "la tierra de Tahtim-hodsi en el camino de Joab para contar al pueblo (2SA 24:6)"
+    },
+    {
+      "slug": "armageddon",
+      "english": "the place called in the Hebrew tongue Armageddon, where the kings are gathered (REV 16:16)",
+      "ukr": "місце, що по-єврейському зветься Армагеддон, де збираються царі (REV 16:16)",
+      "deu": "der Ort, der auf hebräisch Harmagedon heißt, wo die Könige versammelt werden (REV 16:16)",
+      "spa": "el lugar llamado en hebreo Armagedón, donde se reúnen los reyes (REV 16:16)"
+    },
+    {
+      "slug": "aven",
+      "english": "named with Pi-beseth, whose young men fall by the sword (EZK 30:17); its high places are the sin of Israel (HOS 10:8)",
+      "ukr": "названий з Пі-Бесетом, чиї юнаки впадуть від меча (EZK 30:17); його пагірки — гріх Ізраїля (HOS 10:8)",
+      "deu": "mit Pi-Beseth genannt, dessen junge Mannschaft durchs Schwert fällt (EZK 30:17); seine Höhen sind die Sünde Israels (HOS 10:8)",
+      "spa": "nombrada con Pibeset, cuyos jóvenes caerán a espada (EZK 30:17); sus lugares altos son el pecado de Israel (HOS 10:8)"
+    },
+    {
+      "slug": "azazel",
+      "english": "the word of the second lot on the Day of Atonement, which the King James renders scapegoat (LEV 16:8-10)",
+      "ukr": "слово другого жереба в День Спокути, яке King James передає як «козел відпущення» (LEV 16:8-10)",
+      "deu": "das Wort des zweiten Loses am Versöhnungstag, das die King James mit Sündenbock wiedergibt (LEV 16:8-10)",
+      "spa": "la palabra de la segunda suerte en el Día de la Expiación, que la King James traduce chivo expiatorio (LEV 16:8-10)"
+    },
+    {
+      "slug": "babylon-2",
+      "english": "the Babylon from which Peter writes: the church that is at Babylon (1PE 5:13)",
+      "ukr": "Вавилон, звідки пише Петро: Церква, що у Вавилоні (1PE 5:13)",
+      "deu": "das Babylon, von dem aus Petrus schreibt: die Gemeinde zu Babylon (1PE 5:13)",
+      "spa": "la Babilonia desde donde escribe Pedro: la iglesia que está en Babilonia (1PE 5:13)"
+    },
+    {
+      "slug": "babylon-3",
+      "english": "that great city of the Revelation, Babylon the great (REV 14:8; REV 17:5)",
+      "ukr": "те велике місто з Об'явлення, Вавилон великий (REV 14:8; REV 17:5)",
+      "deu": "jene große Stadt der Offenbarung, die große Babylon (REV 14:8; REV 17:5)",
+      "spa": "aquella gran ciudad del Apocalipsis, Babilonia la grande (REV 14:8; REV 17:5)"
+    },
+    {
+      "slug": "bealoth-2",
+      "english": "in Baanah's district, with Asher (1KI 4:16)",
+      "ukr": "в окрузі Баани, разом з Асиром (1KI 4:16)",
+      "deu": "im Bezirk Baanas, mit Asser (1KI 4:16)",
+      "spa": "en el distrito de Baana, con Aser (1KI 4:16)"
+    },
+    {
+      "slug": "bethel-3",
+      "english": "what the house of Israel trusted and was ashamed of, as Moab of Chemosh (JER 48:13)",
+      "ukr": "те, на що надіявся Ізраїлів дім і чого засоромився, як Моав Кемоша (JER 48:13)",
+      "deu": "worauf das Haus Israel sich verließ und dessen es sich schämte, wie Moab des Kamos (JER 48:13)",
+      "spa": "aquello en que confió la casa de Israel y de que se avergonzó, como Moab de Quemos (JER 48:13)"
+    },
+    {
+      "slug": "bether",
+      "english": "the mountains of Bether in the Song of Songs (SNG 2:17)",
+      "ukr": "гори Бетеру в Пісні над піснями (SNG 2:17)",
+      "deu": "die Scheidebirge, Bether, im Hohelied (SNG 2:17)",
+      "spa": "los montes de Beter en el Cantar de los Cantares (SNG 2:17)"
+    },
+    {
+      "slug": "biziothiah",
+      "english": "named with Beersheba among the cities of Judah (JOS 15:28)",
+      "ukr": "названий з Беер-Шевою серед міст Юди (JOS 15:28)",
+      "deu": "mit Beer-Seba unter den Städten Judas genannt (JOS 15:28)",
+      "spa": "nombrada con Beerseba entre las ciudades de Judá (JOS 15:28)"
+    },
+    {
+      "slug": "calebephrathah",
+      "english": "where Hezron died (1CH 2:24)",
+      "ukr": "де помер Хецрон (1CH 2:24)",
+      "deu": "wo Hezron starb (1CH 2:24)",
+      "spa": "donde murió Hezrón (1CH 2:24)"
+    },
+    {
+      "slug": "ezel",
+      "english": "the stone by which David was told to wait (1SA 20:19)",
+      "ukr": "камінь, біля якого Давид мав чекати (1SA 20:19)",
+      "deu": "der Stein, bei dem David warten sollte (1SA 20:19)",
+      "spa": "la piedra junto a la que David debía esperar (1SA 20:19)"
+    },
+    {
+      "slug": "gedor-7",
+      "english": "the home of Jeroham, whose sons came to David (1CH 12:7)",
+      "ukr": "дім Єрохама, чиї сини прийшли до Давида (1CH 12:7)",
+      "deu": "die Heimat Jerohams, dessen Söhne zu David kamen (1CH 12:7)",
+      "spa": "la tierra de Jeroham, cuyos hijos vinieron a David (1CH 12:7)"
+    },
+    {
+      "slug": "gibeah-4",
+      "english": "a city of Benjamin, named with Jerusalem (JOS 18:28)",
+      "ukr": "місто Веніямина, назване з Єрусалимом (JOS 18:28)",
+      "deu": "eine Stadt Benjamins, mit Jerusalem genannt (JOS 18:28)",
+      "spa": "una ciudad de Benjamín, nombrada con Jerusalén (JOS 18:28)"
+    },
+    {
+      "slug": "goiim",
+      "english": "the realm of Tidal, who fought beside Chedorlaomer; the King James says nations (GEN 14:1)",
+      "ukr": "царство Тід'ала, що воював разом із Кедорлаомером; King James каже «народи» (GEN 14:1)",
+      "deu": "das Reich Thideals, der an Kedor-Laomers Seite kämpfte; die King James sagt Völker (GEN 14:1)",
+      "spa": "el reino de Tidal, que peleó junto a Quedorlaomer; la King James dice naciones (GEN 14:1)"
+    },
+    {
+      "slug": "hara",
+      "english": "one of the places to which the king of Assyria carried the eastern tribes (1CH 5:26)",
+      "ukr": "одне з місць, куди асирійський цар переселив східні племена (1CH 5:26)",
+      "deu": "einer der Orte, wohin der König von Assyrien die östlichen Stämme führte (1CH 5:26)",
+      "spa": "uno de los lugares adonde el rey de Asiria llevó a las tribus del oriente (1CH 5:26)"
+    },
+    {
+      "slug": "harim-5",
+      "english": "the Harim whose children came back from the captivity, as the towns of the list do (EZR 2:32; NEH 7:35)",
+      "ukr": "Харім, чиї сини повернулися з полону, як і міста цього списку (EZR 2:32; NEH 7:35)",
+      "deu": "das Harim, dessen Kinder aus der Gefangenschaft zurückkamen wie die Städte der Liste (EZR 2:32; NEH 7:35)",
+      "spa": "la Harim cuyos hijos volvieron de la cautividad, como las ciudades de la lista (EZR 2:32; NEH 7:35)"
+    },
+    {
+      "slug": "haroshethhagoyim",
+      "english": "where Sisera dwelt, captain of Jabin's host (JDG 4:2)",
+      "ukr": "де жив Сісера, провідник Явінового війська (JDG 4:2)",
+      "deu": "wo Sisera wohnte, der Feldhauptmann Jabins (JDG 4:2)",
+      "spa": "donde habitaba Sísara, capitán del ejército de Jabín (JDG 4:2)"
+    },
+    {
+      "slug": "heres",
+      "english": "the ascent by which Gideon came back from battle; the King James says the sun (JDG 8:13)",
+      "ukr": "узвіз, яким Гедеон повертався з бою; King James каже «сонце» (JDG 8:13)",
+      "deu": "die Steige, auf der Gideon vom Streit zurückkam; die King James sagt Sonne (JDG 8:13)",
+      "spa": "la subida por la que Gedeón volvió de la batalla; la King James dice sol (JDG 8:13)"
+    },
+    {
+      "slug": "jorkeam-2",
+      "english": "whose father the genealogy says was Raham (1CH 2:44)",
+      "ukr": "чиїм батьком родовід називає Рахама (1CH 2:44)",
+      "deu": "als dessen Vater das Geschlechtsregister Raham nennt (1CH 2:44)",
+      "spa": "cuyo padre, dice la genealogía, fue Raham (1CH 2:44)"
+    },
+    {
+      "slug": "methegammah",
+      "english": "what David took out of the hand of the Philistines (2SA 8:1)",
+      "ukr": "те, що Давид узяв з руки филистимлян (2SA 8:1)",
+      "deu": "was David aus der Hand der Philister nahm (2SA 8:1)",
+      "spa": "lo que David tomó de mano de los filisteos (2SA 8:1)"
+    },
+    {
+      "slug": "senaah-2",
+      "english": "whose children came back from the captivity, as the towns of the list do (EZR 2:35; NEH 7:38)",
+      "ukr": "чиї сини повернулися з полону, як і міста цього списку (EZR 2:35; NEH 7:38)",
+      "deu": "dessen Kinder aus der Gefangenschaft zurückkamen wie die Städte der Liste (EZR 2:35; NEH 7:38)",
+      "spa": "cuyos hijos volvieron de la cautividad, como las ciudades de la lista (EZR 2:35; NEH 7:38)"
+    },
+    {
+      "slug": "tarshish-5",
+      "english": "whose ships Solomon and Jehoshaphat sent out (1KI 10:22; 1KI 22:48)",
+      "ukr": "чиї кораблі споряджали Соломон і Йосафат (1KI 10:22; 1KI 22:48)",
+      "deu": "deren Schiffe Salomo und Josaphat aussandten (1KI 10:22; 1KI 22:48)",
+      "spa": "cuyas naves enviaron Salomón y Josafat (1KI 10:22; 1KI 22:48)"
+    },
+    {
+      "slug": "uphaz",
+      "english": "the place gold comes from (JER 10:9; DAN 10:5)",
+      "ukr": "звідки приходить золото (JER 10:9; DAN 10:5)",
+      "deu": "woher das Gold kommt (JER 10:9; DAN 10:5)",
+      "spa": "de donde viene el oro (JER 10:9; DAN 10:5)"
+    },
+    {
+      "slug": "valleyofbaca",
+      "english": "the valley that those who pass through make a well (PSA 84:6)",
+      "ukr": "долина, яку ті, хто йде нею, перетворюють на джерело (PSA 84:6)",
+      "deu": "das Tal, das die Hindurchziehenden zum Brunnen machen (PSA 84:6)",
+      "spa": "el valle que los que pasan por él convierten en fuente (PSA 84:6)"
+    },
+    {
+      "slug": "zelzah",
+      "english": "by Rachel's sepulchre in the border of Benjamin (1SA 10:2)",
+      "ukr": "біля Рахилиного гробу на границі Веніямина (1SA 10:2)",
+      "deu": "bei Rahels Grab an der Grenze Benjamins (1SA 10:2)",
+      "spa": "junto al sepulcro de Raquel en el término de Benjamín (1SA 10:2)"
+    },
+    {
+      "slug": "zer",
+      "english": "a fenced city of Naphtali (JOS 19:35)",
+      "ukr": "укріплене місто Нефталима (JOS 19:35)",
+      "deu": "eine feste Stadt Naphtalis (JOS 19:35)",
+      "spa": "una ciudad fortificada de Neftalí (JOS 19:35)"
     }
   ]
 }

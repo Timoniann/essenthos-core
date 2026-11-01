@@ -1468,6 +1468,70 @@
       "why": "The heap Jacob called Galeed and Laban Jegar-sahadutha 'was the name of it called Galeed; and Mizpah' (GEN 31:47-49): one heap of witness, which the kept record holds with GEN 31:47-48 and the name Jegar Sahadutha.",
       "confidence": 1.0,
       "source": "Essenthos: the places Strong's headwords and the gazetteer wrote twice for one place, each pair read against the verses both hold by claude-opus-5-5, 2026-10-29"
+    },
+    {
+      "strongNumber": "H6166",
+      "keeps": "arad-2",
+      "folds": "arad-3",
+      "why": "King Arad the Canaanite 'dwelt in the south' (NUM 21:1; 33:40) and the Kenites went 'into the wilderness of Judah, which lieth in the south of Arad' (JDG 1:16): one town in the south, and the gazetteer gives Arad 2 as another name for Arad 1 at Tel Arad.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "H884",
+      "keeps": "beersheba-2",
+      "folds": "beersheba",
+      "why": "The Beersheba Abraham named (GEN 21:31) is the town of the south that bounds the land from Dan to Beersheba (JDG 20:1) and is given to Judah and Simeon (JOS 15:28; 19:2): the gazetteer gives the patriarchs' entry as another name for this one. The record of the Joshua and Samuel verses keeps its address because the owner's known-for answer stands on it.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "-",
+      "keeps": "cityofpalms",
+      "folds": "cityofpalms-2",
+      "why": "'The city of palm trees': Jericho by name at DEU 34:3, the same phrase at JDG 3:13 and JDG 1:16, and the gazetteer gives both entries the same three answers (Jericho, Tamar, Zoar). Nothing in the text parts them.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "H6943",
+      "keeps": "kedesh",
+      "folds": "kedesh-5",
+      "why": "Kedesh in Galilee in mount Naphtali (JOS 20:7; 19:37) is the Kedesh in Galilee of Naphtali given to the Levites (JOS 21:32; 1CH 6:76): the same words, and the gazetteer gives Kedesh 5 as another name for Kedesh 1.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "G4499",
+      "keeps": "rhodes",
+      "folds": "rhodes-2",
+      "why": "One island. Rhodes of ACT 21:1, and the Rhodes the Greek reads at EZK 27:15 where the Hebrew and the King James have Dedan; the verse stays cited as concerning it.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "H218",
+      "keeps": "ur",
+      "folds": "ur-2",
+      "why": "Ur of the Chaldees (GEN 11:28) is the Sumerian city at Tell el Muqayyar. The second entry cites no verse and the gazetteer gives the first as another name for it.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "H2341",
+      "keeps": "havilah-4",
+      "folds": "havilah-5",
+      "why": "Ishmael's sons 'dwelt from Havilah unto Shur, that is before Egypt' (GEN 25:18); Saul smote the Amalekites 'from Havilah until thou comest to Shur, that is over against Egypt' (1SA 15:7): the same stretch in the same words, and the gazetteer gives the second as another name for the first.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
+    },
+    {
+      "strongNumber": "H7883",
+      "keeps": "shihor",
+      "folds": "shihor-2",
+      "why": "The word of ISA 23:3, Sihor, already names Shihor; the second entry holds no word of its own, and the gazetteer gives it as another name for Shihor 1.",
+      "confidence": 1.0,
+      "source": "Essenthos: places of one name written twice, each pair read against the verses both hold by claude-opus-5-5, 2026-11-01, on the project owner's word of 2026-11-01"
     }
   ],
   "declined": [
@@ -2952,6 +3016,51 @@
         "ACT 23:31"
       ],
       "why": "Antipatris, where the soldiers brought Paul by night (ACT 23:31), is Herod's town built on the site of Aphek, and keeps its own page and its own verse by the project owner's ruling of 2026-10-29; the gazetteer files the verse under Aphek."
+    },
+    {
+      "from": "redsea",
+      "to": "redsea-2",
+      "name": null,
+      "verses": [
+        "EXO 13:18"
+      ],
+      "why": "'Through the way of the wilderness of the Red sea' (EXO 13:18) is the road to the crossing of chapters 14 and 15: the sea of the crossing, where the gazetteer files this verse."
+    },
+    {
+      "from": "mahanehdan-2",
+      "to": "mahanehdan",
+      "name": null,
+      "verses": [
+        "JDG 13:25"
+      ],
+      "why": "'The camp of Dan between Zorah and Eshtaol' (JDG 13:25) is the camp the gazetteer files under Mahaneh-dan 1; the other record's verse is the place behind Kirjath-jearim (JDG 18:12)."
+    },
+    {
+      "from": "jokmeam-2",
+      "to": "jokmeam",
+      "name": null,
+      "verses": [
+        "1KI 4:12"
+      ],
+      "why": "Baana's district 'unto the place that is beyond Jokneam' (1KI 4:12) is the verse the gazetteer files under Jokmeam 1; the other record's verse is the Levites' city (1CH 6:68)."
+    },
+    {
+      "from": "kir",
+      "to": "kir-2",
+      "name": null,
+      "verses": [
+        "ISA 15:1"
+      ],
+      "why": "'Kir of Moab' (ISA 15:1) is in Moab, not the land Assyria carried Damascus to (2KI 16:9; AMO 1:5): the gazetteer files the verse under Kir 2, at Kerak."
+    },
+    {
+      "from": "sela-3",
+      "to": "sela-2",
+      "name": null,
+      "verses": [
+        "2KI 14:7"
+      ],
+      "why": "Amaziah's Selah 'in the valley of salt', called Joktheel (2KI 14:7), is the verse the gazetteer files under Sela 2; Sela 3 is the Sela of ISA 16:1 and 'may be a different, unknown location farther north'."
     }
   ]
 }

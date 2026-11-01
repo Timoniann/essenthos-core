@@ -457,24 +457,6 @@
       "second": "'the land of the Canaanites, as he sware unto thee and to thy fathers' is the sworn 'land of Canaan' of 6:4 and 6:8."
     },
     {
-      "reference": "EXO 13:18",
-      "record": "redsea",
-      "kind": "named",
-      "how": "name",
-      "words": "the Red sea",
-      "named": [
-        {
-          "text": "BHSA",
-          "position": 10,
-          "strong": "H3220",
-          "surface": "יַם"
-        }
-      ],
-      "confidence": 0.9,
-      "first": "'the way of the wilderness of the Red sea' prints the place's own name, Yam Suph, the sea in which the locusts were cast in 10:19.",
-      "second": "'the way of the wilderness of the Red sea' prints yam suph, the same 'Red sea' into which the locusts were cast in 10:19."
-    },
-    {
       "reference": "EXO 14:20",
       "record": "israelites",
       "kind": "named",
