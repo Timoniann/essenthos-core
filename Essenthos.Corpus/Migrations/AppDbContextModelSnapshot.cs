@@ -1832,6 +1832,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("source");
 
+                    b.Property<bool>("Withheld")
+                        .HasColumnType("boolean")
+                        .HasColumnName("withheld");
+
                     b.HasKey("Id")
                         .HasName("pk_entity_verse");
 

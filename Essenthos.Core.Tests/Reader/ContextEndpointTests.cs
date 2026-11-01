@@ -2,8 +2,11 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Reader;
@@ -64,6 +67,8 @@ public sealed class ContextEndpointTests : IDisposable
         NamedAt(gomer, 10, 1);
         await _db.SaveChangesAsync();
 
+        await ReadOffTheWords();
+
         var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
 
         context.Entities.Select(e => (e.Slug, string.Join(',', e.Verses))).Should().Equal(
@@ -104,6 +109,8 @@ public sealed class ContextEndpointTests : IDisposable
                 Licence = "CC BY 4.0", Source = "Wikimedia Commons",
             });
         await _db.SaveChangesAsync();
+
+        await ReadOffTheWords();
 
         var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
 
@@ -455,6 +462,27 @@ public sealed class ContextEndpointTests : IDisposable
 
     private void Name(Entity entity, string label, string meaning, string kind = "proper name") =>
         _db.EntityNames.Add(new EntityName { EntityId = entity.Id, Label = label, Meaning = meaning, Kind = kind });
+
+    /// <summary>The verses the words name, as the load writes them; the test's transaction leaves the loader out.</summary>
+    private async Task ReadOffTheWords()
+    {
+        await _db.SaveChangesAsync();
+        var named = await (
+                from annotation in _db.WordEntities
+                join word in _db.Words on annotation.WordId equals word.Id
+                join reference in _db.VerseReferences on word.VerseId equals reference.VerseId
+                where reference.IsPrimary
+                select new { annotation.EntityId, reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse })
+            .Distinct()
+            .ToListAsync();
+        _db.EntityVerses.AddRange(named.Select(n => new EntityVerse
+        {
+            EntityId = n.EntityId, CanonicalBook = n.CanonicalBook, CanonicalChapter = n.CanonicalChapter,
+            CanonicalVerse = n.CanonicalVerse, Names = true,
+            Source = "Essenthos, from the words this corpus annotates to the person or the place they name",
+        }));
+        await _db.SaveChangesAsync();
+    }
 
     private Entity Record(string slug, EntityKind kind)
     {

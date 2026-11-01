@@ -26,6 +26,20 @@ internal static class ShownVerses
              && !(v.Source == OpenBible && v.Entity!.OpenBibleId == "a5f43dd"
                   && v.CanonicalBook == 26 && v.CanonicalChapter == 10 && v.CanonicalVerse == 9);
 
+    /// <summary>
+    /// What the source of every row read off the settled annotations starts with, a person's or a
+    /// people's.
+    /// </summary>
+    private const string FromOurWords = "Essenthos, from the words this corpus annotates";
+
+    /// <summary>
+    /// Whether a row says that a word of the verse, in some text, names the record as the reader is
+    /// told it. A row holds a canonical verse and no text, so a question about one text's words is not
+    /// answered here.
+    /// </summary>
+    public static bool ReadOffTheWords(string source, bool names) =>
+        names && source.StartsWith(FromOurWords, StringComparison.Ordinal);
+
     public static IQueryable<EntityVerse> Shown(this IQueryable<EntityVerse> references) =>
         references.Where(IsShown);
 }

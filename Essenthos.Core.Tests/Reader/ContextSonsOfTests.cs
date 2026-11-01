@@ -194,6 +194,35 @@ public sealed class ContextSonsOfTests : IDisposable
         (await Panel(1, 35))["jacob"].Should().Equal(1);
     }
 
+    /// <summary>
+    /// One word that counts keeps the verse his, in whichever text it stands, and the mark follows
+    /// the words: when that word is taken back the verse goes to the people again.
+    /// </summary>
+    [Fact]
+    public async Task AWordOfAnotherTextThatCountsKeepsTheVerseHisUntilItIsTakenBack()
+    {
+        var other = Corpus.Add(_db, "another-text", TextKind.Translation, "eng", (99, 1, ["unrelated"]));
+        _db.AddBook(other, 2, "Exodus", (1, 7, ["Israel"]));
+        _db.SaveChanges();
+        Annotate(At(other, 2, 1, 7, 1), "jacob");
+        await Load();
+
+        (await Withheld("jacob", 2, 1, 7)).Should().BeFalse();
+        (await Panel(2, 1))["jacob"].Should().Equal(7);
+
+        await _db.WordEntities.Where(a => a.WordId == At(other, 2, 1, 7, 1).Id).ExecuteDeleteAsync();
+        await Load();
+
+        (await Withheld("jacob", 2, 1, 7)).Should().BeTrue();
+        (await Panel(2, 1)).Should().NotContainKey("jacob");
+    }
+
+    private Task<bool> Withheld(string slug, int book, int chapter, int verse) =>
+        _db.EntityVerses.AsNoTracking()
+            .Where(v => v.Entity!.Slug == slug && v.CanonicalBook == book && v.CanonicalChapter == chapter && v.CanonicalVerse == verse)
+            .Select(v => v.Withheld)
+            .SingleAsync();
+
     /// <summary>The book's panel counts the same way: the Israelites for the verses, Jacob only where he is named otherwise.</summary>
     [Fact]
     public async Task TheBookCountsTheSameWay()

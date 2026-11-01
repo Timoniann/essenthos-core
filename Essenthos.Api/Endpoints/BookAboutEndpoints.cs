@@ -109,19 +109,23 @@ internal static class BookAboutEndpoints
         string? language,
         CancellationToken cancellationToken)
     {
-        var (verses, withheld) = await Annotations.InBookApart(db, book, cancellationToken);
         var listed = await db.EntityVerses.Shown()
             .Where(v => v.CanonicalBook == book && !v.Disputed)
-            .Select(v => new { v.Entity!.Slug, v.CanonicalChapter, v.CanonicalVerse, v.Source })
+            .Select(v => new { v.Entity!.Slug, v.CanonicalChapter, v.CanonicalVerse, v.Source, v.Withheld })
             .Distinct()
             .ToListAsync(cancellationToken);
+
+        // The verse the ranking leaves to the people, on this record's row and on any other list read
+        // off the same words.
+        var withheld = listed
+            .Where(row => row.Withheld)
+            .Select(row => (row.Slug, row.CanonicalChapter, row.CanonicalVerse))
+            .ToHashSet();
+        var verses = new Dictionary<string, HashSet<(int Chapter, int Verse)>>(StringComparer.Ordinal);
         foreach (var row in listed)
         {
-            // The verse list is read off the same words, so it holds the verse the ranking leaves to the
-            // people; a record some other word in the verse names keeps it.
             if (ChapterSalience.FromTheWords(row.Source)
-                && withheld.GetValueOrDefault(row.Slug)?.Contains((row.CanonicalChapter, row.CanonicalVerse)) == true
-                && verses.GetValueOrDefault(row.Slug)?.Contains((row.CanonicalChapter, row.CanonicalVerse)) != true)
+                && withheld.Contains((row.Slug, row.CanonicalChapter, row.CanonicalVerse)))
             {
                 continue;
             }

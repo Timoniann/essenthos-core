@@ -234,24 +234,40 @@ internal static class ContextEndpoints
             int chapter,
             CancellationToken cancellationToken)
     {
-        var (verses, withheld) = await Annotations.InChapterApart(db, book, chapter, cancellationToken);
-        var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
-        var spoken = verses.ToDictionary(pair => pair.Key, pair => new SortedSet<int>(pair.Value), StringComparer.Ordinal);
-
         // Disputed rows are left out: they are the references the source itself would not assign
         // to the record, and listing them here would assign them.
         var stated = await db.EntityVerses.Shown()
             .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed)
-            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse, v.Source })
+            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse, v.Source, v.Names, v.Withheld })
             .Distinct()
             .ToListAsync(cancellationToken);
+
+        var verses = new Dictionary<string, SortedSet<int>>(StringComparer.Ordinal);
+        var withheld = new HashSet<(string Slug, int Verse)>();
+        foreach (var row in stated.Where(row => ShownVerses.ReadOffTheWords(row.Source, row.Names)))
+        {
+            if (row.Withheld)
+            {
+                withheld.Add((row.Slug, row.CanonicalVerse));
+                continue;
+            }
+
+            if (!verses.TryGetValue(row.Slug, out var named))
+            {
+                verses[row.Slug] = named = [];
+            }
+
+            named.Add(row.CanonicalVerse);
+        }
+
+        var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
+        var spoken = verses.ToDictionary(pair => pair.Key, pair => new SortedSet<int>(pair.Value), StringComparer.Ordinal);
+
         foreach (var row in stated)
         {
-            // The verse list is read off the same words, so it holds the verse the ranking leaves to the
-            // people; a record some other word in the verse names keeps it.
-            if (ChapterSalience.FromTheWords(row.Source)
-                && withheld.GetValueOrDefault(row.Slug)?.Contains(row.CanonicalVerse) == true
-                && spoken.GetValueOrDefault(row.Slug)?.Contains(row.CanonicalVerse) != true)
+            // The verse the ranking leaves to the people, on this record's row and on any other list
+            // read off the same words.
+            if (ChapterSalience.FromTheWords(row.Source) && withheld.Contains((row.Slug, row.CanonicalVerse)))
             {
                 continue;
             }

@@ -20,7 +20,7 @@ internal sealed record NamesUsedHere(IReadOnlyList<(string Label, int Verses, in
 /// <para>
 /// <em>Israel</em> in <em>the children of Israel</em> names Jacob on the word, but the verse is a mention
 /// of the people the word for <em>children</em> names, so it is not counted for him here
-/// (<see cref="Annotations.InChapterApart"/>). His own sons, and Jacob where he acts, count for him.
+/// (<see cref="Essenthos.Core.Database.Entities.EntityVerse.Withheld"/>). His own sons, and Jacob where he acts, count for him.
 /// </para>
 /// </summary>
 internal static class ChapterSalience

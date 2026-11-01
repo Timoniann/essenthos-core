@@ -75,6 +75,8 @@ internal sealed record OwnReferenceOutcome(
 /// them once, for the peoples it writes; they are read again here on every boot, because the passes
 /// after it — the tribes named after an ancestor, the realms, the readings — go on naming words the
 /// people, and a verse read off none of them is a people's page missing <em>the children of Israel</em>.
+/// Here they are read off the words of every text, as a person's are: the chapter's panel asks these
+/// rows who the words name, and it answers for every text.
 /// </para>
 ///
 /// <para>
@@ -105,6 +107,7 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
         written += await Run(connection, transaction, PeopleDerivation, cancellationToken,
             PeopleLoader.FromOurOwnWords);
         var withdrawn = await Run(connection, transaction, Retraction, cancellationToken);
+        await Run(connection, transaction, ForTheirPeople, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         var cited = await db.EntityVerses.CountAsync(v => v.Source == FromOurOwnWords, cancellationToken);
@@ -149,9 +152,9 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     private static readonly string Derivation =
         $"""
          INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
-                                   label, disputed, source)
+                                   label, disputed, names, source)
          SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
-                NULL, FALSE, @source
+                NULL, FALSE, TRUE, @source
          FROM own_named s
          JOIN entity e ON e.id = s.entity_id AND e.kind IN ({Named})
          JOIN word w ON w.id = s.word_id
@@ -166,21 +169,18 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
          """;
 
     /// <summary>
-    /// The verses the original names a people in, off the same settled answers: the witness's words
-    /// only, as <see cref="PeopleLoader"/> reads them, and only what is not cited yet. Nothing is
-    /// taken back here, since <see cref="PeopleLoader"/>'s own reading of the stated descent writes
-    /// under the same line.
+    /// The verses a people is named in, off the same settled answers in every text, and only what is
+    /// not cited yet. Nothing is taken back here.
     /// </summary>
     private static readonly string PeopleDerivation =
         $"""
          INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
-                                   label, disputed, source)
+                                   label, disputed, names, source)
          SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
-                e.name, FALSE, @source
+                e.name, FALSE, TRUE, @source
          FROM own_named s
          JOIN entity e ON e.id = s.entity_id AND e.kind = '{EnumSpelling.Of(EntityKind.People)}'
          JOIN word w ON w.id = s.word_id
-         JOIN text t ON t.id = w.text_id AND t.slug = '{EntityCandidates.Witness}'
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
          WHERE NOT EXISTS (
              SELECT 1 FROM entity_verse cited
@@ -233,6 +233,58 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
                  AND kept.canonical_chapter = cited.canonical_chapter
                  AND kept.canonical_verse = cited.canonical_verse)
          """;
+
+    /// <summary>
+    /// What a ranking leaves out of a man's verses. The name after the word for <em>sons</em> —
+    /// <em>Israel</em> in <em>the children of Israel</em> — names the man, and the word for
+    /// <em>sons</em> in the same verse of the same text names the people, so that verse of that text
+    /// is a mention of the people and not of the man. Where no such word stands in the verse the sons
+    /// are his own, named in the passage, and the name counts for him. A canonical verse is withheld
+    /// only where every word naming him in it, in every text, is so read: one word that counts keeps
+    /// the verse his.
+    /// </summary>
+    private static readonly string ForTheirPeople =
+        $"""
+         WITH by_ruling AS MATERIALIZED (
+             SELECT s.word_id, s.entity_id, e.kind, w.verse_id
+             FROM own_named s
+             JOIN word_entity a ON a.word_id = s.word_id AND a.entity_id = s.entity_id
+             JOIN entity e ON e.id = s.entity_id
+             JOIN word w ON w.id = s.word_id
+             WHERE a.source = '{Quoted(Essenthos.Core.Corpus.Annotations.SonsOf)}'
+                OR EXISTS (SELECT 1 FROM word_entity_claim c
+                           WHERE c.word_entity_id = a.id AND c.source = '{Quoted(Essenthos.Core.Corpus.Annotations.SonsOf)}')
+         ),
+         apart AS MATERIALIZED (
+             SELECT m.word_id, m.entity_id
+             FROM by_ruling m
+             WHERE m.kind = '{EnumSpelling.Of(EntityKind.Person)}'
+               AND m.verse_id IN (SELECT p.verse_id FROM by_ruling p
+                                  WHERE p.kind = '{EnumSpelling.Of(EntityKind.People)}')
+         ),
+         counted AS MATERIALIZED (
+             SELECT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
+                    bool_and(apart.word_id IS NOT NULL) AS withheld
+             FROM own_named s
+             JOIN word w ON w.id = s.word_id
+             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+             LEFT JOIN apart ON apart.word_id = s.word_id AND apart.entity_id = s.entity_id
+             WHERE s.entity_id IN (SELECT entity_id FROM apart)
+             GROUP BY 1, 2, 3, 4
+         )
+         UPDATE entity_verse v
+         SET withheld = coalesce(c.withheld, FALSE)
+         FROM entity_verse o
+         LEFT JOIN counted c ON c.entity_id = o.entity_id
+              AND c.canonical_book = o.canonical_book
+              AND c.canonical_chapter = o.canonical_chapter
+              AND c.canonical_verse = o.canonical_verse
+         WHERE o.id = v.id
+           AND o.source = @source
+           AND o.withheld <> coalesce(c.withheld, FALSE)
+         """;
+
+    private static string Quoted(string text) => text.Replace("'", "''", StringComparison.Ordinal);
 
     private async Task<int> Run(
         NpgsqlConnection connection,
