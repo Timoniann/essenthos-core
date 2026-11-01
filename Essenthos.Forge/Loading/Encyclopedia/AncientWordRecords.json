@@ -869,6 +869,57 @@
       "strongNumber": "H8219",
       "existing": "shephelah",
       "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 20:3",
+      "position": 24,
+      "surface": "מָגֹ֥ור",
+      "strongNumber": "H4032",
+      "existing": "pashhur-2",
+      "why": "Pashhur's other name, which the project owner (2026-11-01) asked to be read: 'The LORD hath not called thy name Pashur, but Magormissabib' (JER 20:3). The name is H4036 מָגוֹר מִסָּבִיב, written מָגוֹר מִ סָּבִיב: the first and the last word carry it. The same מָגוֹר in JER 6:25, 20:10, 46:5 and 49:29 is the common 'terror on every side' and is not this name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 20:3",
+      "position": 26,
+      "surface": "סָּבִֽיב",
+      "strongNumber": "H4036",
+      "existing": "pashhur-2",
+      "why": "Pashhur's other name, which the project owner (2026-11-01) asked to be read: 'The LORD hath not called thy name Pashur, but Magormissabib' (JER 20:3). The name is H4036 מָגוֹר מִסָּבִיב, written מָגוֹר מִ סָּבִיב: the first and the last word carry it. The same מָגוֹר in JER 6:25, 20:10, 46:5 and 49:29 is the common 'terror on every side' and is not this name."
+    },
+    {
+      "text": "SWETE",
+      "reference": "JER 20:3",
+      "position": 22,
+      "surface": "Μέτοικον",
+      "existing": "pashhur-2",
+      "why": "'Not Pashur but Metoikon' (JER 20:3): the Greek gives Pashhur's other name, Magor-missabib, by its sense, a sojourner, and the word stands where the name stands."
+    },
+    {
+      "text": "BHSA",
+      "reference": "RUT 1:20",
+      "position": 10,
+      "surface": "מָרָ֔א",
+      "strongNumber": "H4755",
+      "existing": "naomi",
+      "why": "Naomi's other name, given in the verse: 'Call me not Naomi, call me Mara: for the Almighty hath dealt very bitterly with me' (RUT 1:20). מָרָא (H4755) is the name, and no text carried it."
+    },
+    {
+      "text": "SWETE",
+      "reference": "2SA 12:25",
+      "position": 13,
+      "surface": "Ἰδεδεί",
+      "existing": "solomon",
+      "why": "'And he called his name Jedidiah' (2SA 12:25): the Greek's spelling of Solomon's other name, which the Hebrew's יְדִידְיָהּ carries and no text of the Septuagint did."
+    },
+    {
+      "text": "SWETE",
+      "reference": "GEN 41:45",
+      "position": 6,
+      "surface": "ψουθομΦανήχ",
+      "existing": "joseph",
+      "why": "'And Pharaoh called Joseph's name Zaphnath-paaneah' (GEN 41:45): the Greek's spelling of the name Pharaoh gave Joseph, which the Hebrew's צָפְנַת פַּעְנֵחַ carries and no text of the Septuagint did."
     }
   ]
 }
