@@ -10,7 +10,9 @@ internal sealed record SearchSpelling(int EntityId, string Form, string Folded);
 /// <param name="Unsure">Spellings per text refused because no annotation on them is sure enough.</param>
 /// <param name="CommonWord">Refused because most words printed so in the text are not this entity.</param>
 /// <param name="AnotherName">Refused because the text prints it as another entity's name.</param>
-internal sealed record SearchSpellingCount(int Admitted, int AdmittedInTexts, int Unsure, int CommonWord, int AnotherName);
+/// <param name="Unsegmented">Refused because the text writes no spaces, so a word of it is a stretch of running text.</param>
+internal sealed record SearchSpellingCount(
+    int Admitted, int AdmittedInTexts, int Unsure, int CommonWord, int AnotherName, int Unsegmented = 0);
 
 /// <summary>
 /// Which of the spellings <see cref="Renderings"/> drops a search may still find the record by.
@@ -28,6 +30,11 @@ internal sealed record SearchSpellingCount(int Admitted, int AdmittedInTexts, in
 /// is Joseph once;</item>
 /// <item>it is not how that text spells another entity's name, so <em>Ur</em> stays Ur's.</item>
 /// </list>
+/// <para>
+/// A Chinese text writes no spaces, so the stretch of characters a name was annotated on is the name
+/// with the particles and the verb around it (<em>乃在乎耶和華</em>, <em>現在他</em>); a search that opens on
+/// those finds a record by the word before its name. Those are left to <see cref="Renderings"/>.
+/// </para>
 /// <para>
 /// Things, feasts and titles are left out: their renderings are common nouns, and a search that finds a
 /// record by a common noun has stopped searching names.
@@ -53,6 +60,7 @@ internal static class SearchSpellings
         foreach (var run in Renderings.Runs(words.Where(word => !word.Thing)))
         {
             if (Renderings.Spelled(run) is { } name
+                && !Unsegmented(name)
                 && NameFolding.Fold(name) is { Length: >= ShortestSpelling } folded
                 && !held.Contains((run[0].EntityId, folded)))
             {
@@ -124,7 +132,8 @@ internal static class SearchSpellings
             Counted(Verdict.Admitted),
             Counted(Verdict.Unsure),
             Counted(Verdict.CommonWord),
-            Counted(Verdict.AnotherName)));
+            Counted(Verdict.AnotherName),
+            Counted(Verdict.Unsegmented)));
     }
 
     /// <summary>In the order one run's verdict is preferred to another's for the same spelling in a text.</summary>
@@ -134,6 +143,7 @@ internal static class SearchSpellings
         Unsure,
         CommonWord,
         AnotherName,
+        Unsegmented,
     }
 
     private static Verdict Read(
@@ -144,6 +154,11 @@ internal static class SearchSpellings
         IReadOnlyDictionary<(int Text, string Normalised), int> printed)
     {
         var first = run[0];
+        if (Unsegmented(Renderings.Spelled(run) ?? string.Empty))
+        {
+            return Verdict.Unsegmented;
+        }
+
         if (others.TryGetValue((first.TextId, folded), out var bearers) && bearers.Any(entity => entity != first.EntityId))
         {
             return Verdict.AnotherName;
@@ -158,6 +173,10 @@ internal static class SearchSpellings
 
         return run.Any(word => word.Firm) ? Verdict.Admitted : Verdict.Unsure;
     }
+
+    /// <summary>The spelling is Han characters, which a text writes with no space between words.</summary>
+    private static bool Unsegmented(string name) =>
+        name.Any(c => c is >= '㐀' and <= '䶿' or >= '一' and <= '鿿' or >= '豈' and <= '﫿');
 
     private static HashSet<(int Entity, string Folded)> Held(IEnumerable<Rendering> renderings) =>
         renderings.Select(r => (r.EntityId, r.Folded)).ToHashSet();

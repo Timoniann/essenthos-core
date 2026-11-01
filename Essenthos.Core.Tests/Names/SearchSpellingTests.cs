@@ -66,6 +66,15 @@ public sealed class SearchSpellingTests
     }
 
     [Fact]
+    public void AStretchOfChineseWithTheNameInsideItIsNotASearchSpelling()
+    {
+        var (spellings, count) = Of([Word(Joseph, "現在他")], [Held(Joseph, "約瑟")], ("現在他", 1));
+
+        spellings.Should().BeEmpty();
+        count.Unsegmented.Should().Be(1);
+    }
+
+    [Fact]
     public void ASpellingTheRenderingsHoldIsNotWrittenAgain() =>
         Of([Word(Joseph, "Йосип")], [Held(Joseph, "Йосип")], ("Йосип", 3)).Spellings.Should().BeEmpty();
 
