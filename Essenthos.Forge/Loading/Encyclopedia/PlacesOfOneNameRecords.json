@@ -8,7 +8,7 @@
       "text": "BHSA",
       "reference": "EXO 14:2",
       "position": 13,
-      "surface": "מִגְדֹּ֖ל",
+      "surface": "מִגְדֹּ֖ל",
       "strongNumber": "H4024",
       "existing": "migdol",
       "alternatives": [
@@ -29,7 +29,7 @@
       "text": "BHSA",
       "reference": "JER 44:1",
       "position": 19,
-      "surface": "מִגְדֹּל֙",
+      "surface": "מִגְדֹּל֙",
       "strongNumber": "H4024",
       "existing": "migdol-2",
       "alternatives": [
@@ -92,7 +92,7 @@
       "text": "BHSA",
       "reference": "GEN 14:7",
       "position": 24,
-      "surface": "חַֽצְצֹ֥ן תָּמָֽר",
+      "surface": "חַֽצְצֹ֥ן תָּמָֽר",
       "strongNumber": "H2688",
       "existing": "hazazontamar",
       "alternatives": [
@@ -173,7 +173,7 @@
       "text": "BHSA",
       "reference": "2KI 14:7",
       "position": 14,
-      "surface": "סֶּ֖לַע",
+      "surface": "סֶּ֖לַע",
       "strongNumber": "H5554",
       "existing": "sela-2",
       "corrects": "sela-3",
@@ -183,7 +183,7 @@
       "text": "BHSA",
       "reference": "ISA 16:1",
       "position": 6,
-      "surface": "סֶּ֣לַע",
+      "surface": "סֶּ֣לַע",
       "strongNumber": "H5554",
       "existing": "sela-3",
       "alternatives": [
@@ -199,7 +199,7 @@
       "text": "BHSA",
       "reference": "EZK 47:19",
       "position": 6,
-      "surface": "תָּמָ֗ר",
+      "surface": "תָּמָ֗ר",
       "strongNumber": "H8559",
       "existing": "tamar-5",
       "alternatives": [
@@ -241,7 +241,7 @@
       "text": "BHSA",
       "reference": "1CH 2:55",
       "position": 15,
-      "surface": "חַמַּ֖ת",
+      "surface": "חַמַּ֖ת",
       "strongNumber": "H2575",
       "create": {
         "slug": "hemath",
