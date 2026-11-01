@@ -1,10 +1,14 @@
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Reader;
@@ -254,6 +258,56 @@ public sealed class DifferenceEndpointTests : IDisposable
         chapter.Basis.Should().Be("through");
         chapter.Through.Should().Be("test-hebrew");
         chapter.Verses.Single().A.Select(w => w.Degree).Should().Equal("same", "form", "unmatched", "unlinked");
+    }
+
+    /// <summary>
+    /// Whether two texts are linked is two questions, one for each direction. Asked as one with an
+    /// OR, the planner reads the link table from its first row for a pair that has none.
+    /// </summary>
+    [Fact]
+    public async Task TwoTextsAreLinkedInEitherDirectionAndEachDirectionIsAskedOnItsOwn()
+    {
+        var (from, to, apart) = await ThreeTexts();
+        var statements = new List<string>();
+        await using var watched = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(_db.Database.GetDbConnection())
+            .LogTo(statements.Add, [RelationalEventId.CommandExecuting])
+            .Options);
+
+        (await DifferenceEndpoints.Linked(watched, from.Id, to.Id, default)).Should().BeTrue();
+        (await DifferenceEndpoints.Linked(watched, to.Id, from.Id, default)).Should().BeTrue();
+        (await DifferenceEndpoints.Linked(watched, from.Id, apart.Id, default)).Should().BeFalse();
+
+        statements.Should().HaveCount(5).And.NotContain(statement => statement.Contains(" OR "));
+    }
+
+    /// <summary>A text has word mappings if a link leaves it or reaches it, and not otherwise.</summary>
+    [Fact]
+    public async Task TheCanonIndexKnowsWhichTextsAnyLinkTouches()
+    {
+        var (from, to, apart) = await ThreeTexts();
+        var connection = _db.Database.GetDbConnection();
+        await using var services = new ServiceCollection()
+            .AddScoped(_ => new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseNpgsql(connection).Options))
+            .BuildServiceProvider();
+
+        var texts = await new CanonIndex(services.GetRequiredService<IServiceScopeFactory>()).Texts(default);
+
+        texts.Single(t => t.Id == from.Id).HasWordMapping.Should().BeTrue();
+        texts.Single(t => t.Id == to.Id).HasWordMapping.Should().BeTrue();
+        texts.Single(t => t.Id == apart.Id).HasWordMapping.Should().BeFalse();
+    }
+
+    private async Task<(Text From, Text To, Text Apart)> ThreeTexts()
+    {
+        var from = Corpus.Add(_db, "test-from", TextKind.Translation, "eng", (1, 1, ["God"]));
+        var to = Corpus.Add(_db, "test-to", TextKind.CriticalEdition, "hbo", (1, 1, ["אלהים"]));
+        var apart = Corpus.Add(_db, "test-apart", TextKind.Translation, "eng", (1, 1, ["God"]));
+        await _db.SaveChangesAsync();
+
+        Link(from, to, (LinkRelation.Renders, 0.9), (1, 1, 1), (1, 1, 1));
+        await _db.SaveChangesAsync();
+        return (from, to, apart);
     }
 
     private void Lexemes(Text text, int chapter, int verse, params string[] lexemes)
