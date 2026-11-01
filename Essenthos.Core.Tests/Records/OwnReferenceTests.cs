@@ -159,6 +159,22 @@ public sealed class OwnReferenceTests : IDisposable
     }
 
     /// <summary>
+    /// A people only a translation names in a verse has that verse too, as a person has, and the row
+    /// says that it names them.
+    /// </summary>
+    [Fact]
+    public async Task APeopleOnlyATranslationNamesIsCitedThere()
+    {
+        var people = Add("moabites", EntityKind.People);
+        Annotate(English(1), people, LinkMethod.RuleBased, 0.9);
+
+        (await Load()).Should().Be(1);
+
+        (await Referenced(people)).Should().Equal((1, 1, 1));
+        (await _db.EntityVerses.AsNoTracking().SingleAsync(v => v.EntityId == people.Id)).Names.Should().BeTrue();
+    }
+
+    /// <summary>
     /// A title is named at its words as the person it was held as, so the verse of a word that names
     /// it is on its page — the title of Psalm 34 and the Septuagint's Ochozath are occurrences no
     /// dataset lists.

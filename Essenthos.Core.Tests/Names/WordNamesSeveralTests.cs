@@ -2,6 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
@@ -106,7 +107,7 @@ public sealed class WordNamesSeveralTests : IDisposable
         (await Annotations.Of(_db, Greek(1, 2).Id, CancellationToken.None))!.Slug.Should().Be("jesus");
         (await Cited(jesus)).Should().Equal(1);
         (await Cited(anointed)).Should().Equal(1);
-        (await Annotations.InChapter(_db, 1, 1, CancellationToken.None)).Keys.Should().BeEquivalentTo("jesus", "anointed");
+        (await ContextEndpoints.Named(_db, 1, 1, CancellationToken.None)).Keys.Should().BeEquivalentTo("jesus", "anointed");
     }
 
     /// <summary>The bearer stands first whichever of the two outranks the other, and the title beside him.</summary>

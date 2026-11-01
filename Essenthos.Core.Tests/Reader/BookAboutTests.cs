@@ -4,6 +4,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Xunit;
 
@@ -155,6 +156,8 @@ public sealed class BookAboutTests : IDisposable
             new EventDate { EventId = last.Id, ChronologyId = reckoning.Id, Year = 1656 });
         await _db.SaveChangesAsync();
 
+        await ReadOffTheWords();
+
         var about = await BookAboutEndpoints.About(_db, Genesis, null, default);
 
         about.Counts.Should().ContainSingle().Which.Should().Be(new BookTextCountResponse("test-english", 2, 3));
@@ -187,6 +190,27 @@ public sealed class BookAboutTests : IDisposable
         {
             _db.WordAt(text, chapter, verse, position).Morphology = JsonDocument.Parse("""{"state":"c"}""");
         }
+    }
+
+    /// <summary>The verses the words name, as the load writes them; the test's transaction leaves the loader out.</summary>
+    private async Task ReadOffTheWords()
+    {
+        await _db.SaveChangesAsync();
+        var named = await (
+                from annotation in _db.WordEntities
+                join word in _db.Words on annotation.WordId equals word.Id
+                join reference in _db.VerseReferences on word.VerseId equals reference.VerseId
+                where reference.IsPrimary
+                select new { annotation.EntityId, reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse })
+            .Distinct()
+            .ToListAsync();
+        _db.EntityVerses.AddRange(named.Select(n => new EntityVerse
+        {
+            EntityId = n.EntityId, CanonicalBook = n.CanonicalBook, CanonicalChapter = n.CanonicalChapter,
+            CanonicalVerse = n.CanonicalVerse, Names = true,
+            Source = "Essenthos, from the words this corpus annotates to the person or the place they name",
+        }));
+        await _db.SaveChangesAsync();
     }
 
     private Entity Record(string slug, EntityKind kind)

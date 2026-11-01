@@ -666,6 +666,14 @@ public class EntityVerse
     /// </summary>
     public bool Names { get; set; }
 
+    /// <summary>
+    /// Whether every word of this verse that names the record is the name after <em>the sons of</em>,
+    /// with the word for <em>sons</em> beside it naming the people. The word still names the man, and
+    /// his page and verse list keep the verse; a ranking counts it for the people and not for him.
+    /// Written with the verses read off the words, and false on every other source's row.
+    /// </summary>
+    public bool Withheld { get; set; }
+
     public override string ToString() =>
         $"EntityVerse({EntityId} at {CanonicalBook} {CanonicalChapter}:{CanonicalVerse})";
 }
