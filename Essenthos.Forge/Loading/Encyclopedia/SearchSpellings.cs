@@ -10,9 +10,10 @@ internal sealed record SearchSpelling(int EntityId, string Form, string Folded);
 /// <param name="Unsure">Spellings per text refused because no annotation on them is sure enough.</param>
 /// <param name="CommonWord">Refused because most words printed so in the text are not this entity.</param>
 /// <param name="AnotherName">Refused because the text prints it as another entity's name.</param>
+/// <param name="Epithet">Refused because the record is one a text names by epithets and titles as much as by its name.</param>
 /// <param name="Unsegmented">Refused because the text writes no spaces, so a word of it is a stretch of running text.</param>
 internal sealed record SearchSpellingCount(
-    int Admitted, int AdmittedInTexts, int Unsure, int CommonWord, int AnotherName, int Unsegmented = 0);
+    int Admitted, int AdmittedInTexts, int Unsure, int CommonWord, int AnotherName, int Unsegmented = 0, int Epithet = 0);
 
 /// <summary>
 /// Which of the spellings <see cref="Renderings"/> drops a search may still find the record by.
@@ -31,6 +32,11 @@ internal sealed record SearchSpellingCount(
 /// <item>it is not how that text spells another entity's name, so <em>Ur</em> stays Ur's.</item>
 /// </list>
 /// <para>
+/// Jesus, the LORD and the Holy Spirit are left out: the texts annotate their titles and the sentences
+/// round them (<em>Son of God</em>, <em>by the Spirit</em>, <em>as king</em>) in every language, each
+/// printed once so that the share cannot tell them from a name. Their names are found by their renderings.
+/// </para>
+/// <para>
 /// A Chinese text writes no spaces, so the stretch of characters a name was annotated on is the name
 /// with the particles and the verb around it (<em>乃在乎耶和華</em>, <em>現在他</em>); a search that opens on
 /// those finds a record by the word before its name. Those are left to <see cref="Renderings"/>.
@@ -44,6 +50,9 @@ internal static class SearchSpellings
 {
     /// <summary>How sure an annotation that is neither a ruling nor a source's statement must be.</summary>
     internal const double HighConfidence = 0.85;
+
+    /// <summary>The records a text names by epithets as much as by name, which a search does not widen.</summary>
+    internal static readonly string[] EpithetRecords = ["jesus", "yhvh", "holy-spirit"];
 
     /// <summary>How much of what a text prints a certain way must be this entity.</summary>
     internal const double ShareOfThePrinted = 0.5;
@@ -75,10 +84,12 @@ internal static class SearchSpellings
     /// <param name="words">The named words, as <see cref="Renderings.Of"/> reads them.</param>
     /// <param name="renderings">What <see cref="Renderings.Of"/> kept.</param>
     /// <param name="printed">How many words each text prints each way, for the ones asked about.</param>
+    /// <param name="epithets">The ids of <see cref="EpithetRecords"/>.</param>
     public static (List<SearchSpelling> Spellings, SearchSpellingCount Count) Of(
         IReadOnlyList<NamedWord> words,
         IReadOnlyCollection<Rendering> renderings,
-        IReadOnlyDictionary<(int Text, string Normalised), int> printed)
+        IReadOnlyDictionary<(int Text, string Normalised), int> printed,
+        IReadOnlySet<int>? epithets = null)
     {
         var held = Held(renderings);
         var others = renderings
@@ -105,7 +116,9 @@ internal static class SearchSpellings
                 continue;
             }
 
-            var verdict = Read(run, folded, others, named, printed);
+            var verdict = epithets?.Contains(first.EntityId) == true
+                ? Verdict.Epithet
+                : Read(run, folded, others, named, printed);
             var key = (first.EntityId, first.TextId, folded);
             seen[key] = seen.TryGetValue(key, out var before) && before < verdict ? before : verdict;
             if (verdict == Verdict.Admitted)
@@ -133,7 +146,8 @@ internal static class SearchSpellings
             Counted(Verdict.Unsure),
             Counted(Verdict.CommonWord),
             Counted(Verdict.AnotherName),
-            Counted(Verdict.Unsegmented)));
+            Counted(Verdict.Unsegmented),
+            Counted(Verdict.Epithet)));
     }
 
     /// <summary>In the order one run's verdict is preferred to another's for the same spelling in a text.</summary>
@@ -144,6 +158,7 @@ internal static class SearchSpellings
         CommonWord,
         AnotherName,
         Unsegmented,
+        Epithet,
     }
 
     private static Verdict Read(

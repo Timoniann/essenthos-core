@@ -121,7 +121,9 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             .Select(r => new { r.Id, Rendering = new Rendering(r.EntityId, r.TextId, r.Form, r.Folded, r.Occurrences, r.Heading) })
             .ToListAsync(cancellationToken);
         var printed = await PrintedWords(connection, SearchSpellings.PrintedWordsToCount(words, renderings), cancellationToken);
-        var (spellings, searchCount) = SearchSpellings.Of(words, renderings, printed);
+        var epithets = (await db.Entities.Where(e => SearchSpellings.EpithetRecords.Contains(e.Slug))
+            .Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
+        var (spellings, searchCount) = SearchSpellings.Of(words, renderings, printed, epithets);
         var standingSpellings = await db.EntitySearchSpellings
             .AsNoTracking()
             .Select(s => new { s.Id, Spelling = new SearchSpelling(s.EntityId, s.Form, s.Folded) })

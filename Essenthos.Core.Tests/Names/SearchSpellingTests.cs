@@ -75,6 +75,17 @@ public sealed class SearchSpellingTests
     }
 
     [Fact]
+    public void ARecordNamedByEpithetsGainsNoSearchSpelling()
+    {
+        var (spellings, count) = SearchSpellings.Of(
+            [Word(Joseph, "যীচুত")], [Held(Joseph, "Ісус")], new Dictionary<(int, string), int> { [(Text, "যীচুত")] = 1 },
+            new HashSet<int> { Joseph });
+
+        spellings.Should().BeEmpty();
+        count.Epithet.Should().Be(1);
+    }
+
+    [Fact]
     public void ASpellingTheRenderingsHoldIsNotWrittenAgain() =>
         Of([Word(Joseph, "Йосип")], [Held(Joseph, "Йосип")], ("Йосип", 3)).Spellings.Should().BeEmpty();
 
