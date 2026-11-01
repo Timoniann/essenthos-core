@@ -117,6 +117,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\UnreadHebrewNameRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PsalmTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesReadAgainRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\AncientWordRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeptuagintNameListRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalPsalmTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\KulishTwoWordNameRecords.json" />
@@ -206,6 +207,7 @@
 
         <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
         <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
+        <EmbeddedResource Include="BetaMasaheft\GeezEstherAdditionRows.tsv" />
 
         <!-- Which Greek verse each Ge'ez verse answers where the edition numbers otherwise than the
              Greek, kept with the project's other reviewable decisions and built in from there. -->

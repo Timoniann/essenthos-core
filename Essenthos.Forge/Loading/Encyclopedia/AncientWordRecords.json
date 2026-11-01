@@ -1,0 +1,874 @@
+{
+  "decidedBy": "Essenthos, 2026-11-01, on the words of the ancient texts that named no record or the wrong one: each read against its verse by claude-opus-5-5 on the project owner's instruction ('go through and fix', PRB-1414); no person has reviewed these rulings",
+  "policy": "A word of the ancient text that names a record carries it, where no Strong number reached it or a number reached the wrong record of a spelling.",
+  "method": "manual",
+  "source": "Essenthos, the words of the ancient texts read against their verses by claude-opus-5-5 on the project owner's instruction, 2026-11-01",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "JER 46:25",
+      "position": 9,
+      "surface": "אָמֹ֣ון",
+      "strongNumber": "H528",
+      "existing": "amon-3",
+      "corrects": "thebes",
+      "why": "'Behold, I will punish Amon of No' (JER 46:25): אמון here is the god Amon of Thebes, and No, the next word, is the city; the word was held on the city."
+    },
+    {
+      "text": "SWETE",
+      "reference": "JER 26:25",
+      "position": 5,
+      "surface": "Ἀμμὼν",
+      "existing": "amon-3",
+      "why": "'Behold, I punish Ammon her son' (the Greek of JER 46:25, its own 26:25): the Greek's spelling of the Hebrew's Amon of No, whom Pharaoh stands beside in the verse."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EXO 28:23",
+      "position": 11,
+      "surface": "λογίου",
+      "existing": "breastpiece-of-judgment",
+      "why": "λόγιον is the breastpiece of judgment of the high priest: 'the breastpiece of judgments' of EXO 28:15, made 'according to the work of the ephod' and fastened to it, in the Greek's order of Exodus 36."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EXO 36:15",
+      "position": 3,
+      "surface": "λόγιον",
+      "existing": "breastpiece-of-judgment",
+      "why": "λόγιον is the breastpiece of judgment of the high priest: 'the breastpiece of judgments' of EXO 28:15, made 'according to the work of the ephod' and fastened to it, in the Greek's order of Exodus 36."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EXO 36:24",
+      "position": 12,
+      "surface": "λογίου",
+      "existing": "breastpiece-of-judgment",
+      "why": "λόγιον is the breastpiece of judgment of the high priest: 'the breastpiece of judgments' of EXO 28:15, made 'according to the work of the ephod' and fastened to it, in the Greek's order of Exodus 36."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EXO 36:25",
+      "position": 15,
+      "surface": "λογίου",
+      "existing": "breastpiece-of-judgment",
+      "why": "λόγιον is the breastpiece of judgment of the high priest: 'the breastpiece of judgments' of EXO 28:15, made 'according to the work of the ephod' and fastened to it, in the Greek's order of Exodus 36."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EXO 36:27",
+      "position": 16,
+      "surface": "λογίου",
+      "existing": "breastpiece-of-judgment",
+      "why": "λόγιον is the breastpiece of judgment of the high priest: 'the breastpiece of judgments' of EXO 28:15, made 'according to the work of the ephod' and fastened to it, in the Greek's order of Exodus 36."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EXO 36:29",
+      "position": 4,
+      "surface": "λόγιον",
+      "existing": "breastpiece-of-judgment",
+      "why": "λόγιον is the breastpiece of judgment of the high priest: 'the breastpiece of judgments' of EXO 28:15, made 'according to the work of the ephod' and fastened to it, in the Greek's order of Exodus 36."
+    },
+    {
+      "text": "SWETE",
+      "reference": "LEV 8:8",
+      "position": 6,
+      "surface": "λόγιον",
+      "existing": "breastpiece-of-judgment",
+      "why": "'and he put the breastpiece upon it' (LEV 8:8): the breastpiece of judgment, set on the ephod of Aaron."
+    },
+    {
+      "text": "SWETE",
+      "reference": "LEV 8:8",
+      "position": 11,
+      "surface": "λόγιον",
+      "existing": "breastpiece-of-judgment",
+      "why": "'and he put the breastpiece upon it' (LEV 8:8): the breastpiece of judgment, set on the ephod of Aaron."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 16,
+      "surface": "Χετταίου",
+      "existing": "hittites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 19,
+      "surface": "Ἀμορραίου",
+      "existing": "amorites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 22,
+      "surface": "Φερεζαίου",
+      "existing": "perizzites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 25,
+      "surface": "Χαναναίου",
+      "existing": "canaanites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 28,
+      "surface": "Εὑαίου",
+      "existing": "hivites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 31,
+      "surface": "Ἰεβουσαίου",
+      "existing": "jebusites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:24",
+      "position": 34,
+      "surface": "Γεργεσαίου",
+      "existing": "girgashites",
+      "why": "The Greek's addition after 1 Kings 10:22 lists the peoples left in the land Solomon built in (9:20 of the Hebrew): this word names that people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "1KI 10:30",
+      "position": 13,
+      "surface": "ἀλλοφύλων",
+      "existing": "philistines",
+      "why": "'from the river to the land of the foreigners' (the Greek's addition after 1 Kings 10:26): ἀλλόφυλοι is the Septuagint's word for the Philistines, as in the parallel 2 Chronicles 9:26."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:1a",
+      "position": 14,
+      "surface": "Μαρδοχαῖος",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:11a",
+      "position": 3,
+      "surface": "Μαρδοχαῖος",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:12a",
+      "position": 3,
+      "surface": "Μαρδοχαῖος",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:15a",
+      "position": 11,
+      "surface": "Μαρδοχαῖος",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:16a",
+      "position": 5,
+      "surface": "Μαρδοχαίῳ",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:17a",
+      "position": 14,
+      "surface": "Μαρδοχαῖον",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 2:23",
+      "position": 25,
+      "surface": "Μαρδοχαίου",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 3:7",
+      "position": 27,
+      "surface": "Μαρδοχαίου",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 8:13a",
+      "position": 9,
+      "surface": "Μαρδοχαῖον",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 9:25",
+      "position": 10,
+      "surface": "Μαρδοχαῖον",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 10:1",
+      "position": 3,
+      "surface": "Μαρδοχαῖς",
+      "existing": "mordecai-2",
+      "why": "Mordecai of the book of Esther, in a verse the Greek text of Esther carries with no Strong number, read in place."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:2a",
+      "position": 2,
+      "surface": "Ἰουδαῖος",
+      "existing": "judahites",
+      "why": "'a Jewish man, dwelling in Susa' (the Greek's first addition): Mordecai's people."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:2a",
+      "position": 5,
+      "surface": "Σούσοις",
+      "existing": "susa",
+      "why": "'dwelling in Susa the city' (the Greek's first addition)."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 1:3a",
+      "position": 18,
+      "surface": "Ἰουδαίας",
+      "existing": "judahites",
+      "why": "'Jeconiah the king of Judah' (the Greek's first addition): a people's name after a king, on the owner's ruling of 2026-09-28."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 5:9",
+      "position": 17,
+      "surface": "Ἰουδαῖον",
+      "existing": "judahites",
+      "why": "'Mordecai the Jew' (EST 5:9)."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 8:15a",
+      "position": 10,
+      "surface": "Ἰουδαίους",
+      "existing": "judahites",
+      "why": "'the Jews given over to destruction' (the king's letter in the Greek)."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 8:18a",
+      "position": 9,
+      "surface": "Σούσων",
+      "existing": "susa",
+      "why": "'at the gates of Susa' (the king's letter in the Greek)."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 8:19a",
+      "position": 15,
+      "surface": "Ἰουδαίους",
+      "existing": "judahites",
+      "why": "'let the Jews live by their own laws' (the king's letter in the Greek)."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 9:14",
+      "position": 8,
+      "surface": "Ἰουδαίοις",
+      "existing": "judahites",
+      "why": "'he gave up to the Jews of the city' (EST 9:14)."
+    },
+    {
+      "text": "SWETE",
+      "reference": "EST 10:5",
+      "position": 10,
+      "surface": "Ἰουδαίων",
+      "existing": "judahites",
+      "why": "'to destroy the name of the Jews' (the Greek's closing addition, Mordecai reading his dream)."
+    },
+    {
+      "text": "RP2018",
+      "reference": "JHN 3:23",
+      "position": 10,
+      "surface": "σαλημ",
+      "strongNumber": "G4530",
+      "existing": "salim",
+      "corrects": "jerusalem",
+      "why": "'in Aenon near to Salim' (JHN 3:23): the place by Aenon. The Robinson-Pierpont text spells it σαλημ, and the number made it Jerusalem; the other editions print Salim here."
+    },
+    {
+      "text": "BSB",
+      "reference": "JDG 1:33",
+      "position": 1,
+      "surface": "Naphtali",
+      "existing": "naphtalites",
+      "corrects": "naphtali",
+      "why": "'Naphtali failed to drive out the inhabitants' (JDG 1:33): the tribe, as the Hebrew's word is held; the man was long dead."
+    },
+    {
+      "text": "BSB",
+      "reference": "2CH 31:6",
+      "position": 12,
+      "surface": "Judah",
+      "existing": "judahites",
+      "corrects": "judah",
+      "why": "'the cities of Judah' (2CH 31:6): a people's name after a city, on the owner's ruling of 2026-09-28, as the Hebrew's word is held."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 12:9",
+      "position": 8,
+      "surface": "נֶּֽגְבָּה",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 13:1",
+      "position": 17,
+      "surface": "נֶּֽגְבָּה",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 13:3",
+      "position": 6,
+      "surface": "נֶּ֖גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 20:1",
+      "position": 8,
+      "surface": "נֶּ֔גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 24:62",
+      "position": 14,
+      "surface": "נֶּֽגֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 13:17",
+      "position": 17,
+      "surface": "נֶּ֔גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 13:22",
+      "position": 5,
+      "surface": "נֶּגֶב֮",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 13:29",
+      "position": 6,
+      "surface": "נֶּ֑גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 21:1",
+      "position": 9,
+      "surface": "נֶּ֔גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 33:40",
+      "position": 12,
+      "surface": "נֶּ֖גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 1:7",
+      "position": 27,
+      "surface": "נֶּ֖גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 34:3",
+      "position": 4,
+      "surface": "נֶּ֗גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 10:40",
+      "position": 12,
+      "surface": "נֶּ֨גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 11:16",
+      "position": 16,
+      "surface": "נֶּ֨גֶב֙",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 12:8",
+      "position": 23,
+      "surface": "נֶּ֑גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:19",
+      "position": 9,
+      "surface": "נֶּ֨גֶב֙",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:21",
+      "position": 16,
+      "surface": "נֶּ֑גְבָּה",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 19:8",
+      "position": 14,
+      "surface": "נֶ֑גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 1:9",
+      "position": 16,
+      "surface": "נֶּ֖גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "corrects": "canaanites",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 1:15",
+      "position": 10,
+      "surface": "נֶּ֨גֶב֙",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 1:16",
+      "position": 18,
+      "surface": "נֶ֣גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 27:10",
+      "position": 12,
+      "surface": "נֶ֤גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 27:10",
+      "position": 16,
+      "surface": "נֶ֣גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 27:10",
+      "position": 21,
+      "surface": "נֶ֖גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 30:1",
+      "position": 18,
+      "surface": "נֶ֨גֶב֙",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 30:14",
+      "position": 3,
+      "surface": "נֶ֧גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 30:14",
+      "position": 13,
+      "surface": "נֶ֣גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 24:7",
+      "position": 16,
+      "surface": "נֶ֥גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 28:18",
+      "position": 10,
+      "surface": "נֶּגֶב֮",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 126:4",
+      "position": 9,
+      "surface": "נֶּֽגֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ISA 21:1",
+      "position": 8,
+      "surface": "נֶּ֨גֶב֙",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ISA 30:6",
+      "position": 3,
+      "surface": "נֶ֑גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 13:19",
+      "position": 3,
+      "surface": "נֶּ֛גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 17:26",
+      "position": 25,
+      "surface": "נֶּ֔גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 32:44",
+      "position": 41,
+      "surface": "נֶּ֑גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 33:13",
+      "position": 13,
+      "surface": "נֶּ֔גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 21:2",
+      "position": 17,
+      "surface": "נֶֽגֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 21:3",
+      "position": 6,
+      "surface": "נֶּ֔גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "OBA 1:19",
+      "position": 4,
+      "surface": "נֶּ֜גֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "OBA 1:20",
+      "position": 24,
+      "surface": "נֶּֽגֶב",
+      "strongNumber": "H5045",
+      "existing": "negev",
+      "why": "The land of the Negev, at a verse OpenBible or BibleData gives for the record; read in the verse as the land and not the direction south."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 1:7",
+      "position": 23,
+      "surface": "שְּׁפֵלָ֥ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 9:1",
+      "position": 19,
+      "surface": "שְּׁפֵלָ֗ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 10:40",
+      "position": 15,
+      "surface": "שְּׁפֵלָ֜ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 11:2",
+      "position": 20,
+      "surface": "שְּׁפֵלָ֑ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 11:16",
+      "position": 26,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 12:8",
+      "position": 7,
+      "surface": "שְּׁפֵלָ֗ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:33",
+      "position": 3,
+      "surface": "שְּׁפֵלָ֑ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 1:9",
+      "position": 19,
+      "surface": "שְּׁפֵלָֽה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 10:27",
+      "position": 24,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 27:28",
+      "position": 11,
+      "surface": "שְּׁפֵלָ֔ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 1:15",
+      "position": 28,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 9:27",
+      "position": 24,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 26:10",
+      "position": 19,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 28:18",
+      "position": 7,
+      "surface": "שְּׁפֵלָ֣ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 17:26",
+      "position": 17,
+      "surface": "שְּׁפֵלָ֤ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 32:44",
+      "position": 36,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 33:13",
+      "position": 8,
+      "surface": "שְּׁפֵלָה֙",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "OBA 1:19",
+      "position": 10,
+      "surface": "שְּׁפֵלָה֙",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ZEC 7:7",
+      "position": 29,
+      "surface": "שְּׁפֵלָ֖ה",
+      "strongNumber": "H8219",
+      "existing": "shephelah",
+      "why": "The Shephelah, the low hill country of Judah, at a verse OpenBible gives for the record; read in the verse as that land."
+    }
+  ]
+}

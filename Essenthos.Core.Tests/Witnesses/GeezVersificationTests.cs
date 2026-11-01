@@ -81,6 +81,58 @@ public sealed class GeezVersificationTests
 }
 
 /// <summary>
+/// Esther and the Psalter stand where the reading says they answer the Greek, not at their own numbers:
+/// a name read at the Ge'ez's own number would stand in another chapter.
+/// </summary>
+public sealed class GeezPlacedByTheMapTests
+{
+    private const int Esther = 17;
+    private const int Psalms = 19;
+
+    private static IEnumerable<(int Chapter, int Verse)> Rows(int book, int chapter, int verse) =>
+        GeezVersification.Placements[(book, chapter, verse)].Select(row => (row.Chapter, row.Verse));
+
+    [Theory]
+    [InlineData(Esther, 3, 1, 2, 1)]
+    [InlineData(Esther, 1, 1, 11, 2)]
+    [InlineData(Esther, 1, 17, 12, 6)]
+    [InlineData(Esther, 4, 14, 13, 1)]
+    [InlineData(Esther, 5, 16, 13, 8)]
+    [InlineData(Esther, 5, 42, 14, 19)]
+    [InlineData(Esther, 10, 18, 16, 18)]
+    [InlineData(Esther, 12, 14, 10, 13)]
+    [InlineData(Esther, 13, 1, 11, 1)]
+    [InlineData(Psalms, 13, 11, 14, 7)]
+    [InlineData(Psalms, 136, 11, 137, 8)]
+    public void AVerseStandsAtTheRowItAnswers(int book, int chapter, int verse, int rowChapter, int rowVerse) =>
+        Rows(book, chapter, verse).First().Should().Be((rowChapter, rowVerse));
+
+    [Fact]
+    public void AVerseThatHoldsSeveralStandsAtEachOfThem() =>
+        Rows(Esther, 11, 6).Should().Equal((9, 7), (9, 8), (9, 9), (9, 10));
+
+    [Fact]
+    public void VersesAndRowsOfOneCountGoOneToOne()
+    {
+        Rows(Esther, 2, 7).Should().Equal((1, 7));
+        Rows(Esther, 2, 8).Should().Equal((1, 8));
+    }
+
+    [Fact]
+    public void ALineOfFewerRowsThanVersesLeavesEveryVerseARow()
+    {
+        Rows(Psalms, 7, 6).Should().NotBeEmpty();
+        Rows(Psalms, 7, 9).Should().NotBeEmpty();
+        Rows(Psalms, 7, 6).First().Should().Be((7, 6));
+        Rows(Psalms, 7, 9).Last().Should().Be((7, 8));
+    }
+
+    [Fact]
+    public void TheOtherBooksTheChurchDividesKeepTheirOwnNumbers() =>
+        GeezVersification.Placements.Keys.Should().NotContain(key => key.Book == 18 || key.Book == 22 || key.Book == 75);
+}
+
+/// <summary>
 /// The verse links of a chapter the reading places are the reading's, with its share as their
 /// confidence, and the frame states the rest; a corpus joined by the Ge'ez's own numbers before the
 /// reading existed is joined again once.

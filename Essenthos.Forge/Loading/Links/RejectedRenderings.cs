@@ -39,6 +39,13 @@ internal static class RejectedRenderings
             "Claude, 2026-10-14: Σαυῇ is the King James's Shaveh at position 31, not the Emims."),
         new(new("GEEZ81", "GEN 14:5", 14, "ወለአምዮስ"), new("BHSA", "GEN 14:5", 22, "זּוּזִ֖ים"),
             "Claude, 2026-10-14: the Ge'ez Ammyos follows the Septuagint's Ommaeans, the Emim at position 28."),
+
+        // Esther 8:9 in Brenton's Greek, the officers of the king's letter, where the aligner paired one
+        // with a name of the verse.
+        new(new("GRCBRENT", "EST 8:9", 25, "οἰκονόμοις"), new("BHSA", "EST 8:9", 30, "מָרְדֳּכַ֣י"),
+            "Claude, 2026-11-01: οἰκονόμοις is the stewards the king commanded; Mordecai is not in the Greek's verse."),
+        new(new("GRCBRENT", "EST 8:9", 30, "σατραπῶν"), new("GEEZ81", "EST 9:9", 17, "ወለመሳፍንቱ"),
+            "Claude, 2026-11-01: σατραπῶν is the satraps' chiefs, and the Ge'ez word is its princes; neither is a name."),
     ];
 
     /// <summary>
@@ -143,13 +150,19 @@ internal static class RejectedRenderings
         var origins = pairs.Select(p => p.To).Distinct().ToArray();
         var routes = await db.Words.Where(w => origins.Contains(w.Id))
             .Select(w => new { w.Id, Slug = w.Text!.Slug }).ToListAsync(cancellationToken);
-        var annotations = await db.WordEntities.AsNoTracking().Include(a => a.Claims)
-            .Where(a => targets.Contains(a.WordId) && a.Entity!.Slug == "satan")
+        var annotations = await db.WordEntities.AsNoTracking().Include(a => a.Claims).Include(a => a.Entity)
+            .Where(a => targets.Contains(a.WordId))
             .ToListAsync(cancellationToken);
-        foreach (var annotation in annotations)
+        HashSet<string> Routes(long word) => pairs.Where(p => p.From == word).Select(p =>
+            $"through {routes.Single(w => w.Id == p.To).Slug} word {p.To}, linked by aligner").ToHashSet();
+
+        // Another record's name reached the word over a rejected link and nothing else stands behind it;
+        // a word's own reading or another route is simply not this withdrawal's business.
+        annotations = [.. annotations.Where(a => a.Entity!.Slug == "satan" || (Routes(a.WordId) is var through
+            && through.Contains(a.Note ?? string.Empty) && a.Claims.All(c => through.Contains(c.Note ?? string.Empty))))];
+        foreach (var annotation in annotations.Where(a => a.Entity!.Slug == "satan"))
         {
-            var notes = pairs.Where(p => p.From == annotation.WordId).Select(p =>
-                $"through {routes.Single(w => w.Id == p.To).Slug} word {p.To}, linked by aligner").ToHashSet();
+            var notes = Routes(annotation.WordId);
             if (annotation.Method != LinkMethod.StrongNumber || annotation.Source != EntityAnnotationLoader.GreekResolution
                 || !notes.Contains(annotation.Note ?? string.Empty)
                 || annotation.Claims.Any(c => c.Method != LinkMethod.StrongNumber

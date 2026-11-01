@@ -302,6 +302,24 @@ internal static class Annotating
          """;
 
     /// <summary>
+    /// A reading of a translation's word does not come back onto the original's word unless that word's
+    /// Strong number is one of the record's own. A translation's guess at which word names a record says
+    /// nothing about the Hebrew: Judges 1:9's נגב was the Canaanites through the Hindi's word for south.
+    /// A ruling is exempt, as a person read it; so is a word of an edition with no numbers, or a record
+    /// with no number in that language (πάσχα for a Passover recorded by its Hebrew), which this cannot judge.
+    /// </summary>
+    public static string BackOntoTheOriginal(string seed, string witness, string word, string text) =>
+        $"""
+         ({witness}.language NOT IN ('hbo', 'arc', 'grc') AND {text}.language IN ('hbo', 'arc', 'grc')
+          AND {seed}.method <> '{EnumSpelling.Of(LinkMethod.Manual)}'
+          AND {word}.strong_number IS NOT NULL
+          AND EXISTS (SELECT 1 FROM own_number own
+                      WHERE own.entity_id = {seed}.entity_id AND left(own.number, 1) = left({word}.strong_number, 1))
+          AND NOT EXISTS (SELECT 1 FROM own_number own
+                          WHERE own.entity_id = {seed}.entity_id AND own.number = {word}.strong_number))
+         """;
+
+    /// <summary>
     /// The postpositions of Hindi, Urdu and Punjabi, which follow the noun they govern: in a phrase
     /// that renders a name, the word before one of them is the name — <em>एसाव के पुत्र</em>,
     /// <em>Esau's sons</em>, is a name, its genitive and what it governs, and the last word is the
@@ -696,7 +714,7 @@ internal static class Annotating
                    l.method AS link_method,
                    seed.word_id AS through,
                    witness.slug AS spoken_by,
-                   {CommonWord("w", "wt", "seed.entity_id")} AS common
+                   {CommonWord("w", "wt", "seed.entity_id")} OR {BackOntoTheOriginal("seed", "witness", "w", "wt")} AS common
             FROM pending_annotation seed
             JOIN word origin ON origin.id = seed.word_id
             JOIN text witness ON witness.id = origin.text_id

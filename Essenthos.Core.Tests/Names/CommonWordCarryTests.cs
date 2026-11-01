@@ -253,6 +253,20 @@ public sealed class CommonWordCarryTests : IDisposable
         (await NamedOn(Hebrew(1))).Should().BeNull();
     }
 
+    /// <summary>
+    /// What a translation reads does not come back onto the original's word of another number, whatever
+    /// the record is: the common-word guard lets peoples and feasts through for their own words.
+    /// </summary>
+    [Fact]
+    public async Task ATranslationsReadingDoesNotComeBackOntoAnOriginalsWordOfAnotherNumber()
+    {
+        Stated(Hindi(6), Hebrew(1));
+
+        await _carrier.Carry();
+
+        (await NamedOn(Hebrew(1))).Should().BeNull();
+    }
+
     /// <summary>A feast's own word is a common noun: πάσχα is the Passover, and keeps it.</summary>
     [Fact]
     public async Task AFeastIsStillCarriedOntoItsCommonNoun()
