@@ -201,6 +201,18 @@ public sealed class OccupationTests : IDisposable
     }
 
     [Fact]
+    public async Task AClaimRestsOnItsOwnBookOnlyWhereNoQuotationSaysIt()
+    {
+        await new OccupationLoader(_db).Load(File(new OccupationClaim("luke", "physician", [Quote(kind: "own-book")])));
+
+        (await _db.OccupationWitnesses.AsNoTracking().Select(w => w.Kind).ToListAsync()).Should().Equal("own-book");
+        var both = () => OccupationLoader.Validate(File(new OccupationClaim("luke", "physician", [Quote(), Quote(kind: "own-book")])));
+        both.Should().Throw<InvalidDataException>();
+        var neither = () => OccupationLoader.Validate(File(new OccupationClaim("luke", "physician", [Quote(kind: "identity")])));
+        neither.Should().Throw<InvalidDataException>();
+    }
+
+    [Fact]
     public async Task AnIdentityQuotationMarksNothing()
     {
         await _loader.Load(File(new OccupationClaim("luke", "physician",

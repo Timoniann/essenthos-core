@@ -44,6 +44,11 @@ the words that name an occupation in the verses that say it.
   corpus gives the verse.
 - A person is named by slug; a folded record's old slug reaches the kept one through `merged_record`. A slug
   the encyclopedia does not hold stops the load.
+- A witness is `profession` (the verse says the occupation), `identity` (the verse says who the person is) or
+  `own-book`: the owner's ruling of 2026-11-01 for the author of a prophetic book whom no text calls a prophet
+  (Hosea, Obadiah, Nahum, Zephaniah, Malachi). A claim rests on `profession` or on `own-book`, never both; the API
+  sends the kind and the client says it in the reader's language.
+- `person-occupation-review/` holds why each reviewed reading was admitted or refused. Nothing loads it.
 - Categories: `trade`, `office`, `military_role`, `religious_role`, `heavenly_role`, `designation`.
   Heavenly roles are the owner's ruling of 2026-10-27 (TSK-1254); designations the text states of a person
   (Rahab the harlot, Judas a thief and the traitor, Elymas the sorcerer) his ruling of 2026-10-28 (TSK-1218).

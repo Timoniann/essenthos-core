@@ -3114,7 +3114,7 @@ namespace Essenthos.Core.Migrations
                         {
                             t.HasCheckConstraint("ck_occupation_witness_address", "canonical_book BETWEEN 1 AND 93 AND canonical_chapter > 0 AND canonical_verse >= 0");
 
-                            t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity')");
+                            t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity', 'own-book')");
                         });
                 });
 

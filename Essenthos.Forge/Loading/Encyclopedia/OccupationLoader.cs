@@ -105,12 +105,12 @@ internal sealed partial class OccupationLoader(AppDbContext db)
         foreach (var claim in file.Assertions)
         {
             if (!slugs.Contains(claim.Occupation) || !pairs.Add((claim.Person, claim.Occupation))
-                || !claim.Witnesses.Any(w => w.Kind == Profession)
-                || claim.Witnesses.Any(w => w.Kind is not (Profession or Identity) || string.IsNullOrWhiteSpace(w.Quote)
+                || claim.Witnesses.Any(w => w.Kind == Profession) == claim.Witnesses.Any(w => w.Kind == OwnBook)
+                || claim.Witnesses.Any(w => w.Kind is not (Profession or Identity or OwnBook) || string.IsNullOrWhiteSpace(w.Quote)
                                             || Address(w.Reference) is null))
             {
                 throw new InvalidDataException(
-                    $"{claim.Person} as {claim.Occupation}: each person is said once per occupation, by at least one quotation saying it, each at a verse.");
+                    $"{claim.Person} as {claim.Occupation}: each person is said once per occupation, by a quotation saying it or else by their own book, never by both, each at a verse.");
             }
         }
     }
@@ -180,6 +180,9 @@ internal sealed partial class OccupationLoader(AppDbContext db)
 
     private const string Profession = "profession";
     private const string Identity = "identity";
+
+    /// <summary>A prophet whom no text calls one: the claim rests on the book that bears his name.</summary>
+    private const string OwnBook = "own-book";
 
     private static string Fingerprint(OccupationWitness w) =>
         $"{w.Kind}|{w.Text}|{w.Reference}|{w.CanonicalBook}|{w.CanonicalChapter}|{w.CanonicalVerse}|{w.Quote}";
