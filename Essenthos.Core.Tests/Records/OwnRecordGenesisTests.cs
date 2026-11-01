@@ -173,11 +173,21 @@ public sealed class OwnRecordGenesisTests(WitnessDatabase database) : OwnRecordT
     [Fact]
     public async Task TheNationsAFatherBegatAreHisSonsAndThePeopleKeepItsOtherWords()
     {
-        var people = new Entity
+        var people = await Db.Entities.SingleOrDefaultAsync(e => e.Slug == "jebusites");
+        if (people is null)
         {
-            Kind = EntityKind.People, Slug = "jebusites", Name = "Jebusites", SourceId = "jebusites", Source = "a test",
-        };
-        Db.Entities.Add(people);
+            people = new Entity
+            {
+                Kind = EntityKind.People, Slug = "jebusites", Name = "Jebusites", SourceId = "jebusites", Source = "a test",
+            };
+            Db.Entities.Add(people);
+        }
+        else
+        {
+            people.Kind = EntityKind.People;
+            people.Name = "Jebusites";
+        }
+
         var elsewhere = Db.Place([new RuledWord("BHSA", "JOS 15:63", 3, "הַיְבוּסִי")]).Values.Single();
         await Db.SaveChangesAsync();
         var begotten = Words[Ruled("jebusite-son-of-canaan", "GEN 10:16").Word];
