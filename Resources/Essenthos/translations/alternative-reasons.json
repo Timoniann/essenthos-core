@@ -1,5 +1,5 @@
 {
- "source": "Essenthos: machine translation by claude-sonnet-5-5 (effort medium, prompt v1), 2026-10-29, through the Claude API; quotations in the words of the Ohienko, Luther 1912 and Reina-Valera 1909 Bibles; ten phrases corrected on reading (corrections.json)",
+ "source": "Essenthos: machine translation by claude-sonnet-5-5 (effort medium, prompt v1), 2026-10-29, through the Claude API; quotations in the words of the Ohienko, Luther 1912 and Reina-Valera 1909 Bibles; ten phrases corrected on reading (corrections.json); the four reasons for Shaphan and Immer, 2026-11-01, by claude-opus-5-5",
  "entries": [
   {
    "english": "1 Chronicles 16:5 names Jeiel twice, so two men, and the first stands where Jaaziel, or Aziel, stands after Zechariah. Nobody has shown that the two are not one man, only that he does not fit that verse.",
@@ -156,6 +156,12 @@
    "ukr": "Буття 36:20 та 1 Хронік 1:38 зараховують Ану до синів Сеїра, а слова 1 Хронік 1:41 «сини Анині: Дішон» можна розуміти як сказані про нього; Буття 36:24 робить батька Оголівеми сином Ців'она, небожем того Ани.",
    "deu": "1. Mose 36:20 und 1. Chronik 1:38 zählen einen Ana unter die Söhne Seirs, und die Worte aus 1. Chronik 1:41 „Die Kinder Anas: Dison“ könnten als die seinen gelesen werden; 1. Mose 36:24 macht den Vater der Oholibama zum Sohn Zibeons, zum Neffen jenes Ana.",
    "spa": "Génesis 36:20 y 1 Crónicas 1:38 cuentan a un Ana entre los hijos de Seir, y lo de 1 Crónicas 1:41, «Disón fué hijo de Ana», podría entenderse como suyo; Génesis 36:24 hace al padre de Aholibama hijo de Zibeón, sobrino de aquel Ana."
+  },
+  {
+   "english": "He may be Shaphan the scribe of King Josiah, the father of Ahikam and Gemariah (2KI 22:3, 22:12; JER 36:10): JER 29:3 calls Elasah the son of Shaphan and does not say which Shaphan.",
+   "ukr": "Він може бути Шафаном, писарем царя Йосії, батьком Ахікама та Ґемарії (2 Царів 22:3, 22:12; Єремії 36:10): Єремії 29:3 називає Ел'асу Шафановим сином і не каже, якого саме Шафана.",
+   "deu": "Er könnte Saphan sein, der Schreiber des Königs Josia, der Vater Ahikams und Gemarjas (2. Könige 22:3, 22:12; Jeremia 36:10): Jeremia 29:3 nennt Eleasa den Sohn Saphans und sagt nicht, welchen Saphan.",
+   "spa": "Puede ser Saphán, el escriba del rey Josías, padre de Ahicam y de Gemarías (2 Reyes 22:3, 22:12; Jeremías 36:10): Jeremías 29:3 llama a Elasa hijo de Saphán y no dice de cuál Saphán."
   },
   {
    "english": "He stands where Shaul son of Uzziah stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names.",
@@ -350,6 +356,12 @@
    "spa": "Un solo Assuero podría corresponder a Esdras 4:6, a Ester y a este versículo. En contra: Esdras 4:5-7 coloca a su Assuero después de Ciro, y el hijo de este ya tenía sesenta y dos años cuando cayó Babilonia, antes de que reinara Ciro, de modo que el texto no permite que sean un mismo rey; de qué rey de los medos se trata, no lo dice."
   },
   {
+   "english": "Pashhur's Immer may be understood as the Immer of the priestly course (1CH 24:14, EZR 2:37), with Pashhur his descendant: JER 20:1 says 'the son of Immer the priest' and does not say which.",
+   "ukr": "Іммера, батька Пашхура, можна розуміти як Іммера священичої черги (1 Хронік 24:14, Ездри 2:37), а Пашхура як його нащадка: Єремії 20:1 каже «Пашхур, Іммерів син, священик» і не каже, якого саме.",
+   "deu": "Der Immer Pashurs kann als der Immer der Priesterabteilung verstanden werden (1. Chronik 24:14, Esra 2:37), Pashur als sein Nachkomme: Jeremia 20:1 sagt «Pashur, ein Sohn Immers, der Priester» und sagt nicht, welcher.",
+   "spa": "El Immer de Pashur puede entenderse como el Immer del turno sacerdotal (1 Crónicas 24:14, Esdras 2:37), con Pashur como su descendiente: Jeremías 20:1 dice «Pashur sacerdote, hijo de Immer» y no dice de cuál."
+  },
+  {
    "english": "Read as 'Azubah a woman, and (the daughter) of Jerioth', the second name says where the first came from rather than adding a person. Nothing in the clause supplies the missing word, which is what the reading has to assume.",
    "ukr": "Якщо читати як «Азува, жінка, і (дочка) Еріот», то друге ім'я вказує, звідки походить перше, а не додає нової особи. Ніщо в цьому реченні не подає пропущеного слова, а саме його й доводиться припускати за такого читання.",
    "deu": "Liest man es als „Asuba, eine Frau, und (die Tochter) von Jeriot“, so sagt der zweite Name, woher der erste kam, und fügt keine Person hinzu. Nichts im Satz liefert das fehlende Wort, und genau das muss diese Lesart voraussetzen.",
@@ -366,6 +378,18 @@
    "ukr": "Єврейський текст називає його лише один раз, і як одну людину. Його ім'я в розповіді Септуагінти про Авраама може бути наслідком того, що цей переклад узгоджує між собою два завіти в Беер-Шеві, а не свідченням того, що це ім'я було посадою.",
    "deu": "Der hebräische Text nennt ihn nur einmal, und zwar als einen einzelnen Mann. Dass sein Name in der Darstellung der Septuaginta über Abraham steht, mag eher daran liegen, dass diese Übersetzung die beiden Bündnisse in Beerscheba einander angleicht, als dass es ein Zeugnis dafür wäre, dass der Name ein Amt war.",
    "spa": "El hebreo lo nombra solo una vez, y como un solo hombre. Su nombre en el relato de la Septuaginta sobre Abraham puede ser esa traducción armonizando entre sí los dos pactos de Beer-seba, más bien que un testimonio de que el nombre era un cargo."
+  },
+  {
+   "english": "The Immer of JER 20:1, 'Pashur the son of Immer the priest', may be understood as this Immer of the priestly course, with Pashhur his descendant: the verse does not say.",
+   "ukr": "Іммера з Єремії 20:1, «Пашхур, Іммерів син, священик», можна розуміти як цього Іммера священичої черги, а Пашхура як його нащадка: вірш цього не каже.",
+   "deu": "Der Immer von Jeremia 20:1, «Pashur, ein Sohn Immers, der Priester», kann als dieser Immer der Priesterabteilung verstanden werden, Pashur als sein Nachkomme: Der Vers sagt es nicht.",
+   "spa": "El Immer de Jeremías 20:1, «Pashur sacerdote, hijo de Immer», puede entenderse como este Immer del turno sacerdotal, con Pashur como su descendiente: el versículo no lo dice."
+  },
+  {
+   "english": "The Shaphan of JER 29:3, whose son Elasah carried Jeremiah's letter to Babylon, may be this man: the verse does not say which Shaphan.",
+   "ukr": "Шафан з Єремії 29:3, чий син Ел'аса заніс листа Єремії до Вавилону, може бути цією людиною: вірш не каже, якого саме Шафана.",
+   "deu": "Der Saphan von Jeremia 29:3, dessen Sohn Eleasa den Brief Jeremias nach Babel brachte, könnte dieser Mann sein: Der Vers sagt nicht, welcher Saphan.",
+   "spa": "El Saphán de Jeremías 29:3, cuyo hijo Elasa llevó la carta de Jeremías a Babilonia, puede ser este hombre: el versículo no dice de cuál Saphán."
   },
   {
    "english": "The Vulgate reads the clause this way, and an Arabic tradition with it: Caleb begat Jerioth of Azubah his wife, and 'her sons' are Jerioth's. It takes the feminine suffix in its nearest sense, at the cost of making the three Caleb's grandsons rather than his sons.",

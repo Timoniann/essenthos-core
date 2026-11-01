@@ -1289,6 +1289,14 @@
       "surface": "אִמֵּ֣ר",
       "strongNumber": "H564",
       "existing": "immer-5",
+      "alternatives": [
+        {
+          "slug": "immer",
+          "describes": null,
+          "reason": "Pashhur's Immer may be understood as the Immer of the priestly course (1CH 24:14, EZR 2:37), with Pashhur his descendant: JER 20:1 says 'the son of Immer the priest' and does not say which.",
+          "back": "The Immer of JER 20:1, 'Pashur the son of Immer the priest', may be understood as this Immer of the priestly course, with Pashhur his descendant: the verse does not say."
+        }
+      ],
       "why": "'Pashur the son of Immer the priest, who was also chief governor in the house of the LORD' (JER 20:1) names the priest father of Pashur, as this record's line says."
     },
     {
