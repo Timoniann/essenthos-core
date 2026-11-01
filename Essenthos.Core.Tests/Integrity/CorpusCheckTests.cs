@@ -1060,7 +1060,7 @@ public sealed class CorpusCheckTests : IDisposable
             .Which.Should().Be(new Variation("SBLGNT", "NESTLE1904", Units: 3, Addresses: 3, Shared: 4));
     }
 
-    /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
+    /// <summary>Two places of one name that read alike to a reader, in any of the four languages, are a break.</summary>
     [Fact]
     public async Task PlacesOfOneNameThatReadAlikeInALanguageAreABreak()
     {
@@ -1070,21 +1070,22 @@ public sealed class CorpusCheckTests : IDisposable
             new Entity { Kind = EntityKind.Place, Slug = "alike-2", Name = "Alike", ModernEquivalent = "Tell Two", SourceId = "t:2", Source = "t" });
         await _db.SaveChangesAsync();
 
-        var before = (await Integrity(breaks));
+        (await Integrity(breaks)).Should().Be(3, "the two read apart in English and alike, with no words, in the other three languages");
 
         _db.TextTranslations.Add(new TextTranslation
         {
             Language = "ukr", EnglishSha256 = EnglishNotes.Digest("Tell One"), Text = "Телль Перший", Source = "t",
         });
         await _db.SaveChangesAsync();
-        (await Integrity(breaks)).Should().Be(before, "the second place has no Ukrainian words, and the pair already read apart there as one line and none");
+        (await Integrity(breaks)).Should().Be(2, "the first place has Ukrainian words and the second none, so the pair reads apart there");
 
         var two = await _db.Entities.SingleAsync(e => e.Slug == "alike-2");
         two.ModernEquivalent = "Tell One";
         await _db.SaveChangesAsync();
-        (await Integrity(breaks)).Should().Be(before + 4, "the two read alike in all four languages");
+        (await Integrity(breaks)).Should().Be(4, "the two read alike in all four languages");
     }
 
+    /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
     [Fact]
     public async Task TheStoredCoverageReadsBackAsItWasMeasured()
     {

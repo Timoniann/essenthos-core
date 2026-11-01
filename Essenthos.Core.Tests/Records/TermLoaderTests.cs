@@ -54,6 +54,37 @@ public sealed class TermLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// Azazel is the gazetteer's place that the owner ruled is a word of the text (PRB-1417): the record
+    /// becomes a term with its address, verses and line, and has no place kind or site left. A second
+    /// load changes nothing.
+    /// </summary>
+    [Fact]
+    public async Task APlaceTheOwnerRuledIsAWordIsHeldAsATermAndOnlyOnce()
+    {
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Place, Slug = "azazel", Name = "Azazel", PlaceKind = "natural area",
+            Distinguisher = "the word of the second lot", SourceId = "openbible:ab9a5ec", Source = "t",
+            Verses = [new EntityVerse { CanonicalBook = 3, CanonicalChapter = 16, CanonicalVerse = 8, Source = "t" }],
+        });
+        _db.StrongEntries.Add(new StrongEntry { StrongNumber = "H5799", Lemma = "עֲזָאזֵל", Transliteration = "ʻăzâʼzêl", Definition = "scapegoat" });
+        await _db.SaveChangesAsync();
+
+        var first = await _loader.Load();
+        first.Retyped.Should().Be(1);
+
+        var azazel = await _db.Entities.Include(e => e.Names).Include(e => e.Verses).SingleAsync(e => e.Slug == "azazel");
+        azazel.Kind.Should().Be(EntityKind.Term);
+        azazel.PlaceKind.Should().BeNull();
+        azazel.Distinguisher.Should().Be("the word of the second lot", "its line stays");
+        azazel.Verses.Should().ContainSingle("its verse stays");
+        azazel.Names.Should().ContainSingle(n => n.HebrewStrongNumber == "H5799");
+
+        (await _loader.Load()).Retyped.Should().Be(0);
+        (await _db.Entities.CountAsync(e => e.Slug == "azazel")).Should().Be(1);
+    }
+
+    /// <summary>
     /// A word Strong holds becomes an entry of the term kind, named and numbered from his entry, and a
     /// verse that holds the word twice is one reference. A word he does not hold is not invented.
     /// </summary>
