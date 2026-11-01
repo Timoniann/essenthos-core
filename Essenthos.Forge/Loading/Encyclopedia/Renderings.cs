@@ -15,6 +15,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// The entity is a thing, a feast or a title, whose rendering is a common noun a text prints in
 /// lower case — <em>the mercy seat</em>, <em>віко</em>, <em>ковчег</em>.
 /// </param>
+/// <param name="Normalised">The word as the corpus indexes it in its text, for counting what else is printed so.</param>
+/// <param name="Firm">The annotation is a ruling, a source's statement or highly sure (<see cref="SearchSpellings"/>).</param>
 internal readonly record struct NamedWord(
     int EntityId,
     int TextId,
@@ -26,7 +28,9 @@ internal readonly record struct NamedWord(
     string Language,
     string? Renders = null,
     double? Guess = null,
-    bool Thing = false);
+    bool Thing = false,
+    string? Normalised = null,
+    bool Firm = false);
 
 /// <summary>One spelling of one entity in one text, counted, and whether a list heads with it.</summary>
 internal sealed record Rendering(int EntityId, int TextId, string Form, string Folded, int Occurrences, bool Heading);
@@ -340,8 +344,7 @@ internal static class Renderings
         char.IsLetter(c) || char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.NonSpacingMark;
 
     /// <summary><em>Aaron's</em> and <em>Aaron’s</em> are Aaron.</summary>
-    internal static string WithoutPossessive(string word) =>
-        word.Length > 2 && word[^1] == 's' && word[^2] is '\'' or '’' ? word[..^2] : word;
+    internal static string WithoutPossessive(string word) => NameFolding.WithoutPossessive(word);
 
     private static IEnumerable<(Rendering Rendering, bool Another)> Kept(
         int entity,

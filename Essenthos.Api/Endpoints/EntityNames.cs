@@ -280,6 +280,9 @@ internal static class EntityNames
                      SELECT entity_id AS "Value" FROM entity_rendering
                      WHERE folded % {typed} AND similarity(folded, {typed}) >= {NearEnough}
                      UNION
+                     SELECT entity_id FROM entity_search_spelling
+                     WHERE folded % {typed} AND similarity(folded, {typed}) >= {NearEnough}
+                     UNION
                      SELECT entity_id FROM entity_name_form
                      WHERE form % {typed} AND similarity(lower(form), {typed}) >= {NearEnough}
                      """)
@@ -300,13 +303,21 @@ internal static class EntityNames
     /// <summary>The fewest letters a name has before a near spelling of it is looked for.</summary>
     private const int ShortestNear = 4;
 
-    /// <summary>What was typed, the name without the title in front of it, and both in Latin letters.</summary>
+    /// <summary>
+    /// What was typed, the name without the title in front of it or the possessive after it
+    /// (<em>Milcah’s</em>), and all of them in Latin letters.
+    /// </summary>
     private static List<string> Typed(string q)
     {
         var names = new List<string> { q };
         if (TitleWords.Without(q) is { } name)
         {
             names.Add(name);
+        }
+
+        foreach (var one in names.ToList())
+        {
+            names.Add(NameFolding.WithoutPossessive(one.Trim()));
         }
 
         foreach (var one in names.ToList())
@@ -386,7 +397,13 @@ internal static class EntityNames
                             && (EF.Functions.Like(r.Folded, opening)
                                 || (EF.Functions.Like(r.Folded, inside)
                                     && Regex.IsMatch(r.Form, start, RegexOptions.IgnoreCase))))
-                .Select(r => r.EntityId));
+                .Select(r => r.EntityId))
+            .Concat(db.EntitySearchSpellings
+                .Where(s => folded.Length > 0
+                            && (EF.Functions.Like(s.Folded, opening)
+                                || (EF.Functions.Like(s.Folded, inside)
+                                    && Regex.IsMatch(s.Form, start, RegexOptions.IgnoreCase))))
+                .Select(s => s.EntityId));
     }
 
     /// <summary>The entities a word of a title of which opens with what was typed.</summary>
@@ -456,7 +473,8 @@ internal static class EntityNames
             .Concat(db.EntityNameForms
                 .Where(f => f.GrammaticalCase == GrammaticalCases.Nominative && EF.Functions.ILike(f.Form, exactly))
                 .Select(f => f.EntityId))
-            .Concat(db.EntityRenderings.Where(r => folded.Length > 0 && r.Folded == folded).Select(r => r.EntityId));
+            .Concat(db.EntityRenderings.Where(r => folded.Length > 0 && r.Folded == folded).Select(r => r.EntityId))
+            .Concat(db.EntitySearchSpellings.Where(s => folded.Length > 0 && s.Folded == folded).Select(s => s.EntityId));
     }
 
     /// <summary>
@@ -503,6 +521,10 @@ internal static class EntityNames
             .Where(r => ids.Contains(r.EntityId) && (EF.Functions.Like(r.Folded, whole) || EF.Functions.Like(r.Folded, named)))
             .Select(r => new { r.EntityId, r.Form, r.Folded, r.Occurrences, r.Heading })
             .ToListAsync(cancellationToken);
+        spellings.AddRange(await db.EntitySearchSpellings
+            .Where(s => ids.Contains(s.EntityId) && (EF.Functions.Like(s.Folded, whole) || EF.Functions.Like(s.Folded, named)))
+            .Select(s => new { s.EntityId, s.Form, s.Folded, Occurrences = 0, Heading = false })
+            .ToListAsync(cancellationToken));
 
         bool Holds(string name) => typed.Any(NameFolding.Fold(name).Contains);
         bool Opens(string folded) => typed.Any(folded.StartsWith);

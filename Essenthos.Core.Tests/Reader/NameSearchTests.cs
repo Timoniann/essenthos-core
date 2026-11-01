@@ -68,6 +68,40 @@ public sealed class NameSearchTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
     }
 
+    [Fact]
+    public async Task ASpellingKeptForASearchFindsItsRecordAndSaysWhy()
+    {
+        var joseph = Record("joseph", "Joseph");
+        _db.SaveChanges();
+        _db.EntitySearchSpellings.Add(new EntitySearchSpelling
+        {
+            EntityId = joseph.Id,
+            Form = "Цофнат-Панеах",
+            Folded = NameFolding.Fold("Цофнат-Панеах"),
+        });
+        _db.SaveChanges();
+
+        var found = await EntityNames.Find(_db, _db.Entities, "Цофнат", default);
+        found.Near.Should().BeFalse();
+        found.Ids.Should().Equal(joseph.Id);
+        (await EntityNames.Find(_db, _db.Entities, "Панеах", default)).Ids.Should().Equal(joseph.Id);
+        (await EntityNames.Find(_db, _db.Entities, "цофнат панеах", default)).Called.Should().Equal(joseph.Id);
+
+        var why = await EntityNames.FoundAs(_db, new Dictionary<int, string> { [joseph.Id] = "Йосип" }, "Цофнат", default);
+        why[joseph.Id].Name.Should().Be("Цофнат-Панеах");
+    }
+
+    [Theory]
+    [InlineData("Reuben’s")]
+    [InlineData("Reuben's")]
+    public async Task APossessiveFindsTheRecordItBelongsTo(string typed)
+    {
+        var found = await EntityNames.Find(_db, _db.Entities, typed, default);
+
+        found.Near.Should().BeFalse();
+        found.Ids.Should().Equal(_reuben.Id);
+    }
+
     private Entity Record(string slug, string name, EntityKind kind = EntityKind.Person)
     {
         var entity = new Entity { Kind = kind, Slug = slug, Name = name, SourceId = slug, Source = "a test" };
