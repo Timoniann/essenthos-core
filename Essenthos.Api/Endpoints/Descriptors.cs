@@ -197,6 +197,7 @@ internal static class Descriptors
             .OfType<Clause>()
             .ToList();
         var clauses = FamilyTies.Folded([.. own.Select(c => c with { TargetSex = SexOf(c.TargetEntityId, c.TargetSex) }), .. turned]);
+        clauses = await OneAncestorOnce(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id)], cancellationToken);
         clauses = await PlaceLines.Located(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id)], cancellationToken);
 
         // The brothers and sisters the parents give, where no clause says so of the pair already.
@@ -631,6 +632,52 @@ internal static class Descriptors
                 {
                     Method = o.Stated is null ? LinkMethod.Manual : LinkMethod.StatedBySource,
                 }),
+        ];
+    }
+
+    /// <summary>
+    /// A line says one ancestor once: where a subject's tribe and its descent are about the same man,
+    /// the tribe being him or a people named from him, a people is <em>descendants of Judah</em> and a
+    /// person <em>of the tribe of Dan</em>. Only the line: the record and its relationships keep both.
+    /// </summary>
+    private static async Task<List<Clause>> OneAncestorOnce(
+        AppDbContext db,
+        List<Clause> clauses,
+        HashSet<int> peoples,
+        CancellationToken cancellationToken)
+    {
+        static bool Descent(Clause c) => c.Relation is DescriptorRelations.DescendantsOf or DescriptorRelations.DescendantOf;
+
+        var descents = clauses.Where(Descent).Select(c => (c.SubjectId, c.TargetEntityId)).ToHashSet();
+        var tribes = clauses
+            .Where(c => c.Relation == DescriptorRelations.OfTribe && descents.Any(d => d.SubjectId == c.SubjectId))
+            .ToList();
+        if (tribes.Count == 0)
+        {
+            return clauses;
+        }
+
+        var named = tribes.Where(c => c.TargetKind == EntityKind.People).Select(c => c.TargetEntityId).Distinct().ToList();
+        var origins = await db.Entities
+            .Where(e => named.Contains(e.Id) && e.OriginEntityId != null)
+            .ToDictionaryAsync(e => e.Id, e => e.OriginEntityId!.Value, cancellationToken);
+
+        var twice = new HashSet<(int Subject, int Named)>();
+        foreach (var tribe in tribes)
+        {
+            var ancestor = origins.GetValueOrDefault(tribe.TargetEntityId, tribe.TargetEntityId);
+            if (!descents.Contains((tribe.SubjectId, ancestor)))
+            {
+                continue;
+            }
+
+            twice.Add((tribe.SubjectId, peoples.Contains(tribe.SubjectId) ? tribe.TargetEntityId : ancestor));
+        }
+
+        return
+        [
+            .. clauses.Where(c => !twice.Contains((c.SubjectId, c.TargetEntityId))
+                                  || !(peoples.Contains(c.SubjectId) ? c.Relation == DescriptorRelations.OfTribe : Descent(c))),
         ];
     }
 

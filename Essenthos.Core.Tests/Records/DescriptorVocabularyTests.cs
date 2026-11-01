@@ -376,6 +376,11 @@ public sealed class DescriptorVocabularyTests
     [InlineData("spa", "of-people", "people", "nominative=Los nefilim", "del pueblo de los nefilim")]
     [InlineData("deu", "descendants-of", "people", "genitive=Die Nephilim", "Nachkommen der Nephilim")]
     [InlineData("spa", "descendants-of", "people", "nominative=Los nefilim", "descendientes de los nefilim")]
+    [InlineData("deu", "of-tribe", "people", "nominative=Leviten", "vom Stamm der Leviten")]
+    [InlineData("deu", "of-tribe", "people", "nominative=Benjaminiter", "vom Stamm der Benjaminiter")]
+    [InlineData("deu", "of-tribe", "people", "nominative=Judäer", "vom Stamm der Judäer")]
+    [InlineData("deu", "of-tribe", "people", "nominative=Asser", "vom Stamm Asser")]
+    [InlineData("deu", "of-tribe", "person", "nominative=Dan", "vom Stamm Dan")]
     public void ANameIsSaidWithWhatItsLanguageNeedsAroundIt(
         string language, string relation, string kind, string forms, string expected)
     {
