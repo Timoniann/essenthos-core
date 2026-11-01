@@ -1,0 +1,256 @@
+{
+  "decidedBy": "the project owner, 2026-11-01, of the report on PRB-1417: 'Да, виправ це все'; each record read against its verses by claude-opus-5-5, 2026-11-01",
+  "policy": "Where a place of one name may be another of that name, both pages say so. Where a word stands on the wrong one of two, the verse says which.",
+  "method": "manual",
+  "source": "Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "EXO 14:2",
+      "position": 13,
+      "surface": "מִגְדֹּ֖ל",
+      "strongNumber": "H4024",
+      "existing": "migdol",
+      "alternatives": [
+        {
+          "slug": "migdol-2",
+          "reason": "Jeremiah's Migdol in Egypt (JER 44:1; 46:14) may be this one; the text does not say.",
+          "back": "The Migdol by which Israel camped (EXO 14:2) may be this one; the text does not say."
+        },
+        {
+          "slug": "migdol-3",
+          "reason": "The tower of Ezekiel's prophecy against Egypt, in the Hebrew Migdol (EZK 29:10; 30:6), may be this one; the text does not say.",
+          "back": "The Migdol by which Israel camped (EXO 14:2) may be this one; the text does not say."
+        }
+      ],
+      "why": "'Between Migdol and the sea' (EXO 14:2): the camp before the crossing. All three Migdol records are put at Tell el Herr among other sites; the text does not join them."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 44:1",
+      "position": 19,
+      "surface": "מִגְדֹּל֙",
+      "strongNumber": "H4024",
+      "existing": "migdol-2",
+      "alternatives": [
+        {
+          "slug": "migdol-3",
+          "reason": "The tower of Ezekiel's prophecy against Egypt, in the Hebrew Migdol (EZK 29:10; 30:6), may be this one; the text does not say.",
+          "back": "Jeremiah's Migdol in Egypt (JER 44:1; 46:14) may be this one; the text does not say."
+        }
+      ],
+      "why": "Jeremiah's Migdol, in the land of Egypt; Ezekiel's 'from Migdol to Syene' may be the same town."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 1:19",
+      "position": 18,
+      "surface": "רָמָ֑תָה",
+      "strongNumber": "H7414",
+      "existing": "ramah-4",
+      "alternatives": [
+        {
+          "slug": "ramah",
+          "reason": "The Ramah of Benjamin (JOS 18:25) may be Samuel's town; the text does not say.",
+          "back": "Samuel's Ramah (1SA 1:19; 7:17) may be this town; the text does not say."
+        }
+      ],
+      "why": "Samuel's Ramah: the gazetteer gives it as another name for Ramah of Benjamin, and also at Beit Rima. The text does not say."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EXO 10:19",
+      "position": 5,
+      "surface": "יָם֙",
+      "strongNumber": "H3220",
+      "existing": "redsea",
+      "alternatives": [
+        {
+          "slug": "redsea-2",
+          "reason": "The sea Israel crossed (EXO 15:4) may be this one; the text calls both the Red Sea.",
+          "back": "The Red Sea of the locusts and of the camp after Elim (EXO 10:19; NUM 33:10) may be this sea; the text calls both the Red Sea."
+        },
+        {
+          "slug": "redsea-3",
+          "reason": "The Red Sea by Ezion-geber in Edom (1KI 9:26) may be this one; the text calls both the Red Sea.",
+          "back": "The Red Sea of the locusts and of the camp after Elim (EXO 10:19; NUM 33:10) may be this sea; the text calls both the Red Sea."
+        }
+      ],
+      "why": "The Red sea of the locusts (EXO 10:19), the gazetteer's Red Sea 3: at the Gulf of Suez, 'another name for Red Sea 1', and also at the Gulf of Aqaba."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EXO 13:18",
+      "position": 10,
+      "surface": "יַם",
+      "strongNumber": "H3220",
+      "existing": "redsea-2",
+      "corrects": "redsea",
+      "why": "'The way of the wilderness of the Red sea' (EXO 13:18), the road to the crossing."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:7",
+      "position": 24,
+      "surface": "חַֽצְצֹ֥ן תָּמָֽר",
+      "strongNumber": "H2688",
+      "existing": "hazazontamar",
+      "alternatives": [
+        {
+          "slug": "hazazontamar-2",
+          "reason": "The Hazazon-tamar of 2 Chronicles, which is En-gedi (2CH 20:2), may be this one; Genesis does not say.",
+          "back": "The Hazazon-tamar where the Amorites dwelt (GEN 14:7) may be this one; the text does not say."
+        }
+      ],
+      "why": "2CH 20:2 says its Hazazontamar is En-gedi. Whether Genesis's is that one the text does not say; the gazetteer also gives Tamar and Wadi Hasasah."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 13:25",
+      "position": 8,
+      "surface": "מַחֲנֵה־דָ֑ן",
+      "strongNumber": "H4264",
+      "existing": "mahanehdan",
+      "corrects": "mahanehdan-2",
+      "alternatives": [
+        {
+          "slug": "mahanehdan-2",
+          "reason": "The place behind Kirjath-jearim called Mahaneh-dan (JDG 18:12) may be this camp; the text does not say.",
+          "back": "The camp of Dan between Zorah and Eshtaol (JDG 13:25) may be this place; the text does not say."
+        }
+      ],
+      "why": "'The camp of Dan between Zorah and Eshtaol' (JDG 13:25). The verse names this camp, not the place behind Kirjath-jearim of JDG 18:12."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 4:12",
+      "position": 25,
+      "surface": "יָקְמֳעָֽם",
+      "strongNumber": "H3361",
+      "existing": "jokmeam",
+      "corrects": "jokmeam-2",
+      "alternatives": [
+        {
+          "slug": "jokmeam-2",
+          "reason": "The Levites' Jokmeam (1CH 6:68) may be this one; the text does not say.",
+          "back": "The Jokmeam of Solomon's district (1KI 4:12) may be this one; the text does not say."
+        },
+        {
+          "slug": "jokneam",
+          "reason": "The King James prints Jokneam at this verse, and Jokneam by Carmel (JOS 12:22) may be this place; the text does not say.",
+          "back": "The Jokmeam the Hebrew writes at 1KI 4:12, where the King James prints Jokneam, may be this place; the text does not say."
+        }
+      ],
+      "why": "Baana's district reaches the place 'beyond Jokneam' (KJV), in the Hebrew Jokmeam. The verse names the place of the district; whether that is the Levites' Jokmeam or Jokneam by Carmel the text does not say."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ISA 15:1",
+      "position": 14,
+      "surface": "קִיר־מֹואָ֖ב",
+      "strongNumber": "H7024",
+      "existing": "kir-2",
+      "corrects": "kir",
+      "why": "'Kir of Moab' (ISA 15:1): the Moabite town, not the land Assyria carried Damascus to."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 6:45",
+      "position": 17,
+      "surface": "Βηθσαϊδάν",
+      "strongNumber": "G966",
+      "existing": "bethsaida-2",
+      "alternatives": [
+        {
+          "slug": "bethsaida",
+          "reason": "Bethsaida of Galilee, the city of Philip, Andrew and Peter (JHN 1:44; 12:21), may be this one; the text does not say.",
+          "back": "The Bethsaida the disciples crossed to (MRK 6:45; 8:22) may be this one; the text does not say."
+        }
+      ],
+      "why": "The gazetteer sets Bethsaida in Galilee (JHN 12:21) beside Bethsaida in Gaulanitis, and gives the second as another name for the first. Mark 6:45 sends the disciples across to a Bethsaida from near the Bethsaida of LUK 9:10, which is why two have been proposed. The text does not settle it, so the two stay apart with the question on both."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 14:7",
+      "position": 14,
+      "surface": "סֶּ֖לַע",
+      "strongNumber": "H5554",
+      "existing": "sela-2",
+      "corrects": "sela-3",
+      "why": "Amaziah's Selah, called Joktheel (2KI 14:7), the gazetteer's Sela 2."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ISA 16:1",
+      "position": 6,
+      "surface": "סֶּ֣לַע",
+      "strongNumber": "H5554",
+      "existing": "sela-3",
+      "alternatives": [
+        {
+          "slug": "sela-2",
+          "reason": "The Selah that Amaziah took and called Joktheel (2KI 14:7) may be this one; the text does not say.",
+          "back": "The Sela of Isaiah's word on Moab (ISA 16:1) may be this one; the text does not say."
+        }
+      ],
+      "why": "The gazetteer's Sela 3, of ISA 16:1, 'may be a different, unknown location farther north'. So not folded with Amaziah's Selah; the question is on both."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 47:19",
+      "position": 6,
+      "surface": "תָּמָ֗ר",
+      "strongNumber": "H8559",
+      "existing": "tamar-5",
+      "alternatives": [
+        {
+          "slug": "tamar-4",
+          "reason": "The Tamar the Hebrew writes at 1KI 9:18, among the towns Solomon built, may be this one; the text does not say.",
+          "back": "The Tamar of Ezekiel's southern border (EZK 47:19) may be this one; the text does not say."
+        }
+      ],
+      "why": "The Hebrew of 1KI 9:18 writes Tamar where 2CH 8:4 and the King James have Tadmor. The gazetteer gives both, Tamar 2 and Tadmor. So not folded; the question is on both."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 9:18",
+      "position": 6,
+      "surface": "תמר",
+      "strongNumber": "H8412",
+      "existing": "tadmor",
+      "alternatives": [
+        {
+          "slug": "tamar-4",
+          "reason": "The Hebrew writes Tamar at this verse where the King James and 2CH 8:4 have Tadmor, so the town may be another Tamar; the text does not say.",
+          "back": "The Tadmor of 2CH 8:4, which the King James prints at 1KI 9:18 too, may be this town; the text does not say."
+        }
+      ],
+      "why": "The word stays on Tadmor, whose number it carries and as the King James prints it; the other reading is said on both pages."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 10:43",
+      "position": 3,
+      "surface": "נְבֹ֑ו",
+      "strongNumber": "H5015",
+      "existing": "nebo",
+      "corrects": "nebo-3",
+      "why": "'Of the sons of Nebo' (EZR 10:43): a family's forefather, whose record the list of Ezra 2 already names, not the town."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 2:55",
+      "position": 15,
+      "surface": "חַמַּ֖ת",
+      "strongNumber": "H2575",
+      "create": {
+        "slug": "hemath",
+        "kind": "person",
+        "name": "Hemath",
+        "distinguisher": "father of the house of Rechab, of whom the Kenites came (1CH 2:55)"
+      },
+      "corrects": "hammath-2",
+      "why": "'The Kenites that came of Hemath, the father of the house of Rechab' (1CH 2:55): a man. No record held him."
+    }
+  ]
+}

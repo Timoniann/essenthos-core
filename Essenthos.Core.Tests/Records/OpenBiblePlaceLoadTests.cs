@@ -156,7 +156,8 @@ public sealed class OpenBiblePlaceLoadTests : IClassFixture<OpenBiblePlaceLoadTe
             .ToListAsync();
 
         aroers.Should().HaveCountGreaterThan(1);
-        aroers.Should().OnlyContain(e => e.Distinguisher != null && e.Distinguisher.Length > 0);
+        aroers.Where(e => e.AnotherNameForEntityId == null).Should()
+            .OnlyContain(e => e.Distinguisher != null && e.Distinguisher.Length > 0);
         aroers.Select(e => e.Slug).Should().OnlyHaveUniqueItems();
     }
 
@@ -224,6 +225,52 @@ public sealed class OpenBiblePlaceLoadTests : IClassFixture<OpenBiblePlaceLoadTe
         (await _db.Entities.AsNoTracking().OrderBy(e => e.Id)
             .Select(e => new { e.Id, e.AnotherNameForEntityId, e.ModernEquivalent, e.Distinguisher }).ToListAsync())
             .Should().BeEquivalentTo(before, options => options.WithStrictOrdering());
+    }
+
+    /// <summary>
+    /// The catalogue's numbers mean nothing to a reader, and a proposal that the word is no place is
+    /// no line under its name. Read off the source itself, so an entry added to it is held too.
+    /// </summary>
+    [Fact]
+    public void NoLineTheSourceGivesSaysACatalogueNumberOrThatThePlaceIsNone()
+    {
+        var places = OpenBiblePlaceLoader.Read(TestResources.Path("OpenBible", "ancient.jsonl"));
+        var numbered = places.Select(p => p.Catalogued).Where(c => char.IsDigit(c[^1])).ToList();
+
+        var lines = places.Select(p => p.Identification).OfType<string>().ToList();
+        lines.Should().NotContain(line => numbered.Any(entry => line.Contains(entry, StringComparison.Ordinal)));
+        lines.Should().NotContain(line => line.StartsWith("not a ", StringComparison.OrdinalIgnoreCase));
+
+        places.Single(p => p.Catalogued == "Judea 1").Identification.Should().BeNull("the entry only names itself");
+        places.Single(p => p.Catalogued == "Holon 2").Identification.Should().Be("in Moab");
+        places.Single(p => p.Catalogued == "Goshen 2").Identification.Should().Be("about 20 km around Goshen (Dahriya)");
+        places.Single(p => p.Catalogued == "Most Holy Place 2").Identification.Should().Be("in the Holy Place (on Mount Moriah)");
+        places.Single(p => p.Catalogued == "Ai 2").Identification.Should().Be("Khirbet Ai");
+    }
+
+    [Fact]
+    public async Task AWarmCorpusLosesTheNumbersAndKeepsALineSomebodyWrote()
+    {
+        var source = OpenBiblePlaceLoader.Read(TestResources.Path("OpenBible", "ancient.jsonl"));
+        var judeaId = source.Single(p => p.Catalogued == "Judea 1").Id;
+        var holonId = source.Single(p => p.Catalogued == "Holon 2").Id;
+        var judea = await _db.Entities.SingleAsync(e => e.OpenBibleId == judeaId);
+        judea.Distinguisher = "Judea 1";
+        judea.ModernEquivalent = "Judea 1";
+        var held = await _db.Entities.SingleAsync(e => e.OpenBibleId == holonId);
+        held.Distinguisher = "a line a person wrote, of Holon 7";
+        held.ModernEquivalent = "not a place (cipher)";
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await new OpenBiblePlaceLoader(_db, NullLogger<OpenBiblePlaceLoader>.Instance).Load(TestResources.OpenBibleFolder);
+
+        var after = await _db.Entities.AsNoTracking().SingleAsync(e => e.Id == judea.Id);
+        after.Distinguisher.Should().BeNull();
+        after.ModernEquivalent.Should().BeNull();
+        var kept = await _db.Entities.AsNoTracking().SingleAsync(e => e.Id == held.Id);
+        kept.Distinguisher.Should().Be("a line a person wrote, of Holon 7");
+        kept.ModernEquivalent.Should().Be("in Moab");
     }
 
     /// <summary>The King James's Tyrus and Zidon reach Tyre and Sidon, credited to the source that gives them.</summary>

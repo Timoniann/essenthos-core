@@ -26,7 +26,7 @@ public sealed class AnotherNameForEndpointTests : IDisposable
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
         _ramah = Place("ramah", "Ramah");
-        _alias = Place("ramah-4", "Ramah");
+        _alias = Place("ramathaim", "Ramathaim");
         _db.SaveChanges();
         _alias.AnotherNameForEntityId = _ramah.Id;
         _db.SaveChanges();
@@ -49,16 +49,22 @@ public sealed class AnotherNameForEndpointTests : IDisposable
     [Fact]
     public async Task AnAliasLinksToThePlaceItIsAnotherNameFor()
     {
-        var named = await EncyclopediaEndpoints.AnotherNameFor(_db, _alias.AnotherNameForEntityId, "eng", default);
+        var named = await EncyclopediaEndpoints.AnotherNameFor(_db, _alias.AnotherNameForEntityId, _alias.Name, "eng", default);
 
         named.Should().NotBeNull();
         (named!.Slug, named.Kind, named.Name).Should().Be(("ramah", "place", "Ramah"));
     }
 
     [Fact]
+    public async Task APlaceOfTheSameNameIsNoOtherName()
+    {
+        (await EncyclopediaEndpoints.AnotherNameFor(_db, _ramah.Id, "Ramah", "eng", default)).Should().BeNull();
+    }
+
+    [Fact]
     public async Task APlaceThatIsNotAnAliasLinksToNothing()
     {
-        (await EncyclopediaEndpoints.AnotherNameFor(_db, null, "eng", default)).Should().BeNull();
+        (await EncyclopediaEndpoints.AnotherNameFor(_db, null, "Ramah", "eng", default)).Should().BeNull();
     }
 
     [Fact]
@@ -68,7 +74,7 @@ public sealed class AnotherNameForEndpointTests : IDisposable
         await _db.SaveChangesAsync();
         _db.ChangeTracker.Clear();
 
-        var alias = await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == "ramah-4");
+        var alias = await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == "ramathaim");
         alias.AnotherNameForEntityId.Should().BeNull();
     }
 }

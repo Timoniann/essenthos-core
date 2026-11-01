@@ -273,9 +273,9 @@ internal static partial class EncyclopediaEndpoints
     /// <summary>
     /// A few words telling each place from another of the same name, for the places that share one:
     /// Antioch <em>in Pisidia</em>, <em>місто в Пісідії</em>. The first clause of our own line in the
-    /// reader's language; in English, failing that, the source's distinguisher or what the place is
-    /// called today. Nothing where the language has neither, rather than English words on another
-    /// language's map.
+    /// reader's language; failing that, the record's line or what the place is called today, in the
+    /// reader's language. Nothing where the language has no words for them, rather than English words
+    /// on another language's map.
     /// </summary>
     private static async Task<Dictionary<string, string>> Distinguished(
         AppDbContext db,
@@ -295,21 +295,30 @@ internal static partial class EncyclopediaEndpoints
         }
 
         var lines = await Descriptors.Of(db, shared, words, cancellationToken, names);
+        var said = await db.Entities
+            .Where(e => shared.Contains(e.Slug))
+            .Select(e => new { e.Id, e.Slug, Line = e.Distinguisher, Today = e.ModernEquivalent })
+            .ToListAsync(cancellationToken);
         var english = EntityNames.Local(words) is null;
-        var sourced = english
-            ? await db.Entities
-                .Where(e => shared.Contains(e.Slug))
-                .Select(e => new { e.Slug, Said = e.Distinguisher ?? e.ModernEquivalent })
-                .ToDictionaryAsync(e => e.Slug, e => PlaceToday.WithoutCatalogueNumbers(e.Said), cancellationToken)
-            : [];
+        var rendered = english
+            ? null
+            : await TextTranslations.Of(db, said.SelectMany(e => new[] { e.Line, e.Today }), words, cancellationToken);
+        var written = english
+            ? []
+            : await EntityDistinguishers.Of(db, [.. said.Select(e => e.Id)], words, cancellationToken);
 
         var told = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var slug in shared)
+        foreach (var entity in said)
         {
-            var clause = lines.GetValueOrDefault(slug) is { } line ? FirstClause(line) : null;
-            if ((clause ?? sourced.GetValueOrDefault(slug)) is { Length: > 0 } said)
+            var clause = lines.GetValueOrDefault(entity.Slug) is { } line ? FirstClause(line) : null;
+            var sourced = rendered is null
+                ? entity.Line ?? entity.Today
+                : written.GetValueOrDefault(entity.Id)
+                  ?? TextTranslations.In(rendered, entity.Line)
+                  ?? TextTranslations.In(rendered, entity.Today);
+            if ((clause ?? sourced) is { Length: > 0 } text)
             {
-                told[slug] = said;
+                told[entity.Slug] = text;
             }
         }
 

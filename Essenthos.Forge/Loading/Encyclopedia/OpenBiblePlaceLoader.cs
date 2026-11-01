@@ -79,6 +79,25 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
     private const string OtherName = "another name for";
 
     /// <summary>
+    /// How the source opens a line proposing that the word is no place at all: <em>not a place
+    /// (cipher)</em>, <em>not a proper name (west)</em>. It is one answer among the place's candidates,
+    /// where it stands with the others, and it says nothing of where the place is.
+    /// </summary>
+    private static readonly string[] NoPlace = ["not a place", "not a proper name"];
+
+    /// <summary>
+    /// A name followed by a number, as a line may mention an entry of the catalogue: <em>Goshen 3</em>,
+    /// <em>Mount Hor 1</em>. Only the catalogue can say whether it is one, since a site may be written
+    /// so too: <em>Nahal Yattir 205</em>.
+    /// </summary>
+    [GeneratedRegex(@"\p{Lu}[\p{L}’'‘\-]*(?: \p{Lu}[\p{L}’'‘\-]*)* \d+\b")]
+    private static partial Regex NumberedName();
+
+    /// <summary>A mention of an entry of the catalogue, as the source writes it.</summary>
+    [GeneratedRegex(@"<ancient id=""([^""]+)"">([^<]*)</ancient>")]
+    private static partial Regex AncientMention();
+
+    /// <summary>
     /// The id the source writes inside the phrase: <c>another name for &lt;ancient id="a6d57ed"&gt;Ramah
     /// 1&lt;/ancient&gt;</c>. It is the catalogue id <see cref="Entity.OpenBibleId"/> holds, so the target
     /// resolves exactly.
@@ -163,6 +182,7 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
         if (await db.EntityVerses.AnyAsync(v => v.Source == Source, cancellationToken))
         {
             await NameTheAliases(places, cancellationToken);
+            await RewordTheLines(places, cancellationToken);
             await Spell(places, cancellationToken);
             return new PlacesOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
         }
@@ -247,6 +267,7 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
         db.EntityVerses.AddRange(references);
         await db.SaveChangesAsync(cancellationToken);
         await NameTheAliases(places, cancellationToken);
+        await RewordTheLines(places, cancellationToken);
         await Spell(places, cancellationToken);
 
         if (unaddressed > 0)
@@ -312,7 +333,10 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
 
             if (entity.Distinguisher?.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase) == true)
             {
-                entity.Distinguisher = alias.Identification ?? Resolved(target.Name, byId.GetValueOrDefault(alias.AnotherNameFor!));
+                entity.Distinguisher = alias.Identification
+                                       ?? (target.Name == entity.Name
+                                           ? null
+                                           : Resolved(target.Name, byId.GetValueOrDefault(alias.AnotherNameFor!)));
             }
 
             if (before != (entity.AnotherNameForEntityId, entity.ModernEquivalent, entity.Distinguisher))
@@ -329,6 +353,69 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
 
         return changed;
     }
+
+    /// <summary>
+    /// Stored lines that still say what the source's lines are now read past: an entry of the catalogue
+    /// by its number, a proposal that the word is no place, or that a place is another name for a place
+    /// of its own name, which tells a reader nothing. Each takes what <see cref="Read"/> makes of the
+    /// source. Every other line was written by somebody and is left, so a second load changes nothing.
+    /// </summary>
+    private async Task<int> RewordTheLines(List<Place> places, CancellationToken cancellationToken)
+    {
+        var byId = places.ToDictionary(p => p.Id, StringComparer.Ordinal);
+        var numbered = places.Select(p => p.Catalogued).ToHashSet(StringComparer.Ordinal);
+        var held = await db.Entities
+            .Where(e => e.Kind == EntityKind.Place && e.OpenBibleId != null
+                        && (e.ModernEquivalent != null || e.Distinguisher != null))
+            .ToListAsync(cancellationToken);
+
+        var changed = 0;
+        foreach (var entity in held)
+        {
+            if (!byId.TryGetValue(entity.OpenBibleId!, out var place))
+            {
+                continue;
+            }
+
+            var before = (entity.ModernEquivalent, entity.Distinguisher);
+            if (Superseded(entity.ModernEquivalent, numbered))
+            {
+                entity.ModernEquivalent = place.Identification == place.Name ? null : place.Identification;
+            }
+
+            if (Superseded(entity.Distinguisher, numbered) || OfItsOwnName(entity))
+            {
+                entity.Distinguisher = place.Identification
+                                       ?? (place.AnotherNameFor is { } alias
+                                           && byId.TryGetValue(alias, out var target)
+                                           && target.Name != entity.Name
+                                           ? Resolved(target.Name, target)
+                                           : null);
+            }
+
+            if (before != (entity.ModernEquivalent, entity.Distinguisher))
+            {
+                changed++;
+            }
+        }
+
+        if (changed > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("{Lines} places' lines were given words for the source's catalogue numbers", changed);
+        }
+
+        return changed;
+    }
+
+    private static bool Superseded(string? line, IReadOnlySet<string> numbered) =>
+        line is not null
+        && (NoPlace.Any(start => line.StartsWith(start, StringComparison.OrdinalIgnoreCase))
+            || NumberedName().Matches(line).Any(match => numbered.Contains(match.Value)));
+
+    private static bool OfItsOwnName(Entity entity) =>
+        string.Equals(entity.Distinguisher, $"{OtherName} {entity.Name}", StringComparison.OrdinalIgnoreCase)
+        || entity.Distinguisher?.StartsWith($"{OtherName} {entity.Name} (", StringComparison.OrdinalIgnoreCase) == true;
 
     /// <summary>
     /// What tells an alias from its namesakes when the gazetteer gives it no site: the phrase with the
@@ -432,6 +519,9 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
         string? Kind,
         IReadOnlyList<string> Verses)
     {
+        /// <summary>How the source's own catalogue writes the entry: <em>Judea 1</em>.</summary>
+        public string Catalogued { get; init; } = Name;
+
         /// <summary>The catalogue id of the place this one is another name for, where the first line of the source says so.</summary>
         public string? AnotherNameFor { get; init; }
 
@@ -442,15 +532,15 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
     internal static List<Place> Read(string file)
     {
         var places = new List<Place>(1_400);
+        var documents = File.ReadLines(file)
+            .Where(line => line.Length > 0)
+            .Select(line => JsonDocument.Parse(line))
+            .ToList();
+        var catalogue = new Catalogue(documents.Select(document => document.RootElement));
 
-        foreach (var line in File.ReadLines(file))
+        foreach (var document in documents)
         {
-            if (line.Length == 0)
-            {
-                continue;
-            }
-
-            using var document = JsonDocument.Parse(line);
+            using var _ = document;
             var root = document.RootElement;
 
             var id = Text(root, "id");
@@ -463,10 +553,11 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
             places.Add(new Place(
                 id,
                 TrailingIndex().Replace(friendly, string.Empty),
-                Identification(root),
+                Identification(root, catalogue),
                 Kinds(root),
                 [.. Citations(root)])
             {
+                Catalogued = friendly,
                 AnotherNameFor = Alias(root),
                 Spellings = root.TryGetProperty("translation_name_counts", out var counts)
                             && counts.ValueKind == JsonValueKind.Object
@@ -482,13 +573,13 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
     /// Where the scholarship puts the place, in the source's own words: <em>Khirbet Ayun Musa</em>,
     /// <em>between Dedan and Kedar</em>. The first line the dataset orders is the one taken, except
     /// that a line saying the entry is <em>another name for</em> another is not a place at all: that
-    /// is <see cref="Alias"/>, and the list is read on to the first line that names a site. An entry
-    /// that says nothing else has none.
+    /// is <see cref="Alias"/>; nor does one proposing that the word is no place name a site; and the
+    /// list is read on to the first line that does. An entry that says nothing else has none.
     /// </summary>
-    private static string? Identification(JsonElement root)
-    {
-        return Lines(root).FirstOrDefault(line => !line.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase));
-    }
+    private static string? Identification(JsonElement root, Catalogue catalogue) =>
+        Lines(root, catalogue).FirstOrDefault(line =>
+            !line.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase)
+            && !NoPlace.Any(start => line.StartsWith(start, StringComparison.OrdinalIgnoreCase)));
 
     /// <summary>The catalogue id of the place the first line says this one is another name for.</summary>
     private static string? Alias(JsonElement root)
@@ -509,20 +600,98 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
         return null;
     }
 
-    private static IEnumerable<string> Lines(JsonElement root)
+    private static IEnumerable<string> Lines(JsonElement root, Catalogue catalogue)
     {
         if (!root.TryGetProperty("identifications", out var identifications))
         {
             yield break;
         }
 
+        var own = Text(root, "id");
         foreach (var identification in identifications.EnumerateArray())
         {
             if (Text(identification, "description") is { } description
-                && Markup().Replace(description, string.Empty).Trim() is { Length: > 0 } stripped)
+                && catalogue.Said(description, own) is { Length: > 0 } said)
             {
-                yield return stripped;
+                yield return said;
             }
+        }
+    }
+
+    /// <summary>
+    /// The source's entries, as its lines mention them. An entry is written by its name and a number
+    /// only the catalogue uses; a reader is told its name and, where several entries bear that name,
+    /// the site the source first gives it: <em>within 1 km of Gibeah (Tel el Ful)</em>. A line that
+    /// mentions only the entry it stands on, <em>Judea 1</em> of Judea 1, says nothing.
+    /// </summary>
+    private sealed class Catalogue
+    {
+        private readonly Dictionary<string, (string Name, string? Site)> _entries = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, int> _bearers = new(StringComparer.Ordinal);
+
+        public Catalogue(IEnumerable<JsonElement> roots)
+        {
+            foreach (var root in roots)
+            {
+                if (Text(root, "id") is { } id && Text(root, "friendly_id") is { } friendly)
+                {
+                    var name = TrailingIndex().Replace(friendly, string.Empty);
+                    _entries[id] = (name, FirstSite(root, name));
+                    _bearers[name] = _bearers.GetValueOrDefault(name) + 1;
+                }
+            }
+        }
+
+        public string Said(string description, string? own)
+        {
+            var named = AncientMention().Replace(description, mention =>
+            {
+                var id = mention.Groups[1].Value;
+                if (id == own && mention.Length == description.Length)
+                {
+                    return string.Empty;
+                }
+
+                var written = Unnumbered(mention);
+                return id != own
+                       && _entries.TryGetValue(id, out var entry)
+                       && _bearers[entry.Name] > 1
+                       && entry.Site is { } site
+                    ? $"{written} ({site})"
+                    : written;
+            });
+
+            return Markup().Replace(named, string.Empty).Trim();
+        }
+
+        private static string Unnumbered(Match mention) =>
+            TrailingIndex().Replace(mention.Groups[2].Value, string.Empty);
+
+        private static string? FirstSite(JsonElement root, string name)
+        {
+            if (!root.TryGetProperty("identifications", out var identifications))
+            {
+                return null;
+            }
+
+            foreach (var identification in identifications.EnumerateArray())
+            {
+                if (Text(identification, "description") is not { } description)
+                {
+                    continue;
+                }
+
+                var said = Markup().Replace(AncientMention().Replace(description, Unnumbered), string.Empty).Trim();
+                if (said.Length > 0
+                    && !said.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase)
+                    && !said.StartsWith("appears in", StringComparison.OrdinalIgnoreCase)
+                    && !NoPlace.Any(start => said.StartsWith(start, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return string.Equals(said, name, StringComparison.OrdinalIgnoreCase) ? null : said;
+                }
+            }
+
+            return null;
         }
     }
 

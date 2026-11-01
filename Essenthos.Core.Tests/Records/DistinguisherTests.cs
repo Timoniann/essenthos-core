@@ -135,6 +135,17 @@ public partial class DistinguisherTests
         own.Records.Select(r => r.Ukr).Should().NotContain(text => text!.Contains("проєкт"));
     }
 
+    /// <summary>A line that gives a record of a gazetteer's number or no place would read as a catalogue, not as words.</summary>
+    [Fact]
+    public void NoOwnLineSaysACatalogueNumberOrThatThePlaceIsNone()
+    {
+        foreach (var record in DistinguisherLoader.ReadOwnLines().Records.Concat(File.Records))
+        {
+            record.English.Should().NotMatchRegex(@"^not a (place|proper name)", record.Slug);
+            record.English.Should().NotMatchRegex(@"^[A-Z][a-z]+ \d+$", record.Slug);
+        }
+    }
+
     [GeneratedRegex(@"\b[1-3]?[A-Z]{2,3} \d+(?::\d+(?:-\d+)?)?")]
     private static partial Regex Reference();
 }

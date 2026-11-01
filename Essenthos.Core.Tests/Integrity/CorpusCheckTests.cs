@@ -1062,6 +1062,30 @@ public sealed class CorpusCheckTests : IDisposable
 
     /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
     [Fact]
+    public async Task PlacesOfOneNameThatReadAlikeInALanguageAreABreak()
+    {
+        const string breaks = "places of one name a reader cannot tell apart";
+        _db.Entities.AddRange(
+            new Entity { Kind = EntityKind.Place, Slug = "alike", Name = "Alike", ModernEquivalent = "Tell One", SourceId = "t:1", Source = "t" },
+            new Entity { Kind = EntityKind.Place, Slug = "alike-2", Name = "Alike", ModernEquivalent = "Tell Two", SourceId = "t:2", Source = "t" });
+        await _db.SaveChangesAsync();
+
+        var before = (await Integrity(breaks));
+
+        _db.TextTranslations.Add(new TextTranslation
+        {
+            Language = "ukr", EnglishSha256 = EnglishNotes.Digest("Tell One"), Text = "Телль Перший", Source = "t",
+        });
+        await _db.SaveChangesAsync();
+        (await Integrity(breaks)).Should().Be(before, "the second place has no Ukrainian words, and the pair already read apart there as one line and none");
+
+        var two = await _db.Entities.SingleAsync(e => e.Slug == "alike-2");
+        two.ModernEquivalent = "Tell One";
+        await _db.SaveChangesAsync();
+        (await Integrity(breaks)).Should().Be(before + 4, "the two read alike in all four languages");
+    }
+
+    [Fact]
     public async Task TheStoredCoverageReadsBackAsItWasMeasured()
     {
         Link(LinkRelation.Renders, english: 1, hebrew: 2);
