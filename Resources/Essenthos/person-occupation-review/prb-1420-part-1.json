@@ -971,6 +971,49 @@
     "a07fd0610223c118"
    ],
    "notAmongTheHeldRows": null
+  },
+  {
+   "person": "james-3",
+   "occupation": "apostle",
+   "why": "The owner's ruling of 2026-11-01: Gal 1:19 reads \"no other of the apostles except James\".",
+   "rows": [
+    "53832af44ab6fc99"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeremiah-6",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: both Jeremiah and Hilkiah, Jer 1:1. No verse shows Jeremiah serving; the family is firm: Anathoth is a city of the sons of Aaron (Josh 21:13,18), Abiathar's fields are there (1 Kgs 2:26), and Jeremiah holds a right of redemption there (Jer 32:7-9).",
+   "rows": [
+    "9354c665c2163d33"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hilkiah-7",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: both Jeremiah and Hilkiah, Jer 1:1.",
+   "rows": [
+    "3e0cd6f1f59b89a7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azariah-son-of-zadok",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: 1 Kgs 4:2 opens a list of officials, each followed by his office, and \"the priest\" is the only office Azariah has. Verse 4 is no objection, Abiathar having been banished (2:27). The Greek lacks the word.",
+   "rows": [
+    "b08b41de23beb275"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zabud",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: read as 1 Kgs 4:2, as he asked: in the same list כֹּהֵן רֵעֶה הַמֶּלֶךְ follows the name as his office. KJV renders \"principal officer\", and the Greek has only the king's friend.",
+   "rows": [],
+   "notAmongTheHeldRows": true
   }
  ],
  "refused": [
@@ -1837,6 +1880,36 @@
    "person": "ziha",
    "label": "temple servant (Nethinim)",
    "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "6944e0b2a7590c15",
+   "person": "aaron",
+   "label": "prophet (spokesman for Moses)",
+   "reason": "The owner's ruling of 2026-11-01: not Prophet, Exod 7:1. A prophet says what God told him; there Moses tells Aaron what to say."
+  },
+  {
+   "row": "b7b3644d00a1079c",
+   "person": "aaron",
+   "label": "prophet (spokesman for Moses)",
+   "reason": "The owner's ruling of 2026-11-01: not Prophet, Exod 7:1. A prophet says what God told him; there Moses tells Aaron what to say."
+  },
+  {
+   "row": "7c13ea115a3b0f7e",
+   "person": "aaron",
+   "label": "prophet (spokesman for Moses)",
+   "reason": "The owner's ruling of 2026-11-01: not Prophet, Exod 7:1. A prophet says what God told him; there Moses tells Aaron what to say."
+  },
+  {
+   "row": "ab14790e8f504e52",
+   "person": "andronicus",
+   "label": "ἐπίσημοι ἐν τοῖς ἀποστόλοις (apostle?)",
+   "reason": "The owner's ruling of 2026-11-01: not Apostle, Rom 16:7 is read as known to the apostles."
+  },
+  {
+   "row": "c7cf53edb3427faf",
+   "person": "junias",
+   "label": "apostle (ἐπίσημοι ἐν τοῖς ἀποστόλοις)",
+   "reason": "The owner's ruling of 2026-11-01: not Apostle, Rom 16:7 is read as known to the apostles."
   }
  ],
  "covered": [
@@ -3271,60 +3344,5 @@
    "label": "Musician (psaltery/lyre player)"
   }
  ],
- "hard": [
-  {
-   "row": "6944e0b2a7590c15",
-   "person": "aaron",
-   "label": "prophet (spokesman for Moses)",
-   "question": "H1"
-  },
-  {
-   "row": "b7b3644d00a1079c",
-   "person": "aaron",
-   "label": "prophet (spokesman for Moses)",
-   "question": "H1"
-  },
-  {
-   "row": "7c13ea115a3b0f7e",
-   "person": "aaron",
-   "label": "prophet (spokesman for Moses)",
-   "question": "H1"
-  },
-  {
-   "row": "ab14790e8f504e52",
-   "person": "andronicus",
-   "label": "ἐπίσημοι ἐν τοῖς ἀποστόλοις (apostle?)",
-   "question": "H2"
-  },
-  {
-   "row": "b08b41de23beb275",
-   "person": "azariah-son-of-zadok",
-   "label": "priest (the priest)",
-   "question": "H5"
-  },
-  {
-   "row": "3e0cd6f1f59b89a7",
-   "person": "hilkiah-7",
-   "label": "priest of Anathoth",
-   "question": "H4"
-  },
-  {
-   "row": "53832af44ab6fc99",
-   "person": "james-3",
-   "label": "apostle (James)",
-   "question": "H3"
-  },
-  {
-   "row": "9354c665c2163d33",
-   "person": "jeremiah-6",
-   "label": "priest of Anathoth",
-   "question": "H4"
-  },
-  {
-   "row": "c7cf53edb3427faf",
-   "person": "junias",
-   "label": "apostle (ἐπίσημοι ἐν τοῖς ἀποστόλοις)",
-   "question": "H2"
-  }
- ]
+ "ownerRulings": "The five questions put to the owner were answered on 2026-11-01; each stands above under refused or admitted, marked as his ruling."
 }

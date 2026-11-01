@@ -6047,6 +6047,25 @@
    ]
   },
   {
+   "person": "james-3",
+   "occupation": "apostle",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "GAL 1:19",
+     "quote": "ἕτερον δὲ τῶν ἀποστόλων οὐκ εἶδον, εἰ μὴ Ἰάκωβον τὸν ἀδελφὸν τοῦ Κυρίου."
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "GAL 1:19",
+     "quote": "other apostles except James, the Lord’s brother."
+    }
+   ]
+  },
+  {
    "person": "john-2",
    "occupation": "apostle",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22293,6 +22312,25 @@
    ]
   },
   {
+   "person": "azariah-son-of-zadok",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 4:2",
+     "quote": "עֲזַרְיָ֥הוּ בֶן־צָדֹ֖וק הַכֹּהֵֽן׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "1KI 4:2",
+     "quote": "Azariah son of Zadok was the priest;"
+    }
+   ]
+  },
+  {
    "person": "azariah-the-covenant-priest",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -23123,6 +23161,25 @@
    ]
   },
   {
+   "person": "hilkiah-7",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 1:1",
+     "quote": "יִרְמְיָ֖הוּ בֶּן־חִלְקִיָּ֑הוּ מִן־הַכֹּֽהֲנִים֙ אֲשֶׁ֣ר בַּעֲנָתֹ֔ות"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JER 1:1",
+     "quote": "Jeremiah son of Hilkiah, one of the priests in Anathoth"
+    }
+   ]
+  },
+  {
    "person": "hophni",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -23653,6 +23710,25 @@
      "text": "BHSA",
      "reference": "2CH 17:8",
      "quote": "אֱלִישָׁמָ֥ע וִֽיהֹורָ֖ם הַכֹּהֲנִֽים"
+    }
+   ]
+  },
+  {
+   "person": "jeremiah-6",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 1:1",
+     "quote": "יִרְמְיָ֖הוּ בֶּן־חִלְקִיָּ֑הוּ מִן־הַכֹּֽהֲנִים֙ אֲשֶׁ֣ר בַּעֲנָתֹ֔ות"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JER 1:1",
+     "quote": "Jeremiah son of Hilkiah, one of the priests in Anathoth"
     }
    ]
   },
@@ -25093,6 +25169,25 @@
      "text": "BHSA",
      "reference": "EZR 10:21",
      "quote": "וְעֻזִיָּֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "zabud",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 4:5",
+     "quote": "וְזָב֧וּד בֶּן־נָתָ֛ן כֹּהֵ֖ן רֵעֶ֥ה הַמֶּֽלֶךְ׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "1KI 4:5",
+     "quote": "Zabud son of Nathan was a priest and adviser to the king;"
     }
    ]
   },
