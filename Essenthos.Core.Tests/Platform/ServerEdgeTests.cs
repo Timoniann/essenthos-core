@@ -54,6 +54,62 @@ public sealed class ServerEdgeTests
     }
 
     [Fact]
+    public void OnlyTheProxyIsOnTheIpv6NetworkAndItKeepsTheAddressTheApiBelieves()
+    {
+        var compose = Deploy("compose.yaml");
+        var proxy = Service(compose, "proxy");
+        var networks = compose[compose.IndexOf("\nnetworks:\n", StringComparison.Ordinal)..];
+
+        proxy.Should().Contain("ipv4_address: 10.89.0.2").And.Contain("edge: {}");
+        networks.Should().Contain("enable_ipv4: false").And.Contain("enable_ipv6: true");
+        Regex.Matches(compose, @"^      edge:", RegexOptions.Multiline).Count.Should().Be(1, "the API must not reach the proxy over IPv6");
+        Service(compose, "api").Should().Contain("ForwardedHeaders__KnownProxies: 10.89.0.2");
+    }
+
+    [Fact]
+    public void TheAccessLogKeepsNoWholeAddressNoQueryAndNoHeaders()
+    {
+        var caddyfile = Deploy("Caddyfile");
+        var log = caddyfile[caddyfile.IndexOf("(access-log) {", StringComparison.Ordinal)..];
+        log = log[..log.IndexOf("\n}\n", StringComparison.Ordinal)];
+
+        log.Should().Contain("request>remote_ip ip_mask 24 48").And.Contain("request>client_ip ip_mask 24 48")
+            .And.Contain("request>headers delete").And.Contain("resp_headers delete").And.Contain("request>uri regexp \\?.* \"\"");
+        caddyfile.Should().Contain("(site) {\n\timport access-log");
+        Service(Deploy("compose.yaml"), "housekeeping").Should().Contain("ACCESS_LOG_KEEP_DAYS:-28");
+    }
+
+    [Fact]
+    public void AnEventReachesUmamiThroughOnePathWithAnAddressOnlyTheProxyWrites()
+    {
+        var caddyfile = Deploy("Caddyfile");
+        var compose = Deploy("compose.yaml");
+        var route = caddyfile[caddyfile.IndexOf("(count-event-on) {", StringComparison.Ordinal)..caddyfile.IndexOf("(count-event-off) {", StringComparison.Ordinal)];
+
+        route.Should().Contain("@event method POST").And.Contain("rewrite * /api/send").And.Contain("reverse_proxy umami:3000")
+            .And.Contain("header_up X-Real-IP {client_ip}").And.Contain("max_size 8KB").And.Contain("respond 204");
+        Regex.Matches(caddyfile, @"reverse_proxy umami:3000").Count.Should().Be(2, "the event and the dashboard's own hostname, nothing else");
+
+        var umami = Service(compose, "umami");
+        umami.Should().Contain("SALT_ROTATION: day").And.Contain("CLIENT_IP_HEADER: x-real-ip").And.Contain("SKIP_LOCATION_HEADERS")
+            .And.Contain("DISABLE_TELEMETRY").And.Contain("DISABLE_UPDATES").And.NotContain("ports:");
+        umami.Should().Contain("@sha256:", "pinned by digest");
+        Service(compose, "backup").Should().Contain("essenthos_umami");
+    }
+
+    [Fact]
+    public void TheDatabasesServiceIsNotChangedByItsSettings()
+    {
+        var db = Service(Deploy("compose.yaml"), "db");
+
+        db.Should().NotContain("shared_preload_libraries").And.NotContain("UMAMI", "a change here restarts the database at the next deploy");
+        File.ReadAllText(Path.Combine(Checkout(), "deploy", "initdb", "20-observability.sh")).Should()
+            .Contain("ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements'")
+            .And.Contain("ALTER SYSTEM SET log_min_duration_statement = '500ms'")
+            .And.Contain("ALTER SYSTEM SET log_parameter_max_length = 0");
+    }
+
+    [Fact]
     public void TheMemoryBudgetIsEnvsWithTheEightGigabyteMachineAsTheDefault()
     {
         var compose = Deploy("compose.yaml");

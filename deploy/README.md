@@ -1,7 +1,7 @@
 # The server
 
 One Hetzner machine runs production in containers: Postgres, the API, the reader, Caddy in front, a
-nightly backup, and optionally the page counter. No dev runs on it (TSK-1002): the rehearsal of a
+nightly backup, the nightly housekeeping of what must not be kept, and optionally the page counters. No dev runs on it (TSK-1002): the rehearsal of a
 publication is the same stack on the workstation (**Rehearsal**, below). Access, state and history of
 the machine are in the guide `production-server`; the corpus's publication is DOC-0203; the page
 counter is DOC-0211.
@@ -34,6 +34,7 @@ Everything the server keeps is under `HOST_DATA_ROOT=/srv/essenthos`, on that di
 | `releases/`, `images/corpus/`, `downloads/` | what `forge publish` sends |
 | `backups/`, `backup-key/`, `rclone/` | the encrypted dumps, the public key, the off-site remote |
 | `caddy/` | certificates |
+| `logs/caddy/` | the access log and its compressed days (**Reading the logs**) |
 | `maintenance/` | the updating page's switch (**The updating page**) |
 
 Nothing on the disk is unique but the accounts, which the backups protect (**Backups**). The corpus is
@@ -56,9 +57,16 @@ machine's default; `env.example` holds the 4 GB machine's, which this server run
 | `API_MEM_LIMIT` | 768m | 1g |
 | `WEB_MEM_LIMIT` | 128m | 128m |
 | `ANALYTICS_MEM_LIMIT` | 128m | 256m |
+| `UMAMI_MEM_LIMIT` | 384m | 512m |
+| `UMAMI_NODE_HEAP_MB` | 192 | 256 |
 
-The limits add up to 2.9 GiB (3.0 with the counter) of the machine's 3.7, which leaves about 850 MB
-for Ubuntu, Docker, Caddy and the backup container, with the swap file as the safety net. Why the 8 GB figures are what
+The limits add up to 2.9 GiB (3.0 with GoatCounter, 3.4 with Umami beside it) of the machine's 3.7, which
+leaves about 300 MB for Ubuntu, Docker, Caddy and the backup container during the week the two counters
+run together, and 430 MB once GoatCounter goes, with the swap file as the safety net. A limit is not use:
+Umami measured on the rehearsal (2026-11-01, Postgres 18.1, no corpus) holds 75 to 180 MiB at rest from
+cold, 125 to 265 MiB at rest after a burst, under 300 MiB during 5,000 events at 139 to 177 a second, and never
+hit its limit's kill. With a 128 MB heap it dies at start: V8 needs more than that to load. What it holds comes
+out of the corpus's page cache. Why the 8 GB figures are what
 they are is in `compose.yaml` (TSK-0920, PRB-0926). On 4 GB, heavy requests (search, the parallel view,
 entity pages) are slower; the owner accepts that for the alpha. Time them once on the server and record
 the figures on TSK-1002; if they take seconds, rescale the machine and drop the `DB_*`/`*_MEM_LIMIT`
@@ -187,6 +195,10 @@ needs (Postgres in a named volume). Its `.env.rehearsal` beside them is `env.exa
 deploy, a publication, the updating page and a rollback are run here before anything changes on the
 server.
 
+Docker Desktop does not show what an IPv6 reader's connection looks like: its machine has no listener on
+`[::]` for a published port. To see that, run the same compose file in a `docker:<server's version>-dind`
+container with a client network given a public-looking IPv6 subnet (**Readers on IPv6**).
+
 ## Once: the machine
 
 Done on 2026-10-29 as root, on the owner's word (guide `production-server`): Ubuntu 26.04, Docker and
@@ -264,6 +276,79 @@ On the domain only; the bare address asks not to be indexed.
    `docker compose up -d proxy`, check `https://<domain>/<key>.txt`; after a publication,
    `./scripts/indexnow.ps1 -Key <key> -All` (or `-Sitemap <list>` for what changed).
 
+## Readers on IPv6
+
+Docker forwards a published port to a container's IPv6 address and keeps the client's address, but a
+container with none gets the connection through `docker-proxy`, from the bridge's address, and every IPv6
+reader looks like one. So the proxy alone also sits on the network `edge`, which is IPv6 and nothing else.
+IPv4 readers and the proxy's way to the API are unchanged: the API believes only `10.89.0.2`, and its name
+resolves only on `default`.
+
+`dockerd` turns `net.ipv6.conf.all.forwarding` on when `edge` is created. On a host that takes its IPv6
+default route from router advertisements that would lose the route; this server has `accept_ra=0` and a
+static address. Check it before relying on this anywhere else.
+
+From outside, on a network with IPv6 (a phone without Wi-Fi, a VPS): open a page, then look at the last
+line of the access log, whose `remote_ip` must be that network's /48 and not `10.89.…`. Every IPv6 reader
+then also has a rate-limit bucket per /64 and a country.
+
+To undo it: deploy the previous commit, whose compose file has no `edge`, or remove `edge: {}` from the
+proxy's networks in `/srv/essenthos/deploy/compose.yaml`, then `docker compose up -d proxy`, then
+`docker network rm essenthos_edge`. Removing the AAAA records is the other way out: IPv6-only readers
+without NAT64 lose the site, everyone else falls back to IPv4 at once.
+
+## Reading the logs
+
+**The access log**: one JSON line per request in `/srv/essenthos/logs/caddy/access.log`, written by Caddy
+as root, with time, method, host, path, status, duration and size, and the address cut to its /24 or /48.
+No query and no headers. `housekeeping` compresses the day into `daily-<date>.log.gz` each night at 02:00
+UTC and removes what is older than `ACCESS_LOG_KEEP_DAYS` (28), and Caddy rolls the file at 100 MiB,
+keeping 5. From `/srv/essenthos/deploy`:
+
+    docker compose exec proxy tail -f /var/log/caddy/access.log
+    # the slowest requests of today, by path
+    docker compose exec -T proxy cat /var/log/caddy/access.log |
+      jq -r '[.duration, .status, .request.method, .request.uri] | @tsv' | sort -rn | head -20
+    # the requests per status of an earlier day
+    docker compose exec -T housekeeping sh -c 'gzip -dc /logs/daily-2026-11-01.log.gz' | jq .status | sort | uniq -c
+
+Whatever Caddy logs beyond that goes to `docker compose logs proxy`, through the same filter.
+
+**Slow statements**: every statement over 500 ms, in `docker compose logs db`, with its text and duration
+and without its parameters, since a slow search's are a reader's own words. To see them while debugging,
+in one session: `SET log_parameter_max_length = -1`.
+
+    docker compose logs --since 1h db | grep 'duration:'
+
+**What each kind of statement costs**, once the database has started with `pg_stat_statements` loaded.
+`shared_blk_read_time` is there because of `track_io_timing`: it is the time spent waiting for the disk,
+which on this machine is most of a slow read. Numbers count from `pg_stat_statements_reset()` or the last
+start.
+
+    docker compose exec -T db psql -U postgres -c "
+      SELECT d.datname, s.calls, round(s.total_exec_time) AS total_ms, round(s.mean_exec_time) AS mean_ms,
+             round(s.shared_blk_read_time) AS disk_ms, s.shared_blks_read, left(s.query, 80) AS query
+      FROM pg_stat_statements s JOIN pg_database d ON d.oid = s.dbid
+      ORDER BY s.total_exec_time DESC LIMIT 20"
+
+**The settings** are written by `initdb/20-observability.sh` with `ALTER SYSTEM` rather than as flags in
+`compose.yaml`, because a changed flag recreates the database's container at the next deploy, and a restart
+costs readers the cache. On a database older than the script, once, without a restart:
+
+    docker compose exec -T db sh /docker-entrypoint-initdb.d/20-observability.sh
+
+| Setting | Takes effect |
+|---|---|
+| `log_min_duration_statement`, `log_parameter_max_length`, `track_io_timing` | at once, on the reload in the script |
+| `shared_preload_libraries = pg_stat_statements`, `pg_stat_statements.max` | at the next start of the database |
+
+Until that start, `SELECT * FROM pg_stat_statements` answers that the library is not loaded, and nothing
+else differs. **Do not restart for it alone.** A restart drops 768 MB of shared buffers and every open
+connection: the API answers errors for the seconds Postgres takes to come back, the first read of each
+chapter goes to the disk again (7.6 s for two texts on this budget, PRB-1375), and the counts the API warmed
+up are read again when the API itself is restarted. The next rescale or Postgres upgrade brings it. To undo:
+`ALTER SYSTEM RESET` each, then `SELECT pg_reload_conf()`, and the library leaves at the next start.
+
 ## The database's extensions
 
 The corpus uses `pg_trgm`. `initdb/00-extensions.sh` creates it in `template1` when the data directory
@@ -273,9 +358,33 @@ is first created, so every database restored later has it. On a Postgres created
 
 ## Page counts
 
-Off until turned on. When on, a GoatCounter on this machine counts production's pages (page, referring
-site, country, browser, system, screen class, language) with no cookie and without writing the reader's
-address anywhere (DOC-0211). Four switches, which must agree:
+Off until turned on. Umami on this machine records each page view of production's: page, referring
+page, browser, system, device, screen, language, country, region, city, under a code made of the address,
+browser, date and `UMAMI_APP_SECRET`, with no cookie and without writing the address. GoatCounter runs
+beside it (DOC-0211) until the two have been compared for a week.
+
+**Umami** needs nothing done by hand beyond `.env`: `SITE_UMAMI=on`, `UMAMI_DB_PASSWORD`,
+`UMAMI_ADMIN_PASSWORD` and `UMAMI_APP_SECRET`, each fresh, and `docker compose up -d`. Its one-shots make
+its role and database, migrate them, put the admin's password in place of the default, and make the site's
+row, before the server starts. Sign in at `STATS_DOMAIN` as `admin` (the password is in `.env`, on the
+server, read with an editor and not printed). It is in the nightly backup, and `housekeeping` deletes its
+rows older than `UMAMI_KEEP_DAYS` (730).
+
+Only `POST /count` reaches it from the site; `/api/send` and the rest of Umami answer there as any other
+address does. Any visitor can send it made-up events, as with every counter on a public page: an event names
+its own `ip`, `userAgent` and `timestamp`, which the proxy cannot see into. Bodies stop at 8 KB.
+
+To stop counting with Umami: `SITE_UMAMI=off`, `docker compose up -d proxy`, and optionally
+`docker compose stop umami`. Its database stays until dropped by hand. To read what it holds without its
+dashboard: `docker compose exec db psql -U postgres -d essenthos_umami`.
+
+**Comparing them**: the reader's build sends both counters each page view while `VITE_ANALYTICS_ENDPOINT`
+is `/count`. Compare visits per day after a week, keeping in mind that GoatCounter's session lasts eight
+hours and Umami's visit up to an hour, and that Umami counts sessions per day. Then a later commit removes
+the GET from `analytics.ts`, the `analytics` service and its Caddy route, and `SITE_ANALYTICS=off`.
+`essenthos_stats` stays until the owner says to drop it.
+
+**GoatCounter**, four switches, which must agree:
 
 1. the reader's image built with `send-images.ps1 … -AnalyticsEndpoint /count` (`-Force` to resend a
    tag), then deployed;
@@ -296,15 +405,13 @@ address anywhere (DOC-0211). Four switches, which must agree:
    `http://localhost:8081`): the first visit makes the owner's sign-in; then **Data retention** 730
    days, as the privacy page says, and **Language** ticked.
 
-Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`.
-
-To read them without the tunnel: an A record for the hostname, then `STATS_DOMAIN=stats.essenthos.org` in
-`.env` and `docker compose up -d proxy`. It asks for the counter's own sign-in.
+Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`. Its dashboard is only through the tunnel
+now: `STATS_DOMAIN` serves Umami's.
 
 ## Backups
 
 Only `essenthos_app` (accounts, and later what readers write) cannot be rebuilt; the page counts in
-`essenthos_stats` are backed up beside it where the counter is on.
+`essenthos_stats` and `essenthos_umami` are backed up beside it where each counter is on.
 
 - The `backup` service dumps them every night into `/srv/essenthos/backups` and keeps each dump 14 days
   (`BACKUP_KEEP_DAYS`), except while a database's backups fail: then it keeps every dump it has until a

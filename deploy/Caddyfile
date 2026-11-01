@@ -16,8 +16,50 @@
 # first-party. The API hostname serves exactly the same process, so nothing is duplicated.
 
 # Quoted, so that with no domain, and so no address set, it is an empty value rather than none.
+#
+# The default logger is what `docker logs` shows, and an upstream's failure is logged there with the
+# request it failed. The same fields go as in the access log, so a reader's whole address or search
+# words are not kept there either.
 {
 	email "{$ACME_EMAIL}"
+	log {
+		format filter {
+			fields {
+				request>remote_ip ip_mask 24 48
+				request>client_ip ip_mask 24 48
+				request>remote_port delete
+				request>headers delete
+				request>tls delete
+				request>uri regexp \?.* ""
+			}
+		}
+	}
+}
+
+# The access log, one JSON line per request: when, method, host, path, status, duration and bytes, with
+# the address cut to its /24 or /48. The query is dropped, since it can hold what a reader searched for,
+# and so are the headers. Caddy rolls a file only by size, so housekeeping.sh is what keeps it under a
+# month: it compresses the day's lines each night and removes what is older than ACCESS_LOG_KEEP_DAYS.
+(access-log) {
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 100MiB
+			roll_keep 5
+		}
+		format filter {
+			fields {
+				request>remote_ip ip_mask 24 48
+				request>client_ip ip_mask 24 48
+				request>remote_port delete
+				request>headers delete
+				request>tls delete
+				request>uri regexp \?.* ""
+				resp_headers delete
+				user_id delete
+				bytes_read delete
+			}
+		}
+	}
 }
 
 # While a corpus is replaced (one copy on the server), every site answers this page with 503: when
@@ -88,27 +130,75 @@
 }
 
 # The page counter, at /count on the reader's own origin, so a page view is a same-origin request
-# the policy's connect-src 'self' already allows and no other origin is ever named. "on" passes it
-# to GoatCounter; "off" answers it with nothing and counts nothing, and is what dev always uses.
+# the policy's connect-src 'self' already allows and no other origin is ever named. A POST is Umami's
+# event, switched by SITE_UMAMI; a GET is GoatCounter's, switched by SITE_ANALYTICS, while the two run
+# side by side to compare their numbers. "off" answers with nothing and counts nothing. Dev never counts.
 #
-# The counter believes CF-Connecting-IP, Fly-Client-IP, X-Azure-SocketIP and X-Real-IP before the
+# POST /count reaches Umami's /api/send and nothing else of it. Umami is told the address only by the
+# one header written here from the connection, and it answers the reader with nothing, so the session
+# hash it returns goes no further than this proxy. A body over 8 KB is not an event of ours.
+(count-event-on) {
+	@event method POST
+	handle @event {
+		request_body {
+			max_size 8KB
+		}
+		rewrite * /api/send
+		reverse_proxy umami:3000 {
+			header_up X-Real-IP {client_ip}
+			header_up -X-Forwarded-For
+			header_up -Forwarded
+			header_up -True-Client-IP
+			header_up -CF-Connecting-IP
+			header_up -Cookie
+			header_up -Authorization
+			header_up -Referer
+			header_up -X-Umami-Cache
+			@counted status 2xx
+			handle_response @counted {
+				respond 204
+			}
+		}
+	}
+}
+
+(count-event-off) {
+	@event method POST
+	handle @event {
+		respond 204
+	}
+}
+
+# GoatCounter believes CF-Connecting-IP, Fly-Client-IP, X-Azure-SocketIP and X-Real-IP before the
 # connection, so each is written here from the connection or removed, and a visitor cannot pose as
 # another address. It is told nothing it does not need: no cookie, no credentials, no referring page.
 (analytics-on) {
 	handle /count {
-		reverse_proxy analytics:8080 {
-			header_up X-Real-IP {client_ip}
-			header_up -CF-Connecting-IP
-			header_up -Fly-Client-IP
-			header_up -X-Azure-SocketIP
-			header_up -Cookie
-			header_up -Authorization
-			header_up -Referer
+		import count-event-{$SITE_UMAMI:off}
+		handle {
+			reverse_proxy analytics:8080 {
+				header_up X-Real-IP {client_ip}
+				header_up -CF-Connecting-IP
+				header_up -Fly-Client-IP
+				header_up -X-Azure-SocketIP
+				header_up -Cookie
+				header_up -Authorization
+				header_up -Referer
+			}
 		}
 	}
 }
 
 (analytics-off) {
+	handle /count {
+		import count-event-{$SITE_UMAMI:off}
+		handle {
+			respond 204
+		}
+	}
+}
+
+(analytics-none) {
 	handle /count {
 		respond 204
 	}
@@ -239,6 +329,7 @@ Disallow: /
 }
 
 (site) {
+	import access-log
 	encode zstd gzip
 
 	# No page of the site is meant to be shown inside another site's frame, where a click on it can be
@@ -325,15 +416,15 @@ import ip-site-{$IP_SITE}
 
 import domain-sites-{$DOMAIN_SITES}
 
-# The page counts on a hostname of their own, behind the counter's own sign-in, so the owner needs no
-# tunnel. Served only where .env names STATS_DOMAIN. Unlike /count this one passes cookies: it is the
-# sign-in. Its records are never pages of a search result.
+# The page counts on a hostname of their own, behind Umami's own sign-in, so the owner needs no tunnel.
+# Served only where .env names STATS_DOMAIN. Unlike /count this one passes cookies and the whole of Umami:
+# it is the sign-in and the dashboard. Its records are never pages of a search result.
 (stats-site-on) {
 	{$STATS_DOMAIN} {
 		import site off
 		import unlisted
 		handle {
-			reverse_proxy analytics:8080 {
+			reverse_proxy umami:3000 {
 				header_up X-Real-IP {client_ip}
 			}
 		}
@@ -357,7 +448,7 @@ import stats-site-{$STATS_SITE}
 	{$DEV_DOMAIN} {
 		import site {$DEV_CSP:report-only}
 		header X-Robots-Tag "noindex, nofollow"
-		import analytics-off
+		import analytics-none
 		@guarded not path /v1/csp-reports /count
 		basic_auth @guarded {
 			{$DEV_USER} {$DEV_PASSWORD_HASH}
