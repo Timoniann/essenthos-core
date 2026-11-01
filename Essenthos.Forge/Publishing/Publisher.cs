@@ -188,9 +188,10 @@ internal sealed class Publisher(
         {
             logger.LogInformation("Dumping {Database} as release {Name}", connection.Database, name);
             var started = DateTimeOffset.UtcNow;
+            // EVIDENTIA's ledger stays here, where the load replays it: the tables go, empty, and nothing served reads them.
             await Shell.Run("docker",
                 ["exec", SourceContainer, "pg_dump", "-U", connection.Username!, "-Fc", "-Z6",
-                 "-f", inContainer, connection.Database!], cancellationToken);
+                 "--exclude-table-data=evidentia_*", "-f", inContainer, connection.Database!], cancellationToken);
             await Shell.Run("docker", ["cp", $"{SourceContainer}:{inContainer}", dump], cancellationToken);
             logger.LogInformation("Dumped in {Seconds:F0} s", (DateTimeOffset.UtcNow - started).TotalSeconds);
         }
