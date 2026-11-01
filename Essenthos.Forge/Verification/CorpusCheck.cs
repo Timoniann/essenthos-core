@@ -577,7 +577,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
              WHERE type IN ({Listed(KinRelations.ChildOf)})),
          fathers AS (
              SELECT s.child, s.parent, bool_or(s.method = '{EnumSpelling.Of(LinkMethod.Manual)}') decided
-             FROM stated s JOIN entity f ON f.id = s.parent AND f.sex = 'male'
+             FROM stated s JOIN entity f ON f.id = s.parent AND f.sex = 'male' AND f.sex_source IS NULL
              GROUP BY s.child, s.parent),
          pairs AS (
              SELECT a.child, a.parent one, b.parent other, a.decided AND b.decided decided

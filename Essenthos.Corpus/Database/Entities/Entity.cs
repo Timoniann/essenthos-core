@@ -37,6 +37,19 @@ public class Entity
 
     public string? Sex { get; set; }
 
+    /// <summary>
+    /// What said this person's <see cref="Sex"/>, a <see cref="Corpus.SexSources"/> value; null where the
+    /// dataset gave it, or where nothing does.
+    /// </summary>
+    public string? SexSource { get; set; }
+
+    /// <summary>
+    /// The sex the Greek's grammar gives this person's name, <c>male</c> or <c>female</c>: what Nestle's
+    /// morphology states of every word of its own naming the person, where they agree, for a word whose
+    /// lexicon headword is a name. It may differ from <see cref="Sex"/>.
+    /// </summary>
+    public string? NameGender { get; set; }
+
     public string? Tribe { get; set; }
 
     /// <summary>A place's kind as the source classifies it: city, region, astronomical.</summary>

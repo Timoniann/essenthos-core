@@ -259,10 +259,7 @@ internal static partial class EncyclopediaEndpoints
                 ],
                 cancellationToken);
             var mine = readByUs.GetValueOrDefault(entity.Slug);
-            var sex = mine is not null ? mine.Sex
-                : entity.Sex ?? (entity.Kind == EntityKind.Person
-                    ? (await OursOnlyRecords.SexesOf(db, [entity.Id], cancellationToken)).GetValueOrDefault(entity.Id)
-                    : null);
+            var sex = mine is not null ? mine.Sex : entity.Sex;
             var lines = await EntityDistinguishers.OfSlugs(
                 db,
                 [
@@ -276,8 +273,7 @@ internal static partial class EncyclopediaEndpoints
 
             // The record's own line and the people's it is related to, in one reading, so a row says who
             // each one is as their own page does, in the reader's language. A people's, a place's or a
-            // title's line is not read here: the sex of a name asks every word that names it, and the
-            // Israelites are named ninety thousand times.
+            // title's line is not read here.
             var described = await Descriptors.Of(
                 db,
                 [entity.Slug, .. related.Where(r => r.Kind == EnumSpelling.Of(EntityKind.Person)).Select(r => r.Slug)],

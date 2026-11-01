@@ -131,6 +131,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\PaulsCircleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\AntipatrisRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\TwoSidedIdentityRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\JuniaRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NestleNameRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\HeldApartRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\TwelveRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />

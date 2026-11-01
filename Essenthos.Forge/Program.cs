@@ -190,6 +190,7 @@ builder.Services.AddScoped<TitleLoader>();
 builder.Services.AddScoped<TitleReadingLoader>();
 builder.Services.AddScoped<VerseReadingLoader>();
 builder.Services.AddScoped<RelationshipVerseLoader>();
+builder.Services.AddScoped<PersonSexLoader>();
 builder.Services.AddScoped<MisplacedAnnotationLoader>();
 builder.Services.AddScoped<ReignLoader>();
 builder.Services.AddScoped<OwnNameLoader>();

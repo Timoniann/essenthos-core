@@ -113,7 +113,6 @@ internal static class OccupationEndpoints
             .ToDictionaryAsync(e => e.Slug, cancellationToken);
         var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
         var lines = await Descriptors.Of(db, named.Select(p => p.Slug), ReaderLanguages.Prose(prose, language), cancellationToken, language);
-        var sexes = await OursOnlyRecords.SexesOf(db, ids, cancellationToken);
         var assertions = await db.PersonOccupations.AsNoTracking().Where(p => p.OccupationId == label.OccupationId && ids.Contains(p.PersonId))
             .Include(p => p.Witnesses).ToDictionaryAsync(p => p.PersonId, cancellationToken);
         var total = await people.CountAsync(cancellationToken);
@@ -124,7 +123,7 @@ internal static class OccupationEndpoints
                 if (renamed.TryGetValue(p.Id, out var heads))
                     summary = summary with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled };
                 var evidence = Witnesses(assertions[p.Id]);
-                return new OccupationPractitionerResponse(summary, Role(label, p.Sex ?? sexes.GetValueOrDefault(p.Id)),
+                return new OccupationPractitionerResponse(summary, Role(label, p.Sex),
                     Verses(evidence), evidence);
             }).ToList());
     }
@@ -142,7 +141,7 @@ internal static class OccupationEndpoints
         summary = summary with { LocalName = local };
         if ((await RenamedHeadings.Of(db, [person.Id], language, cancellationToken)).TryGetValue(person.Id, out var heads))
             summary = summary with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled };
-        var sex = person.Sex ?? (await OursOnlyRecords.SexesOf(db, [person.Id], cancellationToken)).GetValueOrDefault(person.Id);
+        var sex = person.Sex;
         var words = Words(language, prose);
         var rows = await db.PersonOccupations.AsNoTracking().Where(p => p.PersonId == person.Id)
             .Include(p => p.Witnesses).Include(p => p.Occupation).ThenInclude(o => o!.Labels)

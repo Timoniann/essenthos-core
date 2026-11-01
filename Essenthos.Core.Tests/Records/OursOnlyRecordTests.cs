@@ -4,7 +4,9 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
@@ -244,8 +246,8 @@ public sealed class OursOnlyRecordTests : IDisposable
 
     /// <summary>
     /// A record no relationship of ours gives a sex has the one the Greek's grammar gives the name that
-    /// names it: Bernice is Βερνίκη, feminine. A common noun used as a name says nothing of a bearer,
-    /// so Legion stays empty, and a record of our own is given its sex the same way, by its clauses first.
+    /// names it, as the load wrote it: Bernice is Βερνίκη, feminine. A common noun used as a name says
+    /// nothing of a bearer, so Legion stays empty. The dataset's value is not read.
     /// </summary>
     [Fact]
     public async Task WhereNoRelationshipSaysTheGreeksGrammarOfTheNameGivesTheSex()
@@ -253,23 +255,27 @@ public sealed class OursOnlyRecordTests : IDisposable
         var greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc",
             (25, 13, ["Βερνίκη"]), (25, 14, ["Λεγιών"]), (25, 15, ["Ἰάκωβος"]));
         await _db.SaveChangesAsync();
-        var (bernice, legion, james, zebedee) =
-            (Supplied("bernice", null, null), Supplied("legion", null, null), Person("james-son-of-mary"), Person("zebedee"));
+        var (bernice, legion, junias) =
+            (Supplied("bernice", null, null), Supplied("legion", null, null), Supplied("junias", "male", null));
         await _db.SaveChangesAsync();
         Verse(bernice, OurVerse);
         Verse(legion, OurVerse);
+        Verse(junias, OurVerse);
         Named(greek, 13, bernice, "G959", "Βερνίκη", "feminine");
         Named(greek, 14, legion, "G3003", "λεγεών", "feminine");
-        Named(greek, 15, james, "G2385", "Ἰάκωβος", "masculine");
-        Clause(zebedee, "father-of", james);
+        Named(greek, 15, junias, "G2458", "Ἰουνία", "feminine");
         await _db.SaveChangesAsync();
+        await new PersonSexLoader(_db, NullLogger<PersonSexLoader>.Instance).Load(default);
+        foreach (var record in new[] { bernice, legion, junias })
+        {
+            await _db.Entry(record).ReloadAsync();
+        }
 
-        var ours = await OursOnlyRecords.Among(_db, ["bernice", "legion"], default);
+        var ours = await OursOnlyRecords.Among(_db, ["bernice", "legion", "junias"], default);
         ours["bernice"].Sex.Should().Be("female");
         ours["legion"].Sex.Should().BeNull();
-
-        var sexes = await OursOnlyRecords.SexesOf(_db, [james.Id, zebedee.Id], default);
-        sexes.Should().Equal(new Dictionary<int, string> { [james.Id] = "male", [zebedee.Id] = "male" });
+        ours["junias"].Sex.Should().Be("female");
+        junias.Sex.Should().Be("male");
     }
 
     private void Named(Text greek, int verse, Entity entity, string number, string lemma, string gender)

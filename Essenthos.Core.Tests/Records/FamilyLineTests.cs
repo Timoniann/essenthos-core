@@ -256,6 +256,8 @@ public sealed class FamilyLineTests : IDisposable
     [Fact]
     public async Task ASexOurOwnRowsStateTurnsAClauseAndAnUnknownOneDoesNot()
     {
+        await new PersonSexLoader(_db, Microsoft.Extensions.Logging.Abstractions.NullLogger<PersonSexLoader>.Instance).Load(default);
+
         (await Line("rebekah", "eng")).Should().Be("wife of Isaac, mother of Jacob");
         (await Descriptors.Of(_db, "nobody", "eng", default)).Should().BeNull();
     }

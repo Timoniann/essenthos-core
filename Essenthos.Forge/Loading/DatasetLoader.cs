@@ -642,6 +642,7 @@ internal sealed class DatasetLoader(
                 new LoadStep("kin-statements", cancellationToken => CountTheChildrenTheVersesCount(resources, cancellationToken)) { Files = ["Essenthos/kin"] }),
             .. In(LoadModules.Names, new LoadStep("crossed-names", CrossBackTheNamesGivenToEachOther)),
             .. In(LoadModules.Records, new LoadStep("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom)),
+            .. In(LoadModules.Records, new LoadStep("person-sexes", WriteThePersonsSexes)),
             .. In(LoadModules.Names,
                 new LoadStep("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
                 new LoadStep("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
@@ -2744,6 +2745,18 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<RelationshipVerseLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The sex of every person, once the relationships are read. The names settled after this step run
+    /// it again if they move a word of Nestle's.
+    /// </summary>
+    private async Task WriteThePersonsSexes(CancellationToken cancellationToken)
+    {
+        status.Starting("the persons' sexes");
+
+        using var scope = services.CreateScope();
+        status.Record((await scope.ServiceProvider.GetRequiredService<PersonSexLoader>().Load(cancellationToken)).ToString());
     }
 
     /// <summary>

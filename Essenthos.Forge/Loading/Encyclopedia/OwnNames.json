@@ -1,5 +1,13 @@
 {
   "names": [],
+  "sexes": [
+    {
+      "entity": "junias",
+      "sourceId": "person:Junias_1",
+      "sex": "female",
+      "why": "The owner's word on 2026-11-01: Junia of Romans 16:7 is a woman, and her page says the texts differ."
+    }
+  ],
   "forms": [
     {
       "entity": "rehoboam",

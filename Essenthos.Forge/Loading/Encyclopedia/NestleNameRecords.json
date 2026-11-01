@@ -1,0 +1,45 @@
+{
+  "decidedBy": "an agent (claude-opus-5-5) reading the verses on the project owner's instruction of 2026-11-01, decided 2026-11-01",
+  "policy": "Nestle prints these places and no word of it carries them: its number is not the name's, so the resolution by number cannot reach them.",
+  "method": "manual",
+  "carry": false,
+  "source": "Essenthos, read off Nestle's words on the project owner's instruction of 2026-11-01 that a word of the originals printing a name carries it",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 16:11",
+      "position": 12,
+      "surface": "Νέαν",
+      "strongNumber": "G3501",
+      "existing": "neapolis",
+      "why": "'εἰς Νέαν Πόλιν' (ACT 16:11): Nestle prints the town's name as two words, numbered as the common words new and city; the Textus Receptus prints it as one, G3496."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 16:11",
+      "position": 13,
+      "surface": "Πόλιν",
+      "strongNumber": "G4172",
+      "existing": "neapolis",
+      "why": "'εἰς Νέαν Πόλιν' (ACT 16:11): the second word of the town's name as Nestle prints it."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 20:13",
+      "position": 10,
+      "surface": "Ἆσσον",
+      "strongNumber": "G788",
+      "existing": "assos",
+      "why": "'ἀνήχθημεν ἐπὶ τὴν Ἆσσον' (ACT 20:13): the town; Nestle's word is numbered G788, the adverb nearer, where the town's number is G789."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 20:14",
+      "position": 7,
+      "surface": "Ἆσσον",
+      "strongNumber": "G788",
+      "existing": "assos",
+      "why": "'εἰς τὴν Ἆσσον' (ACT 20:14): the town, numbered as in the verse before."
+    }
+  ]
+}
