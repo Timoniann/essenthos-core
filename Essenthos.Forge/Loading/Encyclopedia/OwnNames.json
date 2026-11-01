@@ -601,6 +601,47 @@
               ]
           },
           "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'And Pharaoh called Joseph's name Zaphnath-paaneah' (GEN 41:45); Luther renders the name, so the German has none."
+      },
+      {
+          "entity": "pashhur-2",
+          "reference": "JER 20:3",
+          "names": {
+              "eng": [
+                  "Magor-missabib"
+              ],
+              "ukr": [
+                  "Маґор-Міссавів"
+              ],
+              "rus": [
+                  "Магор-Миссавив"
+              ],
+              "spa": [
+                  "Magor-missabib"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-11-01 that the name the text gives Pashhur is said in the line. 'The LORD hath not called thy name Pashur, but Magormissabib' (JER 20:3); Luther renders the name ('Schrecken um und um'), so the German has none."
+      },
+      {
+          "entity": "naomi",
+          "reference": "RUT 1:20",
+          "names": {
+              "eng": [
+                  "Mara"
+              ],
+              "ukr": [
+                  "Мара"
+              ],
+              "rus": [
+                  "Мара"
+              ],
+              "deu": [
+                  "Mara"
+              ],
+              "spa": [
+                  "Mara"
+              ]
+          },
+          "why": "On the project owner's decision of 2026-10-25 that a byname the text gives is said in the line. 'Call me not Naomi, call me Mara' (RUT 1:20)."
       }
   ]
 }

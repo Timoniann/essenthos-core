@@ -12,12 +12,14 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Words">Named words read.</param>
 /// <param name="Renderings">Spellings written, across every text.</param>
 /// <param name="Entities">Entities that have at least one.</param>
+/// <param name="Search">The spellings kept for a search alone, and what it refused (<see cref="SearchSpellings"/>).</param>
 internal sealed record EntityRenderingOutcome(
     int Words,
     int Renderings,
     int Entities,
     IReadOnlyList<(string Text, int Entities)> ByText,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    SearchSpellingCount Search)
 {
     /// <summary>Names in a language put back to the spelling its texts print (<see cref="PrintedNames"/>).</summary>
     public int Renamed { get; init; }
@@ -25,6 +27,7 @@ internal sealed record EntityRenderingOutcome(
     public override string ToString() =>
         $"{Renderings} spellings of {Entities} entities counted from {Words} named words in {Elapsed}; " +
         $"{Renamed} names in a language put back to the spelling its texts print. " +
+        $"For a search alone: {Search}. " +
         "Entities per text: " + string.Join(", ", ByText.Select(t => $"{t.Text} {t.Entities}"));
 }
 
@@ -71,7 +74,11 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         SELECT a.entity_id, hw.text_id, hw.verse_id, hw.position, hw.text, hw.trailer, hw.lemma, ht.language,
                CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE rendered.lemma END AS renders,
                CASE WHEN a.note LIKE @guessed THEN a.confidence END AS guess,
-               e.kind IN ('object', 'observance', 'title') AS thing
+               e.kind IN ('object', 'observance', 'title') AS thing,
+               hw.normalised_text,
+               CASE WHEN a.note LIKE @guessed THEN a.confidence >= @sure
+                    ELSE a.method IN ('manual', 'stated-by-source') OR a.confidence IS NULL OR a.confidence >= @sure
+               END AS firm
         FROM word_entity a
         JOIN entity e ON e.id = a.entity_id
         JOIN word hw ON hw.id = a.word_id
@@ -113,6 +120,17 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             .AsNoTracking()
             .Select(r => new { r.Id, Rendering = new Rendering(r.EntityId, r.TextId, r.Form, r.Folded, r.Occurrences, r.Heading) })
             .ToListAsync(cancellationToken);
+        var printed = await PrintedWords(connection, SearchSpellings.PrintedWordsToCount(words, renderings), cancellationToken);
+        var epithets = (await db.Entities.Where(e => SearchSpellings.EpithetRecords.Contains(e.Slug))
+            .Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
+        var (spellings, searchCount) = SearchSpellings.Of(words, renderings, printed, epithets);
+        var standingSpellings = await db.EntitySearchSpellings
+            .AsNoTracking()
+            .Select(s => new { s.Id, Spelling = new SearchSpelling(s.EntityId, s.Form, s.Folded) })
+            .ToListAsync(cancellationToken);
+        var wantedSpellings = spellings.ToHashSet();
+        var goneSpellings = standingSpellings.Where(s => !wantedSpellings.Remove(s.Spelling)).Select(s => s.Id).ToList();
+
         var wanted = renderings.ToHashSet();
         var gone = standing.Where(r => !wanted.Remove(r.Rendering)).Select(r => r.Id).ToList();
 
@@ -138,6 +156,22 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             await writer.CompleteAsync(cancellationToken);
         }
 
+        await db.EntitySearchSpellings.Where(s => goneSpellings.Contains(s.Id)).ExecuteDeleteAsync(cancellationToken);
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY entity_search_spelling (entity_id, form, folded) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
+        {
+            foreach (var spelling in spellings.Where(wantedSpellings.Contains))
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(spelling.EntityId, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(spelling.Form, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(spelling.Folded, NpgsqlDbType.Text, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
         await Rename(renamed, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
@@ -154,7 +188,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             renderings.Count,
             renderings.Select(r => r.EntityId).Distinct().Count(),
             byText,
-            started.Elapsed)
+            started.Elapsed,
+            searchCount)
         {
             Renamed = renamed.Count,
         };
@@ -243,12 +278,39 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
     /// <summary>How a name put back to the printed spelling is sourced.</summary>
     internal const string PrintedSource = "Essenthos, as the texts of the language print it where the record is named";
 
+    /// <summary>How many words each text prints each of these ways, read through the words' own index.</summary>
+    private static async Task<Dictionary<(int Text, string Normalised), int>> PrintedWords(
+        NpgsqlConnection connection,
+        IEnumerable<(int Text, string Normalised)> asked,
+        CancellationToken cancellationToken)
+    {
+        var distinct = asked.Distinct().ToList();
+        var printed = new Dictionary<(int Text, string Normalised), int>(distinct.Count);
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT a.text_id, a.normalised,
+                   (SELECT count(*) FROM word w WHERE w.text_id = a.text_id AND w.normalised_text = a.normalised)
+            FROM unnest(@texts, @forms) AS a(text_id, normalised)
+            """,
+            connection);
+        command.Parameters.AddWithValue("texts", distinct.Select(a => a.Text).ToArray());
+        command.Parameters.AddWithValue("forms", distinct.Select(a => a.Normalised).ToArray());
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            printed[(reader.GetInt32(0), reader.GetString(1))] = (int)reader.GetInt64(2);
+        }
+
+        return printed;
+    }
+
     private static async Task<List<NamedWord>> Words(NpgsqlConnection connection, CancellationToken cancellationToken)
     {
         var words = new List<NamedWord>();
         await using var command = new NpgsqlCommand(Named, connection);
         command.Parameters.AddWithValue("originals", Renderings.Original.ToArray());
         command.Parameters.AddWithValue("guessed", $"{Annotating.CarriedNote}, linked by {EnumSpelling.Of(LinkMethod.Aligner)}");
+        command.Parameters.AddWithValue("sure", SearchSpellings.HighConfidence);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
@@ -263,7 +325,9 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                 reader.GetString(7),
                 reader.IsDBNull(8) ? null : reader.GetString(8),
                 reader.IsDBNull(9) ? null : reader.GetDouble(9),
-                reader.GetBoolean(10)));
+                reader.GetBoolean(10),
+                reader.IsDBNull(11) ? null : reader.GetString(11),
+                reader.GetBoolean(12)));
         }
 
         return words;

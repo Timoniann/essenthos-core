@@ -311,6 +311,14 @@
       "surface": "שָׁפָ֔ן",
       "strongNumber": "H8227",
       "existing": "shaphan-5",
+      "alternatives": [
+        {
+          "slug": "shaphan",
+          "describes": null,
+          "reason": "He may be Shaphan the scribe of King Josiah, the father of Ahikam and Gemariah (2KI 22:3, 22:12; JER 36:10): JER 29:3 calls Elasah the son of Shaphan and does not say which Shaphan.",
+          "back": "The Shaphan of JER 29:3, whose son Elasah carried Jeremiah's letter to Babylon, may be this man: the verse does not say which Shaphan."
+        }
+      ],
       "corrects": "shaphan",
       "why": "JER 29:3 (Shaphan): Elasah ben Shaphan names Elasah's father, which is B; the text does not say he is Josiah's scribe, and A's family lists no Elasah. Codex gpt-6.1-sol and a blind Opus judge named the same man."
     },

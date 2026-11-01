@@ -1790,6 +1790,48 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntitySearchSpelling", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<string>("Folded")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("folded");
+
+                    b.Property<string>("Form")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("form");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_search_spelling");
+
+                    b.HasIndex("Folded")
+                        .HasDatabaseName("ix_entity_search_spelling_folded");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Folded"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Folded"), new[] { "gin_trgm_ops" });
+
+                    b.HasIndex("EntityId", "Folded")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_search_spelling_entity_id_folded");
+
+                    b.ToTable("entity_search_spelling", null, t =>
+                        {
+                            t.HasComment("A spelling a text prints for an entity that entity_rendering does not keep and a search finds the entity by. Derived and rebuilt with entity_rendering; nothing else reads it.");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityVerse", b =>
                 {
                     b.Property<int>("Id")
@@ -6346,6 +6388,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Entity");
 
                     b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntitySearchSpelling", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_search_spelling_entity_entity_id");
+
+                    b.Navigation("Entity");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityVerse", b =>

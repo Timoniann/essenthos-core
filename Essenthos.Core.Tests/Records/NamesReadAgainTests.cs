@@ -75,6 +75,29 @@ public sealed class NamesReadAgainTests
     }
 
     /// <summary>
+    /// Elasah's Shaphan and Pashhur's Immer are records of their own, and each son has one father;
+    /// that the scribe or the priestly course may be meant is said as a possible identity.
+    /// </summary>
+    [Fact]
+    public void ANamesakeFatherTheOwnerKeptApartIsTheOnlyFather()
+    {
+        Claims("elasah-2").Should().ContainSingle(c => c.Relation == "son-of")
+            .Which.Target.Should().Be("shaphan-5");
+        Claims("pashhur-2").Should().ContainSingle(c => c.Relation == "son-of")
+            .Which.Target.Should().Be("immer-5");
+        Claims("shaphan-2").Should().NotContain(c => c.Target == "elasah-2");
+        Claims("immer-2").Should().NotContain(c => c.Target == "pashhur-2");
+
+        var alternatives = SenseReadingFiles.AllRulings()
+            .SelectMany(file => file.Rulings)
+            .Where(ruling => ruling.Existing is "shaphan-5" or "immer-5")
+            .ToDictionary(ruling => ruling.Existing!, ruling => ruling.Alternatives!.Single());
+        alternatives["shaphan-5"].Slug.Should().Be("shaphan");
+        alternatives["immer-5"].Slug.Should().Be("immer");
+        alternatives["immer-5"].Reason.Should().Contain("descendant");
+    }
+
+    /// <summary>
     /// The Dishon of Anah's sons at 1 Chronicles 1:41 is Anah's, not Seir's son of the same name, and
     /// the Michael of 1 Chronicles 5:14 is the forefather, not the brother of 5:13.
     /// </summary>

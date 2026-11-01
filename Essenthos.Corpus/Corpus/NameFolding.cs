@@ -27,6 +27,10 @@ internal static class NameFolding
 
     private const string Plain = "aaaaaaaaaccceeeeeeeeiiiiiinnnoooooooouuuuuuuyysszzzlddtrllег";
 
+    /// <summary><em>Aaron's</em> and <em>Aaron’s</em> are Aaron.</summary>
+    public static string WithoutPossessive(string word) =>
+        word.Length > 2 && word[^1] == 's' && word[^2] is '\'' or '’' ? word[..^2] : word;
+
     public static string Fold(string name)
     {
         var bare = GreekLetters.Bare(WordFolding.Fold(name, "hbo")).ToLowerInvariant();

@@ -40,7 +40,9 @@ internal sealed record GeezVersificationLine(
 ///
 /// <para>
 /// It leaves alone the books the church divides as no other edition does: <see cref="GeezVerseMap"/>
-/// reads those, and the frame keeps them at their own numbers.
+/// reads those. The frame keeps most of them at their own numbers, which name no passage a reader
+/// would look for there; Esther and the Psalter it places by that reading, because their chapters run
+/// ahead of the frame's and a name read at its own number stands in the wrong chapter.
 /// </para>
 /// </summary>
 internal static class GeezVersification
@@ -55,6 +57,12 @@ internal static class GeezVersification
 
     public const string NoCounterpart = "none";
 
+    /// <summary>Where the verses of the additions in the church's Esther stand, one row each.</summary>
+    public const string AdditionRowsResource = "Essenthos.Core.BetaMasaheft.GeezEstherAdditionRows.tsv";
+
+    /// <summary>Esther and the Psalter, which the frame places as <see cref="GeezVerseMap"/> reads them.</summary>
+    private static readonly HashSet<int> PlacedByTheMap = [17, 19];
+
     public static IReadOnlyList<GeezVersificationLine> Lines { get; } = Read();
 
     /// <summary>Each listed verse by its own book, chapter and verse.</summary>
@@ -68,10 +76,68 @@ internal static class GeezVersification
     public static IReadOnlyDictionary<(int Book, int Chapter, int Verse), IReadOnlyList<CanonicalReference>> Placements
     {
         get;
-    } = Lines.ToDictionary(
-        line => (line.Book, line.Chapter, line.Verse),
-        line => (IReadOnlyList<CanonicalReference>)
-            [.. line.Greek.Select(row => new CanonicalReference(line.Book, row.Chapter, row.Verse))]);
+    } = Lines
+        .Select(line => (Key: (line.Book, line.Chapter, line.Verse), Rows: (IReadOnlyList<CanonicalReference>)
+            [.. line.Greek.Select(row => new CanonicalReference(line.Book, row.Chapter, row.Verse))]))
+        .Concat(ReadByTheMap(GeezVerseMap.Lines.Where(line => PlacedByTheMap.Contains(line.Book)), AdditionRows()))
+        .ToDictionary(entry => entry.Key, entry => entry.Rows);
+
+    /// <summary>
+    /// Each verse of the lines at the rows it answers. A line of as many verses as rows goes one to one;
+    /// otherwise each verse takes its proportion of the rows, in order, since the reading joins the
+    /// passage as a whole and the verses run through it in the same order as the Greek.
+    /// </summary>
+    private static IEnumerable<((int Book, int Chapter, int Verse) Key, IReadOnlyList<CanonicalReference> Rows)> ReadByTheMap(
+        IEnumerable<GeezVerseMapLine> lines,
+        IReadOnlyList<GeezVerseMapLine> additions)
+    {
+        var replaced = additions
+            .SelectMany(line => line.From.Select(verse => (line.Book, verse.Chapter, verse.Verse)))
+            .ToHashSet();
+        var placed = new Dictionary<(int Book, int Chapter, int Verse), List<CanonicalReference>>();
+        foreach (var line in lines.Where(line => !line.From.Any(verse => replaced.Contains((line.Book, verse.Chapter, verse.Verse))))
+                     .Concat(additions))
+        {
+            for (var index = 0; index < line.From.Count; index++)
+            {
+                var (chapter, verse) = line.From[index];
+                if (!placed.TryGetValue((line.Book, chapter, verse), out var rows))
+                {
+                    placed[(line.Book, chapter, verse)] = rows = [];
+                }
+
+                rows.AddRange(RowsOf(line.To, index, line.From.Count)
+                    .Select(row => new CanonicalReference(row.Book, row.Chapter, row.Verse))
+                    .Where(row => !rows.Contains(row)));
+            }
+        }
+
+        return placed.Select(entry => (entry.Key, (IReadOnlyList<CanonicalReference>)entry.Value));
+    }
+
+    private static IEnumerable<(int Book, int Chapter, int Verse)> RowsOf(
+        IReadOnlyList<(int Book, int Chapter, int Verse)> rows,
+        int verse,
+        int verses)
+    {
+        if (rows.Count == 0)
+        {
+            return [];
+        }
+
+        var first = verse * rows.Count / verses;
+        var last = Math.Max(first, (((verse + 1) * rows.Count) - 1) / verses);
+        return rows.Skip(first).Take(last - first + 1);
+    }
+
+    private static List<GeezVerseMapLine> AdditionRows()
+    {
+        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(AdditionRowsResource)
+                           ?? throw new InvalidOperationException(
+                               $"{AdditionRowsResource} is not embedded in the Forge; it is listed as an EmbeddedResource in its project file.");
+        using var reader = new StreamReader(stream);
+        return GeezVerseMap.Parse(reader.ReadToEnd());
+    }
 
     /// <summary>
     /// How sure a verse link over these verses is: the lowest share among them, and for a verse none of

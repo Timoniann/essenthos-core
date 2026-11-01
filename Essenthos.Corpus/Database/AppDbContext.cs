@@ -327,6 +327,8 @@ public class AppDbContext : DbContext
     /// <summary>Each text's spellings of an entity's name, counted from the words that name it.</summary>
     public DbSet<EntityRendering> EntityRenderings { get; set; } = null!;
 
+    public DbSet<EntitySearchSpelling> EntitySearchSpellings { get; set; } = null!;
+
     /// <summary>A translation's commonest phrases for each Strong number, counted from the links once per load.</summary>
     public DbSet<StrongRendering> StrongRenderings { get; set; } = null!;
 
@@ -1547,6 +1549,22 @@ public class AppDbContext : DbContext
                     + "name it there. Derived and rebuilt with those annotations; it asserts nothing "
                     + "they do not.");
             });
+        });
+
+        modelBuilder.Entity<EntitySearchSpelling>(entity =>
+        {
+            entity.HasOne(s => s.Entity)
+                .WithMany()
+                .HasForeignKey(s => s.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(s => s.Folded)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+
+            entity.ToTable("entity_search_spelling", t => t.HasComment(
+                "A spelling a text prints for an entity that entity_rendering does not keep and a search "
+                + "finds the entity by. Derived and rebuilt with entity_rendering; nothing else reads it."));
         });
 
         modelBuilder.Entity<StrongRendering>(entity =>
