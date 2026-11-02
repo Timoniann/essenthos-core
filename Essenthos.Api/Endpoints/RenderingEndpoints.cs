@@ -90,7 +90,73 @@ internal static class RenderingEndpoints
                 matched.Sum(form => form.Count),
                 witnesses));
         }).RequireRateLimiting(RateLimits.Expensive);
+
+        routes.MapGet("/renderings/occurrences", async (
+            [FromQuery] string? corpus,
+            [FromQuery] string? word,
+            [FromQuery] bool? exact,
+            [FromQuery] int? skip,
+            [FromQuery] int? take,
+            AppDbContext db,
+            ICanonIndex canon,
+            WordForms forms,
+            CancellationToken cancellationToken) =>
+        {
+            if (corpus is not { Length: > 0 })
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    "Name the text the word is read in, as ?corpus=KJV. GET /v1/corpora lists them."));
+            }
+
+            var terms = SearchTerms.Parse(word);
+            if (terms.Length != 1)
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    "Ask about one word, as ?word=love. A phrase is not one word of the text."));
+            }
+
+            if (await canon.Text(corpus, cancellationToken) is not { } text)
+            {
+                return Results.NotFound(new ProblemResponse(
+                    $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds."));
+            }
+
+            var index = await forms.Of(text.Id, cancellationToken);
+            var matched = index.Matching(terms[0], exact ?? false);
+            var page = await Occurrences(
+                db, text.Id, terms[0], [.. matched.Select(form => form.Text)], skip, take, cancellationToken);
+
+            return Results.Ok(new WordOccurrencesResponse(
+                text.Slug,
+                terms[0],
+                exact ?? false,
+                index.Stems,
+                [.. matched.Select(form => new WordFormResponse(form.Text, form.Count))],
+                page.Total,
+                page.Items));
+        }).RequireRateLimiting(RateLimits.Expensive);
     }
+
+    /// <summary>
+    /// One page of the places a text prints these spellings, in canonical order, by the frame's address:
+    /// the same shape as a Strong number's places, because a list of where a word stands is the same
+    /// list whichever end it was asked from. The total is every occurrence, so it adds up to the forms.
+    /// </summary>
+    internal static Task<StrongOccurrenceListResponse> Occurrences(
+        AppDbContext db,
+        int textId,
+        string word,
+        IReadOnlyCollection<string> spellings,
+        int? skip,
+        int? take,
+        CancellationToken cancellationToken) =>
+        StrongEndpoints.OccurrencePage(
+            db,
+            word,
+            db.Words.Where(w => w.TextId == textId && spellings.Contains(w.NormalisedText!) && !w.Elided),
+            skip,
+            take,
+            cancellationToken);
 
     /// <summary>
     /// What stands behind these spellings of one text, in every original it is linked to.
@@ -338,6 +404,20 @@ internal record WordRenderingsResponse(
     IList<WordWitnessResponse> Witnesses);
 
 internal record WordFormResponse(string Text, int Count);
+
+/// <param name="Word">The word as it was asked about.</param>
+/// <param name="Stemmed">Whether the forms were gathered by a stem, or the spelling alone was matched.</param>
+/// <param name="Forms">The spellings listed, commonest first.</param>
+/// <param name="Total">Every occurrence of those spellings in the text.</param>
+/// <param name="Items">One page of them, in canonical order.</param>
+internal record WordOccurrencesResponse(
+    string Corpus,
+    string Word,
+    bool Exact,
+    bool Stemmed,
+    IList<WordFormResponse> Forms,
+    int Total,
+    IList<StrongOccurrenceResponse> Items);
 
 /// <param name="Occurrences">
 /// The translation's occurrences in the books this witness holds: the denominator. A Greek New

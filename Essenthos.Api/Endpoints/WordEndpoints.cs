@@ -175,7 +175,8 @@ internal static class WordEndpoints
                     other.Word.Verse!.Number * 1000 + other.Word.Position,
                     other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalBook,
                     other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalChapter,
-                    other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalVerse)))
+                    other.Word.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
+                    other.Word.StrongNumber)))
             .ToListAsync(cancellationToken);
 
     /// <summary>
@@ -226,7 +227,10 @@ internal static class WordEndpoints
                             .Select(method => EnumSpelling.Of(method))
                             .Order(StringComparer.Ordinal),
                     ],
-                    Datasets.Credited(row.Source)?.Name)),
+                    Datasets.Credited(row.Source)?.Name)
+                {
+                    StrongNumber = row.StrongNumber,
+                }),
         ];
     }
 
@@ -244,7 +248,8 @@ internal static class WordEndpoints
         int Position,
         int CanonicalBook,
         int CanonicalChapter,
-        int CanonicalVerse);
+        int CanonicalVerse,
+        string? StrongNumber);
 
     /// <summary>
     /// Whether the edition prints this word as its own, rather than as a rendering of anything in
@@ -390,4 +395,8 @@ internal record WordRenderingResponse(
     string Method,
     double? Confidence,
     IList<string> AlsoBy,
-    string? StatedBy);
+    string? StatedBy)
+{
+    /// <summary>The number the linked word itself carries: how a translation's word, which has none, reaches its entry.</summary>
+    public string? StrongNumber { get; init; }
+}
