@@ -50,7 +50,7 @@ if ($check.StatusCode -ne 200 -or "$($check.Content)".Trim() -ne $Key) {
 
 $addresses = switch ($PSCmdlet.ParameterSetName) {
     'All' {
-        Write-Host 'Reading the sitemaps, about two minutes for the whole site...'
+        Write-Host 'Reading the sitemaps, under a minute for the whole site...'
         Get-Locations "$Origin/sitemap.xml" | ForEach-Object { Get-Locations $_ }
     }
     'Sitemap' { $Sitemap | ForEach-Object { Get-Locations "$Origin/sitemaps/$_.xml" } }
