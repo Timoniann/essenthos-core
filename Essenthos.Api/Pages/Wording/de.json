@@ -317,6 +317,14 @@
       "title": "Eine Korrektur oder Idee vorschlagen",
       "description": "Schicken Sie den Menschen, die Essenthos machen, eine Korrektur oder eine Idee."
     },
+    "allPages": {
+      "title": "Alle Seiten",
+      "description": "Alle Seiten von Essenthos in einer Liste."
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "description": "Wie die Website aussieht, ihre Sprache und der Text, aus dem sie zitiert."
+    },
     "account": {
       "title": "Ihr Konto",
       "description": "Ihr Profil, Ihre Anmeldungen und Ihre Geräte."

@@ -209,7 +209,8 @@
 # /v1/pages/<the address>. robots.txt and the sitemaps are the API's too, under /v1. Where the API
 # answers a page with a server error or a refusal, or cannot be reached within two seconds, the web
 # container serves the plain application instead, so a fault there costs the preview and never the
-# page. A page that does not exist is the API's 404, with the application's own not-found page in it.
+# page. A page that does not exist is the API's 404, with the application's own not-found page in it,
+# and a file the web container does not have, /error.log, is that container's 404 with the same page.
 (pages) {
 	@crawl path /robots.txt /sitemap.xml /sitemaps/*
 	handle @crawl {

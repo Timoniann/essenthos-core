@@ -64,6 +64,32 @@ public sealed class RequestTimingTests(WitnessDatabase database)
     }
 
     [Fact]
+    public async Task ACrawlerPageNamesItsPathAndItsCallerAndNothingElseOfThem()
+    {
+        await using var server = await Server.Start(database);
+        using var request = new HttpRequestMessage(HttpMethod.Get, "/v1/pages/old/address?q=a+reader%27s+words");
+        request.Headers.TryAddWithoutValidation("User-Agent", "SomeBot/1.0");
+
+        await server.Http.SendAsync(request);
+
+        (await server.NextLine()).Should().StartWith("GET /v1/pages/{**path} 308 ");
+        var line = await server.NextLine();
+        line.Should().Be("page 308 /v1/pages/old/address agent=SomeBot/1.0");
+    }
+
+    [Fact]
+    public async Task ThePageLineCanBeTurnedOff()
+    {
+        await using var server = await Server.Start(database, "RequestTiming:PageAddresses=false");
+
+        await server.Http.GetAsync("/v1/pages/old/address");
+        await server.Http.GetAsync("/v1/quiet");
+
+        (await server.NextLine()).Should().StartWith("GET /v1/pages/{**path} 308 ");
+        (await server.NextLine()).Should().StartWith("GET /v1/quiet 200", "the page's own line would have come first");
+    }
+
+    [Fact]
     public async Task AnAddressNoRouteMatchesIsNotWrittenDown()
     {
         await using var server = await Server.Start(database);
@@ -142,6 +168,7 @@ public sealed class RequestTimingTests(WitnessDatabase database)
             var v1 = app.MapGroup("/v1");
             v1.MapGet("/health/live", () => "live");
             v1.MapGet("/quiet", () => "quiet");
+            v1.MapGet("/pages/{**path}", () => Results.StatusCode(StatusCodes.Status308PermanentRedirect));
             v1.MapGet("/fault", string () => throw new InvalidOperationException("Asked to fail."));
             v1.MapGet("/books/{slug}/chapters/{chapter:int}", async (string slug, int chapter, AppDbContext db, CancellationToken cancellationToken) =>
             {

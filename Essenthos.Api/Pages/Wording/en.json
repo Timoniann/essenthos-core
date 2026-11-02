@@ -317,6 +317,14 @@
       "title": "Suggest a correction or an idea",
       "description": "Send a correction or an idea to the people who make Essenthos."
     },
+    "allPages": {
+      "title": "All pages",
+      "description": "Every page of Essenthos, in one list."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "How the site looks, its language and the text it quotes from."
+    },
     "account": {
       "title": "Your account",
       "description": "Your profile, your sign-ins and your devices."
