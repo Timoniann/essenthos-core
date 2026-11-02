@@ -49,11 +49,16 @@ if ($check.StatusCode -ne 200 -or "$($check.Content)".Trim() -ne $Key) {
 }
 
 $addresses = switch ($PSCmdlet.ParameterSetName) {
-    'All' { Get-Locations "$Origin/sitemap.xml" | ForEach-Object { Get-Locations $_ } }
+    'All' {
+        Write-Host 'Reading the sitemaps, about two minutes for the whole site...'
+        Get-Locations "$Origin/sitemap.xml" | ForEach-Object { Get-Locations $_ }
+    }
     'Sitemap' { $Sitemap | ForEach-Object { Get-Locations "$Origin/sitemaps/$_.xml" } }
     'Url' { $Url }
 }
-$addresses = @($addresses | Select-Object -Unique)
+# Not Select-Object -Unique: it compares each address with all the others, half an hour for the whole site.
+$seen = [Collections.Generic.HashSet[string]]::new()
+$addresses = @($addresses | Where-Object { $seen.Add($_) })
 $foreign = @($addresses | Where-Object { -not $_.StartsWith("$Origin/") })
 if ($foreign.Count -gt 0) {
     throw "Only $Origin's own pages can be sent with its key; not: $($foreign | Select-Object -First 3)"
