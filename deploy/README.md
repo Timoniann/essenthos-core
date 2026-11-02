@@ -297,6 +297,18 @@ without NAT64 lose the site, everyone else falls back to IPv4 at once.
 
 ## Reading the logs
 
+**Who asks for the crawler pages**: the API's log names, for `/v1/pages` alone, the path and the User-Agent of
+every answer that is not a 200 and of one 200 in ten, with no query and no client address. About 30,000 lines
+a day at today's traffic, so the 100 MB the log keeps lasts some days. The commonest callers and addresses of the redirects:
+
+```bash
+docker logs --since 24h essenthos-api-1 2>&1 | grep 'RequestTiming\[2\]' > /tmp/pages.log
+grep -o ' agent=.*' /tmp/pages.log | sort | uniq -c | sort -rn | head -20
+grep ' page 308 ' /tmp/pages.log | awk '{print $6}' | sort | uniq -c | sort -rn | head -20
+```
+
+Multiply a 200's count by ten. `RequestTiming__PageAddresses=false` on the API takes the line out.
+
 **The access log**: one JSON line per request in `/srv/essenthos/logs/caddy/access.log`, written by Caddy
 as root, with time, method, host, path, status, duration and size, and the address cut to its /24 or /48.
 No query and no headers. `housekeeping` compresses the day into `daily-<date>.log.gz` each night at 02:00

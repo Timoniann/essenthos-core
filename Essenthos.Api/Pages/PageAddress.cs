@@ -44,6 +44,7 @@ internal static class PageSections
     [
         new("texts", "/texts"),
         new("lexicon", "/lexicon", Queries: ["q"]),
+        new("varied", "/lexicon/varied", Listed: false),
         new(Syntax, "/syntax", Queries: ["on", "feature", "word", "book"]),
         new(Encyclopedia, "/encyclopedia", Queries: ["q"]),
         new("occupations", "/occupations", Queries: ["q", "category", "skip"]),
@@ -68,7 +69,9 @@ internal static class PageSections
         new("api", "/api"),
         new("suggestions", "/suggestions", Listed: false),
         new("newSuggestion", "/suggestions/new", Private: true, Listed: false),
+        new("allPages", "/pages", Listed: false),
         new("account", "/account", Private: true, Listed: false),
+        new("settings", "/settings", Private: true, Listed: false),
         new("bookmarks", "/bookmarks", Private: true, Listed: false),
         new("admin", "/admin", Private: true, Listed: false),
     ];
