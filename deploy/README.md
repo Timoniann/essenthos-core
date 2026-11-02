@@ -1,7 +1,7 @@
 # The server
 
 One Hetzner machine runs production in containers: Postgres, the API, the reader, Caddy in front, a
-nightly backup, the nightly housekeeping of what must not be kept, and optionally the page counters. No dev runs on it (TSK-1002): the rehearsal of a
+nightly backup, the nightly housekeeping of what must not be kept, and optionally the page counter. No dev runs on it (TSK-1002): the rehearsal of a
 publication is the same stack on the workstation (**Rehearsal**, below). Access, state and history of
 the machine are in the guide `production-server`; the corpus's publication is DOC-0203; the page
 counter is DOC-0211.
@@ -56,13 +56,11 @@ machine's default; `env.example` holds the 4 GB machine's, which this server run
 | `DB_SHM_SIZE` | 512mb | 1gb |
 | `API_MEM_LIMIT` | 768m | 1g |
 | `WEB_MEM_LIMIT` | 128m | 128m |
-| `ANALYTICS_MEM_LIMIT` | 128m | 256m |
 | `UMAMI_MEM_LIMIT` | 384m | 512m |
 | `UMAMI_NODE_HEAP_MB` | 192 | 256 |
 
-The limits add up to 2.9 GiB (3.0 with GoatCounter, 3.4 with Umami beside it) of the machine's 3.7, which
-leaves about 300 MB for Ubuntu, Docker, Caddy and the backup container during the week the two counters
-run together, and 430 MB once GoatCounter goes, with the swap file as the safety net. A limit is not use:
+The limits add up to 2.9 GiB (3.3 with Umami) of the machine's 3.7, which leaves about 430 MB for Ubuntu,
+Docker, Caddy and the backup container, with the swap file as the safety net. A limit is not use:
 Umami measured on the rehearsal (2026-11-01, Postgres 18.1, no corpus) holds 75 to 180 MiB at rest from
 cold, 125 to 265 MiB at rest after a burst, under 300 MiB during 5,000 events at 139 to 177 a second, and never
 hit its limit's kill. With a 128 MB heap it dies at start: V8 needs more than that to load. What it holds comes
@@ -360,11 +358,12 @@ is first created, so every database restored later has it. On a Postgres created
 
 Off until turned on. Umami on this machine records each page view of production's: page, referring
 page, browser, system, device, screen, language, country, region, city, under a code made of the address,
-browser, date and `UMAMI_APP_SECRET`, with no cookie and without writing the address. GoatCounter runs
-beside it (DOC-0211) until the two have been compared for a week.
+browser, date and `UMAMI_APP_SECRET`, with no cookie and without writing the address.
 
-**Umami** needs nothing done by hand beyond `.env`: `SITE_UMAMI=on`, `UMAMI_DB_PASSWORD`,
-`UMAMI_ADMIN_PASSWORD` and `UMAMI_APP_SECRET`, each fresh, and `docker compose up -d`. Its one-shots make
+**To turn it on**: the reader's image built with `send-images.ps1 … -AnalyticsEndpoint /count` (`-Force` to
+resend a tag) and deployed; `.env`: `COMPOSE_PROFILES=analytics` (`offsite,analytics` with the off-site copy),
+`SITE_UMAMI=on`, `UMAMI_DB_PASSWORD`, `UMAMI_ADMIN_PASSWORD` and `UMAMI_APP_SECRET`, each fresh; then
+`docker compose up -d`. Nothing else is done by hand. Its one-shots make
 its role and database, migrate them, put the admin's password in place of the default, and make the site's
 row, before the server starts. Sign in at `STATS_DOMAIN` as `admin` (the password is in `.env`, on the
 server, read with an editor and not printed). It is in the nightly backup, and `housekeeping` deletes its
@@ -378,40 +377,10 @@ To stop counting with Umami: `SITE_UMAMI=off`, `docker compose up -d proxy`, and
 `docker compose stop umami`. Its database stays until dropped by hand. To read what it holds without its
 dashboard: `docker compose exec db psql -U postgres -d essenthos_umami`.
 
-**Comparing them**: the reader's build sends both counters each page view while `VITE_ANALYTICS_ENDPOINT`
-is `/count`. Compare visits per day after a week, keeping in mind that GoatCounter's session lasts eight
-hours and Umami's visit up to an hour, and that Umami counts sessions per day. Then a later commit removes
-the GET from `analytics.ts`, the `analytics` service and its Caddy route, and `SITE_ANALYTICS=off`.
-`essenthos_stats` stays until the owner says to drop it.
-
-**GoatCounter**, four switches, which must agree:
-
-1. the reader's image built with `send-images.ps1 … -AnalyticsEndpoint /count` (`-Force` to resend a
-   tag), then deployed;
-2. `.env`: `COMPOSE_PROFILES=analytics` (`offsite,analytics` with the off-site copy), `SITE_ANALYTICS=on`,
-   `STATS_PASSWORD=<fresh>`;
-3. its database: created by initdb on a new Postgres; on an existing one, once, from
-   `/srv/essenthos/deploy`:
-
-        docker compose exec -T db psql -U postgres -v ON_ERROR_STOP=1 \
-          -v stats="$(grep '^STATS_PASSWORD=' .env | cut -d= -f2-)" <<'SQL'
-        CREATE ROLE essenthos_stats LOGIN PASSWORD :'stats';
-        CREATE DATABASE essenthos_stats OWNER essenthos_stats;
-        REVOKE ALL ON DATABASE essenthos_stats FROM PUBLIC;
-        SQL
-
-   then `docker compose up -d`;
-4. its settings, through a tunnel (`ssh -L 8081:127.0.0.1:8081 deploy@2.29.125.205`, then
-   `http://localhost:8081`): the first visit makes the owner's sign-in; then **Data retention** 730
-   days, as the privacy page says, and **Language** ticked.
-
-Off again: `SITE_ANALYTICS=off` and `docker compose up -d proxy`. Its dashboard is only through the tunnel
-now: `STATS_DOMAIN` serves Umami's.
-
 ## Backups
 
 Only `essenthos_app` (accounts, and later what readers write) cannot be rebuilt; the page counts in
-`essenthos_stats` and `essenthos_umami` are backed up beside it where each counter is on.
+`essenthos_umami` are backed up beside it where the counter is on.
 
 - The `backup` service dumps them every night into `/srv/essenthos/backups` and keeps each dump 14 days
   (`BACKUP_KEEP_DAYS`), except while a database's backups fail: then it keeps every dump it has until a

@@ -62,8 +62,6 @@ services:
       # Dev's pair, created only when both are set.
       READER_DEV_PASSWORD: ${READER_DEV_PASSWORD:-}
       APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:-}
-      # The page counter's role and database, created only when this is set.
-      STATS_PASSWORD: ${STATS_PASSWORD:-}
     # The memory budget is .env's (DB_* below; deploy/README.md, "Memory"). The defaults are the 8 GB
     # machine's: the database gets at most 4 GB (owner, 2026-10-01). Measured in a 4 GB container
     # (TSK-0920): verify peaks at 2.9 GB with these settings, the reader is as fast as with no limit,
@@ -266,8 +264,6 @@ services:
       # Each environment's Content-Security-Policy: off, report-only or enforce. See the Caddyfile.
       SITE_CSP: ${SITE_CSP:-off}
       DEV_CSP: ${DEV_CSP:-report-only}
-      # Whether production's /count reaches the page counter (on) or is answered and dropped (off).
-      SITE_ANALYTICS: ${SITE_ANALYTICS:-off}
       # Whether production's POST /count reaches Umami (on) or is answered and dropped (off).
       SITE_UMAMI: ${SITE_UMAMI:-off}
       # The key the site serves at /<key>.txt for IndexNow; empty serves nothing.
@@ -313,7 +309,7 @@ services:
       PGUSER: postgres
       PGPASSWORD: ${POSTGRES_PASSWORD}
       # A database the server does not have is skipped, so the counter's is named whether it is on or not.
-      BACKUP_DATABASES: essenthos_app essenthos_app_dev essenthos_stats essenthos_umami
+      BACKUP_DATABASES: essenthos_app essenthos_app_dev essenthos_umami
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
       BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-3}
       # Without a key in backup-key/ a run writes nothing and fails, unless this is "yes".
@@ -336,38 +332,7 @@ services:
       db:
         condition: service_healthy
 
-  # The page counter: GoatCounter, counting production's pages by path, referrer, country, browser,
-  # system, screen class and language, with no cookie and nothing kept in the browser. It tells one
-  # visit from the next by the address and browser, in memory for at most eight hours, and never
-  # writes either. Off unless COMPOSE_PROFILES names it and SITE_ANALYTICS=on sends it production's
-  # /count; its counts live in essenthos_stats on the same Postgres and are backed up with the rest.
-  #
-  # The only public way in is /count, through the proxy. Its dashboard is bound to the machine's
-  # loopback and reached through an ssh tunnel, so the owner's sign-in never faces the internet.
-  # Pinned by digest; re-pin with
-  #   docker buildx imagetools inspect arp242/goatcounter:<version> --format '{{.Manifest.Digest}}'
-  analytics:
-    profiles: ["analytics"]
-    image: arp242/goatcounter:2.7.0@sha256:791df3317bf5ce379511181a4802aaf29127a318b372d4fe39ec59e1c5af44be
-    restart: unless-stopped
-    logging: *logging
-    mem_limit: ${ANALYTICS_MEM_LIMIT:-256m}
-    # lib/pq reads the password from PGPASSWORD, so it is in neither the command line nor a log line.
-    command:
-      - serve
-      - -automigrate
-      - -listen=:8080
-      - -tls=http
-      - -db=postgresql+host=db port=5432 dbname=essenthos_stats user=essenthos_stats sslmode=disable
-    environment:
-      PGPASSWORD: ${STATS_PASSWORD:-}
-    ports:
-      - "127.0.0.1:${ANALYTICS_HOST_PORT:-8081}:8080"
-    depends_on:
-      db:
-        condition: service_healthy
-
-  # The page counter's successor: Umami, on its own database and role on the same Postgres, with no
+  # The page counter: Umami, on its own database and role on the same Postgres, with no
   # ClickHouse. It stores a row per page view and per reader's day: the page, the referring site, country,
   # region, city, browser, system, device, screen and language, under a hash of address, browser, date and
   # APP_SECRET (SALT_ROTATION=day, read in v3.4.1's api/send/route.ts and lib/crypto.ts). The address itself
