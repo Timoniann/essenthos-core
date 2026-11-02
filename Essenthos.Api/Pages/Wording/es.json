@@ -263,6 +263,10 @@
       "title": "Concordancia",
       "description": "Cada versículo en que aparece una palabra, y la palabra hebrea o griega que traduce."
     },
+    "word": {
+      "title": "Una palabra en su texto",
+      "description": "Cada lugar donde una palabra está en una Biblia, y cada lugar de su original con cómo esa Biblia lo traduce."
+    },
     "parallels": {
       "title": "Pasajes paralelos",
       "description": "Dos pasajes que narran los mismos hechos, lado a lado."

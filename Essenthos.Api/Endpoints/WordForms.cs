@@ -17,7 +17,8 @@ namespace Essenthos.Core.Endpoints;
 /// says so by answering one form.
 ///
 /// A text has a few tens of thousands of spellings and the corpus is read-only while the process
-/// runs, so each text's are read once, on the index that leads with the text, and kept.
+/// runs, so each text's are read once and kept: from what the load counted, a few milliseconds off one
+/// index, or from the words themselves on a corpus the load has not counted.
 /// </summary>
 internal sealed class WordForms(IServiceScopeFactory scopes)
 {
@@ -50,13 +51,26 @@ internal sealed class WordForms(IServiceScopeFactory scopes)
 
         var language = await db.Texts.Where(t => t.Id == textId).Select(t => t.Language)
             .FirstAsync(cancellationToken);
-        var spellings = await db.Words
+
+        return new FormIndex(language, await Spellings(db, textId, cancellationToken));
+    }
+
+    internal static async Task<List<WordForm>> Spellings(AppDbContext db, int textId, CancellationToken cancellationToken)
+    {
+        var counted = await db.TextForms
+            .Where(f => f.TextId == textId)
+            .Select(f => new WordForm(f.Form, f.Occurrences))
+            .ToListAsync(cancellationToken);
+        if (counted.Count > 0)
+        {
+            return counted;
+        }
+
+        return await db.Words
             .Where(w => w.TextId == textId && w.NormalisedText != null && !w.Elided)
             .GroupBy(w => w.NormalisedText!)
             .Select(g => new WordForm(g.Key, g.Count()))
             .ToListAsync(cancellationToken);
-
-        return new FormIndex(language, spellings);
     }
 }
 

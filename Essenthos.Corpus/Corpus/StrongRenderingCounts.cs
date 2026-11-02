@@ -319,6 +319,79 @@ internal static class StrongRenderingCounts
         return await Read(command, reader => reader.GetInt64(0), cancellationToken);
     }
 
+    /// <summary>The words of the edition carrying the number that no link of the text reaches, read as the reach is.</summary>
+    private const string OfNotRendered =
+        $"""
+         WITH numbered AS MATERIALIZED (
+             SELECT id FROM word WHERE strong_number = @number AND text_id = @witness
+         ),
+         pair AS MATERIALIZED (
+             SELECT l.id
+             FROM link l
+             WHERE ((l.from_text_id = @text AND l.to_text_id = @witness)
+                    OR (l.to_text_id = @text AND l.from_text_id = @witness))
+               AND {Rendering}
+         )
+         SELECT id FROM numbered
+         EXCEPT
+         SELECT s.word_id
+         FROM pair p
+         JOIN link_word s ON s.link_id = p.id
+         WHERE s.word_id IN (SELECT id FROM numbered)
+         """;
+
+    /// <summary>The words of <paramref name="witnessId"/> carrying <paramref name="number"/> that the text renders with nothing.</summary>
+    public static async Task<List<long>> NotRendered(
+        AppDbContext db,
+        string number,
+        int textId,
+        int witnessId,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(OfNotRendered, await Open(db, cancellationToken));
+        command.Parameters.AddWithValue("number", number);
+        command.Parameters.AddWithValue("text", textId);
+        command.Parameters.AddWithValue("witness", witnessId);
+        return await Read(command, reader => reader.GetInt64(0), cancellationToken);
+    }
+
+    /// <summary>
+    /// The phrase of each of a page of words, started from those words: a page's worth of index reads,
+    /// whatever the size of the text's links.
+    /// </summary>
+    private const string OfOriginals =
+        $"""
+         WITH pairs AS (
+             SELECT DISTINCT s.link_id, s.side, '' AS number, s.word_id AS original
+             FROM link_word s
+             JOIN link l ON l.id = s.link_id
+             WHERE s.word_id = ANY(@originals)
+               AND (l.from_text_id = @text OR l.to_text_id = @text)
+               AND {Rendering}
+         ),
+         {Rendered}
+         SELECT original, phrase FROM rendered WHERE phrase IS NOT NULL
+         """;
+
+    /// <summary>How the text renders each of these words of an original, by the phrase its renderings count; absent where nothing does.</summary>
+    public static async Task<Dictionary<long, string>> PhrasesOf(
+        AppDbContext db,
+        int textId,
+        IReadOnlyCollection<long> originals,
+        CancellationToken cancellationToken)
+    {
+        if (originals.Count == 0)
+        {
+            return [];
+        }
+
+        await using var command = new NpgsqlCommand(OfOriginals, await Open(db, cancellationToken));
+        command.Parameters.AddWithValue("text", textId);
+        command.Parameters.AddWithValue("originals", originals.ToArray());
+        return (await Read(command, reader => (Word: reader.GetInt64(0), Phrase: reader.GetString(1)), cancellationToken))
+            .ToDictionary(row => row.Word, row => row.Phrase);
+    }
+
     /// <summary>
     /// The commonest <see cref="Kept"/> phrases and the reach of every number the text renders, counted
     /// over the editions it is most fully joined to (<paramref name="primary"/>): what the entry page

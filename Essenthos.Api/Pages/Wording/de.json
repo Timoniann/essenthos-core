@@ -261,6 +261,10 @@
       "title": "Konkordanz",
       "description": "Jeder Vers, in dem ein Wort vorkommt, und das hebräische oder griechische Wort, das es übersetzt."
     },
+    "word": {
+      "title": "Ein Wort im Text",
+      "description": "Jede Stelle, an der ein Wort in einer Bibel steht, und jede Stelle seines Originals mit der Übersetzung dieser Bibel."
+    },
     "parallels": {
       "title": "Parallelstellen",
       "description": "Zwei Abschnitte, die dieselben Ereignisse erzählen, nebeneinander."

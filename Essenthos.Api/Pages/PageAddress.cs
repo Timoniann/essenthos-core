@@ -54,6 +54,7 @@ internal static class PageSections
         new("kings", "/timeline/kings"),
         new("map", "/map"),
         new("concordance", "/concordance", Queries: ["word"]),
+        new("word", "/word", Listed: false, Queries: ["word", "strong"]),
         new("parallels", "/parallels", Listed: false, Queries: ["a", "b"]),
         new(Search, "/search", Listed: false, Queries: ["q"]),
         new("about", "/about"),

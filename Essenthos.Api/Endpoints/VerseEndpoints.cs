@@ -88,8 +88,11 @@ internal static class VerseEndpoints
             [FromQuery] string? entity,
             [FromQuery] string? strong,
             [FromQuery] string? occupation,
+            [FromQuery] string? word,
+            [FromQuery] bool? exact,
             AppDbContext db,
             ICanonIndex canon,
+            WordForms forms,
             CancellationToken cancellationToken) =>
         {
             var text = corpus is { Length: > 0 }
@@ -172,7 +175,23 @@ internal static class VerseEndpoints
                     "An occupation is marked as one person's: ask with entity=<person> beside occupation=<slug>."));
             }
 
-            var found = await Read(db, text.Id, keys, named, cancellationToken, number, occupation);
+            // A word's forms are the ones its list counted, so a verse of that list marks what put it there.
+            IReadOnlyCollection<string>? spellings = null;
+            if (word is { Length: > 0 } && named is null && number is null)
+            {
+                var terms = SearchTerms.Parse(word);
+                if (terms.Length != 1)
+                {
+                    return Results.BadRequest(new ProblemResponse(
+                        "Ask to mark one word, as word=love. A phrase is not one word of the text."));
+                }
+
+                spellings = [.. (await forms.Of(text.Id, cancellationToken))
+                    .Matching(terms[0], exact ?? false)
+                    .Select(form => form.Text)];
+            }
+
+            var found = await Read(db, text.Id, keys, named, cancellationToken, number, occupation, spellings);
 
             var answered = found
                 .Select(verse => (verse.Book.Ordinal * Address.BookStride)
@@ -206,6 +225,7 @@ internal static class VerseEndpoints
     /// <para>
     /// With a Strong number and no entity, the words marked are those that carry the number or render
     /// a word that does, by the links alone: a list of where a word stands shows it in each verse.
+    /// With spellings instead, the words marked are those the text prints so.
     /// </para>
     /// </summary>
     internal static async Task<List<VerseTextResponse>> Read(
@@ -215,7 +235,8 @@ internal static class VerseEndpoints
         string? named,
         CancellationToken cancellationToken,
         string? strong = null,
-        string? occupation = null)
+        string? occupation = null,
+        IReadOnlyCollection<string>? printed = null)
     {
         // The book narrows the match to what the placement index can find; the packed number then
         // picks the addresses out of those books, on the same arithmetic the encyclopedia orders by.
@@ -263,7 +284,7 @@ internal static class VerseEndpoints
 
         var words = (await db.Words
                 .Where(w => verseIds.Contains(w.VerseId))
-                .Select(w => new { w.VerseId, w.Id, w.Surface, w.Trailer, w.Position })
+                .Select(w => new { w.VerseId, w.Id, w.Surface, w.Trailer, w.Position, w.NormalisedText, w.Elided })
                 .ToListAsync(cancellationToken))
             .GroupBy(word => word.VerseId)
             .ToDictionary(group => group.Key, group => group.OrderBy(word => word.Position).ToList());
@@ -277,9 +298,13 @@ internal static class VerseEndpoints
                 ? await Naming(db, wordIds, named, cancellationToken)
                 : strong is not null
                     ? await Numbered(db, wordIds, [strong], cancellationToken)
-                    : [];
+                    : printed is not null
+                        ? [.. words.Values.SelectMany(list => list)
+                            .Where(word => !word.Elided && word.NormalisedText is not null && printed.Contains(word.NormalisedText))
+                            .Select(word => word.Id)]
+                        : [];
         var spellings = named is null || occupation is { Length: > 0 } ? [] : await Spellings(db, textId, named, cancellationToken);
-        var marking = named is not null || strong is not null;
+        var marking = named is not null || strong is not null || printed is not null;
 
         return chosen
             .GroupBy(place => new { place.Key, place.CanonicalBook, place.CanonicalChapter, place.CanonicalVerse })

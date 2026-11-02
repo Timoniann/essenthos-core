@@ -121,6 +121,7 @@ internal static class StrongEndpoints
             [FromQuery] int? take,
             [FromQuery] string? rendering,
             [FromQuery] string? renderedIn,
+            [FromQuery] bool? unrendered,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -132,29 +133,50 @@ internal static class StrongEndpoints
             }
 
             var words = db.Words.Where(w => w.StrongNumber == canonical);
-            if (rendering is { Length: > 0 })
+            if (rendering is { Length: > 0 } && renderedIn is not { Length: > 0 })
             {
-                // The places behind one row of the renderings: the edition's words the text renders
-                // with exactly this phrase, counted as the renderings are.
-                if (renderedIn is not { Length: > 0 })
-                {
-                    return Results.BadRequest(new ProblemResponse(
-                        "Name the text the rendering is written in, as ?renderedIn=KJV."));
-                }
+                return Results.BadRequest(new ProblemResponse(
+                    "Name the text the rendering is written in, as ?renderedIn=KJV."));
+            }
 
+            // Asked of a translation, the list is the words of the edition that text is counted over,
+            // each with the phrase it is rendered by there: all of them, the ones it renders with one
+            // phrase, or the ones it renders with nothing.
+            int? renderedBy = null;
+            if (renderedIn is { Length: > 0 })
+            {
                 if (await canon.Text(renderedIn, cancellationToken) is not { } translation)
                 {
                     return Results.NotFound(new ProblemResponse($"There is no text \"{renderedIn}\"."));
                 }
 
+                renderedBy = translation.Id;
                 var witness = LinkedOriginals.WitnessFor(
                     LinkedOriginals.Primary(await LinkedOriginals.Of(db, translation.Id, cancellationToken)), canonical);
-                var rendered = witness is null
-                    ? []
-                    : await StrongRenderingCounts.RenderedAs(
-                        db, canonical, translation.Id, witness.Id, rendering, cancellationToken);
-                words = words.Where(w => rendered.Contains(w.Id));
+                if (rendering is { Length: > 0 })
+                {
+                    // The places behind one row of the renderings, counted as the renderings are.
+                    var rendered = witness is null
+                        ? []
+                        : await StrongRenderingCounts.RenderedAs(
+                            db, canonical, translation.Id, witness.Id, rendering, cancellationToken);
+                    words = words.Where(w => rendered.Contains(w.Id));
+                }
+                else if (unrendered == true)
+                {
+                    var missed = witness is null
+                        ? []
+                        : await StrongRenderingCounts.NotRendered(
+                            db, canonical, translation.Id, witness.Id, cancellationToken);
+                    words = words.Where(w => missed.Contains(w.Id));
+                }
+                else
+                {
+                    // A text joined to no edition holding the number has no places to answer with.
+                    words = words.Where(w => w.TextId == (witness == null ? 0 : witness.Id));
+                }
             }
+
             if (corpus is { Length: > 0 })
             {
                 // Resolved rather than compared to the column, so that a spelling the corpus does
@@ -174,7 +196,18 @@ internal static class StrongEndpoints
                 words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal == ordinal);
             }
 
-            return Results.Ok(await OccurrencePage(db, canonical, words, skip, take, cancellationToken));
+            var page = await OccurrencePage(db, canonical, words, skip, take, cancellationToken);
+            if (renderedBy is not { } translationId)
+            {
+                return Results.Ok(page);
+            }
+
+            var phrases = await StrongRenderingCounts.PhrasesOf(
+                db, translationId, [.. page.Items.Select(item => item.WordId)], cancellationToken);
+            return Results.Ok(page with
+            {
+                Items = [.. page.Items.Select(item => item with { Rendered = phrases.GetValueOrDefault(item.WordId) })],
+            });
         });
 
         MapRenderings(routes);
@@ -885,6 +918,12 @@ internal record StrongOccurrenceResponse(
     /// <c>3:19</c> for Malachi 4:1, <c>3:1</c> for a psalm's title. Null where the two agree.
     /// </summary>
     public IList<string>? Printed { get; init; }
+
+    /// <summary>
+    /// The phrase the text named by <c>renderedIn</c> renders this word with, as its renderings count
+    /// it. Null where that text was not asked about, or no link of its reaches the word.
+    /// </summary>
+    public string? Rendered { get; init; }
 }
 
 /// <param name="ByText">How many of <paramref name="Total"/> stand in each text, most first.</param>

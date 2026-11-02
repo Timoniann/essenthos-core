@@ -261,6 +261,10 @@
       "title": "Concordance",
       "description": "Every verse a word is used in, and the Hebrew or Greek it translates."
     },
+    "word": {
+      "title": "A word in its text",
+      "description": "Every place a word stands in a Bible, and every place its original stands with how that Bible translates it."
+    },
     "parallels": {
       "title": "Parallel passages",
       "description": "Two passages that tell the same events, side by side."
