@@ -7,7 +7,7 @@ internal sealed record PageCount(int Total, int Done, int Failed);
 /// <param name="Read">How many items have an answer; the other three are how they were answered.</param>
 internal sealed record ItemCount(int Total, int Read, int Right, int Wrong, int Neither);
 
-/// <param name="Folder">The pipeline folder under <c>Resources/Essenthos/generation</c>.</param>
+/// <param name="Folder">The pipeline folder under <c>Resources/Essenthos/page-readings</c>.</param>
 /// <param name="Action">The avioniq action that runs it, which is how the owner starts it.</param>
 /// <param name="State"><c>running</c>, <c>done</c>, <c>limit</c> (Codex's usage limit stopped it) or <c>failed</c>.</param>
 /// <param name="Updated">When the run last wrote, so a run that died while <c>running</c> shows its age.</param>
@@ -36,14 +36,14 @@ internal sealed class PageReadings(DeskPaths paths, ILogger<PageReadings> logger
 
     public IReadOnlyList<PageReading> Read()
     {
-        var generation = Path.Combine(paths.Owner, "generation");
-        if (!Directory.Exists(generation))
+        var readingsFolder = Path.Combine(paths.Owner, "page-readings");
+        if (!Directory.Exists(readingsFolder))
         {
             return [];
         }
 
         var readings = new List<PageReading>();
-        foreach (var folder in Directory.EnumerateDirectories(generation, "pages-*").Order(StringComparer.Ordinal))
+        foreach (var folder in Directory.EnumerateDirectories(readingsFolder, "pages-*").Order(StringComparer.Ordinal))
         {
             var file = Path.Combine(folder, "progress.json");
             if (!File.Exists(file))

@@ -1,5 +1,7 @@
 # Person occupations: TSK-1250
 
+> Historical (TSK-1452): the run folders named below were archived on 2026-11-04 from `Resources/Essenthos/generation/` to `E:\EssenthosArchive\generation\<run>`, with a verified manifest beside it.
+
 The owner authorized preparing and launching Sonnet 5.5 readings for all current persons with a new **$100 total estimated API budget**, including pilot, drafts, verifier calls and retries. This is generation for review, without occupation database/UI admission. Presence admission is separate and already served.
 
 ## Frozen run

@@ -194,3 +194,20 @@ public sealed class TextConversionTests : IDisposable
             .Should().Be("""{"x": {"a": [1, 2], "bb": 1}, "pos": "art", "language": "hbo"}""");
     }
 }
+
+/// <summary>
+/// Every source a catalogued text declares is where it says. The converter leaves a missing source out of a text's
+/// inputs without a word, so a source that moved (the page readings when generation/ was archived, TSK-1452) would
+/// quietly stop deciding whether the text is made again.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public sealed class TextCatalogueSourceTests
+{
+    [Fact]
+    public void EverySourceATextDeclaresIsOnDisk() =>
+        TextCatalogue.All
+            .SelectMany(text => text.Sources, (text, source) => (text.Slug, Path: TestResources.Folder(source), Source: source))
+            .Where(entry => !File.Exists(entry.Path) && !Directory.Exists(entry.Path))
+            .Select(entry => $"{entry.Slug}: {entry.Source}")
+            .Should().BeEmpty();
+}

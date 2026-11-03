@@ -762,17 +762,17 @@ public sealed class DeskTests : IAsyncLifetime
     [Fact]
     public async Task APageReadingShowsHowFarItHasGot()
     {
-        var generation = Path.Combine(Repository, "Resources", "Essenthos", "generation");
-        Directory.CreateDirectory(Path.Combine(generation, "pages-ottley"));
-        Directory.CreateDirectory(Path.Combine(generation, "pages-swete"));
-        Directory.CreateDirectory(Path.Combine(generation, "pages-half"));
-        File.WriteAllText(Path.Combine(generation, "pages-ottley", "progress.json"), """
+        var readingsFolder = Path.Combine(Repository, "Resources", "Essenthos", "page-readings");
+        Directory.CreateDirectory(Path.Combine(readingsFolder, "pages-ottley"));
+        Directory.CreateDirectory(Path.Combine(readingsFolder, "pages-swete"));
+        Directory.CreateDirectory(Path.Combine(readingsFolder, "pages-half"));
+        File.WriteAllText(Path.Combine(readingsFolder, "pages-ottley", "progress.json"), """
             {"title": "Ottley", "action": "pages-ottley", "state": "limit", "started": "2026-10-10T09:00:00+00:00",
              "updated": "2026-10-10T10:00:00+00:00", "pages": {"total": 102, "done": 40, "failed": 0},
              "items": {"total": 1008, "read": 400, "right": 380, "wrong": 15, "neither": 5},
              "note": "Codex stopped at its usage limit.", "after": null}
             """);
-        File.WriteAllText(Path.Combine(generation, "pages-half", "progress.json"), """{"title": "Ha""");
+        File.WriteAllText(Path.Combine(readingsFolder, "pages-half", "progress.json"), """{"title": "Ha""");
 
         var readings = await Json<List<PageReading>>(await _http.GetAsync("/desk-api/texts/pages"));
 

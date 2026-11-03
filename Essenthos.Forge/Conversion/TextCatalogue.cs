@@ -27,16 +27,19 @@ internal static class TextCatalogue
     /// <summary>
     /// The second reading of Swete's and Ottley's text, made from the printed pages: the readings and verdicts the
     /// tables their readers apply (<c>Swete/SweteSettled.json</c>, <c>Swete/OttleyPage.json</c>) are written from. A
-    /// change to them makes the texts again.
+    /// change to them makes the texts again. They live under <c>Resources/Essenthos/page-readings/</c>, our own readings
+    /// kept beside the rest of our data; the provenance of other model runs is archived off the checkout.
     /// </summary>
-    private const string SwetePages = "Essenthos/generation/pages-swete-2026-10-10/out";
+    private const string SwetePages = "Essenthos/page-readings/pages-swete-2026-10-10/out";
 
+    /// <summary>Ottley's readings, and <c>write_table.py</c>, which writes <c>Swete/OttleyPage.json</c> from them.</summary>
     private static readonly string[] OttleyPages =
     [
-        "Essenthos/generation/pages-ottley-2026-10-09/settled.json",
-        "Essenthos/generation/pages-ottley-2026-10-09/accepted.json",
-        "Essenthos/generation/pages-ottley-2026-10-09/places.json",
-        "Essenthos/generation/pages-ottley-2026-10-09/transcribed.txt",
+        "Essenthos/page-readings/pages-ottley-2026-10-09/settled.json",
+        "Essenthos/page-readings/pages-ottley-2026-10-09/accepted.json",
+        "Essenthos/page-readings/pages-ottley-2026-10-09/places.json",
+        "Essenthos/page-readings/pages-ottley-2026-10-09/transcribed.txt",
+        "Essenthos/page-readings/pages-ottley-2026-10-09/write_table.py",
     ];
 
     private static readonly Lazy<IReadOnlyList<CataloguedText>> Known = new(Build);

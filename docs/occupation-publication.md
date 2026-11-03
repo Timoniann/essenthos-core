@@ -64,5 +64,5 @@ renderings of the number in its text. A pronoun is never marked; a word occurrin
 only where it is among those renderings ten times or more. `/v1/text`, `/v1/parallel` send them as a word's
 `roles`; `/v1/verses?entity=<person>&occupation=<slug>` marks them in a verse list.
 
-The admitted generation folders under `Resources/Essenthos/generation/occupation-*` are the record of how the
+The admitted generation folders under `E:\EssenthosArchive\generation\occupation-*` (under `Resources/Essenthos/generation/` until 2026-11-04, TSK-1452) are the record of how the
 file was made (Claude Sonnet 5.5 readings, Codex's source review, TSK-1250/1251/1254); requests never read them.

@@ -156,7 +156,7 @@
     { "path": "Resources/Essenthos/name-forms/**", "areas": ["Names"] },
     { "path": "Resources/Essenthos/name-glosses/**", "areas": ["Names"] },
     { "path": "Resources/Essenthos/lexicon/**", "areas": ["Lexicon"] },
-    { "path": "Resources/Essenthos/generation/**", "areas": ["Witnesses", "Lexicon"] },
+    { "path": "Resources/Essenthos/page-readings/**", "areas": ["Witnesses"] },
     { "path": "Resources/Essenthos/sites/**", "areas": ["Platform"] },
     { "path": "Resources/Essenthos/visitors/**", "areas": ["Platform"] },
     { "path": "Resources/Essenthos/**", "areas": ["Records", "Names"] },

@@ -1,3 +1,7 @@
+# Historical (TSK-1452): the run folders this script names under Resources/Essenthos/generation were archived on
+# 2026-11-04 to E:\EssenthosArchive\generation\<run>, with a verified manifest beside it. The script is kept as the record
+# of how the run was made and no longer runs as written; to run it again, point it at a copy of the run folder, never
+# at the archive itself.
 param(
     [ValidateSet('es')][string] $Language = 'es',
     [ValidateSet('prepare','smoke','pilot','repair','full','check-pilot','check-full','status','publish','judge-smoke','preflight','transport-smoke','finish-prepare','finish-recover','finish-repair','finish-check','finish-status','finish-publish')]
