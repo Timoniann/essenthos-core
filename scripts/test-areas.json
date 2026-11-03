@@ -9,7 +9,8 @@
     "Records": "The encyclopedia: records, own records and rulings, descriptors, relationships, families, events, periods, places.",
     "Reader": "What the API serves the reader: verse, context, search, word, entity and page endpoints.",
     "Platform": "Accounts, the desk, deployment, publication, downloads, Forge verbs and the load's steps.",
-    "Integrity": "Verification and corpus checks, schema invariants, provenance and licences of every text."
+    "Integrity": "Verification and corpus checks, schema invariants, provenance and licences of every text.",
+    "Products": "The product files of the corpus build: keys, verse hashes, headers, the manifest, the formats and the store."
   },
   "rules": [
     { "path": "Resources/Essenthos/owner-changes.jsonl", "areas": [] },
@@ -63,6 +64,8 @@
     { "path": "Essenthos.Corpus/Strong/**", "areas": ["Lexicon", "Links", "Reader", "Witnesses"] },
     { "path": "Essenthos.Corpus/Utils/UnicodeNormalization*.cs", "areas": ["Lexicon", "Links", "Names", "Reader", "Witnesses"] },
     { "path": "Essenthos.Corpus/Utils/**", "areas": ["Lexicon", "Links", "Witnesses"] },
+
+    { "path": "Essenthos.Products/**", "areas": ["all"] },
 
     { "path": "Essenthos.Forge/Loading/Links/Evidentia/**", "areas": ["Evidentia", "Links", "Platform"] },
     { "path": "Essenthos.Forge/Loading/Links/**", "areas": ["Links", "Evidentia", "Names", "Witnesses"] },

@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
+        <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
     </ItemGroup>
 
     <ItemGroup>

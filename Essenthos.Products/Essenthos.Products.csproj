@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Products</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
+
+    <!-- The product files of the corpus build: keys, headers, hashes, the manifest and the readers and
+         writers of the formats. The Forge writes them, the API will read the panes, and a viewer or a
+         converter outside this solution reads them too, so this assembly depends on nothing: no
+         Entity Framework, no Npgsql, no corpus schema. Everything in it is public for the same
+         reason. -->
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+</Project>
