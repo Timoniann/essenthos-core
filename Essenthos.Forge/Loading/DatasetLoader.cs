@@ -10,6 +10,7 @@ using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Links.Evidentia;
 using Essenthos.Core.Loading.Marks;
+using Essenthos.Core.Products;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -91,7 +92,7 @@ internal sealed class DatasetLoader(
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             var text = await db.Texts.SingleAsync(t => t.Slug == slug, cancellationToken);
             status.Record(await scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>()
-                .Place(text, rules, cancellationToken));
+                .Place(text, rules, cancellationToken, new ProductStore(resources)));
         }
 
         // A module's psalm titles are marked as titles, which the full load reads at its own step.
@@ -277,7 +278,7 @@ internal sealed class DatasetLoader(
     [
         "SynodalStrong", "ChineseUnion1919", "ReinaValera1909", "Segond1910Strong", "DarbyFrench", "Schlachter1951",
         "RevisedLiteral", "Byzantine", "mapping", "OpenHebrewBible", "Door43", "Berean", "Swete", "STEPBible",
-        "Versification", .. Bible4uFiles(), "Septuagint",
+        "Versification", "Essenthos/versification", .. Bible4uFiles(), "Septuagint",
     ];
 
     /// <summary>
@@ -485,11 +486,11 @@ internal sealed class DatasetLoader(
                 }),
             .. In(LoadModules.SyntaxFrame,
                 new LoadStep("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)) { Files = ["etcbc"] },
-                new LoadStep("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)) { Files = ["Versification"] }),
+                new LoadStep("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)) { Files = ["Versification", "Essenthos/versification"] }),
             .. In(LoadModules.Texts,
                 new LoadStep("misprints", cancellationToken => CorrectWhatTheirFilesMisprint(resources, cancellationToken))
                 {
-                    Files = [.. bible4u, "Septuagint", "mapping", "STEPBible", "SynodalStrong", "Versification"],
+                    Files = [.. bible4u, "Septuagint", "mapping", "STEPBible", "SynodalStrong", "Versification", "Essenthos/versification"],
                 },
                 new LoadStep("psalm-openings", cancellationToken => OpenThePsalmsTheirEditionsOpenWith(resources, cancellationToken))
                 {
@@ -981,7 +982,8 @@ internal sealed class DatasetLoader(
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 var brenton = await db.Texts.SingleAsync(t => t.Slug == SeptuagintTextSource.Slug, cancellationToken);
                 var placed = await scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>().Place(
-                    brenton, TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt")), cancellationToken);
+                    brenton, TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt")), cancellationToken,
+                    new ProductStore(resources));
                 status.Record(placed);
                 if (!placed.AlreadyPlaced)
                 {
@@ -1105,10 +1107,14 @@ internal sealed class DatasetLoader(
     /// Every text is placed in the shared frame after all of them are loaded, so that a text added
     /// later is placed on the next boot without the others being touched.
     /// </summary>
-    public Task Reframe(CancellationToken cancellationToken) =>
-        PlaceInTheFrame(ResourcePaths.Read(configuration, environment.ContentRootPath), cancellationToken);
+    public Task Reframe(IReadOnlySet<string>? slugs, CancellationToken cancellationToken) =>
+        PlaceInTheFrame(ResourcePaths.Read(configuration, environment.ContentRootPath), cancellationToken, slugs);
 
-    private async Task PlaceInTheFrame(string resources, CancellationToken cancellationToken)
+    /// <summary>
+    /// Every text, or the ones named, placed in the frame through its frame file
+    /// (<c>Resources/Essenthos/texts/&lt;SLUG&gt;/frame</c>), which is written from the verses as they stand.
+    /// </summary>
+    private async Task PlaceInTheFrame(string resources, CancellationToken cancellationToken, IReadOnlySet<string>? slugs = null)
     {
         status.Starting("the canonical frame");
         var rules = TvtmsReader.Read(ResourcePaths.File(resources, "Versification", "TVTMS.txt"));
@@ -1117,8 +1123,14 @@ internal sealed class DatasetLoader(
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var loader = scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>();
 
+        var store = new ProductStore(resources);
         foreach (var text in await db.Texts.OrderBy(t => t.Slug).ToListAsync(cancellationToken))
         {
+            if (slugs is not null && !slugs.Contains(text.Slug))
+            {
+                continue;
+            }
+
             if (!rules.Covers(text.Versification))
             {
                 logger.LogWarning(
@@ -1128,8 +1140,10 @@ internal sealed class DatasetLoader(
                 continue;
             }
 
-            status.Record(await loader.Place(text, rules, cancellationToken));
+            status.Record(await loader.Place(text, rules, cancellationToken, store));
         }
+
+        store.Save();
     }
 
     /// <summary>

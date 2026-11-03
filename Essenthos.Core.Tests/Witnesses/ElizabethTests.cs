@@ -124,7 +124,7 @@ public sealed class ElizabethPlacementTests : IDisposable
     {
         await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).Load(SwordTextSource.Read(ElizabethTests.Folder));
         var text = await _db.Texts.SingleAsync();
-        await new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance).Place(text, TvtmsReader.Read(TestResources.Tvtms));
+        await new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance).Place(text, TestResources.Rules);
 
         var unplaced = await _db.Verses.CountAsync(v => v.TextId == text.Id && !_db.VerseReferences.Any(r => r.VerseId == v.Id && r.IsPrimary));
         var placed = await _db.VerseReferences.Where(r => r.IsPrimary && r.Verse!.TextId == text.Id && r.CanonicalBook <= 66)

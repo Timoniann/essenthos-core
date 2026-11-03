@@ -1,0 +1,39 @@
+# product    Essenthos/versification/schemes.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
+# The numbering schemes the versification data (TVTMS) names, and the tradition each belongs to.
+#
+# The first scheme of a tradition is the one the tradition is named after; the rest are its variants.
+# The order is the order they are weighed in: where two schemes of a tradition answer an edition's
+# tests equally, the earlier one is taken. The data names twelve Greek schemes, not one, and which of
+# them an edition follows is answered by the edition rather than by its language. The Russian schemes
+# are absent from the data, so a Synodal text cannot be placed from this source and has to say so
+# rather than fall back to its own numbering and look right.
+#
+# Columns, tab-separated:
+#   tradition  original, english, septuagint or vulgate
+#   scheme     the scheme's name as the data writes it in its SourceType column
+#   divided    for an undivided scheme, the divided scheme it is written against; '-' for the others.
+#              The data writes an undivided scheme as only the rows that differ from the divided one
+#              (in Exodus 40 three rows about 38:27 and nothing about the renumbering of the chapter),
+#              so it is read as the divided scheme's rows with its own in place of the ones about the
+#              same verses.
+#   why        what the row says beyond its name, or '-' where its name is all the data says of it
+tradition	scheme	divided	why
+original	Hebrew	-	the Hebrew Bible's numbering
+english	Eng-KJV	-	the English Bibles' numbering
+english	EngTitleSeparate	-	the English numbering with a psalm's title as a verse of its own
+english	EngTitleMerged	-	the English numbering with a psalm's title run into its first verse
+septuagint	Greek	-	the Septuagint's numbering
+septuagint	Greek2	-	-
+septuagint	Greek3	-	-
+septuagint	GreekUndivided	Greek	the Greek scheme where a verse the Greek scheme divides is printed whole
+septuagint	GreekUndivided2	-	-
+septuagint	Greek2Undivided	Greek2	the Greek2 scheme where a verse it divides is printed whole
+septuagint	GreekIntegrated	-	-
+septuagint	GreekIntegrated2	-	-
+septuagint	Greek2-NETS	-	the Septuagint as the New English Translation of the Septuagint numbers it
+septuagint	GrkTitleSeparate	-	the Greek numbering with a psalm's title as a verse of its own
+septuagint	GrkTitleSeparate2	-	-
+septuagint	GrkTitleMerged	-	the Greek numbering with a psalm's title run into its first verse
+vulgate	Latin	-	the Vulgate's numbering
+vulgate	Latin2	-	-

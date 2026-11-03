@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Products;
 using Essenthos.Core.Publishing;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
@@ -260,11 +261,153 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// The texts named (every text by default) placed in the frame: each one's frame file written from
+    /// its verses as they stand, and its rows of <c>verse_reference</c> filled from the file.
+    /// </summary>
     private static async Task<int> Reframe(ForgeRun forge, string[] args)
     {
         using var scope = forge.Scope();
-        await scope.ServiceProvider.GetRequiredService<DatasetLoader>().Reframe(CancellationToken.None);
+        await scope.ServiceProvider.GetRequiredService<DatasetLoader>().Reframe(Slugs(args), CancellationToken.None);
         return 0;
+    }
+
+    /// <summary>
+    /// The frame files of the texts named (every text by default), written from the verses of the
+    /// configured corpus or of <c>--database</c>, which is only read.
+    /// </summary>
+    private static async Task<int> FrameFiles(ForgeRun forge, string[] args)
+    {
+        var rules = Loading.Frame.TvtmsReader.Read(Configuration.ResourcePaths.File(forge.Resources, "Versification", "TVTMS.txt"));
+        var store = new ProductStore(forge.Resources);
+        await using var db = OnDatabase(forge, Option(args, "--database"));
+        var loader = new CanonicalFrameLoader(db, Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
+        var source = db.Database.GetDbConnection().Database;
+        var slugs = Slugs(args);
+
+        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        {
+            if ((slugs is not null && !slugs.Contains(text.Slug)) || !rules.Covers(text.Versification))
+            {
+                continue;
+            }
+
+            var framed = await loader.Framed(text, rules, CancellationToken.None);
+            CanonicalFrameLoader.Write(text, rules, store, framed, source);
+            Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
+                $"{text.Slug}\t{framed.Verses.Count} verses\t{framed.Rows.Count} lines\t{framed.Titles} title rows\t{store.RelativePath(Loading.Frame.FrameFile.Product(text.Slug), ProductKind.Machine)}"));
+        }
+
+        store.Save();
+        return 0;
+    }
+
+    /// <summary>Every text's rows of <c>verse_reference</c> filled from its frame file, in the configured corpus or <c>--database</c>.</summary>
+    private static async Task<int> FrameLoad(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(forge.Resources);
+        await using var db = OnDatabase(forge, Option(args, "--database"));
+        var loader = new CanonicalFrameLoader(db, forge.Logger is ILogger<CanonicalFrameLoader> typed
+            ? typed
+            : Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
+        var slugs = Slugs(args);
+
+        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        {
+            if ((slugs is not null && !slugs.Contains(text.Slug)) || !store.Exists(Loading.Frame.FrameFile.Product(text.Slug)))
+            {
+                continue;
+            }
+
+            Console.WriteLine(await loader.Fill(text, store));
+        }
+
+        return 0;
+    }
+
+    /// <summary>The texts named before the first option, or null for every text.</summary>
+    private static HashSet<string>? Slugs(string[] args)
+    {
+        var named = args.Skip(1).TakeWhile(arg => !arg.StartsWith("--", StringComparison.Ordinal))
+            .SelectMany(arg => arg.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return named.Count == 0 ? null : named;
+    }
+
+    /// <summary>
+    /// Every text's frame computed as <c>frame</c> would write it, set against the rows the corpus holds:
+    /// a row only one side has is a difference, except a psalm title's further row, which the passes after
+    /// the frame write (<see cref="CanonicalFrameLoader.Unchanged"/>). Exits 1 when a text differs.
+    /// </summary>
+    private static async Task<int> FrameCheck(ForgeRun forge, string[] args)
+    {
+        var path = Option(args, "--out") is { } file ? Path.GetFullPath(file) : null;
+        var rules = Loading.Frame.TvtmsReader.Read(Configuration.ResourcePaths.File(forge.Resources, "Versification", "TVTMS.txt"));
+
+        await using var db = OnDatabase(forge, Option(args, "--database"));
+        var loader = new CanonicalFrameLoader(db, Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
+        Console.WriteLine($"The frame of {db.Database.GetDbConnection().Database}, by the rules under {rules.Data.Store.ResourcesPath}");
+        await using var output = path is null ? null : new StreamWriter(path, false, new UTF8Encoding(false)) { NewLine = "\n" };
+        output?.WriteLine("text\tbook\tchapter\tverse\tlabel\tcanonical_book\tcanonical_chapter\tcanonical_verse\tprimary");
+
+        var differing = 0;
+        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        {
+            if (!rules.Covers(text.Versification))
+            {
+                Console.WriteLine($"{text.Slug}\tnot covered");
+                continue;
+            }
+
+            var (verses, existing, expected) = await loader.Compute(text, rules);
+            var wanted = expected.ToHashSet();
+            var held = existing.ToHashSet();
+            var missing = wanted.Count(reference => !held.Contains(reference));
+            var extra = held.Where(reference => !wanted.Contains(reference)).ToList();
+            var titles = extra.Count(reference => !reference.IsPrimary && reference.Verse == Loading.Frame.CanonicalReference.TitleVerse);
+            var unchanged = CanonicalFrameLoader.Unchanged(existing, expected);
+            if (!unchanged)
+            {
+                differing++;
+            }
+
+            Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
+                $"{text.Slug}\t{verses.Count} verses\t{expected.Count} computed\t{existing.Count} held\t{missing} missing\t{extra.Count - titles} extra\t{titles} title rows of later passes\t{(unchanged ? "unchanged" : "DIFFERS")}"));
+
+            if (output is null)
+            {
+                continue;
+            }
+
+            var byId = verses.ToDictionary(verse => verse.Id);
+            foreach (var reference in expected
+                         .OrderBy(r => byId[r.VerseId].Book).ThenBy(r => byId[r.VerseId].Chapter)
+                         .ThenBy(r => byId[r.VerseId].Number).ThenBy(r => byId[r.VerseId].Label, StringComparer.Ordinal)
+                         .ThenByDescending(r => r.IsPrimary).ThenBy(r => r.Book).ThenBy(r => r.Chapter).ThenBy(r => r.Verse))
+            {
+                var verse = byId[reference.VerseId];
+                output.WriteLine(string.Create(CultureInfo.InvariantCulture,
+                    $"{text.Slug}\t{verse.Book}\t{verse.Chapter}\t{verse.Number}\t{verse.Label}\t{reference.Book}\t{reference.Chapter}\t{reference.Verse}\t{(reference.IsPrimary ? 1 : 0)}"));
+            }
+        }
+
+        Console.WriteLine($"{differing} texts differ from the frame the corpus holds");
+        return differing == 0 ? 0 : 1;
+    }
+
+    /// <summary>
+    /// The configured corpus, or another database on the same server named by <c>--database</c>, for a
+    /// verb that only reads: the snapshot a rework export is taken from, a copy being proved.
+    /// </summary>
+    private static AppDbContext OnDatabase(ForgeRun forge, string? database)
+    {
+        var connection = new Npgsql.NpgsqlConnectionStringBuilder(forge.DatabaseConnection);
+        if (database is not null)
+        {
+            connection.Database = database;
+        }
+
+        return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(connection.ConnectionString, npgsql => npgsql.CommandTimeout(1800)).Options);
     }
 
     private static async Task<int> VerseLinks(ForgeRun forge, string[] args)

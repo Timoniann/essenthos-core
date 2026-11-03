@@ -71,7 +71,7 @@ public sealed class IsaiahLoadTests : IDisposable
 
     private async Task Place(string slug)
     {
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var text = await _db.Texts.SingleAsync(t => t.Slug == slug);
         await new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance).Place(text, rules);
     }

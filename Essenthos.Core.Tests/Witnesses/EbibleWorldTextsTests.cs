@@ -208,7 +208,7 @@ public class EbibleWorldTextsTests(WorldTexts texts) : IClassFixture<WorldTexts>
         string slug, int book, int chapter, int verse, int canonicalBook, int canonicalChapter, int canonicalVerse)
     {
         var source = Source(slug);
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(
+        var frame = TestResources.Rules.Frame(
             source.Definition.Versification,
             EditionShape.Of(WorldTexts.Verses(source).Select(v =>
                 (v.Book, v.Chapter, v.Verse.Number, v.Verse.Label, v.Verse.Words.Sum(word => word.Surface.Length)))));

@@ -1,3 +1,5 @@
+using Essenthos.Core.Corpus;
+
 namespace Essenthos.Core.Loading.Frame;
 
 /// <summary>
@@ -10,23 +12,18 @@ namespace Essenthos.Core.Loading.Frame;
 /// Here the song stays in Daniel, as every edition of the corpus that holds it prints it, after the
 /// thirty verses the chapter has in the standard numbering: the standard's verse 1:1 is Daniel 3:31
 /// and 1:68 is Daniel 3:98. Which standard verse an edition's verse is, and so its order, is the
-/// data's, and no Hebrew or English verse stands at those addresses.
+/// data's, and no Hebrew or English verse stands at those addresses. Where the song stands is
+/// <see cref="SongOfTheThreeBook"/>'s, which the reader's twin passages read too.
 /// </summary>
 internal static class SongOfTheThree
 {
-    private const string Code = "S3Y";
+    public const string Code = "S3Y";
 
     private const string PrefixInDaniel = "Dan.";
 
-    private const int Daniel = 27;
-
-    private const int Chapter = 3;
-
-    /// <summary>The verses Daniel 3 has in the standard numbering, the Hebrew's 3:31-33 being its 4:1-3.</summary>
-    private const int ChapterVerses = 30;
-
     /// <summary>Where the standard's verse of the song stands.</summary>
-    public static CanonicalReference Verse(int verse) => new(Daniel, Chapter, ChapterVerses + verse);
+    public static CanonicalReference Verse(int verse) =>
+        new(SongOfTheThreeBook.Daniel, SongOfTheThreeBook.InDaniel, SongOfTheThreeBook.DanielVerses + verse);
 
     /// <summary>
     /// The places a cell of the data's standard column names in the song, <c>S3Y.1:29-30</c>, or false
@@ -45,7 +42,7 @@ internal static class SongOfTheThree
         references =
         [
             .. CanonicalReference.ParseAll(PrefixInDaniel + text[(Code.Length + 1)..])
-                .Where(reference => reference.Chapter == 1)
+                .Where(reference => reference.Chapter == SongOfTheThreeBook.Chapter)
                 .Select(reference => Verse(reference.Verse)),
         ];
         return references.Count > 0;

@@ -1,0 +1,249 @@
+# product    Essenthos/versification/supplements.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
+# Passages an edition in the corpus numbers in a way none of the versification data's (TVTMS's) schemes
+# describes, written down in the data's own form: the edition's verse, where its words stand, and the
+# tests that tell that edition apart. These are Essenthos's, not Tyndale House's, and each was read
+# verse against verse before it was written.
+#
+# A passage is only ever taken for an edition that answers every one of its tests, and then it is taken
+# in preference to the data's schemes for the passage it joins, because the tests were written to
+# recognise that one edition. An edition the tests do not describe is placed exactly as before.
+#
+# Columns, tab-separated:
+#   passage    the rows of one passage share it (its first row's source); a passage is chosen or left
+#              as a whole, as the data's own passages are
+#   scheme     the name the numbering goes by here: the edition's, as the data itself names Brenton's
+#              merged psalm titles
+#   tradition  the tradition the edition belongs to: original, english or septuagint
+#   joins      a verse the data's own passage about the same text places, so the rows join that passage
+#              and are weighed against its schemes; '-' where the data has no passage there
+#   source     the edition's verse or verses, in the data's notation (Jer.30:17-21)
+#   standard   where their words stand in the data's standard numbering. A range against a range of the
+#              same length is verse against verse; one verse against a range spans it; a range against
+#              one verse puts each of them there
+#   tests      what tells the edition apart, in the data's own form
+#   why        what was read, on the passage's first row
+#
+# Brenton divides the Septuagint's Jeremiah as no other edition does. Its chapter 30 runs Edom
+# (30:1-16), Ammon (30:17-21), Kedar (30:23-28) and Damascus (30:29-33); it ends Elam at 25:20 with the
+# date the Hebrew puts first; and it prints the cup of wrath as 32:15-38 under the Hebrew's own verse
+# numbers. The data's two Greek schemes each describe one of those and fail the other.
+#
+# Both editions print Agur's sayings and Lemuel's mother's in chapter 24 of Proverbs, where the
+# Septuagint puts them, and number them onward from there rather than under the Hebrew's numbers as
+# Rahlfs does; Swete also numbers the chapters around them straight through past the verses the
+# Septuagint leaves out. The data has no Greek rule for any of it.
+#
+# Brenton divides Leviticus 8:18-21 and 8:30 differently from every other text, so its verses 8:19-29
+# each stand one before the words they carry.
+#
+# Swete prints 2 Samuel 19 under the English numbers, which the Greek scheme's tests do not recognise;
+# and it prints the altar on Ebal as Joshua 9:3-8 where the Hebrew has it as 8:30-35, numbering the
+# Gibeonites on from 9:9. At the end of Joshua it keeps the Septuagint's order under the Hebrew's verse
+# numbers, which the data's tests cannot tell apart from Brenton's renumbering of the same three verses.
+#
+# Both Greek editions list the unclean birds of Leviticus 11:13-19 in their own order: the ostrich, the
+# owl and the gull come before the raven, which the Hebrew names first. Brenton prints them as 11:15 and
+# puts the raven with the hawk in 11:16, which stands with them at 11:16 and covers the Hebrew's raven
+# as well; Swete prints no raven at all. The chapters count the same, so no scheme notices.
+#
+# The Reina-Valera of 1909, as eBible publishes it, follows the Spanish division where the Spanish runs
+# ahead of the English (a chapter that opens one to three verses earlier, as the Hebrew and the Latin
+# do) but it is numbered to the English count: the verse the Spanish moved away is left empty, every
+# verse after it stands one to three places early, and the chapter's last verse holds what the count
+# had no room for. Its Job 39:30 carries the English 39:27 to 40:5. The data's own Spanish column for
+# Job says the same of the printed edition. Jon.1:17=NotExist is the verse eBible's Reina-Valera leaves
+# empty at the start of Jonah's prayer, which no other edition in the corpus lacks: it tells the file
+# apart wherever a passage's own tests would also describe a Bible that simply follows the Hebrew.
+#
+# Kulish's Bible of 1903 divides forty-odd chapters in its own way: it runs two verses into one at a
+# chapter's end, opens Genesis 3 with what the English prints as two verses, gives the Hebrew's order of
+# Leviticus 5-6 and Job 39-41 a division of its own, prints the titles of Psalm 60 as two verses of
+# their own and swaps the weeping and the rallying at Judges 20:22-23. Where its verse merely starts
+# half a line before the English one, it is left where it stands. Gen.3:23=Last is Kulish's Genesis 3,
+# which ends at verse 23 and in no other edition here.
+#
+# The Synodal, as bible4u publishes it, is renumbered to the English chapters and verse counts, and in a
+# few chapters keeps its own division inside them: Song of Songs 1 opens with 'let him kiss me', which
+# the English numbers 1:2, and divides the last verse in two; Psalm 90 prints its title as a verse of
+# its own and joins the flood and the grass; Isaiah 3 lists the ornaments in fewer verses and divides
+# the last; Esther 1 and Revelation 20 divide a verse where the English does not. Sng.1:16*2<Sng.1:15
+# is its last verse of Song of Songs 1, 'the rafters of fir', printed apart from 'the beams of our house
+# are cedar', which no other edition here does.
+#
+# Ohienko's Bible, as bible4u publishes it, is renumbered to the English everywhere but Psalm 65, where
+# it keeps its own edition's numbering: the title is verse 1, printed with the opening words of Psalm
+# 66 as Ukrainian Wikisource's transcription of the same edition prints them too, and the psalm runs
+# one verse behind the English until its last verse holds the English 65:12 and 65:13.
+# Psa.65:12*2<Psa.65:13 is that last verse, more than twice the verse before it, as in no other edition.
+#
+# The Segond of 1910 numbers the Old Testament as the Hebrew does and its psalm titles as their first
+# verses, except in two places it divides in its own way. At the end of Job it runs Job 38 three verses
+# short, opens chapter 39 with the lion and the raven, closes it with the first five verses of the
+# Lord's second speech, and splits the Hebrew's 40:25-41:26 into 40:20-28 and 41:1-25; Clear Bible's
+# hand-made alignment of it, which pairs its words with the Hebrew's, says the same of every verse it
+# covers. And it closes Ecclesiastes 11 at verse 8, opening chapter 12 with "Rejoice, O young man".
+#
+# Brenton's English, as eBible publishes it, numbers Nehemiah 4 as the English Bibles do where his
+# Greek numbers it as the Hebrew, and like the Greek it has no verse 6. The data measures that very
+# verse to tell its schemes apart, so none of them answers and the edition fell back to the Greek
+# scheme, a chapter's worth of verses six places out.
+passage	scheme	tradition	joins	source	standard	tests	why
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.30:17-21	Jer.49:1-5	Jer.30:33=Last & Jer.25:20=Last	Brenton's Jeremiah 30 runs Edom (30:1-16), Ammon (30:17-21), Kedar (30:23-28) and Damascus (30:29-33), and ends Elam at 25:20 with the date the Hebrew puts first
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.30:1-16	Jer.49:7-22	Jer.30:33=Last & Jer.25:20=Last	
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.30:29-33	Jer.49:23-27	Jer.30:33=Last & Jer.25:20=Last	
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.30:23-28	Jer.49:28-33	Jer.30:33=Last & Jer.25:20=Last	
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.25:14	Jer.49:34	Jer.30:33=Last & Jer.25:20=Last	
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.25:15-19	Jer.49:35-39	Jer.30:33=Last & Jer.25:20=Last	
+Jer.30:17-21	Brenton	septuagint	Jer.49:1	Jer.25:20	Jer.49:34	Jer.30:33=Last & Jer.25:20=Last	
+Jer.32:15-38	Brenton	septuagint	Jer.25:15	Jer.32:15-38	Jer.25:15-38	Jer.32:38=Last & Jer.25:20=Last	Brenton prints the cup of wrath as Jeremiah 32:15-38 under the Hebrew's own verse numbers
+Pro.24:35-53	Brenton	septuagint	-	Pro.24:35-53	Pro.30:15-33	Pro.24:62=Last	Brenton prints Agur's sayings and Lemuel's mother's in Proverbs 24, where the Septuagint puts them, and numbers them on from there
+Pro.24:35-53	Brenton	septuagint	-	Pro.24:54-62	Pro.31:1-9	Pro.24:62=Last	
+Lev.8:18	Brenton	septuagint	-	Lev.8:18	Lev.8:18-19	Lev.8:30<Lev.8:29	Brenton divides Leviticus 8:18-21 and 8:30 differently from every other text, so its verses 8:19-29 each stand one before the words they carry
+Lev.8:18	Brenton	septuagint	-	Lev.8:19	Lev.8:20-21	Lev.8:30<Lev.8:29	
+Lev.8:18	Brenton	septuagint	-	Lev.8:20	Lev.8:21	Lev.8:30<Lev.8:29	
+Lev.8:18	Brenton	septuagint	-	Lev.8:21-28	Lev.8:22-29	Lev.8:30<Lev.8:29	
+Lev.8:18	Brenton	septuagint	-	Lev.8:29-30	Lev.8:30	Lev.8:30<Lev.8:29	
+Pro.18:23	Swete	septuagint	Pro.18:23	Pro.18:23	Pro.19:3	Pro.24:77=Last	Swete numbers the chapters around Agur's and Lemuel's sayings straight through, past the verses the Septuagint leaves out
+Pro.18:23	Swete	septuagint	Pro.18:23	Pro.19:1-26	Pro.19:4-29	Pro.24:77=Last	
+Pro.20:10-12	Swete	septuagint	Pro.20:20	Pro.20:10-12	Pro.20:20-22	Pro.24:77=Last	Swete numbers Proverbs 20 straight through in the Septuagint's order: its 20:10-12 are the Hebrew's 20:20-22
+Pro.20:10-12	Swete	septuagint	Pro.20:20	Pro.20:13-16	Pro.20:10-13	Pro.24:77=Last	
+Pro.20:10-12	Swete	septuagint	Pro.20:20	Pro.20:17-24	Pro.20:23-30	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.24:24-37	Pro.30:1-14	Pro.24:77=Last	Swete prints Agur's sayings and Lemuel's mother's in Proverbs 24, where the Septuagint puts them, and numbers them on from there rather than under the Hebrew's numbers as Rahlfs does; chapter 29 ends with the capable wife
+Pro.24:24-37	Swete	septuagint	-	Pro.24:38-49	Pro.24:23-34	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.24:50-68	Pro.30:15-33	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.24:69-77	Pro.31:1-9	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.29:28-42	Pro.31:10-24	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.29:43	Pro.31:26	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.29:44	Pro.31:25	Pro.24:77=Last	
+Pro.24:24-37	Swete	septuagint	-	Pro.29:45-49	Pro.31:27-31	Pro.24:77=Last	
+2Sa.18:33	Swete	septuagint	2Sa.19:1	2Sa.18:33	2Sa.18:33	2Sa.18:33=Last & 2Sa.19:43=Last	Swete prints 2 Samuel 19 under the English numbers, which the Greek scheme's tests do not recognise
+2Sa.18:33	Swete	septuagint	2Sa.19:1	2Sa.19:1-43	2Sa.19:1-43	2Sa.18:33=Last & 2Sa.19:43=Last	
+Jos.9:3-8	Swete	septuagint	Jos.8:30	Jos.9:3-8	Jos.8:30-35	Jos.8:29=Last & Jos.9:33=Last	Swete prints the altar on Ebal as Joshua 9:3-8 where the Hebrew has it as 8:30-35, and numbers the Gibeonites on from 9:9
+Jos.9:3-8	Swete	septuagint	Jos.8:30	Jos.9:9-27	Jos.9:3-21	Jos.8:29=Last & Jos.9:33=Last	
+Jos.9:28-33	Swete	septuagint	Jos.9:27	Jos.9:28-33	Jos.9:22-27	Jos.8:29=Last & Jos.9:33=Last	the end of Swete's Joshua 9, numbered on past the altar on Ebal
+Jos.24:29-31	Swete	septuagint	Jos.24:29	Jos.24:29-31	Jos.24:29-31	Jos.24:30.2=Exist & Jos.24:33.1=Exist	at the end of Joshua Swete keeps the Septuagint's order under the Hebrew's verse numbers, which the data's tests cannot tell apart from Brenton's renumbering of the same three verses
+Lev.11:15	Brenton	septuagint	-	Lev.11:15	Lev.11:16	Lev.11:15<Lev.11:16 & Lev.8:30<Lev.8:29	Brenton lists the unclean birds in the Greek's order, the ostrich, the owl and the gull before the raven, as 11:15, and puts the raven with the hawk in 11:16, which stands with them at 11:16 and covers the Hebrew's raven as well; the chapters count the same, so no scheme notices
+Lev.11:15	Brenton	septuagint	-	Lev.11:16	Lev.11:16; 11:15	Lev.11:15<Lev.11:16 & Lev.8:30<Lev.8:29	
+Lev.11:15-16	Swete	septuagint	-	Lev.11:15-16	Lev.11:16	Lev.11:16<Lev.11:15 & Pro.24:77=Last	Swete lists the ostrich, the owl and the gull before the raven, which the Hebrew names first, and prints no raven at all; the chapters count the same, so no scheme notices
+Num.13:1	ReinaValera1909	english	Num.12:16	Num.13:1	Num.12:16	Jon.1:17=NotExist & Num.12:16=NotExist & Num.13:33=Last	Numbers 13 opens one verse early, as the Hebrew does, numbered to the English count: 12:16 is empty and 13:33 holds the English 13:32-33
+Num.13:1	ReinaValera1909	english	Num.12:16	Num.13:2-32	Num.13:1-31	Jon.1:17=NotExist & Num.12:16=NotExist & Num.13:33=Last	
+Num.13:1	ReinaValera1909	english	Num.12:16	Num.13:33	Num.13:32-33	Jon.1:17=NotExist & Num.12:16=NotExist & Num.13:33=Last	
+Num.30:1	ReinaValera1909	english	Num.29:40	Num.30:1	Num.29:40	Jon.1:17=NotExist & Num.29:40=NotExist & Num.30:16=Last	Numbers 30 opens one verse early, numbered to the English count: 29:40 is empty and 30:16 holds the English 30:15-16
+Num.30:1	ReinaValera1909	english	Num.29:40	Num.30:2-15	Num.30:1-14	Jon.1:17=NotExist & Num.29:40=NotExist & Num.30:16=Last	
+Num.30:1	ReinaValera1909	english	Num.29:40	Num.30:16	Num.30:15-16	Jon.1:17=NotExist & Num.29:40=NotExist & Num.30:16=Last	
+Jdg.14:19	ReinaValera1909	english	-	Jdg.14:19	Jdg.14:18	Jon.1:17=NotExist & Jdg.14:19<Jdg.14:18	Judges 14:18-20 divided as the Spanish divides them, numbered to the English count
+Jdg.14:19	ReinaValera1909	english	-	Jdg.14:20	Jdg.14:19-20	Jon.1:17=NotExist & Jdg.14:19<Jdg.14:18	
+1Sa.24:1	ReinaValera1909	english	1Sa.23:29	1Sa.24:1	1Sa.23:29	Jon.1:17=NotExist & 1Sa.23:29=NotExist & 1Sa.24:22=Last	1 Samuel 24 opens one verse early, numbered to the English count: 23:29 is empty and 24:22 holds the English 24:21-22
+1Sa.24:1	ReinaValera1909	english	1Sa.23:29	1Sa.24:2-21	1Sa.24:1-20	Jon.1:17=NotExist & 1Sa.23:29=NotExist & 1Sa.24:22=Last	
+1Sa.24:1	ReinaValera1909	english	1Sa.23:29	1Sa.24:22	1Sa.24:21-22	Jon.1:17=NotExist & 1Sa.23:29=NotExist & 1Sa.24:22=Last	
+2Sa.20:25	ReinaValera1909	english	-	2Sa.20:25	2Sa.20:25-26	Jon.1:17=NotExist & 2Sa.20:26=NotExist & 2Sa.20:25=Last	2 Samuel 20:25 holds the English 20:25-26, and 20:26 is empty
+1Ki.22:44	ReinaValera1909	english	1Ki.22:43	1Ki.22:44	1Ki.22:43	Jon.1:17=NotExist & 1Ki.22:53=Last & 1Ki.22:45<1Ki.22:44	1 Kings 22 runs one verse early from 22:44, numbered to the English count: 22:53 holds the English 22:52-53
+1Ki.22:44	ReinaValera1909	english	1Ki.22:43	1Ki.22:45-52	1Ki.22:44-51	Jon.1:17=NotExist & 1Ki.22:53=Last & 1Ki.22:45<1Ki.22:44	
+1Ki.22:44	ReinaValera1909	english	1Ki.22:43	1Ki.22:53	1Ki.22:52-53	Jon.1:17=NotExist & 1Ki.22:53=Last & 1Ki.22:45<1Ki.22:44	
+1Ch.1:30	ReinaValera1909	english	-	1Ch.1:30	1Ch.1:30-31	Jon.1:17=NotExist & 1Ch.1:32<1Ch.1:31	1 Chronicles 1:30-32 divided as the Spanish divides them, numbered to the English count
+1Ch.1:30	ReinaValera1909	english	-	1Ch.1:31-32	1Ch.1:32	Jon.1:17=NotExist & 1Ch.1:32<1Ch.1:31	
+1Ch.21:16	ReinaValera1909	english	-	1Ch.21:16	1Ch.21:15	Jon.1:17=NotExist & 1Ch.21:28<1Ch.21:27	1 Chronicles 21 runs one verse early from 21:16, numbered to the English count: 21:30 holds the English 21:29-30
+1Ch.21:16	ReinaValera1909	english	-	1Ch.21:17-29	1Ch.21:16-28	Jon.1:17=NotExist & 1Ch.21:28<1Ch.21:27	
+1Ch.21:16	ReinaValera1909	english	-	1Ch.21:30	1Ch.21:29-30	Jon.1:17=NotExist & 1Ch.21:28<1Ch.21:27	
+2Ch.33:10	ReinaValera1909	english	-	2Ch.33:10	2Ch.33:10-11	Jon.1:17=NotExist & 2Ch.33:25=NotExist & 2Ch.33:24=Last	2 Chronicles 33:10 holds the English 33:10-11, the verses after it stand one early, and 33:25 is empty
+2Ch.33:10	ReinaValera1909	english	-	2Ch.33:11-24	2Ch.33:12-25	Jon.1:17=NotExist & 2Ch.33:25=NotExist & 2Ch.33:24=Last	
+Job.35:15	ReinaValera1909	english	-	Job.35:15	Job.35:15-16	Jon.1:17=NotExist & Job.35:16=NotExist & Job.35:15=Last	Job 35:15 holds the English 35:15-16, and 35:16 is empty
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:1-3	Job.38:39-41	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	Job 39 opens three verses early, as the Hebrew does, numbered to the English count: its 39:30 carries the English 39:27 to 40:5; the data's own Spanish column for Job says the same of the printed edition
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:4-29	Job.39:1-26	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:30	Job.39:27-30; 40:1-5	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.40:1-19	Job.40:6-24	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	
+Hos.12:1	ReinaValera1909	english	Hos.11:12	Hos.12:1	Hos.11:12	Jon.1:17=NotExist & Hos.11:12=NotExist & Hos.12:14=Last	Hosea 12 opens one verse early, numbered to the English count: 11:12 is empty and 12:14 holds the English 12:13-14
+Hos.12:1	ReinaValera1909	english	Hos.11:12	Hos.12:2-13	Hos.12:1-12	Jon.1:17=NotExist & Hos.11:12=NotExist & Hos.12:14=Last	
+Hos.12:1	ReinaValera1909	english	Hos.11:12	Hos.12:14	Hos.12:13-14	Jon.1:17=NotExist & Hos.11:12=NotExist & Hos.12:14=Last	
+Jon.2:1	ReinaValera1909	english	Jon.1:17	Jon.2:1	Jon.1:17	Jon.1:17=NotExist & Jon.2:10=Last	Jonah 2 opens one verse early, numbered to the English count: 1:17 is empty and 2:10 holds the English 2:9-10
+Jon.2:1	ReinaValera1909	english	Jon.1:17	Jon.2:2-9	Jon.2:1-8	Jon.1:17=NotExist & Jon.2:10=Last	
+Jon.2:1	ReinaValera1909	english	Jon.1:17	Jon.2:10	Jon.2:9-10	Jon.1:17=NotExist & Jon.2:10=Last	
+Gen.3:1	Kulish	english	Gen.3:1	Gen.3:1	Gen.3:1-2	Gen.3:23=Last	Kulish opens Genesis 3 with what the English prints as two verses; its Genesis 3 ends at verse 23, as in no other edition here
+Gen.3:1	Kulish	english	Gen.3:1	Gen.3:2-23	Gen.3:3-24	Gen.3:23=Last	
+Gen.6:20	Kulish	english	-	Gen.6:20	Gen.6:20-21	Gen.3:23=Last & Gen.6:21=Last	Kulish runs Genesis 6:20-21 into one at the chapter's end
+Gen.6:20	Kulish	english	-	Gen.6:21	Gen.6:22	Gen.3:23=Last & Gen.6:21=Last	
+Gen.48:21	Kulish	english	-	Gen.48:21	Gen.48:21-22	Gen.3:23=Last & Gen.48:21=Last	Kulish runs two verses into one at the chapter's end
+Lev.5:20-24	Kulish	english	Lev.6:1	Lev.5:20-24	Lev.6:1-5	Gen.3:23=Last & Lev.5:27=Last & Lev.6:22=Last	Kulish gives the Hebrew's order of Leviticus 5-6 a division of its own
+Lev.5:20-24	Kulish	english	Lev.6:1	Lev.5:25	Lev.6:5	Gen.3:23=Last & Lev.5:27=Last & Lev.6:22=Last	
+Lev.5:20-24	Kulish	english	Lev.6:1	Lev.5:26-27	Lev.6:6-7	Gen.3:23=Last & Lev.5:27=Last & Lev.6:22=Last	
+Lev.5:20-24	Kulish	english	Lev.6:1	Lev.6:1-21	Lev.6:8-28	Gen.3:23=Last & Lev.5:27=Last & Lev.6:22=Last	
+Lev.5:20-24	Kulish	english	Lev.6:1	Lev.6:22	Lev.6:29-30	Gen.3:23=Last & Lev.5:27=Last & Lev.6:22=Last	
+Lev.14:54	Kulish	english	-	Lev.14:54	Lev.14:54-55	Gen.3:23=Last & Lev.14:55=Last	Kulish runs the last four verses of Leviticus 14 into two
+Lev.14:54	Kulish	english	-	Lev.14:55	Lev.14:56-57	Gen.3:23=Last & Lev.14:55=Last	
+Lev.17:15	Kulish	english	-	Lev.17:15	Lev.17:15-16	Gen.3:23=Last & Lev.17:15=Last	Kulish runs two verses into one at the chapter's end
+Num.8:25	Kulish	english	-	Num.8:25	Num.8:25-26	Gen.3:23=Last & Num.8:25=Last	Kulish runs two verses into one at the chapter's end
+Num.14:44	Kulish	english	-	Num.14:44	Num.14:44-45	Gen.3:23=Last & Num.14:44=Last	Kulish runs two verses into one at the chapter's end
+Num.15:40	Kulish	english	-	Num.15:40	Num.15:40-41	Gen.3:23=Last & Num.15:40=Last	Kulish runs two verses into one at the chapter's end
+Num.20:28	Kulish	english	Num.20:29	Num.20:28	Num.20:28-29	Gen.3:23=Last & Num.20:28=Last	Kulish runs two verses into one at the chapter's end
+Num.23:18	Kulish	english	-	Num.23:18	Num.23:17	Gen.3:23=Last & Num.23:31=Last	Kulish divides Numbers 23 in its own way, a verse ahead of the English from 23:18
+Num.23:18	Kulish	english	-	Num.23:19-31	Num.23:18-30	Gen.3:23=Last & Num.23:31=Last	
+Num.25:17	Kulish	english	-	Num.25:17	Num.25:17-18	Gen.3:23=Last & Num.25:17=Last	Kulish runs two verses into one at the chapter's end
+Num.27:22	Kulish	english	-	Num.27:22	Num.27:22-23	Gen.3:23=Last & Num.27:22=Last	Kulish runs two verses into one at the chapter's end
+Deu.16:21	Kulish	english	-	Deu.16:21	Deu.16:21-22	Gen.3:23=Last & Deu.16:21=Last	Kulish runs two verses into one at the chapter's end
+Deu.24:21	Kulish	english	Deu.24:22	Deu.24:21	Deu.24:21-22	Gen.3:23=Last & Deu.24:21=Last	Kulish runs two verses into one at the chapter's end
+Deu.27:7	Kulish	english	-	Deu.27:7	Deu.27:6	Gen.3:23=Last & Deu.27:7*2<Deu.27:8	Kulish divides Deuteronomy 27:6-8 in its own way
+Deu.27:7	Kulish	english	-	Deu.27:8	Deu.27:7-8	Gen.3:23=Last & Deu.27:7*2<Deu.27:8	
+Deu.28:69	Kulish	english	Deu.29:1	Deu.28:69	Deu.29:1	Gen.3:23=Last & Deu.28:69=Last & Deu.29:29=Last	Kulish ends Deuteronomy 28 with the Hebrew's 28:69, the English 29:1, and prints the English 29:2 as two verses
+Deu.28:69	Kulish	english	Deu.29:1	Deu.29:1-2	Deu.29:2	Gen.3:23=Last & Deu.28:69=Last & Deu.29:29=Last	
+Deu.32:51	Kulish	english	-	Deu.32:51	Deu.32:51-52	Gen.3:23=Last & Deu.32:51=Last	Kulish runs two verses into one at the chapter's end
+Deu.34:11	Kulish	english	-	Deu.34:11	Deu.34:11-12	Gen.3:23=Last & Deu.34:11=Last	Kulish runs two verses into one at the chapter's end
+Jdg.20:22	Kulish	english	-	Jdg.20:22	Jdg.20:23	Gen.3:23=Last & Jdg.20:22>Jdg.20:23	Kulish swaps the weeping and the rallying at Judges 20:22-23
+Jdg.20:22	Kulish	english	-	Jdg.20:23	Jdg.20:22	Gen.3:23=Last & Jdg.20:22>Jdg.20:23	
+2Sa.2:5	Kulish	english	-	2Sa.2:5	2Sa.2:4	Gen.3:23=Last & 2Sa.2:33=Last	Kulish divides 2 Samuel 2 in its own way, a verse ahead of the English from 2:5
+2Sa.2:5	Kulish	english	-	2Sa.2:6-33	2Sa.2:5-32	Gen.3:23=Last & 2Sa.2:33=Last	
+Est.1:7	Kulish	english	-	Est.1:7	Est.1:6	Gen.3:23=Last & Est.1:7*2<Est.1:8	Kulish divides Esther 1:6-8 in its own way
+Est.1:7	Kulish	english	-	Est.1:8	Est.1:7-8	Gen.3:23=Last & Est.1:7*2<Est.1:8	
+Job.21:32	Kulish	english	-	Job.21:32	Job.21:32-33	Gen.3:23=Last & Job.21:33=Last	Kulish runs Job 21:32-33 into one at the chapter's end
+Job.21:32	Kulish	english	-	Job.21:33	Job.21:34	Gen.3:23=Last & Job.21:33=Last	
+Job.39:31-35	Kulish	english	Job.38:39	Job.39:31-35	Job.40:1-5	Gen.3:23=Last & Job.39:35=Last & Job.40:27=Last & Job.41:26=Last	Kulish gives the Hebrew's order of Job 39-41 a division of its own
+Job.39:31-35	Kulish	english	Job.38:39	Job.40:1-19	Job.40:6-24	Gen.3:23=Last & Job.39:35=Last & Job.40:27=Last & Job.41:26=Last	
+Job.39:31-35	Kulish	english	Job.38:39	Job.40:20-27	Job.41:1-8	Gen.3:23=Last & Job.39:35=Last & Job.40:27=Last & Job.41:26=Last	
+Job.39:31-35	Kulish	english	Job.38:39	Job.41:1-26	Job.41:9-34	Gen.3:23=Last & Job.39:35=Last & Job.40:27=Last & Job.41:26=Last	
+Psa.13:5	Kulish	english	Psa.13:5	Psa.13:5	Psa.13:5-6	Gen.3:23=Last & Psa.13:5=Last	Kulish runs two verses into one at the chapter's end
+Psa.24:9	Kulish	english	Psa.24:1	Psa.24:9	Psa.24:9-10	Gen.3:23=Last & Psa.24:9=Last	Kulish runs two verses into one at the chapter's end
+Psa.29:7	Kulish	english	Psa.29:11	Psa.29:7	Psa.29:7-8	Gen.3:23=Last & Psa.29:10=Last	Kulish divides Psalm 29 in its own way
+Psa.29:7	Kulish	english	Psa.29:11	Psa.29:8-10	Psa.29:9-11	Gen.3:23=Last & Psa.29:10=Last	
+Psa.54:4	Kulish	english	Psa.54:7	Psa.54:4	Psa.54:4-5	Gen.3:23=Last & Psa.54:6=Last	Kulish divides Psalm 54 in its own way
+Psa.54:4	Kulish	english	Psa.54:7	Psa.54:5-6	Psa.54:6-7	Gen.3:23=Last & Psa.54:6=Last	
+Psa.60:1-2	Kulish	english	Psa.60:1	Psa.60:1-2	Psa.60:Title	Gen.3:23=Last & Psa.60:14=Last	Kulish prints the titles of Psalm 60 as two verses of their own
+Psa.60:1-2	Kulish	english	Psa.60:1	Psa.60:3-14	Psa.60:1-12	Gen.3:23=Last & Psa.60:14=Last	
+Psa.89:51	Kulish	english	Psa.89:52	Psa.89:51	Psa.89:51-52	Gen.3:23=Last & Psa.89:51=Last	Kulish runs two verses into one at the chapter's end
+Psa.106:47	Kulish	english	Psa.106:48	Psa.106:47	Psa.106:47-48	Gen.3:23=Last & Psa.106:47=Last	Kulish runs two verses into one at the chapter's end
+Psa.127:6	Kulish	english	-	Psa.127:6	Psa.127:5	Gen.3:23=Last & Psa.127:6=Last	Kulish numbers the last verse of Psalm 127 as 127:6
+Pro.30:30	Kulish	english	-	Pro.30:30	Pro.30:30-31	Gen.3:23=Last & Pro.30:32=Last	Kulish divides Proverbs 30:30-33 in its own way
+Pro.30:30	Kulish	english	-	Pro.30:31-32	Pro.30:32-33	Gen.3:23=Last & Pro.30:32=Last	
+Isa.3:19	Kulish	english	-	Isa.3:19	Isa.3:19-20	Gen.3:23=Last & Isa.3:20*2<Isa.3:19	Kulish divides Isaiah 3:19-22 in its own way
+Isa.3:19	Kulish	english	-	Isa.3:20-21	Isa.3:21-22	Gen.3:23=Last & Isa.3:20*2<Isa.3:19	
+Isa.3:19	Kulish	english	-	Isa.3:22	Isa.3:22	Gen.3:23=Last & Isa.3:20*2<Isa.3:19	
+Isa.9:22	Kulish	english	Isa.9:21	Isa.9:22	Isa.9:21	Gen.3:23=Last & Isa.9:22=Last	Kulish numbers the last verse of Isaiah 9 as 9:22
+Php.3:20	Kulish	english	-	Php.3:20	Php.3:20-21	Gen.3:23=Last & Php.3:20=Last	Kulish runs two verses into one at the chapter's end
+Phm.1:23	Kulish	english	-	Phm.1:23	Phm.1:23-24	Gen.3:23=Last & Phm.1:24=Last	Kulish divides the end of Philemon in its own way
+Phm.1:23	Kulish	english	-	Phm.1:24	Phm.1:25	Gen.3:23=Last & Phm.1:24=Last	
+Sng.1:1-15	Synodal1876	english	Sng.1:2	Sng.1:1-15	Sng.1:2-16	Sng.1:16*2<Sng.1:15	the Synodal's Song of Songs 1 opens with 'let him kiss me', which the English numbers 1:2, and divides the last verse in two: the rafters of fir apart from the beams of cedar, as no other edition here does
+Sng.1:1-15	Synodal1876	english	Sng.1:2	Sng.1:16-17	Sng.1:17	Sng.1:16*2<Sng.1:15	
+Psa.90:1-2	Synodal1876	english	Psa.90:1	Psa.90:1-2	Psa.90:1	Sng.1:16*2<Sng.1:15 & Psa.90:1*2<Psa.90:3	the Synodal's Psalm 90 prints its title as a verse of its own and joins the flood and the grass
+Psa.90:1-2	Synodal1876	english	Psa.90:1	Psa.90:3-5	Psa.90:2-4	Sng.1:16*2<Sng.1:15 & Psa.90:1*2<Psa.90:3	
+Psa.90:1-2	Synodal1876	english	Psa.90:1	Psa.90:6	Psa.90:5-6	Sng.1:16*2<Sng.1:15 & Psa.90:1*2<Psa.90:3	
+Est.1:7	Synodal1876	english	-	Est.1:7	Est.1:6	Sng.1:16*2<Sng.1:15 & Est.1:7*2<Est.1:8	the Synodal's Esther 1 divides a verse where the English does not
+Est.1:7	Synodal1876	english	-	Est.1:8	Est.1:7-8	Sng.1:16*2<Sng.1:15 & Est.1:7*2<Est.1:8	
+Isa.3:19	Synodal1876	english	-	Isa.3:19	Isa.3:19-20	Sng.1:16*2<Sng.1:15 & Isa.3:20*2<Isa.3:19	the Synodal's Isaiah 3 lists the ornaments in fewer verses and divides the last
+Isa.3:19	Synodal1876	english	-	Isa.3:20-24	Isa.3:21-25	Sng.1:16*2<Sng.1:15 & Isa.3:20*2<Isa.3:19	
+Isa.3:19	Synodal1876	english	-	Isa.3:25-26	Isa.3:26	Sng.1:16*2<Sng.1:15 & Isa.3:20*2<Isa.3:19	
+Rev.20:7	Synodal1876	english	-	Rev.20:7	Rev.20:7-8	Sng.1:16*2<Sng.1:15 & Rev.20:8*2<Rev.20:7	the Synodal's Revelation 20 divides a verse where the English does not
+Rev.20:7	Synodal1876	english	-	Rev.20:8-9	Rev.20:9	Sng.1:16*2<Sng.1:15 & Rev.20:8*2<Rev.20:7	
+Psa.65:1	Ohienko1962	english	Psa.65:1	Psa.65:1	Psa.65:Title	Psa.65:12*2<Psa.65:13	Ohienko keeps his edition's own numbering in Psalm 65: the title is verse 1, printed with the opening words of Psalm 66 as Ukrainian Wikisource's transcription of the same edition prints them too, and the psalm runs one verse behind the English until its last verse holds the English 65:12 and 65:13
+Psa.65:1	Ohienko1962	english	Psa.65:1	Psa.65:2-12	Psa.65:1-11	Psa.65:12*2<Psa.65:13	
+Psa.65:1	Ohienko1962	english	Psa.65:1	Psa.65:13	Psa.65:12-13	Psa.65:12*2<Psa.65:13	
+Job.39:1-3	Segond1910	original	Job.38:39	Job.39:1-3	Job.38:39-41	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	the Segond runs Job 38 three verses short, opens chapter 39 with the lion and the raven, closes it with the first five verses of the Lord's second speech, and splits the Hebrew's 40:25-41:26 into 40:20-28 and 41:1-25; Clear Bible's hand-made alignment of it with the Hebrew says the same of every verse it covers
+Job.39:1-3	Segond1910	original	Job.38:39	Job.39:4-33	Job.39:1-30	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	
+Job.39:1-3	Segond1910	original	Job.38:39	Job.39:34-38	Job.40:1-5	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	
+Job.39:1-3	Segond1910	original	Job.38:39	Job.40:1-19	Job.40:6-24	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	
+Job.39:1-3	Segond1910	original	Job.38:39	Job.40:20-27	Job.41:1-8	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	
+Job.39:1-3	Segond1910	original	Job.38:39	Job.40:28	Job.41:9	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	
+Job.39:1-3	Segond1910	original	Job.38:39	Job.41:1-25	Job.41:10-34	Job.39:38=Last & Job.40:28=Last & Job.41:25=Last	
+Ecc.12:1-2	Segond1910	original	-	Ecc.12:1-2	Ecc.11:9-10	Ecc.11:8=Last & Ecc.12:16=Last	the Segond closes Ecclesiastes 11 at verse 8, opening chapter 12 with 'Rejoice, O young man'
+Ecc.12:1-2	Segond1910	original	-	Ecc.12:3-16	Ecc.12:1-14	Ecc.11:8=Last & Ecc.12:16=Last	
+Neh.3:32	BrentonEnglish	septuagint	Neh.4:1	Neh.3:32	Neh.3:32	Neh.3:32=Last & Neh.4:23=Last & Neh.4:6=NotExist	Brenton's English numbers Nehemiah 4 as the English Bibles do where his Greek numbers it as the Hebrew, and like the Greek it has no verse 6, the verse the data measures to tell its schemes apart
+Neh.3:32	BrentonEnglish	septuagint	Neh.4:1	Neh.4:1-5	Neh.4:1-5	Neh.3:32=Last & Neh.4:23=Last & Neh.4:6=NotExist	
+Neh.3:32	BrentonEnglish	septuagint	Neh.4:1	Neh.4:7-23	Neh.4:7-23	Neh.3:32=Last & Neh.4:23=Last & Neh.4:6=NotExist	

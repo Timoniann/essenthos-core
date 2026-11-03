@@ -481,7 +481,7 @@ public class SweteOldGreekTests
 
     private static readonly TextSource Source = SweteOldGreekTextSource.Read(TestResources.SweteFolder);
 
-    private static readonly Lazy<VersificationFrame> Frame = new(() => TvtmsReader.Read(TestResources.Tvtms).Frame(
+    private static readonly Lazy<VersificationFrame> Frame = new(() => TestResources.Rules.Frame(
         Versification.Septuagint,
         EditionShape.Of(
         [

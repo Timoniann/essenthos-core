@@ -269,7 +269,7 @@ public sealed class CodexLoadTests : IDisposable
     [Fact]
     public async Task EveryVerseStandsInTheFrame()
     {
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         foreach (var codex in CodexTextSource.All)
         {
             await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).Load(codex.Read(TestResources.Folder(".")));

@@ -145,7 +145,7 @@ public sealed class DatasetAttributionTests
         string[] corrected = ["Malachi", "Jeremiah", "Daniel"];
         corrected.Should().OnlyContain(book => tvtms.Changes!.Any(change => change.Contains(book)));
 
-        var schemes = TvtmsSupplements.All.Select(supplement => supplement.Scheme).Distinct().ToList();
+        var schemes = TestResources.Versification.Supplements.Select(supplement => supplement.Scheme).Distinct().ToList();
         schemes.Should().OnlyContain(scheme => NotedAs.ContainsKey(scheme),
             "a numbering added to the frame is a change the note of changes has to name");
         schemes.Should().OnlyContain(scheme => tvtms.Changes!.Any(change => change.Contains(NotedAs[scheme])));

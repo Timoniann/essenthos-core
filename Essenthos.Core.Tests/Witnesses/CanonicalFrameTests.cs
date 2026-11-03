@@ -8,7 +8,7 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// <summary>Read once; the file is 5.8 MB and 22,875 rules.</summary>
 public sealed class VersificationFrames
 {
-    internal VersificationRules Rules { get; } = TvtmsReader.Read(TestResources.Tvtms);
+    internal VersificationRules Rules { get; } = TestResources.Rules;
 
     internal VersificationFrame Hebrew => Rules.Frame(Versification.Original);
 
@@ -258,7 +258,7 @@ public class LetteredEditionFrameTests
 
     private const int FirstSamuel = 9;
 
-    private static readonly VersificationRules Rules = TvtmsReader.Read(TestResources.Tvtms);
+    private static readonly VersificationRules Rules = TestResources.Rules;
 
     private static readonly VersificationFrame Brenton = Rules.Frame(Versification.Septuagint, EditionShape.Of(
     [

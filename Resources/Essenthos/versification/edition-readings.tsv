@@ -1,0 +1,283 @@
+# product    Essenthos/versification/edition-readings.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
+# Where an edition's verses stand, in passages it numbers in a way of its own that the versification
+# data (TVTMS) does not describe, read verse against verse. These are Essenthos's reading, not Tyndale
+# House's, made by comparing the editions word for word.
+#
+# An edition's rows are taken for a text that answers every one of their tests, and then they place
+# those verses ahead of every scheme of the data. Where two editions' rows name the same verse, the
+# later row wins (Brenton's Greek after Brenton).
+#
+# The data places the Greek Esther by the letters of the edition it describes (1:1a to 1:1r for
+# Mordecai's dream, thirty pieces at 4:17 for his prayer and Esther's) and neither Greek edition here
+# letters them so. The additions are the same verses in every edition, though, and the data says where
+# each of them stands (its Latin rows name them by lettered chapter: Est.A:1 is the first verse of the
+# dream, at the standard's 11:2), so what is written down here is only which verse of which addition
+# each lettered verse prints.
+#
+# Columns, tab-separated:
+#   edition   the edition the rows describe
+#   source    the edition's verse, in the data's notation with the edition's letter after the verse
+#             (Est.1:1b, Est.4:1a1), or a run of verses with one letter (Est.1:1a-17a, Sir.30:27-40);
+#             S3Y is the Song of the Three printed as a book of its own
+#   standard  the standard verses it prints, the one it prints most of first, separated by ';'. Est.A:1
+#             to Est.F:11 are the additions to Esther, placed where the data's rows put them; S3Y.1:n is
+#             the song's verse n, which the frame holds in Daniel 3 after the chapter's thirty verses,
+#             or in the song's own book for a verse of an edition that prints it as one (source S3Y).
+#             A run against a run of the same length is verse against verse; one verse against a run
+#             prints all of it; a run against one verse puts each of them there
+#   tests     what tells the edition apart, in the data's own form; the same on every row of an edition
+#   why       what was read, on the first row of each passage
+edition	source	standard	tests	why
+Brenton	Est.1:1	Est.A:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	Brenton prints the first verse of Mordecai's dream as 1:1 and continues it as 1:1b to 1:1r, skipping j, so that the verse the Hebrew calls 1:1 is his 1:1s; he runs some verses of the prayers and of the king's letters together (his 4:17c is the prayer's third and fourth verse), and lets 5:1 and 5:2 carry the opening of Esther's audience with the king, which the Greek writes in place of the Hebrew's two verses
+Brenton	Est.1:1b	Est.A:2	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1c	Est.A:3	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1d	Est.A:4	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1e	Est.A:5	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1f	Est.A:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1g	Est.A:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1h	Est.A:8	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1i	Est.A:9	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1k	Est.A:10	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1l	Est.A:11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1m	Est.A:12	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1n	Est.A:13	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1o	Est.A:14	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1p	Est.A:15	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1q	Est.A:16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1r	Est.A:17	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.1:1s	Est.1:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13a	Est.B:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13b	Est.B:2	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13c	Est.B:3	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13d	Est.B:4	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13e	Est.B:5	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13f	Est.B:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.3:13g	Est.B:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17a	Est.C:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17b	Est.C:2	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17c	Est.C:3-4	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17d	Est.C:5-6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17e	Est.C:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17f	Est.C:8	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17g	Est.C:9	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17h	Est.C:10	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17i	Est.C:11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17k	Est.C:12-13	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17l	Est.C:14-15	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17m	Est.C:16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17n	Est.C:17-18	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17o	Est.C:19-20	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17p	Est.C:21	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17q	Est.C:22	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17r	Est.C:23	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17s	Est.C:24	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17t	Est.C:25	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17u	Est.C:26	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17w	Est.C:27	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17x	Est.C:28	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17y	Est.C:29	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.4:17z	Est.C:30	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1	Est.5:1; Est.D:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1a	Est.D:2-4	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1b	Est.D:5	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1c	Est.D:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1d	Est.D:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1e	Est.D:8	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:1f	Est.D:9-11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:2	Est.5:2; Est.D:12	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:2a	Est.D:13-14	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.5:2b	Est.D:15-16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12a	Est.E:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12b	Est.E:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12c	Est.E:2-3	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12d	Est.E:4	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12e	Est.E:5	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12f	Est.E:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12g	Est.E:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12h	Est.E:8	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12i	Est.E:9	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12k	Est.E:10	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12l	Est.E:11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12m	Est.E:12	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12n	Est.E:13	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12o	Est.E:14	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12p	Est.E:15	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12q	Est.E:16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12r	Est.E:17-18	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12s	Est.E:19-20	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12t	Est.E:21	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12u	Est.E:22-23	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.8:12x	Est.E:24	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3a	Est.F:1	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3b	Est.F:2	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3c	Est.F:3	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3d	Est.F:4	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3e	Est.F:5	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3f	Est.F:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3g	Est.F:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3h	Est.F:8	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3i	Est.F:9	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3k	Est.F:10	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Est.10:3l	Est.F:11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Dan.3:54-55	S3Y.1:32-33	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	Brenton follows the order of Vaticanus in the Song of the Three, not the order the data's Greek and Latin columns number: the depths before the throne, the heavens before the angels, four lines of weather in another order, and the seas before the springs; he letters the last two of his as 3:72a and 3:72b
+Brenton	Dan.3:58-59	S3Y.1:36-37	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Dan.3:72a	S3Y.1:45	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Dan.3:72b	S3Y.1:50	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Dan.3:77	S3Y.1:56	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Dan.3:78	S3Y.1:55	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.30:13a	Sir.30:11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	Brenton prints Sirach 30:25-36:16 in the order of the Greek manuscripts, where two quires of their archetype were bound the wrong way round, under their own chapter numbers: his 30:25-40 is the standard's 33:16-31, his 31-33 its 34, 35 and 36:1-11, his 34-36 its 31, 32 and 33:1-15, and a verse at each seam prints the halves of two; his English is the King James's Apocrypha divided as his Greek is, which is how it was read against the standard, verse for verse
+Brenton	Sir.30:13b	Sir.30:12	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.30:25	Sir.33:16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.30:26	Sir.33:17; Sir.33:16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.30:27-40	Sir.33:18-31	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.31:1-26	Sir.34:1-26	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.32:1-20	Sir.35:1-20	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.33:1-11	Sir.36:1-11	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.33:12	Sir.30:25	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.34:1-31	Sir.31:1-31	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.35:1-24	Sir.32:1-24	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.36:1-15	Sir.33:1-15	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.36:16	Sir.36:11; Sir.33:16	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Sir.36:17-31	Sir.36:12-26	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Gen.31:50a	Gen.31:51	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	eBible prints these with the letter a after the verse before them, in Brenton's Greek and his English alike, where the standard numbering and the Hebrew have the same words as the next verse and the edition no verse of that number: Laban's heap and pillar as witness, the oil for the light, declaring his glory among the nations, Melatiah the Gibeonite at the wall, the vows paid before all his people; each stands where its words do, not at the verse whose number it borrows
+Brenton	Exo.25:5a	Exo.25:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	1Ch.16:23a	1Ch.16:24	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Neh.3:6a	Neh.3:7	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton	Psa.115:4a	Psa.116:14	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist	
+Brenton's Greek	Sir.33:7	Sir.36:7; Sir.36:6	Est.1:1.18=Exist & Est.4:17.25=Exist & Est.10:3.12=Exist & 1Sa.17:12=NotExist	Brenton's Greek runs the end of the standard's Sirach 36:6 into 36:7 at its 33:7, which his English leaves in 33:6, and was read against Swete there; his English prints 1 Samuel 17:12-31, which his Greek leaves out with Vaticanus, and that tells the two apart
+Swete	Est.1:1a-17a	Est.A:1-17	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	Swete numbers each addition to Esther from one and marks it with a letter in the chapter it follows: 1:1a to 1:17a are the dream, 4:1a to 4:30a the prayers, with the eleventh printed as 4:1a1, and 4:1b to 4:16b the audience; at the end of the book the letter is on the other side, 10:1a to 10:3a being the Hebrew's last three verses and the unlettered 10:1 to 10:11 the interpretation of the dream and the colophon
+Swete	Est.3:1a-7a	Est.B:1-7	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.4:1a-10a	Est.C:1-10	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.4:12a-30a	Est.C:12-30	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.4:1a1	Est.C:11	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.4:1b-16b	Est.D:1-16	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.8:1a-24a	Est.E:1-24	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.10:1a-3a	Est.10:1-3	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.10:1-11	Est.F:1-11	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:1	LJe.1:1-2	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	Swete prints the Letter of Jeremiah in seventy-two verses where the standard has seventy-three: his first verse is the title and the letter's opening, and he runs 15-16 into one verse, 43 into 42 and 50-51 into one, which leaves most of his verses one behind the standard's; read against Brenton's Greek, which is numbered as the standard is
+Swete	LJe.1:2-13	LJe.1:3-14	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:14	LJe.1:15-16	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:15	LJe.1:17	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:16-42	LJe.1:17-43	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:43-49	LJe.1:43-49	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:50	LJe.1:50-51	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	LJe.1:51-72	LJe.1:52-73	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Dan.3:54-55	S3Y.1:32-33	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	Swete follows the order of Vaticanus in the Song of the Three, not the order the data's Greek and Latin columns number: the depths before the throne, the heavens before the angels, and four lines of weather in another order where the Latin has six
+Swete	Dan.3:58-59	S3Y.1:36-37	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Dan.3:67-68	S3Y.1:47-48	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Dan.3:69	S3Y.1:45	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Dan.3:70	S3Y.1:50	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.30:13b	Sir.30:25	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	Swete prints Sirach 30-36 in the standard's order but numbers 34-36 as the NRSV does, which the data's Sirach passages map, and gives the Greek manuscripts' verse numbers to 33:16-31
+Swete	Sir.33:16a	Sir.33:16	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.33:25-36	Sir.33:16-27	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.33:37	Sir.33:27	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.33:38	Sir.33:28-29	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.33:39	Sir.33:30-31	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.33:40	Sir.33:31	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.34:10	Sir.34:10	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.34:11-14	Sir.34:10-13	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.34:15-17	Sir.34:13-15	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.34:18-21	Sir.34:15-18	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.34:22-26	Sir.34:18-22	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.34:27-31	Sir.34:22-26	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:1	Sir.35:1	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:2-3	Sir.35:1-2	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:4-14	Sir.35:2-12	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:15-18	Sir.35:12-15	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:19-22	Sir.35:15-18	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:23-24	Sir.35:18-19	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.35:25-26	Sir.35:19-20	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.36:7-8	Sir.36:6-7	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.36:9-12	Sir.36:7-10	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.36:13a	Sir.36:11	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.36:16b	Sir.36:11	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Sir.36:17-31	Sir.36:12-26	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Ge'ez	Dan.3:54-55	S3Y.1:32-33	Dan.3:100=Last & Dan.13:1=Exist	the church's Ge'ez has the Latin's six lines of weather in the Song of the Three but in an order of its own, and the depths and the heavens first as Vaticanus has them; the line it prints as 3:71 is placed by elimination, the others naming night and day, dew, cold and frost, light and darkness, and hail. Its Daniel keeps Susanna and Bel as chapters 13 and 14, which tells it apart from the Latin texts that also end Daniel 3 at verse 100
+Ge'ez	Dan.3:58-59	S3Y.1:36-37	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Dan.3:67	S3Y.1:47	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Dan.3:70	S3Y.1:48	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Dan.3:71	S3Y.1:45	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Dan.3:72	S3Y.1:50	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.30:25-36	Sir.33:16-27	Dan.3:100=Last & Dan.13:1=Exist	the Ge'ez keeps the Greek manuscripts' order of Sirach 30:25-36:31, as Brenton prints them, and divides every chapter verse for verse as Swete does: its 30:25-40 are Swete's 33:25-40, its 31, 32 and 33 Swete's 34, 35 and 36:1-13, its 34 and 35 Swete's 31 and 32, and its 36 Swete's 33:1-16 and 36:17-31. Each verse stands where the verse of Swete's it prints stands, so these rows are Swete's rows under the Ge'ez's numbers and change with them
+Ge'ez	Sir.30:37	Sir.33:27	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.30:38	Sir.33:28-29	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.30:39	Sir.33:30-31	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.30:40	Sir.33:31	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.31:1-10	Sir.34:1-10	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.31:11-14	Sir.34:10-13	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.31:15-17	Sir.34:13-15	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.31:18-21	Sir.34:15-18	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.31:22-26	Sir.34:18-22	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.31:27-31	Sir.34:22-26	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:1	Sir.35:1	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:2-3	Sir.35:1-2	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:4-14	Sir.35:2-12	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:15-18	Sir.35:12-15	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:19-22	Sir.35:15-18	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:23-24	Sir.35:18-19	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.32:25-26	Sir.35:19-20	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.33:1-6	Sir.36:1-6	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.33:7-8	Sir.36:6-7	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.33:9-13	Sir.36:7-11	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.34:1-31	Sir.31:1-31	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.35:1-24	Sir.32:1-24	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.36:1-16	Sir.33:1-16	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	Sir.36:17-31	Sir.36:12-26	Dan.3:100=Last & Dan.13:1=Exist	
+Synodal	Est.1:1a	Est.A:1-17	LJe.1:72=Last & Est.5:1=Exist	Russian Wikisource's Synodal sets the additions to Esther in brackets inside six verses, each the lettered piece of its verse and each the whole of an addition, the audience divided between 5:1 and 5:2 as Brenton divides it; its Esther prints 5:1, which tells it from Swete's
+Synodal	Est.3:13a	Est.B:1-7	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Est.4:17a	Est.C:1-30	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Est.5:1a	Est.D:1-11	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Est.5:2a	Est.D:12-16	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Est.8:12a	Est.E:1-24	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Est.10:3a	Est.F:1-11	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:1-4	LJe.1:1-4	LJe.1:72=Last & Est.5:1=Exist	the Synodal's Letter of Jeremiah in seventy-two verses of its own division, read against Brenton's English, which is numbered as the standard is: it runs 5-6, 15-16 and 50-51 into one verse each, divides 17 and 43, and carries a clause over a verse's end at 25, 39-40, 46-47 and 53-54
+Synodal	LJe.1:5	LJe.1:5-6	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:6-13	LJe.1:7-14	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:14	LJe.1:15-16	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:15	LJe.1:17	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:16-24	LJe.1:17-25	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:25	LJe.1:26-27	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:26-39	LJe.1:27-40	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:40	LJe.1:41; LJe.1:40	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:41-42	LJe.1:42-43	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:43-46	LJe.1:43-46	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:47	LJe.1:47; LJe.1:46	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:48-49	LJe.1:48-49	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:50	LJe.1:50-51	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:51-53	LJe.1:52-54	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:54	LJe.1:55; LJe.1:54	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	LJe.1:55-72	LJe.1:56-73	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	S3Y.1:29	S3Y.1:29-30	LJe.1:72=Last & Est.5:1=Exist	the Synodal's Song of the Three 1:29 holds the song's 29 and 30
+Synodal	Man.1:1	Man.1:1	LJe.1:72=Last & Est.5:1=Exist	the Synodal's Prayer of Manasseh in twelve verses, read against the King James's fifteen
+Synodal	Man.1:2	Man.1:3; Man.1:2; Man.1:4-5	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:3-5	Man.1:5-7	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:6	Man.1:7-8	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:7	Man.1:8-9	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:8	Man.1:9-10	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:9	Man.1:10	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:10	Man.1:10-11	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:11	Man.1:13; Man.1:12; Man.1:14-15	LJe.1:72=Last & Est.5:1=Exist	
+Synodal	Man.1:12	Man.1:15	LJe.1:72=Last & Est.5:1=Exist	
+Vulgate	Bar.6:1-4	Bar.6:2-5	Bar.6:72=Last	the Clementine Vulgate and the Douay-Rheims made from it print the letter as Baruch 6, with its title as a heading and not as a verse, so their first verse is the standard's second, and divide the verses around 9, 12, 14-19, 25 and 40-43 otherwise; read against the King James
+Vulgate	Bar.6:5	Bar.6:6; Bar.6:5	Bar.6:72=Last	
+Vulgate	Bar.6:6-8	Bar.6:7-9	Bar.6:72=Last	
+Vulgate	Bar.6:9	Bar.6:10; Bar.6:9	Bar.6:72=Last	
+Vulgate	Bar.6:10-11	Bar.6:11-12	Bar.6:72=Last	
+Vulgate	Bar.6:12	Bar.6:13; Bar.6:12	Bar.6:72=Last	
+Vulgate	Bar.6:13	Bar.6:14	Bar.6:72=Last	
+Vulgate	Bar.6:14	Bar.6:15-16	Bar.6:72=Last	
+Vulgate	Bar.6:15	Bar.6:17; Bar.6:16	Bar.6:72=Last	
+Vulgate	Bar.6:16-17	Bar.6:17-18	Bar.6:72=Last	
+Vulgate	Bar.6:18	Bar.6:19-20	Bar.6:72=Last	
+Vulgate	Bar.6:19-24	Bar.6:20-25	Bar.6:72=Last	
+Vulgate	Bar.6:25	Bar.6:26-27	Bar.6:72=Last	
+Vulgate	Bar.6:26-39	Bar.6:27-40	Bar.6:72=Last	
+Vulgate	Bar.6:40	Bar.6:41; Bar.6:40	Bar.6:72=Last	
+Vulgate	Bar.6:41	Bar.6:42; Bar.6:41	Bar.6:72=Last	
+Vulgate	Bar.6:42	Bar.6:43	Bar.6:72=Last	
+Vulgate	Bar.6:43-49	Bar.6:43-49	Bar.6:72=Last	
+Vulgate	Bar.6:50	Bar.6:50-51	Bar.6:72=Last	
+Vulgate	Bar.6:51-55	Bar.6:52-56	Bar.6:72=Last	
+Vulgate	Bar.6:56	Bar.6:57-58	Bar.6:72=Last	
+Vulgate	Bar.6:57-72	Bar.6:58-73	Bar.6:72=Last	

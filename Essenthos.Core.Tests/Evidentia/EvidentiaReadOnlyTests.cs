@@ -104,7 +104,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
 
         var measurement = await Loader(new EvidentiaFileSourceTexts(
                 _ => Private(),
-                () => Essenthos.Core.Loading.Frame.TvtmsReader.Read(TestResources.Tvtms)))
+                () => TestResources.Rules))
             .MeasureBook("PRIVATE", "HEBT", 1, new EvidentiaMeasurementOptions(
                 LearnRenderingsFrom: "ROUTE", SourceFromFiles: true, RouteTexts: ["ROUTE"]));
 

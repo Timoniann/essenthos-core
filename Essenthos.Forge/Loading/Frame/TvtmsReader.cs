@@ -19,7 +19,18 @@ internal sealed record TvtmsRow(
     IReadOnlyList<string> Traditions,
     IReadOnlyList<CanonicalReference> Sources,
     IReadOnlyList<CanonicalReference> Standards,
-    VersificationConditions? Tests);
+    VersificationConditions? Tests)
+{
+    /// <summary>The tests as the data writes them, which a frame file names when they decided a passage.</summary>
+    public string Written { get; init; } = string.Empty;
+}
+
+/// <summary>
+/// How one passage of the data was decided for an edition: the scheme taken, and the tests of it the
+/// edition answered, as the data writes them.
+/// </summary>
+/// <param name="Passage">The first verse the passage's rows name, in the data's notation.</param>
+internal sealed record PassageDecision(string Passage, string Scheme, IReadOnlyList<string> Held);
 
 /// <summary>
 /// Reads Tyndale's TVTMS — Translators Versification Traditions with Methodology for
@@ -52,7 +63,15 @@ internal static class TvtmsReader
 
     private const int TestsColumn = 8;
 
-    public static VersificationRules Read(string path)
+    /// <summary>
+    /// The rules of TVTMS at <paramref name="path"/>, with this project's own from the versification files
+    /// of the same <c>Resources/</c> folder, where <c>Versification/TVTMS.txt</c> stands beside
+    /// <c>Essenthos/versification/</c>.
+    /// </summary>
+    public static VersificationRules Read(string path) =>
+        Read(path, VersificationData.Of(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetFullPath(path)))!));
+
+    public static VersificationRules Read(string path, VersificationData data)
     {
         var blocks = new List<IReadOnlyList<TvtmsRow>>(512);
         var passage = new List<TvtmsRow>(64);
@@ -77,7 +96,7 @@ internal static class TvtmsReader
 
             if (TryReadRow(line, out var row))
             {
-                passage.Add(TvtmsCorrections.Apply(row, out var correction));
+                passage.Add(TvtmsCorrections.Apply(row, data.Corrections, out var correction));
                 if (correction is not null)
                 {
                     corrected.Add(correction);
@@ -110,8 +129,8 @@ internal static class TvtmsReader
                 "release and not the spreadsheet export.");
         }
 
-        var supplemented = TvtmsSupplements.Join(blocks);
-        return new VersificationRules(blocks, corrected, supplemented, additions);
+        var supplemented = TvtmsSupplements.Join(blocks, data.Supplements);
+        return new VersificationRules(data, blocks, corrected, supplemented, additions);
     }
 
     /// <summary>
@@ -168,7 +187,10 @@ internal static class TvtmsReader
             ],
             sources,
             standards,
-            VersificationTest.ParseAll(columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty));
+            VersificationTest.ParseAll(columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty))
+        {
+            Written = columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty,
+        };
         return true;
     }
 }
@@ -184,58 +206,59 @@ internal static class TvtmsReader
 /// beside every rule, and the reader used not to ask.
 /// </summary>
 internal sealed class VersificationRules(
+    VersificationData data,
     IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks,
     IReadOnlySet<TvtmsCorrection> corrected,
     IReadOnlySet<TvtmsSupplement> supplemented,
     IReadOnlyDictionary<AdditionVerse, CanonicalReference> additions)
 {
     /// <summary>
-    /// The names this file gives the numbering schemes of each tradition, the first being the one
-    /// the tradition is named after and the rest its variants. The Russian schemes are absent from
-    /// the file, so a Synodal text cannot be placed from this source and has to say so rather than
-    /// fall back to its own numbering and look right.
+    /// The names the data gives the numbering schemes of each tradition, the first being the one the
+    /// tradition is named after and the rest its variants, and each undivided scheme with the divided one
+    /// it is written against, as <c>Resources/Essenthos/versification/schemes.tsv</c> lists them. The
+    /// Russian schemes are absent from the data, so a Synodal text cannot be placed from this source and
+    /// has to say so rather than fall back to its own numbering and look right.
     /// </summary>
-    private static readonly Dictionary<Versification, string[]> Schemes = new()
+    public static (Dictionary<Versification, string[]> Schemes, Dictionary<string, string> Undivided) ReadSchemes(
+        VersificationData data)
     {
-        [Versification.Original] = ["Hebrew"],
-        [Versification.English] = ["Eng-KJV", "EngTitleSeparate", "EngTitleMerged"],
-        [Versification.Septuagint] =
-        [
-            "Greek", "Greek2", "Greek3", "GreekUndivided", "GreekUndivided2", "Greek2Undivided",
-            "GreekIntegrated", "GreekIntegrated2", "Greek2-NETS", "GrkTitleSeparate", "GrkTitleSeparate2",
-            "GrkTitleMerged",
-        ],
-        [Versification.Vulgate] = ["Latin", "Latin2"],
-    };
+        var lines = data.Rows(VersificationData.SchemesProduct, "tradition", "scheme", "divided", "why");
+        return (
+            lines.GroupBy(line => line.Tradition("tradition"))
+                .ToDictionary(tradition => tradition.Key, tradition => tradition.Select(line => line.Required("scheme")).ToArray()),
+            lines.Where(line => line.Optional("divided") is not null)
+                .ToDictionary(line => line.Required("scheme"), line => line.Required("divided"), StringComparer.Ordinal));
+    }
 
-    /// <summary>The undivided form of a scheme, and the divided scheme it is written against.</summary>
-    private static readonly Dictionary<string, string> UndividedVariants = new()
-    {
-        ["GreekUndivided"] = "Greek",
-        ["Greek2Undivided"] = "Greek2",
-    };
+    private IReadOnlyDictionary<Versification, string[]> Schemes => data.Schemes;
+
+    /// <summary>The project's own rules these were read with.</summary>
+    public VersificationData Data => data;
 
     public bool Covers(Versification tradition) => Schemes.ContainsKey(tradition);
 
+    /// <summary>The scheme a tradition is named after, which it takes where nothing says otherwise.</summary>
+    public string SchemeNamedAfter(Versification tradition) => Schemes[tradition][0];
+
     /// <summary>
-    /// Which of <see cref="TvtmsCorrections.All"/> still found the row they correct. One that did not
+    /// Which of <see cref="VersificationData.Corrections"/> still found the row they correct. One that did not
     /// is about a rule this release of the data no longer states.
     /// </summary>
     public IReadOnlySet<TvtmsCorrection> Corrected { get; } = corrected;
 
     /// <summary>
-    /// Which of <see cref="TvtmsSupplements.All"/> found the passage of the data they were written to
+    /// Which of <see cref="VersificationData.Supplements"/> found the passage of the data they were written to
     /// join. One that did not stands as a passage of its own, where the data's rules for the same
     /// verses would compete with it.
     /// </summary>
     public IReadOnlySet<TvtmsSupplement> Supplemented { get; } = supplemented;
 
     /// <summary>
-    /// Which of <see cref="TvtmsSupplements.All"/> stand apart from a passage of the data that places
+    /// Which of <see cref="VersificationData.Supplements"/> stand apart from a passage of the data that places
     /// some of the same verses by a scheme of the supplement's own tradition. The two are then chosen
     /// between separately and the verse is given the addresses of both.
     /// </summary>
-    public IReadOnlySet<TvtmsSupplement> Competing { get; } = Competitors(blocks, supplemented);
+    public IReadOnlySet<TvtmsSupplement> Competing { get; } = Competitors(data, blocks, supplemented);
 
     /// <summary>Where each verse of the additions to Esther stands in the standard numbering.</summary>
     public IReadOnlyDictionary<AdditionVerse, CanonicalReference> Additions { get; } = additions;
@@ -276,22 +299,48 @@ internal sealed class VersificationRules(
     /// An edition whose lettered verses were read one by one (<see cref="LetteredEditions"/>) has them
     /// placed as read, ahead of every scheme.
     /// </summary>
-    public VersificationFrame Frame(Versification tradition, EditionShape edition)
+    /// <param name="decided">Told how each passage the edition is placed by was decided.</param>
+    public VersificationFrame Frame(Versification tradition, EditionShape edition, Action<PassageDecision>? decided = null)
     {
         var own = Schemes[tradition];
         var others = Schemes.Where(scheme => scheme.Key != tradition).SelectMany(scheme => scheme.Value).ToArray();
-        var supplements = TvtmsSupplements.Schemes(tradition);
+        var supplements = TvtmsSupplements.Schemes(data.Supplements, tradition);
 
-        return Build(tradition, LetteredEditions.For(edition, Additions), passage =>
-            Chosen(passage, supplements, edition, requireEvidence: true) ??
-            Chosen(passage, own, edition, requireEvidence: false) ??
-            Chosen(passage, others, edition, requireEvidence: true) ??
-            (tradition == Versification.English
-                ? Closest(passage, [.. own, .. others], edition) ??
-                  Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true)
-                : ApartFromPieces(passage, own[0], edition) ??
-                  Closest(passage, [.. own, .. others], edition) ??
-                  Named(passage, own[0])));
+        IEnumerable<TvtmsRow> Choose(IReadOnlyList<TvtmsRow> passage)
+        {
+            (string Scheme, IEnumerable<TvtmsRow> Rows) choice =
+                Chosen(passage, supplements, edition, requireEvidence: true) ??
+                Chosen(passage, own, edition, requireEvidence: false) ??
+                Chosen(passage, others, edition, requireEvidence: true) ??
+                (tradition == Versification.English
+                    ? Closest(passage, [.. own, .. others], edition) ??
+                      (own[0], Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true))
+                    : (ApartFromPieces(passage, own[0], edition) is { } whole ? (own[0], whole) : ((string, IEnumerable<TvtmsRow>)?)null) ??
+                      Closest(passage, [.. own, .. others], edition) ??
+                      (own[0], Named(passage, own[0])));
+            var (scheme, rows) = choice;
+            if (decided is not null && passage.Any(row => row.Sources.Any(source => edition.Carries(source.Book))))
+            {
+                var taken = rows.ToList();
+                decided(new PassageDecision(
+                    passage.SelectMany(row => row.Sources).Select(source => source.ToString()).FirstOrDefault() ?? "-",
+                    scheme,
+                    [.. taken.Where(row => row.Tests?.Answer(edition) is true).Select(row => row.Written).Distinct()]));
+                return taken;
+            }
+
+            return rows;
+        }
+
+        if (decided is not null)
+        {
+            foreach (var (name, tests) in data.Editions.Matched(edition))
+            {
+                decided(new PassageDecision(name, VersificationData.EditionReadingsProduct, [tests]));
+            }
+        }
+
+        return Build(tradition, data.Editions.For(edition, Additions), Choose);
     }
 
     /// <summary>
@@ -303,7 +352,7 @@ internal sealed class VersificationRules(
     /// and needs no argument for it; another tradition's is taken only on the strength of a test
     /// that actually held.
     /// </param>
-    private static IEnumerable<TvtmsRow>? Chosen(
+    private (string Scheme, IEnumerable<TvtmsRow> Rows)? Chosen(
         IReadOnlyList<TvtmsRow> passage,
         IReadOnlyList<string> schemes,
         EditionShape edition,
@@ -332,7 +381,7 @@ internal sealed class VersificationRules(
             most = held;
         }
 
-        return best is null ? null : Named(passage, best);
+        return best is null ? null : (best, Named(passage, best));
     }
 
     /// <summary>
@@ -340,7 +389,7 @@ internal sealed class VersificationRules(
     /// pieces. An edition that prints Exodus 38:11 whole still numbers the chapter as the scheme that
     /// divides it does.
     /// </summary>
-    private static IEnumerable<TvtmsRow>? ApartFromPieces(
+    private IEnumerable<TvtmsRow>? ApartFromPieces(
         IReadOnlyList<TvtmsRow> passage,
         string scheme,
         EditionShape edition)
@@ -356,7 +405,7 @@ internal sealed class VersificationRules(
     /// The scheme whose tests the edition answers most, counted as the rows that hold less the rows
     /// that fail, or null where no scheme has more of the one than the other.
     /// </summary>
-    private static IEnumerable<TvtmsRow>? Closest(
+    private (string Scheme, IEnumerable<TvtmsRow> Rows)? Closest(
         IReadOnlyList<TvtmsRow> passage,
         IReadOnlyList<string> schemes,
         EditionShape edition)
@@ -375,7 +424,7 @@ internal sealed class VersificationRules(
             }
         }
 
-        return best is null ? null : Named(passage, best);
+        return best is null ? null : (best, Named(passage, best));
     }
 
     /// <summary>
@@ -384,10 +433,10 @@ internal sealed class VersificationRules(
     /// renumbering of the chapter — so it is the divided scheme's rows with its own in place of the
     /// ones about the same verses.
     /// </summary>
-    private static IEnumerable<TvtmsRow> Named(IReadOnlyList<TvtmsRow> passage, string scheme)
+    private IEnumerable<TvtmsRow> Named(IReadOnlyList<TvtmsRow> passage, string scheme)
     {
         var rows = passage.Where(row => row.Traditions.Contains(scheme)).ToList();
-        if (rows.Count == 0 || !UndividedVariants.TryGetValue(scheme, out var divided))
+        if (rows.Count == 0 || !data.Undivided.TryGetValue(scheme, out var divided))
         {
             return rows;
         }
@@ -404,10 +453,11 @@ internal sealed class VersificationRules(
     }
 
     private static HashSet<TvtmsSupplement> Competitors(
+        VersificationData data,
         IReadOnlyList<IReadOnlyList<TvtmsRow>> blocks,
         IReadOnlySet<TvtmsSupplement> supplemented)
     {
-        var placed = Schemes.ToDictionary(
+        var placed = data.Schemes.ToDictionary(
             tradition => tradition.Key,
             tradition => blocks.SelectMany(block => block)
                 .Where(row => row.Traditions.Any(tradition.Value.Contains))
@@ -416,7 +466,7 @@ internal sealed class VersificationRules(
 
         return
         [
-            .. TvtmsSupplements.All.Where(supplement =>
+            .. data.Supplements.Where(supplement =>
                 !supplemented.Contains(supplement) &&
                 supplement.Rows.Any(row => row.Sources.Any(placed[supplement.Tradition].Contains))),
         ];
