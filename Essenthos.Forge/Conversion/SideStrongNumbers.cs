@@ -45,6 +45,9 @@ internal sealed class SideStrongNumbers : ITextStage
 
     public bool AppliesTo(string slug) => Layers.ContainsKey(slug);
 
+    /// <summary>Whether a text's Strong numbers are laid onto it from another edition, not its own tags.</summary>
+    public static bool Layered(string slug) => Layers.ContainsKey(slug);
+
     public IReadOnlyList<string> Sources(string slug) => [Layers[slug].Source];
 
     public void Apply(ConvertedText text, string resources)
