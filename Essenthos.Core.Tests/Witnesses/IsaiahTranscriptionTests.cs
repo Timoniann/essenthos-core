@@ -223,7 +223,7 @@ public class SweteIsaiahTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EveryVerseStandsAtItsOwnAddressInTheFrame()
     {
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.Septuagint, EditionShape.Of(
+        var frame = TestResources.Rules.Frame(Versification.Septuagint, EditionShape.Of(
             swete.Source.Books.SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses.Select(verse =>
                 (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
                     verse.Words.Sum(word => word.Surface.Length)))))));

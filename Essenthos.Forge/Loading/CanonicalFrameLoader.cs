@@ -132,7 +132,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                 reference.IsPrimary))
             .ToListAsync(cancellationToken);
 
-        var expected = Expected(rules, text.Versification, verses, BookTraditions.For(text.Slug), Read(text.Slug));
+        var expected = Expected(rules, text.Versification, verses, rules.Data.Books(text.Slug), Read(text.Slug));
         return (verses, existing, expected);
     }
 

@@ -130,7 +130,7 @@ public class EditionBoundaryLoaderTests : IClassFixture<WitnessDatabase>, IDispo
         (await db.Words.AsNoTracking().SingleAsync(w => w.Id == moved.Id)).VerseId.Should().Be(next.Id);
         var text = await db.Texts.SingleAsync(t => t.Id == moved.TextId);
         var placer = new CanonicalFrameLoader(db, NullLogger<CanonicalFrameLoader>.Instance);
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         await placer.Place(text, rules);
         (await db.VerseReferences.AsNoTracking().SingleAsync(r => r.VerseId == next.Id && r.IsPrimary))
             .CanonicalVerse.Should().Be(43);

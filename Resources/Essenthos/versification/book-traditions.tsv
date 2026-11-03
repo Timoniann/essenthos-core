@@ -1,3 +1,5 @@
+# product    Essenthos/versification/book-traditions.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
 # Books an edition numbers in another tradition than the rest of it, or in none the versification data
 # describes. A book not listed is numbered in its edition's own tradition.
 #

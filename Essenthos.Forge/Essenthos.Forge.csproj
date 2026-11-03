@@ -215,18 +215,6 @@
              Greek, kept with the project's other reviewable decisions and built in from there. -->
         <EmbeddedResource Include="..\Resources\Essenthos\versification\geez.tsv"
                           LogicalName="Essenthos.Core.BetaMasaheft.GeezVersification.tsv" />
-        <!-- The versification rules that are this project's rather than TVTMS's (Loading/Frame/VersificationFiles.cs),
-             compiled in so a worktree reads its own copy and a changed rule moves the frame step's digest. -->
-        <EmbeddedResource Include="..\Resources\Essenthos\versification\schemes.tsv"
-                          LogicalName="Essenthos.Core.Loading.Frame.Versification.schemes.tsv" />
-        <EmbeddedResource Include="..\Resources\Essenthos\versification\corrections.tsv"
-                          LogicalName="Essenthos.Core.Loading.Frame.Versification.corrections.tsv" />
-        <EmbeddedResource Include="..\Resources\Essenthos\versification\supplements.tsv"
-                          LogicalName="Essenthos.Core.Loading.Frame.Versification.supplements.tsv" />
-        <EmbeddedResource Include="..\Resources\Essenthos\versification\book-traditions.tsv"
-                          LogicalName="Essenthos.Core.Loading.Frame.Versification.book-traditions.tsv" />
-        <EmbeddedResource Include="..\Resources\Essenthos\versification\edition-readings.tsv"
-                          LogicalName="Essenthos.Core.Loading.Frame.Versification.edition-readings.tsv" />
     </ItemGroup>
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes

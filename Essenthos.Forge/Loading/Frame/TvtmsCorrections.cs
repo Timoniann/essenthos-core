@@ -25,16 +25,14 @@ internal sealed record TvtmsCorrection(
 /// </summary>
 internal static class TvtmsCorrections
 {
-    public static IReadOnlyList<TvtmsCorrection> All { get; } = Read();
-
     /// <summary>
     /// The row with its placement corrected, or the row itself. A row serving several schemes is
     /// never corrected: the correction is about one scheme, and would silently move the others.
     /// </summary>
-    public static TvtmsRow Apply(TvtmsRow row, out TvtmsCorrection? applied)
+    public static TvtmsRow Apply(TvtmsRow row, IReadOnlyList<TvtmsCorrection> corrections, out TvtmsCorrection? applied)
     {
         applied = row is { Traditions.Count: 1, Sources.Count: 1, Standards.Count: 1 }
-            ? All.FirstOrDefault(correction =>
+            ? corrections.FirstOrDefault(correction =>
                 correction.Scheme == row.Traditions[0] &&
                 correction.Source == row.Sources[0] &&
                 correction.States == row.Standards[0])
@@ -50,9 +48,9 @@ internal static class TvtmsCorrections
             };
     }
 
-    private static List<TvtmsCorrection> Read() =>
+    public static List<TvtmsCorrection> Read(VersificationData data) =>
     [
-        .. VersificationFiles.Read(VersificationFiles.Corrections,
+        .. data.Rows(VersificationData.CorrectionsProduct,
                 "scheme", "data-source", "data-standard", "source", "standard", "tests", "why")
             .Select(line => new TvtmsCorrection(
                 line.Required("scheme"),

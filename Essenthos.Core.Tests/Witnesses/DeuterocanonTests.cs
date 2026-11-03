@@ -168,7 +168,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
         esther.Chapters.Single(chapter => chapter.Number == 1).Verses.Single(verse => verse.Label == "a")
             .Words.Should().OnlyContain(word => word.SuppliedSpan != null);
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var extended = Deuterocanon.Frame(read.Synodal, rules);
         extended.Resolve(17, 1, 1, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 11, 2));
         extended.Resolve(17, 5, 2, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 15, 12));
@@ -205,7 +205,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
         read.KingJames.Definition.PartSources.Should()
             .Equal(DeuterocanonTextSource.KingJamesSource, DeuterocanonTextSource.KingJamesEstherSource);
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var extended = Deuterocanon.Frame(read.KingJames, rules);
         var hebrewOnly = Deuterocanon.Frame(
             Bible4uTextSource.Read(TestResources.Bible4u("KJV"), "KJV"), rules);
@@ -234,7 +234,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
     [Fact]
     public void TheBooksBeyondTheCanonArePlacedForTheEditionsTheDataDescribes()
     {
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
 
         Deuterocanon.Frame(read.DouayRheims, rules).Resolve(75, 5, 15)[0].Should().Be(new CanonicalReference(75, 5, 14));
         Deuterocanon.Frame(read.Vulgate, rules).Resolve(75, 5, 15)[0].Should().Be(new CanonicalReference(75, 5, 14));
@@ -248,7 +248,7 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
             .ToList();
         var wisdom = synodal.Single(verse => verse is { Book: 75, Chapter: 5, Number: 14 });
         CanonicalFrameLoader.Expected(rules, read.Synodal.Definition.Versification, synodal,
-                BookTraditions.For(Sources.SynodalSlug))
+                rules.Data.Books(Sources.SynodalSlug))
             .Single(reference => reference.VerseId == wisdom.Id)
             .Should().Be(new ReferenceDraft(wisdom.Id, 75, 5, 14, true));
     }
@@ -359,7 +359,7 @@ public class MaccabeesFrameTests(Deuterocanon read) : IClassFixture<Deuterocanon
 
     private const int SecondMaccabees = 74;
 
-    private static readonly VersificationRules Rules = TvtmsReader.Read(TestResources.Tvtms);
+    private static readonly VersificationRules Rules = TestResources.Rules;
 
     [Fact]
     public void TheGreekAndEnglishEditionsStayWhereTheyNumberThemselves()
@@ -760,7 +760,7 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
 
     private async Task Place()
     {
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {

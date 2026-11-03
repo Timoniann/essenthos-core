@@ -47,7 +47,7 @@ internal readonly record struct AdditionVerse(int Book, char Section, int Verse)
 /// though, and the data says where each of them stands, so what is written down is only which verse
 /// of which addition each lettered verse prints.
 /// </summary>
-internal static class LetteredEditions
+internal sealed class LetteredEditions
 {
     /// <summary>One standard verse a row names: an addition to Esther, placed by the data, or an address.</summary>
     private readonly record struct Standard(AdditionVerse? Addition, CanonicalReference Address);
@@ -59,16 +59,18 @@ internal static class LetteredEditions
     /// <param name="Tests">What tells the edition apart, in the versification data's own form.</param>
     private sealed record Edition(string Name, VersificationConditions Tests, List<Row> Rows);
 
-    private static readonly IReadOnlyList<Edition> All = Read();
+    private readonly IReadOnlyList<Edition> _all;
+
+    private LetteredEditions(IReadOnlyList<Edition> all) => _all = all;
 
     /// <summary>
     /// The places of the lettered verses of whichever of these editions this one is, or nothing.
     /// </summary>
-    public static IReadOnlyDictionary<PrintedAddress, IReadOnlyList<CanonicalReference>>? For(
+    public IReadOnlyDictionary<PrintedAddress, IReadOnlyList<CanonicalReference>>? For(
         EditionShape edition,
         IReadOnlyDictionary<AdditionVerse, CanonicalReference> additions)
     {
-        var matched = All.Where(candidate => candidate.Tests.Answer(edition) is true).ToList();
+        var matched = _all.Where(candidate => candidate.Tests.Answer(edition) is true).ToList();
         if (matched.Count == 0)
         {
             return null;
@@ -112,7 +114,7 @@ internal static class LetteredEditions
         return prints.Count == 1
             ? row.Verses.Select(verse => (verse, prints))
             : throw new FormatException(
-                $"edition-readings.tsv line {row.Line}: {edition.Name}'s {row.Verses.Count} verses against " +
+                $"edition-readings.tsv row {row.Line}: {edition.Name}'s {row.Verses.Count} verses against " +
                 $"{prints.Count} standard ones are neither the same length nor a single verse on either side.");
     }
 
@@ -134,13 +136,13 @@ internal static class LetteredEditions
                 "Esther passages; check that TVTMS.txt is the release those rows were read from.");
     }
 
-    private static List<Edition> Read()
+    public static LetteredEditions Read(VersificationData data)
     {
         var editions = new List<Edition>();
 
         // The tests each edition's first row states, which every other row of it has to repeat.
         var stated = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var line in VersificationFiles.Read(VersificationFiles.EditionReadings,
+        foreach (var line in data.Rows(VersificationData.EditionReadingsProduct,
                      "edition", "source", "standard", "tests", "why"))
         {
             var name = line.Required("edition");
@@ -163,10 +165,10 @@ internal static class LetteredEditions
             }
 
             var verses = Verses(line);
-            edition.Rows.Add(new Row(line.Number, verses, Standards(line, inTheBook: verses[0].Address.Book == SongOfTheThreeBook.Book)));
+            edition.Rows.Add(new Row(line.Row, verses, Standards(line, inTheBook: verses[0].Address.Book == SongOfTheThreeBook.Book)));
         }
 
-        return editions;
+        return new LetteredEditions(editions);
     }
 
     /// <summary>

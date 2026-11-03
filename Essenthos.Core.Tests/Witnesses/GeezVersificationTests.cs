@@ -65,7 +65,7 @@ public sealed class GeezVersificationTests
             .. Enumerable.Range(1, 44).Select(verse => new PlacedVerse(verse, FirstChronicles, 7, verse, string.Empty, 50)),
             .. Enumerable.Range(1, 6).Select(verse => new PlacedVerse(100 + verse, Numbers, 1, verse, string.Empty, 50)),
         ];
-        var rules = new VersificationRules([], new HashSet<TvtmsCorrection>(), new HashSet<TvtmsSupplement>(),
+        var rules = new VersificationRules(TestResources.Rules.Data, [], new HashSet<TvtmsCorrection>(), new HashSet<TvtmsSupplement>(),
             new Dictionary<AdditionVerse, CanonicalReference>());
 
         var placed = CanonicalFrameLoader.Expected(rules, Versification.Septuagint, verses, read: GeezVersification.Placements)
@@ -233,7 +233,7 @@ public sealed class GeezVersificationLinkTests : IDisposable
             ]),
         ]));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {

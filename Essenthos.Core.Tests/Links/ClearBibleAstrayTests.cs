@@ -144,7 +144,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
                 verse => ClearBibleAlignment.Verse(verse.Book, verse.Chapter, verse.Verse),
                 verse => Canonical(spanish.Resolve(verse.Book, verse.Chapter, verse.Verse)));
 
-        var hebrew = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.Original);
+        var hebrew = TestResources.Rules.Frame(Versification.Original);
         var sourceFrame = new Dictionary<int, HashSet<int>>();
         var records = ClearBibleAlignment.Records(Path.Combine(folder, "spa", "alignments", "RV09", "WLCM-RV09-manual.json"))
             .ToList();

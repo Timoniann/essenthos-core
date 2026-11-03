@@ -274,13 +274,12 @@ internal static partial class ForgeVerbs
     /// </summary>
     private static async Task<int> FrameCheck(ForgeRun forge, string[] args)
     {
-        var at = Array.IndexOf(args, "--out");
-        var path = at > 0 && at + 1 < args.Length ? Path.GetFullPath(args[at + 1]) : null;
+        var path = Option(args, "--out") is { } file ? Path.GetFullPath(file) : null;
         var rules = Loading.Frame.TvtmsReader.Read(Configuration.ResourcePaths.File(forge.Resources, "Versification", "TVTMS.txt"));
 
-        using var scope = forge.Scope();
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var loader = scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>();
+        await using var db = OnDatabase(forge, Option(args, "--database"));
+        var loader = new CanonicalFrameLoader(db, Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
+        Console.WriteLine($"The frame of {db.Database.GetDbConnection().Database}, by the rules under {rules.Data.Store.ResourcesPath}");
         await using var output = path is null ? null : new StreamWriter(path, false, new UTF8Encoding(false)) { NewLine = "\n" };
         output?.WriteLine("text\tbook\tchapter\tverse\tlabel\tcanonical_book\tcanonical_chapter\tcanonical_verse\tprimary");
 
@@ -327,6 +326,22 @@ internal static partial class ForgeVerbs
 
         Console.WriteLine($"{differing} texts differ from the frame the corpus holds");
         return differing == 0 ? 0 : 1;
+    }
+
+    /// <summary>
+    /// The configured corpus, or another database on the same server named by <c>--database</c>, for a
+    /// verb that only reads: the snapshot a rework export is taken from, a copy being proved.
+    /// </summary>
+    private static AppDbContext OnDatabase(ForgeRun forge, string? database)
+    {
+        var connection = new Npgsql.NpgsqlConnectionStringBuilder(forge.DatabaseConnection);
+        if (database is not null)
+        {
+            connection.Database = database;
+        }
+
+        return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(connection.ConnectionString, npgsql => npgsql.CommandTimeout(1800)).Options);
     }
 
     private static async Task<int> VerseLinks(ForgeRun forge, string[] args)

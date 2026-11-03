@@ -60,7 +60,7 @@ public class EditionBoundaryRepairTests
         Text(before).Should().EndWith("ἡμῖν;");
         Text(last).Should().StartWith("καὶ ἀπεκρίθη ἀνὴρ Ἰσραὴλ");
         Text(last).Should().Contain("ὑπὲρ τὸν λόγον ἀνδρὸς Ἰσραήλ.");
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.Septuagint,
+        var frame = TestResources.Rules.Frame(Versification.Septuagint,
             EditionShape.Of(source.Books.SelectMany(b => b.Chapters.SelectMany(c => c.Verses.Select(v =>
                 (b.CanonicalOrdinal, c.Number, v.Number, v.Label, v.Words.Sum(w => w.Surface.Length)))))));
         foreach (var number in new[] { 1, 42, 43 })

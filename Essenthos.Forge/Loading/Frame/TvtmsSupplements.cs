@@ -26,11 +26,9 @@ internal sealed record TvtmsSupplement(
 /// </summary>
 internal static class TvtmsSupplements
 {
-    public static IReadOnlyList<TvtmsSupplement> All { get; } = Read();
-
-    public static IReadOnlyList<string> Schemes(Versification tradition) =>
+    public static IReadOnlyList<string> Schemes(IReadOnlyList<TvtmsSupplement> supplements, Versification tradition) =>
     [
-        .. All.Where(supplement => supplement.Tradition == tradition)
+        .. supplements.Where(supplement => supplement.Tradition == tradition)
             .Select(supplement => supplement.Scheme)
             .Distinct(),
     ];
@@ -39,11 +37,11 @@ internal static class TvtmsSupplements
     /// Adds each supplement to the passage it joins, or as a passage of its own, and says which of
     /// them found the passage they were written to join.
     /// </summary>
-    public static IReadOnlySet<TvtmsSupplement> Join(List<IReadOnlyList<TvtmsRow>> blocks)
+    public static IReadOnlySet<TvtmsSupplement> Join(List<IReadOnlyList<TvtmsRow>> blocks, IReadOnlyList<TvtmsSupplement> supplements)
     {
         var joined = new HashSet<TvtmsSupplement>();
 
-        foreach (var supplement in All)
+        foreach (var supplement in supplements)
         {
             var at = supplement.Joins is { } verse
                 ? blocks.FindIndex(block => block.Any(row => row.Standards.Contains(verse)))
@@ -65,12 +63,12 @@ internal static class TvtmsSupplements
     /// The file's passages in the order it writes them, each from the rows that name it. A passage is
     /// one edition's and joins one place, so its rows have to agree on both.
     /// </summary>
-    private static List<TvtmsSupplement> Read()
+    public static List<TvtmsSupplement> Read(VersificationData data)
     {
         var passages = new List<(string Scheme, string Name, Versification Tradition, CanonicalReference? Joins, List<TvtmsRow> Rows)>();
         var traditions = new Dictionary<string, Versification>(StringComparer.Ordinal);
 
-        foreach (var line in VersificationFiles.Read(VersificationFiles.Supplements,
+        foreach (var line in data.Rows(VersificationData.SupplementsProduct,
                      "passage", "scheme", "tradition", "joins", "source", "standard", "tests", "why"))
         {
             var scheme = line.Required("scheme");

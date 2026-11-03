@@ -1,3 +1,5 @@
+# product    Essenthos/versification/supplements.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
 # Passages an edition in the corpus numbers in a way none of the versification data's (TVTMS's) schemes
 # describes, written down in the data's own form: the edition's verse, where its words stand, and the
 # tests that tell that edition apart. These are Essenthos's, not Tyndale House's, and each was read

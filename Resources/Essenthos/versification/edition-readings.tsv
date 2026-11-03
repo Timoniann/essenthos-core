@@ -1,3 +1,5 @@
+# product    Essenthos/versification/edition-readings.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
 # Where an edition's verses stand, in passages it numbers in a way of its own that the versification
 # data (TVTMS) does not describe, read verse against verse. These are Essenthos's reading, not Tyndale
 # House's, made by comparing the editions word for word.

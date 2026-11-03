@@ -1,3 +1,5 @@
+# product    Essenthos/versification/schemes.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
 # The numbering schemes the versification data (TVTMS) names, and the tradition each belongs to.
 #
 # The first scheme of a tradition is the one the tradition is named after; the rest are its variants.

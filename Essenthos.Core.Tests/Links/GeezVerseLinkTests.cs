@@ -55,7 +55,7 @@ public sealed class GeezVerseLinkTests : IDisposable
         await Load(Tiny(BhsaTextSource.Definition, (Genesis, 3), (Esther, 3)));
         await Load(Tiny(NestleTextSource.Definition, (Matthew, 3)));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {
@@ -92,7 +92,7 @@ public sealed class GeezVerseLinkTests : IDisposable
         await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah, 73)));
         await Load(Tiny(SweteTextSource.Definition, (LetterOfJeremiah, 72)));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {
@@ -139,7 +139,7 @@ public sealed class GeezVerseLinkTests : IDisposable
                 .Select(book => book with { Chapters = [book.Chapters[0]] })]));
         await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah, 73), (Song, 17)));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {
@@ -183,7 +183,7 @@ public sealed class GeezVerseLinkTests : IDisposable
                 .Select(book => book with { Chapters = [book.Chapters[0]] })]));
         await Load(Tiny(SeptuagintTextSource.Definition(), (Genesis, 31), (Song, 17)));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {

@@ -44,7 +44,7 @@ public class VersificationTestTests
     [Fact]
     public void EnglishEstherDoesNotReceiveAdditionsItDoesNotPrint()
     {
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.English, Edition);
+        var frame = TestResources.Rules.Frame(Versification.English, Edition);
 
         frame.Resolve(17, 1, 1).Should().Equal(new CanonicalReference(17, 1, 1));
     }
@@ -63,7 +63,7 @@ public class VersificationTestTests
             .. Enumerable.Range(1, 16).Select(verse => (4, 30, verse, string.Empty, 40)),
         ]);
 
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.English, numbers);
+        var frame = TestResources.Rules.Frame(Versification.English, numbers);
 
         frame.Resolve(4, 30, 1).Should().Equal(new CanonicalReference(4, 29, 40));
         frame.Resolve(4, 30, 16).Should().Equal(new CanonicalReference(4, 30, 15));
@@ -119,7 +119,7 @@ public class VersificationTestTests
 /// </summary>
 public sealed class BrentonEdition
 {
-    private readonly VersificationRules rules = TvtmsReader.Read(TestResources.Tvtms);
+    private readonly VersificationRules rules = TestResources.Rules;
 
     private readonly Lazy<VersificationFrame> tradition;
 
@@ -421,7 +421,7 @@ public class SweteMalachiTests
     {
         var malachi = SweteTextSource.Read(TestResources.SweteFolder).Books
             .Single(book => book.CanonicalOrdinal == Malachi);
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(
+        var frame = TestResources.Rules.Frame(
             Versification.Septuagint,
             EditionShape.Of(
             [
@@ -440,7 +440,8 @@ public class SweteMalachiTests
     [Fact]
     public void EveryCorrectionStillFindsTheRuleItCorrects()
     {
-        TvtmsReader.Read(TestResources.Tvtms).Corrected.Should().BeEquivalentTo(TvtmsCorrections.All);
+        var rules = TestResources.Rules;
+        rules.Corrected.Should().BeEquivalentTo(rules.Data.Corrections);
     }
 
     /// <summary>
@@ -450,8 +451,8 @@ public class SweteMalachiTests
     [Fact]
     public void EverySupplementJoinsThePassageItWasWrittenFor()
     {
-        TvtmsReader.Read(TestResources.Tvtms).Supplemented.Should()
-            .BeEquivalentTo(TvtmsSupplements.All.Where(supplement => supplement.Joins is not null));
+        var rules = TestResources.Rules;
+        rules.Supplemented.Should().BeEquivalentTo(rules.Data.Supplements.Where(supplement => supplement.Joins is not null));
     }
 
     /// <summary>
@@ -461,7 +462,7 @@ public class SweteMalachiTests
     [Fact]
     public void NoSupplementStandsApartFromAPassageThatPlacesTheSameVerses()
     {
-        TvtmsReader.Read(TestResources.Tvtms).Competing.Should().BeEmpty();
+        TestResources.Rules.Competing.Should().BeEmpty();
     }
 }
 
@@ -472,7 +473,7 @@ public sealed class SweteEdition
 
     public SweteEdition()
     {
-        edition = new Lazy<VersificationFrame>(() => TvtmsReader.Read(TestResources.Tvtms)
+        edition = new Lazy<VersificationFrame>(() => TestResources.Rules
             .Frame(Versification.Septuagint, EditionShape.Of(Verses)));
     }
 
@@ -878,7 +879,7 @@ public class SynodalFrameTests(Bible4u bible4u) : IClassFixture<Bible4u>
 /// <summary>An English-numbered edition's frame, built once: the whole Bible's shape is read for it.</summary>
 internal static class EnglishEditions
 {
-    private static readonly Lazy<VersificationRules> Rules = new(() => TvtmsReader.Read(TestResources.Tvtms));
+    private static readonly Lazy<VersificationRules> Rules = new(() => TestResources.Rules);
 
     private static readonly ConcurrentDictionary<TextSource, VersificationFrame> Frames = new();
 

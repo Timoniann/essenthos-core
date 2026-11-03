@@ -182,7 +182,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
             TestResources.Path("Strong", "StrongHebrew.xml"),
             TestResources.Path("Strong", "StrongGreek.xml"));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var frame = new CanonicalFrameLoader(db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await db.Texts.ToListAsync())
         {

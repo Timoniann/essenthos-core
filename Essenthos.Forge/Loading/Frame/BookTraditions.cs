@@ -9,19 +9,10 @@ namespace Essenthos.Core.Loading.Frame;
 /// </summary>
 internal static class BookTraditions
 {
-    private static readonly IReadOnlyDictionary<string, IReadOnlyDictionary<int, Versification>> Editions = Read();
-
-    /// <summary>
-    /// The books of this edition numbered in a tradition of their own, or in none the data describes;
-    /// empty for most.
-    /// </summary>
-    public static IReadOnlyDictionary<int, Versification> For(string slug) =>
-        Editions.GetValueOrDefault(slug) ?? new Dictionary<int, Versification>();
-
-    private static Dictionary<string, IReadOnlyDictionary<int, Versification>> Read()
+    public static Dictionary<string, IReadOnlyDictionary<int, Versification>> Read(VersificationData data)
     {
         var editions = new Dictionary<string, Dictionary<int, Versification>>(StringComparer.OrdinalIgnoreCase);
-        foreach (var line in VersificationFiles.Read(VersificationFiles.BookTraditions, "text", "book", "tradition", "why"))
+        foreach (var line in data.Rows(VersificationData.BookTraditionsProduct, "text", "book", "tradition", "why"))
         {
             var code = line.Required("book");
             if (!BookCodes.TryGetOrdinal(code, out var book))

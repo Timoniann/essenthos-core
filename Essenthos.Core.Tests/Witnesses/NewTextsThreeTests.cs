@@ -59,8 +59,8 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
         var id = verses.Single(v => v.Book == 19 && v.Chapter == psalm && v.Number == verse).Id;
 
         CanonicalFrameLoader.Expected(
-                TvtmsReader.Read(TestResources.Tvtms), texts.Ukrainian.Definition.Versification, verses,
-                BookTraditions.For(EbibleTextSource.BiblicaUkrainian))
+                TestResources.Rules, texts.Ukrainian.Definition.Versification, verses,
+                TestResources.Rules.Data.Books(EbibleTextSource.BiblicaUkrainian))
             .Single(reference => reference.VerseId == id && reference.IsPrimary)
             .Should().Be(new ReferenceDraft(id, 19, toPsalm, toVerse, true));
     }
@@ -187,7 +187,7 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
     public void TheUkrainianPsalmsArePlacedAsTheHebrewNumbersThem(
         int book, int chapter, int verse, int canonicalBook, int canonicalChapter, int canonicalVerse)
     {
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(
+        var frame = TestResources.Rules.Frame(
             texts.Ukrainian.Definition.Versification,
             EditionShape.Of(WorldTexts.Verses(texts.Ukrainian).Select(v =>
                 (v.Book, v.Chapter, v.Verse.Number, v.Verse.Label, v.Verse.Words.Sum(word => word.Surface.Length)))));

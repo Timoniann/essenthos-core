@@ -46,7 +46,7 @@ public sealed class AlexandrinusLoadTests : IDisposable
 
         var text = await _db.Texts.SingleAsync();
         await new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance)
-            .Place(text, TvtmsReader.Read(TestResources.Tvtms));
+            .Place(text, TestResources.Rules);
 
         var unplaced = await _db.Verses.CountAsync(verse => !_db.VerseReferences.Any(r => r.VerseId == verse.Id && r.IsPrimary));
         var moved = await _db.VerseReferences
@@ -86,7 +86,7 @@ public sealed class AlexandrinusLoadTests : IDisposable
         await Load(Tiny(SeptuagintTextSource.Definition(), (genesis, 31)));
         await Load(Tiny(SweteTextSource.Definition, (genesis, 31)));
 
-        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var rules = TestResources.Rules;
         var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
         foreach (var text in await _db.Texts.ToListAsync())
         {

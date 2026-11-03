@@ -1,3 +1,5 @@
+# product    Essenthos/versification/corrections.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame
 # Rows of the versification data (TVTMS, Resources/Versification/TVTMS.txt) that the texts themselves
 # contradict, and where the texts put those verses instead. These are Essenthos's, not Tyndale House's.
 #

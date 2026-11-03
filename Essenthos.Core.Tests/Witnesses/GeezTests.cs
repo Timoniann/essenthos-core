@@ -210,7 +210,7 @@ public class GeezAlignmentScopeTests
     public void SirachInTheManuscriptsOrderStandsWhereItsSweteVerseStands(
         int chapter, int verse, int toChapter, int toVerse)
     {
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.Septuagint, EditionShape.Of(
+        var frame = TestResources.Rules.Frame(Versification.Septuagint, EditionShape.Of(
         [
             (27, 3, 100, string.Empty, 10), (27, 13, 1, string.Empty, 10),
             (72, chapter, verse, string.Empty, 10),
@@ -526,7 +526,7 @@ public class GeezTextTests
                       from verse in chapter.Verses
                       select (book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label,
                           verse.Words.Sum(word => word.Surface.Length))).ToList();
-        var frame = TvtmsReader.Read(TestResources.Tvtms).Frame(Versification.Septuagint, EditionShape.Of(verses));
+        var frame = TestResources.Rules.Frame(Versification.Septuagint, EditionShape.Of(verses));
 
         frame.Resolve(19, 22, 1)[0].Should().Be(new CanonicalReference(19, 23, 1));
         frame.Resolve(24, 25, 1)[0].Should().Be(new CanonicalReference(24, 25, 1));

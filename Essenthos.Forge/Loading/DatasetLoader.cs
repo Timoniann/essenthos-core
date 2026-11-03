@@ -277,7 +277,7 @@ internal sealed class DatasetLoader(
     [
         "SynodalStrong", "ChineseUnion1919", "ReinaValera1909", "Segond1910Strong", "DarbyFrench", "Schlachter1951",
         "RevisedLiteral", "Byzantine", "mapping", "OpenHebrewBible", "Door43", "Berean", "Swete", "STEPBible",
-        "Versification", .. Bible4uFiles(), "Septuagint",
+        "Versification", "Essenthos/versification", .. Bible4uFiles(), "Septuagint",
     ];
 
     /// <summary>
@@ -485,11 +485,11 @@ internal sealed class DatasetLoader(
                 }),
             .. In(LoadModules.SyntaxFrame,
                 new LoadStep("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)) { Files = ["etcbc"] },
-                new LoadStep("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)) { Files = ["Versification"] }),
+                new LoadStep("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)) { Files = ["Versification", "Essenthos/versification"] }),
             .. In(LoadModules.Texts,
                 new LoadStep("misprints", cancellationToken => CorrectWhatTheirFilesMisprint(resources, cancellationToken))
                 {
-                    Files = [.. bible4u, "Septuagint", "mapping", "STEPBible", "SynodalStrong", "Versification"],
+                    Files = [.. bible4u, "Septuagint", "mapping", "STEPBible", "SynodalStrong", "Versification", "Essenthos/versification"],
                 },
                 new LoadStep("psalm-openings", cancellationToken => OpenThePsalmsTheirEditionsOpenWith(resources, cancellationToken))
                 {
