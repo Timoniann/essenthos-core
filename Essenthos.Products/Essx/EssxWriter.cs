@@ -3,51 +3,51 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace Essenthos.Core.Products.Esw;
+namespace Essenthos.Core.Products.Essx;
 
 /// <summary>
-/// Writes an ESW file: one or more tables, each as row groups of column chunks, string columns
+/// Writes an ESSX file: one or more tables, each as row groups of column chunks, string columns
 /// through a dictionary shared by the whole table, the footer last. Rows stream in; memory holds
 /// one row group per table and the dictionaries. <see cref="Complete"/> writes the dictionaries,
 /// the footer and the trailer and moves the file into place; disposing without it leaves the
 /// previous file.
 /// </summary>
-public sealed class EswWriter : IDisposable
+public sealed class EssxWriter : IDisposable
 {
     private readonly ProductHeader _header;
-    private readonly EswOptions _options;
+    private readonly EssxOptions _options;
     private readonly AtomicFile _file;
     private readonly Output _output;
     private readonly List<ITableWriter> _tables = [];
     private bool _completed;
 
-    private EswWriter(string path, ProductHeader header, EswOptions options)
+    private EssxWriter(string path, ProductHeader header, EssxOptions options)
     {
         _header = header;
         _options = options;
         _file = AtomicFile.Create(path);
         _output = new Output(_file.Stream);
-        _output.Write(EswLayout.Magic);
+        _output.Write(EssxLayout.Magic);
         Span<byte> preamble = stackalloc byte[4];
-        BinaryPrimitives.WriteUInt16LittleEndian(preamble, EswLayout.Version);
+        BinaryPrimitives.WriteUInt16LittleEndian(preamble, EssxLayout.Version);
         BinaryPrimitives.WriteUInt16LittleEndian(preamble[2..], 0);
         _output.Write(preamble);
     }
 
-    public static EswWriter Create(string path, ProductHeader header, EswOptions? options = null) =>
-        new(path, header, options ?? EswOptions.Default);
+    public static EssxWriter Create(string path, ProductHeader header, EssxOptions? options = null) =>
+        new(path, header, options ?? EssxOptions.Default);
 
     public string Path => _file.Path;
 
     /// <summary>Adds a table. Its rows may be written in any order with the other tables' rows.</summary>
-    public EswTableWriter<T> Table<T>(string name, ProductSchema<T> schema)
+    public EssxTableWriter<T> Table<T>(string name, ProductSchema<T> schema)
     {
         if (_tables.Any(table => table.Name == name))
         {
             throw new ArgumentException($"Table '{name}' is already in the file.", nameof(name));
         }
 
-        var table = new EswTableWriter<T>(name, schema, _options, _output);
+        var table = new EssxTableWriter<T>(name, schema, _options, _output);
         _tables.Add(table);
         return table;
     }
@@ -60,7 +60,7 @@ public sealed class EswWriter : IDisposable
             return;
         }
 
-        var footer = new EswFooter { Product = EswProductInfo.From(_header) };
+        var footer = new EssxFooter { Product = EssxProductInfo.From(_header) };
         foreach (var table in _tables)
         {
             footer.Tables.Add(table.Finish());
@@ -70,13 +70,13 @@ public sealed class EswWriter : IDisposable
         _header.Rows = footer.Product.Rows;
 
         var footerOffset = _output.Position;
-        var json = JsonSerializer.SerializeToUtf8Bytes(footer, EswLayout.Json);
+        var json = JsonSerializer.SerializeToUtf8Bytes(footer, EssxLayout.Json);
         _output.Write(json);
 
-        Span<byte> trailer = stackalloc byte[EswLayout.TrailerLength - EswLayout.HashLength];
+        Span<byte> trailer = stackalloc byte[EssxLayout.TrailerLength - EssxLayout.HashLength];
         BinaryPrimitives.WriteInt64LittleEndian(trailer, footerOffset);
         BinaryPrimitives.WriteInt64LittleEndian(trailer[8..], json.Length);
-        EswLayout.Magic.CopyTo(trailer[16..]);
+        EssxLayout.Magic.CopyTo(trailer[16..]);
         _output.Write(trailer);
         _file.Stream.Write(_output.Hash());
         _file.Commit();
@@ -106,23 +106,23 @@ public sealed class EswWriter : IDisposable
     {
         string Name { get; }
 
-        EswTableInfo Finish();
+        EssxTableInfo Finish();
     }
 }
 
-/// <summary>One table of an <see cref="EswWriter"/>; also a product writer when the file holds one table.</summary>
-public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.ITableWriter
+/// <summary>One table of an <see cref="EssxWriter"/>; also a product writer when the file holds one table.</summary>
+public sealed class EssxTableWriter<T> : IProductWriter<T>, IRowSink, EssxWriter.ITableWriter
 {
     private readonly ProductSchema<T> _schema;
-    private readonly EswOptions _options;
-    private readonly EswWriter.Output _output;
+    private readonly EssxOptions _options;
+    private readonly EssxWriter.Output _output;
     private readonly ColumnEncoder[] _encoders;
-    private readonly List<EswRowGroupInfo> _groups = [];
+    private readonly List<EssxRowGroupInfo> _groups = [];
     private int _column;
     private int _inGroup;
     private bool _finished;
 
-    internal EswTableWriter(string name, ProductSchema<T> schema, EswOptions options, EswWriter.Output output)
+    internal EssxTableWriter(string name, ProductSchema<T> schema, EssxOptions options, EssxWriter.Output output)
     {
         Name = name;
         _schema = schema;
@@ -148,7 +148,7 @@ public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.I
         }
     }
 
-    /// <summary>Flushes the last group. The file is finished by <see cref="EswWriter.Complete"/>.</summary>
+    /// <summary>Flushes the last group. The file is finished by <see cref="EssxWriter.Complete"/>.</summary>
     public void Complete()
     {
     }
@@ -157,7 +157,7 @@ public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.I
     {
     }
 
-    EswTableInfo EswWriter.ITableWriter.Finish()
+    EssxTableInfo EssxWriter.ITableWriter.Finish()
     {
         if (_finished)
         {
@@ -170,7 +170,7 @@ public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.I
             FlushGroup();
         }
 
-        var info = new EswTableInfo
+        var info = new EssxTableInfo
         {
             Name = Name,
             SchemaVersion = _schema.Version,
@@ -182,7 +182,7 @@ public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.I
         {
             var column = _schema.Columns[i];
             var physical = _encoders[i].Finish(_output);
-            info.Columns.Add(new EswColumnInfo
+            info.Columns.Add(new EssxColumnInfo
             {
                 Name = column.Name,
                 Type = column.Type.ToString().ToLowerInvariant(),
@@ -197,7 +197,7 @@ public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.I
 
     private void FlushGroup()
     {
-        var group = new EswRowGroupInfo { Rows = _inGroup };
+        var group = new EssxRowGroupInfo { Rows = _inGroup };
         foreach (var encoder in _encoders)
         {
             encoder.Flush(_output, group.Chunks);
@@ -220,7 +220,7 @@ public sealed class EswTableWriter<T> : IProductWriter<T>, IRowSink, EswWriter.I
 /// <summary>Buffers one column's values of the current row group and writes them as chunks.</summary>
 internal abstract class ColumnEncoder
 {
-    public static ColumnEncoder For(Column column, EswOptions options) => column.Type switch
+    public static ColumnEncoder For(Column column, EssxOptions options) => column.Type switch
     {
         ColumnType.Text or ColumnType.Json => new StringEncoder(column.Name, options),
         ColumnType.Integer => new IntEncoder(column.Name, options),
@@ -236,19 +236,19 @@ internal abstract class ColumnEncoder
     public virtual void VerseKey(VerseKey? value) => throw Mismatch("a verse key");
     public virtual void WordKey(WordKey? value) => throw Mismatch("a word key");
 
-    public abstract void Flush(EswWriter.Output output, List<EswChunkInfo> chunks);
+    public abstract void Flush(EssxWriter.Output output, List<EssxChunkInfo> chunks);
 
     /// <summary>Writes what the column keeps for the whole table (a dictionary) and describes its physical columns.</summary>
-    public abstract IReadOnlyList<EswPhysicalInfo> Finish(EswWriter.Output output);
+    public abstract IReadOnlyList<EssxPhysicalInfo> Finish(EssxWriter.Output output);
 
     private ProductFormatException Mismatch(string given) => new($"The schema writes {given} into a column of another type.");
 
-    protected static EswChunkInfo WriteChunk(EswWriter.Output output, ReadOnlySpan<byte> raw, EswOptions options)
+    protected static EssxChunkInfo WriteChunk(EssxWriter.Output output, ReadOnlySpan<byte> raw, EssxOptions options)
     {
-        var chunk = new EswChunkInfo { Offset = output.Position, RawLength = raw.Length, Length = raw.Length };
-        if (options.Codec != EswLayout.CodecNone && raw.Length >= options.CompressFrom)
+        var chunk = new EssxChunkInfo { Offset = output.Position, RawLength = raw.Length, Length = raw.Length };
+        if (options.Codec != EssxLayout.CodecNone && raw.Length >= options.CompressFrom)
         {
-            var compressed = EswLayout.Compress(raw, options.Codec);
+            var compressed = EssxLayout.Compress(raw, options.Codec);
             if (compressed.Length < raw.Length)
             {
                 output.Write(compressed);
@@ -263,7 +263,7 @@ internal abstract class ColumnEncoder
     }
 }
 
-internal sealed class IntEncoder(string name, EswOptions options) : ColumnEncoder
+internal sealed class IntEncoder(string name, EssxOptions options) : ColumnEncoder
 {
     private readonly List<long> _values = [];
     private readonly List<bool> _valid = [];
@@ -279,7 +279,7 @@ internal sealed class IntEncoder(string name, EswOptions options) : ColumnEncode
         }
     }
 
-    public override void Flush(EswWriter.Output output, List<EswChunkInfo> chunks)
+    public override void Flush(EssxWriter.Output output, List<EssxChunkInfo> chunks)
     {
         var rows = _values.Count;
         long min = long.MaxValue, max = long.MinValue;
@@ -296,15 +296,15 @@ internal sealed class IntEncoder(string name, EswOptions options) : ColumnEncode
             min = max = 0;
         }
 
-        var width = EswLayout.Width((ulong)(max - min));
-        var bitmap = _nulls > 0 ? EswLayout.BitmapLength(rows) : 0;
+        var width = EssxLayout.Width((ulong)(max - min));
+        var bitmap = _nulls > 0 ? EssxLayout.BitmapLength(rows) : 0;
         var raw = new byte[bitmap + rows * width];
         for (var i = 0; i < rows; i++)
         {
             if (_valid[i])
             {
-                if (bitmap > 0) EswLayout.SetBit(raw, i);
-                EswLayout.WriteUnsigned(raw.AsSpan(bitmap + i * width), (ulong)(_values[i] - min), width);
+                if (bitmap > 0) EssxLayout.SetBit(raw, i);
+                EssxLayout.WriteUnsigned(raw.AsSpan(bitmap + i * width), (ulong)(_values[i] - min), width);
             }
         }
 
@@ -320,11 +320,11 @@ internal sealed class IntEncoder(string name, EswOptions options) : ColumnEncode
         _nulls = 0;
     }
 
-    public override IReadOnlyList<EswPhysicalInfo> Finish(EswWriter.Output output) =>
-        [new EswPhysicalInfo { Name = name, Encoding = "int" }];
+    public override IReadOnlyList<EssxPhysicalInfo> Finish(EssxWriter.Output output) =>
+        [new EssxPhysicalInfo { Name = name, Encoding = "int" }];
 }
 
-internal sealed class BoolEncoder(string name, EswOptions options) : ColumnEncoder
+internal sealed class BoolEncoder(string name, EssxOptions options) : ColumnEncoder
 {
     private readonly List<bool> _values = [];
     private readonly List<bool> _valid = [];
@@ -340,20 +340,20 @@ internal sealed class BoolEncoder(string name, EswOptions options) : ColumnEncod
         }
     }
 
-    public override void Flush(EswWriter.Output output, List<EswChunkInfo> chunks)
+    public override void Flush(EssxWriter.Output output, List<EssxChunkInfo> chunks)
     {
         var rows = _values.Count;
-        var bits = EswLayout.BitmapLength(rows);
+        var bits = EssxLayout.BitmapLength(rows);
         var bitmap = _nulls > 0 ? bits : 0;
         var raw = new byte[bitmap + bits];
         var trues = 0;
         for (var i = 0; i < rows; i++)
         {
             if (!_valid[i]) continue;
-            if (bitmap > 0) EswLayout.SetBit(raw, i);
+            if (bitmap > 0) EssxLayout.SetBit(raw, i);
             if (_values[i])
             {
-                EswLayout.SetBit(raw.AsSpan(bitmap), i);
+                EssxLayout.SetBit(raw.AsSpan(bitmap), i);
                 trues++;
             }
         }
@@ -367,8 +367,8 @@ internal sealed class BoolEncoder(string name, EswOptions options) : ColumnEncod
         _nulls = 0;
     }
 
-    public override IReadOnlyList<EswPhysicalInfo> Finish(EswWriter.Output output) =>
-        [new EswPhysicalInfo { Name = name, Encoding = "bool" }];
+    public override IReadOnlyList<EssxPhysicalInfo> Finish(EssxWriter.Output output) =>
+        [new EssxPhysicalInfo { Name = name, Encoding = "bool" }];
 }
 
 /// <summary>
@@ -377,7 +377,7 @@ internal sealed class BoolEncoder(string name, EswOptions options) : ColumnEncod
 /// or they are short, since a dictionary of a million distinct long strings is the strings again
 /// plus an index.
 /// </summary>
-internal sealed class StringEncoder(string name, EswOptions options) : ColumnEncoder
+internal sealed class StringEncoder(string name, EssxOptions options) : ColumnEncoder
 {
     private readonly List<string?> _values = [];
     private readonly Dictionary<string, int> _ids = new(StringComparer.Ordinal);
@@ -388,12 +388,12 @@ internal sealed class StringEncoder(string name, EswOptions options) : ColumnEnc
 
     public override void Text(string? value) => _values.Add(value);
 
-    public override void Flush(EswWriter.Output output, List<EswChunkInfo> chunks)
+    public override void Flush(EssxWriter.Output output, List<EssxChunkInfo> chunks)
     {
         _dictionaryMode ??= Decide();
         var rows = _values.Count;
         var nulls = _values.Count(value => value is null);
-        EswChunkInfo chunk;
+        EssxChunkInfo chunk;
         if (_dictionaryMode.Value)
         {
             var ids = new int[rows];
@@ -404,11 +404,11 @@ internal sealed class StringEncoder(string name, EswOptions options) : ColumnEnc
                 max = Math.Max(max, ids[i]);
             }
 
-            var width = EswLayout.Width((ulong)max);
+            var width = EssxLayout.Width((ulong)max);
             var raw = new byte[rows * width];
             for (var i = 0; i < rows; i++)
             {
-                EswLayout.WriteUnsigned(raw.AsSpan(i * width), (ulong)ids[i], width);
+                EssxLayout.WriteUnsigned(raw.AsSpan(i * width), (ulong)ids[i], width);
             }
 
             chunk = WriteChunk(output, raw, options);
@@ -417,7 +417,7 @@ internal sealed class StringEncoder(string name, EswOptions options) : ColumnEnc
         }
         else
         {
-            var bitmap = nulls > 0 ? EswLayout.BitmapLength(rows) : 0;
+            var bitmap = nulls > 0 ? EssxLayout.BitmapLength(rows) : 0;
             var bytes = 0;
             foreach (var value in _values)
             {
@@ -431,7 +431,7 @@ internal sealed class StringEncoder(string name, EswOptions options) : ColumnEnc
             {
                 if (_values[i] is { } value)
                 {
-                    if (bitmap > 0) EswLayout.SetBit(raw, i);
+                    if (bitmap > 0) EssxLayout.SetBit(raw, i);
                     at += Encoding.UTF8.GetBytes(value, raw.AsSpan(at));
                 }
 
@@ -478,18 +478,18 @@ internal sealed class StringEncoder(string name, EswOptions options) : ColumnEnc
         return _ids[value] = _dictionary.Count;
     }
 
-    public override IReadOnlyList<EswPhysicalInfo> Finish(EswWriter.Output output)
+    public override IReadOnlyList<EssxPhysicalInfo> Finish(EssxWriter.Output output)
     {
         if (!DictionaryMode)
         {
-            return [new EswPhysicalInfo { Name = name, Encoding = "text" }];
+            return [new EssxPhysicalInfo { Name = name, Encoding = "text" }];
         }
 
-        return [new EswPhysicalInfo { Name = name, Encoding = "dict", Dictionary = WriteDictionary(output, _dictionary, options) }];
+        return [new EssxPhysicalInfo { Name = name, Encoding = "dict", Dictionary = WriteDictionary(output, _dictionary, options) }];
     }
 
     /// <summary><c>u32 count, u32 offsets[count + 1], bytes</c>; id 1 is the first string, 0 is null.</summary>
-    internal static EswSectionInfo WriteDictionary(EswWriter.Output output, List<string> values, EswOptions options)
+    internal static EssxSectionInfo WriteDictionary(EssxWriter.Output output, List<string> values, EssxOptions options)
     {
         var bytes = 0;
         foreach (var value in values)
@@ -508,7 +508,7 @@ internal sealed class StringEncoder(string name, EswOptions options) : ColumnEnc
         }
 
         var chunk = WriteChunk(output, raw, options);
-        return new EswSectionInfo { Offset = chunk.Offset, Length = chunk.Length, RawLength = chunk.RawLength, Codec = chunk.Codec, Count = values.Count };
+        return new EssxSectionInfo { Offset = chunk.Offset, Length = chunk.Length, RawLength = chunk.RawLength, Codec = chunk.Codec, Count = values.Count };
     }
 }
 
@@ -527,7 +527,7 @@ internal sealed class KeyEncoder : ColumnEncoder
     private readonly StringEncoder _verseLabel;
     private readonly IntEncoder? _position;
 
-    public KeyEncoder(string name, EswOptions options, bool withPosition)
+    public KeyEncoder(string name, EssxOptions options, bool withPosition)
     {
         _book = new IntEncoder($"{name}.book", options);
         _chapter = new IntEncoder($"{name}.chapter", options);
@@ -570,7 +570,7 @@ internal sealed class KeyEncoder : ColumnEncoder
         _position?.Integer(position);
     }
 
-    public override void Flush(EswWriter.Output output, List<EswChunkInfo> chunks)
+    public override void Flush(EssxWriter.Output output, List<EssxChunkInfo> chunks)
     {
         foreach (var part in Parts)
         {
@@ -578,6 +578,6 @@ internal sealed class KeyEncoder : ColumnEncoder
         }
     }
 
-    public override IReadOnlyList<EswPhysicalInfo> Finish(EswWriter.Output output) =>
+    public override IReadOnlyList<EssxPhysicalInfo> Finish(EssxWriter.Output output) =>
         [.. Parts.SelectMany(part => part.Finish(output))];
 }

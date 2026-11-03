@@ -20,7 +20,7 @@ public interface ITextTable : IDisposable
 }
 
 /// <summary>
-/// The shapes a product converts to and from, by extension: <c>.esw</c>, <c>.tsv</c>, <c>.csv</c>,
+/// The shapes a product converts to and from, by extension: <c>.essx</c>, <c>.tsv</c>, <c>.csv</c>,
 /// <c>.jsonl</c>, <c>.xml</c>. Null is <c>\N</c> in TSV, an empty unquoted field in CSV (as
 /// <c>COPY ... CSV</c> has it, a quoted empty string being the empty string), JSON <c>null</c>,
 /// and an absent element in XML.
@@ -38,19 +38,19 @@ public static class TextTables
         return -1;
     }
 
-    public static readonly string[] Extensions = [Esw.EswLayout.Extension, ".tsv", ".csv", ".jsonl", ".xml"];
+    public static readonly string[] Extensions = [Essx.EssxLayout.Extension, ".tsv", ".csv", ".jsonl", ".xml"];
 
     public static string Kind(string path)
     {
         var extension = Path.GetExtension(path).ToLowerInvariant();
         return Extensions.Contains(extension)
             ? extension
-            : throw new ArgumentException($"'{path}': a product is .esw, .tsv, .csv, .jsonl or .xml.", nameof(path));
+            : throw new ArgumentException($"'{path}': a product is .essx, .tsv, .csv, .jsonl or .xml.", nameof(path));
     }
 
     public static ITextTable Open(string path, string? table = null) => Kind(path) switch
     {
-        var esw when esw == Esw.EswLayout.Extension => new EswText(path, table),
+        var essx when essx == Essx.EssxLayout.Extension => new EssxText(path, table),
         ".tsv" => new TsvText(path),
         ".csv" => new CsvText(path),
         ".jsonl" => new JsonlText(path),
@@ -178,14 +178,14 @@ public static class TextTables
         return types;
     }
 
-    private sealed class EswText : ITextTable
+    private sealed class EssxText : ITextTable
     {
-        private readonly Esw.EswReader _reader;
-        private readonly Esw.EswTable _table;
+        private readonly Essx.EssxReader _reader;
+        private readonly Essx.EssxTable _table;
 
-        public EswText(string path, string? table)
+        public EssxText(string path, string? table)
         {
-            _reader = Esw.EswReader.Open(path);
+            _reader = Essx.EssxReader.Open(path);
             _table = table is null ? _reader.Tables[0] : _reader.Table(table);
         }
 

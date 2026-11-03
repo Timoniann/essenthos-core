@@ -1,4 +1,4 @@
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tsv;
 
 namespace Essenthos.Core.Products;
@@ -7,7 +7,7 @@ namespace Essenthos.Core.Products;
 /// Which format a product is written in. People and agents edit a <see cref="Hand"/> file and
 /// review it in git, so it is TSV for good; a <see cref="Machine"/> product is written and read by
 /// the build alone, and its format is whatever <see cref="ProductStore.MachineFormat"/> says: the
-/// binary ESW (NOT-0216).
+/// binary ESSX (NOT-0216).
 /// </summary>
 public enum ProductKind
 {
@@ -31,11 +31,11 @@ public sealed class ProductStore
     private readonly Lazy<BuildManifest> _manifest;
 
     /// <param name="resourcesPath">The <c>Resources/</c> folder.</param>
-    /// <param name="machineFormat">What machine products are written in: the binary ESW unless a caller says otherwise.</param>
+    /// <param name="machineFormat">What machine products are written in: the binary ESSX unless a caller says otherwise.</param>
     public ProductStore(string resourcesPath, IProductFormat? machineFormat = null, bool rehash = false)
     {
         ResourcesPath = Path.GetFullPath(resourcesPath);
-        MachineFormat = machineFormat ?? EswFormat.Instance;
+        MachineFormat = machineFormat ?? EssxFormat.Instance;
         _hasher = new Lazy<InputHasher>(() => new InputHasher(ResourcesPath) { Rehash = rehash });
         _manifest = new Lazy<BuildManifest>(() => BuildManifest.Load(ResourcesPath));
     }

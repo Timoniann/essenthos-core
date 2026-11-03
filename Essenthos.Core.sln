@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essenthos.Desk", "Essenthos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essenthos.Products", "Essenthos.Products\Essenthos.Products.csproj", "{C5D19777-4C60-4A2A-9D32-EE428D8E786C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essenthos.Esw", "Essenthos.Esw\Essenthos.Esw.csproj", "{D13CD177-09F3-4449-B7F5-FBF9D04CCAFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essenthos.Essx", "Essenthos.Essx\Essenthos.Essx.csproj", "{D13CD177-09F3-4449-B7F5-FBF9D04CCAFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essenthos.Products.Postgres", "Essenthos.Products.Postgres\Essenthos.Products.Postgres.csproj", "{2541585A-F724-4BF2-B4D0-A7ED78A9A5F7}"
 EndProject

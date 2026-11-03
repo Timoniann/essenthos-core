@@ -5,64 +5,64 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Win32.SafeHandles;
 
-namespace Essenthos.Core.Products.Esw;
+namespace Essenthos.Core.Products.Essx;
 
 /// <summary>
-/// Reads an ESW file: the trailer, the footer, then whatever is asked for, by seeking. Nothing is
+/// Reads an ESSX file: the trailer, the footer, then whatever is asked for, by seeking. Nothing is
 /// decoded until a table's rows or a row group is read, so opening a file and reading one verse's
 /// group costs the footer and that group's chunks. <see cref="Verify"/> hashes the whole file once.
 /// </summary>
-public sealed class EswReader : IDisposable
+public sealed class EssxReader : IDisposable
 {
     private readonly SafeFileHandle _handle;
 
-    private EswReader(string path, SafeFileHandle handle, EswFooter footer, long length)
+    private EssxReader(string path, SafeFileHandle handle, EssxFooter footer, long length)
     {
         Path = path;
         _handle = handle;
         Footer = footer;
         Length = length;
-        Tables = [.. footer.Tables.Select(table => new EswTable(this, table))];
+        Tables = [.. footer.Tables.Select(table => new EssxTable(this, table))];
     }
 
-    public static EswReader Open(string path)
+    public static EssxReader Open(string path)
     {
         var handle = File.OpenHandle(path, FileMode.Open, FileAccess.Read, FileShare.Read, FileOptions.RandomAccess);
         try
         {
             var length = RandomAccess.GetLength(handle);
-            if (length < EswLayout.PreambleLength + EswLayout.TrailerLength)
+            if (length < EssxLayout.PreambleLength + EssxLayout.TrailerLength)
             {
-                throw new ProductFormatException($"{path}: too short to be an ESW file.");
+                throw new ProductFormatException($"{path}: too short to be an ESSX file.");
             }
 
-            Span<byte> trailer = stackalloc byte[EswLayout.TrailerLength];
-            RandomAccess.Read(handle, trailer, length - EswLayout.TrailerLength);
-            Span<byte> preamble = stackalloc byte[EswLayout.PreambleLength];
+            Span<byte> trailer = stackalloc byte[EssxLayout.TrailerLength];
+            RandomAccess.Read(handle, trailer, length - EssxLayout.TrailerLength);
+            Span<byte> preamble = stackalloc byte[EssxLayout.PreambleLength];
             RandomAccess.Read(handle, preamble, 0);
-            if (!preamble[..4].SequenceEqual(EswLayout.Magic) || !trailer.Slice(16, 4).SequenceEqual(EswLayout.Magic))
+            if (!preamble[..4].SequenceEqual(EssxLayout.Magic) || !trailer.Slice(16, 4).SequenceEqual(EssxLayout.Magic))
             {
-                throw new ProductFormatException($"{path}: not an ESW file (no magic at the start and the end).");
+                throw new ProductFormatException($"{path}: not an ESSX file (no magic at the start and the end).");
             }
 
             var version = BinaryPrimitives.ReadUInt16LittleEndian(preamble[4..]);
-            if (version > EswLayout.Version)
+            if (version > EssxLayout.Version)
             {
-                throw new ProductFormatException($"{path}: ESW version {version} is newer than this reader ({EswLayout.Version}).");
+                throw new ProductFormatException($"{path}: ESSX version {version} is newer than this reader ({EssxLayout.Version}).");
             }
 
             var footerOffset = BinaryPrimitives.ReadInt64LittleEndian(trailer);
             var footerLength = BinaryPrimitives.ReadInt64LittleEndian(trailer[8..]);
-            if (footerOffset < EswLayout.PreambleLength || footerLength < 2 || footerOffset + footerLength != length - EswLayout.TrailerLength)
+            if (footerOffset < EssxLayout.PreambleLength || footerLength < 2 || footerOffset + footerLength != length - EssxLayout.TrailerLength)
             {
                 throw new ProductFormatException($"{path}: the trailer does not point at a footer inside the file.");
             }
 
             var json = new byte[footerLength];
             RandomAccess.Read(handle, json, footerOffset);
-            var footer = JsonSerializer.Deserialize<EswFooter>(json, EswLayout.Json)
+            var footer = JsonSerializer.Deserialize<EssxFooter>(json, EssxLayout.Json)
                          ?? throw new ProductFormatException($"{path}: empty footer.");
-            return new EswReader(path, handle, footer, length);
+            return new EssxReader(path, handle, footer, length);
         }
         catch
         {
@@ -75,21 +75,21 @@ public sealed class EswReader : IDisposable
 
     public long Length { get; }
 
-    public EswFooter Footer { get; }
+    public EssxFooter Footer { get; }
 
     public ProductHeader Header => Footer.Product.ToHeader();
 
-    public IReadOnlyList<EswTable> Tables { get; }
+    public IReadOnlyList<EssxTable> Tables { get; }
 
-    public EswTable Table(string name) =>
+    public EssxTable Table(string name) =>
         Tables.FirstOrDefault(table => table.Name == name)
         ?? throw new ProductFormatException($"{Path}: no table '{name}'; the tables are {string.Join(", ", Tables.Select(table => table.Name))}.");
 
     /// <summary>The SHA-256 the trailer carries.</summary>
     public byte[] StoredHash()
     {
-        var hash = new byte[EswLayout.HashLength];
-        RandomAccess.Read(_handle, hash, Length - EswLayout.HashLength);
+        var hash = new byte[EssxLayout.HashLength];
+        RandomAccess.Read(_handle, hash, Length - EssxLayout.HashLength);
         return hash;
     }
 
@@ -98,7 +98,7 @@ public sealed class EswReader : IDisposable
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         var buffer = new byte[1 << 20];
-        var remaining = Length - EswLayout.HashLength;
+        var remaining = Length - EssxLayout.HashLength;
         long at = 0;
         while (remaining > 0)
         {
@@ -118,7 +118,7 @@ public sealed class EswReader : IDisposable
 
     internal byte[] Read(long offset, long length, string codec, long rawLength)
     {
-        if (offset < EswLayout.PreambleLength || offset + length > Length - EswLayout.TrailerLength)
+        if (offset < EssxLayout.PreambleLength || offset + length > Length - EssxLayout.TrailerLength)
         {
             throw new ProductFormatException($"{Path}: a chunk at {offset}+{length} lies outside the data.");
         }
@@ -130,20 +130,20 @@ public sealed class EswReader : IDisposable
             throw new ProductFormatException($"{Path}: short read at {offset}.");
         }
 
-        return codec == EswLayout.CodecNone ? stored : EswLayout.Decompress(stored, codec, rawLength);
+        return codec == EssxLayout.CodecNone ? stored : EssxLayout.Decompress(stored, codec, rawLength);
     }
 
     public void Dispose() => _handle.Dispose();
 }
 
 /// <summary>One table: its columns, its row groups, and the rows decoded a group at a time.</summary>
-public sealed class EswTable
+public sealed class EssxTable
 {
-    private readonly EswReader _reader;
+    private readonly EssxReader _reader;
     private readonly Dictionary<string, int> _physicalIndex;
     private readonly string?[]?[] _dictionaries;
 
-    internal EswTable(EswReader reader, EswTableInfo info)
+    internal EssxTable(EssxReader reader, EssxTableInfo info)
     {
         _reader = reader;
         Info = info;
@@ -152,7 +152,7 @@ public sealed class EswTable
         _dictionaries = new string?[]?[info.Physical.Count];
     }
 
-    public EswTableInfo Info { get; }
+    public EssxTableInfo Info { get; }
 
     public string Name => Info.Name;
 
@@ -169,7 +169,7 @@ public sealed class EswTable
         return _dictionaries[index] ??= ReadDictionary(Info.Physical[index]);
     }
 
-    private string?[] ReadDictionary(EswPhysicalInfo physical)
+    private string?[] ReadDictionary(EssxPhysicalInfo physical)
     {
         var section = physical.Dictionary ?? throw new ProductFormatException($"{_reader.Path}: column '{physical.Name}' has no dictionary.");
         var raw = _reader.Read(section.Offset, section.Length, section.Codec, section.RawLength);
@@ -192,16 +192,16 @@ public sealed class EswTable
     }
 
     /// <summary>Decodes one row group whole: every column of it, as arrays.</summary>
-    public EswRowGroup ReadGroup(int index)
+    public EssxRowGroup ReadGroup(int index)
     {
         var group = Info.RowGroups[index];
-        var columns = new EswColumnData[Columns.Count];
+        var columns = new EssxColumnData[Columns.Count];
         for (var i = 0; i < Columns.Count; i++)
         {
-            columns[i] = EswColumnData.Decode(this, Info.Columns[i], group);
+            columns[i] = EssxColumnData.Decode(this, Info.Columns[i], group);
         }
 
-        return new EswRowGroup(this, index, group.Rows, columns);
+        return new EssxRowGroup(this, index, group.Rows, columns);
     }
 
     /// <summary>The groups whose chunk statistics admit the predicate, for a read that needs some verses rather than the file.</summary>
@@ -218,19 +218,19 @@ public sealed class EswTable
         }
     }
 
-    internal byte[] ReadChunk(EswRowGroupInfo group, string physicalName, out EswChunkInfo chunk)
+    internal byte[] ReadChunk(EssxRowGroupInfo group, string physicalName, out EssxChunkInfo chunk)
     {
         chunk = group.Chunks[_physicalIndex[physicalName]];
         return _reader.Read(chunk.Offset, chunk.Length, chunk.Codec, chunk.RawLength);
     }
 
     /// <summary>Every row, group after group. The row object is reused; take what is needed before moving on.</summary>
-    public IEnumerable<EswRow> Rows()
+    public IEnumerable<EssxRow> Rows()
     {
         for (var g = 0; g < Info.RowGroups.Count; g++)
         {
             var group = ReadGroup(g);
-            var row = new EswRow(group);
+            var row = new EssxRow(group);
             for (var i = 0; i < group.Rows; i++)
             {
                 row.Index = i;
@@ -250,21 +250,21 @@ public sealed class EswTable
 }
 
 /// <summary>One decoded row group.</summary>
-public sealed class EswRowGroup(EswTable table, int index, int rows, EswColumnData[] columns)
+public sealed class EssxRowGroup(EssxTable table, int index, int rows, EssxColumnData[] columns)
 {
-    public EswTable Table { get; } = table;
+    public EssxTable Table { get; } = table;
 
     public int Index { get; } = index;
 
     public int Rows { get; } = rows;
 
-    public IReadOnlyList<EswColumnData> Columns { get; } = columns;
+    public IReadOnlyList<EssxColumnData> Columns { get; } = columns;
 
-    public EswColumnData Column(string name) => Columns[Table.Columns.ToList().FindIndex(column => column.Name == name)];
+    public EssxColumnData Column(string name) => Columns[Table.Columns.ToList().FindIndex(column => column.Name == name)];
 }
 
 /// <summary>A logical column of one row group, decoded: typed arrays a loader reads straight.</summary>
-public abstract class EswColumnData
+public abstract class EssxColumnData
 {
     public abstract bool IsNull(int row);
 
@@ -278,7 +278,7 @@ public abstract class EswColumnData
 
     public virtual WordKey? WordKey(int row, string text) => Text(row) is { } written ? Products.WordKey.Parse(written, text) : null;
 
-    internal static EswColumnData Decode(EswTable table, EswColumnInfo column, EswRowGroupInfo group) => column.Type switch
+    internal static EssxColumnData Decode(EssxTable table, EssxColumnInfo column, EssxRowGroupInfo group) => column.Type switch
     {
         "integer" => IntData.Read(table, group, column.Physical[0]),
         "boolean" => BoolData.Read(table, group, column.Physical[0]),
@@ -288,7 +288,7 @@ public abstract class EswColumnData
         _ => throw new ProductFormatException($"Unknown column type '{column.Type}'."),
     };
 
-    private static EswColumnData StringData(EswTable table, EswRowGroupInfo group, string physical)
+    private static EssxColumnData StringData(EssxTable table, EssxRowGroupInfo group, string physical)
     {
         var encoding = table.Info.Physical.First(p => p.Name == physical).Encoding;
         return encoding == "dict" ? DictData.Read(table, group, physical) : TextData.Read(table, group, physical);
@@ -296,7 +296,7 @@ public abstract class EswColumnData
 
     internal static bool[]? Validity(ReadOnlySpan<byte> raw, int rows, int nulls, out int bitmapLength)
     {
-        bitmapLength = nulls > 0 ? EswLayout.BitmapLength(rows) : 0;
+        bitmapLength = nulls > 0 ? EssxLayout.BitmapLength(rows) : 0;
         if (nulls == 0)
         {
             return null;
@@ -305,14 +305,14 @@ public abstract class EswColumnData
         var valid = new bool[rows];
         for (var i = 0; i < rows; i++)
         {
-            valid[i] = EswLayout.Bit(raw, i);
+            valid[i] = EssxLayout.Bit(raw, i);
         }
 
         return valid;
     }
 }
 
-public sealed class IntData(long[] values, bool[]? valid) : EswColumnData
+public sealed class IntData(long[] values, bool[]? valid) : EssxColumnData
 {
     public long[] Values { get; } = values;
 
@@ -325,7 +325,7 @@ public sealed class IntData(long[] values, bool[]? valid) : EswColumnData
 
     public override long? Integer(int row) => IsNull(row) ? null : Values[row];
 
-    internal static IntData Read(EswTable table, EswRowGroupInfo group, string physical)
+    internal static IntData Read(EssxTable table, EssxRowGroupInfo group, string physical)
     {
         var raw = table.ReadChunk(group, physical, out var chunk);
         var valid = Validity(raw, group.Rows, chunk.Nulls, out var bitmap);
@@ -333,14 +333,14 @@ public sealed class IntData(long[] values, bool[]? valid) : EswColumnData
         var width = chunk.Width;
         for (var i = 0; i < values.Length; i++)
         {
-            values[i] = chunk.Base + (long)EswLayout.ReadUnsigned(raw.AsSpan(bitmap + i * width), width);
+            values[i] = chunk.Base + (long)EssxLayout.ReadUnsigned(raw.AsSpan(bitmap + i * width), width);
         }
 
         return new IntData(values, valid);
     }
 }
 
-public sealed class BoolData(bool[] values, bool[]? valid) : EswColumnData
+public sealed class BoolData(bool[] values, bool[]? valid) : EssxColumnData
 {
     public bool[] Values { get; } = values;
 
@@ -352,14 +352,14 @@ public sealed class BoolData(bool[] values, bool[]? valid) : EswColumnData
 
     public override bool? Boolean(int row) => IsNull(row) ? null : Values[row];
 
-    internal static BoolData Read(EswTable table, EswRowGroupInfo group, string physical)
+    internal static BoolData Read(EssxTable table, EssxRowGroupInfo group, string physical)
     {
         var raw = table.ReadChunk(group, physical, out var chunk);
         var valid = Validity(raw, group.Rows, chunk.Nulls, out var bitmap);
         var values = new bool[group.Rows];
         for (var i = 0; i < values.Length; i++)
         {
-            values[i] = EswLayout.Bit(raw.AsSpan(bitmap), i);
+            values[i] = EssxLayout.Bit(raw.AsSpan(bitmap), i);
         }
 
         return new BoolData(values, valid);
@@ -367,7 +367,7 @@ public sealed class BoolData(bool[] values, bool[]? valid) : EswColumnData
 }
 
 /// <summary>A dictionary column: ids into the table's dictionary, 0 null; the strings are shared instances.</summary>
-public sealed class DictData(int[] ids, string?[] dictionary) : EswColumnData
+public sealed class DictData(int[] ids, string?[] dictionary) : EssxColumnData
 {
     public int[] Ids { get; } = ids;
 
@@ -377,14 +377,14 @@ public sealed class DictData(int[] ids, string?[] dictionary) : EswColumnData
 
     public override string? Text(int row) => Dictionary[Ids[row]];
 
-    internal static DictData Read(EswTable table, EswRowGroupInfo group, string physical)
+    internal static DictData Read(EssxTable table, EssxRowGroupInfo group, string physical)
     {
         var raw = table.ReadChunk(group, physical, out var chunk);
         var ids = new int[group.Rows];
         var width = chunk.Width;
         for (var i = 0; i < ids.Length; i++)
         {
-            ids[i] = (int)EswLayout.ReadUnsigned(raw.AsSpan(i * width), width);
+            ids[i] = (int)EssxLayout.ReadUnsigned(raw.AsSpan(i * width), width);
         }
 
         var dictionary = table.Dictionary(physical);
@@ -397,7 +397,7 @@ public sealed class DictData(int[] ids, string?[] dictionary) : EswColumnData
     }
 }
 
-public sealed class TextData(string?[] values) : EswColumnData
+public sealed class TextData(string?[] values) : EssxColumnData
 {
     public string?[] Values { get; } = values;
 
@@ -405,7 +405,7 @@ public sealed class TextData(string?[] values) : EswColumnData
 
     public override string? Text(int row) => Values[row];
 
-    internal static TextData Read(EswTable table, EswRowGroupInfo group, string physical)
+    internal static TextData Read(EssxTable table, EssxRowGroupInfo group, string physical)
     {
         var raw = table.ReadChunk(group, physical, out var chunk);
         var valid = Validity(raw, group.Rows, chunk.Nulls, out var bitmap);
@@ -424,11 +424,11 @@ public sealed class TextData(string?[] values) : EswColumnData
 }
 
 /// <summary>A key column from its parts.</summary>
-public sealed class KeyData : EswColumnData
+public sealed class KeyData : EssxColumnData
 {
     private readonly bool _withPosition;
 
-    internal KeyData(EswTable table, EswRowGroupInfo group, List<string> physical, bool withPosition)
+    internal KeyData(EssxTable table, EssxRowGroupInfo group, List<string> physical, bool withPosition)
     {
         _withPosition = withPosition;
         Book = IntData.Read(table, group, physical[0]);
@@ -466,9 +466,9 @@ public sealed class KeyData : EswColumnData
 }
 
 /// <summary>A row of a decoded group, as the schema reads it.</summary>
-public sealed class EswRow(EswRowGroup group) : ProductRow(group.Table.Columns)
+public sealed class EssxRow(EssxRowGroup group) : ProductRow(group.Table.Columns)
 {
-    public EswRowGroup Group { get; } = group;
+    public EssxRowGroup Group { get; } = group;
 
     public int Index { get; set; }
 

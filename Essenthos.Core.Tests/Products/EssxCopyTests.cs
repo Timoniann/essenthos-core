@@ -1,5 +1,5 @@
 using Essenthos.Core.Products;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Postgres;
 using FluentAssertions;
 using Npgsql;
@@ -8,12 +8,12 @@ using Xunit;
 namespace Essenthos.Core.Tests.Products;
 
 /// <summary>
-/// The binary load is a claim about what Postgres receives, so it is asked of Postgres: an ESW
+/// The binary load is a claim about what Postgres receives, so it is asked of Postgres: an ESSX
 /// file of every column type goes in over several streams, in binary and in text, and comes back
 /// row for row, the key spread over its parts and the file's text as a constant column.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class EswCopyTests(WitnessDatabase database) : IDisposable
+public sealed class EssxCopyTests(WitnessDatabase database) : IDisposable
 {
     private sealed record Row(WordKey Key, VerseKey? Cited, string Surface, string? Lemma, long Count, bool Flag, bool? Maybe, string? Morphology);
 
@@ -47,9 +47,9 @@ public sealed class EswCopyTests(WitnessDatabase database) : IDisposable
     public async Task EveryRowComesBackThroughCopy(CopyMode mode, int streams)
     {
         Directory.CreateDirectory(_folder);
-        var path = Path.Combine(_folder, "words.esw");
+        var path = Path.Combine(_folder, "words.essx");
         var rows = Enumerable.Range(0, 9_000).Select(Make).ToList();
-        using (var writer = new EswFormat(new EswOptions { RowGroupRows = 1000 }).Create(path, new ProductHeader("Essenthos/texts/KJV/words.esw", [], "test"), Schema))
+        using (var writer = new EssxFormat(new EssxOptions { RowGroupRows = 1000 }).Create(path, new ProductHeader("Essenthos/texts/KJV/words.essx", [], "test"), Schema))
         {
             writer.WriteAll(rows);
         }
@@ -65,10 +65,10 @@ public sealed class EswCopyTests(WitnessDatabase database) : IDisposable
                 surface text NOT NULL, lemma text, count bigint NOT NULL, flag boolean NOT NULL, maybe boolean, morphology jsonb)
             """);
 
-        using var reader = EswReader.Open(path);
-        var columns = EswCopy.DefaultColumns(reader.Tables[0], ("text", "KJV"));
+        using var reader = EssxReader.Open(path);
+        var columns = EssxCopy.DefaultColumns(reader.Tables[0], ("text", "KJV"));
         // An opened connection no longer shows its password; the loader opens its own, so it is given the string of a fresh one.
-        var result = await EswCopy.Load(database.NewConnection().ConnectionString, path, table, columns, streams, mode);
+        var result = await EssxCopy.Load(database.NewConnection().ConnectionString, path, table, columns, streams, mode);
         result.Rows.Should().Be(rows.Count);
 
         var copied = new List<Row>();

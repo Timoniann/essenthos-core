@@ -1,42 +1,42 @@
-namespace Essenthos.Core.Products.Esw;
+namespace Essenthos.Core.Products.Essx;
 
 /// <summary>
 /// The binary format as a product format: a file of one table named <see cref="TableName"/>. The
 /// machine products are written in it; a file of several tables is written with
-/// <see cref="EswWriter"/> directly.
+/// <see cref="EssxWriter"/> directly.
 /// </summary>
-public sealed class EswFormat : IProductFormat
+public sealed class EssxFormat : IProductFormat
 {
     public const string TableName = "rows";
 
-    public static readonly EswFormat Instance = new();
+    public static readonly EssxFormat Instance = new();
 
-    public static readonly EswFormat Compressed = new(new EswOptions { Codec = EswLayout.CodecDeflate });
+    public static readonly EssxFormat Compressed = new(new EssxOptions { Codec = EssxLayout.CodecDeflate });
 
-    private readonly EswOptions _options;
+    private readonly EssxOptions _options;
 
-    public EswFormat(EswOptions? options = null)
+    public EssxFormat(EssxOptions? options = null)
     {
-        _options = options ?? EswOptions.Default;
+        _options = options ?? EssxOptions.Default;
     }
 
-    public string Extension => EswLayout.Extension;
+    public string Extension => EssxLayout.Extension;
 
     public IProductWriter<T> Create<T>(string path, ProductHeader header, ProductSchema<T> schema) =>
-        new SingleTableWriter<T>(EswWriter.Create(path, header, _options), schema);
+        new SingleTableWriter<T>(EssxWriter.Create(path, header, _options), schema);
 
     public IProductReader<T> Open<T>(string path, ProductSchema<T> schema) =>
-        new SingleTableReader<T>(EswReader.Open(path), row => schema.Read(row), schema);
+        new SingleTableReader<T>(EssxReader.Open(path), row => schema.Read(row), schema);
 
     public IProductReader<string?[]> Open(string path) =>
-        new SingleTableReader<string?[]>(EswReader.Open(path), row => row.ToTexts(), null);
+        new SingleTableReader<string?[]>(EssxReader.Open(path), row => row.ToTexts(), null);
 
     private sealed class SingleTableWriter<T> : IProductWriter<T>
     {
-        private readonly EswWriter _file;
-        private readonly EswTableWriter<T> _table;
+        private readonly EssxWriter _file;
+        private readonly EssxTableWriter<T> _table;
 
-        public SingleTableWriter(EswWriter file, ProductSchema<T> schema)
+        public SingleTableWriter(EssxWriter file, ProductSchema<T> schema)
         {
             _file = file;
             _table = file.Table(TableName, schema);
@@ -55,11 +55,11 @@ public sealed class EswFormat : IProductFormat
 
     private sealed class SingleTableReader<T> : IProductReader<T>
     {
-        private readonly EswReader _file;
-        private readonly EswTable _table;
-        private readonly Func<EswRow, T> _read;
+        private readonly EssxReader _file;
+        private readonly EssxTable _table;
+        private readonly Func<EssxRow, T> _read;
 
-        public SingleTableReader(EswReader file, Func<EswRow, T> read, ProductSchema<T>? schema)
+        public SingleTableReader(EssxReader file, Func<EssxRow, T> read, ProductSchema<T>? schema)
         {
             _file = file;
             _read = read;
