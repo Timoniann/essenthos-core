@@ -29,10 +29,12 @@ internal static class MappingComparison
             var (fromText, toText) = MappingProducts.Split(pair);
             var a = await Rows(before, keysBefore, provBefore, pair, fromText, toText, token);
             var b = await Rows(after, keysAfter, provAfter, pair, fromText, toText, token);
+            var one = new KeyedComparison();
+            one.Add("link", a.Links, b.Links);
+            one.Add("link_claim", a.Claims, b.Claims);
             lock (comparison)
             {
-                comparison.Add("link", a.Links, b.Links);
-                comparison.Add("link_claim", a.Claims, b.Claims);
+                comparison.Merge(one);
             }
 
             logger.LogInformation("{Pair} compared at {Elapsed}", pair, clock.Elapsed);

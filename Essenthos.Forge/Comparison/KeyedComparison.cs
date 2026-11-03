@@ -115,6 +115,35 @@ internal sealed class KeyedComparison(int examples = 12)
         }
     }
 
+    /// <summary>
+    /// Adds another comparison's counts and groups to this one, so that scopes can be compared apart, in parallel,
+    /// and gathered. Examples are kept up to the limit, the first comparison's first.
+    /// </summary>
+    public void Merge(KeyedComparison other)
+    {
+        foreach (var (table, (before, after)) in other._counts)
+        {
+            var counts = _counts.GetValueOrDefault(table);
+            _counts[table] = (counts.Before + before, counts.After + after);
+        }
+
+        lock (_groups)
+        {
+            foreach (var (key, group) in other._groups)
+            {
+                if (!_groups.TryGetValue(key, out var found))
+                {
+                    _groups[key] = group with { Examples = [.. group.Examples.Take(examples)] };
+                    continue;
+                }
+
+                var kept = found.Examples;
+                kept.AddRange(group.Examples.Take(Math.Max(0, examples - kept.Count)));
+                _groups[key] = found with { Rows = found.Rows + group.Rows };
+            }
+        }
+    }
+
     private static Dictionary<string, List<KeyedRow>> Index(IReadOnlyList<KeyedRow> rows)
     {
         var index = new Dictionary<string, List<KeyedRow>>(rows.Count, StringComparer.Ordinal);

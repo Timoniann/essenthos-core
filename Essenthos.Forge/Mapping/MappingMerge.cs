@@ -401,14 +401,11 @@ internal static class MappingMerge
         return order;
     }
 
-    /// <summary>Rank, then the surer, then method and source by name: the order a link's claims stand in.</summary>
+    /// <summary>Rank, then <see cref="MappingMethods.SettlesBefore"/> between equals: the order a link's claims stand in.</summary>
     private static readonly Comparer<Entry> TopFirst = Comparer<Entry>.Create((a, b) =>
     {
         var order = b.Rank.CompareTo(a.Rank);
-        if (order == 0) order = (b.Row.Confidence ?? 2).CompareTo(a.Row.Confidence ?? 2);
-        if (order == 0) order = string.CompareOrdinal(a.Row.Method, b.Row.Method);
-        if (order == 0) order = string.CompareOrdinal(a.Row.Source, b.Row.Source);
-        if (order == 0) order = string.CompareOrdinal(a.Row.Evidence, b.Row.Evidence);
+        if (order == 0) order = MappingMethods.SettlesBefore(a.Row, b.Row);
         if (order == 0) order = string.CompareOrdinal(a.File, b.File);
         if (order == 0) order = a.Index.CompareTo(b.Index);
         return order;

@@ -38,7 +38,7 @@ internal static partial class ForgeVerbs
         var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
         var pairs = args.Contains("--all") ? MappingProducts.Pairs(store) : [args[1]];
         var results = new System.Collections.Concurrent.ConcurrentBag<MappingFiles.Merged>();
-        Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 6) }, pair =>
+        System.Threading.Tasks.Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 6) }, pair =>
         {
             var merged = MappingFiles.Merge(store, pair, args.Contains("--force"));
             results.Add(merged);

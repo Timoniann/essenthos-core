@@ -95,6 +95,20 @@ internal static partial class MappingMethods
     };
 
     /// <summary>Whether a method states absences that win their word (<see cref="StatedAbsence"/>).</summary>
+    /// <summary>
+    /// Which of two claims of one link that <see cref="Rank"/> ranks equal is settled, negative when
+    /// <paramref name="a"/> is: the surer, then method, source and evidence by name. The whole tie-break
+    /// is this one function; the order among stated sources and among EVIDENTIA runs belongs here.
+    /// </summary>
+    public static int SettlesBefore(MappingRow a, MappingRow b)
+    {
+        var order = (b.Confidence ?? 2).CompareTo(a.Confidence ?? 2);
+        if (order == 0) order = string.CompareOrdinal(a.Method, b.Method);
+        if (order == 0) order = string.CompareOrdinal(a.Source, b.Source);
+        if (order == 0) order = string.CompareOrdinal(a.Evidence, b.Evidence);
+        return order;
+    }
+
     public static bool StatesAbsence(string method) => method is Stated or Evidentia or Manual or Ruling;
 
     /// <summary>
