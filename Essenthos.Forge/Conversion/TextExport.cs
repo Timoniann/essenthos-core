@@ -118,5 +118,9 @@ internal static class TextExport
         public void Boolean(bool? value) => Fields.Add(value is null ? null : value.Value ? "t" : "f");
 
         public void Json(string? value) => Fields.Add(value);
+
+        public void VerseKey(VerseKey? value) => Fields.Add(value?.ToString());
+
+        public void WordKey(WordKey? value) => Fields.Add(value?.Own);
     }
 }
