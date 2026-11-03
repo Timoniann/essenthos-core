@@ -67,7 +67,8 @@ public sealed class EswCopyTests(WitnessDatabase database) : IDisposable
 
         using var reader = EswReader.Open(path);
         var columns = EswCopy.DefaultColumns(reader.Tables[0], ("text", "KJV"));
-        var result = await EswCopy.Load(connection.ConnectionString, path, table, columns, streams, mode);
+        // An opened connection no longer shows its password; the loader opens its own, so it is given the string of a fresh one.
+        var result = await EswCopy.Load(database.NewConnection().ConnectionString, path, table, columns, streams, mode);
         result.Rows.Should().Be(rows.Count);
 
         var copied = new List<Row>();
