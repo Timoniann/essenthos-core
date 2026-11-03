@@ -170,7 +170,7 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
     /// the written spellings are counted alongside, and what lands in the column is the dictionary
     /// form as GLAUx writes it.
     /// </summary>
-    private static (Dictionary<string, LemmaChoice> Lexicon, Dictionary<string, string> Spelling) Read(
+    internal static (Dictionary<string, LemmaChoice> Lexicon, Dictionary<string, string> Spelling) Read(
         string directory)
     {
         var counts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);

@@ -1,0 +1,263 @@
+using Essenthos.Core.Loading;
+using Essenthos.Core.Products;
+using Essenthos.Core.XmlBible;
+
+namespace Essenthos.Core.Conversion;
+
+/// <summary>
+/// One repair a text's corrections file declares. Every repair names what the source reads where it
+/// applies (<see cref="Before"/>), so a source that changed upstream stops the conversion instead of
+/// taking a repair somewhere it was never meant.
+/// </summary>
+/// <param name="Own">A word key (<c>1.1:1.3</c>) for <c>letters</c> and <c>drop</c>; a verse key (<c>1.1:1</c>) for the others.</param>
+/// <param name="Kind">
+/// <c>verse</c>: the source's verse, markup and all, is read as <see cref="After"/> before it is divided into words;
+/// <c>letters</c>: the word's letters <see cref="Before"/> become <see cref="After"/>;
+/// <c>prepend</c> / <c>append</c>: the words of <see cref="After"/> open / close the verse;
+/// <c>drop</c>: the word, which reads <see cref="Before"/>, is not the edition's and goes.
+/// </param>
+internal sealed record TextCorrection(string Own, string Kind, string? Before, string? After, string Why)
+{
+    public const string Verse = "verse";
+    public const string Letters = "letters";
+    public const string Prepend = "prepend";
+    public const string Append = "append";
+    public const string Drop = "drop";
+
+    public static readonly ProductSchema<TextCorrection> Schema = new ProductSchema<TextCorrection>()
+        .Text("own", c => c.Own)
+        .Text("kind", c => c.Kind)
+        .OptionalText("before", c => c.Before)
+        .OptionalText("after", c => c.After)
+        .Text("why", c => c.Why)
+        .Reads(row => new TextCorrection(row.Text(0), row.Text(1), row.TextOrNull(2), row.TextOrNull(3), row.Text(4)));
+}
+
+/// <summary>
+/// The repairs of one text, read from <c>texts/&lt;SLUG&gt;/corrections.tsv</c> and applied by the converter:
+/// <c>verse</c> rows inside the reader (<see cref="SourceRepairs"/>), the word rows to what it read
+/// (<see cref="Apply"/>). Every row must find what it says the source reads, once.
+/// </summary>
+internal sealed class TextCorrections
+{
+    private readonly string _slug;
+    private readonly List<TextCorrection> _rows;
+
+    private TextCorrections(string slug, List<TextCorrection> rows)
+    {
+        _slug = slug;
+        _rows = rows;
+    }
+
+    public static string ProductOf(string text) => $"texts/{text}/corrections";
+
+    public IReadOnlyList<TextCorrection> Rows => _rows;
+
+    /// <summary>The words <c>prepend</c> and <c>append</c> rows added, which no source printed where they now stand.</summary>
+    public HashSet<WordDraft> Added { get; } = new(ReferenceEqualityComparer.Instance);
+
+    public static TextCorrections None(string slug) => new(slug, []);
+
+    public static TextCorrections Read(ProductStore store, string slug)
+    {
+        if (!store.Exists(ProductOf(slug)))
+        {
+            return None(slug);
+        }
+
+        using var reader = store.Open(ProductOf(slug), TextCorrection.Schema);
+        var rows = reader.ReadAll();
+        foreach (var row in rows)
+        {
+            if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append or TextCorrection.Drop))
+            {
+                throw new FormatException($"{slug} corrections: \"{row.Kind}\" at {row.Own} is not a kind of correction.");
+            }
+        }
+
+        return new TextCorrections(slug, rows);
+    }
+
+    /// <summary>The <c>verse</c> rows, as the repairs a reader applies to its source's verses before it divides them.</summary>
+    public TextRepairs SourceRepairs()
+    {
+        var verses = _rows
+            .Where(row => row.Kind == TextCorrection.Verse)
+            .Select(row =>
+            {
+                var key = VerseKey.Parse(row.Own);
+                return new VerseRepair(key.Book, key.Chapter, key.Verse, row.Before!, row.After!);
+            })
+            .ToList();
+        return new TextRepairs(_slug, verses, string.Empty);
+    }
+
+    /// <summary>
+    /// Every <c>verse</c> row against the verse its source prints, before the reader applies them: a reader keeps
+    /// the source's verse where a repair does not meet it, so a row that no longer meets its verse stops here.
+    /// </summary>
+    public void CheckVerses(Func<int, int, int, string?> sourceVerse)
+    {
+        foreach (var row in _rows.Where(row => row.Kind == TextCorrection.Verse))
+        {
+            var key = VerseKey.Parse(row.Own);
+            if (sourceVerse(key.Book, key.Chapter, key.Verse) != row.Before)
+            {
+                throw Unmatched(row, "the source does not print the verse as the row's before says");
+            }
+        }
+    }
+
+    /// <summary>The word rows applied to what the reader read; a note's anchor follows its word.</summary>
+    public TextSource Apply(TextSource source)
+    {
+        if (_rows.Count == 0)
+        {
+            return source;
+        }
+
+        var byVerse = _rows
+            .Where(row => row.Kind != TextCorrection.Verse)
+            .GroupBy(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop
+                ? WordKey.Parse(row.Own, _slug).Verse
+                : VerseKey.Parse(row.Own))
+            .ToDictionary(group => group.Key, group => group.ToList());
+        if (byVerse.Count == 0)
+        {
+            return source;
+        }
+
+        var met = new HashSet<VerseKey>();
+        var books = source.Books.Select(book => book with
+        {
+            Chapters =
+            [
+                .. book.Chapters.Select(chapter => chapter with
+                {
+                    Verses =
+                    [
+                        .. chapter.Verses.Select(verse =>
+                        {
+                            var key = new VerseKey(book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label);
+                            if (!byVerse.TryGetValue(key, out var rows))
+                            {
+                                return verse;
+                            }
+
+                            met.Add(key);
+                            var (words, read) = Corrected(verse.Words, rows);
+                            return verse with
+                            {
+                                Words = words,
+                                Notes =
+                                [
+                                    .. verse.Notes.Select(note => note with
+                                    {
+                                        AnchorWordPosition = note.AnchorWordPosition is { } anchor && read.IndexOf(anchor) is var at and >= 0 ? at + 1 : null,
+                                    }),
+                                ],
+                            };
+                        }),
+                    ],
+                }),
+            ],
+        }).ToList();
+
+        foreach (var (key, rows) in byVerse)
+        {
+            if (!met.Contains(key))
+            {
+                throw Unmatched(rows[0], "the text has no such verse");
+            }
+        }
+
+        return source with { Books = books };
+    }
+
+    /// <summary>
+    /// The verse's words with its rows applied, and for each the position it had as read (0 for a word a row added),
+    /// so a note's anchor can follow its word.
+    /// </summary>
+    private (List<WordDraft> Words, List<int> Read) Corrected(IReadOnlyList<WordDraft> read, List<TextCorrection> rows)
+    {
+        var words = read.ToList();
+        var origin = Enumerable.Range(1, read.Count).ToList();
+
+        // Word rows first, by the positions the reader gave, from the last so a drop moves nothing still to come.
+        foreach (var row in rows
+                     .Where(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop)
+                     .OrderByDescending(row => WordKey.Parse(row.Own, _slug).Position))
+        {
+            var at = WordKey.Parse(row.Own, _slug).Position - 1;
+            if (at < 0 || at >= words.Count || words[at].Surface != row.Before)
+            {
+                throw Unmatched(row, at >= 0 && at < words.Count ? $"the word reads \"{words[at].Surface}\"" : "the verse has no such word");
+            }
+
+            if (row.Kind == TextCorrection.Drop)
+            {
+                words.RemoveAt(at);
+                origin.RemoveAt(at);
+            }
+            else
+            {
+                words[at] = words[at] with { Surface = row.After! };
+            }
+        }
+
+        foreach (var row in rows.Where(row => row.Kind == TextCorrection.Prepend))
+        {
+            var head = Words(row);
+            Added.UnionWith(head);
+            if (words.Take(head.Count).Select(w => w.Surface).SequenceEqual(head.Select(w => w.Surface)))
+            {
+                throw Unmatched(row, "the verse already opens with these words");
+            }
+
+            words.InsertRange(0, head);
+            origin.InsertRange(0, Enumerable.Repeat(0, head.Count));
+        }
+
+        foreach (var row in rows.Where(row => row.Kind == TextCorrection.Append))
+        {
+            var tail = Words(row);
+            Added.UnionWith(tail);
+            if (words.Count > 0)
+            {
+                var last = words[^1];
+                if (last.Trailer.Length == 0 || !char.IsWhiteSpace(last.Trailer[^1]))
+                {
+                    words[^1] = last with { Trailer = last.Trailer + " " };
+                }
+            }
+
+            words.AddRange(tail);
+            origin.AddRange(Enumerable.Repeat(0, tail.Count));
+        }
+
+        return (words, origin);
+    }
+
+    /// <summary>
+    /// The words a <c>prepend</c> or <c>append</c> row adds, divided as the bible4u files' verses are. Space
+    /// the row ends with stays on its last word: it is what parts a prepended title from the verse after it.
+    /// </summary>
+    internal static List<WordDraft> Words(TextCorrection row)
+    {
+        var after = row.After ?? string.Empty;
+        var words = VerseWords.Parse(after)
+            .Select(token => new WordDraft(token.Word, token.Trailer, Elided: token.Word.Length == 0, SuppliedSpan: token.SuppliedSpan))
+            .ToList();
+        var read = string.Concat(words.Select(w => w.Surface + w.Trailer));
+        if (words.Count > 0 && after.Length > read.Length && after.StartsWith(read, StringComparison.Ordinal) && string.IsNullOrWhiteSpace(after[read.Length..]))
+        {
+            words[^1] = words[^1] with { Trailer = words[^1].Trailer + after[read.Length..] };
+        }
+
+        return words;
+    }
+
+    private InvalidOperationException Unmatched(TextCorrection row, string why) =>
+        new($"{_slug} corrections: the {row.Kind} row at {row.Own} ({row.Before} -> {row.After}) does not apply: {why}. "
+            + "The source is not the one the row was written against; read both before changing either.");
+}

@@ -133,7 +133,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// same verse; the rest of it is aligned on the letters, and what will not align is left
     /// untagged rather than guessed at.
     /// </summary>
-    private const double SameVerse = 0.8;
+    internal const double SameVerse = 0.8;
 
     private const string StrongNumberTable =
         """
@@ -458,7 +458,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// Greek word between them, and the grouping below turns that into a single link naming both.
     /// A word in no span is untagged, and the function-word pass may still reach it.
     /// </summary>
-    private static List<TaggedWord> Project(List<TaggedWord> tags, int words, List<EditionSpan> spans)
+    internal static List<TaggedWord> Project(List<TaggedWord> tags, int words, List<EditionSpan> spans)
     {
         var projected = new List<TaggedWord>(words);
         for (var i = 0; i < words; i++)
@@ -489,7 +489,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         return projected;
     }
 
-    private static Dictionary<(int, int, int), List<TaggedWord>> Tagged(string path)
+    internal static Dictionary<(int, int, int), List<TaggedWord>> Tagged(string path)
     {
         var bible = new ZefaniaParser().Parse(File.ReadAllText(path));
         var verses = new Dictionary<(int, int, int), List<TaggedWord>>(8_000);
@@ -669,7 +669,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// The Strong numbers the tag names, which is usually one, sometimes none, and 2,725 times in
     /// the New Testament several — one English word standing over a Greek phrase.
     /// </param>
-    private sealed record TaggedWord(string Text, IReadOnlyList<string> Numbers, bool Supplied);
+    internal sealed record TaggedWord(string Text, IReadOnlyList<string> Numbers, bool Supplied);
 
     private sealed record Word(long Id, string Text, string? Strong, GreekMorphology Morphology);
 

@@ -1,0 +1,18 @@
+# product    Essenthos/texts/UBIO/corrections.tsv
+# inputs     bible4u/UKR.xml@4db37788c4170ec48279ac63fa6072833aa7ceadbf35cb808f3d2527e3d1eab4
+# producer   forge texts corrections UBIO   (Essenthos.Forge 1.0.0+8aa731d0dc56-dirty)
+# rows                 11
+# kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes
+# note       written once from the repairs the load computed in code; edit this file, not the code
+own	kind	before	after	why
+19.7:1.1	letters	Жалібна	Жалобна	the title as the 1988 printing spells it (Ukrainian Wikisource), without stress marks
+19.7:1.10	letters	веніямінівця	веніяминівця	the title as the 1988 printing spells it (Ukrainian Wikisource), without stress marks
+19.7:1.11	letters	Куща	Куша	the title as the 1988 printing spells it (Ukrainian Wikisource), without stress marks
+19.7:1	append	\N	Господи, Боже мій, — я до Тебе вдаюся: спаси Ти мене від усіх моїх напасників, і визволь мене, 	the line of the psalm the file lost, from the 1988 printing (Ukrainian Wikisource), without stress marks
+1.22:19	append	\N	І встали вони, та й пішли разом до Беер-Шеви. І осів Авраам у Беер-Шеві.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+1.44:26	append	\N	Коли найменший наш брат буде з нами, то зійдемо ми, бо не можемо бачити лиця того мужа, якщо брат наш наймолодший не буде з нами.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+1.50:11	append	\N	То сильна жалоба для Єгипту! Тому то кликнули ім'я його Авел-Міцраїм, що на тім боці Йордану.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+10.17:20	append	\N	Перейшли через воду. І ті шукали й не знайшли, та й вернулися до Єрусалиму.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+18.2:2	append	\N	Я мандрував по землі та й перейшов її.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+23.50:9	append	\N	Вони всі розпадуться, немов та одежа, їх міль пожере!	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
+35.1:8	append	\N	І розлетяться його верхівці, а їздці його здалека прийдуть, вони будуть летіти, неначе орел, що на їжу поспішає.	the end of the verse the file cut short, from the 1988 printing (Ukrainian Wikisource), without stress marks, quotation marks and dashes
