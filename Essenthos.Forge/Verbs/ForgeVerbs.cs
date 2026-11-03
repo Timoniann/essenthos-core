@@ -47,8 +47,21 @@ internal static partial class ForgeVerbs
             "Measure the corpus, record what it finds for /v1/health, and fail on anything broken.", Verify),
         new("release", "[--allow-dirty] [--allow-unrecorded] [--dry-run]",
             "Verify this machine's corpus and dump it into .releases/ as the next release.", Release),
-        new("export", "[--to <folder>] [--dry-run]",
-            "Write the texts that may be passed on, one file each with its licence and attribution, and a manifest of checksums.", Export),
+        new("export", "[--to <folder>] [--dry-run] | <text> --as tsv|csv|jsonl [--to <file>]",
+            "Write the texts that may be passed on, one file each with its licence and attribution, and a manifest of checksums; "
+            + "with a text and --as, write that text's converted words in a common shape.",
+            (forge, args) => args.Contains("--as") ? ExportText(forge, args) : Export(forge, args)),
+
+        // The texts as converted products (TSK-1443): beside the load until the build reads them.
+        new("convert", "<text,...|all> [--force] [--parallel <n>]",
+            "Convert texts from their declared sources and corrections into their products under Resources/Essenthos/texts; "
+            + "a text whose inputs did not move is left as it is.",
+            ConvertVerb, Least: 1),
+        new("texts", "ids|compare|corrections <text,...|all> [--out <folder>] [--parallel <n>]",
+            "ids: write each word's id in the configured database as the text's ids product. compare: hold the converted products "
+            + "against the configured database by key and list every difference. corrections: write a text's corrections file "
+            + "from the repairs the load still computes in code (once, before they are deleted).",
+            TextsVerb, Least: 2),
         new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--dry-run]",
             "Restore a release on a target, verify it there and swap it in.", Publish),
         new("publish-downloads", "--to <target> [--from <folder>] [--dry-run]",

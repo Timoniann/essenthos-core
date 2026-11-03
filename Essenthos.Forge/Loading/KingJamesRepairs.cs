@@ -286,7 +286,7 @@ internal static class KingJamesRepairs
     /// The subscription is read with the same reader as the verses, so its words are what any other
     /// verse's would be.
     /// </summary>
-    private static (Dictionary<(int, int, int), IReadOnlyList<string>> Verses, Dictionary<(int, int, int), string> Subscriptions)
+    internal static (Dictionary<(int, int, int), IReadOnlyList<string>> Verses, Dictionary<(int, int, int), string> Subscriptions)
         Edition(string folder)
     {
         var verses = new Dictionary<(int, int, int), IReadOnlyList<string>>(31_200);
