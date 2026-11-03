@@ -224,6 +224,9 @@ internal static partial class ForgeVerbs
         new("verse-readings", "", "Keep the verses two readings agree speak of a record.", VerseReadings),
         new("passage-readings", "", "Name the words two readings of a passage agree stand for a person.", PassageReadings),
         new("dataset-records", "", "Make the records a dataset supplied ours, fold them or withdraw them.", DatasetRecords),
+        new("records-export", "[--into <Resources>]", "Write our records, facts, languages and external datasets as files, from the database.", RecordsExport),
+        new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
+        new("records-compare", "<port/db> <port/db> [--out <file>]", "Compare two databases' records table by table by natural key. Reads only.", RecordsCompare, Least: 2),
     ];
 
     public static ForgeVerb? Find(string name) =>
