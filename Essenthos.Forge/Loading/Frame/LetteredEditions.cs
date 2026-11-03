@@ -57,11 +57,15 @@ internal sealed class LetteredEditions
     private sealed record Row(int Line, IReadOnlyList<PrintedAddress> Verses, IReadOnlyList<Standard> Prints);
 
     /// <param name="Tests">What tells the edition apart, in the versification data's own form.</param>
-    private sealed record Edition(string Name, VersificationConditions Tests, List<Row> Rows);
+    private sealed record Edition(string Name, VersificationConditions Tests, string Written, List<Row> Rows);
 
     private readonly IReadOnlyList<Edition> _all;
 
     private LetteredEditions(IReadOnlyList<Edition> all) => _all = all;
+
+    /// <summary>The editions whose readings this one answers the tests of, with those tests as written.</summary>
+    public IEnumerable<(string Name, string Tests)> Matched(EditionShape edition) =>
+        _all.Where(candidate => candidate.Tests.Answer(edition) is true).Select(candidate => (candidate.Name, candidate.Written));
 
     /// <summary>
     /// The places of the lettered verses of whichever of these editions this one is, or nothing.
@@ -155,6 +159,7 @@ internal sealed class LetteredEditions
                     VersificationTest.ParseAll(tests) ?? throw line.Fail(
                         $"the tests \"{tests}\" say nothing this corpus can answer; write them as the versification " +
                         "data does, as in Bar.6:72=Last"),
+                    tests,
                     []);
                 editions.Add(edition);
                 stated[name] = tests;

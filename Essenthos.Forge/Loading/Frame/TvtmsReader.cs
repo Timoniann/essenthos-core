@@ -19,7 +19,18 @@ internal sealed record TvtmsRow(
     IReadOnlyList<string> Traditions,
     IReadOnlyList<CanonicalReference> Sources,
     IReadOnlyList<CanonicalReference> Standards,
-    VersificationConditions? Tests);
+    VersificationConditions? Tests)
+{
+    /// <summary>The tests as the data writes them, which a frame file names when they decided a passage.</summary>
+    public string Written { get; init; } = string.Empty;
+}
+
+/// <summary>
+/// How one passage of the data was decided for an edition: the scheme taken, and the tests of it the
+/// edition answered, as the data writes them.
+/// </summary>
+/// <param name="Passage">The first verse the passage's rows name, in the data's notation.</param>
+internal sealed record PassageDecision(string Passage, string Scheme, IReadOnlyList<string> Held);
 
 /// <summary>
 /// Reads Tyndale's TVTMS — Translators Versification Traditions with Methodology for
@@ -176,7 +187,10 @@ internal static class TvtmsReader
             ],
             sources,
             standards,
-            VersificationTest.ParseAll(columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty));
+            VersificationTest.ParseAll(columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty))
+        {
+            Written = columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty,
+        };
         return true;
     }
 }
@@ -222,6 +236,9 @@ internal sealed class VersificationRules(
     public VersificationData Data => data;
 
     public bool Covers(Versification tradition) => Schemes.ContainsKey(tradition);
+
+    /// <summary>The scheme a tradition is named after, which it takes where nothing says otherwise.</summary>
+    public string SchemeNamedAfter(Versification tradition) => Schemes[tradition][0];
 
     /// <summary>
     /// Which of <see cref="VersificationData.Corrections"/> still found the row they correct. One that did not
@@ -282,22 +299,48 @@ internal sealed class VersificationRules(
     /// An edition whose lettered verses were read one by one (<see cref="LetteredEditions"/>) has them
     /// placed as read, ahead of every scheme.
     /// </summary>
-    public VersificationFrame Frame(Versification tradition, EditionShape edition)
+    /// <param name="decided">Told how each passage the edition is placed by was decided.</param>
+    public VersificationFrame Frame(Versification tradition, EditionShape edition, Action<PassageDecision>? decided = null)
     {
         var own = Schemes[tradition];
         var others = Schemes.Where(scheme => scheme.Key != tradition).SelectMany(scheme => scheme.Value).ToArray();
         var supplements = TvtmsSupplements.Schemes(data.Supplements, tradition);
 
-        return Build(tradition, data.Editions.For(edition, Additions), passage =>
-            Chosen(passage, supplements, edition, requireEvidence: true) ??
-            Chosen(passage, own, edition, requireEvidence: false) ??
-            Chosen(passage, others, edition, requireEvidence: true) ??
-            (tradition == Versification.English
-                ? Closest(passage, [.. own, .. others], edition) ??
-                  Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true)
-                : ApartFromPieces(passage, own[0], edition) ??
-                  Closest(passage, [.. own, .. others], edition) ??
-                  Named(passage, own[0])));
+        IEnumerable<TvtmsRow> Choose(IReadOnlyList<TvtmsRow> passage)
+        {
+            (string Scheme, IEnumerable<TvtmsRow> Rows) choice =
+                Chosen(passage, supplements, edition, requireEvidence: true) ??
+                Chosen(passage, own, edition, requireEvidence: false) ??
+                Chosen(passage, others, edition, requireEvidence: true) ??
+                (tradition == Versification.English
+                    ? Closest(passage, [.. own, .. others], edition) ??
+                      (own[0], Named(passage, own[0]).Where(row => row.Tests?.FailsPieceExistence(edition) is not true))
+                    : (ApartFromPieces(passage, own[0], edition) is { } whole ? (own[0], whole) : ((string, IEnumerable<TvtmsRow>)?)null) ??
+                      Closest(passage, [.. own, .. others], edition) ??
+                      (own[0], Named(passage, own[0])));
+            var (scheme, rows) = choice;
+            if (decided is not null && passage.Any(row => row.Sources.Any(source => edition.Carries(source.Book))))
+            {
+                var taken = rows.ToList();
+                decided(new PassageDecision(
+                    passage.SelectMany(row => row.Sources).Select(source => source.ToString()).FirstOrDefault() ?? "-",
+                    scheme,
+                    [.. taken.Where(row => row.Tests?.Answer(edition) is true).Select(row => row.Written).Distinct()]));
+                return taken;
+            }
+
+            return rows;
+        }
+
+        if (decided is not null)
+        {
+            foreach (var (name, tests) in data.Editions.Matched(edition))
+            {
+                decided(new PassageDecision(name, VersificationData.EditionReadingsProduct, [tests]));
+            }
+        }
+
+        return Build(tradition, data.Editions.For(edition, Additions), Choose);
     }
 
     /// <summary>
@@ -309,7 +352,7 @@ internal sealed class VersificationRules(
     /// and needs no argument for it; another tradition's is taken only on the strength of a test
     /// that actually held.
     /// </param>
-    private IEnumerable<TvtmsRow>? Chosen(
+    private (string Scheme, IEnumerable<TvtmsRow> Rows)? Chosen(
         IReadOnlyList<TvtmsRow> passage,
         IReadOnlyList<string> schemes,
         EditionShape edition,
@@ -338,7 +381,7 @@ internal sealed class VersificationRules(
             most = held;
         }
 
-        return best is null ? null : Named(passage, best);
+        return best is null ? null : (best, Named(passage, best));
     }
 
     /// <summary>
@@ -362,7 +405,7 @@ internal sealed class VersificationRules(
     /// The scheme whose tests the edition answers most, counted as the rows that hold less the rows
     /// that fail, or null where no scheme has more of the one than the other.
     /// </summary>
-    private IEnumerable<TvtmsRow>? Closest(
+    private (string Scheme, IEnumerable<TvtmsRow> Rows)? Closest(
         IReadOnlyList<TvtmsRow> passage,
         IReadOnlyList<string> schemes,
         EditionShape edition)
@@ -381,7 +424,7 @@ internal sealed class VersificationRules(
             }
         }
 
-        return best is null ? null : Named(passage, best);
+        return best is null ? null : (best, Named(passage, best));
     }
 
     /// <summary>

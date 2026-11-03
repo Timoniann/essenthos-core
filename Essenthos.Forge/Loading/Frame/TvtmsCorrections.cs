@@ -45,6 +45,7 @@ internal static class TvtmsCorrections
                 Sources = [applied.Printed],
                 Standards = [applied.Standard],
                 Tests = applied.Tests is null ? row.Tests : VersificationTest.ParseAll(applied.Tests),
+                Written = applied.Tests ?? row.Written,
             };
     }
 

@@ -97,7 +97,7 @@ internal static class TvtmsSupplements
                              throw line.Fail(
                                  $"the tests \"{tests}\" say nothing this corpus can answer; write them as the " +
                                  "versification data does, as in Jer.30:33=Last");
-            passages[at].Rows.AddRange(Rows(line, scheme, line.Required("source"), line.Required("standard"), conditions));
+            passages[at].Rows.AddRange(Rows(line, scheme, line.Required("source"), line.Required("standard"), conditions, tests));
         }
 
         return [.. passages.Select(passage => new TvtmsSupplement(passage.Tradition, passage.Scheme, passage.Joins, passage.Rows))];
@@ -112,23 +112,24 @@ internal static class TvtmsSupplements
         string scheme,
         string printed,
         string standard,
-        VersificationConditions tests)
+        VersificationConditions tests,
+        string written)
     {
         var sources = References(line, printed);
         var standards = References(line, standard);
 
         if (sources.Count == standards.Count)
         {
-            return sources.Zip(standards, (source, target) => new TvtmsRow([scheme], [source], [target], tests));
+            return sources.Zip(standards, (source, target) => new TvtmsRow([scheme], [source], [target], tests) { Written = written });
         }
 
         if (sources.Count == 1)
         {
-            return [new TvtmsRow([scheme], sources, standards, tests)];
+            return [new TvtmsRow([scheme], sources, standards, tests) { Written = written }];
         }
 
         return standards.Count == 1
-            ? sources.Select(source => new TvtmsRow([scheme], [source], standards, tests))
+            ? sources.Select(source => new TvtmsRow([scheme], [source], standards, tests) { Written = written })
             : throw line.Fail(
                 $"it pairs {printed} with {standard}, which are neither the same length nor a single verse on " +
                 "either side; split it into rows that are");

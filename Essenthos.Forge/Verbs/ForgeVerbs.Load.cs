@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Products;
 using Essenthos.Core.Publishing;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
@@ -260,11 +261,76 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// The texts named (every text by default) placed in the frame: each one's frame file written from
+    /// its verses as they stand, and its rows of <c>verse_reference</c> filled from the file.
+    /// </summary>
     private static async Task<int> Reframe(ForgeRun forge, string[] args)
     {
         using var scope = forge.Scope();
-        await scope.ServiceProvider.GetRequiredService<DatasetLoader>().Reframe(CancellationToken.None);
+        await scope.ServiceProvider.GetRequiredService<DatasetLoader>().Reframe(Slugs(args), CancellationToken.None);
         return 0;
+    }
+
+    /// <summary>
+    /// The frame files of the texts named (every text by default), written from the verses of the
+    /// configured corpus or of <c>--database</c>, which is only read.
+    /// </summary>
+    private static async Task<int> FrameFiles(ForgeRun forge, string[] args)
+    {
+        var rules = Loading.Frame.TvtmsReader.Read(Configuration.ResourcePaths.File(forge.Resources, "Versification", "TVTMS.txt"));
+        var store = new ProductStore(forge.Resources);
+        await using var db = OnDatabase(forge, Option(args, "--database"));
+        var loader = new CanonicalFrameLoader(db, Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
+        var source = db.Database.GetDbConnection().Database;
+        var slugs = Slugs(args);
+
+        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        {
+            if ((slugs is not null && !slugs.Contains(text.Slug)) || !rules.Covers(text.Versification))
+            {
+                continue;
+            }
+
+            var framed = await loader.Framed(text, rules, CancellationToken.None);
+            CanonicalFrameLoader.Write(text, rules, store, framed, source);
+            Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
+                $"{text.Slug}\t{framed.Verses.Count} verses\t{framed.Rows.Count} lines\t{framed.Titles} title rows\t{store.RelativePath(Loading.Frame.FrameFile.Product(text.Slug), ProductKind.Machine)}"));
+        }
+
+        store.Save();
+        return 0;
+    }
+
+    /// <summary>Every text's rows of <c>verse_reference</c> filled from its frame file, in the configured corpus or <c>--database</c>.</summary>
+    private static async Task<int> FrameLoad(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(forge.Resources);
+        await using var db = OnDatabase(forge, Option(args, "--database"));
+        var loader = new CanonicalFrameLoader(db, forge.Logger is ILogger<CanonicalFrameLoader> typed
+            ? typed
+            : Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
+        var slugs = Slugs(args);
+
+        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        {
+            if ((slugs is not null && !slugs.Contains(text.Slug)) || !store.Exists(Loading.Frame.FrameFile.Product(text.Slug)))
+            {
+                continue;
+            }
+
+            Console.WriteLine(await loader.Fill(text, store));
+        }
+
+        return 0;
+    }
+
+    /// <summary>The texts named before the first option, or null for every text.</summary>
+    private static HashSet<string>? Slugs(string[] args)
+    {
+        var named = args.Skip(1).TakeWhile(arg => !arg.StartsWith("--", StringComparison.Ordinal))
+            .SelectMany(arg => arg.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return named.Count == 0 ? null : named;
     }
 
     /// <summary>
