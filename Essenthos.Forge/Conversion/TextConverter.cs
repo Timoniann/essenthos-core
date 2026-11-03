@@ -148,6 +148,22 @@ internal static class TextConverter
         return text;
     }
 
+    /// <summary>
+    /// Each verse's length as the frame's rules read it: the characters of its words' surfaces, trailers left out,
+    /// as <see cref="CanonicalFrameLoader"/> counts them in the database. One pass over the words product.
+    /// </summary>
+    public static Dictionary<VerseKey, int> Lengths(ProductStore store, string slug)
+    {
+        var lengths = new Dictionary<VerseKey, int>();
+        using var reader = store.Open(TextWord.ProductOf(slug), TextWord.Schema(slug));
+        foreach (var word in reader.Rows())
+        {
+            lengths[word.Key.Verse] = lengths.GetValueOrDefault(word.Key.Verse) + word.Surface.Length;
+        }
+
+        return lengths;
+    }
+
     private static Dictionary<WordKey, long> Ids(ProductStore store, string slug)
     {
         if (!store.Exists(TextWordId.ProductOf(slug)))

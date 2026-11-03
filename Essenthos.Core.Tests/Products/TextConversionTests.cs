@@ -88,6 +88,7 @@ public sealed class TextConversionTests : IDisposable
         words[0].Normalised.Should().Be("in");
         words[^1].Key.Own.Should().Be("1.1:2.6");
         Manifest(store).Select(v => (v.Own.ToString(), v.Sequence, v.Words)).Should().Equal(("1.1:1", 1, 10), ("1.1:2", 2, 6));
+        TextConverter.Lengths(store, Slug)[VerseKey.Parse("1.1:2")].Should().Be(26, "the frame reads a verse's letters, trailers left out");
     }
 
     [Fact]
