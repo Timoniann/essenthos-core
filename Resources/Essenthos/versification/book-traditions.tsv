@@ -1,0 +1,41 @@
+# Books an edition numbers in another tradition than the rest of it, or in none the versification data
+# describes. A book not listed is numbered in its edition's own tradition.
+#
+# Columns, tab-separated:
+#   text       the text's slug
+#   book       the book, by the versification data's book code (Psa, 1Ki, Tob, ...)
+#   tradition  the tradition the book is numbered in: original, english, septuagint, vulgate; or unknown,
+#              where the data has no column for its numbering and the book stands at its own numbers
+#   why        what was read to say so
+#
+# NPU2022: the Open New Ukrainian Translation numbers the Psalms as the Greek does, as its note on
+# Psalm 9 says ("we use the numbering by the Greek translation that the Ukrainian reader is used to"):
+# its Psalm 22 is the Hebrew's 23, and it counts the titles as verses. Everything else it numbers as
+# the Hebrew and the English do. Placed by the Hebrew's rules throughout, each of its psalms from the
+# tenth on stood at the psalm before.
+#
+# RUSV: the Synodal's books beyond the canon come from Russian Wikisource in the Synodal's own
+# numbering, which the versification data has no column for. Its tests take them for the Latin wherever
+# a chapter happens to count as the Latin's does (the Synodal's Wisdom 5 has the Latin's twenty-four
+# verses and divides them as the King James does), so they stand at their own numbers. Baruch, the
+# Letter of Jeremiah and Maccabees, which were read verse by verse, are placed.
+#
+# CSLELIZABETH: the Elizabeth Bible numbers the same books the Synodal's way, and the data has no column
+# for it either. It numbers the Septuagint's way everywhere else except in 1 Kings and Malachi, where it
+# divides the chapters as the King James does: placed by the Greek's rules there, 1 Kings 5 stood at the
+# Greek's chapter 4 and Malachi 4:4 at 4:5, against the Synodal's words.
+text	book	tradition	why
+NPU2022	Psa	septuagint	its note on Psalm 9 says it numbers the Psalms as the Greek does, and it counts the titles as verses
+RUSV	1Es	unknown	from Russian Wikisource in the Synodal's own numbering, which the data has no column for
+RUSV	2Es	unknown	as 1 Esdras
+RUSV	Tob	unknown	as 1 Esdras
+RUSV	Jdt	unknown	as 1 Esdras
+RUSV	Sir	unknown	as 1 Esdras
+RUSV	Wis	unknown	as 1 Esdras; its Wisdom 5 has the Latin's twenty-four verses and divides them as the King James does, so the tests took it for the Latin
+CSLELIZABETH	1Ki	english	divides the chapters as the King James does: placed by the Greek's rules, 1 Kings 5 stood at the Greek's chapter 4
+CSLELIZABETH	Mal	english	divides the chapters as the King James does: placed by the Greek's rules, Malachi 4:4 stood at 4:5
+CSLELIZABETH	1Es	unknown	numbered the Synodal's way, which the data has no column for
+CSLELIZABETH	Tob	unknown	as 1 Esdras
+CSLELIZABETH	Jdt	unknown	as 1 Esdras
+CSLELIZABETH	Sir	unknown	as 1 Esdras
+CSLELIZABETH	Wis	unknown	as 1 Esdras

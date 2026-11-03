@@ -1,0 +1,55 @@
+# Rows of the versification data (TVTMS, Resources/Versification/TVTMS.txt) that the texts themselves
+# contradict, and where the texts put those verses instead. These are Essenthos's, not Tyndale House's.
+#
+# Each row replaces one row of the data's expanded section, and only while that row still says what it
+# was found saying: the row whose scheme is `scheme`, whose source verse is `data-source` and whose
+# standard verse is `data-standard`, with no other scheme, source or standard on it. A release of the
+# data that corrects the rule, or changes it, is then taken as it stands. A row serving several schemes
+# is never corrected, because the correction is about one scheme and would silently move the others.
+#
+# Columns, tab-separated:
+#   scheme         the data's numbering scheme the row is about, as the data names it (Greek, Latin, ...)
+#   data-source    the verse as the data's row names it
+#   data-standard  where the data's row places it
+#   source         where that scheme prints the verse; differs from data-source only where the row
+#                  names the wrong one
+#   standard       where its words place it, in the data's standard numbering (S3Y.1:n is the Song of
+#                  the Three, which the frame holds in Daniel 3 after the chapter's thirty verses)
+#   tests          the row's tests restated for the verse it now names, in the data's own form; '-' keeps
+#                  the row's own
+#   why            what the texts were read to say
+#
+# Malachi: the Septuagint ends Malachi with Elijah, the turning of hearts, and then the law of Moses,
+# which the Hebrew puts first. Brenton prints them as 3:22, 3:23 and 3:24, and Swete as 4:4, 4:5 and
+# 4:6, both in that order. The data's expanded rows for both schemes place each verse where the next one
+# belongs (the inverse of the reordering), so every row of the reader showed the Greek of another verse
+# beside the Hebrew and the English. Its own condensed table for the 3:22 scheme says what the words say.
+#
+# Jeremiah: the Greek of Jeremiah prints the oracle against Ammon as 30:1-5, before Kedar at 30:6-11
+# and Damascus at 30:12-16. The data's Greek column names it 30:17-21 while testing that the chapter
+# ends at 30:16, which no edition can satisfy, so the scheme failed for the one edition it was written
+# for and Swete's Ammon stood beside the Hebrew of Jeremiah 30.
+#
+# Song of the Three: the data's Greek and Latin columns place Daniel 3:77 at the seas and 3:78 at the
+# springs, and its Greek column 3:80 at the beasts and 3:81 at the birds, where its Latin column has them
+# the other way round. Swete, the Clementine, the Douay and the Ge'ez print the springs before the seas,
+# and every edition here, Brenton's included, the birds before the beasts, which is the order the
+# standard's own verses have.
+scheme	data-source	data-standard	source	standard	tests	why
+Greek	Mal.4:4	Mal.4:6	Mal.4:4	Mal.4:5	-	Swete's 4:4 is Elijah, which the Hebrew and the English print as 4:5; the data places it where the turning of hearts belongs
+Greek	Mal.4:5	Mal.4:4	Mal.4:5	Mal.4:6	-	Swete's 4:5 is the turning of hearts, the standard's 4:6; the data places it where the law of Moses belongs
+Greek	Mal.4:6	Mal.4:5	Mal.4:6	Mal.4:4	-	Swete's 4:6 is the law of Moses, the standard's 4:4; the data places it where Elijah belongs
+Greek2	Mal.3:22	Mal.4:6	Mal.3:22	Mal.4:5	-	Brenton's 3:22 is Elijah, the standard's 4:5; the data places it where the turning of hearts belongs, against its own condensed table
+Greek2	Mal.3:23	Mal.4:4	Mal.3:23	Mal.4:6	-	Brenton's 3:23 is the turning of hearts, the standard's 4:6; the data places it where the law of Moses belongs
+Greek2	Mal.3:24	Mal.4:5	Mal.3:24	Mal.4:4	-	Brenton's 3:24 is the law of Moses, the standard's 4:4; the data places it where Elijah belongs
+Greek	Jer.30:17	Jer.49:1	Jer.30:1	Jer.49:1	Jer.30:1=Exist & Jer.30:16=Last & Jer.25:19=Last	the Greek prints the oracle against Ammon as 30:1-5; the data names it 30:17-21 while testing that the chapter ends at 30:16
+Greek	Jer.30:18	Jer.49:2	Jer.30:2	Jer.49:2	Jer.30:2=Exist & Jer.30:16=Last & Jer.25:19=Last	Ammon, as 30:17 above
+Greek	Jer.30:19	Jer.49:3	Jer.30:3	Jer.49:3	Jer.30:3=Exist & Jer.30:16=Last & Jer.25:19=Last	Ammon, as 30:17 above
+Greek	Jer.30:20	Jer.49:4	Jer.30:4	Jer.49:4	Jer.30:4=Exist & Jer.30:16=Last & Jer.25:19=Last	Ammon, as 30:17 above
+Greek	Jer.30:21	Jer.49:5	Jer.30:5	Jer.49:5	Jer.30:5=Exist & Jer.30:16=Last & Jer.25:19=Last	Ammon, as 30:17 above
+Greek	Dan.3:77	S3Y.1:56	Dan.3:77	S3Y.1:55	-	Swete and the Ge'ez print the springs before the seas; the data's Greek column places 3:77 at the seas
+Greek	Dan.3:78	S3Y.1:55	Dan.3:78	S3Y.1:56	-	the seas after the springs, as 3:77 above
+Latin	Dan.3:77	S3Y.1:56	Dan.3:77	S3Y.1:55	-	the Clementine and the Douay print the springs before the seas; the data places 3:77 at the seas
+Latin	Dan.3:78	S3Y.1:55	Dan.3:78	S3Y.1:56	-	the seas after the springs, as 3:77 above
+Greek	Dan.3:80	S3Y.1:59	Dan.3:80	S3Y.1:58	-	every Greek edition here prints the birds before the beasts, as the standard's own verses have them; the data's Greek column places 3:80 at the beasts
+Greek	Dan.3:81	S3Y.1:58	Dan.3:81	S3Y.1:59	-	the beasts after the birds, as 3:80 above

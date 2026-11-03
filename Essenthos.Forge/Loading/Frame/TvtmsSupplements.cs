@@ -15,404 +15,18 @@ internal sealed record TvtmsSupplement(
 
 /// <summary>
 /// Passages an edition in the corpus numbers in a way none of the versification data's schemes
-/// describes, written down in the data's own form: the edition's verse, where its words stand, and
-/// the tests that tell that edition apart. These are this project's, not Tyndale House's, and each
-/// was read verse against verse before it was written.
+/// describes, written down in the data's own form in <c>Resources/Essenthos/versification/supplements.tsv</c>:
+/// the edition's verse, where its words stand, the tests that tell that edition apart, and what was
+/// read. These are this project's, not Tyndale House's.
 ///
 /// A supplement is only ever taken for an edition that answers every one of its tests, and then it
 /// is taken in preference to the data's schemes for the passage it joins, because the tests were
 /// written to recognise that one edition. An edition the tests do not describe is placed exactly as
 /// before.
-///
-/// <para>
-/// Brenton divides the Septuagint's Jeremiah as no other edition does. Its chapter 30 runs Edom
-/// (30:1-16), Ammon (30:17-21), Kedar (30:23-28) and Damascus (30:29-33); it ends Elam at 25:20 with
-/// the date the Hebrew puts first; and it prints the cup of wrath as 32:15-38 under the Hebrew's own
-/// verse numbers. The data's two Greek schemes each describe one of those and fail the other.
-/// </para>
-/// <para>
-/// Both editions print Agur's sayings and Lemuel's mother's in chapter 24 of Proverbs, where the
-/// Septuagint puts them, and number them onward from there rather than under the Hebrew's numbers
-/// as Rahlfs does; Swete also numbers the chapters around them straight through past the verses the
-/// Septuagint leaves out. The data has no Greek rule for any of it.
-/// </para>
-/// <para>
-/// Brenton divides Leviticus 8:18-21 and 8:30 differently from every other text, so its verses
-/// 8:19-29 each stand one before the words they carry.
-/// </para>
-/// <para>
-/// Swete prints 2 Samuel 19 under the English numbers, which the Greek scheme's tests do not
-/// recognise; and it prints the altar on Ebal as Joshua 9:3-8 where the
-/// Hebrew has it as 8:30-35, numbering the Gibeonites on from 9:9. At the end of Joshua it keeps the
-/// Septuagint's order under the Hebrew's verse numbers, which the data's tests cannot tell apart
-/// from Brenton's renumbering of the same three verses.
-/// </para>
-/// <para>
-/// Both Greek editions list the unclean birds of Leviticus 11:13-19 in their own order: the ostrich,
-/// the owl and the gull come before the raven, which the Hebrew names first. Brenton prints them as
-/// 11:15 and puts the raven with the hawk in 11:16, which stands with them at 11:16 and covers the
-/// Hebrew's raven as well; Swete prints no raven at all. The chapters count the same, so no scheme
-/// notices.
-/// </para>
-/// <para>
-/// The Reina-Valera of 1909, as eBible publishes it, follows the Spanish division where the Spanish
-/// runs ahead of the English — a chapter that opens one to three verses earlier, as the Hebrew and
-/// the Latin do — but it is numbered to the English count: the verse the Spanish moved away is left
-/// empty, every verse after it stands one to three places early, and the chapter's last verse holds
-/// what the count had no room for. Its Job 39:30 carries the English 39:27 to 40:5. The data's own
-/// Spanish column for Job says the same of the printed edition.
-/// </para>
-/// <para>
-/// Kulish's Bible of 1903 divides forty-odd chapters in its own way: it runs two verses into one at a
-/// chapter's end, opens Genesis 3 with what the English prints as two verses, gives the Hebrew's
-/// order of Leviticus 5-6 and Job 39-41 a division of its own, prints the titles of Psalm 60 as two
-/// verses of their own and swaps the weeping and the rallying at Judges 20:22-23. Where its verse
-/// merely starts half a line before the English one, it is left where it stands.
-/// </para>
-/// <para>
-/// The Synodal, as bible4u publishes it, is renumbered to the English chapters and verse counts, and
-/// in a few chapters keeps its own division inside them: Song of Songs 1 opens with <em>let him kiss
-/// me</em>, which the English numbers 1:2, and divides the last verse in two; Psalm 90 prints its
-/// title as a verse of its own and joins the flood and the grass; Isaiah 3 lists the ornaments in
-/// fewer verses and divides the last; Esther 1 and Revelation 20 divide a verse where the English
-/// does not.
-/// </para>
-/// <para>
-/// Ohienko's Bible, as bible4u publishes it, is renumbered to the English everywhere but Psalm 65,
-/// where it keeps its own edition's numbering: the title is verse 1, printed with the opening words of
-/// Psalm 66 as Ukrainian Wikisource's transcription of the same edition prints them too, and the psalm
-/// runs one verse behind the English until its last verse holds the English 65:12 and 65:13.
-/// </para>
-/// <para>
-/// The Segond of 1910 numbers the Old Testament as the Hebrew does and its psalm titles as their
-/// first verses, except in two places it divides in its own way. At the end of Job it runs Job 38
-/// three verses short, opens chapter 39 with the lion and the raven, closes it with the first five
-/// verses of the Lord's second speech, and splits the Hebrew's 40:25-41:26 into 40:20-28 and 41:1-25;
-/// Clear Bible's hand-made alignment of it, which pairs its words with the Hebrew's, says the same of
-/// every verse it covers. And it closes Ecclesiastes 11 at verse 8, opening chapter 12 with
-/// "Rejoice, O young man".
-/// </para>
-/// <para>
-/// Brenton's English, as eBible publishes it, numbers Nehemiah 4 as the English Bibles do where his
-/// Greek numbers it as the Hebrew, and like the Greek it has no verse 6. The data measures that very
-/// verse to tell its schemes apart, so none of them answers and the edition fell back to the Greek
-/// scheme, a chapter's worth of verses six places out.
-/// </para>
 /// </summary>
 internal static class TvtmsSupplements
 {
-    private const string Brenton = "Brenton";
-
-    private const string Swete = "Swete";
-
-    private const string ReinaValera = "ReinaValera1909";
-
-    private const string Kulish = "Kulish";
-
-    private const string Synodal = "Synodal1876";
-
-    private const string Ohienko = "Ohienko1962";
-
-    private const string Segond = "Segond1910";
-
-    private const string BrentonEnglish = "BrentonEnglish";
-
-    private const string BrentonJeremiah = "Jer.30:33=Last & Jer.25:20=Last";
-
-    private const string BrentonLeviticus = "Lev.8:30<Lev.8:29";
-
-    private const string SweteProverbs = "Pro.24:77=Last";
-
-    private const string SweteJoshua = "Jos.8:29=Last & Jos.9:33=Last";
-
-    /// <summary>
-    /// The verse eBible's Reina-Valera leaves empty at the start of Jonah's prayer, which no other
-    /// edition in the corpus lacks: it tells the file apart wherever a passage's own tests would also
-    /// describe a Bible that simply follows the Hebrew.
-    /// </summary>
-    private const string ReinaValeraEdition = "Jon.1:17=NotExist";
-
-    /// <summary>Kulish's Genesis 3, which ends at verse 23 and in no other edition here.</summary>
-    private const string KulishEdition = "Gen.3:23=Last";
-
-    /// <summary>
-    /// The Synodal's last verse of Song of Songs 1, <em>the rafters of fir</em>, printed apart from
-    /// <em>the beams of our house are cedar</em>, which no other edition here does.
-    /// </summary>
-    private const string SynodalEdition = "Sng.1:16*2<Sng.1:15";
-
-    /// <summary>
-    /// Ohienko's last verse of Psalm 65, which holds the English 65:12 and 65:13 together and is more
-    /// than twice the verse before it, as in no other edition here.
-    /// </summary>
-    private const string OhienkoEdition = "Psa.65:12*2<Psa.65:13";
-
-    private static readonly Dictionary<string, Versification> Traditions = new()
-    {
-        [Brenton] = Versification.Septuagint,
-        [Swete] = Versification.Septuagint,
-        [ReinaValera] = Versification.English,
-        [Kulish] = Versification.English,
-        [Synodal] = Versification.English,
-        [Ohienko] = Versification.English,
-        [Segond] = Versification.Original,
-        [BrentonEnglish] = Versification.Septuagint,
-    };
-
-    public static IReadOnlyList<TvtmsSupplement> All { get; } =
-    [
-        Passage(Brenton, "Jer.49:1", BrentonJeremiah,
-            ("Jer.30:17-21", "Jer.49:1-5"),
-            ("Jer.30:1-16", "Jer.49:7-22"),
-            ("Jer.30:29-33", "Jer.49:23-27"),
-            ("Jer.30:23-28", "Jer.49:28-33"),
-            ("Jer.25:14", "Jer.49:34"),
-            ("Jer.25:15-19", "Jer.49:35-39"),
-            ("Jer.25:20", "Jer.49:34")),
-        Passage(Brenton, "Jer.25:15", "Jer.32:38=Last & Jer.25:20=Last",
-            ("Jer.32:15-38", "Jer.25:15-38")),
-        Passage(Brenton, null, "Pro.24:62=Last",
-            ("Pro.24:35-53", "Pro.30:15-33"),
-            ("Pro.24:54-62", "Pro.31:1-9")),
-        Passage(Brenton, null, BrentonLeviticus,
-            ("Lev.8:18", "Lev.8:18-19"),
-            ("Lev.8:19", "Lev.8:20-21"),
-            ("Lev.8:20", "Lev.8:21"),
-            ("Lev.8:21-28", "Lev.8:22-29"),
-            ("Lev.8:29-30", "Lev.8:30")),
-        Passage(Swete, "Pro.18:23", SweteProverbs,
-            ("Pro.18:23", "Pro.19:3"),
-            ("Pro.19:1-26", "Pro.19:4-29")),
-        Passage(Swete, "Pro.20:20", SweteProverbs,
-            ("Pro.20:10-12", "Pro.20:20-22"),
-            ("Pro.20:13-16", "Pro.20:10-13"),
-            ("Pro.20:17-24", "Pro.20:23-30")),
-        Passage(Swete, null, SweteProverbs,
-            ("Pro.24:24-37", "Pro.30:1-14"),
-            ("Pro.24:38-49", "Pro.24:23-34"),
-            ("Pro.24:50-68", "Pro.30:15-33"),
-            ("Pro.24:69-77", "Pro.31:1-9"),
-            ("Pro.29:28-42", "Pro.31:10-24"),
-            ("Pro.29:43", "Pro.31:26"),
-            ("Pro.29:44", "Pro.31:25"),
-            ("Pro.29:45-49", "Pro.31:27-31")),
-        Passage(Swete, "2Sa.19:1", "2Sa.18:33=Last & 2Sa.19:43=Last",
-            ("2Sa.18:33", "2Sa.18:33"),
-            ("2Sa.19:1-43", "2Sa.19:1-43")),
-        Passage(Swete, "Jos.8:30", SweteJoshua,
-            ("Jos.9:3-8", "Jos.8:30-35"),
-            ("Jos.9:9-27", "Jos.9:3-21")),
-        Passage(Swete, "Jos.9:27", SweteJoshua,
-            ("Jos.9:28-33", "Jos.9:22-27")),
-        Passage(Swete, "Jos.24:29", "Jos.24:30.2=Exist & Jos.24:33.1=Exist",
-            ("Jos.24:29-31", "Jos.24:29-31")),
-        Passage(Brenton, null, $"Lev.11:15<Lev.11:16 & {BrentonLeviticus}",
-            ("Lev.11:15", "Lev.11:16"),
-            ("Lev.11:16", "Lev.11:16; 11:15")),
-        Passage(Swete, null, $"Lev.11:16<Lev.11:15 & {SweteProverbs}",
-            ("Lev.11:15-16", "Lev.11:16")),
-        .. ReinaValeraPassages,
-        .. KulishPassages,
-        .. SynodalPassages,
-        Passage(Ohienko, "Psa.65:1", OhienkoEdition,
-            ("Psa.65:1", "Psa.65:Title"),
-            ("Psa.65:2-12", "Psa.65:1-11"),
-            ("Psa.65:13", "Psa.65:12-13")),
-        .. SegondPassages,
-        Passage(BrentonEnglish, "Neh.4:1", "Neh.3:32=Last & Neh.4:23=Last & Neh.4:6=NotExist",
-            ("Neh.3:32", "Neh.3:32"),
-            ("Neh.4:1-5", "Neh.4:1-5"),
-            ("Neh.4:7-23", "Neh.4:7-23")),
-    ];
-
-    private static IEnumerable<TvtmsSupplement> ReinaValeraPassages =>
-    [
-        Passage(ReinaValera, "Num.12:16", $"{ReinaValeraEdition} & Num.12:16=NotExist & Num.13:33=Last",
-            ("Num.13:1", "Num.12:16"),
-            ("Num.13:2-32", "Num.13:1-31"),
-            ("Num.13:33", "Num.13:32-33")),
-        Passage(ReinaValera, "Num.29:40", $"{ReinaValeraEdition} & Num.29:40=NotExist & Num.30:16=Last",
-            ("Num.30:1", "Num.29:40"),
-            ("Num.30:2-15", "Num.30:1-14"),
-            ("Num.30:16", "Num.30:15-16")),
-        Passage(ReinaValera, null, $"{ReinaValeraEdition} & Jdg.14:19<Jdg.14:18",
-            ("Jdg.14:19", "Jdg.14:18"),
-            ("Jdg.14:20", "Jdg.14:19-20")),
-        Passage(ReinaValera, "1Sa.23:29", $"{ReinaValeraEdition} & 1Sa.23:29=NotExist & 1Sa.24:22=Last",
-            ("1Sa.24:1", "1Sa.23:29"),
-            ("1Sa.24:2-21", "1Sa.24:1-20"),
-            ("1Sa.24:22", "1Sa.24:21-22")),
-        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 2Sa.20:26=NotExist & 2Sa.20:25=Last",
-            ("2Sa.20:25", "2Sa.20:25-26")),
-        Passage(ReinaValera, "1Ki.22:43", $"{ReinaValeraEdition} & 1Ki.22:53=Last & 1Ki.22:45<1Ki.22:44",
-            ("1Ki.22:44", "1Ki.22:43"),
-            ("1Ki.22:45-52", "1Ki.22:44-51"),
-            ("1Ki.22:53", "1Ki.22:52-53")),
-        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 1Ch.1:32<1Ch.1:31",
-            ("1Ch.1:30", "1Ch.1:30-31"),
-            ("1Ch.1:31-32", "1Ch.1:32")),
-        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 1Ch.21:28<1Ch.21:27",
-            ("1Ch.21:16", "1Ch.21:15"),
-            ("1Ch.21:17-29", "1Ch.21:16-28"),
-            ("1Ch.21:30", "1Ch.21:29-30")),
-        Passage(ReinaValera, null, $"{ReinaValeraEdition} & 2Ch.33:25=NotExist & 2Ch.33:24=Last",
-            ("2Ch.33:10", "2Ch.33:10-11"),
-            ("2Ch.33:11-24", "2Ch.33:12-25")),
-        Passage(ReinaValera, null, $"{ReinaValeraEdition} & Job.35:16=NotExist & Job.35:15=Last",
-            ("Job.35:15", "Job.35:15-16")),
-        Passage(ReinaValera, "Job.38:39",
-            $"{ReinaValeraEdition} & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last",
-            ("Job.39:1-3", "Job.38:39-41"),
-            ("Job.39:4-29", "Job.39:1-26"),
-            ("Job.39:30", "Job.39:27-30; 40:1-5"),
-            ("Job.40:1-19", "Job.40:6-24")),
-        Passage(ReinaValera, "Hos.11:12", $"{ReinaValeraEdition} & Hos.11:12=NotExist & Hos.12:14=Last",
-            ("Hos.12:1", "Hos.11:12"),
-            ("Hos.12:2-13", "Hos.12:1-12"),
-            ("Hos.12:14", "Hos.12:13-14")),
-        Passage(ReinaValera, "Jon.1:17", $"{ReinaValeraEdition} & Jon.2:10=Last",
-            ("Jon.2:1", "Jon.1:17"),
-            ("Jon.2:2-9", "Jon.2:1-8"),
-            ("Jon.2:10", "Jon.2:9-10")),
-    ];
-
-    private static IEnumerable<TvtmsSupplement> KulishPassages =>
-    [
-        Passage(Kulish, "Gen.3:1", KulishEdition,
-            ("Gen.3:1", "Gen.3:1-2"),
-            ("Gen.3:2-23", "Gen.3:3-24")),
-        Passage(Kulish, null, $"{KulishEdition} & Gen.6:21=Last",
-            ("Gen.6:20", "Gen.6:20-21"),
-            ("Gen.6:21", "Gen.6:22")),
-        Passage(Kulish, null, $"{KulishEdition} & Gen.48:21=Last",
-            ("Gen.48:21", "Gen.48:21-22")),
-        Passage(Kulish, "Lev.6:1", $"{KulishEdition} & Lev.5:27=Last & Lev.6:22=Last",
-            ("Lev.5:20-24", "Lev.6:1-5"),
-            ("Lev.5:25", "Lev.6:5"),
-            ("Lev.5:26-27", "Lev.6:6-7"),
-            ("Lev.6:1-21", "Lev.6:8-28"),
-            ("Lev.6:22", "Lev.6:29-30")),
-        Passage(Kulish, null, $"{KulishEdition} & Lev.14:55=Last",
-            ("Lev.14:54", "Lev.14:54-55"),
-            ("Lev.14:55", "Lev.14:56-57")),
-        Passage(Kulish, null, $"{KulishEdition} & Lev.17:15=Last",
-            ("Lev.17:15", "Lev.17:15-16")),
-        Passage(Kulish, null, $"{KulishEdition} & Num.8:25=Last",
-            ("Num.8:25", "Num.8:25-26")),
-        Passage(Kulish, null, $"{KulishEdition} & Num.14:44=Last",
-            ("Num.14:44", "Num.14:44-45")),
-        Passage(Kulish, null, $"{KulishEdition} & Num.15:40=Last",
-            ("Num.15:40", "Num.15:40-41")),
-        Passage(Kulish, "Num.20:29", $"{KulishEdition} & Num.20:28=Last",
-            ("Num.20:28", "Num.20:28-29")),
-        Passage(Kulish, null, $"{KulishEdition} & Num.23:31=Last",
-            ("Num.23:18", "Num.23:17"),
-            ("Num.23:19-31", "Num.23:18-30")),
-        Passage(Kulish, null, $"{KulishEdition} & Num.25:17=Last",
-            ("Num.25:17", "Num.25:17-18")),
-        Passage(Kulish, null, $"{KulishEdition} & Num.27:22=Last",
-            ("Num.27:22", "Num.27:22-23")),
-        Passage(Kulish, null, $"{KulishEdition} & Deu.16:21=Last",
-            ("Deu.16:21", "Deu.16:21-22")),
-        Passage(Kulish, "Deu.24:22", $"{KulishEdition} & Deu.24:21=Last",
-            ("Deu.24:21", "Deu.24:21-22")),
-        Passage(Kulish, null, $"{KulishEdition} & Deu.27:7*2<Deu.27:8",
-            ("Deu.27:7", "Deu.27:6"),
-            ("Deu.27:8", "Deu.27:7-8")),
-        Passage(Kulish, "Deu.29:1", $"{KulishEdition} & Deu.28:69=Last & Deu.29:29=Last",
-            ("Deu.28:69", "Deu.29:1"),
-            ("Deu.29:1-2", "Deu.29:2")),
-        Passage(Kulish, null, $"{KulishEdition} & Deu.32:51=Last",
-            ("Deu.32:51", "Deu.32:51-52")),
-        Passage(Kulish, null, $"{KulishEdition} & Deu.34:11=Last",
-            ("Deu.34:11", "Deu.34:11-12")),
-        Passage(Kulish, null, $"{KulishEdition} & Jdg.20:22>Jdg.20:23",
-            ("Jdg.20:22", "Jdg.20:23"),
-            ("Jdg.20:23", "Jdg.20:22")),
-        Passage(Kulish, null, $"{KulishEdition} & 2Sa.2:33=Last",
-            ("2Sa.2:5", "2Sa.2:4"),
-            ("2Sa.2:6-33", "2Sa.2:5-32")),
-        Passage(Kulish, null, $"{KulishEdition} & Est.1:7*2<Est.1:8",
-            ("Est.1:7", "Est.1:6"),
-            ("Est.1:8", "Est.1:7-8")),
-        Passage(Kulish, null, $"{KulishEdition} & Job.21:33=Last",
-            ("Job.21:32", "Job.21:32-33"),
-            ("Job.21:33", "Job.21:34")),
-        Passage(Kulish, "Job.38:39", $"{KulishEdition} & Job.39:35=Last & Job.40:27=Last & Job.41:26=Last",
-            ("Job.39:31-35", "Job.40:1-5"),
-            ("Job.40:1-19", "Job.40:6-24"),
-            ("Job.40:20-27", "Job.41:1-8"),
-            ("Job.41:1-26", "Job.41:9-34")),
-        Passage(Kulish, "Psa.13:5", $"{KulishEdition} & Psa.13:5=Last",
-            ("Psa.13:5", "Psa.13:5-6")),
-        Passage(Kulish, "Psa.24:1", $"{KulishEdition} & Psa.24:9=Last",
-            ("Psa.24:9", "Psa.24:9-10")),
-        Passage(Kulish, "Psa.29:11", $"{KulishEdition} & Psa.29:10=Last",
-            ("Psa.29:7", "Psa.29:7-8"),
-            ("Psa.29:8-10", "Psa.29:9-11")),
-        Passage(Kulish, "Psa.54:7", $"{KulishEdition} & Psa.54:6=Last",
-            ("Psa.54:4", "Psa.54:4-5"),
-            ("Psa.54:5-6", "Psa.54:6-7")),
-        Passage(Kulish, "Psa.60:1", $"{KulishEdition} & Psa.60:14=Last",
-            ("Psa.60:1-2", "Psa.60:Title"),
-            ("Psa.60:3-14", "Psa.60:1-12")),
-        Passage(Kulish, "Psa.89:52", $"{KulishEdition} & Psa.89:51=Last",
-            ("Psa.89:51", "Psa.89:51-52")),
-        Passage(Kulish, "Psa.106:48", $"{KulishEdition} & Psa.106:47=Last",
-            ("Psa.106:47", "Psa.106:47-48")),
-        Passage(Kulish, null, $"{KulishEdition} & Psa.127:6=Last",
-            ("Psa.127:6", "Psa.127:5")),
-        Passage(Kulish, null, $"{KulishEdition} & Pro.30:32=Last",
-            ("Pro.30:30", "Pro.30:30-31"),
-            ("Pro.30:31-32", "Pro.30:32-33")),
-        Passage(Kulish, null, $"{KulishEdition} & Isa.3:20*2<Isa.3:19",
-            ("Isa.3:19", "Isa.3:19-20"),
-            ("Isa.3:20-21", "Isa.3:21-22"),
-            ("Isa.3:22", "Isa.3:22")),
-        Passage(Kulish, "Isa.9:21", $"{KulishEdition} & Isa.9:22=Last",
-            ("Isa.9:22", "Isa.9:21")),
-        Passage(Kulish, null, $"{KulishEdition} & Php.3:20=Last",
-            ("Php.3:20", "Php.3:20-21")),
-        Passage(Kulish, null, $"{KulishEdition} & Phm.1:24=Last",
-            ("Phm.1:23", "Phm.1:23-24"),
-            ("Phm.1:24", "Phm.1:25")),
-    ];
-
-    private static IEnumerable<TvtmsSupplement> SynodalPassages =>
-    [
-        Passage(Synodal, "Sng.1:2", SynodalEdition,
-            ("Sng.1:1-15", "Sng.1:2-16"),
-            ("Sng.1:16-17", "Sng.1:17")),
-        Passage(Synodal, "Psa.90:1", $"{SynodalEdition} & Psa.90:1*2<Psa.90:3",
-            ("Psa.90:1-2", "Psa.90:1"),
-            ("Psa.90:3-5", "Psa.90:2-4"),
-            ("Psa.90:6", "Psa.90:5-6")),
-        Passage(Synodal, null, $"{SynodalEdition} & Est.1:7*2<Est.1:8",
-            ("Est.1:7", "Est.1:6"),
-            ("Est.1:8", "Est.1:7-8")),
-        Passage(Synodal, null, $"{SynodalEdition} & Isa.3:20*2<Isa.3:19",
-            ("Isa.3:19", "Isa.3:19-20"),
-            ("Isa.3:20-24", "Isa.3:21-25"),
-            ("Isa.3:25-26", "Isa.3:26")),
-        Passage(Synodal, null, $"{SynodalEdition} & Rev.20:8*2<Rev.20:7",
-            ("Rev.20:7", "Rev.20:7-8"),
-            ("Rev.20:8-9", "Rev.20:9")),
-    ];
-
-    private static IEnumerable<TvtmsSupplement> SegondPassages =>
-    [
-        Passage(Segond, "Job.38:39", "Job.39:38=Last & Job.40:28=Last & Job.41:25=Last",
-            ("Job.39:1-3", "Job.38:39-41"),
-            ("Job.39:4-33", "Job.39:1-30"),
-            ("Job.39:34-38", "Job.40:1-5"),
-            ("Job.40:1-19", "Job.40:6-24"),
-            ("Job.40:20-27", "Job.41:1-8"),
-            ("Job.40:28", "Job.41:9"),
-            ("Job.41:1-25", "Job.41:10-34")),
-        Passage(Segond, null, "Ecc.11:8=Last & Ecc.12:16=Last",
-            ("Ecc.12:1-2", "Ecc.11:9-10"),
-            ("Ecc.12:3-16", "Ecc.12:1-14")),
-    ];
+    public static IReadOnlyList<TvtmsSupplement> All { get; } = Read();
 
     public static IReadOnlyList<string> Schemes(Versification tradition) =>
     [
@@ -447,22 +61,48 @@ internal static class TvtmsSupplements
         return joined;
     }
 
-    private static TvtmsSupplement Passage(
-        string scheme,
-        string? joins,
-        string tests,
-        params (string Printed, string Standard)[] verses)
+    /// <summary>
+    /// The file's passages in the order it writes them, each from the rows that name it. A passage is
+    /// one edition's and joins one place, so its rows have to agree on both.
+    /// </summary>
+    private static List<TvtmsSupplement> Read()
     {
-        var conditions = VersificationTest.ParseAll(tests) ??
-                         throw new InvalidOperationException(
-                             $"The supplement tests \"{tests}\" say nothing this corpus can answer. Write them as the " +
-                             "versification data does, as in Jer.30:33=Last.");
+        var passages = new List<(string Scheme, string Name, Versification Tradition, CanonicalReference? Joins, List<TvtmsRow> Rows)>();
+        var traditions = new Dictionary<string, Versification>(StringComparer.Ordinal);
 
-        return new TvtmsSupplement(
-            Traditions[scheme],
-            scheme,
-            joins is null ? null : References(joins)[0],
-            [.. verses.SelectMany(pair => Rows(scheme, pair.Printed, pair.Standard, conditions))]);
+        foreach (var line in VersificationFiles.Read(VersificationFiles.Supplements,
+                     "passage", "scheme", "tradition", "joins", "source", "standard", "tests", "why"))
+        {
+            var scheme = line.Required("scheme");
+            var name = line.Required("passage");
+            var tradition = line.Tradition("tradition");
+            if (traditions.TryGetValue(scheme, out var known) && known != tradition)
+            {
+                throw line.Fail($"the scheme {scheme} is given to {tradition} here and to {known} above");
+            }
+
+            traditions[scheme] = tradition;
+            var joins = line.Optional("joins") is { } verse ? References(line, verse)[0] : (CanonicalReference?)null;
+            var at = passages.FindIndex(passage => passage.Scheme == scheme && passage.Name == name);
+            if (at < 0)
+            {
+                passages.Add((scheme, name, tradition, joins, []));
+                at = passages.Count - 1;
+            }
+            else if (passages[at].Joins != joins)
+            {
+                throw line.Fail($"the passage {scheme} {name} joins {passages[at].Joins} above and {joins} here");
+            }
+
+            var tests = line.Required("tests");
+            var conditions = VersificationTest.ParseAll(tests) ??
+                             throw line.Fail(
+                                 $"the tests \"{tests}\" say nothing this corpus can answer; write them as the " +
+                                 "versification data does, as in Jer.30:33=Last");
+            passages[at].Rows.AddRange(Rows(line, scheme, line.Required("source"), line.Required("standard"), conditions));
+        }
+
+        return [.. passages.Select(passage => new TvtmsSupplement(passage.Tradition, passage.Scheme, passage.Joins, passage.Rows))];
     }
 
     /// <summary>
@@ -470,13 +110,14 @@ internal static class TvtmsSupplements
     /// spans it, and a range against one verse puts each of them there.
     /// </summary>
     private static IEnumerable<TvtmsRow> Rows(
+        VersificationLine line,
         string scheme,
         string printed,
         string standard,
         VersificationConditions tests)
     {
-        var sources = References(printed);
-        var standards = References(standard);
+        var sources = References(line, printed);
+        var standards = References(line, standard);
 
         if (sources.Count == standards.Count)
         {
@@ -490,18 +131,18 @@ internal static class TvtmsSupplements
 
         return standards.Count == 1
             ? sources.Select(source => new TvtmsRow([scheme], [source], standards, tests))
-            : throw new InvalidOperationException(
-                $"The supplement pairs {printed} with {standard}, which are neither the same length nor a single " +
-                "verse on either side. Split it into pairs that are.");
+            : throw line.Fail(
+                $"it pairs {printed} with {standard}, which are neither the same length nor a single verse on " +
+                "either side; split it into rows that are");
     }
 
-    private static IReadOnlyList<CanonicalReference> References(string value)
+    private static IReadOnlyList<CanonicalReference> References(VersificationLine line, string value)
     {
         var references = CanonicalReference.ParseAll(value);
         return references.Count > 0
             ? references
-            : throw new InvalidOperationException(
-                $"The supplement reference \"{value}\" is not one the versification data could hold. Write it as " +
-                "the data does, as in Jer.30:1-16.");
+            : throw line.Fail(
+                $"the reference \"{value}\" is not one the versification data could hold; write it as the data " +
+                "does, as in Jer.30:1-16");
     }
 }

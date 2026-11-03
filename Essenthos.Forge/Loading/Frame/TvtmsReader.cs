@@ -190,30 +190,26 @@ internal sealed class VersificationRules(
     IReadOnlyDictionary<AdditionVerse, CanonicalReference> additions)
 {
     /// <summary>
-    /// The names this file gives the numbering schemes of each tradition, the first being the one
-    /// the tradition is named after and the rest its variants. The Russian schemes are absent from
-    /// the file, so a Synodal text cannot be placed from this source and has to say so rather than
-    /// fall back to its own numbering and look right.
+    /// The names the data gives the numbering schemes of each tradition, the first being the one the
+    /// tradition is named after and the rest its variants, as <c>Resources/Essenthos/versification/schemes.tsv</c>
+    /// lists them. The Russian schemes are absent from the data, so a Synodal text cannot be placed
+    /// from this source and has to say so rather than fall back to its own numbering and look right.
     /// </summary>
-    private static readonly Dictionary<Versification, string[]> Schemes = new()
-    {
-        [Versification.Original] = ["Hebrew"],
-        [Versification.English] = ["Eng-KJV", "EngTitleSeparate", "EngTitleMerged"],
-        [Versification.Septuagint] =
-        [
-            "Greek", "Greek2", "Greek3", "GreekUndivided", "GreekUndivided2", "Greek2Undivided",
-            "GreekIntegrated", "GreekIntegrated2", "Greek2-NETS", "GrkTitleSeparate", "GrkTitleSeparate2",
-            "GrkTitleMerged",
-        ],
-        [Versification.Vulgate] = ["Latin", "Latin2"],
-    };
+    private static readonly Dictionary<Versification, string[]> Schemes;
 
     /// <summary>The undivided form of a scheme, and the divided scheme it is written against.</summary>
-    private static readonly Dictionary<string, string> UndividedVariants = new()
+    private static readonly Dictionary<string, string> UndividedVariants;
+
+    static VersificationRules()
     {
-        ["GreekUndivided"] = "Greek",
-        ["Greek2Undivided"] = "Greek2",
-    };
+        var lines = VersificationFiles.Read(VersificationFiles.Schemes, "tradition", "scheme", "divided", "why");
+        Schemes = lines
+            .GroupBy(line => line.Tradition("tradition"))
+            .ToDictionary(tradition => tradition.Key, tradition => tradition.Select(line => line.Required("scheme")).ToArray());
+        UndividedVariants = lines
+            .Where(line => line.Optional("divided") is not null)
+            .ToDictionary(line => line.Required("scheme"), line => line.Required("divided"), StringComparer.Ordinal);
+    }
 
     public bool Covers(Versification tradition) => Schemes.ContainsKey(tradition);
 
