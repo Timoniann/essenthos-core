@@ -202,7 +202,7 @@ public class OttleyPageTests
     [Fact]
     public void ThePipelineReadsTheTranscriptionAsTheConverterDoes()
     {
-        var kept = Path.Combine(Checkout(), "Resources", "Essenthos", "generation", Pipeline, "transcribed.txt");
+        var kept = Path.Combine(Checkout(), "Resources", "Essenthos", "page-readings", Pipeline, "transcribed.txt");
 
         File.ReadAllLines(kept).Should().Equal(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription));
     }

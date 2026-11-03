@@ -174,15 +174,15 @@ Resources/*/*
 # the backup rather than here, at the owner's word (NOT-0209). This line must stay below the one above it.
 Resources/Essenthos/lexicon/strong-*.jsonl
 
-# Raw model output of generation runs: Swete's page readings while the run goes, the Strong candidate
-# runs and the portrait drafts -- tens to hundreds of MB, rewritten while a run works. The backup
-# mirrors Resources/ whole, so they are kept there. What a loader reads from a run (a written table,
-# a corrections file) is committed under its own path. The owner's word, 2026-10-21. Below the line
-# that carries Resources/Essenthos/, like the Strong line.
-Resources/Essenthos/generation/pages-swete-*/out/
-Resources/Essenthos/generation/pages-swete-*/progress.*
-Resources/Essenthos/generation/strong-*/
-Resources/Essenthos/generation/portrait-*/
+# Raw model output of generation runs: tens to hundreds of MB, rewritten while a run works. A run writes under
+# Resources/Essenthos/generation/<run>/ (the backup mirrors Resources/ whole, so it is kept there while it works); what a
+# loader reads from it is committed under its own path, and the finished run folder moves to
+# E:\EssenthosArchive\generation with a verified manifest (the owner's word, 2026-11-03, TSK-1452). Nothing a build
+# reads stays in generation/. Swete's page readings are a declared source of the Swete text, but the run rewrites them
+# as it goes, so they too are kept by the backup, not git. Below the line that carries Resources/Essenthos/.
+Resources/Essenthos/generation/
+Resources/Essenthos/page-readings/pages-swete-*/out/
+Resources/Essenthos/page-readings/pages-swete-*/progress.*
 
 # The texts as converted products: forge convert writes each text's words, verses, notes, books and declaration
 # from its sources, and the words are the corpus itself, which stays out. Carried: the corrections people edit,
