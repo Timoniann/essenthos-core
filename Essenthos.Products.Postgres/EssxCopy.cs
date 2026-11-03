@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tsv;
 using Npgsql;
 using NpgsqlTypes;
@@ -27,15 +27,15 @@ public sealed record CopyResult(long Rows, TimeSpan Elapsed, int Streams, CopyMo
 }
 
 /// <summary>
-/// Loads an ESW table into a Postgres table with <c>COPY</c>. Row groups are dealt out to several
+/// Loads an ESSX table into a Postgres table with <c>COPY</c>. Row groups are dealt out to several
 /// connections, each decoding its groups and copying them in binary, so the file's decoding and
 /// the server's insertion run on as many cores as there are streams. Nothing is written to the
 /// file; the table is whatever the caller made it, so indexes are the caller's to drop and build.
 /// </summary>
-public static class EswCopy
+public static class EssxCopy
 {
     /// <summary>The default mapping: every column to one of the same name, a key column to <c>name_book … name_position</c>.</summary>
-    public static IReadOnlyList<CopyColumn> DefaultColumns(EswTable table, params IEnumerable<(string Name, string Value)> constants)
+    public static IReadOnlyList<CopyColumn> DefaultColumns(EssxTable table, params IEnumerable<(string Name, string Value)> constants)
     {
         var columns = new List<CopyColumn>();
         foreach (var (name, value) in constants)
@@ -74,7 +74,7 @@ public static class EswCopy
         CancellationToken cancellation = default)
     {
         var watch = Stopwatch.StartNew();
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         var table = sourceTable is null ? file.Tables[0] : file.Table(sourceTable);
         columns ??= DefaultColumns(table);
         var types = await TargetTypes(connectionString, targetTable, cancellation);
@@ -100,7 +100,7 @@ public static class EswCopy
         return new CopyResult(counts.Sum(), watch.Elapsed, streams, mode);
     }
 
-    private static int IndexOf(EswTable table, string name)
+    private static int IndexOf(EssxTable table, string name)
     {
         for (var i = 0; i < table.Columns.Count; i++)
         {
@@ -151,7 +151,7 @@ public static class EswCopy
     /// <summary>Each stream opens the file itself: a reader's handle is one position, and the streams decode at once.</summary>
     private static async Task<long> CopyBinary(NpgsqlDataSource source, string copy, string path, string tableName, List<int> groups, Bound[] plan, CancellationToken cancellation)
     {
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         var table = file.Table(tableName);
         await using var connection = await source.OpenConnectionAsync(cancellation);
         await using var importer = await connection.BeginBinaryImportAsync(copy, cancellation);
@@ -230,7 +230,7 @@ public static class EswCopy
 
     private static async Task<long> CopyText(NpgsqlDataSource source, string copy, string path, string tableName, List<int> groups, Bound[] plan, CancellationToken cancellation)
     {
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         var table = file.Table(tableName);
         await using var connection = await source.OpenConnectionAsync(cancellation);
         await using var importer = await connection.BeginTextImportAsync(copy, cancellation);

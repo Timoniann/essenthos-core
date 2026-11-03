@@ -1,14 +1,14 @@
 using Essenthos.Core.Products;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tools;
 
-// esw: the command line over product files.
+// essx: the command line over product files.
 //
-//   esw view <file> [--head N] [--verse 1.1:1] [--key column] [--where column=value]... [--columns a,b] [--table name]
-//   esw stats <file>
-//   esw header <file>
-//   esw convert <from> <to> [--types own:wordkey,count:integer] [--compress] [--group N] [--table name]
-//   esw validate <file>...
+//   essx view <file> [--head N] [--verse 1.1:1] [--key column] [--where column=value]... [--columns a,b] [--table name]
+//   essx stats <file>
+//   essx header <file>
+//   essx convert <from> <to> [--types own:wordkey,count:integer] [--compress] [--group N] [--table name]
+//   essx validate <file>...
 //
 // Output is TSV on standard output; problems go to standard error and the exit code is 1.
 
@@ -79,10 +79,10 @@ static int Convert(string[] args)
     {
         Types = Option(options, "types") is { } types ? TextTables.ParseTypes(types) : null,
         Table = Option(options, "table"),
-        Esw = new EswOptions
+        Essx = new EssxOptions
         {
-            Codec = options.Any(option => option.Key == "compress") ? EswLayout.CodecDeflate : EswLayout.CodecNone,
-            RowGroupRows = Option(options, "group") is { } group ? int.Parse(group) : EswOptions.Default.RowGroupRows,
+            Codec = options.Any(option => option.Key == "compress") ? EssxLayout.CodecDeflate : EssxLayout.CodecNone,
+            RowGroupRows = Option(options, "group") is { } group ? int.Parse(group) : EssxOptions.Default.RowGroupRows,
         },
     });
     Console.Error.WriteLine($"{result.Rows} rows into {result.Path}: {string.Join(", ", result.Columns)}");
@@ -145,11 +145,11 @@ static int Fail(string message)
 partial class Program
 {
     private const string Usage = """
-        esw view <file> [--head N] [--verse 1.1:1] [--key column] [--where column=value]... [--columns a,b] [--table name]
-        esw stats <file>
-        esw header <file>
-        esw convert <from> <to> [--types own:wordkey,count:integer] [--compress] [--group N] [--table name]
-        esw validate <file>...
-        Files are .esw, .tsv, .csv, .jsonl or .xml, told by extension.
+        essx view <file> [--head N] [--verse 1.1:1] [--key column] [--where column=value]... [--columns a,b] [--table name]
+        essx stats <file>
+        essx header <file>
+        essx convert <from> <to> [--types own:wordkey,count:integer] [--compress] [--group N] [--table name]
+        essx validate <file>...
+        Files are .essx, .tsv, .csv, .jsonl or .xml, told by extension.
         """;
 }

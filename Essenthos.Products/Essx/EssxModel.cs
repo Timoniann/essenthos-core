@@ -3,24 +3,24 @@ using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Essenthos.Core.Products.Esw;
+namespace Essenthos.Core.Products.Essx;
 
 /// <summary>
-/// The fixed parts of an ESW file. The layout is <c>docs/esw-format.md</c>; what is here is what a
+/// The fixed parts of an ESSX file. The layout is <c>docs/essx-format.md</c>; what is here is what a
 /// reader in any language needs first: the magic, the trailer, the varint, the codecs.
 ///
 /// <para>
-/// File: <c>"ESW2" u16 version u16 flags</c>, then the chunks and dictionaries in the order written,
-/// then the footer (JSON, UTF-8), then the trailer: <c>u64 footerOffset u64 footerLength "ESW2"
+/// File: <c>"ESSX" u16 version u16 flags</c>, then the chunks and dictionaries in the order written,
+/// then the footer (JSON, UTF-8), then the trailer: <c>u64 footerOffset u64 footerLength "ESSX"
 /// sha256</c>. The SHA-256 is over every byte before it. Integers are little-endian.
 /// </para>
 /// </summary>
-public static class EswLayout
+public static class EssxLayout
 {
-    public static ReadOnlySpan<byte> Magic => "ESW2"u8;
+    public static ReadOnlySpan<byte> Magic => "ESSX"u8;
 
     /// <summary>With the dot. The name is provisional (the lead has proposed <c>.essp</c>); it and <see cref="Magic"/> are the two places a rename touches.</summary>
-    public const string Extension = ".esw";
+    public const string Extension = ".essx";
 
     public const ushort Version = 1;
 
@@ -111,23 +111,23 @@ public static class EswLayout
 }
 
 /// <summary>The footer: everything a reader needs to find and decode the rest, as JSON.</summary>
-public sealed class EswFooter
+public sealed class EssxFooter
 {
-    public string Format { get; set; } = "esw";
+    public string Format { get; set; } = "essx";
 
-    public int Version { get; set; } = EswLayout.Version;
+    public int Version { get; set; } = EssxLayout.Version;
 
-    public required EswProductInfo Product { get; set; }
+    public required EssxProductInfo Product { get; set; }
 
-    public List<EswTableInfo> Tables { get; set; } = [];
+    public List<EssxTableInfo> Tables { get; set; } = [];
 }
 
 /// <summary>The <see cref="ProductHeader"/> as the footer carries it.</summary>
-public sealed class EswProductInfo
+public sealed class EssxProductInfo
 {
     public required string Product { get; set; }
 
-    public List<EswInput> Inputs { get; set; } = [];
+    public List<EssxInput> Inputs { get; set; } = [];
 
     public required string Producer { get; set; }
 
@@ -137,10 +137,10 @@ public sealed class EswProductInfo
 
     public List<string>? Comments { get; set; }
 
-    public static EswProductInfo From(ProductHeader header) => new()
+    public static EssxProductInfo From(ProductHeader header) => new()
     {
         Product = header.Product,
-        Inputs = [.. header.Inputs.Select(input => new EswInput { Path = input.Path, Sha256 = input.Sha256 })],
+        Inputs = [.. header.Inputs.Select(input => new EssxInput { Path = input.Path, Sha256 = input.Sha256 })],
         Producer = header.Producer,
         Rows = header.Rows ?? 0,
         Notes = header.Notes.Count == 0 ? null : [.. header.Notes.Select(note => new[] { note.Key, note.Value })],
@@ -156,14 +156,14 @@ public sealed class EswProductInfo
     }
 }
 
-public sealed class EswInput
+public sealed class EssxInput
 {
     public required string Path { get; set; }
 
     public required string Sha256 { get; set; }
 }
 
-public sealed class EswTableInfo
+public sealed class EssxTableInfo
 {
     public required string Name { get; set; }
 
@@ -174,15 +174,15 @@ public sealed class EswTableInfo
 
     public int RowGroupRows { get; set; }
 
-    public List<EswColumnInfo> Columns { get; set; } = [];
+    public List<EssxColumnInfo> Columns { get; set; } = [];
 
-    public List<EswPhysicalInfo> Physical { get; set; } = [];
+    public List<EssxPhysicalInfo> Physical { get; set; } = [];
 
-    public List<EswRowGroupInfo> RowGroups { get; set; } = [];
+    public List<EssxRowGroupInfo> RowGroups { get; set; } = [];
 }
 
 /// <summary>A column as the schema declares it, and the stored columns it is made of.</summary>
-public sealed class EswColumnInfo
+public sealed class EssxColumnInfo
 {
     public required string Name { get; set; }
 
@@ -195,25 +195,25 @@ public sealed class EswColumnInfo
 }
 
 /// <summary>A stored column: one chunk per row group, and a dictionary when the encoding has one.</summary>
-public sealed class EswPhysicalInfo
+public sealed class EssxPhysicalInfo
 {
     public required string Name { get; set; }
 
     /// <summary>int, bool, dict, text.</summary>
     public required string Encoding { get; set; }
 
-    public EswSectionInfo? Dictionary { get; set; }
+    public EssxSectionInfo? Dictionary { get; set; }
 }
 
-public sealed class EswRowGroupInfo
+public sealed class EssxRowGroupInfo
 {
     public int Rows { get; set; }
 
     /// <summary>One per physical column, in the table's physical order.</summary>
-    public List<EswChunkInfo> Chunks { get; set; } = [];
+    public List<EssxChunkInfo> Chunks { get; set; } = [];
 }
 
-public sealed class EswChunkInfo
+public sealed class EssxChunkInfo
 {
     public long Offset { get; set; }
 
@@ -221,7 +221,7 @@ public sealed class EswChunkInfo
 
     public long RawLength { get; set; }
 
-    public string Codec { get; set; } = EswLayout.CodecNone;
+    public string Codec { get; set; } = EssxLayout.CodecNone;
 
     public int Nulls { get; set; }
 
@@ -236,7 +236,7 @@ public sealed class EswChunkInfo
     public long? Max { get; set; }
 }
 
-public sealed class EswSectionInfo
+public sealed class EssxSectionInfo
 {
     public long Offset { get; set; }
 
@@ -244,21 +244,21 @@ public sealed class EswSectionInfo
 
     public long RawLength { get; set; }
 
-    public string Codec { get; set; } = EswLayout.CodecNone;
+    public string Codec { get; set; } = EssxLayout.CodecNone;
 
     public int Count { get; set; }
 }
 
 /// <summary>How a file is written: the row group size and whether chunks are compressed.</summary>
-public sealed record EswOptions
+public sealed record EssxOptions
 {
-    public static readonly EswOptions Default = new();
+    public static readonly EssxOptions Default = new();
 
     /// <summary>Rows per group. A group is the unit of random access and of compression.</summary>
     public int RowGroupRows { get; init; } = 1 << 16;
 
-    /// <summary><see cref="EswLayout.CodecNone"/> or <see cref="EswLayout.CodecDeflate"/>.</summary>
-    public string Codec { get; init; } = EswLayout.CodecNone;
+    /// <summary><see cref="EssxLayout.CodecNone"/> or <see cref="EssxLayout.CodecDeflate"/>.</summary>
+    public string Codec { get; init; } = EssxLayout.CodecNone;
 
     /// <summary>Chunks smaller than this are never compressed.</summary>
     public int CompressFrom { get; init; } = 256;

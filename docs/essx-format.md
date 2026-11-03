@@ -1,25 +1,25 @@
-# ESW: the product file format
+# ESSX: the product file format
 
-ESW is the binary format of the corpus build's machine products (NOT-0216). It holds one or
+ESSX is the binary format of the corpus build's machine products (NOT-0216). It holds one or
 more tables of typed columns, written in row groups so that any group is read without the rest,
 with every string column through a dictionary so that a word a text prints sixty thousand times
 is stored once, and with a SHA-256 of the whole file at its end. It is designed to be read in a
 browser: little-endian integers, UTF-8, a JSON footer, and raw deflate (`deflate-raw` in
 `DecompressionStream`) as the only codec. The reference implementation is
-`Essenthos.Products/Esw/` (writer, reader) and the tests in `Essenthos.Core.Tests/Products/EswProductTests.cs`.
+`Essenthos.Products/Essx/` (writer, reader) and the tests in `Essenthos.Core.Tests/Products/EssxProductTests.cs`.
 Version 1, 2026-11-03.
 
 ## 1. File layout
 
 ```
-offset 0      "ESW2"              4 bytes   magic
+offset 0      "ESSX"              4 bytes   magic
        4      version             u16       1
        6      flags               u16       0
        8      sections …                    chunks and dictionaries, in the order the writer produced them
        F      footer              JSON, UTF-8, no BOM
        F+L    footerOffset        u64       F
        F+L+8  footerLength        u64       L
-       F+L+16 "ESW2"              4 bytes   magic again, so a tail read confirms the file
+       F+L+16 "ESSX"              4 bytes   magic again, so a tail read confirms the file
        F+L+20 sha256              32 bytes  over bytes [0, F+L+20)
 ```
 
@@ -33,10 +33,10 @@ JSON with camelCase names; absent means null.
 
 ```json
 {
-  "format": "esw",
+  "format": "essx",
   "version": 1,
   "product": {
-    "product": "Essenthos/texts/KJV/words.esw",
+    "product": "Essenthos/texts/KJV/words.essx",
     "inputs": [{"path": "bible4u/kjv.zip", "sha256": "…"}],
     "producer": "forge convert KJV   (Essenthos.Forge 1.0+2b87c172)",
     "rows": 932131,
@@ -122,7 +122,7 @@ of `.book` and `.chapter` per chunk let a reader find a verse's group without re
 
 ## 7. Conventions
 
-- A product file holds one table named `rows` unless a producer writes several with `EswWriter`.
-- The extension is `.esw` for now; the name is provisional (`.essp`, Essenthos Product, is proposed, since `.esw` is taken by other programs). The extension and the magic are `EswLayout.Extension` and `EswLayout.Magic`, the only two places a rename touches. Hand-edited files stay `.tsv` and never become ESW.
+- A product file holds one table named `rows` unless a producer writes several with `EssxWriter`.
+- The extension is `.essx` and the magic `ESSX` (the owner's choice, 2026-11-04; `.esw`, the first name, is taken by other programs). They are `EssxLayout.Extension` and `EssxLayout.Magic`. Hand-edited files stay `.tsv` and never become ESSX.
 - Integers are never floats; a product that needs a decimal writes an integer in a stated unit or text.
 - A reader refuses a `version` newer than it knows; within a version, unknown footer fields are ignored.

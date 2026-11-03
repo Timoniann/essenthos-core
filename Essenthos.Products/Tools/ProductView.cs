@@ -1,5 +1,5 @@
 using System.Globalization;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 
 namespace Essenthos.Core.Products.Tools;
 
@@ -67,7 +67,7 @@ public static class ProductView
 
     private static IEnumerable<string?[]> RowsOf(string path, ITextTable table, ViewQuery query, int keyIndex)
     {
-        if (query.Verse is not { } verse || TextTables.Kind(path) != EswLayout.Extension)
+        if (query.Verse is not { } verse || TextTables.Kind(path) != EssxLayout.Extension)
         {
             return table.Rows();
         }
@@ -78,7 +78,7 @@ public static class ProductView
     /// <summary>Only the groups whose book and chapter statistics admit the verse.</summary>
     private static IEnumerable<string?[]> VerseGroups(string path, string? tableName, int keyIndex, VerseKey verse)
     {
-        using var reader = EswReader.Open(path);
+        using var reader = EssxReader.Open(path);
         var table = tableName is null ? reader.Tables[0] : reader.Table(tableName);
         var key = table.Info.Columns[keyIndex];
         if (key.Type is not ("wordkey" or "versekey"))
@@ -92,7 +92,7 @@ public static class ProductView
         foreach (var g in groups)
         {
             var group = table.ReadGroup(g);
-            var row = new EswRow(group);
+            var row = new EssxRow(group);
             for (var i = 0; i < group.Rows; i++)
             {
                 row.Index = i;
@@ -104,7 +104,7 @@ public static class ProductView
     /// <summary>The file in numbers: header, tables, columns with their encodings and sizes, row groups.</summary>
     public static void Stats(string path, TextWriter output)
     {
-        if (TextTables.Kind(path) != EswLayout.Extension)
+        if (TextTables.Kind(path) != EssxLayout.Extension)
         {
             using var table = TextTables.Open(path);
             output.WriteLine($"file\t{path}\t{new FileInfo(path).Length} bytes");
@@ -122,11 +122,11 @@ public static class ProductView
             return;
         }
 
-        using var reader = EswReader.Open(path);
+        using var reader = EssxReader.Open(path);
         output.WriteLine($"file\t{path}\t{reader.Length} bytes\tversion {reader.Footer.Version}");
         output.Write(reader.Header.Format());
-        var footerLength = reader.Length - EswLayout.TrailerLength - reader.Footer.Tables.SelectMany(t => t.RowGroups.SelectMany(g => g.Chunks.Select(c => c.Length))).Sum()
-                           - reader.Footer.Tables.SelectMany(t => t.Physical.Select(p => p.Dictionary?.Length ?? 0)).Sum() - EswLayout.PreambleLength;
+        var footerLength = reader.Length - EssxLayout.TrailerLength - reader.Footer.Tables.SelectMany(t => t.RowGroups.SelectMany(g => g.Chunks.Select(c => c.Length))).Sum()
+                           - reader.Footer.Tables.SelectMany(t => t.Physical.Select(p => p.Dictionary?.Length ?? 0)).Sum() - EssxLayout.PreambleLength;
         output.WriteLine($"footer\t{footerLength} bytes");
         foreach (var table in reader.Tables)
         {

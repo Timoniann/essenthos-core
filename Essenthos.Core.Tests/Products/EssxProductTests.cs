@@ -1,12 +1,12 @@
 using Essenthos.Core.Products;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tsv;
 using FluentAssertions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Products;
 
-public sealed class EswProductTests : IDisposable
+public sealed class EssxProductTests : IDisposable
 {
     private sealed record Row(WordKey Key, VerseKey? Cited, string Surface, string? Lemma, long Count, int? Rank, bool Flag, bool? Maybe, string Json, string? Long);
 
@@ -44,7 +44,7 @@ public sealed class EswProductTests : IDisposable
 
     private readonly string _folder = Path.Combine(Path.GetTempPath(), "essenthos-products", Guid.NewGuid().ToString("N"));
 
-    public EswProductTests()
+    public EssxProductTests()
     {
         Directory.CreateDirectory(_folder);
     }
@@ -53,22 +53,22 @@ public sealed class EswProductTests : IDisposable
 
     private static ProductHeader Header()
     {
-        var header = new ProductHeader("Essenthos/test/rows.esw", [new ProductInput("a/b.txt", new string('0', 64))], "test");
+        var header = new ProductHeader("Essenthos/test/rows.essx", [new ProductInput("a/b.txt", new string('0', 64))], "test");
         header.Notes.Add(new("tradition", "test"));
         header.Comments.Add("a free comment");
         return header;
     }
 
     [Theory]
-    [InlineData(EswLayout.CodecNone, 1 << 16)]
-    [InlineData(EswLayout.CodecDeflate, 1 << 16)]
-    [InlineData(EswLayout.CodecNone, 1000)]
-    [InlineData(EswLayout.CodecDeflate, 1000)]
+    [InlineData(EssxLayout.CodecNone, 1 << 16)]
+    [InlineData(EssxLayout.CodecDeflate, 1 << 16)]
+    [InlineData(EssxLayout.CodecNone, 1000)]
+    [InlineData(EssxLayout.CodecDeflate, 1000)]
     public void EveryTypeNullAndEscapedCharacterRoundTripsOverSeveralRowGroups(string codec, int groupRows)
     {
-        var path = File("rows.esw");
+        var path = File("rows.essx");
         var rows = Rows(12_345);
-        var format = new EswFormat(new EswOptions { Codec = codec, RowGroupRows = groupRows });
+        var format = new EssxFormat(new EssxOptions { Codec = codec, RowGroupRows = groupRows });
         using (var writer = format.Create(path, Header(), Schema))
         {
             writer.WriteAll(rows);
@@ -79,28 +79,28 @@ public sealed class EswProductTests : IDisposable
         reader.Columns.Should().Equal(Schema.Columns);
         reader.ReadAll().Should().Equal(rows);
 
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         file.Verify().Should().BeTrue();
         file.Tables.Should().ContainSingle().Which.RowGroups.Should().Be((rows.Count + groupRows - 1) / groupRows);
         file.Tables[0].Info.SchemaVersion.Should().Be(3);
         file.Tables[0].Info.RowGroups.Sum(group => group.Rows).Should().Be(rows.Count);
-        if (codec == EswLayout.CodecDeflate)
+        if (codec == EssxLayout.CodecDeflate)
         {
-            file.Tables[0].Info.RowGroups[0].Chunks.Should().Contain(chunk => chunk.Codec == EswLayout.CodecDeflate);
+            file.Tables[0].Info.RowGroups[0].Chunks.Should().Contain(chunk => chunk.Codec == EssxLayout.CodecDeflate);
         }
     }
 
     [Fact]
     public void TheFileCarriesTheProductHeaderAndAnUntypedReaderGivesTexts()
     {
-        var path = File("rows.esw");
-        using (var writer = EswFormat.Instance.Create(path, Header(), Schema))
+        var path = File("rows.essx");
+        using (var writer = EssxFormat.Instance.Create(path, Header(), Schema))
         {
             writer.WriteAll(Rows(3));
         }
 
-        using var reader = EswFormat.Instance.Open(path);
-        reader.Header!.Product.Should().Be("Essenthos/test/rows.esw");
+        using var reader = EssxFormat.Instance.Open(path);
+        reader.Header!.Product.Should().Be("Essenthos/test/rows.essx");
         reader.Header.Rows.Should().Be(3);
         reader.Header.Notes.Should().BeEquivalentTo(new[] { new KeyValuePair<string, string>("tradition", "test") });
         reader.Header.Comments.Should().Equal("a free comment");
@@ -112,13 +112,13 @@ public sealed class EswProductTests : IDisposable
     [Fact]
     public void RepeatedStringsAreOneInstanceAndKeysAreStoredAsParts()
     {
-        var path = File("rows.esw");
-        using (var writer = EswFormat.Instance.Create(path, Header(), Schema))
+        var path = File("rows.essx");
+        using (var writer = EssxFormat.Instance.Create(path, Header(), Schema))
         {
             writer.WriteAll(Rows(2000));
         }
 
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         var table = file.Tables[0];
         table.Info.Columns.First(column => column.Name == "own").Physical.Should().Equal("own.book", "own.chapter", "own.chapter_label", "own.verse", "own.verse_label", "own.position");
         table.Info.Physical.First(p => p.Name == "surface").Encoding.Should().Be("dict");
@@ -138,8 +138,8 @@ public sealed class EswProductTests : IDisposable
     [Fact]
     public void AFlippedByteIsCaughtByTheChecksumAndAnOutOfRangeChunkByTheReader()
     {
-        var path = File("rows.esw");
-        using (var writer = EswFormat.Instance.Create(path, Header(), Schema))
+        var path = File("rows.essx");
+        using (var writer = EssxFormat.Instance.Create(path, Header(), Schema))
         {
             writer.WriteAll(Rows(500));
         }
@@ -148,23 +148,23 @@ public sealed class EswProductTests : IDisposable
         bytes[100] ^= 0xff;
         System.IO.File.WriteAllBytes(path, bytes);
 
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         file.Verify().Should().BeFalse();
 
-        var truncated = File("short.esw");
+        var truncated = File("short.essx");
         System.IO.File.WriteAllBytes(truncated, bytes[..200]);
-        var open = () => EswReader.Open(truncated);
+        var open = () => EssxReader.Open(truncated);
         open.Should().Throw<ProductFormatException>();
     }
 
     [Fact]
     public void AFileOfSeveralTablesReadsEachByName()
     {
-        var path = File("pair.esw");
+        var path = File("pair.essx");
         var verses = new ProductSchema<(VerseKey Own, int Words)>()
             .VerseKey("own", v => v.Own).Integer("words", v => v.Words)
             .Reads(row => (row.VerseKey(0), row.Int32(1)));
-        using (var file = EswWriter.Create(path, Header()))
+        using (var file = EssxWriter.Create(path, Header()))
         {
             var words = file.Table("words", Schema);
             var manifest = file.Table("verses", verses);
@@ -173,7 +173,7 @@ public sealed class EswProductTests : IDisposable
             file.Complete();
         }
 
-        using var reader = EswReader.Open(path);
+        using var reader = EssxReader.Open(path);
         reader.Tables.Select(table => table.Name).Should().Equal("words", "verses");
         reader.Table("verses").Rows(verses).Should().Equal((new VerseKey(1, 1, 1), 10));
         reader.Table("words").Rows(Schema).Should().Equal(Rows(10));
@@ -185,13 +185,13 @@ public sealed class EswProductTests : IDisposable
     [Fact]
     public void RowGroupStatisticsLetAReaderSkipTheGroupsAVerseIsNotIn()
     {
-        var path = File("rows.esw");
-        using (var writer = new EswFormat(new EswOptions { RowGroupRows = 1000 }).Create(path, Header(), Schema))
+        var path = File("rows.essx");
+        using (var writer = new EssxFormat(new EssxOptions { RowGroupRows = 1000 }).Create(path, Header(), Schema))
         {
             writer.WriteAll(Rows(12_000));
         }
 
-        using var file = EswReader.Open(path);
+        using var file = EssxReader.Open(path);
         var table = file.Tables[0];
         var groups = table.GroupsWhere("own.book", (min, max) => min <= 2 && max >= 2).ToList();
         groups.Should().Equal([5, 6, 7, 8, 9], "rows 5000-9999 are book 2 and the groups hold 1000 rows");
@@ -203,49 +203,49 @@ public sealed class EswProductTests : IDisposable
     [Fact]
     public void AWriterDisposedWithoutCompletingLeavesThePreviousFileAndNoTemporary()
     {
-        var path = File("rows.esw");
-        using (var writer = EswFormat.Instance.Create(path, Header(), Schema))
+        var path = File("rows.essx");
+        using (var writer = EssxFormat.Instance.Create(path, Header(), Schema))
         {
             writer.WriteAll(Rows(1));
         }
 
-        using (var writer = EswFormat.Instance.Create(path, Header(), Schema))
+        using (var writer = EssxFormat.Instance.Create(path, Header(), Schema))
         {
             writer.Write(Make(5));
         }
 
         Directory.GetFiles(_folder).Should().BeEquivalentTo(new[] { path });
-        using var reader = EswFormat.Instance.Open(path, Schema);
+        using var reader = EssxFormat.Instance.Open(path, Schema);
         reader.ReadAll().Should().Equal(Rows(1));
     }
 
     [Fact]
     public void TheSchemaMismatchIsNamedAsForTsv()
     {
-        var path = File("rows.esw");
+        var path = File("rows.essx");
         var other = new ProductSchema<string>().Text("name", s => s).Reads(row => row.Text(0));
-        using (var writer = EswFormat.Instance.Create(path, Header(), other))
+        using (var writer = EssxFormat.Instance.Create(path, Header(), other))
         {
             writer.WriteAll(["a"]);
         }
 
-        var open = () => EswFormat.Instance.Open(path, Schema);
+        var open = () => EssxFormat.Instance.Open(path, Schema);
         open.Should().Throw<ProductFormatException>().WithMessage("*column 1 is 'name' where the schema expects 'own'*");
         Directory.GetFiles(_folder).Should().BeEquivalentTo(new[] { path }, "the handle was released on the failed open");
     }
 
     [Fact]
-    public void TheSameRowsReadTheSameFromTsvAndFromEsw()
+    public void TheSameRowsReadTheSameFromTsvAndFromEssx()
     {
         var rows = Rows(3000);
         var tsv = File("rows.tsv");
-        var esw = File("rows.esw");
+        var essx = File("rows.essx");
         using (var writer = TsvFormat.Instance.Create(tsv, Header(), Schema)) writer.WriteAll(rows);
-        using (var writer = EswFormat.Instance.Create(esw, Header(), Schema)) writer.WriteAll(rows);
+        using (var writer = EssxFormat.Instance.Create(essx, Header(), Schema)) writer.WriteAll(rows);
 
         using var fromTsv = TsvFormat.Instance.Open(tsv);
-        using var fromEsw = EswFormat.Instance.Open(esw);
-        fromEsw.ReadAll().Should().BeEquivalentTo(fromTsv.ReadAll(), options => options.WithStrictOrdering());
+        using var fromEssx = EssxFormat.Instance.Open(essx);
+        fromEssx.ReadAll().Should().BeEquivalentTo(fromTsv.ReadAll(), options => options.WithStrictOrdering());
     }
 
     public void Dispose()

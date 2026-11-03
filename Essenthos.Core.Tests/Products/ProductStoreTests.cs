@@ -59,29 +59,29 @@ public sealed class ProductStoreTests : IDisposable
     }
 
     [Fact]
-    public void AHandProductIsAlwaysTsvAndAMachineProductIsEswUnlessSaidOtherwise()
+    public void AHandProductIsAlwaysTsvAndAMachineProductIsEssxUnlessSaidOtherwise()
     {
         var store = new ProductStore(_root);
         store.RelativePath("texts/KJV/corrections", ProductKind.Hand).Should().Be("Essenthos/texts/KJV/corrections.tsv");
-        store.RelativePath("texts/KJV/words", ProductKind.Machine).Should().Be("Essenthos/texts/KJV/words.esw");
+        store.RelativePath("texts/KJV/words", ProductKind.Machine).Should().Be("Essenthos/texts/KJV/words.essx");
         Store().RelativePath("texts/KJV/words", ProductKind.Machine).Should().Be("Essenthos/texts/KJV/words.tsv");
     }
 
     [Fact]
-    public void AMachineProductWrittenAsEswIsFoundReadAndRecordedLikeATsvOne()
+    public void AMachineProductWrittenAsEssxIsFoundReadAndRecordedLikeATsvOne()
     {
         var store = new ProductStore(_root);
         var inputs = store.Inputs("bible4u/kjv.xml");
         Make(store, inputs);
 
-        store.Find("texts/KJV/words").Should().Be("Essenthos/texts/KJV/words.esw");
+        store.Find("texts/KJV/words").Should().Be("Essenthos/texts/KJV/words.essx");
         store.NeedsBuild("texts/KJV/words", ProductKind.Machine, inputs).Should().BeFalse();
         using var reader = store.Open("texts/KJV/words", Schema);
-        reader.Header!.Product.Should().Be("Essenthos/texts/KJV/words.esw");
+        reader.Header!.Product.Should().Be("Essenthos/texts/KJV/words.essx");
         reader.Header.Inputs.Should().Equal(inputs);
         reader.Header.Rows.Should().Be(2);
         reader.ReadAll().Should().Equal(Words);
-        store.Manifest.Get("Essenthos/texts/KJV/words.esw")!.Rows.Should().Be(2);
+        store.Manifest.Get("Essenthos/texts/KJV/words.essx")!.Rows.Should().Be(2);
     }
 
     [Fact]

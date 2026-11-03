@@ -73,7 +73,7 @@ public class VerseRangeTests
         try
         {
             var rows = new[] { ("flood", VerseRange.Parse("1.6:9..9:17")), ("call", VerseRange.Parse("1.12:1")) };
-            foreach (var format in new IProductFormat[] { Essenthos.Core.Products.Tsv.TsvFormat.Instance, Essenthos.Core.Products.Esw.EswFormat.Instance })
+            foreach (var format in new IProductFormat[] { Essenthos.Core.Products.Tsv.TsvFormat.Instance, Essenthos.Core.Products.Essx.EssxFormat.Instance })
             {
                 var path = Path.Combine(folder, "ranges" + format.Extension);
                 using (var writer = format.Create(path, new ProductHeader("Essenthos/test/ranges" + format.Extension, [], "test"), schema))

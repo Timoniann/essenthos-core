@@ -1,14 +1,14 @@
 using System.Buffers.Binary;
 using System.Globalization;
 using System.Text;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tsv;
 using NpgsqlTypes;
 
 namespace Essenthos.Core.Products.Postgres;
 
 /// <summary>
-/// Writes what <c>COPY ... FROM '&lt;file&gt;'</c> reads, from an ESW table: the text format a TSV
+/// Writes what <c>COPY ... FROM '&lt;file&gt;'</c> reads, from an ESSX table: the text format a TSV
 /// product already is, or the binary format, which the server takes without parsing a number or
 /// a quote. For a database on the same machine as the files this is the fastest way in: the
 /// server reads the file itself and nothing crosses a client connection.
@@ -23,9 +23,9 @@ public static class CopyFiles
     /// header before them and <paramref name="last"/> the trailer after, so several tables or files
     /// go into one stream.
     /// </summary>
-    public static long WriteBinary(Stream output, string eswPath, IReadOnlyList<CopyColumn> columns, IReadOnlyDictionary<string, NpgsqlDbType> types, bool first = true, bool last = true, string? sourceTable = null)
+    public static long WriteBinary(Stream output, string essxPath, IReadOnlyList<CopyColumn> columns, IReadOnlyDictionary<string, NpgsqlDbType> types, bool first = true, bool last = true, string? sourceTable = null)
     {
-        using var file = EswReader.Open(eswPath);
+        using var file = EssxReader.Open(essxPath);
         var table = sourceTable is null ? file.Tables[0] : file.Table(sourceTable);
         var plan = columns.Select(column => (column, Index: column.Source is null ? -1 : IndexOfColumn(table, column.Source), Type: types[column.Target])).ToArray();
         var writer = new BinaryWriter(output);
@@ -95,9 +95,9 @@ public static class CopyFiles
     }
 
     /// <summary>Appends the table's rows as COPY text lines, which is the body of a TSV product.</summary>
-    public static long WriteText(TextWriter output, string eswPath, IReadOnlyList<CopyColumn> columns, string? sourceTable = null)
+    public static long WriteText(TextWriter output, string essxPath, IReadOnlyList<CopyColumn> columns, string? sourceTable = null)
     {
-        using var file = EswReader.Open(eswPath);
+        using var file = EssxReader.Open(essxPath);
         var table = sourceTable is null ? file.Tables[0] : file.Table(sourceTable);
         var plan = columns.Select(column => (column, Index: column.Source is null ? -1 : IndexOfColumn(table, column.Source))).ToArray();
         long rows = 0;
@@ -136,7 +136,7 @@ public static class CopyFiles
         _ => key.Position!.Values[row].ToString(CultureInfo.InvariantCulture),
     };
 
-    private static int IndexOfColumn(EswTable table, string name)
+    private static int IndexOfColumn(EssxTable table, string name)
     {
         for (var i = 0; i < table.Columns.Count; i++)
         {

@@ -1,4 +1,4 @@
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tsv;
 
 namespace Essenthos.Core.Products.Tools;
@@ -11,7 +11,7 @@ public sealed record ConversionOptions
     /// <summary>Which table of a file of several; the first when null.</summary>
     public string? Table { get; init; }
 
-    public EswOptions Esw { get; init; } = EswOptions.Default;
+    public EssxOptions Essx { get; init; } = EssxOptions.Default;
 
     /// <summary>The header to write when the source has none, as a hand-written CSV has none.</summary>
     public ProductHeader? Header { get; init; }
@@ -38,16 +38,16 @@ public static class ProductConversion
                 : TextTables.Infer(source.Names, source.Rows(), options.Types ?? source.Columns?.ToDictionary(column => column.Name, column => column.Type));
         }
 
-        header = options.Header ?? header ?? new ProductHeader(Path.GetFileName(to).Replace(' ', '_'), [], $"esw convert {Path.GetFileName(from)}");
+        header = options.Header ?? header ?? new ProductHeader(Path.GetFileName(to).Replace(' ', '_'), [], $"essx convert {Path.GetFileName(from)}");
         header.Rows = null;
         using var rows = TextTables.Open(from, options.Table);
         long count;
         switch (toKind)
         {
-            case var esw when esw == EswLayout.Extension:
+            case var essx when essx == EssxLayout.Extension:
             case ".tsv":
             {
-                IProductFormat format = toKind == EswLayout.Extension ? new EswFormat(options.Esw) : TsvFormat.Instance;
+                IProductFormat format = toKind == EssxLayout.Extension ? new EssxFormat(options.Essx) : TsvFormat.Instance;
                 using var writer = format.Create(to, header, TextTables.Schema(columns));
                 writer.WriteAll(rows.Rows());
                 count = writer.Rows;

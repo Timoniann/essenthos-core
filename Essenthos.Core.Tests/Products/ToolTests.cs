@@ -1,5 +1,5 @@
 using Essenthos.Core.Products;
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tools;
 using Essenthos.Core.Products.Tsv;
 using FluentAssertions;
@@ -38,13 +38,13 @@ public sealed class ToolTests : IDisposable
 
     private string File(string name) => Path.Combine(_folder, name);
 
-    private string Esw()
+    private string Essx()
     {
-        var path = File("words.esw");
+        var path = File("words.essx");
         if (!System.IO.File.Exists(path))
         {
-            var header = new ProductHeader("Essenthos/texts/KJV/words.esw", [new ProductInput("bible4u/kjv.zip", new string('1', 64))], "test");
-            using var writer = EswFormat.Instance.Create(path, header, Schema);
+            var header = new ProductHeader("Essenthos/texts/KJV/words.essx", [new ProductInput("bible4u/kjv.zip", new string('1', 64))], "test");
+            using var writer = EssxFormat.Instance.Create(path, header, Schema);
             writer.WriteAll(Words);
         }
 
@@ -59,9 +59,9 @@ public sealed class ToolTests : IDisposable
     public void EveryTextShapeRoundTripsBackToTheSameRowsAndTypes(string extension)
     {
         var text = File($"words.{extension}");
-        var back = File("back.esw");
+        var back = File("back.essx");
 
-        var outward = ProductConversion.Convert(Esw(), text);
+        var outward = ProductConversion.Convert(Essx(), text);
         var inward = ProductConversion.Convert(text, back);
 
         outward.Rows.Should().Be(Words.Length);
@@ -73,17 +73,17 @@ public sealed class ToolTests : IDisposable
             new Column("pos", ColumnType.Integer),
             new Column("elided", ColumnType.Boolean),
             new Column("morphology", ColumnType.Json, Nullable: true));
-        using var reader = EswFormat.Instance.Open(back, Schema);
+        using var reader = EssxFormat.Instance.Open(back, Schema);
         reader.ReadAll().Should().Equal(Words, "nulls, empty strings, tabs, quotes, line breaks and scripts survive {0}", extension);
     }
 
     [Fact]
-    public void TheTsvOfAnEswIsTheTsvTheWriterWouldHaveWritten()
+    public void TheTsvOfAnEssxIsTheTsvTheWriterWouldHaveWritten()
     {
         var viaConvert = File("converted.tsv");
         var direct = File("direct.tsv");
-        ProductConversion.Convert(Esw(), viaConvert);
-        using (var writer = TsvFormat.Instance.Create(direct, new ProductHeader("Essenthos/texts/KJV/words.esw", [new ProductInput("bible4u/kjv.zip", new string('1', 64))], "test"), Schema))
+        ProductConversion.Convert(Essx(), viaConvert);
+        using (var writer = TsvFormat.Instance.Create(direct, new ProductHeader("Essenthos/texts/KJV/words.essx", [new ProductInput("bible4u/kjv.zip", new string('1', 64))], "test"), Schema))
         {
             writer.WriteAll(Words);
         }
@@ -95,9 +95,9 @@ public sealed class ToolTests : IDisposable
     public void StatedTypesWinOverInferredOnes()
     {
         var csv = File("words.csv");
-        ProductConversion.Convert(Esw(), csv);
+        ProductConversion.Convert(Essx(), csv);
 
-        var result = ProductConversion.Convert(csv, File("typed.esw"), new ConversionOptions { Types = TextTables.ParseTypes("pos:text,own:text") });
+        var result = ProductConversion.Convert(csv, File("typed.essx"), new ConversionOptions { Types = TextTables.ParseTypes("pos:text,own:text") });
 
         result.Columns.First(c => c.Name == "pos").Type.Should().Be(ColumnType.Text);
         result.Columns.First(c => c.Name == "own").Type.Should().Be(ColumnType.Text);
@@ -129,19 +129,19 @@ public sealed class ToolTests : IDisposable
     public void ViewHeadVerseWhereAndColumns()
     {
         var head = new StringWriter();
-        ProductView.Rows(Esw(), new ViewQuery { Head = 2, Columns = ["own", "surface"] }, head);
+        ProductView.Rows(Essx(), new ViewQuery { Head = 2, Columns = ["own", "surface"] }, head);
         head.ToString().Should().Be("own\tsurface\n1.1:1.1\tIn\n1.1:1.2\tthe, \"quoted\"\n");
 
         var verse = new StringWriter();
-        ProductView.Rows(Esw(), new ViewQuery { Verse = VerseKey.Parse("1.1:2") }, verse);
+        ProductView.Rows(Essx(), new ViewQuery { Verse = VerseKey.Parse("1.1:2") }, verse);
         verse.ToString().Split('\n', StringSplitOptions.RemoveEmptyEntries).Should().HaveCount(2).And.Contain(line => line.StartsWith("1.1:2.1\ttab\\there\t\t1\tt\t"));
 
         var where = new StringWriter();
-        ProductView.Rows(Esw(), new ViewQuery { Where = [("lemma", null)], Columns = ["own"] }, where);
+        ProductView.Rows(Essx(), new ViewQuery { Where = [("lemma", null)], Columns = ["own"] }, where);
         where.ToString().Should().Be("own\n1.1:1.2\n");
 
         var tsv = File("words.tsv");
-        ProductConversion.Convert(Esw(), tsv);
+        ProductConversion.Convert(Essx(), tsv);
         var fromTsv = new StringWriter();
         ProductView.Rows(tsv, new ViewQuery { Verse = VerseKey.Parse("2.1:1"), Columns = ["surface"] }, fromTsv);
         fromTsv.ToString().Should().Be("surface\nבְּרֵאשִׁית\n");
@@ -151,23 +151,23 @@ public sealed class ToolTests : IDisposable
     public void StatsNameEveryStoredColumnWithItsEncodingAndBytes()
     {
         var stats = new StringWriter();
-        ProductView.Stats(Esw(), stats);
+        ProductView.Stats(Essx(), stats);
 
         var text = stats.ToString();
         text.Should().Contain("table\trows\trows=5");
         text.Should().Contain("column\town.book\twordkey\tint\t");
         text.Should().Contain("column\tsurface\ttext\tdict\t").And.Contain("distinct=5");
         text.Should().Contain("column\tlemma\ttext?\tdict\t").And.Contain("nulls=1");
-        text.Should().Contain("# product    Essenthos/texts/KJV/words.esw");
+        text.Should().Contain("# product    Essenthos/texts/KJV/words.essx");
     }
 
     [Fact]
     public void ValidationPassesAGoodFileAndNamesWhatIsWrongWithABadOne()
     {
-        ProductValidation.Validate(Esw()).Should().BeEquivalentTo(new ValidationReport(Esw(), [], Words.Length));
+        ProductValidation.Validate(Essx()).Should().BeEquivalentTo(new ValidationReport(Essx(), [], Words.Length));
 
-        var bytes = System.IO.File.ReadAllBytes(Esw());
-        var damaged = File("damaged.esw");
+        var bytes = System.IO.File.ReadAllBytes(Essx());
+        var damaged = File("damaged.essx");
         bytes[60] ^= 0x01;
         System.IO.File.WriteAllBytes(damaged, bytes);
         var report = ProductValidation.Validate(damaged);

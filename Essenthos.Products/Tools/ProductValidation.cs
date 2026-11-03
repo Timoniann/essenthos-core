@@ -1,4 +1,4 @@
-using Essenthos.Core.Products.Esw;
+using Essenthos.Core.Products.Essx;
 using Essenthos.Core.Products.Tsv;
 
 namespace Essenthos.Core.Products.Tools;
@@ -21,7 +21,7 @@ public static class ProductValidation
         long rows = 0;
         try
         {
-            rows = TextTables.Kind(path) == EswLayout.Extension ? ValidateEsw(path, problems) : ValidateText(path, problems);
+            rows = TextTables.Kind(path) == EssxLayout.Extension ? ValidateEssx(path, problems) : ValidateText(path, problems);
         }
         catch (Exception exception) when (exception is ProductFormatException or FormatException or IOException or ArgumentException)
         {
@@ -31,20 +31,20 @@ public static class ProductValidation
         return new ValidationReport(path, problems, rows);
     }
 
-    private static long ValidateEsw(string path, List<string> problems)
+    private static long ValidateEssx(string path, List<string> problems)
     {
-        using var reader = EswReader.Open(path);
+        using var reader = EssxReader.Open(path);
         if (!reader.Verify())
         {
             problems.Add("the SHA-256 in the trailer is not the file's: bytes changed after it was written");
         }
 
-        if (reader.Footer.Format != "esw")
+        if (reader.Footer.Format != "essx")
         {
             problems.Add($"footer format is '{reader.Footer.Format}'");
         }
 
-        var dataEnd = reader.Length - EswLayout.TrailerLength;
+        var dataEnd = reader.Length - EssxLayout.TrailerLength;
         long total = 0;
         foreach (var table in reader.Tables)
         {
@@ -68,7 +68,7 @@ public static class ProductValidation
 
             foreach (var physical in info.Physical)
             {
-                if (physical.Dictionary is { } dictionary && (dictionary.Offset < EswLayout.PreambleLength || dictionary.Offset + dictionary.Length > dataEnd))
+                if (physical.Dictionary is { } dictionary && (dictionary.Offset < EssxLayout.PreambleLength || dictionary.Offset + dictionary.Length > dataEnd))
                 {
                     problems.Add($"table {info.Name}: the dictionary of {physical.Name} lies outside the data");
                 }
@@ -86,7 +86,7 @@ public static class ProductValidation
                 for (var c = 0; c < group.Chunks.Count; c++)
                 {
                     var chunk = group.Chunks[c];
-                    if (chunk.Offset < EswLayout.PreambleLength || chunk.Offset + chunk.Length > dataEnd)
+                    if (chunk.Offset < EssxLayout.PreambleLength || chunk.Offset + chunk.Length > dataEnd)
                     {
                         problems.Add($"table {info.Name} group {g} column {info.Physical[c].Name}: chunk at {chunk.Offset}+{chunk.Length} lies outside the data");
                     }

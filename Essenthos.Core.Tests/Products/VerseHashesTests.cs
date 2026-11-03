@@ -184,7 +184,7 @@ public class VerseHashesTests
 
             using var reader = store.Open(VerseManifestRow.ProductOf("KJV"), VerseManifestRow.Schema);
             reader.ReadAll().Should().Equal(rows);
-            reader.Header!.Product.Should().Be("Essenthos/texts/KJV/verses.esw");
+            reader.Header!.Product.Should().Be("Essenthos/texts/KJV/verses.essx");
         }
         finally
         {
