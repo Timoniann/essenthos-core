@@ -55,39 +55,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         }
 
         var started = Stopwatch.StartNew();
-        // A corpus imported before a new layer can gain a verse afterwards: a source note can sit
-        // on a printed \v marker with no words (ASV Matthew 17:21). Do not make an existing frame
-        // an all-or-nothing gate, or that new anchor can never reach the parallel reader. The
-        // edition's shape still comes from every verse, because that is what decides its scheme.
-        var verses = await db.Verses
-            .Where(v => v.TextId == text.Id)
-            .Select(v => new
-            {
-                v.Id,
-                Book = v.Book!.CanonicalOrdinal,
-                v.ChapterNumber,
-                v.Number,
-                v.Label,
-                Length = v.Words.Sum(w => w.Surface.Length),
-            })
-            .ToListAsync(cancellationToken);
-
-        // The frame is derived data. A rule fixed after a corpus was loaded must replace the old
-        // placements rather than leave them behind just because every verse already has a row.
-        var existing = await db.VerseReferences
-            .Where(reference => reference.Verse!.TextId == text.Id)
-            .Select(reference => new ReferenceDraft(
-                reference.VerseId,
-                reference.CanonicalBook,
-                reference.CanonicalChapter,
-                reference.CanonicalVerse,
-                reference.IsPrimary))
-            .ToListAsync(cancellationToken);
-
-        var expected = Expected(rules, text.Versification, [
-            .. verses.Select(v => new PlacedVerse(v.Id, v.Book, v.ChapterNumber, v.Number, v.Label, v.Length)),
-        ], BookTraditions.For(text.Slug), Read(text.Slug));
-
+        var (verses, existing, expected) = await Compute(text, rules, cancellationToken);
         var versesById = verses.ToDictionary(verse => verse.Id);
 
         if (Unchanged(existing, expected))
@@ -122,11 +90,50 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
         var moved = expected
             .Where(reference => reference.IsPrimary)
-            .Count(reference => reference.Chapter != versesById[reference.VerseId].ChapterNumber ||
+            .Count(reference => reference.Chapter != versesById[reference.VerseId].Chapter ||
                                 reference.Verse != versesById[reference.VerseId].Number);
         var outcome = new FrameOutcome(text.Slug, AlreadyPlaced: false, verses.Count, expected.Count, moved);
         logger.LogInformation("Placed {Outcome} in {Elapsed}", outcome, started.Elapsed);
         return outcome;
+    }
+
+    /// <summary>
+    /// The text's verses, the placements the database holds for them, and where the frame puts them now.
+    /// </summary>
+    public async Task<(List<PlacedVerse> Verses, List<ReferenceDraft> Existing, List<ReferenceDraft> Expected)> Compute(
+        Text text,
+        VersificationRules rules,
+        CancellationToken cancellationToken = default)
+    {
+        // A corpus imported before a new layer can gain a verse afterwards: a source note can sit
+        // on a printed \v marker with no words (ASV Matthew 17:21). Do not make an existing frame
+        // an all-or-nothing gate, or that new anchor can never reach the parallel reader. The
+        // edition's shape still comes from every verse, because that is what decides its scheme.
+        var verses = await db.Verses
+            .Where(v => v.TextId == text.Id)
+            .Select(v => new PlacedVerse(
+                v.Id,
+                v.Book!.CanonicalOrdinal,
+                v.ChapterNumber,
+                v.Number,
+                v.Label,
+                v.Words.Sum(w => w.Surface.Length)))
+            .ToListAsync(cancellationToken);
+
+        // The frame is derived data. A rule fixed after a corpus was loaded must replace the old
+        // placements rather than leave them behind just because every verse already has a row.
+        var existing = await db.VerseReferences
+            .Where(reference => reference.Verse!.TextId == text.Id)
+            .Select(reference => new ReferenceDraft(
+                reference.VerseId,
+                reference.CanonicalBook,
+                reference.CanonicalChapter,
+                reference.CanonicalVerse,
+                reference.IsPrimary))
+            .ToListAsync(cancellationToken);
+
+        var expected = Expected(rules, text.Versification, verses, BookTraditions.For(text.Slug), Read(text.Slug));
+        return (verses, existing, expected);
     }
 
     /// <summary>

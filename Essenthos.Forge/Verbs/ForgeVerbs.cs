@@ -71,6 +71,10 @@ internal static partial class ForgeVerbs
         new("heading-notes", "", "Write the notes Biblica's Ukrainian prints on its psalm headings into a corpus loaded before them.",
             HeadingNotes, Most: 0),
         new("frame", "", "Recompute every text's canonical frame and report which texts changed.", Reframe),
+        new("frame-check", "[--out <file>]",
+            "Compute every text's canonical frame and compare it with the one the corpus holds, verse by verse. "
+            + "Writes nothing to the corpus; --out writes the computed frame as a file.",
+            FrameCheck),
         new("verse-links", "", "Complete verse correspondences from the current frame and sourced word links.", VerseLinks),
         new("verse-refresh", "<text,...>", "Refresh only the frame's verse correspondences involving these texts, preserving other testimony.",
             VerseRefresh, Least: 1, Most: 1, Relinks: args => Relinked.Of(args[1].Split(','))),

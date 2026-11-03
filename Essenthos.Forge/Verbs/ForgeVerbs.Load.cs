@@ -267,6 +267,68 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// Every text's frame computed as <c>frame</c> would write it, set against the rows the corpus holds:
+    /// a row only one side has is a difference, except a psalm title's further row, which the passes after
+    /// the frame write (<see cref="CanonicalFrameLoader.Unchanged"/>). Exits 1 when a text differs.
+    /// </summary>
+    private static async Task<int> FrameCheck(ForgeRun forge, string[] args)
+    {
+        var at = Array.IndexOf(args, "--out");
+        var path = at > 0 && at + 1 < args.Length ? Path.GetFullPath(args[at + 1]) : null;
+        var rules = Loading.Frame.TvtmsReader.Read(Configuration.ResourcePaths.File(forge.Resources, "Versification", "TVTMS.txt"));
+
+        using var scope = forge.Scope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var loader = scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>();
+        await using var output = path is null ? null : new StreamWriter(path, false, new UTF8Encoding(false)) { NewLine = "\n" };
+        output?.WriteLine("text\tbook\tchapter\tverse\tlabel\tcanonical_book\tcanonical_chapter\tcanonical_verse\tprimary");
+
+        var differing = 0;
+        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        {
+            if (!rules.Covers(text.Versification))
+            {
+                Console.WriteLine($"{text.Slug}\tnot covered");
+                continue;
+            }
+
+            var (verses, existing, expected) = await loader.Compute(text, rules);
+            var wanted = expected.ToHashSet();
+            var held = existing.ToHashSet();
+            var missing = wanted.Count(reference => !held.Contains(reference));
+            var extra = held.Where(reference => !wanted.Contains(reference)).ToList();
+            var titles = extra.Count(reference => !reference.IsPrimary && reference.Verse == Loading.Frame.CanonicalReference.TitleVerse);
+            var unchanged = CanonicalFrameLoader.Unchanged(existing, expected);
+            if (!unchanged)
+            {
+                differing++;
+            }
+
+            Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
+                $"{text.Slug}\t{verses.Count} verses\t{expected.Count} computed\t{existing.Count} held\t{missing} missing\t{extra.Count - titles} extra\t{titles} title rows of later passes\t{(unchanged ? "unchanged" : "DIFFERS")}"));
+
+            if (output is null)
+            {
+                continue;
+            }
+
+            var byId = verses.ToDictionary(verse => verse.Id);
+            foreach (var reference in expected
+                         .OrderBy(r => byId[r.VerseId].Book).ThenBy(r => byId[r.VerseId].Chapter)
+                         .ThenBy(r => byId[r.VerseId].Number).ThenBy(r => byId[r.VerseId].Label, StringComparer.Ordinal)
+                         .ThenByDescending(r => r.IsPrimary).ThenBy(r => r.Book).ThenBy(r => r.Chapter).ThenBy(r => r.Verse))
+            {
+                var verse = byId[reference.VerseId];
+                output.WriteLine(string.Create(CultureInfo.InvariantCulture,
+                    $"{text.Slug}\t{verse.Book}\t{verse.Chapter}\t{verse.Number}\t{verse.Label}\t{reference.Book}\t{reference.Chapter}\t{reference.Verse}\t{(reference.IsPrimary ? 1 : 0)}"));
+            }
+        }
+
+        Console.WriteLine($"{differing} texts differ from the frame the corpus holds");
+        return differing == 0 ? 0 : 1;
+    }
+
     private static async Task<int> VerseLinks(ForgeRun forge, string[] args)
     {
         using var scope = forge.Scope();
