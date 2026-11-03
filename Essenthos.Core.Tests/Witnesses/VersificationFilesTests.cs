@@ -12,7 +12,7 @@ public sealed class VersificationFilesTests
 {
     private const int Sirach = 72;
 
-    private static VersificationData Data => VersificationData.Of(TestResources.Shipped("."));
+    private static VersificationData Data => TestResources.Versification;
 
     [Fact]
     public void EveryCorrectionSaysWhatWasRead()

@@ -60,7 +60,7 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
 
         CanonicalFrameLoader.Expected(
                 TestResources.Rules, texts.Ukrainian.Definition.Versification, verses,
-                TestResources.Rules.Data.Books(EbibleTextSource.BiblicaUkrainian))
+                TestResources.Versification.Books(EbibleTextSource.BiblicaUkrainian))
             .Single(reference => reference.VerseId == id && reference.IsPrimary)
             .Should().Be(new ReferenceDraft(id, 19, toPsalm, toVerse, true));
     }

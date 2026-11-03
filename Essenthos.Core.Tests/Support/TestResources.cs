@@ -36,7 +36,11 @@ internal static class TestResources
     /// <c>Resources/Essenthos/versification/</c>, as this branch has them, wherever the corpus is read from.
     /// </summary>
     public static Essenthos.Core.Loading.Frame.VersificationRules Rules =>
-        Essenthos.Core.Loading.Frame.TvtmsReader.Read(Tvtms, Essenthos.Core.Loading.Frame.VersificationData.Of(Shipped(".")));
+        Essenthos.Core.Loading.Frame.TvtmsReader.Read(Tvtms, Versification);
+
+    /// <summary>This project's own versification rules as this checkout has them, which need no corpus.</summary>
+    public static Essenthos.Core.Loading.Frame.VersificationData Versification =>
+        Essenthos.Core.Loading.Frame.VersificationData.Of(Shipped("."));
 
     /// <summary>
     /// The Strong-tagged Synodal, which the mapping reads and the corpus never loads. A path whether
