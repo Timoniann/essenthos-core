@@ -14,6 +14,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
         <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
+        <ProjectReference Include="..\Essenthos.Products.Postgres\Essenthos.Products.Postgres.csproj" />
     </ItemGroup>
 
     <ItemGroup>

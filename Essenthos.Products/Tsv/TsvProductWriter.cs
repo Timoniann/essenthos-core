@@ -107,4 +107,16 @@ public sealed class TsvProductWriter<T> : IProductWriter<T>, IRowSink
         Separate();
         TsvEscaping.WriteEscaped(_writer, value);
     }
+
+    void IRowSink.VerseKey(VerseKey? value)
+    {
+        Separate();
+        _writer.Write(value?.ToString() ?? TsvEscaping.Null);
+    }
+
+    void IRowSink.WordKey(WordKey? value)
+    {
+        Separate();
+        _writer.Write(value?.Own ?? TsvEscaping.Null);
+    }
 }

@@ -68,8 +68,14 @@ public sealed class ProductHeader
         Producer = producer;
     }
 
-    /// <summary>The product's own path, relative to <c>Resources/</c>: <c>Essenthos/texts/KJV/words.tsv</c>.</summary>
+    /// <summary>The product's own path, relative to <c>Resources/</c>: <c>Essenthos/texts/KJV/words.tsv</c>; empty in a hand-written file that omits it.</summary>
     public string Product { get; }
+
+    /// <summary>What a hand-edited file writes as its producer.</summary>
+    public const string ByHand = "by hand";
+
+    /// <summary>Whether people edit this file: its producer is <see cref="ByHand"/>, or it names none.</summary>
+    public bool IsHandWritten => Producer.Length == 0 || Producer.StartsWith(ByHand, StringComparison.Ordinal);
 
     public IReadOnlyList<ProductInput> Inputs { get; }
 
@@ -180,12 +186,9 @@ public sealed class ProductHeader
             }
         }
 
-        if (product is null || producer is null)
-        {
-            throw new FormatException("A product header names its product and its producer.");
-        }
-
-        var header = new ProductHeader(product, inputs, producer) { Rows = rows };
+        // A file written by hand may say only `# producer   by hand`, or carry notes alone; what it
+        // leaves out is empty rather than an error, and the writers always fill all four.
+        var header = new ProductHeader(product ?? string.Empty, inputs, producer ?? string.Empty) { Rows = rows };
         header.Notes.AddRange(notes);
         header.Comments.AddRange(comments);
         return header;

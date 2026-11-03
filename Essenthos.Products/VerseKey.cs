@@ -45,8 +45,8 @@ public readonly record struct VerseKey(int Book, int Chapter, string ChapterLabe
         return true;
     }
 
-    /// <summary>A number with its optional label, as a chapter or a verse writes it.</summary>
-    internal static bool TryParseNumbered(ReadOnlySpan<char> text, out int number, out string label)
+    /// <summary>A number with its optional label, as a chapter or a verse writes it: <c>50a</c>, <c>1-10</c>, <c>4</c>.</summary>
+    public static bool TryParseNumbered(ReadOnlySpan<char> text, out int number, out string label)
     {
         number = 0;
         label = string.Empty;

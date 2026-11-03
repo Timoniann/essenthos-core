@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>Essenthos.Products.Postgres</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
+
+    <!-- The way from a product file into Postgres: binary COPY straight from the decoded columns,
+         several streams at once. Apart from Essenthos.Products so that the format library stays
+         free of a database driver and a tool that only reads files never loads one. Npgsql is the
+         driver the corpus already runs on (PostgreSQL licence), at the version the schema resolves. -->
+
+    <ItemGroup>
+        <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
+        <PackageReference Include="Npgsql" Version="10.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+    </ItemGroup>
+
+</Project>
