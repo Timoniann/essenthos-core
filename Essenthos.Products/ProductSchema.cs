@@ -13,6 +13,12 @@ public enum ColumnType
     Integer,
     Boolean,
     Json,
+
+    /// <summary>A <see cref="Products.VerseKey"/>, written <c>1.31:50a</c> in text and as its parts in binary.</summary>
+    VerseKey,
+
+    /// <summary>A <see cref="Products.WordKey"/> of the file's own text, written <c>1.1:1.3</c> in text and as its parts in binary.</summary>
+    WordKey,
 }
 
 public sealed record Column(string Name, ColumnType Type, bool Nullable = false)
@@ -27,6 +33,8 @@ public interface IRowSink
     void Integer(long? value);
     void Boolean(bool? value);
     void Json(string? value);
+    void VerseKey(VerseKey? value);
+    void WordKey(WordKey? value);
 }
 
 /// <summary>
@@ -100,12 +108,61 @@ public abstract class ProductRow
 
     public string Json(int column) => Text(column);
 
+    public virtual VerseKey? VerseKeyOrNull(int column)
+    {
+        var text = TextOrNull(column);
+        if (text is null)
+        {
+            return null;
+        }
+
+        return Products.VerseKey.TryParse(text, out var key)
+            ? key
+            : throw new ProductFormatException($"Column '{Columns[column].Name}' holds '{text}', not a verse key.");
+    }
+
+    public VerseKey VerseKey(int column) => VerseKeyOrNull(column) ?? throw Missing(column);
+
+    public VerseRange? VerseRangeOrNull(int column)
+    {
+        var text = TextOrNull(column);
+        if (text is null)
+        {
+            return null;
+        }
+
+        return Products.VerseRange.TryParse(text, out var range)
+            ? range
+            : throw new ProductFormatException($"Column '{Columns[column].Name}' holds '{text}', not a verse or a run of verses.");
+    }
+
+    public VerseRange VerseRange(int column) => VerseRangeOrNull(column) ?? throw Missing(column);
+
+    /// <summary>A word key of <paramref name="text"/>, which the file's own column never writes.</summary>
+    public virtual WordKey? WordKeyOrNull(int column, string text)
+    {
+        var written = TextOrNull(column);
+        if (written is null)
+        {
+            return null;
+        }
+
+        return Products.WordKey.TryParseOwn(written, text, out var key)
+            ? key
+            : throw new ProductFormatException($"Column '{Columns[column].Name}' holds '{written}', not a word key.");
+    }
+
+    public WordKey WordKey(int column, string text) => WordKeyOrNull(column, text) ?? throw Missing(column);
+
     public string? TextOrNull(string column) => TextOrNull(IndexOf(column));
     public string Text(string column) => Text(IndexOf(column));
     public long? IntegerOrNull(string column) => IntegerOrNull(IndexOf(column));
     public long Integer(string column) => Integer(IndexOf(column));
     public int Int32(string column) => Int32(IndexOf(column));
     public bool Boolean(string column) => Boolean(IndexOf(column));
+    public VerseKey VerseKey(string column) => VerseKey(IndexOf(column));
+    public VerseRange VerseRange(string column) => VerseRange(IndexOf(column));
+    public WordKey WordKey(string column, string text) => WordKey(IndexOf(column), text);
 
     /// <summary>Every value as text, null where the value is null; what a converter or a viewer takes.</summary>
     public string?[] ToTexts()
@@ -136,6 +193,15 @@ public sealed class ProductSchema<T>
 
     public IReadOnlyList<Column> Columns => _columns;
 
+    /// <summary>The producer's own version of this shape, written into a binary file's footer; 1 until a column changes meaning.</summary>
+    public int Version { get; private set; } = 1;
+
+    public ProductSchema<T> Versioned(int version)
+    {
+        Version = version;
+        return this;
+    }
+
     public ProductSchema<T> Text(string name, Func<T, string> get) =>
         Add(new Column(name, ColumnType.Text), (row, sink) => sink.Text(get(row) ?? throw NullIn(name)));
 
@@ -162,11 +228,24 @@ public sealed class ProductSchema<T>
 
     /// <summary>A verse key, written as <c>1.31:50a</c>.</summary>
     public ProductSchema<T> VerseKey(string name, Func<T, VerseKey> get) =>
+        Add(new Column(name, ColumnType.VerseKey), (row, sink) => sink.VerseKey(get(row)));
+
+    public ProductSchema<T> OptionalVerseKey(string name, Func<T, VerseKey?> get) =>
+        Add(new Column(name, ColumnType.VerseKey, Nullable: true), (row, sink) => sink.VerseKey(get(row)));
+
+    /// <summary>A verse or a run of verses, written as <c>1.1:1</c> or <c>1.1:1..10</c>; text in every format.</summary>
+    public ProductSchema<T> VerseRange(string name, Func<T, VerseRange> get) =>
         Text(name, row => get(row).ToString());
 
-    /// <summary>A word key of the file's own text, written as <c>1.1:1.3</c>.</summary>
+    public ProductSchema<T> OptionalVerseRange(string name, Func<T, VerseRange?> get) =>
+        OptionalText(name, row => get(row)?.ToString());
+
+    /// <summary>A word key of the file's own text, written as <c>1.1:1.3</c>: the text is the file's and is not written.</summary>
     public ProductSchema<T> OwnWordKey(string name, Func<T, WordKey> get) =>
-        Text(name, row => get(row).Own);
+        Add(new Column(name, ColumnType.WordKey), (row, sink) => sink.WordKey(get(row)));
+
+    public ProductSchema<T> OptionalOwnWordKey(string name, Func<T, WordKey?> get) =>
+        Add(new Column(name, ColumnType.WordKey, Nullable: true), (row, sink) => sink.WordKey(get(row)));
 
     public ProductSchema<T> Reads(Func<ProductRow, T> read)
     {

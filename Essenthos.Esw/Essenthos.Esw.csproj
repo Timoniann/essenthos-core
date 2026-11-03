@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>Essenthos.Core</RootNamespace>
+        <AssemblyName>esw</AssemblyName>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
+
+    <!-- The command line over the product files: view, stats, convert, validate. Its own
+         executable rather than a Forge verb because it must start in a blink on any machine that
+         has a product file and nothing else: no corpus, no database, no SIL. -->
+
+    <ItemGroup>
+        <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
+    </ItemGroup>
+
+</Project>

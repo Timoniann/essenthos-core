@@ -42,6 +42,7 @@
          enforced in the API's own project file rather than here. -->
     <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
     <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
+    <ProjectReference Include="..\Essenthos.Products.Postgres\Essenthos.Products.Postgres.csproj" />
     <ProjectReference Include="..\Essenthos.Accounts\Essenthos.Accounts.csproj" />
     <ProjectReference Include="..\Essenthos.Api\Essenthos.Api.csproj" />
     <ProjectReference Include="..\Essenthos.Forge\Essenthos.Forge.csproj" />

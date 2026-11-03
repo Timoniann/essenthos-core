@@ -75,11 +75,19 @@ public class ProductHeaderTests
     }
 
     [Fact]
-    public void AHeaderWithoutProductOrProducerIsRefused()
+    public void AHandWrittenHeaderMayLeaveOutTheProductAndTheInputs()
     {
-        var parse = () => ProductHeader.Parse(["# rows       3"]);
+        var parsed = ProductHeader.Parse(["# producer   by hand", "# note       the owner's rulings of 2026-11"]);
 
-        parse.Should().Throw<FormatException>();
+        parsed.Product.Should().BeEmpty();
+        parsed.Producer.Should().Be(ProductHeader.ByHand);
+        parsed.IsHandWritten.Should().BeTrue();
+        parsed.Inputs.Should().BeEmpty();
+        parsed.Rows.Should().BeNull();
+        parsed.Notes.Should().BeEquivalentTo(new[] { new KeyValuePair<string, string>("note", "the owner's rulings of 2026-11") });
+
+        ProductHeader.Parse(["# rows       3"]).Producer.Should().BeEmpty("a header with neither line still reads");
+        new ProductHeader("Essenthos/a.tsv", [], "forge convert KJV   (Essenthos.Forge 1.0)").IsHandWritten.Should().BeFalse();
     }
 
     [Fact]

@@ -45,11 +45,19 @@ public readonly record struct WordKey(string Text, VerseKey Verse, int Position)
             ? key
             : throw new FormatException($"'{text}' is not a word key{(context is null ? "" : $" in the context of {context}")}.");
 
-    /// <summary>Reads a key written inside a file of one text, where the text is never written.</summary>
+    /// <summary>Reads a key written inside a file of one text, where the text is never written: the full <c>1.1:1.3</c>.</summary>
     public static WordKey Parse(ReadOnlySpan<char> text, string ownText) =>
-        TryParse(text, ownText, null, out var key)
+        TryParseOwn(text, ownText, out var key)
             ? key
-            : throw new FormatException($"'{text}' is not a word key of {ownText}.");
+            : throw new FormatException($"'{text}' is not a word key of {ownText} (book.chapter:verse.position).");
+
+    /// <summary>The full shape without the text, <c>1.1:1.3</c>, which is the only one a file writes.</summary>
+    public static bool TryParseOwn(ReadOnlySpan<char> text, string ownText, out WordKey key)
+    {
+        key = default;
+        var colon = text.IndexOf(':');
+        return colon > 0 && text[..colon].Contains('.') && !text.Contains(' ') && TryParse(text, ownText, null, out key);
+    }
 
     public static bool TryParse(ReadOnlySpan<char> text, WordKey? context, out WordKey key) =>
         TryParse(text, context?.Text, context?.Verse, out key);
