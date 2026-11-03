@@ -74,6 +74,12 @@ internal sealed class CompositionPipeline(
     /// </summary>
     public const double AgreementFloor = 0.1;
 
+    /// <summary>
+    /// Where the links a run reads come from and where its answers go: null for the database, or the mapping's
+    /// files, whose finals it reads and whose <c>composed</c> method file it writes (<c>forge compose-file</c>).
+    /// </summary>
+    internal Mapping.MappingLinks? Files { get; set; }
+
     /// <param name="viaSlugs">
     /// The middle texts, one or two. A second is a second route that shares no evidence with the
     /// first, so the two agreeing is worth as much as either agreeing with the direct alignment.
@@ -121,6 +127,11 @@ internal sealed class CompositionPipeline(
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         IReadOnlySet<int>? verses = null;
+        if (refresh && Files is not null)
+        {
+            throw new InvalidOperationException("A composition read from the mapping files is drawn whole; --refresh reads the database's link ids.");
+        }
+
         if (refresh)
         {
             verses = await Stale(connection, fromSlug, viaSlugs, toSlug, daughter, cancellationToken);
@@ -135,7 +146,7 @@ internal sealed class CompositionPipeline(
         }
 
         var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
-        var statements = await Key(connection, from.Id, to.Id, cancellationToken);
+        var statements = await KeyOf(connection, from.Id, to.Id, cancellationToken);
         var (admission, _) = await Admit(
             connection, from, viaSlugs, to, proposed, statements, threshold, precision, false, null,
             cancellationToken);
@@ -148,7 +159,10 @@ internal sealed class CompositionPipeline(
         }
 
         var merged = Merge(proposed, admission, agreeing);
-        var (fresh, corroborated) = await Write(
+        var (fresh, corroborated) = Files is not null
+            ? WriteFiles(from, to, [.. viaSlugs], merged,
+                measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0) ? measured.Note : null)
+            : await Write(
             connection, from, to, [.. viaSlugs], merged, cancellationToken,
             measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0)
                 ? measured.Note
@@ -269,7 +283,7 @@ internal sealed class CompositionPipeline(
 
         var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, true, books, cancellationToken, daughter);
         var trained = started.Elapsed;
-        var statements = await Key(connection, from.Id, to.Id, cancellationToken);
+        var statements = await KeyOf(connection, from.Id, to.Id, cancellationToken);
         var scope = await CompositionTrial.Scope(connection, from.Id, to.Id, statements, books, cancellationToken);
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
         var (admission, measured) = await Admit(
@@ -376,7 +390,7 @@ internal sealed class CompositionPipeline(
             var first = await aligner.Proposals(
                 fromSlug, viaSlug, Workspace(fromSlug, viaSlug, trial, books), AgreementFloor,
                 books: books, cancellationToken: cancellationToken);
-            composed.Add(Compose(first, await Carried(connection, via.Id, to.Id, daughter, cancellationToken), joins));
+            composed.Add(Compose(first, Files?.Carried(via.Id, to.Id, daughter) ?? await Carried(connection, via.Id, to.Id, daughter, cancellationToken), joins));
         }
 
         return new Proposed(written, reduced, composed);
@@ -412,11 +426,11 @@ internal sealed class CompositionPipeline(
 
         var measured = new List<(string Text, Route Reads, IReadOnlyDictionary<Route, RouteFloor> Floors)>();
         var report = new StringBuilder();
-        foreach (var proxy in await Proxies(connection, from, to.Id, cancellationToken))
+        foreach (var proxy in Files?.Proxies(from.Id, to.Id) ?? await Proxies(connection, from, to.Id, cancellationToken))
         {
             var vias = viaSlugs.Where(via => via != proxy.Slug).ToList();
             var proxyProposed = await Propose(connection, proxy.Slug, vias, to.Slug, trial, books, cancellationToken);
-            var proxyStatements = await Key(connection, proxy.Id, to.Id, cancellationToken);
+            var proxyStatements = await KeyOf(connection, proxy.Id, to.Id, cancellationToken);
             var proxyEvery = Merge(proxyProposed, Admission.Everything(minimumConfidence));
             var floors = Admission.Measure(proxyEvery, proxyStatements, minimumConfidence, precision);
 
@@ -1095,6 +1109,58 @@ internal sealed class CompositionPipeline(
         }
 
         return words;
+    }
+
+    /// <summary><see cref="Key"/>, with the statements read from the mapping files where the run reads them.</summary>
+    private async Task<Dictionary<long, HashSet<long>>> KeyOf(
+        NpgsqlConnection connection, int fromTextId, int toTextId, CancellationToken cancellationToken)
+    {
+        if (Files is null)
+        {
+            return await Key(connection, fromTextId, toTextId, cancellationToken);
+        }
+
+        var statements = Files.Statements(fromTextId, toTextId, rules: false);
+        var together = WrittenTogether(await Spelling(connection, toTextId, cancellationToken));
+        foreach (var targets in statements.Values)
+        {
+            foreach (var target in targets.ToArray())
+            {
+                if (together.TryGetValue(target, out var joined))
+                {
+                    targets.UnionWith(joined);
+                }
+            }
+        }
+
+        return statements;
+    }
+
+    /// <summary>
+    /// <see cref="Write"/> for a run that reads the mapping files: the same pairs are kept and left out (a stated pair
+    /// becomes an agreement, a word another method answers for gets no guess, an unrendered target word none either),
+    /// and they go to the pair's <c>composed</c> method file instead of the database. The rejected renderings are the
+    /// pair's rulings, which the merge applies.
+    /// </summary>
+    private (int Fresh, int Corroborated) WriteFiles(
+        Database.Entities.Text from, Database.Entities.Text to, string[] viaSlugs, IReadOnlyList<RoutedLink> merged, string? note)
+    {
+        var stated = Files!.Stated(from.Id, to.Id);
+        var claimed = Files.Statements(from.Id, to.Id, rules: true).Keys.ToHashSet();
+        var unrendered = Files.Unrendered(from.Id, to.Id);
+        var (fresh, agreeing) = Split([.. merged.Where(link => !unrendered.Contains(link.To))], stated, claimed, viaSlugs);
+        var agreed = stated.ToDictionary(pair => pair.Value, pair => pair.Key);
+        Files.WriteComposed(from.Slug, to.Slug,
+        [
+            .. fresh.Select(link => (link.From, link.To, Routes.Written(link.Confidence),
+                Routes.Describe(link.Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"), (string?)null)),
+            .. agreeing.Select(a => (agreed[a.Link].From, agreed[a.Link].To, a.Confidence, a.Source, (string?)Agreement)),
+        ],
+        [
+            .. viaSlugs.Select(via => Mapping.MappingProducts.Of(Mapping.MappingProducts.Pair(via, to.Slug), Mapping.MappingProducts.Final)),
+            Mapping.MappingProducts.Of(Mapping.MappingProducts.Pair(from.Slug, to.Slug), Mapping.MappingProducts.Final),
+        ]);
+        return (fresh.Count, agreeing.Count);
     }
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>

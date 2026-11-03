@@ -86,6 +86,8 @@
     { "path": "Essenthos.Forge/Loading/**", "areas": ["Witnesses", "Links", "Integrity"] },
     { "path": "Essenthos.Forge/Verification/**", "areas": ["Integrity", "Records", "Platform"] },
     { "path": "Essenthos.Forge/Publishing/**", "areas": ["Platform"] },
+    { "path": "Essenthos.Forge/Mapping/**", "areas": ["Links"] },
+    { "path": "Essenthos.Forge/Comparison/**", "areas": ["Links", "Records"] },
     { "path": "Essenthos.Forge/Verbs/**", "areas": ["Platform"] },
     { "path": "Essenthos.Forge/Configuration/**", "areas": ["Platform", "Records"] },
     { "path": "Essenthos.Forge/Program.cs", "areas": ["Platform"] },
