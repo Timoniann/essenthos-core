@@ -123,6 +123,6 @@ of `.book` and `.chapter` per chunk let a reader find a verse's group without re
 ## 7. Conventions
 
 - A product file holds one table named `rows` unless a producer writes several with `EswWriter`.
-- The extension is `.esw`. Hand-edited files stay `.tsv` and never become ESW.
+- The extension is `.esw` for now; the name is provisional (`.essp`, Essenthos Product, is proposed, since `.esw` is taken by other programs). The extension and the magic are `EswLayout.Extension` and `EswLayout.Magic`, the only two places a rename touches. Hand-edited files stay `.tsv` and never become ESW.
 - Integers are never floats; a product that needs a decimal writes an integer in a stated unit or text.
 - A reader refuses a `version` newer than it knows; within a version, unknown footer fields are ignored.
