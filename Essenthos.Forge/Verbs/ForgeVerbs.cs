@@ -252,6 +252,16 @@ internal static partial class ForgeVerbs
         new("records-export", "[--into <Resources>]", "Write our records, facts, languages and external datasets as files, from the database.", RecordsExport),
         new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
         new("records-compare", "<port/db> <port/db> [--out <file>]", "Compare two databases' records table by table by natural key. Reads only.", RecordsCompare, Least: 2),
+        new("mapping-export", "[--into <Resources>] [--pairs A-B,...] [--parallel <n>]",
+            "Write every link of the database as the mapping's per-pair method files, words by key and ids kept. Reads the database only.", MappingExportVerb),
+        new("merge", "<pair> | --all [--from <Resources>] [--force] [--parallel <n>]",
+            "Merge a pair's method files into its final and report by the stated precedence; losers stay in their files, marked.", Merge, Least: 1),
+        new("mapping-load", "[--from <Resources>]",
+            "Put every pair's final into the database (never live): link, link_word, link_claim and provenance, by COPY.", MappingLoadVerb),
+        new("mapping-compare", "<port/db> <port/db> [--out <folder>] [--pairs A-B,...] [--parallel <n>]",
+            "Compare two databases' links and claims by key, grouped by pair and method. Reads only.", MappingCompare, Least: 2),
+        new("compose-file", "<from> <via[,via]> <to> --files <Resources> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured]",
+            "Compose from the mapping files' links into the pair's composed method file; words and frame from the database, which it never writes.", ComposeFile, Least: 3),
     ];
 
     public static ForgeVerb? Find(string name) =>
