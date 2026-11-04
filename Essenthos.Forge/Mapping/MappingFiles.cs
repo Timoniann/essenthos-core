@@ -76,9 +76,17 @@ internal static class MappingFiles
             }
         }
 
+        List<MappingRow>? yielded = null;
+        if (store.Exists(MappingProducts.Of(pair, MappingProducts.StrongYielded)))
+        {
+            using var reader = store.Open(MappingProducts.Of(pair, MappingProducts.StrongYielded), MappingRow.Schema);
+            yielded = reader.ReadAll();
+        }
+
         var ordinal = PairOrdinals.Ensure(store, [pair])[pair];
         var output = MappingMerge.Merge(new MappingMerge.Input(
-            pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers));
+            pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers,
+            yielded));
 
         foreach (var (method, merged) in output.Methods)
         {
@@ -234,6 +242,7 @@ internal static class MappingFiles
         var products = methods.Select(m => MappingProducts.Of(pair, m))
             .Append(MappingProducts.Of(pair, MappingProducts.Rulings))
             .Append(MappingProducts.Of(pair, MappingProducts.Hashes))
+            .Append(MappingProducts.Of(pair, MappingProducts.StrongYielded))
             .Append(VerseManifestRow.ProductOf(fromText))
             .Append(VerseManifestRow.ProductOf(toText))
             .Append(Loading.Frame.FrameFile.Product(fromText))

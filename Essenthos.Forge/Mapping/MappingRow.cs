@@ -193,6 +193,14 @@ internal static class MappingStatus
 
     public const string NarrowedByRuling = "narrowed-by ruling";
 
+    public const string NarrowedByEvidentia = "narrowed-by evidentia";
+
+    /// <summary>
+    /// A laid Strong row the producer left to a stated link that names some of its words (<see cref="MappingProducts.StrongYielded"/>):
+    /// the merge makes it a claim on that link where an approved EVIDENTIA absence takes the rest out.
+    /// </summary>
+    public const string YieldsToStated = "yields-to stated";
+
     public const string Stale = "stale";
 
     public static string SupersededBy(int run) => $"superseded-by evidentia run {run}";
@@ -211,10 +219,13 @@ internal static class MappingProducts
 
     public const string Rulings = "rulings";
 
+    /// <summary>The laid Strong rows <c>strong-pairs</c> left to a stated link, which only the merge reads (<see cref="MappingStatus.YieldsToStated"/>).</summary>
+    public const string StrongYielded = "strong-yielded";
+
     public const string PairOrdinals = Folder + "/pairs";
 
     /// <summary>The products of a pair folder that are not a method's claims.</summary>
-    public static readonly string[] NotMethods = [Final, Report, Hashes, Rulings, VerseLinkFiles.Name];
+    public static readonly string[] NotMethods = [Final, Report, Hashes, Rulings, StrongYielded, VerseLinkFiles.Name];
 
     public static string Pair(string from, string to) => $"{from}-{to}";
 

@@ -8,6 +8,8 @@ namespace Essenthos.Core.Mapping;
 /// <item>rows citing a verse whose text moved since they were made are stale and stand aside; a model's rows
 /// stay out until the pair is aligned again (the owner's D1);</item>
 /// <item>a pair's rulings refuse shapes or words and pin shapes;</item>
+/// <item>an approved EVIDENTIA verdict that a word has no counterpart takes that word out of a Strong pairing laid from
+/// another edition (<see cref="NarrowLaidStrong"/>);</item>
 /// <item>rows naming the same words are one link: the top-ranked row is its settled claim, the others its claims;</item>
 /// <item>links of different words competing for a word: the higher-ranked keeps it, the lower is withdrawn
 /// whole, by the method that won; an absence a source states or a person decides wins its word over any
@@ -33,6 +35,7 @@ internal static class MappingMerge
     /// carried from an earlier file instead (<see cref="MethodFiles.KeptSources"/>): their other rows answer for no verse that moved.</param>
     /// <param name="Producers">The producer that wrote each method file, where one from files did; a moved verse's rows wait for it.</param>
     /// <param name="Verses">The two texts' frames, for <see cref="CrossingRule"/>; null leaves the rule out.</param>
+    /// <param name="Yielded">The laid Strong rows the producer left to a stated link (<see cref="MappingProducts.StrongYielded"/>).</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -46,7 +49,8 @@ internal static class MappingMerge
         Func<string, VerseKey, string?>? FoldNow = null,
         PairFrames? Verses = null,
         IReadOnlyDictionary<string, IReadOnlySet<string>>? Remade = null,
-        IReadOnlyDictionary<string, string>? Producers = null);
+        IReadOnlyDictionary<string, string>? Producers = null,
+        IReadOnlyList<MappingRow>? Yielded = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -85,6 +89,10 @@ internal static class MappingMerge
         var (stale, lost) = Stale(input, entries, report);
         var pinned = Rule(input, entries);
         Supersede(entries);
+        if (laid)
+        {
+            NarrowLaidStrong(entries, pinned, input.Yielded ?? [], report);
+        }
 
         var active = entries.Where(e => e.Status is null).ToList();
         var candidates = active
@@ -282,6 +290,113 @@ internal static class MappingMerge
                 verdict.Entry.Status = MappingStatus.SupersededBy(run);
             }
         }
+    }
+
+    /// <summary>
+    /// An approved EVIDENTIA verdict that a word has no counterpart outranks a Strong pairing laid onto the text from another
+    /// edition (the owner's order, NOT-0218: a verdict ranks below a text's own numbers and above numbers laid from elsewhere,
+    /// which pair a supplied word with the phrase it stands in, "el Cristo"). The absent word is taken out of the laid link, as a
+    /// ruling takes a word out of a source's rows, and the rest of the link stands as drawn; a link left with no word on that
+    /// side is withdrawn by the verdict. The verdict narrows the laid link whatever else claims the word: against every other
+    /// method its absence still gives way (<see cref="GiveWay"/>). A pinned shape is never narrowed. A laid row the producer left
+    /// to a stated link because its words were not the link's (<paramref name="yielded"/>) is narrowed the same way and becomes a
+    /// claim on that link where it then names exactly the link's words.
+    /// </summary>
+    private static void NarrowLaidStrong(List<Entry> entries, HashSet<string> pinned, IReadOnlyList<MappingRow> yielded, List<ReportRow> report)
+    {
+        var absentFrom = new HashSet<string>(StringComparer.Ordinal);
+        var absentTo = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var row in entries.Where(e => e.Status is null && e.Row.Method == MappingMethods.Evidentia && MappingMethods.IsAbsence(e.Row.Relation))
+                     .Select(e => e.Row))
+        {
+            if (row.Relation == "omits")
+            {
+                absentTo.UnionWith(MappingText.Split(row.To));
+            }
+            else
+            {
+                absentFrom.UnionWith(MappingText.Split(row.From));
+            }
+        }
+
+        if (absentFrom.Count == 0 && absentTo.Count == 0)
+        {
+            return;
+        }
+
+        (string From, string To)? Narrowed(MappingRow row)
+        {
+            var from = MappingText.Split(row.From).Where(k => !absentFrom.Contains(k)).ToList();
+            var to = MappingText.Split(row.To).Where(k => !absentTo.Contains(k)).ToList();
+            return from.Count == 0 || to.Count == 0 ? null : (string.Join(' ', from), string.Join(' ', to));
+        }
+
+        foreach (var entry in entries.Where(e => e.Status is null && e.Row.Method == MappingMethods.Strong
+                                                 && !MappingMethods.IsAbsence(e.Row.Relation) && !pinned.Contains(e.Row.Shape)).ToList())
+        {
+            var narrowed = Narrowed(entry.Row);
+            if (narrowed is { } same && same.From == entry.Row.From && same.To == entry.Row.To)
+            {
+                continue;
+            }
+
+            if (narrowed is not { } left)
+            {
+                entry.Status = MappingStatus.WithdrawnBy(MappingMethods.Evidentia);
+                continue;
+            }
+
+            entry.Status = MappingStatus.NarrowedByEvidentia;
+            entries.Add(new Entry(entry.File, -1, entry.Row with
+            {
+                From = left.From,
+                To = left.To,
+                Roles = KeptRoles(entry.Row.Roles, MappingText.Split(left.From).ToHashSet(StringComparer.Ordinal)),
+            }, laidStrong: true));
+        }
+
+        var stated = entries.Where(e => e.Status is null && MappingMethods.StatesAbsence(e.Row.Method) && !MappingMethods.IsAbsence(e.Row.Relation))
+            .Select(e => e.Row.Shape).ToHashSet(StringComparer.Ordinal);
+        var regained = 0;
+        foreach (var row in yielded)
+        {
+            if (Narrowed(row) is { } narrowed && (narrowed.From != row.From || narrowed.To != row.To)
+                && stated.Contains(narrowed.From + "|" + narrowed.To))
+            {
+                entries.Add(new Entry(MappingMethods.Strong, -1, row with
+                {
+                    From = narrowed.From,
+                    To = narrowed.To,
+                    Roles = KeptRoles(row.Roles, MappingText.Split(narrowed.From).ToHashSet(StringComparer.Ordinal)),
+                    Evidence = Loading.Links.TaggedTextLinkLoader.CorroborationNote,
+                    Status = null,
+                }, laidStrong: true));
+                regained++;
+            }
+        }
+
+        if (regained > 0)
+        {
+            report.Add(new ReportRow("regained", MappingMethods.Strong, MappingMethods.Evidentia, regained,
+                "laid Strong rows the producer left to a stated link, claims on it once EVIDENTIA's absent words are out"));
+        }
+    }
+
+    /// <summary>The roles of a link's FROM words that name only words still in it, or null when none is left.</summary>
+    private static string? KeptRoles(string? roles, HashSet<string> from)
+    {
+        if (roles is null)
+        {
+            return null;
+        }
+
+        var kept = roles.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(role =>
+        {
+            var equals = role.IndexOf('=');
+            var at = role.LastIndexOf('@');
+            return equals > 0 && from.Contains(role[..equals]) && (at < 0 || from.Contains(role[(at + 1)..]));
+        }).ToList();
+        return kept.Count == 0 ? null : string.Join(' ', kept);
     }
 
     /// <summary>
@@ -625,7 +740,9 @@ internal static class MappingMerge
                 ? ("withdrawn", status["withdrawn-by ".Length..])
                 : status.StartsWith("superseded-by ", StringComparison.Ordinal)
                     ? ("superseded", status["superseded-by ".Length..])
-                    : (status.Split(' ')[0], string.Empty);
+                    : status.StartsWith("narrowed-by ", StringComparison.Ordinal)
+                        ? ("narrowed", status["narrowed-by ".Length..])
+                        : (status.Split(' ')[0], string.Empty);
             report.Add(new ReportRow(kind, method, by, group.Count(), status));
         }
 

@@ -38,7 +38,8 @@ internal static partial class MappingMethods
     /// <summary>
     /// An approved EVIDENTIA verdict's absence beats only the aligner's guess: it ranks just above the aligner,
     /// and gives way to any link on its word that another method claims (<see cref="GivesWay"/>), so a rule's
-    /// "no counterpart" never withdraws a hand alignment, a Strong pairing, a composition or a placed name.
+    /// "no counterpart" never withdraws a hand alignment, a Strong pairing on the text's own numbers, a composition
+    /// or a placed name. A Strong pairing laid from another edition loses the word instead (<c>MappingMerge.NarrowLaidStrong</c>).
     /// </summary>
     public const int EvidentiaAbsence = 41;
 

@@ -214,6 +214,14 @@ internal sealed class StrongNumberSource : IPairSource
                     if (!testimony.Shapes.Contains(row.Shape))
                     {
                         testified++;
+
+                        // A laid phrase may hold a word an approved EVIDENTIA verdict states absent, which this producer cannot read:
+                        // the merge takes that word out and keeps the rest where it then names the stated link's words.
+                        if (Laid)
+                        {
+                            rows.Add(row with { Status = MappingStatus.YieldsToStated });
+                        }
+
                         continue;
                     }
 

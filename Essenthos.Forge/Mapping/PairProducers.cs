@@ -204,6 +204,20 @@ internal static class MethodFiles
             previousMade.Count(shape => !madeShapes.Contains(shape)), carried.Count, carriedSources);
     }
 
+    /// <summary>
+    /// The laid Strong rows a producer left to a stated link (<see cref="MappingProducts.StrongYielded"/>), sorted, from the
+    /// same inputs as the method file; only the merge reads them, so no other producer sees them as links.
+    /// </summary>
+    public static void WriteYielded(ProductStore store, string pair, IReadOnlyCollection<MappingRow> yielded, string producer, IEnumerable<ProductInput> inputs)
+    {
+        var (fromText, toText) = MappingProducts.Split(pair);
+        var sorted = yielded.Select(r => (Sort: MappingText.SortKey(r.From, r.To, fromText, toText), Row: r)).ToList();
+        sorted.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));
+        using var writer = store.Create(MappingProducts.Of(pair, MappingProducts.StrongYielded), ProductKind.Machine, MappingRow.Schema,
+            ProductHeader.DescribeProducer($"{producer} {pair}"), [.. inputs.DistinctBy(input => input.Path)]);
+        writer.WriteAll(sorted.Select(r => r.Row));
+    }
+
     /// <summary>The inputs every producer of a pair names: both texts' words and frames.</summary>
     public static IEnumerable<ProductInput> TextInputs(ProductStore store, string pair)
     {
