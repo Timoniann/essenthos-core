@@ -111,7 +111,6 @@ internal static partial class MappingMethods
     public static bool KeepsOrphan(MappingRow settled, bool pinned) =>
         pinned || settled.Confidence is null || settled.Confidence >= OrphanFloor;
 
-    /// <summary>Whether a method states absences that win their word (<see cref="StatedAbsence"/>).</summary>
     /// <summary>How a stated source was made, as its credit says.</summary>
     public enum StatedMaking
     {
@@ -128,6 +127,7 @@ internal static partial class MappingMethods
         Transferred,
     }
 
+    /// <summary>How a stated source was made, read from its credit; a credit that says both is taken as transferred.</summary>
     public static StatedMaking Making(string source) =>
         source.Contains("not made by hand", StringComparison.Ordinal)
         || source.Contains("transferred from", StringComparison.Ordinal)
@@ -161,6 +161,7 @@ internal static partial class MappingMethods
         return order;
     }
 
+    /// <summary>Whether a method states absences that win their word (<see cref="StatedAbsence"/>).</summary>
     public static bool StatesAbsence(string method) => method is Stated or Evidentia or Manual or Ruling;
 
     /// <summary>
