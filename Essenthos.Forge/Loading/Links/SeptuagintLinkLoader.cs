@@ -207,7 +207,7 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
     /// One address of each edition laid against the other. The alignment decides what corresponds to
     /// what and how sure it is; this only turns its answer into rows.
     /// </summary>
-    private static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
+    internal static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
     {
         var forms = WitnessAlignment.Pair(
             [.. left.Select(w => w.Form)], [.. right.Select(w => w.Form)]);
@@ -326,9 +326,9 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
             $"The text \"{slug}\" must be loaded before it can be linked. This reads its words; it does not " +
             "create them.");
 
-    private sealed record GreekWord(long Id, WitnessForm Form);
+    internal sealed record GreekWord(long Id, WitnessForm Form);
 
-    private sealed record GreekDraft(
+    internal sealed record GreekDraft(
         LinkRelation Relation,
         List<long> From,
         List<long> To,

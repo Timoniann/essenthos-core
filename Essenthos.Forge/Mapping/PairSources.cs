@@ -47,6 +47,10 @@ internal static class PairSources
         .. TableSources.All,
         .. StrongNumberSource.All,
         .. KingJamesGreekSource.All,
+        new GreekWitnessSource(MappingMethods.Strong),
+        new GreekWitnessSource(MappingMethods.Lexical),
+        new GreekLetterSource(),
+        new HebrewLetterSource(),
     ];
 
     /// <summary>The verb that writes a method's files, as the header and the declared graph name it.</summary>

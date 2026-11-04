@@ -78,7 +78,7 @@ internal sealed record SamaritanLinkOutcome(
 /// </summary>
 internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLinkLoader> logger)
 {
-    private const string Source =
+    internal const string Source =
         "the consonants both Hebrew witnesses write, aligned within each verse";
 
     public async Task<SamaritanLinkOutcome> Load(
@@ -185,7 +185,7 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
     /// which the Samaritan writes with 34:2-3 inside it — and as <c>transposes</c> where it is
     /// anywhere else, which is Exodus 26:35 holding the altar of incense.
     /// </summary>
-    private static (int Placed, int Moved, List<(int Book, int Expanded, int Omitted)> Changed) Relocate(
+    internal static (int Placed, int Moved, List<(int Book, int Expanded, int Omitted)> Changed) Relocate(
         Dictionary<(int Book, int Chapter, int Verse), List<HebrewWord>> here,
         Dictionary<(int Book, int Chapter, int Verse), List<HebrewWord>> there,
         Dictionary<(int Book, int Chapter, int Verse), List<HebrewDraft>> expandedAt,
@@ -271,7 +271,7 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
     /// what and how sure it is; this only turns its answer into rows, and the ids it hands back are
     /// positions within the two verses.
     /// </summary>
-    private static void Pair(List<HebrewWord> left, List<HebrewWord> right, List<HebrewDraft> drafts)
+    internal static void Pair(List<HebrewWord> left, List<HebrewWord> right, List<HebrewDraft> drafts)
     {
         var forms = WitnessAlignment.Pair(
             [.. left.Select(w => w.Form)], [.. right.Select(w => w.Form)]);
@@ -355,9 +355,9 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
             $"The text \"{slug}\" must be loaded before it can be linked. This reads its words; it does not " +
             "create them.");
 
-    private sealed record HebrewWord(long Id, WitnessForm Form);
+    internal sealed record HebrewWord(long Id, WitnessForm Form);
 
-    private sealed record HebrewDraft(
+    internal sealed record HebrewDraft(
         LinkRelation Relation,
         List<long> From,
         List<long> To,
