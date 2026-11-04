@@ -263,6 +263,12 @@ internal static partial class ForgeVerbs
             "Compare two databases' links and claims by key, grouped by pair and method. Reads only.", MappingCompare, Least: 2),
         new("compose-file", "<from> <via[,via]> <to> --files <Resources> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured]",
             "Compose from the mapping files' links into the pair's composed method file; words and frame from the database, which it never writes.", ComposeFile, Least: 3),
+        new("indexes", "[--texts A,B|all] [--only strong,occurrences,forms,spellings] [--from <Resources>] [--force] [--parallel <n>]",
+            "Make each text's indexes (Strong renderings, occurrences, search forms, spellings) from its words, its pairs' finals and the names, where an input moved. Reads no database.", IndexesVerb),
+        new("indexes-load", "[--texts A,B|all] [--only strong,forms,spellings] [--from <Resources>]",
+            "Put the texts' indexes into the strong, text_form and entity spelling tables of the database (never live).", IndexesLoadVerb),
+        new("names-export", "[--into <Resources>]",
+            "Write the database's names as names/exported/<SLUG>, which the spellings index reads until the names layer writes them. Reads the database only.", NamesExportVerb),
     ];
 
     public static ForgeVerb? Find(string name) =>
