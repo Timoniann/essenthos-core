@@ -39,7 +39,7 @@ records/facts/locations	build	records-derive	Essenthos/records/external-ids Esse
 records/facts/location-candidates	build	records-derive	Essenthos/records/external-ids Essenthos/records/facts/location-supplements Essenthos/records/records OpenBible/*	@records	all
 records/**	export	records-export	-	@records	all
 external/**	export	records-export	-	@records	all
-names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/texts/{text}/words Essenthos/mapping/*/final	word_entity	text
+names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/names/overrides/{text} Essenthos/texts/{text}/words Essenthos/mapping/*/final Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/i18n/*/name-forms	word_entity	text
 names/bases	hand	by hand (seeded once by names-project)	-	-	none
 names/overrides/{text}	hand	by hand	-	-	none
 names/live/{text}	export	names-from-database	Essenthos/texts/{text}/words	-	none
