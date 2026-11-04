@@ -75,12 +75,15 @@ internal static class PairSources
 
     /// <summary>
     /// The pairs some source of the file speaks about whose two texts the store holds; and the pairs whose file of a method
-    /// holds rows a source of that method now writes into another file, so the file gives them up.
+    /// holds rows a source of that method now writes into another file, so the file gives them up. A pair is the mapping's
+    /// when its folder holds a method file: a folder with only the verse links verse-pairs writes from two frames, after
+    /// every producer, would bring a pair in on the build after the one that made it.
     /// </summary>
     public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null) =>
     [
         .. MappingProducts.Pairs(texts.Store)
             .Where(pair => only is null || only.Contains(pair))
+            .Where(pair => MappingProducts.Methods(texts.Store, pair).Count > 0)
             .Where(pair => All.Any(source => source.States(pair)
                 && (source.File == file || (source.Method == file && texts.Store.Exists(MappingProducts.Of(pair, file))))))
             .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),
