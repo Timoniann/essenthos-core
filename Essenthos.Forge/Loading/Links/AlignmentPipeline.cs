@@ -269,7 +269,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         var folder = await Answer(workspace, modelType, inputs, AlignmentFile, async training =>
         {
-            var modelPrefix = Path.Combine(training, "model", $"{fromSlug}-{toSlug}");
+            var modelPrefix = ModelPrefix(training, $"{fromSlug}-{toSlug}");
             Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
             Directory.CreateDirectory(Path.Combine(training, "alignment"));
 
@@ -313,18 +313,24 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// answer is written and not empty, so a run stopped half way leaves no answer rather than a partial
     /// one, and an empty answer is never reused.
     /// </para>
+    /// <para>
+    /// Where the answer file is only a stamp beside what was trained, <paramref name="complete"/> says
+    /// what a folder lacks of the rest, and a folder that lacks anything is neither reused nor stored,
+    /// so the align that reads a pool's model never meets a stamp beside an empty model folder.
+    /// </para>
     /// </summary>
     internal async Task<string> Answer(
         string workspace,
         string modelType,
         IReadOnlyList<(string Name, string[] Lines)> inputs,
         string answer,
-        Func<string, Task> train)
+        Func<string, Task> train,
+        Func<string, string?>? complete = null)
     {
         var keyed = Path.Combine(workspace, Key(modelType, inputs));
         foreach (var folder in new[] { keyed, workspace })
         {
-            if (Holds(folder, inputs, answer))
+            if (Holds(folder, inputs, answer, complete))
             {
                 logger.LogInformation("Reusing the {Answer} already in {Workspace}",
                     answer == AlignmentFile ? "alignment" : "model", folder);
@@ -333,9 +339,12 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         }
 
         var standing = Directory.Exists(keyed) ? keyed : workspace;
-        var stored = Stored(Path.Combine(standing, answer)) is var found && found == StoredAlignment.Whole
-            ? StoredAlignment.OfOtherWords
-            : found;
+        var stored = Stored(Path.Combine(standing, answer)) switch
+        {
+            StoredAlignment.Whole when complete?.Invoke(standing) is not null => StoredAlignment.Empty,
+            StoredAlignment.Whole => StoredAlignment.OfOtherWords,
+            var found => found,
+        };
         RefuseToTrain(standing, stored);
         if (stored != StoredAlignment.None)
         {
@@ -351,7 +360,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             Directory.Delete(keyed, recursive: true);
         }
 
-        var training = $"{keyed}.training-{Guid.NewGuid():N}";
+        var training = $"{keyed}.training-{Guid.NewGuid().ToString("N")[..8]}";
         var clock = Stopwatch.StartNew();
         try
         {
@@ -368,11 +377,17 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     $"Training in {training} finished without writing {answer}, so no answer was stored.");
             }
 
+            if (complete?.Invoke(training) is { } missing)
+            {
+                throw new InvalidOperationException(
+                    $"Training in {training} wrote {answer} but {missing}, so no answer was stored.");
+            }
+
             try
             {
                 Directory.Move(training, keyed);
             }
-            catch (IOException) when (Holds(keyed, inputs, answer))
+            catch (IOException) when (Holds(keyed, inputs, answer, complete))
             {
                 // Another run trained the same inputs first; its answer stands.
                 Directory.Delete(training, recursive: true);
@@ -402,9 +417,86 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     }
 
     /// <summary>Whether <paramref name="folder"/> holds a whole answer made from exactly these inputs.</summary>
-    private static bool Holds(string folder, IReadOnlyList<(string Name, string[] Lines)> inputs, string answer) =>
+    private static bool Holds(
+        string folder,
+        IReadOnlyList<(string Name, string[] Lines)> inputs,
+        string answer,
+        Func<string, string?>? complete) =>
         Stored(Path.Combine(folder, answer)) == StoredAlignment.Whole
+        && complete?.Invoke(folder) is null
         && Unchanged(inputs.Select(input => (Path.Combine(folder, input.Name), input.Lines)));
+
+    /// <summary>
+    /// What a trained model at <paramref name="prefix"/> lacks, or null when it is whole. SIL's aligner
+    /// writes each direction of a symmetrised model as a configuration and its tables beside the prefix
+    /// (<c>GEEZ81_swm.yml</c>, <c>GEEZ81_swm.ibm_lexnd</c>, ... and the same with <c>_invswm</c>), and
+    /// loads a direction from its configuration. A direction counts only when its configuration is there
+    /// and not empty and at least one of its tables holds something; its word classes are empty in every
+    /// model it writes, so an empty file alone says nothing.
+    /// </summary>
+    internal static string? ModelLacks(string prefix)
+    {
+        var folder = Path.GetDirectoryName(prefix)!;
+        var name = Path.GetFileName(prefix);
+        if (!Directory.Exists(folder))
+        {
+            return $"there is no model folder {folder}";
+        }
+
+        foreach (var direction in new[] { "_swm", "_invswm" })
+        {
+            var configuration = new FileInfo(Path.Combine(folder, $"{name}{direction}.yml"));
+            if (!configuration.Exists || configuration.Length == 0)
+            {
+                return $"{folder} holds no configuration {configuration.Name}";
+            }
+
+            var tables = Directory.EnumerateFiles(folder, $"{name}{direction}.*")
+                .Where(file => !file.EndsWith(".yml", StringComparison.Ordinal))
+                .Select(file => new FileInfo(file).Length)
+                .ToList();
+            if (!tables.Any(length => length > 0))
+            {
+                return $"{folder} holds the configuration {configuration.Name} and no table of it that is not empty";
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// The longest name SIL's aligner gives a file beside a model's prefix:
+    /// <c>_invswm.src_class_names</c>.
+    /// </summary>
+    internal const int LongestModelSuffix = 23;
+
+    /// <summary>
+    /// The longest path the aligner can write or read a model file at on Windows. Its native half
+    /// opens the files with the old 260-character limit whatever the system allows, and when one
+    /// will not open it prints "Error while printing source vocabulary." and exits as if it had
+    /// saved: a pool trained into a store folder deep enough left an empty model folder after
+    /// three minutes of training.
+    /// </summary>
+    internal const int LongestAlignerPath = 259;
+
+    private static string ModelPrefix(string training, string name)
+    {
+        var prefix = Path.Combine(training, "model", name);
+        RefuseTooLong(prefix);
+        return prefix;
+    }
+
+    /// <summary>Refuses a model prefix whose files the aligner could not open, before anything is run.</summary>
+    internal static void RefuseTooLong(string prefix)
+    {
+        if (OperatingSystem.IsWindows() && prefix.Length + LongestModelSuffix > LongestAlignerPath)
+        {
+            throw new InvalidOperationException(
+                $"The model at {prefix} would have files {prefix.Length + LongestModelSuffix} characters long, and " +
+                $"SIL's aligner opens none longer than {LongestAlignerPath} on Windows. Put the alignment store at a " +
+                $"shorter path ({AlignmentStore.ConfigurationKey}).");
+        }
+    }
 
     /// <summary>
     /// The name of the folder an answer made from these inputs is kept in: a digest of the model type
@@ -442,6 +534,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         CancellationToken cancellationToken)
     {
         var partial = alignmentFile + ".partial";
+        RefuseTooLong(modelPrefix);
         await Machine(
             ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, partial],
             cancellationToken);
@@ -559,15 +652,24 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
         var folder = await Answer(workspace, modelType, inputs, stampFile, async training =>
         {
-            var prefix = Path.Combine(training, "model", fromSlug);
+            var prefix = ModelPrefix(training, fromSlug);
             Directory.CreateDirectory(Path.GetDirectoryName(prefix)!);
             logger.LogInformation("Training {Model} over {Verses} verse pairs of {From} against {Pool}",
                 modelType, sourceLines.Count, fromSlug, string.Join(", ", pool));
             await Machine(["train", "alignment-model", "-mt", modelType, prefix,
                     Path.Combine(training, SourceFile), Path.Combine(training, TargetFile)],
                 cancellationToken);
+            // The model is loaded once over its first verse before it is stamped, so a stamp always
+            // stands beside a model the align after it can read.
+            var probe = Path.Combine(training, "probe");
+            Directory.CreateDirectory(probe);
+            AlignmentStore.WriteWhole(Path.Combine(probe, SourceFile), [sourceLines[0]]);
+            AlignmentStore.WriteWhole(Path.Combine(probe, TargetFile), [targetLines[0]]);
+            await AlignWhole(modelType, prefix, Path.Combine(probe, SourceFile), Path.Combine(probe, TargetFile),
+                Path.Combine(probe, "pharaoh.txt"), cancellationToken);
+            Directory.Delete(probe, recursive: true);
             AlignmentStore.WriteWhole(Path.Combine(training, stampFile), [Key(modelType, inputs)]);
-        });
+        }, folder => ModelLacks(Path.Combine(folder, "model", fromSlug)));
 
         return (Path.Combine(folder, "model", fromSlug), File.ReadAllText(Path.Combine(folder, stampFile)).Trim());
     }
@@ -1476,7 +1578,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 $"`machine {string.Join(' ', arguments)}` failed with exit code {process.ExitCode}. " +
                 $"It is SIL's alignment tool; install it with `dotnet tool install -g SIL.Machine.Tool`. {error}");
         }
+
+        if (ReportsAnError(error))
+        {
+            throw new InvalidOperationException(
+                $"`machine {string.Join(' ', arguments)}` exited as if it had succeeded and reported: {error.Trim()}");
+        }
     }
+
+    /// <summary>
+    /// Whether the aligner's standard error says something failed. Its native half reports a model
+    /// file it could not write or read as a line starting "Error" and the tool still exits with 0.
+    /// </summary>
+    internal static bool ReportsAnError(string error) =>
+        error.Split('\n').Any(line => line.TrimStart().StartsWith("Error", StringComparison.Ordinal));
 
     /// <summary>
     /// One verse per line, one token per word, and the tool splits the line on whitespace to get

@@ -140,6 +140,85 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     }
 
     [Fact]
+    public async Task APoolsStampBesideAnEmptyModelIsNeitherStoredNorReused()
+    {
+        var inputs = new List<(string Name, string[] Lines)> { ("source.txt", ["in"]), ("target.txt", ["in"]) };
+        string? Lacks(string folder) => AlignmentPipeline.ModelLacks(Path.Combine(folder, "model", "GEEZ81"));
+
+        var empty = () => _aligner.Answer(_workspace, "ibm4", inputs, "trained.txt", training =>
+        {
+            Directory.CreateDirectory(Path.Combine(training, "model"));
+            File.WriteAllText(Path.Combine(training, "trained.txt"), "stamp");
+            return Task.CompletedTask;
+        }, Lacks);
+        await empty.Should().ThrowAsync<InvalidOperationException>().WithMessage("*no configuration GEEZ81_swm.yml*");
+        Directory.GetDirectories(_workspace).Should().BeEmpty();
+
+        var keyed = Path.Combine(_workspace, AlignmentPipeline.Key("ibm4", inputs));
+        Directory.CreateDirectory(Path.Combine(keyed, "model"));
+        File.WriteAllLines(Path.Combine(keyed, "source.txt"), ["in"]);
+        File.WriteAllLines(Path.Combine(keyed, "target.txt"), ["in"]);
+        File.WriteAllText(Path.Combine(keyed, "trained.txt"), "stamp");
+
+        var trained = false;
+        var folder = await _aligner.Answer(_workspace, "ibm4", inputs, "trained.txt", training =>
+        {
+            Model(Path.Combine(training, "model", "GEEZ81"));
+            File.WriteAllText(Path.Combine(training, "trained.txt"), "stamp");
+            trained = true;
+            return Task.CompletedTask;
+        }, Lacks);
+
+        trained.Should().BeTrue("a stamp beside an empty model is not a model to reuse");
+        Lacks(folder).Should().BeNull();
+    }
+
+    [Fact]
+    public void AModelCountsOnlyWithEachDirectionsConfigurationAndATableThatHoldsSomething()
+    {
+        var prefix = Path.Combine(_workspace, "model", "GEEZ81");
+        AlignmentPipeline.ModelLacks(prefix).Should().Contain("no model folder");
+
+        Model(prefix);
+        AlignmentPipeline.ModelLacks(prefix).Should().BeNull();
+
+        File.WriteAllText(prefix + "_invswm.ibm_lexnd", string.Empty);
+        AlignmentPipeline.ModelLacks(prefix).Should().Contain("no table of it");
+
+        Model(prefix);
+        File.WriteAllText(prefix + "_swm.yml", string.Empty);
+        AlignmentPipeline.ModelLacks(prefix).Should().Contain("no configuration GEEZ81_swm.yml");
+    }
+
+    [Fact]
+    public void TheAlignersReportedErrorsAndTooLongModelPathsAreRefused()
+    {
+        AlignmentPipeline.ReportsAnError("Error while printing source vocabulary.\r\nError while printing source vocabulary.\r\n")
+            .Should().BeTrue();
+        AlignmentPipeline.ReportsAnError(string.Empty).Should().BeFalse();
+
+        var fits = "C:\\" + new string('a', AlignmentPipeline.LongestAlignerPath - AlignmentPipeline.LongestModelSuffix - 3);
+        var check = () => AlignmentPipeline.RefuseTooLong(fits);
+        check.Should().NotThrow();
+        if (OperatingSystem.IsWindows())
+        {
+            var tooLong = () => AlignmentPipeline.RefuseTooLong(fits + "a");
+            tooLong.Should().Throw<InvalidOperationException>().WithMessage("*opens none longer than*shorter path*");
+        }
+    }
+
+    private static void Model(string prefix)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(prefix)!);
+        foreach (var direction in new[] { "_swm", "_invswm" })
+        {
+            File.WriteAllText(prefix + direction + ".yml", "model: ibm4");
+            File.WriteAllText(prefix + direction + ".ibm_lexnd", "table");
+            File.WriteAllText(prefix + direction + ".src_classes", string.Empty);
+        }
+    }
+
+    [Fact]
     public void TheDigestNamesTheModelAndEveryLine()
     {
         var key = AlignmentPipeline.Key("ibm4", [("source.txt", ["a b"]), ("target.txt", ["c"])]);
