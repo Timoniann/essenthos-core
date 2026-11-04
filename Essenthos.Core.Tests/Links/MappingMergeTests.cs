@@ -165,26 +165,56 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
-    public void A_laid_strong_link_keeps_a_word_an_evidentia_absence_gives_way_on_to_another_method()
+    public void A_verdict_that_gives_way_to_another_method_still_takes_its_word_out_of_a_laid_strong_link()
     {
         const string Run = "EVIDENTIA run 14";
         var output = Merge([
             Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2", "1.1:1.1", confidence: 0.95, link: 1),
             Row(MappingMethods.Evidentia, "1.1:1.1", string.Empty, relation: "expands", source: Run, link: 2, evidence: "decision 5, safe tier: rule"),
-            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.1", confidence: 0.9, source: Machine, link: 3),
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.2", confidence: 0.9, source: Machine, link: 3),
             Row(MappingMethods.Strong, "1.1:1.3 1.1:1.4", "1.1:1.3", confidence: 0.95, link: 4),
             Row(MappingMethods.Strong, "1.1:1.3 1.1:1.4", "1.1:1.3", confidence: 0.95, source: "another numbering", link: 4),
             Row(MappingMethods.Evidentia, "1.1:1.3", string.Empty, relation: "expands", source: Run, link: 5, evidence: "decision 6, safe tier: rule"),
             Row(MappingMethods.Aligner, "1.1:1.3", "1.1:1.3", confidence: 0.6, source: "SIL.Machine ibm4", link: 6),
         ], pair: "RV1909-BHSA");
 
-        Status(output, MappingMethods.Strong, 0).Should().NotBe(MappingStatus.NarrowedByEvidentia, "a composition names the word, so the verdict gives way and narrows nothing");
-        output.Final.Should().NotContain(r => r.From == "1.1:1.2" && r.To == "1.1:1.1");
-        Status(output, MappingMethods.Evidentia, 0).Should().Be("withdrawn-by composed");
-        output.Methods[MappingMethods.Strong].Skip(1).Should().OnlyContain(r => r.Status == MappingStatus.NarrowedByEvidentia,
-            "the aligner's claim on the word does not stop the verdict, and every laid row of the shape is narrowed");
+        output.Final.Where(r => r.Settled).Select(r => (r.From, r.To, r.Method)).Should().Equal(
+            ("1.1:1.1", "1.1:1.2", MappingMethods.Composed),
+            ("1.1:1.2", "1.1:1.1", MappingMethods.Strong),
+            ("1.1:1.3", string.Empty, MappingMethods.Evidentia),
+            ("1.1:1.4", "1.1:1.3", MappingMethods.Strong));
+        Status(output, MappingMethods.Evidentia, 0).Should().Be("withdrawn-by composed", "the absence gives way to the composition as before");
+        output.Methods[MappingMethods.Strong].Should().OnlyContain(r => r.Status == MappingStatus.NarrowedByEvidentia,
+            "the laid link loses the word whoever else claims it, and every laid row of the shape is narrowed");
         output.Final.Where(r => r.From == "1.1:1.4").Should().HaveCount(2).And.OnlyContain(r => r.Method == MappingMethods.Strong);
         Status(output, MappingMethods.Aligner).Should().Be("withdrawn-by evidentia");
+    }
+
+    [Fact]
+    public void A_laid_row_the_producer_left_to_a_stated_link_becomes_its_claim_once_the_absent_word_is_out()
+    {
+        const string Run = "EVIDENTIA run 14";
+        const string Hand = "WLCM-RV09-manual, made by hand";
+        MappingRow Yielded(string from, string to) => Row(MappingMethods.Strong, from, to, confidence: 0.9) with { Status = MappingStatus.YieldsToStated };
+        var rows = new[]
+        {
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.1", source: Hand),
+            Row(MappingMethods.Evidentia, "1.1:1.1", string.Empty, relation: "expands", source: Run, evidence: "decision 5, safe tier: supplied-article-spa"),
+            Row(MappingMethods.Stated, "1.1:1.4", "1.1:1.3", source: Hand),
+            Row(MappingMethods.Stated, "1.1:1.6", "1.1:1.5", source: Hand),
+            Row(MappingMethods.Evidentia, "1.1:1.7", string.Empty, relation: "expands", source: Run, evidence: "decision 6, safe tier: supplied-article-spa"),
+        };
+        MappingRow[] yielded = [Yielded("1.1:1.1 1.1:1.2", "1.1:1.1"), Yielded("1.1:1.3 1.1:1.4", "1.1:1.3"), Yielded("1.1:1.6 1.1:1.7", "1.1:1.6")];
+        var output = MappingMerge.Merge(new MappingMerge.Input(
+            "RV1909-BHSA", "RV1909", "BHSA", rows.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()), [],
+            new Dictionary<(string, VerseKey), string>(), new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(), Ordinal, Yielded: yielded));
+
+        output.Final.Where(r => r.From == "1.1:1.2").Select(r => (r.Method, r.Settled)).Should().Equal(
+            (MappingMethods.Stated, true), (MappingMethods.Strong, false));
+        output.Final.Where(r => r.From == "1.1:1.4" || r.From == "1.1:1.6").Should().OnlyContain(r => r.Method == MappingMethods.Stated,
+            "a row whose words differ from the stated link's for another reason, or that names other words once narrowed, stays left");
+        output.Methods.Should().NotContainKey(MappingProducts.StrongYielded);
+        output.Report.Should().Contain(r => r.Kind == "regained" && r.Rows == 1);
     }
 
     [Fact]

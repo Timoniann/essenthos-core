@@ -109,9 +109,19 @@ internal static class PairSources
             log($"{pair} {source.Name}: {rows.Count - before} rows");
         }
 
+        var yielded = rows.Where(row => row.Status == MappingStatus.YieldsToStated).ToList();
+        rows.RemoveAll(row => row.Status == MappingStatus.YieldsToStated);
+
         // A row of a source that writes another file of the pair is not carried into this one: that file holds it.
         var written = MethodFiles.Write(store, pair, file, rows, Producer(file), inputs,
             made => All.Any(source => source.States(pair) && source.Makes(made)));
+        var side = MappingProducts.Of(pair, MappingProducts.StrongYielded);
+        if (file == MappingMethods.Strong && (yielded.Count > 0 || store.Exists(side)))
+        {
+            MethodFiles.WriteYielded(store, pair, yielded, Producer(file), inputs);
+            log($"{pair}: {yielded.Count} laid Strong rows left to a stated link, for the merge");
+        }
+
         return new Outcome(pair, false, written, [.. sources.Select(s => s.Name)]);
     }
 

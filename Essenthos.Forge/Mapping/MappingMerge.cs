@@ -35,6 +35,7 @@ internal static class MappingMerge
     /// carried from an earlier file instead (<see cref="MethodFiles.KeptSources"/>): their other rows answer for no verse that moved.</param>
     /// <param name="Producers">The producer that wrote each method file, where one from files did; a moved verse's rows wait for it.</param>
     /// <param name="Verses">The two texts' frames, for <see cref="CrossingRule"/>; null leaves the rule out.</param>
+    /// <param name="Yielded">The laid Strong rows the producer left to a stated link (<see cref="MappingProducts.StrongYielded"/>).</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -48,7 +49,8 @@ internal static class MappingMerge
         Func<string, VerseKey, string?>? FoldNow = null,
         PairFrames? Verses = null,
         IReadOnlyDictionary<string, IReadOnlySet<string>>? Remade = null,
-        IReadOnlyDictionary<string, string>? Producers = null);
+        IReadOnlyDictionary<string, string>? Producers = null,
+        IReadOnlyList<MappingRow>? Yielded = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -89,7 +91,7 @@ internal static class MappingMerge
         Supersede(entries);
         if (laid)
         {
-            NarrowLaidStrong(entries, pinned);
+            NarrowLaidStrong(entries, pinned, input.Yielded ?? [], report);
         }
 
         var active = entries.Where(e => e.Status is null).ToList();
@@ -295,65 +297,88 @@ internal static class MappingMerge
     /// edition (the owner's order, NOT-0218: a verdict ranks below a text's own numbers and above numbers laid from elsewhere,
     /// which pair a supplied word with the phrase it stands in, "el Cristo"). The absent word is taken out of the laid link, as a
     /// ruling takes a word out of a source's rows, and the rest of the link stands as drawn; a link left with no word on that
-    /// side is withdrawn by the verdict. Where a claim of any other method but the aligner names the word, the verdict gives
-    /// way to it (<see cref="GiveWay"/>) and narrows nothing. A pinned shape is never narrowed.
+    /// side is withdrawn by the verdict. The verdict narrows the laid link whatever else claims the word: against every other
+    /// method its absence still gives way (<see cref="GiveWay"/>). A pinned shape is never narrowed. A laid row the producer left
+    /// to a stated link because its words were not the link's (<paramref name="yielded"/>) is narrowed the same way and becomes a
+    /// claim on that link where it then names exactly the link's words.
     /// </summary>
-    private static void NarrowLaidStrong(List<Entry> entries, HashSet<string> pinned)
+    private static void NarrowLaidStrong(List<Entry> entries, HashSet<string> pinned, IReadOnlyList<MappingRow> yielded, List<ReportRow> report)
     {
         var absentFrom = new HashSet<string>(StringComparer.Ordinal);
         var absentTo = new HashSet<string>(StringComparer.Ordinal);
-        var claimedFrom = new HashSet<string>(StringComparer.Ordinal);
-        var claimedTo = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var entry in entries.Where(e => e.Status is null))
+        foreach (var row in entries.Where(e => e.Status is null && e.Row.Method == MappingMethods.Evidentia && MappingMethods.IsAbsence(e.Row.Relation))
+                     .Select(e => e.Row))
         {
-            var row = entry.Row;
-            if (MappingMethods.IsAbsence(row.Relation))
+            if (row.Relation == "omits")
             {
-                if (row.Method == MappingMethods.Evidentia)
-                {
-                    (row.Relation == "omits" ? absentTo : absentFrom).UnionWith(MappingText.Split(row.Relation == "omits" ? row.To : row.From));
-                }
+                absentTo.UnionWith(MappingText.Split(row.To));
             }
-            else if (row.Method is not (MappingMethods.Aligner or MappingMethods.Strong))
+            else
             {
-                claimedFrom.UnionWith(MappingText.Split(row.From));
-                claimedTo.UnionWith(MappingText.Split(row.To));
+                absentFrom.UnionWith(MappingText.Split(row.From));
             }
         }
 
-        absentFrom.ExceptWith(claimedFrom);
-        absentTo.ExceptWith(claimedTo);
         if (absentFrom.Count == 0 && absentTo.Count == 0)
         {
             return;
         }
 
+        (string From, string To)? Narrowed(MappingRow row)
+        {
+            var from = MappingText.Split(row.From).Where(k => !absentFrom.Contains(k)).ToList();
+            var to = MappingText.Split(row.To).Where(k => !absentTo.Contains(k)).ToList();
+            return from.Count == 0 || to.Count == 0 ? null : (string.Join(' ', from), string.Join(' ', to));
+        }
+
         foreach (var entry in entries.Where(e => e.Status is null && e.Row.Method == MappingMethods.Strong
                                                  && !MappingMethods.IsAbsence(e.Row.Relation) && !pinned.Contains(e.Row.Shape)).ToList())
         {
-            var from = MappingText.Split(entry.Row.From).ToList();
-            var to = MappingText.Split(entry.Row.To).ToList();
-            var keptFrom = from.Where(k => !absentFrom.Contains(k)).ToList();
-            var keptTo = to.Where(k => !absentTo.Contains(k)).ToList();
-            if (keptFrom.Count == from.Count && keptTo.Count == to.Count)
+            var narrowed = Narrowed(entry.Row);
+            if (narrowed is { } same && same.From == entry.Row.From && same.To == entry.Row.To)
             {
                 continue;
             }
 
-            if (keptFrom.Count == 0 || keptTo.Count == 0)
+            if (narrowed is not { } left)
             {
                 entry.Status = MappingStatus.WithdrawnBy(MappingMethods.Evidentia);
                 continue;
             }
 
             entry.Status = MappingStatus.NarrowedByEvidentia;
-            var kept = keptFrom.ToHashSet(StringComparer.Ordinal);
             entries.Add(new Entry(entry.File, -1, entry.Row with
             {
-                From = string.Join(' ', keptFrom),
-                To = string.Join(' ', keptTo),
-                Roles = KeptRoles(entry.Row.Roles, kept),
+                From = left.From,
+                To = left.To,
+                Roles = KeptRoles(entry.Row.Roles, MappingText.Split(left.From).ToHashSet(StringComparer.Ordinal)),
             }, laidStrong: true));
+        }
+
+        var stated = entries.Where(e => e.Status is null && MappingMethods.StatesAbsence(e.Row.Method) && !MappingMethods.IsAbsence(e.Row.Relation))
+            .Select(e => e.Row.Shape).ToHashSet(StringComparer.Ordinal);
+        var regained = 0;
+        foreach (var row in yielded)
+        {
+            if (Narrowed(row) is { } narrowed && (narrowed.From != row.From || narrowed.To != row.To)
+                && stated.Contains(narrowed.From + "|" + narrowed.To))
+            {
+                entries.Add(new Entry(MappingMethods.Strong, -1, row with
+                {
+                    From = narrowed.From,
+                    To = narrowed.To,
+                    Roles = KeptRoles(row.Roles, MappingText.Split(narrowed.From).ToHashSet(StringComparer.Ordinal)),
+                    Evidence = Loading.Links.TaggedTextLinkLoader.CorroborationNote,
+                    Status = null,
+                }, laidStrong: true));
+                regained++;
+            }
+        }
+
+        if (regained > 0)
+        {
+            report.Add(new ReportRow("regained", MappingMethods.Strong, MappingMethods.Evidentia, regained,
+                "laid Strong rows the producer left to a stated link, claims on it once EVIDENTIA's absent words are out"));
         }
     }
 
