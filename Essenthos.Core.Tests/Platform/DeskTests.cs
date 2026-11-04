@@ -5,6 +5,7 @@ using System.Text.Json.Nodes;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Desk;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Products;
 using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -324,7 +325,7 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task ApprovingWhatARecordIsKnownForWritesTheAnswerTheLoadReadsAndLogsIt()
+    public async Task ApprovingWhatARecordIsKnownForWritesTheAnswerBesideItsEntryAndLogsItForTheFiles()
     {
         WriteKnownFor();
 
@@ -344,11 +345,63 @@ public sealed class DeskTests : IAsyncLifetime
             .Should().Equal(("sodom", "was overthrown when the LORD rained brimstone and fire on it"));
         var logged = Logged();
         logged.Select(l => (l.Section, l.Action, l.Target, l.Needs, l.Label, l.After?.GetValue<string>())).Should().Equal(
-            ("known-for", "verdict", "place/sodom", "load", "Sodom", "approved"),
-            ("known-for", "verdict", "place/bethel", "load", "Bethel", "rejected"));
+            ("known-for", "verdict", "place/sodom", "files", "Sodom", "approved"),
+            ("known-for", "verdict", "place/bethel", "files", "Bethel", "rejected"));
         logged[0].Note.Should().Be("так");
         var summary = await Json<SummaryResponse>(await _http.GetAsync("/desk-api/summary"));
         summary.Counts.Single(c => c.Key == "known-for").Count.Should().Be(0, "both records are answered");
+        summary.Waiting["files"].Should().Be(2, "an agent writes both into the build's files");
+        read = await Json<KnownForReviewResponse>(await _http.GetAsync("/desk-api/review/known-for"));
+        (read.Files, read.Unapplied).Should().Be((false, 0), "the build's files are not in this checkout");
+        read.Entries.Select(e => e.Shown).Should().AllSatisfy(shown => shown.Should().BeNull());
+    }
+
+    [Fact]
+    public async Task TheKnownForPageShowsWhatTheBuildsFilesHoldAndNeverWritesThem()
+    {
+        WriteKnownFor();
+        var resources = Path.Combine(_root, "resources");
+        var store = new ProductStore(resources);
+        KnownForFile(store, "records/facts/known-for", ["sodom", "0", "a model, approved by the owner"]);
+        KnownForFile(store, "records/facts/known-for-references", ["sodom", "0", "0", "1.19:24", "19", "25"]);
+        KnownForFile(store, "records/i18n/eng/known-for", ["sodom", "0", "was overthrown, as an agent corrected it in the file"]);
+        KnownForFile(store, "records/i18n/ukr/known-for", ["sodom", "0", "був зруйнований"]);
+        string Files() => string.Join("\n", Directory.GetFiles(Path.Combine(resources, "Essenthos", "records"), "*", SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal).Select(f => f + "\n" + File.ReadAllText(f)));
+        var files = Files();
+
+        var read = await Json<KnownForReviewResponse>(await _http.GetAsync("/desk-api/review/known-for"));
+
+        (read.Files, read.Unapplied).Should().Be((true, 0));
+        var sodom = read.Entries.Single(e => e.Slug == "sodom");
+        sodom.Shown.Should().BeTrue();
+        var clause = sodom.Clauses.Single();
+        (clause.English, clause.Ukr, clause.Deu).Should().Be(("was overthrown, as an agent corrected it in the file", "був зруйнований", null),
+            "what is shown is what the files hold, not the list's proposal");
+        clause.References.Should().Equal("Gen 19:24-25");
+        clause.Addresses.Should().Equal("genesis:19:24");
+        read.Entries.Single(e => e.Slug == "bethel").Shown.Should().BeFalse();
+
+        (await Put("/desk-api/review/known-for/sodom", new { answer = "rejected", note = "ні" })).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await Put("/desk-api/review/known-for/bethel", new { answer = "approved", note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+
+        read = await Json<KnownForReviewResponse>(await _http.GetAsync("/desk-api/review/known-for"));
+        read.Unapplied.Should().Be(2, "a rejection the files still show and an approval they do not, until an agent applies them");
+
+        Files().Should().Be(files, "the console never writes the build's files");
+        Logged().Select(l => l.Needs).Should().Equal("files", "files");
+
+        KnownForFile(store, "records/folds", ["bethel", "luz", "Bethel", null, "manual", null, "a test", "one place"]);
+        read = await Json<KnownForReviewResponse>(await _http.GetAsync("/desk-api/review/known-for"));
+        read.Entries.Single(e => e.Slug == "bethel").FoldedInto.Should().Be("luz");
+        read.Unapplied.Should().Be(1, "a record folded into another shows that record's own line, so its approval has nothing to write");
+    }
+
+    private static void KnownForFile(ProductStore store, string product, string?[] row)
+    {
+        var file = Essenthos.Core.Records.RecordFiles.All.Single(f => f.Product == product);
+        using var writer = store.Create(file.Product, file.Kind, file.Schema(), "test", []);
+        writer.WriteAll([row]);
     }
 
     [Fact]

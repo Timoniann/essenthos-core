@@ -272,6 +272,9 @@ internal static partial class ForgeVerbs
         new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
         new("records-derive", "[--from <Resources>] [--into <Resources>]", "Make the derived record files whose inputs are files (relationships, locations) from the hand files, without a database.", RecordsDerive),
         new("records-canon", "[--from <Resources>] [--force]", "Write records/canon, which canons attest each record, from the names projection and the frames, without a database.", RecordsCanon),
+        new("owner-apply", "[--from <Resources>] [--dry-run]",
+            "Apply the owner's console decisions that wait on the files step (owner-changes.jsonl, needs: files) to the record files "
+            + "they concern, with his stamp on each row, then append the apply line. Reads no database.", OwnerApply, Most: 3),
         new("records-compare", "<port/db> <port/db> [--out <file>]", "Compare two databases' records table by table by natural key. Reads only.", RecordsCompare, Least: 2),
         new("mapping-export", "[--into <Resources>] [--pairs A-B,...] [--parallel <n>]",
             "Write every link of the database as the mapping's per-pair method files, words by key. Reads the database only.", MappingExportVerb),

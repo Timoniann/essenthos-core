@@ -42,6 +42,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton(new LocalOnly(builder.Configuration.GetSection("Desk:Origins").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Avioniq>();
         builder.Services.AddSingleton<ChangeLog>();
+        builder.Services.AddSingleton<BuildFiles>();
         builder.Services.AddSingleton<ThingReview>();
         builder.Services.AddSingleton<WikipediaReview>();
         builder.Services.AddSingleton<KnownForReview>();

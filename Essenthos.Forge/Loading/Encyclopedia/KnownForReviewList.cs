@@ -30,9 +30,7 @@ internal static class KnownForReviewList
             return new KnownForFile(string.Empty, []);
         }
 
-        using var stream = File.OpenRead(path);
-        var list = JsonSerializer.Deserialize<KnownForReviewFile>(stream, Shape)
-                   ?? throw new InvalidDataException($"{path} is empty. It should hold a source and the records.");
+        var list = Read(path);
         var approved = list.Records
             .Where(entry => entry.Decision?.Answer == ApprovedAnswer)
             .Select(entry => new KnownForRecord(entry.Slug, entry.Clauses))
@@ -44,6 +42,14 @@ internal static class KnownForReviewList
         }
 
         return new KnownForFile(list.Source ?? string.Empty, approved);
+    }
+
+    /// <summary>Every entry of the list, answered or not.</summary>
+    public static KnownForReviewFile Read(string path)
+    {
+        using var stream = File.OpenRead(path);
+        return JsonSerializer.Deserialize<KnownForReviewFile>(stream, Shape)
+               ?? throw new InvalidDataException($"{path} is empty. It should hold a source and the records.");
     }
 }
 
