@@ -87,6 +87,34 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
+    public void An_evidentia_absence_withdraws_only_the_aligner_and_gives_way_to_every_other_method()
+    {
+        const string Run = "EVIDENTIA run 14";
+        const string Safe = "decision 5, safe tier: supplied-article-spa";
+        var output = Merge([
+            Row(MappingMethods.Evidentia, string.Empty, "1.1:1.1", relation: "omits", source: Run, id: 1, evidence: Safe),
+            Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.1", source: "WLCM-RV09-manual, made by hand", id: 2),
+            Row(MappingMethods.Evidentia, "1.1:1.2", string.Empty, relation: "expands", source: Run, id: 3, evidence: Safe),
+            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.2", confidence: 0.5, id: 4),
+            Row(MappingMethods.Evidentia, string.Empty, "1.1:1.3", relation: "omits", source: Run, id: 5, evidence: Safe),
+            Row(MappingMethods.Composed, "1.1:1.3", "1.1:1.3", confidence: 0.9, source: Machine, id: 6),
+            Row(MappingMethods.Evidentia, string.Empty, "1.1:1.4", relation: "omits", source: Run, id: 7, evidence: Safe),
+            Row(MappingMethods.Aligner, "1.1:1.4", "1.1:1.4", confidence: 0.6, source: "SIL.Machine ibm4", id: 8),
+            Row(MappingMethods.Evidentia, "1.1:1.5", string.Empty, relation: "expands", source: Run, id: 9, evidence: Safe),
+            Row(MappingMethods.Aligner, "1.1:1.5", "1.1:1.5", confidence: 0.9, source: "SIL.Machine ibm4", id: 10),
+            Row(MappingMethods.Lexical, "1.1:1.5", "1.1:1.5", confidence: 0.6, id: 10),
+        ]);
+
+        output.Final.Where(r => r.Settled).Select(r => r.Id).Should().BeEquivalentTo([2L, 4L, 6L, 7L, 10L]);
+        Status(output, MappingMethods.Evidentia, 0).Should().Be("withdrawn-by stated", "a hand alignment does not lose to a rule's no counterpart");
+        Status(output, MappingMethods.Evidentia, 1).Should().Be("withdrawn-by strong", "even a weak Strong pairing outlasts it");
+        Status(output, MappingMethods.Evidentia, 2).Should().Be("withdrawn-by composed");
+        Status(output, MappingMethods.Evidentia, 3).Should().BeNull();
+        Status(output, MappingMethods.Aligner, 0).Should().Be("withdrawn-by evidentia", "the aligner's guess alone gives way to the verdict");
+        Status(output, MappingMethods.Evidentia, 4).Should().Be("withdrawn-by aligner", "a link another method also claims is not the aligner's alone");
+    }
+
+    [Fact]
     public void An_approved_verdict_outranks_a_strong_pairing_and_the_aligner_outranks_form_matching()
     {
         var output = Merge([

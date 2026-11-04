@@ -30,10 +30,23 @@ internal static partial class MappingMethods
     public const int Pinned = 1000;
 
     /// <summary>
-    /// An absence a source states or an approved verdict decides outranks any correspondence on its word
+    /// An absence a source states or a person decides outranks any correspondence on its word
     /// (DOC-0224 §6.4.3: the King James's italics), whichever method draws the correspondence.
     /// </summary>
     public const int StatedAbsence = 95;
+
+    /// <summary>
+    /// An approved EVIDENTIA verdict's absence beats only the aligner's guess: it ranks just above the aligner,
+    /// and gives way to any link on its word that another method claims (<see cref="GivesWay"/>), so a rule's
+    /// "no counterpart" never withdraws a hand alignment, a Strong pairing, a composition or a placed name.
+    /// </summary>
+    public const int EvidentiaAbsence = 41;
+
+    /// <summary>The rank of an EVIDENTIA absence that a link of another method than the aligner contests: below every link.</summary>
+    public const int GivesWay = 0;
+
+    /// <summary>Whether every claim of a link is the aligner's own, the only kind an EVIDENTIA absence withdraws.</summary>
+    public static bool OnlyTheAligner(IEnumerable<string> methods) => methods.All(m => m == Aligner);
 
     /// <summary>Which file a claim of the corpus belongs in, by its method and its source.</summary>
     public static string Classify(string databaseMethod, string source) => databaseMethod switch
@@ -162,7 +175,7 @@ internal static partial class MappingMethods
     }
 
     /// <summary>Whether a method states absences that win their word (<see cref="StatedAbsence"/>).</summary>
-    public static bool StatesAbsence(string method) => method is Stated or Evidentia or Manual or Ruling;
+    public static bool StatesAbsence(string method) => method is Stated or Manual or Ruling;
 
     /// <summary>
     /// The methods a model drew, which a changed verse loses until the pair is aligned again (DOC-0224
