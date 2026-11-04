@@ -102,6 +102,8 @@ internal sealed class ByzantineApparatusSource : IPairSource
 
     public string Method => MappingMethods.Stated;
 
+    public string File => PairSources.Laid;
+
     public string Name => "byzantine-apparatus";
 
     public bool States(string pair) =>

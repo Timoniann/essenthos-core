@@ -92,7 +92,8 @@ internal sealed class SuppliedWordSource : IPairSource
     public static readonly string[] Renderings =
     [
         MappingMethods.Strong, MappingMethods.Aligner, MappingMethods.Composed, MappingMethods.Names, MappingMethods.NameList,
-        MappingMethods.Possessive, MappingMethods.Lexical, MappingMethods.Rule, MappingMethods.Manual,
+        MappingMethods.Possessive, MappingMethods.Lexical, MappingMethods.Rule, MappingMethods.Manual, MappingMethods.Evidentia,
+        MappingMethods.Stated,
     ];
 
     /// <summary>The texts in the original languages an edition's marks can be stated against; each one's declaration decides.</summary>
@@ -106,6 +107,8 @@ internal sealed class SuppliedWordSource : IPairSource
 
     public string Method => MappingMethods.Stated;
 
+    public string File => PairSources.Laid;
+
     public string Name => "supplied-words";
 
     public bool States(string pair) =>
@@ -114,11 +117,7 @@ internal sealed class SuppliedWordSource : IPairSource
     public bool Makes(string source) => SuppliedWordAbsences.Editions.Any(edition => edition.Source == source);
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
-    [
-        .. Renderings.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>(),
-        .. PairSources.All.Where(source => source != this && source.Method == Method && source.States(pair))
-            .SelectMany(source => source.Inputs(store, pair)),
-    ];
+        Renderings.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>();
 
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
@@ -169,7 +168,6 @@ internal sealed class SuppliedWordSource : IPairSource
     private IReadOnlySet<string> Rendered(ProductTexts texts, string pair, IReadOnlySet<string> absent, out int withdrawn)
     {
         var rows = PairStanding.Rows(texts.Store, pair, Renderings)
-            .Concat(OtherStated(texts, pair))
             .Where(row => row.Relation is "renders" or "equals")
             .ToList();
         var claims = rows.GroupBy(row => row.Shape, StringComparer.Ordinal)
@@ -200,29 +198,5 @@ internal sealed class SuppliedWordSource : IPairSource
             row.Relation == "renders"
             && MappingMethods.DatabaseMethod(row.Method) == LinkMethod.Aligner
             && row.Source.StartsWith(Machine, StringComparison.Ordinal);
-    }
-
-    /// <summary>
-    /// The pair's stated rows of the other sources: made now by the sources a producer reads, and carried from the stated
-    /// file for a source none of them makes (the stated producer carries those over unchanged).
-    /// </summary>
-    private IEnumerable<MappingRow> OtherStated(ProductTexts texts, string pair)
-    {
-        var others = PairSources.All.Where(source => source != this && source.Method == Method && source.States(pair)).ToList();
-        foreach (var source in others)
-        {
-            foreach (var row in source.Rows(texts, pair, _ => { }))
-            {
-                yield return row;
-            }
-        }
-
-        foreach (var row in PairStanding.Rows(texts.Store, pair, [Method]))
-        {
-            if (!Makes(row.Source) && !PairSources.All.Any(source => source.Method == Method && source.Makes(row.Source)))
-            {
-                yield return row;
-            }
-        }
     }
 }

@@ -552,6 +552,8 @@ internal static class MappingMerge
                      ?? (input.PreviousIds.TryGetValue(candidate.Shape, out var previous) && !used.Contains(previous) ? previous : next++);
             used.Add(id);
             var top = candidate.Top.Row;
+            // The words' roles are the link's, whichever claim carries them: a source states the words and a verdict their roles.
+            var roles = top.Roles ?? candidate.Rows.Select(r => r.Row.Roles).FirstOrDefault(r => r is not null);
             var seen = new HashSet<(Database.Entities.Enums.LinkMethod, string)>();
             foreach (var entry in candidate.Rows)
             {
@@ -561,7 +563,7 @@ internal static class MappingMerge
                     continue;
                 }
 
-                final.Add(new FinalRow(id, top.From, top.To, top.Relation, top.Roles, ReferenceEquals(entry, candidate.Top), row.Method, row.Confidence, row.Source));
+                final.Add(new FinalRow(id, top.From, top.To, top.Relation, roles, ReferenceEquals(entry, candidate.Top), row.Method, row.Confidence, row.Source));
             }
         }
 

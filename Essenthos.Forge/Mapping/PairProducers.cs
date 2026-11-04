@@ -38,7 +38,7 @@ internal sealed class ProductText
     public IReadOnlyList<VerseKey> Verses { get; }
 
     /// <summary>The products a producer reading this text names among its inputs.</summary>
-    public static IEnumerable<string> Products(string slug) => [TextWord.ProductOf(slug), FrameFile.Product(slug)];
+    public static IEnumerable<string> Products(string slug) => [TextWord.ProductOf(slug), FrameFile.Product(slug), TextField.ProductOf(slug)];
 
     public static ProductText Read(ProductStore store, string slug)
     {

@@ -9,8 +9,14 @@ namespace Essenthos.Core.Mapping;
 /// </summary>
 internal interface IPairSource
 {
-    /// <summary>The method file its rows go in.</summary>
+    /// <summary>The method of its rows.</summary>
     string Method { get; }
+
+    /// <summary>
+    /// The file its rows go in, the method's own unless the source reads the pair's other method files: then it writes a
+    /// file of its own that the build makes after them (<see cref="PairSources.Laid"/>), so no file reads itself through another.
+    /// </summary>
+    string File => Method;
 
     /// <summary>A short name for the log and for <c>--sources</c>.</summary>
     string Name { get; }
@@ -55,29 +61,35 @@ internal static class PairSources
         new PossessiveSource(),
     ];
 
-    /// <summary>The verb that writes a method's files, as the header and the declared graph name it.</summary>
-    public static string Producer(string method) => $"forge {method}-pairs";
+    /// <summary>
+    /// The file of stated rows a source lays on the links the pair already has (the editions' supplied words give way to a
+    /// word's rendering; Robinson's apparatus reads the pair's Strong and lexical links): made after every method file it reads.
+    /// </summary>
+    public const string Laid = "stated-laid";
+
+    /// <summary>The verb that writes a file of every pair, as the header and the declared graph name it.</summary>
+    public static string Producer(string file) => $"forge {file}-pairs";
 
     public sealed record Outcome(string Pair, bool Current, MethodFiles.Written? Written, IReadOnlyList<string> Sources);
 
     /// <summary>The pairs some source of the method speaks about whose two texts the store holds.</summary>
-    public static List<string> Pairs(ProductTexts texts, string method, IReadOnlySet<string>? only = null) =>
+    public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null) =>
     [
         .. MappingProducts.Pairs(texts.Store)
             .Where(pair => only is null || only.Contains(pair))
-            .Where(pair => All.Any(source => source.Method == method && source.States(pair)))
+            .Where(pair => All.Any(source => source.File == file && source.States(pair)))
             .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),
     ];
 
     /// <summary>Writes the pair's method file from its sources, unless every input is as the file was made from.</summary>
-    public static Outcome Write(ProductTexts texts, string method, string pair, bool force, Action<string> log)
+    public static Outcome Write(ProductTexts texts, string file, string pair, bool force, Action<string> log)
     {
         var store = texts.Store;
-        var sources = All.Where(source => source.Method == method && source.States(pair)).ToList();
+        var sources = All.Where(source => source.File == file && source.States(pair)).ToList();
         var inputs = MethodFiles.TextInputs(store, pair)
             .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Distinct(StringComparer.Ordinal).Select(store.Input))
             .ToList();
-        var product = MappingProducts.Of(pair, method);
+        var product = MappingProducts.Of(pair, file);
         if (!force && store.Exists(product) && !store.NeedsBuild(product, ProductKind.Machine, inputs))
         {
             return new Outcome(pair, true, null, [.. sources.Select(s => s.Name)]);
@@ -91,8 +103,9 @@ internal static class PairSources
             log($"{pair} {source.Name}: {rows.Count - before} rows");
         }
 
-        var written = MethodFiles.Write(store, pair, method, rows, Producer(method), inputs,
-            made => sources.Any(source => source.Makes(made)));
+        // A row of a source that writes another file of the pair is not carried into this one: that file holds it.
+        var written = MethodFiles.Write(store, pair, file, rows, Producer(file), inputs,
+            made => All.Any(source => source.States(pair) && source.Makes(made)));
         return new Outcome(pair, false, written, [.. sources.Select(s => s.Name)]);
     }
 
