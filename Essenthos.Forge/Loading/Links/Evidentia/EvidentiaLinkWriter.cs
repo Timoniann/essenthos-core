@@ -145,9 +145,9 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
     internal static string RuleSource(int run, string ruleVersion, string kind) =>
         $"{Sources.EvidentiaRunPrefix} {run} ({ruleVersion}), {kind}";
 
-    private const string WithinNote = "names one word pair of this link";
+    internal const string WithinNote = "names one word pair of this link";
 
-    private const string WithinAbsenceNote = "names one word of this absence";
+    internal const string WithinAbsenceNote = "names one word of this absence";
 
     private const string WithdrawnNote = "the aligner's link of this word was withdrawn for it";
 
@@ -871,9 +871,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             Confidence = null,
             Provenance = new Provenance
             {
-                Source = review.Verdict == EvidentiaVerdict.Corrected
-                    ? $"{review.Reviewer}, correcting EVIDENTIA run {run.Id} decision {decision.Id}"
-                    : $"{review.Reviewer}, reviewing EVIDENTIA run {run.Id} decision {decision.Id}",
+                Source = $"{PersonSource(review.Reviewer, run.Id, review.Verdict == EvidentiaVerdict.Corrected)} decision {decision.Id}",
                 Note = review.Note,
             },
         };
@@ -889,13 +887,22 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             Provenance = new Provenance
             {
                 Source = RuleSource(run.Id, run.RuleVersion, decision.Kind),
-                Note = Joined(
-                    ($"decision {decision.Id}, {decision.Tier} tier: {decision.Rationale}"),
-                    review.Examined ? null : $"accepted with its tier by {review.Reviewer}, not read one by one"),
+                Note = $"decision {decision.Id}, {RuleEvidence(decision.Tier, decision.Rationale, review.Examined, review.Reviewer)}",
             },
         };
         return review.Examined ? [person, rule] : [rule];
     }
+
+    /// <summary>
+    /// What a rule's claim says of its decision beyond the decision's row: the tier, the rationale, and
+    /// whether the tier was accepted unread. The database's claim puts the decision's id before it.
+    /// </summary>
+    internal static string RuleEvidence(string? tier, string? rationale, bool examined, string reviewer) =>
+        Joined($"{tier} tier: {rationale}", examined ? null : $"accepted with its tier by {reviewer}, not read one by one")!;
+
+    /// <summary>The source of a person's claim on a verdict, which the database's claim follows with the decision's id.</summary>
+    internal static string PersonSource(string reviewer, int run, bool corrected) =>
+        corrected ? $"{reviewer}, correcting EVIDENTIA run {run}" : $"{reviewer}, reviewing EVIDENTIA run {run}";
 
     /// <summary>
     /// The same source with something added to its note. A new provenance rather than an edit,

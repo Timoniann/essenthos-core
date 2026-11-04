@@ -244,6 +244,34 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// The pair files the ledger makes (<see cref="Mapping.EvidentiaFiles"/>), every pair it holds runs of or the pairs
+    /// named. Reads the ledger and the texts' products only.
+    /// </summary>
+    private static Task<int> EvidentiaPairs(ForgeRun forge, string[] args)
+    {
+        var store = new Products.ProductStore(Option(args, "--into") ?? forge.Resources);
+        var ledger = Option(args, "--ledger") ?? store.ResourcesPath;
+        var leaveOut = Option(args, "--leave-out") is { } runs ? runs.Split(',').Select(int.Parse).ToHashSet() : null;
+        var named = Positional(args, 1).Where(arg => arg.Contains('-')).ToList();
+        var pairs = named.Count > 0 ? named : Mapping.EvidentiaFiles.Pairs(ledger);
+        var failed = 0;
+        foreach (var pair in pairs)
+        {
+            if (!Mapping.EvidentiaFiles.CanWrite(store, pair))
+            {
+                forge.Logger.LogWarning("{Pair}: the store has no words or frame of one of its texts under texts/", pair);
+                failed++;
+                continue;
+            }
+
+            forge.Logger.LogInformation("{Outcome}", Mapping.EvidentiaFiles.Write(store, ledger, pair, leaveOut));
+        }
+
+        store.Save();
+        return Task.FromResult(failed == 0 ? 0 : 1);
+    }
+
     private static async Task<int> EvidentiaProblems(ForgeRun forge, string[] args)
     {
         using var problemScope = forge.Scope();

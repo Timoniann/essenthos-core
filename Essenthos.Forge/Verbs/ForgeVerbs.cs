@@ -206,6 +206,8 @@ internal static partial class ForgeVerbs
         new("evidentia-export", "[<run> ...]", "Write the verdicts to the ledger under Resources/Essenthos/evidentia.",
             EvidentiaExport),
         new("evidentia-replay", "", "Put the ledger's verdicts back into the corpus.", EvidentiaReplay, Relinks: Every),
+        new("evidentia-pairs", "[<FROM-TO> ...] [--into <Resources>] [--ledger <Resources>] [--leave-out <run,...>]",
+            "Write each pair's evidentia method file from the ledger and the texts' words and frames. Reads no database.", EvidentiaPairs),
         new("evidentia-problems", "<run,...> [--take <n>] [--min-words <n>] [--flagged]",
             "The verses a run did worst on.", EvidentiaProblems, Least: 1),
         new("evidentia-rerun", "<run> [--take <n>] [--min-words <n>]", "Run a stored run's worst verses again.",

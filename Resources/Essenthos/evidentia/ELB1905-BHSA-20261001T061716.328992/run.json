@@ -1,5 +1,6 @@
 {
   "about": "The verdicts given on one EVIDENTIA run, kept so that a rebuild of the corpus gives them back. One file per canonical book, a line per verdict; a word is its canonical address, which of the address's words it is, and its surface as it then read. Written by the Forge whenever a verdict is recorded, and replayed by every load. Do not edit by hand: record verdicts with the evidentia verbs.",
+  "run": 20,
   "from": "ELB1905",
   "to": "BHSA",
   "startedAt": "2026-10-01T06:17:16.3289920+00:00",

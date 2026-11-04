@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -98,7 +99,24 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
 
     private const string BookPattern = "*.tsv";
 
+    /// <summary>A run folder's book files, <c>01.tsv</c> to <c>87.tsv</c>, in order; not <see cref="HeadsFile"/>.</summary>
+    internal static IEnumerable<string> BookFiles(string folder) =>
+        Directory.EnumerateFiles(folder, BookPattern)
+            .Where(file => int.TryParse(Path.GetFileNameWithoutExtension(file), NumberStyles.None, CultureInfo.InvariantCulture, out _))
+            .Order(StringComparer.Ordinal);
+
+    /// <summary>
+    /// The head each attached word of the run goes with, where the corpus knows it: the word its decision anchored it
+    /// to on the same counterpart, or the one its link marks. A file-built mapping cannot find it again, because the
+    /// head's own decision may have no verdict.
+    /// </summary>
+    public const string HeadsFile = "heads.tsv";
+
+    private static readonly string[] HeadColumns = ["at", "word", "surface", "head_at", "head", "head_surface"];
+
     private const char Tab = '\t';
+
+    private const char NewLine = '\n';
 
     /// <summary>The digits a confidence is written with, which is all of it the link writer keeps.</summary>
     private const int ConfidenceDigits = 4;
@@ -201,7 +219,9 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
                 review.CorrectedTargetWordId))
             .ToListAsync(cancellationToken);
 
-        var fromWords = await AddressesOf(run.FromTextId, [.. reviewed.Select(row => row.Source)], cancellationToken);
+        var anchored = await Heads(runId, cancellationToken);
+        var fromWords = await AddressesOf(run.FromTextId,
+            [.. reviewed.Select(row => row.Source), .. anchored.Select(head => (long?)head.Head)], cancellationToken);
         var toWords = await AddressesOf(run.ToTextId, [.. reviewed.SelectMany(row => new[] { row.Target, row.Corrected })], cancellationToken);
         var sessions = reviewed
             .Select(row => new Session(row.Reviewer, row.ReviewedAt, row.Examined, row.Note))
@@ -245,7 +265,7 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
 
         var folder = Path.Combine(Folder(resources), RunFolder(run.FromText!.Slug, run.ToText!.Slug, run.StartedAt));
         Directory.CreateDirectory(folder);
-        foreach (var stale in Directory.EnumerateFiles(folder, BookPattern))
+        foreach (var stale in BookFiles(folder))
         {
             File.Delete(stale);
         }
@@ -263,9 +283,25 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
             await Write(Path.Combine(folder, BookFile(book.Key)), text.ToString(), cancellationToken);
         }
 
+        var headed = anchored
+            .Select(pair => (Word: Of(fromWords, pair.Word, run.FromText.Slug), Head: Of(fromWords, pair.Head, run.FromText.Slug)))
+            .Distinct()
+            .OrderBy(pair => pair.Word.At.Book).ThenBy(pair => pair.Word.At.Chapter).ThenBy(pair => pair.Word.At.Verse)
+            .ThenBy(pair => pair.Word.Nth).ThenBy(pair => pair.Head.At.Chapter).ThenBy(pair => pair.Head.At.Verse).ThenBy(pair => pair.Head.Nth)
+            .ToList();
+        var heads = new StringBuilder(string.Join(Tab, HeadColumns)).Append(NewLine);
+        foreach (var (word, head) in headed)
+        {
+            heads.AppendJoin(Tab, word.At, word.Nth, Checked(word.Surface), head.At == word.At ? string.Empty : head.At.ToString(),
+                head.Nth, Checked(head.Surface)).Append(NewLine);
+        }
+
+        await Write(Path.Combine(folder, HeadsFile), heads.ToString(), cancellationToken);
+
         var record = new JsonObject
         {
             ["about"] = About,
+            ["run"] = run.Id,
             ["from"] = run.FromText.Slug,
             ["to"] = run.ToText.Slug,
             ["startedAt"] = Stamp(run.StartedAt),
@@ -290,6 +326,45 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
     /// The runs whose verdicts in the database differ from what the ledger holds for them, each as a
     /// sentence saying what to run. Empty when every verdict is in a file.
     /// </summary>
+    /// <summary>The approved attached words of a run and the head each goes with, where the corpus knows one.</summary>
+    private async Task<List<(long Word, long Head)>> Heads(int runId, CancellationToken cancellationToken)
+    {
+        var heads = new List<(long, long)>();
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            await using var command = new NpgsqlCommand(Headed, (NpgsqlConnection)db.Database.GetDbConnection());
+            command.Parameters.AddWithValue("run", runId);
+            command.Parameters.AddWithValue("kind", AttachedWords.DecisionKind);
+            command.Parameters.AddWithValue("approved", EnumSpelling.Of(EvidentiaVerdict.Approved));
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                heads.Add((reader.GetInt64(0), reader.GetInt64(1)));
+            }
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
+        }
+
+        return heads;
+    }
+
+    /// <summary>The heads an approved attached word's decision anchors on its own counterpart, or else its link marks.</summary>
+    private const string Headed =
+        """
+        SELECT x.word, x.head
+        FROM (
+            SELECT d.source_word_id AS word,
+                   coalesce(CASE WHEN d.anchor_target_word_id = d.target_word_id THEN d.anchor_source_word_id END, lw.head_word_id) AS head
+            FROM evidentia_review r
+            JOIN evidentia_decision d ON d.id = r.decision_id
+            LEFT JOIN link_word lw ON lw.link_id = r.link_id AND lw.word_id = d.source_word_id AND lw.head_word_id IS NOT NULL
+            WHERE d.run_id = @run AND d.kind = @kind AND r.verdict = @approved AND d.source_word_id IS NOT NULL) x
+        WHERE x.head IS NOT NULL
+        """;
+
     public static async Task<IReadOnlyList<string>> Unrecorded(AppDbContext db, string resources, CancellationToken cancellationToken = default)
     {
         var counts = await db.EvidentiaReviews.AsNoTracking()
@@ -356,7 +431,7 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
     private async Task ReplayRun(string folder, LedgerRun recorded, ReplayTally tally, CancellationToken cancellationToken)
     {
         var name = Path.GetFileName(folder);
-        var lines = Directory.EnumerateFiles(folder, BookPattern).Order(StringComparer.Ordinal)
+        var lines = BookFiles(folder)
             .SelectMany(file => LedgerLine.ReadAll(file))
             .ToList();
         tally.Runs++;
@@ -783,7 +858,12 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
     internal sealed record Session(string Reviewer, DateTimeOffset ReviewedAt, bool Examined, string? Note);
 
     /// <summary>What <see cref="RunFile"/> says about a run.</summary>
+    /// <param name="Run">
+    /// The run's number, which a rule's claim names (<see cref="EvidentiaLinkWriter.RuleSource"/>) and by which a
+    /// newer run supersedes an older; null in a file written before it was recorded.
+    /// </param>
     internal sealed record LedgerRun(
+        int? Run,
         string From,
         string To,
         DateTimeOffset StartedAt,
@@ -798,6 +878,7 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
             var node = JsonNode.Parse(File.ReadAllText(path))
                        ?? throw new InvalidDataException($"{path} holds no JSON. Restore it from git.");
             return new LedgerRun(
+                node["run"]?.GetValue<int>(),
                 Required(node, "from", path),
                 Required(node, "to", path),
                 Moment(Required(node, "startedAt", path)),
@@ -878,6 +959,37 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         private static int? Number(string field) => field.Length == 0 ? null : int.Parse(field, CultureInfo.InvariantCulture);
 
         private static string? Empty(string field) => field.Length == 0 ? null : field;
+    }
+
+    /// <summary>One line of <see cref="HeadsFile"/>: an attached word and the head it goes with, each by address, ordinal and surface.</summary>
+    internal sealed record LedgerHead(Address At, int Word, string Surface, Address HeadAt, int Head, string HeadSurface)
+    {
+        /// <summary>The heads a run's folder lists; null where the folder has no heads file, as one written before them.</summary>
+        public static List<LedgerHead>? ReadAll(string folder)
+        {
+            var path = Path.Combine(folder, HeadsFile);
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+
+            var heads = new List<LedgerHead>();
+            foreach (var text in File.ReadLines(path).Skip(1).Where(text => text.Length > 0))
+            {
+                var field = text.Split(Tab);
+                if (field.Length != HeadColumns.Length)
+                {
+                    throw new InvalidDataException(
+                        $"A line of {path} has {field.Length} fields where the ledger writes {HeadColumns.Length}. Restore it from git.");
+                }
+
+                var at = Address.Parse(field[0], 0);
+                heads.Add(new LedgerHead(at, int.Parse(field[1], CultureInfo.InvariantCulture), field[2],
+                    field[3].Length == 0 ? at : Address.Parse(field[3], at.Book), int.Parse(field[4], CultureInfo.InvariantCulture), field[5]));
+            }
+
+            return heads;
+        }
     }
 
     private sealed class ReplayTally

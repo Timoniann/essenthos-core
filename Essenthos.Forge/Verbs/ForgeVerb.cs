@@ -1,5 +1,7 @@
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links.Evidentia;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Verbs;
 
@@ -79,9 +81,26 @@ internal sealed class ForgeRun(IServiceProvider services, ILogger logger, string
             "{Outcome}", await scope.ServiceProvider.GetRequiredService<StrongRenderingLoader>().Load(relinked));
     }
 
-    /// <summary>A verdict recorded is written to the ledger at once, so no verdict lives only in this database.</summary>
-    public async Task Record(IServiceScope scope, int runId) =>
-        logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<EvidentiaLedger>().Export(runId, resources));
+    /// <summary>
+    /// A verdict recorded is written to the ledger at once, so no verdict lives only in this database, and the run's
+    /// pair file under <c>mapping/</c> is made again from the ledger where the store holds both texts' words and frames.
+    /// </summary>
+    public async Task Record(IServiceScope scope, int runId)
+    {
+        var exported = await scope.ServiceProvider.GetRequiredService<EvidentiaLedger>().Export(runId, resources);
+        logger.LogInformation("{Outcome}", exported);
+        var run = EvidentiaLedger.LedgerRun.Read(Path.Combine(exported.Folder, EvidentiaLedger.RunFile));
+        var pair = MappingProducts.Pair(run.From, run.To);
+        var store = new ProductStore(resources);
+        if (!EvidentiaFiles.CanWrite(store, pair))
+        {
+            logger.LogInformation("{Pair}'s evidentia file waits for both texts' words and frames under texts/", pair);
+            return;
+        }
+
+        logger.LogInformation("{Outcome}", EvidentiaFiles.Write(store, resources, pair));
+        store.Save();
+    }
 
     /// <summary>
     /// The ledger's verdicts on the runs a command's texts reach, put back after it rewrote their links
