@@ -158,14 +158,7 @@ internal static class TextConverter
     /// <summary>The text read, corrected and put through its stages, without writing anything.</summary>
     public static ConvertedText Read(ProductStore store, CataloguedText declared)
     {
-        var corrections = TextCorrections.Read(store, declared.Slug);
-        var source = corrections.Apply(declared.Read(store.ResourcesPath, corrections));
-        var text = From(source, corrections.Added);
-        foreach (var stage in Stages.Where(stage => stage.AppliesTo(declared.Slug)))
-        {
-            stage.Apply(text, store.ResourcesPath);
-        }
-
+        var (text, corrections) = Staged(store, declared, null);
         var (set, cleared) = corrections.ApplyNumbers(text);
         if (set + cleared > 0)
         {
@@ -173,6 +166,29 @@ internal static class TextConverter
         }
 
         return text;
+    }
+
+    /// <summary>
+    /// The text read and corrected and put through its stages up to the first <paramref name="until"/> accepts, which is not
+    /// applied (null: every stage); the number corrections, applied after every stage, are not. Its words stand where the
+    /// words product puts them.
+    /// </summary>
+    public static (ConvertedText Text, TextCorrections Corrections) Staged(ProductStore store, CataloguedText declared, Func<ITextStage, bool>? until)
+    {
+        var corrections = TextCorrections.Read(store, declared.Slug);
+        var source = corrections.Apply(declared.Read(store.ResourcesPath, corrections));
+        var text = From(source, corrections.Added);
+        foreach (var stage in Stages.Where(stage => stage.AppliesTo(declared.Slug)))
+        {
+            if (until?.Invoke(stage) == true)
+            {
+                break;
+            }
+
+            stage.Apply(text, store.ResourcesPath);
+        }
+
+        return (text, corrections);
     }
 
     /// <summary>

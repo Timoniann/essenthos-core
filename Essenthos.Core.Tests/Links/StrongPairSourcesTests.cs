@@ -36,9 +36,13 @@ public sealed class StrongPairSourcesTests : IDisposable
     [Theory]
     [InlineData(MappingMethods.Strong, "KJV-BHSA")]
     [InlineData(MappingMethods.Strong, "RUSV-WH1881")]
-    [InlineData(MappingMethods.Lexical, "KJV-BHSA")]
+    [InlineData(MappingMethods.Lexical, "RUSV-NESTLE1904")]
     public void A_pair_no_load_matched_has_none(string method, string pair) =>
         PairSources.All.Should().NotContain(source => source.Method == method && source.States(pair));
+
+    [Fact]
+    public void The_King_James_function_words_speak_only_of_the_Greek() =>
+        KingJamesGreekSource.All.Should().NotContain(source => source.States("KJV-BHSA"));
 
     [Fact]
     public void A_source_makes_the_rows_of_its_numbering_under_any_name_of_the_witness()
@@ -108,19 +112,27 @@ public sealed class StrongPairSourcesTests : IDisposable
             "Essenthos/texts/NESTLE1904/words.essx", "Essenthos/texts/NESTLE1904/frame.essx", "Essenthos/mapping/RUSV-NESTLE1904/stated.essx",
             StrongNumberSource.GreekDictionary, "SynodalStrong/RSTE_verse_words.xml",
         ];
+        string[] luther =
+        [
+            "Essenthos/texts/LUTH1912/words.essx", "Essenthos/texts/LUTH1912/frame.essx", "Essenthos/texts/LUTH1912/text.tsv",
+            "Essenthos/texts/RP2018/words.essx", "Essenthos/texts/RP2018/frame.essx", "Essenthos/texts/RP2018/text.tsv", "Luther1912/01.usfm",
+            "Essenthos/texts/BHSA/words.essx", "Essenthos/texts/NESTLE1904/words.essx", "Essenthos/texts/LUTH1912/corrections.tsv",
+            "Essenthos/texts/LUTH1912/ids.essx",
+        ];
         string[] laid = ["ChineseUnion1919/ChiUn/module.txt", "Segond1910Strong/FreSegond1910/module.txt", "ReinaValera1909/01.usfm"];
         string[] lexical =
         [
             "Essenthos/texts/KJV/words.essx", "Essenthos/texts/KJV/frame.essx", "Essenthos/texts/KJV/corrections.tsv",
             "Essenthos/texts/TR1894/words.essx", "Essenthos/texts/TR1894/frame.essx", KingJamesGreekSource.Zefania, StrongNumberSource.GreekDictionary,
         ];
-        foreach (var file in strong.Concat(laid).Concat(lexical))
+        foreach (var file in strong.Concat(luther).Concat(laid).Concat(lexical))
         {
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(_root, file))!);
             File.WriteAllText(Path.Combine(_root, file), file);
         }
 
         Make(store, "mapping/RUSV-NESTLE1904/strong", strong);
+        Make(store, "mapping/LUTH1912-RP2018/strong", [.. luther.Where(file => !file.StartsWith("Luther1912/", StringComparison.Ordinal)), "Luther1912"]);
         Make(store, "mapping/CUV-BHSA/strong", "ChineseUnion1919/ChiUn");
         Make(store, "mapping/LSG1910-BHSA/strong", "Segond1910Strong/FreSegond1910", "ReinaValera1909");
         Make(store, "mapping/KJV-TR1894/strong", lexical);
