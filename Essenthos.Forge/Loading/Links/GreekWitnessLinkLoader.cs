@@ -73,9 +73,9 @@ internal sealed record GreekWitnessOutcome(
 /// </summary>
 internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitnessLinkLoader> logger)
 {
-    private const string Source = "the Strong numbers both editions carry, paired within each verse";
+    internal const string Source = "the Strong numbers both editions carry, paired within each verse";
 
-    private const string SubstitutionSource =
+    internal const string SubstitutionSource =
         "the words left over once the Strong numbers were paired, matched by their place in the verse";
 
     /// <summary>
@@ -84,7 +84,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
     /// checking a pairing against the two numbers printed would otherwise find them different and
     /// have nothing to tell them why.
     /// </summary>
-    private const string LemmatisedSource =
+    internal const string LemmatisedSource =
         "the Strong numbers both editions carry, paired within each verse under the number each " +
         "concordance gives the lemma";
 
@@ -161,7 +161,7 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
     /// side only is written positively as an absence rather than left as a hole — that is the
     /// variant, and recording it is the whole point.
     /// </summary>
-    private static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
+    internal static void Pair(List<GreekWord> left, List<GreekWord> right, List<GreekDraft> drafts)
     {
         var mine = left.Where(w => w.Strong is not null).GroupBy(w => GreekLemmaNumbers.Of(w.Strong)!)
             .ToDictionary(g => g.Key, g => g.OrderBy(w => w.Position).ToList());
@@ -310,12 +310,12 @@ internal sealed class GreekWitnessLinkLoader(AppDbContext db, ILogger<GreekWitne
             : throw new InvalidOperationException(
                 $"The text \"{slug}\" must be loaded before it can be linked.");
 
-    private sealed record GreekWord(long Id, int Position, string Surface, string? Strong);
+    internal sealed record GreekWord(long Id, int Position, string Surface, string? Strong);
 
     /// <summary>A word whose number the other edition did not answer, and how sure that is.</summary>
     private sealed record Leftover(GreekWord Word, double Certainty);
 
-    private sealed record GreekDraft(
+    internal sealed record GreekDraft(
         LinkRelation Relation,
         List<long> From,
         List<long> To,
