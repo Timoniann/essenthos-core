@@ -89,6 +89,11 @@ public sealed class PeopleAncestorLineTests : IDisposable
             Kind = kind, Slug = slug, Name = name, SourceId = slug, Origin = origin,
             Source = kind == EntityKind.People && slug == "gadites" ? Tribes : "a test",
         };
+        if (kind == EntityKind.People && slug == "gadites")
+        {
+            entity.Claims.Add(new EntityClaim { Method = LinkMethod.Manual, Source = Tribes });
+        }
+
         _db.Entities.Add(entity);
         return entity;
     }

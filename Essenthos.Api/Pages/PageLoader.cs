@@ -256,8 +256,7 @@ internal sealed class PageLoader(
         }
 
         var described = descriptor is null ? "" : string.Concat(descriptor.Parts.Select(part => part.Text)).Trim();
-        var ours = await OursOnlyRecords.Among(db, [entity.Slug], cancellationToken);
-        var english = language.IsEnglish ? OursOnlyRecords.Line(ours, entity.Slug, entity.Distinguisher) : null;
+        var english = language.IsEnglish ? entity.Distinguisher : null;
         var line = new[] { localDistinguisher, described, english }
             .FirstOrDefault(said => !string.IsNullOrWhiteSpace(said));
         var tally = await db.Entities

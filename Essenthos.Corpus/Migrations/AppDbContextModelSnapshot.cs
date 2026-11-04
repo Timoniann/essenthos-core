@@ -672,6 +672,25 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("entity_alternative", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityCanon", b =>
+                {
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<string>("Canon")
+                        .HasColumnType("text")
+                        .HasColumnName("canon");
+
+                    b.HasKey("EntityId", "Canon")
+                        .HasName("pk_entity_canon");
+
+                    b.ToTable("entity_canon", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_entity_canon_canon", "canon IN ('hebrew', 'greek-nt', 'deuterocanon', 'ethiopic')");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -3795,6 +3814,50 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordExternalId", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Dataset")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("dataset");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<string>("ExternalId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("external_id");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text")
+                        .HasColumnName("note");
+
+                    b.Property<string>("Relation")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("relation");
+
+                    b.HasKey("Id")
+                        .HasName("pk_record_external_id");
+
+                    b.HasIndex("EntityId")
+                        .HasDatabaseName("ix_record_external_id_entity_id");
+
+                    b.HasIndex("Dataset", "ExternalId")
+                        .HasDatabaseName("ix_record_external_id_dataset_external_id");
+
+                    b.ToTable("record_external_id", (string)null);
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.ReignEvent", b =>
                 {
                     b.Property<int>("Id")
@@ -6173,6 +6236,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Entity");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityCanon", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany("Canons")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_canon_entity_entity_id");
+
+                    b.Navigation("Entity");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityClaim", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
@@ -6867,6 +6942,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Place");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordExternalId", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany("ExternalIds")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_record_external_id_entity_entity_id");
+
+                    b.Navigation("Entity");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.ReignEvent", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Entity", "Ruler")
@@ -7451,7 +7538,11 @@ namespace Essenthos.Core.Migrations
 
                     b.Navigation("Candidates");
 
+                    b.Navigation("Canons");
+
                     b.Navigation("Claims");
+
+                    b.Navigation("ExternalIds");
 
                     b.Navigation("Images");
 

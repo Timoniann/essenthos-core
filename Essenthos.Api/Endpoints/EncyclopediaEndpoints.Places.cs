@@ -19,9 +19,12 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? language,
             [FromQuery] string? prose,
             [FromQuery] bool? variants,
+            [FromQuery] string? canon,
             AppDbContext db,
             CancellationToken cancellationToken) =>
-            Results.Ok(await Map(db, language, cancellationToken, prose, variants ?? false)));
+            CanonAttestation.TryMode(canon, out var mode)
+                ? Results.Ok(await Map(db, language, cancellationToken, prose, variants ?? false, mode))
+                : ApiResults.NotFound($"There is no canon \"{canon}\". Try one of: {Canons.Names}."));
 
         // How many of the map's places a chapter names: the reader's link to the map under a chapter
         // says so, and fetching the whole map to count them was most of what a chapter downloaded.
@@ -53,14 +56,18 @@ internal static partial class EncyclopediaEndpoints
     /// </summary>
     /// <param name="prose">The language the words of a distinguisher are said in; the names' where not given.</param>
     /// <param name="variants">Whether the other sites proposed for each place come too.</param>
+    /// <param name="mode">The canon mode: the places it hides are left off the map (<see cref="CanonAttestation.InCanon"/>).</param>
     internal static async Task<PlaceMapResponse> Map(
         AppDbContext db,
         string? language = null,
         CancellationToken cancellationToken = default,
         string? prose = null,
-        bool variants = false)
+        bool variants = false,
+        CanonDefinition? mode = null)
     {
-        var places = await db.PlaceLocations
+        var shown = db.Entities.InCanon(mode).Select(e => e.Id);
+        var located = mode is null ? db.PlaceLocations : db.PlaceLocations.Where(l => shown.Contains(l.EntityId));
+        var places = await located
             .OrderBy(l => l.Entity!.Name).ThenBy(l => l.Entity!.Slug)
             .Select(l => new
             {
@@ -231,10 +238,10 @@ internal static partial class EncyclopediaEndpoints
         var throughIds = rows.Select(r => r.ThroughOpenBibleId).OfType<string>().Distinct().ToList();
         var through = throughIds.Count == 0
             ? []
-            : (await db.Entities
-                .Where(e => e.Kind == EntityKind.Place && e.OpenBibleId != null
-                            && throughIds.Contains(e.OpenBibleId) && e.Id != entityId)
-                .Select(e => new { e.Id, e.Slug, e.Kind, e.Name, OpenBibleId = e.OpenBibleId! })
+            : (await db.RecordExternalIds
+                .Where(x => x.Dataset == Datasets.OpenBibleId && x.Relation == RecordExternalRelations.SameAs
+                            && throughIds.Contains(x.ExternalId) && x.EntityId != entityId && x.Entity!.Kind == EntityKind.Place)
+                .Select(x => new { x.Entity!.Id, x.Entity.Slug, x.Entity.Kind, x.Entity.Name, OpenBibleId = x.ExternalId })
                 .ToListAsync(cancellationToken))
             .GroupBy(e => e.OpenBibleId, StringComparer.Ordinal)
             .ToDictionary(group => group.Key, group => group.MinBy(e => e.Id)!, StringComparer.Ordinal);

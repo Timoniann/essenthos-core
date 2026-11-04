@@ -118,7 +118,10 @@ internal static partial class EncyclopediaEndpoints
                     e.Subtype,
                     e.ModernEquivalent,
                     e.Notes,
-                    e.OpenBibleId,
+                    OpenBibleId = e.ExternalIds
+                        .Where(x => x.Dataset == Datasets.OpenBibleId && x.Relation == RecordExternalRelations.SameAs)
+                        .Select(x => x.ExternalId)
+                        .FirstOrDefault(),
                     e.AnotherNameForEntityId,
                     Origin = e.Origin == null
                         ? null
@@ -127,7 +130,6 @@ internal static partial class EncyclopediaEndpoints
                             EnumSpelling.Of(e.Origin.Kind),
                             e.Origin.Name,
                             e.Origin.Distinguisher),
-                    e.Source,
                     Location = e.Location == null
                         ? null
                         : new EntityLocationResponse(
@@ -251,18 +253,7 @@ internal static partial class EncyclopediaEndpoints
                 })
                 .ToList();
 
-            var readByUs = await OursOnlyRecords.Among(
-                db,
-                [
-                    entity.Slug,
-                    .. related.Select(r => r.Slug),
-                    .. bearers.Select(b => b.Slug),
-                    .. titles.Select(t => t.Slug),
-                    .. alternatives.Select(a => a.Slug).OfType<string>(),
-                ],
-                cancellationToken);
-            var mine = readByUs.GetValueOrDefault(entity.Slug);
-            var sex = mine is not null ? mine.Sex : entity.Sex;
+            var sex = entity.Sex;
             var lines = await EntityDistinguishers.OfSlugs(
                 db,
                 [
@@ -287,8 +278,7 @@ internal static partial class EncyclopediaEndpoints
             [
                 .. related.Select(r => r with
                 {
-                    Distinguisher = OursOnlyRecords.Line(readByUs, r.Slug, r.Distinguisher),
-                    LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, r.Slug),
+                    LocalDistinguisher = lines.GetValueOrDefault(r.Slug),
                     Line = described.GetValueOrDefault(r.Slug) is { } line
                         ? string.Concat(line.Parts.Select(part => part.Text))
                         : null,
@@ -298,8 +288,7 @@ internal static partial class EncyclopediaEndpoints
             [
                 .. alternatives.Select(a => a with
                 {
-                    Distinguisher = OursOnlyRecords.Line(readByUs, a.Slug, a.Distinguisher),
-                    LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, a.Slug),
+                    LocalDistinguisher = a.Slug is null ? null : lines.GetValueOrDefault(a.Slug),
                 }),
             ];
 
@@ -336,27 +325,33 @@ internal static partial class EncyclopediaEndpoints
             var glosses = await EntityNameTranslations.Of(
                 db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
 
-            var ownNotes = mine is null
-                ? await NoteTranslations.Of(db, entity.Id, entity.Notes, words, cancellationToken)
-                : null;
-            var machineNotes = mine is null && ownNotes is null ? TextTranslations.In(sourced, entity.Notes) : null;
+            var ownNotes = await NoteTranslations.Of(db, entity.Id, entity.Notes, words, cancellationToken);
+            var machineNotes = ownNotes is null ? TextTranslations.In(sourced, entity.Notes) : null;
+
+            // A record is ours (the record files keep no dataset as its source): it is credited to our own claim that
+            // established it, the strongest first; a dataset's statement about it stays among the claims.
+            var credit = established
+                .OrderByDescending(c => Datasets.Of(c.Source) == Datasets.Own)
+                .ThenByDescending(c => ClaimStanding.Of(c.Method))
+                .ThenByDescending(c => c.Confidence ?? 1)
+                .Select(c => c.Source)
+                .FirstOrDefault() ?? OursOnlyRecords.Credit;
 
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
                 renamed?.Name ?? entity.Name,
-                mine is not null ? mine.Line
-                    : entity.Kind == EntityKind.Place ? PlaceToday.Line(entity.Distinguisher, entity.ModernEquivalent, locations)
+                entity.Kind == EntityKind.Place ? PlaceToday.Line(entity.Distinguisher, entity.ModernEquivalent, locations)
                     : entity.Distinguisher,
                 sex,
-                mine is null ? entity.Tribe : mine.Tribe,
+                entity.Tribe,
                 entity.PlaceKind,
                 entity.Kind == EntityKind.Place ? PlaceToday.Of(entity.ModernEquivalent, locations) : entity.ModernEquivalent,
-                mine is null ? entity.Notes : null,
+                entity.Notes,
                 entity.OpenBibleId,
                 entity.Origin,
-                mine is null ? entity.Source : OursOnlyRecords.Credit,
-                Datasets.Of(mine is null ? entity.Source : OursOnlyRecords.Credit),
+                credit,
+                Datasets.Of(credit) ?? Datasets.Own,
                 tally.References,
                 tally.Mentions,
                 tally.Disputed,
@@ -397,7 +392,7 @@ internal static partial class EncyclopediaEndpoints
                         ? new Dictionary<string, string>(headed, StringComparer.Ordinal)
                         : null,
                 TribeRecord = await TribeRecord(
-                    db, mine is null ? entity.Tribe : mine.Tribe, language, cancellationToken, entity.Slug),
+                    db, entity.Tribe, language, cancellationToken, entity.Slug),
                 Descriptor = described.GetValueOrDefault(entity.Slug),
                 Location = entity.Location,
                 Locations = locations,
@@ -407,24 +402,23 @@ internal static partial class EncyclopediaEndpoints
                 BuiltOnItsSite = await SharedSite(
                     db, SharedSites.All.FirstOrDefault(s => s.Earlier == entity.Slug)?.Later, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
+                ExternalIds = await ExternalIds(db, entity.Id, cancellationToken),
                 LocalName = renamed is null ? localNames.GetValueOrDefault(entity.Id) : renamed.LocalName,
                 AlsoCalled = renamed?.AlsoCalled,
                 NameFromSource = (await EntityNames.NamedOnlyBySource(
                     db, [entity.Id], language, localNames, cancellationToken)).Contains(entity.Id),
-                LocalDistinguisher = mine is null || mine.Line is not null
-                    ? (await EntityDistinguishers.Of(db, [entity.Id], words, cancellationToken))
-                        .GetValueOrDefault(entity.Id)
-                    : null,
+                LocalDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], words, cancellationToken))
+                    .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
                 Images = await ImageEndpoints.Of(
                     db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language),
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
-                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, OursOnlyRecords.Line(readByUs, b.Slug, b.Distinguisher),
+                        b.Slug, EnumSpelling.Of(b.Kind), b.Name, b.Distinguisher,
                         BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)
                     {
-                        LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, b.Slug),
+                        LocalDistinguisher = lines.GetValueOrDefault(b.Slug),
                         LocalName = counterpartNames.GetValueOrDefault(b.BearerEntityId),
                         LocalNote = TextTranslations.In(sourced, b.Note),
                     }),
@@ -432,10 +426,10 @@ internal static partial class EncyclopediaEndpoints
                 Titles =
                 [
                     .. titles.Select(t => new EntityTitleResponse(
-                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, OursOnlyRecords.Line(readByUs, t.Slug, t.Distinguisher),
+                        t.Slug, EnumSpelling.Of(t.Kind), t.Name, t.Distinguisher,
                         BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)
                     {
-                        LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, t.Slug),
+                        LocalDistinguisher = lines.GetValueOrDefault(t.Slug),
                         LocalName = counterpartNames.GetValueOrDefault(t.TitleEntityId),
                         LocalNote = TextTranslations.In(sourced, t.Note),
                     }),
@@ -485,6 +479,24 @@ internal static partial class EncyclopediaEndpoints
     private static (string Lemma, string? Transliteration)? Lemma(
         IReadOnlyDictionary<string, (string Lemma, string? Transliteration)> lemmas, string? number) =>
         number is not null && lemmas.TryGetValue(number, out var lemma) ? lemma : null;
+
+    /// <summary>The ids the datasets give one record, by dataset and id.</summary>
+    internal static async Task<List<EntityExternalIdResponse>> ExternalIds(
+        AppDbContext db,
+        int entityId,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.RecordExternalIds
+            .Where(x => x.EntityId == entityId)
+            .OrderBy(x => x.Dataset).ThenBy(x => x.Relation != RecordExternalRelations.SameAs).ThenBy(x => x.ExternalId)
+            .Select(x => new { x.Dataset, x.ExternalId, x.Relation, x.Note })
+            .ToListAsync(cancellationToken);
+        return
+        [
+            .. rows.Select(x => new EntityExternalIdResponse(
+                x.Dataset, Datasets.All.FirstOrDefault(d => d.Id == x.Dataset)?.Name, x.ExternalId, x.Relation, x.Note)),
+        ];
+    }
 
     /// <summary>
     /// Every text's spellings of one entity, a text's heading first. The texts in the corpus's own

@@ -150,6 +150,12 @@ public class Entity
     /// <summary>Where an observance falls in the year, as the verses that appoint it state.</summary>
     public ICollection<ObservanceTime> Times { get; set; } = [];
 
+    /// <summary>The canons a word of a held text names it in; empty for a record named in no word.</summary>
+    public ICollection<EntityCanon> Canons { get; set; } = [];
+
+    /// <summary>The ids the datasets give it.</summary>
+    public ICollection<RecordExternalId> ExternalIds { get; set; } = [];
+
     public override string ToString() => $"Entity({Kind} {Slug})";
 }
 
@@ -688,6 +694,9 @@ public static class DivineRecords
     public const string GodSourcePrefix = "person:YHVH_";
 
     public const string HolySpiritSourceId = "essenthos:thing:holy-spirit";
+
+    /// <summary>The Holy Spirit's record, which no dataset gives an id.</summary>
+    public const string HolySpiritSlug = "holy-spirit";
 
     public static bool Contains(string sourceId) =>
         sourceId.StartsWith(GodSourcePrefix, StringComparison.Ordinal)

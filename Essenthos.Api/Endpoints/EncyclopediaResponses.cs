@@ -277,6 +277,12 @@ internal record EntityResponse(
     public EntityWikipediaResponse? Wikipedia { get; init; }
 
     /// <summary>
+    /// The ids the datasets give this record (<c>records/external-ids</c>): BibleData's <c>person:Moses_1</c>, OpenBible's
+    /// <c>a5f43dd</c>, each with how it stands to ours. Empty for a record no dataset knows.
+    /// </summary>
+    public IList<EntityExternalIdResponse> ExternalIds { get; init; } = [];
+
+    /// <summary>
     /// What this corpus says the entity is: the pieces of a line, each name among them carrying the
     /// entity it names complete enough to be linked, and the claims the line was made of with the
     /// verse each was read from. <see cref="EntityDescriptorResponse.Language"/> says which language
@@ -784,3 +790,10 @@ internal record EntityPlaceResponse(
 
     public double? Confidence { get; init; }
 }
+
+/// <param name="Dataset">The dataset's id in the list of datasets: <c>bibledata</c>, <c>openbible</c>.</param>
+/// <param name="Name">The dataset's name as its credit gives it; null for a dataset the list does not declare.</param>
+/// <param name="ExternalId">The dataset's own id for the record.</param>
+/// <param name="Relation"><c>same-as</c> where the dataset's record is this one, <c>folded</c> where it was another record folded into this one.</param>
+/// <param name="Note">Why, where the file says: <em>the id of hilkiah-6, folded into this record</em>.</param>
+internal record EntityExternalIdResponse(string Dataset, string? Name, string ExternalId, string Relation, string? Note);

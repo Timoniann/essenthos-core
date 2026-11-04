@@ -49,16 +49,4 @@ internal static class EntityDistinguishers
             .Select(d => new { d.Entity!.Slug, d.Text })
             .ToDictionaryAsync(d => d.Slug, d => d.Text, StringComparer.Ordinal, cancellationToken);
     }
-
-    /// <summary>
-    /// A record's rendered line where it may show one: a record of ours that has no line of ours
-    /// shows none, whatever was once rendered of the dataset's.
-    /// </summary>
-    public static string? For(
-        IReadOnlyDictionary<string, OursOnlyRecords.OwnFacts> ours,
-        IReadOnlyDictionary<string, string> lines,
-        string? slug) =>
-        slug is null || (ours.TryGetValue(slug, out var own) && own.Line is null)
-            ? null
-            : lines.GetValueOrDefault(slug);
 }

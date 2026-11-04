@@ -21,6 +21,12 @@ namespace Essenthos.Core.Corpus;
 /// up. Where our rows say nothing, or say two things, they are empty; a sex then falls to the grammar
 /// of the person's name, as the load wrote it.
 /// </para>
+///
+/// <para>
+/// It reads a database of the old load, where a record still names the dataset that supplied it. <c>records-export</c>
+/// writes what it finds into the record files, so a database those files were loaded into holds the result in the records'
+/// own columns, and the API reads those.
+/// </para>
 /// </summary>
 internal static class OursOnlyRecords
 {

@@ -22,6 +22,9 @@ public static class Datasets
     /// </summary>
     public const string Own = "essenthos";
 
+    /// <summary>OpenBible's id in the list below, which is also how <c>record_external_id</c> names it.</summary>
+    public const string OpenBibleId = "openbible";
+
     /// <param name="Prefix">
     /// What a row's source string starts with, where the dataset supplies rows. A dataset that
     /// supplies annotation rather than rows carries no prefix and is found by <paramref name="Lemmas"/>.

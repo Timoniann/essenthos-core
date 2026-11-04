@@ -572,9 +572,17 @@ internal static class StrongEndpoints
         CancellationToken cancellationToken)
     {
         var stated = await db.StrongGentilics
-            .Include(g => g.Origin)
-            .Include(g => g.People)
-            .FirstOrDefaultAsync(g => g.StrongNumber == canonical, cancellationToken);
+            .Where(g => g.StrongNumber == canonical)
+            .Select(g => new
+            {
+                g.OriginNumber,
+                g.Kind,
+                g.Statement,
+                g.Source,
+                Origin = g.Origin == null ? null : new { g.Origin.Kind, g.Origin.Slug, g.Origin.Name },
+                People = g.People == null ? null : new { g.People.Slug, g.People.Name },
+            })
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (stated is null)
         {

@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -464,6 +465,63 @@ public sealed class ContextEndpointTests : IDisposable
         _db.EntityNames.Add(new EntityName { EntityId = entity.Id, Label = label, Meaning = meaning, Kind = kind });
 
     /// <summary>The verses the words name, as the load writes them; the test's transaction leaves the loader out.</summary>
+    /// <summary>
+    /// The base text's settled names are the chapter's records even where no list of the record's verses was read off them;
+    /// a translation's added name and its differing name come only with that translation open, each flagged with it, and the
+    /// base's record a differing word replaces stays.
+    /// </summary>
+    [Fact]
+    public async Task TheBaseNamesTheChapterAndAnOpenTextsExceptionsAreFlagged()
+    {
+        var noah = Record("noah", EntityKind.Person);
+        var japheth = Record("japheth", EntityKind.Person);
+        var gomer = Record("gomer", EntityKind.Person);
+        var magog = Record("magog", EntityKind.Person);
+        await _db.SaveChangesAsync();
+        Names(_db.WordAt(_hebrew, 10, 1, 4), noah, origin: WordEntityOrigins.Settled);
+        Names(_db.WordAt(_hebrew, 10, 2, 2), japheth, origin: WordEntityOrigins.Settled);
+        Names(_db.WordAt(_english, 10, 1, 6), noah, LinkMethod.Aligner, 0.9, WordEntityOrigins.Projected);
+        Names(_db.WordAt(_english, 10, 3, 5), gomer, LinkMethod.Manual, origin: WordEntityOrigins.Added);
+        Names(_db.WordAt(_english, 10, 2, 4), magog, LinkMethod.Manual, origin: WordEntityOrigins.Differs);
+        Names(_db.WordAt(_english, 10, 2, 4), japheth, LinkMethod.Aligner, 0.9, WordEntityOrigins.BaseReading);
+        await _db.SaveChangesAsync();
+
+        var closed = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+        var open = await ContextEndpoints.Context(
+            _db, Genesis, 10, null, await ContextWeights.Count(_db, default), default, open: [Open(_english)]);
+
+        closed.Entities.Select(e => (e.Slug, string.Join(',', e.Verses), e.Exceptions is null))
+            .Should().BeEquivalentTo([("noah", "1", true), ("japheth", "2", true)]);
+        open.Entities.Select(e => e.Slug).Should().BeEquivalentTo("noah", "japheth", "gomer", "magog");
+        var gomerRow = open.Entities.Single(e => e.Slug == "gomer");
+        gomerRow.How.Should().Equal("exception");
+        gomerRow.Exceptions!.Select(x => (x.Text, x.Origin, string.Join(',', x.Verses)))
+            .Should().Equal(("test-english", WordEntityOrigins.Added, "3"));
+        open.Entities.Single(e => e.Slug == "magog").Exceptions!.Single().Origin.Should().Be(WordEntityOrigins.Differs);
+        open.Entities.Single(e => e.Slug == "japheth").Exceptions.Should().BeEmpty("the base names him; nothing is excepted");
+    }
+
+    /// <summary>A canon mode leaves off the chapter's records only canons it does not receive attest.</summary>
+    [Fact]
+    public async Task ACanonModeHidesWhatOnlyTheCanonsItDoesNotReceiveAttest()
+    {
+        var noah = Record("noah", EntityKind.Person);
+        var gomer = Record("gomer", EntityKind.Person);
+        await _db.SaveChangesAsync();
+        Names(_db.WordAt(_hebrew, 10, 1, 4), noah, origin: WordEntityOrigins.Settled);
+        Names(_db.WordAt(_hebrew, 10, 2, 3), gomer, origin: WordEntityOrigins.Settled);
+        _db.EntityCanons.Add(new EntityCanon { EntityId = gomer.Id, Canon = RecordCanonGroups.Deuterocanon });
+        await _db.SaveChangesAsync();
+
+        var protestant = await ContextEndpoints.Context(
+            _db, Genesis, 10, null, await ContextWeights.Count(_db, default), default, mode: Canons.Find("protestant"));
+        var catholic = await ContextEndpoints.Context(
+            _db, Genesis, 10, null, await ContextWeights.Count(_db, default), default, mode: Canons.Find("catholic"));
+
+        protestant.Entities.Select(e => e.Slug).Should().Equal("noah");
+        catholic.Entities.Select(e => e.Slug).Should().BeEquivalentTo("noah", "gomer");
+    }
+
     private async Task ReadOffTheWords()
     {
         await _db.SaveChangesAsync();
@@ -498,7 +556,8 @@ public sealed class ContextEndpointTests : IDisposable
         return entity;
     }
 
-    private void Names(Word word, Entity entity, LinkMethod method = LinkMethod.StatedBySource, double? confidence = null) =>
+    private void Names(
+        Word word, Entity entity, LinkMethod method = LinkMethod.StatedBySource, double? confidence = null, string? origin = null) =>
         _db.WordEntities.Add(new WordEntity
         {
             WordId = word.Id,
@@ -506,7 +565,11 @@ public sealed class ContextEndpointTests : IDisposable
             Method = method,
             Confidence = confidence,
             Source = $"test:{method}:{entity.Slug}",
+            Origin = origin,
+            Role = origin is null ? null : WordEntityRoles.Name,
         });
+
+    private TextEntry Open(Text text) => new(text.Id, text.Slug, [Genesis], true);
 
     private void Rendered(Entity entity, string english, string ukrainian) =>
         _db.EntityDistinguishers.Add(new EntityDistinguisher
