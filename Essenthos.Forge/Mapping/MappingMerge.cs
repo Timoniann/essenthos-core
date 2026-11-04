@@ -35,13 +35,13 @@ internal static class MappingMerge
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
 
-    private sealed class Entry(string file, int index, MappingRow row)
+    private sealed class Entry(string file, int index, MappingRow row, bool laidStrong)
     {
         public string File { get; } = file;
         public int Index { get; } = index;
         public MappingRow Row { get; set; } = row;
         public string? Status { get; set; }
-        public int Rank { get; } = MappingMethods.Rank(row.Method, row.Confidence, row.Evidence);
+        public int Rank { get; } = MappingMethods.Rank(row.Method, row.Confidence, row.Evidence, laidStrong);
     }
 
     private sealed class Candidate(string shape, List<Entry> rows, Entry top)
@@ -56,17 +56,19 @@ internal static class MappingMerge
     public static Output Merge(Input input)
     {
         var entries = new List<Entry>();
+        var laid = MappingMethods.LaysStrong(input.FromText, input.ToText);
         foreach (var (file, rows) in input.Methods.OrderBy(m => m.Key, StringComparer.Ordinal))
         {
             for (var i = 0; i < rows.Count; i++)
             {
-                entries.Add(new Entry(file, i, rows[i] with { Status = null }));
+                entries.Add(new Entry(file, i, rows[i] with { Status = null }, laid));
             }
         }
 
         var report = new List<ReportRow>();
         var stale = Stale(input, entries, report);
         var pinned = Rule(input, entries);
+        Supersede(entries);
 
         var active = entries.Where(e => e.Status is null).ToList();
         var candidates = active
@@ -100,7 +102,8 @@ internal static class MappingMerge
             return order != 0 ? order : CompareBySort(a, b);
         });
 
-        var accepted = Compete(candidates);
+        var (accepted, withdrawn, refinements) = Compete(candidates);
+        var (orphans, bare, left) = KeepOrphans(accepted, withdrawn, pinned);
         accepted.Sort(CompareBySort);
         var final = Finalise(input, accepted);
 
@@ -115,6 +118,14 @@ internal static class MappingMerge
             methods[entry.File].Add(input.Methods[entry.File][entry.Index] with { Status = entry.Status });
         }
 
+        report.Add(new ReportRow("refinements", string.Empty, string.Empty, refinements,
+            "links inside a higher-ranked link on both sides, kept as links of their own"));
+        report.Add(new ReportRow("orphans", string.Empty, string.Empty, orphans,
+            $"links kept because the competition would leave a word of {input.FromText} with none (at least {MappingMethods.OrphanFloor} sure)"));
+        report.Add(new ReportRow("bare-words", string.Empty, string.Empty, bare,
+            $"words of {input.FromText} the competition alone would leave with no link"));
+        report.Add(new ReportRow("bare-words-left", string.Empty, string.Empty, left,
+            $"words of {input.FromText} still with no link after the kept ones: their links are under {MappingMethods.OrphanFloor}"));
         Report(input, entries, final, stale, report);
         return new Output(final, methods, report);
     }
@@ -171,6 +182,45 @@ internal static class MappingMerge
         return drawn;
     }
 
+    /// <summary>
+    /// A newer EVIDENTIA run replaces an older one within what it covers: the books it gave verdicts in, in
+    /// the tiers it gave them in (a run applied for the attached tier alone decided nothing about the safe
+    /// tier). An older run's claim there is superseded; outside it, the older run stands. Runs are ordered
+    /// by their number.
+    /// </summary>
+    private static void Supersede(List<Entry> entries)
+    {
+        static int Book(MappingRow row)
+        {
+            var key = MappingText.Split(row.From.Length > 0 ? row.From : row.To).First();
+            return int.Parse(key[..key.IndexOf('.')], System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        var verdicts = entries
+            .Where(e => e.Status is null && e.Row.Method == MappingMethods.Evidentia)
+            .Select(e => (Entry: e, Run: MappingMethods.EvidentiaRun(e.Row.Source), Tier: MappingMethods.Tier(e.Row.Evidence) ?? string.Empty))
+            .Where(v => v.Run is not null)
+            .Select(v => (v.Entry, Run: v.Run!.Value, v.Tier, Book: Book(v.Entry.Row)))
+            .ToList();
+        var newest = new Dictionary<(string Tier, int Book), int>();
+        foreach (var verdict in verdicts)
+        {
+            if (!newest.TryGetValue((verdict.Tier, verdict.Book), out var run) || run < verdict.Run)
+            {
+                newest[(verdict.Tier, verdict.Book)] = verdict.Run;
+            }
+        }
+
+        foreach (var verdict in verdicts)
+        {
+            var run = newest[(verdict.Tier, verdict.Book)];
+            if (run > verdict.Run)
+            {
+                verdict.Entry.Status = MappingStatus.SupersededBy(run);
+            }
+        }
+    }
+
     /// <summary>Applies the rulings; returns the pinned shapes.</summary>
     private static HashSet<string> Rule(Input input, List<Entry> entries)
     {
@@ -189,7 +239,7 @@ internal static class MappingMerge
                 {
                     entries.Add(new Entry(MappingMethods.Ruling, -1, new MappingRow(null, from, to,
                         ruling.Relation.Length == 0 ? "renders" : ruling.Relation, MappingMethods.Ruling, null,
-                        "a ruling of this project: " + ruling.Reason, null, null, null)));
+                        "a ruling of this project: " + ruling.Reason, null, null, null), false));
                 }
 
                 continue;
@@ -233,7 +283,8 @@ internal static class MappingMerge
                 }
 
                 entry.Status = MappingStatus.NarrowedByRuling;
-                entries.Add(new Entry(entry.File, -1, onFrom ? entry.Row with { From = left } : entry.Row with { To = left }));
+                entries.Add(new Entry(entry.File, -1, onFrom ? entry.Row with { From = left } : entry.Row with { To = left },
+                    MappingMethods.LaysStrong(input.FromText, input.ToText)));
             }
         }
 
@@ -243,9 +294,16 @@ internal static class MappingMerge
     private static string Normal(string keys, string text) =>
         keys.Length == 0 ? string.Empty : MappingText.Keys(MappingText.Split(keys).Select(k => WordKey.Parse(k, text)));
 
-    /// <summary>The greedy competition, highest rank first; returns the candidates that stand.</summary>
-    private static List<Candidate> Compete(List<Candidate> ordered)
+    /// <summary>
+    /// The greedy competition, highest rank first. A candidate that loses a word to a higher-ranked link
+    /// but lies inside a standing link on both sides is a refinement of it and stands as a link of its own.
+    /// Returns the candidates that stand, those withdrawn, and how many stood as refinements.
+    /// </summary>
+    private static (List<Candidate> Accepted, List<Candidate> Withdrawn, int Refinements) Compete(List<Candidate> ordered)
     {
+        var standing = new Dictionary<string, List<(HashSet<string> From, HashSet<string> To)>>(StringComparer.Ordinal);
+        var withdrawn = new List<Candidate>();
+        var refinements = 0;
         var fromHeld = new Dictionary<string, (int Rank, string Method)>(StringComparer.Ordinal);
         var toRendered = new Dictionary<string, (int Rank, string Method)>(StringComparer.Ordinal);
         var toAbsent = new Dictionary<string, (int Rank, string Method)>(StringComparer.Ordinal);
@@ -296,11 +354,21 @@ internal static class MappingMerge
 
             if (best.Rank > candidate.Rank)
             {
+                if (!MappingMethods.IsAbsence(relation) && from.Count > 0 && to.Count > 0
+                    && standing.TryGetValue(from[0], out var holders)
+                    && holders.Any(h => from.All(h.From.Contains) && to.All(h.To.Contains)))
+                {
+                    refinements++;
+                    accepted.Add(candidate);
+                    continue;
+                }
+
                 foreach (var row in candidate.Rows)
                 {
                     row.Status = MappingStatus.WithdrawnBy(best.Method);
                 }
 
+                withdrawn.Add(candidate);
                 continue;
             }
 
@@ -316,13 +384,78 @@ internal static class MappingMerge
                 default:
                     Hold(fromHeld, from, candidate.Rank, method);
                     Hold(toRendered, to, candidate.Rank, method);
+                    var shape = (from.ToHashSet(StringComparer.Ordinal), to.ToHashSet(StringComparer.Ordinal));
+                    foreach (var key in from)
+                    {
+                        if (!standing.TryGetValue(key, out var list))
+                        {
+                            standing[key] = list = [];
+                        }
+
+                        list.Add(shape);
+                    }
+
                     break;
             }
 
             accepted.Add(candidate);
         }
 
-        return accepted;
+        return (accepted, withdrawn, refinements);
+    }
+
+    /// <summary>
+    /// A word of the FROM text that the competition left with no standing link keeps its best withdrawn
+    /// link, highest rank then surest first, if that link is sure enough (<see cref="MappingMethods.KeepsOrphan"/>).
+    /// Returns how many links were kept so, how many words were bare before, and how many still are.
+    /// </summary>
+    private static (int Kept, int Bare, int Left) KeepOrphans(List<Candidate> accepted, List<Candidate> withdrawn, HashSet<string> pinned)
+    {
+        var held = accepted.SelectMany(c => MappingText.Split(c.Top.Row.From)).ToHashSet(StringComparer.Ordinal);
+        var bare = withdrawn.SelectMany(c => MappingText.Split(c.Top.Row.From)).Where(k => !held.Contains(k)).ToHashSet(StringComparer.Ordinal);
+        var best = new Dictionary<string, Candidate>(StringComparer.Ordinal);
+        foreach (var candidate in withdrawn)
+        {
+            if (!MappingMethods.KeepsOrphan(candidate.Top.Row, pinned.Contains(candidate.Shape)))
+            {
+                continue;
+            }
+
+            foreach (var key in MappingText.Split(candidate.Top.Row.From))
+            {
+                if (!held.Contains(key) && (!best.TryGetValue(key, out var other) || Better(candidate, other)))
+                {
+                    best[key] = candidate;
+                }
+            }
+        }
+
+        var kept = 0;
+        foreach (var (key, candidate) in best.OrderBy(b => b.Value.Sort.First).ThenBy(b => b.Key, StringComparer.Ordinal))
+        {
+            if (held.Contains(key))
+            {
+                continue;
+            }
+
+            foreach (var row in candidate.Rows)
+            {
+                row.Status = null;
+            }
+
+            held.UnionWith(MappingText.Split(candidate.Top.Row.From));
+            accepted.Add(candidate);
+            kept++;
+        }
+
+        return (kept, bare.Count, bare.Count(k => !held.Contains(k)));
+
+        static bool Better(Candidate a, Candidate b)
+        {
+            var order = a.Rank.CompareTo(b.Rank);
+            if (order == 0) order = (a.Top.Row.Confidence ?? 2).CompareTo(b.Top.Row.Confidence ?? 2);
+            return order > 0 || (order == 0 && CompareBySort(a, b) < 0);
+        }
     }
 
     private static List<FinalRow> Finalise(Input input, List<Candidate> accepted)
@@ -367,7 +500,9 @@ internal static class MappingMerge
             var (status, method) = group.Key;
             var (kind, by) = status.StartsWith("withdrawn-by ", StringComparison.Ordinal)
                 ? ("withdrawn", status["withdrawn-by ".Length..])
-                : (status.Split(' ')[0], string.Empty);
+                : status.StartsWith("superseded-by ", StringComparison.Ordinal)
+                    ? ("superseded", status["superseded-by ".Length..])
+                    : (status.Split(' ')[0], string.Empty);
             report.Add(new ReportRow(kind, method, by, group.Count(), status));
         }
 

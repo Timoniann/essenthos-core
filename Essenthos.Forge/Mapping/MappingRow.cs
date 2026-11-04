@@ -150,6 +150,8 @@ internal static class MappingStatus
     public const string NarrowedByRuling = "narrowed-by ruling";
 
     public const string Stale = "stale";
+
+    public static string SupersededBy(int run) => $"superseded-by evidentia run {run}";
 }
 
 /// <summary>The product names of the mapping.</summary>

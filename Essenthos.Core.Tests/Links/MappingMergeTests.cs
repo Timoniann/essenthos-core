@@ -20,9 +20,10 @@ public sealed class MappingMergeTests
         IReadOnlyList<RulingRow>? rulings = null,
         Dictionary<(string, VerseKey), string>? hashes = null,
         Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>? manifests = null,
-        Dictionary<string, long>? previous = null) =>
+        Dictionary<string, long>? previous = null,
+        string pair = "KJV-BHSA") =>
         MappingMerge.Merge(new MappingMerge.Input(
-            "KJV-BHSA", "KJV", "BHSA",
+            pair, pair[..pair.IndexOf('-')], pair[(pair.IndexOf('-') + 1)..],
             rows.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()),
             rulings ?? [],
             hashes ?? [],
@@ -182,5 +183,96 @@ public sealed class MappingMergeTests
 
         first.Final.Select(r => r.From).Should().Equal("1.1:1.1", "1.1:1.2");
         second.Final.Should().Equal(first.Final);
+    }
+
+    [Fact]
+    public void Between_stated_sources_one_aligned_by_hand_settles_before_one_carried_from_another_edition()
+    {
+        const string hand = "Clear Bible Alignments WLCM-AVD-manual, BiblioNexus, github.com/Clear-Bible/Alignments, CC BY 4.0, made by hand";
+        const string carried = "BSOJ's alignment of the Van Dyck to unfoldingWord's Hebrew Bible and Greek New Testament, made in translationCore";
+        const string transfer = "Clear Bible Alignments SBLGNT-JFA11-transfer, transferred from their Spanish Reina-Valera 1909 alignment, not made by hand";
+        var output = Merge([
+            Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.1", source: carried, id: 1),
+            Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.1", source: hand, id: 1),
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: transfer, id: 2),
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: Berean, id: 2),
+        ]);
+
+        output.Final.Where(r => r.Settled).Select(r => r.Source).Should().Equal(hand, Berean);
+        MappingMethods.Making(transfer).Should().Be(MappingMethods.StatedMaking.Transferred, "'not made by hand' is not 'made by hand'");
+    }
+
+    [Fact]
+    public void A_newer_evidentia_run_supersedes_an_older_one_in_the_books_and_tiers_it_covers()
+    {
+        static MappingRow Verdict(int run, string from, string to, string tier, long id) =>
+            Row(MappingMethods.Evidentia, from, to, confidence: 0.8, source: $"EVIDENTIA run {run} (1.0.0)", id: id, evidence: $"decision {id}, {tier} tier: rule");
+
+        var output = Merge([
+            Verdict(6, "1.1:1.1", "1.1:1.1", "safe", 1),
+            Verdict(10, "1.1:1.1", "1.1:1.1", "safe", 1),
+            Verdict(6, "1.1:1.2", "1.1:1.3", "safe", 2),
+            Verdict(10, "1.1:1.3", "1.1:1.4", "safe", 3),
+            Verdict(6, "2.1:1.1", "2.1:1.1", "safe", 4),
+            Verdict(12, "1.1:1.5", "1.1:1.5", "attached", 5),
+        ]);
+
+        output.Final.Select(r => (r.Id, r.Source[..r.Source.IndexOf(" (")])).Should().Equal(
+            (1L, "EVIDENTIA run 10"), (3L, "EVIDENTIA run 10"), (5L, "EVIDENTIA run 12"), (4L, "EVIDENTIA run 6"));
+        output.Methods[MappingMethods.Evidentia].Select(r => r.Status).Should().Equal(
+            "superseded-by evidentia run 10", null, "superseded-by evidentia run 10", null, null, null);
+        output.Report.Should().Contain(r => r.Kind == "superseded" && r.By == "evidentia run 10" && r.Rows == 2);
+    }
+
+    [Fact]
+    public void A_lower_link_inside_a_standing_link_on_both_sides_stands_as_a_refinement()
+    {
+        var output = Merge([
+            Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2 1.1:1.3", "1.1:1.2 1.1:1.3", confidence: 0.95, id: 1),
+            Row(MappingMethods.Composed, "1.1:1.2", "1.1:1.3", confidence: 0.9, source: Machine, id: 2),
+            Row(MappingMethods.Composed, "1.1:1.3", "1.1:1.4", confidence: 0.9, source: Machine, id: 3),
+        ]);
+
+        output.Final.Select(r => r.Id).Should().Equal(1, 2);
+        Status(output, MappingMethods.Composed, 1).Should().Be("withdrawn-by strong", "its TO word lies outside the winner");
+        output.Report.Should().Contain(r => r.Kind == "refinements" && r.Rows == 1);
+    }
+
+    [Fact]
+    public void A_word_the_competition_leaves_bare_keeps_its_best_lower_link_when_it_is_sure_enough()
+    {
+        var output = Merge(
+        [
+            Row(MappingMethods.Evidentia, "1.1:1.2", "1.1:1.2", confidence: 0.5, source: "EVIDENTIA run 8 (1.0.0)", id: 1, evidence: "decision 1, safe tier: rule"),
+            Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2", "1.1:1.1", confidence: 0.9, id: 2),
+            Row(MappingMethods.Composed, "1.1:1.3 1.1:1.2", "1.1:1.5", confidence: 0.65, source: Machine, id: 3),
+            Row(MappingMethods.Evidentia, "1.1:1.4", "1.1:1.6", confidence: 0.5, source: "EVIDENTIA run 8 (1.0.0)", id: 4, evidence: "decision 4, safe tier: rule"),
+            Row(MappingMethods.Composed, "1.1:1.4 1.1:1.6", "1.1:1.7", confidence: 0.6, source: Machine, id: 5),
+            Row(MappingMethods.Stated, "1.1:1.7 1.1:1.8", "1.1:1.8", source: Berean, id: 7),
+        ],
+        [new RulingRow(RulingRow.Accept, "1.1:1.8", "1.1:1.8", "renders", string.Empty, "read in the verse")]);
+
+        output.Final.Where(r => r.Settled).Select(r => r.Id).Should().HaveCount(5).And.Contain([1L, 2L, 4L, 7L],
+            "1.1:1.1 keeps the 0.9 Strong link and 1.1:1.7 its stated one; 1.1:1.3 and 1.1:1.6 have only compositions under 0.7");
+        Status(output, MappingMethods.Composed).Should().Be("withdrawn-by evidentia");
+        output.Report.Should().Contain(r => r.Kind == "orphans" && r.Rows == 2);
+        output.Report.Should().Contain(r => r.Kind == "bare-words" && r.Rows == 4).And.Contain(r => r.Kind == "bare-words-left" && r.Rows == 2);
+        MappingMethods.OrphanFloor.Should().Be(0.7);
+    }
+
+    [Fact]
+    public void Strong_numbers_laid_from_another_edition_rank_below_a_composition_and_a_text_s_own_do_not()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, id: 1),
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.2", confidence: 0.98, source: Machine, id: 2),
+        ];
+
+        Merge(rows, pair: "LSG1910-BHSA").Final.Should().ContainSingle().Which.Id.Should().Be(2);
+        Merge(rows, pair: "KJV-BHSA").Final.Should().ContainSingle().Which.Id.Should().Be(1);
+        string[] laid = ["RUSV", "LSG1910", "JND2024", "SCH1951", "RLT2018", "CUV", "CUVS", "RV1909"];
+        laid.Should().OnlyContain(slug => Essenthos.Core.Conversion.SideStrongNumbers.Layered(slug));
+        ((string[])["KJV", "LUTH1912", "UBIO", "BHSA"]).Should().NotContain(slug => Essenthos.Core.Conversion.SideStrongNumbers.Layered(slug));
     }
 }

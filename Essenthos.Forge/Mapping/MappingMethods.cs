@@ -69,10 +69,12 @@ internal static partial class MappingMethods
     /// <summary>
     /// The merge's precedence, highest first: a person, a ruling's pin aside; a stated source; an approved
     /// EVIDENTIA verdict, the safe tier before the attached; the names placed by whom both texts name; a
-    /// Strong pairing at 0.9 or more; a composition admitted by its floor; a Strong pairing at 0.7 to 0.9;
-    /// the aligner; a Strong pairing under 0.7; form matching. The numbers are only compared with each other.
+    /// Strong pairing at 0.9 or more from the text's own tags; a composition admitted by its floor; a Strong
+    /// pairing at 0.9 or more from numbers laid onto the text from another edition (<paramref name="laidStrong"/>);
+    /// a Strong pairing at 0.7 to 0.9; the aligner; a Strong pairing under 0.7; form matching. The numbers are
+    /// only compared with each other.
     /// </summary>
-    public static int Rank(string method, double? confidence, string? evidence) => method switch
+    public static int Rank(string method, double? confidence, string? evidence, bool laidStrong = false) => method switch
     {
         Manual or Ruling => 100,
         Stated => 90,
@@ -84,9 +86,10 @@ internal static partial class MappingMethods
         },
         Names => 77,
         Possessive or Rule => 76,
-        Strong when confidence >= 0.9 => 70,
+        Strong when confidence >= 0.9 && !laidStrong => 70,
         ModelReading => 65,
         Composed => 60,
+        Strong when confidence >= 0.9 => 55,
         Strong when confidence >= 0.7 => 50,
         Aligner or NameList => 40,
         Strong => 30,
@@ -94,21 +97,71 @@ internal static partial class MappingMethods
         _ => 0,
     };
 
-    /// <summary>Whether a method states absences that win their word (<see cref="StatedAbsence"/>).</summary>
+    /// <summary>
+    /// Whether a pair's Strong rows draw on numbers laid onto one of its texts from a numbered edition of
+    /// the same translation (<see cref="Conversion.SideStrongNumbers"/>) rather than on the text's own tags.
+    /// </summary>
+    public static bool LaysStrong(string fromText, string toText) =>
+        Conversion.SideStrongNumbers.Layered(fromText) || Conversion.SideStrongNumbers.Layered(toText);
+
+    /// <summary>A link restored to a word the competition would leave with none must be at least this sure.</summary>
+    public const double OrphanFloor = 0.7;
+
+    /// <summary>Whether a link is sure enough to keep a word that would otherwise have none (<see cref="OrphanFloor"/>).</summary>
+    public static bool KeepsOrphan(MappingRow settled, bool pinned) =>
+        pinned || settled.Confidence is null || settled.Confidence >= OrphanFloor;
+
+    /// <summary>How a stated source was made, as its credit says.</summary>
+    public enum StatedMaking
+    {
+        /// <summary>Aligned by hand to this edition: Clear Bible's <c>-manual</c> alignments, "made by hand".</summary>
+        ByHand,
+
+        /// <summary>Tables, mappings, italics and the rest that say nothing about it.</summary>
+        Unsaid,
+
+        /// <summary>
+        /// Carried from an alignment to another edition: to unfoldingWord's Hebrew Bible and Greek New Testament
+        /// (Door43, translationCore), or Clear Bible's <c>-transfer</c> alignments.
+        /// </summary>
+        Transferred,
+    }
+
+    /// <summary>How a stated source was made, read from its credit; a credit that says both is taken as transferred.</summary>
+    public static StatedMaking Making(string source) =>
+        source.Contains("not made by hand", StringComparison.Ordinal)
+        || source.Contains("transferred from", StringComparison.Ordinal)
+        || source.Contains("to unfoldingWord's", StringComparison.Ordinal)
+        || source.Contains("translationCore", StringComparison.Ordinal)
+            ? StatedMaking.Transferred
+            : source.Contains("made by hand", StringComparison.Ordinal)
+                ? StatedMaking.ByHand
+                : StatedMaking.Unsaid;
+
+    /// <summary>The run number an EVIDENTIA claim's source names: <c>EVIDENTIA run 26 (…)</c>.</summary>
+    public static int? EvidentiaRun(string source) =>
+        RunPattern().Match(source) is { Success: true } match ? int.Parse(match.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture) : null;
+
+    [GeneratedRegex(@"^EVIDENTIA run (\d+)\b")]
+    private static partial Regex RunPattern();
+
     /// <summary>
     /// Which of two claims of one link that <see cref="Rank"/> ranks equal is settled, negative when
-    /// <paramref name="a"/> is: the surer, then method, source and evidence by name. The whole tie-break
+    /// <paramref name="a"/> is: between stated sources, one aligned by hand before one carried from another
+    /// edition (<see cref="Making"/>); then the surer, then method, source and evidence by name. The whole tie-break
     /// is this one function; the order among stated sources and among EVIDENTIA runs belongs here.
     /// </summary>
     public static int SettlesBefore(MappingRow a, MappingRow b)
     {
-        var order = (b.Confidence ?? 2).CompareTo(a.Confidence ?? 2);
+        var order = a.Method == Stated && b.Method == Stated ? Making(a.Source).CompareTo(Making(b.Source)) : 0;
+        if (order == 0) order = (b.Confidence ?? 2).CompareTo(a.Confidence ?? 2);
         if (order == 0) order = string.CompareOrdinal(a.Method, b.Method);
         if (order == 0) order = string.CompareOrdinal(a.Source, b.Source);
         if (order == 0) order = string.CompareOrdinal(a.Evidence, b.Evidence);
         return order;
     }
 
+    /// <summary>Whether a method states absences that win their word (<see cref="StatedAbsence"/>).</summary>
     public static bool StatesAbsence(string method) => method is Stated or Evidentia or Manual or Ruling;
 
     /// <summary>
