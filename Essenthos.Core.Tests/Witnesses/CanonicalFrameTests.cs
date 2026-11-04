@@ -597,3 +597,41 @@ public class SongOfTheThreeFrameTests(VersificationFrames frames) : IClassFixtur
     private static EditionShape Daniel3(int last) =>
         EditionShape.Of(Enumerable.Range(1, last).Select(verse => (Daniel, 3, verse, string.Empty, 60)));
 }
+
+/// <summary>
+/// The Elizabeth Bible prints 1 Kings 17:20-23 as one block, kept as one verse at 17:20, and numbers the
+/// verse after it 17:23: the block covers the four verses and its 17:23 stands at the others' 17:24.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class ElizabethKingsFrameTests(VersificationFrames frames) : IClassFixture<VersificationFrames>
+{
+    private const int Kings = 11;
+
+    [Theory]
+    [InlineData(19, new[] { "11.17.19*" })]
+    [InlineData(20, new[] { "11.17.20*", "11.17.21", "11.17.22", "11.17.23" })]
+    [InlineData(23, new[] { "11.17.24*" })]
+    public void TheBlockCoversFourVersesAndTheVerseAfterItStandsAtTheirTwentyFourth(int verse, string[] expected) =>
+        Placed([.. Elizabeth()], verse).Should().Equal(expected);
+
+    [Fact]
+    public void AnEditionPrintingEveryVerseStandsAtItsOwnNumbers() =>
+        Placed([.. Enumerable.Range(1, 24).Select(verse => (verse, 60))], 23).Should().Equal("11.17.23*");
+
+    private static IEnumerable<(int Verse, int Length)> Elizabeth() =>
+        [.. Enumerable.Range(1, 19).Select(verse => (verse, 60)), (20, 280), (23, 70)];
+
+    private List<string> Placed(IReadOnlyList<(int Verse, int Length)> chapter, int verse)
+    {
+        var verses = chapter
+            .Select((printed, index) => new Essenthos.Core.Loading.PlacedVerse(index + 1, Kings, 17, printed.Verse, string.Empty, printed.Length))
+            .ToList();
+        var id = verses.Single(v => v.Number == verse).Id;
+        return
+        [
+            .. Essenthos.Core.Loading.CanonicalFrameLoader.Expected(frames.Rules, Versification.English, verses)
+                .Where(reference => reference.VerseId == id)
+                .Select(reference => $"{reference.Book}.{reference.Chapter}.{reference.Verse}{(reference.IsPrimary ? "*" : string.Empty)}"),
+        ];
+    }
+}

@@ -281,3 +281,5 @@ Vulgate	Bar.6:50	Bar.6:50-51	Bar.6:72=Last
 Vulgate	Bar.6:51-55	Bar.6:52-56	Bar.6:72=Last	
 Vulgate	Bar.6:56	Bar.6:57-58	Bar.6:72=Last	
 Vulgate	Bar.6:57-72	Bar.6:58-73	Bar.6:72=Last	
+Elizabeth	1Ki.17:20	1Ki.17:20-23	1Ki.17:23=Last & 1Ki.17:21=NotExist	the Elizabeth Bible (CrossWire's CSlElizabeth) prints 3 Kingdoms 17:20-23 as one block, stored once under 17:20, 17:21 and 17:22 and kept as one verse at 17:20 (texts/CSLELIZABETH/corrections.tsv), and numbers the woman's answer, "I know that thou art a man of God", 17:23 where the Hebrew, the Greek and the King James number it 17:24; it divides the book as the King James does otherwise
+Elizabeth	1Ki.17:23	1Ki.17:24	1Ki.17:23=Last & 1Ki.17:21=NotExist	

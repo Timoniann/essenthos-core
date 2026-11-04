@@ -274,6 +274,7 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// The frame files of the texts named (every text by default), written from the verses of the
+    /// converted text where the store holds its words and verse manifest, and otherwise of the
     /// configured corpus or of <c>--database</c>, which is only read.
     /// </summary>
     private static async Task<int> FrameFiles(ForgeRun forge, string[] args)
@@ -292,7 +293,7 @@ internal static partial class ForgeVerbs
                 continue;
             }
 
-            var framed = await loader.Framed(text, rules, CancellationToken.None, store);
+            var framed = await loader.Framed(text, rules, CancellationToken.None, store, versesFromProducts: true);
             CanonicalFrameLoader.Write(text, rules, store, framed, source);
             Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
                 $"{text.Slug}\t{framed.Verses.Count} verses\t{framed.Rows.Count} lines\t{framed.Titles} title rows\t{store.RelativePath(Loading.Frame.FrameFile.Product(text.Slug), ProductKind.Machine)}"));

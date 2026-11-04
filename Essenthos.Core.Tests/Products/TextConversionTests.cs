@@ -245,6 +245,49 @@ public sealed class TextConversionTests : IDisposable
         TextWordIds.Match(["βου", "τυρον", "και"], ["βουτυρον", "και"]).Should().Equal([-1, 2], "two words read as one are neither");
     }
 
+    /// <summary>1 Kings 17:19-23 as a module stores a block under three numbers: 17:20, 17:21 and 17:22 read alike.</summary>
+    private static CataloguedText Stored(string third) => new(Slug, ["Test/source.txt"], (_, _) =>
+    {
+        List<WordDraft> Words(string verse) => [.. verse.Split(' ').Select(token => new WordDraft(token, " "))];
+        return new TextSource(Definition,
+        [
+            new BookDraft(11, 11, "1 Kings", "1ki",
+            [
+                new ChapterDraft(17,
+                [
+                    new VerseDraft(19, Words("And he said, Give me thy son.")),
+                    new VerseDraft(20, Words("And he cried unto the LORD. See, thy son liveth.")),
+                    new VerseDraft(21, Words("And he cried unto the LORD. See, thy son liveth.")),
+                    new VerseDraft(22, Words(third)),
+                    new VerseDraft(23, Words("And the woman said, Now I know.")),
+                ]),
+            ]),
+        ]);
+    });
+
+    [Fact]
+    public void ABlockStoredUnderSeveralNumbersIsOneVerseStatingThemAll()
+    {
+        Corrections(new TextCorrection("11.17:20", TextCorrection.Block, "11.17:21 11.17:22", null, "stored once, linked three times"));
+        var store = new ProductStore(_resources);
+        TextConverter.Convert(store, Stored("And he cried unto the LORD. See, thy son liveth."));
+
+        Manifest(store).Select(v => (v.Own.ToString(), v.Sequence)).Should().Equal(("11.17:19", 1), ("11.17:20", 2), ("11.17:23", 3));
+        using var notes = store.Open(TextNote.ProductOf(Slug), TextNote.Schema);
+        notes.ReadAll().Where(n => n.Scope == "stated").Select(n => (n.At, n.Content)).Should()
+            .Equal(("11.17:20", "17:20"), ("11.17:20", "17:21"), ("11.17:20", "17:22"));
+    }
+
+    [Fact]
+    public void ABlockWhoseCopyReadsOtherwiseStopsTheConversion()
+    {
+        Corrections(new TextCorrection("11.17:20", TextCorrection.Block, "11.17:21 11.17:22", null, "stored once, linked three times"));
+
+        var convert = () => TextConverter.Convert(new ProductStore(_resources), Stored("And the child revived."));
+
+        convert.Should().Throw<InvalidOperationException>().WithMessage("*11.17:22 does not read what 11.17:20 reads*");
+    }
+
     [Fact]
     public void ACorrectionThatDoesNotMeetWhatTheSourceReadsStopsTheConversion()
     {

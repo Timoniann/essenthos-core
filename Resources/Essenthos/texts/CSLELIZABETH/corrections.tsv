@@ -1,0 +1,5 @@
+# product    Essenthos/texts/CSLELIZABETH/corrections.tsv
+# producer   by hand
+# kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes; block: the verses own and before are one block the source stores under each number, kept once at own stating them all
+own	kind	before	after	why
+11.17:20	block	11.17:21 11.17:22	\N	CSlElizabeth 1.5.2 stores one entry, "И возопи Илиа ко Господу ... И рече Илиа: виждь, жив есть сын твой." (the Greek's 3 Kingdoms 17:20-23), under 17:20, 17:21 and 17:22 alike (ot.bzv entries 9661-9663 point at the same 649 bytes); its 17:23 is the Greek's 17:24 and its 17:24 is empty
