@@ -348,6 +348,9 @@ public class AppDbContext : DbContext
 
     public DbSet<TextForm> TextForms { get; set; } = null!;
 
+    /// <summary>Each text's side of the parallel view for one canonical chapter, written ahead of time.</summary>
+    public DbSet<Pane> Panes { get; set; } = null!;
+
     /// <summary>What each step of the load last ran on, so a load skips a step whose inputs have not moved.</summary>
     public DbSet<LoadStepMark> LoadStepMarks { get; set; } = null!;
 
@@ -1682,6 +1685,15 @@ public class AppDbContext : DbContext
             entity.ToTable("strong_count_mark", t => t.HasComment(
                 "A digest of what a text's Strong counts were last counted from and of the rows they left, so the "
                 + "load counts again only the texts where either moved. Derived; deleting a row only costs a recount."));
+        });
+
+        modelBuilder.Entity<Pane>(entity =>
+        {
+            entity.HasOne(p => p.Text).WithMany().HasForeignKey(p => p.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("pane", t => t.HasComment(
+                "Each text's side of the parallel view for one canonical chapter: the words with what the reader shows on "
+                + "them, the verses and notes, the records named, as gzip-compressed JSON the API sends as it is. Derived "
+                + "from the served tables by the build's pane producer (build/products, panes/{text})."));
         });
 
         modelBuilder.Entity<TextForm>(entity =>

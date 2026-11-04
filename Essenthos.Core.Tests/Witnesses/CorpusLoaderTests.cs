@@ -164,7 +164,7 @@ public sealed class CorpusLoaderTests : IDisposable
 
         var outcome = await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(source);
         var text = await _db.Texts.SingleAsync();
-        var chapter = await Texts.ReadChapter(_db, text.Id, 8, 1, default);
+        var chapter = await ChapterReading.ReadChapter(_db, text.Id, 8, 1, default);
 
         var anchor = await _db.Words.SingleAsync(word => word.Surface == "In");
 
@@ -188,7 +188,7 @@ public sealed class CorpusLoaderTests : IDisposable
             new VerseDraft(2, [new WordDraft("Second", "")])));
         var text = await _db.Texts.SingleAsync();
 
-        var chapter = await Texts.ReadChapter(_db, text.Id, 8, 1, default);
+        var chapter = await ChapterReading.ReadChapter(_db, text.Id, 8, 1, default);
 
         chapter.Select(verse => verse.Number).Should().Equal(1, 3, 2);
         (await _db.Verses.OrderBy(verse => verse.Sequence).Select(verse => verse.Number).ToListAsync())
@@ -213,7 +213,7 @@ public sealed class CorpusLoaderTests : IDisposable
         await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(noted);
         var text = await _db.Texts.SingleAsync();
 
-        (await Texts.ReadChapter(_db, text.Id, 8, 1, default)).Select(verse => verse.Number)
+        (await ChapterReading.ReadChapter(_db, text.Id, 8, 1, default)).Select(verse => verse.Number)
             .Should().Equal(1, 2, 3);
     }
 
@@ -278,7 +278,7 @@ public sealed class CorpusLoaderTests : IDisposable
         await new SourceNoteLoader(_db, NullLogger<SourceNoteLoader>.Instance).Load(source);
 
         var second = await _db.Words.SingleAsync(word => word.Surface == "Rachel" && word.Position == 3);
-        var chapter = await Texts.ReadChapter(_db, (await _db.Texts.SingleAsync()).Id, 8, 1, default);
+        var chapter = await ChapterReading.ReadChapter(_db, (await _db.Texts.SingleAsync()).Id, 8, 1, default);
 
         chapter.Should().ContainSingle().Which.Notes.Should().ContainSingle()
             .Which.AnchorWordId.Should().Be(second.Id);

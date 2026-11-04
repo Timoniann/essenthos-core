@@ -4,12 +4,17 @@ using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Build;
 
-/// <summary>Who makes a product: a person (<c>hand</c>), an export from a database (<c>export</c>) or the build (<c>build</c>).</summary>
+/// <summary>
+/// Who makes a product: a person (<c>hand</c>), an export from a database (<c>export</c>), the build from files (<c>build</c>),
+/// or the build from the serving database once it is filled (<c>serve</c>: <c>build --into</c> and <c>build --apply</c>
+/// run its producer at the end, never <c>forge build</c> alone).
+/// </summary>
 internal static class ProductMaker
 {
     public const string Hand = "hand";
     public const string Export = "export";
     public const string Build = "build";
+    public const string Serve = "serve";
 }
 
 /// <summary>
@@ -65,11 +70,11 @@ internal sealed partial class ProductGraph
             throw new InvalidDataException($"{Product} declares {duplicate.Key} twice.");
         }
 
-        var bad = declarations.FirstOrDefault(d => d.Maker is not (ProductMaker.Hand or ProductMaker.Export or ProductMaker.Build)
+        var bad = declarations.FirstOrDefault(d => d.Maker is not (ProductMaker.Hand or ProductMaker.Export or ProductMaker.Build or ProductMaker.Serve)
                                                    || d.Scope is not ("text" or "pair" or "all" or "none"));
         if (bad is not null)
         {
-            throw new InvalidDataException($"{Product}: {bad.Product} has maker '{bad.Maker}' and scope '{bad.Scope}'; makers are hand, export or build, scopes text, pair, all or none.");
+            throw new InvalidDataException($"{Product}: {bad.Product} has maker '{bad.Maker}' and scope '{bad.Scope}'; makers are hand, export, build or serve, scopes text, pair, all or none.");
         }
     }
 

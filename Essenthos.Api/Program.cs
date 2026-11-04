@@ -64,6 +64,7 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddSingleton<TextFacts>();
+builder.Services.AddSingleton<RecordNames>();
 builder.Services.AddSingleton<ContextWeightsCache>();
 builder.Services.AddSingleton<StartupWarmup>();
 builder.Services.AddSingleton<DatasetCountsCache>();
@@ -154,6 +155,7 @@ v1.MapHealth();
 v1.MapRead();
 v1.MapVerses();
 v1.MapParallel();
+v1.MapPanes();
 v1.MapDifferences();
 v1.MapStrong();
 v1.MapVariedRenderings();

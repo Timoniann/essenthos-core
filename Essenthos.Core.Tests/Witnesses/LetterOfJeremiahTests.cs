@@ -149,15 +149,15 @@ public sealed class LetterOfJeremiahReadingTests : IDisposable
     [Fact]
     public void EachNameOfAPassageIsReadWithItsOtherName()
     {
-        ParallelEndpoints.Held(LetterOfJeremiah.Baruch, 6).Should().Equal(
+        ChapterReading.Held(LetterOfJeremiah.Baruch, 6).Should().Equal(
             (LetterOfJeremiah.Baruch, 6, int.MinValue, int.MaxValue, 0), (LetterOfJeremiah.Book, 1, 1, 73, 0));
-        ParallelEndpoints.Held(LetterOfJeremiah.Book, 1).Should().Equal(
+        ChapterReading.Held(LetterOfJeremiah.Book, 1).Should().Equal(
             (LetterOfJeremiah.Book, 1, int.MinValue, int.MaxValue, 0), (LetterOfJeremiah.Baruch, 6, 1, 73, 0));
-        ParallelEndpoints.Held(SongOfTheThreeBook.Daniel, 3).Should().Equal(
+        ChapterReading.Held(SongOfTheThreeBook.Daniel, 3).Should().Equal(
             (27, 3, int.MinValue, int.MaxValue, 0), (SongOfTheThreeBook.Book, 1, 1, 68, 30));
-        ParallelEndpoints.Held(SongOfTheThreeBook.Book, 1).Should().Equal(
+        ChapterReading.Held(SongOfTheThreeBook.Book, 1).Should().Equal(
             (SongOfTheThreeBook.Book, 1, int.MinValue, int.MaxValue, 0), (27, 3, 31, 98, -30));
-        ParallelEndpoints.Held(27, 4).Should().HaveCount(1);
+        ChapterReading.Held(27, 4).Should().HaveCount(1);
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public sealed class LetterOfJeremiahReadingTests : IDisposable
     {
         var daniel = new Dictionary<int, string> { [1] = "Nebuchadnezzar", [30] = "promoted" };
 
-        ParallelEndpoints.Merge(daniel, new Dictionary<int, string> { [1] = "they walked", [68] = "O all ye" }, 1, 68, 30);
+        ChapterReading.Merge(daniel, new Dictionary<int, string> { [1] = "they walked", [68] = "O all ye" }, 1, 68, 30);
 
         daniel.Should().Equal(new Dictionary<int, string>
         {
@@ -177,7 +177,7 @@ public sealed class LetterOfJeremiahReadingTests : IDisposable
         });
 
         var song = new Dictionary<int, string>();
-        ParallelEndpoints.Merge(song, new Dictionary<int, string> { [1] = "x", [30] = "y", [31] = "z", [98] = "w" }, 31, 98, -30);
+        ChapterReading.Merge(song, new Dictionary<int, string> { [1] = "x", [30] = "y", [31] = "z", [98] = "w" }, 31, 98, -30);
         song.Should().Equal(new Dictionary<int, string> { [1] = "z", [68] = "w" });
     }
 

@@ -217,7 +217,7 @@ public sealed class OccupationTests : IDisposable
         verse.Marks.Should().ContainSingle().Which.Should().Be(new VerseMarkResponse(17, 26));
         verse.Text[17..26].Should().Be("physician");
 
-        var chapter = await Texts.ReadChapter(_db, _texts["KJV"].Id, 51, 4, default);
+        var chapter = await ChapterReading.ReadChapter(_db, _texts["KJV"].Id, 51, 4, default);
         var words = chapter.Single().Words;
         words.Single(w => w.Text == "physician").Roles.Should().Equal(new WordRoleResponse("physician", "trade", "luke"));
         words.Where(w => w.Text != "physician").Should().OnlyContain(w => w.Roles == null);

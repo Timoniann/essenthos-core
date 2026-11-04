@@ -198,6 +198,29 @@ internal static partial class ForgeVerbs
         return store.RelativePath(product, ProductKind.Hand);
     }
 
+    /// <summary>
+    /// <c>panes [&lt;text,...&gt;] [--force] [--parallel n]</c>: the panes of the configured database, for the texts whose inputs
+    /// moved (every text named with <c>--force</c>), with their products in the configured Resources.
+    /// </summary>
+    private static async Task<int> PanesVerb(ForgeRun forge, string[] args)
+    {
+        ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
+        var clock = Stopwatch.StartNew();
+        var panes = new PaneBuild(forge.DatabaseConnection, new ProductStore(forge.Resources), forge.Scope().ServiceProvider, forge.Logger);
+        var outcomes = await panes.Run(Slugs(args), args.Contains("--force"), Parallelism(args, 16), CancellationToken.None);
+        foreach (var outcome in outcomes)
+        {
+            Console.WriteLine(outcome.Made
+                ? $"{outcome.Text,-14} {outcome.Panes,6} panes {outcome.Words,10} words {outcome.Bytes,12} bytes {outcome.Compressed,11} compressed {outcome.Elapsed.TotalSeconds,7:0.0} s"
+                : $"{outcome.Text,-14} {outcome.Panes,6} panes  current");
+        }
+
+        var made = outcomes.Where(o => o.Made).ToList();
+        Console.WriteLine($"{made.Count} texts made, {outcomes.Count - made.Count} current: {made.Sum(o => o.Panes)} panes, {made.Sum(o => o.Words)} words, "
+                          + $"{made.Sum(o => o.Bytes)} bytes of JSON, {made.Sum(o => o.Compressed)} compressed, in {clock.Elapsed.TotalSeconds:0.0} s");
+        return 0;
+    }
+
     /// <summary><c>tables [&lt;table,...&gt;] [--from &lt;Resources&gt;] [--force]</c>: the served tables made from files, each when its sources moved.</summary>
     private static Task<int> TablesVerb(ForgeRun forge, string[] args)
     {

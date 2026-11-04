@@ -1,7 +1,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
-using Essenthos.Core.Endpoints;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -172,7 +172,7 @@ public sealed class VerseEndingTests : IDisposable
 
         // What the reader is sent for Job 2: the whole of verse 2, the answer unlinked and unnumbered.
         var ohienko = _db.Texts.AsNoTracking().Single(t => t.Slug == Bible4uTextSource.Ohienko);
-        var served = (await Texts.ReadChapter(_db, ohienko.Id, 18, 2, default)).Single(v => v.Number == 2);
+        var served = (await ChapterReading.ReadChapter(_db, ohienko.Id, 18, 2, default)).Single(v => v.Number == 2);
         string.Concat(served.Words.Select(w => w.Text + w.Trailer)).Should().EndWith("Я мандрував по землі та й перейшов її.");
         served.Words.TakeLast(7).Should().OnlyContain(w => w.StrongNo == null && w.OriginalWordIds.Length == 0);
 

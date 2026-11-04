@@ -49,8 +49,8 @@ public sealed class ParallelPairingTests : IDisposable
         Place(hebrew, 4, 1, canonicalChapter: 3, canonicalVerse: 1);
         _db.SaveChanges();
 
-        var englishVerses = await Endpoints.Texts.ReadByCanonicalVerse(_db, english.Id, 1, 3, default);
-        var hebrewVerses = await Endpoints.Texts.ReadByCanonicalVerse(_db, hebrew.Id, 1, 3, default);
+        var englishVerses = await ChapterReading.ReadByCanonicalVerse(_db, english.Id, 1, 3, default);
+        var hebrewVerses = await ChapterReading.ReadByCanonicalVerse(_db, hebrew.Id, 1, 3, default);
 
         englishVerses.Should().ContainKey(1);
         hebrewVerses.Should().ContainKey(1);
@@ -75,8 +75,8 @@ public sealed class ParallelPairingTests : IDisposable
         Place(hebrew, 4, 1, canonicalChapter: 3, canonicalVerse: 1);
         _db.SaveChanges();
 
-        var atCanonicalThree = await Endpoints.Texts.ReadByCanonicalVerse(_db, hebrew.Id, 1, 3, default);
-        var atCanonicalTwo = await Endpoints.Texts.ReadByCanonicalVerse(_db, hebrew.Id, 1, 2, default);
+        var atCanonicalThree = await ChapterReading.ReadByCanonicalVerse(_db, hebrew.Id, 1, 3, default);
+        var atCanonicalTwo = await ChapterReading.ReadByCanonicalVerse(_db, hebrew.Id, 1, 2, default);
 
         Rebuild(atCanonicalThree[1]).Should().Be("כִּי");
         Rebuild(atCanonicalTwo[28]).Should().Be("וְהָיָה");
@@ -94,7 +94,7 @@ public sealed class ParallelPairingTests : IDisposable
         Place(greek, 1, 1, canonicalChapter: 1, canonicalVerse: 1);
         _db.SaveChanges();
 
-        var elsewhere = await Endpoints.Texts.ReadByCanonicalVerse(_db, greek.Id, 1, 9, default);
+        var elsewhere = await ChapterReading.ReadByCanonicalVerse(_db, greek.Id, 1, 9, default);
 
         elsewhere.Should().BeEmpty();
     }
@@ -225,7 +225,7 @@ public sealed class ParallelPairingTests : IDisposable
         State(synodal, 1, 2, position: 2, 117, 2);
         _db.SaveChanges();
 
-        var stated = await ParallelEndpoints.StatedVerses(_db, synodal.Id, 1, 1, default);
+        var stated = await ChapterReading.StatedVerses(_db, synodal.Id, 1, 1, default);
 
         stated[1].Should().Equal("118:1");
         stated[2].Should().Equal("117:1", "117:2");
@@ -244,7 +244,7 @@ public sealed class ParallelPairingTests : IDisposable
         State(swete, 1, 1, position: 1, 4, 1, "a");
         _db.SaveChanges();
 
-        var stated = await ParallelEndpoints.StatedVerses(_db, swete.Id, 1, 1, default);
+        var stated = await ChapterReading.StatedVerses(_db, swete.Id, 1, 1, default);
 
         stated[1].Should().Equal("4a:1");
     }

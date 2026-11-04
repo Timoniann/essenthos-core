@@ -401,4 +401,9 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(List<UndeclaredResponse>))]
 [JsonSerializable(typeof(ParallelTextResponse))]
 [JsonSerializable(typeof(Dictionary<string, ParallelCellResponse?>))]
+[JsonSerializable(typeof(StrengthResponse))]
+[JsonSerializable(typeof(PaneStrengthResponse))]
+[JsonSerializable(typeof(Dictionary<string, PaneStrengthResponse>))]
+[JsonSerializable(typeof(Dictionary<int, LinkStrengthResponse>))]
+[JsonSerializable(typeof(RecordNamesResponse))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext;

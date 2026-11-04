@@ -1,0 +1,1058 @@
+﻿using System.Globalization;
+using System.Text.Json;
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Utils;
+using Microsoft.EntityFrameworkCore;
+
+namespace Essenthos.Core.Corpus;
+
+/// <summary>
+/// The words of a chapter as the reader is given them, with everything the corpus says of each word, and what each text
+/// prints and numbers around them. The API answers the reader with it and the Forge's pane producer writes the same
+/// reading ahead of time, so the two cannot drift apart.
+/// </summary>
+internal static class ChapterReading
+{
+    /// <summary>The group kinds that are an edition's statement about its own words rather than an analysis of them.</summary>
+    private static readonly WordGroupKind[] EditionMarks =
+    [
+        WordGroupKind.Supplied, WordGroupKind.Restored, WordGroupKind.Doubtful, WordGroupKind.Subscription,
+    ];
+
+    /// <summary>
+    /// A word of BHSA carries these under its own names; the old contract has a field for each.
+    /// Everything else the annotation holds stays in the database and is reached by the new shapes.
+    /// </summary>
+    private const string PartOfSpeech = "pos";
+    private const string Language = "language";
+    private const string Phono = "phono";
+    private const string PhonoTrailer = "phonoTrailer";
+
+    /// <summary>The language whose words the Greek lexicon glosses.</summary>
+    private const string Greek = "grc";
+
+    /// <summary>The language Dillmann's lexicon glosses, and whose words are given the aligned Greek's meaning.</summary>
+    private const string Geez = "gez";
+
+    /// <summary>How many of Dillmann's glosses and Greek equivalents a word carries; his articles run to dozens.</summary>
+    private const int LatinShown = 5;
+
+    private const int GreekShown = 4;
+
+    /// <summary>A Greek equivalent longer than this is a phrase quoted from a verse, not a gloss.</summary>
+    private const int GreekShownWords = 3;
+
+    /// <summary>How a gloss was reached, as <see cref="LexiconGlossResponse.Via"/> spells it.</summary>
+    private const string ByStatedNumber = "strong";
+    private const string ByLemma = "lemma";
+    private const string ByEqualWord = "equals";
+    private const string ByProposedNumber = "strong-candidate";
+    private const string BySpelling = "form";
+
+    /// <summary>
+    /// Reads one chapter as this text numbers it. The words and the edition's notes each come back
+    /// in one query: a chapter is a thousand words, and a query per word is a thousand round trips.
+    /// A note-only verse stays in the response too — it is how an edition says a verse is absent
+    /// from its text, and the note is the only thing the reader has to show at that address.
+    /// </summary>
+    public static async Task<IList<TextVerseResponse>> ReadChapter(
+        AppDbContext db,
+        int textId,
+        int bookOrdinal,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        var verses = await db.Verses
+            .Where(verse => verse.TextId == textId
+                            && verse.Book!.CanonicalOrdinal == bookOrdinal
+                            && verse.ChapterNumber == chapter)
+            .OrderBy(verse => verse.Sequence).ThenBy(verse => verse.Number).ThenBy(verse => verse.Label)
+            .Select(verse => new VerseRow(verse.Number, verse.Label))
+            .ToListAsync(cancellationToken);
+
+        var rows = await db.Words
+            .Where(word => word.TextId == textId
+                           && word.Verse!.Book!.CanonicalOrdinal == bookOrdinal
+                           && word.Verse.ChapterNumber == chapter)
+            .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
+            .Select(w => new WordRow(
+                w.Verse!.Number, w.Verse!.Label, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber,
+                w.Morphology, w.Elided, w.Break, w.NormalisedText))
+            .ToListAsync(cancellationToken);
+
+        var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        counterparts = counterparts with
+        {
+            Glossed = await Glossed(
+                db, textId,
+                [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber))],
+                counterparts.Proposed, cancellationToken),
+        };
+        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.Text))], counterparts, cancellationToken);
+        var notes = await db.VerseNotes
+            .Where(note => note.Verse!.TextId == textId
+                           && note.Verse.Book!.CanonicalOrdinal == bookOrdinal
+                           && note.Verse.ChapterNumber == chapter)
+            .OrderBy(note => note.Verse!.Number).ThenBy(note => note.Verse!.Label).ThenBy(note => note.Position)
+            .Select(note => new NoteRow(
+                note.Verse!.Number, note.Verse.Label, note.Kind, note.Content, note.AnchorWordId,
+                note.AnchorWord == null ? null : note.AnchorWord.Surface))
+            .ToListAsync(cancellationToken);
+
+        return Group(verses, rows, counterparts, notes);
+    }
+
+    /// <summary>
+    /// The notes each of these texts printed on this book's title, by text, for a text that printed
+    /// any. They come with the book's first chapter, where the title stands on the page, and with no
+    /// other chapter.
+    /// </summary>
+    public static async Task<Dictionary<int, BookNotesResponse>> BookNotes(
+        AppDbContext db,
+        IReadOnlyCollection<int> textIds,
+        int bookOrdinal,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        if (chapter != 1)
+        {
+            return [];
+        }
+
+        var notes = await db.BookNotes
+            .Where(note => textIds.Contains(note.Book!.TextId) && note.Book.CanonicalOrdinal == bookOrdinal)
+            .OrderBy(note => note.Position)
+            .Select(note => new { note.Book!.TextId, note.Book.NameNative, note.Kind, note.Content })
+            .ToListAsync(cancellationToken);
+
+        return notes
+            .GroupBy(note => note.TextId)
+            .ToDictionary(
+                group => group.Key,
+                group => new BookNotesResponse(
+                    group.First().NameNative,
+                    [.. group.Select(note => new SourceNoteResponse(EnumSpelling.Of(note.Kind), note.Content))]));
+    }
+
+    /// <summary>
+    /// The notes a text printed on the headings of its chapters, by the canonical address of the
+    /// verse each chapter opens with, for the chapters whose first verse stands in this canonical
+    /// chapter. A psalm the edition numbers otherwise brings its notes to the canonical psalm it opens.
+    /// </summary>
+    public static async Task<Dictionary<int, List<ChapterNotesResponse>>> ChapterNotesByCanonicalVerse(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var notes = await db.ChapterNotes
+            .Where(note => note.Chapter!.TextId == textId && note.Chapter.Book!.CanonicalOrdinal == canonicalBook)
+            .OrderBy(note => note.Position)
+            .Select(note => new { note.ChapterId, note.Heading, note.Kind, note.Content })
+            .ToListAsync(cancellationToken);
+        if (notes.Count == 0)
+        {
+            return [];
+        }
+
+        var chapterIds = notes.Select(note => note.ChapterId).Distinct().ToList();
+        var opening = (await db.VerseReferences
+                .Where(reference => reference.IsPrimary && chapterIds.Contains(reference.Verse!.ChapterId))
+                .Select(reference => new
+                {
+                    reference.Verse!.ChapterId,
+                    reference.Verse.Sequence,
+                    reference.Verse.Number,
+                    reference.Verse.Label,
+                    reference.CanonicalBook,
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                })
+                .ToListAsync(cancellationToken))
+            .GroupBy(verse => verse.ChapterId)
+            .Select(verses => verses
+                .OrderBy(verse => verse.Sequence).ThenBy(verse => verse.Number)
+                .ThenBy(verse => verse.Label, StringComparer.Ordinal)
+                .First())
+            .Where(verse => verse.CanonicalBook == canonicalBook && verse.CanonicalChapter == canonicalChapter)
+            .ToDictionary(verse => verse.ChapterId, verse => verse.CanonicalVerse);
+
+        return Grouped(notes
+            .Where(note => opening.ContainsKey(note.ChapterId))
+            .Select(note => (opening[note.ChapterId], note.Heading, note.Kind, note.Content)));
+    }
+
+    /// <summary>
+    /// The notes a text printed on the heading of this chapter of its own, by the number of the verse
+    /// the chapter opens with.
+    /// </summary>
+    public static async Task<Dictionary<int, List<ChapterNotesResponse>>> ChapterNotesOfOwnChapter(
+        AppDbContext db,
+        int textId,
+        int bookOrdinal,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        var notes = await db.ChapterNotes
+            .Where(note => note.Chapter!.TextId == textId && note.Chapter.Book!.CanonicalOrdinal == bookOrdinal
+                                                           && note.Chapter.Number == chapter)
+            .OrderBy(note => note.Position)
+            .Select(note => new { note.ChapterId, note.Heading, note.Kind, note.Content })
+            .ToListAsync(cancellationToken);
+        if (notes.Count == 0)
+        {
+            return [];
+        }
+
+        var first = await db.Verses
+            .Where(verse => verse.ChapterId == notes[0].ChapterId)
+            .OrderBy(verse => verse.Sequence).ThenBy(verse => verse.Number).ThenBy(verse => verse.Label)
+            .Select(verse => verse.Number)
+            .FirstAsync(cancellationToken);
+
+        return Grouped(notes.Select(note => (first, note.Heading, note.Kind, note.Content)));
+    }
+
+    private static Dictionary<int, List<ChapterNotesResponse>> Grouped(
+        IEnumerable<(int Verse, string Heading, VerseNoteKind Kind, string Content)> notes) =>
+        notes
+            .GroupBy(note => note.Verse)
+            .ToDictionary(
+                byVerse => byVerse.Key,
+                byVerse => byVerse
+                    .GroupBy(note => note.Heading)
+                    .Select(byHeading => new ChapterNotesResponse(
+                        byVerse.Key,
+                        byHeading.Key,
+                        [.. byHeading.Select(note => new SourceNoteResponse(EnumSpelling.Of(note.Kind), note.Content))]))
+                    .ToList());
+
+    /// <summary>
+    /// The words of the ancient witnesses each of these words reaches, in one query rather than one
+    /// per word.
+    ///
+    /// The client treats this set as opaque and highlights where two words' sets intersect, so what
+    /// the set holds decides what can light up together. Holding link ids would only ever join two
+    /// texts that are **directly** linked — the Ukrainian and the Synodal each link to BHSA and
+    /// never to each other, so hovering one would leave the other dark although both name the same
+    /// Hebrew word.
+    ///
+    /// Holding the witness's word ids instead makes the join happen through the witness, which is
+    /// what the whole model is shaped for: five texts meet at the word they all render, and a sixth
+    /// joins them by being linked to that same word rather than to any of them. A word of a witness
+    /// carries its own id, so it meets the translations that reach it.
+    /// </summary>
+    private static async Task<Reached> Counterparts(
+        AppDbContext db,
+        IEnumerable<long> wordIds,
+        CancellationToken cancellationToken)
+    {
+        var ids = wordIds.Distinct().ToList();
+
+        var own = await db.Words
+            .Where(w => ids.Contains(w.Id) && w.Text!.Kind != TextKind.Translation)
+            .Select(w => new { WordId = w.Id, Reached = w.Id })
+            .ToListAsync(cancellationToken);
+
+        var reached = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId))
+            .SelectMany(side => db.LinkWords
+                .Where(other => other.LinkId == side.LinkId
+                                && other.Side != side.Side
+                                && other.Word!.Text!.Kind != TextKind.Translation)
+                .Select(other => new { side.WordId, Reached = other.WordId }))
+            .ToListAsync(cancellationToken);
+
+        // Only the links that reach a witness, because those are the ones the highlighting is built
+        // from. A translation is now linked to other translations too — the Synodal to the King
+        // James, which is how it reaches the Hebrew at all — and letting one of those describe the
+        // word would report the confidence of a step the reader never sees.
+        var evidence = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId)
+                           && (side.Link!.Relation == LinkRelation.Expands
+                               || db.LinkWords.Any(other => other.LinkId == side.LinkId
+                                                            && other.Side != side.Side
+                                                            && other.Word!.Text!.Kind != TextKind.Translation)))
+            .Select(side => new { side.WordId, side.Link!.Method, side.Link!.Confidence, side.Link.Relation })
+            .ToListAsync(cancellationToken);
+
+        var strongest = evidence
+            .GroupBy(row => row.WordId)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderByDescending(row => row.Confidence is null)
+                    .ThenByDescending(row => row.Confidence)
+                    .Select(row => Provenance(row.Method, row.Confidence))
+                    .First());
+
+        // A word whose absence is stated is not a word nothing was found for, and a reader has to
+        // be able to tell them apart — that difference is what the schema was built to hold and
+        // what 22,155 King James italics say outright.
+        var absent = evidence
+            .Where(row => row.Relation is LinkRelation.Expands or LinkRelation.Omits)
+            .GroupBy(row => row.WordId)
+            .ToDictionary(group => group.Key, group => EnumSpelling.Of(group.First().Relation));
+
+        // Asked of the group table rather than tested per word: a chapter is a thousand words, and
+        // BHSA's are each in seven groups, so an EXISTS per word would walk seven rows a thousand
+        // times to answer no.
+        var marked = await db.WordGroupWords
+            .Where(m => ids.Contains(m.WordId) && EditionMarks.Contains(m.WordGroup!.Kind))
+            .Select(m => new { m.WordId, m.WordGroup!.Kind })
+            .ToListAsync(cancellationToken);
+
+        // A word that goes with another renders through its own link, which is already among the
+        // witnesses above; what it adds is the word it goes with, so the reader can name it.
+        var attached = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId) && side.Role != null && side.HeadWordId != null)
+            .Select(side => new { side.WordId, side.Role, HeadId = side.HeadWordId!.Value, Head = side.HeadWord!.Surface })
+            .ToListAsync(cancellationToken);
+
+        var roles = await db.OccupationWords
+            .Where(w => ids.Contains(w.WordId))
+            .Select(w => new
+            {
+                w.WordId,
+                Occupation = w.PersonOccupation!.Occupation!.Slug,
+                w.PersonOccupation.Occupation.Category,
+                Person = w.PersonOccupation.Person!.Slug,
+            })
+            .ToListAsync(cancellationToken);
+
+        return new Reached(
+            own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached),
+            strongest,
+            absent,
+            marked
+                .GroupBy(m => m.WordId)
+                .ToDictionary(group => group.Key, group => group.Min(m => m.Kind)),
+            await Annotations.AllOf(db, ids, cancellationToken),
+            await Proposed(db, ids, cancellationToken))
+        {
+            Attached = attached
+                .GroupBy(row => row.WordId)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group
+                        .OrderBy(row => row.Role)
+                        .ThenBy(row => row.HeadId)
+                        .Select(row => new AttachedResponse(EnumSpelling.Of(row.Role!.Value), row.HeadId, row.Head))
+                        .First()),
+            Roles = roles
+                .GroupBy(row => row.WordId)
+                .ToDictionary(
+                    group => group.Key,
+                    group => (IReadOnlyList<WordRoleResponse>)[.. group
+                        .OrderBy(row => row.Person, StringComparer.Ordinal).ThenBy(row => row.Occupation, StringComparer.Ordinal)
+                        .Select(row => new WordRoleResponse(row.Occupation, row.Category, row.Person))]),
+        };
+    }
+
+    /// <summary>
+    /// The Strong number the corpus proposed for each word, where it proposed one and only one.
+    ///
+    /// A word whose lemma two dictionary entries claim has two proposals, and choosing between them
+    /// here would be a guess sent out as an answer; it gets none. Two methods proposing the same
+    /// number are one answer, and the surer of them describes it.
+    /// </summary>
+    private static async Task<Dictionary<long, StrongCandidateResponse>> Proposed(
+        AppDbContext db,
+        List<long> ids,
+        CancellationToken cancellationToken)
+    {
+        var proposals = await db.WordStrongs
+            .Where(proposal => ids.Contains(proposal.WordId))
+            .Select(proposal => new
+            {
+                proposal.WordId, proposal.Number, proposal.Method, proposal.Confidence,
+            })
+            .ToListAsync(cancellationToken);
+
+        return proposals
+            .GroupBy(proposal => proposal.WordId)
+            .Where(group => group.Select(proposal => proposal.Number).Distinct().Count() == 1)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderByDescending(proposal => proposal.Confidence is null)
+                    .ThenByDescending(proposal => proposal.Confidence)
+                    .Select(proposal => new StrongCandidateResponse(
+                        proposal.Number, EnumSpelling.Of(proposal.Method), proposal.Confidence))
+                    .First());
+    }
+
+    /// <summary>
+    /// What established this word's link, in one string the client can show without reading the
+    /// schema: the method, and the confidence where there is one. A link with no confidence is one
+    /// somebody asserted, and it is the only kind that carries no number — which is the point, and
+    /// why the number is not defaulted to 1.
+    /// </summary>
+    private static string Provenance(LinkMethod method, double? confidence) =>
+        confidence is { } value
+            ? $"{EnumSpelling.Of(method)}:{value.ToString("0.##", CultureInfo.InvariantCulture)}"
+            : EnumSpelling.Of(method);
+
+    /// <param name="Witnesses">The witness words each word reaches, which is what the client intersects.</param>
+    /// <param name="Provenance">What established the strongest link on each word, where it has one.</param>
+    /// <param name="Absent">
+    /// Where a link records an absence rather than a correspondence: <c>expands</c> for a word this
+    /// text supplies and the other does not have, <c>omits</c> for the reverse.
+    /// </param>
+    /// <param name="Marks">
+    /// What the edition itself prints about each word it marks: supplied, doubtful, a subscription. It is not <paramref name="Absent"/> read
+    /// twice: that is what an alignment found, and this is what the edition printed, which is a
+    /// first-hand claim about one text and names no counterpart for it.
+    /// </param>
+    /// <param name="Named">
+    /// Every record each word names, the first answer first, where the corpus can say and can say
+    /// it without choosing. Empty for most words, because most words are not names.
+    /// </param>
+    /// <param name="Proposed">
+    /// The one Strong number the corpus proposed for each word, where it proposed exactly one.
+    /// </param>
+    private sealed record Reached(
+        ILookup<long, long> Witnesses,
+        Dictionary<long, string> Provenance,
+        Dictionary<long, string> Absent,
+        Dictionary<long, WordGroupKind> Marks,
+        Dictionary<long, IReadOnlyList<EntityRefResponse>> Named,
+        Dictionary<long, StrongCandidateResponse> Proposed)
+    {
+        /// <summary>The lexicon's gloss for each Greek word its edition does not gloss, and how it was reached.</summary>
+        public Dictionary<long, LexiconGlossResponse> Glossed { get; init; } = [];
+
+        /// <summary>For each Ge'ez word, the meaning of the Greek word it is aligned to.</summary>
+        public Dictionary<long, ThroughGreekResponse> ThroughGreek { get; init; } = [];
+
+        /// <summary>For each Ge'ez word, the entry of Dillmann's lexicon it is a form of.</summary>
+        public Dictionary<long, GeezEntryResponse> GeezEntries { get; init; } = [];
+
+        /// <summary>For each word that goes with another word of its text, that word and how.</summary>
+        public Dictionary<long, AttachedResponse> Attached { get; init; } = [];
+
+        /// <summary>For each word naming a person's occupation in a verse that says it, whose and which.</summary>
+        public Dictionary<long, IReadOnlyList<WordRoleResponse>> Roles { get; init; } = [];
+    }
+
+    private sealed record GlossWanted(
+        long Id, string Surface, string? Folded, string? Gloss, string? Lemma, string? StrongNumber);
+
+    /// <summary>
+    /// A short gloss for every Greek word whose edition prints none, from the lexicon, and the way
+    /// each was reached — because the ways are not equally strong and a reader is owed the difference.
+    ///
+    /// Tried in order of how little stands between the word and the entry: the number the edition
+    /// itself prints; then the word's own dictionary form; then, for a word that has neither, the
+    /// dictionary form of the word it is linked to as the same word in another edition — Swete's
+    /// Septuagint reaches Brenton's lemmas that way; then the one number the corpus proposed from
+    /// the word's form. A form or a number the lexicon files under several entries gets every one of
+    /// their glosses, in the lexicon's order, rather than one of them chosen here.
+    ///
+    /// Last, for a word none of those reached, its spelling: the dictionary form every other Greek
+    /// word printed exactly the same way carries, where they all carry the same one the lexicon
+    /// holds. Case and a grave accent for an acute do not count as a different spelling; a breathing
+    /// or another accent does, which is what keeps Ἰού the name apart from ἰοῦ the noun. Where the
+    /// words spelt that way disagree, the word gets nothing.
+    ///
+    /// Five queries for a chapter at most, and none at all for a text that is not Greek.
+    /// </summary>
+    private static async Task<Dictionary<long, LexiconGlossResponse>> Glossed(
+        AppDbContext db,
+        int textId,
+        IReadOnlyList<GlossWanted> words,
+        Dictionary<long, StrongCandidateResponse> proposed,
+        CancellationToken cancellationToken)
+    {
+        var wanting = words.Where(word => word.Gloss is null).ToList();
+        if (wanting.Count == 0
+            || await db.Texts.Where(text => text.Id == textId).Select(text => text.Language)
+                .SingleAsync(cancellationToken) != Greek)
+        {
+            return [];
+        }
+
+        var bare = wanting.Where(word => word.Lemma is null && word.StrongNumber is null).Select(word => word.Id).ToList();
+        var borrowed = bare.Count == 0
+            ? []
+            : (await db.LinkWords
+                    .Where(side => bare.Contains(side.WordId) && side.Link!.Relation == LinkRelation.Equals)
+                    .SelectMany(side => db.LinkWords
+                        .Where(other => other.LinkId == side.LinkId
+                                        && other.Side != side.Side
+                                        && other.Word!.Lemma != null)
+                        .Select(other => new { side.WordId, other.Word!.Lemma }))
+                    .ToListAsync(cancellationToken))
+                .GroupBy(row => row.WordId)
+                .Where(group => group.Select(row => row.Lemma).Distinct().Count() == 1)
+                .ToDictionary(group => group.Key, group => group.First().Lemma!);
+
+        var lemmas = wanting.Select(word => word.Lemma).Concat(borrowed.Values).OfType<string>().Distinct().ToList();
+        var numbers = wanting
+            .Select(word => word.StrongNumber ?? proposed.GetValueOrDefault(word.Id)?.Number)
+            .OfType<string>()
+            .Distinct()
+            .ToList();
+
+        var entries = await db.LexiconGlosses
+            .Where(gloss => lemmas.Contains(gloss.Lemma) || numbers.Contains(gloss.StrongNumber))
+            .OrderBy(gloss => gloss.Id)
+            .Select(gloss => new { gloss.Lemma, gloss.StrongNumber, gloss.Gloss })
+            .ToListAsync(cancellationToken);
+        var byLemma = entries.ToLookup(entry => entry.Lemma, StringComparer.Ordinal);
+        var byNumber = entries.ToLookup(entry => entry.StrongNumber, StringComparer.Ordinal);
+
+        static LexiconGlossResponse? Answer(IEnumerable<string> glosses, string via) =>
+            glosses.Distinct(StringComparer.Ordinal).ToArray() is { Length: > 0 } found
+                ? new LexiconGlossResponse(found, via)
+                : null;
+
+        var glossed = new Dictionary<long, LexiconGlossResponse>();
+        foreach (var word in wanting)
+        {
+            // A number filed under several entries is narrowed by the word's own form where the
+            // edition prints one and it names one of them; otherwise every entry under the number stands.
+            var stated = word.StrongNumber is { } number ? byNumber[number].ToList() : [];
+            var own = stated.Where(entry => entry.Lemma == word.Lemma).ToList();
+
+            var answer =
+                Answer((own.Count > 0 ? own : stated).Select(entry => entry.Gloss), ByStatedNumber)
+                ?? (word.Lemma is { } lemma ? Answer(byLemma[lemma].Select(entry => entry.Gloss), ByLemma) : null)
+                ?? (borrowed.TryGetValue(word.Id, out var equal)
+                    ? Answer(byLemma[equal].Select(entry => entry.Gloss), ByEqualWord)
+                    : null)
+                ?? (word.StrongNumber is null && proposed.GetValueOrDefault(word.Id) is { } candidate
+                    ? Answer(byNumber[candidate.Number].Select(entry => entry.Gloss), ByProposedNumber)
+                    : null);
+
+            if (answer is not null)
+            {
+                glossed[word.Id] = answer;
+            }
+        }
+
+        var unreached = wanting.Where(word => !glossed.ContainsKey(word.Id) && word.Folded is { Length: > 0 }).ToList();
+        if (unreached.Count == 0)
+        {
+            return glossed;
+        }
+
+        var forms = unreached.Select(word => word.Folded!).Distinct().ToList();
+        var spelt = await db.Words
+            .Where(other => other.Lemma != null
+                            && forms.Contains(other.NormalisedText!)
+                            && other.Text!.Language == Greek
+                            && db.LexiconGlosses.Any(gloss => gloss.Lemma == other.Lemma))
+            .Select(other => new { other.Surface, other.Lemma })
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        var lemmaBySpelling = spelt
+            .GroupBy(other => GreekLetters.Spelling(other.Surface), StringComparer.Ordinal)
+            .Where(group => group.Select(other => other.Lemma).Distinct().Count() == 1)
+            .ToDictionary(group => group.Key, group => group.First().Lemma!, StringComparer.Ordinal);
+
+        var further = lemmaBySpelling.Values.Distinct().Where(lemma => !byLemma.Contains(lemma)).ToList();
+        var furtherEntries = further.Count == 0
+            ? []
+            : await db.LexiconGlosses
+                .Where(gloss => further.Contains(gloss.Lemma))
+                .OrderBy(gloss => gloss.Id)
+                .Select(gloss => new { gloss.Lemma, gloss.Gloss })
+                .ToListAsync(cancellationToken);
+        var bySpeltLemma = entries.Select(entry => new { entry.Lemma, entry.Gloss })
+            .Concat(furtherEntries)
+            .ToLookup(entry => entry.Lemma, StringComparer.Ordinal);
+
+        foreach (var word in unreached)
+        {
+            if (lemmaBySpelling.TryGetValue(GreekLetters.Spelling(word.Surface), out var lemma)
+                && Answer(bySpeltLemma[lemma].Select(entry => entry.Gloss), BySpelling) is { } answer)
+            {
+                glossed[word.Id] = answer;
+            }
+        }
+
+        return glossed;
+    }
+
+    private sealed record AlignedGreek(
+        long WordId, string Corpus, string Surface, string? Lemma, string? StrongNumber, string? Gloss,
+        LinkMethod Method, double? Confidence);
+
+    /// <summary>
+    /// What a Ge'ez word means, two ways, for a text in Ge'ez and nothing else.
+    ///
+    /// Through the Greek: the meaning of the Greek word the aligner put beside it — its edition's
+    /// gloss, or the Greek lexicon's by the number its edition prints or its dictionary form — from
+    /// the surest link that reaches a Greek word with a meaning. It is carried with the Greek word
+    /// and the link, because it says what the Greek means and that the aligner paired the two, and
+    /// nothing about the Ge'ez itself.
+    ///
+    /// From Dillmann: the entry the word is a form of, where <see cref="GeezLexicon"/> can say so
+    /// without choosing, the aligned Greek words' forms serving as the evidence where several
+    /// headwords could be meant.
+    ///
+    /// Four queries for a chapter, and one for a text in another language.
+    /// </summary>
+    private static async Task<Reached> Meant(
+        AppDbContext db,
+        int textId,
+        IReadOnlyList<(long Id, string Surface)> words,
+        Reached counterparts,
+        CancellationToken cancellationToken)
+    {
+        if (words.Count == 0
+            || await db.Texts.Where(text => text.Id == textId).Select(text => text.Language)
+                .SingleAsync(cancellationToken) != Geez)
+        {
+            return counterparts;
+        }
+
+        var ids = words.Select(word => word.Id).ToList();
+        var aligned = await db.LinkWords
+            .Where(side => ids.Contains(side.WordId)
+                           && side.Link!.Relation != LinkRelation.Expands
+                           && side.Link.Relation != LinkRelation.Omits)
+            .SelectMany(side => db.LinkWords
+                .Where(other => other.LinkId == side.LinkId
+                                && other.Side != side.Side
+                                && other.Word!.Text!.Language == Greek)
+                .Select(other => new AlignedGreek(
+                    side.WordId, other.Word!.Text!.Slug, other.Word.Surface, other.Word.Lemma,
+                    other.Word.StrongNumber, other.Word.Gloss, side.Link!.Method, side.Link.Confidence)))
+            .ToListAsync(cancellationToken);
+
+        var lemmas = aligned.Select(greek => greek.Lemma).OfType<string>().Distinct().ToList();
+        var numbers = aligned.Select(greek => greek.StrongNumber).OfType<string>().Distinct().ToList();
+        var entries = lemmas.Count == 0 && numbers.Count == 0
+            ? []
+            : await db.LexiconGlosses
+                .Where(gloss => lemmas.Contains(gloss.Lemma) || numbers.Contains(gloss.StrongNumber))
+                .OrderBy(gloss => gloss.Id)
+                .Select(gloss => new { gloss.Lemma, gloss.StrongNumber, gloss.Gloss })
+                .ToListAsync(cancellationToken);
+        var byLemma = entries.ToLookup(entry => entry.Lemma, entry => entry.Gloss, StringComparer.Ordinal);
+        var byNumber = entries.ToLookup(entry => entry.StrongNumber, StringComparer.Ordinal);
+
+        // The edition's own gloss first; then the entries under the number it prints, narrowed by its
+        // dictionary form where that names one of them; then its dictionary form alone.
+        string[] MeaningOf(AlignedGreek greek)
+        {
+            if (greek.Gloss is { Length: > 0 } own)
+            {
+                return [own];
+            }
+
+            var stated = greek.StrongNumber is { } number ? byNumber[number].ToList() : [];
+            var narrowed = stated.Where(entry => entry.Lemma == greek.Lemma).ToList();
+            return
+            [
+                .. (narrowed.Count > 0 ? narrowed : stated).Select(entry => entry.Gloss)
+                    .Concat(stated.Count == 0 && greek.Lemma is { } lemma ? byLemma[lemma] : [])
+                    .Distinct(StringComparer.Ordinal),
+            ];
+        }
+
+        var byWord = aligned.ToLookup(greek => greek.WordId);
+        var throughGreek = new Dictionary<long, ThroughGreekResponse>();
+        foreach (var id in ids)
+        {
+            var surest = byWord[id]
+                .OrderByDescending(greek => greek.Confidence is null)
+                .ThenByDescending(greek => greek.Confidence)
+                .ThenBy(greek => greek.Corpus, StringComparer.Ordinal)
+                .Select(greek => (Greek: greek, Glosses: MeaningOf(greek)))
+                .FirstOrDefault(found => found.Glosses.Length > 0);
+            if (surest.Greek is { } link)
+            {
+                throughGreek[id] = new ThroughGreekResponse(
+                    link.Corpus, link.Surface, link.Lemma, surest.Glosses, EnumSpelling.Of(link.Method), link.Confidence);
+            }
+        }
+
+        var keys = words.SelectMany(word => GeezLexicon.KeysOf(word.Surface)).Distinct().ToList();
+        var headwords = keys.Count == 0
+            ? []
+            : await db.GeezLexiconEntries
+                .Where(entry => entry.Consonants.Any(consonants => keys.Contains(consonants)))
+                .ToListAsync(cancellationToken);
+        var geezEntries = new Dictionary<long, GeezEntryResponse>();
+        if (headwords.Count > 0)
+        {
+            var lexicon = new GeezLexicon(headwords.Select(entry => new GeezHeadword(entry.Entry, entry.Forms, entry.Greek)));
+            var byEntry = headwords.ToDictionary(entry => entry.Entry, StringComparer.Ordinal);
+            foreach (var (id, surface) in words)
+            {
+                var greek = byWord[id].SelectMany(link => new[] { link.Lemma, link.Surface }).OfType<string>().ToList();
+                if (lexicon.Match(surface, greek) is not { } match)
+                {
+                    continue;
+                }
+
+                var entry = byEntry[match.Entry];
+                geezEntries[id] = new GeezEntryResponse(
+                    entry.Headword,
+                    [.. entry.Latin.Take(LatinShown)],
+                    [
+                        .. entry.Greek
+                            .Where(equivalent => equivalent.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length <= GreekShownWords)
+                            .Take(GreekShown),
+                    ],
+                    match.Via);
+            }
+        }
+
+        return counterparts with { ThroughGreek = throughGreek, GeezEntries = geezEntries };
+    }
+
+    /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
+    public static async Task<Dictionary<int, List<TextWordResponse>>> ReadByCanonicalVerse(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseReferences
+            .Where(r => r.IsPrimary
+                        && r.Verse!.TextId == textId
+                        && r.CanonicalBook == canonicalBook
+                        && r.CanonicalChapter == canonicalChapter)
+            .SelectMany(r => r.Verse!.Words.Select(w => new CanonicalWordRow(
+                r.CanonicalVerse, r.Verse.Sequence, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
+                w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break, w.NormalisedText)))
+            .ToListAsync(cancellationToken);
+
+        var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        counterparts = counterparts with
+        {
+            Glossed = await Glossed(
+                db, textId,
+                [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber))],
+                counterparts.Proposed, cancellationToken),
+        };
+        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.Text))], counterparts, cancellationToken);
+
+        return rows
+            .GroupBy(r => r.CanonicalVerse)
+            .ToDictionary(
+                group => group.Key,
+                // Two verses of this text can sit at one canonical address — the Septuagint's 50 and
+                // 50a both answer to Genesis 31:50 — and ordering by word position alone shuffles
+                // their words together, so the verses go in the edition's own order first.
+                group => group
+                    .OrderBy(r => r.VerseSequence).ThenBy(r => r.VerseNumber).ThenBy(r => r.Label)
+                    .ThenBy(r => r.Position)
+                    .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
+                        r.Elided, r.Break, counterparts))
+                    .ToList());
+    }
+
+    /// <summary>
+    /// Grouped by the number **and** the letter, because the Septuagint prints Genesis 31 as 49,
+    /// 50, 50a, 52 and two verses numbered 50 are two verses. The separate verse list is what
+    /// lets a note-only verse remain visible rather than being lost from a query rooted at words.
+    /// </summary>
+    private static IList<TextVerseResponse> Group(
+        List<VerseRow> verses,
+        List<WordRow> rows,
+        Reached counterparts,
+        List<NoteRow>? notes = null)
+    {
+        var notesByVerse = (notes ?? [])
+            .ToLookup(note => (note.VerseNumber, note.Label), note => new SourceNoteResponse(
+                EnumSpelling.Of(note.Kind), note.Content, note.AnchorWordId, note.Anchor));
+        var wordsByVerse = rows.ToLookup(row => (row.VerseNumber, row.Label));
+
+        return verses
+            .Select(verse => new TextVerseResponse(
+                verse.Number,
+                wordsByVerse[(verse.Number, verse.Label)].Select(row => Word(
+                        row.Id, row.Text, row.Trailer, row.Gloss, row.Lemma, row.StrongNumber, row.Morphology,
+                        row.Elided, row.Break, counterparts))
+                    .ToList(),
+                verse.Label)
+            {
+                Notes = [.. notesByVerse[(verse.Number, verse.Label)]],
+            })
+            .ToList();
+    }
+
+    private static TextWordResponse Word(
+        long id,
+        string text,
+        string trailer,
+        string? gloss,
+        string? lemma,
+        string? strongNumber,
+        JsonDocument? morphology,
+        bool elided,
+        TextBreak? opening,
+        Reached counterparts)
+    {
+        var features = Features(morphology);
+        return new TextWordResponse(
+            id,
+            text,
+            trailer,
+            gloss,
+            lemma,
+            strongNumber,
+            [.. counterparts.Witnesses[id].Distinct()],
+            counterparts.Provenance.GetValueOrDefault(id),
+            counterparts.Absent.GetValueOrDefault(id),
+            counterparts.Named.GetValueOrDefault(id)?[0],
+            Morphology(features),
+            Feature(features, Phono),
+            Feature(features, PhonoTrailer),
+            Feature(features, Language))
+        {
+            Elided = elided,
+            Supplied = counterparts.Marks.TryGetValue(id, out var mark) && mark == WordGroupKind.Supplied,
+            Mark = counterparts.Marks.ContainsKey(id) ? EnumSpelling.Of(mark) : null,
+            StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
+            LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
+            ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
+            GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
+            Attached = counterparts.Attached.GetValueOrDefault(id),
+            Roles = counterparts.Roles.GetValueOrDefault(id),
+            Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
+            Entities = counterparts.Named.GetValueOrDefault(id) ?? [],
+        };
+    }
+
+    private static JsonElement? Features(JsonDocument? morphology) => morphology?.RootElement;
+
+    private static string? Feature(JsonElement? features, string name) =>
+        features is { } element && element.TryGetProperty(name, out var value) ? value.GetString() : null;
+
+    /// <summary>
+    /// The annotation, as much of it as the old contract has a field for. A word with none — every
+    /// word of every translation — answers null rather than an object of nulls.
+    /// </summary>
+    private static MorphologyResponse? Morphology(JsonElement? features)
+    {
+        if (features is null || Feature(features, PartOfSpeech) is null)
+        {
+            return null;
+        }
+
+        return new MorphologyResponse(
+            Feature(features, PartOfSpeech),
+            Feature(features, "case"),
+            Feature(features, "gender"),
+            Feature(features, "number"),
+            Feature(features, "person"),
+            Feature(features, "state"),
+            Feature(features, "stem"),
+            Feature(features, "tense"),
+            Feature(features, "lexicalSet"),
+            Feature(features, "phrasePos"),
+            Feature(features, "suffixGender"),
+            Feature(features, "suffixNumber"),
+            Feature(features, "suffixPerson"),
+            Feature(features, "nameType")?.Split(','));
+    }
+
+    private sealed record WordRow(
+        int VerseNumber, string Label, long Id, string Text, string Trailer, string? Gloss, string? Lemma,
+        string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break, string? NormalisedText);
+
+    private sealed record VerseRow(int Number, string Label);
+
+    private sealed record NoteRow(
+        int VerseNumber,
+        string Label,
+        VerseNoteKind Kind,
+        string Content,
+        long? AnchorWordId,
+        string? Anchor);
+
+    private sealed record CanonicalWordRow(
+        int CanonicalVerse, int VerseSequence, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
+        string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break,
+        string? NormalisedText);
+
+    /// <summary>
+    /// The chapters a chapter's rows are read from: itself, and each chapter holding a passage of it
+    /// under another name (<see cref="TwinPassages"/>) — the Letter of Jeremiah, which is Baruch 6 in the
+    /// Latin and English Bibles and a book of its own in the Greek, and the Song of the Three, which is
+    /// inside Daniel 3 in the Greek and Latin and a book of its own in the King James. A text is read
+    /// under whichever name it prints the passage, with the verses of that passage and at the rows they
+    /// have here, so either name opens it in every text that has it.
+    /// </summary>
+    internal static IEnumerable<(int Book, int Chapter, int First, int Last, int Shift)> Held(int book, int chapter) =>
+        [(book, chapter, int.MinValue, int.MaxValue, 0), .. TwinPassages.NamedElsewhere(book, chapter)];
+
+    /// <summary>
+    /// Rows read under another name, at the rows they have here; a row the chapter already holds for the
+    /// text keeps what it has, since a verse stands primarily under one name only.
+    /// </summary>
+    internal static void Merge<T>(Dictionary<int, T> into, Dictionary<int, T> read, int first, int last, int shift)
+    {
+        foreach (var (verse, value) in read)
+        {
+            if (verse >= first && verse <= last)
+            {
+                into.TryAdd(verse + shift, value);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Which of a text's own verses sit at each canonical address in this chapter, as the text
+    /// numbers them.
+    ///
+    /// <see cref="OwnReferences"/> answers the same question and keeps only one per address, because
+    /// a reference is a single address and cannot be two. That is right for what it is for and it is
+    /// why the label went missing: Brenton's <c>31:50a</c> and <c>31:50</c> both belong at canonical
+    /// 31:50, so one of the two was reported and the row silently held both.
+    /// </summary>
+    public static async Task<Dictionary<int, List<string>>> OwnVerses(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseReferences
+            .Where(r => r.IsPrimary
+                        && r.Verse!.TextId == textId
+                        && r.CanonicalBook == canonicalBook
+                        && r.CanonicalChapter == canonicalChapter)
+            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number, r.Verse.Label })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(r => r.CanonicalVerse)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderBy(r => r.Number).ThenBy(r => r.Label, StringComparer.Ordinal)
+                    .Select(r => $"{r.ChapterNumber}:{r.Number}{r.Label}")
+                    .ToList());
+    }
+
+    /// <summary>
+    /// What the edition prints as its own address for each canonical address in this chapter.
+    ///
+    /// <para>
+    /// It sits beside <see cref="OwnVerses"/> and answers a different question. That one asks which
+    /// verses this text holds here, and every answer is a row that can be fetched; this one asks
+    /// what the edition's own pages call them, and the answer is a claim about a printed book that
+    /// no row of this corpus answers to. Reading them as one field is how the Synodal would come to
+    /// offer 118:1 as a verse it has.
+    /// </para>
+    ///
+    /// <para>
+    /// The addresses of a verse are ordered as the edition printed them, and where two of its
+    /// verses became one of ours both are here — the second is not a duplicate of the first and
+    /// dropping it would say the edition divides the passage as we do.
+    /// </para>
+    /// </summary>
+    public static async Task<Dictionary<int, List<string>>> StatedVerses(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.StatedVerseNumbers
+            .Where(n => n.Verse!.TextId == textId
+                        && n.Verse.References.Any(r => r.IsPrimary
+                                                       && r.CanonicalBook == canonicalBook
+                                                       && r.CanonicalChapter == canonicalChapter))
+            .Select(n => new
+            {
+                Canonical = n.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
+                Holder = n.Verse.Number,
+                n.Position,
+                Chapter = n.ChapterNumber,
+                n.ChapterLabel,
+                Verse = n.Number,
+            })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(row => row.Canonical)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderBy(row => row.Holder).ThenBy(row => row.Position)
+                    .Select(row => $"{row.Chapter}{row.ChapterLabel}:{row.Verse}")
+            .ToList());
+    }
+
+    /// <summary>
+    /// The edition's notes, grouped by the canonical row rather than by their printed number. A
+    /// row can hold more than one of a translation's own verses, so the order keeps the verse they
+    /// belong to before their position inside it.
+    /// </summary>
+    public static async Task<Dictionary<int, List<SourceNoteResponse>>> SourceNotes(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseNotes
+            .Where(note => note.Verse!.TextId == textId
+                           && note.Verse.References.Any(reference => reference.IsPrimary
+                                                                    && reference.CanonicalBook == canonicalBook
+                                                                    && reference.CanonicalChapter == canonicalChapter))
+            .Select(note => new
+            {
+                Canonical = note.Verse!.References.First(reference => reference.IsPrimary).CanonicalVerse,
+                Holder = note.Verse.Number,
+                note.Verse.Label,
+                note.Position,
+                note.Kind,
+                note.Content,
+                note.AnchorWordId,
+                Anchor = note.AnchorWord == null ? null : note.AnchorWord.Surface,
+            })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(row => row.Canonical)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .OrderBy(row => row.Holder).ThenBy(row => row.Label, StringComparer.Ordinal)
+                    .ThenBy(row => row.Position)
+                    .Select(row => new SourceNoteResponse(
+                        EnumSpelling.Of(row.Kind), row.Content, row.AnchorWordId, row.Anchor))
+                    .ToList());
+    }
+
+    /// <summary>What each text calls the verses it puts at these canonical addresses.</summary>
+    public static async Task<Dictionary<int, VerseRefResponse>> OwnReferences(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.VerseReferences
+            .Where(r => r.IsPrimary
+                        && r.Verse!.TextId == textId
+                        && r.CanonicalBook == canonicalBook
+                        && r.CanonicalChapter == canonicalChapter)
+            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number })
+            .ToListAsync(cancellationToken);
+
+        return rows
+            .GroupBy(r => r.CanonicalVerse)
+            .ToDictionary(
+                group => group.Key,
+                group => new VerseRefResponse(
+                    canonicalBook,
+                    BookReferences.Name(canonicalBook),
+                    BookReferences.Slug(canonicalBook),
+                    group.Min(r => r.ChapterNumber),
+                    group.Min(r => r.Number)));
+    }
+}

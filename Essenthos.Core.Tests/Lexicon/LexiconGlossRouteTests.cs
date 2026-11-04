@@ -140,7 +140,7 @@ public sealed class LexiconGlossRouteTests : IDisposable
 
     private async Task<TextWordResponse> Read(Text text, int position)
     {
-        var chapter = await Texts.ReadChapter(_db, text.Id, 1, 1, default);
+        var chapter = await ChapterReading.ReadChapter(_db, text.Id, 1, 1, default);
         return chapter.Single().Words[position - 1];
     }
 

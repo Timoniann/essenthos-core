@@ -95,7 +95,7 @@ public sealed class StrongCandidateTests : IDisposable
 
     private async Task<TextWordResponse> Read(int position)
     {
-        var chapter = await Texts.ReadChapter(_db, _septuagint.Id, 1, 1, default);
+        var chapter = await ChapterReading.ReadChapter(_db, _septuagint.Id, 1, 1, default);
         return chapter.Single().Words[position - 1];
     }
 

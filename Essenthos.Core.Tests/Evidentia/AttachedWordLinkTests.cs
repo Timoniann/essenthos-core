@@ -147,7 +147,7 @@ public sealed class AttachedWordLinkTests : IDisposable
         Attached(Out, Exelthonta, "PhrasalParticle of 'go'", head: (Go, Exelthonta));
         await AcceptAndApply();
 
-        var words = (await Endpoints.Texts.ReadByCanonicalVerse(_db, _english.Id, 1, 1, default))[1]
+        var words = (await ChapterReading.ReadByCanonicalVerse(_db, _english.Id, 1, 1, default))[1]
             .ToDictionary(word => word.Id);
 
         words[Did].Attached.Should().Be(new AttachedResponse("attached", See, "see"));
