@@ -103,7 +103,7 @@ internal static class MappingMerge
         });
 
         var (accepted, withdrawn, refinements) = Compete(candidates);
-        var orphans = KeepOrphans(accepted, withdrawn, pinned);
+        var (orphans, bare, left) = KeepOrphans(accepted, withdrawn, pinned);
         accepted.Sort(CompareBySort);
         var final = Finalise(input, accepted);
 
@@ -122,6 +122,10 @@ internal static class MappingMerge
             "links inside a higher-ranked link on both sides, kept as links of their own"));
         report.Add(new ReportRow("orphans", string.Empty, string.Empty, orphans,
             $"links kept because the competition would leave a word of {input.FromText} with none (at least {MappingMethods.OrphanFloor} sure)"));
+        report.Add(new ReportRow("bare-words", string.Empty, string.Empty, bare,
+            $"words of {input.FromText} the competition alone would leave with no link"));
+        report.Add(new ReportRow("bare-words-left", string.Empty, string.Empty, left,
+            $"words of {input.FromText} still with no link after the kept ones: their links are under {MappingMethods.OrphanFloor}"));
         Report(input, entries, final, stale, report);
         return new Output(final, methods, report);
     }
@@ -403,11 +407,12 @@ internal static class MappingMerge
     /// <summary>
     /// A word of the FROM text that the competition left with no standing link keeps its best withdrawn
     /// link, highest rank then surest first, if that link is sure enough (<see cref="MappingMethods.KeepsOrphan"/>).
-    /// Returns how many links were kept so.
+    /// Returns how many links were kept so, how many words were bare before, and how many still are.
     /// </summary>
-    private static int KeepOrphans(List<Candidate> accepted, List<Candidate> withdrawn, HashSet<string> pinned)
+    private static (int Kept, int Bare, int Left) KeepOrphans(List<Candidate> accepted, List<Candidate> withdrawn, HashSet<string> pinned)
     {
         var held = accepted.SelectMany(c => MappingText.Split(c.Top.Row.From)).ToHashSet(StringComparer.Ordinal);
+        var bare = withdrawn.SelectMany(c => MappingText.Split(c.Top.Row.From)).Where(k => !held.Contains(k)).ToHashSet(StringComparer.Ordinal);
         var best = new Dictionary<string, Candidate>(StringComparer.Ordinal);
         foreach (var candidate in withdrawn)
         {
@@ -443,7 +448,7 @@ internal static class MappingMerge
             kept++;
         }
 
-        return kept;
+        return (kept, bare.Count, bare.Count(k => !held.Contains(k)));
 
         static bool Better(Candidate a, Candidate b)
         {

@@ -256,6 +256,7 @@ public sealed class MappingMergeTests
             "1.1:1.1 keeps the 0.9 Strong link and 1.1:1.7 its stated one; 1.1:1.3 and 1.1:1.6 have only compositions under 0.7");
         Status(output, MappingMethods.Composed).Should().Be("withdrawn-by evidentia");
         output.Report.Should().Contain(r => r.Kind == "orphans" && r.Rows == 2);
+        output.Report.Should().Contain(r => r.Kind == "bare-words" && r.Rows == 4).And.Contain(r => r.Kind == "bare-words-left" && r.Rows == 2);
         MappingMethods.OrphanFloor.Should().Be(0.7);
     }
 

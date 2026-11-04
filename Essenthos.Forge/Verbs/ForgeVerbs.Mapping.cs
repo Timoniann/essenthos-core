@@ -50,7 +50,7 @@ internal static partial class ForgeVerbs
         {
             long Rows(string kind) => merged.Report.Where(r => r.Kind == kind).Sum(r => r.Rows);
             Console.WriteLine($"{merged.Pair,-24} {merged.Links,9} links {merged.Claims,9} claims {Rows("withdrawn"),7} withdrawn"
-                              + $" {Rows("superseded"),7} superseded {Rows("refinements"),6} refinements {Rows("orphans"),5} orphans"
+                              + $" {Rows("superseded"),7} superseded {Rows("refinements"),6} refinements {Rows("orphans"),5} orphans {Rows("bare-words"),5} bare {Rows("bare-words-left"),5} left"
                               + string.Concat(merged.Report.Where(r => r.Kind == "needs").Select(r => $"  needs {r.By}")));
         }
 
