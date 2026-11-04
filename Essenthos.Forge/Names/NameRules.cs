@@ -21,7 +21,9 @@ namespace Essenthos.Core.Names;
 /// other word of the side written as a name, with a capital where the sentence does not begin) or <c>all</c>.</item>
 /// <item><c>faint</c>: a person or place carried over a link below it onto a word not written as a name is taken back where
 /// another word of the verse takes the same record over a link at least as sure as it (the stray rule).</item>
-/// <item><c>floor</c>: a name carried with less than this, the settled name's confidence times the link's, is not carried.</item>
+/// <item><c>floor</c>: a name carried with less than this, the settled name's confidence times the link's, is not carried. A
+/// value of a mapping method and a number (<c>name-list 0.9</c>) is the floor over that method's links; a number alone is the
+/// floor over every other method's.</item>
 /// <item><c>foreign-names</c> (<c>on</c>|<c>off</c>): a person's name carried onto a word that is another record's name is not
 /// carried (<see cref="ForeignNameRule"/>).</item>
 /// </list>
@@ -41,6 +43,9 @@ internal sealed class NameRules
     public const string Floor = "floor";
     public const string ForeignNamesRule = "foreign-names";
 
+    private const string NameListFloor =
+        "the owner, 2026-11-04 (DOC-0228): over a name-list link a name is carried only from 0.9; below it a fifth of them were wrong, almost all link errors";
+
     public const string HeadLast = "last";
     public const string HeadAll = "all";
     public const string HeadLastAndCapitals = "last+capitals";
@@ -50,6 +55,7 @@ internal sealed class NameRules
     private readonly Dictionary<string, HashSet<string>> _neverPos = new(StringComparer.Ordinal);
     private readonly Dictionary<string, HashSet<string>> _neverStrong = new(StringComparer.Ordinal);
     private readonly Dictionary<string, HashSet<string>> _neverNormalised = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, double> _floors = new(StringComparer.Ordinal);
 
     public NameRules(IEnumerable<NameRuleRow> rows)
     {
@@ -76,7 +82,19 @@ internal sealed class NameRules
                     HeadRule = row.Value is HeadLast or HeadAll or HeadLastAndCapitals ? row.Value : throw new InvalidDataException($"names/rules: head is {HeadLast}, {HeadLastAndCapitals} or {HeadAll}, not {row.Value}.");
                     break;
                 case Faint: FaintValue = Parse(row) ?? throw new InvalidDataException("names/rules: faint needs a number."); break;
-                case Floor: FloorValue = Parse(row) ?? throw new InvalidDataException("names/rules: floor needs a number."); break;
+                case Floor:
+                    if (row.Value.Split(' ') is [var method, var number])
+                    {
+                        _floors[method] = double.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out var over)
+                            ? over
+                            : throw new InvalidDataException($"names/rules: floor {row.Value} needs a method and a number.");
+                    }
+                    else
+                    {
+                        FloorValue = Parse(row) ?? throw new InvalidDataException("names/rules: floor needs a number, or a method and a number.");
+                    }
+
+                    break;
                 case ForeignNamesRule:
                     ForeignNames = row.Value switch { "on" => true, "off" => false, _ => throw new InvalidDataException($"names/rules: foreign-names is on or off, not {row.Value}.") };
                     break;
@@ -94,6 +112,9 @@ internal sealed class NameRules
 
     /// <summary>A name carried with less than this (the settled name's confidence times the link's) is not carried.</summary>
     public double FloorValue { get; }
+
+    /// <summary>The floor over a link of this mapping method: its own where the rules name one, else <see cref="FloorValue"/>.</summary>
+    public double FloorOver(string? method) => method is not null && _floors.TryGetValue(method, out var floor) ? floor : FloorValue;
 
     /// <summary>Whether a person's name carried onto a word that is another record's name is refused (<see cref="ForeignNameRule"/>).</summary>
     public bool ForeignNames { get; }
@@ -166,6 +187,7 @@ internal sealed class NameRules
             new(Head, "*", HeadLast, "the last word of a link's side that can be a name takes it; before an English possessive, the word that carries it"),
             new(Faint, "*", Annotating.Faint.ToString("R", CultureInfo.InvariantCulture), "a person or place carried below it onto a word not written as a name yields to the same record on a surer word of the verse"),
             new(Floor, "*", "0.7", "the owner's answer of 2026-11-04 on TSK-1448: a name the settled name's confidence and the link's together make less sure than this is not carried; better correct than rubbish"),
+            new(Floor, "*", "name-list 0.9", NameListFloor),
             new(ForeignNamesRule, "*", "on", "a person's name carried onto a word the text writes as another record's name is not carried (the load's foreign-names pass)"),
             new(PronounReferent, "*", ReferentClear, "a pronoun shows the person it refers to only where that is certainly clear (the owner's ruling of 2026-10-07, PronounReferents)"),
         };
