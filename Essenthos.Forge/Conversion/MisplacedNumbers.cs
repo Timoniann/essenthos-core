@@ -33,6 +33,11 @@ namespace Essenthos.Core.Conversion;
 /// conjunction, adverb, particle, negation or article: cleared;</item>
 /// <item>any other pronoun carrying such a number of the Greek, or of a Hebrew conjunction: cleared. A Hebrew preposition,
 /// noun, adverb or negation keeps it: the German pronoun renders its suffix (<em>vor dir</em> for לְפָנֶיךָ).</item>
+/// <item>an auxiliary or a pronoun carrying a verb's number, right after an untagged content word in the same clause: the
+/// number moves to that word, which renders the verb (<em>geboten hat</em>, <em>vergossen wird</em>, <em>sprach er</em>,
+/// <em>fürchtete sich</em>), unless the verb is one an auxiliary or a modal renders itself (הָיָה, εἰμί, γίνομαι, ἔχω,
+/// יָכֹל, δύναμαι, θέλω, δεῖ, ὀφείλω, אָבָה). Read on samples of 30: right or defensible in 30, 30, 30 and 27 of 27;
+/// the Zefania module of the same lineage puts 93% of these numbers on the same word.</item>
 /// </list>
 /// A capitalised form inside a sentence is a noun (<em>Habe</em>, <em>Waren</em>), and <em>sein</em> is the verb only where
 /// nothing but a function word follows it. A number the rules miss is put right at the word in the text's corrections
@@ -89,6 +94,20 @@ internal sealed class MisplacedNumbers : ITextStage
     private static readonly HashSet<string> Rendered = new(
         ["H3426", "H369", "H5750", "H518", "H3863", "H3884", "G1487", "G1437", "G1535", "H1167"], StringComparer.Ordinal);
 
+    /// <summary>Verbs a German auxiliary or modal renders by itself, so their numbers stay on it.</summary>
+    private static readonly HashSet<string> OwnVerbs = new(
+        ["H1961", "H1933", "G1510", "G1096", "G2192", "H3426", "G1163", "G3784", "G1410", "H3201", "G2309", "H14"], StringComparer.Ordinal);
+
+    /// <summary>Words that never render the verb whose number the auxiliary or pronoun after them carries.</summary>
+    private static readonly HashSet<string> NotVerbs = new(
+        [.. Function, "lassen", "läßt", "ließ", "ließen", "lasse", "lasset", "laß", "ließest",
+         "also", "nun", "dann", "darum", "daher", "doch", "sondern", "sonst", "hier", "dort", "daselbst", "dahin", "dennoch", "jetzt",
+         "wohl", "gar", "immer", "allein", "ebenso", "desgleichen", "abermals", "alsbald", "alsdann", "bald", "zuvor", "hernach",
+         "wieder", "nimmer", "niemals", "nie", "oft", "welcher", "welche", "welches", "welchen", "welchem", "was", "wer", "wen", "wem",
+         "wessen", "dieser", "diese", "dieses", "diesen", "diesem", "jener", "jene", "jenes", "jenen", "jenem", "neben", "zwischen",
+         "hinter", "bis", "seit", "außer", "wegen", "statt", "trotz"],
+        StringComparer.Ordinal);
+
     /// <summary>Whether a German word is a form of <em>sein</em>, <em>haben</em>, <em>werden</em> or a modal verb.</summary>
     public static bool IsAuxiliary(string surface) => Auxiliaries.Contains(surface.ToLowerInvariant());
 
@@ -99,9 +118,10 @@ internal sealed class MisplacedNumbers : ITextStage
     public IReadOnlyList<string> Products(string slug) => [.. Originals.Select(TextWord.ProductOf)];
 
     /// <summary>What the stage did to the text's numbers.</summary>
-    internal sealed record Outcome(int Moved, int Cleared)
+    internal sealed record Outcome(int Moved, int Cleared, int Verbs)
     {
-        public override string ToString() => $"{Moved} moved to the word before, {Cleared} cleared";
+        public override string ToString() =>
+            $"{Moved} moved to the word before, {Cleared} cleared; {Verbs} verb numbers moved from an auxiliary or pronoun to the verb before it";
     }
 
     public void Apply(ConvertedText text, string resources)
@@ -115,7 +135,7 @@ internal sealed class MisplacedNumbers : ITextStage
     /// <summary>Moves or clears the misplaced numbers of <paramref name="verses"/>; <paramref name="classes"/> gives each number its part of speech.</summary>
     internal static Outcome Place(IReadOnlyList<ConvertedVerse> verses, IReadOnlyDictionary<string, string> classes)
     {
-        int moved = 0, cleared = 0;
+        int moved = 0, cleared = 0, verbs = 0;
         foreach (var verse in verses)
         {
             var words = verse.Words;
@@ -133,6 +153,15 @@ internal sealed class MisplacedNumbers : ITextStage
                 var auxiliary = Auxiliaries.Contains(lower)
                                 && !(char.IsUpper(word.Surface[0]) && before is not null && !EndsSentence(before))
                                 && !(lower == "sein" && at + 1 < words.Count && !Function.Contains(words[at + 1].Surface));
+                if (part == "verb" && !OwnVerbs.Contains(number) && (auxiliary || Subjects.Contains(lower) || Pronouns.Contains(lower))
+                    && RendersTheVerb(before))
+                {
+                    before!.Strong = number;
+                    word.Strong = null;
+                    verbs++;
+                    continue;
+                }
+
                 switch (Decide(lower, auxiliary, number, part, before, carried[number]))
                 {
                     case Placement.Move:
@@ -148,8 +177,15 @@ internal sealed class MisplacedNumbers : ITextStage
             }
         }
 
-        return new Outcome(moved, cleared);
+        return new Outcome(moved, cleared, verbs);
     }
+
+    /// <summary>Whether the word before an auxiliary or pronoun can be the verb whose number it carries: untagged, a content word, in the same clause.</summary>
+    private static bool RendersTheVerb(ConvertedWord? before) =>
+        before is { Strong: null }
+        && !NotVerbs.Contains(before.Surface.ToLowerInvariant())
+        && before.Trailer.IndexOfAny([',', ';', ':', '.', '!', '?', '(', ')']) < 0
+        && before.Surface.IndexOfAny(['\'', '’']) < 0;
 
     private enum Placement
     {
