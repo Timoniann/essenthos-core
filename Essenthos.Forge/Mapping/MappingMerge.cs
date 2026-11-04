@@ -10,8 +10,9 @@ namespace Essenthos.Core.Mapping;
 /// <item>a pair's rulings refuse shapes or words and pin shapes;</item>
 /// <item>rows naming the same words are one link: the top-ranked row is its settled claim, the others its claims;</item>
 /// <item>links of different words competing for a word: the higher-ranked keeps it, the lower is withdrawn
-/// whole, by the method that won; an absence a source states or a verdict decides wins its word over any
-/// correspondence; links of equal rank stand side by side, as one source's own several links on a word do.</item>
+/// whole, by the method that won; an absence a source states or a person decides wins its word over any
+/// correspondence, an EVIDENTIA verdict's absence only over the aligner's; links of equal rank stand side
+/// by side, as one source's own several links on a word do.</item>
 /// </list>
 /// Nothing is deleted: every row stays in its method file, with what the merge decided in its status. The
 /// output is a function of the inputs and sorted by key, so a second merge of the same files writes the same bytes.
@@ -90,11 +91,17 @@ internal static class MappingMerge
             candidate.Rows.RemoveAll(r => r.Status is not null);
             candidate.Rank = pinned.Contains(candidate.Shape)
                 ? MappingMethods.Pinned
-                : MappingMethods.IsAbsence(candidate.Top.Row.Relation) && MappingMethods.StatesAbsence(candidate.Top.Row.Method)
-                    ? Math.Max(MappingMethods.StatedAbsence, candidate.Top.Rank)
-                    : candidate.Top.Rank;
+                : !MappingMethods.IsAbsence(candidate.Top.Row.Relation)
+                    ? candidate.Top.Rank
+                    : MappingMethods.StatesAbsence(candidate.Top.Row.Method)
+                        ? Math.Max(MappingMethods.StatedAbsence, candidate.Top.Rank)
+                        : candidate.Top.Row.Method == MappingMethods.Evidentia
+                            ? MappingMethods.EvidentiaAbsence
+                            : candidate.Top.Rank;
             candidate.Sort = MappingText.SortKey(candidate.Top.Row.From, candidate.Top.Row.To, input.FromText, input.ToText);
         }
+
+        GiveWay(candidates, pinned);
 
         candidates.Sort((a, b) =>
         {
@@ -217,6 +224,40 @@ internal static class MappingMerge
             if (run > verdict.Run)
             {
                 verdict.Entry.Status = MappingStatus.SupersededBy(run);
+            }
+        }
+    }
+
+    /// <summary>
+    /// An EVIDENTIA absence on a word that a correspondence claimed by anything but the aligner names gives
+    /// way to it (<see cref="MappingMethods.EvidentiaAbsence"/>): on the TO side for an omission, on the FROM
+    /// side for an expansion.
+    /// </summary>
+    private static void GiveWay(List<Candidate> candidates, HashSet<string> pinned)
+    {
+        var from = new HashSet<string>(StringComparer.Ordinal);
+        var to = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var candidate in candidates)
+        {
+            if (!MappingMethods.IsAbsence(candidate.Top.Row.Relation) && !MappingMethods.OnlyTheAligner(candidate.Rows.Select(r => r.Row.Method)))
+            {
+                from.UnionWith(MappingText.Split(candidate.Top.Row.From));
+                to.UnionWith(MappingText.Split(candidate.Top.Row.To));
+            }
+        }
+
+        foreach (var candidate in candidates)
+        {
+            var row = candidate.Top.Row;
+            if (row.Method != MappingMethods.Evidentia || !MappingMethods.IsAbsence(row.Relation) || pinned.Contains(candidate.Shape))
+            {
+                continue;
+            }
+
+            var contested = row.Relation == "omits" ? MappingText.Split(row.To).Any(to.Contains) : MappingText.Split(row.From).Any(from.Contains);
+            if (contested)
+            {
+                candidate.Rank = MappingMethods.GivesWay;
             }
         }
     }

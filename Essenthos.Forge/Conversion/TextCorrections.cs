@@ -10,11 +10,14 @@ namespace Essenthos.Core.Conversion;
 /// taking a repair somewhere it was never meant.
 /// </summary>
 /// <param name="Own">A word key (<c>1.1:1.3</c>) for <c>letters</c> and <c>drop</c>; a verse key (<c>1.1:1</c>) for the others.</param>
+/// <param name="Before">For <c>block</c>, the further verses of the chapter the source stores the block under, space-separated.</param>
 /// <param name="Kind">
 /// <c>verse</c>: the source's verse, markup and all, is read as <see cref="After"/> before it is divided into words;
 /// <c>letters</c>: the word's letters <see cref="Before"/> become <see cref="After"/>;
 /// <c>prepend</c> / <c>append</c>: the words of <see cref="After"/> open / close the verse;
-/// <c>drop</c>: the word, which reads <see cref="Before"/>, is not the edition's and goes.
+/// <c>drop</c>: the word, which reads <see cref="Before"/>, is not the edition's and goes;
+/// <c>block</c>: the source prints the verses <see cref="Own"/> and <see cref="Before"/> as one block and stores it under each
+/// of their numbers; it is one verse, at <see cref="Own"/>, stating all of them, and the copies, which must read the same, go.
 /// </param>
 internal sealed record TextCorrection(string Own, string Kind, string? Before, string? After, string Why)
 {
@@ -23,6 +26,7 @@ internal sealed record TextCorrection(string Own, string Kind, string? Before, s
     public const string Prepend = "prepend";
     public const string Append = "append";
     public const string Drop = "drop";
+    public const string Block = "block";
 
     public static readonly ProductSchema<TextCorrection> Schema = new ProductSchema<TextCorrection>()
         .Text("own", c => c.Own)
@@ -69,7 +73,8 @@ internal sealed class TextCorrections
         var rows = reader.ReadAll();
         foreach (var row in rows)
         {
-            if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append or TextCorrection.Drop))
+            if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append
+                or TextCorrection.Drop or TextCorrection.Block))
             {
                 throw new FormatException($"{slug} corrections: \"{row.Kind}\" at {row.Own} is not a kind of correction.");
             }
@@ -117,12 +122,15 @@ internal sealed class TextCorrections
         }
 
         var byVerse = _rows
-            .Where(row => row.Kind != TextCorrection.Verse)
+            .Where(row => row.Kind is not (TextCorrection.Verse or TextCorrection.Block))
             .GroupBy(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop
                 ? WordKey.Parse(row.Own, _slug).Verse
                 : VerseKey.Parse(row.Own))
             .ToDictionary(group => group.Key, group => group.ToList());
-        if (byVerse.Count == 0)
+        var blocks = _rows
+            .Where(row => row.Kind == TextCorrection.Block)
+            .ToDictionary(row => VerseKey.Parse(row.Own), row => (Row: row, Copies: Copies(row)));
+        if (byVerse.Count == 0 && blocks.Count == 0)
         {
             return source;
         }
@@ -136,7 +144,7 @@ internal sealed class TextCorrections
                 {
                     Verses =
                     [
-                        .. chapter.Verses.Select(verse =>
+                        .. Blocks(book.CanonicalOrdinal, chapter, blocks, met).Select(verse =>
                         {
                             var key = new VerseKey(book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label);
                             if (!byVerse.TryGetValue(key, out var rows))
@@ -171,7 +179,102 @@ internal sealed class TextCorrections
             }
         }
 
+        foreach (var (key, (row, copies)) in blocks)
+        {
+            if (!met.Contains(key) || !copies.All(met.Contains))
+            {
+                throw Unmatched(row, "the text has no such verse");
+            }
+        }
+
         return source with { Books = books };
+    }
+
+    /// <summary>The verses a <c>block</c> row says the source stores the block under again: in its chapter, after it.</summary>
+    private List<VerseKey> Copies(TextCorrection row)
+    {
+        var own = VerseKey.Parse(row.Own);
+        var copies = (row.Before ?? string.Empty).Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(key => VerseKey.Parse(key)).ToList();
+        if (copies.Count == 0 || row.After is not null
+            || copies.Any(copy => copy.Book != own.Book || copy.Chapter != own.Chapter || copy.ChapterLabel != own.ChapterLabel
+                                  || copy.CompareTo(own) <= 0))
+        {
+            throw Unmatched(row, "a block names in before the later verses of its chapter it is stored under, and nothing in after");
+        }
+
+        return copies;
+    }
+
+    /// <summary>
+    /// The chapter's verses with each block once: the copies, which must read word for word what the block reads,
+    /// go, and the block states every number it was stored under, in order.
+    /// </summary>
+    private IEnumerable<VerseDraft> Blocks(
+        int book,
+        ChapterDraft chapter,
+        Dictionary<VerseKey, (TextCorrection Row, List<VerseKey> Copies)> blocks,
+        HashSet<VerseKey> met)
+    {
+        if (blocks.Count == 0)
+        {
+            return chapter.Verses;
+        }
+
+        VerseKey Key(VerseDraft verse) => new(book, chapter.Number, verse.Number, verse.Label);
+        var verses = chapter.Verses.ToDictionary(Key);
+        var copyOf = new Dictionary<VerseKey, VerseKey>();
+        foreach (var (own, (row, copies)) in blocks.Where(block => block.Key.Book == book && block.Key.Chapter == chapter.Number))
+        {
+            if (!verses.TryGetValue(own, out var block))
+            {
+                continue;
+            }
+
+            foreach (var copy in copies)
+            {
+                if (verses.TryGetValue(copy, out var copied) && !Printed(copied).SequenceEqual(Printed(block)))
+                {
+                    throw Unmatched(row, $"{copy} does not read what {own} reads");
+                }
+
+                copyOf[copy] = own;
+            }
+        }
+
+        return chapter.Verses
+            .Where(verse =>
+            {
+                var key = Key(verse);
+                if (!copyOf.ContainsKey(key))
+                {
+                    return true;
+                }
+
+                met.Add(key);
+                return false;
+            })
+            .Select(verse =>
+            {
+                var key = Key(verse);
+                if (!blocks.TryGetValue(key, out var block))
+                {
+                    return verse;
+                }
+
+                if (verse.Stated.Count > 0)
+                {
+                    throw Unmatched(block.Row, "the source already states the verse's numbers");
+                }
+
+                met.Add(key);
+                return verse with
+                {
+                    Stated = [.. new[] { key }.Concat(block.Copies).Select(at => new StatedNumberDraft(at.Chapter, at.Verse))],
+                };
+            })
+            .ToList();
+
+        static IEnumerable<(string, string)> Printed(VerseDraft verse) => verse.Words.Select(word => (word.Surface, word.Trailer));
     }
 
     /// <summary>
