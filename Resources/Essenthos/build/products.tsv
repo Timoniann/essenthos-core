@@ -18,8 +18,9 @@ texts/{text}/words	build	convert all --parallel 16	{sources} Essenthos/texts/{te
 texts/{text}/verses	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	verse chapter	text
 texts/{text}/notes	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	verse_note chapter_note book_note stated_verse_number	text
 texts/{text}/books	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	book	text
+texts/{text}/titles	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	-	text
 texts/{text}/text	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	text	text
-texts/{text}/frame	export	frame-files (reads the database's text list and the title rows later passes wrote; a build product once it reads products only)	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses	verse_reference	text
+texts/{text}/frame	build	frame-files	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/titles	verse_reference	text
 texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/mapping/*/final	strong_rendering strong_reach strong_reach_method	text
 texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
 texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text

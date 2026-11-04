@@ -95,9 +95,9 @@ internal static partial class ForgeVerbs
         new("frame", "[<text,...>]",
             "Place the texts named, or every text, in the canonical frame: write each one's frame file and fill its verse references from it.",
             Reframe),
-        new("frame-files", "[<text,...>] [--database <name>]",
-            "Write the frame files of the texts named, or of every text, from the verses of the converted text where its products are there, "
-            + "and otherwise of the corpus or of another database on its server, which is only read.",
+        new("frame-files", "[<text,...>] [--from <Resources>] [--force] [--parallel <n>]",
+            "Write the frame files of the texts named, or of every text, whose inputs moved: from each text's verse manifest, words, titles and "
+            + "declaration and the versification data. Reads no database.",
             FrameFiles),
         new("frame-load", "[<text,...>] [--database <name>]",
             "Fill the verse references of every text that has a frame file from the file, in the corpus or in another database on its server.",

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
@@ -38,6 +38,9 @@ internal sealed class ConvertedVerse(VerseKey key, int sequence, List<ConvertedW
 
     /// <summary>The addresses the edition prints for the verse in its own numbering, where it states them. Not written here; the notes hold them.</summary>
     public IReadOnlyList<(int Chapter, int Number)> Stated { get; init; } = [];
+
+    /// <summary>Why the verse holds a psalm's superscription (<see cref="TextTitle"/>), or null.</summary>
+    public string? Title { get; init; }
 }
 
 /// <summary>A text while it is converted: its declaration, books, verses in print order and notes.</summary>
@@ -91,6 +94,9 @@ internal sealed record ConversionOutcome(string Slug, bool Unchanged, int Verses
 /// </summary>
 internal static class TextConverter
 {
+    /// <summary>The book whose chapters open with a superscription, by its canonical ordinal.</summary>
+    private const int Psalms = 19;
+
     public static IReadOnlyList<ITextStage> Stages { get; } = TextStages.All;
 
     /// <summary>Whether a text's stages read another text's products, so that it is converted after the texts that do not.</summary>
@@ -124,6 +130,7 @@ internal static class TextConverter
         !store.NeedsBuild(TextWord.ProductOf(slug), ProductKind.Machine, inputs)
         && !store.NeedsBuild(VerseManifestRow.ProductOf(slug), ProductKind.Machine, inputs)
         && !store.NeedsBuild(TextNote.ProductOf(slug), ProductKind.Machine, inputs)
+        && !store.NeedsBuild(TextTitle.ProductOf(slug), ProductKind.Machine, inputs)
         && !store.NeedsBuild(TextBook.ProductOf(slug), ProductKind.Machine, inputs)
         && !store.NeedsBuild(TextField.ProductOf(slug), ProductKind.Hand, inputs);
 
@@ -227,7 +234,15 @@ internal static class TextConverter
                         });
                     }
 
-                    verses.Add(new ConvertedVerse(key, index + 1, words) { Stated = [.. verse.Stated.Select(s => (s.Chapter, s.Number))] });
+                    verses.Add(new ConvertedVerse(key, index + 1, words)
+                    {
+                        Stated = [.. verse.Stated.Select(s => (s.Chapter, s.Number))],
+                        Title = verse.MarksASuperscription || verse.OpensBeforeItsStatedAddress
+                            ? TextTitle.Marked
+                            : key is { Book: Psalms, ChapterLabel: "", Verse: 1, VerseLabel: "" } && words.Count > 0 && (words[0].Added || words[^1].Added)
+                                ? TextTitle.Opening
+                                : null,
+                    });
                     foreach (var (at, note) in verse.Notes.Index())
                     {
                         notes.Add(new TextNote(key.ToString(), "verse", at + 1, EnumSpelling.Of(note.Kind), note.Content,
@@ -284,6 +299,11 @@ internal static class TextConverter
         using (var writer = store.Create(VerseManifestRow.ProductOf(slug), ProductKind.Machine, VerseManifestRow.Schema, producer, inputs))
         {
             writer.WriteAll(manifest);
+        }
+
+        using (var writer = store.Create(TextTitle.ProductOf(slug), ProductKind.Machine, TextTitle.Schema, producer, inputs))
+        {
+            writer.WriteAll(text.Verses.Where(verse => verse.Title is not null).Select(verse => new TextTitle(verse.Key, verse.Title!)));
         }
 
         using (var writer = store.Create(TextNote.ProductOf(slug), ProductKind.Machine, TextNote.Schema, producer, inputs))
