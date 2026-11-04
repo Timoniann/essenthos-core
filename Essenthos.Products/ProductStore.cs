@@ -44,7 +44,7 @@ public sealed class ProductStore
 
     public IProductFormat MachineFormat { get; }
 
-    public static IProductFormat HandFormat => TsvFormat.Instance;
+    public static IProductFormat HandFormat => TsvFormat.HandEdited;
 
     public InputHasher Hasher => _hasher.Value;
 

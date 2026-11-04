@@ -81,7 +81,7 @@ internal sealed record FinalRow(
 }
 
 /// <summary>A line of a pair's merge report, <c>mapping/&lt;pair&gt;/report</c>.</summary>
-/// <param name="Kind">rows, links, claims, withdrawn, refused, stale, needs, unlinked-verses, unchecked.</param>
+/// <param name="Kind">rows, links, claims, withdrawn, refused, stale, read-same, needs, unlinked-verses, unchecked.</param>
 /// <param name="Method">The method the line is about.</param>
 /// <param name="By">For withdrawn rows, the method that won; for needs, what must run.</param>
 internal sealed record ReportRow(string Kind, string Method, string By, long Rows, string Note)
@@ -98,15 +98,62 @@ internal sealed record ReportRow(string Kind, string Method, string By, long Row
 /// <summary>
 /// The text hash of every verse a pair's method files cite, as it was when they were made,
 /// <c>mapping/&lt;pair&gt;/hashes</c>. The merge compares it with each text's verse manifest: a verse
-/// whose hash moved has rows that may name other words now (DOC-0224 §6.2).
+/// whose hash moved has rows that may name other words now (DOC-0224 §6.2), unless its words still read the
+/// same (<see cref="Fold"/>, <see cref="VerseFold"/>).
 /// </summary>
-internal sealed record VerseHashRow(string Text, VerseKey Own, string Hash)
+/// <param name="Fold">The verse's words folded (<see cref="VerseFold"/>), null in a file written before it was kept.</param>
+internal sealed record VerseHashRow(string Text, VerseKey Own, string Hash, string? Fold = null)
 {
     public static readonly ProductSchema<VerseHashRow> Schema = new ProductSchema<VerseHashRow>()
         .Text("text", r => r.Text)
         .VerseKey("own", r => r.Own)
         .Text("h_text", r => r.Hash)
-        .Reads(row => new VerseHashRow(row.Text(0), VerseKey.Parse(row.Text(1)), row.Text(2)));
+        .OptionalText("h_fold", r => r.Fold)
+        .Reads(row => new VerseHashRow(row.Text(0), VerseKey.Parse(row.Text(1)), row.Text(2), row.TextOrNull(3)));
+
+    /// <summary>The file's rows, whether or not it has the <c>h_fold</c> column.</summary>
+    public static List<VerseHashRow> ReadAll(ProductStore store, string product)
+    {
+        using var reader = store.Open(product);
+        var names = reader.Columns.Select(c => c.Name).ToList();
+        var (text, own, hash, fold) = (names.IndexOf("text"), names.IndexOf("own"), names.IndexOf("h_text"), names.IndexOf("h_fold"));
+        if (text < 0 || own < 0 || hash < 0)
+        {
+            throw new ProductFormatException($"{product}: the columns text, own and h_text are needed; the file has {string.Join(", ", names)}.");
+        }
+
+        return [.. reader.Rows().Select(row => new VerseHashRow(row[text]!, VerseKey.Parse(row[own]!), row[hash]!, fold < 0 ? null : row[fold]))];
+    }
+}
+
+/// <summary>
+/// What a verse's words read once their marks are set aside: each word folded as search folds it
+/// (<see cref="Essenthos.Core.Corpus.WordFolding"/>), lower-cased and without combining marks, the punctuation after it
+/// left out. A verse whose text hash moved but whose fold did not holds the same words in the same places, only
+/// accented, pointed or punctuated otherwise, so a link citing it still names the words it named.
+/// </summary>
+internal static class VerseFold
+{
+    public static string Of(IEnumerable<string> surfaces, string? language)
+    {
+        using var hash = System.Security.Cryptography.IncrementalHash.CreateHash(System.Security.Cryptography.HashAlgorithmName.SHA256);
+        var text = new System.Text.StringBuilder();
+        foreach (var surface in surfaces)
+        {
+            foreach (var letter in Essenthos.Core.Corpus.WordFolding.Fold(surface, language))
+            {
+                if (char.GetUnicodeCategory(letter) != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    text.Append(char.ToLowerInvariant(letter));
+                }
+            }
+
+            text.Append('');
+        }
+
+        hash.AppendData(System.Text.Encoding.UTF8.GetBytes(text.ToString()));
+        return Convert.ToHexStringLower(hash.GetHashAndReset())[..VerseHashes.Length];
+    }
 }
 
 /// <summary>

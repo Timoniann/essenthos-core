@@ -192,6 +192,7 @@ internal static class NameOrigins
 /// <param name="Origin">See <see cref="NameOrigins"/>.</param>
 /// <param name="Through">The base's word it was carried from, with its text (<c>BHSA 1.1:1.3</c>); null when not carried.</param>
 /// <param name="Confidence">The settled name's confidence times the link's, where either has one.</param>
+/// <param name="Link">The mapping method of the link it was carried over (<see cref="Mapping.MappingMethods"/>); null when not carried.</param>
 internal sealed record ProjectedName(
     WordKey Own,
     string Record,
@@ -200,7 +201,8 @@ internal sealed record ProjectedName(
     string? Through,
     string Method,
     double? Confidence,
-    string Source)
+    string Source,
+    string? Link = null)
 {
     public static ProductSchema<ProjectedName> Schema(string text) => new ProductSchema<ProjectedName>()
         .OwnWordKey("own", r => r.Own)
@@ -211,9 +213,10 @@ internal sealed record ProjectedName(
         .Text("method", r => r.Method)
         .OptionalText("confidence", r => NameProducts.Number(r.Confidence))
         .Text("source", r => r.Source)
+        .OptionalText("link", r => r.Link)
         .Reads(row => new ProjectedName(
             WordKey.Parse(row.Text(0), text), row.Text(1), row.Text(2), row.Text(3), row.TextOrNull(4), row.Text(5),
-            NameProducts.Number(row.TextOrNull(6)), row.Text(7)));
+            NameProducts.Number(row.TextOrNull(6)), row.Text(7), row.TextOrNull(8)));
 }
 
 /// <summary>

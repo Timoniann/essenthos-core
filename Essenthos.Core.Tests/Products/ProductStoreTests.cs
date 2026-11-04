@@ -68,6 +68,29 @@ public sealed class ProductStoreTests : IDisposable
     }
 
     [Fact]
+    public void AHandProductAnExporterWroteStaysReadableAfterALineIsAddedByHand()
+    {
+        var store = new ProductStore(_root);
+        using (var writer = store.Create("texts/KJV/corrections", ProductKind.Hand, Schema, "forge export", []))
+        {
+            writer.WriteAll(Words);
+        }
+
+        var path = store.FullPath("texts/KJV/corrections", ProductKind.Hand);
+        File.ReadAllText(path).Should().NotContain("# rows");
+        File.AppendAllText(path, "1.1:1.3\tbeginning\n");
+        using (var reader = store.Open("texts/KJV/corrections", Schema))
+        {
+            reader.ReadAll().Should().HaveCount(3);
+        }
+
+        // A file seeded before hand files stopped counting their rows still says 2.
+        File.WriteAllText(path, "# product    Essenthos/texts/KJV/corrections.tsv\n# producer   forge export\n# rows                  2\nown\tsurface\n1.1:1.1\tIn\n1.1:1.2\tthe\n1.1:1.3\tbeginning\n");
+        using var old = store.Open("texts/KJV/corrections", Schema);
+        old.ReadAll().Should().HaveCount(3);
+    }
+
+    [Fact]
     public void AMachineProductWrittenAsEssxIsFoundReadAndRecordedLikeATsvOne()
     {
         var store = new ProductStore(_root);

@@ -11,12 +11,14 @@ public sealed class TsvProductReader<T> : IProductReader<T>
     private readonly ProductSchema<T>? _schema;
     private readonly Func<TsvRow, T> _read;
     private readonly string[] _names;
+    private readonly bool _checkRows;
     private int _line;
     private bool _rowsTaken;
 
-    private TsvProductReader(string path, StreamReader reader, ProductSchema<T>? schema, Func<TsvRow, T> read)
+    private TsvProductReader(string path, StreamReader reader, ProductSchema<T>? schema, Func<TsvRow, T> read, bool checkRows)
     {
         Path = path;
+        _checkRows = checkRows;
         _reader = reader;
         _schema = schema;
         _read = read;
@@ -53,12 +55,13 @@ public sealed class TsvProductReader<T> : IProductReader<T>
         }
     }
 
-    public static TsvProductReader<T> Open(string path, ProductSchema<T> schema)
+    /// <param name="checkRows">Hold the file to the rows count its header states; false for a file people edit.</param>
+    public static TsvProductReader<T> Open(string path, ProductSchema<T> schema, bool checkRows = true)
     {
         var reader = OpenText(path);
         try
         {
-            return new TsvProductReader<T>(path, reader, schema, row => schema.Read(row));
+            return new TsvProductReader<T>(path, reader, schema, row => schema.Read(row), checkRows);
         }
         catch
         {
@@ -68,12 +71,12 @@ public sealed class TsvProductReader<T> : IProductReader<T>
     }
 
     /// <summary>The untyped reader, which copies each row's fields out since the row is reused.</summary>
-    public static TsvProductReader<string?[]> OpenTexts(string path)
+    public static TsvProductReader<string?[]> OpenTexts(string path, bool checkRows = true)
     {
         var reader = OpenText(path);
         try
         {
-            return new TsvProductReader<string?[]>(path, reader, null, row => row.CopyFields());
+            return new TsvProductReader<string?[]>(path, reader, null, row => row.CopyFields(), checkRows);
         }
         catch
         {
@@ -117,7 +120,7 @@ public sealed class TsvProductReader<T> : IProductReader<T>
             yield return _read(row);
         }
 
-        if (Header?.Rows is { } declared && declared != rows)
+        if (_checkRows && Header?.Rows is { } declared && declared != rows)
         {
             throw new ProductFormatException($"{Path}: the header says {declared} rows and the file holds {rows}.");
         }

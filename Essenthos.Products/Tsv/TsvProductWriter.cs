@@ -14,17 +14,20 @@ public sealed class TsvProductWriter<T> : IProductWriter<T>, IRowSink
     private readonly AtomicFile _file;
     private readonly StreamWriter _writer;
     private readonly long _rowsOffset;
+    private readonly bool _countsRows;
     private int _column;
     private bool _completed;
 
-    public TsvProductWriter(string path, ProductHeader header, ProductSchema<T> schema)
+    /// <param name="countsRows">Write the rows count into the header; false for a file people edit, which then has no rows line.</param>
+    public TsvProductWriter(string path, ProductHeader header, ProductSchema<T> schema, bool countsRows = true)
     {
         _header = header;
+        _countsRows = countsRows;
         _schema = schema;
         _file = AtomicFile.Create(path);
         _writer = new StreamWriter(_file.Stream, Utf8.NoBom, 1 << 16, leaveOpen: true) { NewLine = "\n" };
         _rowsOffset = header.RowsOffset();
-        _writer.Write(header.Format(rows: null));
+        _writer.Write(header.Format(rows: null, withRows: countsRows));
         _writer.Write(string.Join('\t', schema.Columns.Select(column => column.Name)));
         _writer.Write('\n');
     }
@@ -49,12 +52,16 @@ public sealed class TsvProductWriter<T> : IProductWriter<T>, IRowSink
         }
 
         _writer.Flush();
-        var stream = _file.Stream;
-        var end = stream.Position;
-        stream.Position = _rowsOffset;
-        stream.Write(System.Text.Encoding.ASCII.GetBytes(ProductHeader.RowsField(Rows)));
-        stream.Position = end;
-        _header.Rows = Rows;
+        if (_countsRows)
+        {
+            var stream = _file.Stream;
+            var end = stream.Position;
+            stream.Position = _rowsOffset;
+            stream.Write(System.Text.Encoding.ASCII.GetBytes(ProductHeader.RowsField(Rows)));
+            stream.Position = end;
+            _header.Rows = Rows;
+        }
+
         _file.Commit();
         _completed = true;
     }

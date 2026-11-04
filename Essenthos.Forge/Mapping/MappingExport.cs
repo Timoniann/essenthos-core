@@ -31,7 +31,7 @@ internal static class MappingExport
         logger.LogInformation("{Words} word keys read in {Elapsed}", keys.Words, clock.Elapsed);
         var provenances = await Provenances.Load(db, notes: true, cancellationToken);
         logger.LogInformation("Provenances read in {Elapsed}", clock.Elapsed);
-        var hashes = await VerseTextHashes(db, cancellationToken);
+        var hashes = await VerseTextHashes(db, keys, cancellationToken);
         logger.LogInformation("Verse hashes computed in {Elapsed}", clock.Elapsed);
         var seeds = await RulingSeeds(db, keys, store.ResourcesPath, cancellationToken);
 
@@ -60,7 +60,7 @@ internal static class MappingExport
 
     private static Dictionary<string, long> Write(
         ProductStore store, string pair, string fromText, string toText, List<StoredLink> links, WordKeys keys,
-        Provenances provenances, string?[] hashes, string database)
+        Provenances provenances, (string?[] Text, string?[] Fold) hashes, string database)
     {
         var byMethod = new Dictionary<string, List<(int Side, WordKey First, MappingRow Row)>>(StringComparer.Ordinal);
         var verses = new HashSet<int>();
@@ -104,7 +104,7 @@ internal static class MappingExport
                    ProductHeader.DescribeProducer(Producer), [], header => header.Notes.Add(new("exported", $"from {database}"))))
         {
             foreach (var row in verses
-                         .Select(v => new VerseHashRow(keys.Slug(keys.TextOfVerse(v)), keys.VerseKeyOf(v), hashes[v] ?? string.Empty))
+                         .Select(v => new VerseHashRow(keys.Slug(keys.TextOfVerse(v)), keys.VerseKeyOf(v), hashes.Text[v] ?? string.Empty, hashes.Fold[v]))
                          .OrderBy(r => r.Text, StringComparer.Ordinal).ThenBy(r => r.Own))
             {
                 writer.Write(row);
@@ -149,11 +149,32 @@ internal static class MappingExport
         return (string.Join(' ', list.Select(k => k.Own)), list);
     }
 
-    /// <summary>The text hash of every verse (<see cref="VerseHasher"/>), by verse id: what the texts' manifests say once P1 writes them.</summary>
-    private static async Task<string?[]> VerseTextHashes(NpgsqlConnection db, CancellationToken cancellationToken)
+    /// <summary>
+    /// The text hash of every verse (<see cref="VerseHasher"/>), by verse id: what the texts' manifests say once P1 writes them;
+    /// and the verse's fold (<see cref="VerseFold"/>), which tells a later correction of marks from one of words.
+    /// </summary>
+    private static async Task<(string?[] Text, string?[] Fold)> VerseTextHashes(NpgsqlConnection db, WordKeys keys, CancellationToken cancellationToken)
     {
+        var languages = new Dictionary<int, string?>();
+        await using (var command = new NpgsqlCommand("SELECT id, language FROM text", db))
+        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        {
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                languages[reader.GetInt32(0)] = reader.IsDBNull(1) ? null : reader.GetString(1);
+            }
+        }
+
         await using var max = new NpgsqlCommand("SELECT coalesce(max(id), 0) FROM verse", db);
         var hashes = new string?[Convert.ToInt32(await max.ExecuteScalarAsync(cancellationToken)) + 1];
+        var folds = new string?[hashes.Length];
+        var surfaces = new List<string>();
+        void Fold(int verse)
+        {
+            folds[verse] = VerseFold.Of(surfaces, languages.GetValueOrDefault(keys.TextOfVerse(verse)));
+            surfaces.Clear();
+        }
+
         using var hasher = new VerseHasher();
         var current = 0;
         using (var export = db.BeginBinaryExport("COPY (SELECT verse_id, text, trailer FROM word ORDER BY verse_id, position) TO STDOUT (FORMAT BINARY)"))
@@ -166,21 +187,25 @@ internal static class MappingExport
                     if (current != 0)
                     {
                         hashes[current] = hasher.Finish().Text;
+                        Fold(current);
                     }
 
                     current = verse;
                 }
 
-                hasher.Add(new VerseWord(export.Read<string>(NpgsqlDbType.Text), export.Read<string>(NpgsqlDbType.Text)));
+                var surface = export.Read<string>(NpgsqlDbType.Text);
+                surfaces.Add(surface);
+                hasher.Add(new VerseWord(surface, export.Read<string>(NpgsqlDbType.Text)));
             }
         }
 
         if (current != 0)
         {
             hashes[current] = hasher.Finish().Text;
+            Fold(current);
         }
 
-        return hashes;
+        return (hashes, folds);
     }
 
     /// <summary>

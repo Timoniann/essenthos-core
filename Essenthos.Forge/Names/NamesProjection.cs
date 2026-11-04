@@ -17,7 +17,7 @@ namespace Essenthos.Core.Names;
 internal sealed partial class NamesProjection
 {
     /// <summary>Raised with any change to what the projection writes or how; a product made by another version is made again.</summary>
-    public const string Version = "1";
+    public const string Version = "2";
 
     public const string VersionNote = "names-version";
 
@@ -33,6 +33,7 @@ internal sealed partial class NamesProjection
         }
 
         Records = ReadRecords(store);
+        _foreign = new Lazy<ForeignNameRule>(() => new ForeignNameRule(store));
 
         if (!store.Exists(NameProducts.Bases))
         {
@@ -168,7 +169,8 @@ internal sealed partial class NamesProjection
     /// <summary>A word of a text as the rules read it.</summary>
     /// <param name="Sex">The sex a pronoun states, where it states one.</param>
     /// <param name="Verse">The verse's place in the text's print order.</param>
-    internal sealed record Word(WordKey Key, string Surface, bool Cased, bool WrittenAsName, bool Pronoun, bool NeverAName, bool Possessive, string? Sex, int Verse);
+    /// <param name="Form">The form words are counted by: the normalised form, or the bare surface where the text has none.</param>
+    internal sealed record Word(WordKey Key, string Surface, bool Cased, bool WrittenAsName, bool Pronoun, bool NeverAName, bool Possessive, string? Sex, int Verse, string Form);
 
     /// <summary>What a name was not carried for, by (own key, record): the rule that refused it.</summary>
     internal static class Refusals
@@ -179,6 +181,7 @@ internal sealed partial class NamesProjection
         public const string Stray = "stray";
         public const string Floor = "below-the-floor";
         public const string Suppressed = "suppressed";
+        public const string Foreign = "another-record's-name";
     }
 
     /// <param name="Names">The text's names, sorted by key and record.</param>
@@ -193,17 +196,33 @@ internal sealed partial class NamesProjection
         Dictionary<string, List<string>> LinkedTo,
         IReadOnlyList<ProductInput> Inputs);
 
-    private sealed class Candidate(string record, string role, SettledName settled, string through, double link)
+    private sealed class Candidate(string record, string role, SettledName settled, string through, double link, string method)
     {
         public string Record { get; } = record;
         public string Role { get; } = role;
         public SettledName Settled { get; set; } = settled;
         public string Through { get; set; } = through;
         public double Link { get; set; } = link;
+        public string LinkMethod { get; set; } = method;
     }
 
     [GeneratedRegex("['’]s?$", RegexOptions.IgnoreCase)]
     private static partial Regex PossessiveEnding();
+
+    /// <summary>The record files the rules read: kinds and sexes for the pronoun referents, names, name forms and titles for the foreign names.</summary>
+    private Lazy<IReadOnlyList<ProductInput>> RecordInputs => _recordInputs ??= new Lazy<IReadOnlyList<ProductInput>>(() =>
+    {
+        var products = new List<string> { RecordsProduct, "records/names", "records/facts/titles" };
+        var i18n = Path.Combine(Store.ResourcesPath, ProductStore.EssenthosFolder, "records", "i18n");
+        if (Directory.Exists(i18n))
+        {
+            products.AddRange(Directory.GetDirectories(i18n).Select(Path.GetFileName).Order(StringComparer.Ordinal).Select(l => $"records/i18n/{l}/name-forms"));
+        }
+
+        return [.. products.Where(Store.Exists).Select(Store.ProductInput)];
+    });
+
+    private Lazy<IReadOnlyList<ProductInput>>? _recordInputs;
 
     public IReadOnlyList<ProductInput> InputsOf(string text)
     {
@@ -216,6 +235,7 @@ internal sealed partial class NamesProjection
 
         inputs.Add(Store.ProductInput(NameProducts.Bases));
         inputs.Add(Store.ProductInput(TextWord.ProductOf(text)));
+        inputs.AddRange(RecordInputs.Value);
         foreach (var reference in NameBases.Of(text, Bases).Values.SelectMany(b => b).Distinct().Order(StringComparer.Ordinal))
         {
             if (Store.Exists(NameProducts.Settled(reference)))
@@ -344,11 +364,11 @@ internal sealed partial class NamesProjection
                             var through = $"{reference} {their}";
                             if (!candidates.TryGetValue((head, name.Record), out var candidate))
                             {
-                                candidates[(head, name.Record)] = new Candidate(name.Record, name.Role, name, through, link);
+                                candidates[(head, name.Record)] = new Candidate(name.Record, name.Role, name, through, link, row.Method);
                             }
                             else if (Worth(link, name) > Worth(candidate.Link, candidate.Settled))
                             {
-                                (candidate.Settled, candidate.Through, candidate.Link) = (name, through, link);
+                                (candidate.Settled, candidate.Through, candidate.Link, candidate.LinkMethod) = (name, through, link, row.Method);
                             }
                         }
                     }
@@ -374,10 +394,20 @@ internal sealed partial class NamesProjection
             refused[key] = Refusals.Stray;
         }
 
+        if (Rules.ForeignNames)
+        {
+            foreach (var key in Foreign(candidates, words).ToList())
+            {
+                candidates.Remove(key);
+                refused[key] = Refusals.Foreign;
+            }
+        }
+
         var names = candidates.Select(c => new ProjectedName(
                 WordKey.Parse(c.Key.Own, text), c.Key.Record, c.Value.Role, NameOrigins.Projected, c.Value.Through, c.Value.Settled.Method,
                 c.Value.Settled.Confidence is null && c.Value.Link >= 1.0 ? null : (c.Value.Settled.Confidence ?? 1.0) * c.Value.Link,
-                c.Value.Settled.Source))
+                c.Value.Settled.Source,
+                c.Value.LinkMethod))
             .ToList();
         Override(text, names, refused);
         names.Sort(Order);
@@ -517,6 +547,103 @@ internal sealed partial class NamesProjection
         }
     }
 
+    private readonly Lazy<ForeignNameRule> _foreign;
+
+    private readonly ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<string, (string Surface, string? Strong)>>> _baseWords = new(StringComparer.Ordinal);
+
+    private readonly ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<string, List<string>>>> _namedByVerse = new(StringComparer.Ordinal);
+
+    private IReadOnlyDictionary<string, (string Surface, string? Strong)> BaseWords(string reference) =>
+        _baseWords.GetOrAdd(reference, r => new Lazy<IReadOnlyDictionary<string, (string, string?)>>(() =>
+        {
+            using var reader = Store.Open(TextWord.ProductOf(r), TextWord.Schema(r));
+            return reader.Rows().ToDictionary(w => w.Key.Own, w => (w.Surface, w.Strong), StringComparer.Ordinal);
+        })).Value;
+
+    /// <summary>The records a reference text's settled names hold in each verse.</summary>
+    private IReadOnlyDictionary<string, List<string>> NamedByVerse(string reference) =>
+        _namedByVerse.GetOrAdd(reference, r => new Lazy<IReadOnlyDictionary<string, List<string>>>(() =>
+            SettledOf(r).Values.SelectMany(list => list).GroupBy(n => n.Own.Verse.ToString())
+                .ToDictionary(g => g.Key, g => g.Select(n => n.Record).Distinct().ToList(), StringComparer.Ordinal))).Value;
+
+    /// <summary>The names the foreign-names rule refuses (<see cref="ForeignNameRule"/>).</summary>
+    private IEnumerable<(string Own, string Record)> Foreign(Dictionary<(string Own, string Record), Candidate> candidates, IReadOnlyDictionary<string, Word> words)
+    {
+        var rule = _foreign.Value;
+        var byForm = new Dictionary<string, List<(int Verse, string Record)>>(StringComparer.Ordinal);
+        var byVerse = new Dictionary<int, HashSet<string>>();
+        foreach (var key in candidates.Keys)
+        {
+            if (!words.TryGetValue(key.Own, out var word))
+            {
+                continue;
+            }
+
+            if (!byForm.TryGetValue(word.Form, out var list))
+            {
+                byForm[word.Form] = list = [];
+            }
+
+            list.Add((word.Verse, key.Record));
+            if (!byVerse.TryGetValue(word.Verse, out var named))
+            {
+                byVerse[word.Verse] = named = new HashSet<string>(StringComparer.Ordinal);
+            }
+
+            named.Add(key.Record);
+        }
+
+        var counts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+        var kinCounts = new Dictionary<(string Form, string Record), int>();
+        foreach (var (key, candidate) in candidates)
+        {
+            if (!words.TryGetValue(key.Own, out var word) || !word.WrittenAsName
+                || !Records.TryGetValue(key.Record, out var record) || record.Kind != "person"
+                || (candidate.Settled.Confidence is null && candidate.Link >= 1.0))
+            {
+                continue;
+            }
+
+            var space = candidate.Through.IndexOf(' ');
+            var (reference, baseOwn) = (candidate.Through[..space], candidate.Through[(space + 1)..]);
+            if (!BaseWords(reference).TryGetValue(baseOwn, out var seed)
+                || !rule.IsOwnName(key.Record, seed.Surface, seed.Strong)
+                || rule.IsSpelling(key.Record, word.Surface, seed.Surface))
+            {
+                continue;
+            }
+
+            var form = byForm[word.Form];
+            if (!counts.TryGetValue(word.Form, out var tally))
+            {
+                counts[word.Form] = tally = form.GroupBy(f => f.Record, StringComparer.Ordinal).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
+            }
+
+            int Kin(string one) =>
+                kinCounts.TryGetValue((word.Form, one), out var n) ? n : kinCounts[(word.Form, one)] = tally.Where(t => rule.Kin(one, t.Key)).Sum(t => t.Value);
+            var ours = Kin(key.Record);
+            var baseVerse = baseOwn[..baseOwn.LastIndexOf('.')];
+            var atBase = NamedByVerse(reference).GetValueOrDefault(baseVerse) ?? [];
+            foreach (var other in tally.Keys.Where(o => !rule.Kin(key.Record, o)))
+            {
+                var theirs = Kin(other);
+                if (theirs < Loading.Encyclopedia.ForeignNames.Least || theirs < Loading.Encyclopedia.ForeignNames.Outnumbering * ours || !atBase.Any(named => rule.Kin(other, named)))
+                {
+                    continue;
+                }
+
+                var elsewhere = form.Where(f => rule.Kin(key.Record, f.Record)
+                                                && !byVerse[f.Verse].Any(named => rule.Kin(other, named)))
+                    .Select(f => f.Verse).Distinct().Take(Loading.Encyclopedia.ForeignNames.Elsewhere).Count();
+                if (elsewhere < Loading.Encyclopedia.ForeignNames.Elsewhere)
+                {
+                    yield return key;
+                    break;
+                }
+            }
+        }
+    }
+
     private Dictionary<string, Word> ReadWords(string text, string language)
     {
         var words = new Dictionary<string, Word>(StringComparer.Ordinal);
@@ -552,7 +679,8 @@ internal sealed partial class NamesProjection
                 Rules.IsNeverAName(language, bare, language == "hbo" ? NameRules.PartOfSpeech(word.Morphology) : null, word.Strong, word.Normalised),
                 PossessiveEnding().IsMatch(word.Surface),
                 Rules.SexOf(language, bare),
-                verse);
+                verse,
+                word.Normalised ?? bare);
             previous = word;
         }
 
@@ -597,6 +725,31 @@ internal sealed partial class NamesProjection
                     throw new InvalidDataException($"names/overrides/{text}: {row.Action} is not add, suppress or differs.");
             }
         }
+    }
+
+    /// <summary>
+    /// A text's own names as the spellings index reads them (<see cref="ExportedName"/>), from <c>names/projected</c>: the
+    /// columns <c>names-export</c> computes in SQL from word_entity, computed the same way. A name is a guess where an aligner's
+    /// link carried it; firm where a person or a source settled it, or it is sure enough; spellable where its word is neither
+    /// a pronoun nor a word its language never names anybody with.
+    /// </summary>
+    public List<ExportedName> IndexNames(string text)
+    {
+        var words = WordsOf(text);
+        var names = new List<ExportedName>();
+        using var reader = Store.Open(NameProducts.Projected(text), ProjectedName.Schema(text));
+        foreach (var name in reader.Rows().Where(n => NameOrigins.IsOwn(n.Origin)))
+        {
+            var guessed = name.Link is not null && MappingMethods.DatabaseMethod(name.Link) == Database.Entities.Enums.LinkMethod.Aligner;
+            var thing = Records.TryGetValue(name.Record, out var record) && record.Kind is "object" or "observance" or "title";
+            var firm = guessed
+                ? name.Confidence >= Loading.Encyclopedia.SearchSpellings.HighConfidence
+                : name.Method is "manual" or "stated-by-source" || name.Confidence is null || name.Confidence >= Loading.Encyclopedia.SearchSpellings.HighConfidence;
+            var spellable = words.TryGetValue(name.Own.Own, out var word) && !word.NeverAName && !word.Pronoun;
+            names.Add(new ExportedName(name.Own, name.Record, guessed ? name.Confidence : null, thing, firm, spellable));
+        }
+
+        return names;
     }
 
     /// <summary>One text's projection written, or found current.</summary>

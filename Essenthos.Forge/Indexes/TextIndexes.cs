@@ -27,7 +27,7 @@ internal sealed class IndexContext
     /// Raised with any change to what an index holds or how it is counted; an index made by another version is made again
     /// whatever its inputs say.
     /// </summary>
-    public const string Version = "1";
+    public const string Version = "2";
 
     public const string VersionNote = "index-version";
 
@@ -43,6 +43,36 @@ internal sealed class IndexContext
             .Select(slug => Declared(store, slug))
             .ToDictionary(text => text.Slug, StringComparer.Ordinal);
         Pairs = [.. MappingProducts.Pairs(store).Where(pair => store.Exists(MappingProducts.Of(pair, MappingProducts.Final)))];
+        _projection = new Lazy<Names.NamesProjection?>(() =>
+            store.Exists(Names.NameProducts.Rules) && store.Exists(Names.NameProducts.Bases) ? new Names.NamesProjection(store) : null);
+    }
+
+    private readonly Lazy<Names.NamesProjection?> _projection;
+
+    /// <summary>
+    /// The product a text's names are read from: the names layer's projection where it has been made, else the database's
+    /// names as <c>names-export</c> wrote them; null where neither exists.
+    /// </summary>
+    public string? NamesProduct(string slug) =>
+        _projection.Value is not null && Store.Exists(Names.NameProducts.Projected(slug)) ? Names.NameProducts.Projected(slug)
+        : Store.Exists(IndexProducts.ExportedNames(slug)) ? IndexProducts.ExportedNames(slug)
+        : null;
+
+    /// <summary>What the names of a text's product depend on besides the product: the rules and records the projection's columns are read with.</summary>
+    public IEnumerable<string> NamesInputs(string slug) =>
+        NamesProduct(slug) == Names.NameProducts.Projected(slug) ? [Names.NameProducts.Rules, Names.NamesProjection.RecordsProduct] : [];
+
+    /// <summary>A text's names as the indexes read them, from <see cref="NamesProduct"/>.</summary>
+    public List<ExportedName> ExportedNamesOf(string slug)
+    {
+        var product = NamesProduct(slug) ?? throw new FileNotFoundException($"Neither names/projected/{slug} nor names/exported/{slug} has been made.");
+        if (product == Names.NameProducts.Projected(slug))
+        {
+            return _projection.Value!.IndexNames(slug);
+        }
+
+        using var reader = Store.Open(product, ExportedName.Schema(slug));
+        return reader.ReadAll();
     }
 
     public ProductStore Store { get; }
@@ -72,18 +102,17 @@ internal sealed class IndexContext
     public Edition EditionOf(string slug) =>
         _editions.GetOrAdd(slug, s => new Lazy<Edition>(() => Edition.Read(Store, s))).Value;
 
-    /// <summary>The records each word of a text is named as, by own key, from the exported names; empty where there are none.</summary>
+    /// <summary>The records each word of a text is named as, by own key, from its names (<see cref="NamesProduct"/>); empty where there are none.</summary>
     public IReadOnlyDictionary<string, List<string>> NamesOf(string slug) =>
         _names.GetOrAdd(slug, s => new Lazy<IReadOnlyDictionary<string, List<string>>>(() =>
         {
             var names = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-            if (!Store.Exists(IndexProducts.ExportedNames(s)))
+            if (NamesProduct(s) is null)
             {
                 return names;
             }
 
-            using var reader = Store.Open(IndexProducts.ExportedNames(s), ExportedName.Schema(s));
-            foreach (var row in reader.Rows())
+            foreach (var row in ExportedNamesOf(s))
             {
                 var own = row.Own.Own;
                 if (!names.TryGetValue(own, out var records))
@@ -462,12 +491,13 @@ internal static class TextIndexes
     /// Every word of the text that names a record and can spell a name, with what the spellings are counted by: its letters,
     /// the lemma of a word of an original a link pairs it with that names the same record (read through the finals of the
     /// text's pairs with the originals, as <c>EntityRenderingLoader</c> reads it through the links), and how many words of the
-    /// text print its form. The names come from <c>names/exported</c> until the names layer writes them from files.
+    /// text print its form. The names are the names layer's projection (<c>names/projected</c>), or the database's
+    /// <c>names/exported</c> where no projection has been made.
     /// </summary>
     public static IndexOutcome? Spellings(IndexContext context, string text, bool force)
     {
         var clock = Stopwatch.StartNew();
-        if (!context.Store.Exists(IndexProducts.ExportedNames(text)))
+        if (context.NamesProduct(text) is not { } namesProduct)
         {
             return null;
         }
@@ -478,19 +508,20 @@ internal static class TextIndexes
         var pairs = original
             ? []
             : context.PairsOf(text)
-                .Where(p => Renderings.Original.Contains(context.Texts[p.Other].Language) && context.Store.Exists(IndexProducts.ExportedNames(p.Other)))
+                .Where(p => Renderings.Original.Contains(context.Texts[p.Other].Language) && context.NamesProduct(p.Other) is not null)
                 .ToList();
         var inputs = new List<ProductInput>
         {
             Product(context, TextField.ProductOf(text)),
             Product(context, TextWord.ProductOf(text)),
-            Product(context, IndexProducts.ExportedNames(text)),
+            Product(context, namesProduct),
         };
+        inputs.AddRange(context.NamesInputs(text).Select(p => Product(context, p)));
         foreach (var other in pairs.Select(p => p.Other).Distinct().Order(StringComparer.Ordinal))
         {
             inputs.Add(Product(context, TextField.ProductOf(other)));
             inputs.Add(Product(context, TextWord.ProductOf(other)));
-            inputs.Add(Product(context, IndexProducts.ExportedNames(other)));
+            inputs.Add(Product(context, context.NamesProduct(other)!));
         }
 
         inputs.AddRange(pairs.Select(p => Product(context, MappingProducts.Of(p.Pair, MappingProducts.Final))));
@@ -499,11 +530,7 @@ internal static class TextIndexes
             return new IndexOutcome(text, IndexProducts.Spellings, false, 0, clock.Elapsed);
         }
 
-        var names = new List<ExportedName>();
-        using (var reader = context.Store.Open(IndexProducts.ExportedNames(text), ExportedName.Schema(text)))
-        {
-            names.AddRange(reader.Rows());
-        }
+        var names = context.ExportedNamesOf(text);
 
         var named = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         foreach (var name in names.Where(n => n.Spellable))
@@ -575,7 +602,9 @@ internal static class TextIndexes
         long rows;
         var missing = 0;
         using (var writer = Create(context, product, SpellingRow.Schema(text), inputs,
-                   ("names", "exported from the database (names/exported) until the names layer writes them from files")))
+                   ("names", namesProduct == IndexProducts.ExportedNames(text)
+                       ? "exported from the database (names/exported): no projection has been made"
+                       : "the names layer's projection (names/projected)")))
         {
             foreach (var name in names.Where(n => n.Spellable).OrderBy(n => n.Own).ThenBy(n => n.Record, StringComparer.Ordinal))
             {

@@ -198,6 +198,37 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
+    public void A_verse_whose_accents_alone_changed_keeps_its_rows_and_one_whose_words_changed_does_not()
+    {
+        var (accented, joined) = (VerseKey.Parse("1.12:6"), VerseKey.Parse("1.38:24"));
+        var rows = new[]
+        {
+            Row(MappingMethods.Composed, "1.12:6.10", "1.12:6.12", confidence: 0.98, source: Machine, id: 1),
+            Row(MappingMethods.Composed, "1.38:24.11", "1.38:24.11", confidence: 0.98, source: Machine, id: 2),
+        };
+        var then = new Dictionary<VerseKey, string[]> { [accented] = ["до", "дубрави", "Море"], [joined] = ["λε", "γοντες", "Θαμάρ"] };
+        var now = new Dictionary<VerseKey, string[]> { [accented] = ["до", "дубрави", "Море́"], [joined] = ["λέγοντες", "Θαμάρ"] };
+        var output = MappingMerge.Merge(new MappingMerge.Input(
+            "KJV-BHSA", "KJV", "BHSA",
+            rows.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()),
+            [],
+            new Dictionary<(string, VerseKey), string> { [("KJV", accented)] = "aaaa", [("KJV", joined)] = "bbbb" },
+            new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>
+            {
+                ["KJV"] = new Dictionary<VerseKey, string> { [accented] = "cccc", [joined] = "dddd" },
+                ["BHSA"] = null,
+            },
+            new Dictionary<string, long>(),
+            PairOrdinals.Base + PairOrdinals.Range,
+            then.ToDictionary(v => ("KJV", v.Key), v => VerseFold.Of(v.Value, v.Key == joined ? "grc" : "ukr")),
+            (text, verse) => VerseFold.Of(now[verse], verse == joined ? "grc" : "ukr")));
+
+        output.Final.Should().ContainSingle().Which.Id.Should().Be(1);
+        output.Methods[MappingMethods.Composed].Select(r => r.Status).Should().Equal(null, MappingStatus.Stale);
+        output.Report.Should().Contain(r => r.Kind == "read-same" && r.Rows == 1);
+    }
+
+    [Fact]
     public void A_link_keeps_the_id_an_earlier_merge_gave_it_and_the_output_is_deterministic()
     {
         MappingRow[] rows =

@@ -1,0 +1,165 @@
+# product    Essenthos/names/bases.tsv
+# inputs     
+# producer   forge names-project   (Essenthos.Forge 1.0.0+f4f4a9684e30-dirty)
+# seeded     from the relations between texts and the mapping's pairs; kept by hand from here on
+text	books	base	why
+ALEX	1	GRCBRENT	the reference text in grc
+ALEX	23	GRCBRENT	the reference text in grc
+ALEX	40-66	NESTLE1904	the reference text in grc
+ALEX	73-74	GRCBRENT	the reference text in grc
+ALEX	80-81	GRCBRENT	the reference text in grc
+ALEX	1	BHSA	for the words GRCBRENT does not link
+ALEX	23	BHSA	for the words GRCBRENT does not link
+ALM1911	1-39	BHSA	the default for the book
+ALM1911	40-66	NESTLE1904	the default for the book
+ASV	1-39	BHSA	revised-from KJV, which is same-family-as BHSA or the other way
+ASV	40-66	NESTLE1904	the default for the book
+AVD1865	1-39	BHSA	the default for the book
+AVD1865	40-66	NESTLE1904	the default for the book
+BBE	1-39	BHSA	same-family-as BHSA
+BBE	40-66	NESTLE1904	the default for the book
+BRENTON	1-39	GRCBRENT	translated-from GRCBRENT
+BRENTON	67-68	GRCBRENT	the default for the book
+BRENTON	70-81	GRCBRENT	the default for the book
+BRENTON	1-39	BHSA	for the words GRCBRENT does not link
+BSB	1-39	BHSA	the default for the book
+BSB	40-66	NESTLE1904	the default for the book
+CSLELIZABETH	1-39	BHSA	the default for the book
+CSLELIZABETH	40-66	NESTLE1904	the default for the book
+CUV	1-39	BHSA	the default for the book
+CUV	40-66	NESTLE1904	the default for the book
+CUVS	1-39	BHSA	the default for the book
+CUVS	40-66	NESTLE1904	the default for the book
+DRA	1-67	VULGCLEM	translated-from VULGCLEM
+DRA	70-75	VULGCLEM	translated-from VULGCLEM
+DRA	77-78	VULGCLEM	translated-from VULGCLEM
+DRA	1-39	BHSA	for the words VULGCLEM does not link
+DRA	40-66	NESTLE1904	for the words VULGCLEM does not link
+ELB1905	1-39	BHSA	the default for the book
+ELB1905	40-66	NESTLE1904	the default for the book
+GNV1599	1-39	BHSA	same-family-as BHSA
+GNV1599	40-66	NESTLE1904	the default for the book
+IRV2019	1-39	BHSA	the default for the book
+IRV2019	40-66	NESTLE1904	the default for the book
+IRVASM	1-39	BHSA	the default for the book
+IRVASM	40-66	NESTLE1904	the default for the book
+IRVBEN	1-39	BHSA	the default for the book
+IRVBEN	40-66	NESTLE1904	the default for the book
+IRVGUJ	40-66	NESTLE1904	the default for the book
+IRVKAN	40-66	NESTLE1904	the default for the book
+IRVMAL	1-39	BHSA	the default for the book
+IRVMAL	40-66	NESTLE1904	the default for the book
+IRVMAR	40-66	NESTLE1904	the default for the book
+IRVPAN	40-66	NESTLE1904	the default for the book
+IRVTAM	1-39	BHSA	the default for the book
+IRVTAM	40-66	NESTLE1904	the default for the book
+IRVTEL	40-66	NESTLE1904	the default for the book
+IRVURD	1-39	BHSA	the default for the book
+IRVURD	40-66	NESTLE1904	the default for the book
+JND2024	1-39	BHSA	the default for the book
+JND2024	40-66	NESTLE1904	the default for the book
+JPS1917	1-39	BHSA	same-family-as BHSA
+KJV	1-39	BHSA	same-family-as BHSA
+KJV	40-66	TR1894	translated-from TR1894
+KJV	67-68	GRCBRENT	the default for the book
+KJV	70-75	GRCBRENT	the default for the book
+KJV	77-79	GRCBRENT	the default for the book
+KJV	93	GRCBRENT	the default for the book
+KJV	1-39	GRCBRENT	for the words BHSA does not link
+KJV	40-66	NESTLE1904	for the words TR1894 does not link
+KRV	1-39	BHSA	the default for the book
+KRV	40-66	NESTLE1904	the default for the book
+LSG1910	1-39	BHSA	same-family-as BHSA
+LSG1910	40-66	NESTLE1904	the default for the book
+LSG1910	40-66	TR1894	for the words NESTLE1904 does not link
+LUTH1912	1-39	BHSA	same-family-as BHSA
+LUTH1912	40-66	TR1894	same-family-as TR1550, which is same-family-as TR1894 or the other way
+LUTH1912	40-66	NESTLE1904	for the words TR1894 does not link
+NPU2022	19	BHSA	the default for the book
+NPU2022	40-66	NESTLE1904	the default for the book
+OHCB	1-39	BHSA	the default for the book
+OHCB	40-66	NESTLE1904	the default for the book
+OTTLEY	23	BHSA	the default for the book
+RLT2018	1-39	BHSA	the default for the book
+RLT2018	40-61	NESTLE1904	the default for the book
+RLT2018	62	TR1894	NESTLE1904 has no links of it in the book; the reference text with the most
+RLT2018	63-66	NESTLE1904	the default for the book
+RLT2018	40-61	TR1894	for the words NESTLE1904 does not link
+RLT2018	63-66	TR1894	for the words NESTLE1904 does not link
+RP2018	40-66	NESTLE1904	the reference text in grc
+RP2018	40-66	TR1894	for the words NESTLE1904 does not link
+RP2018	40-66	GEEZ81	for the words NESTLE1904 does not link
+RUSV	1-39	BHSA	same-family-as BHSA
+RUSV	40-66	NESTLE1904	the default for the book
+RUSV	67-68	GRCBRENT	the default for the book
+RUSV	70-80	GRCBRENT	the default for the book
+RUSV	17	GRCBRENT	for the words BHSA does not link
+RUSV	40-66	TR1894	for the words NESTLE1904 does not link
+RV1909	1-39	BHSA	the default for the book
+RV1909	40-66	TR1894	same-family-as TR1550, which is same-family-as TR1894 or the other way
+RV1909	40-66	NESTLE1904	for the words TR1894 does not link
+SBLGNT	40-66	NESTLE1904	the reference text in grc
+SBLGNT	40-66	TR1894	for the words NESTLE1904 does not link
+SCH1951	1-39	BHSA	the default for the book
+SCH1951	40-66	NESTLE1904	the default for the book
+SCH1951	40-66	TR1894	for the words NESTLE1904 does not link
+SIN	40-66	NESTLE1904	the reference text in grc
+SWETE	1-20	GRCBRENT	GRCBRENT is same-family-as SWETE
+SWETE	22-39	GRCBRENT	GRCBRENT is same-family-as SWETE
+SWETE	67-68	GRCBRENT	GRCBRENT is same-family-as SWETE
+SWETE	70-78	GRCBRENT	GRCBRENT is same-family-as SWETE
+SWETE	80-81	GRCBRENT	GRCBRENT is same-family-as SWETE
+SWETE	1-20	BHSA	for the words GRCBRENT does not link
+SWETE	22-39	BHSA	for the words GRCBRENT does not link
+SWETE	67-68	GEEZ81	for the words GRCBRENT does not link
+SWETE	70-72	GEEZ81	for the words GRCBRENT does not link
+SWETE	75	GEEZ81	for the words GRCBRENT does not link
+SWETE	1-16	GEEZ81	for the words GRCBRENT does not link
+SWETE	18-20	GEEZ81	for the words GRCBRENT does not link
+SWETE	22-39	GEEZ81	for the words GRCBRENT does not link
+SWETEOG	27	GRCBRENT	the reference text in grc
+SWETEOG	77-78	GRCBRENT	the reference text in grc
+SWETEOG	27	BHSA	for the words GRCBRENT does not link
+TISCH	40-66	NESTLE1904	the reference text in grc
+TISCH	40-66	TR1894	for the words NESTLE1904 does not link
+TR1550	40-66	TR1894	TR1894 is same-family-as TR1550
+TR1550	40-48	NESTLE1904	for the words TR1894 does not link
+TR1550	50	NESTLE1904	for the words TR1894 does not link
+TR1550	54	NESTLE1904	for the words TR1894 does not link
+TR1550	58-62	NESTLE1904	for the words TR1894 does not link
+TR1550	65-66	NESTLE1904	for the words TR1894 does not link
+TYN1534	40-66	NESTLE1904	the default for the book
+UBIO	1-39	BHSA	same-family-as BHSA
+UBIO	40-66	NESTLE1904	the default for the book
+UBIO	40-66	TR1894	for the words NESTLE1904 does not link
+UKR1871	1-39	BHSA	the default for the book
+UKR1871	40-66	NESTLE1904	the default for the book
+ULT	1-3	BHSA	the default for the book
+ULT	5-12	BHSA	the default for the book
+ULT	15-20	BHSA	the default for the book
+ULT	22	BHSA	the default for the book
+ULT	25	BHSA	the default for the book
+ULT	28-29	BHSA	the default for the book
+ULT	31-37	BHSA	the default for the book
+ULT	39	BHSA	the default for the book
+ULT	40-66	NESTLE1904	the default for the book
+UST	1-3	BHSA	the default for the book
+UST	5-12	BHSA	the default for the book
+UST	15-20	BHSA	the default for the book
+UST	22	BHSA	the default for the book
+UST	25	BHSA	the default for the book
+UST	27-39	BHSA	the default for the book
+UST	40-66	NESTLE1904	the default for the book
+VAT	40-53	NESTLE1904	the reference text in grc
+VAT	58-65	NESTLE1904	the reference text in grc
+VIGLT	8	BHSA	the default for the book
+VIGLT	40-66	NESTLE1904	the default for the book
+WEB	1-39	BHSA	the default for the book
+WEB	40-66	NESTLE1904	the default for the book
+WEB	67-68	GRCBRENT	the default for the book
+WEB	70-75	GRCBRENT	the default for the book
+WEB	79-81	GRCBRENT	the default for the book
+WH1881	40-66	NESTLE1904	the reference text in grc
+WH1881	40-66	TR1894	for the words NESTLE1904 does not link
+YLT	1-39	BHSA	the default for the book
+YLT	40-66	NESTLE1904	the default for the book
