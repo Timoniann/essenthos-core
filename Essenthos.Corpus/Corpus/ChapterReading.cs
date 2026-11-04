@@ -276,18 +276,20 @@ internal static class ChapterReading
                                || db.LinkWords.Any(other => other.LinkId == side.LinkId
                                                             && other.Side != side.Side
                                                             && other.Word!.Text!.Kind != TextKind.Translation)))
-            .Select(side => new { side.WordId, side.Link!.Method, side.Link!.Confidence, side.Link.Relation })
+            .Select(side => new { side.WordId, side.LinkId, side.Link!.Method, side.Link!.Confidence, side.Link.Relation })
             .ToListAsync(cancellationToken);
+
+        // Two links equally sure are told apart by the method the merge ranks higher, then by the link's id, which is derived
+        // from its words: the database's row order would let the same links describe a word differently from load to load.
+        evidence = [.. evidence
+            .OrderByDescending(row => row.Confidence is null)
+            .ThenByDescending(row => row.Confidence)
+            .ThenByDescending(row => LinkMethodPrecedence.Of(row.Method))
+            .ThenBy(row => row.LinkId)];
 
         var strongest = evidence
             .GroupBy(row => row.WordId)
-            .ToDictionary(
-                group => group.Key,
-                group => group
-                    .OrderByDescending(row => row.Confidence is null)
-                    .ThenByDescending(row => row.Confidence)
-                    .Select(row => Provenance(row.Method, row.Confidence))
-                    .First());
+            .ToDictionary(group => group.Key, group => group.Select(row => Provenance(row.Method, row.Confidence)).First());
 
         // A word whose absence is stated is not a word nothing was found for, and a reader has to
         // be able to tell them apart — that difference is what the schema was built to hold and
@@ -368,7 +370,7 @@ internal static class ChapterReading
             .Where(proposal => ids.Contains(proposal.WordId))
             .Select(proposal => new
             {
-                proposal.WordId, proposal.Number, proposal.Method, proposal.Confidence,
+                proposal.WordId, proposal.Number, proposal.Method, proposal.Confidence, proposal.Source,
             })
             .ToListAsync(cancellationToken);
 
@@ -380,6 +382,8 @@ internal static class ChapterReading
                 group => group
                     .OrderByDescending(proposal => proposal.Confidence is null)
                     .ThenByDescending(proposal => proposal.Confidence)
+                    .ThenByDescending(proposal => LinkMethodPrecedence.Of(proposal.Method))
+                    .ThenBy(proposal => proposal.Source, StringComparer.Ordinal)
                     .Select(proposal => new StrongCandidateResponse(
                         proposal.Number, EnumSpelling.Of(proposal.Method), proposal.Confidence))
                     .First());
