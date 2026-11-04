@@ -125,7 +125,8 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         bool held,
         string? output,
         bool apply,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        Func<string, string?>? targetLemmas = null)
     {
         var started = Stopwatch.StartNew();
         var from = await db.Texts.AsNoTracking().SingleAsync(text => text.Slug == fromSlug, cancellationToken);
@@ -143,7 +144,7 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         try
         {
             var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-            var originals = await Originals(connection, to.Id, families, cancellationToken);
+            var originals = await Originals(connection, to.Id, families, cancellationToken, targetLemmas);
             var named = names is null
                 ? await Annotated(connection, from.Id, families, cancellationToken)
                 : await Read(connection, from.Id, Path.Combine(names, $"{fromSlug}-words.tsv"), slugs, families, cancellationToken);
@@ -597,7 +598,8 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         NpgsqlConnection connection,
         int textId,
         NameFamilies families,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        Func<string, string?>? lemmas = null)
     {
         var rows = new List<(long Word, int Entity, EntityKind Kind, bool Proper)>();
         await using (var command = new NpgsqlCommand(
@@ -608,7 +610,8 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
                                 AND NOT EXISTS (
                                     SELECT 1 FROM word o
                                     WHERE o.verse_id = w.verse_id AND abs(o.position - w.position) = 1
-                                      AND ((w.lemma = @adonai AND o.lemma = @yhwh) OR (w.lemma = @yhwh AND o.lemma = @adonai)))
+                                      AND ((w.lemma = @adonai AND o.lemma = @yhwh) OR (w.lemma = @yhwh AND o.lemma = @adonai))),
+                                w.lemma IS NULL, w.text
                          FROM word_entity we
                          JOIN word w ON w.id = we.word_id
                          JOIN entity e ON e.id = we.entity_id
@@ -623,8 +626,13 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
-                rows.Add((reader.GetInt64(0), reader.GetInt32(1), EnumSpelling.ToEntityKind(reader.GetString(2)),
-                    !reader.IsDBNull(3) && reader.GetBoolean(3)));
+                var proper = !reader.IsDBNull(3) && reader.GetBoolean(3);
+                if (!proper && lemmas is not null && reader.GetBoolean(4) && lemmas(reader.GetString(5)) is { Length: > 0 } lemma)
+                {
+                    proper = char.IsUpper(lemma[0]);
+                }
+
+                rows.Add((reader.GetInt64(0), reader.GetInt32(1), EnumSpelling.ToEntityKind(reader.GetString(2)), proper));
             }
         }
 

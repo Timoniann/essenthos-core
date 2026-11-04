@@ -613,13 +613,34 @@ internal static partial class ForgeVerbs
             new NamePolicy(alone, Even: !args.Contains("--uneven"), Repeated: !args.Contains("--single")),
             args.Contains("--held"),
             Option(args, "--out"),
-            args.Contains("--apply")));
+            args.Contains("--apply"),
+            targetLemmas: TargetLemmas(forge, args, Identifier(namesTo))));
         if (args.Contains("--apply"))
         {
             await forge.Replay(namesScope, (from, to) => Between(from, to, Identifier(namesFrom), Identifier(namesTo)));
         }
 
         return 0;
+    }
+
+    /// <summary>
+    /// <c>--target-lemmas glaux</c>: the Septuagint's words with no lemma read with GLAUx's leading one, whatever share
+    /// of its evidence agrees, so every word whose form GLAUx knows has a lemma. A measurement; refused with --apply.
+    /// </summary>
+    private static Func<string, string?>? TargetLemmas(ForgeRun forge, string[] args, string target)
+    {
+        if (Option(args, "--target-lemmas") is not { } source)
+        {
+            return null;
+        }
+
+        if (source != "glaux" || target != Glaux.GlauxLemmaLoader.Septuagint || args.Contains("--apply"))
+        {
+            throw new ArgumentException(
+                $"--target-lemmas takes glaux, for {Glaux.GlauxLemmaLoader.Septuagint} as the target, and only without --apply.");
+        }
+
+        return Glaux.GlauxLemmaLoader.Leading(Path.Combine(forge.Resources, "Glaux", "xml"));
     }
 
     /// <summary>
