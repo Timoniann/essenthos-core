@@ -9,8 +9,8 @@ namespace Essenthos.Core.Conversion;
 /// The King James's Strong numbers and the words its translators supplied, from the editions that state them:
 /// <list type="bullet">
 /// <item>the New Testament from Zefania's KJV+, whose tags are matched to the words verse by verse as the load's
-/// <c>new-testament-links</c> step matches them: a word takes the first number of its tag, and a word the edition
-/// prints in italics and numbers nothing is supplied;</item>
+/// <c>new-testament-links</c> step matches them, both sides in one spelling (<see cref="AmericanSpelling"/>): a word
+/// takes the first number of its tag, and a word the edition prints in italics and numbers nothing is supplied;</item>
 /// <item>the Old Testament's supplied words from the Open Hebrew Bible's mapping file, whose italic words are joined to
 /// the verse's words as the load's <c>old-testament-links</c> step joins them, a function word the mapping gives a
 /// Hebrew prefix excepted;</item>
@@ -85,7 +85,8 @@ internal sealed class KingJamesNumbers : ITextStage
 
             // The words the source printed: an epistle's subscription, added by a correction, is not in the tagged edition.
             var words = verse.Words.Where(word => !word.Added).ToList();
-            var spans = TaggedEdition.Align([.. tags.Select(tag => tag.Text)], [.. words.Select(word => word.Surface)]);
+            // Zefania spells the American way (honorable, offense, heretic); the words are put in step on one spelling.
+            var spans = TaggedEdition.Align([.. tags.Select(tag => tag.Text)], [.. words.Select(word => word.Surface)], AmericanSpelling.Fold);
             if (TaggedEdition.Agreement(spans, words.Count) < NewTestamentLinkLoader.SameVerse)
             {
                 continue;

@@ -99,3 +99,54 @@ public class TaggedEditionTests
         return (span.TaggedFrom, span.TaggedTo, span.CorpusFrom, span.CorpusTo);
     }
 }
+
+/// <summary>
+/// The spellings the Zefania KJV+ prints the American way, each from a verse whose numbers the conversion lost when
+/// two such words stood together and nothing anchored the pair.
+/// </summary>
+public class AmericanSpellingTests
+{
+    [Theory]
+    [InlineData("honourable", "honorable")]
+    [InlineData("counsellor", "counselor")]
+    [InlineData("offence", "offense")]
+    [InlineData("heretick", "heretic")]
+    [InlineData("stedfast", "steadfast")]
+    [InlineData("unmoveable", "unmovable")]
+    [InlineData("labour", "labor")]
+    [InlineData("Saviour", "Savior")]
+    [InlineData("travelled", "traveled")]
+    public void TheTwoSpellingsOfAWordFoldToOne(string british, string american) =>
+        AmericanSpelling.Fold(british).Should().Be(AmericanSpelling.Fold(american));
+
+    [Theory]
+    [InlineData("four", "for")]
+    [InlineData("your", "yor")]
+    [InlineData("hour", "hor")]
+    [InlineData("quick", "quic")]
+    [InlineData("sick", "sic")]
+    public void ShortWordsThatOnlyLookLikeASpellingAreLeftAlone(string word, string other) =>
+        AmericanSpelling.Fold(word).Should().NotBe(AmericanSpelling.Fold(other));
+
+    /// <summary>Mark 15:43: two words spelled differently side by side used to stand in no span at all.</summary>
+    [Fact]
+    public void TwoRespelledWordsSideBySideAreEachPutInStep()
+    {
+        string[] tagged = ["of", "Arimathaea", "an", "honorable", "counselor", "which"];
+        string[] corpus = ["of", "Arimathaea", "an", "honourable", "counsellor", "which"];
+
+        TaggedEdition.Align(tagged, corpus).Where(s => s.CorpusFrom is 3 or 4).Should().BeEmpty("nothing anchors the pair as printed");
+        var spans = TaggedEdition.Align(tagged, corpus, AmericanSpelling.Fold);
+        spans.Should().HaveCount(6).And.OnlyContain(s => s.Match == EditionMatch.Identical);
+    }
+
+    /// <summary>1 Corinthians 4:11: the fold of <em>dwelling</em> must not part the letters of <em>dwelling place</em> from <em>dwellingplace</em>.</summary>
+    [Fact]
+    public void ARunDividedDifferentlyIsStillComparedOnItsPrintedLetters()
+    {
+        var spans = TaggedEdition.Align(["have", "no", "certain", "dwelling", "place"], ["have", "no", "certain", "dwellingplace"], AmericanSpelling.Fold);
+
+        spans.Should().Contain(new EditionSpan(3, 5, 3, 4, EditionMatch.Divided));
+        TaggedEdition.Agreement(spans, 4).Should().Be(1);
+    }
+}
