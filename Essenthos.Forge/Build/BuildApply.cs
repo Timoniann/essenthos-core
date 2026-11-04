@@ -183,12 +183,13 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
     /// <summary>
     /// The products with tables whose file, hashed as it is now (a hand edit records nothing in the manifest), is not the one the
-    /// database was built from, and those gone or new since.
+    /// database was built from, and those gone or new since. A manifest entry whose file is gone is gone.
     /// </summary>
     private List<string> Changed(ProductHeader served)
     {
         var then = served.Inputs.ToDictionary(i => i.Path, i => i.Sha256, StringComparer.Ordinal);
-        var now = store.Manifest.Entries.Where(e => graph.Find(e.Product) is { Declaration.Tables.Count: > 0 })
+        var now = store.Manifest.Entries
+            .Where(e => graph.Find(e.Product) is { Declaration.Tables.Count: > 0 } && File.Exists(store.FullPath(e.Product)))
             .ToDictionary(e => e.Product, e => store.Hasher.Hash(e.Product), StringComparer.Ordinal);
         return [.. now.Where(n => !then.TryGetValue(n.Key, out var sha) || sha != n.Value).Select(n => n.Key)
             .Concat(then.Keys.Where(t => !now.ContainsKey(t))).Order(StringComparer.Ordinal)];
