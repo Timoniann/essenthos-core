@@ -113,7 +113,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private static string RecoveredSource(string greekSlug) =>
         $"the untagged English function words, matched to the morphology {greekSlug} states";
 
-    private const string SuppliedSource =
+    internal const string SuppliedSource =
         "Zefania KJV+ italics, the King James translators' own mark that they supplied the word";
 
     internal const string PhraseSource =
