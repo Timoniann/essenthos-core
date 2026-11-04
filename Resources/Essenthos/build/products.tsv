@@ -24,7 +24,7 @@ texts/{text}/frame	build	frame-files	Versification/TVTMS.txt Essenthos/versifica
 texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/mapping/*/final	strong_rendering strong_reach strong_reach_method	text
 texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
 texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text
-texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/exported/* Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
+texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/exported/* Essenthos/names/projected/* Essenthos/names/rules Essenthos/records/records Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
 versification/*	hand	by hand	-	-	none
 evidentia/**	hand	by hand (the ledger; forge evidentia-export writes it)	-	-	none
 page-readings/**	hand	by hand	-	-	none
