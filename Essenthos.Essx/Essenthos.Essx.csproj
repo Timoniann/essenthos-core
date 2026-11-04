@@ -8,6 +8,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <PublishAot>true</PublishAot>
     </PropertyGroup>
 
     <!-- The command line over the product files: view, stats, convert, validate. Its own

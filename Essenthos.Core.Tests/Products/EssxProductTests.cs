@@ -195,7 +195,7 @@ public sealed class EssxProductTests : IDisposable
         var table = file.Tables[0];
         var groups = table.GroupsWhere("own.book", (min, max) => min <= 2 && max >= 2).ToList();
         groups.Should().Equal([5, 6, 7, 8, 9], "rows 5000-9999 are book 2 and the groups hold 1000 rows");
-        var found = groups.Select(table.ReadGroup).SelectMany(group => Enumerable.Range(0, group.Rows).Select(i => group.Column("own").WordKey(i, "KJV")!.Value))
+        var found = groups.Select(g => table.ReadGroup(g)).SelectMany(group => Enumerable.Range(0, group.Rows).Select(i => group.Column("own").WordKey(i, "KJV")!.Value))
             .Count(key => key.Verse.Book == 2);
         found.Should().Be(5000);
     }

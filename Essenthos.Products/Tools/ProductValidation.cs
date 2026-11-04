@@ -116,7 +116,7 @@ public static class ProductValidation
                     for (var c = 0; c < table.Columns.Count; c++)
                     {
                         var column = table.Columns[c];
-                        var data = decoded.Columns[c];
+                        var data = decoded.Column(c);
                         var nulls = 0;
                         for (var i = 0; i < decoded.Rows; i++)
                         {

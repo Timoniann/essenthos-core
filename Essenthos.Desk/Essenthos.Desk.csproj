@@ -17,6 +17,8 @@
         <!-- The schema and nothing else: it reads the corpus, and the files it writes are the ones the
              loaders read, so it never needs a loader of its own. -->
         <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
+        <!-- The product files' reader, for the page that opens an ESSX file. -->
+        <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
     </ItemGroup>
 
     <ItemGroup>
