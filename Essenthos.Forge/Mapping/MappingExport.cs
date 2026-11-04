@@ -81,7 +81,7 @@ internal static class MappingExport
                     byMethod[method] = rows = [];
                 }
 
-                rows.Add((side, first, new MappingRow(link.Id, from.Text, to.Text, link.Relation, method, claim.Confidence, source, note, roles, null)));
+                rows.Add((side, first, new MappingRow(from.Text, to.Text, link.Relation, method, claim.Confidence, source, note, roles, null)));
             }
         }
 
@@ -312,14 +312,9 @@ internal static class MappingExport
     }
 }
 
-/// <summary>The id ranges of the pairs' new links (<see cref="PairOrdinalRow"/>).</summary>
+/// <summary>Each pair's ordinal, the top bits of its links' ids (<see cref="LinkIds"/>, <see cref="PairOrdinalRow"/>); a listed pair keeps its own.</summary>
 internal static class PairOrdinals
 {
-    /// <summary>Where new link ids start: past any id the corpus has given, a range of a billion per pair.</summary>
-    public const long Base = 1_000_000_000_000;
-
-    public const long Range = 1_000_000_000;
-
     public static Dictionary<string, long> Read(ProductStore store)
     {
         if (!store.Exists(MappingProducts.PairOrdinals))

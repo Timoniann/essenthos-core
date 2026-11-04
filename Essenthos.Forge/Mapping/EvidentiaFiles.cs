@@ -223,7 +223,7 @@ internal static class EvidentiaFiles
                         continue;
                     }
 
-                    var row = new Written(new MappingRow(null, shape.From, shape.To, relation, claim.Method, claim.Confidence, claim.Source,
+                    var row = new Written(new MappingRow(shape.From, shape.To, relation, claim.Method, claim.Confidence, claim.Source,
                         claim.Evidence, null, null), within is not null);
                     written.Add(row);
                     foreach (var key in MappingText.Split(row.Row.From))
@@ -261,9 +261,8 @@ internal static class EvidentiaFiles
         }
 
         var roles = Roles(written);
-        var ids = Ids(store, pair);
         var rows = written
-            .Select(w => w.Row with { Id = ids.GetValueOrDefault(w.Row.Shape), Roles = roles.GetValueOrDefault(w.Row.Shape) })
+            .Select(w => w.Row with { Roles = roles.GetValueOrDefault(w.Row.Shape) })
             .Select(r => (Sort: MappingText.SortKey(r.From, r.To, fromText, toText), Row: r))
             .ToList();
         rows.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));
@@ -285,40 +284,6 @@ internal static class EvidentiaFiles
         MappingFiles.RecordHashes(store, pair, rows.Select(r => r.Row));
         return new Outcome(pair, runs.Count, verdicts, rows.Count, written.Count(w => w.Within), roles.Values.Sum(r => r.Split(' ').Length),
             conflicts, leftOut);
-    }
-
-    /// <summary>
-    /// The ids the pair's links already have, by shape: from the evidentia file this one replaces (exported from a
-    /// corpus with its link ids, or written here before), then from the pair's final. A link keeps its id however
-    /// often the file is made again, and a link no file numbered yet is left for the merge to number.
-    /// </summary>
-    private static Dictionary<string, long?> Ids(ProductStore store, string pair)
-    {
-        var ids = new Dictionary<string, long?>(StringComparer.Ordinal);
-        var evidentia = MappingProducts.Of(pair, MappingMethods.Evidentia);
-        if (store.Exists(evidentia))
-        {
-            using var reader = store.Open(evidentia, MappingRow.Schema);
-            foreach (var row in reader.Rows())
-            {
-                if (row.Id is { } id)
-                {
-                    ids.TryAdd(row.Shape, id);
-                }
-            }
-        }
-
-        var final = MappingProducts.Of(pair, MappingProducts.Final);
-        if (store.Exists(final))
-        {
-            using var reader = store.Open(final, FinalRow.Schema);
-            foreach (var row in reader.Rows())
-            {
-                ids.TryAdd(row.From + "|" + row.To, row.Id);
-            }
-        }
-
-        return ids;
     }
 
     /// <summary>
@@ -500,12 +465,23 @@ internal static class EvidentiaFiles
 
         public List<string> Products { get; } = [];
 
-        private sealed record Shape(string From, string To, HashSet<string> FromKeys, HashSet<string> ToKeys, long Order);
+        private sealed record Shape(string From, string To, HashSet<string> FromKeys, HashSet<string> ToKeys)
+        {
+            public int Words => FromKeys.Count + ToKeys.Count;
+        }
+
+        /// <summary>The narrowest first, then by key: the order a verdict's wider links are tried in.</summary>
+        private static readonly Comparer<Shape> Narrowest = Comparer<Shape>.Create((a, b) =>
+        {
+            var order = a.Words.CompareTo(b.Words);
+            if (order == 0) order = string.CompareOrdinal(a.From, b.From);
+            if (order == 0) order = string.CompareOrdinal(a.To, b.To);
+            return order;
+        });
 
         public static Others Read(ProductStore store, string pair)
         {
             var others = new Others();
-            var order = 0L;
             foreach (var method in MappingProducts.Methods(store, pair).Where(m => m != MappingMethods.Evidentia))
             {
                 var product = MappingProducts.Of(pair, method);
@@ -513,14 +489,12 @@ internal static class EvidentiaFiles
                 using var reader = store.Open(product, MappingRow.Schema);
                 foreach (var row in reader.Rows())
                 {
-                    order++;
                     if (!others._shapes.Add(row.Shape))
                     {
                         continue;
                     }
 
-                    var shape = new Shape(row.From, row.To, [.. MappingText.Split(row.From)], [.. MappingText.Split(row.To)],
-                        row.Id ?? long.MaxValue / 2 + order);
+                    var shape = new Shape(row.From, row.To, [.. MappingText.Split(row.From)], [.. MappingText.Split(row.To)]);
                     foreach (var key in shape.FromKeys)
                     {
                         Add(others._byFrom, key, shape);
@@ -547,8 +521,8 @@ internal static class EvidentiaFiles
         }
 
         /// <summary>
-        /// The wider link a verdict sits on: none where a row names exactly its words; otherwise the first link, by id,
-        /// naming its words among more on both sides (for an absence, an absence naming more words).
+        /// The wider link a verdict sits on: none where a row names exactly its words; otherwise the narrowest link naming its
+        /// words among more on both sides (for an absence, an absence naming more words), the first by key among equals.
         /// </summary>
         public (string From, string To)? Within(string relation, string fromKeys, string toKeys, WordKey[] from, WordKey[] to)
         {
@@ -568,7 +542,7 @@ internal static class EvidentiaFiles
             var wider = candidates
                 .Where(shape => from.All(key => shape.FromKeys.Contains(key.Own)) && to.All(key => shape.ToKeys.Contains(key.Own)))
                 .Where(shape => relation == "renders" ? shape.FromKeys.Count > 0 && shape.ToKeys.Count > 0 : onFrom ? shape.ToKeys.Count == 0 : shape.FromKeys.Count == 0)
-                .MinBy(shape => shape.Order);
+                .Min(Narrowest);
             return wider is null ? null : (wider.From, wider.To);
         }
 

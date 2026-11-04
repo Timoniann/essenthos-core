@@ -376,7 +376,7 @@ internal sealed partial class NamesProjection
             }
         }
 
-        foreach (var (key, candidate) in candidates.Where(c => Worth(c.Value.Link, c.Value.Settled) < Rules.FloorValue).ToList())
+        foreach (var (key, candidate) in candidates.Where(c => Worth(c.Value.Link, c.Value.Settled) < Rules.FloorOver(c.Value.LinkMethod)).ToList())
         {
             candidates.Remove(key);
             refused[key] = Refusals.Floor;

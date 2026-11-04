@@ -150,7 +150,7 @@ internal sealed class MappingLinks(ProductStore store, WordKeys keys, IReadOnlyD
     {
         var pair = MappingProducts.Pair(fromSlug, toSlug);
         var written = rows
-            .Select(r => new MappingRow(null, keys.Own(r.From), keys.Own(r.To), "renders", MappingMethods.Composed, r.Confidence, r.Source, r.Evidence, null, null))
+            .Select(r => new MappingRow(keys.Own(r.From), keys.Own(r.To), "renders", MappingMethods.Composed, r.Confidence, r.Source, r.Evidence, null, null))
             .Select(r => (Sort: MappingText.SortKey(r.From, r.To, fromSlug, toSlug), Row: r))
             .ToList();
         written.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));

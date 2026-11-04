@@ -5778,6 +5778,16 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("note");
 
+                    b.Property<string>("Origin")
+                        .HasColumnType("text")
+                        .HasColumnName("origin")
+                        .HasComment("Where the name comes from: settled, projected, added, differs, or base-reading (the base text's record beside a differs row on the same word, never the word's own name). Null where the corpus load wrote the row.");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text")
+                        .HasColumnName("role")
+                        .HasComment("How the word stands for the record: name, people, title or thing. Null where the corpus load wrote the row.");
+
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnType("text")
@@ -5802,6 +5812,10 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_word_entity_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
 
                             t.HasCheckConstraint("ck_word_entity_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
+
+                            t.HasCheckConstraint("ck_word_entity_origin", "origin IS NULL OR origin IN ('settled', 'projected', 'added', 'differs', 'base-reading')");
+
+                            t.HasCheckConstraint("ck_word_entity_role", "role IS NULL OR role IN ('name', 'people', 'title', 'thing')");
 
                             t.HasCheckConstraint("ck_word_entity_source_not_empty", "length(btrim(\"source\")) > 0");
 

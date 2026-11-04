@@ -145,7 +145,7 @@ internal static class StrongFiles
                 }
 
                 matched += from.Count;
-                var row = new MappingRow(null, MappingText.Keys(from), MappingText.Keys(draft.To.Select(id => keys[id])), "renders",
+                var row = new MappingRow(MappingText.Keys(from), MappingText.Keys(draft.To.Select(id => keys[id])), "renders",
                     MappingMethods.Strong, draft.Confidence, source, draft.Kind.ToString().ToLowerInvariant(), null, null);
                 if (from.Any(key => testimony.Words.Contains(key.Own)) && !testimony.Shapes.Contains(row.Shape))
                 {
@@ -161,10 +161,9 @@ internal static class StrongFiles
         }
 
         var previous = Previous(store, pair);
-        rows = [.. rows.Select(row => previous.TryGetValue(row.Shape, out var id) ? row with { Id = id } : row)];
-        var kept = rows.Count(row => row.Id is not null);
+        var kept = rows.Count(row => previous.Contains(row.Shape));
         var made = rows.Select(row => row.Shape).ToHashSet(StringComparer.Ordinal);
-        var gone = previous.Keys.Count(shape => !made.Contains(shape));
+        var gone = previous.Count(shape => !made.Contains(shape));
 
         var sorted = rows.Select(r => (Sort: MappingText.SortKey(r.From, r.To, fromText, toText), Row: r)).ToList();
         sorted.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));
@@ -379,25 +378,22 @@ internal static class StrongFiles
         return (absent, (words, shapes));
     }
 
-    /// <summary>The id the previous file gave each shape.</summary>
-    private static Dictionary<string, long> Previous(ProductStore store, string pair)
+    /// <summary>The shapes the previous file held.</summary>
+    private static HashSet<string> Previous(ProductStore store, string pair)
     {
         var product = MappingProducts.Of(pair, MappingMethods.Strong);
-        var ids = new Dictionary<string, long>(StringComparer.Ordinal);
+        var shapes = new HashSet<string>(StringComparer.Ordinal);
         if (!store.Exists(product))
         {
-            return ids;
+            return shapes;
         }
 
         using var reader = store.Open(product, MappingRow.Schema);
         foreach (var row in reader.Rows())
         {
-            if (row.Id is { } id)
-            {
-                ids.TryAdd(row.Shape, id);
-            }
+            shapes.Add(row.Shape);
         }
 
-        return ids;
+        return shapes;
     }
 }

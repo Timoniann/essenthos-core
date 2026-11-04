@@ -14,7 +14,8 @@ namespace Essenthos.Core.Tests.Links;
 
 /// <summary>
 /// The links of a database written out as method files, merged, loaded back and written out again: the same rows
-/// with the same ids, keys and claims, except what the merge rule withdrew, which stays in its file marked.
+/// with the same keys and claims under the ids the final derived, except what the merge rule withdrew, which stays in its
+/// file marked.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class MappingRoundTripTests : IDisposable
@@ -46,7 +47,7 @@ public sealed class MappingRoundTripTests : IDisposable
     }
 
     [Fact]
-    public async Task LinksComeBackWithTheirIdsKeysAndClaimsAndAWithdrawnRowStaysInItsFile()
+    public async Task LinksComeBackWithTheirKeysAndClaimsUnderTheFinalsIdsAndAWithdrawnRowStaysInItsFile()
     {
         var kjv = await Words("KJV");
         var bhsa = await Words("BHSA");
@@ -83,7 +84,12 @@ public sealed class MappingRoundTripTests : IDisposable
         outcome.Unresolved.Should().Be(0);
         Rows(store, "composed").Should().ContainSingle(r => r.Status == "withdrawn-by strong").Which.To.Should().Be("1.1:1.2");
         after.Should().BeEquivalentTo(before.Where(r => !r.Contains("aligned as stems")),
-            "every link the merge kept is loaded with its id, words, roles and claims");
+            "every link the merge kept is loaded with its words, roles and claims");
+        using (var final = store.Open(MappingProducts.Of("KJV-BHSA", MappingProducts.Final), FinalRow.Schema))
+        {
+            (await Ids()).Should().BeEquivalentTo(final.ReadAll().Select(r => r.Id).Distinct(), "a link is loaded under the id its final derived");
+        }
+
         Rows(again, "stated").Should().Equal(Rows(store, "stated"));
         Rows(again, "strong").Should().Equal(Rows(store, "strong"));
         Rows(again, "composed").Should().ContainSingle().Which.Should().Be(Rows(store, "composed").Single(r => r.Status == null) with { Evidence = null },
@@ -97,13 +103,28 @@ public sealed class MappingRoundTripTests : IDisposable
         return reader.ReadAll();
     }
 
+    private async Task<List<long>> Ids()
+    {
+        await using var connection = _database.NewConnection();
+        await connection.OpenAsync();
+        await using var command = new NpgsqlCommand("SELECT id FROM link", connection);
+        var ids = new List<long>();
+        await using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            ids.Add(reader.GetInt64(0));
+        }
+
+        return ids;
+    }
+
     private async Task<List<string>> Stored()
     {
         await using var connection = _database.NewConnection();
         await connection.OpenAsync();
         await using var command = new NpgsqlCommand(
             """
-            SELECT concat_ws(' | ', l.id, l.relation, l.method, l.confidence, p.source, l.fingerprint,
+            SELECT concat_ws(' | ', l.relation, l.method, l.confidence, p.source, l.fingerprint,
                    (SELECT string_agg(concat_ws(':', w.word_id, w.side, w.role, w.head_word_id), ',' ORDER BY w.side, w.word_id) FROM link_word w WHERE w.link_id = l.id),
                    (SELECT string_agg(concat_ws(':', c.method, c.confidence, cp.source), ',' ORDER BY c.method, cp.source)
                     FROM link_claim c JOIN provenance cp ON cp.id = c.provenance_id WHERE c.link_id = l.id))

@@ -120,6 +120,29 @@ public sealed class NamesProjectionTests : IDisposable
     }
 
     [Fact]
+    public void ANameListLinkCarriesANameOnlyFromItsOwnFloorAndEveryOtherMethodFromTheCommonOne()
+    {
+        var store = Corpus();
+        using (var writer = store.Create(MappingProducts.Of("ENG-BHSA", MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "test", []))
+        {
+            writer.WriteAll([
+                Link(3, "2.3:4.5", "2.3:4.3", 0.85),
+                Link(5, "2.3:4.8", "2.3:4.5", 0.85) with { Method = MappingMethods.NameList },
+            ]);
+        }
+
+        store.Save();
+
+        var names = new NamesProjection(new ProductStore(_resources)).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(5), "moses")], "an aligner's 0.85 clears 0.7");
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(8), "aaron"), "below-the-floor"),
+            "a name-list link needs 0.9");
+        new NameRules(NameRules.Seed()).FloorOver(MappingMethods.NameList).Should().Be(0.9);
+        new NameRules(NameRules.Seed()).FloorOver(MappingMethods.Composed).Should().Be(0.7);
+    }
+
+    [Fact]
     public void OverridesAddSuppressAndPutTheTranslationsRecordBeforeTheBases()
     {
         var projection = new NamesProjection(Corpus(
