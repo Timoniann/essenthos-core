@@ -400,6 +400,23 @@ internal static partial class EncyclopediaEndpoints
     }
 
     /// <summary>
+    /// The entities a canon mode shows (<see cref="CanonAttestation.InCanon"/>), or a refusal naming the canons there are.
+    /// No canon asked shows them all.
+    /// </summary>
+    internal static bool InCanon(ref IQueryable<Entity> entities, string? canon, out IResult? refusal)
+    {
+        refusal = null;
+        if (!CanonAttestation.TryMode(canon, out var mode))
+        {
+            refusal = ApiResults.NotFound($"There is no canon \"{canon}\". Try one of: {Canons.Names}.");
+            return false;
+        }
+
+        entities = entities.InCanon(mode);
+        return true;
+    }
+
+    /// <summary>
     /// The one letter <c>letter</c> names, or a refusal saying what it takes. A word or a digit is
     /// refused rather than read as its first character, because an index that quietly answers a
     /// different question from the one asked is harder to notice than one that says no.

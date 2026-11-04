@@ -83,6 +83,7 @@ public sealed class PlaceReferenceReadingTests : IDisposable
     {
         Kind = EntityKind.Place, Slug = slug, Name = slug, OpenBibleId = openBibleId,
         SourceId = $"test:{slug}", Source = "test",
+        ExternalIds = { new RecordExternalId { Dataset = "openbible", ExternalId = openBibleId, Relation = RecordExternalRelations.SameAs } },
     };
 
     private void Citation(Entity entity, int book, int chapter, int verse, string source) =>

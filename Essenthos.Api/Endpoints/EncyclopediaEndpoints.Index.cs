@@ -22,6 +22,7 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? letter,
             [FromQuery] int? skip,
             [FromQuery] int? take,
+            [FromQuery] string? canon,
             AppDbContext db,
             IServiceScopeFactory scopes,
             SiteSettingsFile settings,
@@ -35,7 +36,7 @@ internal static partial class EncyclopediaEndpoints
 
             var entities = Listed(db.Entities);
 
-            if (!OfKind(ref entities, kind, out var refusal))
+            if (!OfKind(ref entities, kind, out var refusal) || !InCanon(ref entities, canon, out refusal))
             {
                 return refusal!;
             }
@@ -78,11 +79,9 @@ internal static partial class EncyclopediaEndpoints
             var slugs = named.Select(row => row.Slug).ToList();
             var words = ReaderLanguages.Prose(prose, language);
 
-            // What each row says under its name is read beside the rest, each on a connection of its
-            // own: both take a dozen small reads, and one after the other they were most of the time
-            // Go To waited for a page of five.
+            // What each row says under its name is read beside the rest, on a connection of its own: it
+            // takes a dozen small reads, and after the rest it was most of the time Go To waited for a page of five.
             var describing = Beside(scopes, other => Descriptors.Of(other, slugs, words, cancellationToken, language));
-            var owning = Beside(scopes, other => OursOnlyRecords.Among(other, slugs, cancellationToken));
 
             // The summaries in a second read, by slug: the projection is an expression the provider
             // cannot put beside the name the first read ordered by.
@@ -101,20 +100,12 @@ internal static partial class EncyclopediaEndpoints
                 ? await EntityNames.FoundAs(
                     db, headed.ToDictionary(row => row.Key, row => row.Value.LocalName ?? row.Value.Name), q, cancellationToken, renamed)
                 : [];
-            var ours = await owning;
             var page = named
-                .Select(row => ours.TryGetValue(row.Slug, out var own)
-                    ? headed[row.Id] with
-                    {
-                        Distinguisher = own.Line,
-                        LocalDistinguisher = own.Line is null ? null : lines.GetValueOrDefault(row.Id),
-                        Matched = foundAs.GetValueOrDefault(row.Id),
-                    }
-                    : headed[row.Id] with
-                    {
-                        LocalDistinguisher = lines.GetValueOrDefault(row.Id),
-                        Matched = foundAs.GetValueOrDefault(row.Id),
-                    })
+                .Select(row => headed[row.Id] with
+                {
+                    LocalDistinguisher = lines.GetValueOrDefault(row.Id),
+                    Matched = foundAs.GetValueOrDefault(row.Id),
+                })
                 .ToList();
 
             var described = await describing;
@@ -160,11 +151,12 @@ internal static partial class EncyclopediaEndpoints
         routes.MapGet("/entities/letters", async (
             [FromQuery] string? kind,
             [FromQuery] string? language,
+            [FromQuery] string? canon,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
             var entities = Listed(db.Entities);
-            return OfKind(ref entities, kind, out var refusal)
+            return OfKind(ref entities, kind, out var refusal) && InCanon(ref entities, canon, out refusal)
                 ? Results.Ok(await Letters(EntityNames.Localised(db, entities, language), language, cancellationToken))
                 : refusal!;
         });

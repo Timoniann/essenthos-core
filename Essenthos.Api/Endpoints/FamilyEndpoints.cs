@@ -41,7 +41,6 @@ internal static class FamilyEndpoints
             .Select(e => new { e.Id, e.Slug, e.Name, e.Distinguisher, e.Sex })
             .ToListAsync(cancellationToken);
         var ids = people.Select(p => p.Id).ToList();
-        var ours = await OursOnlyRecords.Among(db, [.. people.Select(p => p.Slug)], cancellationToken);
 
         // Both directions, as the entity page reads them: a father is recorded once, and reading
         // one side only would give Isaac a father and Abraham no son.
@@ -78,7 +77,7 @@ internal static class FamilyEndpoints
         var spoken = DescriptorPhrasings.Spoken(words);
         var described = await Descriptors.Of(
             db,
-            people.Where(p => EntityDistinguishers.For(ours, lines, p.Slug) is null).Select(p => p.Slug),
+            people.Where(p => !lines.ContainsKey(p.Slug)).Select(p => p.Slug),
             words,
             cancellationToken,
             language);
@@ -93,8 +92,8 @@ internal static class FamilyEndpoints
                     p.Slug,
                     renamed.GetValueOrDefault(p.Id)?.Name ?? p.Name,
                     renamed.TryGetValue(p.Id, out var heads) ? heads.LocalName : local.GetValueOrDefault(p.Id),
-                    OursOnlyRecords.Line(ours, p.Slug, p.Distinguisher),
-                    ours.TryGetValue(p.Slug, out var own) ? own.Sex : p.Sex,
+                    p.Distinguisher,
+                    p.Sex,
                     [
                         .. rows.Where(r => r.FromEntityId == p.Id)
                             .Select(r => new FamilyTieResponse(r.Type, false, r.To)
@@ -111,7 +110,7 @@ internal static class FamilyEndpoints
                             .DistinctBy(tie => (tie.Type, tie.Inward, tie.Slug)),
                     ])
                 {
-                    LocalDistinguisher = EntityDistinguishers.For(ours, lines, p.Slug),
+                    LocalDistinguisher = lines.GetValueOrDefault(p.Slug),
                     DescriptorLine = described.TryGetValue(p.Slug, out var descriptor) && descriptor.Language == spoken
                         ? string.Concat(descriptor.Parts.Select(part => part.Text)).Trim() is { Length: > 0 } said ? said : null
                         : null,

@@ -307,6 +307,7 @@ public sealed class PlaceCandidateTests : IDisposable
             OpenBibleId = openBibleId,
             SourceId = $"test:{openBibleId}",
             Source = "test",
+            ExternalIds = { new RecordExternalId { Dataset = "openbible", ExternalId = openBibleId, Relation = RecordExternalRelations.SameAs } },
         };
         _db.Entities.Add(entity);
         return entity;

@@ -211,6 +211,7 @@ internal static partial class RecordFiles
             loaded.Add((file.Product, rows.Count));
         }
 
+        loaded.Add((RecordCanons.Product, await RecordCanons.Load(db, transaction, store, cancellationToken)));
         return loaded;
     }
 

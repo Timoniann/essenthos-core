@@ -230,6 +230,23 @@ internal record EntityRefResponse(string Type, string Slug, string Name)
     /// where the word bears the heading's name or the number does not settle which.
     /// </summary>
     public string? NamedAs { get; init; }
+
+    /// <summary>
+    /// How the word stands for the record: <c>name</c>, <c>people</c>, <c>title</c> or <c>thing</c>. A word may stand for
+    /// several records, each in its own role (a person and a people, a man and his title). Null where the corpus does not say.
+    /// </summary>
+    public string? Role { get; init; }
+
+    /// <summary>
+    /// Where the naming comes from: <c>settled</c> on a reference text, <c>projected</c> from the base text over a link,
+    /// <c>added</c> where this text names someone its base does not, <c>differs</c> where it names another record than its base
+    /// (the first card), <c>base-reading</c> for the record the base text names on that word (the second card, never the word's
+    /// own name). Null where the corpus does not say.
+    /// </summary>
+    public string? Origin { get; init; }
+
+    /// <summary>The text whose word names the record, on a <c>base-reading</c> card; null on every other.</summary>
+    public string? BaseText { get; init; }
 }
 
 /// <param name="OriginalWordIds">

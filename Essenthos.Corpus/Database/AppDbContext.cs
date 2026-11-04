@@ -250,6 +250,12 @@ public class AppDbContext : DbContext
 
     public DbSet<EntityNameTranslation> EntityNameTranslations { get; set; } = null!;
 
+    /// <summary>Which canons attest each record: the canon mode hides a record none of its canons receives.</summary>
+    public DbSet<EntityCanon> EntityCanons { get; set; } = null!;
+
+    /// <summary>The ids the datasets give our records.</summary>
+    public DbSet<RecordExternalId> RecordExternalIds { get; set; } = null!;
+
     /// <summary>The article each language's Wikipedia has on a record, and what tied the record to it.</summary>
     public DbSet<EntityWikipedia> EntityWikipedia { get; set; } = null!;
 
@@ -580,6 +586,27 @@ public class AppDbContext : DbContext
 
             entity.ToTable("entity_image_caption", t =>
                 t.HasCheckConstraint("ck_entity_image_caption_text", "length(caption) > 0"));
+        });
+
+        modelBuilder.Entity<EntityCanon>(entity =>
+        {
+            entity.HasOne(c => c.Entity)
+                .WithMany(e => e.Canons)
+                .HasForeignKey(c => c.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_canon", t => t.HasCheckConstraint("ck_entity_canon_canon",
+                $"canon IN ({string.Join(", ", RecordCanonGroups.All.Select(c => $"'{c}'"))})"));
+        });
+
+        modelBuilder.Entity<RecordExternalId>(entity =>
+        {
+            entity.HasOne(x => x.Entity)
+                .WithMany(e => e.ExternalIds)
+                .HasForeignKey(x => x.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("record_external_id");
         });
 
         modelBuilder.Entity<EntityWikipedia>(entity =>

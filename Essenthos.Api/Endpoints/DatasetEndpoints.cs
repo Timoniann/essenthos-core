@@ -70,7 +70,12 @@ public static class DatasetEndpoints
     /// </summary>
     internal static async Task<DatasetTally> Count(AppDbContext db, CancellationToken cancellationToken)
     {
-        var entities = await Counted(db.Entities.Select(e => e.Source), cancellationToken);
+        // A record is ours; a dataset is credited with the records it gives an id of its own.
+        var identified = await db.RecordExternalIds
+            .Where(x => x.Relation == RecordExternalRelations.SameAs)
+            .GroupBy(x => x.Dataset)
+            .Select(group => new { Dataset = group.Key, Rows = group.Select(x => x.EntityId).Distinct().Count() })
+            .ToDictionaryAsync(row => row.Dataset, row => row.Rows, StringComparer.Ordinal, cancellationToken);
         var events = await Counted(db.Events.Select(e => e.Source), cancellationToken);
         var periods = (await Counted(db.Periods.Select(p => p.Source), cancellationToken))
             .Concat(await Counted(db.PeriodDefinitions.Select(p => p.Source), cancellationToken))
@@ -139,7 +144,7 @@ public static class DatasetEndpoints
                     : 0;
 
             var counts = new DatasetCounts(
-                Of(entities, dataset),
+                identified.GetValueOrDefault(dataset.Id),
                 Of(events, dataset),
                 Of(periods, dataset),
                 lemmas,
@@ -171,7 +176,7 @@ public static class DatasetEndpoints
         // Rows whose source no declaration claims. Reported rather than dropped: a dataset
         // loaded without being declared here is exactly the thing this endpoint exists to
         // catch, and a silent zero would let it be published unattributed.
-        var undeclared = Undeclared(entities).Concat(Undeclared(events)).Concat(Undeclared(periods))
+        var undeclared = Undeclared(events).Concat(Undeclared(periods))
             .Concat(Undeclared(links))
             .Concat(Undeclared(parsings))
             .Concat(Undeclared(commandments))

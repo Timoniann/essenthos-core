@@ -36,6 +36,8 @@ internal static class ContextEndpoints
             int chapter,
             [FromQuery] string? language,
             [FromQuery] string? prose,
+            [FromQuery] string? texts,
+            [FromQuery(Name = "canon")] string? mode,
             AppDbContext db,
             ICanonIndex canon,
             ContextWeightsCache weights,
@@ -43,9 +45,34 @@ internal static class ContextEndpoints
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
-            return refusal ?? Results.Ok(await Context(
+            if (refusal is not null)
+            {
+                return refusal;
+            }
+
+            if (!CanonAttestation.TryMode(mode, out var shown))
+            {
+                return ApiResults.NotFound($"There is no canon \"{mode}\". Try one of: {Canons.Names}.");
+            }
+
+            List<TextEntry>? open = null;
+            if (texts is not null)
+            {
+                open = [];
+                foreach (var slug in texts.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                {
+                    if (await canon.Text(slug, cancellationToken) is not { } text)
+                    {
+                        return ApiResults.NotFound($"There is no text \"{slug}\".");
+                    }
+
+                    open.Add(text);
+                }
+            }
+
+            return Results.Ok(await Context(
                 db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken,
-                settings.Is(SiteSettings.GeneratedImages), prose));
+                settings.Is(SiteSettings.GeneratedImages), prose, open, shown));
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -102,13 +129,28 @@ internal static class ContextEndpoints
         ContextWeights weights,
         CancellationToken cancellationToken,
         bool generated = true,
-        string? prose = null)
+        string? prose = null,
+        IReadOnlyList<TextEntry>? open = null,
+        CanonDefinition? mode = null)
     {
         var (verses, how, spoken) = await NamedAndHow(db, book, chapter, cancellationToken);
+        var exceptions = await Exceptions(db, book, chapter, open ?? [], cancellationToken);
+        foreach (var exception in exceptions)
+        {
+            if (!verses.TryGetValue(exception.Slug, out var at))
+            {
+                verses[exception.Slug] = at = [];
+            }
+
+            at.UnionWith(exception.Verses);
+            Route(how, exception.Slug, Excepted);
+        }
+
         ChapterSalience.SettleWordsForGod(verses, how, spoken);
         var slugs = verses.Keys.ToList();
         var records = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
+            .InCanon(mode)
             .Select(e => new
             {
                 e.Id,
@@ -118,7 +160,6 @@ internal static class ContextEndpoints
                 e.Distinguisher,
                 e.PlaceKind,
                 e.Subtype,
-                e.Source,
                 Location = e.Location == null
                     ? null
                     : new EntityLocationResponse(
@@ -129,7 +170,6 @@ internal static class ContextEndpoints
             })
             .ToListAsync(cancellationToken);
 
-        var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
         var words = ReaderLanguages.Prose(prose, language);
         var lines = await EntityDistinguishers.OfSlugs(db, slugs, words, cancellationToken);
@@ -149,23 +189,26 @@ internal static class ContextEndpoints
                 r.Slug,
                 EnumSpelling.Of(r.Kind),
                 r.Name,
-                OursOnlyRecords.Line(ours, r.Slug, r.Distinguisher),
+                r.Distinguisher,
                 [.. verses[r.Slug]])
             {
                 LocalName = local.GetValueOrDefault(r.Id),
-                LocalDistinguisher = EntityDistinguishers.For(ours, lines, r.Slug),
+                LocalDistinguisher = lines.GetValueOrDefault(r.Slug),
                 Descriptor = described.GetValueOrDefault(r.Slug),
                 Meaning = meanings.GetValueOrDefault(r.Id),
                 PlaceKind = r.PlaceKind,
                 Subtype = r.Subtype,
                 Location = r.Location,
                 How = [.. how.GetValueOrDefault(r.Slug) ?? []],
-                SourceId = Datasets.Of(ours.ContainsKey(r.Slug) ? OursOnlyRecords.Credit : r.Source),
+                SourceId = Datasets.Own,
                 Group = ChapterSalience.WordsForGod.Contains(r.Slug) ? ChapterSalience.GodGroup : null,
                 ChapterName = ChapterSalience.WordsForGod.Contains(r.Slug)
                     ? null
                     : ChapterSalience.NameUsed(r.Name, namesUsed.GetValueOrDefault(r.Slug)),
                 Thumbnail = pictured.GetValueOrDefault(r.Slug),
+                Exceptions = open is null
+                    ? null
+                    : [.. exceptions.Where(x => x.Slug == r.Slug).Select(x => new ContextExceptionResponse(x.Text, x.Origin, [.. x.Verses]))],
             })
             .OrderByDescending(e => ChapterSalience.Of(e.Slug, verses, how, spoken))
             .ThenBy(e => weights.EntityChapters.GetValueOrDefault(e.Slug, int.MaxValue))
@@ -260,6 +303,23 @@ internal static class ContextEndpoints
             named.Add(row.CanonicalVerse);
         }
 
+        // The settled names of the reference texts are the passage's own: what the base texts name, whatever a
+        // translation adds or names otherwise (those are exceptions, flagged with the text that carries them).
+        foreach (var settled in await Settled(db, book, chapter, cancellationToken))
+        {
+            if (withheld.Contains((settled.Slug, settled.CanonicalVerse)))
+            {
+                continue;
+            }
+
+            if (!verses.TryGetValue(settled.Slug, out var named))
+            {
+                verses[settled.Slug] = named = [];
+            }
+
+            named.Add(settled.CanonicalVerse);
+        }
+
         var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
         var spoken = verses.ToDictionary(pair => pair.Key, pair => new SortedSet<int>(pair.Value), StringComparer.Ordinal);
 
@@ -298,6 +358,66 @@ internal static class ContextEndpoints
         }
 
         return (verses, how, spoken);
+    }
+
+    /// <summary>The route of a record a text the reader has open names in the chapter against its base.</summary>
+    private const string Excepted = "exception";
+
+    private sealed record NamedAt(string Slug, int CanonicalVerse);
+
+    /// <summary>Where a reference text's settled names fall in the chapter, by the verse of the shared numbering.</summary>
+    private static async Task<List<NamedAt>> Settled(AppDbContext db, int book, int chapter, CancellationToken cancellationToken) =>
+        await (
+                from reference in db.VerseReferences
+                where reference.IsPrimary && reference.CanonicalBook == book && reference.CanonicalChapter == chapter
+                join word in db.Words on reference.VerseId equals word.VerseId
+                join named in db.WordEntities on word.Id equals named.WordId
+                where named.Origin == WordEntityOrigins.Settled
+                select new NamedAt(named.Entity!.Slug, reference.CanonicalVerse))
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+    private sealed record ExceptionAt(string Slug, string Text, string Origin, SortedSet<int> Verses);
+
+    /// <summary>
+    /// The names the open texts carry against their base in the chapter: a record a text adds (<c>added</c>) or names in
+    /// place of its base's (<c>differs</c>), each with the text that carries it. A suppression takes nothing away: the
+    /// context is about the passage, and the base still names the record.
+    /// </summary>
+    private static async Task<List<ExceptionAt>> Exceptions(
+        AppDbContext db,
+        int book,
+        int chapter,
+        IReadOnlyList<TextEntry> open,
+        CancellationToken cancellationToken)
+    {
+        if (open.Count == 0)
+        {
+            return [];
+        }
+
+        var ids = open.Select(t => t.Id).ToList();
+        var rows = await (
+                from reference in db.VerseReferences
+                where reference.IsPrimary && reference.CanonicalBook == book && reference.CanonicalChapter == chapter
+                join word in db.Words on reference.VerseId equals word.VerseId
+                where ids.Contains(word.TextId)
+                join named in db.WordEntities on word.Id equals named.WordId
+                where named.Origin == WordEntityOrigins.Added || named.Origin == WordEntityOrigins.Differs
+                select new { named.Entity!.Slug, word.TextId, Origin = named.Origin!, reference.CanonicalVerse })
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        var order = open.Select((text, at) => (text.Id, at)).ToDictionary(pair => pair.Id, pair => pair.at);
+        var slugs = open.ToDictionary(t => t.Id, t => t.Slug);
+        return
+        [
+            .. rows.GroupBy(row => (row.Slug, row.TextId, row.Origin))
+                .OrderBy(group => group.Key.Slug, StringComparer.Ordinal)
+                .ThenBy(group => order[group.Key.TextId])
+                .ThenBy(group => group.Key.Origin, StringComparer.Ordinal)
+                .Select(group => new ExceptionAt(
+                    group.Key.Slug, slugs[group.Key.TextId], group.Key.Origin, [.. group.Select(row => row.CanonicalVerse)])),
+        ];
     }
 
     private static void Route(Dictionary<string, SortedSet<string>> how, string slug, string route)
@@ -665,4 +785,17 @@ internal record ContextEntityResponse(
 
     /// <summary>The picture a person's page leads with, to show small beside the name; null for everything else.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
+
+    /// <summary>
+    /// Where a text the reader has open names the record against its base text in this chapter: <c>added</c> where the text
+    /// names it and its base does not, <c>differs</c> where the text names it in place of the record its base names. Each
+    /// carries the text and the verses. Null where the request named no texts; empty where none of them makes an exception
+    /// for the record.
+    /// </summary>
+    public IList<ContextExceptionResponse>? Exceptions { get; init; }
 }
+
+/// <param name="Text">The open text that carries the exception.</param>
+/// <param name="Origin"><c>added</c> or <c>differs</c>.</param>
+/// <param name="Verses">The verses of the chapter that carry it, in the shared numbering.</param>
+internal record ContextExceptionResponse(string Text, string Origin, IList<int> Verses);

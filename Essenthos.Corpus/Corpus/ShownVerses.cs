@@ -23,8 +23,12 @@ internal static class ShownVerses
     // Keep OpenBible's testimony stored, but do not count this lexical sense as a place reference.
     internal static readonly Expression<Func<EntityVerse, bool>> IsShown =
         v => !v.Source.StartsWith(Witness)
-             && !(v.Source == OpenBible && v.Entity!.OpenBibleId == "a5f43dd"
-                  && v.CanonicalBook == 26 && v.CanonicalChapter == 10 && v.CanonicalVerse == 9);
+             && !(v.Source == OpenBible && v.CanonicalBook == 26 && v.CanonicalChapter == 10 && v.CanonicalVerse == 9
+                  && v.Entity!.ExternalIds.Any(x => x.Dataset == Datasets.OpenBibleId && x.ExternalId == TarshishStone
+                                                    && x.Relation == RecordExternalRelations.SameAs));
+
+    /// <summary>OpenBible's entry for the Tarshish of Ezekiel 10:9's stone.</summary>
+    private const string TarshishStone = "a5f43dd";
 
     /// <summary>
     /// What the source of every row read off the settled annotations starts with, a person's or a

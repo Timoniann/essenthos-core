@@ -607,8 +607,8 @@ internal static class Descriptors
             {
                 e.Id,
                 e.Slug,
-                e.Source,
                 Stated = e.Claims.Where(c => c.Method == LinkMethod.StatedBySource).Select(c => c.Source).FirstOrDefault(),
+                Claimed = e.Claims.OrderBy(c => c.Id).Select(c => c.Source).FirstOrDefault(),
                 Origin = new Person(e.Origin!.Id, e.Origin.Kind, e.Origin.Slug, e.Origin.Name, e.Origin.Distinguisher, e.Origin.Sex),
             })
             .ToListAsync(cancellationToken);
@@ -616,7 +616,7 @@ internal static class Descriptors
         return
         [
             .. origins.Where(o => !said.Contains(o.Id)).Select(o => Derived(
-                    o.Slug, o.Id, null, DescriptorRelations.DescendantsOf, o.Origin, [], null, o.Stated ?? o.Source)
+                    o.Slug, o.Id, null, DescriptorRelations.DescendantsOf, o.Origin, [], null, o.Stated ?? o.Claimed ?? OursOnlyRecords.Credit)
                 with
                 {
                     Method = o.Stated is null ? LinkMethod.Manual : LinkMethod.StatedBySource,
@@ -649,7 +649,8 @@ internal static class Descriptors
         var named = tribes.Where(c => c.TargetKind == EntityKind.People).Select(c => c.TargetEntityId).Distinct().ToList();
         var origins = await db.Entities
             .Where(e => named.Contains(e.Id) && e.OriginEntityId != null)
-            .ToDictionaryAsync(e => e.Id, e => e.OriginEntityId!.Value, cancellationToken);
+            .Select(e => new { e.Id, Origin = e.OriginEntityId!.Value })
+            .ToDictionaryAsync(e => e.Id, e => e.Origin, cancellationToken);
 
         var twice = new HashSet<(int Subject, int Named)>();
         foreach (var tribe in tribes)

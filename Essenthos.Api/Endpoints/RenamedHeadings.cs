@@ -88,9 +88,16 @@ internal static class RenamedHeadings
 
         var people = await db.Entities
             .Where(e => ids.Contains(e.Id) && e.Kind == EntityKind.Person)
-            .Select(e => new { e.Id, e.Name, e.SourceId })
+            .Select(e => new
+            {
+                e.Id,
+                e.Name,
+                e.Slug,
+                Ids = e.ExternalIds.Where(x => x.Relation == RecordExternalRelations.SameAs).Select(x => x.ExternalId).ToList(),
+            })
             .ToListAsync(cancellationToken);
-        people.RemoveAll(p => DivineRecords.Contains(p.SourceId) || RuledHeadings.Contains(p.SourceId));
+        people.RemoveAll(p => p.Slug == DivineRecords.HolySpiritSlug
+                              || p.Ids.Any(id => DivineRecords.Contains(id) || RuledHeadings.Contains(id)));
         var personIds = people.Select(p => p.Id).ToList();
         if (personIds.Count == 0)
         {

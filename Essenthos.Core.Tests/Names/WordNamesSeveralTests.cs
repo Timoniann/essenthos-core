@@ -62,11 +62,13 @@ public sealed class WordNamesSeveralTests : IDisposable
         return entity;
     }
 
-    private void Annotate(Word word, Entity entity, LinkMethod method, double? confidence)
+    private void Annotate(
+        Word word, Entity entity, LinkMethod method, double? confidence, string? role = null, string? origin = null, string? note = null)
     {
         _db.WordEntities.Add(new WordEntity
         {
             Word = word, Entity = entity, Method = method, Confidence = confidence, Source = "a test",
+            Role = role, Origin = origin, Note = note,
         });
         _db.SaveChanges();
     }
@@ -209,6 +211,70 @@ public sealed class WordNamesSeveralTests : IDisposable
 
         (await Shown(Greek(4, 1))).Should().Equal("mountseir");
         (await Cited(seir)).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// Matthew 1:11 where a translation names Eliakim and its Greek base Jechoniah: the translation's record is the first
+    /// card and the base's the second, saying which text names it; the base's reading is never the word's own answer.
+    /// </summary>
+    [Fact]
+    public async Task AWordThatDiffersFromItsBaseShowsBothCardsTheTranslationsFirst()
+    {
+        var eliakim = Add("eliakim", EntityKind.Person);
+        var jehoiachin = Add("jehoiachin", EntityKind.Person);
+        Annotate(Greek(4, 1), eliakim, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Differs);
+        Annotate(Greek(4, 1), jehoiachin, LinkMethod.Aligner, 0.9, WordEntityRoles.Name, WordEntityOrigins.BaseReading,
+            "through TR1894 word 77");
+
+        var cards = await Annotations.AllOf(_db, Greek(4, 1).Id, CancellationToken.None);
+
+        cards.Select(c => (c.Slug, c.Origin, c.BaseText)).Should().Equal(
+            ("eliakim", WordEntityOrigins.Differs, null),
+            ("jehoiachin", WordEntityOrigins.BaseReading, "TR1894"));
+        cards[0].Role.Should().Be(WordEntityRoles.Name);
+        (await Annotations.Of(_db, Greek(4, 1).Id, CancellationToken.None))!.Slug.Should().Be("eliakim");
+        (await _db.WordEntities.CountAsync(a => a.WordId == Greek(4, 1).Id)).Should().Be(1, "a base reading is asked for, never read by default");
+    }
+
+    /// <summary>A base reading on a word whose own name is not a differs is not shown: it is a second card or nothing.</summary>
+    [Fact]
+    public async Task ABaseReadingWithoutItsDiffersIsNotShown()
+    {
+        var barak = Add("barak", EntityKind.Person);
+        var sisera = Add("sisera", EntityKind.Person);
+        Annotate(Greek(4, 1), barak, LinkMethod.StrongNumber, 0.9, WordEntityRoles.Name, WordEntityOrigins.Projected);
+        Annotate(Greek(4, 1), sisera, LinkMethod.StrongNumber, 0.9, WordEntityRoles.Name, WordEntityOrigins.BaseReading);
+
+        (await Shown(Greek(4, 1))).Should().Equal("barak");
+    }
+
+    /// <summary>
+    /// One word standing for two records in two roles names both, whatever their kinds: a man and the title the corpus
+    /// joins to nobody, each answering its own question.
+    /// </summary>
+    [Fact]
+    public async Task RecordsInDifferentRolesStandBesideEachOther()
+    {
+        var herod = Add("herod", EntityKind.Person);
+        var tetrarch = Add("tetrarch", EntityKind.Title);
+        Annotate(Greek(2, 1), tetrarch, LinkMethod.RuleBased, 0.99, WordEntityRoles.Title, WordEntityOrigins.Settled);
+        Annotate(Greek(2, 1), herod, LinkMethod.RuleBased, 0.99, WordEntityRoles.Name, WordEntityOrigins.Settled);
+
+        var cards = await Annotations.AllOf(_db, Greek(2, 1).Id, CancellationToken.None);
+
+        cards.Select(c => (c.Slug, c.Role)).Should().Equal(("herod", WordEntityRoles.Name), ("tetrarch", WordEntityRoles.Title));
+    }
+
+    /// <summary>Two records in one role are still rivals: two men named on one word are one answer.</summary>
+    [Fact]
+    public async Task RecordsInOneRoleAreStillRivals()
+    {
+        var barak = Add("barak", EntityKind.Person);
+        var sisera = Add("sisera", EntityKind.Person);
+        Annotate(Greek(4, 1), barak, LinkMethod.StrongNumber, 0.9, WordEntityRoles.Name, WordEntityOrigins.Settled);
+        Annotate(Greek(4, 1), sisera, LinkMethod.StrongNumber, 0.9, WordEntityRoles.Name, WordEntityOrigins.Settled);
+
+        (await Shown(Greek(4, 1))).Should().BeEmpty();
     }
 
     /// <summary>A word that names nothing has an empty list and no first answer.</summary>

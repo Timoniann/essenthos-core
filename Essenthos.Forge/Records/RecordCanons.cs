@@ -1,7 +1,9 @@
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Names;
 using Essenthos.Core.Products;
+using Npgsql;
 
 namespace Essenthos.Core.Records;
 
@@ -50,39 +52,28 @@ internal static class RecordCanons
 
     public const string VersionNote = "canon-version";
 
-    public const string Hebrew = "hebrew";
+    public const string Hebrew = RecordCanonGroups.Hebrew;
 
-    public const string GreekNt = "greek-nt";
+    public const string GreekNt = RecordCanonGroups.GreekNt;
 
-    public const string Deuterocanon = "deuterocanon";
+    public const string Deuterocanon = RecordCanonGroups.Deuterocanon;
 
-    public const string Ethiopic = "ethiopic";
+    public const string Ethiopic = RecordCanonGroups.Ethiopic;
 
     /// <summary>The canons in the order a record's rows are written.</summary>
-    public static readonly string[] All = [Hebrew, GreekNt, Deuterocanon, Ethiopic];
+    public static readonly string[] All = [.. RecordCanonGroups.All];
 
     private const string HebrewText = "BHSA";
 
-    private static readonly HashSet<int> HebrewBooks = [.. Canons.List.Single(c => c.Slug == "tanakh").Ordinals];
+    private static IReadOnlySet<int> HebrewBooks => CanonAttestation.HebrewBooks;
 
-    /// <summary>Messale and Tägsas: Proverbs as the Ethiopian Bible divides it.</summary>
-    private static readonly HashSet<int> ProverbsInTwo = [91, 92];
+    private static IReadOnlySet<int> ProverbsInTwo => CanonAttestation.ProverbsInTwo;
 
-    private static readonly HashSet<int> NewTestamentBooks =
-        [.. Canons.List.Single(c => c.Slug == "protestant").Sections.Single(s => s.Slug == "new-testament").Ordinals];
+    private static IReadOnlySet<int> NewTestamentBooks => CanonAttestation.NewTestamentBooks;
 
-    private static readonly HashSet<int> WiderBooks =
-    [
-        .. Canons.List.Where(c => c.Slug != "ethiopian").SelectMany(c => c.Ordinals)
-            .Where(book => !HebrewBooks.Contains(book) && !NewTestamentBooks.Contains(book)),
-    ];
+    private static IReadOnlySet<int> WiderBooks => CanonAttestation.WiderBooks;
 
-    private static readonly HashSet<int> EthiopicBooks =
-    [
-        .. Canons.List.Single(c => c.Slug == "ethiopian").Ordinals
-            .Where(book => !HebrewBooks.Contains(book) && !NewTestamentBooks.Contains(book) && !WiderBooks.Contains(book)
-                           && !ProverbsInTwo.Contains(book)),
-    ];
+    private static IReadOnlySet<int> EthiopicBooks => CanonAttestation.EthiopicBooks;
 
     public sealed record Outcome(bool Written, long Rows, long Records, long Names, long Unplaced);
 
@@ -180,6 +171,52 @@ internal static class RecordCanons
         }
 
         return WiderBooks.Contains(canonical.Book) ? Deuterocanon : EthiopicBooks.Contains(canonical.Book) ? Ethiopic : null;
+    }
+
+    /// <summary>
+    /// Puts <c>records/canon</c> into <c>entity_canon</c> (record and canon only: the counts are for a reader of the file) inside
+    /// the caller's transaction, after the records. A slug that names no record fails the load. -1 where the store holds no
+    /// such product, which leaves the table empty and every record shown in every canon.
+    /// </summary>
+    public static async Task<long> Load(NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, CancellationToken cancellationToken)
+    {
+        await using (var empty = new NpgsqlCommand("TRUNCATE entity_canon", db, transaction))
+        {
+            await empty.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        if (!store.Exists(Product))
+        {
+            return -1;
+        }
+
+        await using (var stage = new NpgsqlCommand("DROP TABLE IF EXISTS s; CREATE TEMP TABLE s (slug text, canon text) ON COMMIT DROP", db, transaction))
+        {
+            await stage.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        long rows = 0;
+        await using (var import = await db.BeginBinaryImportAsync("COPY s (slug, canon) FROM STDIN (FORMAT BINARY)", cancellationToken))
+        {
+            using var reader = store.Open(Product, RecordCanonRow.Schema);
+            foreach (var row in reader.Rows())
+            {
+                await import.WriteRowAsync(cancellationToken, row.Slug, row.Canon);
+                rows++;
+            }
+
+            await import.CompleteAsync(cancellationToken);
+        }
+
+        await using var insert = new NpgsqlCommand(
+            "INSERT INTO entity_canon (entity_id, canon) SELECT e.id, s.canon FROM s JOIN entity e ON e.slug = s.slug", db, transaction)
+        {
+            CommandTimeout = 0,
+        };
+        var written = await insert.ExecuteNonQueryAsync(cancellationToken);
+        return written == rows
+            ? rows
+            : throw new InvalidOperationException($"{Product}: {rows} rows in the file, {written} written: a slug names no record.");
     }
 
     private static bool NeedsBuild(ProductStore store, IReadOnlyList<ProductInput> inputs)

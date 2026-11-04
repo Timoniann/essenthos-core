@@ -59,18 +59,11 @@ internal static class Annotations
             return [];
         }
 
-        var rows = await db.WordEntities
-            .Where(a => ids.Contains(a.WordId))
-            .Select(a => new Claimed(
-                a.WordId, a.Method, a.Confidence, a.Source, a.Note,
-                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name)
-            {
-                EntityId = a.EntityId,
-                Held = a.Claims.Where(c => c.Method != LinkMethod.StatedBySource).Select(c => c.Method).Distinct().ToList(),
-            })
+        var rows = await Rows(db.WordEntities.Where(a => ids.Contains(a.WordId)))
             .ToListAsync(cancellationToken);
 
         var settled = Settle(rows, await Bearers(db, rows, cancellationToken));
+        await BaseReadings(db, settled, cancellationToken);
         var namedAs = await NamedAs(db, settled, cancellationToken);
         return settled.ToDictionary(
             pair => pair.Key,
@@ -81,6 +74,48 @@ internal static class Annotations
                         ? Show(claimed) with { NamedAs = label }
                         : Show(claimed)),
             ]);
+    }
+
+    private static IQueryable<Claimed> Rows(IQueryable<WordEntity> annotations) =>
+        annotations.Select(a => new Claimed(
+            a.WordId, a.Method, a.Confidence, a.Source, a.Note,
+            a.Entity!.Kind, a.Entity.Slug, a.Entity.Name)
+        {
+            EntityId = a.EntityId,
+            Role = a.Role,
+            Origin = a.Origin,
+            Held = a.Claims.Where(c => c.Method != LinkMethod.StatedBySource).Select(c => c.Method).Distinct().ToList(),
+        });
+
+    /// <summary>
+    /// The second card of every word whose translation names another record than its base text does: the base's record,
+    /// right after the translation's own (<c>differs</c>), so a reader sees both and which is which. Asked only for the
+    /// words that carry a <c>differs</c> answer, which are few.
+    /// </summary>
+    private static async Task BaseReadings(
+        AppDbContext db,
+        Dictionary<long, List<Claimed>> settled,
+        CancellationToken cancellationToken)
+    {
+        var differing = settled
+            .Where(word => word.Value.Any(claimed => claimed.Origin == WordEntityOrigins.Differs))
+            .Select(word => word.Key)
+            .ToList();
+        if (differing.Count == 0)
+        {
+            return;
+        }
+
+        var readings = (await Rows(db.WordEntities.IgnoreQueryFilters()
+                    .Where(a => differing.Contains(a.WordId) && a.Origin == WordEntityOrigins.BaseReading))
+                .ToListAsync(cancellationToken))
+            .ToLookup(reading => reading.WordId);
+        foreach (var word in differing)
+        {
+            var shown = settled[word];
+            var at = shown.FindIndex(claimed => claimed.Origin == WordEntityOrigins.Differs);
+            shown.InsertRange(at + 1, readings[word].Where(reading => shown.All(claimed => claimed.EntityId != reading.EntityId)));
+        }
     }
 
     /// <summary>The first answer for each word, which is all an older client reads.</summary>
@@ -303,7 +338,8 @@ internal static class Annotations
     /// ruled on the word together.
     /// </summary>
     private static bool Beside(Claimed one, Claimed other, IReadOnlySet<(int Title, int Bearer)> bearers) =>
-        (one.Kind, other.Kind) is (EntityKind.Person, EntityKind.People) or (EntityKind.People, EntityKind.Person)
+        (one.Role is not null && other.Role is not null && one.Role != other.Role)
+        || (one.Kind, other.Kind) is (EntityKind.Person, EntityKind.People) or (EntityKind.People, EntityKind.Person)
         || ((one.Kind, other.Kind) is (EntityKind.Place, EntityKind.People) or (EntityKind.People, EntityKind.Place)
             && one.Standing == Ruled && other.Standing == Ruled)
         || (one.Kind == EntityKind.Title && bearers.Contains((one.EntityId, other.EntityId)))
@@ -316,7 +352,20 @@ internal static class Annotations
             Confidence = claimed.Confidence,
             Source = claimed.Source,
             Note = Route(claimed.Note),
+            Role = claimed.Role,
+            Origin = claimed.Origin,
+            BaseText = claimed.Origin == WordEntityOrigins.BaseReading ? CarriedThrough(claimed.Note) : null,
         };
+
+    /// <summary>The text a carried name came through, as its note writes it: <c>GRCBRENT</c> of <em>through GRCBRENT word 7521417</em>.</summary>
+    internal static string? CarriedThrough(string? note)
+    {
+        var match = note is null ? null : Through.Match(note);
+        return match is { Success: true } ? match.Groups[1].Value : null;
+    }
+
+    private static readonly Regex Through =
+        new(@"^through (\S+) word \d+", RegexOptions.CultureInvariant);
 
     /// <summary>The carrying route a note begins with, which is the whole of it a response carries; null for any other note.</summary>
     internal static string? Route(string? note)
@@ -341,6 +390,12 @@ internal static class Annotations
     {
         /// <summary>The record's row, which is what a title's bearers and a record's names are joined by.</summary>
         public int EntityId { get; init; }
+
+        /// <summary>How the word stands for the record (<see cref="WordEntityRoles"/>); null on a row the old load wrote.</summary>
+        public string? Role { get; init; }
+
+        /// <summary>Where the naming comes from (<see cref="WordEntityOrigins"/>); null on a row the old load wrote.</summary>
+        public string? Origin { get; init; }
 
         /// <summary>
         /// The methods of the claims the answer holds, other than a source's testimony about the
