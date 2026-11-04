@@ -1,4 +1,4 @@
-using Essenthos.Core.Conversion;
+﻿using Essenthos.Core.Conversion;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
@@ -74,6 +74,30 @@ public sealed class EvidentiaFilesTests : IDisposable
 
         using var reader = store.Open(MappingProducts.Of(Pair, MappingMethods.Evidentia), MappingRow.Schema);
         reader.ReadAll().Should().ContainSingle(r => r.From == "1.1:2.2").Which.Roles.Should().Be("1.1:2.2=attached@1.1:2.1");
+    }
+
+    [Fact]
+    public void A_link_keeps_the_id_the_file_it_replaces_or_the_final_gave_it()
+    {
+        var store = Store(withRunNumber: true);
+        using (var exported = store.Create(MappingProducts.Of(Pair, MappingMethods.Evidentia), ProductKind.Machine, MappingRow.Schema, "export", []))
+        {
+            exported.WriteAll([new MappingRow(555, "1.1:1.4", "1.1:1.4", "renders", MappingMethods.Evidentia, 0.9, "EVIDENTIA run 7", null, null, null)]);
+        }
+
+        using (var final = store.Create(MappingProducts.Of(Pair, MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "merge", []))
+        {
+            final.WriteAll([new FinalRow(777, "1.1:1.2", string.Empty, "expands", null, true, MappingMethods.Evidentia, 0.9, "EVIDENTIA run 7")]);
+        }
+
+        EvidentiaFiles.Write(store, _root, Pair, force: true);
+        EvidentiaFiles.Write(store, _root, Pair, force: true);
+
+        using var reader = store.Open(MappingProducts.Of(Pair, MappingMethods.Evidentia), MappingRow.Schema);
+        var rows = reader.ReadAll();
+        rows.Where(r => r.From == "1.1:1.4").Select(r => r.Id).Should().AllBeEquivalentTo(555L);
+        rows.Single(r => r.Relation == "expands").Id.Should().Be(777);
+        rows.Single(r => r.From == "1.1:1.1 1.1:1.2 1.1:1.3").Id.Should().BeNull("the stated row numbers that link in the merge");
     }
 
     [Fact]
