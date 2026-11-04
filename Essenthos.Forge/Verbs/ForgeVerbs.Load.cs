@@ -292,7 +292,7 @@ internal static partial class ForgeVerbs
                 continue;
             }
 
-            var framed = await loader.Framed(text, rules, CancellationToken.None);
+            var framed = await loader.Framed(text, rules, CancellationToken.None, store);
             CanonicalFrameLoader.Write(text, rules, store, framed, source);
             Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
                 $"{text.Slug}\t{framed.Verses.Count} verses\t{framed.Rows.Count} lines\t{framed.Titles} title rows\t{store.RelativePath(Loading.Frame.FrameFile.Product(text.Slug), ProductKind.Machine)}"));
