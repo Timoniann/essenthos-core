@@ -45,6 +45,8 @@ internal static class PairSources
         new ClearBibleSource(),
         new Door43AlignmentSource(),
         .. TableSources.All,
+        .. StrongNumberSource.All,
+        .. KingJamesGreekSource.All,
     ];
 
     /// <summary>The verb that writes a method's files, as the header and the declared graph name it.</summary>

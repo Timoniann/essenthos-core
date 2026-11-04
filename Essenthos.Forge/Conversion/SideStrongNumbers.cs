@@ -52,6 +52,16 @@ internal sealed class SideStrongNumbers : ITextStage
     /// <summary>The texts whose Strong numbers are laid from another edition.</summary>
     public static IEnumerable<string> Texts => Layers.Keys;
 
+    /// <summary>
+    /// The edition a laid text's numbers are read from (a file or folder under Resources), and whether it is laid through
+    /// the addresses the text's own file prints (the Synodal's <c>stated</c> notes) rather than at each verse's own.
+    /// </summary>
+    public static (string Source, bool Stated) Edition(string slug) => (Layers[slug].Source, Layers[slug].Stated);
+
+    /// <summary>The numbered edition of a laid text, read from Resources, verse by verse.</summary>
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> ReadEdition(string slug, string resources) =>
+        Layers[slug].Read(resources);
+
     public IReadOnlyList<string> Sources(string slug) => [Layers[slug].Source, StrongTerms.Source];
 
     public void Apply(ConvertedText text, string resources)

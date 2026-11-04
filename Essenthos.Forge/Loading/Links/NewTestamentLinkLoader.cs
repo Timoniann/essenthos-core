@@ -107,10 +107,10 @@ internal sealed record GreekLinkOutcome(
 /// </summary>
 internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestamentLinkLoader> logger)
 {
-    private static string Source(string greekSlug) =>
+    internal static string Source(string greekSlug) =>
         $"Zefania KJV+ Strong numbers, matched within the verse against {greekSlug}";
 
-    private static string RecoveredSource(string greekSlug) =>
+    internal static string RecoveredSource(string greekSlug) =>
         $"the untagged English function words, matched to the morphology {greekSlug} states";
 
     internal const string SuppliedSource =
@@ -290,7 +290,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         return GreekNumberResolution.Admit(dictionary, attested, Occurrences(pairs));
     }
 
-    private static IEnumerable<NumberOccurrence> Occurrences(List<VersePair> pairs)
+    internal static IEnumerable<NumberOccurrence> Occurrences(List<VersePair> pairs)
     {
         foreach (var pair in pairs)
         {
@@ -314,7 +314,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// originals by as well. What is added here is what only the King James has — italics the
     /// translators printed to mark a word they supplied, and an English function-word matcher.
     /// </summary>
-    private static List<GreekLinkDraft> Build(
+    internal static List<GreekLinkDraft> Build(
         VersePair pair,
         IReadOnlyDictionary<string, NumberRedirect> resolution,
         ref int unmatched,
@@ -671,13 +671,13 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// </param>
     internal sealed record TaggedWord(string Text, IReadOnlyList<string> Numbers, bool Supplied);
 
-    private sealed record Word(long Id, string Text, string? Strong, GreekMorphology Morphology);
+    internal sealed record Word(long Id, string Text, string? Strong, GreekMorphology Morphology);
 
     /// <summary>A verse the tagged edition and the corpus agree on, with both texts' words beside it.</summary>
-    private sealed record VersePair(List<TaggedWord> Tags, List<Word> English, List<Word> Greek);
+    internal sealed record VersePair(List<TaggedWord> Tags, List<Word> English, List<Word> Greek);
 
     /// <summary>What joined the two sides, so the load can report each kind apart from the others.</summary>
-    private enum GreekMatch
+    internal enum GreekMatch
     {
         Unambiguous,
         Paired,
@@ -691,5 +691,5 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// stated by the source, and a number on it would invite the reader to weigh a claim that was
     /// never a guess.
     /// </param>
-    private sealed record GreekLinkDraft(List<long> English, List<long> Greek, double? Confidence, GreekMatch Kind);
+    internal sealed record GreekLinkDraft(List<long> English, List<long> Greek, double? Confidence, GreekMatch Kind);
 }

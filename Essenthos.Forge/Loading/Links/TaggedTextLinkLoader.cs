@@ -201,14 +201,14 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     internal static string Source(string fromSlug, string toSlug) =>
         $"the Strong numbers {fromSlug} carries, matched within the verse against {toSlug}";
 
-    private static string Source(EditionNumbers edition, string toSlug) =>
+    internal static string Source(EditionNumbers edition, string toSlug) =>
         $"{edition.Credit}, matched within the verse against {toSlug}";
 
     /// <summary>
     /// The note on a claim a source's link is given where the numbers reach exactly its words. The
     /// link keeps the source's own method; this says a printed number agrees with it.
     /// </summary>
-    private const string CorroborationNote = "the Strong numbers name the same words";
+    internal const string CorroborationNote = "the Strong numbers name the same words";
 
     /// <summary>
     /// The note on an aligner claim folded into a match naming more words than the aligner did —
