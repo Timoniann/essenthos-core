@@ -1,4 +1,4 @@
-using Essenthos.Core.Build;
+﻿using Essenthos.Core.Build;
 using Essenthos.Core.Products;
 using Essenthos.Core.Verbs;
 using FluentAssertions;
@@ -96,6 +96,19 @@ public sealed class ProductGraphTests : IDisposable
     public void Producers_run_after_what_they_read()
     {
         Graph.Order().Should().Equal("convert all", "merge --all", "indexes");
+    }
+
+    [Fact]
+    public void A_producer_reading_one_texts_product_runs_after_the_producer_of_that_product()
+    {
+        var graph = new ProductGraph(
+        [
+            new("tables/word_strong", ProductMaker.Build, "tables", ["Essenthos/texts/BSB/frame"], ["word_strong"], "all"),
+            new("texts/{text}/frame", ProductMaker.Build, "frame-files", ["Essenthos/texts/{text}/words"], ["verse_reference"], "text"),
+            new("texts/{text}/words", ProductMaker.Build, "convert all", ["bible4u/*"], ["word"], "text"),
+        ]);
+
+        graph.Order().Should().Equal("convert all", "frame-files", "tables");
     }
 
     [Fact]

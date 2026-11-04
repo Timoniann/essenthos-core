@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Products;
 
@@ -109,10 +109,14 @@ internal sealed partial class ProductGraph
         foreach (var reader in Declarations.Where(d => d.Maker == ProductMaker.Build && d.Producer != SelfProducer))
         {
             var inputs = reader.Inputs.Where(i => i != "{sources}").Select(i => Compile(i, null)).ToList();
+            // An input naming one text's product (Essenthos/texts/BSB/frame) is read as the product it names, too.
+            var named = reader.Inputs.Where(i => i.StartsWith("Essenthos/", StringComparison.Ordinal))
+                .Select(i => SamplePath(i["Essenthos/".Length..])).ToList();
             foreach (var made in Declarations.Where(d => d.Maker == ProductMaker.Build && d.Producer != reader.Producer && d.Producer != SelfProducer))
             {
                 var sample = "Essenthos/" + SamplePath(made.Product);
-                if (inputs.Any(i => i.IsMatch(sample) || i.IsMatch(Strip(sample))))
+                var pattern = Compile(made.Product, null);
+                if (inputs.Any(i => i.IsMatch(sample) || i.IsMatch(Strip(sample))) || named.Any(pattern.IsMatch))
                 {
                     needs[reader.Producer].Add(made.Producer);
                 }
