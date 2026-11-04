@@ -89,7 +89,7 @@ internal static class MappingFiles
         var ordinal = PairOrdinals.Ensure(store, [pair])[pair];
         var output = MappingMerge.Merge(new MappingMerge.Input(
             pair, fromText, toText, rows, rulings, hashes, manifests, previous, PairOrdinals.Base + ordinal * PairOrdinals.Range,
-            folds, CurrentFolds(store), remade, producers));
+            folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers));
 
         foreach (var (method, merged) in output.Methods)
         {
@@ -233,14 +233,22 @@ internal static class MappingFiles
         return folds;
     }
 
-    /// <summary>What a pair's final is made from: its method files, its rulings and hashes, and the two texts' manifests where they exist.</summary>
+    /// <summary>The two texts' frames for the merge's crossing rule, where the store holds both texts' manifests.</summary>
+    private static PairFrames? Frames(ProductStore store, string pair, string fromText, string toText) =>
+        store.Exists(VerseManifestRow.ProductOf(fromText)) && store.Exists(VerseManifestRow.ProductOf(toText))
+            ? VerseLinkFiles.Frames(store, pair)
+            : null;
+
+    /// <summary>What a pair's final is made from: its method files, its rulings and hashes, and the two texts' manifests and frames where they exist.</summary>
     private static IReadOnlyList<ProductInput> Inputs(ProductStore store, string pair, List<string> methods, string fromText, string toText)
     {
         var products = methods.Select(m => MappingProducts.Of(pair, m))
             .Append(MappingProducts.Of(pair, MappingProducts.Rulings))
             .Append(MappingProducts.Of(pair, MappingProducts.Hashes))
             .Append(VerseManifestRow.ProductOf(fromText))
-            .Append(VerseManifestRow.ProductOf(toText));
+            .Append(VerseManifestRow.ProductOf(toText))
+            .Append(Loading.Frame.FrameFile.Product(fromText))
+            .Append(Loading.Frame.FrameFile.Product(toText));
         return [.. products.Select(store.Find).OfType<string>().Select(store.Input)];
     }
 

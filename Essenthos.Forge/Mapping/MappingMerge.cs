@@ -12,7 +12,8 @@ namespace Essenthos.Core.Mapping;
 /// <item>links of different words competing for a word: the higher-ranked keeps it, the lower is withdrawn
 /// whole, by the method that won; an absence a source states or a person decides wins its word over any
 /// correspondence, an EVIDENTIA verdict's absence only over the aligner's; links of equal rank stand side
-/// by side, as one source's own several links on a word do.</item>
+/// by side, as one source's own several links on a word do;</item>
+/// <item>a machine's link across two verses no verse link joins is withdrawn (<see cref="CrossingRule"/>).</item>
 /// </list>
 /// Nothing is deleted: every row stays in its method file, with what the merge decided in its status. The
 /// output is a function of the inputs and sorted by key, so a second merge of the same files writes the same bytes.
@@ -30,6 +31,7 @@ internal static class MappingMerge
     /// <param name="Remade">The method files a producer made from the two texts' words as they stand, each with the sources whose rows it
     /// carried from an earlier file instead (<see cref="MethodFiles.KeptSources"/>): their other rows answer for no verse that moved.</param>
     /// <param name="Producers">The producer that wrote each method file, where one from files did; a moved verse's rows wait for it.</param>
+    /// <param name="Verses">The two texts' frames, for <see cref="CrossingRule"/>; null leaves the rule out.</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -42,6 +44,7 @@ internal static class MappingMerge
         long IdBase,
         IReadOnlyDictionary<(string Text, VerseKey Verse), string>? Folds = null,
         Func<string, VerseKey, string?>? FoldNow = null,
+        PairFrames? Verses = null,
         IReadOnlyDictionary<string, IReadOnlySet<string>>? Remade = null,
         IReadOnlyDictionary<string, string>? Producers = null);
 
@@ -125,6 +128,11 @@ internal static class MappingMerge
         var (orphans, bare, left) = KeepOrphans(accepted, withdrawn, pinned);
         accepted.Sort(CompareBySort);
         var final = Finalise(input, accepted);
+        if (input.Verses is { } verses)
+        {
+            final = WithdrawCrossings(verses, accepted, final);
+        }
+
 
         var methods = new Dictionary<string, List<MappingRow>>(StringComparer.Ordinal);
         foreach (var (file, rows) in input.Methods)
@@ -539,6 +547,31 @@ internal static class MappingMerge
             if (order == 0) order = (a.Top.Row.Confidence ?? 2).CompareTo(b.Top.Row.Confidence ?? 2);
             return order > 0 || (order == 0 && CompareBySort(a, b) < 0);
         }
+    }
+
+    /// <summary>
+    /// <see cref="CrossingRule"/> over the standing links, once the verse links the final makes are known: a link withdrawn
+    /// here leaves its words as they are, with no other link put in its place.
+    /// </summary>
+    private static List<FinalRow> WithdrawCrossings(PairFrames verses, List<Candidate> accepted, List<FinalRow> final)
+    {
+        var joined = VerseLinks.Joins(verses, final);
+        var withdrawn = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var candidate in accepted)
+        {
+            if (CrossingRule.Applies(candidate.Rows.Select(r => r.Row.Method))
+                && CrossingRule.Withdraws(candidate.Top.Row.From, candidate.Top.Row.To, verses, joined))
+            {
+                foreach (var row in candidate.Rows)
+                {
+                    row.Status = MappingStatus.WithdrawnBy(CrossingRule.Name);
+                }
+
+                withdrawn.Add(candidate.Top.Row.From + "|" + candidate.Top.Row.To);
+            }
+        }
+
+        return withdrawn.Count == 0 ? final : [.. final.Where(r => !withdrawn.Contains(r.From + "|" + r.To))];
     }
 
     private static List<FinalRow> Finalise(Input input, List<Candidate> accepted)

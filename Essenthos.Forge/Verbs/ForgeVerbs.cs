@@ -272,6 +272,9 @@ internal static partial class ForgeVerbs
             "Write every link of the database as the mapping's per-pair method files, words by key and ids kept. Reads the database only.", MappingExportVerb),
         new("merge", "<pair> | --all [--from <Resources>] [--force] [--parallel <n>]",
             "Merge a pair's method files into its final and report by the stated precedence; losers stay in their files, marked.", Merge, Least: 1),
+        new("verse-pairs", "[<FROM-TO>,...] [--from <Resources>] [--force] [--parallel <n>]",
+            "Write each pair's verse links (mapping/<pair>/verses) from the two texts' frames and the pair's final, for every pair "
+            + "whose inputs moved: every pair with a final and every declared pair. Reads no database.", VerseLinksVerb),
         new("strong-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
             "Write each pair's strong method file from the translation's Strong numbers (its own, or laid from a numbered edition) and both texts' words and frames, where an input moved. Reads no database.",
             (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Strong)),
