@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Essenthos.Core.Conversion;
@@ -242,12 +243,26 @@ internal sealed class StrongNumberSource : IPairSource
         }
 
         var laid = SynodalStrongLayer.Lay(SideStrongNumbers.ReadEdition(_translation, texts.Store.ResourcesPath), corpus);
-        var tags = new Dictionary<long, WordTag>(laid.Tags);
+        var (tags, set, cleared) = Overlay(laid.Tags, [.. text.Words.Select(word => word.Strong)]);
+        log($"{SideStrongNumbers.Edition(_translation).Source} laid onto {laid.Verses} verses ({laid.Renumbered} through the address the "
+            + $"text prints, {laid.Joined} with a neighbour, {laid.Refused} refused, {laid.Unused} edition verses unused), {laid.TaggedWords} "
+            + $"words numbered; {set} numbers the words product holds otherwise, {cleared} it clears");
+        return tags;
+    }
+
+    /// <summary>
+    /// The laid tags with the words product's numbers over them: where a word's number is not its tag's first (a correction
+    /// set or cleared it), the word's number stands, first among the tag's others, or the tag goes; a number on a word the
+    /// edition left untagged is a tag of its own. Returns how many were set and cleared.
+    /// </summary>
+    internal static (Dictionary<long, WordTag> Tags, int Set, int Cleared) Overlay(IReadOnlyDictionary<long, WordTag> laid, IReadOnlyList<string?> numbers)
+    {
+        var tags = new Dictionary<long, WordTag>(laid);
         int set = 0, cleared = 0;
         var unit = -1;
-        for (var id = 0; id < text.Words.Count; id++)
+        for (var id = 0; id < numbers.Count; id++)
         {
-            var number = text.Words[id].Strong;
+            var number = numbers[id];
             var tag = tags.TryGetValue(id, out var found) ? found : (WordTag?)null;
             var first = tag is { Numbers.Count: > 0 } t ? t.Numbers[0] : null;
             if (number == first)
@@ -269,10 +284,7 @@ internal sealed class StrongNumberSource : IPairSource
             }
         }
 
-        log($"{SideStrongNumbers.Edition(_translation).Source} laid onto {laid.Verses} verses ({laid.Renumbered} through the address the "
-            + $"text prints, {laid.Joined} with a neighbour, {laid.Refused} refused, {laid.Unused} edition verses unused), {laid.TaggedWords} "
-            + $"words numbered; {set} numbers the words product holds otherwise, {cleared} it clears");
-        return tags;
+        return (tags, set, cleared);
     }
 
     /// <summary>The addresses the text's own file prints for its verses (the <c>stated</c> notes of its notes product).</summary>
@@ -292,14 +304,15 @@ internal sealed class StrongNumberSource : IPairSource
         }
 
         return stated;
+    }
 
-        static VerseAddress Address(string content)
-        {
-            var colon = content.IndexOf(':');
-            var chapter = content[..colon];
-            var digits = chapter.Length - chapter.TrimStart("0123456789".ToCharArray()).Length;
-            return new VerseAddress(int.Parse(chapter[..digits]), int.Parse(content[(colon + 1)..]));
-        }
+    /// <summary>A <c>stated</c> note's address, <c>chapter[label]:verse</c> (<c>22:1</c>, <c>9a:3</c>), as the laying reads it.</summary>
+    internal static VerseAddress Address(string content)
+    {
+        var colon = content.IndexOf(':');
+        var chapter = content[..colon];
+        var digits = chapter.Length - chapter.TrimStart("0123456789".ToCharArray()).Length;
+        return new VerseAddress(int.Parse(chapter[..digits], CultureInfo.InvariantCulture), int.Parse(content[(colon + 1)..], CultureInfo.InvariantCulture));
     }
 
     /// <summary>
