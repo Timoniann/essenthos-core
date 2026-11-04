@@ -163,6 +163,18 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
     }
 
     /// <summary>
+    /// GLAUx's leading lemma for a word as written, whatever share of its evidence agrees: a lemma for every word
+    /// whose form GLAUx knows, for a measurement that wants one. The column keeps only the agreed ones (<see cref="Agreed"/>).
+    /// </summary>
+    internal static Func<string, string?> Leading(string directory)
+    {
+        var (lexicon, spelling) = Read(directory);
+        return surface => lexicon.TryGetValue(GreekLetters.Bare(surface), out var choice)
+            ? spelling.GetValueOrDefault(choice.Lemma) ?? choice.Lemma
+            : null;
+    }
+
+    /// <summary>
     /// The form-to-lemma table, and the spelling each folded lemma is most often written with.
     ///
     /// The lexicon folds both sides so that an accented text can be looked up by an unaccented key,
