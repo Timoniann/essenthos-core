@@ -43,6 +43,7 @@ internal static class PairSources
     [
         new BereanTableSource(),
         .. StrongNumberSource.All,
+        .. KingJamesGreekSource.All,
     ];
 
     /// <summary>The verb that writes a method's files, as the header and the declared graph name it.</summary>

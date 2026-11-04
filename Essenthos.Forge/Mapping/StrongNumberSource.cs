@@ -309,13 +309,7 @@ internal sealed class StrongNumberSource : IPairSource
     private string Named(ProductStore store, string pair, string toText)
     {
         var fallback = _credit is null ? TaggedTextLinkLoader.Source(_translation, toText) : _credit + Against + toText;
-        return Previous(store, pair, MappingMethods.Strong, source => Makes(source) && Witness(source, toText)) ?? fallback;
-
-        static bool Witness(string source, string toText)
-        {
-            var name = source[(source.LastIndexOf(' ') + 1)..];
-            return TextAliases.Of(toText).Append(toText).Any(alias => string.Equals(alias, name, StringComparison.OrdinalIgnoreCase));
-        }
+        return Previous(store, pair, MappingMethods.Strong, source => Makes(source) && NamesWitness(source, toText)) ?? fallback;
     }
 
     /// <summary>The source most rows of a pair's method file carry among those the test accepts, or null.</summary>
@@ -423,14 +417,24 @@ internal sealed class StrongNumberSource : IPairSource
         }
     }
 
+    /// <summary>Strong's Greek dictionary's entries, as the database's <c>strong_entry</c> holds them for the redirects.</summary>
+    internal static List<GreekEntry> GreekEntries(ProductStore store) =>
+        [.. new StrongXmlParser().ParseGreek(File.ReadAllText(store.FullPath(GreekDictionary)))
+            .Select(entry => new GreekEntry(entry.StrongNumber, entry.Lemma, entry.Derivation))];
+
+    /// <summary>Whether a source names this witness last, under its slug or an old name, in any case.</summary>
+    internal static bool NamesWitness(string source, string witness)
+    {
+        var name = source[(source.LastIndexOf(' ') + 1)..];
+        return TextAliases.Of(witness).Append(witness).Any(alias => string.Equals(alias, name, StringComparison.OrdinalIgnoreCase));
+    }
+
     /// <summary>The redirects of Strong's Greek dictionary the verses bear out, as the database's loader admits them.</summary>
     internal static Dictionary<string, NumberRedirect> Resolution(
         ProductStore store,
         IEnumerable<(List<StrongNumberMatch.TaggedWord> Tagged, List<(long Id, StrongNumberMatch.WitnessWord Word)> Against)> verses)
     {
-        var dictionary = new StrongXmlParser().ParseGreek(File.ReadAllText(store.FullPath(GreekDictionary)))
-            .Select(entry => new GreekEntry(entry.StrongNumber, entry.Lemma, entry.Derivation))
-            .ToList();
+        var dictionary = GreekEntries(store);
         var list = verses.ToList();
         var attested = list.SelectMany(v => v.Against).Where(w => w.Word.Strong is not null).Select(w => w.Word.Strong!).ToHashSet(StringComparer.Ordinal);
         return GreekNumberResolution.Admit(dictionary, attested, Occurrences(list));
