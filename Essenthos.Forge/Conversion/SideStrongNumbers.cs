@@ -1,4 +1,5 @@
 using Essenthos.Core.Loading;
+using Essenthos.Core.Products;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.XmlBible;
 
@@ -48,7 +49,10 @@ internal sealed class SideStrongNumbers : ITextStage
     /// <summary>Whether a text's Strong numbers are laid onto it from another edition, not its own tags.</summary>
     public static bool Layered(string slug) => Layers.ContainsKey(slug);
 
-    public IReadOnlyList<string> Sources(string slug) => [Layers[slug].Source];
+    /// <summary>The texts whose Strong numbers are laid from another edition.</summary>
+    public static IEnumerable<string> Texts => Layers.Keys;
+
+    public IReadOnlyList<string> Sources(string slug) => [Layers[slug].Source, StrongTerms.Source];
 
     public void Apply(ConvertedText text, string resources)
     {
@@ -80,5 +84,59 @@ internal sealed class SideStrongNumbers : ITextStage
         }
 
         text.Provenance.Add(new("strong", $"{layer.Source}, laid onto the words: {numbered} words ({laid})"));
+        var verdict = StrongTerms.Read(resources).GetValueOrDefault(text.Slug);
+        text.Provenance.Add(new(StrongTerms.Served, verdict is { Served: true }
+            ? "yes"
+            : $"no: {verdict?.Why ?? "the terms of the numbering are not read"} ({StrongTerms.Source})"));
     }
+}
+
+/// <summary>
+/// One row of <c>texts/strong-terms.tsv</c>: whether the terms of the numbering a text's Strong numbers are laid from
+/// let the served database carry them, with the terms quoted and where they were read.
+/// </summary>
+internal sealed record StrongTerm(string Text, string Numbering, bool Served, string File, string Quote, string Why)
+{
+    public static readonly ProductSchema<StrongTerm> Schema = new ProductSchema<StrongTerm>()
+        .Text("text", t => t.Text)
+        .Text("numbering", t => t.Numbering)
+        .Text("served", t => t.Served ? "yes" : "no")
+        .Text("file", t => t.File)
+        .Text("quote", t => t.Quote)
+        .Text("why", t => t.Why)
+        .Reads(row => new StrongTerm(row.Text(0), row.Text(1), row.Text(2) switch
+        {
+            "yes" => true,
+            "no" => false,
+            var other => throw new FormatException($"texts/strong-terms: served is yes or no, not \"{other}\" ({row.Text(0)})."),
+        }, row.Text(3), row.Text(4), row.Text(5)));
+}
+
+/// <summary>
+/// The verdicts on laid Strong numbers, and how the words product carries them: a header note <c>strong-served</c>,
+/// <c>yes</c> or <c>no: why</c>. A text whose numbers are its own tags has no note, and its numbers are served.
+/// </summary>
+internal static class StrongTerms
+{
+    public const string Product = "texts/strong-terms";
+
+    public const string Source = "Essenthos/texts/strong-terms.tsv";
+
+    public const string Served = "strong-served";
+
+    public static Dictionary<string, StrongTerm> Read(string resources)
+    {
+        var store = new ProductStore(resources);
+        if (!store.Exists(Product))
+        {
+            return [];
+        }
+
+        using var reader = store.Open(Product, StrongTerm.Schema);
+        return reader.Rows().ToDictionary(term => term.Text, StringComparer.Ordinal);
+    }
+
+    /// <summary>Whether the served database may carry the Strong numbers of a text's words product, as its header says.</summary>
+    public static bool MayServe(ProductHeader? header) =>
+        header?.Notes.LastOrDefault(note => note.Key == Served) is not { Value: { } value } || value == "yes";
 }

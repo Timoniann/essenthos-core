@@ -25,6 +25,17 @@ public class ProductHeaderTests
     }
 
     [Fact]
+    public void ANoteWhoseNameFillsTheColumnReadsBackAsTheSameNote()
+    {
+        var header = new ProductHeader("Essenthos/texts/RUSV/words.essx", [], "forge convert RUSV");
+        header.Notes.Add(new("strong-served", "no: for the mapping only"));
+
+        var parsed = ProductHeader.Parse(header.Format().Split('\n', StringSplitOptions.RemoveEmptyEntries));
+
+        parsed.Notes.Should().ContainSingle().Which.Should().Be(new KeyValuePair<string, string>("strong-served", "no: for the mapping only"));
+    }
+
+    [Fact]
     public void ParsesWhatItWritesNotesAndFreeCommentsIncluded()
     {
         var header = new ProductHeader("Essenthos/texts/NPU2022/frame.tsv", [new ProductInput("Versification/TVTMS.txt", Sha)], "forge frame NPU2022");

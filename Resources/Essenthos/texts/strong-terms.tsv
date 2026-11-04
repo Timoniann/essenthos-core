@@ -1,0 +1,24 @@
+# product    Essenthos/texts/strong-terms.tsv
+# producer   by hand: whether a text's Strong numbers laid from another edition may be served, read by forge convert
+# A translation without tags of its own takes Strong numbers from a numbered edition of the same translation
+# (SideStrongNumbers). Those numbers always feed the mapping. They go into the served database only where the
+# terms of the numbering itself, not the text's, allow it: the owner's answer on TSK-1443 (2026-11-04) is to
+# show only the numbers whose terms allow it, and to use the others, and any whose terms were not read, for the
+# mapping only. A laid text missing from this file is not served.
+#
+# Columns, tab-separated:
+#   text       the text's slug
+#   numbering  whose numbering it is, and where it is read from
+#   served     yes or no
+#   file       where its terms were read, under Resources/ or at the address given
+#   quote      the terms, verbatim
+#   why        the verdict and what it rests on
+text	numbering	served	file	quote	why
+RUSV	swmail/RST, Bob Jones University's numbering (SynodalStrong/RSTE_verse_words.xml)	no	SynodalStrong/LICENCE.md	Pierce-Strong's Number Code System with Tense-Voice-Mood Verb Parsings, Copyright 0 1996 Bob Jones University, Use of the work for profit making purposes is expressly forbidden. This work may not be copied or reproduced in any way for the purpose of profitable business ventures.	Owner 2026-11-04 on TSK-1443 Q1: used for the mapping only, not shown, not served.
+LSG1910	CrossWire FreSegond1910 (Segond1910Strong/FreSegond1910)	no	Segond1910Strong/FreSegond1910/mods.d	DistributionLicense=Copyrighted; Permission to distribute granted to CrossWire	Owner 2026-11-04 on TSK-1443 Q1: used for the mapping only, not shown, not served.
+SCH1951	CrossWire GerSch (Schlachter1951/GerSch)	no	Schlachter1951/GerSch/mods.d	DistributionLicense=Copyrighted; Free non-commercial distribution	Owner 2026-11-04 on TSK-1443 Q1: used for the mapping only, not shown, not served.
+RLT2018	CrossWire RLT (RevisedLiteral/RLT)	no	RevisedLiteral/RLT/mods.d	DistributionLicense=GPL	Owner 2026-11-04 on TSK-1443 Q1: used for the mapping only, not shown, not served.
+RV1909	Rubén Gómez's tagging, as eBible's spaRV1909 carries it (ReinaValera1909/*.usfm)	no	ReinaValera1909/LICENCE.md	Reina-Valera 1909 con números de Strong. Cortesía de Rubén Gómez. Utilizado con permiso. (CrossWire's sparv1909.conf: DistributionLicense=Copyrighted; Permission to distribute granted to CrossWire)	The numbering is Gómez's, not eBible's public-domain text (PRB-0375); the owner ruled on 2026-09-20 that it is used for the mapping only and shown nowhere, and his answer of 2026-11-04 on TSK-1443 Q1 names it again.
+JND2024	concordance.bible's numbering in CrossWire FreJND 3.3 (DarbyFrench/FreJND)	no	DarbyFrench/FreJND/mods.d/frejnd.conf; https://concordance.bible/pages/mentions-legales/ (read 2026-11-04)	frejnd.conf: DistributionLicense=Public Domain; About: Text in Public Domain 2024 (provided by BPC, revision JND v2.0) ... With Strong numbers affected by "Concordances and Bible Translations". concordance.bible's legal notice: l'utilisation et la reproduction des données du Site est strictement interdite sans obtention de l'autorisation de l'éditeur	Unclear: the module's line says public domain and its About says it of the text, while the numbering's author (the association CTB, concordance.bible) reserves its data and nowhere frees the numbers. Not served until the owner says otherwise (question on TSK-1443).
+CUV	FHL's numbering in CrossWire ChiUn (ChineseUnion1919/ChiUn)	no	ChineseUnion1919/LICENCE.md; ChineseUnion1919/fhl-copyright.html	信望爱的《和合本》 Strong's numbers 着作权为本会所有，采用open source FDL授权，本文件包含Strong's numbers标记，请勿任意移除。	Unclear for serving: the numbers are FHL's copyright under the GNU FDL (copyleft, no version named). Serving them copies them, which the FDL allows only under the FDL with its notices; whether to accept that on an annotation is the owner's under RUL-0183 (FTR-0731 settled the links only). Not served until the owner says otherwise (question on TSK-1443).
+CUVS	FHL's numbering in CrossWire ChiUns (ChineseUnion1919/ChiUns)	no	ChineseUnion1919/LICENCE.md; ChineseUnion1919/fhl-copyright.html	信望爱的《和合本》 Strong's numbers 着作权为本会所有，采用open source FDL授权，本文件包含Strong's numbers标记，请勿任意移除。	As CUV: the same FHL numbering in simplified characters. Not served until the owner says otherwise (question on TSK-1443).

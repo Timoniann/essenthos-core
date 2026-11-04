@@ -141,8 +141,9 @@ public sealed class ProductHeader
         return Encoding.UTF8.GetByteCount(before.ToString()) + ("# " + RowsName.PadRight(NameWidth)).Length;
     }
 
+    /// <summary>A name as long as the column or longer still takes the two spaces that tell a named line from a comment.</summary>
     private static void Line(StringBuilder text, string name, string value) =>
-        text.Append("# ").Append(name.PadRight(NameWidth)).Append(value).Append('\n');
+        text.Append("# ").Append(name.PadRight(Math.Max(NameWidth, name.Length + 2))).Append(value).Append('\n');
 
     /// <summary>
     /// Reads the comment lines at the top of a file, which the caller has already taken off it. A
