@@ -47,6 +47,7 @@ internal sealed class StrongNumberSource : IPairSource
     private readonly string? _credit;
     private readonly IReadOnlyList<string> _prefixes;
     private readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<long, WordTag>>> _tags = new();
+    private readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<long, long>>> _moved = new();
 
     /// <param name="credit">Whose numbering is laid onto the translation; null for numbers the translation carries itself.</param>
     private StrongNumberSource(string translation, IReadOnlyList<string> witnesses, string? credit)
@@ -91,6 +92,14 @@ internal sealed class StrongNumberSource : IPairSource
             {
                 inputs.Add(file);
             }
+        }
+
+        if (!Laid && Placed(_translation))
+        {
+            // The text read again up to MisplacedNumbers, which decides from the originals' words, to know what it moved.
+            // Not a text product the frame names already: a path named twice never reads as current (PairSources.Write).
+            var named = MethodFiles.TextInputs(store, pair).Select(input => input.Path).ToHashSet(StringComparer.Ordinal);
+            inputs.AddRange(TextConverter.Inputs(store, TextCatalogue.Find(_translation)).Select(input => input.Path).Where(path => !named.Contains(path)));
         }
 
         if (IndexContext.Declared(store, to).Language == "grc")
@@ -167,8 +176,9 @@ internal sealed class StrongNumberSource : IPairSource
         var resolution = series == StrongNumbers.Greek ? Resolution(store, verses.Select(v => (v.Tagged, v.Against))) : [];
         var (absent, testimony) = Others(store, pair);
         var rows = new List<MappingRow>(300_000);
-        int matched = 0, testified = 0;
+        int matched = 0, testified = 0, regained = 0;
         var kinds = new int[3];
+        var moved = Laid || !Placed(_translation) ? null : _moved.GetValue(texts, t => new Lazy<Dictionary<long, long>>(() => Moved(t, _translation, log))).Value;
         foreach (var (units, members, against) in verses)
         {
             // The witness's words are numbered after the translation's, in the order the pool gives them, so one id names
@@ -177,15 +187,28 @@ internal sealed class StrongNumberSource : IPairSource
             var drafts = StrongNumberMatch.Verse(units, [.. against.Select((a, at) => a.Word with { Id = offset + at })], resolution, out _);
             foreach (var draft in drafts)
             {
-                var from = draft.From.SelectMany(id => members[id]).Select(translation.Key).Where(key => !absent.Contains(key.Own)).ToList();
+                var ids = draft.From.SelectMany(id => members[id]).ToList();
+                var from = ids.Select(translation.Key).Where(key => !absent.Contains(key.Own)).ToList();
                 if (from.Count == 0)
                 {
                     continue;
                 }
 
                 matched += from.Count;
+
+                // The auxiliary or pronoun the conversion took a verb's number from joins the verb's link, attached to it.
+                List<(WordKey Word, WordKey Verb)> attached = moved is null
+                    ? []
+                    : ids.Where(id => moved.ContainsKey(id) && !absent.Contains(translation.Key(id).Own))
+                        .Select(verb => (Word: translation.Key(moved[verb]), Verb: translation.Key(verb)))
+                        .Where(pair => !absent.Contains(pair.Word.Own) && !from.Contains(pair.Word))
+                        .ToList();
+                from.AddRange(attached.Select(pair => pair.Word));
+                regained += attached.Count;
                 var row = new MappingRow(null, MappingText.Keys(from), MappingText.Keys(draft.To.Select(id => witness.Text.Key(against[(int)(id - offset)].Id))), "renders",
-                    MappingMethods.Strong, draft.Confidence, source, null, null, null);
+                    MappingMethods.Strong, draft.Confidence, source, null,
+                    attached.Count == 0 ? null : string.Join(' ', attached.OrderBy(pair => pair.Word).Select(pair => $"{pair.Word.Own}=attached@{pair.Verb.Own}")),
+                    null);
                 if (from.Any(key => testimony.Words.Contains(key.Own)))
                 {
                     if (!testimony.Shapes.Contains(row.Shape))
@@ -205,8 +228,35 @@ internal sealed class StrongNumberSource : IPairSource
 
         log($"{verses.Count} verses, {matched} of {tagged} tagged words matched ({unplaced} in verses the witness lacks); {rows.Count} rows "
             + $"({kinds[(int)StrongMatchKind.Unambiguous]} unambiguous, {kinds[(int)StrongMatchKind.Paired]} paired, "
-            + $"{kinds[(int)StrongMatchKind.Contended]} contended), {testified} left to a stated link");
+            + $"{kinds[(int)StrongMatchKind.Contended]} contended), {testified} left to a stated link"
+            + (moved is null ? string.Empty : $"; {regained} auxiliaries or pronouns attached to the verb their number moved to"));
         return rows;
+    }
+
+    /// <summary>Whether the conversion moves a verb's number off an auxiliary or pronoun of the text (<see cref="MisplacedNumbers"/>).</summary>
+    private static bool Placed(string slug) => new MisplacedNumbers().AppliesTo(slug);
+
+    /// <summary>
+    /// The word each verb took its number from at conversion (<see cref="MisplacedNumbers.VerbMoves"/>), by the verb's id
+    /// in the words product: <em>geboten</em> for <em>hat</em>. A move the words product no longer bears out (a correction
+    /// put a number back on the auxiliary, or took the verb's) is left out.
+    /// </summary>
+    private static Dictionary<long, long> Moved(ProductTexts texts, string slug, Action<string> log)
+    {
+        var text = texts[slug];
+        var moved = new Dictionary<long, long>();
+        var moves = MisplacedNumbers.VerbMoves(texts.Store, TextCatalogue.Find(slug));
+        foreach (var (verse, word, verb) in moves)
+        {
+            var ids = text.InVerse(verse).ToList();
+            if (word <= ids.Count && text.Words[ids[verb - 1]].Strong is not null && text.Words[ids[word - 1]].Strong is null)
+            {
+                moved[ids[verb - 1]] = ids[word - 1];
+            }
+        }
+
+        log($"{moves.Count} verb numbers the conversion moved off an auxiliary or pronoun, {moved.Count} of them as the words product holds them");
+        return moved;
     }
 
     /// <summary>The numbers of the series a word's tag names and the unit it belongs to, or null where it names none.</summary>
