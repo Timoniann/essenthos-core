@@ -43,8 +43,17 @@ internal static partial class ForgeVerbs
         new("lexicon-translations", "", "Load only published Strong translations beside the English dictionary.",
             LexiconTranslations, Most: 0),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
-        new("verify", "[--floor <share>]",
-            "Measure the corpus, record what it finds for /v1/health, and fail on anything broken.", Verify),
+        new("build", "[--into <database> [--replace]] [--apply] [--level skip|essentials|all] [--parallel <n>] [--no-products]",
+            "Make every product whose inputs moved, in the order build/products declares, and fail on a read it does not declare; then fill "
+            + "a new database of the configured server from the products (--into), or replace in the configured one what moved since it was "
+            + "built (--apply); then verify at the level asked and write build/report-<n>. Never builds into the live corpus or the snapshot.",
+            BuildVerb),
+        new("carried-export", "[--into <Resources>]",
+            "Write the served tables no package makes yet from the configured database as carried/<table>, so a build reads files only.",
+            CarriedExport),
+        new("verify", "[--level skip|essentials|all] [--only <measure,...>] [--texts <text,...>] [--floor <share>]",
+            "Measure the corpus and fail on anything broken: all (the default) records what it finds for /v1/health; essentials holds the tables "
+            + "to the build's row counts and keys and coverage to the floor; --only measures those named, --texts keeps those texts.", VerifyVerb),
         new("release", "[--allow-dirty] [--allow-unrecorded] [--dry-run]",
             "Verify this machine's corpus and dump it into .releases/ as the next release.", Release),
         new("export", "[--to <folder>] [--dry-run] | <text> --as tsv|csv|jsonl [--to <file>]",

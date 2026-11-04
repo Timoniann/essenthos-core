@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -65,11 +65,12 @@ internal static class EvidentiaFiles
         long Within,
         long Roles,
         IReadOnlyList<string> Conflicts,
-        IReadOnlyList<int> LeftOut)
+        IReadOnlyList<int> LeftOut,
+        bool Current = false)
     {
         private const int Named = 10;
 
-        public override string ToString() =>
+        public override string ToString() => Current ? $"{Pair}: current, nothing written" :
             $"{Pair}: {Runs} runs, {Verdicts:N0} verdicts, {Rows:N0} rows ({Within:N0} on a wider link), {Roles:N0} attached words"
             + (LeftOut.Count == 0 ? string.Empty : $", runs {string.Join(',', LeftOut)} left out")
             + (Conflicts.Count == 0 ? string.Empty : $", {Conflicts.Count:N0} lines not found")
@@ -114,7 +115,18 @@ internal static class EvidentiaFiles
     /// replacing what it held.
     /// </summary>
     /// <param name="leaveOut">Run numbers not to read, for a comparison with a corpus that never applied them.</param>
-    public static Outcome Write(ProductStore store, string ledger, string pair, IReadOnlySet<int>? leaveOut = null)
+    /// <summary>What a pair's file is made from: the runs' ledger folders, both texts' words and frames, the pair's other method files.</summary>
+    private static List<ProductInput> Inputs(ProductStore store, string pair, IEnumerable<string> folders, IEnumerable<string> others)
+    {
+        var (fromText, toText) = MappingProducts.Split(pair);
+        return folders.Select(folder => store.Input(Path.GetRelativePath(store.ResourcesPath, folder).Replace('\\', '/')))
+            .Concat(new[] { TextWord.ProductOf(fromText), FrameFile.Product(fromText), TextWord.ProductOf(toText), FrameFile.Product(toText) }
+                .Select(store.ProductInput))
+            .Concat(others.Select(store.ProductInput))
+            .ToList();
+    }
+
+    public static Outcome Write(ProductStore store, string ledger, string pair, IReadOnlySet<int>? leaveOut = null, bool force = false)
     {
         var (fromText, toText) = MappingProducts.Split(pair);
         var runs = Runs(ledger).Where(held => held.Run.From == fromText && held.Run.To == toText).ToList();
@@ -127,6 +139,13 @@ internal static class EvidentiaFiles
 
         var leftOut = runs.Where(held => leaveOut?.Contains(held.Run.Run!.Value) == true).Select(held => held.Run.Run!.Value).ToList();
         runs = [.. runs.Where(held => leaveOut?.Contains(held.Run.Run!.Value) != true)];
+
+        var product = MappingProducts.Of(pair, MappingMethods.Evidentia);
+        if (!force && !store.NeedsBuild(product, ProductKind.Machine, Inputs(store, pair, runs.Select(held => held.Folder),
+                MappingProducts.Methods(store, pair).Where(m => m != MappingMethods.Evidentia).Select(m => MappingProducts.Of(pair, m)))))
+        {
+            return new Outcome(pair, runs.Count, 0, 0, 0, 0, [], leftOut, Current: true);
+        }
 
         var lines = runs.Select(held => (held.Folder, held.Run, Lines: EvidentiaLedger.BookFiles(held.Folder).SelectMany(EvidentiaLedger.LedgerLine.ReadAll)
             .Where(line => line.Verdict is EvidentiaVerdict.Approved or EvidentiaVerdict.Corrected).ToList())).ToList();
@@ -248,12 +267,8 @@ internal static class EvidentiaFiles
             .ToList();
         rows.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));
 
-        var inputs = runs.Select(held => store.Input(Path.GetRelativePath(store.ResourcesPath, held.Folder).Replace('\\', '/')))
-            .Concat(new[] { TextWord.ProductOf(fromText), FrameFile.Product(fromText), TextWord.ProductOf(toText), FrameFile.Product(toText) }
-                .Select(store.ProductInput))
-            .Concat(others.Products.Select(store.ProductInput))
-            .ToList();
-        using (var writer = store.Create(MappingProducts.Of(pair, MappingMethods.Evidentia), ProductKind.Machine, MappingRow.Schema,
+        var inputs = Inputs(store, pair, runs.Select(held => held.Folder), others.Products);
+        using (var writer = store.Create(product, ProductKind.Machine, MappingRow.Schema,
                    ProductHeader.DescribeProducer($"{Producer} {pair}"), inputs, header =>
                    {
                        header.Notes.Add(new("runs", string.Join(' ', runs.Select(held => held.Run.Run))));

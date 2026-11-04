@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
@@ -51,9 +51,18 @@ internal static class IndexLoad
     /// </summary>
     public static async Task<Outcome> Strong(string connectionString, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken)
     {
-        var clock = Stopwatch.StartNew();
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
+        return await Strong(connection, store, texts, cancellationToken, own: true);
+    }
+
+    /// <summary>The same on a connection whose transaction the caller holds and commits.</summary>
+    public static Task<Outcome> Strong(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken) =>
+        Strong(connection, store, texts, cancellationToken, own: false);
+
+    private static async Task<Outcome> Strong(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken, bool own)
+    {
+        var clock = Stopwatch.StartNew();
         var ids = await Texts(connection, cancellationToken);
 
         var occurrences = new Dictionary<string, List<OccurrenceRow>>(StringComparer.Ordinal);
@@ -88,7 +97,7 @@ internal static class IndexLoad
         var editions = primaries.SelectMany(p => p).ToHashSet(StringComparer.Ordinal);
         var countedIn = clock.Elapsed;
 
-        await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
+        await using var transaction = own ? await connection.BeginTransactionAsync(cancellationToken) : null;
         var textIds = counted.Select(c => c.TextId).ToArray();
         var editionIds = editions.Where(ids.ContainsKey).Select(e => ids[e].Id).ToArray();
         await using (var delete = new NpgsqlCommand(
@@ -232,7 +241,11 @@ internal static class IndexLoad
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        if (transaction is not null)
+        {
+            await transaction.CommitAsync(cancellationToken);
+        }
+
         return new Outcome("strong_*", renderings + counted.Sum(c => (long)c.Reach.Count + c.Methods.Count + c.Books.Count), counted.Count, clock.Elapsed,
             $"{renderings} phrases kept, {counted.Sum(c => c.Reach.Count)} reach, {counted.Sum(c => c.Methods.Count)} methods, {counted.Sum(c => c.Books.Count)} by book, " +
             $"{editions.Count} editions by book; counted from the files in {countedIn.TotalSeconds:0.0} s");
@@ -296,13 +309,22 @@ internal static class IndexLoad
     /// </summary>
     public static async Task<Outcome> Forms(string connectionString, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken)
     {
-        var clock = Stopwatch.StartNew();
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
+        return await Forms(connection, store, texts, cancellationToken, own: true);
+    }
+
+    /// <summary>The same on a connection whose transaction the caller holds and commits.</summary>
+    public static Task<Outcome> Forms(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken) =>
+        Forms(connection, store, texts, cancellationToken, own: false);
+
+    private static async Task<Outcome> Forms(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken, bool own)
+    {
+        var clock = Stopwatch.StartNew();
         var ids = await Texts(connection, cancellationToken);
         var loaded = texts.Where(slug => ids.ContainsKey(slug) && store.Exists(IndexProducts.Of(slug, IndexProducts.Forms))).ToList();
 
-        await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
+        await using var transaction = own ? await connection.BeginTransactionAsync(cancellationToken) : null;
         await using (var stage = new NpgsqlCommand(
                          """
                          DELETE FROM text_form WHERE text_id = ANY(@texts);
@@ -364,7 +386,11 @@ internal static class IndexLoad
             rows = await insert.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        if (transaction is not null)
+        {
+            await transaction.CommitAsync(cancellationToken);
+        }
+
         return new Outcome("text_form", rows, loaded.Count, clock.Elapsed);
     }
 
@@ -375,9 +401,18 @@ internal static class IndexLoad
     /// </summary>
     public static async Task<Outcome> Spellings(string connectionString, ProductStore store, EntityRenderingLoader counter, CancellationToken cancellationToken)
     {
-        var clock = Stopwatch.StartNew();
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
+        return await Spellings(connection, store, counter, cancellationToken, own: true);
+    }
+
+    /// <summary>The same on a connection whose transaction the caller holds and commits.</summary>
+    public static Task<Outcome> Spellings(NpgsqlConnection connection, ProductStore store, EntityRenderingLoader counter, CancellationToken cancellationToken) =>
+        Spellings(connection, store, counter, cancellationToken, own: false);
+
+    private static async Task<Outcome> Spellings(NpgsqlConnection connection, ProductStore store, EntityRenderingLoader counter, CancellationToken cancellationToken, bool own)
+    {
+        var clock = Stopwatch.StartNew();
         var ids = await Texts(connection, cancellationToken);
         var records = new Dictionary<string, int>(StringComparer.Ordinal);
         await using (var command = new NpgsqlCommand("SELECT slug, id FROM entity", connection))
@@ -430,7 +465,7 @@ internal static class IndexLoad
             asked => Task.FromResult(asked.Distinct().ToDictionary(a => a, a => printed.GetValueOrDefault(a))),
             cancellationToken);
 
-        await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
+        await using var transaction = own ? await connection.BeginTransactionAsync(cancellationToken) : null;
         await using (var delete = new NpgsqlCommand("DELETE FROM entity_rendering; DELETE FROM entity_search_spelling;", connection, transaction))
         {
             await delete.ExecuteNonQueryAsync(cancellationToken);
@@ -467,7 +502,11 @@ internal static class IndexLoad
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        if (transaction is not null)
+        {
+            await transaction.CommitAsync(cancellationToken);
+        }
+
         return new Outcome("entity_rendering, entity_search_spelling", renderings.Count + spellings.Count, texts, clock.Elapsed,
             $"{words.Count} named words, {renderings.Count} renderings, {spellings.Count} search spellings ({search}); " +
             $"{renamed.Count} names the texts print put back, not written; {unknown} words naming a record the database lacks");
