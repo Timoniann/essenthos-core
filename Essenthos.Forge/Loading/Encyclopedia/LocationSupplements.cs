@@ -25,7 +25,12 @@ internal sealed record LocationSupplement(IReadOnlyList<IndependentPoint> Points
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(
             "Essenthos.Core.Loading.Encyclopedia.LocationSupplements.json")
             ?? throw new InvalidOperationException("The location supplement is not embedded.");
-        var supplement = JsonSerializer.Deserialize<LocationSupplement>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+        return Declared(JsonSerializer.Deserialize<LocationSupplement>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!);
+    }
+
+    /// <summary>The supplement, once every dataset it credits is a declared one.</summary>
+    public static LocationSupplement Declared(LocationSupplement supplement)
+    {
         foreach (var dataset in supplement.Points.Select(p => p.Dataset).Concat(supplement.Regions.Select(r => r.Dataset)))
             if (!Datasets.All.Any(d => d.Id == dataset && !d.Unlisted))
                 throw new InvalidDataException($"The location supplement credits \"{dataset}\", which is no declared dataset.");

@@ -213,5 +213,6 @@ internal static partial class RecordFiles
         .. External,
         .. Reigns,
         .. Derived,
+        .. Lists,
     ]);
 }

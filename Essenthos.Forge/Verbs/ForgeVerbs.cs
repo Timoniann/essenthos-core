@@ -251,6 +251,7 @@ internal static partial class ForgeVerbs
         new("dataset-records", "", "Make the records a dataset supplied ours, fold them or withdraw them.", DatasetRecords),
         new("records-export", "[--into <Resources>]", "Write our records, facts, languages and external datasets as files, from the database.", RecordsExport),
         new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
+        new("records-derive", "[--from <Resources>] [--into <Resources>]", "Make the derived record files whose inputs are files (relationships, locations) from the hand files, without a database.", RecordsDerive),
         new("records-compare", "<port/db> <port/db> [--out <file>]", "Compare two databases' records table by table by natural key. Reads only.", RecordsCompare, Least: 2),
         new("mapping-export", "[--into <Resources>] [--pairs A-B,...] [--parallel <n>]",
             "Write every link of the database as the mapping's per-pair method files, words by key and ids kept. Reads the database only.", MappingExportVerb),

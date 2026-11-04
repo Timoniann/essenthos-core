@@ -59,14 +59,9 @@ internal static partial class RecordFiles
         foreach (var file in All)
         {
             var schema = file.Schema();
-            await using var command = new NpgsqlCommand(loaded ? file.ExportLoaded ?? file.Export : file.Export, db) { CommandTimeout = 0 };
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            if (reader.FieldCount != file.Parsed.Length)
-            {
-                throw new InvalidOperationException(
-                    $"{file.Product}: the export gives {reader.FieldCount} columns, the file has {file.Parsed.Length}.");
-            }
-
+            List<string?[]> rows = file.Listed is { } listed
+                ? [.. listed()]
+                : await Rows(db, file, loaded ? file.ExportLoaded ?? file.Export : file.Export, cancellationToken);
             using var writer = store.Create(file.Product, file.Kind, schema, ProductHeader.DescribeProducer(Producer), [],
                 header =>
                 {
@@ -76,27 +71,43 @@ internal static partial class RecordFiles
                         header.Comments.Add(about);
                     }
                 });
-            var row = new string?[file.Parsed.Length];
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                for (var i = 0; i < row.Length; i++)
-                {
-                    row[i] = reader.IsDBNull(i)
-                        ? null
-                        : file.Parsed[i].Type is RecordColumnType.Ref or RecordColumnType.Refs
-                            ? Text(file.Parsed[i], Whole(reader.GetFieldValue<int?[]>(i), file.Product, file.Parsed[i].Name))
-                            : Text(file.Parsed[i], reader.GetValue(i));
-                }
-
-                writer.Write(row);
-            }
-
+            writer.WriteAll(rows);
             writer.Complete();
             written.Add((file.Product, writer.Rows));
         }
 
         store.Save();
         return written;
+    }
+
+    /// <summary>The file's rows as the export gives them, in the file's order (<see cref="RecordFile.Sorted"/>).</summary>
+    private static async Task<List<string?[]>> Rows(NpgsqlConnection db, RecordFile file, string export, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(export, db) { CommandTimeout = 0 };
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        if (reader.FieldCount != file.Parsed.Length)
+        {
+            throw new InvalidOperationException(
+                $"{file.Product}: the export gives {reader.FieldCount} columns, the file has {file.Parsed.Length}.");
+        }
+
+        var rows = new List<string?[]>();
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            var row = new string?[file.Parsed.Length];
+            for (var i = 0; i < row.Length; i++)
+            {
+                row[i] = reader.IsDBNull(i)
+                    ? null
+                    : file.Parsed[i].Type is RecordColumnType.Ref or RecordColumnType.Refs
+                        ? Text(file.Parsed[i], Whole(reader.GetFieldValue<int?[]>(i), file.Product, file.Parsed[i].Name))
+                        : Text(file.Parsed[i], reader.GetValue(i));
+            }
+
+            rows.Add(row);
+        }
+
+        return file.Sorted(rows, file.Order(export));
     }
 
     /// <summary>
@@ -147,6 +158,25 @@ internal static partial class RecordFiles
                 await import.CompleteAsync(cancellationToken);
             }
 
+            if (file.Check is { } check)
+            {
+                var sound = await Scalar(db, transaction, check, cancellationToken);
+                if (sound != rows.Count)
+                {
+                    throw new InvalidOperationException(
+                        $"{file.Product}: {rows.Count} rows in the file, {sound} of them sound. A slug names no record, " +
+                        "or names one it must not; find it with the file's check as a SELECT.");
+                }
+
+                if (file.After is { } kept)
+                {
+                    await Execute(db, transaction, kept, cancellationToken);
+                }
+
+                loaded.Add((file.Product, rows.Count));
+                continue;
+            }
+
             var written = await Execute(db, transaction, file.Load, cancellationToken);
             if (written != rows.Count)
             {
@@ -167,6 +197,35 @@ internal static partial class RecordFiles
         return loaded;
     }
 
+    /// <summary>
+    /// A dataset's verse references by whether a word of ours confirms them: a served verse of the same
+    /// record at the same verse that a word names. None is served from the dataset, on the owner's
+    /// ruling; the unconfirmed are the ones a reader no longer sees.
+    /// </summary>
+    public static async Task<List<(string Dataset, bool Confirmed, long Rows, long Records)>> DatasetVerses(
+        string connection, CancellationToken cancellationToken)
+    {
+        await using var db = new NpgsqlConnection(connection);
+        await db.OpenAsync(cancellationToken);
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT dataset, confirmed, count(*), count(DISTINCT entity_id) FROM (
+                SELECT x.dataset, x.entity_id, EXISTS (
+                    SELECT 1 FROM entity_verse v WHERE v.entity_id = x.entity_id AND v.names AND v.canonical_book = x.canonical_book
+                      AND v.canonical_chapter = x.canonical_chapter AND v.canonical_verse = x.canonical_verse) confirmed
+                FROM external_reference x) r
+            GROUP BY 1, 2 ORDER BY 1, 2
+            """, db) { CommandTimeout = 0 };
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        var counts = new List<(string, bool, long, long)>();
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            counts.Add((reader.GetString(0), reader.GetBoolean(1), reader.GetInt64(2), reader.GetInt64(3)));
+        }
+
+        return counts;
+    }
+
     /// <summary>Whether the database was filled by this loader: the dataset columns of a record are gone.</summary>
     private static async Task<bool> Loaded(NpgsqlConnection db, CancellationToken cancellationToken)
     {
@@ -174,6 +233,12 @@ internal static partial class RecordFiles
             "SELECT NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'entity' AND column_name = 'source')",
             db);
         return (bool)(await command.ExecuteScalarAsync(cancellationToken))!;
+    }
+
+    private static async Task<long> Scalar(NpgsqlConnection db, NpgsqlTransaction transaction, string sql, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(sql, db, transaction) { CommandTimeout = 0 };
+        return Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken), CultureInfo.InvariantCulture);
     }
 
     private static async Task<bool> Holds(NpgsqlConnection db, NpgsqlTransaction transaction, string condition, CancellationToken cancellationToken)

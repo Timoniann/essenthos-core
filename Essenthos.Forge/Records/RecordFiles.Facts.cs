@@ -29,6 +29,8 @@ internal static partial class RecordFiles
         FROM s JOIN entity e ON e.slug = s.slug ORDER BY s.slug, s.ref, s.by, s.label
         """,
         product.Contains("derived", StringComparison.Ordinal) ? [] : ["entity_verse"],
+        After: Settled("entity_verse", DatasetVerse.Replace("v.", ""),
+            "a verse row credits a dataset: the verses of a dataset are its references, never the served verses of a record"),
         ExportLoaded: $"""
         SELECT e.slug, {Ref("v")}, v.label, v.names, v.disputed, v.withheld, v.source
         FROM entity_verse v JOIN entity e ON e.id = v.entity_id WHERE {which} ORDER BY 1, 2, 7, 3, 4, 5, 6

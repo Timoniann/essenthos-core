@@ -486,17 +486,9 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
     {
         var wanted = new List<EntityRelationship>();
         var missing = 0;
-        foreach (var relation in record.Related ?? [])
+        foreach (var (relation, row) in Relations(_set, record, known.ContainsKey))
         {
-            if (!ThingRelations.All.Contains(relation.Type))
-            {
-                throw new InvalidDataException(
-                    $"{record.Slug} is related to {relation.To} as \"{relation.Type}\", which is not a relation " +
-                    $"these records stand in. Use one of {string.Join(", ", ThingRelations.All)}.");
-            }
-
-            var verse = ScriptureSpan.Parse(relation.Reference);
-            if (!known.TryGetValue(relation.To, out var other) || !verse.IsVerse)
+            if (row is null)
             {
                 logger.LogWarning(
                     "{Slug} is related to {To} at {Reference}, and either the encyclopedia holds no record of " +
@@ -506,20 +498,9 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
                 continue;
             }
 
-            wanted.Add(new EntityRelationship
-            {
-                FromEntityId = entity.Id,
-                ToEntityId = other.Id,
-                Type = relation.Type,
-                Category = RelationshipCategories.Read,
-                CanonicalBook = verse.Book,
-                CanonicalChapter = verse.FromChapter,
-                CanonicalVerse = verse.FromVerse,
-                Method = MethodOf(record.Reviewed is not null),
-                Confidence = ConfidenceOf(record.Reviewed is not null),
-                Source = _set.SourceOf(record.Reviewed is not null),
-                Notes = relation.Note,
-            });
+            row.FromEntityId = entity.Id;
+            row.ToEntityId = known[relation.To].Id;
+            wanted.Add(row);
         }
 
         var held = await db.EntityRelationships
@@ -532,6 +513,45 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         }
 
         return missing;
+    }
+
+    /// <summary>
+    /// The relations a record's file states, each as the row it is written as (its two ends left for
+    /// the caller to set); null where the encyclopedia holds no record of the other end or the
+    /// reference is not a verse.
+    /// </summary>
+    internal static IEnumerable<(ThingRelation Relation, EntityRelationship? Row)> Relations(
+        ThingSet set, ThingRecord record, Func<string, bool> holds)
+    {
+        foreach (var relation in record.Related ?? [])
+        {
+            if (!ThingRelations.All.Contains(relation.Type))
+            {
+                throw new InvalidDataException(
+                    $"{record.Slug} is related to {relation.To} as \"{relation.Type}\", which is not a relation " +
+                    $"these records stand in. Use one of {string.Join(", ", ThingRelations.All)}.");
+            }
+
+            var verse = ScriptureSpan.Parse(relation.Reference);
+            if (!holds(relation.To) || !verse.IsVerse)
+            {
+                yield return (relation, null);
+                continue;
+            }
+
+            yield return (relation, new EntityRelationship
+            {
+                Type = relation.Type,
+                Category = RelationshipCategories.Read,
+                CanonicalBook = verse.Book,
+                CanonicalChapter = verse.FromChapter,
+                CanonicalVerse = verse.FromVerse,
+                Method = MethodOf(record.Reviewed is not null),
+                Confidence = ConfidenceOf(record.Reviewed is not null),
+                Source = set.SourceOf(record.Reviewed is not null),
+                Notes = relation.Note,
+            });
+        }
     }
 
     private static string RelationKey(EntityRelationship r) =>

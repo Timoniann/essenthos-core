@@ -134,15 +134,63 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
 
         var supplement = LocationSupplement.Read();
         var read = supplement.Apply(Read(ancient, modern));
-        var regions = supplement.Regions.ToDictionary(r => r.Slug, StringComparer.Ordinal);
-        var regionSlugs = regions.Keys.ToList();
+        var regionSlugs = supplement.Regions.Select(r => r.Slug).ToList();
         var laterTowns = SharedSites.All.Select(s => s.Later).ToList();
 
         var places = await db.Entities
             .Where(e => e.Kind == EntityKind.Place
                         && (e.OpenBibleId != null || regionSlugs.Contains(e.Slug) || laterTowns.Contains(e.Slug)))
-            .Select(e => new { e.Id, e.Slug, e.OpenBibleId })
+            .Select(e => new Place(e.Id, e.Slug, e.OpenBibleId))
             .ToListAsync(cancellationToken);
+        var (locations, candidates, unheld) = Locate(read, supplement, places);
+
+        if (await Holds(locations, candidates, cancellationToken))
+        {
+            return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+        }
+
+        // The points and the answers are replaced together or not at all: a place must never be
+        // left with a point its answers no longer give, nor without the point it had.
+        await using (var own = db.Database.CurrentTransaction is null
+                         ? await db.Database.BeginTransactionAsync(cancellationToken)
+                         : null)
+        {
+            await db.PlaceCandidates.ExecuteDeleteAsync(cancellationToken);
+            await db.PlaceLocations.ExecuteDeleteAsync(cancellationToken);
+            foreach (var gone in db.ChangeTracker.Entries()
+                         .Where(e => e.Entity is PlaceLocation or PlaceCandidate).ToList())
+            {
+                gone.State = EntityState.Detached;
+            }
+
+            db.PlaceLocations.AddRange(locations);
+            db.PlaceCandidates.AddRange(candidates);
+            await db.SaveChangesAsync(cancellationToken);
+            if (own is not null)
+            {
+                await own.CommitAsync(cancellationToken);
+            }
+        }
+
+        var outcome = new LocationsOutcome(
+            false, locations.Count, candidates.Count, read.OpenStreetMap, read.Commercial, read.NoSite,
+            read.Unidentified, unheld, started.Elapsed);
+        logger.LogInformation("Located the places: {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>A place record the gazetteer can locate: by its id there, or as a region or a later town.</summary>
+    internal sealed record Place(int Id, string Slug, string? OpenBibleId);
+
+    /// <summary>
+    /// The point and the proposed sites of each place, from the gazetteer's reading with the
+    /// supplement applied; and how many located places no record holds. Reads nothing but its
+    /// arguments, so a build from files gives what a load from the database gives.
+    /// </summary>
+    internal static (List<PlaceLocation> Locations, List<PlaceCandidate> Candidates, int Unheld) Locate(
+        Reading read, LocationSupplement supplement, IReadOnlyList<Place> places)
+    {
+        var regions = supplement.Regions.ToDictionary(r => r.Slug, StringComparer.Ordinal);
         var bySlug = places.ToDictionary(p => p.Slug, StringComparer.Ordinal);
         // A town built on an earlier one's site stands at that site's point and takes its answers.
         var builtOn = SharedSites.All
@@ -221,39 +269,7 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             });
         }
 
-        if (await Holds(locations, candidates, cancellationToken))
-        {
-            return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
-        }
-
-        // The points and the answers are replaced together or not at all: a place must never be
-        // left with a point its answers no longer give, nor without the point it had.
-        await using (var own = db.Database.CurrentTransaction is null
-                         ? await db.Database.BeginTransactionAsync(cancellationToken)
-                         : null)
-        {
-            await db.PlaceCandidates.ExecuteDeleteAsync(cancellationToken);
-            await db.PlaceLocations.ExecuteDeleteAsync(cancellationToken);
-            foreach (var gone in db.ChangeTracker.Entries()
-                         .Where(e => e.Entity is PlaceLocation or PlaceCandidate).ToList())
-            {
-                gone.State = EntityState.Detached;
-            }
-
-            db.PlaceLocations.AddRange(locations);
-            db.PlaceCandidates.AddRange(candidates);
-            await db.SaveChangesAsync(cancellationToken);
-            if (own is not null)
-            {
-                await own.CommitAsync(cancellationToken);
-            }
-        }
-
-        var outcome = new LocationsOutcome(
-            false, locations.Count, candidates.Count, read.OpenStreetMap, read.Commercial, read.NoSite,
-            read.Unidentified, unheld, started.Elapsed);
-        logger.LogInformation("Located the places: {Outcome}", outcome);
-        return outcome;
+        return (locations, candidates, unheld);
     }
 
     /// <summary>Whether the tables already hold exactly these rows, so a load writes nothing.</summary>
