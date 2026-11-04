@@ -71,10 +71,25 @@ internal static class MappingFiles
             }
         }
 
+        var remade = new Dictionary<string, IReadOnlySet<string>>(StringComparer.Ordinal);
+        var producers = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var (method, header) in headers)
+        {
+            if (MethodFiles.KeptSources(store, header, fromText, toText) is { } kept)
+            {
+                remade[method] = kept;
+            }
+
+            if (ProducerVerb(header) is { } verb)
+            {
+                producers[method] = verb;
+            }
+        }
+
         var ordinal = PairOrdinals.Ensure(store, [pair])[pair];
         var output = MappingMerge.Merge(new MappingMerge.Input(
             pair, fromText, toText, rows, rulings, hashes, manifests, previous, PairOrdinals.Base + ordinal * PairOrdinals.Range,
-            folds, CurrentFolds(store)));
+            folds, CurrentFolds(store), remade, producers));
 
         foreach (var (method, merged) in output.Methods)
         {
@@ -109,6 +124,28 @@ internal static class MappingFiles
         }
 
         return new Merged(pair, false, output.Final.Count(r => r.Settled), output.Final.Count, output.Report);
+    }
+
+    /// <summary>
+    /// The verb of the producer from files that wrote a method file (<c>forge stated-pairs</c>), without its pair and version; null
+    /// for a file exported from a database or written by the merge alone.
+    /// </summary>
+    private static string? ProducerVerb(ProductHeader? header)
+    {
+        if (header is null || header.IsHandWritten)
+        {
+            return null;
+        }
+
+        var producer = header.Producer;
+        var version = producer.IndexOf("  (", StringComparison.Ordinal);
+        if (version >= 0)
+        {
+            producer = producer[..version];
+        }
+
+        var words = producer.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return words.Length < 2 || words[1] is "mapping-export" or "merge" ? null : $"{words[0]} {words[1]}";
     }
 
     /// <summary>

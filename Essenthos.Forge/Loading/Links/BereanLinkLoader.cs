@@ -310,7 +310,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     /// How many of the verse's Strong numbers the two sides state the same way, and how many either
     /// of them states at all.
     /// </summary>
-    private static (int Agreed, int Of) Agreement(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
+    internal static (int Agreed, int Of) Agreement(IReadOnlyList<BereanRow> rows, IReadOnlyList<Word> witness)
     {
         int agreed = 0, of = 0;
         for (var i = 0; i < rows.Count; i++)

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Essenthos.Core.Build;
+using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 using Essenthos.Core.Verification;
 using Npgsql;
@@ -48,6 +49,7 @@ internal static partial class ForgeVerbs
 
         var store = new ProductStore(forge.Resources);
         var graph = ProductGraph.Read(store);
+        stages.AddRange(MappingGaps(store));
         var verified = true;
         if (level != BuildVerify.Skip)
         {
@@ -138,6 +140,34 @@ internal static partial class ForgeVerbs
 
         stages.Add(new BuildStage("products", "declared graph", TimeSpan.Zero, undeclared.Count, undeclared.Count == 0 ? "every read declared" : "UNDECLARED READS"));
         return undeclared.Count == 0;
+    }
+
+    /// <summary>
+    /// Every pair and method whose rows a changed verse left stale with nothing to make them again, from the pairs' merge
+    /// reports, one stage each, then their total: a verse a correction unlinks is never a silent gap.
+    /// </summary>
+    private static List<BuildStage> MappingGaps(ProductStore store)
+    {
+        var stages = new List<BuildStage>();
+        foreach (var pair in MappingProducts.Pairs(store))
+        {
+            var product = MappingProducts.Of(pair, MappingProducts.Report);
+            if (!store.Exists(product))
+            {
+                continue;
+            }
+
+            using var reader = store.Open(product, ReportRow.Schema);
+            foreach (var row in reader.Rows().Where(r => r.Kind is MappingMerge.NoProducer or "needs"))
+            {
+                stages.Add(new BuildStage("mapping", $"{pair} {row.Method}", TimeSpan.Zero, row.Rows,
+                    row.Kind == MappingMerge.NoProducer ? $"no producer: {row.By}" : $"needs {row.By}"));
+            }
+        }
+
+        stages.Add(new BuildStage("mapping", "rows lost to changed verses", TimeSpan.Zero, stages.Sum(s => s.Rows),
+            stages.Count == 0 ? "none: every stale row has a producer that made it again" : $"{stages.Count} pair methods wait for a producer"));
+        return stages;
     }
 
     private static async Task<int> ForeignKeys(string connection)

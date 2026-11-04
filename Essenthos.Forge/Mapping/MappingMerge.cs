@@ -19,11 +19,17 @@ namespace Essenthos.Core.Mapping;
 /// </summary>
 internal static class MappingMerge
 {
+    /// <summary>The report's kind for rows a changed verse made stale that no producer from files makes again.</summary>
+    public const string NoProducer = "no-producer";
+
     /// <param name="Hashes">The text hash of each cited verse when the rows were made (<see cref="VerseHashRow"/>).</param>
     /// <param name="Manifests">Each text's verse manifest as it stands, or null where the text has none yet.</param>
     /// <param name="PreviousIds">The ids an earlier final gave its links, by shape, so a link keeps its id.</param>
     /// <param name="Folds">The fold of each cited verse when the rows were made (<see cref="VerseFold"/>), where it was kept.</param>
     /// <param name="FoldNow">The fold of a verse of a text as its words stand, asked only of a verse whose text hash moved.</param>
+    /// <param name="Remade">The method files a producer made from the two texts' words as they stand, each with the sources whose rows it
+    /// carried from an earlier file instead (<see cref="MethodFiles.KeptSources"/>): their other rows answer for no verse that moved.</param>
+    /// <param name="Producers">The producer that wrote each method file, where one from files did; a moved verse's rows wait for it.</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -35,7 +41,9 @@ internal static class MappingMerge
         IReadOnlyDictionary<string, long> PreviousIds,
         long IdBase,
         IReadOnlyDictionary<(string Text, VerseKey Verse), string>? Folds = null,
-        Func<string, VerseKey, string?>? FoldNow = null);
+        Func<string, VerseKey, string?>? FoldNow = null,
+        IReadOnlyDictionary<string, IReadOnlySet<string>>? Remade = null,
+        IReadOnlyDictionary<string, string>? Producers = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -71,7 +79,7 @@ internal static class MappingMerge
         }
 
         var report = new List<ReportRow>();
-        var stale = Stale(input, entries, report);
+        var (stale, lost) = Stale(input, entries, report);
         var pinned = Rule(input, entries);
         Supersede(entries);
 
@@ -137,7 +145,7 @@ internal static class MappingMerge
             $"words of {input.FromText} the competition alone would leave with no link"));
         report.Add(new ReportRow("bare-words-left", string.Empty, string.Empty, left,
             $"words of {input.FromText} still with no link after the kept ones: their links are under {MappingMethods.OrphanFloor}"));
-        Report(input, entries, final, stale, report);
+        Report(input, entries, final, stale, lost, report);
         return new Output(final, methods, report);
     }
 
@@ -146,9 +154,11 @@ internal static class MappingMerge
     /// whose words still read the same (its fold then and now agree) has not moved for its rows: only marks or punctuation
     /// changed, and every cited key still names the word it named.
     /// </summary>
-    private static HashSet<string> Stale(Input input, List<Entry> entries, List<ReportRow> report)
+    private static (HashSet<string> Drawn, Dictionary<(string File, string Method, string Source), int> Lost) Stale(
+        Input input, List<Entry> entries, List<ReportRow> report)
     {
         var drawn = new HashSet<string>(StringComparer.Ordinal);
+        var lost = new Dictionary<(string File, string Method, string Source), int>();
         var fromManifest = input.Manifests.GetValueOrDefault(input.FromText);
         var toManifest = input.Manifests.GetValueOrDefault(input.ToText);
         foreach (var (text, manifest) in new[] { (input.FromText, fromManifest), (input.ToText, toManifest) })
@@ -161,7 +171,7 @@ internal static class MappingMerge
 
         if (fromManifest is null && toManifest is null)
         {
-            return drawn;
+            return (drawn, lost);
         }
 
         var verdicts = new Dictionary<(bool From, string Verse), bool>();
@@ -192,12 +202,22 @@ internal static class MappingMerge
 
         foreach (var entry in entries)
         {
+            if (input.Remade?.TryGetValue(entry.File, out var kept) == true && !kept.Contains(entry.Row.Source))
+            {
+                continue;
+            }
+
             if (MappingText.Split(entry.Row.From).Any(k => Moved(true, k)) || MappingText.Split(entry.Row.To).Any(k => Moved(false, k)))
             {
                 entry.Status = MappingStatus.Stale;
                 if (MappingMethods.Drawn(entry.Row.Method))
                 {
                     drawn.Add(entry.Row.Method);
+                }
+                else
+                {
+                    var key = (entry.File, entry.Row.Method, entry.Row.Source);
+                    lost[key] = lost.GetValueOrDefault(key) + 1;
                 }
             }
         }
@@ -208,7 +228,7 @@ internal static class MappingMerge
                 "cited verses whose text moved but whose words read the same, only marks or punctuation otherwise: their rows stand"));
         }
 
-        return drawn;
+        return (drawn, lost);
     }
 
     /// <summary>
@@ -548,7 +568,8 @@ internal static class MappingMerge
         return final;
     }
 
-    private static void Report(Input input, List<Entry> entries, List<FinalRow> final, HashSet<string> drawnStale, List<ReportRow> report)
+    private static void Report(Input input, List<Entry> entries, List<FinalRow> final, HashSet<string> drawnStale,
+        Dictionary<(string File, string Method, string Source), int> lost, List<ReportRow> report)
     {
         foreach (var group in entries.Where(e => e.Index >= 0).GroupBy(e => e.File).OrderBy(g => g.Key, StringComparer.Ordinal))
         {
@@ -573,6 +594,17 @@ internal static class MappingMerge
         {
             report.Add(new ReportRow("needs", method, MappingMethods.Regenerates(method), 0,
                 $"verses whose text moved lost their {method} rows; {input.Pair} needs {MappingMethods.Regenerates(method)} again"));
+        }
+
+        foreach (var ((file, method, source), rows) in lost.OrderBy(l => l.Key.Method, StringComparer.Ordinal).ThenBy(l => l.Key.Source, StringComparer.Ordinal))
+        {
+            // In a file a producer made again, the only stale rows are those of the sources it carried over and does not make.
+            var producer = input.Remade?.ContainsKey(file) == true ? null : input.Producers?.GetValueOrDefault(file);
+            report.Add(producer is not null
+                ? new ReportRow("needs", method, producer, rows,
+                    $"rows of {source} on verses whose text moved since {producer} wrote the file; {input.Pair} needs it run again")
+                : new ReportRow(NoProducer, method, source, rows,
+                    $"rows of verses whose text moved, which no producer makes again: {input.Pair} has no {method} rows of this source there"));
         }
 
         report.Add(new ReportRow("links", string.Empty, string.Empty, final.Count(r => r.Settled), "links of the final"));

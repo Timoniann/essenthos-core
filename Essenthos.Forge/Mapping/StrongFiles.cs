@@ -175,7 +175,8 @@ internal static class StrongFiles
             .Concat(series == 'G' ? [store.Input(GreekDictionary)] : [])
             .ToList();
         using (var writer = store.Create(MappingProducts.Of(pair, MappingMethods.Strong), ProductKind.Machine, MappingRow.Schema,
-                   ProductHeader.DescribeProducer($"{Producer} {pair}"), inputs))
+                   ProductHeader.DescribeProducer($"{Producer} {pair}"), inputs,
+                   header => header.Notes.Add(new(MethodFiles.RemadeNote, $"every row, from {fromText}'s and {toText}'s words as the inputs name them"))))
         {
             writer.WriteAll(sorted.Select(r => r.Row));
         }
