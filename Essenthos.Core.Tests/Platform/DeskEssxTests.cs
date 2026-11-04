@@ -116,6 +116,8 @@ public sealed class DeskEssxTests : IAsyncLifetime
         var check = await Json<EssxVerifyView>(await _http.GetAsync($"/desk-api/essx/files/{view.Id}/verify"));
         check.Ok.Should().BeTrue();
         check.StoredSha256.Should().Be(view.StoredSha256);
+        check.ComputedSha256.Should().Be(check.StoredSha256);
+        check.FileSha256.Should().Be(Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(bytes)));
 
         var features = await Json<EssxFeaturesView>(await _http.PostAsync($"/desk-api/essx/files/{view.Id}/features?head=20", null));
         features.Features.Select(f => f.Key).Should().Equal("open", "footer", "column", "verse", "head", "full", "verify");
@@ -139,6 +141,8 @@ public sealed class DeskEssxTests : IAsyncLifetime
 
         var notEssx = await _http.PostAsync("/desk-api/essx/files?name=x.essx", new ByteArrayContent("not a product file at all, just some text bytes here........................"u8.ToArray()));
         notEssx.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        var problem = await notEssx.Content.ReadAsStringAsync();
+        problem.Should().Contain("x.essx").And.NotContain("cache");
         Directory.EnumerateFiles(Path.Combine(_root, "cache", "essx")).Should().BeEmpty("a file that cannot be read is not kept");
     }
 }

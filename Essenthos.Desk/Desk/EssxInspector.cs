@@ -75,7 +75,9 @@ internal sealed record EssxFileView(
     string StoredSha256,
     double OpenMs);
 
-internal sealed record EssxVerifyView(bool Ok, string StoredSha256, string FileSha256, string? ManifestSha256, bool? MatchesManifest, double Ms);
+/// <param name="ComputedSha256">The hash of every byte before the trailer's, computed now: a sound file stores it.</param>
+/// <param name="FileSha256">The hash of the whole file, trailer included, as the build manifest records a product.</param>
+internal sealed record EssxVerifyView(bool Ok, string StoredSha256, string ComputedSha256, string FileSha256, string? ManifestSha256, bool? MatchesManifest, double Ms);
 
 internal sealed record EssxRowsView(
     string Table,
@@ -106,7 +108,15 @@ internal sealed class EssxInspector(DeskPaths paths)
     private const int Runs = 5;
     private const int FiltersKept = 6;
 
-    private sealed record Opened(string Path, string Name, bool Uploaded, ConcurrentDictionary<string, long[]> Filters);
+    private sealed record Opened(string Path, string Name, bool Uploaded, ConcurrentDictionary<string, Filter> Filters);
+
+    /// <summary>A filter's matching rows, and when it was last used, so the least recently used goes first.</summary>
+    private sealed class Filter(long[] rows)
+    {
+        public long[] Rows { get; } = rows;
+
+        public long Used { get; set; } = Stopwatch.GetTimestamp();
+    }
 
     private readonly ConcurrentDictionary<string, Opened> _files = new(StringComparer.Ordinal);
 
@@ -139,7 +149,7 @@ internal sealed class EssxInspector(DeskPaths paths)
         }
 
         var id = Guid.NewGuid().ToString("N");
-        _files[id] = new Opened(full, System.IO.Path.GetFileName(full), false, new ConcurrentDictionary<string, long[]>(StringComparer.Ordinal));
+        _files[id] = new Opened(full, System.IO.Path.GetFileName(full), false, new ConcurrentDictionary<string, Filter>(StringComparer.Ordinal));
         return View(id);
     }
 
@@ -160,10 +170,16 @@ internal sealed class EssxInspector(DeskPaths paths)
         }
 
         _files[id] = new Opened(full, string.IsNullOrWhiteSpace(name) ? "dropped.essx" : System.IO.Path.GetFileName(name), true,
-            new ConcurrentDictionary<string, long[]>(StringComparer.Ordinal));
+            new ConcurrentDictionary<string, Filter>(StringComparer.Ordinal));
         try
         {
             return View(id) ?? throw new ProductFormatException("The file could not be read.");
+        }
+        catch (Exception exception) when (exception is ProductFormatException or FormatException)
+        {
+            var dropped = _files[id].Name;
+            Close(id);
+            throw new ProductFormatException(exception.Message.Replace(full, dropped, StringComparison.OrdinalIgnoreCase));
         }
         catch
         {
@@ -228,10 +244,10 @@ internal sealed class EssxInspector(DeskPaths paths)
 
         var clock = Stopwatch.StartNew();
         using var reader = EssxReader.Open(opened.Path);
-        var ok = reader.Verify(out var fileSha256);
+        var ok = reader.Verify(out var computedSha256, out var fileSha256);
         var ms = clock.Elapsed.TotalMilliseconds;
         var manifest = opened.Uploaded ? null : ManifestHash(opened.Path);
-        return new EssxVerifyView(ok, Convert.ToHexStringLower(reader.StoredHash()), fileSha256, manifest, manifest is null ? null : manifest == fileSha256, ms);
+        return new EssxVerifyView(ok, Convert.ToHexStringLower(reader.StoredHash()), computedSha256, fileSha256, manifest, manifest is null ? null : manifest == fileSha256, ms);
     }
 
     /// <summary>
@@ -262,13 +278,12 @@ internal sealed class EssxInspector(DeskPaths paths)
         if (wanted is not null || words.Length > 0)
         {
             var key = $"{table.Name}|{wanted}|{string.Join(' ', words)}|{searchColumn}";
-            matching = opened.Filters.GetOrAdd(key, _ => Matching(table, starts, wanted, words, searchColumn));
-            if (opened.Filters.Count > FiltersKept)
+            var filter = opened.Filters.GetOrAdd(key, _ => new Filter(Matching(table, starts, wanted, words, searchColumn)));
+            filter.Used = Stopwatch.GetTimestamp();
+            matching = filter.Rows;
+            foreach (var old in opened.Filters.OrderBy(pair => pair.Value.Used).Take(Math.Max(0, opened.Filters.Count - FiltersKept)).ToList())
             {
-                foreach (var old in opened.Filters.Keys.Where(k => k != key).Take(opened.Filters.Count - FiltersKept))
-                {
-                    opened.Filters.TryRemove(old, out _);
-                }
+                opened.Filters.TryRemove(old.Key, out _);
             }
         }
 

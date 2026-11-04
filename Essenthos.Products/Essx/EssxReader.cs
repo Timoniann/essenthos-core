@@ -113,9 +113,13 @@ public sealed class EssxReader : IDisposable
     /// <see cref="Verify()"/>, and in the same pass the SHA-256 of the whole file as a build manifest records
     /// it (lower-case hex), so one read both checks the bytes and names them.
     /// </summary>
-    public bool Verify(out string fileSha256)
+    public bool Verify(out string fileSha256) => Verify(out _, out fileSha256);
+
+    /// <summary><see cref="Verify(out string)"/>, with the hash of the bytes before the trailer's hash as computed now, which a sound file has stored.</summary>
+    public bool Verify(out string computedSha256, out string fileSha256)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        computedSha256 = string.Empty;
         fileSha256 = string.Empty;
         var buffer = new byte[1 << 20];
         var remaining = Length - EssxLayout.HashLength;
@@ -134,7 +138,9 @@ public sealed class EssxReader : IDisposable
         }
 
         var stored = StoredHash();
-        var matches = hash.GetCurrentHash().AsSpan().SequenceEqual(stored);
+        var computed = hash.GetCurrentHash();
+        computedSha256 = Convert.ToHexStringLower(computed);
+        var matches = computed.AsSpan().SequenceEqual(stored);
         hash.AppendData(stored);
         fileSha256 = Convert.ToHexStringLower(hash.GetHashAndReset());
         return matches;
