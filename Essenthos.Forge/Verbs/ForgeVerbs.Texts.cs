@@ -68,10 +68,21 @@ internal static partial class ForgeVerbs
         }
     }
 
-    /// <summary>The ids every word of the texts holds in the configured database, written as each text's ids product.</summary>
+    /// <summary>
+    /// The ids every word of the texts holds in the configured database, written as each text's ids product, and the
+    /// ceiling new words take their ids above raised to the database's highest.
+    /// </summary>
     private static async Task<int> TextIds(ForgeRun forge, ProductStore store, IReadOnlyList<string> slugs)
     {
         var database = new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database;
+        await using (var connection = new NpgsqlConnection(forge.DatabaseConnection))
+        {
+            await connection.OpenAsync();
+            var highest = await TextSnapshot.HighestWordId(connection);
+            WordIdCeiling.Raise(forge.Resources, highest);
+            forge.Logger.LogInformation("Word id ceiling: {Ceiling} ({Database} holds ids up to {Highest})", WordIdCeiling.Read(forge.Resources), database, highest);
+        }
+
         foreach (var slug in slugs)
         {
             await using var connection = new NpgsqlConnection(forge.DatabaseConnection);

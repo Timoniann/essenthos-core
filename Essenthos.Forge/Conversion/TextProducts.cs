@@ -85,17 +85,19 @@ internal sealed record TextWord(
 }
 
 /// <summary>
-/// The id a word of the corpus holds, by key: what <c>forge texts ids</c> exports from a corpus once, so that
-/// every later conversion gives each word the id it already has and the database's ids never change.
+/// The id a word of the corpus holds, by key, with the word as the corpus reads it: what <c>forge texts ids</c> exports
+/// from a corpus, so that every later conversion gives each word the id it already has, and a word a correction moved
+/// within its verse is still found by its letters (<see cref="TextWordIds"/>).
 /// </summary>
-internal sealed record TextWordId(WordKey Key, long Id)
+internal sealed record TextWordId(WordKey Key, long Id, string Surface)
 {
     public static string ProductOf(string text) => $"texts/{text}/ids";
 
     public static ProductSchema<TextWordId> Schema(string text) => new ProductSchema<TextWordId>()
         .OwnWordKey("own", w => w.Key)
         .Integer("id", w => w.Id)
-        .Reads(row => new TextWordId(WordKey.Parse(row.Text(0), text), row.Integer(1)));
+        .Text("surface", w => w.Surface)
+        .Reads(row => new TextWordId(WordKey.Parse(row.Text(0), text), row.Integer(1), row.Text(2)));
 }
 
 /// <summary>
