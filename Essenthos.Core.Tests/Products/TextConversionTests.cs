@@ -354,6 +354,12 @@ public sealed class TextConversionTests : IDisposable
     [InlineData("so schlecht sind:H7455 vor Bosheit:H7455", "so schlecht sind vor Bosheit:H7455")]
     [InlineData("nannte:H7121 er:H5892 nach", "nannte:H7121 er:H5892 nach")]
     [InlineData("Es:G1161 ist:G2235 schon", "Es ist schon")]
+    [InlineData("wie er ihnen befohlen hatte:H6680", "wie er ihnen befohlen:H6680 hatte")]
+    [InlineData("Da sprach er:H559 Wohlan", "Da sprach:H559 er Wohlan")]
+    [InlineData("denn er fürchtete sich:H3372 zu Zoar", "denn er fürchtete:H3372 sich zu Zoar")]
+    [InlineData("und unter sie gekommen waren:H1961", "und unter sie gekommen waren:H1961")]
+    [InlineData("Also ward:H2388 Jotham mächtig", "Also ward:H2388 Jotham mächtig")]
+    [InlineData("kein Gott neben Mir:H4191", "kein Gott neben Mir:H4191")]
     public void LuthersNumbersOnPronounsAndAuxiliariesThatRenderNeitherMoveToTheHeadOrGo(string read, string placed)
     {
         Dictionary<string, string> classes = new()
@@ -361,7 +367,8 @@ public sealed class TextConversionTests : IDisposable
             ["H5971"] = "subs", ["H5921"] = "prep", ["H5102"] = "verb", ["H1121"] = "subs", ["H2845"] = "nmpr", ["H4735"] = "subs",
             ["G4314"] = "prep", ["H5012"] = "verb", ["H6440"] = "subs", ["H5674"] = "verb", ["H3426"] = "subs", ["H2428"] = "subs",
             ["H518"] = "conj", ["H3068"] = "nmpr", ["H7455"] = "subs", ["H7121"] = "verb", ["H5892"] = "subs", ["G1161"] = "conj",
-            ["G2235"] = "adv",
+            ["G2235"] = "adv", ["H6680"] = "verb", ["H559"] = "verb", ["H3372"] = "verb", ["H1961"] = "verb", ["H2388"] = "verb",
+            ["H4191"] = "verb",
         };
         var words = read.Split(' ').Select(token => token.Split(':')).Select(parts => new ConvertedWord
         {

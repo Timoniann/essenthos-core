@@ -8,8 +8,7 @@ namespace Essenthos.Core.Build;
 /// <summary>
 /// The served tables loaded whole from a product: made from files (<see cref="TableProducts"/>, <c>tables/&lt;table&gt;</c>), or,
 /// for the ones no producer makes yet, carried from a database as <c>carried/&lt;table&gt;</c> so that a build
-/// still reads files only: every column as Postgres prints it, a text by its slug, a verse by its text and own address,
-/// a word by its id (word ids are the products' own). Loaded through a staging table, each row put back on the text,
+/// still reads files only: every column as Postgres prints it, a text by its slug, a word by its id (word ids are the products' own). Loaded through a staging table, each row put back on the text,
 /// verse and word the new database holds there; a row whose word or verse the products no longer hold is left out and
 /// counted. Each table leaves this list when the package that owns it writes it as a product.
 /// </summary>
@@ -20,15 +19,6 @@ internal static class CarriedTables
     public sealed record Outcome(string Table, long Exported, long Loaded, long LeftOut, TimeSpan Elapsed);
 
     private const string Kept = "('supplied', 'restored', 'doubtful', 'subscription')";
-
-    private const string VerseKey =
-        "t.slug AS verse_text, b.canonical_ordinal::text AS verse_book, v.chapter_number::text AS verse_chapter, v.number::text AS verse_number, v.label AS verse_label";
-
-    private const string VerseJoin = "JOIN verse v ON v.id = x.verse_id JOIN book b ON b.id = v.book_id JOIN text t ON t.id = v.text_id";
-
-    private const string VerseResolve =
-        "JOIN text vt ON vt.slug = s.verse_text JOIN book vb ON vb.text_id = vt.id AND vb.canonical_ordinal = s.verse_book::int " +
-        "JOIN verse v ON v.book_id = vb.id AND v.chapter_number = s.verse_chapter::int AND v.number = s.verse_number::int AND v.label = s.verse_label";
 
     public static readonly IReadOnlyList<Carried> All =
     [
@@ -54,16 +44,6 @@ internal static class CarriedTables
             "id, word_id, number, method, confidence, source, note",
             "SELECT s.id::bigint, s.word_id::bigint, s.number, s.method, s.confidence::float8, s.source, s.note FROM s " +
             "WHERE EXISTS (SELECT 1 FROM word w WHERE w.id = s.word_id::bigint)"),
-        new("verse_link",
-            "SELECT x.id::text, f.slug AS from_text, t.slug AS to_text, x.relation, x.method, x.confidence::text, x.source, x.note " +
-            "FROM verse_link x JOIN text f ON f.id = x.from_text_id JOIN text t ON t.id = x.to_text_id ORDER BY x.id",
-            "id, from_text_id, to_text_id, relation, method, confidence, source, note",
-            "SELECT s.id::int, f.id, t.id, s.relation, s.method, s.confidence::float8, s.source, s.note FROM s " +
-            "JOIN text f ON f.slug = s.from_text JOIN text t ON t.slug = s.to_text"),
-        new("verse_link_verse",
-            $"SELECT x.verse_link_id::text, {VerseKey}, x.side FROM verse_link_verse x {VerseJoin} ORDER BY x.verse_link_id, x.verse_id",
-            "verse_link_id, verse_id, side",
-            $"SELECT s.verse_link_id::int, v.id, s.side FROM s {VerseResolve} WHERE EXISTS (SELECT 1 FROM verse_link l WHERE l.id = s.verse_link_id::int)"),
         new("text_relation",
             "SELECT x.id::text, f.slug AS from_text, t.slug AS to_text, x.relation, x.scope, x.note, x.source " +
             "FROM text_relation x JOIN text f ON f.id = x.from_text_id JOIN text t ON t.id = x.to_text_id ORDER BY x.id",

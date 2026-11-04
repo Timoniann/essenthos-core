@@ -1,29 +1,193 @@
 # product    Essenthos/texts/LUTH1912/corrections.tsv
 # producer   by hand
 # kinds      strong: the word's Strong number becomes after (none where after is \N); before is the word and, after a space, the number it carries until then
-# note       numbers the eBible file prints on the wrong word, read against BHSA and Nestle 1904 by hand (TSK-1471, PRB-1469); the converter's MisplacedNumbers stage has already moved or cleared the numbers it can tell are misplaced
+# note       numbers the eBible file prints on the wrong word, read against BHSA and Nestle 1904 by hand (TSK-1471, PRB-1469); the converter's MisplacedNumbers stage has already moved or cleared the numbers it can tell are misplaced; most rows from 6.8:2.1 on were found where EVIDENTIA pairs the word elsewhere and the Zefania Luther 1912 module (a check only, never a source: ZefaniaLuther1912/LICENCE.md) puts the number on another word, and each was read against the originals (PRB-1473)
 own	kind	before	after	why
 1.4:17.18	strong	die	H5892	the relative die renders the second הָעִיר, whose number the file prints on er
 1.4:17.20	strong	er H5892	\N	er is the subject of וַיִּקְרָא; the town's number belongs to die
 5.9:3.3	strong	du H3117	\N	du is the subject of וְיָדַעְתָּ; the day's number belongs to heute
 5.9:3.5	strong	heute	H3117	heute renders הַיּוֹם
 6.2:12.10	strong	ich H2617	\N	ich is the subject of עָשִׂיתִי; Barmherzigkeit renders חֶסֶד
+6.8:2.1	strong	Du H310	\N	du is the subject of תַעֲשֶׂה; אַחֲרֶיהָ is hinter
+6.8:2.34	strong	hinter	H310	hinter renders מֵאַחֲרֶיהָ
+9.2:30.17	strong	sollten H6440	\N	לְפָנַי is vor mir, whose mir carries the number; the file repeats it on sollten
+9.4:2.13	strong	Israel	H3478	Israel renders יִשְׂרָאֵל, whose number the file prints on ward
+9.4:2.14	strong	ward H3478	\N	ward is the auxiliary of geschlagen
+9.9:27.33	strong	kundtue	H8085	kundtue renders אַשְׁמִיעֲךָ, I make you hear
+9.9:27.37	strong	hat H8085	\N	hat is the auxiliary of gesagt; the number is kundtue's
+9.22:19.6	strong	Nobe	H5011	Nobe renders נֹב
+9.22:19.8	strong	er H5011	\N	er is the subject of schlug; the town's number belongs to Nobe
 10.21:12.24	strong	sie H853	\N	sie is the subject of גָּנְבוּ; the object marker אֹתָם is the relative die
 11.10:2.28	strong	sie H413	\N	sie is the subject of וַתְּדַבֵּר; אֵלָיו is ihm
 11.10:2.29	strong	ihm	H413	ihm renders אֵלָיו
 16.10:37.1	strong	Auch H7225	\N	רֵאשִׁית is das Erste; the file repeats its number on auch and wir
 16.10:37.3	strong	wir H7225	\N	רֵאשִׁית is das Erste; the file repeats its number on auch and wir
+17.8:6.3	strong	kann	H3201	kann renders אוּכַל
+17.8:6.4	strong	ich H3201	\N	ich is the subject of אוּכַל; its number belongs to kann
+17.8:6.15	strong	kann	H3201	kann renders the second אוּכַל
+17.8:6.16	strong	ich H3201	\N	ich is the subject of אוּכַל; its number belongs to kann
 19.22:1.9	strong	früh	H7837	früh renders הַשַּׁחַר, the dawn
 19.22:1.10	strong	gejagt H7837	\N	the dawn's number is früh's; gejagt renders nothing of the title
 19.22:1.21	strong	ich H1697	\N	ich is no word: דִּבְרֵי שַׁאֲגָתִי is the words of my roaring
 19.39:3.14	strong	ich H784	\N	ich is the speaker; the fire is entzündet's
+21.5:17.2	strong	Leben	H3117	Sein Leben lang renders כָּל יָמָיו
+21.5:17.5	strong	er H3117	\N	er is the subject of יֹאכֵל; the days' number belongs to Leben
 22.8:9.7	strong	wir H2918	\N	Bollwerk renders טִירַת; the file repeats its number on wir
-26.15:7.12	strong	fressen	H398	fressen renders תֹּאכְלֵם
-26.15:7.13	strong	soll H3318	\N	the numbers of the two clauses stand on each other's auxiliaries
-26.15:7.20	strong	herausgekommen	H3318	herausgekommen renders יָצָאוּ
-26.15:7.21	strong	sind H398	\N	the numbers of the two clauses stand on each other's auxiliaries
+26.15:7.12	strong	fressen H3318	H398	fressen renders תֹּאכְלֵם; the numbers of the two clauses stand on each other's verbs
+26.15:7.20	strong	herausgekommen H398	H3318	herausgekommen renders יָצָאוּ; the numbers of the two clauses stand on each other's verbs
 26.27:7.2	strong	Segel H4374	H4666	Segel renders מִפְרָשֵׂךְ, the sail
 26.27:7.13	strong	Panier H4666	H5251	Panier renders נֵס, the banner
 26.27:7.17	strong	Decken H5251	H4374	Decken renders מְכַסֵּךְ, the covering
+26.43:20.4	strong	Blut	H1818	Blut renders דָּמוֹ
+26.43:20.6	strong	du H1818	\N	du is the subject of וְלָקַחְתָּ; the blood's number belongs to Blut
+26.44:20.2	strong	Haupt	H7218	Haupt renders רֹאשָׁם
+26.44:20.4	strong	sie H7218	\N	sie is the subject of יְגַלֵּחוּ; the head's number belongs to Haupt
+38.2:12.3	strong	HERR	H3068	HERR renders יְהוָה
+38.2:12.4	strong	wird H3068	\N	wird is the auxiliary of erben; the name's number belongs to HERR
+40.5:16.10	strong	sie G5216	\N	sie is the subject of ἴδωσιν; ὑμῶν is eure
+40.5:16.11	strong	eure G2570	G5216	eure renders ὑμῶν
+40.5:16.12	strong	guten	G2570	guten renders καλὰ
+40.5:26.7	strong	nicht	G3364	nicht renders οὐ μὴ
+40.5:26.9	strong	dannen G3364	\N	von dannen is ἐκεῖθεν, whose number von carries; the negation's is nicht's
+40.9:13.1	strong	Gehet G1161	G4198	Gehet … hin renders πορευθέντες; δὲ is aber
+40.9:13.2	strong	aber	G1161	aber renders δὲ
+40.12:7.18	strong	hättet	G302	the subjunctive hättet renders ἂν
+40.12:7.23	strong	verdammt G302	G2613	verdammt renders κατεδικάσατε
+40.12:13.20	strong	wieder	G600	ward … wieder renders ἀπεκατεστάθη
+40.12:13.21	strong	gesund G600	G5199	gesund renders ὑγιὴς
+40.13:19.22	strong	ist G846	\N	ist is the auxiliary of gesät; αὐτοῦ is sein
+40.13:19.24	strong	sein	G846	sein renders αὐτοῦ
+40.13:34.1	strong	Solches G3956	G5023	Solches renders ταῦτα, whose number the file prints on alles
+40.13:34.2	strong	alles G5023	G3956	alles renders πάντα, whose number the file prints on Solches
+40.22:11.18	strong	hochzeitlich	G1062	hochzeitlich renders γάμου
+40.22:11.19	strong	Kleid G1062	G1742	Kleid renders ἔνδυμα
+40.22:12.15	strong	hochzeitlich	G1062	hochzeitlich renders γάμου
+40.22:12.16	strong	Kleid G1062	G1742	Kleid renders ἔνδυμα
+40.24:4.12	strong	nicht	G3361	nicht renders μή
+40.24:4.13	strong	jemand G3361	G5100	jemand renders τις
+40.26:56.14	strong	verließen G5343	G863	verließen renders ἀφέντες, whose number the file prints on flohen
+40.26:56.19	strong	flohen G863	G5343	flohen renders ἔφυγον, whose number the file prints on verließen
+40.26:69.12	strong	eine	G3391	eine renders μία
+40.26:69.13	strong	Magd G3391	G3814	Magd renders παιδίσκη
+40.27:42.24	strong	wir G846	\N	wir is the subject of πιστεύσομεν; αὐτῷ is ihm
+40.27:42.25	strong	ihm	G846	ihm renders αὐτῷ
+40.28:5.16	strong	ihr G2212	\N	ihr is the subject of ζητεῖτε; its number belongs to sucht
+40.28:5.20	strong	sucht G3588	G2212	sucht renders ζητεῖτε
+41.1:37.10	strong	Jedermann G2212	G3956	Jedermann renders πάντες
+41.1:37.11	strong	sucht	G2212	sucht renders ζητοῦσίν
+41.2:6.2	strong	waren	G2258	waren renders ἦσαν
+41.2:6.7	strong	saßen G2258	G2521	saßen renders καθήμενοι
+41.9:36.9	strong	mitten G1722	G3319	mitten renders μέσῳ
+41.9:36.10	strong	unter	G1722	unter renders ἐν
+41.13:11.3	strong	euch G71	G5209	euch renders ὑμᾶς
+41.13:11.4	strong	nun G5209	\N	ὑμᾶς is euch; nun renders no word of the clause
+41.13:11.5	strong	führen G3860	G71	führen renders ἄγωσιν
+41.13:11.7	strong	überantworten	G3860	überantworten renders παραδιδόντες
+41.13:15.16	strong	hinein G5100	\N	komme … hinein is εἰσελθάτω, whose number komme carries; τι is etwas
+41.13:15.17	strong	etwas G1537	G5100	etwas renders τι
+41.13:15.20	strong	aus	G1537	aus renders ἐκ
+41.14:8.14	strong	zu	G1519	zu renders εἰς
+41.14:8.15	strong	meinem G1519	G3450	meinem renders μου
+41.15:1.27	strong	überantworteten G4091	G3860	überantworteten renders παρέδωκαν, whose number the file prints on Pilatus
+41.15:1.30	strong	Pilatus G3860	G4091	Pilatus renders Πειλάτῳ, whose number the file prints on überantworteten
+42.1:73.11	strong	Abraham G4314	G11	Abraham renders Ἀβραὰμ; πρὸς has no word of its own here
+42.6:6.22	strong	rechte	G1188	rechte renders δεξιὰ
+42.6:6.23	strong	Hand G1188	G5495	Hand renders χεὶρ
+42.18:4.14	strong	ich G2316	\N	ich is the subject of φοβοῦμαι; Θεὸν is Gott
+42.18:4.18	strong	Gott G3756	G2316	Gott renders Θεὸν
+42.18:4.19	strong	nicht	G3756	nicht renders οὐ
+42.19:29.7	strong	nahte G1519	G1448	nahte renders ἤγγισεν
+42.19:29.8	strong	gen	G1519	gen renders εἰς
+42.20:43.3	strong	ich G4675	\N	ich is the subject of θῶ; σου is deine
+42.20:43.5	strong	deine	G4675	deine renders σου
+42.23:26.11	strong	Kyrene G2064	G2956	Kyrene renders Κυρηναῖον
+42.23:26.13	strong	kam	G2064	kam renders ἐρχόμενον
+43.4:38.2	strong	habe G649	\N	habe is the auxiliary of gesandt
+43.4:38.4	strong	gesandt G2325	G649	gesandt renders ἀπέστειλα
+43.4:38.6	strong	schneiden	G2325	schneiden renders θερίζειν
+43.7:17.12	strong	Lehre G2076	G1322	Lehre renders διδαχῆς
+43.7:17.15	strong	sei	G2076	sei renders ἐστιν
+43.7:23.25	strong	ganzen	G3650	ganzen renders ὅλον
+43.7:23.27	strong	habe G4160	\N	habe is the auxiliary of gemacht
+43.7:23.30	strong	gesund G3650	G5199	gesund renders ὑγιῆ
+43.7:23.31	strong	gemacht G5199	G4160	gemacht renders ἐποίησα
+43.7:38.13	strong	Ströme G4482	G4215	Ströme renders ποταμοὶ
+43.7:38.17	strong	fließen	G4482	fließen renders ῥεύσουσιν
+43.7:39.10	strong	sollten G4100	G3195	sollten renders ἔμελλον
+43.7:39.14	strong	glaubten	G4100	glaubten renders πιστεύσαντες
+43.8:52.27	strong	Wort	G3056	Wort renders λόγον
+43.8:52.28	strong	hält G3056	G5083	hält renders τηρήσῃ
+43.10:24.14	strong	unsere	G2257	unsere renders ἡμῶν
+43.10:24.15	strong	Seele G2257	G5590	Seele renders ψυχὴν
+44.2:39.15	strong	Gott G2962	G2316	Gott renders Θεὸς, whose number the file prints on HERR
+44.2:39.17	strong	HERR G2316	G2962	HERR renders Κύριος, whose number the file prints on Gott
+44.5:15.24	strong	ihrer G5100	G846	ihrer renders αὐτῶν, whose number the file prints on etliche
+44.5:15.25	strong	etliche G846	G5100	etliche renders τινὶ, whose number the file prints on ihrer
+44.13:46.28	strong	nicht	G3756	nicht renders οὐκ
+44.13:46.29	strong	wert G3756	G514	wert renders ἀξίους
+44.19:11.4	strong	nicht	G3756	nicht renders οὐ
+44.19:11.5	strong	geringe G3756	G5177	geringe renders τυχούσας
+44.20:2.9	strong	ermahnt	G3870	ermahnt renders παρακαλέσας
+44.20:2.13	strong	Worten G3870	G3056	Worten renders λόγῳ
+44.21:23.1	strong	So G4160	\N	so renders no word; ποίησον is tue
+44.21:23.2	strong	tue G3739	G4160	tue renders ποίησον
+44.21:23.5	strong	was	G3739	was renders ὅ
+44.25:26.1	strong	Etwas G804	G5100	Etwas renders τι, whose number the file prints on Gewisses
+44.25:26.2	strong	Gewisses G5100	G804	Gewisses renders ἀσφαλές, whose number the file prints on Etwas
+44.26:26.5	strong	solches G4314	G5130	solches renders τούτων
+44.26:26.7	strong	zu	G4314	zu renders πρὸς
+44.28:8.4	strong	daß G3962	\N	daß renders no word; πατέρα is Vater
+44.28:8.6	strong	Vater G4196	G3962	Vater renders πατέρα
+44.28:8.8	strong	Publius	G4196	Publius renders Ποπλίου
+44.28:15.15	strong	bis	G891	bis gen renders ἄχρι
+44.28:17.39	strong	gefangen G3860	G1198	gefangen renders δέσμιος
+44.28:17.42	strong	übergeben	G3860	übergeben renders παρεδόθην
+45.15:4.7	strong	ist G4270	\N	ist renders no word; προεγράφη is zuvor geschrieben
+45.15:4.11	strong	geschrieben G4270	G1125	the second geschrieben renders ἐγράφη
+45.15:23.9	strong	diesen G575	G5125	diesen renders τούτοις
+45.15:23.18	strong	von	G575	von renders ἀπὸ
+46.4:5.28	strong	alsdann G2532	G5119	alsdann renders τότε
+46.16:7.14	strong	etliche	G5100	etliche renders τινὰ
+46.16:7.15	strong	Zeit G5100	G5550	Zeit renders χρόνον
 47.1:8.19	strong	über G916	G2596	über die Maßen renders καθ' ὑπερβολήν
 47.1:8.22	strong	beschwert G2596	G916	beschwert renders ἐβαρήθημεν
+47.4:17.3	strong	Trübsal G1645	G2347	Trübsal renders θλίψεως
+47.4:17.6	strong	und G3910	\N	und renders no word; παραυτίκα is zeitlich
+47.4:17.7	strong	leicht G3910	G1645	leicht renders ἐλαφρὸν
+47.6:11.4	strong	unser	G2257	unser renders ἡμῶν
+47.6:11.5	strong	Mund G2257	G4750	Mund renders στόμα
+47.6:11.7	strong	sich G4750	\N	sich renders no word; στόμα is Mund
+47.9:13.6	strong	untertäniges G3671	G5292	untertäniges renders ὑποταγῇ, whose number the file prints on Bekenntnis
+47.9:13.7	strong	Bekenntnis G5292	G3671	Bekenntnis renders ὁμολογίας, whose number the file prints on untertäniges
+47.11:17.1	strong	Was	G3739	Was renders ὃ
+47.11:17.2	strong	ich G3739	\N	ich is the subject of λαλῶ; ὃ is Was
+47.12:15.11	strong	eure G5590	G5216	eure renders ὑμῶν
+47.12:15.12	strong	Seelen	G5590	Seelen renders ψυχῶν
+48.1:9.11	strong	jemand G5209	G5100	jemand renders τις
+48.1:9.12	strong	euch	G5209	euch renders ὑμᾶς
+48.1:19.11	strong	HERRN G80	G2962	HERRN renders Κυρίου, whose number the file prints on Bruder
+48.1:19.12	strong	Bruder G2962	G80	Bruder renders ἀδελφὸν, whose number the file prints on HERRN
+48.4:30.17	strong	soll G3364	\N	soll renders no word of its own; the negation's number is nicht's
+48.4:30.18	strong	nicht	G3364	nicht renders οὐ μὴ
+49.1:14.8	strong	unsrer G4047	\N	unsrer renders no word; περιποιήσεως is Eigentum
+49.1:14.13	strong	Eigentum	G4047	Eigentum renders περιποιήσεως
+49.4:19.13	strong	samt	G1722	samt renders ἐν
+49.4:19.15	strong	Geiz G1722	G4124	Geiz renders πλεονεξίᾳ
+50.2:1.18	strong	Liebe G3628	G4698	herzliche Liebe renders σπλάγχνα, whose number the file prints on Barmherzigkeit
+50.2:1.20	strong	Barmherzigkeit G4698	G3628	Barmherzigkeit renders οἰκτιρμοί, whose number the file prints on Liebe
+51.1:20.5	strong	versöhnt G1517	G604	versöhnt renders ἀποκαταλλάξαι; εἰρηνοποιήσας is Frieden machte
+51.1:20.20	strong	Frieden	G1517	Frieden machte renders εἰρηνοποιήσας
+58.4:7.19	strong	ihr G846	\N	ihr is the subject of ἀκούσητε; αὐτοῦ is seine
+58.4:7.20	strong	seine	G846	seine renders αὐτοῦ
+58.8:12.15	strong	ich G3364	\N	ich is the subject of μνησθῶ; the negation's number is nicht's
+58.8:12.16	strong	nicht	G3364	nicht renders οὐ μὴ
+58.9:11.4	strong	gekommen	G3854	gekommen renders παραγενόμενος
+58.9:11.7	strong	sei G3854	\N	sei renders no word of παραγενόμενος
+58.9:23.9	strong	solchem	G5125	solchem renders τούτοις
+58.9:23.11	strong	werden G5125	\N	werden is the auxiliary of gereinigt
+59.1:11.19	strong	schöne	G2143	schöne Gestalt renders εὐπρέπεια
+59.1:11.20	strong	Gestalt G2143	G4383	Gestalt renders προσώπου
+59.2:12.14	strong	gerichtet G3195	G2919	gerichtet renders κρίνεσθαι; μέλλοντες is sollen
+59.2:12.15	strong	werden G2919	\N	werden is the auxiliary of gerichtet
+61.2:18.12	strong	Unzucht G1939	G766	Unzucht renders ἀσελγείαις, whose number the file prints on Lust
+61.2:18.15	strong	Lust G766	G1939	Lust renders ἐπιθυμίαις, whose number the file prints on Unzucht
