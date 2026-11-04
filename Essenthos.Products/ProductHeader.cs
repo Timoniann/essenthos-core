@@ -106,13 +106,18 @@ public sealed class ProductHeader
     /// The header's lines, each ending in LF. The rows line is right-aligned in a fixed width so a
     /// writer that learns the count last can come back and overwrite the digits in place.
     /// </summary>
-    public string Format(long? rows = null)
+    /// <param name="withRows">False for a file people edit: the rows line is left out, since a hand edit would falsify it.</param>
+    public string Format(long? rows = null, bool withRows = true)
     {
         var text = new StringBuilder();
         Line(text, ProductName, Product);
         Line(text, InputsName, string.Join(InputsJoin, Inputs));
         Line(text, ProducerName, Producer);
-        Line(text, RowsName, RowsField(rows ?? Rows));
+        if (withRows)
+        {
+            Line(text, RowsName, RowsField(rows ?? Rows));
+        }
+
         foreach (var (name, value) in Notes)
         {
             Line(text, name, value);

@@ -6,18 +6,32 @@ namespace Essenthos.Core.Products.Tsv;
 /// </summary>
 public sealed class TsvFormat : IProductFormat
 {
-    public static readonly TsvFormat Instance = new();
+    /// <summary>A machine's TSV: the header counts the rows and the reader holds the file to that count.</summary>
+    public static readonly TsvFormat Instance = new(countsRows: true);
+
+    /// <summary>
+    /// A file people edit: no rows count is written and none is checked, so a line added or taken out by hand never makes
+    /// the file unreadable (a count an exporter wrote before is ignored).
+    /// </summary>
+    public static readonly TsvFormat HandEdited = new(countsRows: false);
+
+    private TsvFormat(bool countsRows)
+    {
+        CountsRows = countsRows;
+    }
+
+    public bool CountsRows { get; }
 
     public string Extension => ".tsv";
 
     public IProductWriter<T> Create<T>(string path, ProductHeader header, ProductSchema<T> schema) =>
-        new TsvProductWriter<T>(path, header, schema);
+        new TsvProductWriter<T>(path, header, schema, CountsRows);
 
     public IProductReader<T> Open<T>(string path, ProductSchema<T> schema) =>
-        TsvProductReader<T>.Open(path, schema);
+        TsvProductReader<T>.Open(path, schema, CountsRows);
 
     public IProductReader<string?[]> Open(string path) =>
-        TsvProductReader<string?[]>.OpenTexts(path);
+        TsvProductReader<string?[]>.OpenTexts(path, CountsRows);
 
     /// <summary>
     /// The rows of a product as <c>COPY ... FROM STDIN</c> takes them: a reader positioned after the

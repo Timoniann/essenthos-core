@@ -191,6 +191,11 @@ Resources/Essenthos/texts/*/*
 !Resources/Essenthos/texts/*/corrections.tsv
 !Resources/Essenthos/texts/*/frame.tsv
 
+# The names layer's machine products (TSK-1448): the projection onto every text and a database's names kept for the
+# proof. Carried: the settled names, rules, bases and overrides people edit. Below the line that carries Resources/Essenthos/.
+Resources/Essenthos/names/projected/
+Resources/Essenthos/names/live/
+
 # Maimonides' count of the commandments as this project curated it from two public-domain works:
 # 613 rows, 59 KB. The downloads it is written from stay out, and scripts/maimonides.py puts them back.
 !Resources/Maimonides/commandments.tsv

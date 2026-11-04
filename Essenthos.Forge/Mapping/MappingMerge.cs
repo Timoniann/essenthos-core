@@ -22,6 +22,8 @@ internal static class MappingMerge
     /// <param name="Hashes">The text hash of each cited verse when the rows were made (<see cref="VerseHashRow"/>).</param>
     /// <param name="Manifests">Each text's verse manifest as it stands, or null where the text has none yet.</param>
     /// <param name="PreviousIds">The ids an earlier final gave its links, by shape, so a link keeps its id.</param>
+    /// <param name="Folds">The fold of each cited verse when the rows were made (<see cref="VerseFold"/>), where it was kept.</param>
+    /// <param name="FoldNow">The fold of a verse of a text as its words stand, asked only of a verse whose text hash moved.</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -31,7 +33,9 @@ internal static class MappingMerge
         IReadOnlyDictionary<(string Text, VerseKey Verse), string> Hashes,
         IReadOnlyDictionary<string, IReadOnlyDictionary<VerseKey, string>?> Manifests,
         IReadOnlyDictionary<string, long> PreviousIds,
-        long IdBase);
+        long IdBase,
+        IReadOnlyDictionary<(string Text, VerseKey Verse), string>? Folds = null,
+        Func<string, VerseKey, string?>? FoldNow = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -137,7 +141,11 @@ internal static class MappingMerge
         return new Output(final, methods, report);
     }
 
-    /// <summary>The rows citing a verse whose text moved, or which is gone, since they were made.</summary>
+    /// <summary>
+    /// The rows citing a verse whose text moved, or which is gone, since they were made. A verse whose text hash moved but
+    /// whose words still read the same (its fold then and now agree) has not moved for its rows: only marks or punctuation
+    /// changed, and every cited key still names the word it named.
+    /// </summary>
     private static HashSet<string> Stale(Input input, List<Entry> entries, List<ReportRow> report)
     {
         var drawn = new HashSet<string>(StringComparer.Ordinal);
@@ -157,6 +165,7 @@ internal static class MappingMerge
         }
 
         var verdicts = new Dictionary<(bool From, string Verse), bool>();
+        var readSame = 0;
         bool Moved(bool from, string key)
         {
             var verse = key[..key.LastIndexOf('.')];
@@ -170,6 +179,13 @@ internal static class MappingMerge
             moved = manifest is not null
                     && (!manifest.TryGetValue(verseKey, out var now)
                         || (input.Hashes.TryGetValue((text, verseKey), out var then) && then != now));
+            if (moved && manifest!.ContainsKey(verseKey) && input.Folds?.TryGetValue((text, verseKey), out var foldThen) == true
+                && input.FoldNow?.Invoke(text, verseKey) == foldThen)
+            {
+                moved = false;
+                readSame++;
+            }
+
             verdicts[(from, verse)] = moved;
             return moved;
         }
@@ -184,6 +200,12 @@ internal static class MappingMerge
                     drawn.Add(entry.Row.Method);
                 }
             }
+        }
+
+        if (readSame > 0)
+        {
+            report.Add(new ReportRow("read-same", string.Empty, string.Empty, readSame,
+                "cited verses whose text moved but whose words read the same, only marks or punctuation otherwise: their rows stand"));
         }
 
         return drawn;

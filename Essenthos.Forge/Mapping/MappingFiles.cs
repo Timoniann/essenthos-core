@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Mapping;
@@ -41,12 +42,16 @@ internal static class MappingFiles
         }
 
         var hashes = new Dictionary<(string, VerseKey), string>();
+        var folds = new Dictionary<(string, VerseKey), string>();
         if (store.Exists(MappingProducts.Of(pair, MappingProducts.Hashes)))
         {
-            using var reader = store.Open(MappingProducts.Of(pair, MappingProducts.Hashes), VerseHashRow.Schema);
-            foreach (var row in reader.Rows())
+            foreach (var row in VerseHashRow.ReadAll(store, MappingProducts.Of(pair, MappingProducts.Hashes)))
             {
                 hashes[(row.Text, row.Own)] = row.Hash;
+                if (row.Fold is not null)
+                {
+                    folds[(row.Text, row.Own)] = row.Fold;
+                }
             }
         }
 
@@ -68,7 +73,8 @@ internal static class MappingFiles
 
         var ordinal = PairOrdinals.Ensure(store, [pair])[pair];
         var output = MappingMerge.Merge(new MappingMerge.Input(
-            pair, fromText, toText, rows, rulings, hashes, manifests, previous, PairOrdinals.Base + ordinal * PairOrdinals.Range));
+            pair, fromText, toText, rows, rulings, hashes, manifests, previous, PairOrdinals.Base + ordinal * PairOrdinals.Range,
+            folds, CurrentFolds(store)));
 
         foreach (var (method, merged) in output.Methods)
         {
@@ -113,15 +119,16 @@ internal static class MappingFiles
     {
         var (fromText, toText) = MappingProducts.Split(pair);
         var product = MappingProducts.Of(pair, MappingProducts.Hashes);
-        var hashes = new Dictionary<(string Text, VerseKey Own), string>();
+        var hashes = new Dictionary<(string Text, VerseKey Own), (string Hash, string? Fold)>();
         if (store.Exists(product))
         {
-            using var reader = store.Open(product, VerseHashRow.Schema);
-            foreach (var row in reader.Rows())
+            foreach (var row in VerseHashRow.ReadAll(store, product))
             {
-                hashes[(row.Text, row.Own)] = row.Hash;
+                hashes[(row.Text, row.Own)] = (row.Hash, row.Fold);
             }
         }
+
+        var foldNow = CurrentFolds(store);
 
         var manifests = new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(StringComparer.Ordinal)
         {
@@ -143,7 +150,7 @@ internal static class MappingFiles
                     var verse = VerseKey.Parse(key[..key.LastIndexOf('.')]);
                     if (!hashes.ContainsKey((text, verse)) && manifest.TryGetValue(verse, out var hash))
                     {
-                        hashes[(text, verse)] = hash;
+                        hashes[(text, verse)] = (hash, foldNow(text, verse));
                         added++;
                     }
                 }
@@ -156,8 +163,37 @@ internal static class MappingFiles
         }
 
         using var writer = store.Create(product, ProductKind.Machine, VerseHashRow.Schema, ProductHeader.DescribeProducer(MergeProducer), []);
-        writer.WriteAll(hashes.Select(h => new VerseHashRow(h.Key.Text, h.Key.Own, h.Value))
+        writer.WriteAll(hashes.Select(h => new VerseHashRow(h.Key.Text, h.Key.Own, h.Value.Hash, h.Value.Fold))
             .OrderBy(r => r.Text, StringComparer.Ordinal).ThenBy(r => r.Own));
+    }
+
+    /// <summary>
+    /// The fold of a verse as a text's words product has it (<see cref="VerseFold"/>), each text read once and only when
+    /// asked; null where the store has no words or no declaration for the text.
+    /// </summary>
+    public static Func<string, VerseKey, string?> CurrentFolds(ProductStore store)
+    {
+        var texts = new System.Collections.Concurrent.ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<VerseKey, string>>>(StringComparer.Ordinal);
+        return (text, verse) => texts.GetOrAdd(text, slug => new Lazy<IReadOnlyDictionary<VerseKey, string>>(() => FoldsOf(store, slug)))
+            .Value.GetValueOrDefault(verse);
+    }
+
+    private static IReadOnlyDictionary<VerseKey, string> FoldsOf(ProductStore store, string text)
+    {
+        var folds = new Dictionary<VerseKey, string>();
+        if (!store.Exists(TextWord.ProductOf(text)) || !store.Exists(TextField.ProductOf(text)))
+        {
+            return folds;
+        }
+
+        var language = Essenthos.Core.Indexes.IndexContext.Declared(store, text).Language;
+        using var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text));
+        foreach (var verse in reader.Rows().GroupBy(w => w.Key.Verse))
+        {
+            folds[verse.Key] = VerseFold.Of(verse.Select(w => w.Surface), language);
+        }
+
+        return folds;
     }
 
     /// <summary>What a pair's final is made from: its method files, its rulings and hashes, and the two texts' manifests where they exist.</summary>

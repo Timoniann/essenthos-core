@@ -1,0 +1,6 @@
+# product    Essenthos/names/overrides/SCH1951.tsv
+# inputs     
+# producer   forge names-compare --write-overrides   (Essenthos.Forge 1.0.0+f4f4a9684e30-dirty)
+# edited     by hand from here on: add, suppress or differs on one word of this text
+own	record	action	base_record	role	source	note
+44.20:4.27	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not

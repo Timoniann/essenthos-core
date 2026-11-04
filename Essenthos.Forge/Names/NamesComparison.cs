@@ -21,7 +21,7 @@ internal static class NamesComparison
     /// <summary>The differences the sample of 2026-11-04 found the database right on, each with the override that keeps it.</summary>
     public const string TranslatorsOwn = "the base verse does not name it, written as a name";
 
-    public const string ReferenceGap = "the linked base word names nobody; another reference text's linked word names it";
+    public const string NoLink = "only-live: no link to any reference text";
 
     /// <param name="writeOverrides">Write <c>names/overrides/&lt;SLUG&gt;</c> for the categories decided for the database, where a text has none yet.</param>
     public static Outcome Run(NamesProjection projection, IReadOnlyList<string> texts, string outFolder, int perCategory, int parallel, bool writeOverrides = false)
@@ -84,7 +84,7 @@ internal static class NamesComparison
                           + (words.TryGetValue(key.Item1, out var word) ? word.WrittenAsName ? ", written as a name" : word.Cased ? ", in lower case" : ", script without capitals" : "")
                         : others.TryGetValue(key.Item1, out var elsewhere)
                             ? elsewhere.Contains(key.Item2) ? "only-live: no link to the base; another reference text's linked word names it" : "only-live: no link to the base; linked to another reference text"
-                            : "only-live: no link to any reference text";
+                            : NoLink;
                 differences.Add(new Difference(text, category, key.Item1, key.Item2,
                     $"live {row.Method} {NameProducts.Number(row.Confidence) ?? "-"} {row.Kind} | {row.Source} | {row.Note}"
                     + (result.LinkedTo.TryGetValue(key.Item1, out var to) ? $" | linked {string.Join("; ", to.Take(3))}" : "")));
@@ -109,6 +109,19 @@ internal static class NamesComparison
                 WriteOverrides(projection, result, text, differences, live);
             }
 
+            var unlinked = differences.Where(d => d.Category == NoLink).ToList();
+            if (unlinked.Count > 0)
+            {
+                // The names the projection cannot carry because no final links the word to a reference text: the mapping's to fix.
+                Directory.CreateDirectory(Path.Combine(outFolder, "no-link"));
+                using var writer = new StreamWriter(Path.Combine(outFolder, "no-link", $"{text}.tsv"), false, new UTF8Encoding(false));
+                writer.Write("own\trecord\tlive\n");
+                foreach (var row in unlinked.OrderBy(d => WordKey.Parse(d.Own, text)).ThenBy(d => d.Record, StringComparer.Ordinal))
+                {
+                    writer.Write($"{row.Own}\t{row.Record}\t{row.Detail.Replace('\t', ' ')}\n");
+                }
+            }
+
             if (differences.Count == 0)
             {
                 return;
@@ -118,7 +131,6 @@ internal static class NamesComparison
             {
                 counts[(text, group.Key)] = group.LongCount();
             }
-
 
             var picked = differences
                 .Select(d => (Hash: Fnv($"{d.Text} {d.Own} {d.Record}"), Row: d))
@@ -131,7 +143,7 @@ internal static class NamesComparison
                 string Surface(string reference, string own) =>
                     baseWords.GetOrAdd(reference, r => new Lazy<Dictionary<string, string>>(() => Surfaces(projection.Store, r))).Value.GetValueOrDefault(own) ?? "?";
                 var baseWord = "";
-                if (row.Detail.StartsWith("through ", StringComparison.Ordinal) && row.Detail.Split(' ') is { Length: > 2 } through)
+                if (row.Detail.StartsWith("through ", StringComparison.Ordinal) && row.Detail.Split(' ') is { Length: > 2 } through && through[1].Length > 0)
                 {
                     baseWord = Surface(through[1], through[2]);
                 }
@@ -182,13 +194,11 @@ internal static class NamesComparison
 
     /// <summary>
     /// The overrides that keep what the sample found the database right on: a name the translation writes where its base's
-    /// verse names nobody of the kind (<c>add</c>); and a name the base's linked word
-    /// lacks where a reference text the translation is made from at one remove names it (<c>add</c>, a gap of the base). A
-    /// <c>differs</c> is never written here.
+    /// verse names nobody of the kind (<c>add</c>). A gap of the base (its linked word names nobody where another reference
+    /// text's does) is filled in the base's settled names, not here, and a <c>differs</c> is never written here.
     /// </summary>
     private static void WriteOverrides(NamesProjection projection, NamesProjection.Projection result, string text, List<Difference> differences, Dictionary<(string, string), LiveName> live)
     {
-        var bases = NameBases.Of(text, projection.Bases);
         var rows = new List<NameOverride>();
         foreach (var difference in differences.Where(d => d.Category.StartsWith("only-live: ", StringComparison.Ordinal)))
         {
@@ -203,12 +213,6 @@ internal static class NamesComparison
                 {
                     rows.Add(new NameOverride(own, difference.Record, OverrideActions.Add, null, role, source, "the translation names it where its base's verse does not"));
                 }
-            }
-            else if (difference.Category.Contains(ReferenceGap, StringComparison.Ordinal)
-                     && bases.TryGetValue(own.Verse.Book, out var bookBases) && bookBases[0] is not ("BHSA" or "NESTLE1904" or "TR1894"))
-            {
-                rows.Add(new NameOverride(own, difference.Record, OverrideActions.Add, null, role, source,
-                    $"{bookBases[0]}'s linked word is unnamed where another reference text names it"));
             }
         }
 

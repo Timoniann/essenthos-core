@@ -1,0 +1,6 @@
+# product    Essenthos/names/overrides/BRENTON.tsv
+# inputs     
+# producer   forge names-compare --write-overrides   (Essenthos.Forge 1.0.0+f4f4a9684e30-dirty)
+# edited     by hand from here on: add, suppress or differs on one word of this text
+own	record	action	base_record	role	source	note
+13.4:26.4	zaboud	add	\N	name	the database's names before the rework (Essenthos, the records BibleData supplied that rested on it alone, each read against its verses by claude-opus-5-5 on the project owner's instruction, 2026-09-30)	the translation names it where its base's verse does not

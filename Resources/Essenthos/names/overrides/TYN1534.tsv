@@ -1,0 +1,8 @@
+# product    Essenthos/names/overrides/TYN1534.tsv
+# inputs     
+# producer   forge names-compare --write-overrides   (Essenthos.Forge 1.0.0+f4f4a9684e30-dirty)
+# edited     by hand from here on: add, suppress or differs on one word of this text
+own	record	action	base_record	role	source	note
+42.23:6.14	galilee	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
+44.9:19.9	saul-2	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
+44.20:4.24	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not

@@ -198,7 +198,7 @@ public static class TextTables
 
     private sealed class TsvText(string path) : ITextTable
     {
-        private readonly TsvProductReader<string?[]> _reader = TsvProductReader<string?[]>.OpenTexts(path);
+        private readonly TsvProductReader<string?[]> _reader = TsvProductReader<string?[]>.OpenTexts(path, checkRows: false);
 
         public ProductHeader? Header => _reader.Header;
         public IReadOnlyList<string> Names => _reader.Names;

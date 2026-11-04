@@ -22,6 +22,8 @@ namespace Essenthos.Core.Names;
 /// <item><c>faint</c>: a person or place carried over a link below it onto a word not written as a name is taken back where
 /// another word of the verse takes the same record over a link at least as sure as it (the stray rule).</item>
 /// <item><c>floor</c>: a name carried with less than this, the settled name's confidence times the link's, is not carried.</item>
+/// <item><c>foreign-names</c> (<c>on</c>|<c>off</c>): a person's name carried onto a word that is another record's name is not
+/// carried (<see cref="ForeignNameRule"/>).</item>
 /// </list>
 /// </summary>
 internal sealed class NameRules
@@ -37,6 +39,7 @@ internal sealed class NameRules
     public const string Head = "head";
     public const string Faint = "faint";
     public const string Floor = "floor";
+    public const string ForeignNamesRule = "foreign-names";
 
     public const string HeadLast = "last";
     public const string HeadAll = "all";
@@ -74,6 +77,9 @@ internal sealed class NameRules
                     break;
                 case Faint: FaintValue = Parse(row) ?? throw new InvalidDataException("names/rules: faint needs a number."); break;
                 case Floor: FloorValue = Parse(row) ?? throw new InvalidDataException("names/rules: floor needs a number."); break;
+                case ForeignNamesRule:
+                    ForeignNames = row.Value switch { "on" => true, "off" => false, _ => throw new InvalidDataException($"names/rules: foreign-names is on or off, not {row.Value}.") };
+                    break;
                 default: throw new InvalidDataException($"names/rules: no rule is called {row.Rule}.");
             }
         }
@@ -88,6 +94,9 @@ internal sealed class NameRules
 
     /// <summary>A name carried with less than this (the settled name's confidence times the link's) is not carried.</summary>
     public double FloorValue { get; }
+
+    /// <summary>Whether a person's name carried onto a word that is another record's name is refused (<see cref="ForeignNameRule"/>).</summary>
+    public bool ForeignNames { get; }
 
     private static void Add(Dictionary<string, HashSet<string>> lists, NameRuleRow row)
     {
@@ -156,7 +165,8 @@ internal sealed class NameRules
         {
             new(Head, "*", HeadLast, "the last word of a link's side that can be a name takes it; before an English possessive, the word that carries it"),
             new(Faint, "*", Annotating.Faint.ToString("R", CultureInfo.InvariantCulture), "a person or place carried below it onto a word not written as a name yields to the same record on a surer word of the verse"),
-            new(Floor, "*", "0.5", "a name the settled name's confidence and the link's together make less sure than this is not carried: read in the sample of TSK-1448, most such names were wrong"),
+            new(Floor, "*", "0.7", "the owner's answer of 2026-11-04 on TSK-1448: a name the settled name's confidence and the link's together make less sure than this is not carried; better correct than rubbish"),
+            new(ForeignNamesRule, "*", "on", "a person's name carried onto a word the text writes as another record's name is not carried (the load's foreign-names pass)"),
             new(PronounReferent, "*", ReferentClear, "a pronoun shows the person it refers to only where that is certainly clear (the owner's ruling of 2026-10-07, PronounReferents)"),
         };
         rows.AddRange(Pronouns.Listed()
