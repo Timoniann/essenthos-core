@@ -1,3 +1,4 @@
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Products;
@@ -85,6 +86,55 @@ internal static partial class ForgeVerbs
             : $"{RecordCanons.Product} is current");
         store.Save();
         return Task.FromResult(0);
+    }
+
+    /// <summary>
+    /// Applies the owner's decisions waiting on the files step to the record files of <c>--from &lt;Resources&gt;</c>
+    /// (default the Forge's own), where his log is too; reads no database.
+    /// </summary>
+    private static Task<int> OwnerApply(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var dryRun = args.Contains("--dry-run");
+        OwnerDecisions.Outcome outcome;
+        try
+        {
+            outcome = OwnerDecisions.Apply(store, dryRun, DateTimeOffset.UtcNow);
+        }
+        catch (Exception exception) when (exception is FileNotFoundException or InvalidDataException)
+        {
+            Console.Error.WriteLine(exception.Message);
+            return Task.FromResult(1);
+        }
+
+        Console.WriteLine($"{outcome.Waiting} lines of the owner's log waited on the files step: {outcome.Records} known-for decisions.");
+        Console.WriteLine($"{outcome.Added,9}  written into the files{(dryRun ? " (dry run: nothing written)" : string.Empty)}");
+        Console.WriteLine($"{outcome.Removed,9}  taken out of them");
+        Console.WriteLine($"{outcome.Already,9}  already as decided");
+        foreach (var slug in outcome.Held)
+        {
+            Console.WriteLine($"  {slug}: KnownFor.json holds it, and a console answer does not override that file; left as it is");
+        }
+
+        foreach (var unplaced in outcome.Unplaced)
+        {
+            Console.WriteLine($"  {unplaced}; nothing written");
+        }
+
+        foreach (var product in outcome.Written)
+        {
+            Console.WriteLine($"  wrote {product}");
+        }
+
+        foreach (var line in outcome.Unhandled)
+        {
+            Console.WriteLine($"  line {line}: this step does not apply that section; it keeps waiting");
+        }
+
+        Console.WriteLine(outcome.Recorded
+            ? $"Appended the apply line for '{OwnerChanges.Files}' to {OwnerChanges.FileName}."
+            : $"No apply line appended{(outcome.Waiting == 0 ? ": nothing waited" : string.Empty)}.");
+        return Task.FromResult(outcome.Unhandled.Count > 0 ? 1 : 0);
     }
 
     /// <summary>

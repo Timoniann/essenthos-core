@@ -21,6 +21,12 @@ public static class OwnerChanges
 
     public const string Succeeded = "succeeded";
 
+    /// <summary>
+    /// The step a decision waits on when it takes effect as an edit of the files the build reads
+    /// (DOC-0224 §8.4): an agent applies it with <c>forge owner-apply</c>.
+    /// </summary>
+    public const string Files = "files";
+
     /// <summary>The paths of the checkout that hold the owner's decisions, which a release must find committed.</summary>
     public static readonly IReadOnlyList<string> Tracked =
     [
@@ -60,6 +66,63 @@ public static class OwnerChanges
         return waiting;
     }
 
+    /// <summary>The lines still waiting on <paramref name="step"/>, oldest first, each with its line number from 1.</summary>
+    public static IReadOnlyList<(int Line, JsonObject Change)> WaitingOn(string path, string step)
+    {
+        if (!File.Exists(path))
+        {
+            return [];
+        }
+
+        var lines = File.ReadAllLines(path, Encoding.UTF8);
+        var waiting = new List<(int, JsonObject)>();
+        for (var index = lines.Length - 1; index >= 0; index--)
+        {
+            if (Parse(lines[index]) is not JsonObject line)
+            {
+                continue;
+            }
+
+            if (Text(line, "section") == Apply && Text(line, "after") == Succeeded && Text(line, "action") == step)
+            {
+                break;
+            }
+
+            if (Text(line, "needs") == step)
+            {
+                waiting.Add((index + 1, line));
+            }
+        }
+
+        waiting.Reverse();
+        return waiting;
+    }
+
+    /// <summary>
+    /// Appends the line that says <paramref name="step"/> ran and succeeded, in the shape the console
+    /// writes, which clears every earlier line waiting on it.
+    /// </summary>
+    public static void Applied(string path, string step, string note, DateTimeOffset at)
+    {
+        var line = new JsonObject
+        {
+            ["at"] = at.UtcDateTime.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'", System.Globalization.CultureInfo.InvariantCulture),
+            ["section"] = Apply,
+            ["action"] = step,
+            ["target"] = $"step/{step}",
+            ["label"] = null,
+            ["before"] = null,
+            ["after"] = Succeeded,
+            ["note"] = note,
+            ["needs"] = null,
+        };
+        var text = line.ToJsonString(new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        File.AppendAllText(path, text + "\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+    }
+
+    public static string? Text(JsonObject line, string key) =>
+        line[key] is JsonValue value && value.TryGetValue<string>(out var text) ? text : null;
+
     private static JsonNode? Parse(string text)
     {
         if (text.Trim().Length == 0)
@@ -77,7 +140,4 @@ public static class OwnerChanges
             return null;
         }
     }
-
-    private static string? Text(JsonObject line, string key) =>
-        line[key] is JsonValue value && value.TryGetValue<string>(out var text) ? text : null;
 }

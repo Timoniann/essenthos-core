@@ -8,7 +8,8 @@ namespace Essenthos.Core.Desk;
 /// <param name="Resources">The corpus folder, which holds the pictures.</param>
 /// <param name="Workspace">The avioniq control folder, where every avioniq command is run from.</param>
 /// <param name="Kept">Where the console keeps what it works out for itself, where configuration says.</param>
-internal sealed record DeskPaths(string Repository, string Resources, string Workspace, string? Kept = null)
+/// <param name="Built">The Resources folder whose Essenthos/ holds the files the build reads, where configuration says.</param>
+internal sealed record DeskPaths(string Repository, string Resources, string Workspace, string? Kept = null, string? Built = null)
 {
     public const string RepositoryKey = "Desk:Repository";
 
@@ -17,6 +18,8 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
     public const string WorkspaceKey = "Desk:Workspace";
 
     public const string CacheKey = "Desk:Cache";
+
+    public const string ProductsKey = "Desk:Products";
 
     /// <summary>What marks the checkout when walking up from the assembly.</summary>
     private const string RepositoryMarker = "Essenthos.Core.sln";
@@ -35,6 +38,13 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
     public string Records => Path.Combine(Repository, "Essenthos.Forge", "Loading", "Encyclopedia");
 
     public string Images => Path.Combine(Resources, "Images");
+
+    /// <summary>
+    /// The Resources folder of the build the console shows (DOC-0224): its <c>Essenthos/</c> holds the record
+    /// files the build reads and the site is loaded from. The corpus folder unless configuration names another,
+    /// such as a proof build's scratch folder.
+    /// </summary>
+    public string BuildResources => Built ?? Resources;
 
     /// <summary>The simulated visitors' sessions: screenshots and steps, beside the scans and never in a repository.</summary>
     public string Visitors => Path.Combine(Workspace, ".visitors");
@@ -64,7 +74,8 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
                             $"holding {WorkspaceMarker}.");
 
         var cache = configuration[CacheKey] is { Length: > 0 } kept ? Path.GetFullPath(Path.Combine(repository, kept)) : null;
-        return new DeskPaths(repository, resources, workspace, cache);
+        var built = Configured(configuration, ProductsKey, repository);
+        return new DeskPaths(repository, resources, workspace, cache, built);
     }
 
     private static string? Configured(IConfiguration configuration, string key, string relativeTo)
