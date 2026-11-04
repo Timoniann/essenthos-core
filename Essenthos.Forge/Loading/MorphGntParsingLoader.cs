@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -77,7 +77,7 @@ internal sealed class MorphGntParsingLoader(AppDbContext db, ILogger<MorphGntPar
     /// certainty — nobody stated this pairing, and the SBLGNT differs from the Nestle line in more
     /// than 540 variation units — so it sits at the top of the lexical band rather than outside it.
     /// </summary>
-    private const double PrintedConfidence = 0.98;
+    internal const double PrintedConfidence = 0.98;
 
     /// <summary>
     /// The editions spell it differently and the difference is one of the two this corpus has
@@ -85,7 +85,7 @@ internal sealed class MorphGntParsingLoader(AppDbContext db, ILogger<MorphGntPar
     /// checking the join should look at first, and the note on each says which two spellings were
     /// joined.
     /// </summary>
-    private const double SpellingConfidence = 0.85;
+    internal const double SpellingConfidence = 0.85;
 
     private const string Import =
         """
@@ -179,7 +179,7 @@ internal sealed class MorphGntParsingLoader(AppDbContext db, ILogger<MorphGntPar
     }
 
     /// <summary>What the word's own text says about it, flattened to the keys it writes.</summary>
-    private static IReadOnlyDictionary<string, string> Stated(JsonDocument? morphology)
+    internal static IReadOnlyDictionary<string, string> Stated(JsonDocument? morphology)
     {
         if (morphology is null)
         {
@@ -261,7 +261,7 @@ internal sealed class MorphGntParsingLoader(AppDbContext db, ILogger<MorphGntPar
     /// demonstrative, relative and interrogative pronouns, so the code is kept as written rather
     /// than mapped into a vocabulary that cannot hold it.
     /// </summary>
-    private static string Morphology(MorphGntWord word)
+    internal static string Morphology(MorphGntWord word)
     {
         var features = new Dictionary<string, string>(10, StringComparer.Ordinal)
         {
@@ -295,6 +295,6 @@ internal sealed class MorphGntParsingLoader(AppDbContext db, ILogger<MorphGntPar
     /// Both spellings, on every row that needed them to differ, so a reader checking the join can
     /// see what was joined to what without going back to either edition.
     /// </summary>
-    private static string Note(JoinWord witness, MorphGntWord parsing) =>
+    internal static string Note(JoinWord witness, MorphGntWord parsing) =>
         $"Nestle writes {witness.Surface} where the SBLGNT writes {parsing.Word}";
 }

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -125,7 +125,7 @@ internal sealed class MaculaAnnotationLoader(AppDbContext db, ILogger<MaculaAnno
     }
 
     /// <param name="Id">The word's key, kept beside the address so the write never re-queries.</param>
-    private sealed record WitnessWord(long Id, int Book, int Chapter, int Verse, int Position, string Surface);
+    internal sealed record WitnessWord(long Id, int Book, int Chapter, int Verse, int Position, string Surface);
 
     private async Task<WitnessWord[]> Witness(int textId, CancellationToken cancellationToken)
     {
@@ -156,7 +156,7 @@ internal sealed class MaculaAnnotationLoader(AppDbContext db, ILogger<MaculaAnno
     /// cause is the worst kind this corpus can produce: not an error, but 137,779 confident
     /// annotations, most of them on the wrong word.
     /// </summary>
-    private static void Check(WitnessWord[] witness, IReadOnlyList<MaculaWord> annotation)
+    internal static void Check(WitnessWord[] witness, IReadOnlyList<MaculaWord> annotation)
     {
         if (witness.Length != annotation.Count)
         {
@@ -253,7 +253,7 @@ internal sealed class MaculaAnnotationLoader(AppDbContext db, ILogger<MaculaAnno
     /// reading rather than argued about: it is the same Sandborg-Petersen tag Nestle carries, so
     /// where the two differ one of them has misread a code both were looking at.
     /// </summary>
-    private static string Morphology(MaculaWord word)
+    internal static string Morphology(MaculaWord word)
     {
         var features = new Dictionary<string, string>(12, StringComparer.Ordinal);
 
@@ -282,6 +282,6 @@ internal sealed class MaculaAnnotationLoader(AppDbContext db, ILogger<MaculaAnno
         }
     }
 
-    private static string Note(WitnessWord witness, MaculaWord annotation) =>
+    internal static string Note(WitnessWord witness, MaculaWord annotation) =>
         $"this corpus prints {witness.Surface} where MACULA prints {annotation.Surface}";
 }

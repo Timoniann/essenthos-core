@@ -48,8 +48,11 @@ internal static partial class ForgeVerbs
             + "a new database of the configured server from the products (--into), or replace in the configured one what moved since it was "
             + "built (--apply); then verify at the level asked and write build/report-<n>. Never builds into the live corpus or the snapshot.",
             BuildVerb),
-        new("carried-export", "[--into <Resources>]",
-            "Write the served tables no package makes yet from the configured database as carried/<table>, so a build reads files only.",
+        new("tables", "[<table,...>] [--from <Resources>] [--force]",
+            "Write the served tables made whole from files (the lexicon, text relations, ...) as tables/<table>, each only when its sources moved. Reads no database.",
+            TablesVerb),
+        new("carried-export", "[--into <Resources>] [--all]",
+            "Write the served tables no producer makes yet (every one with --all, for a comparison) from the configured database as carried/<table>.",
             CarriedExport),
         new("verify", "[--level skip|essentials|all] [--only <measure,...>] [--texts <text,...>] [--floor <share>]",
             "Measure the corpus and fail on anything broken: all (the default) records what it finds for /v1/health; essentials holds the tables "

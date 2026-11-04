@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
@@ -227,6 +227,66 @@ internal sealed partial class StrongTranslationLoader(
 
         logger.LogInformation("Translated: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The translations of a lexicon's files that stand against the English entries, as the load writes them, with
+    /// what was refused and why: the load's own decision, with nothing already loaded to compare against.
+    /// </summary>
+    internal static List<StrongEntryTranslation> Accepted(
+        IReadOnlyList<StrongTranslationRecord> records,
+        IReadOnlyDictionary<string, StrongEntry> english,
+        out TranslationRefusals refused)
+    {
+        int unknownNumber = 0, unknownMethod = 0, nothingSaid = 0, lostReference = 0, lostSense = 0;
+        var rows = new List<StrongEntryTranslation>(records.Count);
+        foreach (var record in records)
+        {
+            if (!string.Equals(record.Method, StrongTranslationFiles.ModelTranslation, StringComparison.Ordinal))
+            {
+                unknownMethod++;
+                continue;
+            }
+
+            if (!english.TryGetValue(record.StrongNumber, out var source))
+            {
+                unknownNumber++;
+                continue;
+            }
+
+            if (Empty(record))
+            {
+                nothingSaid++;
+                continue;
+            }
+
+            switch (Kept(source, record))
+            {
+                case Skeleton.LostReference:
+                    lostReference++;
+                    continue;
+                case Skeleton.LostSense:
+                    lostSense++;
+                    continue;
+            }
+
+            rows.Add(new StrongEntryTranslation
+            {
+                StrongNumber = record.StrongNumber,
+                Language = record.Language,
+                Definition = Text(record.Definition),
+                Derivation = Text(record.Derivation),
+                KjvDefinition = Text(record.KjvDefinition),
+                DetailedDefinition = Text(record.DetailedDefinition),
+                Method = LinkMethod.ModelReading,
+                Confidence = null,
+                Source = Source(record),
+                Note = Doubt(record),
+            });
+        }
+
+        refused = new TranslationRefusals(unknownNumber, unknownMethod, nothingSaid, lostReference, lostSense);
+        return rows;
     }
 
     private static TranslationOutcome Nothing(bool alreadyLoaded) =>
