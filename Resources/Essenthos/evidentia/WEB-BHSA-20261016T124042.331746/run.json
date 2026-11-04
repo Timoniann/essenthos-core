@@ -173,9 +173,15 @@
       "reviewedAt": "2026-10-16T13:26:23.1373920+00:00",
       "examined": false,
       "note": null
+    },
+    {
+      "reviewer": "lead",
+      "reviewedAt": "2026-11-04T09:48:47.7636170+00:00",
+      "examined": false,
+      "note": "PRB-1462-sample-300-read-2026-11-04-six-kinds-182-of-183"
     }
   ],
   "verdicts": {
-    "approved": 365362
+    "approved": 427612
   }
 }

@@ -2,6 +2,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:1	1	In		3	בִּ		attached-word	attached	0.6786	approved	1				Preposition of 'days'
 1:1	2	the				expands	supplied-article	safe	0.7786	approved	0				article the original does not write; rests on 'days' → 'ימֵי֙'
 1:1	3	days		4	ימֵי֙		global-review-known-rendering	safe	0.7786	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:1	5	the				expands	supplied-article	review	0.7022	approved	2				article the original does not write; rests on 'judges' → 'שְׁפֹ֣ט'
+1:1	6	judges		5	שְׁפֹ֣ט		global-review-known-rendering	review	0.7022	approved	2				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
+1:1	7	judged		7	שֹּׁפְטִ֔ים		global-review-known-rendering	review	0.6239	approved	2				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:1	8	there		9	יְהִ֥י		attached-word	attached	0.5703	approved	1				Expletive of 'was'
 1:1	9	was		9	יְהִ֥י		attached-word	attached	0.6703	approved	1				Copula of 'famine'
 1:1	10	a				expands	supplied-indefinite-article	safe	0.7703	approved	0				indefinite article; rests on 'famine' → 'רָעָ֖ב'
@@ -10,7 +13,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:1	13	the		12			attached-word	safe	0.6259	approved	0				Article of 'land'
 1:1	14	land		13	אָ֑רֶץ		global-review-known-rendering	safe	0.7259	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:1	17	man		16	אִ֜ישׁ		global-review-known-rendering	safe	0.5987	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:1	19	Bethlehem		18	בֵּ֧ית לֶ֣חֶם		global-review-known-rendering	review	0.7565	approved	2				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:1	20	Judah		19	יְהוּדָ֗ה		global-review-known-rendering	safe	0.7843	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:1	21	went		15	יֵּ֨לֶךְ		global-review-known-rendering	review	0.5108	approved	2				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:1	24	in		22	בִּ		attached-word	attached	0.2834	approved	1				Preposition of 'country'
 1:1	25	the				expands	supplied-article	safe	0.3834	approved	0				article the original does not write; rests on 'country' → 'שְׂדֵ֣י'
 1:1	26	country		23	שְׂדֵ֣י		residual-known-rendering	safe	0.3834	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -48,6 +53,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:2	23	and		15	וְ		attached-word	attached	0.3	approved	1				Conjunction of 'Chilion'
 1:2	24	Chilion		16	כִלְיֹון֙		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:2	25	Ephrathites		17	אֶפְרָתִ֔ים		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:2	27	Bethlehem		19	בֵּ֥ית לֶ֖חֶם		global-review-known-rendering	review	0.7565	approved	2				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:2	28	Judah		20	יְהוּדָ֑ה		global-review-known-rendering	safe	0.7843	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:2	32	the				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'country' → 'שְׂדֵי'
 1:2	33	country		23	שְׂדֵי		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -56,6 +62,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:2	36	and		25	וַ		attached-word	attached	0.3	approved	1				Conjunction of 'lived'
 1:2	37	lived		26	יִּֽהְיוּ		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:2	38	there		27	שָֽׁם		global-review-known-rendering	safe	0.5223	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	1	Elimelech		3	אֱלִימֶ֖לֶךְ		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
+1:3	2	Naomi’s		5	נָעֳמִ֑י		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 1:3	3	husband		4	אִ֣ישׁ		global-review-known-rendering	safe	0.6831	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:3	4	died		2	יָּ֥מָת		global-review-known-rendering	safe	0.7671	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:3	5	and		6	וַ		attached-word	attached	0.2	approved	1				PrefixConjunction of 'was'
@@ -87,6 +95,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:4	30	ten		19	עֶ֥שֶׂר		global-review-known-rendering	safe	0.688	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:4	31	years		20	שָׁנִֽים		global-review-known-rendering	safe	0.7634	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:5	1	Mahlon		5	מַחְלֹ֣ון		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	4	both		4	שְׁנֵיהֶ֖ם		global-review-known-rendering	review	0.4866	approved	2				global known-rendering assignment; lexical score 0.34
 1:5	5	died		2	יָּמ֥וּתוּ		global-review-known-rendering	safe	0.7671	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:5	7	the		10	הָֽ		attached-word	safe	0.6229	approved	0				Article of 'woman'
 1:5	8	woman		11	אִשָּׁ֔ה		global-review-known-rendering	safe	0.7229	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -131,11 +140,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:6	35	bread		24	לָֽחֶם		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:7	5	the		4	הַ		attached-word	safe	0.5383	approved	0				Article of 'place'
 1:7	6	place		5	מָּקֹום֙		global-review-known-rendering	safe	0.6383	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:7	7	where		6	אֲשֶׁ֣ר		global-review-known-rendering	review	0.5183	approved	2				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 1:7	9	was		12	עִמָּ֑הּ		attached-word	attached	0.7	approved	1				CopulaOnThePredicate of 'daughters-in-law', on the head of its predicate complement in a NmCl clause
 1:7	11	her		11	כַלֹּתֶ֖יהָ		attached-word	safe	0.7	approved	0				PossessivePronoun of 'daughters-in-law'
 1:7	12	two		10	שְׁתֵּ֥י		global-review-known-rendering	safe	0.6872	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:7	13	daughters-in-law		11	כַלֹּתֶ֖יהָ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:7	16	They		14	תֵּלַ֣כְנָה		attached-word	attached	0.4108	approved	1				SubjectPronoun of 'went'
+1:7	17	went		14	תֵּלַ֣כְנָה		global-review-known-rendering	review	0.5108	approved	2				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:7	18	on		15	בַ		attached-word	attached	0.6224	approved	1				Preposition of 'way'
 1:7	19	the		16			attached-word	safe	0.6224	approved	0				Article of 'way'
 1:7	20	way		17	דֶּ֔רֶךְ		global-review-known-rendering	safe	0.7224	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -150,20 +161,26 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:8	2	said		2	תֹּ֤אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:8	5	two		5	שְׁתֵּ֣י		global-review-known-rendering	safe	0.6872	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:8	6	daughters-in-law		6	כַלֹּתֶ֔יהָ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:8	7	“Go		7	לֵ֣כְנָה		global-review-known-rendering	review	0.5024	approved	2				global known-rendering assignment; lexical score 0.35
 1:8	8	return		8	שֹּׁ֔בְנָה		global-review-known-rendering	safe	0.7857	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:8	13	her		12	אִמָּ֑הּ		attached-word	attached	0.6686	approved	1				PossessivePronoun of 'mother’s'
+1:8	14	mother’s		12	אִמָּ֑הּ		global-review-known-rendering	review	0.7686	approved	2				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:8	15	house		11	בֵ֣ית		global-review-known-rendering	safe	0.7631	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:8	17	the				expands	supplied-article	safe	0.7942	approved	0				article the original does not write; rests on 'LORD' → 'יְהוָ֤ה'
 1:8	18	LORD		14	יְהוָ֤ה		global-review-known-rendering	safe	0.7942	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:8	19	deal		13	יעשׂה		global-review-known-rendering	review	0.5357	approved	2				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:8	20	kindly		16	חֶ֔סֶד		global-review-known-rendering	safe	0.53	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:8	23	as		18	אֲשֶׁ֧ר		attached-word	attached	0.3971	approved	1				Subordinator of 'dealt'
 1:8	24	you		19	עֲשִׂיתֶ֛ם		attached-word	attached	0.3971	approved	1				SubjectPronoun of 'dealt'
 1:8	25	have		19	עֲשִׂיתֶ֛ם		attached-word	attached	0.3971	approved	1				AuxiliaryVerb of 'dealt'
+1:8	26	dealt		19	עֲשִׂיתֶ֛ם		global-review-known-rendering	review	0.4971	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:8	27	with		20	עִם		attached-word	attached	0.5907	approved	1				Preposition of 'dead'
 1:8	28	the		21	הַ		attached-word	safe	0.5907	approved	0				Article of 'dead'
 1:8	29	dead		22	מֵּתִ֖ים		global-review-known-rendering	safe	0.6907	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:9				4	וּ	omits	unrendered-conjunction	safe	0.755	approved	0				conjunction no word of the verse renders; rests on 'find' → 'מְצֶ֣אןָ'
 1:9	1	May		1	יִתֵּ֤ן		attached-word	attached	0.58	approved	1				AuxiliaryVerb of 'grant'
+1:9	2	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָה֙'
+1:9	3	LORD		2	יְהוָה֙		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:9	4	grant		1	יִתֵּ֤ן		global-review-known-rendering	safe	0.68	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:9	7	you		5	מְצֶ֣אןָ		attached-word	attached	0.655	approved	1				SubjectPronoun of 'find'
 1:9	8	may		5	מְצֶ֣אןָ		attached-word	attached	0.655	approved	1				AuxiliaryVerb of 'find'
@@ -204,14 +221,17 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:11	12	go		7	תֵלַ֖כְנָה		global-review-known-rendering	safe	0.5024	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:11	13	with		8	עִמִּ֑י		attached-word	attached	0.3024	approved	1				Preposition of 'me'
 1:11	14	me		8	עִמִּ֑י		attached-word	attached	0.4024	approved	1				ObjectPronoun of 'with'
+1:11	17	still		10	עֹֽוד		global-review-known-rendering	review	0.4562	approved	2				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 1:11	19	sons		12	בָנִים֙		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:11	20	in		13	בְּֽ		attached-word	attached	0.2	approved	1				Preposition of 'my'
 1:11	21	my		14	מֵעַ֔י		attached-word	safe	0.3	approved	0				PossessivePronoun of 'womb'
 1:11	22	womb		14	מֵעַ֔י		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:11	28	husbands		19	אֲנָשִֽׁים		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:12				17	הַ	omits	unrendered-article	safe	0.71	approved	0				article no the of the verse renders; rests on 'tonight' → 'לַּ֨יְלָה֙'
+1:12	2	back		1	שֹׁ֤בְנָה		global-review-known-rendering	review	0.5608	approved	2				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:12	3	my		2	בְנֹתַי֙		attached-word	safe	0.6641	approved	0				PossessivePronoun of 'daughters'
 1:12	4	daughters		2	בְנֹתַי֙		global-review-known-rendering	safe	0.7641	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:12	5	go		3	לֵ֔כְןָ		global-review-known-rendering	review	0.5024	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 1:12	8	for		4	כִּ֥י		attached-word	attached	0.3	approved	1				Subordinator of 'old'
 1:12	10	am		5	זָקַ֖נְתִּי		attached-word	attached	0.3	approved	1				BeOnTheVerb of 'old', on the finite verb its predicate was placed on in a xQt0 clause
 1:12	12	old		5	זָקַ֖נְתִּי		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -232,6 +252,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:12	31	tonight		18	לַּ֨יְלָה֙		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 1:12	32	and		21	וְ		attached-word	attached	0.4583	approved	1				Conjunction of 'also'
 1:12	33	should		23	יָלַ֥דְתִּי		attached-word	attached	0.35	approved	1				AuxiliaryVerb of 'bear'
+1:12	34	also		22	גַ֖ם		global-review-known-rendering	review	0.5583	approved	2				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:12	36	sons		24	בָנִֽים		global-review-known-rendering	safe	0.7694	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:13	1	would		3	תְּשַׂבֵּ֗רְנָה		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'wait'
 1:13	2	you		3	תְּשַׂבֵּ֗רְנָה		attached-word	attached	0.3	approved	1				SubjectPronoun of 'wait'
@@ -244,6 +265,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:13	15	husbands		14	אִ֑ישׁ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:13	17	my		16	בְּנֹתַ֗י		attached-word	safe	0.6641	approved	0				PossessivePronoun of 'daughters'
 1:13	18	daughters		16	בְּנֹתַ֗י		global-review-known-rendering	safe	0.7641	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:13	28	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD’s' → 'יְהוָֽה'
+1:13	29	LORD’s		26	יְהוָֽה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 1:13	30	hand		25	יַד		global-review-known-rendering	safe	0.6694	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:13	31	has		23	יָצְאָ֥ה		attached-word	attached	0.25	approved	1				AuxiliaryVerb of 'gone'
 1:13	32	gone		23	יָצְאָ֥ה		attached-word	attached	0.35	approved	1				VerbOfItsParticle of 'out'
@@ -265,6 +288,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:15	1	She		2	תֹּ֗אמֶר		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
 1:15	2	said		2	תֹּ֗אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:15	3	“Behold		3	הִנֵּה֙		global-review-known-rendering	safe	0.647	approved	0				global known-rendering assignment; lexical score 0.50
+1:15	8	back		4	שָׁ֣בָה		global-review-known-rendering	review	0.5608	approved	2				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:15	9	to		6	אֶל		attached-word	attached	0.5667	approved	1				Preposition of 'her'
 1:15	10	her		7	עַמָּ֖הּ		attached-word	safe	0.6667	approved	0				PossessivePronoun of 'people'
 1:15	11	people		7	עַמָּ֖הּ		global-review-known-rendering	safe	0.7667	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -272,17 +296,23 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:15	13	to		9	אֶל		attached-word	attached	0.5293	approved	1				Preposition of 'her'
 1:15	14	her		10	אֱלֹהֶ֑יהָ		attached-word	safe	0.6293	approved	0				PossessivePronoun of 'god'
 1:15	15	god		10	אֱלֹהֶ֑יהָ		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:15	16	Follow		12	אַחֲרֵ֥י		global-review-known-rendering	review	0.487	approved	2				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:16	1	Ruth		3	רוּת֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:16	2	said		2	תֹּ֤אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:16	6	to		7	לְ		attached-word	attached	0.3888	approved	1				Infinitive of 'leave'
 1:16	7	leave		8	עָזְבֵ֖ךְ		global-review-known-rendering	safe	0.4888	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:16	8	you		8	עָזְבֵ֖ךְ		attached-word	attached	0.3888	approved	1				ObjectPronoun of 'leave'
 1:16	10	to		9	לָ		attached-word	attached	0.6857	approved	1				Infinitive of 'return'
+1:16	11	return		10	שׁ֣וּב		global-review-known-rendering	review	0.7857	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:16	13	following		12	אַחֲרָ֑יִךְ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:16	16	where		15	אֲשֶׁ֨ר		global-review-known-rendering	review	0.5183	approved	2				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 1:16	17	you		16	תֵּלְכִ֜י		attached-word	attached	0.4024	approved	1				SubjectPronoun of 'go'
+1:16	18	go		16	תֵּלְכִ֜י		global-review-known-rendering	review	0.5024	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:16	19	I		17	אֵלֵ֗ךְ		attached-word	attached	0.4024	approved	1				SubjectPronoun of 'go'
 1:16	20	will		17	אֵלֵ֗ךְ		attached-word	attached	0.4024	approved	1				AuxiliaryVerb of 'go'
+1:16	21	go		17	אֵלֵ֗ךְ		global-review-known-rendering	review	0.5024	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:16	22	and		18	וּ		attached-word	attached	0.4183	approved	1				Conjunction of 'where'
+1:16	23	where		20	אֲשֶׁ֤ר		global-review-known-rendering	review	0.5183	approved	2				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 1:16	24	you		21	תָּלִ֨ינִי֙		attached-word	attached	0.3	approved	1				SubjectPronoun of 'stay'
 1:16	25	stay		21	תָּלִ֨ינִי֙		repeated-rendering-in-order	safe	0.4	approved	0				a word the verse repeats, on the occurrences of its one lexeme in the same order; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 1:16	26	I		22	אָלִ֔ין		attached-word	attached	0.3	approved	1				SubjectPronoun of 'stay'
@@ -298,6 +328,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:16	37	God		26	אלֹהַ֖יִךְ		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:16	38	my		27	אֱלֹהָֽי		attached-word	safe	0.6293	approved	0				PossessivePronoun of 'God'
 1:16	39	God		27	אֱלֹהָֽי		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:17	1	Where		2	אֲשֶׁ֤ר		global-review-known-rendering	review	0.5183	approved	2				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 1:17	2	you		3	תָּמ֨וּתִי֙		attached-word	attached	0.6681	approved	1				SubjectPronoun of 'die'
 1:17	3	die		3	תָּמ֨וּתִי֙		global-review-known-rendering	safe	0.7681	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:17	4	I		4	אָמ֔וּת		attached-word	attached	0.6681	approved	1				SubjectPronoun of 'die'
@@ -327,14 +358,19 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:18	12	she		10	תֶּחְדַּ֖ל		attached-word	attached	0.3	approved	1				SubjectPronoun of 'stopped'
 1:19	1	So		1	וַ		attached-word	attached	0.4108	approved	1				SentenceConjunction of 'went'
 1:19	2	they		2	תֵּלַ֣כְנָה		attached-word	attached	0.4108	approved	1				SubjectPronoun of 'went'
+1:19	3	both		3	שְׁתֵּיהֶ֔ם		global-review-known-rendering	review	0.4866	approved	2				global known-rendering assignment; lexical score 0.34
+1:19	4	went		2	תֵּלַ֣כְנָה		global-review-known-rendering	review	0.5108	approved	2				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 1:19	5	until		4	עַד		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+1:19	9	Bethlehem		6	בֵּ֣ית לָ֑חֶם		global-review-known-rendering	review	0.7565	approved	2				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:19	11	they		10	בֹאָ֨נָה֙		attached-word	attached	0.4737	approved	1				SubjectPronoun of 'come'
+1:19	13	come		10	בֹאָ֨נָה֙		global-review-known-rendering	review	0.5737	approved	2				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:19	15	Bethlehem		11	בֵּ֣ית לֶ֔חֶם		global-review-known-rendering	safe	0.7565	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:19	16	all		14	כָּל		global-review-known-rendering	safe	0.7582	approved	0				global known-rendering assignment; lexical score 0.61
 1:19	17	the		15	הָ		attached-word	safe	0.6519	approved	0				Article of 'city'
 1:19	18	city		16	עִיר֙		global-review-known-rendering	safe	0.7519	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:19	19	was		13	תֵּהֹ֤ם		attached-word	attached	0.35	approved	1				BeOnTheVerb of 'excited', on the finite verb its predicate was placed on in a WayX clause
 1:19	20	excited		13	תֵּהֹ֤ם		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in context, from STEPBible's TAHOT (Tyndale House, Cambridge, CC BY-NC 3.0); EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:19	27	this		21	זֹ֥את		global-review-known-rendering	review	0.4785	approved	2				global known-rendering assignment; lexical score 0.33
 1:19	28	Naomi		22	נָעֳמִֽי		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:20				1	וַ	omits	unrendered-conjunction	safe	0.7769	approved	0				conjunction no word of the verse renders; rests on 'said' → 'תֹּ֣אמֶר'
 1:20	1	She		2	תֹּ֣אמֶר		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
@@ -348,8 +384,11 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:20	13	the				expands	supplied-article	safe	0.764	approved	0				article the original does not write; rests on 'Almighty' → 'שַׁדַּ֛י'
 1:20	14	Almighty		13	שַׁדַּ֛י		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:20	15	has		12	הֵמַ֥ר		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'dealt'
+1:20	17	very		15	מְאֹֽד		global-review-known-rendering	review	0.5887	approved	2				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 1:21	2	went		3	הָלַ֔כְתִּי		global-review-known-rendering	safe	0.5108	approved	0				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:21	4	full		2	מְלֵאָ֣ה		global-review-known-rendering	safe	0.4636	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:21	6	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָ֑ה'
+1:21	7	LORD		7	יְהוָ֑ה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 1:21	12	again		6	הֱשִׁיבַ֣נִי		global-review-known-rendering	safe	0.5663	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 1:21	13	empty		5	רֵיקָ֖ם		global-review-known-rendering	safe	0.4956	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:21	14	Why		8	לָ֣מָּה		global-review-known-rendering	safe	0.6617	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -357,6 +396,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:21	16	you		9	תִקְרֶ֤אנָה		attached-word	attached	0.6235	approved	1				SubjectPronoun of 'call'
 1:21	17	call		9	תִקְרֶ֤אנָה		global-review-known-rendering	safe	0.7235	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 1:21	19	Naomi		11	נָעֳמִ֔י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:21	21	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יהוָה֙'
+1:21	22	LORD		13	יהוָה֙		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 1:21	23	has		14	עָ֣נָה		attached-word	attached	0.35	approved	1				AuxiliaryVerb of 'testified'
 1:21	24	testified		14	עָ֣נָה		global-review-known-rendering	safe	0.45	approved	0				global known-rendering assignment; lexical score 0.30; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 1:21	25	against		15	בִ֔י		attached-word	attached	0.25	approved	1				Preposition of 'me'
@@ -386,8 +427,12 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 1:22	27	of		21	קְצִ֥יר		attached-word	attached	0.7	approved	1				OfTheConstruct of 'harvest'
 1:22	28	barley		22	שְׂעֹרִֽים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 1:22	29	harvest		21	קְצִ֥יר		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:1	1	Naomi		3	נָעֳמִ֞י		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 2:1	5	of		5	לְ		attached-word	attached	0.4597	approved	1				GenitivePreposition of 'her'
 2:1	6	her		6	אִישָׁ֗הּ		attached-word	attached	0.5597	approved	1				PossessivePronoun of 'husband’s'
+2:1	7	husband’s		6	אִישָׁ֗הּ		global-review-known-rendering	review	0.6597	approved	2				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
+2:1	8	a				expands	supplied-indefinite-article	review	0.592	approved	2				indefinite article; rests on 'mighty' → 'גִּבֹּ֣ור'
+2:1	9	mighty		8	גִּבֹּ֣ור		global-review-known-rendering	review	0.592	approved	2				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:1	10	man		7	אִ֚ישׁ		global-review-known-rendering	safe	0.5987	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:1	11	of		8	גִּבֹּ֣ור		attached-word	attached	0.492	approved	1				OfTheConstruct of 'mighty'
 2:1	12	wealth		9	חַ֔יִל		global-review-known-rendering	safe	0.5341	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -410,12 +455,15 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:2	6	Naomi		7	נָעֳמִ֗י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:2	7	“Let		8	אֵֽלְכָה		attached-word	attached	0.4026	approved	1				LetOfTheMood of 'go', on the verb whose form says the wish
 2:2	8	me		8	אֵֽלְכָה		attached-word	attached	0.4026	approved	1				LetOfTheMood of 'go', on the verb whose ending names it
+2:2	9	now		9	נָּ֤א		global-review-known-rendering	review	0.4635	approved	2				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
+2:2	10	go		8	אֵֽלְכָה		global-review-known-rendering	review	0.5026	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:2	12	the		10	הַ		attached-word	safe	0.6574	approved	0				Article of 'field'
 2:2	13	field		11	שָּׂדֶה֙		global-review-known-rendering	safe	0.7574	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:2	14	and		12	וַ		attached-word	attached	0.3	approved	1				Conjunction of 'glean'
 2:2	15	glean		13	אֲלַקֳטָ֣ה		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:2	20	grain		16	שִּׁבֳּלִ֔ים		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:2	21	after		17	אַחַ֕ר		global-review-known-rendering	safe	0.5894	approved	0				global known-rendering assignment; lexical score 0.44
+2:2	24	whose		18	אֲשֶׁ֥ר		global-review-known-rendering	review	0.5147	approved	2				global known-rendering assignment; lexical score 0.36
 2:2	25	sight		22	עֵינָ֑יו		global-review-known-rendering	safe	0.6848	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:2	26	I		19	אֶמְצָא		attached-word	attached	0.6546	approved	1				SubjectPronoun of 'find'
 2:2	27	find		19	אֶמְצָא		global-review-known-rendering	safe	0.7546	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -424,9 +472,11 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:2	30	said		24	תֹּ֥אמֶר		global-review-known-rendering	safe	0.7768	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:2	31	to		25	לָ֖הּ		attached-word	attached	0.5768	approved	1				Preposition of 'her'
 2:2	32	her		25	לָ֖הּ		attached-word	attached	0.6768	approved	1				ObjectPronoun of 'to'
+2:2	33	“Go		26	לְכִ֥י		global-review-known-rendering	review	0.5026	approved	2				global known-rendering assignment; lexical score 0.35
 2:2	34	my		27	בִתִּֽי		attached-word	safe	0.6753	approved	0				PossessivePronoun of 'daughter'
 2:2	35	daughter		27	בִתִּֽי		global-review-known-rendering	safe	0.7753	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:3	1	She		2	תֵּ֤לֶךְ		attached-word	attached	0.4116	approved	1				SubjectPronoun of 'went'
+2:3	2	went		2	תֵּ֤לֶךְ		global-review-known-rendering	review	0.5116	approved	2				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 2:3	5	and		5	וַ		attached-word	attached	0.3	approved	1				Conjunction of 'gleaned'
 2:3	6	gleaned		6	תְּלַקֵּ֣ט		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:3	7	in		7	בַּ		attached-word	attached	0.6574	approved	1				Preposition of 'field'
@@ -436,6 +486,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:3	11	the		11	הַ		attached-word	safe	0.7	approved	0				Article of 'reapers'
 2:3	12	reapers		12	קֹּצְרִ֑ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:3	13	and		13	וַ		attached-word	attached	0.43	approved	1				PrefixConjunction of 'happened'
+2:3	15	happened		14	יִּ֣קֶר		global-review-known-rendering	review	0.53	approved	2				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
+2:3	17	come		4	תָּבֹוא֙		global-review-known-rendering	review	0.574	approved	2				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 2:3	19	the				expands	supplied-article	safe	0.3846	approved	0				article the original does not write; rests on 'portion' → 'חֶלְקַ֤ת'
 2:3	20	portion		16	חֶלְקַ֤ת		residual-known-rendering	safe	0.3846	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.08; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:3	21	of		16	חֶלְקַ֤ת		attached-word	safe	0.2846	approved	0				Genitive of 'portion'
@@ -455,13 +507,20 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:4	4	from		5	מִ		attached-word	attached	0.6719	approved	1				Preposition of 'Bethlehem'
 2:4	5	Bethlehem		6	בֵּ֣ית לֶ֔חֶם		global-review-known-rendering	safe	0.7719	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:4	6	and		7	וַ		attached-word	attached	0.6768	approved	1				Conjunction of 'said'
+2:4	7	said		8	יֹּ֥אמֶר		global-review-known-rendering	review	0.7768	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:4	8	to		9	לַ		attached-word	attached	0.7	approved	1				Preposition of 'reapers'
 2:4	9	the		10			attached-word	safe	0.7	approved	0				Article of 'reapers'
 2:4	10	reapers		11	קֹּוצְרִ֖ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:4	12	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָ֣ה'
+2:4	13	LORD		12	יְהוָ֣ה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 2:4	17	They		15	יֹּ֥אמְרוּ		attached-word	attached	0.3846	approved	1				SubjectPronoun of 'answered'
+2:4	18	answered		15	יֹּ֥אמְרוּ		global-review-known-rendering	review	0.4846	approved	2				global known-rendering assignment; lexical score 0.33; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
+2:4	21	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָֽה'
+2:4	22	LORD		18	יְהוָֽה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 2:4	23	bless		17	יְבָרֶכְךָ֥		global-review-known-rendering	safe	0.7266	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:4	24	you		17	יְבָרֶכְךָ֥		attached-word	attached	0.6266	approved	1				ObjectPronoun of 'bless'
 2:5				6	הַ	omits	unrendered-article	safe	0.4	approved	0				article no the of the verse renders; rests on 'set' → 'נִּצָּ֖ב'
+2:5				15	הַ	omits	unrendered-article	review	0.4785	approved	2				article no the of the verse renders; rests on 'this' → 'זֹּֽאת'
 2:5	1	Then		1	וַ		attached-word	attached	0.6768	approved	1				SentenceConjunction of 'said'
 2:5	2	Boaz		3	בֹּ֨עַז֙		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:5	3	said		2	יֹּ֤אמֶר		global-review-known-rendering	safe	0.7768	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -471,7 +530,9 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:5	10	over		8	עַל		global-review-known-rendering	safe	0.5637	approved	0				global known-rendering assignment; lexical score 0.41
 2:5	11	the		9	הַ		attached-word	safe	0.7	approved	0				Article of 'reapers'
 2:5	12	reapers		10	קֹּֽוצְרִ֑ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:5	14	young		5	נַעֲרֹ֔ו		global-review-known-rendering	review	0.4748	approved	2				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 2:5	16	is		12	מִ֖י		attached-word	attached	0.3785	approved	1				CopulaOnThePredicate of 'this', on the interrogative of its predicate complement in a NmCl clause
+2:5	17	this		16	זֹּֽאת		global-review-known-rendering	review	0.4785	approved	2				global known-rendering assignment; lexical score 0.33
 2:6	1	The		3	הַ		attached-word	safe	0.283	approved	0				Article of 'servant'
 2:6	2	servant		4	נַּ֛עַר		residual-known-rendering	safe	0.383	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:6	3	who		6	נִּצָּ֥ב		attached-word	attached	0.3	approved	1				RelativeOfTheParticiple of 'set', on its participle
@@ -480,11 +541,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:6	6	over		7	עַל		global-review-known-rendering	safe	0.5637	approved	0				global known-rendering assignment; lexical score 0.41
 2:6	7	the		8	הַ		attached-word	safe	0.7	approved	0				Article of 'reapers'
 2:6	8	reapers		9	קֹּוצְרִ֖ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:6	9	answered		2	יַּ֗עַן		global-review-known-rendering	review	0.6086	approved	2				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:6	12	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'Moabite' → 'מֹֽואֲבִיָּה֙'
 2:6	13	Moabite		13	מֹֽואֲבִיָּה֙		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:6	17	back		16	שָּׁ֥בָה		global-review-known-rendering	safe	0.5608	approved	0				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:6	18	with		17	עִֽם		attached-word	attached	0.7	approved	1				Preposition of 'Naomi'
 2:6	19	Naomi		18	נָעֳמִ֖י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:6	20	out		19	מִ		global-review-known-rendering	review	0.492	approved	2				global known-rendering assignment; lexical score 0.34
 2:6	22	the				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'country' → 'שְּׂדֵ֥ה'
 2:6	23	country		20	שְּׂדֵ֥ה		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:6	24	of		20	שְּׂדֵ֥ה		attached-word	safe	0.3	approved	0				Genitive of 'country'
@@ -502,6 +565,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:7	15	So		13	וַ		attached-word	attached	0.4366	approved	1				SentenceConjunction of 'came'
 2:7	16	she		14	תָּבֹ֣וא		attached-word	attached	0.4366	approved	1				SubjectPronoun of 'came'
 2:7	17	came		14	תָּבֹ֣וא		global-review-known-rendering	safe	0.5366	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:7	20	continued		25	שִׁבְתָּ֥הּ		global-review-known-rendering	review	0.4727	approved	2				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 2:7	23	the		19	הַ		attached-word	safe	0.6486	approved	0				Article of 'morning'
 2:7	24	morning		20	בֹּ֨קֶר֙		global-review-known-rendering	safe	0.7486	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:7	25	until		22	עַד		global-review-known-rendering	safe	0.7301	approved	0				global known-rendering assignment; lexical score 0.58
@@ -515,6 +579,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:8	3	said		2	יֹּאמֶר֩		global-review-known-rendering	safe	0.7768	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:8	4	to		4	אֶל		attached-word	attached	0.7	approved	1				Preposition of 'Ruth'
 2:8	5	Ruth		5	ר֜וּת		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:8	6	“Listen		8	שָׁמַ֣עַתְּ		global-review-known-rendering	review	0.7286	approved	2				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 2:8	7	my		9	בִּתִּ֗י		attached-word	safe	0.6753	approved	0				PossessivePronoun of 'daughter'
 2:8	8	daughter		9	בִּתִּ֗י		global-review-known-rendering	safe	0.7753	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:8	9	Don’t		7	לֹ֧וא		global-review-known-rendering	safe	0.6784	approved	0				global known-rendering assignment; lexical score 0.53
@@ -522,6 +587,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:8	11	to		12	לִ		attached-word	attached	0.3	approved	1				Infinitive of 'glean'
 2:8	12	glean		13	לְקֹט֙		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:8	13	in		14	בְּ		attached-word	attached	0.6574	approved	1				Preposition of 'field'
+2:8	14	another		16	אַחֵ֔ר		global-review-known-rendering	review	0.4635	approved	2				global known-rendering assignment; lexical score 0.31
 2:8	15	field		15	שָׂדֶ֣ה		global-review-known-rendering	safe	0.7574	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:8	17	don’t		19	לֹ֥א		global-review-known-rendering	safe	0.6784	approved	0				global known-rendering assignment; lexical score 0.53
 2:8	25	to		26	עִם		attached-word	attached	0.4714	approved	1				Preposition of 'my'
@@ -539,16 +605,20 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:9	9	they		6	יִקְצֹרוּן֙		attached-word	attached	0.6143	approved	1				SubjectPronoun of 'reap'
 2:9	10	reap		6	יִקְצֹרוּן֙		global-review-known-rendering	safe	0.7143	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:9	11	and		7	וְ		attached-word	attached	0.4026	approved	1				Conjunction of 'go'
+2:9	12	go		8	הָלַ֣כְתְּ		global-review-known-rendering	review	0.5026	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:9	13	after		9	אַחֲרֵיהֶ֔ן		global-review-known-rendering	safe	0.5894	approved	0				global known-rendering assignment; lexical score 0.44
 2:9	14	them		9	אַחֲרֵיהֶ֔ן		attached-word	attached	0.4894	approved	1				ObjectPronoun of 'after'
 2:9	16	I		12	צִוִּ֛יתִי		attached-word	attached	0.6189	approved	1				SubjectPronoun of 'commanded'
+2:9	17	commanded		12	צִוִּ֛יתִי		global-review-known-rendering	review	0.7189	approved	2				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:9	18	the		14	הַ		attached-word	safe	0.3748	approved	0				Article of 'young'
 2:9	19	young		15	נְּעָרִ֖ים		global-review-known-rendering	safe	0.4748	approved	0				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:9	21	not		11	לֹ֥וא		global-review-known-rendering	review	0.6785	approved	2				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 2:9	22	to		18	נָגְעֵ֑ךְ		attached-word	attached	0.6591	approved	1				Infinitive of 'touch'
 2:9	23	touch		18	נָגְעֵ֑ךְ		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:9	24	you		18	נָגְעֵ֑ךְ		attached-word	attached	0.6591	approved	1				ObjectPronoun of 'touch'
 2:9	27	are		20	צָמִ֗ת		attached-word	attached	0.3	approved	1				BeOnTheVerb of 'thirsty', on the finite verb its predicate was placed on in a WQt0 clause
 2:9	28	thirsty		20	צָמִ֗ת		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:9	29	go		22	הָלַכְתְּ֙		global-review-known-rendering	review	0.5026	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:9	30	to		23	אֶל		attached-word	attached	0.6681	approved	1				Preposition of 'vessels'
 2:9	31	the		24	הַ		attached-word	safe	0.6681	approved	0				Article of 'vessels'
 2:9	32	vessels		25	כֵּלִ֔ים		global-review-known-rendering	safe	0.7681	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -556,6 +626,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:9	34	drink		27	שָׁתִ֕ית		global-review-known-rendering	safe	0.5881	approved	0				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:9	37	which		29	אֲשֶׁ֥ר		global-review-known-rendering	safe	0.6686	approved	0				global known-rendering assignment; lexical score 0.52
 2:9	38	the		31	הַ		attached-word	attached	0.3748	approved	1				Article of 'young'
+2:9	39	young		32	נְּעָרִֽים		global-review-known-rendering	review	0.4748	approved	2				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:9	41	have		30	יִשְׁאֲב֖וּן		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'drawn'
 2:9	42	drawn		30	יִשְׁאֲב֖וּן		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:10	1	Then		1	וַ		attached-word	attached	0.5925	approved	1				SentenceConjunction of 'fell'
@@ -579,11 +650,14 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:10	21	favor		13	חֵ֤ן		global-review-known-rendering	safe	0.4906	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:10	22	in		14	בְּ		attached-word	attached	0.4848	approved	1				Preposition of 'your'
 2:10	23	your		15	עֵינֶ֨יךָ֙		attached-word	attached	0.5848	approved	1				PossessivePronoun of 'sight'
+2:10	24	sight		15	עֵינֶ֨יךָ֙		global-review-known-rendering	review	0.6848	approved	2				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 2:10	34	am		20	נָכְרִיָּֽה		attached-word	attached	0.475	approved	1				CopulaOnThePredicate of 'foreigner', on the head of its predicate complement in a AjCl clause
 2:10	35	a				expands	supplied-indefinite-article	safe	0.575	approved	0				indefinite article; rests on 'foreigner' → 'נָכְרִיָּֽה'
 2:10	36	foreigner		20	נָכְרִיָּֽה		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:11	1	Boaz		3	בֹּ֨עַז֙		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:11	2	answered		2	יַּ֤עַן		global-review-known-rendering	safe	0.6086	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:11	7	told		7	הֻגֵּ֨ד		global-review-known-rendering	review	0.6449	approved	2				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
+2:11	8	all		10	כֹּ֤ל		global-review-known-rendering	review	0.7581	approved	2				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 2:11	9	about		11	אֲשֶׁר		attached-word	attached	0.5997	approved	1				Subordinator of 'done'
 2:11	11	you		12	עָשִׂית֙		attached-word	attached	0.5997	approved	1				SubjectPronoun of 'done'
 2:11	12	have		12	עָשִׂית֙		attached-word	attached	0.5997	approved	1				AuxiliaryVerb of 'done'
@@ -603,6 +677,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:11	28	your		20	אָבִ֣יךְ		attached-word	safe	0.6642	approved	0				PossessivePronoun of 'father'
 2:11	29	father		20	אָבִ֣יךְ		global-review-known-rendering	safe	0.7642	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:11	30	your		22	אִמֵּ֗ךְ		attached-word	attached	0.676	approved	1				PossessivePronoun of 'mother'
+2:11	31	mother		22	אִמֵּ֗ךְ		global-review-known-rendering	review	0.776	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:11	32	and		23	וְ		attached-word	attached	0.626	approved	1				Conjunction of 'land'
 2:11	33	the				expands	supplied-article	safe	0.726	approved	0				article the original does not write; rests on 'land' → 'אֶ֨רֶץ֙'
 2:11	34	land		24	אֶ֨רֶץ֙		global-review-known-rendering	safe	0.726	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -620,20 +695,26 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:11	47	know		32	יָדַ֖עַתְּ		global-review-known-rendering	safe	0.7474	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:11	48	before		34	שִׁלְשֹֽׁום		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:12	1	May		1	יְשַׁלֵּ֥ם		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'repay'
+2:12	2	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָ֖ה'
+2:12	3	LORD		2	יְהוָ֖ה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:12	4	repay		1	יְשַׁלֵּ֥ם		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:12	5	your		3	פָּעֳלֵ֑ךְ		attached-word	safe	0.3	approved	0				PossessivePronoun of 'work'
 2:12	6	work		3	פָּעֳלֵ֑ךְ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:12	8	a				expands	supplied-indefinite-article	safe	0.4	approved	0				indefinite article; rests on 'full' → 'שְׁלֵמָ֗ה'
 2:12	9	full		7	שְׁלֵמָ֗ה		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:12	15	from		9	עִ֤ם		attached-word	attached	0.6942	approved	1				Preposition of 'LORD'
+2:12	16	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָה֙'
+2:12	17	LORD		10	יְהוָה֙		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:12	18	the				expands	supplied-article	safe	0.7293	approved	0				article the original does not write; rests on 'God' → 'אֱלֹהֵ֣י'
 2:12	19	God		11	אֱלֹהֵ֣י		global-review-known-rendering	safe	0.7293	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:12	20	of		11	אֱלֹהֵ֣י		attached-word	safe	0.6293	approved	0				Genitive of 'God'
 2:12	21	Israel		12	יִשְׂרָאֵ֔ל		global-review-known-rendering	safe	0.7856	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:12	22	under		17	תַּֽחַת		global-review-known-rendering	safe	0.6569	approved	0				global known-rendering assignment; lexical score 0.51
+2:12	23	whose		13	אֲשֶׁר		global-review-known-rendering	review	0.5147	approved	2				global known-rendering assignment; lexical score 0.36
 2:12	24	wings		18	כְּנָפָֽיו		global-review-known-rendering	safe	0.7366	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:12	25	you		14	בָּ֖את		attached-word	attached	0.474	approved	1				SubjectPronoun of 'come'
 2:12	26	have		14	בָּ֖את		attached-word	attached	0.474	approved	1				AuxiliaryVerb of 'come'
+2:12	27	come		14	בָּ֖את		global-review-known-rendering	review	0.574	approved	2				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:12	30	refuge		16	חֲסֹ֥ות		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in context, from STEPBible's TAHOT (Tyndale House, Cambridge, CC BY-NC 3.0); EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:13	1	Then		1	וַ֠		attached-word	attached	0.6768	approved	1				SentenceConjunction of 'said'
 2:13	2	she		2	תֹּאמֶר		attached-word	attached	0.6768	approved	1				SubjectPronoun of 'said'
@@ -647,11 +728,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:13	10	sight		6	עֵינֶ֤יךָ		global-review-known-rendering	safe	0.6848	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:13	11	my		7	אֲדֹנִי֙		attached-word	safe	0.3888	approved	0				PossessivePronoun of 'lord'
 2:13	12	lord		7	אֲדֹנִי֙		global-review-known-rendering	safe	0.4888	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:13	13	because		8	כִּ֣י		global-review-known-rendering	review	0.5351	approved	2				global known-rendering assignment; lexical score 0.39
 2:13	14	you		9	נִֽחַמְתָּ֔נִי		attached-word	attached	0.7	approved	1				SubjectPronoun of 'comforted'
 2:13	15	have		9	נִֽחַמְתָּ֔נִי		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'comforted'
 2:13	16	comforted		9	נִֽחַמְתָּ֔נִי		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:13	17	me		9	נִֽחַמְתָּ֔נִי		attached-word	attached	0.7	approved	1				ObjectPronoun of 'comforted'
 2:13	18	and		11	כִ֥י		attached-word	attached	0.5513	approved	1				Conjunction of 'you'
+2:13	19	because		11	כִ֥י		global-review-known-rendering	review	0.5351	approved	2				global known-rendering assignment; lexical score 0.39
 2:13	20	you		12	דִבַּ֖רְתָּ		attached-word	attached	0.6513	approved	1				SubjectPronoun of 'spoken'
 2:13	21	have		12	דִבַּ֖רְתָּ		attached-word	attached	0.6513	approved	1				AuxiliaryVerb of 'spoken'
 2:13	22	spoken		12	דִבַּ֖רְתָּ		global-review-known-rendering	safe	0.7513	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -680,6 +763,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:14	20	vinegar		21	חֹ֑מֶץ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:14	21	She		23	תֵּ֨שֶׁב֙		attached-word	attached	0.6904	approved	1				SubjectPronoun of 'sat'
 2:14	22	sat		23	תֵּ֨שֶׁב֙		global-review-known-rendering	safe	0.7904	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:14	23	beside		24	מִ		global-review-known-rendering	review	0.5083	approved	2				global known-rendering assignment; lexical score 0.36
 2:14	24	the		26	הַ		attached-word	safe	0.7	approved	0				Article of 'reapers'
 2:14	25	reapers		27	קֹּֽוצְרִ֔ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:14	30	parched		31	קָלִ֔י		global-review-known-rendering	safe	0.6313	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -705,6 +789,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:15	22	don’t		18	לֹ֥א		global-review-known-rendering	safe	0.6784	approved	0				global known-rendering assignment; lexical score 0.53
 2:15	23	reproach		19	תַכְלִימֽוּהָ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 2:15	24	her		19	תַכְלִימֽוּהָ		attached-word	attached	0.3	approved	1				ObjectPronoun of 'reproach'
+2:16	1	Also		2	גַ֛ם		global-review-known-rendering	review	0.5583	approved	2				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:16	7	from		6	מִן		attached-word	attached	0.3	approved	1				Preposition of 'bundles'
 2:16	8	the		7	הַ		attached-word	safe	0.3	approved	0				Article of 'bundles'
 2:16	9	bundles		8	צְּבָתִ֑ים		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -748,6 +833,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:18	17	gleaned		12	לִקֵּ֑טָה		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:18	18	and		3	וַ		attached-word	attached	0.2887	approved	1				Conjunction of 'she'
 2:18	19	she		4	תָּבֹ֣וא		attached-word	attached	0.3887	approved	1				SubjectPronoun of 'brought'
+2:18	20	brought		4	תָּבֹ֣וא		global-review-known-rendering	review	0.4887	approved	2				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 2:18	22	and		15	וַ		attached-word	attached	0.5892	approved	1				Conjunction of 'gave'
 2:18	23	gave		16	תִּתֶּן		global-review-known-rendering	safe	0.6892	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:18	24	to		17	לָ֔הּ		attached-word	attached	0.4892	approved	1				Preposition of 'her'
@@ -756,11 +842,14 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:19				15	וַ	omits	unrendered-conjunction	safe	0.6449	approved	0				conjunction no word of the verse renders; rests on 'told' → 'תַּגֵּ֣ד'
 2:19				19	אֵ֤ת	omits	unrendered-object-marker	safe	0.4	approved	0				object marker; rests on 'worked' → 'עָשְׂתָה֙'
 2:19	1	Her		4	חֲמֹותָ֜הּ		attached-word	attached	0.6357	approved	1				PossessivePronoun of 'mother-in-law'
+2:19	2	mother-in-law		4	חֲמֹותָ֜הּ		global-review-known-rendering	review	0.7357	approved	2				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
+2:19	3	said		2	תֹּאמֶר֩		global-review-known-rendering	review	0.7768	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 2:19	4	to		3	לָ֨הּ		attached-word	attached	0.5768	approved	1				Preposition of 'her'
 2:19	5	her		3	לָ֨הּ		attached-word	attached	0.6768	approved	1				ObjectPronoun of 'to'
 2:19	7	have		6	לִקַּ֤טְתְּ		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'gleaned'
 2:19	8	you		6	לִקַּ֤טְתְּ		attached-word	attached	0.3	approved	1				SubjectPronoun of 'gleaned'
 2:19	9	gleaned		6	לִקַּ֤טְתְּ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:19	10	today		8	יֹּום֙		global-review-known-rendering	review	0.7917	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:19	12	have		11	עָשִׂ֔ית		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'worked'
 2:19	13	you		11	עָשִׂ֔ית		attached-word	attached	0.3	approved	1				SubjectPronoun of 'worked'
 2:19	14	worked		11	עָשִׂ֔ית		repeated-rendering-in-order	safe	0.4	approved	0				a word the verse repeats, on the occurrences of its one lexeme in the same order; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -772,6 +861,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:19	21	She		16	תַּגֵּ֣ד		attached-word	attached	0.5449	approved	1				SubjectPronoun of 'told'
 2:19	22	told		16	תַּגֵּ֣ד		global-review-known-rendering	safe	0.6449	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 2:19	23	her		18	חֲמֹותָ֗הּ		attached-word	attached	0.6357	approved	1				PossessivePronoun of 'mother-in-law'
+2:19	24	mother-in-law		18	חֲמֹותָ֗הּ		global-review-known-rendering	review	0.7357	approved	2				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:19	26	whom		20	אֲשֶׁר		global-review-known-rendering	safe	0.6442	approved	0				global known-rendering assignment; lexical score 0.49
 2:19	27	she		21	עָשְׂתָה֙		attached-word	attached	0.3	approved	1				SubjectPronoun of 'worked'
 2:19	28	had		21	עָשְׂתָה֙		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'worked'
@@ -781,6 +871,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:19	34	whom		28	אֲשֶׁ֨ר		global-review-known-rendering	safe	0.6442	approved	0				global known-rendering assignment; lexical score 0.49
 2:19	35	I		29	עָשִׂ֧יתִי		attached-word	attached	0.3	approved	1				SubjectPronoun of 'worked'
 2:19	36	worked		29	עָשִׂ֧יתִי		repeated-rendering-in-order	safe	0.4	approved	0				a word the verse repeats, on the occurrences of its one lexeme in the same order; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:19	37	today		32	יֹּ֖ום		global-review-known-rendering	review	0.7917	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:19	38	is		33	בֹּֽעַז		attached-word	attached	0.6679	approved	1				CopulaOnThePredicate of 'Boaz', on the head of its predicate complement in a NmCl clause
 2:19	39	Boaz		33	בֹּֽעַז		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:20				1	וַ	omits	unrendered-conjunction	safe	0.7768	approved	0				conjunction no word of the verse renders; rests on 'said' → 'תֹּ֨אמֶר'
@@ -814,15 +905,19 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:20	29	her		23	לָ֣הּ		attached-word	attached	0.6768	approved	1				ObjectPronoun of 'to'
 2:20	30	“The		27	הָ		attached-word	safe	0.4987	approved	0				Article of 'man'
 2:20	31	man		28	אִ֔ישׁ		global-review-known-rendering	safe	0.5987	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:21				11	הַ	omits	unrendered-article	review	0.4748	approved	2				article no the of the verse renders; rests on 'young' → 'נְּעָרִ֤ים'
 2:21				19	אֵ֥ת	omits	unrendered-object-marker	safe	0.7581	approved	0				object marker; rests on 'all' → 'כָּל'
 2:21				21	הַ	omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'harvest' → 'קָּצִ֖יר'
 2:21	1	Ruth		3	ר֣וּת		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 2:21	2	the		4	הַ		attached-word	safe	0.7	approved	0				Article of 'Moabitess'
 2:21	3	Moabitess		5	מֹּואֲבִיָּ֑ה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:21	4	said		2	תֹּ֖אמֶר		global-review-known-rendering	review	0.7768	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:21	6	he		8	אָמַ֣ר		attached-word	attached	0.6768	approved	1				SubjectPronoun of 'said'
+2:21	7	said		8	אָמַ֣ר		global-review-known-rendering	review	0.7768	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:21	8	to		9	אֵלַ֗י		attached-word	attached	0.5768	approved	1				Preposition of 'me'
 2:21	9	me		9	אֵלַ֗י		attached-word	attached	0.6768	approved	1				ObjectPronoun of 'to'
 2:21	13	close		15	תִּדְבָּקִ֔ין		residual-known-rendering	safe	0.3909	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.09; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:21	16	young		12	נְּעָרִ֤ים		global-review-known-rendering	review	0.4748	approved	2				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 2:21	18	until		16	עַ֣ד		global-review-known-rendering	safe	0.7301	approved	0				global known-rendering assignment; lexical score 0.58
 2:21	19	they		18	כִּלּ֔וּ		attached-word	attached	0.5258	approved	1				SubjectPronoun of 'finished'
 2:21	20	have		18	כִּלּ֔וּ		attached-word	attached	0.5258	approved	1				AuxiliaryVerb of 'finished'
@@ -856,6 +951,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:23	10	to		6	לְ		attached-word	attached	0.3	approved	1				Infinitive of 'glean'
 2:23	11	glean		7	לַקֵּ֔ט		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 2:23	12	to		8	עַד		attached-word	attached	0.3	approved	1				Preposition of 'end'
+2:23	13	the				expands	supplied-article	review	0.4	approved	2				article the original does not write; rests on 'end' → 'כְּלֹ֥ות'
 2:23	15	of		10	קְצִֽיר		attached-word	attached	0.7	approved	1				OfTheConstruct of 'harvest'
 2:23	16	barley		12	שְּׂעֹרִ֖ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 2:23	17	harvest		10	קְצִֽיר		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -865,6 +961,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 2:23	26	her		20	חֲמֹותָֽהּ		attached-word	safe	0.6357	approved	0				PossessivePronoun of 'mother-in-law'
 2:23	27	mother-in-law		20	חֲמֹותָֽהּ		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:1				1	וַ	omits	unrendered-conjunction	safe	0.7769	approved	0				conjunction no word of the verse renders; rests on 'said' → 'תֹּ֥אמֶר'
+3:1	1	Naomi		4	נָעֳמִ֣י		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 3:1	2	her		5	חֲמֹותָ֑הּ		attached-word	safe	0.6438	approved	0				PossessivePronoun of 'mother-in-law'
 3:1	3	mother-in-law		5	חֲמֹותָ֑הּ		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:1	4	said		2	תֹּ֥אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -880,9 +977,12 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:1	19	be		13	יִֽיטַב		attached-word	attached	0.3301	approved	1				BeOnTheVerb of 'well', on the finite verb its predicate was placed on in a xYq0 clause
 3:1	20	well		13	יִֽיטַב		residual-known-rendering	safe	0.4301	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.18; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:2				1	וְ	omits	unrendered-conjunction	safe	0.6309	approved	0				conjunction no word of the verse renders; rests on 'Now' → 'עַתָּ֗ה'
+3:2				14	אֶת	omits	unrendered-object-marker	review	0.5353	approved	2				object marker; rests on 'floor' → 'גֹּ֥רֶן'
 3:2	1	Now		2	עַתָּ֗ה		global-review-known-rendering	safe	0.6309	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:2	2	isn’t		4	לֹ֥א		global-review-known-rendering	review	0.6787	approved	2				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 3:2	3	Boaz		5	בֹ֨עַז֙		global-review-known-rendering	safe	0.7795	approved	0				global known-rendering assignment; lexical score 0.63
 3:2	4	our		6	מֹֽדַעְתָּ֔נוּ		attached-word	attached	0.35	approved	1				PossessivePronoun of 'kinsman'
+3:2	7	whose		7	אֲשֶׁ֥ר		global-review-known-rendering	review	0.5133	approved	2				global known-rendering assignment; lexical score 0.36
 3:2	8	maidens		10	נַעֲרֹותָ֑יו		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:2	11	Behold		11	הִנֵּה		global-review-known-rendering	safe	0.6469	approved	0				global known-rendering assignment; lexical score 0.50
 3:2	13	will		13	זֹרֶ֛ה		attached-word	attached	0.61	approved	1				AuxiliaryVerb of 'winnowing'
@@ -890,10 +990,14 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:2	15	winnowing		13	זֹרֶ֛ה		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 3:2	16	barley		17	שְּׂעֹרִ֖ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 3:2	17	tonight		19	לָּֽיְלָה		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:2	21	floor		15	גֹּ֥רֶן		global-review-known-rendering	review	0.5353	approved	2				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:3	2	wash		2	רָחַ֣צְתְּ		global-review-known-rendering	safe	0.5469	approved	0				global known-rendering assignment; lexical score 0.40; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:3	3	yourself		15	לָ		global-review-known-rendering	review	0.4698	approved	2				global known-rendering assignment; lexical score 0.32
 3:3	4	anoint		4	סַ֗כְתְּ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:3	5	yourself		20	לֶ		global-review-known-rendering	review	0.4698	approved	2				global known-rendering assignment; lexical score 0.32
 3:3	10	down		10	ירדתי		global-review-known-rendering	safe	0.5165	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:3	14	floor		12	גֹּ֑רֶן		global-review-known-rendering	safe	0.5353	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:3	18	yourself		23	לִ		global-review-known-rendering	review	0.4698	approved	2				global known-rendering assignment; lexical score 0.32
 3:3	19	known		14	תִּוָּדְעִ֣י		global-review-known-rendering	safe	0.6951	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:3	21	the		16			attached-word	safe	0.4984	approved	0				Article of 'man'
 3:3	22	man		17	אִ֔ישׁ		global-review-known-rendering	safe	0.5984	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -907,18 +1011,22 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:4				24	אֵ֖ת	omits	unrendered-object-marker	safe	0.6262	approved	0				object marker; rests on 'do' → 'תַּעֲשִֽׂין'
 3:4	12	the		8	הַ		attached-word	safe	0.5383	approved	0				Article of 'place'
 3:4	13	place		9	מָּקֹום֙		global-review-known-rendering	safe	0.6383	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:4	14	where		10	אֲשֶׁ֣ר		global-review-known-rendering	review	0.5205	approved	2				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 3:4	18	Then		13	וּ		attached-word	attached	0.3	approved	1				SentenceConjunction of 'go'
 3:4	19	you		14	בָ֛את		attached-word	attached	0.3	approved	1				SubjectPronoun of 'go'
 3:4	20	shall		14	בָ֛את		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'go'
 3:4	21	go		14	בָ֛את		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:4	23	uncover		16	גִלִּ֥ית		global-review-known-rendering	review	0.7	approved	2				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:4	24	his		17	מַרְגְּלֹתָ֖יו		attached-word	safe	0.35	approved	0				PossessivePronoun of 'feet'
 3:4	25	feet		17	מַרְגְּלֹתָ֖יו		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 3:4	26	and		18	ו		attached-word	attached	0.4458	approved	1				Conjunction of 'lie'
+3:4	27	lie		19	שׁכבתי		global-review-known-rendering	review	0.5458	approved	2				global known-rendering assignment; lexical score 0.40; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:4	28	down		19	שׁכבתי		attached-word	attached	0.4458	approved	1				PhrasalParticle of 'lie'
 3:4	31	will		22	יַגִּ֣יד		attached-word	attached	0.457	approved	1				AuxiliaryVerb of 'tell'
 3:4	32	tell		22	יַגִּ֣יד		global-review-known-rendering	safe	0.557	approved	0				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 3:4	36	do		26	תַּעֲשִֽׂין		global-review-known-rendering	safe	0.6262	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:5	1	She		2	תֹּ֖אמֶר		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
+3:5	2	said		2	תֹּ֖אמֶר		global-review-known-rendering	review	0.7769	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:5	3	to		3	אֵלֶ֑יהָ		attached-word	attached	0.5769	approved	1				Preposition of 'her'
 3:5	4	her		3	אֵלֶ֑יהָ		attached-word	attached	0.6769	approved	1				ObjectPronoun of 'to'
 3:5	5	“All		4	כֹּ֛ל		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
@@ -966,6 +1074,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:7	32	lay		26	תִּשְׁכָּֽב		residual-known-rendering	safe	0.4417	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.20; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:7	33	down		26	תִּשְׁכָּֽב		attached-word	attached	0.3417	approved	1				PhrasalParticle of 'lay'
 3:8	3	the		9	הָ		attached-word	attached	0.4984	approved	1				Article of 'man'
+3:8	4	man		10	אִ֖ישׁ		global-review-known-rendering	review	0.5984	approved	2				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:8	5	was		8	יֶּחֱרַ֥ד		attached-word	attached	0.3	approved	1				AuxiliaryVerb of 'startled'
 3:8	6	startled		8	יֶּחֱרַ֥ד		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:8	7	and		11	וַ		attached-word	attached	0.3	approved	1				Conjunction of 'turned'
@@ -978,8 +1087,10 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:8	16	his		17	מַרְגְּלֹתָֽיו		attached-word	safe	0.3	approved	0				PossessivePronoun of 'feet'
 3:8	17	feet		17	מַרְגְּלֹתָֽיו		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 3:9				10	וּ	omits	unrendered-conjunction	safe	0.5405	approved	0				conjunction no word of the verse renders; rests on 'spread' → 'פָרַשְׂתָּ֤'
+3:9	2	said		2	יֹּ֖אמֶר		global-review-known-rendering	review	0.7769	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:9	3	“Who		3	מִי		global-review-known-rendering	safe	0.5954	approved	0				global known-rendering assignment; lexical score 0.45
 3:9	4	are		3	מִי		attached-word	attached	0.4954	approved	1				CopulaOnThePredicate of 'Who', on the interrogative of its predicate complement in a NmCl clause
+3:9	7	answered		6	תֹּ֗אמֶר		global-review-known-rendering	review	0.4837	approved	2				global known-rendering assignment; lexical score 0.33; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:9	9	am		8	ר֣וּת		attached-word	attached	0.3	approved	1				CopulaOnThePredicate of 'servant', on the head of its predicate complement in a NmCl clause
 3:9	10	Ruth		8	ר֣וּת		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
 3:9	11	your		9	אֲמָתֶ֔ךָ		attached-word	safe	0.3	approved	0				PossessivePronoun of 'servant'
@@ -1000,11 +1111,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:10	8	LORD		6	יהוָה֙		global-review-known-rendering	safe	0.7942	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 3:10	9	my		7	בִּתִּ֔י		attached-word	safe	0.6723	approved	0				PossessivePronoun of 'daughter'
 3:10	10	daughter		7	בִּתִּ֔י		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:10	15	kindness		9	חַסְדֵּ֥ךְ		global-review-known-rendering	review	0.7581	approved	2				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:10	17	the		10	הָ		attached-word	safe	0.3	approved	0				Article of 'latter'
 3:10	18	latter		11	אַחֲרֹ֖ון		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 3:10	20	than		12	מִן		global-review-known-rendering	safe	0.5845	approved	0				global known-rendering assignment; lexical score 0.43
 3:10	22	the		13	הָ		attached-word	attached	0.3	approved	1				Article of 'beginning'
 3:10	28	young		20	בַּ֣חוּרִ֔ים		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:10	30	whether		21	אִם		global-review-known-rendering	review	0.5	approved	2				global known-rendering assignment; lexical score 0.35
 3:10	31	poor		22	דַּ֖ל		global-review-known-rendering	safe	0.458	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 3:10	33	rich		25	עָשִֽׁיר		global-review-known-rendering	safe	0.5857	approved	0				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 3:11				1	וְ	omits	unrendered-conjunction	safe	0.6309	approved	0				conjunction no word of the verse renders; rests on 'Now' → 'עַתָּ֗ה'
@@ -1015,6 +1128,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:11	6	afraid		5	תִּ֣ירְאִ֔י		global-review-known-rendering	safe	0.5589	approved	0				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:11	7	I		9	אֶֽעֱשֶׂה		attached-word	attached	0.5262	approved	1				SubjectPronoun of 'do'
 3:11	8	will		9	אֶֽעֱשֶׂה		attached-word	attached	0.5262	approved	1				AuxiliaryVerb of 'do'
+3:11	9	do		9	אֶֽעֱשֶׂה		global-review-known-rendering	review	0.6262	approved	2				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:11	10	to		10	לָּ֑ךְ		attached-word	attached	0.4262	approved	1				Preposition of 'you'
 3:11	11	you		10	לָּ֑ךְ		attached-word	attached	0.5262	approved	1				ObjectPronoun of 'to'
 3:11	12	all		6	כֹּ֥ל		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
@@ -1028,6 +1142,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:11	21	my		15	עַמִּ֔י		attached-word	safe	0.6667	approved	0				PossessivePronoun of 'people'
 3:11	22	people		15	עַמִּ֔י		global-review-known-rendering	safe	0.7667	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:11	23	knows		12	יֹודֵ֨עַ֙		global-review-known-rendering	safe	0.7472	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:11	25	you		19	אָֽתְּ		unique-counterpart	review	0.5	approved	2				the one free counterpart in the verse, and no other word claims it
 3:11	26	are		17	אֵ֥שֶׁת		attached-word	attached	0.6223	approved	1				CopulaOnThePredicate of 'woman', on the head of its predicate complement in a NmCl clause
 3:11	27	a				expands	supplied-indefinite-article	safe	0.4	approved	0				indefinite article; rests on 'worthy' → 'חַ֖יִל'
 3:11	28	worthy		18	חַ֖יִל		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -1035,6 +1150,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:12				1	וְ	omits	unrendered-conjunction	safe	0.6309	approved	0				conjunction no word of the verse renders; rests on 'Now' → 'עַתָּה֙'
 3:12	1	Now		2	עַתָּה֙		global-review-known-rendering	safe	0.6309	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:12	4	true		4	אָמְנָ֔ם		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:12	8	a				expands	supplied-indefinite-article	review	0.4	approved	2				indefinite article; rests on 'near' → 'קָרֹ֥וב'
 3:12	14	a				expands	supplied-indefinite-article	safe	0.6875	approved	0				indefinite article; rests on 'kinsman' → 'גֹּאֵ֖ל'
 3:12	15	kinsman		11	גֹּאֵ֖ל		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:12	17	than		13	מִמֶּֽנִּי		global-review-known-rendering	safe	0.5845	approved	0				global known-rendering assignment; lexical score 0.43
@@ -1043,11 +1159,19 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:13	6	the		7			attached-word	safe	0.6481	approved	0				Article of 'morning'
 3:13	7	morning		8	בֹּ֨קֶר֙		global-review-known-rendering	safe	0.7481	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:13	8	if		9	אִם		global-review-known-rendering	safe	0.6408	approved	0				global known-rendering assignment; lexical score 0.49
+3:13	17	a				expands	supplied-indefinite-article	review	0.6875	approved	2				indefinite article; rests on 'kinsman' → 'יִגְאָלֵ֥ךְ'
+3:13	18	kinsman		10	יִגְאָלֵ֥ךְ		global-review-known-rendering	review	0.6875	approved	2				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 3:13	19	good		11	טֹוב֙		global-review-known-rendering	safe	0.6863	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:13	23	the				expands	supplied-article	review	0.6875	approved	2				article the original does not write; rests on 'kinsman’s' → 'יִגְאָ֔ל'
+3:13	24	kinsman’s		12	יִגְאָ֔ל		global-review-known-rendering	review	0.6875	approved	2				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 3:13	26	But		13	וְ		attached-word	attached	0.5408	approved	1				PrefixConjunction of 'if'
 3:13	27	if		14	אִם		global-review-known-rendering	safe	0.6408	approved	0				global known-rendering assignment; lexical score 0.49
 3:13	30	not		15	לֹ֨א		global-review-known-rendering	safe	0.6789	approved	0				global known-rendering assignment; lexical score 0.53
 3:13	34	of		17	לְ		attached-word	attached	0.5875	approved	1				GenitivePreposition of 'kinsman'
+3:13	35	a				expands	supplied-indefinite-article	review	0.6875	approved	2				indefinite article; rests on 'kinsman' → 'גָֽאֳלֵ֛ךְ'
+3:13	36	kinsman		18	גָֽאֳלֵ֛ךְ		global-review-known-rendering	review	0.6875	approved	2				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
+3:13	46	a				expands	supplied-indefinite-article	review	0.6875	approved	2				indefinite article; rests on 'kinsman' → 'גְאַלְתִּ֥יךְ'
+3:13	47	kinsman		20	גְאַלְתִּ֥יךְ		global-review-known-rendering	review	0.6875	approved	2				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 3:13	51	the				expands	supplied-article	safe	0.7942	approved	0				article the original does not write; rests on 'LORD' → 'יְהוָ֑ה'
 3:13	52	LORD		23	יְהוָ֑ה		global-review-known-rendering	safe	0.7942	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:13	53	lives		22	חַי		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
@@ -1076,6 +1200,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:14	33	floor		24	גֹּֽרֶן		global-review-known-rendering	safe	0.5353	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:15	1	He		2	יֹּ֗אמֶר		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
 3:15	2	said		2	יֹּ֗אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:15	3	“Bring		22	יָּבֹ֖א		global-review-known-rendering	review	0.4942	approved	2				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 3:15	10	and		8	וְ		attached-word	attached	0.3	approved	1				Conjunction of 'hold'
 3:15	11	hold		9	אֶֽחֳזִי		repeated-rendering-in-order	safe	0.4	approved	0				a word the verse repeats, on the occurrences of its one lexeme in the same order; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 3:15	13	She		12	תֹּ֣אחֶז		attached-word	attached	0.3	approved	1				SubjectPronoun of 'held'
@@ -1107,11 +1232,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:16	20	the		18	הָ		attached-word	safe	0.4984	approved	0				Article of 'man'
 3:16	21	man		19	אִֽישׁ		global-review-known-rendering	safe	0.5984	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:16	22	had		16	עָֽשָׂה		attached-word	attached	0.6005	approved	1				AuxiliaryVerb of 'done'
+3:16	23	done		16	עָֽשָׂה		global-review-known-rendering	review	0.7005	approved	2				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 3:16	24	for		17	לָ֖הּ		attached-word	attached	0.5005	approved	1				Preposition of 'her'
 3:16	25	her		17	לָ֖הּ		attached-word	attached	0.6005	approved	1				ObjectPronoun of 'for'
 3:17				4	הַ	omits	unrendered-article	safe	0.8	approved	0				article no the of the verse renders; rests on 'barley' → 'שְּׂעֹרִ֥ים'
 3:17				6	הָ	omits	unrendered-article	safe	0.7099	approved	0				article no the of the verse renders; rests on 'these' → 'אֵ֖לֶּה'
 3:17	1	She		2	תֹּ֕אמֶר		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
+3:17	2	said		2	תֹּ֕אמֶר		global-review-known-rendering	review	0.7769	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 3:17	4	gave		8	נָ֣תַן		global-review-known-rendering	safe	0.6892	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 3:17	6	these		7	אֵ֖לֶּה		global-review-known-rendering	safe	0.7099	approved	0				global known-rendering assignment; lexical score 0.56
 3:17	7	six		3	שֵׁשׁ		global-review-known-rendering	safe	0.7928	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -1137,6 +1264,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 3:18	15	man		15	אִ֔ישׁ		global-review-known-rendering	safe	0.5984	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 3:18	17	not		12	לֹ֤א		global-review-known-rendering	safe	0.6789	approved	0				global known-rendering assignment; lexical score 0.53
 3:18	24	today		22	יֹּֽום		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:1	2	Boaz		2	בֹ֨עַז		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 4:1	4	up		3	עָלָ֣ה		global-review-known-rendering	safe	0.4928	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 4:1	6	the		4	הַ		attached-word	safe	0.6793	approved	0				Article of 'gate'
 4:1	7	gate		5	שַּׁעַר֮		global-review-known-rendering	safe	0.7793	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -1144,12 +1272,15 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:1	9	sat		7	יֵּ֣שֶׁב		global-review-known-rendering	safe	0.7902	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:1	11	there		8	שָׁם֒		global-review-known-rendering	safe	0.5226	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:1	12	Behold		10	הִנֵּ֨ה		global-review-known-rendering	safe	0.647	approved	0				global known-rendering assignment; lexical score 0.50
+4:1	15	kinsman		12	גֹּאֵ֤ל		global-review-known-rendering	review	0.65	approved	2				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:1	17	whom		14	אֲשֶׁ֣ר		global-review-known-rendering	safe	0.6449	approved	0				global known-rendering assignment; lexical score 0.49
 4:1	19	spoke		15	דִּבֶּר		global-review-known-rendering	safe	0.6913	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:1	22	Boaz		16	בֹּ֔עַז		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:1	23	said		18	יֹּ֛אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 4:1	28	here		21	פֹּ֖ה		global-review-known-rendering	safe	0.5672	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:1	31	sit		20	שְׁבָה		global-review-known-rendering	safe	0.7674	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:1	36	and		26	וַ		attached-word	attached	0.6902	approved	1				Conjunction of 'sat'
+4:1	37	sat		27	יֵּשֵֽׁב		global-review-known-rendering	review	0.7902	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:2				1	וַ	omits	unrendered-conjunction	safe	0.5769	approved	0				conjunction no word of the verse renders; rests on 'took' → 'יִּקַּ֞ח'
 4:2	2	took		2	יִּקַּ֞ח		global-review-known-rendering	safe	0.5769	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:2	3	ten		3	עֲשָׂרָ֧ה		global-review-known-rendering	safe	0.688	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -1161,24 +1292,33 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:2	10	city		8	עִ֖יר		global-review-known-rendering	safe	0.7519	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:2	11	and		9	וַ		attached-word	attached	0.6769	approved	1				Conjunction of 'said'
 4:2	12	said		10	יֹּ֣אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:2	13	“Sit		11	שְׁבוּ		global-review-known-rendering	review	0.7674	approved	2				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:2	14	down		11	שְׁבוּ		attached-word	attached	0.6674	approved	1				PhrasalParticle of 'Sit'
 4:2	15	here		12	פֹ֑ה		global-review-known-rendering	safe	0.5672	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:2	16	and		13	וַ		attached-word	attached	0.5902	approved	1				Conjunction of 'they'
 4:2	17	they		14	יֵּשֵֽׁבוּ		attached-word	attached	0.6902	approved	1				SubjectPronoun of 'sat'
+4:2	18	sat		14	יֵּשֵֽׁבוּ		global-review-known-rendering	review	0.7902	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:3				1	וַ	omits	unrendered-conjunction	safe	0.7769	approved	0				conjunction no word of the verse renders; rests on 'said' → 'יֹּ֨אמֶר֙'
 4:3	1	He		2	יֹּ֨אמֶר֙		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
 4:3	2	said		2	יֹּ֨אמֶר֙		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:3	3	to		3	לַ		attached-word	attached	0.55	approved	1				PrefixPreposition of 'kinsman'
 4:3	6	kinsman		5	גֹּאֵ֔ל		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:3	7	“Naomi		15	נָעֳמִ֔י		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
+4:3	11	back		17	שָּׁ֖בָה		global-review-known-rendering	review	0.5625	approved	2				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
+4:3	14	the				expands	supplied-article	review	0.4	approved	2				article the original does not write; rests on 'country' → 'שְּׂדֵ֥ה'
 4:3	16	of		19	שְּׂדֵ֥ה		attached-word	attached	0.3	approved	1				Genitive of 'country'
 4:3	17	Moab		20	מֹואָֽב		global-review-known-rendering	safe	0.7867	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:3	18	is		14	מָכְרָ֣ה		attached-word	attached	0.5312	approved	1				AuxiliaryVerb of 'selling'
 4:3	19	selling		14	מָכְרָ֣ה		global-review-known-rendering	safe	0.6313	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:3	20	the				expands	supplied-article	review	0.8	approved	2				article the original does not write; rests on 'parcel' → 'חֶלְקַת֙'
+4:3	21	parcel		6	חֶלְקַת֙		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 4:3	22	of		6	חֶלְקַת֙		attached-word	attached	0.7	approved	1				Genitive of 'parcel'
 4:3	24	which		9	אֲשֶׁ֥ר		global-review-known-rendering	safe	0.6682	approved	0				global known-rendering assignment; lexical score 0.52
 4:3	25	was		11	אָחִ֖ינוּ		attached-word	attached	0.7	approved	1				CopulaOnThePredicate of 'Elimelech’s', on the head of its predicate complement in a NmCl clause
 4:3	26	our		11	אָחִ֖ינוּ		attached-word	safe	0.6722	approved	0				PossessivePronoun of 'brother'
 4:3	27	brother		11	אָחִ֖ינוּ		global-review-known-rendering	safe	0.7722	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:3	28	Elimelech’s		13	אֱלִימֶ֑לֶךְ		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
+4:4	7	saying		7	אמֹ֗ר		global-review-known-rendering	review	0.788	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:4	8	‘Buy		8	קְ֠נֵה		global-review-known-rendering	safe	0.6024	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:4	11	those		11	יֹּשְׁבִים֮		attached-word	attached	0.6674	approved	1				RelativeOfTheParticiple of 'sit', on its participle
 4:4	12	who		11	יֹּשְׁבִים֮		attached-word	attached	0.6674	approved	1				RelativeOfTheParticiple of 'sit', on its participle
@@ -1197,6 +1337,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:4	30	if		20	אִם		global-review-known-rendering	safe	0.6408	approved	0				global known-rendering assignment; lexical score 0.49
 4:4	33	not		21	לֹ֨א		global-review-known-rendering	safe	0.6785	approved	0				global known-rendering assignment; lexical score 0.53
 4:4	34	redeem		22	יִגְאַ֜ל		global-review-known-rendering	safe	0.5027	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:4	37	tell		23	הַגִּ֣ידָה		global-review-known-rendering	review	0.557	approved	2				global known-rendering assignment; lexical score 0.41; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:4	40	I		26	אדע		attached-word	attached	0.6473	approved	1				SubjectPronoun of 'know'
 4:4	41	may		26	אדע		attached-word	attached	0.6473	approved	1				AuxiliaryVerb of 'know'
 4:4	42	know		26	אדע		global-review-known-rendering	safe	0.7473	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -1206,6 +1347,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:4	56	after		34	אַחֲרֶ֑יךָ		global-review-known-rendering	safe	0.5893	approved	0				global known-rendering assignment; lexical score 0.44
 4:4	57	you		34	אַחֲרֶ֑יךָ		attached-word	attached	0.4893	approved	1				ObjectPronoun of 'after'
 4:4	58	He		36	יֹּ֖אמֶר		attached-word	attached	0.6769	approved	1				SubjectPronoun of 'said'
+4:4	59	said		36	יֹּ֖אמֶר		global-review-known-rendering	review	0.7769	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:4	61	will		38	אֶגְאָֽל		attached-word	attached	0.4027	approved	1				AuxiliaryVerb of 'redeem'
 4:4	62	redeem		38	אֶגְאָֽל		global-review-known-rendering	safe	0.5027	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:5				12	וּ֠	omits	unrendered-conjunction	attached	0.7	approved	1				conjunction no word of the verse renders; rests on 'from' → 'אֵת'
@@ -1215,6 +1357,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:5	5	the				expands	supplied-article	safe	0.7637	approved	0				article the original does not write; rests on 'day' → 'יֹום'
 4:5	6	day		5	יֹום		global-review-known-rendering	safe	0.7637	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:5	7	you		6	קְנֹותְךָ֥		attached-word	attached	0.5024	approved	1				SubjectPronoun of 'buy'
+4:5	8	buy		6	קְנֹותְךָ֥		global-review-known-rendering	review	0.6024	approved	2				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:5	9	the		7	הַ		attached-word	safe	0.6583	approved	0				Article of 'field'
 4:5	10	field		8	שָּׂדֶ֖ה		global-review-known-rendering	safe	0.7583	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:5	11	from		9	מִ		attached-word	attached	0.5698	approved	1				Preposition of 'hand'
@@ -1224,6 +1367,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:5	15	Naomi		11	נָעֳמִ֑י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:5	16	you		21	קניתי		attached-word	attached	0.5024	approved	1				SubjectPronoun of 'buy'
 4:5	17	must		21	קניתי		attached-word	attached	0.5024	approved	1				AuxiliaryVerb of 'buy'
+4:5	18	buy		21	קניתי		global-review-known-rendering	review	0.6024	approved	2				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 4:5	21	from		14	אֵת		attached-word	attached	0.7	approved	1				Preposition of 'Ruth'
 4:5	22	Ruth		15	ר֣וּת		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:5	23	the		16	הַ		attached-word	safe	0.7	approved	0				Article of 'Moabitess'
@@ -1246,16 +1390,25 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:6				1	וַ	omits	unrendered-conjunction	safe	0.7769	approved	0				conjunction no word of the verse renders; rests on 'said' → 'יֹּ֣אמֶר'
 4:6				12	אֶת	omits	unrendered-object-marker	safe	0.7257	approved	0				object marker; rests on 'inheritance' → 'נַחֲלָתִ֑י'
 4:6				17	אֶת	omits	unrendered-object-marker	safe	0.6	approved	0				object marker; rests on 'redemption' → 'גְּאֻלָּתִ֔י'
+4:6	3	kinsman		4	גֹּאֵ֗ל		global-review-known-rendering	review	0.65	approved	2				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:6	4	said		2	יֹּ֣אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:6	6	can’t		5	לֹ֤א		global-review-known-rendering	safe	0.6784	approved	0				global known-rendering assignment; lexical score 0.53
+4:6	7	redeem		8	גאול		global-review-known-rendering	review	0.5027	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
+4:6	11	lest		10	פֶּן		global-review-known-rendering	review	0.6993	approved	2				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:6	16	inheritance		13	נַחֲלָתִ֑י		global-review-known-rendering	safe	0.7257	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:6	21	redemption		18	גְּאֻלָּתִ֔י		global-review-known-rendering	safe	0.6	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:6	22	for		22	לִ		attached-word	attached	0.3672	approved	1				Preposition of 'yourself'
+4:6	23	yourself		22	לִ		global-review-known-rendering	review	0.4672	approved	2				global known-rendering assignment; lexical score 0.32
 4:6	26	can’t		20	לֹא		global-review-known-rendering	safe	0.6784	approved	0				global known-rendering assignment; lexical score 0.53
+4:6	27	redeem		23	גְאֹֽל		global-review-known-rendering	review	0.5027	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
+4:7	2	this		2	זֹאת֩		global-review-known-rendering	review	0.4782	approved	2				global known-rendering assignment; lexical score 0.33
 4:7	9	in		5	בְּ		attached-word	attached	0.6855	approved	1				Preposition of 'Israel'
 4:7	10	Israel		6	יִשְׂרָאֵ֜ל		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:7	11	concerning		7	עַל		global-review-known-rendering	review	0.5696	approved	2				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
 4:7	12	redeeming		9	גְּאוּלָּ֤ה		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:7	13	and		10	וְ		attached-word	attached	0.4696	approved	1				Conjunction of 'concerning'
+4:7	14	concerning		11	עַל		global-review-known-rendering	review	0.5696	approved	2				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.329
+4:7	15	exchanging		13	תְּמוּרָה֙		global-review-known-rendering	review	0.65	approved	2				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:7	16	to		14	לְ		attached-word	attached	0.3625	approved	1				Infinitive of 'confirm'
 4:7	17	confirm		15	קַיֵּ֣ם		global-review-known-rendering	safe	0.4625	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:7	18	all		16	כָּל		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
@@ -1270,14 +1423,17 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:7	30	his		24	רֵעֵ֑הוּ		attached-word	safe	0.5669	approved	0				PossessivePronoun of 'neighbor'
 4:7	31	neighbor		24	רֵעֵ֑הוּ		global-review-known-rendering	safe	0.6669	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:7	32	and		25	וְ		attached-word	attached	0.3782	approved	1				Conjunction of 'this'
+4:7	33	this		26	זֹ֥את		global-review-known-rendering	review	0.4782	approved	2				global known-rendering assignment; lexical score 0.33
 4:7	40	in		29	בְּ		attached-word	attached	0.6855	approved	1				Preposition of 'Israel'
 4:7	41	Israel		30	יִשְׂרָאֵֽל		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:8	1	So		1	וַ		attached-word	attached	0.6769	approved	1				SentenceConjunction of 'said'
+4:8	4	kinsman		4	גֹּאֵ֛ל		global-review-known-rendering	review	0.65	approved	2				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:8	5	said		2	יֹּ֧אמֶר		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 4:8	6	to		5	לְ		attached-word	attached	0.7	approved	1				Preposition of 'Boaz'
 4:8	7	Boaz		6	בֹ֖עַז		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:8	8	“Buy		7	קְנֵה		global-review-known-rendering	safe	0.6024	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:8	10	for		8	לָ֑ךְ		attached-word	attached	0.3672	approved	1				Preposition of 'yourself'
+4:8	11	yourself		8	לָ֑ךְ		global-review-known-rendering	review	0.4672	approved	2				global known-rendering assignment; lexical score 0.32
 4:8	13	he		10	יִּשְׁלֹ֖ף		attached-word	attached	0.3	approved	1				SubjectPronoun of 'took'
 4:8	14	took		10	יִּשְׁלֹ֖ף		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:8	15	off		10	יִּשְׁלֹ֖ף		attached-word	attached	0.3	approved	1				PhrasalParticle of 'took'
@@ -1294,6 +1450,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:9	8	all		8	כָל		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
 4:9	9	the		9	הָ		attached-word	safe	0.6667	approved	0				Article of 'people'
 4:9	10	people		10	עָ֗ם		global-review-known-rendering	safe	0.7667	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:9	11	“You		12	אַתֶּם֙		unique-counterpart	review	0.5	approved	2				the one free counterpart in the verse, and no other word claims it
 4:9	12	are		11	עֵדִ֤ים		attached-word	attached	0.7	approved	1				CopulaOnThePredicate of 'witnesses', on the head of its predicate complement in a NmCl clause
 4:9	13	witnesses		11	עֵדִ֤ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:9	14	today		14	יֹּ֔ום		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -1301,8 +1458,11 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:9	17	have		16	קָנִ֨יתִי֙		attached-word	attached	0.5312	approved	1				AuxiliaryVerb of 'bought'
 4:9	18	bought		16	קָנִ֨יתִי֙		global-review-known-rendering	safe	0.6313	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:9	19	all		18	כָּל		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
+4:9	22	Elimelech’s		21	אֱלִימֶ֔לֶךְ		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:9	24	all		24	כָּל		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61
+4:9	27	Chilion’s		27	כִלְיֹ֖ון		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 4:9	28	and		28	וּ		attached-word	attached	0.7	approved	1				Conjunction of 'Mahlon’s'
+4:9	29	Mahlon’s		29	מַחְלֹ֑ון		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:9	30	from		30	מִ		attached-word	attached	0.5698	approved	1				Preposition of 'hand'
 4:9	31	the				expands	supplied-article	safe	0.6698	approved	0				article the original does not write; rests on 'hand' → 'יַּ֖ד'
 4:9	32	hand		31	יַּ֖ד		global-review-known-rendering	safe	0.6698	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -1313,11 +1473,14 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:10	2	Ruth		4	ר֣וּת		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:10	3	the		5	הַ		attached-word	safe	0.7	approved	0				Article of 'Moabitess'
 4:10	4	Moabitess		6	מֹּאֲבִיָּה֩		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:10	5	the				expands	supplied-article	review	0.7826	approved	2				article the original does not write; rests on 'wife' → 'אֵ֨שֶׁת'
+4:10	6	wife		7	אֵ֨שֶׁת		global-review-known-rendering	review	0.7826	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:10	7	of		7	אֵ֨שֶׁת		attached-word	attached	0.6826	approved	1				Genitive of 'wife'
 4:10	8	Mahlon		8	מַחְלֹ֜ון		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:10	9	I		9	קָנִ֧יתִי		attached-word	attached	0.7	approved	1				SubjectPronoun of 'purchased'
 4:10	10	have		9	קָנִ֧יתִי		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'purchased'
 4:10	11	purchased		9	קָנִ֧יתִי		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:10	15	wife		12	אִשָּׁ֗ה		global-review-known-rendering	review	0.7826	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:10	16	to		13	לְ		attached-word	attached	0.543	approved	1				Infinitive of 'raise'
 4:10	17	raise		14	הָקִ֤ים		global-review-known-rendering	safe	0.643	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:10	19	the				expands	supplied-article	safe	0.7898	approved	0				article the original does not write; rests on 'name' → 'שֵׁם'
@@ -1348,6 +1511,7 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:10	46	of		31	שַּׁ֣עַר		attached-word	safe	0.6793	approved	0				Genitive of 'gate'
 4:10	47	his		32	מְקֹומֹ֑ו		attached-word	safe	0.5383	approved	0				PossessivePronoun of 'place'
 4:10	48	place		32	מְקֹומֹ֑ו		global-review-known-rendering	safe	0.6383	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:10	49	You		34	אַתֶּ֖ם		unique-counterpart	review	0.5	approved	2				the one free counterpart in the verse, and no other word claims it
 4:10	50	are		33	עֵדִ֥ים		attached-word	attached	0.7	approved	1				CopulaOnThePredicate of 'witnesses', on the head of its predicate complement in a NmCl clause
 4:10	51	witnesses		33	עֵדִ֥ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:10	52	today		36	יֹּֽום		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -1363,15 +1527,19 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:11	9	and		10	וְ		attached-word	attached	0.6488	approved	1				Conjunction of 'elders'
 4:11	10	the		11	הַ		attached-word	safe	0.6488	approved	0				Article of 'elders'
 4:11	11	elders		12	זְּקֵנִ֖ים		global-review-known-rendering	safe	0.7488	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:11	12	said		2	יֹּ֨אמְר֜וּ		global-review-known-rendering	review	0.7769	approved	2				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:11	14	are		13	עֵדִ֑ים		attached-word	attached	0.7	approved	1				CopulaOnThePredicate of 'witnesses', on the head of its predicate complement in a NmCl clause
 4:11	15	witnesses		13	עֵדִ֑ים		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:11	16	May		14	יִתֵּן֩		attached-word	attached	0.2789	approved	1				AuxiliaryVerb of 'make'
+4:11	17	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָ֨ה'
+4:11	18	LORD		15	יְהוָ֨ה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:11	19	make		14	יִתֵּן֩		residual-known-rendering	safe	0.3789	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.06; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 4:11	20	the		17	הָ		attached-word	safe	0.6244	approved	0				Article of 'woman'
 4:11	21	woman		18	אִשָּׁ֜ה		global-review-known-rendering	safe	0.7244	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:11	22	who		20	בָּאָ֣ה		attached-word	attached	0.4739	approved	1				RelativeOfTheParticiple of 'come', on its participle
 4:11	23	has		20	בָּאָ֣ה		attached-word	attached	0.4739	approved	1				AuxiliaryVerb of 'come'
 4:11	24	come		20	בָּאָ֣ה		global-review-known-rendering	safe	0.5739	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:11	25	into		21	אֶל		global-review-known-rendering	review	0.455	approved	2				global known-rendering assignment; lexical score 0.30
 4:11	26	your		22	בֵּיתֶ֗ךָ		attached-word	safe	0.6631	approved	0				PossessivePronoun of 'house'
 4:11	27	house		22	בֵּיתֶ֗ךָ		global-review-known-rendering	safe	0.7631	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:11	28	like		23	כְּ		attached-word	attached	0.7	approved	1				Preposition of 'Rachel'
@@ -1380,14 +1548,17 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:11	31	like		26	כְ		attached-word	attached	0.6845	approved	1				Preposition of 'Leah'
 4:11	32	Leah		27	לֵאָה֙		global-review-known-rendering	safe	0.7845	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:11	33	which		28	אֲשֶׁ֨ר		global-review-known-rendering	safe	0.6682	approved	0				global known-rendering assignment; lexical score 0.52
+4:11	34	both		30	שְׁתֵּיהֶם֙		global-review-known-rendering	review	0.4879	approved	2				global known-rendering assignment; lexical score 0.34
 4:11	35	built		29	בָּנ֤וּ		global-review-known-rendering	safe	0.7441	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:11	36	the				expands	supplied-article	safe	0.7631	approved	0				article the original does not write; rests on 'house' → 'בֵּ֣ית'
 4:11	37	house		32	בֵּ֣ית		global-review-known-rendering	safe	0.7631	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:11	38	of		32	בֵּ֣ית		attached-word	safe	0.6631	approved	0				Genitive of 'house'
 4:11	39	Israel		33	יִשְׂרָאֵ֔ל		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:11	40	and		34	וַ		attached-word	attached	0.4	approved	1				Conjunction of 'treat'
+4:11	41	treat		35	עֲשֵׂה		global-review-known-rendering	review	0.5	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.921
 4:11	44	in		37	בְּ		attached-word	attached	0.7	approved	1				Preposition of 'Ephrathah'
 4:11	45	Ephrathah		38	אֶפְרָ֔תָה		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:11	48	famous		41	שֵׁ֖ם		global-review-known-rendering	review	0.5	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.768
 4:11	49	in		42	בְּ		attached-word	attached	0.6591	approved	1				Preposition of 'Bethlehem'
 4:11	50	Bethlehem		43	בֵ֥ית לָֽחֶם		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:12	2	your		3	בֵֽיתְךָ֙		attached-word	safe	0.6631	approved	0				PossessivePronoun of 'house'
@@ -1399,12 +1570,16 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:12	9	Perez		6	פֶּ֔רֶץ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
 4:12	10	whom		7	אֲשֶׁר		global-review-known-rendering	safe	0.6449	approved	0				global known-rendering assignment; lexical score 0.49
 4:12	11	Tamar		9	תָמָ֖ר		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:12	12	bore		8	יָלְדָ֥ה		global-review-known-rendering	review	0.5	approved	2				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:12	13	to		10	לִֽ		attached-word	attached	0.6843	approved	1				Preposition of 'Judah'
 4:12	14	Judah		11	יהוּדָ֑ה		global-review-known-rendering	safe	0.7843	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:12	16	the		13	הַ		attached-word	attached	0.3	approved	1				Article of 'offspring'
 4:12	18	which		15	אֲשֶׁ֨ר		global-review-known-rendering	safe	0.6682	approved	0				global known-rendering assignment; lexical score 0.52
+4:12	19	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָה֙'
+4:12	20	LORD		17	יְהוָה֙		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:12	21	will		16	יִתֵּ֤ן		attached-word	attached	0.5457	approved	1				AuxiliaryVerb of 'give'
 4:12	22	give		16	יִתֵּ֤ן		global-review-known-rendering	safe	0.6457	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:12	25	this		23	זֹּֽאת		global-review-known-rendering	review	0.4782	approved	2				global known-rendering assignment; lexical score 0.33
 4:13				4	אֶת	omits	unrendered-object-marker	safe	0.8	approved	0				object marker; rests on 'Ruth' → 'רוּת֙'
 4:13	1	So		1	וַ		attached-word	attached	0.4769	approved	1				SentenceConjunction of 'took'
 4:13	2	Boaz		3	בֹּ֤עַז		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -1417,6 +1592,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:13	10	and		11	וַ		attached-word	attached	0.1984	approved	1				Conjunction of 'he'
 4:13	11	he		12	יָּבֹ֖א		attached-word	attached	0.2984	approved	1				SubjectPronoun of 'went'
 4:13	12	went		12	יָּבֹ֖א		residual-known-rendering	safe	0.3984	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.11; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:13	17	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָ֥ה'
+4:13	18	LORD		16	יְהוָ֥ה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:13	23	and		19	וַ		attached-word	attached	0.3	approved	1				Conjunction of 'she'
 4:13	24	she		20	תֵּ֥לֶד		attached-word	attached	0.4	approved	1				SubjectPronoun of 'bore'
 4:13	25	bore		20	תֵּ֥לֶד		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
@@ -1430,7 +1607,10 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:14	5	Naomi		6	נָעֳמִ֔י		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
 4:14	6	“Blessed		7	בָּר֣וּךְ		global-review-known-rendering	safe	0.688	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:14	7	be		7	בָּר֣וּךְ		attached-word	attached	0.588	approved	1				CopulaOnThePredicate of 'Blessed', on the head of its predicate complement in a Ptcp clause
+4:14	8	the				expands	supplied-article	review	0.7942	approved	2				article the original does not write; rests on 'LORD' → 'יְהוָ֔ה'
+4:14	9	LORD		8	יְהוָ֔ה		global-review-known-rendering	review	0.7942	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:14	12	not		10	לֹ֣א		global-review-known-rendering	safe	0.6785	approved	0				global known-rendering assignment; lexical score 0.53
+4:14	15	today		15	יֹּ֑ום		global-review-known-rendering	review	0.792	approved	2				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:14	19	kinsman		13	גֹּאֵ֖ל		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:14	21	his		18	שְׁמֹ֖ו		attached-word	safe	0.6898	approved	0				PossessivePronoun of 'name'
 4:14	22	name		18	שְׁמֹ֖ו		global-review-known-rendering	safe	0.7898	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
@@ -1486,6 +1666,8 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:18	7	the				expands	supplied-article	safe	0.4961	approved	0				article the original does not write; rests on 'generations' → 'תֹּולְדֹ֣ות'
 4:18	8	generations		3	תֹּולְדֹ֣ות		global-review-known-rendering	safe	0.4961	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:18	9	of		3	תֹּולְדֹ֣ות		attached-word	safe	0.3961	approved	0				Genitive of 'generations'
+4:18	10	Perez		4	פָּ֔רֶץ		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
+4:18	11	Perez		5	פֶּ֖רֶץ		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:18	13	the				expands	supplied-article	safe	0.45	approved	0				article the original does not write; rests on 'father' → 'הֹולִ֥יד'
 4:18	14	father		6	הֹולִ֥יד		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in context, from STEPBible's TAHOT (Tyndale House, Cambridge, CC BY-NC 3.0); EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:18	16	Hezron		8	חֶצְרֹֽון		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
@@ -1502,11 +1684,13 @@ at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	ver
 4:20	9	Nahshon		7	נַחְשֹׁ֖ון		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
 4:20	14	Salmon		10	שַׂלְמָֽה		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:21				4	אֶת	omits	unrendered-object-marker	safe	0.8	approved	0				object marker; rests on 'Boaz' → 'בֹּ֔עַז'
+4:21				9	אֶת	omits	unrendered-object-marker	review	0.8	approved	2				object marker; rests on 'Obed' → 'עֹובֵֽד'
 4:21	1	and		1	וְ		attached-word	attached	0.35	approved	1				Conjunction of 'Salmon'
 4:21	2	Salmon		2	שַׂלְמֹון֙		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:21	7	Boaz		5	בֹּ֔עַז		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
 4:21	8	and		6	וּ		attached-word	attached	0.7	approved	1				Conjunction of 'Boaz'
 4:21	9	Boaz		7	בֹ֖עַז		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:21	14	Obed		10	עֹובֵֽד		global-review-known-rendering	review	0.8	approved	2				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.939
 4:22				4	אֶת	omits	unrendered-object-marker	safe	0.8	approved	0				object marker; rests on 'Jesse' → 'יִשָׁ֔י'
 4:22				9	אֶת	omits	unrendered-object-marker	safe	0.7918	approved	0				object marker; rests on 'David' → 'דָּוִֽד'
 4:22	1	and		1	וְ		attached-word	attached	0.7	approved	1				Conjunction of 'Obed'
