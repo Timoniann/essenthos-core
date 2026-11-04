@@ -115,6 +115,35 @@ internal readonly record struct ClearBiblePlacement(
         "whose source words do not all stand at the number the file gives them";
 }
 
+/// <summary>One side of a Clear Bible set as its join reads it.</summary>
+/// <param name="Words">
+/// Its words by verse: the verse it prints them in, or, for a source joined edition against edition, the frame address
+/// its verse stands at first. Null for a translation the join numbers itself (<paramref name="InOrder"/>).
+/// </param>
+/// <param name="InOrder">Every word with its printed verse, for a translation whose records number its own words.</param>
+/// <param name="Frame">
+/// Every frame address each printed verse stands at, both written as <see cref="ClearBibleAlignment.Verse(string)"/> writes
+/// them; null for a source joined edition against edition.
+/// </param>
+internal sealed record ClearBibleSide(
+    string Language,
+    IReadOnlyDictionary<(int, int, int), List<ClearBibleLinkLoader.Word>>? Words,
+    IReadOnlyList<ClearBibleLinkLoader.PrintedWord>? InOrder,
+    IReadOnlyDictionary<int, HashSet<int>>? Frame);
+
+/// <summary>A set's drafts, and its records left out by why (<see cref="ClearBibleOutcome"/> says what each count is).</summary>
+internal sealed record ClearBibleJoined(
+    List<ClearBibleLinkLoader.Draft> Drafts,
+    int Records,
+    int Unresolved,
+    int WithoutCounterpart,
+    int Astray,
+    int Shifted,
+    int Misnumbered,
+    int Overruled,
+    int Trimmed,
+    ClearBiblePlacement Placed);
+
 /// <summary>
 /// Clear Bible's hand-made alignments: a second opinion on the Berean, and the only opinion anybody
 /// has published on the Reina-Valera.
@@ -199,89 +228,20 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         }
 
         var started = Stopwatch.StartNew();
-        var placement = new Placement();
-        List<ClearBibleToken> tokens;
-        Dictionary<string, List<long>> theirTarget;
-        if (retokenised)
-        {
-            (tokens, theirTarget) = await Retokenised(from.Id, placement.Target, cancellationToken);
-        }
-        else
-        {
-            tokens = [.. ClearBibleAlignment.Tokens(target)];
-            theirTarget = await Placed(
-                from, ClearBibleJoin.Letters, tokens, ClearBibleAlignment.Word, placement.Target, cancellationToken);
-        }
-
-        var theirSource = await Placed(
-            to, set.Join, [.. ClearBibleAlignment.Tokens(source)], ClearBibleAlignment.Unit, placement.Source,
-            cancellationToken);
-
-        var spokenFor = await SpokenFor(from.Id, to.Id, cancellationToken);
-        var renders = Renders(tokens);
         var targetFrame = await Frame(from.Id, cancellationToken);
         var sourceFrame = set.Join == ClearBibleJoin.Edition ? null : await Frame(to.Id, cancellationToken);
-        var all = ClearBibleAlignment.Records(alignment).ToList();
-        var shift = set.Shift is { } and
-            ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
-            : null;
-        var misnumbered = retokenised ? Misnumbered(all, tokens) : [];
+        var translation = retokenised
+            ? new ClearBibleSide(from.Language, null, await InOrder(from.Id, cancellationToken), targetFrame)
+            : new ClearBibleSide(from.Language, await Words(from.Id, from.Language, canonical: false, cancellationToken), null, targetFrame);
+        var witness = new ClearBibleSide(
+            to.Language, await Words(to.Id, to.Language, canonical: set.Join == ClearBibleJoin.Edition, cancellationToken), null, sourceFrame);
+        var spokenFor = await SpokenFor(from.Id, to.Id, cancellationToken);
         var overruled = await (rulings ?? LinkRulings.None).Overruled(
             db, set.From, set.To, LinkRulings.ClearBible, logger, cancellationToken);
 
-        var drafts = new List<Draft>();
-        int records = 0, corroborated = 0, added = 0, contradicted = 0, unresolved = 0, withoutCounterpart = 0;
-        int astray = 0, shifted = 0, refused = 0, overruledRecords = 0, trimmed = 0;
-
-        foreach (var record in all)
-        {
-            records++;
-            if (record.Target.Any(id => misnumbered.Contains(ClearBibleAlignment.Verse(id) ?? 0)))
-            {
-                refused++;
-                continue;
-            }
-
-            if (Astray(record, renders, targetFrame, sourceFrame))
-            {
-                astray++;
-                continue;
-            }
-
-            if (shift is not null && Shifted(record, shift.Ands, shift.Joining, shift.Named))
-            {
-                shifted++;
-                continue;
-            }
-
-            var witness = Ours(record.Source, theirSource, ClearBibleAlignment.Unit);
-            var translation = Ours(record.Target, theirTarget, ClearBibleAlignment.Word);
-
-            if (witness.Count == 0 || translation.Count == 0)
-            {
-                unresolved++;
-                if (record.Source.Any(id => placement.Source.WithoutCounterpart.Contains(ClearBibleAlignment.Unit(id))))
-                {
-                    withoutCounterpart++;
-                }
-
-                continue;
-            }
-
-            var (kept, lost) = LinkRulings.Trim(witness, overruled);
-            if (lost)
-            {
-                overruledRecords++;
-                if (!kept)
-                {
-                    continue;
-                }
-
-                trimmed++;
-            }
-
-            drafts.Add(new Draft(translation, witness));
-        }
+        var joined = Join(directory, set, translation, witness, overruled);
+        var drafts = joined.Drafts;
+        int corroborated = 0, added = 0, contradicted = 0;
 
         var written = await Write(from.Id, to.Id, set.Statement, drafts, cancellationToken);
         for (var i = 0; i < drafts.Count; i++)
@@ -306,18 +266,18 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
 
         var outcome = new ClearBibleOutcome(
             false,
-            records,
+            joined.Records,
             corroborated,
             added,
             contradicted,
-            unresolved,
-            withoutCounterpart,
-            astray,
-            shifted,
-            refused,
-            overruledRecords,
-            trimmed,
-            placement.Read(),
+            joined.Unresolved,
+            joined.WithoutCounterpart,
+            joined.Astray,
+            joined.Shifted,
+            joined.Misnumbered,
+            joined.Overruled,
+            joined.Trimmed,
+            joined.Placed,
             started.Elapsed);
         logger.LogInformation("Clear Bible on {From} against {To}: {Outcome}", set.From, set.To, outcome);
         return outcome;
@@ -360,6 +320,103 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         return links + claims + verses;
     }
 
+    /// <summary>
+    /// What a set says about the two texts' words, as drafts of links, with every record it could not resolve counted by
+    /// why. It reads only the set's files and the words it is handed, so the database's load and a producer of method files
+    /// make the same join.
+    /// </summary>
+    internal static ClearBibleJoined Join(
+        string directory,
+        ClearBibleSet set,
+        ClearBibleSide translation,
+        ClearBibleSide witness,
+        IReadOnlySet<long> overruled)
+    {
+        var alignment = Path.Combine(directory, set.Alignment);
+        var target = Path.Combine(directory, set.Target);
+        var source = Path.Combine(directory, set.Source);
+
+        var placement = new Placement();
+        List<ClearBibleToken> tokens;
+        Dictionary<string, List<long>> theirTarget;
+        if (translation.InOrder is { } inOrder)
+        {
+            (tokens, theirTarget) = Retokenised(inOrder, placement.Target);
+        }
+        else
+        {
+            tokens = [.. ClearBibleAlignment.Tokens(target)];
+            theirTarget = Placed(
+                ClearBibleJoin.Letters, translation, tokens, ClearBibleAlignment.Word, placement.Target);
+        }
+
+        var theirSource = Placed(
+            set.Join, witness, [.. ClearBibleAlignment.Tokens(source)], ClearBibleAlignment.Unit, placement.Source);
+
+        var renders = Renders(tokens);
+        var all = ClearBibleAlignment.Records(alignment).ToList();
+        var shift = set.Shift is { } and
+            ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
+            : null;
+        var misnumbered = translation.InOrder is not null ? Misnumbered(all, tokens) : [];
+
+        var drafts = new List<Draft>();
+        int records = 0, unresolved = 0, withoutCounterpart = 0;
+        int astray = 0, shifted = 0, refused = 0, overruledRecords = 0, trimmed = 0;
+
+        foreach (var record in all)
+        {
+            records++;
+            if (record.Target.Any(id => misnumbered.Contains(ClearBibleAlignment.Verse(id) ?? 0)))
+            {
+                refused++;
+                continue;
+            }
+
+            if (Astray(record, renders, translation.Frame!, witness.Frame))
+            {
+                astray++;
+                continue;
+            }
+
+            if (shift is not null && Shifted(record, shift.Ands, shift.Joining, shift.Named))
+            {
+                shifted++;
+                continue;
+            }
+
+            var ours = Ours(record.Source, theirSource, ClearBibleAlignment.Unit);
+            var theirs = Ours(record.Target, theirTarget, ClearBibleAlignment.Word);
+
+            if (ours.Count == 0 || theirs.Count == 0)
+            {
+                unresolved++;
+                if (record.Source.Any(id => placement.Source.WithoutCounterpart.Contains(ClearBibleAlignment.Unit(id))))
+                {
+                    withoutCounterpart++;
+                }
+
+                continue;
+            }
+
+            var (kept, lost) = LinkRulings.Trim(ours, overruled);
+            if (lost)
+            {
+                overruledRecords++;
+                if (!kept)
+                {
+                    continue;
+                }
+
+                trimmed++;
+            }
+
+            drafts.Add(new Draft(theirs, ours));
+        }
+
+        return new ClearBibleJoined(
+            drafts, records, unresolved, withoutCounterpart, astray, shifted, refused, overruledRecords, trimmed, placement.Read());
+    }
     private static ClearBibleOutcome Nothing() =>
         new(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, default, TimeSpan.Zero);
 
@@ -612,30 +669,15 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     /// hyphenated word stays one, and every mark of punctuation counts as one. A number that falls on
     /// a mark belongs to no word, and <see cref="Misnumbered"/> refuses the verse it stands in.
     /// </summary>
-    private async Task<(List<ClearBibleToken> Tokens, Dictionary<string, List<long>> Placed)> Retokenised(
-        int textId,
-        Counter counter,
-        CancellationToken cancellationToken)
+    internal static (List<ClearBibleToken> Tokens, Dictionary<string, List<long>> Placed) Retokenised(
+        IReadOnlyList<PrintedWord> words,
+        Counter counter)
     {
-        var words = await db.Words
-            .Where(word => word.TextId == textId)
-            .Select(word => new
-            {
-                word.Verse!.Book!.CanonicalOrdinal,
-                word.Verse.ChapterNumber,
-                word.Verse.Number,
-                word.Position,
-                word.Id,
-                word.Surface,
-                word.Trailer,
-            })
-            .ToListAsync(cancellationToken);
-
         var tokens = new List<ClearBibleToken>(words.Count * 2);
         var placed = new Dictionary<string, List<long>>(words.Count * 2, StringComparer.Ordinal);
 
         foreach (var verse in words
-                     .GroupBy(word => (word.CanonicalOrdinal, word.ChapterNumber, word.Number))
+                     .GroupBy(word => (word.Book, word.Chapter, word.Verse))
                      .OrderBy(verse => verse.Key))
         {
             counter.Verses++;
@@ -644,7 +686,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
             {
                 foreach (var (text, punctuation) in Pieces(word.Surface + word.Trailer))
                 {
-                    var id = $"{verse.Key.CanonicalOrdinal:00}{verse.Key.ChapterNumber:000}{verse.Key.Number:000}{++at:000}";
+                    var id = $"{verse.Key.Book:00}{verse.Key.Chapter:000}{verse.Key.Verse:000}{++at:000}";
                     tokens.Add(new ClearBibleToken(id, text, punctuation, null));
                     counter.Total++;
                     if (!punctuation)
@@ -658,6 +700,20 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
 
         return (tokens, placed);
     }
+
+    /// <summary>A text's words with the verse each text prints them in, for <see cref="Retokenised"/>.</summary>
+    private async Task<List<PrintedWord>> InOrder(int textId, CancellationToken cancellationToken) =>
+        await db.Words
+            .Where(word => word.TextId == textId)
+            .Select(word => new PrintedWord(
+                word.Verse!.Book!.CanonicalOrdinal,
+                word.Verse.ChapterNumber,
+                word.Verse.Number,
+                word.Position,
+                word.Id,
+                word.Surface,
+                word.Trailer))
+            .ToListAsync(cancellationToken);
 
     /// <summary>The pieces a word and the punctuation after it are counted as, in order.</summary>
     internal static IEnumerable<(string Text, bool Punctuation)> Pieces(string written)
@@ -721,20 +777,19 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     /// and the verb of <em>וַיֹּאמֶר</em> land on BHSA's two words and a record naming one of them is
     /// about that one.
     /// </summary>
-    private async Task<Dictionary<string, List<long>>> Placed(
-        Database.Entities.Text text,
+    private static Dictionary<string, List<long>> Placed(
         ClearBibleJoin join,
+        ClearBibleSide text,
         IReadOnlyList<ClearBibleToken> tokens,
         Func<string, string> key,
-        Counter counter,
-        CancellationToken cancellationToken)
+        Counter counter)
     {
         if (join == ClearBibleJoin.Edition)
         {
-            return await Edition(text, tokens, key, counter, cancellationToken);
+            return Edition(text, tokens, key, counter);
         }
 
-        var ours = await Words(text.Id, text.Language, canonical: false, cancellationToken);
+        var ours = text.Words!;
         var placed = new Dictionary<string, List<long>>(ours.Count * 20, StringComparer.Ordinal);
 
         foreach (var (address, theirs) in WithTheirTitles(Verses(tokens, text.Language, key), ours))
@@ -820,14 +875,13 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     /// Their words as ours where their source is another edition of a text the corpus holds, laid
     /// against it word for word inside each canonical verse. See <see cref="ClearBibleJoin.Edition"/>.
     /// </summary>
-    private async Task<Dictionary<string, List<long>>> Edition(
-        Database.Entities.Text text,
+    private static Dictionary<string, List<long>> Edition(
+        ClearBibleSide text,
         IReadOnlyList<ClearBibleToken> tokens,
         Func<string, string> key,
-        Counter counter,
-        CancellationToken cancellationToken)
+        Counter counter)
     {
-        var ours = await Words(text.Id, text.Language, canonical: true, cancellationToken);
+        var ours = text.Words!;
         var placed = new Dictionary<string, List<long>>(ours.Count * 20, StringComparer.Ordinal);
 
         foreach (var (address, theirs) in Verses(tokens, text.Language, key))
@@ -993,7 +1047,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     /// this join disagree about punctuation by construction: their tokeniser makes a token of it and
     /// this reader hangs it on the word before.
     /// </summary>
-    private static string Comparable(string text, string? language)
+    internal static string Comparable(string text, string? language)
     {
         var folded = WordFolding.Fold(text, language);
         var letters = new System.Text.StringBuilder(folded.Length);
@@ -1097,6 +1151,9 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         return written;
     }
 
+    /// <summary>A word with the verse its text prints it in.</summary>
+    internal sealed record PrintedWord(int Book, int Chapter, int Verse, int Position, long Id, string Surface, string Trailer);
+
     private sealed record WordRow(
         int Book,
         int Chapter,
@@ -1106,14 +1163,14 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         string Surface,
         string? StrongNumber);
 
-    private sealed record Word(long Id, string Folded, string? Strong);
+    internal sealed record Word(long Id, string Folded, string? Strong);
 
     /// <param name="With">The morphemes compared and placed as part of this one: its suffixes.</param>
     private sealed record Token(string Id, string Folded, string? Strong, IReadOnlyList<string> With);
 
-    private sealed record Draft(List<long> From, List<long> To);
+    internal sealed record Draft(List<long> From, List<long> To);
 
-    private sealed class Counter
+    internal sealed class Counter
     {
         public int Total { get; set; }
 
@@ -1128,7 +1185,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         public HashSet<string> WithoutCounterpart { get; } = new(StringComparer.Ordinal);
     }
 
-    private sealed class Placement
+    internal sealed class Placement
     {
         public Counter Source { get; } = new();
 

@@ -235,6 +235,41 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
+    public void A_changed_verse_keeps_the_rows_a_producer_made_again_and_lists_every_other_method_that_lost_rows()
+    {
+        var verse = VerseKey.Parse("1.1:1");
+        const string Clear = "Clear Bible Alignments";
+        var rows = new[]
+        {
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: Berean),
+            Row(MappingMethods.Stated, "1.1:1.3", "1.1:1.3", source: Clear),
+            Row(MappingMethods.Lexical, "1.1:1.4", "1.1:1.4", confidence: 0.4, source: "letters"),
+            Row(MappingMethods.Strong, "1.1:1.5", "1.1:1.5", confidence: 0.9, source: "numbers"),
+        };
+        var output = MappingMerge.Merge(new MappingMerge.Input(
+            "KJV-BHSA", "KJV", "BHSA",
+            rows.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()),
+            [],
+            new Dictionary<(string, VerseKey), string> { [("KJV", verse)] = "aaaa" },
+            new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>
+            {
+                ["KJV"] = new Dictionary<VerseKey, string> { [verse] = "cccc" },
+                ["BHSA"] = null,
+            },
+            1,
+            Remade: new Dictionary<string, IReadOnlySet<string>> { [MappingMethods.Stated] = new HashSet<string> { Clear } },
+            Producers: new Dictionary<string, string> { [MappingMethods.Stated] = "forge stated-pairs", [MappingMethods.Strong] = "forge strong-pairs" }));
+
+        output.Methods[MappingMethods.Stated].Select(r => r.Status).Should().Equal(null, MappingStatus.Stale);
+        Status(output, MappingMethods.Lexical).Should().Be(MappingStatus.Stale);
+        Status(output, MappingMethods.Strong).Should().Be(MappingStatus.Stale);
+        output.Final.Should().ContainSingle().Which.Source.Should().Be(Berean);
+        output.Report.Should().Contain(r => r.Kind == MappingMerge.NoProducer && r.Method == MappingMethods.Lexical && r.By == "letters" && r.Rows == 1);
+        output.Report.Should().Contain(r => r.Kind == "needs" && r.Method == MappingMethods.Strong && r.By == "forge strong-pairs");
+        output.Report.Should().Contain(r => r.Kind == MappingMerge.NoProducer && r.Method == MappingMethods.Stated && r.By == Clear && r.Rows == 1);
+    }
+
+    [Fact]
     public void A_verse_whose_accents_alone_changed_keeps_its_rows_and_one_whose_words_changed_does_not()
     {
         var (accented, joined) = (VerseKey.Parse("1.12:6"), VerseKey.Parse("1.38:24"));

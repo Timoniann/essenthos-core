@@ -255,7 +255,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     /// Whether the interlinear names some original words by spelling alone, as the releases exported by
     /// older translationCore do. See <see cref="Door43AlignedBible"/>.
     /// </summary>
-    private static bool Unnumbered(string translationSlug) => Door43AlignedBible.Of(translationSlug) is not null;
+    internal static bool Unnumbered(string translationSlug) => Door43AlignedBible.Of(translationSlug) is not null;
 
     private async Task<InterlinearJoinResult> Join(
         string folder,
@@ -294,20 +294,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             var read = Usfm3AlignmentReader.Read(await File.ReadAllTextAsync(file, cancellationToken), unnumbered);
             var here = await Words(translation, ordinal.Value, cancellationToken);
             var there = await Words(witness, ordinal.Value, cancellationToken);
-            var account = new InterlinearJoinAccount();
-            var pairs = new List<InterlinearPair>();
-
-            foreach (var verse in read)
-            {
-                var address = (verse.Chapter, verse.Number);
-                InterlinearJoin.Verse(
-                    $"{name} {verse.Chapter}:{verse.Number}",
-                    verse,
-                    here.GetValueOrDefault(address) ?? [],
-                    Witness(there, address),
-                    pairs,
-                    account);
-            }
+            var (pairs, account) = Book(name, read, here, there, address => address);
 
             drafts.AddRange(pairs.Select(pair => new InterlinearDraft(translation, witness, pair.From, pair.To)));
             books.Add((name, account));
@@ -315,6 +302,35 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         }
 
         return new InterlinearJoinResult(drafts, books, total);
+    }
+
+    /// <summary>
+    /// One book of the interlinear joined, verse by verse: <paramref name="here"/> holds the translation's words by the
+    /// verse the interlinear numbers, <paramref name="there"/> the witness's by frame address, and
+    /// <paramref name="frame"/> says at which address of the witness a verse of the interlinear is read.
+    /// </summary>
+    internal static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Book(
+        string name,
+        IReadOnlyList<AlignedVerse> read,
+        Dictionary<(int, int), List<InterlinearWord>> here,
+        Dictionary<(int, int), List<InterlinearWord>> there,
+        Func<(int Chapter, int Number), (int Chapter, int Number)> frame)
+    {
+        var account = new InterlinearJoinAccount();
+        var pairs = new List<InterlinearPair>();
+        foreach (var verse in read)
+        {
+            var address = (verse.Chapter, verse.Number);
+            InterlinearJoin.Verse(
+                $"{name} {verse.Chapter}:{verse.Number}",
+                verse,
+                here.GetValueOrDefault(address) ?? [],
+                Witness(there, frame(address)),
+                pairs,
+                account);
+        }
+
+        return (pairs, account);
     }
 
     /// <summary>
@@ -334,7 +350,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     /// The book a file is for, from a name like <c>17-EST.usfm</c>, or <c>EST.usfm</c> where a Scripture
     /// Burrito names its books by their code alone.
     /// </summary>
-    private static int? Ordinal(string fileName) =>
+    internal static int? Ordinal(string fileName) =>
         BookReferences.ResolveOrdinal(Path.GetFileNameWithoutExtension(fileName)[(fileName.IndexOf('-') + 1)..]);
 
     private async Task<Dictionary<(int, int), List<InterlinearWord>>> Words(

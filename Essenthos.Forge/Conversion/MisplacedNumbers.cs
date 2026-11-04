@@ -180,6 +180,34 @@ internal sealed class MisplacedNumbers : ITextStage
         return new Outcome(moved, cleared, verbs);
     }
 
+    /// <summary>
+    /// The verb numbers this stage moves off an auxiliary or a pronoun in a text, each as the word it leaves and the verb
+    /// before it that takes it (<em>hat</em> and <em>geboten</em>), by verse and place in the verse (from 1) as the words
+    /// product numbers them: the text is read up to this stage and the stage run on it, so it decides as the conversion did.
+    /// </summary>
+    internal static List<(VerseKey Verse, int Word, int Verb)> VerbMoves(ProductStore store, CataloguedText declared)
+    {
+        var (text, _) = TextConverter.Staged(store, declared, stage => stage is MisplacedNumbers);
+        var before = text.Verses.Select(verse => verse.Words.Select(word => word.Strong).ToArray()).ToList();
+        var classes = Classes(store);
+        Place(text.Verses, classes);
+        var moves = new List<(VerseKey, int, int)>();
+        for (var v = 0; v < text.Verses.Count; v++)
+        {
+            var words = text.Verses[v].Words;
+            for (var at = 1; at < words.Count; at++)
+            {
+                if (before[v][at] is { } number && words[at].Strong is null && before[v][at - 1] is null && words[at - 1].Strong == number
+                    && classes.GetValueOrDefault(number) == "verb")
+                {
+                    moves.Add((text.Verses[v].Key, at + 1, at));
+                }
+            }
+        }
+
+        return moves;
+    }
+
     /// <summary>Whether the word before an auxiliary or pronoun can be the verb whose number it carries: untagged, a content word, in the same clause.</summary>
     private static bool RendersTheVerb(ConvertedWord? before) =>
         before is { Strong: null }

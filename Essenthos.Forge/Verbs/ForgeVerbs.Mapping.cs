@@ -31,25 +31,64 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary>Writes the strong method file of each pair named from the translation's own numbers (<see cref="StrongFiles"/>).</summary>
-    private static Task<int> StrongPairs(ForgeRun forge, string[] args)
+    /// <summary>
+    /// Writes a method's file of each pair named, or of every pair a source of the method speaks about, from those sources
+    /// (<see cref="PairSources"/>), where an input moved or with <c>--force</c>.
+    /// </summary>
+    private static Task<int> SourcePairs(ForgeRun forge, string[] args, string method)
     {
+        var clock = Stopwatch.StartNew();
         var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
-        var failed = 0;
-        foreach (var pair in Positional(args, 1).Where(arg => arg.Contains('-')))
+        var texts = new ProductTexts(store);
+        var named = Positional(args, 1).Where(arg => arg.Contains('-')).ToHashSet(StringComparer.Ordinal);
+        var pairs = PairSources.Pairs(texts, method, named.Count > 0 ? named : null);
+        foreach (var pair in named.Where(p => !pairs.Contains(p)))
         {
-            if (StrongFiles.Refusal(store, pair) is { } refusal)
-            {
-                forge.Logger.LogWarning("{Pair}: {Refusal}", pair, refusal);
-                failed++;
-                continue;
-            }
-
-            forge.Logger.LogInformation("{Outcome}", StrongFiles.Write(store, pair));
+            forge.Logger.LogWarning("{Pair}: no {Method} source this producer reads speaks about it, or the store lacks a text's words or frame", pair, method);
         }
 
+        var results = new System.Collections.Concurrent.ConcurrentBag<PairSources.Outcome>();
+        System.Threading.Tasks.Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 4) }, pair =>
+        {
+            var outcome = PairSources.Write(texts, method, pair, args.Contains("--force"), line => forge.Logger.LogInformation("{Line}", line));
+            results.Add(outcome);
+            forge.Logger.LogInformation("{Outcome}", outcome.Current ? $"{pair} {method}: current" : outcome.Written!.ToString());
+        });
+
         store.Save();
-        return Task.FromResult(failed == 0 ? 0 : 1);
+        Console.WriteLine($"{method}: {results.Count(r => !r.Current)} pairs written, {results.Count(r => r.Current)} current, in {clock.Elapsed}");
+        return Task.FromResult(named.Count > 0 && named.Any(p => !pairs.Contains(p)) ? 1 : 0);
+    }
+
+    /// <summary>Compares the method files of another Resources folder with this one's by key, per pair, method and source.</summary>
+    private static async Task<int> MappingDiff(ForgeRun forge, string[] args)
+    {
+        var before = new ProductStore(args[1]);
+        var after = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var pairs = Pairs(args);
+        var methods = Option(args, "--methods")?.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.Ordinal);
+        var work = MappingProducts.Pairs(after)
+            .Where(pair => pairs is null || pairs.Contains(pair))
+            .SelectMany(pair => MappingProducts.Methods(after, pair).Where(m => methods is null || methods.Contains(m)).Select(m => (pair, m)))
+            .ToList();
+        var outcomes = new System.Collections.Concurrent.ConcurrentBag<MethodFileComparison.Outcome>();
+        System.Threading.Tasks.Parallel.ForEach(work, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 4) },
+            item => outcomes.Add(MethodFileComparison.Compare(before, after, item.pair, item.m)));
+        var groups = outcomes.SelectMany(o => o.Groups).OrderBy(g => g.Pair, StringComparer.Ordinal).ThenBy(g => g.Method, StringComparer.Ordinal)
+            .ThenBy(g => g.Source, StringComparer.Ordinal).ToList();
+        var summary = MethodFileComparison.Summary(groups);
+        Console.Write(summary);
+        if (Option(args, "--out") is { } folder)
+        {
+            Directory.CreateDirectory(folder);
+            await File.WriteAllTextAsync(Path.Combine(folder, "summary.tsv"), summary);
+            await File.WriteAllLinesAsync(Path.Combine(folder, "examples.tsv"),
+                outcomes.SelectMany(o => o.Examples).Order(StringComparer.Ordinal));
+        }
+
+        Console.WriteLine($"{groups.Count(g => g.Same)} of {groups.Count} groups the same by key; rows equal {groups.Sum(g => g.Equal + g.IdOnly)}, "
+                          + $"changed {groups.Sum(g => g.Changed)}, only before {groups.Sum(g => g.OnlyBefore)}, only after {groups.Sum(g => g.OnlyAfter)}");
+        return 0;
     }
 
     /// <summary>Writes the verse links of the pairs named, or of every pair whose inputs moved.</summary>

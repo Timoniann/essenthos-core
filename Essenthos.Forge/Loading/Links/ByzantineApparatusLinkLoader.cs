@@ -63,7 +63,7 @@ internal sealed class ByzantineApparatusLinkLoader(AppDbContext db, ILogger<Byza
         (Sources.ScrivenerSlug, Divided),
     ];
 
-    private static readonly Dictionary<char, string> Notes = new()
+    internal static readonly Dictionary<char, string> Notes = new()
     {
         ['N'] = "where Nestle-Aland 28 reads otherwise, and Nestle 1904 prints its reading at the place",
         ['E'] = "where the Editio Critica Maior reads otherwise, and Nestle 1904 prints its reading at the place",
@@ -162,7 +162,7 @@ internal sealed class ByzantineApparatusLinkLoader(AppDbContext db, ILogger<Byza
     /// Whether the pair already says the opposite about the note's words. A word cannot be shown as
     /// having no counterpart and as rendered at once, and one set of words carries one relation.
     /// </summary>
-    private static bool Contrary(ApparatusLink link, PairStanding standing)
+    internal static bool Contrary(ApparatusLink link, PairStanding standing)
     {
         if (standing.Shapes.TryGetValue(LinkShape.Of(link.From, link.To), out var relation))
         {
@@ -173,7 +173,7 @@ internal sealed class ByzantineApparatusLinkLoader(AppDbContext db, ILogger<Byza
         return link.From.Concat(link.To).Any(absence ? standing.Rendered.Contains : standing.Absent.Contains);
     }
 
-    private sealed record PairStanding(
+    internal sealed record PairStanding(
         Dictionary<Guid, LinkRelation> Shapes,
         HashSet<long> Rendered,
         HashSet<long> Absent);

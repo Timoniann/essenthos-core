@@ -295,7 +295,7 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         _ => true,
     };
 
-    private static string Combination(NameSignal signals) => signals == NameSignal.None
+    internal static string Combination(NameSignal signals) => signals == NameSignal.None
         ? "none"
         : string.Join('+', new[] { NameSignal.Entity, NameSignal.Letters, NameSignal.Spelling }
             .Where(signal => (signals & signal) != 0)

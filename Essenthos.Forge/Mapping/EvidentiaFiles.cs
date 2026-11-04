@@ -142,7 +142,7 @@ internal static class EvidentiaFiles
 
         var product = MappingProducts.Of(pair, MappingMethods.Evidentia);
         if (!force && !store.NeedsBuild(product, ProductKind.Machine, Inputs(store, pair, runs.Select(held => held.Folder),
-                MappingProducts.Methods(store, pair).Where(m => m != MappingMethods.Evidentia).Select(m => MappingProducts.Of(pair, m)))))
+                MappingProducts.Methods(store, pair).Where(m => m is not (MappingMethods.Evidentia or PairSources.Laid)).Select(m => MappingProducts.Of(pair, m)))))
         {
             return new Outcome(pair, runs.Count, 0, 0, 0, 0, [], leftOut, Current: true);
         }
@@ -482,7 +482,7 @@ internal static class EvidentiaFiles
         public static Others Read(ProductStore store, string pair)
         {
             var others = new Others();
-            foreach (var method in MappingProducts.Methods(store, pair).Where(m => m != MappingMethods.Evidentia))
+            foreach (var method in MappingProducts.Methods(store, pair).Where(m => m is not (MappingMethods.Evidentia or PairSources.Laid)))
             {
                 var product = MappingProducts.Of(pair, method);
                 others.Products.Add(product);
