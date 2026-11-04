@@ -101,8 +101,8 @@ public sealed class TitleNoteLoaderTests : IDisposable
             new BookNoteDraft(VerseNoteKind.CrossReference, "2 Сам. 24")));
         var text = await _db.Texts.SingleAsync();
 
-        var opening = await Texts.BookNotes(_db, [text.Id], 11, 1, default);
-        var later = await Texts.BookNotes(_db, [text.Id], 11, 2, default);
+        var opening = await ChapterReading.BookNotes(_db, [text.Id], 11, 1, default);
+        var later = await ChapterReading.BookNotes(_db, [text.Id], 11, 2, default);
 
         opening.Should().ContainKey(text.Id);
         opening[text.Id].Title.Should().Be("Перва книга царів");

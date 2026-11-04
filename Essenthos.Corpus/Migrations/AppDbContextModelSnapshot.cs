@@ -3186,6 +3186,39 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("occupation_word", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.Pane", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<byte[]>("Body")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("body");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hash");
+
+                    b.HasKey("TextId", "CanonicalBook", "CanonicalChapter")
+                        .HasName("pk_pane");
+
+                    b.ToTable("pane", null, t =>
+                        {
+                            t.HasComment("Each text's side of the parallel view for one canonical chapter: the words with what the reader shows on them, the verses and notes, the records named, as gzip-compressed JSON the API sends as it is. Derived from the served tables by the build's pane producer (build/products, panes/{text}).");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>
                 {
                     b.Property<int>("Id")
@@ -6736,6 +6769,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("PersonOccupation");
 
                     b.Navigation("Word");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.Pane", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pane_texts_text_id");
+
+                    b.Navigation("Text");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Period", b =>

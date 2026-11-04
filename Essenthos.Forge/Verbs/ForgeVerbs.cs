@@ -48,6 +48,10 @@ internal static partial class ForgeVerbs
             + "a new database of the configured server from the products (--into), or replace in the configured one what moved since it was "
             + "built (--apply); then verify at the level asked and write build/report-<n>. Never builds into the live corpus or the snapshot.",
             BuildVerb),
+        new("panes", "[<text,...>] [--force] [--parallel <n>]",
+            "Write the parallel view's panes (one row of pane per text and canonical chapter) from the configured database, for the texts "
+            + "named or every text whose inputs moved, and panes/<SLUG> beside them. Never writes the live corpus or the snapshot.",
+            PanesVerb),
         new("tables", "[<table,...>] [--from <Resources>] [--force]",
             "Write the served tables made whole from files (the lexicon, text relations, ...) as tables/<table>, each only when its sources moved. Reads no database.",
             TablesVerb),

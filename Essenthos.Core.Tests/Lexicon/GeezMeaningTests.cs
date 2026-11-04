@@ -77,7 +77,7 @@ public sealed class GeezMeaningTests : IDisposable
 
     private async Task<TextWordResponse> Read(int position)
     {
-        var chapter = await Texts.ReadChapter(_db, _geez.Id, 1, 1, default);
+        var chapter = await ChapterReading.ReadChapter(_db, _geez.Id, 1, 1, default);
         return chapter.Single().Words[position - 1];
     }
 

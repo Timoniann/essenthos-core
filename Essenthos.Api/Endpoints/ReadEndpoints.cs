@@ -371,7 +371,7 @@ internal static class ReadEndpoints
                     $"is no chapter {chapter}.");
             }
 
-            var verses = await Texts.ReadChapter(db, entry.Id, ordinal.Value, chapter, cancellationToken);
+            var verses = await ChapterReading.ReadChapter(db, entry.Id, ordinal.Value, chapter, cancellationToken);
             var text = await db.Texts.SingleAsync(t => t.Id == entry.Id, cancellationToken);
 
             return Results.Ok(new ChapterTextResponse(
@@ -382,11 +382,11 @@ internal static class ReadEndpoints
                 text.Direction == Database.Entities.Enums.TextDirection.RightToLeft ? "rtl" : "ltr",
                 verses)
             {
-                BookNotes = (await Texts.BookNotes(db, [entry.Id], ordinal.Value, chapter, cancellationToken))
+                BookNotes = (await ChapterReading.BookNotes(db, [entry.Id], ordinal.Value, chapter, cancellationToken))
                     .GetValueOrDefault(entry.Id),
                 ChapterNotes =
                 [
-                    .. (await Texts.ChapterNotesOfOwnChapter(db, entry.Id, ordinal.Value, chapter, cancellationToken))
+                    .. (await ChapterReading.ChapterNotesOfOwnChapter(db, entry.Id, ordinal.Value, chapter, cancellationToken))
                         .SelectMany(verse => verse.Value),
                 ],
             });

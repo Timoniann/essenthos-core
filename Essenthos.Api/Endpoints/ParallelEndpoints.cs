@@ -119,7 +119,30 @@ internal static class ParallelEndpoints
     /// <summary>The contract's separator for the corpus list, and the cap it sets.</summary>
     private const char CorpusSeparator = ',';
 
-    private const int MostCorporaAtOnce = 6;
+    internal const int MostCorporaAtOnce = 6;
+
+    /// <summary>
+    /// How one text's verses of a canonical chapter meet the reference text's, as <c>/v1/parallel</c> tells it per pane:
+    /// the alignment and each row's strength, over the chapter and every chapter holding a passage of it under another name.
+    /// </summary>
+    internal static async Task<PaneStrengthResponse> Strength(
+        AppDbContext db,
+        int textId,
+        int againstId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var verses = new Dictionary<int, LinkStrengthResponse>();
+        var byNumber = false;
+        foreach (var (heldBook, heldChapter, first, last, shift) in ChapterReading.Held(canonicalBook, canonicalChapter))
+        {
+            ChapterReading.Merge(verses, await Strengths(db, textId, againstId, heldBook, heldChapter, cancellationToken), first, last, shift);
+            byNumber |= await JoinedOnlyByReading(db, textId, againstId, heldBook, heldChapter, cancellationToken);
+        }
+
+        return new PaneStrengthResponse(byNumber ? PairedByItsOwnNumber : PairedThroughTheFrame, verses);
+    }
 
     public static void MapParallel(this IEndpointRouteBuilder routes)
     {
@@ -186,23 +209,23 @@ internal static class ParallelEndpoints
                 notes[entry.Slug] = [];
                 strength[entry.Slug] = [];
                 headings[entry.Slug] = [];
-                foreach (var (heldBook, heldChapter, first, last, shift) in Held(ordinal.Value, chapter))
+                foreach (var (heldBook, heldChapter, first, last, shift) in ChapterReading.Held(ordinal.Value, chapter))
                 {
-                    Merge(byText[entry.Slug], await Texts.ReadByCanonicalVerse(
+                    ChapterReading.Merge(byText[entry.Slug], await ChapterReading.ReadByCanonicalVerse(
                         db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
-                    Merge(references[entry.Slug],
-                        await OwnReferences(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
-                    Merge(own[entry.Slug],
-                        await OwnVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
-                    Merge(stated[entry.Slug],
-                        await StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
-                    Merge(notes[entry.Slug],
-                        await SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
-                    Merge(headings[entry.Slug], await Texts.ChapterNotesByCanonicalVerse(
+                    ChapterReading.Merge(references[entry.Slug],
+                        await ChapterReading.OwnReferences(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    ChapterReading.Merge(own[entry.Slug],
+                        await ChapterReading.OwnVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    ChapterReading.Merge(stated[entry.Slug],
+                        await ChapterReading.StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    ChapterReading.Merge(notes[entry.Slug],
+                        await ChapterReading.SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    ChapterReading.Merge(headings[entry.Slug], await ChapterReading.ChapterNotesByCanonicalVerse(
                         db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
                     if (entry.Id != reference.Id)
                     {
-                        Merge(strength[entry.Slug], await Strengths(
+                        ChapterReading.Merge(strength[entry.Slug], await Strengths(
                             db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
                         if (await JoinedOnlyByReading(db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken))
                         {
@@ -231,7 +254,7 @@ internal static class ParallelEndpoints
                 .ToList();
 
             var corpusRows = await CorpusRows(db, canon, requested, cancellationToken);
-            var bookNotes = await Texts.BookNotes(
+            var bookNotes = await ChapterReading.BookNotes(
                 db, [.. requested.Select(entry => entry.Id)], ordinal.Value, chapter, cancellationToken);
 
             return Results.Ok(new ParallelTextResponse(
@@ -259,31 +282,6 @@ internal static class ParallelEndpoints
         });
     }
 
-    /// <summary>
-    /// The chapters a chapter's rows are read from: itself, and each chapter holding a passage of it
-    /// under another name (<see cref="TwinPassages"/>) — the Letter of Jeremiah, which is Baruch 6 in the
-    /// Latin and English Bibles and a book of its own in the Greek, and the Song of the Three, which is
-    /// inside Daniel 3 in the Greek and Latin and a book of its own in the King James. A text is read
-    /// under whichever name it prints the passage, with the verses of that passage and at the rows they
-    /// have here, so either name opens it in every text that has it.
-    /// </summary>
-    internal static IEnumerable<(int Book, int Chapter, int First, int Last, int Shift)> Held(int book, int chapter) =>
-        [(book, chapter, int.MinValue, int.MaxValue, 0), .. TwinPassages.NamedElsewhere(book, chapter)];
-
-    /// <summary>
-    /// Rows read under another name, at the rows they have here; a row the chapter already holds for the
-    /// text keeps what it has, since a verse stands primarily under one name only.
-    /// </summary>
-    internal static void Merge<T>(Dictionary<int, T> into, Dictionary<int, T> read, int first, int last, int shift)
-    {
-        foreach (var (verse, value) in read)
-        {
-            if (verse >= first && verse <= last)
-            {
-                into.TryAdd(verse + shift, value);
-            }
-        }
-    }
 
     /// <summary>
     /// A text with no verse at this address answers null, which is a different fact from a verse
@@ -412,131 +410,6 @@ internal static class ParallelEndpoints
     private static LinkStrengthResponse Strength(IReadOnlyList<double?> confidences) =>
         new(confidences.Count, confidences.Count(c => c is null), confidences.Average());
 
-    /// <summary>
-    /// Which of a text's own verses sit at each canonical address in this chapter, as the text
-    /// numbers them.
-    ///
-    /// <see cref="OwnReferences"/> answers the same question and keeps only one per address, because
-    /// a reference is a single address and cannot be two. That is right for what it is for and it is
-    /// why the label went missing: Brenton's <c>31:50a</c> and <c>31:50</c> both belong at canonical
-    /// 31:50, so one of the two was reported and the row silently held both.
-    /// </summary>
-    private static async Task<Dictionary<int, List<string>>> OwnVerses(
-        AppDbContext db,
-        int textId,
-        int canonicalBook,
-        int canonicalChapter,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.VerseReferences
-            .Where(r => r.IsPrimary
-                        && r.Verse!.TextId == textId
-                        && r.CanonicalBook == canonicalBook
-                        && r.CanonicalChapter == canonicalChapter)
-            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number, r.Verse.Label })
-            .ToListAsync(cancellationToken);
-
-        return rows
-            .GroupBy(r => r.CanonicalVerse)
-            .ToDictionary(
-                group => group.Key,
-                group => group
-                    .OrderBy(r => r.Number).ThenBy(r => r.Label, StringComparer.Ordinal)
-                    .Select(r => $"{r.ChapterNumber}:{r.Number}{r.Label}")
-                    .ToList());
-    }
-
-    /// <summary>
-    /// What the edition prints as its own address for each canonical address in this chapter.
-    ///
-    /// <para>
-    /// It sits beside <see cref="OwnVerses"/> and answers a different question. That one asks which
-    /// verses this text holds here, and every answer is a row that can be fetched; this one asks
-    /// what the edition's own pages call them, and the answer is a claim about a printed book that
-    /// no row of this corpus answers to. Reading them as one field is how the Synodal would come to
-    /// offer 118:1 as a verse it has.
-    /// </para>
-    ///
-    /// <para>
-    /// The addresses of a verse are ordered as the edition printed them, and where two of its
-    /// verses became one of ours both are here — the second is not a duplicate of the first and
-    /// dropping it would say the edition divides the passage as we do.
-    /// </para>
-    /// </summary>
-    public static async Task<Dictionary<int, List<string>>> StatedVerses(
-        AppDbContext db,
-        int textId,
-        int canonicalBook,
-        int canonicalChapter,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.StatedVerseNumbers
-            .Where(n => n.Verse!.TextId == textId
-                        && n.Verse.References.Any(r => r.IsPrimary
-                                                       && r.CanonicalBook == canonicalBook
-                                                       && r.CanonicalChapter == canonicalChapter))
-            .Select(n => new
-            {
-                Canonical = n.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
-                Holder = n.Verse.Number,
-                n.Position,
-                Chapter = n.ChapterNumber,
-                n.ChapterLabel,
-                Verse = n.Number,
-            })
-            .ToListAsync(cancellationToken);
-
-        return rows
-            .GroupBy(row => row.Canonical)
-            .ToDictionary(
-                group => group.Key,
-                group => group
-                    .OrderBy(row => row.Holder).ThenBy(row => row.Position)
-                    .Select(row => $"{row.Chapter}{row.ChapterLabel}:{row.Verse}")
-            .ToList());
-    }
-
-    /// <summary>
-    /// The edition's notes, grouped by the canonical row rather than by their printed number. A
-    /// row can hold more than one of a translation's own verses, so the order keeps the verse they
-    /// belong to before their position inside it.
-    /// </summary>
-    private static async Task<Dictionary<int, List<SourceNoteResponse>>> SourceNotes(
-        AppDbContext db,
-        int textId,
-        int canonicalBook,
-        int canonicalChapter,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.VerseNotes
-            .Where(note => note.Verse!.TextId == textId
-                           && note.Verse.References.Any(reference => reference.IsPrimary
-                                                                    && reference.CanonicalBook == canonicalBook
-                                                                    && reference.CanonicalChapter == canonicalChapter))
-            .Select(note => new
-            {
-                Canonical = note.Verse!.References.First(reference => reference.IsPrimary).CanonicalVerse,
-                Holder = note.Verse.Number,
-                note.Verse.Label,
-                note.Position,
-                note.Kind,
-                note.Content,
-                note.AnchorWordId,
-                Anchor = note.AnchorWord == null ? null : note.AnchorWord.Surface,
-            })
-            .ToListAsync(cancellationToken);
-
-        return rows
-            .GroupBy(row => row.Canonical)
-            .ToDictionary(
-                group => group.Key,
-                group => group
-                    .OrderBy(row => row.Holder).ThenBy(row => row.Label, StringComparer.Ordinal)
-                    .ThenBy(row => row.Position)
-                    .Select(row => new SourceNoteResponse(
-                        EnumSpelling.Of(row.Kind), row.Content, row.AnchorWordId, row.Anchor))
-                    .ToList());
-    }
 
     private static async Task<List<TextEntry>> Requested(
         ICanonIndex canon,
@@ -561,33 +434,6 @@ internal static class ParallelEndpoints
         return found;
     }
 
-    /// <summary>What each text calls the verses it puts at these canonical addresses.</summary>
-    private static async Task<Dictionary<int, VerseRefResponse>> OwnReferences(
-        AppDbContext db,
-        int textId,
-        int canonicalBook,
-        int canonicalChapter,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.VerseReferences
-            .Where(r => r.IsPrimary
-                        && r.Verse!.TextId == textId
-                        && r.CanonicalBook == canonicalBook
-                        && r.CanonicalChapter == canonicalChapter)
-            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number })
-            .ToListAsync(cancellationToken);
-
-        return rows
-            .GroupBy(r => r.CanonicalVerse)
-            .ToDictionary(
-                group => group.Key,
-                group => new VerseRefResponse(
-                    canonicalBook,
-                    BookReferences.Name(canonicalBook),
-                    BookReferences.Slug(canonicalBook),
-                    group.Min(r => r.ChapterNumber),
-                    group.Min(r => r.Number)));
-    }
 
     private static async Task<IList<CorpusResponse>> CorpusRows(
         AppDbContext db,

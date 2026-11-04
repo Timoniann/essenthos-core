@@ -2,7 +2,8 @@
 # producer   by hand
 # The declared graph of the build (DOC-0224 §13). One line per product pattern under Resources/Essenthos/, no extension:
 #   {name} is one path segment bound across the line, * one segment, ** any depth; the first line that matches a product is its line.
-# maker: hand (people edit it), export (written from a database once; re-run at cut-over), build (forge build runs the producer).
+# maker: hand (people edit it), export (written from a database once; re-run at cut-over), build (forge build runs the producer),
+#   serve (made from the serving database once build --into or build --apply has filled it; forge build alone never runs it).
 # producer: the Forge verb and arguments the build runs, once per distinct producer, in the order the inputs ask for.
 # inputs: what the product may read, as patterns under Resources/; {sources} is the text's declared sources in the catalogue.
 #   A product whose header names an input no pattern of its line covers fails the build.
@@ -66,5 +67,6 @@ tables/word_group	build	tables	etcbc Essenthos/texts/BHSA/words Essenthos/texts/
 tables/word_group_word	build	tables	etcbc Essenthos/texts/BHSA/words Essenthos/texts/BHSA/books	word_group_word	all
 tables/word_parsing	build	tables	MorphGnt Macula Essenthos/texts/NESTLE1904/words	word_parsing	all
 tables/word_strong	build	tables	Strong/* Berean/* Essenthos/texts/GRCBRENT/words Essenthos/texts/BSB/words Essenthos/texts/BSB/frame Essenthos/texts/KJV/words bible4u/KJV.xml Zefania/* mapping/* STEPBible KingJamesApocrypha SynodalWikisource WorldEnglishClassic KingJames2006 Essenthos/texts/KJV/corrections Essenthos/texts/KJV/ids	word_strong	all
+panes/{text}	serve	panes	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/notes Essenthos/texts/{text}/books Essenthos/texts/{text}/text Essenthos/texts/{text}/frame Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/mapping/*/final Essenthos/names/projected/{text} Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/facts/occupations Essenthos/records/facts/person-occupations Essenthos/records/derived/occupation-words Essenthos/tables/word_strong Essenthos/tables/lexicon_gloss Essenthos/tables/geez_lexicon_entry	pane	text
 texts/relations	hand	by hand (seeded once by tables from the Forge's list)	-	-	none
 carried/{table}	export	carried-export	-	{table}	all

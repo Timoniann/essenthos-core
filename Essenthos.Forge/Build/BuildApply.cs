@@ -41,6 +41,15 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         {
             logger.LogInformation("Nothing {Database} was built from has moved", database);
             Stages.Add(new BuildStage("apply", "nothing moved", TimeSpan.Zero, 0));
+            // The panes still answer for themselves: a database built before them, or a pane product made since, is caught up.
+            var catchUp = new ServingBuild(connectionString, store, services, logger);
+            if (await catchUp.Panes(null, false, PaneParallelism, cancellationToken) > 0)
+            {
+                await catchUp.Count(cancellationToken);
+                await WriteServed(database, catchUp.Rows, cancellationToken);
+                Stages.AddRange(catchUp.Stages);
+            }
+
             return new Applied([], []);
         }
 
@@ -184,16 +193,23 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             return 0;
         });
 
+        // The panes read what the steps above left, so they come last; only the texts whose inputs moved are made again.
+        await serving.Panes(null, false, PaneParallelism, cancellationToken);
         await serving.Count(cancellationToken);
-        await using (var connection = new NpgsqlConnection(connectionString))
-        {
-            await connection.OpenAsync(cancellationToken);
-            await using var command = new NpgsqlCommand("SELECT count(*) FROM pg_constraint WHERE contype = 'f' AND connamespace = 'public'::regnamespace", connection);
-            ServedState.Write(store, graph, database, serving.Rows, Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken)), $"forge build --apply");
-        }
-
+        await WriteServed(database, serving.Rows, cancellationToken);
         Stages.AddRange(serving.Stages);
         return new Applied(changed, pairs);
+    }
+
+    /// <summary>How many panes are read at once.</summary>
+    private const int PaneParallelism = 16;
+
+    private async Task WriteServed(string database, IReadOnlyDictionary<string, long> rows, CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        await using var command = new NpgsqlCommand("SELECT count(*) FROM pg_constraint WHERE contype = 'f' AND connamespace = 'public'::regnamespace", connection);
+        ServedState.Write(store, graph, database, rows, Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken)), "forge build --apply");
     }
 
     /// <summary>

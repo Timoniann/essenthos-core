@@ -162,8 +162,28 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             await Execute(connectionString, "ANALYZE", cancellationToken);
             return 0;
         });
+        await Panes(null, true, parallel, cancellationToken);
         await Count(cancellationToken);
     }
+
+    /// <summary>
+    /// The panes of the texts named (every text when null) whose inputs moved, or all of them when <paramref name="force"/>
+    /// is set (a fresh database holds none), read from the tables as they now stand.
+    /// </summary>
+    public Task<long> Panes(IReadOnlyCollection<string>? texts, bool force, int parallel, CancellationToken cancellationToken) =>
+        Timed("load", "panes", async () =>
+        {
+            var outcomes = await new PaneBuild(connectionString, store, services, logger).Run(texts, force, parallel, cancellationToken);
+            var made = outcomes.Where(o => o.Made).ToList();
+            logger.LogInformation("Panes: {Made} texts made ({Panes} panes, {Compressed} bytes compressed), {Current} current",
+                made.Count, made.Sum(o => o.Panes), made.Sum(o => o.Compressed), outcomes.Count - made.Count);
+            if (made.Count > 0)
+            {
+                await Execute(connectionString, "ANALYZE pane", cancellationToken);
+            }
+
+            return (long)made.Sum(o => o.Panes);
+        });
 
     /// <summary>The frame of the texts named, or of every text with a frame file, each text replaced in a transaction of its own.</summary>
     public async Task<long> Frame(IReadOnlyCollection<string>? only, CancellationToken cancellationToken)

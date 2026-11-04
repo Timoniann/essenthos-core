@@ -165,10 +165,10 @@ public sealed class HeadingNoteLoaderTests : IDisposable
 
         await _db.SaveChangesAsync();
 
-        var opened = await Texts.ChapterNotesByCanonicalVerse(_db, text.Id, 19, 114, default);
-        var runOn = await Texts.ChapterNotesByCanonicalVerse(_db, text.Id, 19, 115, default);
-        var own = await Texts.ChapterNotesOfOwnChapter(_db, text.Id, 19, 113, default);
-        var otherOwn = await Texts.ChapterNotesOfOwnChapter(_db, text.Id, 19, 112, default);
+        var opened = await ChapterReading.ChapterNotesByCanonicalVerse(_db, text.Id, 19, 114, default);
+        var runOn = await ChapterReading.ChapterNotesByCanonicalVerse(_db, text.Id, 19, 115, default);
+        var own = await ChapterReading.ChapterNotesOfOwnChapter(_db, text.Id, 19, 113, default);
+        var otherOwn = await ChapterReading.ChapterNotesOfOwnChapter(_db, text.Id, 19, 112, default);
 
         var expected = new ChapterNotesResponse(1, "Псалом 113", [new SourceNoteResponse("footnote", Joined)]);
         opened.Keys.Should().Equal(1);
