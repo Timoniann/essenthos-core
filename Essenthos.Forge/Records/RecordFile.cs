@@ -76,6 +76,14 @@ internal sealed record RecordColumn(string Name, RecordColumnType Type, bool Nul
 /// The SELECT for a database this loader filled, where it differs from <paramref name="Export"/>
 /// (the dataset columns are gone there), so that a loaded database exports to the same file.
 /// </param>
+/// <param name="Listed">
+/// The rows of a file no table holds, which the Forge carries as a list of its own until the file
+/// replaces it: the export writes them, whatever the database.
+/// </param>
+/// <param name="Check">
+/// For a <paramref name="Listed"/> file, which the load writes to no table: a SELECT over the staged
+/// rows <c>s</c> counting the rows that are sound. The load fails unless it counts every row.
+/// </param>
 internal sealed record RecordFile(
     string Product,
     ProductKind Kind,
@@ -86,7 +94,9 @@ internal sealed record RecordFile(
     string? After = null,
     string? ExportLoaded = null,
     string? About = null,
-    string? Requires = null)
+    string? Requires = null,
+    Func<IEnumerable<string?[]>>? Listed = null,
+    string? Check = null)
 {
     public RecordColumn[] Parsed { get; } = RecordColumn.Parse(Columns);
 
@@ -111,5 +121,103 @@ internal sealed record RecordFile(
         }
 
         return schema.Reads(row => row.ToTexts());
+    }
+
+    /// <summary>
+    /// The columns a file is sorted by, as the last ORDER BY of its export names them (by position,
+    /// or by a column's name with or without its table's alias).
+    /// </summary>
+    public int[] Order(string export)
+    {
+        var at = LastOrderBy(export)
+                 ?? throw new InvalidOperationException($"{Product}: the export has no ORDER BY of its own.");
+        return
+        [
+            .. export[(at + "ORDER BY".Length)..].Split(',').Select(term =>
+            {
+                var bare = term.Trim();
+                if (int.TryParse(bare, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var position)
+                    && position >= 1 && position <= Parsed.Length)
+                {
+                    return position - 1;
+                }
+
+                var name = bare[(bare.LastIndexOf('.') + 1)..];
+                var index = Array.FindIndex(Parsed, c => c.Name == name);
+                return index >= 0
+                    ? index
+                    : throw new InvalidOperationException($"{Product}: the export sorts by '{bare}', which is no column of the file.");
+            }),
+        ];
+    }
+
+    /// <summary>
+    /// The rows in the file's order, compared by value and by ordinal: a file reads the same whatever
+    /// the collation of the server it was exported from. Equal keys keep the order they came in.
+    /// </summary>
+    public List<string?[]> Sorted(IEnumerable<string?[]> rows, int[] order) =>
+        [.. rows.Order(Comparer<string?[]>.Create((a, b) =>
+        {
+            foreach (var i in order)
+            {
+                var compared = Compare(Parsed[i].Type, a[i], b[i]);
+                if (compared != 0)
+                {
+                    return compared;
+                }
+            }
+
+            return 0;
+        }))];
+
+    private static int Compare(RecordColumnType type, string? a, string? b)
+    {
+        if (a is null || b is null)
+        {
+            // Postgres puts the empty last when it sorts upwards.
+            return a is null ? (b is null ? 0 : 1) : -1;
+        }
+
+        return type switch
+        {
+            RecordColumnType.Integer => long.Parse(a, System.Globalization.CultureInfo.InvariantCulture)
+                .CompareTo(long.Parse(b, System.Globalization.CultureInfo.InvariantCulture)),
+            RecordColumnType.Ref or RecordColumnType.Refs => Keys(a).Zip(Keys(b)).Select(p => p.First.CompareTo(p.Second))
+                .FirstOrDefault(c => c != 0) is var first and not 0 ? first : Keys(a).Length.CompareTo(Keys(b).Length),
+            _ => string.CompareOrdinal(a, b),
+        };
+    }
+
+    private static VerseKey[] Keys(string text) =>
+        [.. text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(key => VerseKey.Parse(key))];
+
+    private static int? LastOrderBy(string sql)
+    {
+        var depth = 0;
+        int? found = null;
+        for (var i = 0; i < sql.Length; i++)
+        {
+            switch (sql[i])
+            {
+                case '(':
+                    depth++;
+                    break;
+                case ')':
+                    depth--;
+                    break;
+                case '\'':
+                    i = sql.IndexOf('\'', i + 1);
+                    break;
+                default:
+                    if (depth == 0 && string.CompareOrdinal(sql, i, "ORDER BY", 0, 8) == 0)
+                    {
+                        found = i;
+                    }
+
+                    break;
+            }
+        }
+
+        return found;
     }
 }

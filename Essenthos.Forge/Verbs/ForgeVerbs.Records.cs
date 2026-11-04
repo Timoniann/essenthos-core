@@ -48,7 +48,31 @@ internal static partial class ForgeVerbs
             Console.WriteLine(rows < 0 ? $"{"-",9}  {product}: not loaded, what it stands on is not in this database" : $"{rows,9}  {product}");
         }
 
+        foreach (var (dataset, confirmed, rows, records) in await RecordFiles.DatasetVerses(forge.DatabaseConnection, CancellationToken.None))
+        {
+            Console.WriteLine($"{rows,9}  {dataset} verse references on {records} records " +
+                              (confirmed ? "a word of ours confirms (the record's own verse is served)" : "no word of ours confirms: not served"));
+        }
+
         return 0;
+    }
+
+    /// <summary>
+    /// Makes the derived record files whose inputs are all files, reading the hand files of
+    /// <c>--from &lt;Resources&gt;</c> and writing into <c>--into &lt;Resources&gt;</c> (both default to the
+    /// Forge's own); the gazetteer is read from OpenBible/ beside the hand files. Reads no database.
+    /// </summary>
+    private static Task<int> RecordsDerive(ForgeRun forge, string[] args)
+    {
+        var from = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var into = Option(args, "--into") is { } path ? new ProductStore(path) : from;
+        foreach (var (product, rows) in RecordProducers.Derive(from, into, Path.Combine(from.ResourcesPath, "OpenBible")))
+        {
+            Console.WriteLine($"{rows,9}  {product}");
+        }
+
+        into.Save();
+        return Task.FromResult(0);
     }
 
     /// <summary>
