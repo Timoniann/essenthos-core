@@ -322,10 +322,6 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         return new EvidentiaExportOutcome(runId, folder, lines.Count, byBook.Count);
     }
 
-    /// <summary>
-    /// The runs whose verdicts in the database differ from what the ledger holds for them, each as a
-    /// sentence saying what to run. Empty when every verdict is in a file.
-    /// </summary>
     /// <summary>The approved attached words of a run and the head each goes with, where the corpus knows one.</summary>
     private async Task<List<(long Word, long Head)>> Heads(int runId, CancellationToken cancellationToken)
     {
@@ -365,6 +361,10 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         WHERE x.head IS NOT NULL
         """;
 
+    /// <summary>
+    /// The runs whose verdicts in the database differ from what the ledger holds for them, each as a
+    /// sentence saying what to run. Empty when every verdict is in a file.
+    /// </summary>
     public static async Task<IReadOnlyList<string>> Unrecorded(AppDbContext db, string resources, CancellationToken cancellationToken = default)
     {
         var counts = await db.EvidentiaReviews.AsNoTracking()
