@@ -48,7 +48,7 @@ internal sealed record PrintedEditionOutcome(
 /// </summary>
 internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedEditionLinkLoader> logger)
 {
-    private const string Source = "byztxt/greektext-textus-receptus, the variant groups of the composite";
+    internal const string Source = "byztxt/greektext-textus-receptus, the variant groups of the composite";
 
     public async Task<PrintedEditionOutcome> Load(string folder, CancellationToken cancellationToken = default)
     {
@@ -116,7 +116,7 @@ internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedE
     /// A segment is one word outside a variant group and one group inside it, counted the same way
     /// on both sides, so this needs no alignment and admits no guess.
     /// </summary>
-    private static void Pair(
+    internal static void Pair(
         UtrVerse first,
         UtrVerse second,
         List<long> left,
@@ -217,5 +217,5 @@ internal sealed class PrintedEditionLinkLoader(AppDbContext db, ILogger<PrintedE
             $"The text \"{slug}\" must be loaded before it can be linked. This reads its words; it does not " +
             "create them.");
 
-    private sealed record EditionDraft(LinkRelation Relation, List<long> From, List<long> To);
+    internal sealed record EditionDraft(LinkRelation Relation, List<long> From, List<long> To);
 }

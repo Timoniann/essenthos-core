@@ -108,7 +108,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// NonCommercial is not a new constraint — BHSA, which this maps onto, is non-commercial
     /// itself. Attribution was the term being broken.
     /// </summary>
-    private const string Source =
+    internal const string Source =
         "Open Hebrew Bible Project by Eliran Wong, github.com/eliranwong/OpenHebrewBible, CC BY-NC 4.0";
 
     /// <summary>
@@ -121,7 +121,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         Sources.TahotPrefix + ", www.STEPBible.org, based on work at Tyndale House Cambridge, CC BY-NC 3.0";
 
     /// <summary>What the second claim asserts, as against what the link's own claim asserts.</summary>
-    private const string StatedNote =
+    internal const string StatedNote =
         "the gloss TAHOT prints for this morpheme where it stands";
 
     /// <summary>
@@ -158,7 +158,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// shows up as a number going the wrong way rather than as silence.
     /// </para>
     /// </summary>
-    private const double SameVerse = 0.6;
+    internal const double SameVerse = 0.6;
 
     /// <summary>
     /// How much of a verse's Hebrew the running numbers must reach before the verse is read through
@@ -641,7 +641,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// between them numbered by the same reading as the Strong numbers are, with each entry's own
     /// running number standing where its Strong number would.
     /// </summary>
-    private static Dictionary<int, Word> WordsByNumber(
+    internal static Dictionary<int, Word> WordsByNumber(
         IReadOnlyList<MappingRecord> records,
         Dictionary<(int, int, int), List<Word>> hebrewVerses,
         Dictionary<long, int> placed) =>
@@ -652,7 +652,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// the first of them, carrying the others in <see cref="Word.Also"/>. Kept apart because a number
     /// is a Strong number's place, and neither half is the whole word the number names.
     /// </param>
-    private static Dictionary<int, Word> WordsByNumber(
+    internal static Dictionary<int, Word> WordsByNumber(
         IReadOnlyList<MappingRecord> records,
         Dictionary<(int, int, int), List<Word>> hebrewVerses,
         Dictionary<long, int> placed,
@@ -741,7 +741,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// splits, read as its first half carrying the rest (<see cref="Split"/>). Null where too little
     /// of it is reached to be the verse the file means.
     /// </summary>
-    private static List<Word?>? ByRunningNumber(
+    internal static List<Word?>? ByRunningNumber(
         MappingRecord record,
         Dictionary<int, Word> byNumber,
         Dictionary<int, Word> split)
@@ -764,7 +764,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// and is read through the running numbers, its links, its Strong numbers and the running
     /// numbers the other mappings borrow alike.
     /// </summary>
-    private static List<Word>? JoinHebrew(
+    internal static List<Word>? JoinHebrew(
         MappingRecord record,
         Dictionary<(int, int, int), List<Word>> hebrewVerses,
         out GlossAgreement glosses)
@@ -802,7 +802,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         return glosses.Share < SameVerse ? null : bhsa;
     }
 
-    private static void Place(MappingRecord record, List<Word> bhsa, Dictionary<long, int> placed)
+    internal static void Place(MappingRecord record, List<Word> bhsa, Dictionary<long, int> placed)
     {
         for (var i = 0; i < record.Hebrew.Count; i++)
         {
@@ -822,7 +822,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private static bool NumbersTwoEntriesAsOneWord(MappingRecord record) =>
         record.Hebrew.Select(entry => entry.Position).Distinct().Count() < record.Hebrew.Count;
 
-    private static LinkRelation RelationOf(LinkDraft draft) => draft.Omitted ? LinkRelation.Omits : draft.Relation;
+    internal static LinkRelation RelationOf(LinkDraft draft) => draft.Omitted ? LinkRelation.Omits : draft.Relation;
 
     private static void StateNumbers(
         MappingRecord record,
@@ -961,7 +961,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// A Hebrew entry with no word is one BHSA divides otherwise, and the English rendering it is
     /// left unlinked rather than given a neighbour's word.
     /// </summary>
-    private static List<LinkDraft>? Build(
+    internal static List<LinkDraft>? Build(
         MappingRecord record,
         List<Word> kjv,
         IReadOnlyList<Word?> bhsa,
@@ -1306,7 +1306,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// The rest of a word BHSA writes as several where the file writes it as one (<see cref="Split"/>),
     /// which every link of this word names too. Empty for every other word.
     /// </param>
-    private sealed record Word(long Id, string Text, string? Gloss)
+    internal sealed record Word(long Id, string Text, string? Gloss)
     {
         public IReadOnlyList<long> Also { get; init; } = [];
     }
@@ -1325,7 +1325,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// Null for everything the file states, and set for the function words matched to their
     /// prefixes, so that the two can never be read as the same kind of claim.
     /// </param>
-    private sealed record LinkDraft(List<long> English, List<long> Hebrew, double? Confidence = null)
+    internal sealed record LinkDraft(List<long> English, List<long> Hebrew, double? Confidence = null)
     {
         public int LastHebrewPosition { get; set; }
 
