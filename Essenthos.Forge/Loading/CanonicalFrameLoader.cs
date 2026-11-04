@@ -64,7 +64,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         }
 
         var started = Stopwatch.StartNew();
-        var framed = await Framed(text, rules, cancellationToken);
+        var framed = await Framed(text, rules, cancellationToken, store);
         var rows = framed.Rows;
         if (store is not null)
         {
@@ -160,12 +160,14 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     }
 
     /// <summary>A text's frame as computed now, with what decided it, and the rows the corpus holds.</summary>
+    /// <param name="Letters">The words product the verses' letters were counted from, or null where the database counted them.</param>
     internal sealed record FramedText(
         List<PlacedVerse> Verses,
         List<ReferenceDraft> Existing,
         List<FrameRow> Rows,
         List<(Versification Tradition, PassageDecision Decision)> Decisions,
-        int Titles);
+        int Titles,
+        string? Letters = null);
 
     /// <summary>
     /// The text's frame as its file says it: where the rules put each verse, and the title verse a
@@ -174,11 +176,13 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     /// <see cref="SuperscriptionFrameLoader"/>) from the verse's words; a row is kept while the verse still
     /// stands first in that psalm, which is what those passes ask.
     /// </summary>
-    internal async Task<FramedText> Framed(Text text, VersificationRules rules, CancellationToken cancellationToken)
+    /// <param name="store">Where the text's words product is, whose letters the rules read in place of the database's.</param>
+    internal async Task<FramedText> Framed(Text text, VersificationRules rules, CancellationToken cancellationToken, ProductStore? store = null)
     {
         var decisions = new List<(Versification, PassageDecision)>();
+        var letters = store is not null && store.Find(Conversion.TextWord.ProductOf(text.Slug)) is { } words ? words : null;
         var (verses, existing, expected) = await Compute(text, rules, cancellationToken,
-            (tradition, decision) => decisions.Add((tradition, decision)));
+            (tradition, decision) => decisions.Add((tradition, decision)), letters is null ? null : store);
 
         var placed = expected.GroupBy(reference => reference.VerseId)
             .ToDictionary(group => group.Key, group => group.Select(reference => new VerseKey(
@@ -200,7 +204,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         var rows = FrameFile.Rows(verses.Select(verse => (
             new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label),
             (IReadOnlyList<VerseKey>)placed[verse.Id])));
-        return new FramedText(verses, existing, rows, decisions, titles);
+        return new FramedText(verses, existing, rows, decisions, titles, letters);
     }
 
     /// <summary>Writes the text's frame file, its header naming what it was made from and what decided it.</summary>
@@ -208,6 +212,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     {
         var inputs = store.Inputs([
             "Versification/TVTMS.txt",
+            .. framed.Letters is { } letters ? [letters] : Array.Empty<string>(),
             .. VersificationData.Products.Select(product => store.Find(product)
                 ?? throw new FileNotFoundException($"{product} is not under {store.ResourcesPath}.")),
             .. text.Slug == GeezTextSource.Slug ? ["Essenthos/versification/geez.tsv"] : Array.Empty<string>(),
@@ -240,7 +245,8 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                     }
                 }
 
-                header.Notes.Add(new("verses", $"{framed.Verses.Count}, read from the database {source}"));
+                header.Notes.Add(new("verses", $"{framed.Verses.Count}, read from the database {source}"
+                                               + (framed.Letters is { } words ? $"; their letters counted in {words}" : string.Empty)));
                 if (framed.Titles > 0)
                 {
                     header.Notes.Add(new("titles", $"{framed.Titles} psalm title verses a first verse also covers, as {source} holds them"));
@@ -268,13 +274,15 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     }
 
     /// <param name="lengths">Whether to count each verse's letters, which the rules read and a frame file does not.</param>
+    /// <param name="words">A store holding the text's words product, whose letters are counted instead of the database's.</param>
     private async Task<(List<PlacedVerse> Verses, List<ReferenceDraft> Existing)> Held(
         Text text,
         CancellationToken cancellationToken,
-        bool lengths = true)
+        bool lengths = true,
+        ProductStore? words = null)
     {
         var held = db.Verses.Where(v => v.TextId == text.Id);
-        var verses = lengths
+        var verses = lengths && words is null
             ? await held
                 .Select(v => new PlacedVerse(
                     v.Id,
@@ -287,6 +295,11 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             : await held
                 .Select(v => new PlacedVerse(v.Id, v.Book!.CanonicalOrdinal, v.ChapterNumber, v.Number, v.Label, 0))
                 .ToListAsync(cancellationToken);
+        if (lengths && words is not null)
+        {
+            var letters = Conversion.TextConverter.Lengths(words, text.Slug);
+            verses = [.. verses.Select(v => v with { Length = letters.GetValueOrDefault(new VerseKey(v.Book, v.Chapter, v.Number, v.Label)) })];
+        }
 
         var existing = await db.VerseReferences
             .Where(reference => reference.Verse!.TextId == text.Id)
@@ -307,13 +320,14 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         Text text,
         VersificationRules rules,
         CancellationToken cancellationToken = default,
-        Action<Versification, PassageDecision>? decided = null)
+        Action<Versification, PassageDecision>? decided = null,
+        ProductStore? words = null)
     {
         // A corpus imported before a new layer can gain a verse afterwards: a source note can sit
         // on a printed \v marker with no words (ASV Matthew 17:21). Do not make an existing frame
         // an all-or-nothing gate, or that new anchor can never reach the parallel reader. The
         // edition's shape still comes from every verse, because that is what decides its scheme.
-        var (verses, existing) = await Held(text, cancellationToken);
+        var (verses, existing) = await Held(text, cancellationToken, words: words);
         var expected = Expected(rules, text.Versification, verses, rules.Data.Books(text.Slug), Read(text.Slug), decided);
         return (verses, existing, expected);
     }

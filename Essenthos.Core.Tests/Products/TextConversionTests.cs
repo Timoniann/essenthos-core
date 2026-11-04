@@ -2,6 +2,7 @@ using Essenthos.Core.Conversion;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Products;
+using Essenthos.Core.Products.Tsv;
 using FluentAssertions;
 using Xunit;
 
@@ -134,6 +135,114 @@ public sealed class TextConversionTests : IDisposable
         string Verse(string verse) => string.Concat(words.Where(w => w.Key.Verse.ToString() == verse).Select(w => w.Surface + w.Trailer));
         Verse("1.1:1").Should().Be("In beginning GOD created the heaven and the earth.");
         Verse("1.1:2").Should().Be("A title. And the earth was without form. Amen.");
+    }
+
+    /// <summary>The corpus's ids for the two verses as the source reads them, 101-110 and 111-116, and a ceiling of 1000.</summary>
+    private void CorpusIds()
+    {
+        string[][] verses = [[.. "In the beginning God created the heaven and the earth.".Split(' ')], ["And", "the", "earth", "was", "without", "form."]];
+        var store = new ProductStore(_resources);
+        var id = 101L;
+        using (var writer = store.Create(TextWordId.ProductOf(Slug), ProductKind.Machine, TextWordId.Schema(Slug), "test", []))
+        {
+            writer.WriteAll(verses.SelectMany((words, verse) =>
+                words.Select((surface, at) => new TextWordId(new WordKey(Slug, new VerseKey(1, 1, verse + 1), at + 1), id++, surface))));
+        }
+
+        store.Save();
+        WordIdCeiling.Raise(_resources, 1000);
+    }
+
+    private Dictionary<string, (long? Id, string Surface)> IdsOf(string verse) =>
+        Words(new ProductStore(_resources)).Where(w => w.Key.Verse.ToString() == verse).ToDictionary(w => w.Key.Own, w => (w.Id, w.Surface));
+
+    private List<WordIdChange> IdReport()
+    {
+        using var reader = TsvFormat.Instance.Open(TextWordIds.ReportOf(_resources, Slug), WordIdChange.Schema);
+        return reader.ReadAll();
+    }
+
+    [Fact]
+    public void AnUnchangedVerseTakesItsIdsByKey()
+    {
+        CorpusIds();
+        TextConverter.Convert(new ProductStore(_resources), Text()).Ids!.ByKey.Should().Be(16);
+
+        Words(new ProductStore(_resources)).Select(w => w.Id).Should().Equal(Enumerable.Range(101, 16).Select(id => (long?)id));
+        File.Exists(TextWordIds.ReportOf(_resources, Slug)).Should().BeFalse("no id was given out or lost");
+    }
+
+    [Fact]
+    public void AWordAddedAtTheHeadOfAVerseTakesANewIdAndTheOthersKeepTheirs()
+    {
+        CorpusIds();
+        Corrections(new TextCorrection("1.1:2", TextCorrection.Prepend, null, "Lo, ", "a word the edition prints"));
+        var outcome = TextConverter.Convert(new ProductStore(_resources), Text());
+
+        IdsOf("1.1:2").Should().Equal(new Dictionary<string, (long?, string)>
+        {
+            ["1.1:2.1"] = (1001, "Lo"), ["1.1:2.2"] = (111, "And"), ["1.1:2.3"] = (112, "the"), ["1.1:2.4"] = (113, "earth"),
+            ["1.1:2.5"] = (114, "was"), ["1.1:2.6"] = (115, "without"), ["1.1:2.7"] = (116, "form."),
+        });
+        outcome.Ids.Should().Be(new WordIdOutcome(10, 6, 1, 0, true, 1));
+        IdReport().Should().Equal(new WordIdChange("new", "1.1:2.1", 1001, "Lo", null));
+        WordIdCeiling.Read(_resources).Should().Be(1001);
+    }
+
+    [Fact]
+    public void AWordDroppedFromAVerseTakesItsIdAwayAndTheWordsAfterItKeepTheirs()
+    {
+        CorpusIds();
+        Corrections(new TextCorrection("1.1:1.2", TextCorrection.Drop, "the", null, "not the edition's"));
+        var outcome = TextConverter.Convert(new ProductStore(_resources), Text());
+
+        IdsOf("1.1:1").Values.Should().Equal(
+            (101L, "In"), (103L, "beginning"), (104L, "God"), (105L, "created"), (106L, "the"), (107L, "heaven"), (108L, "and"), (109L, "the"), (110L, "earth."));
+        outcome.Ids.Should().Be(new WordIdOutcome(7, 8, 0, 1, false, 0));
+        IdReport().Should().Equal(new WordIdChange("gone", "1.1:1.2", 102, "the", "ids"));
+        WordIdCeiling.Read(_resources).Should().Be(1000, "no id was given out");
+    }
+
+    [Fact]
+    public void TheFirstWordDroppedAndOneAppendedMovesNoIdToAnotherWord()
+    {
+        CorpusIds();
+        Corrections(
+            new TextCorrection("1.1:2.1", TextCorrection.Drop, "And", null, "not the edition's"),
+            new TextCorrection("1.1:2", TextCorrection.Append, null, "Amen.", "a subscription"));
+        TextConverter.Convert(new ProductStore(_resources), Text());
+
+        IdsOf("1.1:2").Values.Should().Equal((112L, "the"), (113L, "earth"), (114L, "was"), (115L, "without"), (116L, "form."), (1001L, "Amen"));
+        IdReport().Should().BeEquivalentTo([new WordIdChange("gone", "1.1:2.1", 111, "And", "ids"), new WordIdChange("new", "1.1:2.6", 1001, "Amen", null)]);
+    }
+
+    [Fact]
+    public void AnIdGivenOutIsKeptByTheNextConversionAndAWordPutBackTakesItsOldIdAgain()
+    {
+        CorpusIds();
+        Corrections(
+            new TextCorrection("1.1:2", TextCorrection.Prepend, null, "Lo, ", "a word the edition prints"),
+            new TextCorrection("1.1:1.2", TextCorrection.Drop, "the", null, "not the edition's"));
+        TextConverter.Convert(new ProductStore(_resources), Text());
+        TextConverter.Convert(new ProductStore(_resources), Text(), force: true);
+
+        IdsOf("1.1:2")["1.1:2.1"].Should().Be((1001L, "Lo"), "an id once given is the word's");
+        WordIdCeiling.Read(_resources).Should().Be(1001);
+
+        Corrections(new TextCorrection("1.1:2", TextCorrection.Prepend, null, "Lo, ", "a word the edition prints"));
+        TextConverter.Convert(new ProductStore(_resources), Text());
+
+        IdsOf("1.1:1")["1.1:1.2"].Should().Be((102L, "the"), "the word the corpus held is back");
+        IdsOf("1.1:2")["1.1:2.1"].Should().Be((1001L, "Lo"));
+    }
+
+    [Fact]
+    public void WordsArePairedByTheirLongestCommonRunAndInOrderBetweenEqualGaps()
+    {
+        TextWordIds.Match(["a", "b", "c", "d"], ["a", "x", "c", "d"]).Should().Equal([0, 1, 2, 3], "a word put right is still the word");
+        TextWordIds.Match(["a", "b", "c"], ["x", "a", "b", "c"]).Should().Equal(-1, 0, 1, 2);
+        TextWordIds.Match(["a", "b", "c"], ["b", "c", "y"]).Should().Equal(1, 2, -1);
+        TextWordIds.Match(["βου", "τυρον", "και"], ["βουτυρον", "και"]).Should().Equal([-1, 2], "two words read as one are neither");
     }
 
     [Fact]

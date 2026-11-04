@@ -70,17 +70,17 @@ internal interface ITextStage
     void Apply(ConvertedText text, string resources);
 }
 
-internal sealed record ConversionOutcome(string Slug, bool Unchanged, int Verses, long Words, TimeSpan Elapsed)
+internal sealed record ConversionOutcome(string Slug, bool Unchanged, int Verses, long Words, TimeSpan Elapsed, WordIdOutcome? Ids = null)
 {
     public override string ToString() => Unchanged
         ? $"{Slug}: inputs unchanged, nothing written"
-        : $"{Slug}: {Verses} verses, {Words} words in {Elapsed.TotalSeconds:0.0} s";
+        : $"{Slug}: {Verses} verses, {Words} words in {Elapsed.TotalSeconds:0.0} s; ids: {Ids}";
 }
 
 /// <summary>
 /// <c>forge convert</c>: a text from its declared sources into its products. Reads through the load's
-/// reader, applies the corrections file, runs the stages that apply to it, carries each word's id over
-/// from <c>texts/&lt;SLUG&gt;/ids</c>, and writes <c>words</c>, <c>verses</c>, <c>notes</c>, <c>books</c> and
+/// reader, applies the corrections file, runs the stages that apply to it, gives each word the id it held
+/// (<see cref="TextWordIds"/>), and writes <c>words</c>, <c>verses</c>, <c>notes</c>, <c>books</c> and
 /// <c>text</c>. Nothing is written when no input moved since the products were made.
 /// </summary>
 internal static class TextConverter
@@ -129,9 +129,11 @@ internal static class TextConverter
         }
 
         var text = Read(store, declared);
-        var ids = Ids(store, slug);
+        var (ids, outcome) = TextWordIds.Assign(store, text);
+        text.Provenance.Add(new("ids", outcome.ToString()));
+        text.Provenance.Add(new(WordIdOutcome.GivenNote, outcome.Given.ToString(System.Globalization.CultureInfo.InvariantCulture)));
         Write(store, text, inputs, ids);
-        return new ConversionOutcome(slug, false, text.Verses.Count, text.Verses.Sum(v => (long)v.Words.Count), started.Elapsed);
+        return new ConversionOutcome(slug, false, text.Verses.Count, text.Verses.Sum(v => (long)v.Words.Count), started.Elapsed, outcome);
     }
 
     /// <summary>The text read, corrected and put through its stages, without writing anything.</summary>
@@ -162,17 +164,6 @@ internal static class TextConverter
         }
 
         return lengths;
-    }
-
-    private static Dictionary<WordKey, long> Ids(ProductStore store, string slug)
-    {
-        if (!store.Exists(TextWordId.ProductOf(slug)))
-        {
-            return [];
-        }
-
-        using var reader = store.Open(TextWordId.ProductOf(slug), TextWordId.Schema(slug));
-        return reader.Rows().ToDictionary(row => row.Key, row => row.Id);
     }
 
     public static ConvertedText From(TextSource source, IReadOnlySet<WordDraft>? added = null)
@@ -243,7 +234,7 @@ internal static class TextConverter
         return new ConvertedText { Slug = definition.Slug, Definition = definition, Books = books, Verses = verses, Notes = notes };
     }
 
-    private static void Write(ProductStore store, ConvertedText text, IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<WordKey, long> ids)
+    private static void Write(ProductStore store, ConvertedText text, IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<VerseKey, long?[]> ids)
     {
         var slug = text.Slug;
         var producer = ProductHeader.DescribeProducer($"forge convert {slug}");
@@ -255,10 +246,11 @@ internal static class TextConverter
             foreach (var verse in text.Verses)
             {
                 using var hasher = new VerseHasher();
+                var given = ids[verse.Key];
                 foreach (var (at, word) in verse.Words.Index())
                 {
                     var key = new WordKey(slug, verse.Key, at + 1);
-                    var row = new TextWord(key, ids.TryGetValue(key, out var id) ? id : null, word.Surface, word.Trailer, word.Lemma,
+                    var row = new TextWord(key, given[at], word.Surface, word.Trailer, word.Lemma,
                         word.Strong, word.Gloss, word.Morphology, word.Normalised, word.Graphical, word.Elided, word.Break,
                         word.Supplied, word.Restored)
                     {

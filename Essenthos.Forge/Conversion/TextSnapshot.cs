@@ -74,7 +74,7 @@ internal sealed class TextSnapshot
         var ids = new List<TextWordId>(1 << 20);
         await using var command = new NpgsqlCommand(
             """
-            SELECT w.id, b.canonical_ordinal, v.chapter_number, v.number, v.label, w."position"
+            SELECT w.id, b.canonical_ordinal, v.chapter_number, v.number, v.label, w."position", w."text"
             FROM word w JOIN verse v ON v.id = w.verse_id JOIN book b ON b.id = v.book_id
             WHERE w.text_id = @text
             ORDER BY b.canonical_ordinal, v.chapter_number, v.number, v.label COLLATE "C", w."position"
@@ -85,10 +85,18 @@ internal sealed class TextSnapshot
         {
             ids.Add(new TextWordId(
                 new WordKey(slug, new VerseKey(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetString(4)), reader.GetInt32(5)),
-                reader.GetInt64(0)));
+                reader.GetInt64(0), reader.GetString(6)));
         }
 
         return ids;
+    }
+
+    /// <summary>The highest word id the database has given out: the larger of the table's highest and its sequence's last.</summary>
+    public static async Task<long> HighestWordId(NpgsqlConnection connection)
+    {
+        await using var command = new NpgsqlCommand(
+            "SELECT GREATEST((SELECT coalesce(max(id), 0) FROM word), (SELECT last_value FROM word_id_seq))", connection);
+        return Convert.ToInt64(await command.ExecuteScalarAsync());
     }
 
     public static async Task<TextSnapshot> Read(NpgsqlConnection connection, string slug)

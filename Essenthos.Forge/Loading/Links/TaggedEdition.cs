@@ -62,8 +62,17 @@ internal static class TaggedEdition
     /// The words of the two editions in step, as far as they can be put in step. Words neither side
     /// can be joined to appear in no span, and the caller sees them as untagged.
     /// </summary>
-    public static List<EditionSpan> Align(IReadOnlyList<string> tagged, IReadOnlyList<string> corpus)
+    /// <param name="spelling">
+    /// One form for two spellings of a word (<see cref="AmericanSpelling.Fold"/>), under which two words count as
+    /// written the same way; the letters of a run divided differently are still compared as printed.
+    /// </param>
+    public static List<EditionSpan> Align(IReadOnlyList<string> tagged, IReadOnlyList<string> corpus, Func<string, string>? spelling = null)
     {
+        if (spelling is not null)
+        {
+            return Realigned(Align([.. tagged.Select(spelling)], [.. corpus.Select(spelling)]), tagged, corpus);
+        }
+
         if (SameWordForWord(tagged, corpus))
         {
             var identical = new List<EditionSpan>(corpus.Count);
@@ -90,6 +99,49 @@ internal static class TaggedEdition
 
         Divided(spans, tagged, corpus, at, tagged.Count, to, corpus.Count);
         return spans;
+    }
+
+    /// <summary>
+    /// The spans found on the folded words, with every run between two of them checked again on the letters as
+    /// printed, since a fold made for whole words (<em>dwelling</em>) can part the letters of a run
+    /// (<em>dwelling place</em> against <em>dwellingplace</em>). The run is taken as printed where the printed letters
+    /// join it, and as folded otherwise (<em>fellow laborers</em> against <em>fellowlabourers</em>).
+    /// </summary>
+    private static List<EditionSpan> Realigned(List<EditionSpan> folded, IReadOnlyList<string> tagged, IReadOnlyList<string> corpus)
+    {
+        var spans = new List<EditionSpan>(folded.Count);
+        var at = 0;
+        var to = 0;
+        var between = new List<EditionSpan>();
+        foreach (var span in folded)
+        {
+            if (span.Match != EditionMatch.Identical)
+            {
+                between.Add(span);
+                continue;
+            }
+
+            Run(span.TaggedFrom, span.CorpusFrom);
+            spans.Add(span);
+            at = span.TaggedTo;
+            to = span.CorpusTo;
+        }
+
+        Run(tagged.Count, corpus.Count);
+        return spans;
+
+        void Run(int taggedTo, int corpusTo)
+        {
+            var before = spans.Count;
+            Divided(spans, tagged, corpus, at, taggedTo, to, corpusTo);
+            if (spans.Count == before || (spans[^1].Match == EditionMatch.Spelling && between.Any(span => span.Match == EditionMatch.Divided)))
+            {
+                spans.RemoveRange(before, spans.Count - before);
+                spans.AddRange(between);
+            }
+
+            between.Clear();
+        }
     }
 
     /// <summary>
