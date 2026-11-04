@@ -31,10 +31,10 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
     /// strong evidence, and a possessive can still belong to the neighbouring word's own suffix-less
     /// phrase, which a measure against a stated mapping would put a number on.
     /// </summary>
-    private const double Confidence = 0.8;
+    internal const double Confidence = 0.8;
 
     /// <summary>Person, number, and gender or null for any, of each form.</summary>
-    private static readonly IReadOnlyList<(string Form, string? Person, string? Number, string? Gender)> Forms = BuildForms();
+    internal static readonly IReadOnlyList<(string Form, string? Person, string? Number, string? Gender)> Forms = BuildForms();
 
     public async Task<string> Run(string fromSlug, string toSlug, bool apply, CancellationToken cancellationToken = default)
     {

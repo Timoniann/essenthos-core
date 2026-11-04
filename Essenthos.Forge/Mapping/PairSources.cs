@@ -42,6 +42,8 @@ internal static class PairSources
     public static readonly IReadOnlyList<IPairSource> All =
     [
         new BereanTableSource(),
+        new NameListSource(),
+        new PossessiveSource(),
     ];
 
     /// <summary>The verb that writes a method's files, as the header and the declared graph name it.</summary>
