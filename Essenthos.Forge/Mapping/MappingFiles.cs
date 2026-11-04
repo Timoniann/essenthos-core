@@ -61,20 +61,9 @@ internal static class MappingFiles
             [toText] = Manifest(store, toText),
         };
 
-        var previous = new Dictionary<string, long>(StringComparer.Ordinal);
-        if (store.Exists(finalProduct))
-        {
-            using var reader = store.Open(finalProduct, FinalRow.Schema);
-            foreach (var row in reader.Rows())
-            {
-                previous.TryAdd(row.From + "|" + row.To, row.Id);
-            }
-        }
-
         var ordinal = PairOrdinals.Ensure(store, [pair])[pair];
         var output = MappingMerge.Merge(new MappingMerge.Input(
-            pair, fromText, toText, rows, rulings, hashes, manifests, previous, PairOrdinals.Base + ordinal * PairOrdinals.Range,
-            folds, CurrentFolds(store)));
+            pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store)));
 
         foreach (var (method, merged) in output.Methods)
         {

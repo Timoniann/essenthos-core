@@ -38,7 +38,7 @@ public sealed class EvidentiaFilesTests : IDisposable
         using var reader = store.Open(MappingProducts.Of(Pair, MappingMethods.Evidentia), MappingRow.Schema);
         var rows = reader.ReadAll();
         rows.Should().HaveCount(5);
-        rows.Should().ContainEquivalentOf(new MappingRow(null, "1.1:1.4", "1.1:1.4", "renders", MappingMethods.Evidentia, 0.9123,
+        rows.Should().ContainEquivalentOf(new MappingRow("1.1:1.4", "1.1:1.4", "renders", MappingMethods.Evidentia, 0.9123,
             "EVIDENTIA run 7 (1.0.0+test), global-review-known-rendering",
             "safe tier: global known-rendering assignment; accepted with its tier by lead, not read one by one", null, null));
         rows.Should().ContainSingle(r => r.Relation == "expands").Which.From.Should().Be("1.1:1.2");
@@ -77,27 +77,23 @@ public sealed class EvidentiaFilesTests : IDisposable
     }
 
     [Fact]
-    public void A_link_keeps_the_id_the_file_it_replaces_or_the_final_gave_it()
+    public void A_verdict_inside_several_wider_links_sits_on_the_narrowest_and_carries_no_id()
     {
         var store = Store(withRunNumber: true);
-        using (var exported = store.Create(MappingProducts.Of(Pair, MappingMethods.Evidentia), ProductKind.Machine, MappingRow.Schema, "export", []))
+        using (var aligner = store.Create(MappingProducts.Of(Pair, MappingMethods.Aligner), ProductKind.Machine, MappingRow.Schema, "test", []))
         {
-            exported.WriteAll([new MappingRow(555, "1.1:1.4", "1.1:1.4", "renders", MappingMethods.Evidentia, 0.9, "EVIDENTIA run 7", null, null, null)]);
+            aligner.WriteAll([
+                new MappingRow("1.1:1.1 1.1:1.2", "1.1:1.1", "renders", MappingMethods.Aligner, 0.5, "SIL.Machine ibm4", null, null, null),
+                new MappingRow("1.1:1.1 1.1:1.2 1.1:1.3", "1.1:1.1 1.1:1.2 1.1:1.3", "renders", MappingMethods.Aligner, 0.5, "SIL.Machine ibm4", null, null, null),
+            ]);
         }
 
-        using (var final = store.Create(MappingProducts.Of(Pair, MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "merge", []))
-        {
-            final.WriteAll([new FinalRow(777, "1.1:1.2", string.Empty, "expands", null, true, MappingMethods.Evidentia, 0.9, "EVIDENTIA run 7")]);
-        }
-
-        EvidentiaFiles.Write(store, _root, Pair, force: true);
         EvidentiaFiles.Write(store, _root, Pair, force: true);
 
         using var reader = store.Open(MappingProducts.Of(Pair, MappingMethods.Evidentia), MappingRow.Schema);
-        var rows = reader.ReadAll();
-        rows.Where(r => r.From == "1.1:1.4").Select(r => r.Id).Should().AllBeEquivalentTo(555L);
-        rows.Single(r => r.Relation == "expands").Id.Should().Be(777);
-        rows.Single(r => r.From == "1.1:1.1 1.1:1.2 1.1:1.3").Id.Should().BeNull("the stated row numbers that link in the merge");
+        MappingRow.Schema.Columns.Should().NotContain(c => c.Name == "id", "a link's id is the merge's, derived from its words");
+        reader.ReadAll().Where(r => r.Evidence!.StartsWith("names one word pair of this link")).Select(r => (r.From, r.To))
+            .Should().Equal([("1.1:1.1 1.1:1.2", "1.1:1.1")], "of the three links naming In and its word, the one of fewest words");
     }
 
     [Fact]
@@ -117,7 +113,7 @@ public sealed class EvidentiaFilesTests : IDisposable
         Words(store, "BHSA", ("1.1:1", ["בְּ", "רֵאשִׁית", "בָּרָא", "אֱלֹהִים"]), ("1.1:2", ["וַיַּרְא", "אֱלֹהִים"]));
         using (var stated = store.Create(MappingProducts.Of(Pair, MappingMethods.Stated), ProductKind.Machine, MappingRow.Schema, "test", []))
         {
-            stated.WriteAll([new MappingRow(11, "1.1:1.1 1.1:1.2 1.1:1.3", "1.1:1.1 1.1:1.2", "renders", MappingMethods.Stated, null,
+            stated.WriteAll([new MappingRow("1.1:1.1 1.1:1.2 1.1:1.3", "1.1:1.1 1.1:1.2", "renders", MappingMethods.Stated, null,
                 "Berean Standard Bible translation tables", null, null, null)]);
         }
 
