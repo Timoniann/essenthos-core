@@ -1,0 +1,6 @@
+# product    Essenthos/names/overrides/SWETE.tsv
+# inputs     
+# producer   by hand
+# edited     by hand: add, suppress or differs on one word of this text
+own	record	action	base_record	role	source	note
+11.15:1.5	jeroboam	differs	rehoboam	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-11-04 (TSK-1448)	Swete prints Ἀβιοὺ υἱὸς Ἰεροβοάμ in 1 Kgs 15:1 where Brenton's Greek reads Ῥοβοάμ: the text names Jeroboam, its base Rehoboam
