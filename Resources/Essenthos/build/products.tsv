@@ -1,0 +1,47 @@
+# product    Essenthos/build/products.tsv
+# producer   by hand
+# The declared graph of the build (DOC-0224 §13). One line per product pattern under Resources/Essenthos/, no extension:
+#   {name} is one path segment bound across the line, * one segment, ** any depth; the first line that matches a product is its line.
+# maker: hand (people edit it), export (written from a database once; re-run at cut-over), build (forge build runs the producer).
+# producer: the Forge verb and arguments the build runs, once per distinct producer, in the order the inputs ask for.
+# inputs: what the product may read, as patterns under Resources/; {sources} is the text's declared sources in the catalogue.
+#   A product whose header names an input no pattern of its line covers fails the build.
+# tables: the serving tables it feeds (@records: every table records-load writes); scope: what build --apply replaces when it moves.
+product	maker	producer	inputs	tables	scope
+build/products	hand	by hand	-	-	none
+build/served/*	build	build	Essenthos/**	-	none
+build/report-*	build	build	-	-	none
+texts/strong-terms	hand	by hand	-	-	none
+texts/{text}/corrections	hand	by hand (seeded once by texts corrections)	-	-	none
+texts/{text}/ids	export	texts ids all	-	-	none
+texts/{text}/words	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	text book chapter verse word word_group word_group_word	text
+texts/{text}/verses	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	verse chapter	text
+texts/{text}/notes	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	verse_note chapter_note book_note stated_verse_number	text
+texts/{text}/books	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	book	text
+texts/{text}/text	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	text	text
+texts/{text}/frame	export	frame-files (reads the database's text list and the title rows later passes wrote; a build product once it reads products only)	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses	verse_reference	text
+texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/mapping/*/final	strong_rendering strong_reach strong_reach_method	text
+texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
+texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text
+texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/exported/* Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
+versification/*	hand	by hand	-	-	none
+evidentia/**	hand	by hand (the ledger; forge evidentia-export writes it)	-	-	none
+page-readings/**	hand	by hand	-	-	none
+mapping/pairs	export	mapping-export	-	-	none
+mapping/{from}-{to}/final	build	merge --all --parallel 8	Essenthos/mapping/{from}-{to}/* Essenthos/texts/{from}/verses Essenthos/texts/{to}/verses	link link_word link_claim provenance	pair
+mapping/{from}-{to}/report	build	merge --all --parallel 8	Essenthos/mapping/{from}-{to}/final	-	none
+mapping/{from}-{to}/evidentia	build	evidentia-pairs	Essenthos/evidentia/{from}-{to}-* Essenthos/mapping/{from}-{to}/stated Essenthos/mapping/{from}-{to}/strong Essenthos/mapping/{from}-{to}/aligner Essenthos/mapping/{from}-{to}/composed Essenthos/mapping/{from}-{to}/names Essenthos/mapping/{from}-{to}/name-list Essenthos/mapping/{from}-{to}/possessive Essenthos/mapping/{from}-{to}/lexical Essenthos/mapping/{from}-{to}/rule Essenthos/mapping/{from}-{to}/manual Essenthos/mapping/{from}-{to}/hashes Essenthos/texts/{from}/words Essenthos/texts/{to}/words Essenthos/texts/{from}/frame Essenthos/texts/{to}/frame	-	none
+mapping/{from}-{to}/rulings	hand	by hand (seeded once by mapping-export)	-	-	none
+mapping/{from}-{to}/*	export	mapping-export	-	-	none
+records/facts/relationships	build	records-derive	Essenthos/records/facts/clauses Essenthos/records/facts/withheld-clauses Essenthos/records/records	@records	all
+records/facts/locations	build	records-derive	Essenthos/records/external-ids Essenthos/records/facts/location-supplements Essenthos/records/records OpenBible/*	@records	all
+records/facts/location-candidates	build	records-derive	Essenthos/records/external-ids Essenthos/records/facts/location-supplements Essenthos/records/records OpenBible/*	@records	all
+records/**	export	records-export	-	@records	all
+external/**	export	records-export	-	@records	all
+names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/texts/{text}/words Essenthos/mapping/*/final	word_entity	text
+names/bases	hand	by hand (seeded once by names-project)	-	-	none
+names/overrides/{text}	hand	by hand	-	-	none
+names/live/{text}	export	names-from-database	Essenthos/texts/{text}/words	-	none
+names/exported/{text}	export	names-export	-	-	none
+names/{text}	export	names-from-database	Essenthos/texts/{text}/words	-	none
+carried/{table}	export	carried-export	-	{table}	all

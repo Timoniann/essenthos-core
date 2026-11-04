@@ -48,6 +48,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// </summary>
     public const double RenderedFloor = 0.60;
 
+    /// <summary>What <see cref="Measure(Func{string, bool}, CancellationToken)"/> calls every integrity check at once.</summary>
+    public const string IntegrityName = "integrity";
+
+    /// <summary>The name each integrity check is measured and logged under.</summary>
+    public static IReadOnlyList<string> IntegrityChecks => [.. Integrity.Select(check => check.Breaks)];
+
     /// <summary>
     /// Hebrew prefixes and the object marker. A translation renders these inside the word they
     /// attach to, so counting them as words a translation failed to reach would report a fact about
@@ -1013,7 +1019,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         ORDER BY sum(s.words) DESC, t.slug, w.slug
         """;
 
-    public async Task<CorpusMeasures> Measure(CancellationToken cancellationToken = default)
+    public Task<CorpusMeasures> Measure(CancellationToken cancellationToken = default) => Measure(null, cancellationToken);
+
+    /// <summary>
+    /// The measures <paramref name="wanted"/> names (by the name each is logged under, or <c>integrity</c> for every integrity
+    /// check), or all of them; a measure not asked for comes back empty and an integrity check not asked for is left out.
+    /// </summary>
+    public async Task<CorpusMeasures> Measure(Func<string, bool>? wanted, CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -1038,7 +1050,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
         // A test measures inside a transaction its rows were never committed from, and only the
         // connection holding it can see them.
-        var sessions = new Sessions(connection, db.Database.CurrentTransaction is null ? parallel : 1, logger, cancellationToken);
+        var sessions = new Sessions(connection, db.Database.CurrentTransaction is null ? parallel : 1, logger, cancellationToken)
+        {
+            Wanted = wanted ?? (_ => true),
+        };
 
         var stranded = sessions.Read("stranded", StrandedSql, reader => new Stranded(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
@@ -1067,7 +1082,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // repository's compose file; not needing it belongs here.
         var integrity = Integrity
             .Select(check => sessions.Read(check.Breaks, check.Sql,
-                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true))
+                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true, integrity: true))
             .ToList();
 
         var reach = sessions.Read("reach", ReachSql,
@@ -1134,7 +1149,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         var integrityFound = new List<IntegrityCheck>(Integrity.Length);
         foreach (var check in integrity)
         {
-            integrityFound.Add((await check).Single());
+            if ((await check).SingleOrDefault() is { } found)
+            {
+                integrityFound.Add(found);
+            }
         }
 
         logger.LogInformation("Verify: measured in {Seconds:F1} s over {Sessions} session(s)",
@@ -1192,13 +1210,21 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
         public int Degree { get; } = Math.Max(1, degree);
 
+        public Func<string, bool> Wanted { get; init; } = _ => true;
+
         public Task<List<T>> Read<T>(
             string what,
             string sql,
             Func<NpgsqlDataReader, T> row,
             Action<NpgsqlCommand>? parameters = null,
-            bool singleThreaded = false)
+            bool singleThreaded = false,
+            bool integrity = false)
         {
+            if (!Wanted(what) && !(integrity && Wanted(IntegrityName)))
+            {
+                return Task.FromResult(new List<T>());
+            }
+
             var result = new TaskCompletionSource<List<T>>(TaskCreationOptions.RunContinuationsAsynchronously);
             _waiting.Add((Expected.GetValueOrDefault(what), async () =>
             {

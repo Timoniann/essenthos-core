@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Channels;
 using Essenthos.Core.Comparison;
 using Essenthos.Core.Database;
@@ -157,6 +157,85 @@ internal static class MappingLoad
         await transaction.CommitAsync(cancellationToken);
         logger.LogInformation("Committed at {Elapsed}", clock.Elapsed);
         await Execute(db, "ANALYZE link; ANALYZE link_word; ANALYZE link_claim; ANALYZE provenance", cancellationToken);
+        return new Outcome(pairs.Count, links, words, claims, provenance.Count, unresolved, clock.Elapsed);
+    }
+
+    /// <summary>
+    /// The links of the pairs named replaced from their finals inside the caller's transaction, every other pair's left as it
+    /// is: each pair's links deleted (their words and claims go with them), its final copied in with the ids it keeps, and a
+    /// source the database has not seen given the next provenance id. Indexes and keys stay; this is for a few pairs.
+    /// </summary>
+    public static async Task<Outcome> ReplacePairs(NpgsqlConnection db, ProductStore store, IReadOnlyCollection<string> pairs, ILogger logger,
+        CancellationToken cancellationToken)
+    {
+        var clock = Stopwatch.StartNew();
+        if (Untouchable.Contains(db.Database, StringComparer.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException($"The mapping load never writes {db.Database}; point it at a database of its own.");
+        }
+
+        var keys = await WordKeys.Load(db, reverse: true, cancellationToken);
+        var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
+        await using (var command = new NpgsqlCommand("SELECT source, id FROM provenance", db))
+        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        {
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                provenance[reader.GetString(0)] = reader.GetInt32(1);
+            }
+        }
+
+        if (provenance.Count > 0 && provenance.Values.Max() != provenance.Count)
+        {
+            throw new InvalidOperationException("provenance ids are not 1..n, so a new source cannot be numbered after them; build the database again.");
+        }
+
+        var known = provenance.Count;
+        long links = 0, words = 0, claims = 0, unresolved = 0;
+        foreach (var pair in pairs)
+        {
+            var (fromText, toText) = MappingProducts.Split(pair);
+            await using (var delete = new NpgsqlCommand("DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to", db))
+            {
+                delete.Parameters.AddWithValue("from", keys.TextId(fromText) ?? throw new InvalidDataException($"The database has no text {fromText}."));
+                delete.Parameters.AddWithValue("to", keys.TextId(toText) ?? throw new InvalidDataException($"The database has no text {toText}."));
+                var deleted = await delete.ExecuteNonQueryAsync(cancellationToken);
+                logger.LogInformation("{Pair}: {Deleted} links deleted", pair, deleted);
+            }
+
+            if (!store.Exists(MappingProducts.Of(pair, MappingProducts.Final)))
+            {
+                continue;
+            }
+
+            var rows = Read(store, pair, keys, provenance);
+            if (provenance.Count > known)
+            {
+                using var import = db.BeginBinaryImport("COPY provenance (id, source) FROM STDIN (FORMAT BINARY)");
+                foreach (var (source, id) in provenance.Where(p => p.Value > known).OrderBy(p => p.Value))
+                {
+                    import.StartRow();
+                    import.Write(id, NpgsqlDbType.Integer);
+                    import.Write(source, NpgsqlDbType.Text);
+                }
+
+                import.Complete();
+                known = provenance.Count;
+            }
+
+            await Copy(db, rows, cancellationToken);
+            links += rows.Links.Count;
+            words += rows.Words.Count;
+            claims += rows.Claims.Count;
+            unresolved += rows.Unresolved;
+        }
+
+        await Execute(db,
+            """
+            SELECT setval(pg_get_serial_sequence('link', 'id'), greatest(coalesce((SELECT max(id) FROM link), 0), 1));
+            SELECT setval(pg_get_serial_sequence('link_claim', 'id'), greatest(coalesce((SELECT max(id) FROM link_claim), 0), 1));
+            SELECT setval(pg_get_serial_sequence('provenance', 'id'), greatest(coalesce((SELECT max(id) FROM provenance), 0), 1));
+            """, cancellationToken);
         return new Outcome(pairs.Count, links, words, claims, provenance.Count, unresolved, clock.Elapsed);
     }
 

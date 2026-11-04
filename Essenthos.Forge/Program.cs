@@ -43,7 +43,7 @@ UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly)
 
 // Read here, once, rather than inside an options callback that runs later, so that a missing
 // password stops the process at startup with the message that says what to set.
-var databaseConnection = DatabaseConnection.Read(builder.Configuration);
+var databaseConnection = ForgeVerbs.Target(args, DatabaseConnection.Read(builder.Configuration));
 
 AlignmentStore.Configure(builder.Configuration, builder.Environment.ContentRootPath);
 

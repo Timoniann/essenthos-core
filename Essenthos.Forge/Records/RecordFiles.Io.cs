@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using Essenthos.Core.Products;
 using Npgsql;
 using NpgsqlTypes;
@@ -125,6 +125,24 @@ internal static partial class RecordFiles
         }
 
         await using var transaction = await db.BeginTransactionAsync(cancellationToken);
+        var loaded = await Load(db, transaction, store, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        return loaded;
+    }
+
+    /// <summary>
+    /// The same inside the caller's transaction, which it commits. Every table of the record files is emptied with
+    /// <c>CASCADE</c>, so a table outside them that refers to a record (the names on words, the spellings) is emptied too
+    /// and is the caller's to fill again before it commits.
+    /// </summary>
+    public static async Task<List<(string Product, long Rows)>> Load(
+        NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, CancellationToken cancellationToken)
+    {
+        if (Untouchable.Contains(db.Database, StringComparer.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException($"records-load does not write {db.Database}; load into a database of your own.");
+        }
+
         await Execute(db, transaction, SchemaSql, cancellationToken);
         var tables = All.SelectMany(f => f.Tables).Distinct().ToList();
         await Execute(db, transaction, $"TRUNCATE {string.Join(", ", tables)} RESTART IDENTITY CASCADE", cancellationToken);
@@ -193,7 +211,6 @@ internal static partial class RecordFiles
             loaded.Add((file.Product, rows.Count));
         }
 
-        await transaction.CommitAsync(cancellationToken);
         return loaded;
     }
 
