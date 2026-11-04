@@ -21,34 +21,38 @@ public sealed record ViewQuery
 }
 
 /// <summary>
-/// Reads a product for a person: rows as TSV lines, or the statistics of the file. A binary file
-/// is read by row group, and a verse is found through the group statistics of its key column, so a
-/// verse costs its group, not the file.
+/// Reads a product for a person: rows as TSV lines, or the statistics of the file. A binary file is
+/// read by row group and only in the columns the view shows or filters on; a verse is found through
+/// the group statistics of its key column and then by the key's decoded parts, so a verse costs its
+/// group's key and shown columns, and only its own rows are turned into text.
 /// </summary>
 public static class ProductView
 {
     public static void Rows(string path, ViewQuery query, TextWriter output)
     {
+        if (TextTables.Kind(path) == EssxLayout.Extension)
+        {
+            EssxRows(path, query, output);
+            return;
+        }
+
         using var table = TextTables.Open(path, query.Table);
         var names = table.Names;
-        var selected = query.Columns is null
-            ? [.. Enumerable.Range(0, names.Count)]
-            : query.Columns.Select(name => names.IndexOf(name) is var index and >= 0 ? index : throw new ArgumentException($"No column '{name}'; the columns are {string.Join(", ", names)}.")).ToArray();
-        var where = query.Where.Select(condition => (Index: names.IndexOf(condition.Column) is var index and >= 0 ? index : throw new ArgumentException($"No column '{condition.Column}'."), condition.Value)).ToList();
+        var selected = Selected(names, query);
+        var where = Where(names, query);
         var keyIndex = -1;
-        if (query.Verse is { } verse)
+        if (query.Verse is not null)
         {
-            keyIndex = query.KeyColumn is { } named ? names.IndexOf(named) : table.Columns?.ToList().FindIndex(column => column.Type is ColumnType.WordKey or ColumnType.VerseKey) ?? 0;
+            keyIndex = query.KeyColumn is { } named ? names.IndexOf(named) : 0;
             if (keyIndex < 0)
             {
                 throw new ArgumentException("No key column to find the verse by.");
             }
         }
 
-        output.Write(string.Join('\t', selected.Select(index => names[index])));
-        output.Write('\n');
+        WriteNames(output, names, selected);
         var shown = 0;
-        foreach (var row in RowsOf(path, table, query, keyIndex))
+        foreach (var row in table.Rows())
         {
             if (query.Verse is { } wanted && !InVerse(row[keyIndex], wanted)) continue;
             if (where.Any(condition => row[condition.Index] != condition.Value)) continue;
@@ -58,47 +62,111 @@ public static class ProductView
         }
     }
 
+    private static void EssxRows(string path, ViewQuery query, TextWriter output)
+    {
+        using var reader = EssxReader.Open(path);
+        var table = query.Table is null ? reader.Tables[0] : reader.Table(query.Table);
+        var names = table.Columns.Select(column => column.Name).ToList();
+        var selected = Selected(names, query);
+        var where = Where(names, query);
+        var keyIndex = -1;
+        if (query.Verse is not null)
+        {
+            keyIndex = query.KeyColumn is { } named
+                ? names.IndexOf(named)
+                : table.Columns.ToList().FindIndex(column => column.Type is ColumnType.WordKey or ColumnType.VerseKey);
+            if (keyIndex < 0 || table.Columns[keyIndex].Type is not (ColumnType.WordKey or ColumnType.VerseKey))
+            {
+                throw new ArgumentException("No key column to find the verse by.");
+            }
+        }
+
+        WriteNames(output, names, selected);
+        if (query.Head == 0)
+        {
+            return;
+        }
+
+        string[] read = [.. selected.Concat(where.Select(condition => condition.Index)).Distinct().Select(index => names[index])];
+        var shown = 0;
+        foreach (var g in Groups(table, query.Verse, keyIndex))
+        {
+            var rows = query.Verse is { } verse ? RowsInVerse(table, g, keyIndex, verse) : null;
+            if (rows is { Count: 0 })
+            {
+                continue;
+            }
+
+            var group = table.ReadGroup(g, read);
+            var count = rows?.Count ?? group.Rows;
+            for (var n = 0; n < count; n++)
+            {
+                var r = rows?[n] ?? n;
+                if (where.Any(condition => group.Column(condition.Index).Text(r) != condition.Value)) continue;
+                for (var c = 0; c < selected.Length; c++)
+                {
+                    if (c > 0) output.Write('\t');
+                    Tsv.TsvEscaping.WriteEscaped(output, group.Column(selected[c]).Text(r));
+                }
+
+                output.Write('\n');
+                if (++shown == query.Head) return;
+            }
+        }
+    }
+
+    /// <summary>Every group, or only those whose book and chapter statistics admit the verse.</summary>
+    private static IEnumerable<int> Groups(EssxTable table, VerseKey? verse, int keyIndex)
+    {
+        if (verse is not { } wanted)
+        {
+            return Enumerable.Range(0, table.RowGroups);
+        }
+
+        var key = table.Info.Columns[keyIndex];
+        var books = table.GroupsWhere(key.Physical[0], (min, max) => min is null || min <= wanted.Book && max >= wanted.Book).ToHashSet();
+        return table.GroupsWhere(key.Physical[1], (min, max) => min is null || min <= wanted.Chapter && max >= wanted.Chapter).Where(books.Contains);
+    }
+
+    /// <summary>The rows of a group in the verse, compared on the key's decoded parts: no row is turned into text to find them.</summary>
+    public static List<int> RowsInVerse(EssxTable table, int group, int keyIndex, VerseKey verse)
+    {
+        var key = (KeyData)table.ReadGroup(group, [table.Columns[keyIndex].Name]).Column(keyIndex);
+        var rows = new List<int>();
+        var books = key.Book.Values;
+        var chapters = key.Chapter.Values;
+        var verses = key.Verse.Values;
+        for (var r = 0; r < books.Length; r++)
+        {
+            if (books[r] == verse.Book && chapters[r] == verse.Chapter && verses[r] == verse.Verse && !key.IsNull(r)
+                && (key.ChapterLabel.Text(r) ?? string.Empty) == verse.ChapterLabel && (key.VerseLabel.Text(r) ?? string.Empty) == verse.VerseLabel)
+            {
+                rows.Add(r);
+            }
+        }
+
+        return rows;
+    }
+
+    private static int[] Selected(IReadOnlyList<string> names, ViewQuery query) =>
+        query.Columns is null
+            ? [.. Enumerable.Range(0, names.Count)]
+            : [.. query.Columns.Select(name => names.IndexOf(name) is var index and >= 0 ? index : throw new ArgumentException($"No column '{name}'; the columns are {string.Join(", ", names)}."))];
+
+    private static List<(int Index, string? Value)> Where(IReadOnlyList<string> names, ViewQuery query) =>
+        [.. query.Where.Select(condition => (names.IndexOf(condition.Column) is var index and >= 0 ? index : throw new ArgumentException($"No column '{condition.Column}'."), condition.Value))];
+
+    private static void WriteNames(TextWriter output, IReadOnlyList<string> names, int[] selected)
+    {
+        output.Write(string.Join('\t', selected.Select(index => names[index])));
+        output.Write('\n');
+    }
+
     private static bool InVerse(string? key, VerseKey verse)
     {
         if (key is null) return false;
         if (VerseKey.TryParse(key, out var asVerse)) return asVerse == verse;
         return WordKey.TryParseOwn(key, "X", out var asWord) && asWord.Verse == verse;
-    }
-
-    private static IEnumerable<string?[]> RowsOf(string path, ITextTable table, ViewQuery query, int keyIndex)
-    {
-        if (query.Verse is not { } verse || TextTables.Kind(path) != EssxLayout.Extension)
-        {
-            return table.Rows();
-        }
-
-        return VerseGroups(path, query.Table, keyIndex, verse);
-    }
-
-    /// <summary>Only the groups whose book and chapter statistics admit the verse.</summary>
-    private static IEnumerable<string?[]> VerseGroups(string path, string? tableName, int keyIndex, VerseKey verse)
-    {
-        using var reader = EssxReader.Open(path);
-        var table = tableName is null ? reader.Tables[0] : reader.Table(tableName);
-        var key = table.Info.Columns[keyIndex];
-        if (key.Type is not ("wordkey" or "versekey"))
-        {
-            foreach (var row in table.Rows()) yield return row.ToTexts();
-            yield break;
-        }
-
-        var books = table.GroupsWhere(key.Physical[0], (min, max) => min is null || min <= verse.Book && max >= verse.Book).ToHashSet();
-        var groups = table.GroupsWhere(key.Physical[1], (min, max) => min is null || min <= verse.Chapter && max >= verse.Chapter).Where(books.Contains);
-        foreach (var g in groups)
-        {
-            var group = table.ReadGroup(g);
-            var row = new EssxRow(group);
-            for (var i = 0; i < group.Rows; i++)
-            {
-                row.Index = i;
-                yield return row.ToTexts();
-            }
-        }
     }
 
     /// <summary>The file in numbers: header, tables, columns with their encodings and sizes, row groups.</summary>

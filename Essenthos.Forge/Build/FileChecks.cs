@@ -11,7 +11,8 @@ namespace Essenthos.Core.Build;
 internal sealed record FileCheck(string Name, long Found, IReadOnlyList<string> Examples);
 
 /// <summary>
-/// The integrity checks that have a right answer and can be read off the files (DOC-0224 §14): Strong numbers and Greek
+/// The integrity checks that have a right answer and can be read off the files (DOC-0224 §14): every ESSX product's bytes
+/// against its SHA-256 trailer and the manifest, Strong numbers and Greek
 /// lemmas on the words, and on every pair's final the keys that name no word, links naming no word, absences with words on
 /// the wrong side, two links over the same words, and links that do not begin with exactly one settled claim; relationships
 /// of a record with itself on the record files. Each is zero on a sound build. The checks that need the database (verse
@@ -24,6 +25,12 @@ internal static partial class FileChecks
 
     public static List<FileCheck> Run(ProductStore store, int parallel)
     {
+        var bytes = new Tally("products whose bytes are not what their producer wrote");
+        foreach (var product in ProductIntegrity.CheckEssx(store, parallel).Where(product => product.Problem is not null))
+        {
+            bytes.Add($"{product.Product}: {product.Problem}");
+        }
+
         var slugs = TextLoad.Slugs(store);
         var strong = new Tally("Strong numbers that are not a letter and digits");
         var lemmas = new Tally("Greek lemmas not in canonical form, which nothing can join");
@@ -126,7 +133,7 @@ internal static partial class FileChecks
             }
         }
 
-        return [.. new[] { strong, lemmas, unknown, empty, sides, twice, settled, self }.Select(t => t.Result())];
+        return [.. new[] { bytes, strong, lemmas, unknown, empty, sides, twice, settled, self }.Select(t => t.Result())];
     }
 
     private static string? Language(ProductStore store, string slug)

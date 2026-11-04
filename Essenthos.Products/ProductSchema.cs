@@ -281,7 +281,7 @@ public sealed class ProductSchema<T>
         }
     }
 
-    private ProductSchema<T> Add(Column column, Action<T, IRowSink> write)
+    internal ProductSchema<T> Add(Column column, Action<T, IRowSink> write)
     {
         if (_columns.Any(existing => existing.Name == column.Name))
         {
