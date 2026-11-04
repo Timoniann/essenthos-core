@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using Essenthos.Core.Products;
 using Essenthos.Core.Verification;
@@ -28,9 +28,13 @@ internal static class ServedState
 
     public static void Write(ProductStore store, ProductGraph graph, string database, IReadOnlyDictionary<string, long> rows, int keys, string producer)
     {
+        // A product whose file is gone was not loaded, nor a carried table a product made from files replaces.
         var loaded = store.Manifest.Entries
-            .Where(e => graph.Find(e.Product) is { Declaration.Tables.Count: > 0 })
-            .Select(e => e.Product).Order(StringComparer.Ordinal).ToList();
+            .Where(e => graph.Find(e.Product) is { Declaration.Tables.Count: > 0 } && File.Exists(store.FullPath(e.Product)))
+            .Select(e => e.Product)
+            .Where(p => !(p.StartsWith("Essenthos/carried/", StringComparison.Ordinal)
+                          && store.Find(TableProducts.Product(Path.GetFileNameWithoutExtension(p))) is not null))
+            .Order(StringComparer.Ordinal).ToList();
         using var writer = store.Create(Product(database), ProductKind.Hand, ServedTable.Schema, ProductHeader.DescribeProducer(producer), store.Inputs(loaded),
             header => header.Notes.Add(new(KeysNote, keys.ToString(CultureInfo.InvariantCulture))));
         foreach (var (table, count) in rows.OrderBy(r => r.Key, StringComparer.Ordinal))

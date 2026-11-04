@@ -116,7 +116,7 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     private const string SuppliedSource =
         "Zefania KJV+ italics, the King James translators' own mark that they supplied the word";
 
-    private const string PhraseSource =
+    internal const string PhraseSource =
         "Zefania KJV+ Strong numbers, the whole list a tag naming a Greek phrase states";
 
     /// <summary>The last book of the Old Testament, after which this file numbers in Greek.</summary>

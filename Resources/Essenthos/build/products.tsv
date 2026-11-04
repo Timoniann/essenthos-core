@@ -18,12 +18,13 @@ texts/{text}/words	build	convert all --parallel 16	{sources} Essenthos/texts/{te
 texts/{text}/verses	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	verse chapter	text
 texts/{text}/notes	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	verse_note chapter_note book_note stated_verse_number	text
 texts/{text}/books	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	book	text
+texts/{text}/titles	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	-	text
 texts/{text}/text	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections Essenthos/texts/{text}/ids	text	text
-texts/{text}/frame	export	frame-files (reads the database's text list and the title rows later passes wrote; a build product once it reads products only)	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses	verse_reference	text
+texts/{text}/frame	build	frame-files	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/titles	verse_reference	text
 texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/mapping/*/final	strong_rendering strong_reach strong_reach_method	text
 texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
 texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text
-texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/exported/* Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
+texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/exported/* Essenthos/names/projected/* Essenthos/names/rules Essenthos/records/records Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
 versification/*	hand	by hand	-	-	none
 evidentia/**	hand	by hand (the ledger; forge evidentia-export writes it)	-	-	none
 page-readings/**	hand	by hand	-	-	none
@@ -38,10 +39,22 @@ records/facts/locations	build	records-derive	Essenthos/records/external-ids Esse
 records/facts/location-candidates	build	records-derive	Essenthos/records/external-ids Essenthos/records/facts/location-supplements Essenthos/records/records OpenBible/*	@records	all
 records/**	export	records-export	-	@records	all
 external/**	export	records-export	-	@records	all
-names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/texts/{text}/words Essenthos/mapping/*/final	word_entity	text
+names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/names/overrides/{text} Essenthos/texts/{text}/words Essenthos/mapping/*/final Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/i18n/*/name-forms	word_entity	text
 names/bases	hand	by hand (seeded once by names-project)	-	-	none
 names/overrides/{text}	hand	by hand	-	-	none
 names/live/{text}	export	names-from-database	Essenthos/texts/{text}/words	-	none
 names/exported/{text}	export	names-export	-	-	none
 names/{text}	export	names-from-database	Essenthos/texts/{text}/words	-	none
+tables/text_relation	build	tables	Essenthos/texts/relations	text_relation	all
+tables/strong_entry	build	tables	Strong/*	strong_entry	all
+tables/strong_entry_translation	build	tables	Strong/* Essenthos/lexicon	strong_entry_translation	all
+tables/strong_relation	build	tables	Strong/* BibleData2026/*	strong_relation	all
+tables/strong_profile	build	tables	BibleData2026/* STEPBibleLexicons/*	strong_profile	all
+tables/lexicon_gloss	build	tables	STEPBibleLexicons/*	lexicon_gloss	all
+tables/geez_lexicon_entry	build	tables	Dillmann	geez_lexicon_entry	all
+tables/word_group	build	tables	etcbc Essenthos/texts/BHSA/words Essenthos/texts/BHSA/books	word_group	all
+tables/word_group_word	build	tables	etcbc Essenthos/texts/BHSA/words Essenthos/texts/BHSA/books	word_group_word	all
+tables/word_parsing	build	tables	MorphGnt Macula Essenthos/texts/NESTLE1904/words	word_parsing	all
+tables/word_strong	build	tables	Strong/* Berean/* Essenthos/texts/GRCBRENT/words Essenthos/texts/BSB/words Essenthos/texts/BSB/frame Essenthos/texts/KJV/words bible4u/KJV.xml Zefania/* mapping/* STEPBible KingJamesApocrypha SynodalWikisource WorldEnglishClassic KingJames2006 Essenthos/texts/KJV/corrections Essenthos/texts/KJV/ids	word_strong	all
+texts/relations	hand	by hand (seeded once by tables from the Forge's list)	-	-	none
 carried/{table}	export	carried-export	-	{table}	all

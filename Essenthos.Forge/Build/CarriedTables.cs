@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Products;
 using Essenthos.Core.Products.Postgres;
 using Npgsql;
@@ -6,7 +6,8 @@ using Npgsql;
 namespace Essenthos.Core.Build;
 
 /// <summary>
-/// The served tables no package makes from files yet, carried from a database as <c>carried/&lt;table&gt;</c> so that a build
+/// The served tables loaded whole from a product: made from files (<see cref="TableProducts"/>, <c>tables/&lt;table&gt;</c>), or,
+/// for the ones no producer makes yet, carried from a database as <c>carried/&lt;table&gt;</c> so that a build
 /// still reads files only: every column as Postgres prints it, a text by its slug, a verse by its text and own address,
 /// a word by its id (word ids are the products' own). Loaded through a staging table, each row put back on the text,
 /// verse and word the new database holds there; a row whose word or verse the products no longer hold is left out and
@@ -94,14 +95,17 @@ internal static class CarriedTables
             $"SELECT {string.Join(", ", parsed.Select(c => c.Type == "text" ? $"s.{c.Name}" : $"s.{c.Name}::{c.Type}"))} FROM s");
     }
 
-    /// <summary>Writes every carried table of the database the connection names as its product.</summary>
-    public static async Task<List<Outcome>> Export(string connectionString, ProductStore store, CancellationToken cancellationToken)
+    /// <summary>
+    /// Writes every carried table of the database the connection names as its product: the ones no producer makes from
+    /// files (<see cref="TableProducts"/>), or every one with <paramref name="all"/>, for a comparison with what the files make.
+    /// </summary>
+    public static async Task<List<Outcome>> Export(string connectionString, ProductStore store, CancellationToken cancellationToken, bool all = false)
     {
         var database = new NpgsqlConnectionStringBuilder(connectionString).Database;
         var outcomes = new List<Outcome>();
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
-        foreach (var carried in All)
+        foreach (var carried in All.Where(c => all || !TableProducts.Tables.Contains(c.Table)))
         {
             var clock = Stopwatch.StartNew();
             await using var command = new NpgsqlCommand(carried.Export, connection) { CommandTimeout = 0 };
@@ -137,13 +141,16 @@ internal static class CarriedTables
         return outcomes;
     }
 
-    /// <summary>Loads every carried table there is a product of, in list order, through a staging table each.</summary>
+    /// <summary>
+    /// Loads every table there is a product of, in list order, through a staging table each: the one made from files
+    /// (<see cref="TableProducts"/>) where there is one, else the carried copy.
+    /// </summary>
     public static async Task<List<Outcome>> Load(string connectionString, ProductStore store, IReadOnlySet<string>? only, CancellationToken cancellationToken)
     {
         var outcomes = new List<Outcome>();
         foreach (var carried in All.Where(c => only is null || only.Contains(c.Table)))
         {
-            if (store.Find(Product(carried.Table)) is not { } relative)
+            if ((store.Find(TableProducts.Product(carried.Table)) ?? store.Find(Product(carried.Table))) is not { } relative)
             {
                 continue;
             }

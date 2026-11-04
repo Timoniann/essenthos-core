@@ -253,34 +253,32 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// The frame files of the texts named (every text by default), written from the verses of the
-    /// converted text where the store holds its words and verse manifest, and otherwise of the
-    /// configured corpus or of <c>--database</c>, which is only read.
+    /// The frame files of the texts named (every text by default) whose inputs moved, made from products alone
+    /// (<see cref="Loading.Frame.FrameProducts"/>): each text's verse manifest, words, titles and declaration, and the
+    /// versification data. Reads no database.
     /// </summary>
-    private static async Task<int> FrameFiles(ForgeRun forge, string[] args)
+    private static Task<int> FrameFiles(ForgeRun forge, string[] args)
     {
         var rules = Loading.Frame.TvtmsReader.Read(Configuration.ResourcePaths.File(forge.Resources, "Versification", "TVTMS.txt"));
-        var store = new ProductStore(forge.Resources);
-        await using var db = OnDatabase(forge, Option(args, "--database"));
-        var loader = new CanonicalFrameLoader(db, Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
-        var source = db.Database.GetDbConnection().Database;
-        var slugs = Slugs(args);
-
-        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var outcomes = Loading.Frame.FrameProducts.Write(store, rules, Slugs(args), args.Contains("--force"), Parallelism(args, 16));
+        foreach (var outcome in outcomes)
         {
-            if ((slugs is not null && !slugs.Contains(text.Slug)) || !rules.Covers(text.Versification))
-            {
-                continue;
-            }
+            Console.WriteLine(outcome.Written
+                ? string.Create(CultureInfo.InvariantCulture,
+                    $"{outcome.Slug}	{outcome.Verses} verses	{outcome.Lines} lines	{outcome.Titles} title rows	{store.RelativePath(Loading.Frame.FrameFile.Product(outcome.Slug), ProductKind.Machine)}")
+                : $"{outcome.Slug}	current");
+        }
 
-            var framed = await loader.Framed(text, rules, CancellationToken.None, store, versesFromProducts: true);
-            CanonicalFrameLoader.Write(text, rules, store, framed, source);
-            Console.WriteLine(string.Create(CultureInfo.InvariantCulture,
-                $"{text.Slug}\t{framed.Verses.Count} verses\t{framed.Rows.Count} lines\t{framed.Titles} title rows\t{store.RelativePath(Loading.Frame.FrameFile.Product(text.Slug), ProductKind.Machine)}"));
+        var (unlisted, unheld) = Loading.Frame.FrameProducts.CheckTitled(store, Loading.Frame.FrameProducts.Texts(store));
+        if (unlisted.Count + unheld.Count > 0)
+        {
+            forge.Logger.LogWarning("{Product}: frames place a verse at the title of {Unlisted}, which it does not name; it names {Unheld}, where none does",
+                Loading.Frame.FrameProducts.TitledPsalms, string.Join(' ', unlisted), string.Join(' ', unheld));
         }
 
         store.Save();
-        return 0;
+        return Task.FromResult(0);
     }
 
     /// <summary>Every text's rows of <c>verse_reference</c> filled from its frame file, in the configured corpus or <c>--database</c>.</summary>

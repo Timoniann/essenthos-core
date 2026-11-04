@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -171,6 +171,9 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     {
         /// <summary>The verse manifest the verses were listed from, or null where the database listed them.</summary>
         public string? Manifest { get; init; }
+
+        /// <summary>The titles product the title rows were read from, or null where the database held them.</summary>
+        public string? Titled { get; init; }
     }
 
     /// <summary>
@@ -228,6 +231,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             "Versification/TVTMS.txt",
             .. framed.Letters is { } letters ? [letters] : Array.Empty<string>(),
             .. framed.Manifest is { } manifest ? [manifest] : Array.Empty<string>(),
+            .. framed.Titled is { } titled ? [titled] : Array.Empty<string>(),
             .. VersificationData.Products.Select(product => store.Find(product)
                 ?? throw new FileNotFoundException($"{product} is not under {store.ResourcesPath}.")),
             .. text.Slug == GeezTextSource.Slug ? ["Essenthos/versification/geez.tsv"] : Array.Empty<string>(),
@@ -266,7 +270,9 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                                                + (framed.Letters is { } words ? $"; their letters counted in {words}" : string.Empty)));
                 if (framed.Titles > 0)
                 {
-                    header.Notes.Add(new("titles", $"{framed.Titles} psalm title verses a first verse also covers, as {source} holds them"));
+                    header.Notes.Add(new("titles", framed.Titled is { } titles
+                        ? $"{framed.Titles} psalm title verses a first verse also covers, the verses {titles} lists"
+                        : $"{framed.Titles} psalm title verses a first verse also covers, as {source} holds them"));
                 }
 
                 header.Comments.Add("A verse not listed stands at its own address. own = book.chapter:verse[label] as the edition numbers it;");

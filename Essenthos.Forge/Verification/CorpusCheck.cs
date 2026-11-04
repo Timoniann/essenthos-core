@@ -742,12 +742,16 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             """),
 
         // The same question asked of the annotations, and here for the same reason: an annotation
-        // with nothing claiming it is one nobody can weigh, and a card that names a person with no
-        // account of how it knows is exactly what this schema was built to make impossible.
-        ("word annotations no claim stands on, so nothing says what asserted them",
+        // with nothing saying what asserted it is one nobody can weigh, and a card that names a person
+        // with no account of how it knows is exactly what this schema was built to make impossible.
+        // An annotation states its own method and source; a database built from the names files holds
+        // no claims beside them, so a missing claim counts only where claims are kept at all.
+        ("word annotations that say nothing of what asserted them",
             """
             SELECT count(*) FROM word_entity a
-            WHERE NOT EXISTS (SELECT 1 FROM word_entity_claim c WHERE c.word_entity_id = a.id)
+            WHERE btrim(a.source) = ''
+               OR (EXISTS (SELECT 1 FROM word_entity_claim)
+                   AND NOT EXISTS (SELECT 1 FROM word_entity_claim c WHERE c.word_entity_id = a.id))
             """),
 
         // Twenty-three men are called Zechariah, and no method that works from the name alone can
@@ -772,10 +776,14 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // at Tell el Alayiq say nothing of the kind, and this still fires for them -- which is why
         // no resolution annotates a word of H3405, and why which of the two a verse means is
         // `SiteSplitLoader`'s work, under a method that says something did the choosing.
+        //
+        // A name carried onto a translation's word was resolved on the word it was carried from (the
+        // note says which), so that word's number is the one asked: the translation's own number says
+        // nothing of how the record was chosen.
         ("words a name-resolution annotated although the name is several people's",
             $"""
              SELECT count(*) FROM word_entity a
-             JOIN word w ON w.id = a.word_id
+             JOIN word w ON w.id = coalesce(substring(a.note FROM '^through [A-Za-z0-9]+ word ([0-9]+)$')::bigint, a.word_id)
              WHERE a.method = 'strong-number'
                AND w.strong_number IS NOT NULL
                AND (SELECT count(DISTINCT {EntityCandidates.Resolves}) FROM entity_name n

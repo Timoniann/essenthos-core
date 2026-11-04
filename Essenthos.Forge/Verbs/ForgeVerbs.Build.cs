@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Essenthos.Core.Build;
 using Essenthos.Core.Products;
@@ -168,11 +168,28 @@ internal static partial class ForgeVerbs
         return store.RelativePath(product, ProductKind.Hand);
     }
 
-    /// <summary><c>carried-export [--into &lt;Resources&gt;]</c>: the served tables no package makes yet, from the configured database.</summary>
+    /// <summary><c>tables [&lt;table,...&gt;] [--from &lt;Resources&gt;] [--force]</c>: the served tables made from files, each when its sources moved.</summary>
+    private static Task<int> TablesVerb(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var only = args.Skip(1).TakeWhile(arg => !arg.StartsWith("--", StringComparison.Ordinal))
+            .SelectMany(arg => arg.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToHashSet(StringComparer.Ordinal);
+        foreach (var made in TableProducts.Write(store, only.Count == 0 ? null : only, args.Contains("--force")))
+        {
+            Console.WriteLine(made.Current
+                ? $"tables/{made.Table}  current"
+                : $"{made.Rows,10}  tables/{made.Table}  {made.Elapsed.TotalSeconds:0.0} s{(made.Note is null ? "" : "  " + made.Note)}");
+        }
+
+        store.Save();
+        return Task.FromResult(0);
+    }
+
+    /// <summary><c>carried-export [--into &lt;Resources&gt;] [--all]</c>: the served tables no producer makes yet (every one with --all), from the configured database.</summary>
     private static async Task<int> CarriedExport(ForgeRun forge, string[] args)
     {
         var store = new ProductStore(Option(args, "--into") ?? forge.Resources);
-        foreach (var outcome in await CarriedTables.Export(forge.DatabaseConnection, store, CancellationToken.None))
+        foreach (var outcome in await CarriedTables.Export(forge.DatabaseConnection, store, CancellationToken.None, args.Contains("--all")))
         {
             Console.WriteLine($"{outcome.Exported,10}  carried/{outcome.Table}  {outcome.Elapsed.TotalSeconds:0.0} s");
         }

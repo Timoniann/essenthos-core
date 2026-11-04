@@ -1,4 +1,4 @@
-using Essenthos.Core.Products;
+﻿using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Conversion;
 
@@ -150,4 +150,24 @@ internal sealed record TextField(string Field, string? Value)
         .Text("field", f => f.Field)
         .OptionalText("value", f => f.Value)
         .Reads(row => new TextField(row.Text(0), row.TextOrNull(1)));
+}
+
+/// <summary>
+/// A verse of a converted text that holds a psalm's superscription inside it, as the edition marks it (a superscription
+/// marker, words standing before a marker naming a later verse) or as the corrections write it (a psalm's first verse
+/// whose opening, title or first line, a correction adds because the file did not print it). <c>texts/&lt;SLUG&gt;/titles</c> lists them; the frame gives such a verse the title's address too
+/// where the frame numbers that psalm's title apart.
+/// </summary>
+internal sealed record TextTitle(VerseKey Own, string Why)
+{
+    public static string ProductOf(string text) => $"texts/{text}/titles";
+
+    public const string Marked = "marked";
+
+    public const string Opening = "opening";
+
+    public static readonly ProductSchema<TextTitle> Schema = new ProductSchema<TextTitle>()
+        .VerseKey("own", t => t.Own)
+        .Text("why", t => t.Why)
+        .Reads(row => new TextTitle(row.VerseKey(0), row.Text(1)));
 }

@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Mapping;
@@ -18,7 +18,7 @@ internal sealed record Applied(IReadOnlyList<string> Changed, IReadOnlyCollectio
 /// forms indexes of the texts whose index moved are replaced in one transaction; the names on words and the spellings,
 /// which a records load empties, are kept across it by record slug. The spellings are then counted again and the names
 /// loaded again each in a transaction of its own, so every commit leaves a whole database. A text whose words moved, or
-/// a carried table, needs <c>build --into</c>.
+/// a carried table or one made whole from files (<c>tables/</c>), needs <c>build --into</c>.
 /// </summary>
 internal sealed class BuildApply(string connectionString, ProductStore store, ProductGraph graph, IServiceProvider services, ILogger logger)
 {
@@ -60,8 +60,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             logger.LogInformation("moved: {Product}", product);
             switch (declaration.Product)
             {
-                case var p when TextLayer.Contains(p) || p.StartsWith("carried/", StringComparison.Ordinal):
-                    logger.LogError("{Product} moved: a text's words or a carried table is not applied in place; build --into a new database", product);
+                case var p when TextLayer.Contains(p) || p.StartsWith("carried/", StringComparison.Ordinal) || p.StartsWith("tables/", StringComparison.Ordinal):
+                    logger.LogError("{Product} moved: a text's words or a table loaded whole is not applied in place; build --into a new database", product);
                     return null;
                 case "mapping/{from}-{to}/final":
                     pairs.Add($"{bound["from"]}-{bound["to"]}");
