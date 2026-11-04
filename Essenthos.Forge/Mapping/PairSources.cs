@@ -51,6 +51,8 @@ internal static class PairSources
         new GreekWitnessSource(MappingMethods.Lexical),
         new GreekLetterSource(),
         new HebrewLetterSource(),
+        new NameListSource(),
+        new PossessiveSource(),
     ];
 
     /// <summary>The verb that writes a method's files, as the header and the declared graph name it.</summary>

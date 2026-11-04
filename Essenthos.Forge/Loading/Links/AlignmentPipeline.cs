@@ -1882,7 +1882,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// in capitals throughout is LORD, which the translations do not transliterate.
     /// </summary>
     /// <param name="uncapitalised">Every word the text writes in lower case after its verse's first.</param>
-    private static bool IsNamed(WordForms word, string? pos, string? form, IReadOnlySet<string> uncapitalised) =>
+    internal static bool IsNamed(WordForms word, string? pos, string? form, IReadOnlySet<string> uncapitalised) =>
         pos == "nmpr"
         || form == IndeclinableName
         || (word.Language is "grc" && !string.IsNullOrEmpty(word.Lemma)
@@ -1921,7 +1921,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// Where it stands in its verse, which is how a proper name is told from a verb that happens to
     /// open a sentence.
     /// </param>
-    private sealed record WordForms(
+    internal sealed record WordForms(
         string Surface,
         string? Lemma,
         string? Consonantal,

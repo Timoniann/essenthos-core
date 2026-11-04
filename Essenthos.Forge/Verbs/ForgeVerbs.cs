@@ -281,6 +281,7 @@ internal static partial class ForgeVerbs
         new("stated-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
             "Write each pair's stated method file from the published sources that state it (tables, alignments, marks) and both texts' words and frames, where an input moved. Reads no database.",
             (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Stated)),
+<<<<<<< HEAD
         new("lexical-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
 <<<<<<< HEAD
             "Write each pair's lexical method file from the sources that match words by their letters, glosses or morphology, and both texts' words and frames, where an input moved. Reads no database.",
@@ -288,6 +289,14 @@ internal static partial class ForgeVerbs
             "Write each pair's lexical method file from the rules over two witnesses' words (their letters, the words their Strong numbers leave) and both texts' frames, where an input moved. Reads no database.",
 >>>>>>> wt/r23-witness
             (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Lexical)),
+=======
+        new("possessive-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
+            "Write each Slavic pair's possessive method file from both texts' words and the pair's earlier method files, where an input moved. Reads no database.",
+            (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Possessive)),
+        new("name-list-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
+            "Write each pair's name-list method file, the names of a verse paired by spelling and order, from both texts' words, frames and the pair's earlier method files, where an input moved. Reads no database.",
+            (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.NameList)),
+>>>>>>> wt/r23-names
         new("mapping-diff", "<before Resources> [--from <Resources>] [--pairs A-B,...] [--methods m,...] [--out <folder>]",
             "Compare the method files of two Resources folders by key (words, relation, source), per pair, method and source. Reads only.", MappingDiff, Least: 1),
         new("mapping-load", "[--from <Resources>]",
