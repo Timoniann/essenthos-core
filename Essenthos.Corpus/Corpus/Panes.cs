@@ -335,10 +335,12 @@ internal static class Panes
         Optional(json, "a", word.Absence);
         Optional(json, "m", word.Mark);
         var rows = named.ToList();
-        if (word.Entities.Count > 0)
+        // The shared cards put the base text's reading right after a differs card; a pane carries it apart, in "eb".
+        var own = word.Entities.Where(entity => entity.Origin != WordEntityOrigins.BaseReading).ToList();
+        if (own.Count > 0)
         {
             json.WriteStartArray("e");
-            foreach (var entity in word.Entities)
+            foreach (var entity in own)
             {
                 types[entity.Slug] = entity.Type;
                 var row = rows.FirstOrDefault(r => r.Slug == entity.Slug && r.Origin != WordEntityOrigins.BaseReading
