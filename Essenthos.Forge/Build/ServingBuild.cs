@@ -139,7 +139,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         {
             var projection = new NamesProjection(store);
             var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
-            var outcome = await NamesLoad.Run(connectionString, projection, texts, cancellationToken);
+            var outcome = await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken);
             logger.LogInformation("Names: {Rows} rows of {Texts} texts; {Records} on a record the database lacks, {Words} on a word without an id",
                 outcome.Rows, outcome.Texts, outcome.UnknownRecords, outcome.UnknownWords);
             return outcome.Rows;

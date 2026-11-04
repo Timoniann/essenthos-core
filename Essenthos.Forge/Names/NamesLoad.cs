@@ -8,11 +8,12 @@ using Npgsql;
 namespace Essenthos.Core.Names;
 
 /// <summary>
-/// The names projection into a serving database's <c>word_entity</c> (DOC-0224 §7.3): every word's own names (a base reading
-/// beside an override's differs is not one), by the word id its text's words product carries and the record's id by slug in
-/// the database, and a carried name's note naming the word it was carried from by its id, as the API reads it. One COPY per
-/// text in one transaction; the table's indexes are dropped before and made after. Then the table is
-/// read back by key and compared with the products and with <c>names/live</c>, the database the names were exported from.
+/// The names projection into a serving database's <c>word_entity</c> (DOC-0224 §7.3): every row of it, by the word id its
+/// text's words product carries and the record's id by slug in the database, with its <c>role</c> and <c>origin</c> (a
+/// <c>base-reading</c> row is the base's record beside a <c>differs</c> one on the same word, the second card), and a carried
+/// name's note naming the word it was carried from by its id, as the API reads it. One COPY per text in one transaction; the
+/// table's indexes are dropped before and made after. Then the table is read back by key and compared with the products and
+/// with <c>names/live</c>, the database the names were exported from.
 /// </summary>
 internal static class NamesLoad
 {
@@ -28,9 +29,8 @@ internal static class NamesLoad
         CREATE INDEX IF NOT EXISTS ix_word_entity_entity_id ON word_entity (entity_id);
         """;
 
-    public static async Task<Outcome> Run(string connectionString, NamesProjection projection, IReadOnlyList<string> texts, CancellationToken cancellationToken)
+    public static async Task<Outcome> Run(string connectionString, ProductStore store, IReadOnlyList<string> texts, CancellationToken cancellationToken)
     {
-        var store = projection.Store;
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
         var records = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -53,9 +53,9 @@ internal static class NamesLoad
             {
                 var ids = WordIds(store, text);
                 await using var writer = await connection.BeginTextImportAsync(
-                    "COPY word_entity (word_id, entity_id, method, confidence, source, note) FROM STDIN", cancellationToken);
+                    "COPY word_entity (word_id, entity_id, method, confidence, source, note, role, origin) FROM STDIN", cancellationToken);
                 using var reader = store.Open(NameProducts.Projected(text), ProjectedName.Schema(text));
-                foreach (var name in reader.Rows().Where(n => NameOrigins.IsOwn(n.Origin)))
+                foreach (var name in reader.Rows())
                 {
                     if (!records.TryGetValue(name.Record, out var record))
                     {
@@ -70,7 +70,7 @@ internal static class NamesLoad
                     }
 
                     // The API reads the word a name was carried from by its id in this note (Annotations.CarriedFrom).
-                    var note = name.Origin;
+                    string? note = null;
                     if (name.Through is { } through && through.IndexOf(' ') is var space and > 0)
                     {
                         var reference = through[..space];
@@ -83,7 +83,7 @@ internal static class NamesLoad
                     }
 
                     writer.Write(string.Create(CultureInfo.InvariantCulture,
-                        $"{word}\t{record}\t{Escape(name.Method)}\t{(name.Confidence is { } c ? c.ToString("R", CultureInfo.InvariantCulture) : "\\N")}\t{Escape(name.Source)}\t{Escape(note)}\n"));
+                        $"{word}\t{record}\t{Escape(name.Method)}\t{(name.Confidence is { } c ? c.ToString("R", CultureInfo.InvariantCulture) : "\\N")}\t{Escape(name.Source)}\t{(note is null ? "\\N" : Escape(note))}\t{Escape(name.Role)}\t{Escape(name.Origin)}\n"));
                     rows++;
                 }
             }
@@ -95,18 +95,18 @@ internal static class NamesLoad
         clock.Restart();
         await Execute(connection, Indexes + "ANALYZE word_entity;", cancellationToken);
         var indexes = clock.Elapsed;
-        var readBack = await ReadBack(connection, projection, texts, records, cancellationToken);
+        var readBack = await ReadBack(connection, store, texts, records, cancellationToken);
         return new Outcome(rows, texts.Count, unknownRecords, unknownWords, load, indexes, readBack);
     }
 
-    private static async Task<Comparison> ReadBack(NpgsqlConnection connection, NamesProjection projection, IReadOnlyList<string> texts,
+    private static async Task<Comparison> ReadBack(NpgsqlConnection connection, ProductStore store, IReadOnlyList<string> texts,
         Dictionary<string, int> records, CancellationToken cancellationToken)
     {
         var slugs = records.ToDictionary(r => r.Value, r => r.Key);
         var keys = new Dictionary<long, (string Text, string Own)>();
         foreach (var text in texts)
         {
-            foreach (var (own, id) in WordIds(projection.Store, text))
+            foreach (var (own, id) in WordIds(store, text))
             {
                 keys[id] = (text, own);
             }
@@ -128,17 +128,17 @@ internal static class NamesLoad
         var live = new HashSet<(string, string, string)>();
         foreach (var text in texts)
         {
-            using (var reader = projection.Store.Open(NameProducts.Projected(text), ProjectedName.Schema(text)))
+            using (var reader = store.Open(NameProducts.Projected(text), ProjectedName.Schema(text)))
             {
-                foreach (var name in reader.Rows().Where(n => NameOrigins.IsOwn(n.Origin) && records.ContainsKey(n.Record)))
+                foreach (var name in reader.Rows().Where(n => records.ContainsKey(n.Record)))
                 {
                     products.Add((text, name.Own.Own, name.Record));
                 }
             }
 
-            if (projection.Store.Exists(NameProducts.Live(text)))
+            if (store.Exists(NameProducts.Live(text)))
             {
-                using var reader = projection.Store.Open(NameProducts.Live(text), LiveName.Schema(text));
+                using var reader = store.Open(NameProducts.Live(text), LiveName.Schema(text));
                 foreach (var name in reader.Rows())
                 {
                     live.Add((text, name.Own.Own, name.Record));

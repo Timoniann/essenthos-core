@@ -1,4 +1,5 @@
 using System.Globalization;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Names;
@@ -42,16 +43,16 @@ internal static class NameProducts
 internal static class NameRoles
 {
     /// <summary>The word is the record's name, or stands for the person or place where it is written.</summary>
-    public const string Name = "name";
+    public const string Name = WordEntityRoles.Name;
 
     /// <summary>The word names a people, a tribe or a nation.</summary>
-    public const string People = "people";
+    public const string People = WordEntityRoles.People;
 
     /// <summary>The word is a title, and the record the title or the one who bears it.</summary>
-    public const string Title = "title";
+    public const string Title = WordEntityRoles.Title;
 
     /// <summary>The word names an object, a feast, a term.</summary>
-    public const string Thing = "thing";
+    public const string Thing = WordEntityRoles.Thing;
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>([Name, People, Title, Thing], StringComparer.Ordinal);
 
@@ -167,21 +168,21 @@ internal sealed record NameBase(string Text, string Books, string Base, string W
 internal static class NameOrigins
 {
     /// <summary>A reference text's own settled name.</summary>
-    public const string Settled = "settled";
+    public const string Settled = WordEntityOrigins.Settled;
 
     /// <summary>Carried from the base over a link of the final mapping.</summary>
-    public const string Projected = "projected";
+    public const string Projected = WordEntityOrigins.Projected;
 
     /// <summary>An override's addition.</summary>
-    public const string Added = "added";
+    public const string Added = WordEntityOrigins.Added;
 
     /// <summary>The translation's own record where it names another than its base (an override's differs).</summary>
-    public const string Differs = "differs";
+    public const string Differs = WordEntityOrigins.Differs;
 
     /// <summary>The base's record on a word whose translation names another: shown second, never as the word's own name.</summary>
-    public const string BaseReading = "base-reading";
+    public const string BaseReading = WordEntityOrigins.BaseReading;
 
-    /// <summary>Whether a name of this origin is the word's own, as the database's word_entity holds it.</summary>
+    /// <summary>Whether a name of this origin is the word's own rather than the base's reading shown beside it.</summary>
     public static bool IsOwn(string origin) => origin != BaseReading;
 }
 

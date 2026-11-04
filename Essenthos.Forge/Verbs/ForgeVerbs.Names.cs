@@ -85,7 +85,7 @@ internal static partial class ForgeVerbs
 
         var projection = new NamesProjection(new ProductStore(Option(args, "--from") ?? forge.Resources));
         var texts = NamedTexts(projection, args).Where(t => projection.Store.Exists(NameProducts.Projected(t))).ToList();
-        var outcome = await NamesLoad.Run(forge.DatabaseConnection, projection, texts, CancellationToken.None);
+        var outcome = await NamesLoad.Run(forge.DatabaseConnection, projection.Store, texts, CancellationToken.None);
         Console.WriteLine($"{outcome.Rows} names of {outcome.Texts} texts loaded in {outcome.Load}, indexes in {outcome.Indexes}; " +
                           $"{outcome.UnknownRecords} on a record the database lacks, {outcome.UnknownWords} on a word without an id");
         var back = outcome.ReadBack;

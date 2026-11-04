@@ -70,6 +70,19 @@ public class WordEntity
     /// <summary>The route, where it is worth reading — the number it went through, or the word.</summary>
     public string? Note { get; set; }
 
+    /// <summary>
+    /// How the word stands for the record (<see cref="WordEntityRoles"/>): its name, a people, a title, a thing. One word
+    /// may stand for several records, each in its own role. Null on a row the corpus load wrote before the names projection.
+    /// </summary>
+    public string? Role { get; set; }
+
+    /// <summary>
+    /// Where the name on this word comes from (<see cref="WordEntityOrigins"/>). A <c>base-reading</c> row is not the word's
+    /// own name: it is the record the base text names where the translation names another (the <c>differs</c> row on the
+    /// same word), shown second. Null on a row the corpus load wrote before the names projection.
+    /// </summary>
+    public string? Origin { get; set; }
+
     public ICollection<WordEntityClaim> Claims { get; set; } = [];
 
     public override string ToString() => $"WordEntity(word {WordId} names {EntityId}, {Method})";
@@ -110,4 +123,43 @@ public class WordEntityClaim
     public string? Note { get; set; }
 
     public override string ToString() => $"WordEntityClaim({Method} on annotation {WordEntityId})";
+}
+
+/// <summary>The roles a word stands for a record in, as <c>word_entity.role</c> holds them.</summary>
+public static class WordEntityRoles
+{
+    /// <summary>The word is the record's name, or stands for the person or place where it is written.</summary>
+    public const string Name = "name";
+
+    /// <summary>The word names a people, a tribe or a nation.</summary>
+    public const string People = "people";
+
+    /// <summary>The word is a title, and the record the title or the one who bears it.</summary>
+    public const string Title = "title";
+
+    /// <summary>The word names an object, a feast, a term.</summary>
+    public const string Thing = "thing";
+
+    public static readonly IReadOnlyList<string> All = [Name, People, Title, Thing];
+}
+
+/// <summary>Where a name on a word comes from, as <c>word_entity.origin</c> holds it.</summary>
+public static class WordEntityOrigins
+{
+    /// <summary>A reference text's own settled name.</summary>
+    public const string Settled = "settled";
+
+    /// <summary>Carried from the base text over a link of the final mapping.</summary>
+    public const string Projected = "projected";
+
+    /// <summary>An override's addition.</summary>
+    public const string Added = "added";
+
+    /// <summary>The translation's own record where it names another than its base (an override's differs): the first card.</summary>
+    public const string Differs = "differs";
+
+    /// <summary>The base's record on a word whose translation names another: the second card, never the word's own name.</summary>
+    public const string BaseReading = "base-reading";
+
+    public static readonly IReadOnlyList<string> All = [Settled, Projected, Added, Differs, BaseReading];
 }
