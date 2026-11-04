@@ -16,6 +16,7 @@ internal static class TextStages
         new KingJamesNumbers(),
         new SideStrongNumbers(),
         new DerivedStrongNumbers(),
+        new MisplacedNumbers(),
         new BereanSupplied(),
         new EditionBrackets(),
         new PrintedWords(),

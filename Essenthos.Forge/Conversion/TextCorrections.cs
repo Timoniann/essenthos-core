@@ -9,7 +9,10 @@ namespace Essenthos.Core.Conversion;
 /// applies (<see cref="Before"/>), so a source that changed upstream stops the conversion instead of
 /// taking a repair somewhere it was never meant.
 /// </summary>
-/// <param name="Own">A word key (<c>1.1:1.3</c>) for <c>letters</c> and <c>drop</c>; a verse key (<c>1.1:1</c>) for the others.</param>
+/// <param name="Own">
+/// A word key (<c>1.1:1.3</c>) for <c>letters</c>, <c>drop</c> and <c>strong</c>; a verse key (<c>1.1:1</c>) for the others.
+/// A <c>strong</c> row's key is the word's as the words product writes it, after every other row and stage.
+/// </param>
 /// <param name="Before">For <c>block</c>, the further verses of the chapter the source stores the block under, space-separated.</param>
 /// <param name="Kind">
 /// <c>verse</c>: the source's verse, markup and all, is read as <see cref="After"/> before it is divided into words;
@@ -17,7 +20,11 @@ namespace Essenthos.Core.Conversion;
 /// <c>prepend</c> / <c>append</c>: the words of <see cref="After"/> open / close the verse;
 /// <c>drop</c>: the word, which reads <see cref="Before"/>, is not the edition's and goes;
 /// <c>block</c>: the source prints the verses <see cref="Own"/> and <see cref="Before"/> as one block and stores it under each
-/// of their numbers; it is one verse, at <see cref="Own"/>, stating all of them, and the copies, which must read the same, go.
+/// of their numbers; it is one verse, at <see cref="Own"/>, stating all of them, and the copies, which must read the same, go;
+/// <c>strong</c>: the word's Strong number becomes <see cref="After"/>, or none where it is empty. <see cref="Before"/> is the word
+/// as it reads and, after a space, the number it carries until the row applies (none written where it carries none), so a row
+/// stops the conversion once the word or its number is no longer what the row was written against. It applies after the
+/// converter's stages, so a person's number stands over every number a stage lays, moves or clears.
 /// </param>
 internal sealed record TextCorrection(string Own, string Kind, string? Before, string? After, string Why)
 {
@@ -27,6 +34,7 @@ internal sealed record TextCorrection(string Own, string Kind, string? Before, s
     public const string Append = "append";
     public const string Drop = "drop";
     public const string Block = "block";
+    public const string Strong = "strong";
 
     public static readonly ProductSchema<TextCorrection> Schema = new ProductSchema<TextCorrection>()
         .Text("own", c => c.Own)
@@ -74,7 +82,7 @@ internal sealed class TextCorrections
         foreach (var row in rows)
         {
             if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append
-                or TextCorrection.Drop or TextCorrection.Block))
+                or TextCorrection.Drop or TextCorrection.Block or TextCorrection.Strong))
             {
                 throw new FormatException($"{slug} corrections: \"{row.Kind}\" at {row.Own} is not a kind of correction.");
             }
@@ -122,7 +130,7 @@ internal sealed class TextCorrections
         }
 
         var byVerse = _rows
-            .Where(row => row.Kind is not (TextCorrection.Verse or TextCorrection.Block))
+            .Where(row => row.Kind is not (TextCorrection.Verse or TextCorrection.Block or TextCorrection.Strong))
             .GroupBy(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop
                 ? WordKey.Parse(row.Own, _slug).Verse
                 : VerseKey.Parse(row.Own))
@@ -188,6 +196,68 @@ internal sealed class TextCorrections
         }
 
         return source with { Books = books };
+    }
+
+    /// <summary>
+    /// The <c>strong</c> rows applied to the converted text, after its stages: each sets or clears one word's number, and
+    /// stops the conversion where the word does not read, or does not carry, what the row's <c>before</c> says.
+    /// </summary>
+    /// <returns>How many words the rows numbered and how many they left without a number.</returns>
+    public (int Set, int Cleared) ApplyNumbers(ConvertedText text)
+    {
+        var rows = _rows.Where(row => row.Kind == TextCorrection.Strong).ToList();
+        if (rows.Count == 0)
+        {
+            return (0, 0);
+        }
+
+        var verses = text.Verses.ToDictionary(verse => verse.Key);
+        int set = 0, cleared = 0;
+        foreach (var row in rows)
+        {
+            var key = WordKey.Parse(row.Own, _slug);
+            if (!verses.TryGetValue(key.Verse, out var verse) || key.Position < 1 || key.Position > verse.Words.Count)
+            {
+                throw Unmatched(row, "the text has no such word");
+            }
+
+            var word = verse.Words[key.Position - 1];
+            var (surface, number) = NumberedWord(row);
+            if (word.Surface != surface)
+            {
+                throw Unmatched(row, $"the word reads \"{word.Surface}\"");
+            }
+
+            if (word.Strong != number)
+            {
+                throw Unmatched(row, word.Strong is null ? "the word carries no number" : $"the word carries {word.Strong}");
+            }
+
+            if (word.Strong == row.After)
+            {
+                throw Unmatched(row, "the word already carries the number the row gives it");
+            }
+
+            word.Strong = row.After;
+            if (row.After is null)
+            {
+                cleared++;
+            }
+            else
+            {
+                set++;
+            }
+        }
+
+        return (set, cleared);
+    }
+
+    /// <summary>A <c>strong</c> row's <c>before</c>: the word as it reads, and the number it carries, if any, after a space.</summary>
+    private (string Surface, string? Number) NumberedWord(TextCorrection row)
+    {
+        var before = row.Before ?? throw Unmatched(row, "a strong row names in before the word as it reads and the number it carries");
+        var space = before.LastIndexOf(' ');
+        return space < 0 ? (before, null) : (before[..space], before[(space + 1)..]);
     }
 
     /// <summary>The verses a <c>block</c> row says the source stores the block under again: in its chapter, after it.</summary>

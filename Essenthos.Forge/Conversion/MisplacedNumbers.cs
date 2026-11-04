@@ -1,0 +1,233 @@
+using System.Text.Json;
+using Essenthos.Core.Loading;
+using Essenthos.Core.Products;
+
+namespace Essenthos.Core.Conversion;
+
+/// <summary>
+/// Luther 1912's Strong numbers taken off the German pronouns and auxiliaries that cannot render the word they name.
+///
+/// <para>
+/// The tagging descends from the Zefania module of 2005, whose number follows the phrase it renders
+/// (<c>gekauft ist&lt;4735&gt;</c>); eBible's file puts it on the phrase's last word alone, and the module's own
+/// slips put it on a neighbour. Either way a number lands on <em>ist</em>, <em>hatte</em>, <em>werden</em>, <em>er</em> or
+/// <em>wir</em> while naming a noun, a preposition or a particle: Genesis 4:17's <em>er</em> carries H5892 'town', Micah 4:1's
+/// <em>werden</em> H5921 'upon', Matthew 3:10's <em>ist</em> G2235 'already'. A Strong pairing then joins the pronoun to the
+/// noun. A sample of 30 such tags read by hand (TSK-1471) found the number wrong on the word in 13, right in 6 (a pronoun
+/// standing for the noun it names, <em>hatte</em> for יֵשׁ) and the end of a phrase in 9.
+/// </para>
+///
+/// <para>
+/// What a number names is read from the originals' own words: the part of speech BHSA or Nestle 1904 gives the words that
+/// carry it most often. Then, for each tagged word:
+/// <list type="bullet">
+/// <item>an auxiliary (a form of <em>sein</em>, <em>haben</em>, <em>werden</em> or a modal) carrying a number of a word no
+/// auxiliary renders by itself (not a verb, pronoun, name or interjection, nor one of the words an auxiliary does render:
+/// יֵשׁ, אַיִן, עוֹד, the conditional אִם/לוּ/לוּלֵא/εἰ/ἐάν that German renders by putting the verb first, εἴτε, בַּעַל
+/// 'owner' as <em>der … hat</em>): the number moves to the word before it where that word is a content word with no number
+/// and the verse carries the number nowhere else (the phrase's head), and is cleared otherwise; a modal keeps a noun or an
+/// adjective it may render (ἀνάγκη, δυνατός) where nothing takes the number;</item>
+/// <item>a pronoun after an untagged German preposition, carrying a Greek preposition's number: the number moves to the
+/// preposition (<em>zu ihnen</em> for πρὸς αὐτούς);</item>
+/// <item>a subject pronoun (<em>er</em>, <em>ich</em>, <em>du</em>, <em>wir</em>) carrying the number of a preposition,
+/// conjunction, adverb, particle, negation or article: cleared;</item>
+/// <item>any other pronoun carrying such a number of the Greek, or of a Hebrew conjunction: cleared. A Hebrew preposition,
+/// noun, adverb or negation keeps it: the German pronoun renders its suffix (<em>vor dir</em> for לְפָנֶיךָ).</item>
+/// </list>
+/// A capitalised form inside a sentence is a noun (<em>Habe</em>, <em>Waren</em>), and <em>sein</em> is the verb only where
+/// nothing but a function word follows it. A number the rules miss is put right at the word in the text's corrections
+/// file.
+/// </para>
+/// </summary>
+internal sealed class MisplacedNumbers : ITextStage
+{
+    /// <summary>The originals whose words say what each number names: the Hebrew Bible's, then the Greek New Testament's.</summary>
+    private static readonly string[] Originals = [BhsaTextSource.Slug, NestleTextSource.Slug];
+
+    private static readonly HashSet<string> Subjects = new(["er", "ich", "du", "wir"], StringComparer.Ordinal);
+
+    private static readonly HashSet<string> Pronouns = new(
+        ["sie", "es", "ihr", "man", "ihn", "ihm", "ihnen", "mich", "mir", "dich", "dir", "uns", "euch", "sich"], StringComparer.Ordinal);
+
+    private static readonly HashSet<string> Modals = new(
+        ["soll", "sollst", "sollen", "sollt", "sollte", "sollten", "will", "willst", "wollen", "wollt", "wollte", "wollten", "mag", "mögen",
+         "möge", "kann", "kannst", "können", "könnt", "konnte", "konnten", "muß", "mußt", "müssen", "müßt", "mußte", "mußten", "darf", "dürfen"],
+        StringComparer.Ordinal);
+
+    private static readonly HashSet<string> Auxiliaries = new(
+        ["ist", "war", "sind", "waren", "bin", "bist", "seid", "sei", "seien", "wäre", "wären", "gewesen", "sein", "hat", "hatte", "hatten",
+         "haben", "habe", "hast", "habt", "hätte", "hätten", "hättest", "gehabt", "wird", "werden", "wurde", "wurden", "werde", "wirst",
+         "werdet", "würde", "würden", "worden", "ward", .. Modals],
+        StringComparer.Ordinal);
+
+    private static readonly HashSet<string> Prepositions = new(
+        ["zu", "von", "in", "an", "auf", "mit", "bei", "nach", "aus", "für", "über", "unter", "vor", "durch", "um", "gegen", "ohne", "zum",
+         "zur", "im", "am", "vom", "ins", "wider", "samt", "gen"],
+        StringComparer.Ordinal);
+
+    /// <summary>Words that are never the head of a phrase whose number its auxiliary carries.</summary>
+    private static readonly HashSet<string> Function = new(
+        [.. Subjects, .. Pronouns, .. Auxiliaries, .. Prepositions,
+         "der", "die", "das", "den", "dem", "des", "ein", "eine", "einen", "einem", "einer", "eines", "und", "oder", "aber", "denn", "daß",
+         "wenn", "als", "wie", "so", "da", "nicht", "ja", "auch", "noch", "schon", "nur", "sehr",
+         "mein", "meine", "meinen", "meinem", "meiner", "meines", "dein", "deine", "deinen", "deinem", "deiner", "deines", "seine",
+         "seinen", "seinem", "seiner", "seines", "ihre", "ihren", "ihrem", "ihrer", "ihres", "unser", "unsre", "unsere", "unsern", "unserm",
+         "unsres", "euer", "eure", "euren", "eurem", "eurer", "eures"],
+        StringComparer.Ordinal);
+
+    /// <summary>Parts of speech (BHSA's and Nestle's) of a word an auxiliary renders by itself.</summary>
+    private static readonly HashSet<string> RenderedByAuxiliaries = new(
+        ["verb", "pron", "prps", "prde", "prin", "inrg", "nmpr", "intj"], StringComparer.Ordinal);
+
+    /// <summary>Parts of speech of a word no pronoun stands for.</summary>
+    private static readonly HashSet<string> NeverReferred = new(
+        ["prep", "conj", "adv", "advb", "ptcl", "nega", "det", "art"], StringComparer.Ordinal);
+
+    private static readonly HashSet<string> Nouns = new(["subs", "noun", "adj", "adjv"], StringComparer.Ordinal);
+
+    /// <summary>Numbers a German auxiliary or pronoun does render, whatever their part of speech.</summary>
+    private static readonly HashSet<string> Rendered = new(
+        ["H3426", "H369", "H5750", "H518", "H3863", "H3884", "G1487", "G1437", "G1535", "H1167"], StringComparer.Ordinal);
+
+    /// <summary>Whether a German word is a form of <em>sein</em>, <em>haben</em>, <em>werden</em> or a modal verb.</summary>
+    public static bool IsAuxiliary(string surface) => Auxiliaries.Contains(surface.ToLowerInvariant());
+
+    public bool AppliesTo(string slug) => slug == EbibleTextSource.Luther;
+
+    public IReadOnlyList<string> Sources(string slug) => [];
+
+    public IReadOnlyList<string> Products(string slug) => [.. Originals.Select(TextWord.ProductOf)];
+
+    /// <summary>What the stage did to the text's numbers.</summary>
+    internal sealed record Outcome(int Moved, int Cleared)
+    {
+        public override string ToString() => $"{Moved} moved to the word before, {Cleared} cleared";
+    }
+
+    public void Apply(ConvertedText text, string resources)
+    {
+        var store = new ProductStore(resources);
+        var outcome = Place(text.Verses, Classes(store));
+        text.Provenance.Add(new("strong-placed",
+            $"numbers on German pronouns and auxiliaries that name a word neither renders, by the part of speech {string.Join(" and ", Originals)} give it: {outcome}"));
+    }
+
+    /// <summary>Moves or clears the misplaced numbers of <paramref name="verses"/>; <paramref name="classes"/> gives each number its part of speech.</summary>
+    internal static Outcome Place(IReadOnlyList<ConvertedVerse> verses, IReadOnlyDictionary<string, string> classes)
+    {
+        int moved = 0, cleared = 0;
+        foreach (var verse in verses)
+        {
+            var words = verse.Words;
+            var carried = words.Where(w => w.Strong is not null).GroupBy(w => w.Strong!).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
+            for (var at = 0; at < words.Count; at++)
+            {
+                var word = words[at];
+                if (word.Strong is not { } number || Rendered.Contains(number) || !classes.TryGetValue(number, out var part))
+                {
+                    continue;
+                }
+
+                var before = at > 0 ? words[at - 1] : null;
+                var lower = word.Surface.ToLowerInvariant();
+                var auxiliary = Auxiliaries.Contains(lower)
+                                && !(char.IsUpper(word.Surface[0]) && before is not null && !EndsSentence(before))
+                                && !(lower == "sein" && at + 1 < words.Count && !Function.Contains(words[at + 1].Surface));
+                switch (Decide(lower, auxiliary, number, part, before, carried[number]))
+                {
+                    case Placement.Move:
+                        before!.Strong = number;
+                        word.Strong = null;
+                        moved++;
+                        break;
+                    case Placement.Clear:
+                        word.Strong = null;
+                        cleared++;
+                        break;
+                }
+            }
+        }
+
+        return new Outcome(moved, cleared);
+    }
+
+    private enum Placement
+    {
+        Keep,
+        Move,
+        Clear,
+    }
+
+    private static Placement Decide(string lower, bool auxiliary, string number, string part, ConvertedWord? before, int carried)
+    {
+        var beforeFree = before is not null && before.Strong is null;
+        if (auxiliary && !RenderedByAuxiliaries.Contains(part))
+        {
+            if (beforeFree && carried == 1 && !Function.Contains(before!.Surface.ToLowerInvariant()))
+            {
+                return Placement.Move;
+            }
+
+            return Modals.Contains(lower) && Nouns.Contains(part) ? Placement.Keep : Placement.Clear;
+        }
+
+        var greek = number[0] == 'G';
+        if ((Subjects.Contains(lower) || Pronouns.Contains(lower)) && part == "prep" && greek && beforeFree
+            && Prepositions.Contains(before!.Surface.ToLowerInvariant()))
+        {
+            return Placement.Move;
+        }
+
+        if (Subjects.Contains(lower) && NeverReferred.Contains(part))
+        {
+            return Placement.Clear;
+        }
+
+        return Pronouns.Contains(lower) && NeverReferred.Contains(part) && (greek || part == "conj") ? Placement.Clear : Placement.Keep;
+    }
+
+    private static bool EndsSentence(ConvertedWord word) => word.Trailer.IndexOfAny(['.', '!', '?', ':', '“', '"', '(']) >= 0;
+
+    /// <summary>Each number's part of speech: the one the originals give the words carrying it most often.</summary>
+    internal static Dictionary<string, string> Classes(ProductStore store)
+    {
+        var counts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+        foreach (var slug in Originals)
+        {
+            using var reader = store.Open(TextWord.ProductOf(slug), TextWord.Schema(slug));
+            foreach (var word in reader.Rows())
+            {
+                if (word.Strong is not { } number || PartOfSpeech(word.Morphology) is not { } part)
+                {
+                    continue;
+                }
+
+                if (!counts.TryGetValue(number, out var parts))
+                {
+                    counts[number] = parts = new Dictionary<string, int>(StringComparer.Ordinal);
+                }
+
+                parts[part] = parts.GetValueOrDefault(part) + 1;
+            }
+        }
+
+        return counts.ToDictionary(
+            entry => entry.Key,
+            entry => entry.Value.OrderByDescending(p => p.Value).ThenBy(p => p.Key, StringComparer.Ordinal).First().Key,
+            StringComparer.Ordinal);
+    }
+
+    private static string? PartOfSpeech(string? morphology)
+    {
+        if (morphology is null)
+        {
+            return null;
+        }
+
+        using var document = JsonDocument.Parse(morphology);
+        return document.RootElement.ValueKind == JsonValueKind.Object && document.RootElement.TryGetProperty("pos", out var pos)
+                                                                     && pos.ValueKind == JsonValueKind.String
+            ? pos.GetString()
+            : null;
+    }
+}

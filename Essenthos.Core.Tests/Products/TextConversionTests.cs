@@ -288,6 +288,93 @@ public sealed class TextConversionTests : IDisposable
         convert.Should().Throw<InvalidOperationException>().WithMessage("*11.17:22 does not read what 11.17:20 reads*");
     }
 
+    /// <summary>Genesis 1:1 with a Strong number on each content word, one of them wrong (<em>the</em> carrying H776).</summary>
+    private static CataloguedText Numbered() => new(Slug, ["Test/source.txt"], (_, _) => new TextSource(Definition,
+    [
+        new BookDraft(1, 1, "Genesis", "gen",
+        [
+            new ChapterDraft(1,
+            [
+                new VerseDraft(1,
+                [
+                    new WordDraft("In", " "), new WordDraft("the", " ", StrongNumber: "H776"), new WordDraft("beginning", " ", StrongNumber: "H7225"),
+                    new WordDraft("God", " ", StrongNumber: "H430"), new WordDraft("created", string.Empty, StrongNumber: "H1254"),
+                ]),
+            ]),
+        ]),
+    ]));
+
+    [Fact]
+    public void AStrongCorrectionSetsOrClearsTheNumberOfTheWordItNames()
+    {
+        Corrections(
+            new TextCorrection("1.1:1.4", TextCorrection.Strong, "God H430", "H433", "the singular"),
+            new TextCorrection("1.1:1.2", TextCorrection.Strong, "the H776", null, "the article renders no word"),
+            new TextCorrection("1.1:1.1", TextCorrection.Strong, "In", "H9003", "the preposition"));
+        var store = new ProductStore(_resources);
+        TextConverter.Convert(store, Numbered());
+
+        Words(store).Select(w => (w.Surface, w.Strong)).Should().Equal(
+            ("In", "H9003"), ("the", null), ("beginning", "H7225"), ("God", "H433"), ("created", "H1254"));
+    }
+
+    [Theory]
+    [InlineData("God H1", "*1.1:1.4*the word carries H430*")]
+    [InlineData("Gods H430", "*1.1:1.4*the word reads \"God\"*")]
+    [InlineData("God", "*1.1:1.4*the word carries H430*")]
+    public void AStrongCorrectionWrittenAgainstAnotherWordOrNumberStopsTheConversion(string before, string message)
+    {
+        Corrections(new TextCorrection("1.1:1.4", TextCorrection.Strong, before, "H433", "the singular"));
+
+        var convert = () => TextConverter.Convert(new ProductStore(_resources), Numbered());
+
+        convert.Should().Throw<InvalidOperationException>().WithMessage(message);
+    }
+
+    [Fact]
+    public void AStrongCorrectionGivingTheNumberTheWordAlreadyCarriesStopsTheConversion()
+    {
+        Corrections(new TextCorrection("1.1:1.4", TextCorrection.Strong, "God H430", "H430", "nothing to put right"));
+
+        var convert = () => TextConverter.Convert(new ProductStore(_resources), Numbered());
+
+        convert.Should().Throw<InvalidOperationException>().WithMessage("*already carries*");
+    }
+
+    /// <summary>Real verses of Luther 1912, each with the numbers its file prints, and what the stage leaves of them.</summary>
+    [Theory]
+    [InlineData("die Völker:H5971 werden:H5921 dazu laufen:H5102", "die Völker:H5971 werden dazu laufen:H5102")]
+    [InlineData("die von den Kindern:H1121 Heth:H2845 gekauft ist:H4735", "die von den Kindern:H1121 Heth:H2845 gekauft:H4735 ist")]
+    [InlineData("sprach zu ihnen:G4314", "sprach zu:G4314 ihnen")]
+    [InlineData("Er:H5921 weissagt:H5012 über:H5921 mich", "Er weissagt:H5012 über:H5921 mich")]
+    [InlineData("vor dir:H6440 her geht:H5674", "vor dir:H6440 her geht:H5674")]
+    [InlineData("alles was er hatte:H3426", "alles was er hatte:H3426")]
+    [InlineData("und alle ihre Habe:H2428", "und alle ihre Habe:H2428")]
+    [InlineData("Ist:H518 der HERR:H3068 Gott", "Ist:H518 der HERR:H3068 Gott")]
+    [InlineData("so schlecht sind:H7455 vor Bosheit:H7455", "so schlecht sind vor Bosheit:H7455")]
+    [InlineData("nannte:H7121 er:H5892 nach", "nannte:H7121 er:H5892 nach")]
+    [InlineData("Es:G1161 ist:G2235 schon", "Es ist schon")]
+    public void LuthersNumbersOnPronounsAndAuxiliariesThatRenderNeitherMoveToTheHeadOrGo(string read, string placed)
+    {
+        Dictionary<string, string> classes = new()
+        {
+            ["H5971"] = "subs", ["H5921"] = "prep", ["H5102"] = "verb", ["H1121"] = "subs", ["H2845"] = "nmpr", ["H4735"] = "subs",
+            ["G4314"] = "prep", ["H5012"] = "verb", ["H6440"] = "subs", ["H5674"] = "verb", ["H3426"] = "subs", ["H2428"] = "subs",
+            ["H518"] = "conj", ["H3068"] = "nmpr", ["H7455"] = "subs", ["H7121"] = "verb", ["H5892"] = "subs", ["G1161"] = "conj",
+            ["G2235"] = "adv",
+        };
+        var words = read.Split(' ').Select(token => token.Split(':')).Select(parts => new ConvertedWord
+        {
+            Surface = parts[0],
+            Trailer = " ",
+            Strong = parts.Length > 1 ? parts[1] : null,
+        }).ToList();
+
+        MisplacedNumbers.Place([new ConvertedVerse(new VerseKey(1, 1, 1), 1, words)], classes);
+
+        string.Join(' ', words.Select(w => w.Strong is null ? w.Surface : $"{w.Surface}:{w.Strong}")).Should().Be(placed);
+    }
+
     [Fact]
     public void ACorrectionThatDoesNotMeetWhatTheSourceReadsStopsTheConversion()
     {

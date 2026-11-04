@@ -1,0 +1,29 @@
+# product    Essenthos/texts/LUTH1912/corrections.tsv
+# producer   by hand
+# kinds      strong: the word's Strong number becomes after (none where after is \N); before is the word and, after a space, the number it carries until then
+# note       numbers the eBible file prints on the wrong word, read against BHSA and Nestle 1904 by hand (TSK-1471, PRB-1469); the converter's MisplacedNumbers stage has already moved or cleared the numbers it can tell are misplaced
+own	kind	before	after	why
+1.4:17.18	strong	die	H5892	the relative die renders the second הָעִיר, whose number the file prints on er
+1.4:17.20	strong	er H5892	\N	er is the subject of וַיִּקְרָא; the town's number belongs to die
+5.9:3.3	strong	du H3117	\N	du is the subject of וְיָדַעְתָּ; the day's number belongs to heute
+5.9:3.5	strong	heute	H3117	heute renders הַיּוֹם
+6.2:12.10	strong	ich H2617	\N	ich is the subject of עָשִׂיתִי; Barmherzigkeit renders חֶסֶד
+10.21:12.24	strong	sie H853	\N	sie is the subject of גָּנְבוּ; the object marker אֹתָם is the relative die
+11.10:2.28	strong	sie H413	\N	sie is the subject of וַתְּדַבֵּר; אֵלָיו is ihm
+11.10:2.29	strong	ihm	H413	ihm renders אֵלָיו
+16.10:37.1	strong	Auch H7225	\N	רֵאשִׁית is das Erste; the file repeats its number on auch and wir
+16.10:37.3	strong	wir H7225	\N	רֵאשִׁית is das Erste; the file repeats its number on auch and wir
+19.22:1.9	strong	früh	H7837	früh renders הַשַּׁחַר, the dawn
+19.22:1.10	strong	gejagt H7837	\N	the dawn's number is früh's; gejagt renders nothing of the title
+19.22:1.21	strong	ich H1697	\N	ich is no word: דִּבְרֵי שַׁאֲגָתִי is the words of my roaring
+19.39:3.14	strong	ich H784	\N	ich is the speaker; the fire is entzündet's
+22.8:9.7	strong	wir H2918	\N	Bollwerk renders טִירַת; the file repeats its number on wir
+26.15:7.12	strong	fressen	H398	fressen renders תֹּאכְלֵם
+26.15:7.13	strong	soll H3318	\N	the numbers of the two clauses stand on each other's auxiliaries
+26.15:7.20	strong	herausgekommen	H3318	herausgekommen renders יָצָאוּ
+26.15:7.21	strong	sind H398	\N	the numbers of the two clauses stand on each other's auxiliaries
+26.27:7.2	strong	Segel H4374	H4666	Segel renders מִפְרָשֵׂךְ, the sail
+26.27:7.13	strong	Panier H4666	H5251	Panier renders נֵס, the banner
+26.27:7.17	strong	Decken H5251	H4374	Decken renders מְכַסֵּךְ, the covering
+47.1:8.19	strong	über G916	G2596	über die Maßen renders καθ' ὑπερβολήν
+47.1:8.22	strong	beschwert G2596	G916	beschwert renders ἐβαρήθημεν
