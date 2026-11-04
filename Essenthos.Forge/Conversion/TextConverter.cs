@@ -67,6 +67,12 @@ internal interface ITextStage
 
     IReadOnlyList<string> Sources(string slug);
 
+    /// <summary>
+    /// Other texts' products the stage reads, by product name (<c>texts/NESTLE1904/words</c>): inputs like
+    /// <see cref="Sources"/>, found in whichever format they were written, and made before this text is converted.
+    /// </summary>
+    IReadOnlyList<string> Products(string slug) => [];
+
     void Apply(ConvertedText text, string resources);
 }
 
@@ -87,10 +93,16 @@ internal static class TextConverter
 {
     public static IReadOnlyList<ITextStage> Stages { get; } = TextStages.All;
 
+    /// <summary>Whether a text's stages read another text's products, so that it is converted after the texts that do not.</summary>
+    public static bool ReadsOtherTexts(string slug) => Stages.Any(stage => stage.AppliesTo(slug) && stage.Products(slug).Count > 0);
+
     public static IReadOnlyList<ProductInput> Inputs(ProductStore store, CataloguedText text)
     {
         var paths = new List<string>(text.Sources);
         paths.AddRange(Stages.Where(stage => stage.AppliesTo(text.Slug)).SelectMany(stage => stage.Sources(text.Slug)));
+        paths.AddRange(Stages.Where(stage => stage.AppliesTo(text.Slug)).SelectMany(stage => stage.Products(text.Slug))
+            .Select(product => store.Find(product) ?? throw new FileNotFoundException(
+                $"{text.Slug} is converted from {product}, which has not been made under {store.ResourcesPath}; convert that text first.")));
         foreach (var product in (string[])[TextCorrections.ProductOf(text.Slug), TextWordId.ProductOf(text.Slug)])
         {
             if (store.Find(product) is { } found)

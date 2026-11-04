@@ -94,25 +94,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var words = await Words(connection, cancellationToken);
-        var nominatives = await db.EntityNameForms
-            .Where(f => f.GrammaticalCase == GrammaticalCases.Nominative)
-            .Select(f => new { f.EntityId, f.Language, f.Form })
-            .ToDictionaryAsync(f => (f.EntityId, f.Language), f => f.Form, cancellationToken);
-
-        var renderings = Renderings.Of(words, nominatives).ToList();
-
-        // A name a pass read off a few verses gives way to the one the texts print where the record
-        // is named, and the texts are headed again by it.
-        var renamed = await NamesAsPrinted(renderings, cancellationToken);
-        foreach (var name in renamed)
-        {
-            nominatives[(name.EntityId, name.Language)] = name.Cases[GrammaticalCases.Nominative]!;
-        }
-
-        if (renamed.Count > 0)
-        {
-            renderings = [.. Renderings.Of(words, nominatives)];
-        }
+        var (renderings, spellings, searchCount, renamed) = await Count(
+            words, asked => PrintedWords(connection, asked, cancellationToken), cancellationToken);
 
         // Only what changed is written, so a load that counts the same spellings leaves the rows as
         // they are, ids and all.
@@ -120,10 +103,6 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             .AsNoTracking()
             .Select(r => new { r.Id, Rendering = new Rendering(r.EntityId, r.TextId, r.Form, r.Folded, r.Occurrences, r.Heading) })
             .ToListAsync(cancellationToken);
-        var printed = await PrintedWords(connection, SearchSpellings.PrintedWordsToCount(words, renderings), cancellationToken);
-        var epithets = (await db.Entities.Where(e => SearchSpellings.EpithetRecords.Contains(e.Slug))
-            .Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
-        var (spellings, searchCount) = SearchSpellings.Of(words, renderings, printed, epithets);
         var standingSpellings = await db.EntitySearchSpellings
             .AsNoTracking()
             .Select(s => new { s.Id, Spelling = new SearchSpelling(s.EntityId, s.Form, s.Folded) })
@@ -195,6 +174,44 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         };
         logger.LogInformation("Counted how each text spells each name: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The spellings of every named word and those a search alone finds a record by, with the names in a language put
+    /// back to the spelling its texts print, counted from <paramref name="words"/>; nothing is written. The load reads the
+    /// words from <c>word_entity</c> and how often each form is printed from the words; the spellings index
+    /// (<c>Indexes.IndexLoad</c>) reads both from files.
+    /// </summary>
+    internal async Task<(List<Rendering> Renderings, List<SearchSpelling> Spellings, SearchSpellingCount Search, List<PrintedName> Renamed)> Count(
+        List<NamedWord> words,
+        Func<IEnumerable<(int Text, string Normalised)>, Task<Dictionary<(int Text, string Normalised), int>>> printedWords,
+        CancellationToken cancellationToken)
+    {
+        var nominatives = await db.EntityNameForms
+            .Where(f => f.GrammaticalCase == GrammaticalCases.Nominative)
+            .Select(f => new { f.EntityId, f.Language, f.Form })
+            .ToDictionaryAsync(f => (f.EntityId, f.Language), f => f.Form, cancellationToken);
+
+        var renderings = Renderings.Of(words, nominatives).ToList();
+
+        // A name a pass read off a few verses gives way to the one the texts print where the record
+        // is named, and the texts are headed again by it.
+        var renamed = await NamesAsPrinted(renderings, cancellationToken);
+        foreach (var name in renamed)
+        {
+            nominatives[(name.EntityId, name.Language)] = name.Cases[GrammaticalCases.Nominative]!;
+        }
+
+        if (renamed.Count > 0)
+        {
+            renderings = [.. Renderings.Of(words, nominatives)];
+        }
+
+        var printed = await printedWords(SearchSpellings.PrintedWordsToCount(words, renderings));
+        var epithets = (await db.Entities.Where(e => SearchSpellings.EpithetRecords.Contains(e.Slug))
+            .Select(e => e.Id).ToListAsync(cancellationToken)).ToHashSet();
+        var (spellings, searchCount) = SearchSpellings.Of(words, renderings, printed, epithets);
+        return (renderings, spellings, searchCount, renamed);
     }
 
     /// <summary>
