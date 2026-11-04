@@ -33,7 +33,7 @@ internal interface IPairSource
     /// </summary>
     IEnumerable<string> Inputs(ProductStore store, string pair);
 
-    /// <summary>Its rows for the pair, with no id: the writer keeps each shape's id from the file before.</summary>
+    /// <summary>Its rows for the pair; a link's id follows from its words when the merge numbers it.</summary>
     IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log);
 }
 
@@ -88,7 +88,8 @@ internal static class PairSources
         var store = texts.Store;
         var sources = All.Where(source => source.File == file && source.States(pair)).ToList();
         var inputs = MethodFiles.TextInputs(store, pair)
-            .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Distinct(StringComparer.Ordinal).Select(store.Input))
+            .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
+            .DistinctBy(input => input.Path)
             .ToList();
         var product = MappingProducts.Of(pair, file);
         if (!force && store.Exists(product) && !store.NeedsBuild(product, ProductKind.Machine, inputs))

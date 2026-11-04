@@ -108,8 +108,7 @@ internal sealed class KingJamesGreekSource : IPairSource
                     continue;
                 }
 
-                rows.Add(new MappingRow(null,
-                    MappingText.Keys(draft.English.Select(english.Key)),
+                rows.Add(new MappingRow(MappingText.Keys(draft.English.Select(english.Key)),
                     MappingText.Keys(draft.Greek.Select(id => greek.Key(id - offset))),
                     "renders", Method, draft.Confidence, source, null, null, null));
             }

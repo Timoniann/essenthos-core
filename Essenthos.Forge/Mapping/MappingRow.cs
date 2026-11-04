@@ -6,9 +6,8 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// One method's claim that some words of one text correspond to some words of another, as a method
 /// file of <c>mapping/&lt;FROM&gt;-&lt;TO&gt;/&lt;method&gt;</c> holds it (DOC-0224 §6.1). A link several
-/// methods arrived at is a row in each of their files, with the same <see cref="Id"/>.
+/// methods arrived at is a row in each of their files naming the same words; its id is the merge's (<see cref="LinkIds"/>).
 /// </summary>
-/// <param name="Id">The link's id in the corpus it was exported from, kept so that ids never change; null for a row a generator wrote since.</param>
 /// <param name="From">The words of the first text, own keys in key order, space-separated; empty for <c>omits</c>.</param>
 /// <param name="To">The words of the second text, the same way; empty for <c>expands</c>.</param>
 /// <param name="Relation">renders, equals, expands, omits or transposes.</param>
@@ -19,7 +18,6 @@ namespace Essenthos.Core.Mapping;
 /// <param name="Roles">Words of the first text that only write another word's form or belong to its phrase: <c>key=role@head</c>, space-separated.</param>
 /// <param name="Status">Null while the row stands; what the merge decided otherwise (<see cref="MappingStatus"/>).</param>
 internal sealed record MappingRow(
-    long? Id,
     string From,
     string To,
     string Relation,
@@ -31,7 +29,6 @@ internal sealed record MappingRow(
     string? Status)
 {
     public static readonly ProductSchema<MappingRow> Schema = new ProductSchema<MappingRow>()
-        .OptionalInteger("id", r => r.Id)
         .Text("from", r => r.From)
         .Text("to", r => r.To)
         .Text("relation", r => r.Relation)
@@ -42,8 +39,8 @@ internal sealed record MappingRow(
         .OptionalText("roles", r => r.Roles)
         .OptionalText("status", r => r.Status)
         .Reads(row => new MappingRow(
-            row.IntegerOrNull(0), row.Text(1), row.Text(2), row.Text(3), row.Text(4),
-            MappingText.Confidence(row.TextOrNull(5)), row.Text(6), row.TextOrNull(7), row.TextOrNull(8), row.TextOrNull(9)));
+            row.Text(0), row.Text(1), row.Text(2), row.Text(3),
+            MappingText.Confidence(row.TextOrNull(4)), row.Text(5), row.TextOrNull(6), row.TextOrNull(7), row.TextOrNull(8)));
 
     /// <summary>The words the row names, which decide whether two rows are one link.</summary>
     public string Shape => From + "|" + To;
@@ -178,7 +175,7 @@ internal sealed record RulingRow(string Action, string From, string To, string R
         .Reads(row => new RulingRow(row.Text(0), row.Text(1), row.Text(2), row.Text(3), row.Text(4), row.Text(5)));
 }
 
-/// <summary>Where each pair's new links take their ids from: <c>mapping/pairs</c>, one ordinal per pair, never reused.</summary>
+/// <summary>The top bits of each pair's link ids (<see cref="LinkIds"/>): <c>mapping/pairs</c>, one ordinal per pair, never reused.</summary>
 internal sealed record PairOrdinalRow(string Pair, long Ordinal)
 {
     public static readonly ProductSchema<PairOrdinalRow> Schema = new ProductSchema<PairOrdinalRow>()

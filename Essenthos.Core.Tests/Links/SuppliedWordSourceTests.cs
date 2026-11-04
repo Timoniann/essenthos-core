@@ -50,11 +50,11 @@ public sealed class SuppliedWordSourceTests : IDisposable
     public void A_marked_word_another_link_renders_stays_rendered_unless_only_the_aligner_guesses_it_over_marked_words()
     {
         var store = Store();
-        Method(store, MappingMethods.Strong, new MappingRow(null, "1.1:1.3", "1.1:1.2", "renders", MappingMethods.Strong, 0.9, "numbers", null, null, null));
+        Method(store, MappingMethods.Strong, new MappingRow("1.1:1.3", "1.1:1.2", "renders", MappingMethods.Strong, 0.9, "numbers", null, null, null));
         Method(store, MappingMethods.Aligner,
-            new MappingRow(null, "1.1:1.5", "1.1:1.3", "renders", MappingMethods.Aligner, 0.4, "SIL.Machine ibm4", null, null, null),
-            new MappingRow(null, "1.1:1.2", "1.1:1.1", "renders", MappingMethods.Aligner, 0.4, "SIL.Machine ibm4", null, null, null));
-        Method(store, MappingMethods.Names, new MappingRow(null, "1.1:1.2", "1.1:1.1", "renders", MappingMethods.Names, null, "names", null, null, null));
+            new MappingRow("1.1:1.5", "1.1:1.3", "renders", MappingMethods.Aligner, 0.4, "SIL.Machine ibm4", null, null, null),
+            new MappingRow("1.1:1.2", "1.1:1.1", "renders", MappingMethods.Aligner, 0.4, "SIL.Machine ibm4", null, null, null));
+        Method(store, MappingMethods.Names, new MappingRow("1.1:1.2", "1.1:1.1", "renders", MappingMethods.Names, null, "names", null, null, null));
 
         var rows = new SuppliedWordSource().Rows(new ProductTexts(store), Pair, _ => { }).ToList();
 
@@ -81,7 +81,7 @@ public sealed class SuppliedWordSourceTests : IDisposable
         var store = new ProductStore(_root);
         Text(store, "RP2018", "critical-edition", "grc", ("40.1:1", [("Βίβλος", null), ("γενέσεως", null)]));
         Text(store, "TR1894", "printed-edition", "grc", ("40.1:1", [("Βιβλος", null), ("γενεσεως", null)]));
-        Method(store, MappingMethods.Strong, new MappingRow(null, "40.1:1.2", "40.1:1.1", "renders", MappingMethods.Strong, 0.9, "numbers", null, null, null));
+        Method(store, MappingMethods.Strong, new MappingRow("40.1:1.2", "40.1:1.1", "renders", MappingMethods.Strong, 0.9, "numbers", null, null, null));
         var texts = new ProductTexts(store);
 
         var standing = PairStanding.Read(store, "RP2018-TR1894", [MappingMethods.Strong], texts["RP2018"], texts["TR1894"]);

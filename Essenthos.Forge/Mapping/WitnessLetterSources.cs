@@ -56,7 +56,7 @@ internal sealed class GreekLetterSource : IPairSource
 
     internal static MappingRow Row(ProductText from, ProductText to, LinkRelation relation, List<long> fromIds, List<long> toIds,
         double confidence, string source) =>
-        new(null, MappingText.Keys(fromIds.Select(from.Key)), MappingText.Keys(toIds.Select(to.Key)),
+        new(MappingText.Keys(fromIds.Select(from.Key)), MappingText.Keys(toIds.Select(to.Key)),
             relation.ToString().ToLowerInvariant(), MappingMethods.Lexical, confidence, source, null, null, null);
 }
 

@@ -205,7 +205,7 @@ internal sealed class StrongNumberSource : IPairSource
                         .ToList();
                 from.AddRange(attached.Select(pair => pair.Word));
                 regained += attached.Count;
-                var row = new MappingRow(null, MappingText.Keys(from), MappingText.Keys(draft.To.Select(id => witness.Text.Key(against[(int)(id - offset)].Id))), "renders",
+                var row = new MappingRow(MappingText.Keys(from), MappingText.Keys(draft.To.Select(id => witness.Text.Key(against[(int)(id - offset)].Id))), "renders",
                     MappingMethods.Strong, draft.Confidence, source, null,
                     attached.Count == 0 ? null : string.Join(' ', attached.OrderBy(pair => pair.Word).Select(pair => $"{pair.Word.Own}=attached@{pair.Verb.Own}")),
                     null);

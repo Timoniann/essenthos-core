@@ -166,7 +166,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             {
                 var projection = new NamesProjection(store);
                 var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
-                return (await NamesLoad.Run(connectionString, projection, texts, cancellationToken)).Rows;
+                return (await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken)).Rows;
             });
         }
 
@@ -198,12 +198,13 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
     /// <summary>
     /// The products with tables whose file, hashed as it is now (a hand edit records nothing in the manifest), is not the one the
-    /// database was built from, and those gone or new since.
+    /// database was built from, and those gone or new since. A manifest entry whose file is gone is gone.
     /// </summary>
     private List<string> Changed(ProductHeader served)
     {
         var then = served.Inputs.ToDictionary(i => i.Path, i => i.Sha256, StringComparer.Ordinal);
-        var now = store.Manifest.Entries.Where(e => graph.Find(e.Product) is { Declaration.Tables.Count: > 0 })
+        var now = store.Manifest.Entries
+            .Where(e => graph.Find(e.Product) is { Declaration.Tables.Count: > 0 } && File.Exists(store.FullPath(e.Product)))
             .ToDictionary(e => e.Product, e => store.Hasher.Hash(e.Product), StringComparer.Ordinal);
         return [.. now.Where(n => !then.TryGetValue(n.Key, out var sha) || sha != n.Value).Select(n => n.Key)
             .Concat(then.Keys.Where(t => !now.ContainsKey(t))).Order(StringComparer.Ordinal)];
@@ -215,7 +216,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         await using var command = new NpgsqlCommand(
             """
             CREATE TEMP TABLE kept_names ON COMMIT DROP AS
-                SELECT w.word_id, e.slug, w.method, w.confidence, w.source, w.note FROM word_entity w JOIN entity e ON e.id = w.entity_id;
+                SELECT w.word_id, e.slug, w.method, w.confidence, w.source, w.note, w.role, w.origin FROM word_entity w JOIN entity e ON e.id = w.entity_id;
             CREATE TEMP TABLE kept_renderings ON COMMIT DROP AS
                 SELECT e.slug, r.text_id, r.form, r.folded, r.occurrences, r.heading FROM entity_rendering r JOIN entity e ON e.id = r.entity_id;
             CREATE TEMP TABLE kept_spellings ON COMMIT DROP AS
@@ -229,8 +230,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
     {
         await using var command = new NpgsqlCommand(
             """
-            INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
-                SELECT k.word_id, e.id, k.method, k.confidence, k.source, k.note FROM kept_names k JOIN entity e ON e.slug = k.slug;
+            INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note, role, origin)
+                SELECT k.word_id, e.id, k.method, k.confidence, k.source, k.note, k.role, k.origin FROM kept_names k JOIN entity e ON e.slug = k.slug;
             INSERT INTO entity_rendering (entity_id, text_id, form, folded, occurrences, heading)
                 SELECT e.id, k.text_id, k.form, k.folded, k.occurrences, k.heading FROM kept_renderings k JOIN entity e ON e.slug = k.slug;
             INSERT INTO entity_search_spelling (entity_id, form, folded)

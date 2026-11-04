@@ -72,7 +72,7 @@ internal sealed class PossessiveSource : IPairSource
                                  ?? Agreeing(words, at, +1, translation, linked, suffixed, form);
                 if (hebrewWord is { } agreed)
                 {
-                    rows.Add(new MappingRow(null, translation.Words[word].Key.Own.ToString(), hebrew.Words[agreed].Key.Own.ToString(),
+                    rows.Add(new MappingRow(translation.Words[word].Key.Own.ToString(), hebrew.Words[agreed].Key.Own.ToString(),
                         "renders", Method, PossessivePass.Confidence, PossessivePass.Source, null, null, null));
                 }
             }

@@ -88,8 +88,7 @@ internal sealed class ClearBibleSource : IPairSource
         var rows = new Dictionary<string, MappingRow>(StringComparer.Ordinal);
         foreach (var draft in joined.Drafts)
         {
-            var row = new MappingRow(null,
-                MappingText.Keys(draft.From.Select(translation.Key)),
+            var row = new MappingRow(MappingText.Keys(draft.From.Select(translation.Key)),
                 MappingText.Keys(draft.To.Select(witness.Key)),
                 Renders, Method, null, set.Statement, null, null, null);
             rows.TryAdd(row.Shape, row);

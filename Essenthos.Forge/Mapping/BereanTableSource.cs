@@ -139,8 +139,7 @@ internal sealed class BereanTableSource : IPairSource
         log($"{verses} verses, {drafts.Count} links; {silences.Absent} absent, {silences.Moved} moved, {silences.Joined} joined, "
             + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled; {divided} divided, {drifted} drifted, {disputed} disputed, "
             + $"{unframed} at an address the witness lacks");
-        return drafts.Select(draft => new MappingRow(null,
-            MappingText.Keys(draft.From.Select(english.Key)),
+        return drafts.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(english.Key)),
             MappingText.Keys(draft.To.Select(witnessText.Key)),
             draft.Relation.ToString().ToLowerInvariant(), Method, null, Source, null, null, null));
     }

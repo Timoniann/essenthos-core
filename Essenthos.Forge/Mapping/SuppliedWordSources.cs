@@ -58,7 +58,7 @@ internal sealed class KingJamesItalicsSource : IPairSource
 
             rows.AddRange(english.InVerse(verse)
                 .Where(id => english.Words[id].Supplied is not null)
-                .Select(id => new MappingRow(null, english.Key(id).Own.ToString(), string.Empty,
+                .Select(id => new MappingRow(english.Key(id).Own.ToString(), string.Empty,
                     LinkRelation.Expands.ToString().ToLowerInvariant(), Method, null, NewTestamentLinkLoader.SuppliedSource, null, null, null)));
         }
 
@@ -153,7 +153,7 @@ internal sealed class SuppliedWordSource : IPairSource
         var rows = runs
             .Select(run => run.Where(word => !kept.Contains(word.Own.ToString())).ToList())
             .Where(run => run.Count > 0)
-            .Select(run => new MappingRow(null, MappingText.Keys(run), string.Empty,
+            .Select(run => new MappingRow(MappingText.Keys(run), string.Empty,
                 LinkRelation.Expands.ToString().ToLowerInvariant(), Method, null, edition.Source, null, null, null))
             .ToList();
         log($"{absent.Count} marked words in {runs.Count} runs; {kept.Count} rendered by another link and kept so, "

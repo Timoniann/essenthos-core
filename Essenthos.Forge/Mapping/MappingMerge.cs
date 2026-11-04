@@ -16,7 +16,8 @@ namespace Essenthos.Core.Mapping;
 /// <item>a machine's link across two verses no verse link joins is withdrawn (<see cref="CrossingRule"/>).</item>
 /// </list>
 /// Nothing is deleted: every row stays in its method file, with what the merge decided in its status. The
-/// output is a function of the inputs and sorted by key, so a second merge of the same files writes the same bytes.
+/// output is a function of the inputs and sorted by key, so a second merge of the same files writes the same bytes; a
+/// link's id is derived from its words (<see cref="LinkIds"/>), never carried.
 /// </summary>
 internal static class MappingMerge
 {
@@ -25,7 +26,7 @@ internal static class MappingMerge
 
     /// <param name="Hashes">The text hash of each cited verse when the rows were made (<see cref="VerseHashRow"/>).</param>
     /// <param name="Manifests">Each text's verse manifest as it stands, or null where the text has none yet.</param>
-    /// <param name="PreviousIds">The ids an earlier final gave its links, by shape, so a link keeps its id.</param>
+    /// <param name="Ordinal">The pair's ordinal in <c>mapping/pairs</c>, the top bits of its links' ids.</param>
     /// <param name="Folds">The fold of each cited verse when the rows were made (<see cref="VerseFold"/>), where it was kept.</param>
     /// <param name="FoldNow">The fold of a verse of a text as its words stand, asked only of a verse whose text hash moved.</param>
     /// <param name="Remade">The method files a producer made from the two texts' words as they stand, each with the sources whose rows it
@@ -40,8 +41,7 @@ internal static class MappingMerge
         IReadOnlyList<RulingRow> Rulings,
         IReadOnlyDictionary<(string Text, VerseKey Verse), string> Hashes,
         IReadOnlyDictionary<string, IReadOnlyDictionary<VerseKey, string>?> Manifests,
-        IReadOnlyDictionary<string, long> PreviousIds,
-        long IdBase,
+        long Ordinal,
         IReadOnlyDictionary<(string Text, VerseKey Verse), string>? Folds = null,
         Func<string, VerseKey, string?>? FoldNow = null,
         PairFrames? Verses = null,
@@ -127,7 +127,7 @@ internal static class MappingMerge
         var (accepted, withdrawn, refinements) = Compete(candidates);
         var (orphans, bare, left) = KeepOrphans(accepted, withdrawn, pinned);
         accepted.Sort(CompareBySort);
-        var final = Finalise(input, accepted);
+        var (final, collisions) = Finalise(input, accepted);
         if (input.Verses is { } verses)
         {
             final = WithdrawCrossings(verses, accepted, final);
@@ -153,6 +153,12 @@ internal static class MappingMerge
             $"words of {input.FromText} the competition alone would leave with no link"));
         report.Add(new ReportRow("bare-words-left", string.Empty, string.Empty, left,
             $"words of {input.FromText} still with no link after the kept ones: their links are under {MappingMethods.OrphanFloor}"));
+        if (collisions > 0)
+        {
+            report.Add(new ReportRow("id-collisions", string.Empty, string.Empty, collisions,
+                "links whose words hashed to an id another link of the pair had taken, numbered by hashing again"));
+        }
+
         Report(input, entries, final, stale, lost, report);
         return new Output(final, methods, report);
     }
@@ -328,7 +334,7 @@ internal static class MappingMerge
                 pinned.Add(shape);
                 if (!entries.Any(e => e.Status is null && e.Row.Shape == shape))
                 {
-                    entries.Add(new Entry(MappingMethods.Ruling, -1, new MappingRow(null, from, to,
+                    entries.Add(new Entry(MappingMethods.Ruling, -1, new MappingRow(from, to,
                         ruling.Relation.Length == 0 ? "renders" : ruling.Relation, MappingMethods.Ruling, null,
                         "a ruling of this project: " + ruling.Reason, null, null, null), false));
                 }
@@ -574,17 +580,15 @@ internal static class MappingMerge
         return withdrawn.Count == 0 ? final : [.. final.Where(r => !withdrawn.Contains(r.From + "|" + r.To))];
     }
 
-    private static List<FinalRow> Finalise(Input input, List<Candidate> accepted)
+    /// <summary>The final's rows, links in key order, each numbered from its words.</summary>
+    private static (List<FinalRow> Final, int Collisions) Finalise(Input input, List<Candidate> accepted)
     {
-        var used = new HashSet<long>();
-        var next = input.PreviousIds.Values.Where(id => id >= input.IdBase && id < input.IdBase + PairOrdinals.Range).DefaultIfEmpty(input.IdBase - 1).Max() + 1;
+        var ids = new LinkIds.Allocator(input.Ordinal, input.Pair);
         var final = new List<FinalRow>(accepted.Count * 5 / 4);
         foreach (var candidate in accepted)
         {
-            var id = candidate.Rows.Select(r => r.Row.Id).Where(i => i is not null && !used.Contains(i.Value)).Min()
-                     ?? (input.PreviousIds.TryGetValue(candidate.Shape, out var previous) && !used.Contains(previous) ? previous : next++);
-            used.Add(id);
             var top = candidate.Top.Row;
+            var id = ids.Next(top.From, top.To);
             // The words' roles are the link's, whichever claim carries them: a source states the words and a verdict their roles.
             var roles = top.Roles ?? candidate.Rows.Select(r => r.Row.Roles).FirstOrDefault(r => r is not null);
             var seen = new HashSet<(Database.Entities.Enums.LinkMethod, string)>();
@@ -600,7 +604,7 @@ internal static class MappingMerge
             }
         }
 
-        return final;
+        return (final, ids.Collisions);
     }
 
     private static void Report(Input input, List<Entry> entries, List<FinalRow> final, HashSet<string> drawnStale,
@@ -640,6 +644,13 @@ internal static class MappingMerge
                     $"rows of {source} on verses whose text moved since {producer} wrote the file; {input.Pair} needs it run again")
                 : new ReportRow(NoProducer, method, source, rows,
                     $"rows of verses whose text moved, which no producer makes again: {input.Pair} has no {method} rows of this source there"));
+        }
+
+        var crossed = entries.Count(e => e.Index >= 0 && e.Status == MappingStatus.WithdrawnBy(CrossingRule.Name));
+        if (crossed > 0)
+        {
+            report.Add(new ReportRow("needs", CrossingRule.Name, MappingMethods.Regenerates(MappingMethods.Aligner), crossed,
+                $"machine links joining verses no verse link joins were withdrawn; {input.Pair} needs {MappingMethods.Regenerates(MappingMethods.Aligner)} again"));
         }
 
         report.Add(new ReportRow("links", string.Empty, string.Empty, final.Count(r => r.Settled), "links of the final"));

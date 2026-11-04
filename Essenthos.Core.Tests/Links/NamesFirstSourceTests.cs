@@ -46,7 +46,7 @@ public sealed class NamesFirstSourceTests : IDisposable
     public void A_word_an_earlier_method_file_links_takes_no_name()
     {
         var store = Store();
-        Method(store, MappingMethods.Stated, new MappingRow(null, "1.12:4.3", "1.12:4.2", "renders", MappingMethods.Stated, null,
+        Method(store, MappingMethods.Stated, new MappingRow("1.12:4.3", "1.12:4.2", "renders", MappingMethods.Stated, null,
             "a test", null, null, null));
 
         Write(store).Should().BeEmpty("the original's word is already linked in the pair");

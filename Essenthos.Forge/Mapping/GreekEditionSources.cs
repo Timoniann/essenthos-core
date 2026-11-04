@@ -67,8 +67,7 @@ internal sealed class PrintedEditionSource : IPairSource
         }
 
         log($"{verses} verses, {drafts.Count} links; {unequal} verses whose words are not the file's");
-        return drafts.Select(draft => new MappingRow(null,
-            MappingText.Keys(draft.From.Select(first.Key)),
+        return drafts.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(first.Key)),
             MappingText.Keys(draft.To.Select(second.Key)),
             draft.Relation.ToString().ToLowerInvariant(), Method, null, PrintedEditionLinkLoader.Source, null, null, null));
     }
@@ -140,8 +139,7 @@ internal sealed class ByzantineApparatusSource : IPairSource
             .Where(link => !ByzantineApparatusLinkLoader.Contrary(link with { To = [.. link.To.Select(id => id + offset)] }, standing))
             .ToList();
         log($"{laid}; {admitted.Count} links, {laid.Links.Count - admitted.Count} left out where the pair already says otherwise");
-        return admitted.Select(link => new MappingRow(null,
-            MappingText.Keys(link.From.Select(robinson.Key)),
+        return admitted.Select(link => new MappingRow(MappingText.Keys(link.From.Select(robinson.Key)),
             MappingText.Keys(link.To.Select(witness.Key)),
             link.Relation.ToString().ToLowerInvariant(), Method, null, ByzantineApparatusLinkLoader.Credit,
             ByzantineApparatusLinkLoader.Notes[link.Kind], null, null));
@@ -204,8 +202,7 @@ internal sealed class ReceivedTextPositionSource : IPairSource
 
         var laid = ReceivedTextPositions.Lay(SwordTextSource.Positions(folder), units, verses);
         log($"{units.Count} words laid onto the module's elements; {laid}");
-        return laid.Links.Select(link => new MappingRow(null,
-            MappingText.Keys(link.From.Select(translation.Key)),
+        return laid.Links.Select(link => new MappingRow(MappingText.Keys(link.From.Select(translation.Key)),
             MappingText.Keys(link.To.Select(witness.Key)),
             LinkRelation.Renders.ToString().ToLowerInvariant(), Method, null, Module.Credit, null, null, null));
     }

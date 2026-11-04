@@ -75,6 +75,18 @@ internal static partial class ForgeVerbs
         return Task.FromResult(0);
     }
 
+    /// <summary>Writes <c>records/canon</c> from the names projection and the frames of <c>--from &lt;Resources&gt;</c>; reads no database.</summary>
+    private static Task<int> RecordsCanon(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var outcome = RecordCanons.Write(store, args.Contains("--force"));
+        Console.WriteLine(outcome.Written
+            ? $"{outcome.Rows,9}  {RecordCanons.Product} ({outcome.Records} records; {outcome.Names} names read, {outcome.Unplaced} in a book no canon names)"
+            : $"{RecordCanons.Product} is current");
+        store.Save();
+        return Task.FromResult(0);
+    }
+
     /// <summary>
     /// Compares two databases table by table by natural key: <c>records-compare &lt;port/db&gt; &lt;port/db&gt; --out &lt;file&gt;</c>,
     /// each on the Forge's server credentials.

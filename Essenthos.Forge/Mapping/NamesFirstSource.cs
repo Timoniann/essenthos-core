@@ -106,7 +106,7 @@ internal sealed class NamesFirstSource : IPairSource
         var verses = Verses(source, target, from, to, originals, named, capitalised);
         var placings = NamePlacement.Place(verses);
         var rows = Placings(placings, policy, linkedSources, linkedTargets)
-            .Select(group => new MappingRow(null, from.Key(group.Source).Own.ToString(),
+            .Select(group => new MappingRow(from.Key(group.Source).Own.ToString(),
                 string.Join(' ', group.Targets.Order().Select(id => to.Key(id).Own.ToString())), "renders", Method,
                 NamesFirstPass.Confidence, NamesFirstPass.Source, group.Evidence, null, null))
             .ToList();

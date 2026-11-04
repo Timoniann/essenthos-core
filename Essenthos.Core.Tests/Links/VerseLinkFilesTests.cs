@@ -57,24 +57,26 @@ public sealed class VerseLinkFilesTests
     [Fact]
     public void The_merge_withdraws_a_machine_link_across_verses_no_verse_link_joins_and_keeps_every_other()
     {
-        MappingRow Row(string method, string from, string to, long id, double? confidence = 0.9, string source = Machine) =>
-            new(id, from, to, "renders", method, confidence, source, null, null, null);
+        MappingRow Row(string method, string from, string to, double? confidence = 0.9, string source = Machine) =>
+            new(from, to, "renders", method, confidence, source, null, null, null);
 
         var output = MappingMerge.Merge(new MappingMerge.Input(
             "KJV-BHSA", "KJV", "BHSA",
             new[]
             {
-                Row(MappingMethods.Aligner, "1.1:1.1", "1.1:1.1", 1),
-                Row(MappingMethods.Aligner, "1.1:1.2", "1.1:4.1", 2),
-                Row(MappingMethods.Aligner, "1.1:2.1", "1.1:3.1", 3),
-                Row(MappingMethods.Strong, "1.1:1.3", "1.1:4.2", 4),
-                Row(MappingMethods.Stated, "1.1:4.1", "1.1:2.2", 5, null, "Clear Bible"),
+                Row(MappingMethods.Aligner, "1.1:1.1", "1.1:1.1"),
+                Row(MappingMethods.Aligner, "1.1:1.2", "1.1:4.1"),
+                Row(MappingMethods.Aligner, "1.1:2.1", "1.1:3.1"),
+                Row(MappingMethods.Strong, "1.1:1.3", "1.1:4.2"),
+                Row(MappingMethods.Stated, "1.1:4.1", "1.1:2.2", null, "Clear Bible"),
             }.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()),
             [], new Dictionary<(string, VerseKey), string>(), new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(),
-            new Dictionary<string, long>(), PairOrdinals.Base + PairOrdinals.Range, Verses: Frames));
+            1, Verses: Frames));
 
-        output.Final.Select(r => r.Id).Should().BeEquivalentTo([1L, 3L, 4L, 5L]);
+        output.Final.Select(r => (r.From, r.To)).Should().BeEquivalentTo(
+            [("1.1:1.1", "1.1:1.1"), ("1.1:2.1", "1.1:3.1"), ("1.1:1.3", "1.1:4.2"), ("1.1:4.1", "1.1:2.2")]);
         output.Methods[MappingMethods.Aligner].Select(r => r.Status).Should().Equal(null, "withdrawn-by unjoined-verses", null);
         output.Report.Should().Contain(r => r.Kind == "withdrawn" && r.Method == MappingMethods.Aligner && r.By == CrossingRule.Name && r.Rows == 1);
+        output.Report.Should().Contain(r => r.Kind == "needs" && r.Method == CrossingRule.Name && r.By == "align" && r.Rows == 1);
     }
 }

@@ -6,6 +6,7 @@ rule	language	value	note
 head	*	last+capitals	the last word of a link's side that can be a name takes it; before an English possessive, the word that carries it
 faint	*	0.7	a person or place carried below it onto a word not written as a name yields to the same record on a surer word of the verse
 floor	*	0.7	the owner's answer of 2026-11-04 on TSK-1448: a name the settled name's confidence and the link's together make less sure than this is not carried; better correct than rubbish
+floor	*	name-list 0.9	the owner, 2026-11-04 (DOC-0228): over a name-list link a name is carried only from 0.9; below it a fifth of them were wrong, almost all link errors
 foreign-names	*	on	a person's name carried onto a word the text writes as another record's name is not carried (the load's foreign-names pass)
 pronoun-referent	*	clear	a pronoun shows the person it refers to only where that is certainly clear (the owner's ruling of 2026-10-07, PronounReferents)
 pronoun	deu	dein	\N

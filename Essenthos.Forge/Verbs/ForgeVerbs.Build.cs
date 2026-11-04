@@ -158,7 +158,7 @@ internal static partial class ForgeVerbs
             }
 
             using var reader = store.Open(product, ReportRow.Schema);
-            foreach (var row in reader.Rows().Where(r => r.Kind is MappingMerge.NoProducer or "needs"))
+            foreach (var row in reader.Rows().Where(r => r.Kind == MappingMerge.NoProducer || (r.Kind == "needs" && r.By.StartsWith("forge ", StringComparison.Ordinal))))
             {
                 stages.Add(new BuildStage("mapping", $"{pair} {row.Method}", TimeSpan.Zero, row.Rows,
                     row.Kind == MappingMerge.NoProducer ? $"no producer: {row.By}" : $"needs {row.By}"));

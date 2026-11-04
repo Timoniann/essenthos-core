@@ -142,7 +142,7 @@ internal sealed class ProductTexts(ProductStore store)
 
 /// <summary>
 /// Writing a pair's method file from a producer that reads files (DOC-0224 §6.1): its rows, made from the two texts' words
-/// as they stand, keep the ids their shapes had in the file before; the rows of sources the producer does not make are
+/// as they stand, replace the producer's rows of the file before; the rows of sources the producer does not make are
 /// carried over from that file as they were and named in the header (<see cref="KeptNote"/>), so the merge can tell which
 /// rows a changed verse leaves stale and which the producer made again.
 /// </summary>
@@ -161,7 +161,7 @@ internal static class MethodFiles
             + (Carried == 0 ? string.Empty : $"; {Carried} rows of {CarriedSources.Count} sources no producer makes carried over ({string.Join("; ", CarriedSources)})");
     }
 
-    /// <param name="made">The rows the producer made, with no id.</param>
+    /// <param name="made">The rows the producer made.</param>
     /// <param name="remakes">Whether the producer makes a source's rows; the previous file's rows of any other source are carried.</param>
     public static Written Write(
         ProductStore store,
@@ -181,20 +181,9 @@ internal static class MethodFiles
             previous = reader.ReadAll();
         }
 
-        var ids = new Dictionary<string, long>(StringComparer.Ordinal);
-        foreach (var row in previous)
-        {
-            if (row.Id is { } id)
-            {
-                ids.TryAdd(row.Shape, id);
-            }
-        }
-
         var carried = previous.Where(row => !remakes(row.Source)).Select(row => row with { Status = null }).ToList();
         var carriedSources = carried.Select(row => row.Source).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToList();
-        var rows = made.Select(row => ids.TryGetValue(row.Shape, out var id) ? row with { Id = id, Status = null } : row with { Status = null })
-            .Concat(carried)
-            .ToList();
+        var rows = made.Select(row => row with { Status = null }).Concat(carried).ToList();
         var madeShapes = made.Select(row => row.Shape).ToHashSet(StringComparer.Ordinal);
         var previousMade = previous.Where(row => remakes(row.Source)).Select(row => row.Shape).ToHashSet(StringComparer.Ordinal);
 

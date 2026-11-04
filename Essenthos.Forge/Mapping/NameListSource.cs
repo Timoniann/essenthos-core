@@ -77,7 +77,7 @@ internal sealed class NameListSource : IPairSource
         var settled = added.Distinct().ToList();
         var rows = settled
             .Where(pair => NameLists.Alike(sourceLetters[pair.From], targetLetters[pair.To]) >= NameLists.LeastLikeness)
-            .Select(pair => new MappingRow(null, from.Key(pair.From).Own.ToString(), to.Key(pair.To).Own.ToString(),
+            .Select(pair => new MappingRow(from.Key(pair.From).Own.ToString(), to.Key(pair.To).Own.ToString(),
                 "renders", Method, NameLists.Settled, NameListPass.Source, null, null, null))
             .ToList();
         log($"{rows.Count} name pairs no link joins, over {verses} verses both texts print; {settled.Count - rows.Count} whose letters read as no one name left out");

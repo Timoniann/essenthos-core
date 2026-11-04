@@ -36,8 +36,7 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
         var database = MappingMethods.DatabaseMethod(method);
         var mine = drafts.Where(draft => draft.Method == database).ToList();
         log($"{verses} addresses, {drafts.Count} pairings, {mine.Count} of them {method}");
-        return mine.Select(draft => new MappingRow(null,
-            MappingText.Keys(draft.From.Select(texts[fromText].Key)),
+        return mine.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(texts[fromText].Key)),
             MappingText.Keys(draft.To.Select(id => texts[toText].Key(id - Second))),
             draft.Relation.ToString().ToLowerInvariant(), method, draft.Confidence, draft.Source, null, null, null));
     }

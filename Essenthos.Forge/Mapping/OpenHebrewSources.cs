@@ -216,8 +216,7 @@ internal static class OpenHebrewRows
         var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (var draft in drafts)
         {
-            var row = new MappingRow(null,
-                MappingText.Keys(draft.English.Select(english.Key)),
+            var row = new MappingRow(MappingText.Keys(draft.English.Select(english.Key)),
                 MappingText.Keys(draft.Hebrew.Select(hebrew.Key)),
                 OldTestamentLinkLoader.RelationOf(draft).ToString().ToLowerInvariant(),
                 method, draft.Confidence, OldTestamentLinkLoader.Source, null, null, null);
@@ -296,8 +295,7 @@ internal sealed class OpenHebrewCuvSource : IPairSource
                     continue;
                 }
 
-                rows.Add(new MappingRow(null,
-                    MappingText.Keys(placement.Words.Select(i => chinese.Key(ours![i]))),
+                rows.Add(new MappingRow(MappingText.Keys(placement.Words.Select(i => chinese.Key(ours![i]))),
                     MappingText.Keys(hebrewWords.Select(hebrew.Key)),
                     LinkRelation.Renders.ToString().ToLowerInvariant(), Method, null, OpenHebrewCuvLinkLoader.Credit, null, null, null));
             }

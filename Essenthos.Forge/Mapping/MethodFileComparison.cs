@@ -6,7 +6,7 @@ namespace Essenthos.Core.Mapping;
 
 /// <summary>
 /// Two stores' method files of a pair compared by key: a row is its words, relation and source; its value is its
-/// confidence, evidence and roles; its id and the merge's status are not compared. How a producer's file is held to the
+/// confidence, evidence and roles; the merge's status is not compared. How a producer's file is held to the
 /// file exported from a database.
 /// </summary>
 internal static class MethodFileComparison
@@ -18,7 +18,7 @@ internal static class MethodFileComparison
 
     public sealed record Outcome(List<Group> Groups, List<string> Examples);
 
-    private readonly record struct Value(long? Id, string? Confidence, string? Evidence, string? Roles);
+    private readonly record struct Value(string? Confidence, string? Evidence, string? Roles);
 
     public static Outcome Compare(ProductStore before, ProductStore after, string pair, string method, int examples = 4)
     {
@@ -48,14 +48,10 @@ internal static class MethodFileComparison
                 for (var i = 0; i < pairs; i++)
                 {
                     var (x, y) = (a[i], b[i]);
-                    if (x with { Id = null } != y with { Id = null })
+                    if (x != y)
                     {
                         changed++;
                         Show("changed", $"{key.From}|{key.To} {key.Relation}: {Describe(x)} -> {Describe(y)}");
-                    }
-                    else if (x.Id != y.Id && y.Id is not null)
-                    {
-                        idOnly++;
                     }
                     else
                     {
@@ -116,7 +112,7 @@ internal static class MethodFileComparison
                 rows[key] = values = [];
             }
 
-            values.Add(new Value(row.Id, MappingText.Confidence(row.Confidence), row.Evidence, row.Roles));
+            values.Add(new Value(MappingText.Confidence(row.Confidence), row.Evidence, row.Roles));
         }
 
         foreach (var values in rows.Values)

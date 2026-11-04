@@ -1930,7 +1930,24 @@ public class AppDbContext : DbContext
                 .HasForeignKey(a => a.EntityId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.ToTable("word_entity", t => AddProvenanceConstraints(t, "word_entity"));
+            entity.Property(a => a.Role).HasComment(
+                "How the word stands for the record: name, people, title or thing. Null where the corpus load wrote the row.");
+            entity.Property(a => a.Origin).HasComment(
+                "Where the name comes from: settled, projected, added, differs, or base-reading (the base text's record beside a " +
+                "differs row on the same word, never the word's own name). Null where the corpus load wrote the row.");
+
+            // A base reading is the second card of a differs word, so the readers that ask for a word's names do not see it
+            // unless they ask for it (IgnoreQueryFilters).
+            entity.HasQueryFilter(a => a.Origin != WordEntityOrigins.BaseReading);
+
+            entity.ToTable("word_entity", t =>
+            {
+                AddProvenanceConstraints(t, "word_entity");
+                t.HasCheckConstraint("ck_word_entity_role",
+                    $"role IS NULL OR role IN ({string.Join(", ", WordEntityRoles.All.Select(r => $"'{r}'"))})");
+                t.HasCheckConstraint("ck_word_entity_origin",
+                    $"origin IS NULL OR origin IN ({string.Join(", ", WordEntityOrigins.All.Select(o => $"'{o}'"))})");
+            });
         });
 
         modelBuilder.Entity<WordEntityClaim>(entity =>

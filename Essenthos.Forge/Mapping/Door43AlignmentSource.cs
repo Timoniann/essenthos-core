@@ -85,8 +85,7 @@ internal sealed class Door43AlignmentSource : IPairSource
             total.Add(account);
             foreach (var joined in pairs)
             {
-                var row = new MappingRow(null,
-                    MappingText.Keys(joined.From.Select(translation.Key)),
+                var row = new MappingRow(MappingText.Keys(joined.From.Select(translation.Key)),
                     MappingText.Keys(joined.To.Select(witness.Key)),
                     Renders, Method, null, source, null, null, null);
                 rows.TryAdd(row.Shape, row);

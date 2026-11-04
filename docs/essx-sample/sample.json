@@ -1,0 +1,247 @@
+{
+  "version": 2,
+  "product": {
+    "product": "Essenthos/sample/sample.essx",
+    "producer": "EssxSampleTests.Write",
+    "rows": 10,
+    "inputs": [
+      {
+        "path": "sample/source.txt",
+        "sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+      }
+    ]
+  },
+  "tables": [
+    {
+      "name": "words",
+      "rows": 10,
+      "columns": [
+        {
+          "name": "own",
+          "type": "wordkey",
+          "nullable": false
+        },
+        {
+          "name": "surface",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lemma",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "flag",
+          "type": "boolean",
+          "nullable": false
+        },
+        {
+          "name": "maybe",
+          "type": "boolean",
+          "nullable": true
+        },
+        {
+          "name": "morphology",
+          "type": "json",
+          "nullable": true
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "nullable": true
+        }
+      ],
+      "values": [
+        [
+          "1.1:1.1",
+          "In",
+          null,
+          0,
+          true,
+          null,
+          "{\"i\":0,\"pos\":\"noun\"}",
+          "a note long enough to be stored as text rather than a dictionary, number 0"
+        ],
+        [
+          "1.1:1.2",
+          "the",
+          "beginning",
+          10,
+          false,
+          true,
+          null,
+          "a note long enough to be stored as text rather than a dictionary, number 1"
+        ],
+        [
+          "1.1:1.3",
+          "beginning",
+          "בְּרֵאשִׁית",
+          null,
+          true,
+          false,
+          "{\"i\":2,\"pos\":\"noun\"}",
+          "a note long enough to be stored as text rather than a dictionary, number 2"
+        ],
+        [
+          "1.1:1.4",
+          "בְּרֵאשִׁית",
+          null,
+          30,
+          false,
+          null,
+          "{\"i\":3,\"pos\":\"verb\"}",
+          "a note long enough to be stored as text rather than a dictionary, number 3"
+        ],
+        [
+          "1.1:2.1",
+          "Ἐν",
+          "tab\there",
+          40,
+          true,
+          true,
+          "{\"i\":4,\"pos\":\"noun\"}",
+          null
+        ],
+        [
+          "1.1:2.2",
+          "tab\there",
+          "in",
+          5000000000,
+          false,
+          false,
+          null,
+          "a note long enough to be stored as text rather than a dictionary, number 5"
+        ],
+        [
+          "1.1:2.3",
+          "In",
+          null,
+          -7,
+          true,
+          null,
+          "{\"i\":6,\"pos\":\"noun\"}",
+          "a note long enough to be stored as text rather than a dictionary, number 6"
+        ],
+        [
+          "1.1:2.4",
+          "the",
+          "beginning",
+          70,
+          false,
+          true,
+          "{\"i\":7,\"pos\":\"verb\"}",
+          "a note long enough to be stored as text rather than a dictionary, number 7"
+        ],
+        [
+          "19.4a:1b.1",
+          "beginning",
+          "בְּרֵאשִׁית",
+          80,
+          true,
+          false,
+          "{\"i\":8,\"pos\":\"noun\"}",
+          "a note long enough to be stored as text rather than a dictionary, number 8"
+        ],
+        [
+          "19.4a:1b.2",
+          "בְּרֵאשִׁית",
+          null,
+          90,
+          false,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "name": "verses",
+      "rows": 12,
+      "columns": [
+        {
+          "name": "own",
+          "type": "versekey",
+          "nullable": false
+        },
+        {
+          "name": "cited",
+          "type": "versekey",
+          "nullable": true
+        },
+        {
+          "name": "gloss",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "values": [
+        [
+          "43.3:14",
+          null,
+          "light"
+        ],
+        [
+          "43.3:15",
+          "1.1:1",
+          "life"
+        ],
+        [
+          "43.3:16",
+          null,
+          "light"
+        ],
+        [
+          "43.3:17",
+          "1.1:3",
+          "life"
+        ],
+        [
+          "43.3:18",
+          null,
+          "gloss 4"
+        ],
+        [
+          "43.3:19",
+          "1.1:5",
+          "gloss 5"
+        ],
+        [
+          "43.3:20",
+          null,
+          "gloss 6"
+        ],
+        [
+          "43.3:21",
+          "1.1:7",
+          "gloss 7"
+        ],
+        [
+          "43.3:22",
+          null,
+          "gloss 8"
+        ],
+        [
+          "43.3:23",
+          "1.1:9",
+          "gloss 9"
+        ],
+        [
+          "43.3:24",
+          null,
+          "gloss 10"
+        ],
+        [
+          "43.3:25a",
+          "1.1:11",
+          "gloss 11"
+        ]
+      ]
+    }
+  ]
+}
