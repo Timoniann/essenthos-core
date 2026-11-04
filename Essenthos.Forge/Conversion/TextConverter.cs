@@ -159,6 +159,12 @@ internal static class TextConverter
             stage.Apply(text, store.ResourcesPath);
         }
 
+        var (set, cleared) = corrections.ApplyNumbers(text);
+        if (set + cleared > 0)
+        {
+            text.Provenance.Add(new("strong-corrected", $"{set} numbers set and {cleared} cleared by the corrections file"));
+        }
+
         return text;
     }
 

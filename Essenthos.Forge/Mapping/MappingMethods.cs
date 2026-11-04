@@ -80,17 +80,19 @@ internal static partial class MappingMethods
     };
 
     /// <summary>
-    /// The merge's precedence, highest first: a person, a ruling's pin aside; a stated source; an approved
-    /// EVIDENTIA verdict, the safe tier before the attached; the names placed by whom both texts name; a
-    /// Strong pairing at 0.9 or more from the text's own tags; a composition admitted by its floor; a Strong
-    /// pairing at 0.9 or more from numbers laid onto the text from another edition (<paramref name="laidStrong"/>);
-    /// a Strong pairing at 0.7 to 0.9; the aligner; a Strong pairing under 0.7; form matching. The numbers are
-    /// only compared with each other.
+    /// The merge's precedence, highest first: a person, a ruling's pin aside; a stated source; a Strong pairing at
+    /// 0.9 or more from the text's own tags (the owner, NOT-0218: the second surest record after a source, a wrong
+    /// number being put right at the word); an approved EVIDENTIA verdict, the safe tier before the attached; the
+    /// names placed by whom both texts name; a composition admitted by its floor; a Strong pairing at 0.9 or more
+    /// from numbers laid onto the text from another edition (<paramref name="laidStrong"/>); a Strong pairing at
+    /// 0.7 to 0.9; the aligner; a Strong pairing under 0.7; form matching. The numbers are only compared with each
+    /// other.
     /// </summary>
     public static int Rank(string method, double? confidence, string? evidence, bool laidStrong = false) => method switch
     {
         Manual or Ruling => 100,
         Stated => 90,
+        Strong when confidence >= 0.9 && !laidStrong => 85,
         Evidentia => Tier(evidence) switch
         {
             "safe" => 80,
@@ -99,7 +101,6 @@ internal static partial class MappingMethods
         },
         Names => 77,
         Possessive or Rule => 76,
-        Strong when confidence >= 0.9 && !laidStrong => 70,
         ModelReading => 65,
         Composed => 60,
         Strong when confidence >= 0.9 => 55,

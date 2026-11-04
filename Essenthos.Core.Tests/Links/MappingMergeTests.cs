@@ -115,16 +115,41 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
-    public void An_approved_verdict_outranks_a_strong_pairing_and_the_aligner_outranks_form_matching()
+    public void An_approved_verdict_outranks_a_strong_pairing_under_nine_tenths_and_the_aligner_outranks_form_matching()
     {
         var output = Merge([
-            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, id: 1),
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.7, id: 1),
             Row(MappingMethods.Evidentia, "1.1:1.1", "1.1:1.1", confidence: 0.55, source: "EVIDENTIA run 8", id: 1, evidence: "decision 9, safe tier: rule"),
             Row(MappingMethods.Lexical, "1.1:1.2", "1.1:1.2", confidence: 0.95, id: 2),
             Row(MappingMethods.Aligner, "1.1:1.2", "1.1:1.2", confidence: 0.3, source: "SIL.Machine ibm4", id: 2),
         ]);
 
         output.Final.Where(r => r.Settled).Select(r => r.Method).Should().Equal(MappingMethods.Evidentia, MappingMethods.Aligner);
+    }
+
+    /// <summary>
+    /// The owner's order (NOT-0218): a person, then a stated source, then a text's own Strong numbers at nine tenths or more,
+    /// then EVIDENTIA; numbers laid from another edition keep their place below a composition.
+    /// </summary>
+    [Fact]
+    public void A_text_s_own_strong_pairing_at_nine_tenths_outranks_an_approved_verdict_and_gives_way_to_a_stated_source()
+    {
+        var verdict = Row(MappingMethods.Evidentia, "1.1:1.1", "1.1:1.3", confidence: 0.63, source: "EVIDENTIA run 18", id: 2,
+            evidence: "decision 9, attached tier: attached-word");
+        var strong = Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.2", confidence: 0.9, id: 1);
+
+        Merge([strong, verdict], pair: "LUTH1912-BHSA").Final.Should().ContainSingle().Which.Id.Should().Be(1);
+        Merge([strong, verdict], pair: "LSG1910-BHSA").Final.Should().ContainSingle().Which.Id.Should().Be(2);
+        Merge([strong with { Confidence = 0.7 }, verdict], pair: "LUTH1912-BHSA").Final.Should().ContainSingle().Which.Id.Should().Be(2);
+        Merge([strong, Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.4", id: 3)], pair: "LUTH1912-BHSA")
+            .Final.Should().ContainSingle().Which.Id.Should().Be(3);
+
+        var agreed = Merge([strong, verdict with { To = "1.1:1.2", Id = 1 }], pair: "LUTH1912-BHSA").Final;
+        agreed.Should().HaveCount(2);
+        agreed.Single(r => r.Settled).Method.Should().Be(MappingMethods.Strong);
+        MappingMethods.Rank(MappingMethods.Strong, 0.9, null).Should()
+            .BeGreaterThan(MappingMethods.Rank(MappingMethods.Evidentia, 0.9, "decision 1, safe tier: rule"))
+            .And.BeLessThan(MappingMethods.Rank(MappingMethods.Stated, null, null));
     }
 
     [Fact]
@@ -303,7 +328,7 @@ public sealed class MappingMergeTests
         var output = Merge(
         [
             Row(MappingMethods.Evidentia, "1.1:1.2", "1.1:1.2", confidence: 0.5, source: "EVIDENTIA run 8 (1.0.0)", id: 1, evidence: "decision 1, safe tier: rule"),
-            Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2", "1.1:1.1", confidence: 0.9, id: 2),
+            Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2", "1.1:1.1", confidence: 0.7, id: 2),
             Row(MappingMethods.Composed, "1.1:1.3 1.1:1.2", "1.1:1.5", confidence: 0.65, source: Machine, id: 3),
             Row(MappingMethods.Evidentia, "1.1:1.4", "1.1:1.6", confidence: 0.5, source: "EVIDENTIA run 8 (1.0.0)", id: 4, evidence: "decision 4, safe tier: rule"),
             Row(MappingMethods.Composed, "1.1:1.4 1.1:1.6", "1.1:1.7", confidence: 0.6, source: Machine, id: 5),
@@ -312,7 +337,7 @@ public sealed class MappingMergeTests
         [new RulingRow(RulingRow.Accept, "1.1:1.8", "1.1:1.8", "renders", string.Empty, "read in the verse")]);
 
         output.Final.Where(r => r.Settled).Select(r => r.Id).Should().HaveCount(5).And.Contain([1L, 2L, 4L, 7L],
-            "1.1:1.1 keeps the 0.9 Strong link and 1.1:1.7 its stated one; 1.1:1.3 and 1.1:1.6 have only compositions under 0.7");
+            "1.1:1.1 keeps the 0.7 Strong link and 1.1:1.7 its stated one; 1.1:1.3 and 1.1:1.6 have only compositions under 0.7");
         Status(output, MappingMethods.Composed).Should().Be("withdrawn-by evidentia");
         output.Report.Should().Contain(r => r.Kind == "orphans" && r.Rows == 2);
         output.Report.Should().Contain(r => r.Kind == "bare-words" && r.Rows == 4).And.Contain(r => r.Kind == "bare-words-left" && r.Rows == 2);

@@ -291,4 +291,49 @@ public class StrongNumberMatchTests
 
         links.Should().ContainSingle().Which.To.Should().Equal(12);
     }
+
+    /// <summary>
+    /// קַנֹּא קִנֵּאתִי, <em>ich habe geeifert</em> (1 Kings 19:14): the infinitive absolute is the finite verb's emphasis, so the
+    /// auxiliary and the participle both go with the finite verb, and a verb standing alone for the two renders the finite
+    /// verb. A word of its own for the emphasis keeps the infinitive: <em>des Todes sterben</em> for מוֹת תָּמוּת (Genesis 2:17).
+    /// </summary>
+    [Fact]
+    public void A_translated_verb_is_matched_with_the_finite_verb_beside_an_infinitive_absolute_of_its_root()
+    {
+        StrongNumberMatch.WitnessWord[] verse = [new(11, "H559"), new(12, "H7065", InfinitiveAbsolute: true), new(13, "H7065"), new(14, "H3068")];
+
+        var two = StrongNumberMatch.Verse([new(1, ["H7065"], Auxiliary: true), new(2, ["H7065"])], verse, NoRedirects, out _);
+        two.Should().ContainSingle();
+        two[0].From.Should().Equal(1, 2);
+        two[0].To.Should().Equal(13);
+        two[0].Confidence.Should().Be(StrongNumberMatch.PairedInOrder);
+
+        var one = StrongNumberMatch.Verse([new(1, ["H7065"])], verse, NoRedirects, out _);
+        one.Should().ContainSingle();
+        one[0].To.Should().Equal(13);
+        one[0].Kind.Should().Be(StrongMatchKind.Unambiguous);
+
+        var death = StrongNumberMatch.Verse([new(1, ["H7065"]), new(2, ["H7065"])], verse, NoRedirects, out _);
+        death.Select(l => (l.From[0], l.To[0])).Should().Equal((1L, 12L), (2L, 13L));
+    }
+
+    /// <summary>
+    /// 1 Samuel 30:8, אַשִּׂגֶנּוּ … הַשֵּׂג תַּשִּׂיג: the order pairs the first German word with the first finite verb and the
+    /// auxiliary it would have given the infinitive (<em>wirst</em>) with the finite verb after it; an infinitive with no
+    /// finite verb of its number beside it is an occurrence like any other.
+    /// </summary>
+    [Fact]
+    public void Paired_in_order_a_word_falling_on_an_infinitive_absolute_goes_to_its_finite_verb()
+    {
+        StrongNumberMatch.WitnessWord[] verse =
+        [
+            new(11, "H5381"), new(12, "H310"), new(13, "H5381", InfinitiveAbsolute: true), new(14, "H5381"),
+            new(15, "H1980", InfinitiveAbsolute: true), new(16, "H3068"), new(17, "H6213"), new(18, "H1980"),
+        ];
+
+        var links = StrongNumberMatch.Verse(
+            [new(1, ["H5381"]), new(2, ["H5381"], Auxiliary: true), new(3, ["H5381"]), new(4, ["H1980"])], verse, NoRedirects, out _);
+
+        links.Select(l => (string.Join(',', l.From), string.Join(',', l.To))).Should().Equal(("1", "11"), ("2,3", "14"), ("4", "15,18"));
+    }
 }

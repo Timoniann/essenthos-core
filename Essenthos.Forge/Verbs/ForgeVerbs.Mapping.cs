@@ -31,6 +31,27 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>Writes the strong method file of each pair named from the translation's own numbers (<see cref="StrongFiles"/>).</summary>
+    private static Task<int> StrongPairs(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var failed = 0;
+        foreach (var pair in Positional(args, 1).Where(arg => arg.Contains('-')))
+        {
+            if (StrongFiles.Refusal(store, pair) is { } refusal)
+            {
+                forge.Logger.LogWarning("{Pair}: {Refusal}", pair, refusal);
+                failed++;
+                continue;
+            }
+
+            forge.Logger.LogInformation("{Outcome}", StrongFiles.Write(store, pair));
+        }
+
+        store.Save();
+        return Task.FromResult(failed == 0 ? 0 : 1);
+    }
+
     /// <summary>Merges one pair's method files, or every pair's, into its final and report.</summary>
     private static Task<int> Merge(ForgeRun forge, string[] args)
     {

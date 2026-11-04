@@ -173,10 +173,45 @@ internal static class StrongNumberMatch
         }
 
         tally = new StrongMatchTally(unmatched, resolved, phrases);
-        return Drafts(order, groups);
+        return Drafts(order, groups, Emphasised(witness), [.. tagged.Where(word => word.Auxiliary).Select(word => word.Id)]);
     }
 
-    private static List<StrongMatchDraft> Drafts(List<string> order, Dictionary<string, Group> groups)
+    /// <summary>
+    /// The Hebrew infinitives absolute standing beside a finite verb of the same number (קַנֹּא קִנֵּאתִי, <em>I have been very
+    /// zealous</em>), each with that verb. The infinitive gives the verb its emphasis: a translated word standing alone for
+    /// the two renders the finite verb, and an auxiliary the order would pair with the infinitive belongs to the finite
+    /// verb's form (<em>ich habe … geeifert</em>). A word of its own for the emphasis keeps the infinitive
+    /// (<em>des Todes sterben</em> for מוֹת תָּמוּת). Beside is the next word on either side, or the one after it when a word
+    /// between carries another number (<em>לֹא</em>, a conjunction).
+    /// </summary>
+    private static Dictionary<long, long> Emphasised(IReadOnlyList<WitnessWord> witness)
+    {
+        var verbs = new Dictionary<long, long>();
+        for (var at = 0; at < witness.Count; at++)
+        {
+            if (!witness[at].InfinitiveAbsolute || witness[at].Strong is not { } number)
+            {
+                continue;
+            }
+
+            foreach (var near in (int[])[at + 1, at - 1, at + 2, at - 2])
+            {
+                if (near >= 0 && near < witness.Count && !witness[near].InfinitiveAbsolute && witness[near].Strong == number)
+                {
+                    verbs[witness[at].Id] = witness[near].Id;
+                    break;
+                }
+            }
+        }
+
+        return verbs;
+    }
+
+    private static List<StrongMatchDraft> Drafts(
+        List<string> order,
+        Dictionary<string, Group> groups,
+        Dictionary<long, long> emphasised,
+        HashSet<long> auxiliaries)
     {
         var drafts = new List<StrongMatchDraft>(order.Count);
         foreach (var key in order)
@@ -192,25 +227,41 @@ internal static class StrongNumberMatch
             // do not, nothing here can choose, and the set stands. A phrase is never paired this
             // way: two translated words tagged with the same two witness words each render both of
             // them, and pairing them off would split one stated claim into two invented ones.
+            //
+            // An auxiliary the order pairs with an infinitive absolute goes with the finite verb beside it, and the words
+            // that then share one verb are one link (Emphasised).
             if (group.Numbers == 1 && group.From.Count == group.To.Count && group.From.Count > 1)
             {
+                var paired = new List<(long To, List<long> From)>(group.To.Count);
                 for (var at = 0; at < group.From.Count; at++)
                 {
-                    drafts.Add(new StrongMatchDraft(
-                        [group.From[at]],
-                        [group.To[at]],
-                        Lower(PairedInOrder, group.Resolved),
-                        StrongMatchKind.Paired));
+                    var to = auxiliaries.Contains(group.From[at]) ? emphasised.GetValueOrDefault(group.To[at], group.To[at]) : group.To[at];
+                    if (paired.FindIndex(p => p.To == to) is var known and >= 0)
+                    {
+                        paired[known].From.Add(group.From[at]);
+                    }
+                    else
+                    {
+                        paired.Add((to, [group.From[at]]));
+                    }
+                }
+
+                foreach (var (to, from) in paired)
+                {
+                    drafts.Add(new StrongMatchDraft(from, [to], Lower(PairedInOrder, group.Resolved), StrongMatchKind.Paired));
                 }
 
                 continue;
             }
 
-            var settled = group.From.Count == 1 && group.To.Count == group.Numbers;
+            var witnessed = emphasised.Count == 0
+                ? group.To
+                : [.. group.To.Where(word => !emphasised.TryGetValue(word, out var verb) || !group.To.Contains(verb))];
+            var settled = group.From.Count == 1 && witnessed.Count == group.Numbers;
             drafts.Add(new StrongMatchDraft(
                 group.From,
-                group.To,
-                Confidence(settled, group.From.Count, group.To.Count, group.Resolved),
+                witnessed,
+                Confidence(settled, group.From.Count, witnessed.Count, group.Resolved),
                 settled ? StrongMatchKind.Unambiguous : StrongMatchKind.Contended));
         }
 
@@ -331,13 +382,15 @@ internal static class StrongNumberMatch
     /// The Strong numbers its tag names, which is usually one, sometimes none, and sometimes several
     /// — one word standing over a phrase of the original.
     /// </param>
-    internal readonly record struct TaggedWord(long Id, IReadOnlyList<string> Numbers);
+    /// <param name="Auxiliary">Whether the word is an auxiliary of the translation's language, part of a verb's form (<see cref="Emphasised"/>).</param>
+    internal readonly record struct TaggedWord(long Id, IReadOnlyList<string> Numbers, bool Auxiliary = false);
 
     /// <param name="Suffixed">
     /// Whether the word carries a pronominal suffix, which is what makes an object marker a word a
     /// translation renders (<see cref="ObjectMarker"/>).
     /// </param>
-    internal readonly record struct WitnessWord(long Id, string? Strong, bool Suffixed = false);
+    /// <param name="InfinitiveAbsolute">Whether the word is a Hebrew infinitive absolute (BHSA's tense <c>infa</c>), the emphasis of a finite verb beside it (<see cref="Emphasised"/>).</param>
+    internal readonly record struct WitnessWord(long Id, string? Strong, bool Suffixed = false, bool InfinitiveAbsolute = false);
 
     /// <param name="To">Every witness word the tag's numbers name, in the order the numbers stand.</param>
     /// <param name="Numbers">
