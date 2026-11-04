@@ -24,20 +24,25 @@ internal static partial class ForgeVerbs
         var force = args.Contains("--force");
         var started = Stopwatch.StartNew();
         var failed = new ConcurrentBag<string>();
-        await System.Threading.Tasks.Parallel.ForEachAsync(slugs, new ParallelOptions { MaxDegreeOfParallelism = Parallel(args) }, (slug, _) =>
-        {
-            try
-            {
-                forge.Logger.LogInformation("{Outcome}", TextConverter.Convert(store, slug, force));
-            }
-            catch (Exception exception)
-            {
-                failed.Add(slug);
-                forge.Logger.LogError("{Slug}: {Message}", slug, exception.ToString());
-            }
 
-            return ValueTask.CompletedTask;
-        });
+        // A text whose stages read another text's words (the SBLGNT's numbers from Nestle's) goes after the rest.
+        foreach (var wave in slugs.GroupBy(TextConverter.ReadsOtherTexts).OrderBy(wave => wave.Key))
+        {
+            await System.Threading.Tasks.Parallel.ForEachAsync(wave, new ParallelOptions { MaxDegreeOfParallelism = Parallel(args) }, (slug, _) =>
+            {
+                try
+                {
+                    forge.Logger.LogInformation("{Outcome}", TextConverter.Convert(store, slug, force));
+                }
+                catch (Exception exception)
+                {
+                    failed.Add(slug);
+                    forge.Logger.LogError("{Slug}: {Message}", slug, exception.ToString());
+                }
+
+                return ValueTask.CompletedTask;
+            });
+        }
 
         store.Save();
         forge.Logger.LogInformation("{Count} texts in {Seconds:0.0} s{Failed}", slugs.Count, started.Elapsed.TotalSeconds,

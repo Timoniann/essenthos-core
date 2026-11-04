@@ -15,6 +15,7 @@ internal static class TextStages
         new SeptuagintLemmas(),
         new KingJamesNumbers(),
         new SideStrongNumbers(),
+        new DerivedStrongNumbers(),
         new BereanSupplied(),
         new EditionBrackets(),
         new PrintedWords(),
