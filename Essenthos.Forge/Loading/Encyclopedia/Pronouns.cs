@@ -131,6 +131,10 @@ internal static class Pronouns
         return words;
     }
 
+    /// <summary>Every pronoun listed, with its language and the sex it states (null where it states none).</summary>
+    public static IEnumerable<(string Language, string Word, string? Sex)> Listed() =>
+        ByLanguage.SelectMany(language => language.Value.Select(word => (language.Key, word.Key, word.Value)));
+
     /// <summary>Whether a word, lower-cased and stripped of punctuation, is a pronoun of its language.</summary>
     public static bool Is(string language, string word) =>
         ByLanguage.TryGetValue(language, out var words) && words.ContainsKey(word);

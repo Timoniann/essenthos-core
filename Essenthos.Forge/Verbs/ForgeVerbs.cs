@@ -272,6 +272,14 @@ internal static partial class ForgeVerbs
             "Put the texts' indexes into the strong, text_form and entity spelling tables of the database (never live).", IndexesLoadVerb),
         new("names-export", "[--into <Resources>]",
             "Write the database's names as names/exported/<SLUG>, which the spellings index reads until the names layer writes them. Reads the database only.", NamesExportVerb),
+        new("names-from-database", "[--into <Resources>] [--frozen <yyyy-mm>] [--force]",
+            "Write the database's names as names/live/<SLUG> by the words products' keys, and the reference texts' settled names and the rules where missing. Reads the database only.", NamesFromDatabaseVerb),
+        new("names-project", "[--texts A,B|all] [--from <Resources>] [--force] [--parallel <n>]",
+            "Project the reference texts' settled names onto every text over the final mappings, with the rules and each text's overrides, where an input moved. Reads no database.", NamesVerb),
+        new("names-load", "[--texts A,B|all] [--from <Resources>]",
+            "Put the names projection into word_entity of the database (never live), then read it back by key against the products and names/live.", NamesLoadVerb),
+        new("names-compare", "--out <folder> [--texts A,B|all] [--sample <n>] [--from <Resources>] [--write-overrides]",
+            "Compare the projection with names/live by key and record, each difference in a category, with a sample of each; write the overrides of the categories decided for the database where a text has none. Reads no database.", NamesCompareVerb),
     ];
 
     public static ForgeVerb? Find(string name) =>
