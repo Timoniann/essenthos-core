@@ -16,7 +16,7 @@ namespace Essenthos.Core.Mapping;
 /// <param name="Source">Who says so: the file, the algorithm and its version, or the person.</param>
 /// <param name="Evidence">What only this method knows: an EVIDENTIA decision and its tier, a Strong pairing's kind, the note a source left. Never loaded.</param>
 /// <param name="Roles">Words of the first text that only write another word's form or belong to its phrase: <c>key=role@head</c>, space-separated.</param>
-/// <param name="Status">Null while the row stands; what the merge decided otherwise (<see cref="MappingStatus"/>).</param>
+/// <param name="Status">Null in a method file; in a pair's <see cref="MappingProducts.Statuses"/>, what the merge decided of the row (<see cref="MappingStatus"/>).</param>
 internal sealed record MappingRow(
     string From,
     string To,
@@ -184,7 +184,7 @@ internal sealed record PairOrdinalRow(string Pair, long Ordinal)
         .Reads(row => new PairOrdinalRow(row.Text(0), row.Integer(1)));
 }
 
-/// <summary>What the merge writes into a method file's <c>status</c> column.</summary>
+/// <summary>What the merge decided of a row that is not a claim of the final, as its <see cref="MappingProducts.Statuses"/> write it.</summary>
 internal static class MappingStatus
 {
     public static string WithdrawnBy(string method) => $"withdrawn-by {method}";
@@ -222,10 +222,16 @@ internal static class MappingProducts
     /// <summary>The laid Strong rows <c>strong-pairs</c> left to a stated link, which only the merge reads (<see cref="MappingStatus.YieldsToStated"/>).</summary>
     public const string StrongYielded = "strong-yielded";
 
+    /// <summary>
+    /// Every method file's row the merge did not make a claim of the final, with what it decided of it, in file order. The
+    /// merge's own product beside the final: the method files are its inputs, and it never writes them.
+    /// </summary>
+    public const string Statuses = "statuses";
+
     public const string PairOrdinals = Folder + "/pairs";
 
     /// <summary>The products of a pair folder that are not a method's claims.</summary>
-    public static readonly string[] NotMethods = [Final, Report, Hashes, Rulings, StrongYielded, VerseLinkFiles.Name];
+    public static readonly string[] NotMethods = [Final, Report, Statuses, Hashes, Rulings, StrongYielded, VerseLinkFiles.Name];
 
     public static string Pair(string from, string to) => $"{from}-{to}";
 

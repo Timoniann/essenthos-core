@@ -11,9 +11,10 @@ internal static class MappingFiles
     public sealed record Merged(string Pair, bool Skipped, long Links, long Claims, IReadOnlyList<ReportRow> Report);
 
     /// <summary>
-    /// Merges one pair: its method files, rulings, verse hashes and the two texts' manifests into its final and
-    /// report, and the merge's statuses back into the method files. Skipped when the final is current with all of
-    /// them, unless forced.
+    /// Merges one pair: its method files, rulings, verse hashes and the two texts' manifests into its final, its report and
+    /// its statuses. A method file is never written here: producers that ran before the merge read those files, and a merge
+    /// that wrote into them would make those producers run again on the next build. Skipped when the final is current with
+    /// all of them, unless forced.
     /// </summary>
     public static Merged Merge(ProductStore store, string pair, bool force)
     {
@@ -88,30 +89,16 @@ internal static class MappingFiles
             pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers,
             yielded));
 
-        foreach (var (method, merged) in output.Methods)
-        {
-            if (merged.Select(r => r.Status).SequenceEqual(rows[method].Select(r => r.Status)))
-            {
-                continue;
-            }
-
-            var header = headers[method];
-            using var writer = store.Create(MappingProducts.Of(pair, method), ProductKind.Machine, MappingRow.Schema,
-                header?.Producer ?? ProductHeader.DescribeProducer(MergeProducer), header?.Inputs ?? [], copy =>
-                {
-                    if (header is not null)
-                    {
-                        copy.Notes.AddRange(header.Notes);
-                        copy.Comments.AddRange(header.Comments);
-                    }
-                });
-            writer.WriteAll(merged);
-        }
-
         using (var writer = store.Create(finalProduct, ProductKind.Machine, FinalRow.Schema,
                    ProductHeader.DescribeProducer(MergeProducer), Inputs(store, pair, methods, fromText, toText)))
         {
             writer.WriteAll(output.Final);
+        }
+
+        using (var writer = store.Create(MappingProducts.Of(pair, MappingProducts.Statuses), ProductKind.Machine, MappingRow.Schema,
+                   ProductHeader.DescribeProducer(MergeProducer), [store.ProductInput(finalProduct)]))
+        {
+            writer.WriteAll(output.Methods.OrderBy(m => m.Key, StringComparer.Ordinal).SelectMany(m => m.Value).Where(r => r.Status is not null));
         }
 
         using (var writer = store.Create(MappingProducts.Of(pair, MappingProducts.Report), ProductKind.Machine, ReportRow.Schema,

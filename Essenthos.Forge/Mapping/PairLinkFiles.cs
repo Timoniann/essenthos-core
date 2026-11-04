@@ -28,7 +28,7 @@ internal static class PairLinkFiles
     public static IEnumerable<string> Inputs(ProductStore store, string pair, string method) =>
         Read(method).Select(read => store.Find(MappingProducts.Of(pair, read))).OfType<string>();
 
-    /// <summary>Every row of those files, by method, whatever a merge last said of it.</summary>
+    /// <summary>Every row of those files, by method.</summary>
     public static IEnumerable<MappingRow> Rows(ProductStore store, string pair, string method)
     {
         foreach (var read in Read(method))

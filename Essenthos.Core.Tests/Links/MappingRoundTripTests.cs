@@ -47,7 +47,7 @@ public sealed class MappingRoundTripTests : IDisposable
     }
 
     [Fact]
-    public async Task LinksComeBackWithTheirKeysAndClaimsUnderTheFinalsIdsAndAWithdrawnRowStaysInItsFile()
+    public async Task LinksComeBackWithTheirKeysAndClaimsUnderTheFinalsIdsAndAWithdrawnRowStaysInItsFileUntouched()
     {
         var kjv = await Words("KJV");
         var bhsa = await Words("BHSA");
@@ -72,6 +72,7 @@ public sealed class MappingRoundTripTests : IDisposable
         var connectionString = _database.NewConnection().ConnectionString;
         var store = new ProductStore(Path.Combine(_root, "first"));
         await MappingExport.Run(connectionString, store, null, 1, NullLogger.Instance, CancellationToken.None);
+        var methodFiles = MappingProducts.Methods(store, "KJV-BHSA").ToDictionary(m => m, m => store.ProductInput(MappingProducts.Of("KJV-BHSA", m)).Sha256);
         var merged = MappingFiles.Merge(store, "KJV-BHSA", force: false);
         var before = await Stored();
 
@@ -82,7 +83,11 @@ public sealed class MappingRoundTripTests : IDisposable
 
         merged.Links.Should().Be(2);
         outcome.Unresolved.Should().Be(0);
-        Rows(store, "composed").Should().ContainSingle(r => r.Status == "withdrawn-by strong").Which.To.Should().Be("1.1:1.2");
+        MappingProducts.Methods(store, "KJV-BHSA").ToDictionary(m => m, m => store.ProductInput(MappingProducts.Of("KJV-BHSA", m)).Sha256)
+            .Should().Equal(methodFiles, "the merge never writes the method files that producers before it read");
+        Rows(store, MappingProducts.Statuses).Should().ContainSingle().Which.Should().Match<MappingRow>(r =>
+            r.Method == "composed" && r.To == "1.1:1.2" && r.Status == "withdrawn-by strong");
+        Rows(store, "composed").Should().OnlyContain(r => r.Status == null);
         after.Should().BeEquivalentTo(before.Where(r => !r.Contains("aligned as stems")),
             "every link the merge kept is loaded with its words, roles and claims");
         using (var final = store.Open(MappingProducts.Of("KJV-BHSA", MappingProducts.Final), FinalRow.Schema))
@@ -92,7 +97,7 @@ public sealed class MappingRoundTripTests : IDisposable
 
         Rows(again, "stated").Should().Equal(Rows(store, "stated"));
         Rows(again, "strong").Should().Equal(Rows(store, "strong"));
-        Rows(again, "composed").Should().ContainSingle().Which.Should().Be(Rows(store, "composed").Single(r => r.Status == null) with { Evidence = null },
+        Rows(again, "composed").Should().ContainSingle().Which.Should().Be(Rows(store, "composed").Single(r => r.To == "1.1:1.3") with { Evidence = null },
             "a provenance's note is evidence, kept in the method file and not in the database");
         Rows(store, "stated")[0].Roles.Should().Be("1.1:1.2=attached@1.1:1.3");
     }

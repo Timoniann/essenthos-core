@@ -547,7 +547,7 @@ internal sealed class StrongNumberSource : IPairSource
             }
 
             using var reader = store.Open(product, MappingRow.Schema);
-            foreach (var row in reader.Rows().Where(row => row.Status is null))
+            foreach (var row in reader.Rows())
             {
                 if (row.Relation == "expands")
                 {

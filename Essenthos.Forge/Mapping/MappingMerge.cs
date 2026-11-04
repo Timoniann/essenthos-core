@@ -17,7 +17,8 @@ namespace Essenthos.Core.Mapping;
 /// by side, as one source's own several links on a word do;</item>
 /// <item>a machine's link across two verses no verse link joins is withdrawn (<see cref="CrossingRule"/>).</item>
 /// </list>
-/// Nothing is deleted: every row stays in its method file, with what the merge decided in its status. The
+/// Nothing is deleted: every row stays in its method file, and what the merge decided of a row it did not make a claim is
+/// in the pair's <c>statuses</c> (<see cref="Output.Methods"/>). The
 /// output is a function of the inputs and sorted by key, so a second merge of the same files writes the same bytes; a
 /// link's id is derived from its words (<see cref="LinkIds"/>), never carried.
 /// </summary>
