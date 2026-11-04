@@ -97,7 +97,9 @@ internal sealed class StrongNumberSource : IPairSource
         if (!Laid && Placed(_translation))
         {
             // The text read again up to MisplacedNumbers, which decides from the originals' words, to know what it moved.
-            inputs.AddRange(TextConverter.Inputs(store, TextCatalogue.Find(_translation)).Select(input => input.Path));
+            // Not a text product the frame names already: a path named twice never reads as current (PairSources.Write).
+            var named = MethodFiles.TextInputs(store, pair).Select(input => input.Path).ToHashSet(StringComparer.Ordinal);
+            inputs.AddRange(TextConverter.Inputs(store, TextCatalogue.Find(_translation)).Select(input => input.Path).Where(path => !named.Contains(path)));
         }
 
         if (IndexContext.Declared(store, to).Language == "grc")
