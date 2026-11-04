@@ -77,5 +77,6 @@ public sealed class VerseLinkFilesTests
             [("1.1:1.1", "1.1:1.1"), ("1.1:2.1", "1.1:3.1"), ("1.1:1.3", "1.1:4.2"), ("1.1:4.1", "1.1:2.2")]);
         output.Methods[MappingMethods.Aligner].Select(r => r.Status).Should().Equal(null, "withdrawn-by unjoined-verses", null);
         output.Report.Should().Contain(r => r.Kind == "withdrawn" && r.Method == MappingMethods.Aligner && r.By == CrossingRule.Name && r.Rows == 1);
+        output.Report.Should().Contain(r => r.Kind == "needs" && r.Method == CrossingRule.Name && r.By == "align" && r.Rows == 1);
     }
 }

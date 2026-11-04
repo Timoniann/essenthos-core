@@ -612,6 +612,13 @@ internal static class MappingMerge
                 $"verses whose text moved lost their {method} rows; {input.Pair} needs {MappingMethods.Regenerates(method)} again"));
         }
 
+        var crossed = entries.Count(e => e.Index >= 0 && e.Status == MappingStatus.WithdrawnBy(CrossingRule.Name));
+        if (crossed > 0)
+        {
+            report.Add(new ReportRow("needs", CrossingRule.Name, MappingMethods.Regenerates(MappingMethods.Aligner), crossed,
+                $"machine links joining verses no verse link joins were withdrawn; {input.Pair} needs {MappingMethods.Regenerates(MappingMethods.Aligner)} again"));
+        }
+
         report.Add(new ReportRow("links", string.Empty, string.Empty, final.Count(r => r.Settled), "links of the final"));
         report.Add(new ReportRow("claims", string.Empty, string.Empty, final.Count, "claims of the final"));
         foreach (var group in final.Where(r => r.Settled).GroupBy(r => r.Method).OrderBy(g => g.Key, StringComparer.Ordinal))
