@@ -52,12 +52,30 @@ internal static partial class ForgeVerbs
         return Task.FromResult(failed == 0 ? 0 : 1);
     }
 
+    /// <summary>Writes the verse links of the pairs named, or of every pair whose inputs moved.</summary>
+    private static Task<int> VerseLinksVerb(ForgeRun forge, string[] args)
+    {
+        var clock = Stopwatch.StartNew();
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var only = args.Skip(1).TakeWhile(arg => !arg.StartsWith("--", StringComparison.Ordinal))
+            .SelectMany(arg => arg.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToHashSet(StringComparer.Ordinal);
+        var outcomes = VerseLinkFiles.Write(store, only.Count == 0 ? null : only, args.Contains("--force"), Parallelism(args, 8));
+        foreach (var outcome in outcomes.Where(o => o.Written))
+        {
+            Console.WriteLine($"{outcome.Pair,-24} {outcome.Links,9} verse links");
+        }
+
+        Console.WriteLine($"{outcomes.Count(o => o.Written)} pairs written ({outcomes.Where(o => o.Written).Sum(o => o.Links)} verse links), "
+                          + $"{outcomes.Count(o => !o.Written)} current, in {clock.Elapsed}");
+        return Task.FromResult(0);
+    }
+
     /// <summary>Merges one pair's method files, or every pair's, into its final and report.</summary>
     private static Task<int> Merge(ForgeRun forge, string[] args)
     {
         var clock = Stopwatch.StartNew();
         var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
-        var pairs = args.Contains("--all") ? MappingProducts.Pairs(store) : [args[1]];
+        var pairs = args.Contains("--all") ? MappingProducts.Pairs(store).Where(p => MappingProducts.Methods(store, p).Count > 0).ToList() : [args[1]];
         var results = new System.Collections.Concurrent.ConcurrentBag<MappingFiles.Merged>();
         System.Threading.Tasks.Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 6) }, pair =>
         {

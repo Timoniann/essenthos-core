@@ -567,7 +567,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// afresh, beneath half a million word links. Its <see cref="DeclaredVersePair.Never"/> books are
     /// left out either way.
     /// </summary>
-    private static IReadOnlySet<int> Outside(DeclaredVersePair declaration, bool linked) =>
+    internal static IReadOnlySet<int> Outside(DeclaredVersePair declaration, bool linked) =>
         linked ? declaration.Never : declaration.Without.Union(declaration.Never).ToHashSet();
 
     /// <summary>

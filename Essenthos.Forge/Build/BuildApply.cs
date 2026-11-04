@@ -48,6 +48,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var strong = new SortedSet<string>(StringComparer.Ordinal);
         var forms = new SortedSet<string>(StringComparer.Ordinal);
         var frames = new SortedSet<string>(StringComparer.Ordinal);
+        var verses = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, names = false, spellings = false;
         foreach (var product in changed)
         {
@@ -65,6 +66,9 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                     return null;
                 case "mapping/{from}-{to}/final":
                     pairs.Add($"{bound["from"]}-{bound["to"]}");
+                    break;
+                case "mapping/{from}-{to}/verses":
+                    verses.Add($"{bound["from"]}-{bound["to"]}");
                     break;
                 case "texts/{text}/frame":
                     frames.Add(bound["text"]);
@@ -100,6 +104,17 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 if (outcome.Unresolved > 0)
                 {
                     throw new InvalidOperationException($"{outcome.Unresolved} links name a word key the database does not hold.");
+                }
+
+                rows += outcome.Links;
+            }
+
+            if (verses.Count > 0)
+            {
+                var outcome = await VerseLinkFiles.Load(connection, store, verses, cancellationToken);
+                if (outcome.LeftOut > 0)
+                {
+                    throw new InvalidOperationException($"{outcome.LeftOut} verse links name a verse the database does not hold.");
                 }
 
                 rows += outcome.Links;
