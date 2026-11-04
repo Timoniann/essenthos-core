@@ -59,6 +59,7 @@ internal static class PairSources
         new HebrewLetterSource(),
         new NameListSource(),
         new PossessiveSource(),
+        new NamesFirstSource(),
     ];
 
     /// <summary>
