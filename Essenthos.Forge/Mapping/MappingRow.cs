@@ -193,6 +193,8 @@ internal static class MappingStatus
 
     public const string NarrowedByRuling = "narrowed-by ruling";
 
+    public const string NarrowedByEvidentia = "narrowed-by evidentia";
+
     public const string Stale = "stale";
 
     public static string SupersededBy(int run) => $"superseded-by evidentia run {run}";

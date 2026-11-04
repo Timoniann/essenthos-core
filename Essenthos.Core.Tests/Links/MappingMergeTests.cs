@@ -127,6 +127,66 @@ public sealed class MappingMergeTests
         Status(output, MappingMethods.Evidentia, 4).Should().Be("withdrawn-by aligner", "a link another method also claims is not the aligner's alone");
     }
 
+    /// <summary>
+    /// The owner's order (NOT-0218) puts an approved verdict above numbers laid from another edition: the laid phrase "el Cristo"
+    /// loses the article EVIDENTIA states has no counterpart, keeps the rest, and is withdrawn only when nothing is left.
+    /// </summary>
+    [Fact]
+    public void An_evidentia_absence_takes_its_word_out_of_a_laid_strong_link_and_the_rest_of_the_link_stands()
+    {
+        const string Run = "EVIDENTIA run 14";
+        const string Safe = "decision 5, safe tier: supplied-article-spa";
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2", "1.1:1.1", confidence: 0.95, link: 1),
+            Row(MappingMethods.Evidentia, "1.1:1.1", string.Empty, relation: "expands", source: Run, link: 2, evidence: Safe),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.2 1.1:1.3", confidence: 0.95, link: 3),
+            Row(MappingMethods.Evidentia, string.Empty, "1.1:1.3", relation: "omits", source: Run, link: 4, evidence: Safe),
+            Row(MappingMethods.Strong, "1.1:1.4", "1.1:1.4", confidence: 0.95, link: 5),
+            Row(MappingMethods.Evidentia, "1.1:1.4", string.Empty, relation: "expands", source: Run, link: 6, evidence: Safe),
+        ];
+
+        var laid = Merge(rows, pair: "RV1909-BHSA");
+
+        laid.Final.Where(r => r.Settled).Select(r => (r.From, r.To, r.Method)).Should().Equal(
+            ("1.1:1.1", string.Empty, MappingMethods.Evidentia),
+            ("1.1:1.2", "1.1:1.1", MappingMethods.Strong),
+            ("1.1:1.3", "1.1:1.2", MappingMethods.Strong),
+            ("1.1:1.4", string.Empty, MappingMethods.Evidentia),
+            (string.Empty, "1.1:1.3", MappingMethods.Evidentia));
+        laid.Methods[MappingMethods.Strong].Select(r => r.Status).Should().Equal(
+            MappingStatus.NarrowedByEvidentia, MappingStatus.NarrowedByEvidentia, "withdrawn-by evidentia");
+        laid.Methods[MappingMethods.Evidentia].Should().OnlyContain(r => r.Status == null);
+        laid.Report.Should().Contain(r => r.Kind == "narrowed" && r.Method == MappingMethods.Strong && r.By == MappingMethods.Evidentia && r.Rows == 2);
+
+        var own = Merge(rows, pair: "KJV-BHSA");
+        own.Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 3L, 5L], "a text's own numbers outrank the verdict");
+        own.Methods[MappingMethods.Evidentia].Should().OnlyContain(r => r.Status != null);
+    }
+
+    [Fact]
+    public void A_laid_strong_link_keeps_a_word_an_evidentia_absence_gives_way_on_to_another_method()
+    {
+        const string Run = "EVIDENTIA run 14";
+        var output = Merge([
+            Row(MappingMethods.Strong, "1.1:1.1 1.1:1.2", "1.1:1.1", confidence: 0.95, link: 1),
+            Row(MappingMethods.Evidentia, "1.1:1.1", string.Empty, relation: "expands", source: Run, link: 2, evidence: "decision 5, safe tier: rule"),
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.1", confidence: 0.9, source: Machine, link: 3),
+            Row(MappingMethods.Strong, "1.1:1.3 1.1:1.4", "1.1:1.3", confidence: 0.95, link: 4),
+            Row(MappingMethods.Strong, "1.1:1.3 1.1:1.4", "1.1:1.3", confidence: 0.95, source: "another numbering", link: 4),
+            Row(MappingMethods.Evidentia, "1.1:1.3", string.Empty, relation: "expands", source: Run, link: 5, evidence: "decision 6, safe tier: rule"),
+            Row(MappingMethods.Aligner, "1.1:1.3", "1.1:1.3", confidence: 0.6, source: "SIL.Machine ibm4", link: 6),
+        ], pair: "RV1909-BHSA");
+
+        Status(output, MappingMethods.Strong, 0).Should().NotBe(MappingStatus.NarrowedByEvidentia, "a composition names the word, so the verdict gives way and narrows nothing");
+        output.Final.Should().NotContain(r => r.From == "1.1:1.2" && r.To == "1.1:1.1");
+        Status(output, MappingMethods.Evidentia, 0).Should().Be("withdrawn-by composed");
+        output.Methods[MappingMethods.Strong].Skip(1).Should().OnlyContain(r => r.Status == MappingStatus.NarrowedByEvidentia,
+            "the aligner's claim on the word does not stop the verdict, and every laid row of the shape is narrowed");
+        output.Final.Where(r => r.From == "1.1:1.4").Should().HaveCount(2).And.OnlyContain(r => r.Method == MappingMethods.Strong);
+        Status(output, MappingMethods.Aligner).Should().Be("withdrawn-by evidentia");
+    }
+
     [Fact]
     public void An_approved_verdict_outranks_a_strong_pairing_under_nine_tenths_and_the_aligner_outranks_form_matching()
     {
