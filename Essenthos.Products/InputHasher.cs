@@ -79,6 +79,16 @@ public sealed class InputHasher
         return HashFile(relative, new FileInfo(Path.Combine(_root, relative)), force: true);
     }
 
+    /// <summary>
+    /// Remembers a hash taken elsewhere (a full read that checked the file), with the size and write time
+    /// <paramref name="file"/> had before it was read, so a file that moved meanwhile is hashed again next time.
+    /// </summary>
+    public void Remember(string relativePath, string sha256, FileInfo file)
+    {
+        var relative = Normalise(relativePath);
+        _entries[relative] = new Entry(relative, file.Length, file.LastWriteTimeUtc.Ticks, sha256);
+    }
+
     private string HashFile(string relative, FileInfo file, bool force = false)
     {
         var writtenTicks = file.LastWriteTimeUtc.Ticks;

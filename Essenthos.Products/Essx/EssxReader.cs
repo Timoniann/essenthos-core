@@ -46,9 +46,9 @@ public sealed class EssxReader : IDisposable
             }
 
             var version = BinaryPrimitives.ReadUInt16LittleEndian(preamble[4..]);
-            if (version > EssxLayout.Version)
+            if (version > EssxLayout.Version || version < EssxLayout.OldestVersion)
             {
-                throw new ProductFormatException($"{path}: ESSX version {version} is newer than this reader ({EssxLayout.Version}).");
+                throw new ProductFormatException($"{path}: ESSX version {version}; this reader reads {EssxLayout.OldestVersion} to {EssxLayout.Version}.");
             }
 
             var footerOffset = BinaryPrimitives.ReadInt64LittleEndian(trailer);
@@ -60,8 +60,21 @@ public sealed class EssxReader : IDisposable
 
             var json = new byte[footerLength];
             RandomAccess.Read(handle, json, footerOffset);
-            var footer = JsonSerializer.Deserialize<EssxFooter>(json, EssxLayout.Json)
-                         ?? throw new ProductFormatException($"{path}: empty footer.");
+            EssxFooter? footer;
+            try
+            {
+                footer = JsonSerializer.Deserialize(json, EssxLayout.Json.EssxFooter);
+            }
+            catch (JsonException exception)
+            {
+                throw new ProductFormatException($"{path}: the footer is not the JSON an ESSX footer is ({exception.Message}).");
+            }
+
+            if (footer is null)
+            {
+                throw new ProductFormatException($"{path}: empty footer.");
+            }
+
             return new EssxReader(path, handle, footer, length);
         }
         catch
@@ -94,9 +107,20 @@ public sealed class EssxReader : IDisposable
     }
 
     /// <summary>Hashes every byte before the trailer's hash and compares; false when the file is not what was written.</summary>
-    public bool Verify()
+    public bool Verify() => Verify(out _);
+
+    /// <summary>
+    /// <see cref="Verify()"/>, and in the same pass the SHA-256 of the whole file as a build manifest records
+    /// it (lower-case hex), so one read both checks the bytes and names them.
+    /// </summary>
+    public bool Verify(out string fileSha256) => Verify(out _, out fileSha256);
+
+    /// <summary><see cref="Verify(out string)"/>, with the hash of the bytes before the trailer's hash as computed now, which a sound file has stored.</summary>
+    public bool Verify(out string computedSha256, out string fileSha256)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        computedSha256 = string.Empty;
+        fileSha256 = string.Empty;
         var buffer = new byte[1 << 20];
         var remaining = Length - EssxLayout.HashLength;
         long at = 0;
@@ -113,7 +137,13 @@ public sealed class EssxReader : IDisposable
             remaining -= read;
         }
 
-        return hash.GetHashAndReset().AsSpan().SequenceEqual(StoredHash());
+        var stored = StoredHash();
+        var computed = hash.GetCurrentHash();
+        computedSha256 = Convert.ToHexStringLower(computed);
+        var matches = computed.AsSpan().SequenceEqual(stored);
+        hash.AppendData(stored);
+        fileSha256 = Convert.ToHexStringLower(hash.GetHashAndReset());
+        return matches;
     }
 
     internal byte[] Read(long offset, long length, string codec, long rawLength)
@@ -141,6 +171,7 @@ public sealed class EssxTable
 {
     private readonly EssxReader _reader;
     private readonly Dictionary<string, int> _physicalIndex;
+    private readonly Dictionary<string, int> _columnIndex;
     private readonly string?[]?[] _dictionaries;
 
     internal EssxTable(EssxReader reader, EssxTableInfo info)
@@ -149,6 +180,7 @@ public sealed class EssxTable
         Info = info;
         Columns = [.. info.Columns.Select(column => new Column(column.Name, Enum.Parse<ColumnType>(column.Type, ignoreCase: true), column.Nullable))];
         _physicalIndex = info.Physical.Select((physical, index) => (physical.Name, index)).ToDictionary(pair => pair.Name, pair => pair.index, StringComparer.Ordinal);
+        _columnIndex = info.Columns.Select((column, index) => (column.Name, index)).ToDictionary(pair => pair.Name, pair => pair.index, StringComparer.Ordinal);
         _dictionaries = new string?[]?[info.Physical.Count];
     }
 
@@ -161,6 +193,19 @@ public sealed class EssxTable
     public IReadOnlyList<Column> Columns { get; }
 
     public int RowGroups => Info.RowGroups.Count;
+
+    /// <summary>The index of a logical column; the message lists the columns there are.</summary>
+    public int ColumnIndex(string name) =>
+        _columnIndex.TryGetValue(name, out var index)
+            ? index
+            : throw new ArgumentException($"No column '{name}'; the columns are {string.Join(", ", Info.Columns.Select(column => column.Name))}.", nameof(name));
+
+    /// <summary>The encoding a chunk is in: its own when it names one, else its physical column's.</summary>
+    internal string EncodingOf(EssxRowGroupInfo group, string physicalName)
+    {
+        var index = _physicalIndex[physicalName];
+        return group.Chunks[index].Encoding ?? Info.Physical[index].Encoding;
+    }
 
     /// <summary>The strings of a dictionary column, index 0 null; one instance per distinct value, shared by every row.</summary>
     public string?[] Dictionary(string physicalName)
@@ -191,17 +236,32 @@ public sealed class EssxTable
         return values;
     }
 
-    /// <summary>Decodes one row group whole: every column of it, as arrays.</summary>
-    public EssxRowGroup ReadGroup(int index)
+    /// <summary>
+    /// Decodes one row group as arrays: every column, or only <paramref name="columns"/> (logical names), so a
+    /// reader that uses two columns of fourteen reads and decodes two. A column not read is null in
+    /// <see cref="EssxRowGroup.Columns"/>, and a row asked for it throws.
+    /// </summary>
+    public EssxRowGroup ReadGroup(int index, IReadOnlyCollection<string>? columns = null)
     {
         var group = Info.RowGroups[index];
-        var columns = new EssxColumnData[Columns.Count];
-        for (var i = 0; i < Columns.Count; i++)
+        var data = new EssxColumnData?[Columns.Count];
+        if (columns is null)
         {
-            columns[i] = EssxColumnData.Decode(this, Info.Columns[i], group);
+            for (var i = 0; i < data.Length; i++)
+            {
+                data[i] = EssxColumnData.Decode(this, Info.Columns[i], group);
+            }
+        }
+        else
+        {
+            foreach (var name in columns)
+            {
+                var i = ColumnIndex(name);
+                data[i] ??= EssxColumnData.Decode(this, Info.Columns[i], group);
+            }
         }
 
-        return new EssxRowGroup(this, index, group.Rows, columns);
+        return new EssxRowGroup(this, index, group.Rows, data);
     }
 
     /// <summary>The groups whose chunk statistics admit the predicate, for a read that needs some verses rather than the file.</summary>
@@ -224,12 +284,12 @@ public sealed class EssxTable
         return _reader.Read(chunk.Offset, chunk.Length, chunk.Codec, chunk.RawLength);
     }
 
-    /// <summary>Every row, group after group. The row object is reused; take what is needed before moving on.</summary>
-    public IEnumerable<EssxRow> Rows()
+    /// <summary>Every row, group after group, of every column or of <paramref name="columns"/>. The row object is reused; take what is needed before moving on.</summary>
+    public IEnumerable<EssxRow> Rows(IReadOnlyCollection<string>? columns = null)
     {
         for (var g = 0; g < Info.RowGroups.Count; g++)
         {
-            var group = ReadGroup(g);
+            var group = ReadGroup(g, columns);
             var row = new EssxRow(group);
             for (var i = 0; i < group.Rows; i++)
             {
@@ -249,8 +309,8 @@ public sealed class EssxTable
     }
 }
 
-/// <summary>One decoded row group.</summary>
-public sealed class EssxRowGroup(EssxTable table, int index, int rows, EssxColumnData[] columns)
+/// <summary>One decoded row group; a column the read left out is null.</summary>
+public sealed class EssxRowGroup(EssxTable table, int index, int rows, EssxColumnData?[] columns)
 {
     public EssxTable Table { get; } = table;
 
@@ -258,9 +318,13 @@ public sealed class EssxRowGroup(EssxTable table, int index, int rows, EssxColum
 
     public int Rows { get; } = rows;
 
-    public IReadOnlyList<EssxColumnData> Columns { get; } = columns;
+    public IReadOnlyList<EssxColumnData?> Columns { get; } = columns;
 
-    public EssxColumnData Column(string name) => Columns[Table.Columns.ToList().FindIndex(column => column.Name == name)];
+    public EssxColumnData Column(string name) => Column(Table.ColumnIndex(name));
+
+    public EssxColumnData Column(int index) =>
+        columns[index] ?? throw new ProductFormatException(
+            $"Column '{Table.Columns[index].Name}' was not read; name it among the columns given to ReadGroup or Rows.");
 }
 
 /// <summary>A logical column of one row group, decoded: typed arrays a loader reads straight.</summary>
@@ -288,11 +352,8 @@ public abstract class EssxColumnData
         _ => throw new ProductFormatException($"Unknown column type '{column.Type}'."),
     };
 
-    private static EssxColumnData StringData(EssxTable table, EssxRowGroupInfo group, string physical)
-    {
-        var encoding = table.Info.Physical.First(p => p.Name == physical).Encoding;
-        return encoding == "dict" ? DictData.Read(table, group, physical) : TextData.Read(table, group, physical);
-    }
+    private static EssxColumnData StringData(EssxTable table, EssxRowGroupInfo group, string physical) =>
+        table.EncodingOf(group, physical) == "dict" ? DictData.Read(table, group, physical) : TextData.Read(table, group, physical);
 
     internal static bool[]? Validity(ReadOnlySpan<byte> raw, int rows, int nulls, out int bitmapLength)
     {
@@ -331,9 +392,25 @@ public sealed class IntData(long[] values, bool[]? valid) : EssxColumnData
         var valid = Validity(raw, group.Rows, chunk.Nulls, out var bitmap);
         var values = new long[group.Rows];
         var width = chunk.Width;
-        for (var i = 0; i < values.Length; i++)
+        var bytes = raw.AsSpan(bitmap);
+        var first = chunk.Base;
+        switch (width)
         {
-            values[i] = chunk.Base + (long)EssxLayout.ReadUnsigned(raw.AsSpan(bitmap + i * width), width);
+            case 0:
+                Array.Fill(values, first);
+                break;
+            case 1:
+                for (var i = 0; i < values.Length; i++) values[i] = first + bytes[i];
+                break;
+            case 2:
+                for (var i = 0; i < values.Length; i++) values[i] = first + BinaryPrimitives.ReadUInt16LittleEndian(bytes[(2 * i)..]);
+                break;
+            case 4:
+                for (var i = 0; i < values.Length; i++) values[i] = first + BinaryPrimitives.ReadUInt32LittleEndian(bytes[(4 * i)..]);
+                break;
+            default:
+                for (var i = 0; i < values.Length; i++) values[i] = first + (long)EssxLayout.ReadUnsigned(bytes[(i * width)..], width);
+                break;
         }
 
         return new IntData(values, valid);
@@ -382,9 +459,20 @@ public sealed class DictData(int[] ids, string?[] dictionary) : EssxColumnData
         var raw = table.ReadChunk(group, physical, out var chunk);
         var ids = new int[group.Rows];
         var width = chunk.Width;
-        for (var i = 0; i < ids.Length; i++)
+        var bytes = raw.AsSpan();
+        switch (width)
         {
-            ids[i] = (int)EssxLayout.ReadUnsigned(raw.AsSpan(i * width), width);
+            case 0:
+                break;
+            case 1:
+                for (var i = 0; i < ids.Length; i++) ids[i] = bytes[i];
+                break;
+            case 2:
+                for (var i = 0; i < ids.Length; i++) ids[i] = BinaryPrimitives.ReadUInt16LittleEndian(bytes[(2 * i)..]);
+                break;
+            default:
+                for (var i = 0; i < ids.Length; i++) ids[i] = (int)EssxLayout.ReadUnsigned(bytes[(i * width)..], width);
+                break;
         }
 
         var dictionary = table.Dictionary(physical);
@@ -472,15 +560,15 @@ public sealed class EssxRow(EssxRowGroup group) : ProductRow(group.Table.Columns
 
     public int Index { get; set; }
 
-    public override bool IsNull(int column) => Group.Columns[column].IsNull(Index);
+    public override bool IsNull(int column) => Group.Column(column).IsNull(Index);
 
-    public override string? TextOrNull(int column) => Group.Columns[column].Text(Index);
+    public override string? TextOrNull(int column) => Group.Column(column).Text(Index);
 
-    public override long? IntegerOrNull(int column) => Group.Columns[column].Integer(Index);
+    public override long? IntegerOrNull(int column) => Group.Column(column).Integer(Index);
 
-    public override bool? BooleanOrNull(int column) => Group.Columns[column].Boolean(Index);
+    public override bool? BooleanOrNull(int column) => Group.Column(column).Boolean(Index);
 
-    public override VerseKey? VerseKeyOrNull(int column) => Group.Columns[column].VerseKey(Index);
+    public override VerseKey? VerseKeyOrNull(int column) => Group.Column(column).VerseKey(Index);
 
-    public override WordKey? WordKeyOrNull(int column, string text) => Group.Columns[column].WordKey(Index, text);
+    public override WordKey? WordKeyOrNull(int column, string text) => Group.Column(column).WordKey(Index, text);
 }

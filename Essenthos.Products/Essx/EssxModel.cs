@@ -19,10 +19,11 @@ public static class EssxLayout
 {
     public static ReadOnlySpan<byte> Magic => "ESSX"u8;
 
-    /// <summary>With the dot. The name is provisional (the lead has proposed <c>.essp</c>); it and <see cref="Magic"/> are the two places a rename touches.</summary>
+    /// <summary>With the dot; the owner named the format. It and <see cref="Magic"/> are the two places a rename touches.</summary>
     public const string Extension = ".essx";
 
-    public const ushort Version = 1;
+    /// <summary>2: a chunk of a dict column may say <c>"encoding": "text"</c> once the column's dictionary reached its cap.</summary>
+    public const ushort Version = 2;
 
     public const int PreambleLength = 8;
 
@@ -36,12 +37,11 @@ public static class EssxLayout
     /// <summary>Raw deflate, which a browser decodes natively as <c>deflate-raw</c>.</summary>
     public const string CodecDeflate = "deflate";
 
-    public static readonly JsonSerializerOptions Json = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        WriteIndented = false,
-    };
+    /// <summary>The oldest version this reader reads; version 1 has no per-chunk encoding.</summary>
+    public const ushort OldestVersion = 1;
+
+    /// <summary>The footer's JSON, compiled rather than reflected: no warm-up on open, and the tool links with Native AOT.</summary>
+    public static EssxJsonContext Json => EssxJsonContext.Default;
 
     /// <summary>The least whole bytes that hold a value from 0 to <paramref name="range"/>: 0, 1, 2, 3, 4 or 8.</summary>
     public static int Width(ulong range) => range == 0 ? 0 : range < 1UL << 8 ? 1 : range < 1UL << 16 ? 2 : range < 1UL << 24 ? 3 : range < 1UL << 32 ? 4 : 8;
@@ -91,11 +91,11 @@ public static class EssxLayout
         return output.ToArray();
     }
 
-    public static byte[] Decompress(ReadOnlySpan<byte> stored, string codec, long rawLength)
+    public static byte[] Decompress(byte[] stored, string codec, long rawLength)
     {
         if (codec == CodecNone)
         {
-            return stored.ToArray();
+            return stored;
         }
 
         if (codec != CodecDeflate)
@@ -104,11 +104,15 @@ public static class EssxLayout
         }
 
         var raw = new byte[rawLength];
-        using var deflate = new DeflateStream(new MemoryStream(stored.ToArray()), CompressionMode.Decompress);
+        using var deflate = new DeflateStream(new MemoryStream(stored, writable: false), CompressionMode.Decompress);
         deflate.ReadExactly(raw);
         return raw;
     }
 }
+
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+[JsonSerializable(typeof(EssxFooter))]
+public sealed partial class EssxJsonContext : JsonSerializerContext;
 
 /// <summary>The footer: everything a reader needs to find and decode the rest, as JSON.</summary>
 public sealed class EssxFooter
@@ -234,6 +238,9 @@ public sealed class EssxChunkInfo
     public long? Min { get; set; }
 
     public long? Max { get; set; }
+
+    /// <summary>Null when the chunk is in its physical column's encoding; <c>text</c> for a dict column's chunks after its dictionary reached its cap.</summary>
+    public string? Encoding { get; set; }
 }
 
 public sealed class EssxSectionInfo
@@ -262,4 +269,14 @@ public sealed record EssxOptions
 
     /// <summary>Chunks smaller than this are never compressed.</summary>
     public int CompressFrom { get; init; } = 256;
+
+    /// <summary>
+    /// The most distinct strings a dict column keeps. A column whose first group repeats and whose later
+    /// groups do not would otherwise hold every string of the table in memory; past the cap its chunks are
+    /// written as text.
+    /// </summary>
+    public int DictionaryLimit { get; init; } = 1 << 20;
+
+    /// <summary>The most characters a dict column's strings hold together before it turns to text.</summary>
+    public long DictionaryCharacterLimit { get; init; } = 32L << 20;
 }

@@ -6,14 +6,15 @@ with every string column through a dictionary so that a word a text prints sixty
 is stored once, and with a SHA-256 of the whole file at its end. It is designed to be read in a
 browser: little-endian integers, UTF-8, a JSON footer, and raw deflate (`deflate-raw` in
 `DecompressionStream`) as the only codec. The reference implementation is
-`Essenthos.Products/Essx/` (writer, reader) and the tests in `Essenthos.Core.Tests/Products/EssxProductTests.cs`.
-Version 1, 2026-11-03.
+`Essenthos.Products/Essx/` (writer, reader) and the tests in `Essenthos.Core.Tests/Products/Essx*Tests.cs`.
+Every reader is held to `docs/essx-sample/` (§8). Version 2, 2026-11-04 (version 1, 2026-11-03, differs only
+in having no per-chunk `encoding`; readers read both).
 
 ## 1. File layout
 
 ```
 offset 0      "ESSX"              4 bytes   magic
-       4      version             u16       1
+       4      version             u16       2 (1 is read too)
        6      flags               u16       0
        8      sections …                    chunks and dictionaries, in the order the writer produced them
        F      footer              JSON, UTF-8, no BOM
@@ -57,6 +58,7 @@ JSON with camelCase names; absent means null.
                      "dictionary": {"offset": 1234, "length": 20, "rawLength": 20, "codec": "none", "count": 1}}, … ],
       "rowGroups": [ {"rows": 65536, "chunks": [ {"offset": 8, "length": 0, "rawLength": 0, "codec": "none",
                                                    "nulls": 0, "width": 0, "base": 1, "min": 1, "max": 1}, … ]}, … ]
+      // a chunk of a dict column past its dictionary's cap carries "encoding": "text"
     }
   ]
 }
@@ -69,6 +71,9 @@ JSON with camelCase names; absent means null.
 - `rowGroups[g].chunks[c]` is the chunk of physical column `c` in row group `g`, in the order of
   `physical`. Every chunk of a group holds `rows` values.
 - `schemaVersion` is the producer's own version of the table's shape (`ProductSchema.Versioned`).
+- A chunk may carry `encoding` (version 2): absent means its physical column's encoding; `text`
+  marks a chunk of a `dict` column written as text after the column's dictionary reached its cap
+  (§4). A reader decodes each chunk by its own encoding.
 
 ## 3. Chunks
 
@@ -93,7 +98,11 @@ group: `u32 count, u32 offsets[count+1], bytes`, offsets from the start of the r
 
 The writer chooses `dict` or `text` for a string column on its first row group: `dict` when at
 most half the values are distinct or the average length is at most 16 characters; `text` otherwise.
-A reader does not care which.
+A dictionary is capped (by default 1,048,576 strings or 32 Mi characters, `EssxOptions.DictionaryLimit`
+and `DictionaryCharacterLimit`): the group that would pass the cap and every group after it are
+written as `text` chunks marked `"encoding": "text"`, and the dictionary holds only the strings the
+earlier chunks use. A column over the cap in its first group is a plain `text` column. So the writer's
+memory stays bounded whatever a column holds. A reader does not care which.
 
 ## 5. Column types and keys
 
@@ -110,7 +119,13 @@ Because a text's words come in print order, the parts are constant or rise by on
 so the key costs a few bytes per row uncompressed and almost nothing deflated; and the `min`/`max`
 of `.book` and `.chapter` per chunk let a reader find a verse's group without reading the others.
 
-## 6. Reading in a browser (sketch)
+## 6. Reading a part of a file
+
+A reader decodes only what it is asked for: `EssxTable.ReadGroup(g, columns)` and `Rows(columns)` read
+and decode the named logical columns and leave the others unread, and a verse is found by the key's
+chunk statistics and then by comparing its decoded integer parts, never by formatting keys as text.
+
+## 7. Reading in a browser
 
 1. `fetch` with `Range: bytes=-52` → trailer; check magics; `Range` the footer; `JSON.parse`.
 2. For table `t`, column `c` and the verse wanted: pick the groups whose `.book`/`.chapter`
@@ -120,7 +135,17 @@ of `.book` and `.chapter` per chunk let a reader find a verse's group without re
    (little-endian) and `TextDecoder("utf-8")`.
 4. Verify when the whole file is at hand: `crypto.subtle.digest("SHA-256", bytes[0..-32])`.
 
-## 7. Conventions
+## 8. The sample file
+
+`docs/essx-sample/sample.essx` is the file every reader of the format is tested against, and
+`sample.json` beside it is what it holds: the footer's product, and each table's columns and values
+(keys as their text form, integers as JSON numbers, null as `null`). It has two tables, row groups of
+four, nulls in every type, an integer chunk of width 8 and one of width 0, a `text` column, deflated
+and stored chunks, and a dictionary that reaches its cap. `EssxSampleTests` holds the C# reader and
+writer to it; the console's browser reader is tested against a copy. The file is `EssxSampleTests.Write`'s
+output; regenerate both files from it if the format changes.
+
+## 9. Conventions
 
 - A product file holds one table named `rows` unless a producer writes several with `EssxWriter`.
 - The extension is `.essx` and the magic `ESSX` (the owner's choice, 2026-11-04; `.esw`, the first name, is taken by other programs). They are `EssxLayout.Extension` and `EssxLayout.Magic`. Hand-edited files stay `.tsv` and never become ESSX.
