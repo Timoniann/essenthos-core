@@ -133,7 +133,16 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
                 return rows;
             }),
-            Timed("load", "frame", () => Frame(null, cancellationToken)));
+            Timed("load", "frame", () => Frame(null, cancellationToken)),
+            Timed("load", "verse links", async () =>
+            {
+                await using var connection = new NpgsqlConnection(connectionString);
+                await connection.OpenAsync(cancellationToken);
+                var outcome = await VerseLinkFiles.Load(connection, store, null, cancellationToken);
+                logger.LogInformation("Verse links: {Links} over {Pairs} pairs, {Verses} memberships, {LeftOut} left out (a verse this build does not hold), in {Elapsed}",
+                    outcome.Links, outcome.Pairs, outcome.Verses, outcome.LeftOut, outcome.Elapsed);
+                return outcome.Links;
+            }));
 
         await Timed("load", "names", async () =>
         {

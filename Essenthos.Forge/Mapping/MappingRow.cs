@@ -217,7 +217,7 @@ internal static class MappingProducts
     public const string PairOrdinals = Folder + "/pairs";
 
     /// <summary>The products of a pair folder that are not a method's claims.</summary>
-    public static readonly string[] NotMethods = [Final, Report, Hashes, Rulings];
+    public static readonly string[] NotMethods = [Final, Report, Hashes, Rulings, VerseLinkFiles.Name];
 
     public static string Pair(string from, string to) => $"{from}-{to}";
 
