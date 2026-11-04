@@ -73,12 +73,16 @@ internal static class PairSources
 
     public sealed record Outcome(string Pair, bool Current, MethodFiles.Written? Written, IReadOnlyList<string> Sources);
 
-    /// <summary>The pairs some source of the method speaks about whose two texts the store holds.</summary>
+    /// <summary>
+    /// The pairs some source of the file speaks about whose two texts the store holds; and the pairs whose file of a method
+    /// holds rows a source of that method now writes into another file, so the file gives them up.
+    /// </summary>
     public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null) =>
     [
         .. MappingProducts.Pairs(texts.Store)
             .Where(pair => only is null || only.Contains(pair))
-            .Where(pair => All.Any(source => source.File == file && source.States(pair)))
+            .Where(pair => All.Any(source => source.States(pair)
+                && (source.File == file || (source.Method == file && texts.Store.Exists(MappingProducts.Of(pair, file))))))
             .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),
     ];
 
