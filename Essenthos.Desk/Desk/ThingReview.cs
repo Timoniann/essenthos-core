@@ -260,7 +260,10 @@ internal sealed class ThingReview(DeskPaths paths)
             return rows;
         }
 
-        foreach (var path in Directory.GetFiles(RowsFolder, "*.tsv").Order(StringComparer.Ordinal))
+        // A file ending .records.tsv edits record files (OwnerRows.RecordRowsSuffix in the Forge), not words; it settles no entry.
+        foreach (var path in Directory.GetFiles(RowsFolder, "*.tsv")
+                     .Where(p => !p.EndsWith(".records.tsv", StringComparison.Ordinal))
+                     .Order(StringComparer.Ordinal))
         {
             using var reader = ProductStore.HandFormat.Open(path);
             var columns = reader.Columns.Select(c => c.Name).ToList();

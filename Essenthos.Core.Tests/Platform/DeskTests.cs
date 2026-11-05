@@ -597,6 +597,10 @@ public sealed class DeskTests : IAsyncLifetime
             "entry\tproduct\top\tat\trecord\tfrom\trole\tstrong\tlabel\twhy\n" +
             "objects:0\tnames/BHSA\tremove\t11.7:21.33\tboaz\t\\N\t\\N\tH1162\t\\N\tthe pillar, not the man\n" +
             "objects:0\tnames/BHSA\tadd\t11.7:21.33\tboaz-pillar\t\\N\tthing\tH1162\t\\N\tthe pillar, not the man\n");
+        // A file of record rows has its own columns and settles no entry; the page reads past it.
+        File.WriteAllText(Path.Combine(rows, "2026-11-05-temple-furnishings.records.tsv"),
+            "entry\tproduct\top\tkey\tvalues\twhy\n" +
+            "objects:0\trecords/records\tput\tsolomons-lampstands\t{}\ta record of its own\n");
 
         var read = await Json<ThingQuestionsResponse>(await _http.GetAsync("/desk-api/review/occurrences"));
 
