@@ -501,6 +501,66 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
+    public void A_word_left_bare_does_not_get_back_a_link_over_a_word_a_standing_absence_holds()
+    {
+        var output = Merge([
+            Row(MappingMethods.Stated, string.Empty, "1.1:1.5", relation: "omits", source: Berean, link: 1),
+            Row(MappingMethods.Composed, "1.1:1.6", "1.1:1.5", confidence: 0.9, source: Machine, link: 2),
+            Row(MappingMethods.Stated, "1.1:1.4", string.Empty, relation: "expands", source: "Zefania KJV+ italics", link: 3),
+            Row(MappingMethods.Composed, "1.1:1.4 1.1:1.7", "1.1:1.8", confidence: 0.9, source: Machine, link: 4),
+            Row(MappingMethods.Composed, "1.1:1.11 1.1:1.12", "1.1:1.11", confidence: 0.9, source: Machine, link: 5),
+            Row(MappingMethods.Stated, "1.1:1.12", "1.1:1.12", source: Berean, link: 6),
+        ]);
+
+        output.Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 3L, 5L, 6L],
+            "1.1:1.6 and 1.1:1.7 stay bare rather than render a word an absence holds; 1.1:1.11 keeps its composition");
+        output.Methods[MappingMethods.Composed].Select(r => r.Status).Should().Equal("withdrawn-by stated", "withdrawn-by stated", null);
+        output.Report.Should().Contain(r => r.Kind == "orphans" && r.Rows == 1)
+            .And.Contain(r => r.Kind == "bare-words" && r.Rows == 3).And.Contain(r => r.Kind == "bare-words-left" && r.Rows == 2);
+    }
+
+    /// <summary>
+    /// NESTLE1904-TR1894's Strong pairing finds no number for Ἱεροσόλυμα (G2414) where Scrivener writes ιερουσαλημ (G2419), and
+    /// says each has no counterpart; TR1894-NESTLE1904's names pass pairs the two. The reader takes a word's links from both
+    /// pairs, so each merge reads the other's files and the higher-ranked link keeps the word.
+    /// </summary>
+    [Fact]
+    public void A_word_one_pair_says_has_no_counterpart_and_the_reverse_pair_renders_goes_to_the_higher_ranked_link()
+    {
+        const string Strong = "the Strong numbers both editions carry, paired within each verse";
+        const string Names = "the names of the verse, placed by whom both texts name";
+        MappingMerge.Input Pair(string pair, MappingRow[] rows) => new(
+            pair, pair[..pair.IndexOf('-')], pair[(pair.IndexOf('-') + 1)..],
+            rows.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()),
+            [], new Dictionary<(string, VerseKey), string>(), new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(), Ordinal);
+
+        var nestle = Pair("NESTLE1904-TR1894", [
+            Row(MappingMethods.Strong, "44.21:4.19", string.Empty, relation: "expands", confidence: 0.85, source: Strong, link: 1),
+            Row(MappingMethods.Strong, string.Empty, "44.16:4.21", relation: "omits", confidence: 0.85, source: Strong, link: 2),
+            Row(MappingMethods.Strong, "44.21:4.1", "44.21:4.1", relation: "equals", confidence: 1.0, source: Strong, link: 3),
+            Row(MappingMethods.Stated, string.Empty, "44.1:1.3", relation: "omits", source: Berean, link: 4),
+        ]);
+        var scrivener = Pair("TR1894-NESTLE1904", [
+            Row(MappingMethods.Names, "44.21:4.17", "44.21:4.19", confidence: 0.95, source: Names, link: 11),
+            Row(MappingMethods.Names, "44.16:4.21", "44.16:4.20", confidence: 0.95, source: Names, link: 12),
+            Row(MappingMethods.Names, "44.1:1.3", "44.1:1.2", confidence: 0.95, source: Names, link: 13),
+        ]);
+
+        var forward = MappingMerge.Merge(nestle with { Reverse = scrivener });
+        var backward = MappingMerge.Merge(scrivener with { Reverse = nestle });
+
+        forward.Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([3L, 4L],
+            "a Strong pairing at 0.85 ranks below a placed name, and a stated absence above it");
+        forward.Methods[MappingMethods.Strong].Select(r => r.Status).Should().Equal(
+            "withdrawn-by names in TR1894-NESTLE1904", "withdrawn-by names in TR1894-NESTLE1904", null);
+        backward.Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([11L, 12L]);
+        backward.Methods[MappingMethods.Names].Select(r => r.Status).Should().Equal(null, null, "withdrawn-by stated in NESTLE1904-TR1894");
+
+        MappingMerge.Merge(nestle).Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L, 3L, 4L],
+            "without the reverse pair the merge cannot see the names it contradicts");
+    }
+
+    [Fact]
     public void Strong_numbers_laid_from_another_edition_rank_below_a_composition_and_a_text_s_own_do_not()
     {
         MappingRow[] rows =
