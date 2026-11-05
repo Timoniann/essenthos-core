@@ -24,21 +24,27 @@ and needs neither git nor a registry login:
 
 ## The machine
 
-Hetzner Cloud, Helsinki: x86_64, 2 vCPU, 3.7 GiB of memory with a 4 GB swap file, one 38 GB disk.
-Everything the server keeps is under `HOST_DATA_ROOT=/srv/essenthos`, on that disk:
+Hetzner Cloud, Helsinki: **x86_64** (not Arm64), 2 vCPU, 3.7 GiB of memory with a 4 GB swap file, a
+38 GB system disk, and an **80 GB Hetzner Volume** (`HC_Volume_107312837`) that `/etc/fstab` mounts at
+`/srv/essenthos`. The images are built for `linux/amd64` (`send-images.ps1 -Platform`, its default).
+
+Everything the server keeps is under `HOST_DATA_ROOT=/srv/essenthos`, on the volume. Docker's own data
+(the images and the container logs) is not under it and stays on the system disk.
 
 | Under /srv/essenthos | What |
 |---|---|
 | `deploy/` | this folder's files and `.env` |
-| `postgres/` | the database: the one corpus copy, the accounts, the page counts |
-| `releases/`, `images/corpus/`, `downloads/` | what `forge publish` sends |
+| `postgres/` | the database: the served corpus (and the incoming one during a publication), the accounts, the page counts |
+| `releases/` | the release dumps `forge publish` uploads; it removes the ones no longer needed (**Shipping the corpus**) |
+| `images/corpus/`, `downloads/` | the pictures and the downloads `forge publish` sends |
 | `backups/`, `backup-key/`, `rclone/` | the encrypted dumps, the public key, the off-site remote |
 | `caddy/` | certificates |
 | `logs/caddy/` | the access log and its compressed days (**Reading the logs**) |
 | `maintenance/` | the updating page's switch (**The updating page**) |
 
-Nothing on the disk is unique but the accounts, which the backups protect (**Backups**). The corpus is
-an artefact, published again from the workstation; Hetzner's own server backups (+20%) are optional.
+Nothing on the volume is unique but the accounts, which the backups protect (**Backups**). The corpus is
+an artefact, published again from the workstation. Hetzner's own server backups (+20%) are optional, and
+they do not include a volume.
 
 ### Memory
 
@@ -69,24 +75,34 @@ they are is in `compose.yaml` (TSK-0920, PRB-0926). On 4 GB, heavy requests (sea
 entity pages) are slower; the owner accepts that for the alpha. Time them once on the server and record
 the figures on TSK-1002; if they take seconds, rescale the machine and drop the `DB_*`/`*_MEM_LIMIT`
 lines. Restoring a release builds one index per parallel `pg_restore` job, each with up to
-`maintenance_work_mem`: four jobs at 256MB beside 768 MB of shared buffers come close to the 2g limit.
+`maintenance_work_mem`: four jobs at 256MB beside 768 MB of shared buffers come close to the 2g limit,
+which is why Forge's `prod` target restores with two (`Publish:Targets:prod:RestoreJobs`).
 
 ### Disk
 
-The server keeps **one corpus copy** (owner, 2026-10-29): a publication drops the live corpus and
-restores the new release in its place, with the updating page up meanwhile, and a rollback is publishing
-the previous release again. A published copy is 12–15 GB in Postgres; with the images (about 0.4 GB
-per API and 0.3 GB per reader kept), the pictures (~180 MB), the releases uploaded for restore, the
-backups and the logs, it fits the 38 GB disk. Check `df -h /` before a publication. When it no longer
+Production keeps **two corpus copies** during a publication (`Publish:Targets:prod:Copies` is 2, core
+commit 8aa7921d): the new release is restored as `corpus_incoming` beside the served `corpus`, checked
+there, and renamed into place while the API is stopped for a few seconds; the copy it replaced is then
+dropped. Between publications there is one copy. No previous copy is kept, so a rollback is publishing the
+earlier release again from the workstation (**Shipping the corpus**).
+
+A restored release measured 25 GB in Postgres on 2026-10-30, so a publication needs about 50 GB of the
+volume for the corpus, beside the release dumps, the pictures (~180 MB), the downloads, the backups and
+the access logs. The 38 GB system disk holds the system and Docker's images (about 0.4 GB per API image
+and 0.3 GB per reader image kept). Check `df -h / /srv/essenthos` before a publication. When it no longer
 fits: **When more space is needed**, below.
+
+History: until 2026-10-30 the data was on the 38 GB system disk with one copy (the restored corpus was
+expected at 12–15 GB). It measured 25 GB, so the owner added the volume and the data was moved onto it
+(rsync; the old copy was removed after the first publication succeeded).
 
 ### Firewall
 
 Hetzner's Cloud Firewall, when the owner sets it up, allows 22, 80 and 443 (TCP) and 443 (UDP) inbound
 and nothing else. ufw is no protection here: **Docker's published ports bypass ufw**, so whatever
-compose publishes on `0.0.0.0` is open whatever ufw says. That is why Postgres (5432) and the counter's
-dashboard (8081) are published on `127.0.0.1` only and reached through an ssh tunnel; keep any new port
-the same.
+compose publishes on `0.0.0.0` is open whatever ufw says. That is why Postgres (5432) is published on
+`127.0.0.1` only and reached through an ssh tunnel (Forge's gate opens one); the counter's dashboard is
+served by Caddy at `STATS_DOMAIN`. Keep any new port on `127.0.0.1`.
 
 ## Addresses: the bare IP and the domain
 
@@ -125,17 +141,19 @@ On the bare address:
 
 ## The updating page
 
-While the one corpus copy is replaced, every site answers every request with a short page in Ukrainian,
-English, German and Spanish, status **503** with `Retry-After: 300`, so a reader sees "we are updating"
-and a crawler comes back later. Only `/v1/health/*` still reaches the API, so a publisher can watch it
+While the switch is on, every site answers every request with a short page in Ukrainian, English,
+German and Spanish, status **503** with `Retry-After: 300`, so a reader sees "we are updating" and a
+crawler comes back later. Only `/v1/health/*` still reaches the API, so a publisher can watch it
 come back. The switch is a file; Caddy looks for it on every request, so it takes effect at once, with
 no reload:
 
     ssh deploy@2.29.125.205 'mkdir -p /srv/essenthos/maintenance && touch /srv/essenthos/maintenance/on'   # on
     ssh deploy@2.29.125.205 'rm -f /srv/essenthos/maintenance/on'                                           # off
 
-`forge publish` to a one-copy target turns it on and off itself (`Publish:Targets:<target>:Maintenance`,
-default `maintenance/on` under the target's data root). The page is in the Caddyfile (`&(updating)`).
+`forge publish` to a target that keeps one copy (`Copies: 1`, the rehearsal on the workstation) turns it
+on while the corpus is replaced and off after (`Publish:Targets:<target>:Maintenance`, default
+`maintenance/on` under the target's data root). Production keeps two copies, so its publication does not
+put the page up; the switch is there for work done by hand. The page is in the Caddyfile (`&(updating)`).
 `deploy.ps1` makes the folder as the deploy user; a folder Docker makes for a mount is root's, and the
 `touch` above would be refused.
 
@@ -171,11 +189,43 @@ A corpus reaches production only after the **rehearsal** on the workstation has 
 
     forge release                    # verify this machine's corpus, label it, dump it into .releases/
     forge publish --to rehearsal     # the rehearsal stack below; look at it
-    forge publish --to prod          # one copy: the updating page is up while the copy is replaced
+    forge publish --to prod          # two copies: restored beside the served one, then swapped in
 
-Every Forge command takes `--dry-run`. The first publication sends every picture (~180 MB); later ones
-only what changed. Until the first publication the API answers `/v1/health/ready` with 503. A rollback
-is `forge publish --to prod --release <earlier>` (`forge releases` lists them).
+What `forge publish --to prod` does, in order:
+
+1. checks the dump's SHA-256 against its record and uploads it into `/srv/essenthos/releases`, unless a
+   file with that hash is already there (an interrupted upload is resumed by publishing again);
+2. sends the pictures and the downloads the server lacks;
+3. restores the release into `corpus_incoming` with two `pg_restore` jobs, runs `VACUUM ANALYZE`, and
+   checks its label, its pictures and every reader's bookmark. The gate (`forge verify`'s measure) is not
+   run again on the server for a release the rehearsal already took, which ran it on the same bytes
+   (owner, 2026-10-30);
+4. grants the API's role reading, stops the API, renames `corpus` aside and `corpus_incoming` to
+   `corpus`, starts the API, and drops the replaced copy;
+5. records the publication in `.releases/<name>.published` on the workstation;
+6. removes the release dumps the server no longer needs (below).
+
+The first publication, release 20261029a on 2026-10-30, took 1,710 s for upload, restore and swap, with
+the API stopped for 7.8 s. Every Forge command takes `--dry-run`. The first publication sends every
+picture (~180 MB); later ones only what changed. Until the first publication the API answers
+`/v1/health/ready` with 503.
+
+**Rollback** is `forge rollback --to prod`: production keeps no previous copy, so it publishes again the
+release this workstation published to it before the one it serves (read from the `.published` ledgers),
+which needs no rehearsal because production has served it. `forge publish --to prod --release <name>`
+publishes any earlier one (`forge releases` lists them).
+
+**Old uploads.** Once a publication is in place, Forge removes from `releases/` every release dump except
+the live release's, the one served before it (so a rollback does not upload it again), and any dump named
+after both (an upload a later publication has not finished). Before removing anything it reads back the
+release the live `corpus` says it is, and it removes nothing, saying why, when that is not the release
+just published, when the dump just published is not in the folder, or when the workstation's ledger names
+no release served before it. A file not named like a release dump (`yyyymmdd`, a letter, `.dump`) is
+never touched. Each kept and removed file is named in the log. A failure here is logged and does not fail
+the publication, which has succeeded by then.
+
+The Forge reads `Publish:Targets:prod:Ssh` from its user secrets. A shell that cannot see them (an agent's)
+passes it in the environment: `Publish__Targets__prod__Ssh=deploy@2.29.125.205`.
 
 ## Rehearsal
 
@@ -201,7 +251,10 @@ container with a client network given a public-looking IPv6 subnet (**Readers on
 
 Done on 2026-10-29 as root, on the owner's word (guide `production-server`): Ubuntu 26.04, Docker and
 Compose from Docker's apt repository, the 4 GB swap file, fail2ban, Docker's log rotation, the user
-`deploy` in the `docker` group with the owner's key, and `/srv/essenthos` owned by `deploy`. Left:
+`deploy` in the `docker` group with the owner's key, and `/srv/essenthos` owned by `deploy`. On
+2026-10-30 the 80 GB volume was added and `/srv/essenthos` moved onto it (**When more space is needed**),
+and steps 1 to 3 below were done: the first deploy, and release 20261029a published. The steps, for a
+new machine:
 
 1. **`.env`**: copy `env.example` to `/srv/essenthos/deploy/.env` and fill it in. Every password
    fresh (`openssl rand -base64 32 | tr -d '/+='`). The Postgres passwords are read once, when the
@@ -222,15 +275,18 @@ Compose from Docker's apt repository, the 4 GB swap file, fail2ban, Docker's log
 | ship code | `scripts/deploy.ps1 -Server deploy@2.29.125.205 -Environment prod -Commit <sha> [-WebCommit <sha>]` |
 | undo a code deploy | `scripts/deploy.ps1` with the previous commits |
 | ship a corpus | `forge release`, `forge publish --to rehearsal`, a look, `forge publish --to prod` |
-| undo a corpus | `forge publish --to prod --release <earlier>` |
+| undo a corpus | `forge rollback --to prod`, or `forge publish --to prod --release <earlier>` |
 | ship the downloads alone | `forge export`, `forge publish-downloads --to rehearsal`, then `--to prod` |
 | see what is where | `forge releases`, `forge releases --on prod` |
-| look at the server | `ssh deploy@2.29.125.205 'df -h /; free -h; cd /srv/essenthos/deploy && docker compose ps'` |
+| look at the server | `ssh deploy@2.29.125.205 'df -h / /srv/essenthos; free -h; cd /srv/essenthos/deploy && docker compose ps'` |
 
 The owner's console (`Essenthos.Desk`) has a Deployment section that runs the same commands behind a
 confirmation and records each run in `owner-changes.jsonl`; it reads what runs from
-`/v1/health/version` and `/version.json`, which the images carry from `SOURCE_COMMIT`. It does not send
-images: run `send-images.ps1` first.
+`/v1/health/version` and `/version.json`, which the images carry from `SOURCE_COMMIT`. Its code action
+runs `deploy.ps1 -SendImages`, which checks, builds and sends whichever image the server lacks first.
+
+Run `send-images.ps1` and `deploy.ps1` from PowerShell, not Git Bash: under Git Bash's PATH `tar` is GNU
+tar, which reads `C:\...` as a remote host.
 
 ## The downloads
 
@@ -453,9 +509,18 @@ replace one restore from the real server.
 
 ## When more space is needed
 
-When one copy plus everything else no longer fits the 38 GB disk, or two copies are wanted again
-(`Publish:Targets:prod:Copies`): attach a Hetzner Volume (network storage, slower than the local disk,
-priced per GB), formatted ext4, and move the data onto it.
+The data root is already on a Hetzner Volume (network storage, slower than the local disk, priced per GB):
+80 GB, ext4, mounted at `/srv/essenthos` by `/etc/fstab`. **To grow it**: resize it in Hetzner's console,
+then grow the file system online:
+
+    ls /dev/disk/by-id/ | grep HC_Volume                       # scsi-0HC_Volume_107312837
+    sudo resize2fs /dev/disk/by-id/scsi-0HC_Volume_107312837
+    df -h /srv/essenthos
+
+A volume can be grown, never shrunk. Hetzner's server backups do not include it.
+
+On a new machine, or to move to another volume: attach it, format it ext4 (a new, empty volume only), mount
+it, stop the stack, copy the data, and mount the volume at `/srv/essenthos` instead.
 
     ls /dev/disk/by-id/ | grep HC_Volume                       # scsi-0HC_Volume_<id>
     sudo mkfs.ext4 /dev/disk/by-id/scsi-0HC_Volume_<id>        # a new, empty volume only
@@ -465,9 +530,9 @@ priced per GB), formatted ext4, and move the data onto it.
     sudo rsync -aHAX /srv/essenthos/ /mnt/essenthos/           # postgres/ keeps its owner
     # then mount the volume at /srv/essenthos instead (edit fstab), docker compose up -d
 
-A volume can be grown later (resize at Hetzner, then `resize2fs`), never shrunk. Hetzner's server
-backups do not include a volume. Rescaling the machine instead ("CPU and RAM only" keeps the disk) is
-a few minutes in the console; afterwards drop the 4 GB lines from `.env`.
+**More memory or CPU**: rescaling the machine ("CPU and RAM only" keeps the disk) is a few minutes in the
+console; afterwards drop the 4 GB lines from `.env`. An 8 GB x86 machine (CX33) was unavailable on
+2026-10-30.
 
 ## Optional: Cloudflare in front
 
