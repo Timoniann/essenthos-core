@@ -295,6 +295,8 @@ internal sealed class Publisher(
             Path.Combine(Releases, $"{record.Name}.published"),
             $"{target.Name}\t{DateTimeOffset.UtcNow:O}\n", cancellationToken);
 
+        await RemoveOldUploads(host, record.Name, cancellationToken);
+
         if (target.KeepsPrevious)
         {
             logger.LogInformation(
@@ -313,6 +315,70 @@ internal sealed class Publisher(
 
         return 0;
     }
+
+    /// <summary>
+    /// Once <paramref name="published"/> is live, the dumps in the target's releases folder that neither
+    /// it nor a rollback needs are deleted, by the rule in <see cref="ReleaseUploads"/>, and every file is
+    /// named with what happened to it. The publication has succeeded by then, so a failure here is said
+    /// and leaves the folder as it was found, but does not fail it.
+    /// </summary>
+    private async Task RemoveOldUploads(TargetHost host, string published, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        try
+        {
+            var files = await host.Releases(cancellationToken);
+            var serving = await ReleaseName(host, target.Database, cancellationToken);
+            var previous = ReleaseUploads.Previous(Ledger(target.Name), published);
+            var previousOnTarget = target.KeepsPrevious ? await ReleaseName(host, target.Previous, cancellationToken) : null;
+            var plan = ReleaseUploads.Choose(files.Keys, published, serving, previous, target.KeepsPrevious, previousOnTarget);
+            if (plan.Refusal is { } refusal)
+            {
+                logger.LogWarning("Nothing was removed from {Folder} on {Target}, which holds {Count} files, {Bytes:N0} bytes: {Refusal}",
+                    host.ReleasesFolder, target.Name, files.Count, files.Values.Sum(), refusal);
+                return;
+            }
+
+            foreach (var kept in plan.Keep)
+            {
+                logger.LogInformation("Kept {File} ({Bytes:N0} bytes) in {Folder} on {Target}: {Why}",
+                    kept.File, files[kept.File], host.ReleasesFolder, target.Name, kept.Why);
+            }
+
+            foreach (var file in plan.Untouched)
+            {
+                logger.LogInformation("Left {File} in {Folder} on {Target} as it is: not a release dump", file, host.ReleasesFolder, target.Name);
+            }
+
+            if (!files.ContainsKey(plan.Previous + ReleaseUploads.Extension))
+            {
+                logger.LogInformation("{Folder} on {Target} has no dump of {Previous}, served before; a rollback uploads it again",
+                    host.ReleasesFolder, target.Name, plan.Previous);
+            }
+
+            if (plan.Remove.Count == 0)
+            {
+                logger.LogInformation("No older upload to remove from {Folder} on {Target}", host.ReleasesFolder, target.Name);
+                return;
+            }
+
+            await host.RemoveReleases(plan.Remove, cancellationToken);
+            logger.LogInformation("Removed {Count} older uploads, {Bytes:N0} bytes, from {Folder} on {Target}: {Files}",
+                plan.Remove.Count, plan.Remove.Sum(file => files[file]), host.ReleasesFolder, target.Name, string.Join(", ", plan.Remove));
+        }
+        catch (InvalidOperationException exception)
+        {
+            logger.LogWarning("The older uploads in {Folder} on {Target} were not removed, and the publication stands: {Message}",
+                host.ReleasesFolder, target.Name, exception.Message);
+        }
+    }
+
+    /// <summary>The release a corpus database says it is; null where it is absent or says none.</summary>
+    private static async Task<string?> ReleaseName(TargetHost host, string database, CancellationToken cancellationToken) =>
+        await host.DatabaseExists(database, cancellationToken)
+        && await host.Sql(database, "SELECT name FROM corpus_release", cancellationToken) is { Length: > 0 } name
+            ? name
+            : null;
 
     /// <summary>
     /// A target with room for an incoming copy beside the live one: restored and checked there, then
@@ -586,6 +652,19 @@ internal sealed class Publisher(
                     ? "  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}"
                     : "  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}, and drop {Previous}",
                 target.Reader, target.ApiContainer, target.Incoming, target.Database, target.Database, target.Previous, target.ApiContainer, target.Previous);
+        }
+
+        var previous = ReleaseUploads.Previous(Ledger(target.Name), record.Name);
+        if (previous is null)
+        {
+            logger.LogInformation("Then: remove nothing from {Folder}, because no release served on {Target} before {Name} is recorded here",
+                host.ReleasesFolder, target.Name, record.Name);
+        }
+        else
+        {
+            logger.LogInformation(
+                "Then: check {Target}'s live corpus says {Name}, keep its dump and {Previous}'s (served before) in {Folder}, and any newer upload, and remove the other release dumps there",
+                target.Name, record.Name, previous, host.ReleasesFolder);
         }
 
         logger.LogInformation("Nothing was uploaded, restored or swapped");
