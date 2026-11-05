@@ -20,12 +20,49 @@ internal static class MappingFiles
     {
         var (fromText, toText) = MappingProducts.Split(pair);
         var methods = MappingProducts.Methods(store, pair);
+        var reversePair = MappingProducts.Pair(toText, fromText);
+        var reverseMethods = MappingProducts.Methods(store, reversePair);
         var finalProduct = MappingProducts.Of(pair, MappingProducts.Final);
-        if (!force && store.Exists(finalProduct) && !store.NeedsBuild(finalProduct, ProductKind.Machine, Inputs(store, pair, methods, fromText, toText)))
+        var inputs = Inputs(store, pair, methods, fromText, toText, reverseMethods.Count > 0 ? (reversePair, reverseMethods) : null);
+        if (!force && store.Exists(finalProduct) && !store.NeedsBuild(finalProduct, ProductKind.Machine, inputs))
         {
             return new Merged(pair, true, 0, 0, []);
         }
 
+        var ordinals = PairOrdinals.Ensure(store, reverseMethods.Count > 0 ? [pair, reversePair] : [pair]);
+        var input = Read(store, pair, methods, ordinals[pair]);
+        if (reverseMethods.Count > 0)
+        {
+            input = input with { Reverse = Read(store, reversePair, reverseMethods, ordinals[reversePair]) };
+        }
+
+        var output = MappingMerge.Merge(input);
+
+        using (var writer = store.Create(finalProduct, ProductKind.Machine, FinalRow.Schema,
+                   ProductHeader.DescribeProducer(MergeProducer), inputs))
+        {
+            writer.WriteAll(output.Final);
+        }
+
+        using (var writer = store.Create(MappingProducts.Of(pair, MappingProducts.Statuses), ProductKind.Machine, MappingRow.Schema,
+                   ProductHeader.DescribeProducer(MergeProducer), [store.ProductInput(finalProduct)]))
+        {
+            writer.WriteAll(output.Methods.OrderBy(m => m.Key, StringComparer.Ordinal).SelectMany(m => m.Value).Where(r => r.Status is not null));
+        }
+
+        using (var writer = store.Create(MappingProducts.Of(pair, MappingProducts.Report), ProductKind.Machine, ReportRow.Schema,
+                   ProductHeader.DescribeProducer(MergeProducer), [store.ProductInput(finalProduct)]))
+        {
+            writer.WriteAll(output.Report);
+        }
+
+        return new Merged(pair, false, output.Final.Count(r => r.Settled), output.Final.Count, output.Report);
+    }
+
+    /// <summary>Everything the merge reads of one pair: its method files, rulings, verse hashes, the two texts' manifests and frames.</summary>
+    private static MappingMerge.Input Read(ProductStore store, string pair, List<string> methods, long ordinal)
+    {
+        var (fromText, toText) = MappingProducts.Split(pair);
         var rows = new Dictionary<string, List<MappingRow>>(StringComparer.Ordinal);
         var headers = new Dictionary<string, ProductHeader?>(StringComparer.Ordinal);
         foreach (var method in methods)
@@ -84,30 +121,9 @@ internal static class MappingFiles
             yielded = reader.ReadAll();
         }
 
-        var ordinal = PairOrdinals.Ensure(store, [pair])[pair];
-        var output = MappingMerge.Merge(new MappingMerge.Input(
+        return new MappingMerge.Input(
             pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers,
-            yielded));
-
-        using (var writer = store.Create(finalProduct, ProductKind.Machine, FinalRow.Schema,
-                   ProductHeader.DescribeProducer(MergeProducer), Inputs(store, pair, methods, fromText, toText)))
-        {
-            writer.WriteAll(output.Final);
-        }
-
-        using (var writer = store.Create(MappingProducts.Of(pair, MappingProducts.Statuses), ProductKind.Machine, MappingRow.Schema,
-                   ProductHeader.DescribeProducer(MergeProducer), [store.ProductInput(finalProduct)]))
-        {
-            writer.WriteAll(output.Methods.OrderBy(m => m.Key, StringComparer.Ordinal).SelectMany(m => m.Value).Where(r => r.Status is not null));
-        }
-
-        using (var writer = store.Create(MappingProducts.Of(pair, MappingProducts.Report), ProductKind.Machine, ReportRow.Schema,
-                   ProductHeader.DescribeProducer(MergeProducer), [store.ProductInput(finalProduct)]))
-        {
-            writer.WriteAll(output.Report);
-        }
-
-        return new Merged(pair, false, output.Final.Count(r => r.Settled), output.Final.Count, output.Report);
+            yielded);
     }
 
     /// <summary>
@@ -223,13 +239,20 @@ internal static class MappingFiles
             ? VerseLinkFiles.Frames(store, pair)
             : null;
 
-    /// <summary>What a pair's final is made from: its method files, its rulings and hashes, and the two texts' manifests and frames where they exist.</summary>
-    private static IReadOnlyList<ProductInput> Inputs(ProductStore store, string pair, List<string> methods, string fromText, string toText)
+    /// <summary>
+    /// What a pair's final is made from: its method files, its rulings and hashes, and the two texts' manifests and frames where they
+    /// exist; and the same of the pair the other way round, where there is one.
+    /// </summary>
+    private static IReadOnlyList<ProductInput> Inputs(ProductStore store, string pair, List<string> methods, string fromText, string toText,
+        (string Pair, List<string> Methods)? reverse)
     {
-        var products = methods.Select(m => MappingProducts.Of(pair, m))
+        static IEnumerable<string> Own(string pair, List<string> methods) => methods.Select(m => MappingProducts.Of(pair, m))
             .Append(MappingProducts.Of(pair, MappingProducts.Rulings))
             .Append(MappingProducts.Of(pair, MappingProducts.Hashes))
-            .Append(MappingProducts.Of(pair, MappingProducts.StrongYielded))
+            .Append(MappingProducts.Of(pair, MappingProducts.StrongYielded));
+
+        var products = Own(pair, methods)
+            .Concat(reverse is { } other ? Own(other.Pair, other.Methods) : [])
             .Append(VerseManifestRow.ProductOf(fromText))
             .Append(VerseManifestRow.ProductOf(toText))
             .Append(Loading.Frame.FrameFile.Product(fromText))
