@@ -76,6 +76,28 @@ public sealed class SuppliedWordSourceTests : IDisposable
     }
 
     [Fact]
+    public void A_pair_folder_with_only_verse_links_brings_no_pair_in_and_one_with_a_method_file_does()
+    {
+        var store = new ProductStore(_root);
+        Text(store, "KJV", "translation", "eng", ("40.1:1", [("The", null), ("book", null)]));
+        Text(store, "NESTLE1904", "critical-edition", "grc", ("40.1:1", [("Βίβλος", null), ("γενέσεως", null)]));
+        var folder = Path.Combine(_root, ProductStore.EssenthosFolder, MappingProducts.Folder, "KJV-NESTLE1904");
+        Directory.CreateDirectory(folder);
+        File.WriteAllText(Path.Combine(folder, VerseLinkFiles.Name + ".essx"), "");
+
+        var before = PairSources.Pairs(new ProductTexts(store), MappingMethods.Stated);
+        using (var writer = store.Create(MappingProducts.Of("KJV-NESTLE1904", MappingMethods.Strong), ProductKind.Machine, MappingRow.Schema, "test", []))
+        {
+            writer.WriteAll([new MappingRow("40.1:1.2", "40.1:1.1", "renders", MappingMethods.Strong, 0.9, "numbers", null, null, null)]);
+        }
+
+        var after = PairSources.Pairs(new ProductTexts(store), MappingMethods.Stated);
+
+        before.Should().NotContain("KJV-NESTLE1904", "verse-pairs writes its folder after every producer has run");
+        after.Should().Contain("KJV-NESTLE1904");
+    }
+
+    [Fact]
     public void What_a_pair_says_names_each_texts_words_apart_though_their_places_in_the_products_are_the_same()
     {
         var store = new ProductStore(_root);
