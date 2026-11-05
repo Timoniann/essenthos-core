@@ -82,23 +82,6 @@ public sealed class PossessivePassTests : IDisposable
         report.Should().StartWith("RUSV to BHSA: 0 possessives");
     }
 
-    /// <summary>A load replaying the recipe runs the pass until the corpus holds what it writes.</summary>
-    [Fact]
-    public async Task TheRecipeSkipsThePassOnceItsLinksAreThere()
-    {
-        Link(6, 6); // брата → אָחִיו
-        var step = new RecipeStep("possessives", ["RUSV", "BHSA", "--apply"]);
-        await _db.Database.OpenConnectionAsync();
-        var connection = (NpgsqlConnection)_db.Database.GetDbConnection();
-
-        var before = await Recipe.AlreadyThere(connection, step, CancellationToken.None);
-        await new PossessivePass(_db, NullLogger<PossessivePass>.Instance).Run("RUSV", "BHSA", apply: true);
-        var after = await Recipe.AlreadyThere(connection, step, CancellationToken.None);
-
-        before.Should().BeNull();
-        after.Should().Be("the possessives of RUSV are already linked to BHSA");
-    }
-
     /// <summary>
     /// своего beside брата shares אָחִיו rightly, and so does его four words away, since it agrees
     /// with the suffix; и is not a pronoun; ты on the same word agrees with nothing on it and goes.

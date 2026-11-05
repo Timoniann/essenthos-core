@@ -221,7 +221,6 @@ builder.Services.AddScoped<DuplicateRecordLoader>();
 builder.Services.AddScoped<RefiledTieLoader>();
 builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
-builder.Services.AddScoped<DatasetLoader>();
 builder.Services.AddScoped<Publisher>();
 builder.Services.AddScoped<TextExporter>();
 
@@ -236,44 +235,20 @@ var environment = app.Services.GetRequiredService<IHostEnvironment>();
 var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
 
 // Every verb is declared once, in Verbs/ForgeVerbs.cs, with its arguments and a line of help; `forge help`
-// lists them. No arguments at all is the load.
-var verb = ForgeVerbs.Find(args is [] ? "load" : args[0]);
+// lists them, and no arguments at all is that list.
+string[] arguments = args is [] ? ["help"] : args;
+var verb = ForgeVerbs.Find(arguments[0]);
 if (verb is null)
 {
-    logger.LogError("Nothing is known to do with \"{Verb}\". `forge help` lists the verbs", args[0]);
+    logger.LogError("Nothing is known to do with \"{Verb}\". `forge help` lists the verbs", arguments[0]);
     return 1;
 }
 
-string[] arguments = args is [] ? ["load"] : args;
 if (!verb.Accepts(arguments))
 {
     logger.LogError("forge {Usage}", verb.Usage);
     return 1;
 }
 
-// A Forge a load step started reports what its statements named, so they count as the step's reads.
-using var statementLog = Essenthos.Core.Loading.Marks.StatementTables.ForParent();
-
-// A run the recipe records, run by hand, is watched so its line can be marked as the load would mark it.
-using var adoption = await Essenthos.Core.Loading.Marks.RecipeAdoption.Begin(
-    databaseConnection, resources, configuration, environment.ContentRootPath, arguments, logger);
-
 var forge = new ForgeRun(app.Services, logger, resources, databaseConnection);
-var exit = await verb.Run(forge, arguments);
-adoption?.Ran();
-if (exit == 0)
-{
-    await forge.Recount(verb.Changed(arguments));
-}
-
-// A run that wrote what the load does not goes into the recipe the load replays.
-if (exit == 0)
-{
-    Recipe.Record(resources, arguments, DateTimeOffset.UtcNow);
-    if (adoption is not null)
-    {
-        await adoption.Finish();
-    }
-}
-
-return exit;
+return await verb.Run(forge, arguments);

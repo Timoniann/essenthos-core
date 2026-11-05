@@ -52,14 +52,14 @@ public sealed class EntityVerseNamingTests : IDisposable
             new EntityVerse { EntityId = zimri.Id, CanonicalBook = 1, CanonicalChapter = 9, CanonicalVerse = 31, Source = "test", Names = false });
         await _db.SaveChangesAsync();
 
-        var changed = await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        var changed = await _db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         _db.ChangeTracker.Clear();
 
         changed.Should().Be(1);
         (await _db.EntityVerses.Where(v => v.EntityId == zimri.Id).OrderBy(v => v.CanonicalVerse)
                 .Select(v => v.Names).ToListAsync())
             .Should().Equal(false, true);
-        (await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses)).Should().Be(0, "a second run changes nothing");
+        (await _db.Database.ExecuteSqlRawAsync(VerseNaming.Sql)).Should().Be(0, "a second run changes nothing");
 
         var order = await EncyclopediaEndpoints.NamingFirst(_db.EntityVerses.Where(v => v.EntityId == zimri.Id)).ToListAsync();
         order.Should().HaveCount(2);
@@ -84,7 +84,7 @@ public sealed class EntityVerseNamingTests : IDisposable
             new EntityVerse { EntityId = elohim.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 2, Source = "test" });
         await _db.SaveChangesAsync();
 
-        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        await _db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         _db.ChangeTracker.Clear();
 
         (await _db.EntityVerses.Where(v => v.EntityId == elohim.Id).OrderBy(v => v.CanonicalVerse)

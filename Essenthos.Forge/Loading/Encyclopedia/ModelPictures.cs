@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
-using Essenthos.Core.Loading.Marks;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -60,13 +59,6 @@ internal sealed class ModelPictures(AppDbContext db, IConfiguration configuratio
         Path.GetFullPath(configuration[WebConfigurationKey] is { Length: > 0 } configured
             ? configured
             : Path.Combine(resources, "..", "..", "essenthos-web"));
-
-    /// <summary>The files the step reads, so that a changed model runs it again.</summary>
-    public static StepFile[] Files(IConfiguration configuration, string resources)
-    {
-        var web = WebFolder(configuration, resources);
-        return [.. Sources.Select(source => new StepFile(Path.Combine(web, source)))];
-    }
 
     public async Task<ModelPicturesOutcome> Draw(string resources, CancellationToken cancellationToken = default)
     {

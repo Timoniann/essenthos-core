@@ -37,7 +37,7 @@ internal sealed class KingJamesItalicsSource : IPairSource
     public string Name => "kjv-italics";
 
     public bool States(string pair) =>
-        DatasetLoader.GreekWitnesses.Any(witness => pair == $"{Bible4uTextSource.KingJames}-{witness}");
+        KingJamesGreekSource.Witnesses.Any(witness => pair == $"{Bible4uTextSource.KingJames}-{witness}");
 
     public bool Makes(string source) => source == NewTestamentLinkLoader.SuppliedSource;
 

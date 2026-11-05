@@ -13,69 +13,6 @@ namespace Essenthos.Core.Verbs;
 
 internal static partial class ForgeVerbs
 {
-    /// <summary>
-    /// The load, which the API used to run in the background while it served. It is a command here
-    /// because that is what it always was: hours of parsing that ends, against a database nobody is
-    /// reading yet. Each step is skipped when nothing it reads has moved since it last ran to the end
-    /// (<see cref="Loading.Marks.LoadMarks"/>). <c>--from &lt;step&gt;</c> starts at a step, the one a
-    /// failed load names; <c>--only &lt;step|module,...&gt;</c> runs only those, then verify;
-    /// <c>--no-skip</c> runs every step considered whatever its mark says; <c>--steps</c> lists the steps
-    /// with their modules.
-    /// </summary>
-    private static async Task<int> Load(ForgeRun forge, string[] args)
-    {
-        using var loadScope = forge.Scope();
-        var loader = loadScope.ServiceProvider.GetRequiredService<DatasetLoader>();
-        if (args.Contains("--steps"))
-        {
-            Console.WriteLine(string.Join('\n', loader.StepList().Select(step => $"{step.Name}\t{step.Module}")));
-            return 0;
-        }
-
-        var loaded = await loader.Run(LoadRequestOf(args), CancellationToken.None);
-        await forge.Tidy();
-        return loaded ? 0 : 1;
-    }
-
-    /// <summary>
-    /// <c>--from</c>, <c>--only</c> and <c>--no-skip</c>, each also as <c>--name=value</c>; an empty value is
-    /// the same as none, so an action can always pass all three.
-    /// </summary>
-    internal static LoadRequest LoadRequestOf(string[] args) =>
-        new(
-            Named(args, "--from"),
-            Named(args, "--only")?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries),
-            args.Contains("--no-skip") || Named(args, "--no-skip") is { } force && bool.TryParse(force, out var yes) && yes);
-
-    private static string? Named(string[] args, string name) =>
-        args.FirstOrDefault(argument => argument.StartsWith(name + "=", StringComparison.Ordinal))?[(name.Length + 1)..]
-        ?? (Array.IndexOf(args, name) is var at and >= 0 && at + 1 < args.Length && !args[at + 1].StartsWith("--", StringComparison.Ordinal)
-            ? args[at + 1]
-            : null);
-
-    /// <summary>
-    /// <c>rebuild &lt;database&gt; --compare &lt;reference&gt; --resources &lt;folder&gt; [--resume]</c>: see
-    /// <see cref="Loading.Marks.Rebuild"/>. The Resources folder is asked for, not defaulted, because the
-    /// load writes review lists into the one it is given.
-    /// </summary>
-    private static async Task<int> RebuildVerb(ForgeRun forge, string[] args)
-    {
-        var reference = Named(args, "--compare");
-        var resources = Named(args, "--resources");
-        if (reference is not { Length: > 0 } || resources is not { Length: > 0 } || args[1].StartsWith("--", StringComparison.Ordinal))
-        {
-            forge.Logger.LogError("forge rebuild <database> --compare <reference> --resources <folder> [--resume]");
-            return 1;
-        }
-
-        using var scope = forge.Scope();
-        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-        var sessions = int.TryParse(configuration["Loading:FingerprintSessions"], out var configured) && configured > 0 ? configured : 6;
-        return await Loading.Marks.Rebuild.Run(
-            forge.DatabaseConnection, args[1], reference, Path.GetFullPath(resources), sessions, args.Contains("--resume"), forge.Logger,
-            CancellationToken.None);
-    }
-
     private static async Task<int> LexiconTranslations(ForgeRun forge, string[] args)
     {
         using var scope = forge.Scope();
@@ -148,108 +85,6 @@ internal static partial class ForgeVerbs
         using var releasesScope = forge.Scope();
         return await releasesScope.ServiceProvider.GetRequiredService<Publisher>().List(
             Option(args, "--on"), CancellationToken.None);
-    }
-
-    /// <summary>
-    /// The recorded runs alone, on a corpus already loaded: <c>recipe</c> lists them, <c>recipe --run</c>
-    /// runs what the corpus does not already hold, as the load does after its own linking steps.
-    /// </summary>
-    private static async Task<int> RecipeVerb(ForgeRun forge, string[] args)
-    {
-        using var recipeScope = forge.Scope();
-        if (!args.Contains("--run"))
-        {
-            var recipeDb = recipeScope.ServiceProvider.GetRequiredService<AppDbContext>();
-            await recipeDb.Database.OpenConnectionAsync();
-            var listed = new StringBuilder();
-            foreach (var step in Recipe.Read(forge.Resources))
-            {
-                var already = await Recipe.AlreadyThere(
-                    (Npgsql.NpgsqlConnection)recipeDb.Database.GetDbConnection(), step, CancellationToken.None);
-                listed.AppendLine(already is null ? $"  would run  {step}" : $"  skipped    {step}: {already}");
-            }
-
-            forge.Logger.LogInformation("\n{Steps}", listed);
-            return 0;
-        }
-
-        await recipeScope.ServiceProvider.GetRequiredService<DatasetLoader>().FollowTheRecipe(forge.Resources, CancellationToken.None);
-        forge.Logger.LogInformation(
-            "{Outcome}", await recipeScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
-        await recipeScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
-        return 0;
-    }
-
-    /// <summary>
-    /// One text read again from its source after a change to how it is read, without the whole load.
-    /// Its word links are deleted with it; align and compose it again afterwards.
-    /// </summary>
-    private static async Task<int> Reload(ForgeRun forge, string[] args)
-    {
-        using var reloadScope = forge.Scope();
-        await reloadScope.ServiceProvider.GetRequiredService<DatasetLoader>()
-            .Reload(Identifier(args[1]), CancellationToken.None);
-        return 0;
-    }
-
-    /// <summary>
-    /// Repair the two known edition boundaries atomically, retaining real words and their evidence.
-    /// </summary>
-    private static async Task<int> EditionBoundaries(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        var outcome = await scope.ServiceProvider.GetRequiredService<EditionBoundaryRepairLoader>()
-            .Load(forge.Resources, CancellationToken.None);
-        Console.WriteLine(outcome);
-        return 0;
-    }
-
-    /// <summary>
-    /// The load's swete-restoration step on its own: the verses of Swete and of Ottley's Isaiah read
-    /// against the printed page, written into a corpus that holds them as the transcription had them.
-    /// Their words are linked again by <c>septuagint-refresh</c>.
-    /// </summary>
-    private static async Task<int> RestoreSwete(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<SweteRestorationLoader>()
-            .Load(Path.Combine(forge.Resources, "Swete"), CancellationToken.None));
-        return 0;
-    }
-
-    /// <summary>
-    /// The notes on the book titles alone, which the load writes at each text's step: the one text
-    /// that prints any is read again from its files and nothing else is touched.
-    /// </summary>
-    private static async Task<int> TitleNotes(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<BookNoteLoader>()
-            .Load(KulishTextSource.Read(Path.Combine(forge.Resources, "Kulish")), CancellationToken.None));
-        return 0;
-    }
-
-    /// <summary>
-    /// The notes on the chapter headings alone, which the load writes at each text's step: the one text
-    /// that prints any is read again from its files and nothing else is touched.
-    /// </summary>
-    private static async Task<int> HeadingNotes(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<ChapterNoteLoader>()
-            .Load(EbibleTextSource.Read(Path.Combine(forge.Resources, "BiblicaUkrainian2022")), CancellationToken.None));
-        return 0;
-    }
-
-    /// <summary>
-    /// The texts named (every text by default) placed in the frame: each one's frame file written from
-    /// its verses as they stand, and its rows of <c>verse_reference</c> filled from the file.
-    /// </summary>
-    private static async Task<int> Reframe(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        await scope.ServiceProvider.GetRequiredService<DatasetLoader>().Reframe(Slugs(args), CancellationToken.None);
-        return 0;
     }
 
     /// <summary>
@@ -396,50 +231,6 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    private static async Task<int> VerseRefresh(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>()
-            .Refresh(args[1].Split(',').Select(Identifier).ToHashSet()));
-        return 0;
-    }
-
-    private static async Task<int> SeptuagintRefresh(ForgeRun forge, string[] args)
-    {
-        var books = args[3].Split(',').Select(int.Parse).ToHashSet();
-        if (books.Count == 0 || books.Any(b => b < 1)) throw new InvalidOperationException("Name positive canonical book ordinals.");
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<SeptuagintLinkLoader>()
-            .Refresh(Identifier(args[1]), Identifier(args[2]), books));
-        return 0;
-    }
-
-    /// <summary>
-    /// The words bible4u's King James, Synodal and Ohienko print wrong, corrected in a corpus that loaded
-    /// them before the reader did it: word rows kept wherever the word is the same, the corrected verses
-    /// linked again by the sources that state what their words render, then the verse links and the carry.
-    /// Brenton's Greek verses are begun where his English begins them the same way, their words keeping
-    /// their rows and losing their links until the pairs are aligned again.
-    /// BHSA's headwords and the Berean's Strong numbers are put in place first, the same way.
-    /// </summary>
-    private static async Task<int> Correct(ForgeRun forge, string[] args)
-    {
-        using var correctScope = forge.Scope();
-        await correctScope.ServiceProvider.GetRequiredService<DatasetLoader>().Correct(CancellationToken.None);
-        return 0;
-    }
-
-    /// <summary>
-    /// What the editions print about their own words — supplied, doubtful, a subscription — written as
-    /// word groups in place, over a corpus whose words and links are already there.
-    /// </summary>
-    private static async Task<int> Marks(ForgeRun forge, string[] args)
-    {
-        using var marksScope = forge.Scope();
-        await marksScope.ServiceProvider.GetRequiredService<DatasetLoader>().Marks(CancellationToken.None);
-        return 0;
-    }
-
     /// <summary>
     /// What each text was translated from, revised from or shares a tradition with, made to match the
     /// list kept by hand. The load does this once the texts are in; this is that step alone.
@@ -448,35 +239,6 @@ internal static partial class ForgeVerbs
     {
         using var relationScope = forge.Scope();
         Console.WriteLine(await relationScope.ServiceProvider.GetRequiredService<TextRelationLoader>().Load());
-        return 0;
-    }
-
-    /// <summary>
-    /// Every annotation a pass carried into another text, carried again over the links as they stand.
-    /// For a corpus whose links were changed by something that did not carry them itself.
-    /// </summary>
-    private static async Task<int> ForeignNamesVerb(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        var db = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Database.AppDbContext>();
-        var write = !args.Contains("--dry-run");
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<ForeignNames>().Withdraw(write: write));
-        if (!write)
-        {
-            return 0;
-        }
-
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
-        Console.WriteLine($"{await Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRawAsync(db.Database, DatasetLoader.NamingVerses)} verse naming flags refreshed");
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<EntityRenderingLoader>().Load());
-        return 0;
-    }
-
-    private static async Task<int> Carry(ForgeRun forge, string[] args)
-    {
-        using var carryScope = forge.Scope();
-        await carryScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
-        await forge.Tidy();
         return 0;
     }
 }

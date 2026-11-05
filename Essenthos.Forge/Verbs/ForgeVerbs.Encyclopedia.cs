@@ -86,26 +86,6 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary>How each text spells each name, counted again from the words that name it.</summary>
-    private static async Task<int> Spell(ForgeRun forge, string[] args)
-    {
-        using var spellScope = forge.Scope();
-        Console.WriteLine(await spellScope.ServiceProvider.GetRequiredService<EntityRenderingLoader>().Load());
-        return 0;
-    }
-
-    /// <summary>
-    /// The phrases the lexicon quotes under each entry, counted again from the links for every text,
-    /// whatever their digests say: the load counts only the texts where something moved.
-    /// </summary>
-    private static async Task<int> Cards(ForgeRun forge, string[] args)
-    {
-        using var cardsScope = forge.Scope();
-        Console.WriteLine(await cardsScope.ServiceProvider.GetRequiredService<StrongRenderingLoader>()
-            .Load(Relinked.Every, recount: true));
-        return 0;
-    }
-
     /// <summary>The relations between Strong's entries, for a corpus loaded before they were read.</summary>
     private static async Task<int> LexiconRelations(ForgeRun forge, string[] args)
     {
@@ -184,7 +164,7 @@ internal static partial class ForgeVerbs
         using var ownScope = forge.Scope();
         Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<OwnRecordLoader>().Load(forge.Resources));
         Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
-        Console.WriteLine($"{await ownScope.ServiceProvider.GetRequiredService<AppDbContext>().Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses)} verse naming flags refreshed");
+        Console.WriteLine($"{await ownScope.ServiceProvider.GetRequiredService<AppDbContext>().Database.ExecuteSqlRawAsync(VerseNaming.Sql)} verse naming flags refreshed");
         Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<DistinguisherLoader>().Load());
         return 0;
     }
@@ -216,7 +196,7 @@ internal static partial class ForgeVerbs
     private static async Task TellTheNamingVerses(IServiceScope scope)
     {
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var changed = await db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        var changed = await db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         Console.WriteLine($"{changed} listed verses changed between naming their entity and only concerning it");
     }
 

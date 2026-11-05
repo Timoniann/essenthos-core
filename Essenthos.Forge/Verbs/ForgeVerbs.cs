@@ -9,37 +9,16 @@ using Essenthos.Core.Loading.Links.Evidentia;
 namespace Essenthos.Core.Verbs;
 
 /// <summary>
-/// Every verb the Forge answers to, in the order <c>forge help</c> lists them. The dispatch, the help and
-/// the recipe all read this one list, so a verb cannot be runnable and unlisted, or recorded under a name
-/// the recipe does not know.
+/// Every verb the Forge answers to, in the order <c>forge help</c> lists them. The dispatch and the help
+/// both read this one list, so a verb cannot be runnable and unlisted.
 /// </summary>
 internal static partial class ForgeVerbs
 {
-    private static bool Always(string[] args) => true;
-
-    private static bool Applying(string[] args) => args.Contains("--apply");
-
-    // The texts a run changed the links of, which it counts again as it ends (ForgeVerb.Relinks).
-    private static Relinked Every(string[] args) => Relinked.Every;
-
-    private static Relinked Pair(string[] args) => Relinked.Of(args[1], args[2]);
-
-    private static Relinked AppliedPair(string[] args) => Applying(args) ? Pair(args) : Relinked.None;
-
     public static IReadOnlyList<ForgeVerb> All { get; } =
     [
         new("help", "", "This list.", Help),
 
-        // The load, the corpus measures and the releases.
-        new("load", "[--from <step>] [--only <step|module,...>] [--no-skip] [--steps]",
-            "Load the corpus: every witness, the lexicon, the frame, the links, the encyclopedia and the verification pass; "
-            + "a step nothing it reads has moved for is skipped.",
-            Load),
-        new("rebuild", "<database> --compare <reference> --resources <folder> [--resume]",
-            "Build the corpus from nothing into a new database of its own, every step and no model run but the aligner's, verify it, and compare "
-            + "it table by table with a reference corpus. Never touches the configured database and swaps nothing. "
-            + "--resume goes on in a rebuild that stopped, from the step or recipe line that stopped it.",
-            RebuildVerb, Least: 5, Most: 6),
+        // The build, the corpus measures and the releases.
         new("lexicon-translations", "", "Load only published Strong translations beside the English dictionary.",
             LexiconTranslations, Most: 0),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
@@ -90,24 +69,6 @@ internal static partial class ForgeVerbs
             "Send the export to a target's downloads: what it lacks, then the manifest, then away with the files no manifest names.", PublishDownloads),
         new("rollback", "--to <target> [--dry-run]", "Swap a target's live corpus with the previous release.", Rollback),
         new("releases", "[--on <target>]", "The releases this machine has built, and where each was published.", Releases),
-        new("recipe", "[--run]", "List the recorded Forge runs the load replays, or run the ones the corpus lacks.", RecipeVerb,
-            Relinks: args => args.Contains("--run") ? Relinked.Every : Relinked.None),
-        new("reload", "<text>", "Read one text again from its source without the whole load.", Reload,
-            Least: 1, Most: 1, Records: Always, Relinks: Every),
-        new("correct", "", "Correct the King James, the Synodal and Ohienko against their editions in a loaded corpus.",
-            Correct, Records: Always, Relinks: Every),
-        new("edition-boundaries", "", "Remove KJV Apocrypha headings, open Swete's lost 2 Samuel 19:43 and take out the chapter numbers its transcription let into the text, without replacing either text.",
-            EditionBoundaries, Records: Always, Relinks: Every),
-        new("swete-restoration", "",
-            "Write the words Swete's and Ottley's transcriptions lost, and the letters their printed pages correct, into a corpus loaded before them.",
-            RestoreSwete, Relinks: _ => Relinked.Of(SweteTextSource.Slug, OttleyTextSource.Slug, AlexandrinusTextSource.Slug)),
-        new("title-notes", "", "Write the notes the Kulish Bible prints on its book titles into a corpus loaded before them.",
-            TitleNotes, Most: 0),
-        new("heading-notes", "", "Write the notes Biblica's Ukrainian prints on its psalm headings into a corpus loaded before them.",
-            HeadingNotes, Most: 0),
-        new("frame", "[<text,...>]",
-            "Place the texts named, or every text, in the canonical frame: write each one's frame file and fill its verse references from it.",
-            Reframe),
         new("frame-files", "[<text,...>] [--from <Resources>] [--force] [--parallel <n>]",
             "Write the frame files of the texts named, or of every text, whose inputs moved: from each text's verse manifest, words, titles and "
             + "declaration and the versification data. Reads no database.",
@@ -120,25 +81,17 @@ internal static partial class ForgeVerbs
             + "Writes nothing to the corpus; --database reads another database on its server, --out writes the computed frame as a file.",
             FrameCheck),
         new("verse-links", "", "Complete verse correspondences from the current frame and sourced word links.", VerseLinks),
-        new("verse-refresh", "<text,...>", "Refresh only the frame's verse correspondences involving these texts, preserving other testimony.",
-            VerseRefresh, Least: 1, Most: 1, Relinks: args => Relinked.Of(args[1].Split(','))),
-        new("septuagint-refresh", "<from> <to> <book,...>", "Refresh this Greek pair's own derived claims in selected books while retaining other testimony.",
-            SeptuagintRefresh, Least: 3, Most: 3, Relinks: Pair),
-        new("marks", "", "Write what the editions print about their own words as word groups.", Marks),
         new("relations", "", "Make what each text was translated or revised from match the list kept by hand.", Relations),
-        new("carry", "", "Carry every annotation a pass carried into another text again over the links as they stand.", Carry),
-        new("foreign-names", "[--dry-run]", "Take back the names carried onto a word the text writes as another's name, and cite the verses again.",
-            ForeignNamesVerb),
 
         // Links between texts.
         new("rejected-renderings", "", "Withdraw the specifically rejected statistical renderings and refresh their carried names.",
-            RejectedRenderingVerb, Relinks: args => Relinked.Of("RUSV", "NESTLE1904", "TR1894", "KJV")),
+            RejectedRenderingVerb),
         new("align", "<from> <to> [--min <confidence>] [--model <model>] [--replace] [--outside <text>]",
             "Align two texts with SIL's statistical aligner and write the result as aligner links.", Align,
-            Least: 2, Records: Always, Relinks: Pair),
+            Least: 2),
         new("compose", "<from> <via[,via]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--refresh] [--dry-run]",
             "Compose a text's links to an original through aligned intermediates; --refresh redraws only the verses whose middle text gained links since.", Compose,
-            Least: 3, Records: args => !args.Contains(Recipe.Refresh), Relinks: args => Relinked.Of(args[1], args[3])),
+            Least: 3),
         new("score", "<from> <to> [--min <c,...>] [--model <m>] [--surface] [--stated] [--suppletion] [--pairs <file>]",
             "What an aligner threshold costs, against the pair's stated links. Writes nothing.", Score, Least: 2),
         new("score-anchors", "<from> <to> [--min <c,...>] [--model <m>] [--fold <n>]",
@@ -146,62 +99,54 @@ internal static partial class ForgeVerbs
         new("syntax", "<from> <to> [--model <m>] [--stated]",
             "What the target's syntax is worth as a check on the aligner. Writes nothing.", Syntax, Least: 2),
         new("strong", "<from> <to>", "Link a Strong-tagged translation to a witness that carries the numbers too.",
-            Strong, Least: 2, Records: Always, Relinks: Pair),
+            Strong, Least: 2),
         new("kjv-greek", "<witness>", "Match the tagged King James to one of its five Greek witnesses.",
-            KingJamesGreek, Least: 1, Most: 1, Relinks: args => Relinked.Of(Bible4uTextSource.KingJames, args[1])),
+            KingJamesGreek, Least: 1, Most: 1),
         new("synodal-strong", "[<witness> ...]", "Link the Synodal by Bob Jones University's Strong numbering.",
-            SynodalStrong, Records: Always, Relinks: Every),
+            SynodalStrong),
         new("strong-unreached", "<from> <to>",
             "Match the verses of a Strong-tagged translation no link of its numbers reaches yet, after the witness gained numbers.",
-            StrongUnreached, Least: 2, Most: 2, Relinks: Pair),
+            StrongUnreached, Least: 2, Most: 2),
         new("synodal-strong-unreached", "[<witness> ...]",
             "Match the Synodal's verses no link of its numbering reaches yet, after a witness gained numbers.",
-            SynodalStrongUnreached, Relinks: Every),
+            SynodalStrongUnreached),
         new("union-strong", "[<witness> ...]", "Link the Chinese Union Version by FHL's Strong numbers.",
-            UnionStrong, Records: Always, Relinks: Every),
+            UnionStrong),
         new("reina-valera-strong", "[<witness> ...]",
             "Link the Reina-Valera 1909 by Rubén Gómez's Strong numbers, read for the run and never stored.",
-            ReinaValeraStrong, Records: Always, Relinks: Every),
+            ReinaValeraStrong),
         new("reina-valera-strong-score", "",
             "Score what Gómez's numbers would draw for the Reina-Valera against Clear Bible's alignment. Writes nothing.",
             ReinaValeraStrongScore),
         new("crosswire-strong", "[<module> ...]", "Link the texts CrossWire's Strong-numbered modules number.",
-            CrossWireStrong, Records: Always, Relinks: Every),
+            CrossWireStrong),
         new("byzantine-apparatus", "",
             "Link the Byzantine Textform to Nestle 1904 and Scrivener where Robinson's apparatus states a reading they print.",
-            ByzantineApparatusVerb, Most: 0, Records: Always,
-            Relinks: _ => Relinked.Of([ByzantineTextSource.Slug, .. ByzantineApparatusLinkLoader.Witnesses.Select(w => w.Witness)])),
+            ByzantineApparatusVerb, Most: 0),
         new("crosswire-positions", "[<module> ...]",
             "Link RLT's New Testament to the Received Text by the places of the Greek words its module states.",
-            CrossWirePositions, Records: Always,
-            Relinks: _ => Relinked.Of([SwordTextSource.RevisedLiteral, .. CrossWirePositionLinkLoader.Witnesses])),
+            CrossWirePositions),
         new("ohb-cuv", "[--replace]", "Link the Chinese Union Version's Old Testament to BHSA by the Open Hebrew Bible's mapping.",
-            OhbCuv, Records: Always, Relinks: Every),
+            OhbCuv),
         new("object-marker", "[<text> ...] [--apply]", "Match again the numbered links to the Hebrew the object marker made.",
-            ObjectMarker, Relinks: args => Applying(args) ? Relinked.Every : Relinked.None),
+            ObjectMarker),
         new("interlinear-join", "<text> [--replace]", "Measure a Door43 interlinear's join, and with --replace write it again.",
-            InterlinearJoin, Least: 1, Records: args => args.Contains("--replace"),
-            Relinks: args => args.Contains("--replace") ? Relinked.Of(args[1]) : Relinked.None),
+            InterlinearJoin, Least: 1),
         new("redraw", "berean <witness> | clearbible <translation>", "Withdraw and draw again one stated mapping's links.",
-            Redraw, Least: 2, Most: 2, Relinks: args => args[1] switch
-            {
-                "berean" => Relinked.Of(BereanTextSource.Slug, args[2]),
-                "clearbible" => Relinked.Of(args[2]),
-                _ => Relinked.None,
-            }),
-        new("clearbible", "", "Clear Bible's hand-made alignments, set by set.", ClearBibleVerb, Relinks: Every),
+            Redraw, Least: 2, Most: 2),
+        new("clearbible", "", "Clear Bible's hand-made alignments, set by set.", ClearBibleVerb),
         new("names", "<from> <to> [--chapters b:c,...] [--books b,...] [--apply]",
             "Settle the names of each verse by spelling and order over links already written.", Names,
-            Least: 2, Records: Applying, Relinks: AppliedPair),
+            Least: 2),
         new("names-first", "<from> <to> [--books b,...] [--names-from <name-consensus --out folder>] [--target-lemmas glaux] [--alone entity,letters,spelling|none] [--uneven] [--single] [--held] [--out <folder>] [--apply]",
             "Place every name of a translation on the original's word naming the same person, place or people, by whom both name, their letters and the text's own spelling.",
-            NamesFirst, Least: 2, Records: Applying, Relinks: AppliedPair),
+            NamesFirst, Least: 2),
         new("possessives", "<from> <to> [--apply]",
             "Link the possessive a Slavic text writes beside the word rendering a suffixed Hebrew word.", Possessives,
-            Least: 2, Records: Applying, Relinks: AppliedPair),
+            Least: 2),
         new("unshare", "<from> <to> [--apply]",
             "Withdraw the aligner's links that put a pronoun or particle on a word another word renders.", Unshare,
-            Least: 2, Records: Applying, Relinks: AppliedPair),
+            Least: 2),
 
         // EVIDENTIA.
         new("evidentia-preview", "<from> <to> <book> <chapter> [--verse <v>] [--without-source-strong] [--without-known-renderings]",
@@ -224,11 +169,10 @@ internal static partial class ForgeVerbs
         new("evidentia-accept-tier", "<run> [--tier <t>] [filters] [--reviewer <name>] [--note <text>]",
             "Accept one tier of a stored run unread.", EvidentiaAcceptTier, Least: 1),
         new("evidentia-apply", "<run> [--write]", "Write a run's accepted verdicts as links and claims; without --write, say what it would.",
-            EvidentiaApply, Least: 1,
-            Relinks: args => args.Contains("--write") && int.TryParse(args[1], out var run) ? Relinked.Run(run) : Relinked.None),
+            EvidentiaApply, Least: 1),
         new("evidentia-export", "[<run> ...]", "Write the verdicts to the ledger under Resources/Essenthos/evidentia.",
             EvidentiaExport),
-        new("evidentia-replay", "", "Put the ledger's verdicts back into the corpus.", EvidentiaReplay, Relinks: Every),
+        new("evidentia-replay", "", "Put the ledger's verdicts back into the corpus.", EvidentiaReplay),
         new("evidentia-pairs", "[<FROM-TO> ...] [--into <Resources>] [--ledger <Resources>] [--leave-out <run,...>]",
             "Write each pair's evidentia method file from the ledger and the texts' words and frames. Reads no database.", EvidentiaPairs),
         new("evidentia-problems", "<run,...> [--take <n>] [--min-words <n>] [--flagged]",
@@ -246,9 +190,7 @@ internal static partial class ForgeVerbs
             DillmannMeasure),
         new("images", "", "Draw the things whose 3D model changed, then load the pictures of people, places and things again.", Images),
         new("wikipedia", "", "Link the records to their Wikipedia articles, and list the ones that cannot be told from a namesake.", Wikipedia),
-        new("spell", "", "Count how each text spells each name.", Spell),
         new("lexicon-relations", "", "Read what Strong's entries say about each other.", LexiconRelations),
-        new("cards", "", "Count how every text renders each Strong number again, whatever moved: the lexicon's phrases and the entry page's reach.", Cards),
         new("commandments", "", "Load the 613 commandments.", Commandments),
         new("lands", "", "Load the periods of the lands from PeriodO.", Lands),
         new("name-forms", "", "Load the names the descriptions put into a case.", NameForms),

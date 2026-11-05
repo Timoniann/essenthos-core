@@ -154,31 +154,6 @@ public sealed class RenderedPictureTests : IDisposable
         File.Exists(Path.Combine(_resources, EntityImageLoader.Folder, "models", "menorah.jpg")).Should().BeTrue();
     }
 
-    [Fact]
-    public void TheLoadDrawsTheModelsBeforeItLoadsThePicturesAndRunsAgainWhenAModelChanges()
-    {
-        var web = Path.Combine(_resources, "web");
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["Dataset:ResourcesPath"] = _resources,
-                [ModelPictures.WebConfigurationKey] = web,
-            })
-            .Build();
-        var steps = new DatasetLoader(
-            new ServiceCollection().BuildServiceProvider(),
-            new HostingEnvironment { ContentRootPath = _resources },
-            configuration,
-            new DatasetStatus(),
-            null!,
-            NullLogger<DatasetLoader>.Instance).StepList();
-
-        var names = steps.Select(step => step.Name).ToList();
-        names.IndexOf("model-pictures").Should().Be(names.IndexOf("images") - 1);
-        steps.Single(step => step.Name == "model-pictures").Files.Select(file => file.Path)
-            .Should().Contain(Path.Combine(Path.GetFullPath(web), "src/features/models"));
-    }
-
     private void Choose(params string[] choices)
     {
         Directory.CreateDirectory(Path.Combine(_resources, ImageChoices.Folder));

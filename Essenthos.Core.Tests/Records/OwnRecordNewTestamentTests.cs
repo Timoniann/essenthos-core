@@ -65,7 +65,7 @@ public sealed class OwnRecordNewTestamentTests(WitnessDatabase database) : OwnRe
             .Should().BeEquivalentTo(satanIds);
         var references = new OwnReferenceLoader(Db, NullLogger<OwnReferenceLoader>.Instance);
         await references.Load();
-        await Db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        await Db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         foreach (var slug in new[] { "jesus", "anointed" })
             (await Db.EntityVerses.AnyAsync(v => v.Entity!.Slug == slug && v.CanonicalBook == 46
                 && v.CanonicalChapter == 5 && v.CanonicalVerse == 5 && v.Names)).Should().BeTrue();
@@ -131,7 +131,7 @@ public sealed class OwnRecordNewTestamentTests(WitnessDatabase database) : OwnRe
             .Should().BeFalse();
         var references = new OwnReferenceLoader(Db, NullLogger<OwnReferenceLoader>.Instance);
         await references.Load();
-        await Db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        await Db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         (await Db.EntityVerses.AnyAsync(v => v.EntityId == king.Id && v.CanonicalBook == 40
             && v.CanonicalChapter == 1 && v.CanonicalVerse == 11 && v.Names)).Should().BeTrue();
         var annotationIds = named.Select(a => a.Id).Order().ToArray();
@@ -185,7 +185,7 @@ public sealed class OwnRecordNewTestamentTests(WitnessDatabase database) : OwnRe
         await Load();
         var references = new OwnReferenceLoader(Db, NullLogger<OwnReferenceLoader>.Instance);
         await references.Load();
-        await Db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        await Db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         var wordIds = targets.Where(p => p.Key.Reference == "LUK 3:19").Select(p => p.Value.Id).Append(source.Id).ToArray();
         var named = await Db.WordEntities.Include(a => a.Entity).Where(a => wordIds.Contains(a.WordId)).ToListAsync();
         named.Should().HaveCount(3).And.OnlyContain(a => a.Entity!.Slug == "philip-2");
@@ -243,7 +243,7 @@ public sealed class OwnRecordNewTestamentTests(WitnessDatabase database) : OwnRe
         (await Db.WordEntities.SingleAsync(a => a.WordId == separate.Id)).EntityId.Should().Be(entities["manasseh-3"].Id);
         var references = new OwnReferenceLoader(Db, NullLogger<OwnReferenceLoader>.Instance);
         await references.Load();
-        await Db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        await Db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         (await Db.EntityVerses.AnyAsync(v => v.EntityId == entities["naphtali"].Id && v.CanonicalBook == 66
             && v.CanonicalChapter == 7 && v.CanonicalVerse == 6 && v.Names)).Should().BeTrue();
         var ids = focus.Values.Select(w => w.Id).ToArray();

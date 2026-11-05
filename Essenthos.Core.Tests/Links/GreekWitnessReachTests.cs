@@ -2,6 +2,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Verbs;
 using FluentAssertions;
@@ -100,7 +101,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         var after = await Reached(Scrivener, NestleTextSource.Slug, ByzantineTextSource.Slug);
         output.WriteLine($"  together, without the byzantine: {before.Reached}, {before.Unreached} tagged");
         output.WriteLine($"  together, with it:               {after.Reached}, {after.Unreached} tagged");
-        var five = await Reached([.. DatasetLoader.GreekWitnesses]);
+        var five = await Reached([.. KingJamesGreekSource.Witnesses]);
         output.WriteLine($"  together, all five:               {five.Reached}, {five.Unreached} tagged");
 
         foreach (var reach in new[] { tischendorf, westcottHort })
@@ -192,7 +193,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 
     private async Task<List<GreekLinkOutcome>> LinkTheEnglishToEachGreek(AppDbContext db)
     {
-        var loads = new List<GreekLinkOutcome>(DatasetLoader.GreekWitnesses.Count);
+        var loads = new List<GreekLinkOutcome>(KingJamesGreekSource.Witnesses.Count);
         var logger = new OutcomeLogger(output);
         using var services = new ServiceCollection()
             .AddSingleton(db)
@@ -203,7 +204,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         var run = new ForgeRun(services, logger, TestResources.Folder(""), db.Database.GetConnectionString()!);
         var verb = ForgeVerbs.Find("kjv-greek")!;
 
-        foreach (var greek in DatasetLoader.GreekWitnesses)
+        foreach (var greek in KingJamesGreekSource.Witnesses)
         {
             string[] args = ["kjv-greek", greek];
             (await verb.Run(run, args)).Should().Be(0);
@@ -211,13 +212,11 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
             outcome.AlreadyLoaded.Should().BeFalse();
             output.WriteLine($"{greek}: {outcome}");
             loads.Add(outcome);
-            await run.Recount(verb.Changed(args));
             var fingerprint = await Fingerprint();
             (await verb.Run(run, args)).Should().Be(0);
             logger.Outcome!.AlreadyLoaded.Should().BeTrue();
-            await run.Recount(verb.Changed(args));
             (await Fingerprint()).Should().Be(fingerprint);
-            output.WriteLine($"{greek}: second verb run and recount preserved the table fingerprints");
+            output.WriteLine($"{greek}: second verb run preserved the table fingerprints");
         }
 
         return loads;

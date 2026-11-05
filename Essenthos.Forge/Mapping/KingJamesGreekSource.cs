@@ -4,6 +4,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
+using Essenthos.Core.TextusReceptus;
 
 namespace Essenthos.Core.Mapping;
 
@@ -34,6 +35,20 @@ internal sealed class KingJamesGreekSource : IPairSource
 
     private KingJamesGreekSource(bool lexical) => _lexical = lexical;
 
+    /// <summary>
+    /// The Greek texts the King James is matched against, in the order they are worth reading: the
+    /// one it was translated from, then the tradition that text belongs to, then the critical
+    /// editions. Their order within that last group does not assert an ordering of their reach.
+    /// </summary>
+    internal static IReadOnlyList<string> Witnesses { get; } =
+    [
+        TextusReceptusTextSource.Slug(Edition.Scrivener1894),
+        ByzantineTextSource.Slug,
+        NestleTextSource.Slug,
+        TischendorfTextSource.Slug,
+        WestcottHortTextSource.Slug,
+    ];
+
     /// <summary>The Strong matches and the function words, one source each.</summary>
     public static readonly IReadOnlyList<KingJamesGreekSource> All = [new(lexical: false), new(lexical: true)];
 
@@ -48,7 +63,7 @@ internal sealed class KingJamesGreekSource : IPairSource
             : throw new InvalidOperationException("A King James source names its witness once.");
 
     public bool States(string pair) =>
-        MappingProducts.Split(pair) is var (from, to) && from == KingJames && DatasetLoader.GreekWitnesses.Contains(to);
+        MappingProducts.Split(pair) is var (from, to) && from == KingJames && Witnesses.Contains(to);
 
     public bool Makes(string source) => Witness(source) is not null;
 

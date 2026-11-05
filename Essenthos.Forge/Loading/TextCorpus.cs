@@ -11,11 +11,6 @@ namespace Essenthos.Core.Loading;
 /// own copy of it and one of them had already fallen a text behind: the Samaritan Pentateuch was
 /// loading, and the checks that every text answers to its other identifiers silently stopped
 /// covering it.
-///
-/// <see cref="DatasetLoader"/> does not read this. It cannot: it builds each source from files and
-/// hands the loader a live reader, not a declaration. So the two can still drift, and the guard
-/// against that is a check that reflects over the assembly and refuses a definition this list has
-/// never heard of, rather than a second list somewhere else.
 /// </summary>
 internal static class TextCorpus
 {

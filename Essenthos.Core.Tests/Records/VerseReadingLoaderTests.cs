@@ -369,7 +369,7 @@ public sealed class VerseReadingLoaderTests : IDisposable
             Source = "a gazetteer",
         });
         await _db.SaveChangesAsync();
-        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        await _db.Database.ExecuteSqlRawAsync(VerseNaming.Sql);
         _db.ChangeTracker.Clear();
 
         var shown = _db.EntityVerses.Shown().Where(v => v.EntityId == _nebuchadnezzar.Id);

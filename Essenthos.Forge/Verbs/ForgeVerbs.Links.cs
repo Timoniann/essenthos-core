@@ -4,6 +4,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
 
 namespace Essenthos.Core.Verbs;
 
@@ -16,7 +17,7 @@ internal static partial class ForgeVerbs
         Console.WriteLine(await RejectedRenderings.Withdraw(db));
         Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnRecordLoader>().Load(forge.Resources));
         Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
-        Console.WriteLine($"{await Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRawAsync(db.Database, DatasetLoader.NamingVerses)} verse naming flags refreshed");
+        Console.WriteLine($"{await Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRawAsync(db.Database, VerseNaming.Sql)} verse naming flags refreshed");
         return 0;
     }
 
@@ -99,7 +100,7 @@ internal static partial class ForgeVerbs
             args.Contains("--unmeasured"),
             args.Contains("--daughter"),
             Agreeing(args),
-            args.Contains(Recipe.Refresh)));
+            args.Contains("--refresh")));
         await forge.Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
         await forge.Tidy();
         return 0;
@@ -187,10 +188,10 @@ internal static partial class ForgeVerbs
     private static async Task<int> KingJamesGreek(ForgeRun forge, string[] args)
     {
         var witness = Identifier(args[1]);
-        if (!DatasetLoader.GreekWitnesses.Contains(witness))
+        if (!KingJamesGreekSource.Witnesses.Contains(witness))
         {
             throw new InvalidOperationException(
-                $"\"{witness}\" is not a King James Greek witness. Choose {string.Join(", ", DatasetLoader.GreekWitnesses)}.");
+                $"\"{witness}\" is not a King James Greek witness. Choose {string.Join(", ", KingJamesGreekSource.Witnesses)}.");
         }
 
         using var scope = forge.Scope();

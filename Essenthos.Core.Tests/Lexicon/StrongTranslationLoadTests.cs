@@ -271,8 +271,6 @@ public sealed class StrongTranslationLoadTests : IDisposable
             .AddSingleton(new StrongTranslationLoader(_db, configuration, NullLogger<StrongTranslationLoader>.Instance))
             .BuildServiceProvider();
         var verb = ForgeVerbs.Find("lexicon-translations")!;
-        verb.Records.Should().BeNull();
-        verb.Changed(["lexicon-translations"]).Nothing.Should().BeTrue();
         return await verb.Run(new ForgeRun(services, NullLogger.Instance, "unused-because-the-key-is-set", ""),
             ["lexicon-translations"]);
     }

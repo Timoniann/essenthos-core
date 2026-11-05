@@ -30,7 +30,7 @@ namespace Essenthos.Core.Records;
 /// any text. BibleData's verses stay its references only.</item>
 /// </list>
 /// A term such a row lists is named where a word of the verse, in any text, carries one of its Strong numbers, as
-/// <see cref="DatasetLoader.NamingVerses"/> reads it: no word is annotated to a term.
+/// <see cref="VerseNaming.Sql"/> reads it: no word is annotated to a term.
 /// A base reading beside a differs is the base text's name, not the word's, and puts no verse on a page.
 /// </summary>
 internal static class RecordVerses
