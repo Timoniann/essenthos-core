@@ -96,7 +96,6 @@ public sealed class RenumberedWitnessTests : IDisposable
 
     private void Clear()
     {
-        _db.Database.ExecuteSqlRaw("DELETE FROM carry_mark");
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
     }
