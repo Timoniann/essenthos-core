@@ -217,8 +217,8 @@ internal static partial class RecordFiles
 
     /// <summary>
     /// A dataset's verse references by whether a word of ours confirms them: a served verse of the same
-    /// record at the same verse that a word names. None is served from the dataset, on the owner's
-    /// ruling; the unconfirmed are the ones a reader no longer sees.
+    /// record at the same verse that a word names. BibleData's are not served, on the owner's ruling, so
+    /// its unconfirmed rows are the ones a reader no longer sees; the gazetteer's are served as they stand.
     /// </summary>
     public static async Task<List<(string Dataset, bool Confirmed, long Rows, long Records)>> DatasetVerses(
         string connection, CancellationToken cancellationToken)

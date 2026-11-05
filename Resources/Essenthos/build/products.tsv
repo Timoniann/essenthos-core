@@ -52,7 +52,7 @@ records/facts/images	build	records-derive	Essenthos/records/records Essenthos/re
 records/i18n/*/images	build	records-derive	Essenthos/records/records Essenthos/records/external-ids Essenthos/records/folds Essenthos/image-choices.json Images OpenBible/*	@records	all
 records/facts/wikipedia	build	records-derive	Essenthos/records/records Essenthos/review/wikipedia-matches.json Wikidata/*	@records	all
 records/canon	build	records-canon	Essenthos/names/projected/* Essenthos/texts/*/frame Essenthos/texts/BHSA/verses Essenthos/records/records	entity_canon	all
-records/derived/verses	build	records-verses	Essenthos/names/projected/* Essenthos/texts/*/frame Essenthos/records/records Essenthos/records/facts/titles Essenthos/records/facts/relationships Essenthos/records/facts/verses Essenthos/external/openbible/references	@records	all
+records/derived/verses	build	records-verses	Essenthos/names/projected/* Essenthos/texts/*/frame Essenthos/texts/*/words Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/facts/relationships Essenthos/records/facts/verses Essenthos/external/openbible/references	@records	all
 records/**	export	records-export	-	@records	all
 external/**	export	records-export	-	@records	all
 names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/names/overrides/{text} Essenthos/texts/{text}/words Essenthos/mapping/*/final Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/i18n/*/name-forms	word_entity	text

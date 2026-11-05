@@ -278,7 +278,7 @@ internal static partial class ForgeVerbs
         new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
         new("records-derive", "[--from <Resources>] [--into <Resources>]", "Make the derived record files whose inputs are files (relationships, locations, pictures, Wikipedia links) from the hand files and the console's files, without a database.", RecordsDerive),
         new("records-canon", "[--from <Resources>] [--force]", "Write records/canon, which canons attest each record, from the names projection and the frames, without a database.", RecordsCanon),
-        new("records-verses", "[--from <Resources>] [--force] [--over-live <file>]", "Write records/derived/verses, the verses our words and relationships put each record in, from the names projection, the frames and the relationships, without a database; --over-live writes what the rule makes of names/live to a file instead.", RecordsVerses),
+        new("records-verses", "[--from <Resources>] [--force] [--over-live <file>]", "Write records/derived/verses, the verses our words and relationships put each record in and the gazetteer's verses of its places, from the names projection, the frames, the relationships and the gazetteer's references, without a database; --over-live writes what the rule makes of names/live to a file instead.", RecordsVerses),
         new("owner-apply", "[--from <Resources>] [--dry-run]",
             "Apply the owner's console decisions that wait on the files step (owner-changes.jsonl, needs: files) to the record files "
             + "they concern, with his stamp on each row, then append the apply line. Reads no database.", OwnerApply, Most: 3),
