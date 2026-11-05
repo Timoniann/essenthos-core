@@ -241,4 +241,31 @@ internal static class Corpus
             .Where(lw => lw.LinkId == linkId && lw.Side == side)
             .Select(lw => lw.Word!)
             .ToList();
+
+    /// <summary>
+    /// What a record page reads of the words, counted as the build's serving stage counts it: every text's spellings and
+    /// the King James's positions, replacing what the tables held.
+    /// </summary>
+    public static void CountRecordWords(this AppDbContext db)
+    {
+        db.Database.ExecuteSqlRaw("DELETE FROM record_spelling; DELETE FROM record_position;");
+        foreach (var text in db.Texts.AsNoTracking().ToList())
+        {
+            db.RecordSpellings.AddRange(Core.Corpus.RecordSpellings.Count(db, text.Id, CancellationToken.None).GetAwaiter().GetResult()
+                .Select(c => new RecordSpelling
+                {
+                    EntityId = c.EntityId, TextId = text.Id, StrongNumber = c.StrongNumber, Form = c.Form, Occurrences = c.Occurrences,
+                }));
+            if (text.Slug == Core.Corpus.RecordPositions.Text)
+            {
+                db.RecordPositions.AddRange(Core.Corpus.RecordPositions.Count(db, text.Id, CancellationToken.None).GetAwaiter().GetResult()
+                    .Select(c => new RecordPosition
+                    {
+                        EntityId = c.EntityId, TextId = text.Id, Book = c.Book, Chapter = c.Chapter, Verse = c.Verse, Position = c.Position,
+                    }));
+            }
+        }
+
+        db.SaveChanges();
+    }
 }

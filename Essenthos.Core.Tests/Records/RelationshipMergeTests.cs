@@ -39,12 +39,47 @@ public sealed class RelationshipMergeTests : IDisposable
     {
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
     }
 
     public void Dispose()
     {
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Dispose();
+    }
+
+    /// <summary>
+    /// Rows citing one verse stand in the order the King James names them there, as the build counted it: Simon before
+    /// Andrew, where the alphabet would put Andrew first. A name the verse prints twice stands where it is first printed.
+    /// </summary>
+    [Fact]
+    public async Task RowsCitingOneVerseStandWhereTheKingJamesFirstNamesThem()
+    {
+        var kjv = Corpus.Add(_db, RecordPositions.Text, TextKind.Translation, "eng", (1, 1, ["Simon", "and", "Andrew", "and", "Simon"]));
+        var jonah = Person("jonah");
+        var simon = Person("simon");
+        var andrew = Person("andrew");
+        Read(simon, jonah, DescriptorRelations.SonOf, 1, 1, 1);
+        Read(andrew, jonah, DescriptorRelations.SonOf, 1, 1, 1);
+        foreach (var (entity, position) in new[] { (simon, 1), (andrew, 3), (simon, 5) })
+        {
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = _db.WordAt(kjv, 1, 1, position).Id, EntityId = entity.Id, Method = LinkMethod.Manual, Source = "a test",
+            });
+        }
+
+        _db.SaveChanges();
+        var counted = await RecordPositions.Count(_db, kjv.Id, CancellationToken.None);
+        _db.CountRecordWords();
+
+        counted.Should().BeEquivalentTo(new[]
+        {
+            new RecordPositionCount(simon.Id, 1, 1, 1, 1),
+            new RecordPositionCount(andrew.Id, 1, 1, 1, 3),
+        });
+        (await Page(jonah)).Select(r => (r.Slug, r.Position)).Should().BeEquivalentTo(new[] { ("simon", (int?)1), ("andrew", (int?)3) });
     }
 
     /// <summary>

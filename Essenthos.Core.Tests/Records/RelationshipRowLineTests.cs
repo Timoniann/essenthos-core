@@ -69,6 +69,7 @@ public sealed class RelationshipRowLineTests : IDisposable
             CanonicalBook = 1, CanonicalChapter = 2, CanonicalVerse = 3, Source = "a test",
         });
         _db.SaveChanges();
+        _db.CountRecordWords();
 
         await using var app = await Host();
         using var client = new HttpClient { BaseAddress = new Uri(app.Urls.Single()) };

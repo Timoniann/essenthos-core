@@ -3891,6 +3891,80 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("record_external_id", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordPosition", b =>
+                {
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("integer")
+                        .HasColumnName("book");
+
+                    b.Property<int>("Chapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("chapter");
+
+                    b.Property<int>("Verse")
+                        .HasColumnType("integer")
+                        .HasColumnName("verse");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
+
+                    b.HasKey("EntityId", "TextId", "Book", "Chapter", "Verse")
+                        .HasName("pk_record_position");
+
+                    b.HasIndex("TextId")
+                        .HasDatabaseName("ix_record_position_text_id");
+
+                    b.ToTable("record_position", null, t =>
+                        {
+                            t.HasComment("Where a record's name first stands in a verse of a text (the least position of the words word_entity names it by there), for the text a record page orders a verse's names by. Derived from the served tables by the build's positions producer (build/products, record-positions/{text}).");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordSpelling", b =>
+                {
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.Property<string>("Form")
+                        .HasColumnType("text")
+                        .HasColumnName("form");
+
+                    b.Property<int>("Occurrences")
+                        .HasColumnType("integer")
+                        .HasColumnName("occurrences");
+
+                    b.HasKey("EntityId", "TextId", "StrongNumber", "Form")
+                        .HasName("pk_record_spelling");
+
+                    b.HasIndex("TextId")
+                        .HasDatabaseName("ix_record_spelling_text_id");
+
+                    b.ToTable("record_spelling", null, t =>
+                        {
+                            t.HasComment("How often a text prints a form for a record under a Strong number (the word's own, the original word's it was carried from, or its note's), from the words word_entity names the record by. Derived from the served tables by the build's spellings producer (build/products, record-spellings/{text}).");
+
+                            t.HasCheckConstraint("ck_record_spelling_occurrences", "occurrences > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.ReignEvent", b =>
                 {
                     b.Property<int>("Id")
@@ -6997,6 +7071,48 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_record_external_id_entity_entity_id");
 
                     b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordPosition", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_record_position_entity_entity_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_record_position_texts_text_id");
+
+                    b.Navigation("Entity");
+
+                    b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordSpelling", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_record_spelling_entity_entity_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_record_spelling_texts_text_id");
+
+                    b.Navigation("Entity");
+
+                    b.Navigation("Text");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.ReignEvent", b =>

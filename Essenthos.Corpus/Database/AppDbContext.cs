@@ -357,6 +357,12 @@ public class AppDbContext : DbContext
     /// <summary>Each text's side of the parallel view for one canonical chapter, written ahead of time.</summary>
     public DbSet<Pane> Panes { get; set; } = null!;
 
+    /// <summary>How often each text prints each form for each record under each Strong number, counted ahead of time.</summary>
+    public DbSet<RecordSpelling> RecordSpellings { get; set; } = null!;
+
+    /// <summary>Where each record's name first stands in each verse of the text a record page orders by, counted ahead of time.</summary>
+    public DbSet<RecordPosition> RecordPositions { get; set; } = null!;
+
     /// <summary>What each step of the load last ran on, so a load skips a step whose inputs have not moved.</summary>
     public DbSet<LoadStepMark> LoadStepMarks { get; set; } = null!;
 
@@ -1721,6 +1727,32 @@ public class AppDbContext : DbContext
                 "Each text's side of the parallel view for one canonical chapter: the words with what the reader shows on "
                 + "them, the verses and notes, the records named, as gzip-compressed JSON the API sends as it is. Derived "
                 + "from the served tables by the build's pane producer (build/products, panes/{text})."));
+        });
+
+        modelBuilder.Entity<RecordSpelling>(entity =>
+        {
+            entity.HasOne(s => s.Entity).WithMany().HasForeignKey(s => s.EntityId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(s => s.Text).WithMany().HasForeignKey(s => s.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(s => s.TextId);
+            entity.ToTable("record_spelling", t =>
+            {
+                t.HasCheckConstraint("ck_record_spelling_occurrences", "occurrences > 0");
+                t.HasComment(
+                    "How often a text prints a form for a record under a Strong number (the word's own, the original word's it "
+                    + "was carried from, or its note's), from the words word_entity names the record by. Derived from the served "
+                    + "tables by the build's spellings producer (build/products, record-spellings/{text}).");
+            });
+        });
+
+        modelBuilder.Entity<RecordPosition>(entity =>
+        {
+            entity.HasOne(p => p.Entity).WithMany().HasForeignKey(p => p.EntityId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(p => p.Text).WithMany().HasForeignKey(p => p.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(p => p.TextId);
+            entity.ToTable("record_position", t => t.HasComment(
+                "Where a record's name first stands in a verse of a text (the least position of the words word_entity names it "
+                + "by there), for the text a record page orders a verse's names by. Derived from the served tables by the "
+                + "build's positions producer (build/products, record-positions/{text})."));
         });
 
         modelBuilder.Entity<TextForm>(entity =>

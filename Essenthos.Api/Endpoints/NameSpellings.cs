@@ -15,7 +15,8 @@ internal sealed record BorneName(string Label, IReadOnlyCollection<string> Numbe
 /// <em>Йосип</em> for the Joseph of Matthew 13:55, whose other name in the dataset is <em>Joses</em>.
 /// The words that name him in the reader's texts say which of his names each one prints, through
 /// the Strong number the annotation went through (the word's own, or that of the original word it
-/// was carried from), as <see cref="Annotations"/> reads it for a verse. The spellings of one name are
+/// was carried from), as <see cref="Annotations"/> reads it for a verse; the build counts them per text ahead of time
+/// (<see cref="RecordSpellings"/>, table <c>record_spelling</c>). The spellings of one name are
 /// counted over every text of the language and given as the nominative of the family printed most,
 /// as a renamed heading is (<see cref="RenamedHeadings"/>); where that family is the one the record's
 /// own form belongs to, the record's form stands: the Ohienko Bible prints Joses as <em>Йосип</em>.
@@ -43,38 +44,15 @@ internal static class NameSpellings
             return [];
         }
 
-        var words = await db.WordEntities
-            .Where(a => a.EntityId == entityId && a.Word!.Text!.Language == local)
-            .Select(a => new { a.WordId, a.Word!.Surface, a.Word.StrongNumber, a.Note })
+        var counted = await db.RecordSpellings
+            .Where(s => s.EntityId == entityId && s.Text!.Language == local && wanted.Contains(s.StrongNumber))
+            .GroupBy(s => new { s.StrongNumber, s.Form })
+            .Select(g => new { g.Key.StrongNumber, g.Key.Form, Occurrences = g.Sum(s => s.Occurrences) })
             .ToListAsync(cancellationToken);
-        if (words.Count == 0)
+        if (counted.Count == 0)
         {
             return [];
         }
-
-        var sources = words
-            .Where(w => w.StrongNumber is null)
-            .Select(w => Annotations.CarriedFrom(w.Note))
-            .OfType<long>()
-            .Distinct()
-            .ToList();
-        var carried = sources.Count == 0
-            ? []
-            : await db.Words
-                .Where(w => sources.Contains(w.Id) && w.StrongNumber != null)
-                .Select(w => new { w.Id, w.StrongNumber })
-                .ToDictionaryAsync(w => w.Id, w => w.StrongNumber!, cancellationToken);
-
-        var counted = words
-            .Select(w => (
-                Number: w.StrongNumber
-                        ?? (Annotations.CarriedFrom(w.Note) is { } source ? carried.GetValueOrDefault(source) : null)
-                        ?? Annotations.LeadingNumber(w.Note),
-                Form: w.Surface))
-            .Where(w => w.Number is not null && wanted.Contains(w.Number) && w.Form.Length > 0)
-            .GroupBy(w => (w.Number!, w.Form))
-            .Select(g => (g.Key.Item1, g.Key.Form, Occurrences: g.Count()))
-            .ToList();
 
         var found = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var name in names)
@@ -82,7 +60,7 @@ internal static class NameSpellings
             List<(string Form, string Folded, int Occurrences)> spellings =
             [
                 .. counted
-                    .Where(c => name.Numbers.Contains(c.Item1))
+                    .Where(c => name.Numbers.Contains(c.StrongNumber))
                     .GroupBy(c => c.Form, StringComparer.Ordinal)
                     .Select(g => (g.Key, NameFolding.Fold(g.Key), g.Sum(c => c.Occurrences))),
             ];

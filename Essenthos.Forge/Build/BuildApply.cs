@@ -41,9 +41,11 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         {
             logger.LogInformation("Nothing {Database} was built from has moved", database);
             Stages.Add(new BuildStage("apply", "nothing moved", TimeSpan.Zero, 0));
-            // The panes still answer for themselves: a database built before them, or a pane product made since, is caught up.
+            // The panes and what a record page reads of the words still answer for themselves: a database built before
+            // them, or a product made since, is caught up.
             var catchUp = new ServingBuild(connectionString, store, services, logger);
-            if (await catchUp.Panes(null, false, PaneParallelism, cancellationToken) > 0)
+            var panes = await catchUp.Panes(null, false, PaneParallelism, cancellationToken);
+            if (panes + await catchUp.RecordWords(null, false, cancellationToken) > 0)
             {
                 await catchUp.Count(cancellationToken);
                 await WriteServed(database, catchUp.Rows, cancellationToken);
@@ -193,8 +195,10 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             return 0;
         });
 
-        // The panes read what the steps above left, so they come last; only the texts whose inputs moved are made again.
+        // The panes and what a record page reads of the words read what the steps above left, so they come last; only the
+        // texts whose inputs moved are made again.
         await serving.Panes(null, false, PaneParallelism, cancellationToken);
+        await serving.RecordWords(null, false, cancellationToken);
         await serving.Count(cancellationToken);
         await WriteServed(database, serving.Rows, cancellationToken);
         Stages.AddRange(serving.Stages);
