@@ -297,7 +297,7 @@ internal static class Annotations
     /// in <em>Jesus Christ</em> is Jesus.
     /// </para>
     /// </summary>
-    private static Dictionary<long, List<Claimed>> Settle(
+    internal static Dictionary<long, List<Claimed>> Settle(
         List<Claimed> rows,
         IReadOnlySet<(int Title, int Bearer)> bearers) =>
         rows.GroupBy(row => row.WordId)
@@ -378,7 +378,7 @@ internal static class Annotations
         new(@"^through \S+ word \d+(?:, linked by [\w-]+)?", RegexOptions.CultureInvariant);
 
     /// <summary>What a claim about one word says, flattened for the pick.</summary>
-    private sealed record Claimed(
+    internal sealed record Claimed(
         long WordId,
         LinkMethod Method,
         double? Confidence,
