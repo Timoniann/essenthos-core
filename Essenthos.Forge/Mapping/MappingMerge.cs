@@ -15,7 +15,9 @@ namespace Essenthos.Core.Mapping;
 /// whole, by the method that won; an absence a source states or a person decides wins its word over any
 /// correspondence, an EVIDENTIA verdict's absence only over the aligner's; links of equal rank stand side
 /// by side, as one source's own several links on a word do;</item>
-/// <item>a machine's link across two verses no verse link joins is withdrawn (<see cref="CrossingRule"/>).</item>
+/// <item>a machine's link across two verses no verse link joins is withdrawn (<see cref="CrossingRule"/>);</item>
+/// <item>where the same texts are paired the other way round too, a word one pair says has no counterpart and the other
+/// renders goes to the higher-ranked link (<see cref="WithdrawAgainstReverse"/>).</item>
 /// </list>
 /// Nothing is deleted: every row stays in its method file, and what the merge decided of a row it did not make a claim is
 /// in the pair's <c>statuses</c> (<see cref="Output.Methods"/>). The
@@ -37,6 +39,7 @@ internal static class MappingMerge
     /// <param name="Producers">The producer that wrote each method file, where one from files did; a moved verse's rows wait for it.</param>
     /// <param name="Verses">The two texts' frames, for <see cref="CrossingRule"/>; null leaves the rule out.</param>
     /// <param name="Yielded">The laid Strong rows the producer left to a stated link (<see cref="MappingProducts.StrongYielded"/>).</param>
+    /// <param name="Reverse">The same two texts' pair the other way round, where the corpus has one (<see cref="WithdrawAgainstReverse"/>).</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -51,7 +54,8 @@ internal static class MappingMerge
         PairFrames? Verses = null,
         IReadOnlyDictionary<string, IReadOnlySet<string>>? Remade = null,
         IReadOnlyDictionary<string, string>? Producers = null,
-        IReadOnlyList<MappingRow>? Yielded = null);
+        IReadOnlyList<MappingRow>? Yielded = null,
+        Input? Reverse = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -74,7 +78,67 @@ internal static class MappingMerge
         public (int Side, WordKey First) Sort { get; set; }
     }
 
+    /// <summary>What the merge decided of one pair before its statuses and report are written.</summary>
+    private sealed class Decision(
+        List<Entry> entries, List<ReportRow> report, HashSet<string> stale, Dictionary<(string File, string Method, string Source), int> lost,
+        List<Candidate> accepted, List<FinalRow> final, int refinements, (int Kept, int Bare, int Left) orphans, int collisions)
+    {
+        public List<Entry> Entries { get; } = entries;
+        public List<ReportRow> Report { get; } = report;
+        public HashSet<string> Stale { get; } = stale;
+        public Dictionary<(string File, string Method, string Source), int> Lost { get; } = lost;
+        public List<Candidate> Accepted { get; } = accepted;
+        public List<FinalRow> Final { get; set; } = final;
+        public int Refinements { get; } = refinements;
+        public (int Kept, int Bare, int Left) Orphans { get; } = orphans;
+        public int Collisions { get; } = collisions;
+
+        /// <summary>The links that stand once the crossing rule has run: every claim of each is still unmarked.</summary>
+        public IEnumerable<Candidate> Standing => Accepted.Where(c => c.Rows.All(r => r.Status is null));
+    }
+
     public static Output Merge(Input input)
+    {
+        var decision = Decide(input);
+        if (input.Reverse is { } reverse)
+        {
+            decision.Final = WithdrawAgainstReverse(input, decision, Decide(reverse with { Reverse = null }));
+        }
+
+        var entries = decision.Entries;
+        var final = decision.Final;
+        var report = decision.Report;
+        var methods = new Dictionary<string, List<MappingRow>>(StringComparer.Ordinal);
+        foreach (var (file, rows) in input.Methods)
+        {
+            methods[file] = new List<MappingRow>(rows.Count);
+        }
+
+        foreach (var entry in entries.Where(e => e.Index >= 0).OrderBy(e => e.File, StringComparer.Ordinal).ThenBy(e => e.Index))
+        {
+            methods[entry.File].Add(input.Methods[entry.File][entry.Index] with { Status = entry.Status });
+        }
+
+        var (orphans, bare, left) = decision.Orphans;
+        report.Add(new ReportRow("refinements", string.Empty, string.Empty, decision.Refinements,
+            "links inside a higher-ranked link on both sides, kept as links of their own"));
+        report.Add(new ReportRow("orphans", string.Empty, string.Empty, orphans,
+            $"links kept because the competition would leave a word of {input.FromText} with none (at least {MappingMethods.OrphanFloor} sure)"));
+        report.Add(new ReportRow("bare-words", string.Empty, string.Empty, bare,
+            $"words of {input.FromText} the competition alone would leave with no link"));
+        report.Add(new ReportRow("bare-words-left", string.Empty, string.Empty, left,
+            $"words of {input.FromText} still with no link after the kept ones: their links are under {MappingMethods.OrphanFloor}"));
+        if (decision.Collisions > 0)
+        {
+            report.Add(new ReportRow("id-collisions", string.Empty, string.Empty, decision.Collisions,
+                "links whose words hashed to an id another link of the pair had taken, numbered by hashing again"));
+        }
+
+        Report(input, entries, final, decision.Stale, decision.Lost, report);
+        return new Output(final, methods, report);
+    }
+
+    private static Decision Decide(Input input)
     {
         var entries = new List<Entry>();
         var laid = MappingMethods.LaysStrong(input.FromText, input.ToText);
@@ -134,7 +198,7 @@ internal static class MappingMerge
         });
 
         var (accepted, withdrawn, refinements) = Compete(candidates);
-        var (orphans, bare, left) = KeepOrphans(accepted, withdrawn, pinned);
+        var orphans = KeepOrphans(accepted, withdrawn, pinned);
         accepted.Sort(CompareBySort);
         var (final, collisions) = Finalise(input, accepted);
         if (input.Verses is { } verses)
@@ -142,34 +206,116 @@ internal static class MappingMerge
             final = WithdrawCrossings(verses, accepted, final);
         }
 
+        return new Decision(entries, report, stale, lost, accepted, final, refinements, orphans, collisions);
+    }
 
-        var methods = new Dictionary<string, List<MappingRow>>(StringComparer.Ordinal);
-        foreach (var (file, rows) in input.Methods)
+    /// <summary>
+    /// Two pairs of the same texts the other way round are merged apart, but the reader takes a word's links from both: a word
+    /// one of them says has no counterpart and the other renders would be shown supplied and rendered at once. Where the two
+    /// pairs' standing links meet so, the higher-ranked keeps the word and the other is withdrawn whole, a correspondence
+    /// before an absence of the same rank; a link that loses to a link which itself lost does not lose. Both pairs' merges
+    /// decide the same contest from the same inputs, so each withdraws its own losers and neither keeps a word the other lost.
+    /// No other link is put in a withdrawn one's place.
+    /// </summary>
+    private static List<FinalRow> WithdrawAgainstReverse(Input input, Decision own, Decision reverse)
+    {
+        var pair = input.Pair;
+        var reversePair = input.Reverse!.Pair;
+
+        // A word is named by whether it is a word of this pair's FROM text, and its key.
+        static IEnumerable<(bool FromText, string Key)> Words(Candidate link, bool isOwn, bool absent)
         {
-            methods[file] = new List<MappingRow>(rows.Count);
+            var relation = link.Top.Row.Relation;
+            var from = MappingText.Split(link.Top.Row.From).Select(k => (isOwn, k));
+            var to = MappingText.Split(link.Top.Row.To).Select(k => (!isOwn, k));
+            if (MappingMethods.IsAbsence(relation) != absent)
+            {
+                return [];
+            }
+
+            return !absent ? from.Concat(to) : relation == "expands" ? from : to;
         }
 
-        foreach (var entry in entries.Where(e => e.Index >= 0).OrderBy(e => e.File, StringComparer.Ordinal).ThenBy(e => e.Index))
+        var links = own.Standing.Select(c => (Pair: pair, Link: c, Own: true))
+            .Concat(reverse.Standing.Select(c => (Pair: reversePair, Link: c, Own: false))).ToList();
+        var rendered = new Dictionary<(bool, string), List<int>>();
+        var absent = new Dictionary<(bool, string), List<int>>();
+        for (var i = 0; i < links.Count; i++)
         {
-            methods[entry.File].Add(input.Methods[entry.File][entry.Index] with { Status = entry.Status });
+            foreach (var (index, words) in new[] { (rendered, Words(links[i].Link, links[i].Own, false)), (absent, Words(links[i].Link, links[i].Own, true)) })
+            {
+                foreach (var word in words)
+                {
+                    if (!index.TryGetValue(word, out var list))
+                    {
+                        index[word] = list = [];
+                    }
+
+                    list.Add(i);
+                }
+            }
         }
 
-        report.Add(new ReportRow("refinements", string.Empty, string.Empty, refinements,
-            "links inside a higher-ranked link on both sides, kept as links of their own"));
-        report.Add(new ReportRow("orphans", string.Empty, string.Empty, orphans,
-            $"links kept because the competition would leave a word of {input.FromText} with none (at least {MappingMethods.OrphanFloor} sure)"));
-        report.Add(new ReportRow("bare-words", string.Empty, string.Empty, bare,
-            $"words of {input.FromText} the competition alone would leave with no link"));
-        report.Add(new ReportRow("bare-words-left", string.Empty, string.Empty, left,
-            $"words of {input.FromText} still with no link after the kept ones: their links are under {MappingMethods.OrphanFloor}"));
-        if (collisions > 0)
+        var opponents = new Dictionary<int, HashSet<int>>();
+        foreach (var (word, absences) in absent)
         {
-            report.Add(new ReportRow("id-collisions", string.Empty, string.Empty, collisions,
-                "links whose words hashed to an id another link of the pair had taken, numbered by hashing again"));
+            if (!rendered.TryGetValue(word, out var renderings))
+            {
+                continue;
+            }
+
+            foreach (var a in absences)
+            {
+                foreach (var r in renderings.Where(r => links[r].Own != links[a].Own))
+                {
+                    (opponents.TryGetValue(a, out var mine) ? mine : opponents[a] = []).Add(r);
+                    (opponents.TryGetValue(r, out var theirs) ? theirs : opponents[r] = []).Add(a);
+                }
+            }
         }
 
-        Report(input, entries, final, stale, lost, report);
-        return new Output(final, methods, report);
+        if (opponents.Count == 0)
+        {
+            return own.Final;
+        }
+
+        var order = opponents.Keys.ToList();
+        order.Sort((a, b) =>
+        {
+            var (x, y) = (links[a], links[b]);
+            var compare = y.Link.Rank.CompareTo(x.Link.Rank);
+            if (compare == 0) compare = MappingMethods.IsAbsence(x.Link.Top.Row.Relation).CompareTo(MappingMethods.IsAbsence(y.Link.Top.Row.Relation));
+            if (compare == 0) compare = string.CompareOrdinal(x.Pair, y.Pair);
+            return compare != 0 ? compare : CompareBySort(x.Link, y.Link);
+        });
+
+        var place = order.Select((link, at) => (link, at)).ToDictionary(p => p.link, p => p.at);
+        var kept = new HashSet<int>();
+        var withdrawn = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var link in order)
+        {
+            var winners = opponents[link].Where(kept.Contains).ToList();
+            if (winners.Count == 0)
+            {
+                kept.Add(link);
+                continue;
+            }
+
+            if (!links[link].Own)
+            {
+                continue;
+            }
+
+            var winner = links[winners.MinBy(w => place[w])];
+            foreach (var row in links[link].Link.Rows)
+            {
+                row.Status = MappingStatus.WithdrawnBy($"{winner.Link.Top.Row.Method} in {winner.Pair}");
+            }
+
+            withdrawn.Add(links[link].Link.Top.Row.From + "|" + links[link].Link.Top.Row.To);
+        }
+
+        return withdrawn.Count == 0 ? own.Final : [.. own.Final.Where(r => !withdrawn.Contains(r.From + "|" + r.To))];
     }
 
     /// <summary>
@@ -619,17 +765,57 @@ internal static class MappingMerge
 
     /// <summary>
     /// A word of the FROM text that the competition left with no standing link keeps its best withdrawn
-    /// link, highest rank then surest first, if that link is sure enough (<see cref="MappingMethods.KeepsOrphan"/>).
+    /// link, highest rank then surest first, if that link is sure enough (<see cref="MappingMethods.KeepsOrphan"/>)
+    /// and contradicts no standing link: a correspondence is not put back over a word a standing absence holds,
+    /// nor an absence over a word a standing correspondence renders.
     /// Returns how many links were kept so, how many words were bare before, and how many still are.
     /// </summary>
     private static (int Kept, int Bare, int Left) KeepOrphans(List<Candidate> accepted, List<Candidate> withdrawn, HashSet<string> pinned)
     {
         var held = accepted.SelectMany(c => MappingText.Split(c.Top.Row.From)).ToHashSet(StringComparer.Ordinal);
         var bare = withdrawn.SelectMany(c => MappingText.Split(c.Top.Row.From)).Where(k => !held.Contains(k)).ToHashSet(StringComparer.Ordinal);
+        var absentFrom = new HashSet<string>(StringComparer.Ordinal);
+        var absentTo = new HashSet<string>(StringComparer.Ordinal);
+        var renderedFrom = new HashSet<string>(StringComparer.Ordinal);
+        var renderedTo = new HashSet<string>(StringComparer.Ordinal);
+        void Stand(Candidate candidate)
+        {
+            var (from, to) = (MappingText.Split(candidate.Top.Row.From), MappingText.Split(candidate.Top.Row.To));
+            switch (candidate.Top.Row.Relation)
+            {
+                case "omits":
+                    absentTo.UnionWith(to);
+                    break;
+                case "expands":
+                    absentFrom.UnionWith(from);
+                    break;
+                default:
+                    renderedFrom.UnionWith(from);
+                    renderedTo.UnionWith(to);
+                    break;
+            }
+        }
+
+        bool Contradicts(Candidate candidate)
+        {
+            var (from, to) = (MappingText.Split(candidate.Top.Row.From), MappingText.Split(candidate.Top.Row.To));
+            return candidate.Top.Row.Relation switch
+            {
+                "omits" => to.Any(renderedTo.Contains),
+                "expands" => from.Any(renderedFrom.Contains),
+                _ => from.Any(absentFrom.Contains) || to.Any(absentTo.Contains),
+            };
+        }
+
+        foreach (var candidate in accepted)
+        {
+            Stand(candidate);
+        }
+
         var best = new Dictionary<string, Candidate>(StringComparer.Ordinal);
         foreach (var candidate in withdrawn)
         {
-            if (!MappingMethods.KeepsOrphan(candidate.Top.Row, pinned.Contains(candidate.Shape)))
+            if (!MappingMethods.KeepsOrphan(candidate.Top.Row, pinned.Contains(candidate.Shape)) || Contradicts(candidate))
             {
                 continue;
             }
@@ -646,7 +832,7 @@ internal static class MappingMerge
         var kept = 0;
         foreach (var (key, candidate) in best.OrderBy(b => b.Value.Sort.First).ThenBy(b => b.Key, StringComparer.Ordinal))
         {
-            if (held.Contains(key))
+            if (held.Contains(key) || Contradicts(candidate))
             {
                 continue;
             }
@@ -656,6 +842,7 @@ internal static class MappingMerge
                 row.Status = null;
             }
 
+            Stand(candidate);
             held.UnionWith(MappingText.Split(candidate.Top.Row.From));
             accepted.Add(candidate);
             kept++;
