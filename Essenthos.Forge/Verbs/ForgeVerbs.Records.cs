@@ -89,6 +89,31 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
+    /// Writes <c>records/derived/verses</c> from the names projection, the frames and the relationships of
+    /// <c>--from &lt;Resources&gt;</c>; reads no database. <c>--over-live &lt;file&gt;</c> writes instead what the rule makes
+    /// of the database names in <c>names/live</c>, as TSV outside the store, to hold against that database's export.
+    /// </summary>
+    private static Task<int> RecordsVerses(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        if (Option(args, "--over-live") is { } path)
+        {
+            var live = RecordVerses.WriteOverLive(store, path);
+            Console.WriteLine($"{live.Rows,9}  rows over names/live into {path} ({live.Records} records; {live.Names} names read, " +
+                              $"{live.Withheld} withheld, {live.FromRelationships} from relationships)");
+            return Task.FromResult(0);
+        }
+
+        var outcome = RecordVerses.Write(store, args.Contains("--force"));
+        Console.WriteLine(outcome.Written
+            ? $"{outcome.Rows,9}  {RecordVerses.Product} ({outcome.Records} records; {outcome.Names} names read, {outcome.Withheld} withheld, " +
+              $"{outcome.FromRelationships} from relationships)"
+            : $"{RecordVerses.Product} is current");
+        store.Save();
+        return Task.FromResult(0);
+    }
+
+    /// <summary>
     /// Applies the owner's decisions waiting on the files step to the record files of <c>--from &lt;Resources&gt;</c>
     /// (default the Forge's own), where his log is too; reads no database.
     /// </summary>
