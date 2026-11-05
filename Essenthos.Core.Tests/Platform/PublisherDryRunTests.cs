@@ -167,7 +167,8 @@ public sealed class PublisherDryRunTests : IDisposable
             .And.Contain("drop corpus, and any corpus_incoming, corpus_previous or corpus_retired")
             .And.Contain("restore it into corpus_incoming in essenthos-db-1 with 2 jobs")
             .And.Contain("rename corpus_incoming to corpus, start essenthos-api-1")
-            .And.Contain("the page stays up and essenthos-api-1 stopped until a publication succeeds");
+            .And.Contain("the page stays up and essenthos-api-1 stopped until a publication succeeds")
+            .And.Contain($"remove nothing from {DataRoot}/releases, because no release served on prod before 20260920a is recorded here");
         Said.IndexOf("upload it", StringComparison.Ordinal).Should().BeLessThan(
             Said.IndexOf("maintenance page up", StringComparison.Ordinal), "the release travels while the site still serves");
         Directory.Exists(DataRoot).Should().BeFalse("nothing was uploaded, and no maintenance page went up");
@@ -200,7 +201,8 @@ public sealed class PublisherDryRunTests : IDisposable
 
         Said.Should().Contain("forge publish --to prod --release 20260920a")
             .And.Contain("publishing release 20260920a")
-            .And.Contain("drop corpus");
+            .And.Contain("drop corpus")
+            .And.Contain($"keep its dump and 20260921a's (served before) in {DataRoot}/releases, and any newer upload, and remove the other release dumps there");
         File.ReadAllLines(Path.Combine(Releases, "20260920a.published")).Should().HaveCount(1, "a dry run publishes nowhere");
     }
 

@@ -17,7 +17,8 @@ namespace Essenthos.Core.Publishing;
 /// <param name="Ssh"><c>user@host</c> for a remote target.</param>
 /// <param name="DataRoot">
 /// The directory on the target that holds its persistent state. Releases are uploaded into its
-/// <c>releases</c> folder, which the database container mounts at <c>/releases</c>, and the pictures
+/// <c>releases</c> folder, which the database container mounts at <c>/releases</c> and from which a
+/// publication removes the dumps no longer needed (<see cref="ReleaseUploads"/>), and the pictures
 /// into <c>images/&lt;database&gt;</c>, which the API container mounts at <c>/images</c>.
 /// </param>
 /// <param name="Container">The database container, by name.</param>

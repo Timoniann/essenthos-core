@@ -48,18 +48,73 @@ internal sealed class TargetHost(ReleaseTarget target)
     public async Task Upload(string file, CancellationToken cancellationToken)
     {
         var name = Path.GetFileName(file);
+        var folder = ReleasesFolder;
         if (target.IsRemote)
         {
-            var folder = $"{target.DataRoot.TrimEnd('/')}/releases";
             await Shell.Run("ssh", [.. SshOptions, target.Ssh, "mkdir", "-p", Shell.QuoteForRemote(folder)], cancellationToken);
             await Shell.Run("scp", ["-q", .. SshOptions, file, $"{target.Ssh}:{folder}/{name}"], cancellationToken);
         }
         else
         {
-            var folder = Path.Combine(target.DataRoot, "releases");
             Directory.CreateDirectory(folder);
             File.Copy(file, Path.Combine(folder, name), overwrite: true);
         }
+    }
+
+    /// <summary>Where <see cref="Upload"/> puts a release, and the database container reads it at <c>/releases</c>.</summary>
+    public string ReleasesFolder => target.IsRemote
+        ? $"{target.DataRoot.TrimEnd('/')}/releases"
+        : Path.Combine(target.DataRoot, "releases");
+
+    /// <summary>The files directly in the releases folder, by name, with their sizes; none where the folder is not there.</summary>
+    public async Task<Dictionary<string, long>> Releases(CancellationToken cancellationToken)
+    {
+        if (!target.IsRemote)
+        {
+            return Directory.Exists(ReleasesFolder)
+                ? new DirectoryInfo(ReleasesFolder).EnumerateFiles().ToDictionary(file => file.Name, file => file.Length, StringComparer.Ordinal)
+                : new Dictionary<string, long>(StringComparer.Ordinal);
+        }
+
+        var folder = Shell.QuoteForRemote(ReleasesFolder);
+        var listing = await Shell.Run(
+            "ssh", [.. SshOptions, target.Ssh, $"if [ -d {folder} ]; then find {folder} -mindepth 1 -maxdepth 1 -type f -printf '%f\\t%s\\n'; fi"],
+            cancellationToken);
+        return listing.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.TrimEnd('\r').Split('\t'))
+            .Where(parts => parts.Length == 2)
+            .ToDictionary(parts => parts[0], parts => long.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture), StringComparer.Ordinal);
+    }
+
+    /// <summary>
+    /// Deletes <paramref name="files"/>, names of release dumps in the releases folder. Anything else
+    /// is refused before a file is touched.
+    /// </summary>
+    public async Task RemoveReleases(IReadOnlyList<string> files, CancellationToken cancellationToken)
+    {
+        if (files.Count == 0)
+        {
+            return;
+        }
+
+        if (files.FirstOrDefault(file => ReleaseUploads.ReleaseOf(file) is null) is { } other)
+        {
+            throw new InvalidOperationException($"\"{other}\" is not a release dump; nothing was removed from {ReleasesFolder}.");
+        }
+
+        if (!target.IsRemote)
+        {
+            foreach (var file in files)
+            {
+                File.Delete(Path.Combine(ReleasesFolder, file));
+            }
+
+            return;
+        }
+
+        await Shell.Run(
+            "ssh", [.. SshOptions, target.Ssh, $"cd {Shell.QuoteForRemote(ReleasesFolder)} && rm -f -- {string.Join(' ', files)}"],
+            cancellationToken);
     }
 
     /// <summary>
