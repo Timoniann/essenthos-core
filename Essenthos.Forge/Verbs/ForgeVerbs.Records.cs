@@ -138,6 +138,59 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
+    /// Applies the decided rows (<c>--rows &lt;file&gt;</c>, else every file the Forge ships in <see cref="OwnerRows.Folder"/>) to the
+    /// names and dataset files of <c>--from &lt;Resources&gt;</c> (default the Forge's own); reads no database. Exit 1 when a row
+    /// is refused or a file is missing, and then nothing is written.
+    /// </summary>
+    private static Task<int> OwnerRowsVerb(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var dryRun = args.Contains("--dry-run");
+        var rows = Option(args, "--rows") is { } file ? OwnerRows.Read([file]) : OwnerRows.Shipped();
+        if (rows.Count == 0)
+        {
+            Console.Error.WriteLine($"No decided rows: none in {Path.Combine(AppContext.BaseDirectory, OwnerRows.Folder)} and no --rows given.");
+            return Task.FromResult(1);
+        }
+
+        OwnerRows.Outcome outcome;
+        try
+        {
+            outcome = OwnerRows.Apply(store, rows, dryRun, DateTimeOffset.UtcNow);
+        }
+        catch (Exception exception) when (exception is FileNotFoundException or InvalidDataException)
+        {
+            Console.Error.WriteLine(exception.Message);
+            return Task.FromResult(1);
+        }
+
+        Console.WriteLine($"{outcome.Rows} decided rows read{(dryRun ? " (dry run: nothing written)" : string.Empty)}.");
+        Console.WriteLine($"{outcome.Applied,9}  change a file");
+        Console.WriteLine($"{outcome.Already,9}  already as decided");
+        foreach (var (product, count) in outcome.Changed.OrderBy(c => c.Key, StringComparer.Ordinal))
+        {
+            Console.WriteLine($"  {count,7}  {product}");
+        }
+
+        foreach (var refused in outcome.Refused)
+        {
+            Console.WriteLine($"  refused: {refused}");
+        }
+
+        foreach (var product in outcome.Written)
+        {
+            Console.WriteLine($"  wrote {product}");
+        }
+
+        if (outcome.Refused.Count > 0)
+        {
+            Console.WriteLine($"{outcome.Refused.Count} rows refused: nothing written.");
+        }
+
+        return Task.FromResult(outcome.Refused.Count > 0 ? 1 : 0);
+    }
+
+    /// <summary>
     /// Compares two databases table by table by natural key: <c>records-compare &lt;port/db&gt; &lt;port/db&gt; --out &lt;file&gt;</c>,
     /// each on the Forge's server credentials.
     /// </summary>

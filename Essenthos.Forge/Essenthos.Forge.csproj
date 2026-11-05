@@ -20,6 +20,7 @@
     <ItemGroup>
         <!-- The web SDK copies this; the console SDK does not. -->
         <Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="Records\OwnerRows\*.tsv" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
