@@ -72,7 +72,7 @@ Split out of the single `Essenthos.Core` project on 2026-09-18, because a server
 | `Essenthos.Accounts` | The database the API owns and writes. Empty until accounts arrive; it exists so the boundary is drawn before there is anything to put behind it. |
 | `Essenthos.Forge` | Every loader, parser, aligner, EVIDENTIA pass and the verification. A console application, run here and never deployed. |
 
-The loaders are no longer a background service. What used to happen while the API served is now `avioniq services run core-load`, and the measures are `avioniq services run core-verify` — which a load already ends in, so it is not run again after one.
+The corpus is built from its products: `forge build` makes every product whose inputs moved, in the order `Resources/Essenthos/build/products.tsv` declares, then fills a new database from them (`--into`) or replaces in the configured one what moved (`--apply`), and verifies at the level asked (guide products). The measures alone are `avioniq services run core-verify`.
 
 Both run from one build: `avioniq services run core-forge-build` publishes the Forge into `.run/forge` once per chain, and every Forge action runs that copy, so after a merge it comes first or the old code runs. The API is the same: the `core` service starts its published copy from `.run/api` (`scripts/start-core.ps1`, about 1.5 s), and `avioniq services run core-api-publish` puts a new one in `.run/api-next` while the old one serves, taken at the next `avioniq services restart core`. `.run/` is ignored.
 

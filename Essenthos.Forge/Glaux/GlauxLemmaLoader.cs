@@ -231,7 +231,7 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
 
     /// <summary>
     /// Half a million updates, so they go through a temporary table and one join rather than half a
-    /// million statements — the same shape <c>WordFoldingLoader</c> uses for the same reason.
+    /// million statements.
     /// </summary>
     private async Task Write(
         List<(long Id, string Lemma)> written,

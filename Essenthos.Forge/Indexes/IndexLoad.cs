@@ -14,7 +14,7 @@ namespace Essenthos.Core.Indexes;
 /// <c>strong_reach_method</c>, <c>strong_book_reach</c> and <c>strong_book</c> from the strong and occurrences indexes,
 /// <c>text_form</c> from the forms, <c>entity_rendering</c> and <c>entity_search_spelling</c> from the spellings. Each
 /// table's rows of the texts loaded are replaced in one transaction. What is counted is what the database steps count
-/// (<see cref="StrongRenderingCounts"/>, <see cref="SearchFormLoader"/>, <see cref="EntityRenderingLoader"/>): the
+/// (<see cref="StrongRenderingCounts"/>, <see cref="EntityRenderingLoader"/>): the
 /// commonest phrases are ranked by the database, as before, so ties fall in its collation; the variety and the lexical
 /// class are the same C#.
 /// </summary>
@@ -305,7 +305,7 @@ internal static class IndexLoad
 
     /// <summary>
     /// <c>text_form</c> from the forms indexes: each text's rows replaced, a form the index leaves unstemmed stemmed by the
-    /// database's dictionary for the text's language, as <see cref="SearchFormLoader"/> stems it.
+    /// database's dictionary for the text's language.
     /// </summary>
     public static async Task<Outcome> Forms(string connectionString, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken)
     {

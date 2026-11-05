@@ -29,11 +29,6 @@ internal sealed record BrentonEdit(int Book, int Chapter, int Verse, string Digi
 /// division. Only the file's capital at the head of a verse and its comma before <c>δώσεις</c> are
 /// kept where GLAUx has neither.
 /// </para>
-///
-/// <para>
-/// A cold load reads the verses so; <see cref="BrentonEditLoader"/> writes them into a corpus loaded
-/// before, keeping the row of every word the two readings share.
-/// </para>
 /// </summary>
 internal static class BrentonEdits
 {

@@ -54,7 +54,7 @@ internal sealed record PsalmOpeningOutcome(string Slug, int Psalms, int Words, i
 ///
 /// <para>
 /// A verse that then holds a title as well as a body stands at two addresses, which is the frame's
-/// existing way of saying so and what <see cref="SuperscriptionFrameLoader"/> writes for the two
+/// existing way of saying so and what the frame writes for the two
 /// Slavic files. The second address is written only where the frame already holds a title verse at
 /// it — 63 of the 116 psalms the King James titles — because for the other 53 the Hebrew keeps the
 /// title inside its own verse 1 and there is nothing above it to stand at.

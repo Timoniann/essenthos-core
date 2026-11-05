@@ -15,7 +15,7 @@ namespace Essenthos.Core.Loading;
 /// It is copyrighted by the Watch Tower Bible and Tract Society of Pennsylvania, and the terms it is
 /// downloaded under allow personal, non-commercial use and forbid putting it on a server for a
 /// software application. So it is never a text of the corpus: its definition says
-/// <see cref="Redistribution.Prohibited"/>, <see cref="CorpusLoader"/> refuses to write such a
+/// <see cref="Redistribution.Prohibited"/>, <c>Validate</c> refuses such a
 /// text, and the only reader of it is a benchmark that reads this file in the process that asked.
 /// Everything the corpus holds can be served and is carried by every corpus release; a text kept
 /// out of the database cannot leak through an endpoint somebody forgot to filter.

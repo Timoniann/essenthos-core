@@ -1,7 +1,9 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -53,8 +55,38 @@ public sealed class VerseSearchTests : IAsyncLifetime
         _db.SaveChanges();
     }
 
-    public async Task InitializeAsync() =>
-        await new SearchFormLoader(_db, NullLogger<SearchFormLoader>.Instance).Load();
+    /// <summary>
+    /// <c>text_form</c> as the build fills it from each text's forms index (<see cref="TextIndexes.Forms"/>,
+    /// <see cref="IndexLoad"/>): every form the text prints with how often, stemmed here or by the database's dictionary.
+    /// </summary>
+    public async Task InitializeAsync()
+    {
+        var texts = await _db.Texts.AsNoTracking().ToListAsync();
+        foreach (var text in texts)
+        {
+            var forms = await _db.Words.Where(w => w.TextId == text.Id && w.NormalisedText != null && w.NormalisedText != "")
+                .GroupBy(w => w.NormalisedText!).Select(g => new { Form = g.Key, Occurrences = g.Count() }).ToListAsync();
+            _db.TextForms.AddRange(forms.Select(form => new TextForm
+            {
+                TextId = text.Id,
+                Form = form.Form,
+                Occurrences = form.Occurrences,
+                Stem = TextIndexes.Stem(form.Form, text.Language) ?? form.Form,
+            }));
+        }
+
+        await _db.SaveChangesAsync();
+        foreach (var language in texts.Select(text => text.Language).Distinct())
+        {
+            if (SearchWords.Dictionary(language) is { } dictionary)
+            {
+                await _db.Database.ExecuteSqlRawAsync(
+                    "UPDATE text_form f SET stem = coalesce(nullif((ts_lexize({0}::regdictionary, f.form))[1], ''), f.form) "
+                    + "FROM text t WHERE t.id = f.text_id AND t.language = {1}",
+                    dictionary, language);
+            }
+        }
+    }
 
     public Task DisposeAsync()
     {
@@ -130,17 +162,6 @@ public sealed class VerseSearchTests : IAsyncLifetime
     [Fact]
     public async Task AWordPrintedOftenEnoughIsNotSecondGuessed() =>
         (await Search(_ohienko, "воскресення")).Suggestion.Should().BeNull();
-
-    [Fact]
-    public async Task TheFormsAreCountedOnceAndASecondCountWritesNothing()
-    {
-        var again = await new SearchFormLoader(_db, NullLogger<SearchFormLoader>.Instance).Load();
-
-        again.Written.Should().Be(0);
-        again.Removed.Should().Be(0);
-        (await _db.TextForms.Where(f => f.TextId == _ohienko.Id && f.Form == "воскресення").SingleAsync())
-            .Occurrences.Should().Be(4);
-    }
 
     [Theory]
     [InlineData("«воскресення життя» Ісус", new[] { "воскресення", "життя", "Ісус" }, new[] { 0, 0, -1 })]

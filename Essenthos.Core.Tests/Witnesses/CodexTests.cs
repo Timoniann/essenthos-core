@@ -241,61 +241,6 @@ public class CodexTests
     }
 }
 
-/// <summary>Both codices loaded and placed in the frame.</summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
-[Collection(WitnessDatabaseCollection.Name)]
-public sealed class CodexLoadTests : IDisposable
-{
-    private readonly AppDbContext _db;
-    private readonly ITestOutputHelper _output;
-
-    public CodexLoadTests(WitnessDatabase database, ITestOutputHelper output)
-    {
-        _db = database.NewContext();
-        _output = output;
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-    }
-
-    public void Dispose()
-    {
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _db.Dispose();
-    }
-
-    /// <summary>
-    /// Every verse finds its address in the frame, and only where the Greek numbers a verse
-    /// otherwise than the English the frame is written in does the address differ from the label.
-    /// </summary>
-    [Fact]
-    public async Task EveryVerseStandsInTheFrame()
-    {
-        var rules = TestResources.Rules;
-        foreach (var codex in CodexTextSource.All)
-        {
-            await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).Load(codex.Read(TestResources.Folder(".")));
-            var text = await _db.Texts.SingleAsync(one => one.Slug == codex.Slug);
-            await new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance).Place(text, rules);
-
-            var unplaced = await _db.Verses.CountAsync(verse => verse.TextId == text.Id
-                && !_db.VerseReferences.Any(r => r.VerseId == verse.Id && r.IsPrimary));
-            var moved = await _db.VerseReferences
-                .Where(r => r.IsPrimary && r.Verse!.TextId == text.Id
-                            && (r.CanonicalChapter != r.Verse.ChapterNumber || r.CanonicalVerse != r.Verse.Number))
-                .Select(r => r.Verse!.Book!.Slug + " " + r.Verse.ChapterNumber + ":" + r.Verse.Number
-                             + " -> " + r.CanonicalChapter + ":" + r.CanonicalVerse)
-                .ToListAsync();
-            _output.WriteLine($"{codex.Slug}: unplaced {unplaced}; placed elsewhere: {string.Join(", ", moved)}");
-
-            unplaced.Should().Be(0);
-            moved.Should().BeEquivalentTo(
-            [
-                "3-john 1:15 -> 1:14", "2-corinthians 13:13 -> 13:14", "philippians 1:16 -> 1:17",
-                "philippians 1:17 -> 1:16", .. codex == CodexTextSource.Sinaiticus ? ["revelation 12:18 -> 13:1"] : Array.Empty<string>(),
-            ]);
-        }
-    }
-}
-
 /// <summary>An INTF transcription read without the corpus, on a page made up here.</summary>
 public sealed class NtvmrWordTests
 {

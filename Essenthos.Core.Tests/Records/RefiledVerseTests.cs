@@ -18,8 +18,6 @@ namespace Essenthos.Core.Tests.Records;
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class RefiledVerseTests : IDisposable
 {
-    private const string Reading = "read from Scripture by a test";
-
     private readonly AppDbContext _db;
     private readonly Entity _levite;
     private readonly Entity _highPriest;
@@ -70,25 +68,6 @@ public sealed class RefiledVerseTests : IDisposable
             Label = entity.Name, Source = BibleDataLoader.Source,
         });
 
-    private void Tie(Entity from, string type, Entity to, int verse, LinkMethod method, string source) =>
-        _db.EntityRelationships.Add(new EntityRelationship
-        {
-            From = from, To = to, Type = type, Category = RelationshipCategories.Read,
-            CanonicalBook = 16, CanonicalChapter = 12, CanonicalVerse = verse, Method = method,
-            Confidence = method == LinkMethod.ModelReading ? 0.9 : null, Source = source,
-        });
-
-    private void Clause(Entity entity, int ordinal, string relation, Entity target, int verse) =>
-        _db.EntityDescriptors.Add(new EntityDescriptor
-        {
-            Entity = entity, Ordinal = ordinal, Relation = relation, Target = target,
-            CanonicalBook = 16, CanonicalChapter = 12, CanonicalVerse = verse,
-            Method = LinkMethod.ModelReading, Confidence = 0.9, Source = Reading,
-        });
-
-    private Task<RefiledTieOutcome> Carry() =>
-        new RefiledTieLoader(_db, NullLogger<RefiledTieLoader>.Instance).Load();
-
     [Fact]
     public async Task TheVerseMovesToTheHighPriestAndTheLevitesOwnVersesStay()
     {
@@ -110,72 +89,5 @@ public sealed class RefiledVerseTests : IDisposable
             new { EntityId = _highPriest.Id, CanonicalVerse = 10, Source = BibleDataLoader.Source },
             new { EntityId = _levite.Id, CanonicalVerse = 24, Source = BibleDataLoader.Source },
         ]);
-    }
-
-    [Fact]
-    public async Task WhatWasReadOffTheVerseNamesTheHighPriest()
-    {
-        Tie(_levite, "father-of", _joiakim, 10, LinkMethod.ModelReading, Reading);
-        Tie(_joiakim, "son-of", _levite, 10, LinkMethod.ModelReading, Reading);
-        Tie(_levite, "son-of", _joiakim, 24, LinkMethod.ModelReading, Reading);
-        Clause(_levite, 1, "father-of", _joiakim, 10);
-        Clause(_joiakim, 1, "son-of", _levite, 10);
-        Clause(_joiakim, 2, "son-of", _highPriest, 26);
-        await _db.SaveChangesAsync();
-
-        var outcome = await Carry();
-
-        var ties = await _db.EntityRelationships.AsNoTracking()
-            .Select(r => new { r.FromEntityId, r.Type, r.ToEntityId, r.CanonicalVerse }).ToListAsync();
-        ties.Should().BeEquivalentTo(
-        [
-            new { FromEntityId = _joiakim.Id, Type = "son-of", ToEntityId = _highPriest.Id, CanonicalVerse = (int?)10 },
-            new { FromEntityId = _levite.Id, Type = "son-of", ToEntityId = _joiakim.Id, CanonicalVerse = (int?)24 },
-        ], "the Levite's own reading of Nehemiah 12:10 goes, and a verse that is not moved is not touched");
-
-        var clauses = await _db.EntityDescriptors.AsNoTracking()
-            .Select(d => new { d.EntityId, d.TargetEntityId, d.CanonicalVerse }).ToListAsync();
-        clauses.Should().BeEquivalentTo(
-            [new { EntityId = _joiakim.Id, TargetEntityId = _highPriest.Id, CanonicalVerse = 26 }],
-            "the clause about Joiakim's father, once it names the high priest, says what his record already says");
-        outcome.Should().BeEquivalentTo(new { Moved = 2, Withdrawn = 2, Joined = 1, Renamed = 0 });
-    }
-
-    [Fact]
-    public async Task AnOwnersDecisionIsLeftAsHeMadeIt()
-    {
-        Tie(_joiakim, "son-of", _levite, 10, LinkMethod.Manual, "read from Scripture by the project owner");
-        await _db.SaveChangesAsync();
-
-        await Carry();
-
-        var tie = await _db.EntityRelationships.AsNoTracking().SingleAsync();
-        tie.ToEntityId.Should().Be(_levite.Id);
-    }
-
-    [Fact]
-    public async Task ANameTheVerseListSettledNamesTheMedeAndOnceSettledStays()
-    {
-        var aramaic = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "arc", (5, 31, ["וְדָרְיָוֶשׁ", "מָדָאָה"]));
-        await _db.SaveChangesAsync();
-        _db.In(aramaic, 27);
-        _db.WordEntities.Add(new WordEntity
-        {
-            Word = _db.WordAt(aramaic, 5, 31, 1), Entity = _persian, Method = LinkMethod.Lexical, Confidence = 0.96,
-            Source = RenderedNameLoader.Source,
-        });
-        _db.WordEntities.Add(new WordEntity
-        {
-            Word = _db.WordAt(aramaic, 5, 31, 2), Entity = _persian, Method = LinkMethod.ModelReading, Confidence = 0.9,
-            Source = "a reading of the verse",
-        });
-        await _db.SaveChangesAsync();
-
-        (await Carry()).Renamed.Should().Be(1);
-        (await Carry()).Should().BeEquivalentTo(new { Moved = 0, Withdrawn = 0, Joined = 0, Renamed = 0 });
-
-        var named = await _db.WordEntities.AsNoTracking()
-            .OrderBy(a => a.WordId).Select(a => a.EntityId).ToListAsync();
-        named.Should().Equal([_mede.Id, _persian.Id], "only what the list settled follows the list");
     }
 }

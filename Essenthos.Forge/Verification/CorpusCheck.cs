@@ -775,7 +775,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // for the crime of the hill having a page of its own. Jericho at Tell es Sultan and Jericho
         // at Tell el Alayiq say nothing of the kind, and this still fires for them -- which is why
         // no resolution annotates a word of H3405, and why which of the two a verse means is
-        // `SiteSplitLoader`'s work, under a method that says something did the choosing.
+        // the site split's work, under a method that says something did the choosing.
         //
         // A name carried onto a translation's word was resolved on the word it was carried from (the
         // note says which), so that word's number is the one asked: the translation's own number says

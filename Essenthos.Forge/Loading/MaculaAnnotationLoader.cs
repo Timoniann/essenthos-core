@@ -64,8 +64,7 @@ internal sealed record MaculaOutcome(
 /// </para>
 ///
 /// <para>
-/// A pass of its own rather than part of the corpus loader, for the reason
-/// <see cref="StatedNumberLoader"/> gives: the corpus loader returns early for a text already in
+/// A pass of its own rather than part of the corpus loader, because the corpus loader returned early for a text already in
 /// the text table, and Nestle is loaded in every database this will ever run against. Idempotent by
 /// its own rows, so it costs one indexed existence check per boot.
 /// </para>

@@ -187,33 +187,4 @@ public sealed class GreekTribeNameTests : IDisposable
                 .ToListAsync())
             .Should().Equal(_records["manasseh"].Id);
     }
-
-    [Fact]
-    public async Task AConsensusNameTheVerseGivesAnotherBearerOfTheNameIsHis()
-    {
-        var douay = Corpus.Add(_db, "DRA", TextKind.Translation, "eng", (1, 1, ["x"]));
-        _db.AddBook(douay, 66, "Revelation", (7, 6, ["of", "Manasses"]));
-        _db.SaveChanges();
-        var manasses = _db.Words.Single(w => w.TextId == douay.Id && w.Surface == "Manasses");
-        _db.WordEntities.Add(new WordEntity
-        {
-            WordId = manasses.Id, EntityId = _records["manasseh-3"].Id, Method = LinkMethod.RuleBased,
-            Confidence = 0.99, Source = NameConsensusPass.Source, Note = "the word its verses share in this text: manasses",
-        });
-        _db.WordEntities.Add(new WordEntity
-        {
-            WordId = Word(66, 7, 6, 3).Id, EntityId = _records["manasseh"].Id, Method = LinkMethod.Manual,
-            Confidence = null, Source = "a ruling", Note = "the tribe's ancestor",
-        });
-        await _db.SaveChangesAsync();
-        var namesakes = new ConsensusNamesakes(_db, NullLogger<ConsensusNamesakes>.Instance);
-
-        var first = await namesakes.Load();
-        var second = await namesakes.Load();
-
-        first.Given.Should().Be(1);
-        second.Given.Should().Be(0);
-        second.Withdrawn.Should().Be(0);
-        (await Shown(manasses)).Should().Equal("manasseh");
-    }
 }

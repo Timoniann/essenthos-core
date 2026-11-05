@@ -179,8 +179,8 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     /// <summary>
     /// The text's frame as its file says it: where the rules put each verse, and the title verse a
     /// psalm's first verse also covers where the corpus holds that row. Those rows are written after the
-    /// frame by the passes that read the titles in (<see cref="PsalmOpeningLoader"/>,
-    /// <see cref="SuperscriptionFrameLoader"/>) from the verse's words; a row is kept while the verse still
+    /// frame by the passes that read the titles in (<see cref="PsalmOpeningLoader"/>)
+    /// from the verse's words; a row is kept while the verse still
     /// stands first in that psalm, which is what those passes ask.
     /// </summary>
     /// <param name="store">Where the text's words product is, whose letters the rules read in place of the database's.</param>
@@ -408,7 +408,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     /// <summary>
     /// Whether the text already stands where the frame puts it. A psalm's first verse that holds its
     /// title also covers the title's row, and that further row is written after the frame by the passes
-    /// that read the title in (<see cref="PsalmOpeningLoader"/>, <see cref="SuperscriptionFrameLoader"/>);
+    /// that read the title in (<see cref="PsalmOpeningLoader"/>);
     /// it is theirs, so it does not count as a difference, or every load would place those texts again
     /// only for the passes to write the same rows back.
     /// </summary>

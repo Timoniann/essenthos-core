@@ -33,30 +33,6 @@ public sealed class SourceWordPassTests : IDisposable
     private void Clear() => _db.Database.ExecuteSqlRaw("DELETE FROM text");
 
     [Fact]
-    public async Task BhsaLemmasBecomeHeadwordsInPlaceAndKeepTheOccurrencesSpelling()
-    {
-        var text = Corpus.Add(_db, BhsaTextSource.Slug, TextKind.CriticalEdition, "hbo", (1, 1, ["אֱלֹהִים", "הַ"]));
-        _db.SaveChanges();
-        var words = _db.Words.Where(w => w.TextId == text.Id).OrderBy(w => w.Position).ToList();
-        words[0].Lemma = "אֱלֹה";
-        words[0].Morphology = System.Text.Json.JsonDocument.Parse("""{"vocalizedLexeme":"אֱלֹהִים"}""");
-        words[1].Morphology = System.Text.Json.JsonDocument.Parse("""{"vocalizedLexeme":"הַ"}""");
-        _db.SaveChanges();
-        var ids = words.Select(w => w.Id).ToList();
-
-        var loader = new BhsaLemmaLoader(_db, NullLogger<BhsaLemmaLoader>.Instance);
-        (await loader.Load()).Words.Should().Be(2);
-
-        var after = _db.Words.AsNoTracking().Where(w => w.TextId == text.Id).OrderBy(w => w.Position).ToList();
-        after.Select(w => w.Id).Should().Equal(ids);
-        after.Select(w => w.Lemma).Should().Equal("אֱלֹהִים", "הַ");
-        after[0].Morphology!.RootElement.GetProperty("realisedLexeme").GetString().Should().Be("אֱלֹה");
-        after[1].Morphology!.RootElement.TryGetProperty("realisedLexeme", out _).Should().BeFalse();
-
-        (await loader.Load()).Words.Should().Be(0);
-    }
-
-    [Fact]
     public async Task TheBereanCarriesTheNumbersItsTablesStateOnEveryWordOfTheirPhrase()
     {
         var text = Corpus.Add(_db, BereanTextSource.Slug, TextKind.Translation, "eng",
