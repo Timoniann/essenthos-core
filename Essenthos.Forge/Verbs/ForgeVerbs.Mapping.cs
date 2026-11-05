@@ -48,7 +48,7 @@ internal static partial class ForgeVerbs
         }
 
         var results = new System.Collections.Concurrent.ConcurrentBag<PairSources.Outcome>();
-        System.Threading.Tasks.Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 4) }, pair =>
+        System.Threading.Tasks.Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 12) }, pair =>
         {
             var outcome = PairSources.Write(texts, method, pair, args.Contains("--force"), line => forge.Logger.LogInformation("{Line}", line));
             results.Add(outcome);
