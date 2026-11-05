@@ -1,4 +1,8 @@
+using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Essenthos.Core.Conversion;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Names;
 using Essenthos.Core.Products;
 
@@ -6,11 +10,13 @@ namespace Essenthos.Core.Records;
 
 /// <summary>
 /// Questions the owner's review lists asked, settled from the texts on his word and written as edits of the files the
-/// build reads (NOT-0219): a name settled on a word of a reference text (<c>names/&lt;REF&gt;</c>), or a dataset's verse
-/// row filed under another record of ours (<c>external/bibledata/references</c>). Each decided edit is a row of a file in
-/// <see cref="Folder"/>; applying them again changes nothing, and a row the files cannot take (a word that is not there,
-/// a Strong number that differs, a record or dataset row that does not exist) stops the whole apply before anything is
-/// written, because it means the files are not the ones the decision was read against.
+/// build reads (NOT-0219): a name settled on a word of a reference text (<c>names/&lt;REF&gt;</c>), a dataset's verse
+/// row filed under another record of ours (<c>external/bibledata/references</c>), or a row of a record file
+/// (<c>records/**</c>: a record made, its names, lines and passages, a known-for clause moved to it). Each decided edit is
+/// a row of a file in <see cref="Folder"/>, the record files' rows in files ending <see cref="RecordRowsSuffix"/>;
+/// applying them again changes nothing, and a row the files cannot take (a word that is not there, a Strong number that
+/// differs, a record or dataset row that does not exist) stops the whole apply before anything is written, because it
+/// means the files are not the ones the decision was read against.
 /// </summary>
 internal static class OwnerRows
 {
@@ -18,6 +24,9 @@ internal static class OwnerRows
 
     /// <summary>Where the decided rows ship, under the Forge's own folder.</summary>
     public static readonly string Folder = Path.Combine("Records", "OwnerRows");
+
+    /// <summary>The ending of a file of decided rows of the record files, read with <see cref="RecordSchema"/>.</summary>
+    public const string RecordRowsSuffix = ".records.tsv";
 
     public const string Add = "add";
 
@@ -27,7 +36,17 @@ internal static class OwnerRows
 
     public const string Withdraw = "withdraw";
 
+    /// <summary>A record file's row written: added, or put in place of the row with the same key.</summary>
+    public const string Put = "put";
+
+    /// <summary>A record file's rows taken out: every row of the record whose columns equal the values given.</summary>
+    public const string Drop = "drop";
+
     private const string References = "external/bibledata/references";
+
+    private const string Records = "records/records";
+
+    private const string EnglishRecords = "records/i18n/eng/records";
 
     /// <summary>How a settled name says it was decided: by a person, so no confidence.</summary>
     private const string Method = "manual";
@@ -64,6 +83,34 @@ internal static class OwnerRows
         .Reads(row => new Row(row.Text(0), row.Text(1), row.Text(2), row.Text(3), row.Text(4), row.TextOrNull(5), row.TextOrNull(6),
             row.TextOrNull(7), row.TextOrNull(8), row.Text(9)));
 
+    /// <param name="Entry">The question the row settles (<c>objects:37</c>), or the record and what of it (<c>altar-of-incense:known-for</c>).</param>
+    /// <param name="Product">The record file the row edits (<c>records/names</c>, <c>records/i18n/ukr/lines</c>, ...).</param>
+    /// <param name="Op">put or drop.</param>
+    /// <param name="Record">The record's slug, the file's first column.</param>
+    /// <param name="Values">
+    /// A JSON object of the row's other columns by name. For put, a column not named is empty, except <c>by</c>, which
+    /// is <see cref="Source"/>, and what a language's line or notes renders (<c>english</c>, <c>english_sha256</c>),
+    /// which is taken from the record's English line and notes; for drop, the columns a row must equal to go.
+    /// </param>
+    /// <param name="Why">The reading the decision rests on.</param>
+    internal sealed record RecordRow(string Entry, string Product, string Op, string Record, string Values, string Why);
+
+    public static readonly ProductSchema<RecordRow> RecordSchema = new ProductSchema<RecordRow>()
+        .Text("entry", r => r.Entry)
+        .Text("product", r => r.Product)
+        .Text("op", r => r.Op)
+        .Text("record", r => r.Record)
+        .Text("values", r => r.Values)
+        .Text("why", r => r.Why)
+        .Reads(row => new RecordRow(row.Text(0), row.Text(1), row.Text(2), row.Text(3), row.Text(4), row.Text(5)));
+
+    /// <param name="Names">Rows of the names and dataset files.</param>
+    /// <param name="Records">Rows of the record files.</param>
+    public sealed record Decided(List<Row> Names, List<RecordRow> Records)
+    {
+        public int Count => Names.Count + Records.Count;
+    }
+
     /// <param name="Applied">Rows that changed a file.</param>
     /// <param name="Already">Rows the files already showed as decided.</param>
     /// <param name="Refused">Rows the files cannot take, each with why; when any is, nothing is written.</param>
@@ -78,32 +125,71 @@ internal static class OwnerRows
         IReadOnlyList<string> Written);
 
     /// <summary>The decided rows shipped with the Forge, file by file in name order.</summary>
-    public static List<Row> Shipped() => Read(Directory.Exists(Path.Combine(AppContext.BaseDirectory, Folder))
+    public static Decided Shipped() => Read(Directory.Exists(Path.Combine(AppContext.BaseDirectory, Folder))
         ? Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, Folder), "*.tsv").Order(StringComparer.Ordinal)
         : []);
 
-    public static List<Row> Read(IEnumerable<string> paths)
+    /// <summary>Reads files of decided rows: a file ending <see cref="RecordRowsSuffix"/> holds record rows, any other name rows.</summary>
+    public static Decided Read(IEnumerable<string> paths)
     {
-        var rows = new List<Row>();
+        var decided = new Decided([], []);
         foreach (var path in paths)
         {
+            if (path.EndsWith(RecordRowsSuffix, StringComparison.Ordinal))
+            {
+                using var records = ProductStore.HandFormat.Open(path, RecordSchema);
+                decided.Records.AddRange(records.Rows());
+                continue;
+            }
+
             using var reader = ProductStore.HandFormat.Open(path, Schema);
-            rows.AddRange(reader.Rows());
+            decided.Names.AddRange(reader.Rows());
         }
 
-        return rows;
+        return decided;
     }
 
+    public static Outcome Apply(ProductStore store, IReadOnlyList<Row> rows, bool dryRun, DateTimeOffset now) =>
+        Apply(store, new Decided([.. rows], []), dryRun, now);
+
     /// <summary>
-    /// Applies the rows to the store's files. With <paramref name="dryRun"/> it says what it would do and writes nothing.
+    /// Applies the rows to the store's files: the record files' rows first, so a name row may name a record they make.
+    /// With <paramref name="dryRun"/> it says what it would do and writes nothing.
     /// </summary>
-    public static Outcome Apply(ProductStore store, IReadOnlyList<Row> rows, bool dryRun, DateTimeOffset now)
+    public static Outcome Apply(ProductStore store, Decided decided, bool dryRun, DateTimeOffset now)
     {
         var refused = new List<string>();
         var changed = new Dictionary<string, int>(StringComparer.Ordinal);
         var already = 0;
-        var records = RecordSlugs(store);
         var edits = new List<IFileEdit>();
+
+        var recordEdits = new RecordEdits(store);
+        foreach (var row in decided.Records.OrderBy(r => r.Product switch { Records => 0, EnglishRecords => 1, _ => 2 }))
+        {
+            switch (recordEdits.Apply(row))
+            {
+                case null:
+                    already++;
+                    break;
+                case { Length: 0 }:
+                    changed[row.Product] = changed.GetValueOrDefault(row.Product) + 1;
+                    break;
+                case var why:
+                    refused.Add($"{row.Entry} {row.Op} {row.Record} in {row.Product}: {why}");
+                    break;
+            }
+        }
+
+        edits.AddRange(recordEdits.Edits);
+        var records = recordEdits.Slugs() ?? RecordSlugs(store);
+        if (records is not null)
+        {
+            refused.AddRange(decided.Records
+                .Where(r => r.Op == Put && r.Product != Records && !records.Contains(r.Record))
+                .Select(r => $"{r.Entry} put {r.Record} in {r.Product}: no such record in records/records"));
+        }
+
+        var rows = decided.Names;
 
         foreach (var group in rows.GroupBy(r => r.Product, StringComparer.Ordinal))
         {
@@ -114,7 +200,7 @@ internal static class OwnerRows
                     "come from the cut-over export; apply these rows after it.");
             }
 
-            IFileEdit edit = group.Key == References
+            IRowEdit edit = group.Key == References
                 ? new ReferenceEdit(store)
                 : group.Key.StartsWith(NameProducts.Folder + "/", StringComparison.Ordinal)
                   && NameProducts.IsReference(group.Key[(NameProducts.Folder.Length + 1)..])
@@ -156,7 +242,7 @@ internal static class OwnerRows
             store.Save();
         }
 
-        return new Outcome(rows.Count, changed.Values.Sum(), already, refused, changed, written);
+        return new Outcome(decided.Count, changed.Values.Sum(), already, refused, changed, written);
     }
 
     private static HashSet<string>? RecordSlugs(ProductStore store)
@@ -177,17 +263,205 @@ internal static class OwnerRows
     {
         bool Changed { get; }
 
+        string Write(DateTimeOffset now);
+    }
+
+    private interface IRowEdit : IFileEdit
+    {
         /// <returns>Empty when the row changed the file, null when the file already showed it, else why it cannot.</returns>
         string? Apply(Row row);
+    }
 
-        string Write(DateTimeOffset now);
+    /// <summary>
+    /// The record files the record rows edit, each read once and kept as its rows; a written file keeps its header and
+    /// is sorted as its export sorts it, so the build reads it as if a database had exported it.
+    /// </summary>
+    private sealed class RecordEdits(ProductStore store)
+    {
+        private readonly Dictionary<string, RecordEdit> _edits = new(StringComparer.Ordinal);
+
+        public IEnumerable<IFileEdit> Edits => _edits.Values;
+
+        /// <summary>The records of records/records as the rows leave it, or null when no row edits it.</summary>
+        public HashSet<string>? Slugs() =>
+            _edits.TryGetValue(Records, out var records) ? records.Rows.Select(r => r[0]!).ToHashSet(StringComparer.Ordinal) : null;
+
+        /// <returns>Empty when the row changed the file, null when the file already showed it, else why it cannot.</returns>
+        public string? Apply(RecordRow row)
+        {
+            if (row.Op is not (Put or Drop))
+            {
+                return $"a record file's row is put or dropped, not '{row.Op}'";
+            }
+
+            JsonObject values;
+            try
+            {
+                values = JsonNode.Parse(row.Values) as JsonObject ?? throw new JsonException("not an object");
+            }
+            catch (JsonException exception)
+            {
+                return $"the values are no JSON object of columns ({exception.Message})";
+            }
+
+            var edit = Edit(row.Product);
+            var file = edit.File;
+            var given = new string?[file.Parsed.Length];
+            var named = new bool[file.Parsed.Length];
+            given[0] = row.Record;
+            named[0] = true;
+            foreach (var (name, value) in values)
+            {
+                var at = Array.FindIndex(file.Parsed, c => c.Name == name);
+                if (at <= 0)
+                {
+                    return at == 0 ? "the record is the row's own column, not a value" : $"'{name}' is no column of {row.Product}";
+                }
+
+                given[at] = value switch
+                {
+                    null => null,
+                    JsonValue text when text.TryGetValue<string>(out var s) => s,
+                    _ => value.ToJsonString(),
+                };
+                named[at] = true;
+            }
+
+            if (row.Op == Drop)
+            {
+                return edit.Drop(given, named);
+            }
+
+            for (var i = 1; i < given.Length; i++)
+            {
+                if (!named[i])
+                {
+                    given[i] = file.Parsed[i].Name switch
+                    {
+                        "by" => Source,
+                        "english" when row.Product.EndsWith("/lines", StringComparison.Ordinal) => English(row.Record, 1),
+                        "english_sha256" when row.Product.EndsWith("/notes", StringComparison.Ordinal) =>
+                            English(row.Record, 2) is { } notes ? EnglishNotes.Digest(notes) : null,
+                        _ => null,
+                    };
+                }
+
+                if (given[i] is null && !file.Parsed[i].Nullable)
+                {
+                    return $"'{file.Parsed[i].Name}' is required in {row.Product}";
+                }
+
+                if (given[i] is { } text && !Fits(file.Parsed[i].Type, text))
+                {
+                    return $"'{text}' is no {file.Parsed[i].Type} for '{file.Parsed[i].Name}'";
+                }
+            }
+
+            return edit.Put(given);
+        }
+
+        private RecordEdit Edit(string product)
+        {
+            if (_edits.TryGetValue(product, out var edit))
+            {
+                return edit;
+            }
+
+            var file = RecordFiles.All.SingleOrDefault(f => f.Product == product && f.Kind == ProductKind.Hand && f.Listed is null)
+                       ?? throw new InvalidDataException($"{product}: record rows edit a hand-written record file the export writes, not this file.");
+            if (!store.Exists(product))
+            {
+                throw new FileNotFoundException(
+                    $"{product} is not under {store.ResourcesPath}{Path.DirectorySeparatorChar}Essenthos. The record files come from the " +
+                    "cut-over export; apply these rows after it.");
+            }
+
+            return _edits[product] = new RecordEdit(store, file);
+        }
+
+        /// <summary>The record's English line (column 1) or notes (column 2) as the rows leave them.</summary>
+        private string? English(string slug, int column) =>
+            Edit(EnglishRecords).Rows.FirstOrDefault(r => r[0] == slug)?[column];
+
+        private static bool Fits(RecordColumnType type, string text) => type switch
+        {
+            RecordColumnType.Integer => long.TryParse(text, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out _),
+            RecordColumnType.Boolean => text is "t" or "f",
+            RecordColumnType.Ref => VerseKey.TryParse(text, out _),
+            RecordColumnType.Refs => text.Split(' ', StringSplitOptions.RemoveEmptyEntries).All(key => VerseKey.TryParse(key, out _)),
+            _ => true,
+        };
+    }
+
+    /// <summary>One record file's rows; a row is known by the columns its export sorts by.</summary>
+    private sealed class RecordEdit : IFileEdit
+    {
+        private readonly ProductStore _store;
+        private readonly ProductHeader? _header;
+        private readonly int[] _key;
+
+        public RecordEdit(ProductStore store, RecordFile file)
+        {
+            _store = store;
+            File = file;
+            _key = file.Order(file.Export);
+            using var reader = store.Open(file.Product);
+            _header = reader.Header;
+            Rows = [.. reader.Rows().Select(row => (string?[])row.Clone())];
+        }
+
+        public RecordFile File { get; }
+
+        public List<string?[]> Rows { get; }
+
+        public bool Changed { get; private set; }
+
+        public string? Put(string?[] row)
+        {
+            var at = Rows.FindIndex(r => _key.All(i => r[i] == row[i]));
+            if (at >= 0 && Rows[at].SequenceEqual(row))
+            {
+                return null;
+            }
+
+            if (at >= 0)
+            {
+                Rows[at] = row;
+            }
+            else
+            {
+                Rows.Add(row);
+            }
+
+            Changed = true;
+            return string.Empty;
+        }
+
+        public string? Drop(string?[] given, bool[] named)
+        {
+            if (Rows.RemoveAll(r => Enumerable.Range(0, named.Length).All(i => !named[i] || r[i] == given[i])) == 0)
+            {
+                return null;
+            }
+
+            Changed = true;
+            return string.Empty;
+        }
+
+        public string Write(DateTimeOffset now)
+        {
+            using var writer = _store.Create(File.Product, File.Kind, File.Schema(), _header?.Producer ?? ProductHeader.ByHand, _header?.Inputs ?? [],
+                annotate => Annotate(annotate, _header, now));
+            writer.WriteAll(File.Sorted(Rows, File.Order(File.Export)));
+            return File.Product;
+        }
     }
 
     /// <summary>
     /// A reference text's settled names, kept as the text the file holds so every row the decisions do not touch is
     /// written back as it was; a new row goes after the last row of its key or before, so the file keeps its order.
     /// </summary>
-    private sealed class NameEdit : IFileEdit
+    private sealed class NameEdit : IRowEdit
     {
         private static readonly ProductSchema<string?[]> Texts = new ProductSchema<string?[]>()
             .Text("own", r => r[0]!)
@@ -309,7 +583,7 @@ internal static class OwnerRows
     /// id of its own, so its id goes as the export writes it for such a record; where that record already holds the
     /// dataset's row at the verse, the moving row is dropped, since a record holds one row per dataset and verse.
     /// </summary>
-    private sealed class ReferenceEdit : IFileEdit
+    private sealed class ReferenceEdit : IRowEdit
     {
         private const int Id = 0;
         private const int Filed = 1;

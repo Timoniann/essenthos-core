@@ -281,10 +281,10 @@ internal static partial class ForgeVerbs
         new("owner-apply", "[--from <Resources>] [--dry-run]",
             "Apply the owner's console decisions that wait on the files step (owner-changes.jsonl, needs: files) to the record files "
             + "they concern, with his stamp on each row, then append the apply line. Reads no database.", OwnerApply, Most: 3),
-        new("owner-rows", "[--from <Resources>] [--rows <file>] [--dry-run]",
-            "Apply the decided rows the Forge ships (Records/OwnerRows, or --rows) to the names and dataset files they edit, "
-            + "with the owner's stamp on each name row; a row the files cannot take stops it before anything is written. Reads no database.",
-            OwnerRowsVerb, Most: 5),
+        new("owner-rows", "[--from <Resources>] [--rows <file>]... [--dry-run]",
+            "Apply the decided rows the Forge ships (Records/OwnerRows, or --rows, repeatable) to the names, dataset and record files they edit, "
+            + "with the owner's stamp on each row; a row the files cannot take stops it before anything is written. Reads no database.",
+            OwnerRowsVerb, Most: 9),
         new("records-compare", "<port/db> <port/db> [--out <file>]", "Compare two databases' records table by table by natural key. Reads only.", RecordsCompare, Least: 2),
         new("mapping-export", "[--into <Resources>] [--pairs A-B,...] [--parallel <n>]",
             "Write every link of the database as the mapping's per-pair method files, words by key. Reads the database only.", MappingExportVerb),

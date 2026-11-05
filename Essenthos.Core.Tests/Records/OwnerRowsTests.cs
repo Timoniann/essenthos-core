@@ -85,6 +85,63 @@ public sealed class OwnerRowsTests : IDisposable
         File.ReadAllText(store.FullPath("names/BHSA", ProductKind.Hand)).Should().Be(before);
     }
 
+    [Fact]
+    public void RecordRowsMakeARecordAWordMayThenNameAndMoveAClauseToIt()
+    {
+        var store = Files();
+        Write(store, "records/records", "slug\tkind\tsubtype\tplace_kind\tname\tsex\tsex_source\tname_gender\ttribe\torigin\tanother_name_for\tbyname",
+            "altar-of-incense\tobject\tfurnishing\t\\N\tAltar of Incense\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N",
+            "boaz-pillar\tobject\tstructure\t\\N\tBoaz\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N");
+        Write(store, "records/i18n/eng/records", "slug\tline\tnotes\tmodern", "altar-of-incense\tthe acacia altar\t\\N\t\\N");
+        Write(store, "records/i18n/ukr/lines", "slug\tline\tenglish\tby", "altar-of-incense\tжертівник з акації\tthe acacia altar\tmodel");
+        Write(store, "records/i18n/ukr/notes", "slug\tnotes\tenglish_sha256\tby");
+        Write(store, "records/facts/known-for", "slug\tordinal\tby", "altar-of-incense\t0\tmodel", "altar-of-incense\t1\tmodel");
+        store.Save();
+
+        var decided = new OwnerRows.Decided(
+            [new("objects:37", "names/BHSA", OwnerRows.Add, "11.7:22.1", "solomons-golden-altar", null, "thing", "H8010", null, "the altar of gold")],
+            [
+                new("objects:37", "records/i18n/ukr/lines", OwnerRows.Put, "solomons-golden-altar", """{"line":"золотий жертівник"}""", "the altar of gold"),
+                new("objects:37", "records/i18n/ukr/notes", OwnerRows.Put, "solomons-golden-altar", """{"notes":"Соломон обклав його золотом."}""", "the altar of gold"),
+                new("objects:37", "records/records", OwnerRows.Put, "solomons-golden-altar",
+                    """{"kind":"object","subtype":"furnishing","name":"Solomon's Golden Altar"}""", "the altar of gold"),
+                new("objects:37", "records/i18n/eng/records", OwnerRows.Put, "solomons-golden-altar",
+                    """{"line":"the altar of gold","notes":"Solomon overlaid it with gold."}""", "the altar of gold"),
+                new("objects:37", "records/facts/known-for", OwnerRows.Put, "solomons-golden-altar", """{"ordinal":0,"by":"moved"}""", "Uzziah's altar"),
+                new("objects:37", "records/facts/known-for", OwnerRows.Drop, "altar-of-incense", """{"ordinal":1}""", "Uzziah's altar"),
+            ]);
+
+        var outcome = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
+
+        (outcome.Applied, outcome.Already, outcome.Refused.Count).Should().Be((7, 0, 0));
+        Rows("records/records").Select(r => (r[0], r[4])).Should().Equal(
+            ("altar-of-incense", "Altar of Incense"), ("boaz-pillar", "Boaz"), ("solomons-golden-altar", "Solomon's Golden Altar"));
+        Rows("records/i18n/ukr/lines")[1].Should().Equal("solomons-golden-altar", "золотий жертівник", "the altar of gold", OwnerRows.Source);
+        Rows("records/i18n/ukr/notes")[0][2].Should().Be(Essenthos.Core.Corpus.EnglishNotes.Digest("Solomon overlaid it with gold."));
+        Rows("records/facts/known-for").Should().BeEquivalentTo(new[]
+        {
+            new[] { "altar-of-incense", "0", "model" },
+            ["solomons-golden-altar", "0", "moved"],
+        }, options => options.WithStrictOrdering());
+        Rows("names/BHSA").Should().ContainEquivalentOf(
+            new[] { "11.7:22.1", "solomons-golden-altar", "thing", "manual", null, OwnerRows.Source, "the altar of gold" });
+
+        var again = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
+        (again.Applied, again.Already, again.Written.Count).Should().Be((0, 7, 0));
+
+        var wrong = new OwnerRows.Decided([],
+        [
+            new("objects:42", "records/names", OwnerRows.Put, "solomons-lavers", """{"n":1,"label":"Lavers"}""", "no such record"),
+            new("objects:42", "records/records", OwnerRows.Put, "solomons-lavers", """{"kind":"object","colour":"bronze"}""", "no such column"),
+        ]);
+        Write(store, "records/names", "slug\tn\tlabel\tkind\thebrew\thebrew_transliterated\tgreek\tgreek_transliterated\thebrew_strong\tgreek_strong\taspect_of\tby");
+        store.Save();
+        var refused = OwnerRows.Apply(new ProductStore(_resources), wrong, dryRun: false, Now);
+        refused.Refused.Should().HaveCount(2);
+        refused.Refused.Should().Contain(r => r.Contains("'colour' is no column")).And.Contain(r => r.Contains("no such record"));
+        refused.Written.Should().BeEmpty();
+    }
+
     private ProductStore Files()
     {
         var store = new ProductStore(_resources);
