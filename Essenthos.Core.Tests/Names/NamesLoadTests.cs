@@ -67,7 +67,7 @@ public sealed class NamesLoadTests : IDisposable
         var outcome = await NamesLoad.Run(_database.NewConnection().ConnectionString, store, ["RUSV"], CancellationToken.None);
 
         outcome.Rows.Should().Be(3);
-        outcome.ReadBack.MissingFromTable.Should().Be(0);
+        outcome.ReadBack!.MissingFromTable.Should().Be(0);
         (await Rows()).Should().BeEquivalentTo([
             (russian[0], "jehoiachin", "name", "base-reading", $"through BHSA word {hebrew[0]}"),
             (russian[0], "eliakim-2", "name", "differs", (string?)null),

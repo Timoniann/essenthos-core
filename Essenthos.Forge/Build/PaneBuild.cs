@@ -56,40 +56,106 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
         var texts = await Texts(cancellationToken);
         var held = await Held(cancellationToken);
         var pairs = MappingProducts.Pairs(store).Select(MappingProducts.Split).ToList();
-        var outcomes = new List<PaneOutcome>();
-        foreach (var text in texts.Where(t => only is null || only.Contains(t.Slug)))
+        var named = texts.Where(t => only is null || only.Contains(t.Slug)).ToList();
+        var outcomes = new PaneOutcome[named.Count];
+        var work = new List<Making>();
+        for (var i = 0; i < named.Count; i++)
         {
-            var clock = Stopwatch.StartNew();
+            var text = named[i];
             var inputs = Inputs(text, texts, pairs);
             var product = Product(text.Slug);
             if (!force && !store.NeedsBuild(product, ProductKind.Machine, inputs) && Listed(product) == held.GetValueOrDefault(text.Id))
             {
-                outcomes.Add(new PaneOutcome(text.Slug, false, held.GetValueOrDefault(text.Id), 0, 0, 0, clock.Elapsed));
+                outcomes[i] = new PaneOutcome(text.Slug, false, held.GetValueOrDefault(text.Id), 0, 0, 0, TimeSpan.Zero);
                 continue;
             }
 
-            var panes = await Make(text, parallel, cancellationToken);
-            await Replace(text.Id, panes, cancellationToken);
-            using (var writer = store.Create(product, ProductKind.Machine, PaneRow.Schema, ProductHeader.DescribeProducer("forge panes"), inputs,
-                       header => header.Notes.Add(new("pane-format", Panes.Format.ToString(CultureInfo.InvariantCulture)))))
-            {
-                foreach (var pane in panes)
-                {
-                    writer.Write(new PaneRow(pane.Book, pane.Chapter, pane.Words, pane.Bytes, pane.Gzip.Length, pane.Hash));
-                }
-
-                writer.Complete();
-            }
-
-            store.Save();
-            var outcome = new PaneOutcome(text.Slug, true, panes.Count, panes.Sum(p => (long)p.Words), panes.Sum(p => (long)p.Bytes),
-                panes.Sum(p => (long)p.Gzip.Length), clock.Elapsed);
-            logger.LogInformation("Panes of {Text}: {Panes} chapters, {Words} words, {Bytes} bytes of JSON, {Compressed} compressed, in {Seconds:0.0} s",
-                text.Slug, outcome.Panes, outcome.Words, outcome.Bytes, outcome.Compressed, outcome.Elapsed.TotalSeconds);
-            outcomes.Add(outcome);
+            work.Add(new Making(i, text, inputs));
         }
 
+        // Every chapter of every text to make in one queue, <parallel> at once, so no text's last chapters leave the
+        // rest idle; a text is replaced and listed as soon as its last chapter is read.
+        await Parallel.ForEachAsync(work, new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
+            async (making, token) => await Plan(making, token));
+        foreach (var making in work.Where(m => m.Chapters.Count == 0))
+        {
+            outcomes[making.Index] = await Finish(making, cancellationToken);
+        }
+
+        await Parallel.ForEachAsync(work.SelectMany(m => m.Chapters.Select(chapter => (Making: m, chapter.Book, chapter.Chapter))),
+            new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
+            async (item, token) =>
+            {
+                var making = item.Making;
+                using (var scope = services.CreateScope())
+                {
+                    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                    if (await Panes.Read(db, making.Text.Id, making.Text.Slug, item.Book, item.Chapter, making.Reach.GetValueOrDefault(item.Book), token) is { } pane)
+                    {
+                        making.Made.Add(pane);
+                    }
+                }
+
+                if (Interlocked.Decrement(ref making.Left) == 0)
+                {
+                    outcomes[making.Index] = await Finish(making, token);
+                }
+            });
+
         return outcomes;
+    }
+
+    /// <summary>A text whose panes are being made: its chapters, what it reaches, and the panes read so far.</summary>
+    private sealed class Making(int index, TextRow text, List<ProductInput> inputs)
+    {
+        public int Index { get; } = index;
+
+        public TextRow Text { get; } = text;
+
+        public List<ProductInput> Inputs { get; } = inputs;
+
+        public Stopwatch Clock { get; } = Stopwatch.StartNew();
+
+        public IReadOnlyList<(int Book, int Chapter)> Chapters { get; private set; } = [];
+
+        public Dictionary<int, int> Reach { get; private set; } = [];
+
+        public void Planned(IReadOnlyList<(int Book, int Chapter)> chapters, Dictionary<int, int> reach)
+        {
+            Chapters = chapters;
+            Reach = reach;
+            Left = chapters.Count;
+        }
+
+        public ConcurrentBag<PaneBody> Made { get; } = [];
+
+        public int Left;
+    }
+
+    /// <summary>A text's panes, in chapter order, replaced in the table and listed in its product.</summary>
+    private async Task<PaneOutcome> Finish(Making making, CancellationToken cancellationToken)
+    {
+        var text = making.Text;
+        List<PaneBody> panes = [.. making.Made.OrderBy(p => p.Book).ThenBy(p => p.Chapter)];
+        await Replace(text.Id, panes, cancellationToken);
+        using (var writer = store.Create(Product(text.Slug), ProductKind.Machine, PaneRow.Schema, ProductHeader.DescribeProducer("forge panes"), making.Inputs,
+                   header => header.Notes.Add(new("pane-format", Panes.Format.ToString(CultureInfo.InvariantCulture)))))
+        {
+            foreach (var pane in panes)
+            {
+                writer.Write(new PaneRow(pane.Book, pane.Chapter, pane.Words, pane.Bytes, pane.Gzip.Length, pane.Hash));
+            }
+
+            writer.Complete();
+        }
+
+        store.Save();
+        var outcome = new PaneOutcome(text.Slug, true, panes.Count, panes.Sum(p => (long)p.Words), panes.Sum(p => (long)p.Bytes),
+            panes.Sum(p => (long)p.Gzip.Length), making.Clock.Elapsed);
+        logger.LogInformation("Panes of {Text}: {Panes} chapters, {Words} words, {Bytes} bytes of JSON, {Compressed} compressed, in {Seconds:0.0} s",
+            text.Slug, outcome.Panes, outcome.Words, outcome.Bytes, outcome.Compressed, outcome.Elapsed.TotalSeconds);
+        return outcome;
     }
 
     /// <summary>A text as its panes need it.</summary>
@@ -161,43 +227,26 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
         return [.. store.Inputs(products.Distinct(StringComparer.Ordinal).Select(store.Find).OfType<string>().Order(StringComparer.Ordinal))];
     }
 
-    /// <summary>Every pane of one text, <paramref name="parallel"/> chapters at once, each on a context of its own.</summary>
-    private async Task<List<PaneBody>> Make(TextRow text, int parallel, CancellationToken cancellationToken)
+    /// <summary>The chapters a text's panes are made for, and the chapters it reaches in each book.</summary>
+    private async Task Plan(Making making, CancellationToken cancellationToken)
     {
-        List<(int Book, int Chapter)> held;
-        Dictionary<int, int> reach;
-        using (var scope = services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            held = (await db.VerseReferences
-                    .Where(r => r.IsPrimary && r.Verse!.TextId == text.Id)
-                    .Select(r => new { r.CanonicalBook, r.CanonicalChapter })
-                    .Distinct()
-                    .ToListAsync(cancellationToken))
-                .Select(r => (r.CanonicalBook, r.CanonicalChapter)).ToList();
+        var text = making.Text;
+        using var scope = services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var held = (await db.VerseReferences
+                .Where(r => r.IsPrimary && r.Verse!.TextId == text.Id)
+                .Select(r => new { r.CanonicalBook, r.CanonicalChapter })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .Select(r => (r.CanonicalBook, r.CanonicalChapter)).ToList();
 
-            // The chapters the text reaches in each book of the shared frame, as the reader steps through them (CanonIndex).
-            reach = await db.VerseReferences
-                .Where(r => r.Verse!.TextId == text.Id)
-                .GroupBy(r => r.CanonicalBook)
-                .Select(g => new { g.Key, Chapters = g.Max(r => r.CanonicalChapter) })
-                .ToDictionaryAsync(g => g.Key, g => g.Chapters, cancellationToken);
-        }
-
-        var made = new ConcurrentBag<PaneBody>();
-        await Parallel.ForEachAsync(Panes.Chapters(held), new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
-            async (chapter, token) =>
-            {
-                using var scope = services.CreateScope();
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-                if (await Panes.Read(db, text.Id, text.Slug, chapter.Book, chapter.Chapter, reach.GetValueOrDefault(chapter.Book), token) is { } pane)
-                {
-                    made.Add(pane);
-                }
-            });
-
-        return [.. made.OrderBy(p => p.Book).ThenBy(p => p.Chapter)];
+        // The chapters the text reaches in each book of the shared frame, as the reader steps through them (CanonIndex).
+        var reach = await db.VerseReferences
+            .Where(r => r.Verse!.TextId == text.Id)
+            .GroupBy(r => r.CanonicalBook)
+            .Select(g => new { g.Key, Chapters = g.Max(r => r.CanonicalChapter) })
+            .ToDictionaryAsync(g => g.Key, g => g.Chapters, cancellationToken);
+        making.Planned(Panes.Chapters(held), reach);
     }
 
     /// <summary>A text's panes replaced in one transaction: a failure leaves the panes it had.</summary>

@@ -177,7 +177,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             {
                 var projection = new NamesProjection(store);
                 var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
-                return (await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken)).Rows;
+                return (await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken, readBack: false)).Rows;
             });
         }
 
