@@ -30,12 +30,15 @@ internal sealed record BuildStage(string Stage, string What, TimeSpan Elapsed, l
 
 /// <summary>
 /// A serving database made from the products alone (DOC-0224 §13): created and migrated, every secondary index and foreign
-/// key dropped, the tables filled by COPY (texts first, then the mapping, the records, the frame and the carried tables at
-/// once, then the names, the word groups and the indexes), the indexes and keys made again in parallel, and ANALYZE. It
-/// never touches the live corpus or the shared snapshot.
+/// key dropped, the tables filled by COPY (texts first, then every other load at once, each after the loads it reads, while
+/// the texts' indexes are made), the other indexes made again in parallel, ANALYZE, then the panes and the record words
+/// counted while the foreign keys are added and validated. It never touches the live corpus or the shared snapshot.
 /// </summary>
 internal sealed class ServingBuild(string connectionString, ProductStore store, IServiceProvider services, ILogger logger)
 {
+    /// <summary>The texts' tables whose indexes wait until the loads that read the verses are done.</summary>
+    private static readonly string[] VerseTables = ["verse", "book", "chapter"];
+
     public static readonly string[] Untouchable = ["essenthos_core", "essenthos_core_rework_src", "postgres", "template0", "template1"];
 
     public string Database { get; } = new NpgsqlConnectionStringBuilder(connectionString).Database
@@ -95,6 +98,32 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             return (outcome.Words, collected);
         });
 
+        // The texts' tables take no more rows, so their indexes are made while the rest loads; those of the verses, books
+        // and chapters wait for the frame and the verse links, which read the verses without an order and so would number
+        // their rows in the order another plan gives.
+        var sizes = await Sizes(cancellationToken);
+        var textIndexes = Timed("database", "indexes of the texts' tables", () =>
+            MakeIndexes([.. indexes.Where(i => TextLoad.Tables.Contains(i.Table) && !VerseTables.Contains(i.Table))], sizes, parallel, cancellationToken));
+        var frame = Timed("load", "frame", () => Frame(null, cancellationToken));
+        var verseLinks = Timed("load", "verse links", async () =>
+        {
+            await using var connection = new NpgsqlConnection(connectionString);
+            await connection.OpenAsync(cancellationToken);
+            var outcome = await VerseLinkFiles.Load(connection, store, null, cancellationToken);
+            logger.LogInformation("Verse links: {Links} over {Pairs} pairs, {Verses} memberships, {LeftOut} left out (a verse this build does not hold), in {Elapsed}",
+                outcome.Links, outcome.Pairs, outcome.Verses, outcome.LeftOut, outcome.Elapsed);
+            return outcome.Links;
+        });
+        var verseIndexes = Task.Run(async () =>
+        {
+            await Task.WhenAll(frame, verseLinks);
+            return await Timed("database", "indexes of the verses' tables", () =>
+                MakeIndexes([.. indexes.Where(i => VerseTables.Contains(i.Table))], sizes, parallel, cancellationToken));
+        }, cancellationToken);
+
+        // Every load below writes tables of its own and reads only what the texts or the records put in, so they run at
+        // once along the chains their reads make: the names and the spellings wait for the records, the word groups for
+        // the carried word_group rows whose highest id they number after.
         await Task.WhenAll(
             Timed("load", "mapping", async () =>
             {
@@ -106,66 +135,80 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
                 return outcome.Links;
             }),
-            Timed("load", "records", async () =>
-            {
-                long rows = 0;
-                foreach (var (product, count) in await RecordFiles.Load(connectionString, store, cancellationToken))
-                {
-                    if (count < 0)
-                    {
-                        logger.LogWarning("{Product}: not loaded, what it stands on is not in this database", product);
-                    }
+            RecordsThenNames(cancellationToken),
+            CarriedThenGroups(groups.collected, cancellationToken),
+            frame,
+            verseLinks,
+            Indexes(null, true, false, cancellationToken),
+            textIndexes,
+            verseIndexes);
 
-                    rows += Math.Max(count, 0);
-                }
-
-                return rows;
-            }),
-            Timed("load", "carried", async () =>
-            {
-                long rows = 0;
-                foreach (var outcome in await CarriedTables.Load(connectionString, store, null, cancellationToken))
-                {
-                    logger.LogInformation("Carried {Table}: {Loaded} rows, {LeftOut} left out, in {Elapsed}", outcome.Table, outcome.Loaded, outcome.LeftOut, outcome.Elapsed);
-                    Stages.Enqueue(new BuildStage("load", $"carried/{outcome.Table}", outcome.Elapsed, outcome.Loaded,
-                        outcome.LeftOut > 0 ? $"{outcome.LeftOut} rows on a word, verse or group this build does not hold" : ""));
-                    rows += outcome.Loaded;
-                }
-
-                return rows;
-            }),
-            Timed("load", "frame", () => Frame(null, cancellationToken)),
-            Timed("load", "verse links", async () =>
-            {
-                await using var connection = new NpgsqlConnection(connectionString);
-                await connection.OpenAsync(cancellationToken);
-                var outcome = await VerseLinkFiles.Load(connection, store, null, cancellationToken);
-                logger.LogInformation("Verse links: {Links} over {Pairs} pairs, {Verses} memberships, {LeftOut} left out (a verse this build does not hold), in {Elapsed}",
-                    outcome.Links, outcome.Pairs, outcome.Verses, outcome.LeftOut, outcome.Elapsed);
-                return outcome.Links;
-            }));
-
-        await Timed("load", "names", async () =>
-        {
-            var projection = new NamesProjection(store);
-            var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
-            var outcome = await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken);
-            logger.LogInformation("Names: {Rows} rows of {Texts} texts; {Records} on a record the database lacks, {Words} on a word without an id",
-                outcome.Rows, outcome.Texts, outcome.UnknownRecords, outcome.UnknownWords);
-            return outcome.Rows;
-        });
-
-        await Timed("load", "word groups", () => TextLoad.WriteGroups(connectionString, groups.collected, cancellationToken));
-        await Indexes(null, true, true, cancellationToken);
-        await Reindex(indexes, keys, parallel, cancellationToken);
+        sizes = await Sizes(cancellationToken);
+        await Timed("database", "indexes", () => MakeIndexes(indexes, sizes, parallel, cancellationToken));
         await Timed("database", "analyze", async () =>
         {
             await Execute(connectionString, "ANALYZE", cancellationToken);
             return 0;
         });
-        await Panes(null, true, parallel, cancellationToken);
-        await RecordWords(null, true, cancellationToken);
+
+        // The panes and the record words read the same filled and indexed tables and write tables of their own; the foreign
+        // keys only read the tables they check, so they are added and validated meanwhile, and the build fails as before when
+        // one does not hold.
+        await Task.WhenAll(
+            Timed("database", "foreign keys", () => AddKeys(keys, sizes, parallel, cancellationToken)),
+            Panes(null, true, parallel, cancellationToken),
+            RecordWords(null, true, cancellationToken));
         await Count(cancellationToken);
+    }
+
+    private async Task RecordsThenNames(CancellationToken cancellationToken)
+    {
+        await Timed("load", "records", async () =>
+        {
+            long rows = 0;
+            foreach (var (product, count) in await RecordFiles.Load(connectionString, store, cancellationToken))
+            {
+                if (count < 0)
+                {
+                    logger.LogWarning("{Product}: not loaded, what it stands on is not in this database", product);
+                }
+
+                rows += Math.Max(count, 0);
+            }
+
+            return rows;
+        });
+
+        await Task.WhenAll(
+            Timed("load", "names", async () =>
+            {
+                var projection = new NamesProjection(store);
+                var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
+                var outcome = await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken, readBack: false);
+                logger.LogInformation("Names: {Rows} rows of {Texts} texts; {Records} on a record the database lacks, {Words} on a word without an id",
+                    outcome.Rows, outcome.Texts, outcome.UnknownRecords, outcome.UnknownWords);
+                return outcome.Rows;
+            }),
+            Spellings(cancellationToken));
+    }
+
+    private async Task CarriedThenGroups(TextLoad.Groups collected, CancellationToken cancellationToken)
+    {
+        await Timed("load", "carried", async () =>
+        {
+            long rows = 0;
+            foreach (var outcome in await CarriedTables.Load(connectionString, store, null, cancellationToken))
+            {
+                logger.LogInformation("Carried {Table}: {Loaded} rows, {LeftOut} left out, in {Elapsed}", outcome.Table, outcome.Loaded, outcome.LeftOut, outcome.Elapsed);
+                Stages.Enqueue(new BuildStage("load", $"carried/{outcome.Table}", outcome.Elapsed, outcome.Loaded,
+                    outcome.LeftOut > 0 ? $"{outcome.LeftOut} rows on a word, verse or group this build does not hold" : ""));
+                rows += outcome.Loaded;
+            }
+
+            return rows;
+        });
+
+        await Timed("load", "word groups", () => TextLoad.WriteGroups(connectionString, collected, cancellationToken));
     }
 
     /// <summary>
@@ -253,14 +296,17 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
         if (spellings)
         {
-            await Timed("load", "indexes: spellings", async () =>
-            {
-                using var scope = services.CreateScope();
-                return (await IndexLoad.Spellings(connectionString, store, scope.ServiceProvider.GetRequiredService<EntityRenderingLoader>(),
-                    cancellationToken)).Rows;
-            });
+            await Spellings(cancellationToken);
         }
     }
+
+    private Task<long> Spellings(CancellationToken cancellationToken) =>
+        Timed("load", "indexes: spellings", async () =>
+        {
+            using var scope = services.CreateScope();
+            return (await IndexLoad.Spellings(connectionString, store, scope.ServiceProvider.GetRequiredService<EntityRenderingLoader>(),
+                cancellationToken)).Rows;
+        });
 
     private sealed record Definition(string Table, string Name, string Sql);
 
@@ -309,89 +355,100 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         return (indexes, keys);
     }
 
-    /// <summary>The dropped indexes made again, the largest tables first and <paramref name="parallel"/> at once, then the keys, validated.</summary>
-    private async Task Reindex(List<Definition> indexes, List<Definition> keys, int parallel, CancellationToken cancellationToken)
+    /// <summary>Each table's size, for making the indexes and keys of the largest first.</summary>
+    private async Task<Dictionary<string, long>> Sizes(CancellationToken cancellationToken)
     {
         var sizes = new Dictionary<string, long>(StringComparer.Ordinal);
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        await using var command = new NpgsqlCommand("SELECT relname, pg_total_relation_size(oid) FROM pg_class WHERE relkind = 'r' AND relnamespace = 'public'::regnamespace", connection);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            sizes[reader.GetString(0)] = reader.GetInt64(1);
+        }
+
+        return sizes;
+    }
+
+    /// <summary>
+    /// The dropped indexes made again, the largest tables first and <paramref name="parallel"/> at once; one that already
+    /// stands is left as it is. An index on a column a loader's schema step removed is reported, not failed.
+    /// </summary>
+    private async Task<long> MakeIndexes(List<Definition> indexes, Dictionary<string, long> sizes, int parallel, CancellationToken cancellationToken)
+    {
+        var gone = new ConcurrentBag<string>();
+        await Parallel.ForEachAsync(indexes.OrderByDescending(i => sizes.GetValueOrDefault(i.Table)),
+            new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (index, token) =>
+            {
+                var sql = index.Sql.Replace("CREATE UNIQUE INDEX ", "CREATE UNIQUE INDEX IF NOT EXISTS ", StringComparison.Ordinal)
+                    .Replace("CREATE INDEX ", "CREATE INDEX IF NOT EXISTS ", StringComparison.Ordinal);
+                await using var connection = new NpgsqlConnection(connectionString);
+                await connection.OpenAsync(token);
+                await Execute(connection, "SET maintenance_work_mem = '1GB'", token);
+                try
+                {
+                    await Execute(connection, sql, token);
+                }
+                catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
+                {
+                    // A loader's own schema step (the records files take entity.source out) removed what the index was on.
+                    gone.Add($"{index.Name}: {exception.MessageText}");
+                }
+            });
+        if (!gone.IsEmpty)
+        {
+            logger.LogWarning("{Count} indexes stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
+        }
+
+        return indexes.Count - gone.Count;
+    }
+
+    /// <summary>The dropped foreign keys added again, the largest tables first and <paramref name="parallel"/> at once, each validated.</summary>
+    private async Task<long> AddKeys(List<Definition> keys, Dictionary<string, long> sizes, int parallel, CancellationToken cancellationToken)
+    {
+        var present = new HashSet<string>(StringComparer.Ordinal);
         await using (var connection = new NpgsqlConnection(connectionString))
         {
             await connection.OpenAsync(cancellationToken);
-            await using var command = new NpgsqlCommand("SELECT relname, pg_total_relation_size(oid) FROM pg_class WHERE relkind = 'r' AND relnamespace = 'public'::regnamespace", connection);
+            await using var command = new NpgsqlCommand("SELECT conname FROM pg_constraint WHERE contype = 'f' AND connamespace = 'public'::regnamespace", connection);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
-                sizes[reader.GetString(0)] = reader.GetInt64(1);
+                present.Add(reader.GetString(0));
             }
         }
 
         var gone = new ConcurrentBag<string>();
-        await Timed("database", "indexes", async () =>
-        {
-            await Parallel.ForEachAsync(indexes.OrderByDescending(i => sizes.GetValueOrDefault(i.Table)),
-                new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (index, token) =>
-                {
-                    var sql = index.Sql.Replace("CREATE UNIQUE INDEX ", "CREATE UNIQUE INDEX IF NOT EXISTS ", StringComparison.Ordinal)
-                        .Replace("CREATE INDEX ", "CREATE INDEX IF NOT EXISTS ", StringComparison.Ordinal);
-                    await using var connection = new NpgsqlConnection(connectionString);
-                    await connection.OpenAsync(token);
-                    await Execute(connection, "SET maintenance_work_mem = '1GB'", token);
-                    try
-                    {
-                        await Execute(connection, sql, token);
-                    }
-                    catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
-                    {
-                        // A loader's own schema step (the records files take entity.source out) removed what the index was on.
-                        gone.Add($"{index.Name}: {exception.MessageText}");
-                    }
-                });
-            if (!gone.IsEmpty)
+        var failed = new ConcurrentBag<string>();
+        await Parallel.ForEachAsync(keys.Where(k => !present.Contains(k.Name)).OrderByDescending(k => sizes.GetValueOrDefault(k.Table)),
+            new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (key, token) =>
             {
-                logger.LogWarning("{Count} indexes stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
-            }
-
-            return indexes.Count - gone.Count;
-        });
-
-        await Timed("database", "foreign keys", async () =>
-        {
-            var present = new HashSet<string>(StringComparer.Ordinal);
-            await using (var connection = new NpgsqlConnection(connectionString))
-            {
-                await connection.OpenAsync(cancellationToken);
-                await using var command = new NpgsqlCommand("SELECT conname FROM pg_constraint WHERE contype = 'f' AND connamespace = 'public'::regnamespace", connection);
-                await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-                while (await reader.ReadAsync(cancellationToken))
+                try
                 {
-                    present.Add(reader.GetString(0));
+                    await Execute(connectionString, $"ALTER TABLE {key.Table} ADD CONSTRAINT \"{key.Name}\" {key.Sql}", token);
                 }
-            }
-
-            var failed = new ConcurrentBag<string>();
-            await Parallel.ForEachAsync(keys.Where(k => !present.Contains(k.Name)).OrderByDescending(k => sizes.GetValueOrDefault(k.Table)),
-                new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (key, token) =>
+                catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
                 {
-                    try
-                    {
-                        await Execute(connectionString, $"ALTER TABLE {key.Table} ADD CONSTRAINT \"{key.Name}\" {key.Sql}", token);
-                    }
-                    catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
-                    {
-                        gone.Add($"{key.Name}: {exception.MessageText}");
-                    }
-                    catch (PostgresException exception)
-                    {
-                        failed.Add($"{key.Table}.{key.Name}: {exception.MessageText}");
-                    }
-                });
+                    gone.Add($"{key.Name}: {exception.MessageText}");
+                }
+                catch (PostgresException exception)
+                {
+                    failed.Add($"{key.Table}.{key.Name}: {exception.MessageText}");
+                }
+            });
 
-            if (!failed.IsEmpty)
-            {
-                throw new InvalidOperationException($"{failed.Count} foreign keys do not hold on the loaded rows:\n  " + string.Join("\n  ", failed.Order()));
-            }
+        if (!gone.IsEmpty)
+        {
+            logger.LogWarning("{Count} foreign keys stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
+        }
 
-            return keys.Count;
-        });
+        if (!failed.IsEmpty)
+        {
+            throw new InvalidOperationException($"{failed.Count} foreign keys do not hold on the loaded rows:\n  " + string.Join("\n  ", failed.Order()));
+        }
+
+        return keys.Count;
     }
 
     public async Task Count(CancellationToken cancellationToken)

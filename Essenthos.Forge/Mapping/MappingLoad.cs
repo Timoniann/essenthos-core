@@ -34,7 +34,8 @@ internal static class MappingLoad
         List<(long Id, int From, int To, string Relation, string Method, double? Confidence, int Provenance, Guid Shape)> Links,
         List<(long Link, long Word, bool From, long? Head, string? Role)> Words,
         List<(long Link, string Method, double? Confidence, int Provenance)> Claims,
-        long Unresolved);
+        long Unresolved,
+        List<string> Sources);
 
     public static async Task<Outcome> Run(string connection, ProductStore store, ILogger logger, CancellationToken cancellationToken)
     {
@@ -51,14 +52,26 @@ internal static class MappingLoad
         var pairs = MappingProducts.Pairs(store).Where(p => store.Exists(MappingProducts.Of(p, MappingProducts.Final))).ToList();
         var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
 
+        // The pairs are read several at once and handed on in their order, so the provenance ids and every row's place in
+        // the COPY are the same as one reader's.
         var channel = Channel.CreateBounded<PairRows>(2);
         var reading = Task.Run(async () =>
         {
             try
             {
+                var window = new Queue<Task<PairRows>>();
                 foreach (var pair in pairs)
                 {
-                    await channel.Writer.WriteAsync(Read(store, pair, keys, provenance), cancellationToken);
+                    window.Enqueue(Task.Run(() => Read(store, pair, keys), cancellationToken));
+                    if (window.Count >= Readers)
+                    {
+                        await channel.Writer.WriteAsync(await window.Dequeue(), cancellationToken);
+                    }
+                }
+
+                while (window.Count > 0)
+                {
+                    await channel.Writer.WriteAsync(await window.Dequeue(), cancellationToken);
                 }
             }
             finally
@@ -91,7 +104,7 @@ internal static class MappingLoad
         long links = 0, words = 0, claims = 0, unresolved = 0;
         await foreach (var rows in channel.Reader.ReadAllAsync(cancellationToken))
         {
-            await Copy(db, rows, cancellationToken);
+            await Copy(db, rows, Globalize(rows.Sources, provenance), cancellationToken);
             links += rows.Links.Count;
             words += rows.Words.Count;
             claims += rows.Claims.Count;
@@ -208,7 +221,8 @@ internal static class MappingLoad
                 continue;
             }
 
-            var rows = Read(store, pair, keys, provenance);
+            var rows = Read(store, pair, keys);
+            var sources = Globalize(rows.Sources, provenance);
             if (provenance.Count > known)
             {
                 using var import = db.BeginBinaryImport("COPY provenance (id, source) FROM STDIN (FORMAT BINARY)");
@@ -223,7 +237,7 @@ internal static class MappingLoad
                 known = provenance.Count;
             }
 
-            await Copy(db, rows, cancellationToken);
+            await Copy(db, rows, sources, cancellationToken);
             links += rows.Links.Count;
             words += rows.Words.Count;
             claims += rows.Claims.Count;
@@ -239,8 +253,16 @@ internal static class MappingLoad
         return new Outcome(pairs.Count, links, words, claims, provenance.Count, unresolved, clock.Elapsed);
     }
 
-    private static PairRows Read(ProductStore store, string pair, WordKeys keys, Dictionary<string, int> provenance)
+    /// <summary>How many pairs are read at once ahead of the COPY.</summary>
+    private const int Readers = 6;
+
+    /// <summary>
+    /// One pair's final as rows to copy; a claim's provenance is the pair's own number of its source, counted from 1 in the
+    /// order the file first names each (<see cref="PairRows.Sources"/>), until <see cref="Globalize"/> numbers it for the database.
+    /// </summary>
+    private static PairRows Read(ProductStore store, string pair, WordKeys keys)
     {
+        var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
         var (fromText, toText) = MappingProducts.Split(pair);
         var fromId = keys.TextId(fromText) ?? throw new InvalidDataException($"The database has no text {fromText}.");
         var toId = keys.TextId(toText) ?? throw new InvalidDataException($"The database has no text {toText}.");
@@ -295,20 +317,37 @@ internal static class MappingLoad
             }
         }
 
-        return new PairRows(pair, links, words, claims, unresolved);
+        return new PairRows(pair, links, words, claims, unresolved, [.. provenance.OrderBy(p => p.Value).Select(p => p.Key)]);
     }
 
     private static int Provenance(Dictionary<string, int> provenance, string source)
     {
-        lock (provenance)
+        if (!provenance.TryGetValue(source, out var id))
         {
-            if (!provenance.TryGetValue(source, out var id))
+            provenance[source] = id = provenance.Count + 1;
+        }
+
+        return id;
+    }
+
+    /// <summary>
+    /// A pair's own source numbers turned into the database's: a source already numbered keeps its id, a new one takes the
+    /// next, in the order the pair first names them. Index 0 is unused.
+    /// </summary>
+    private static int[] Globalize(List<string> sources, Dictionary<string, int> provenance)
+    {
+        var ids = new int[sources.Count + 1];
+        for (var i = 0; i < sources.Count; i++)
+        {
+            if (!provenance.TryGetValue(sources[i], out var id))
             {
-                provenance[source] = id = provenance.Count + 1;
+                provenance[sources[i]] = id = provenance.Count + 1;
             }
 
-            return id;
+            ids[i + 1] = id;
         }
+
+        return ids;
     }
 
     private static long[]? Resolve(string own, string text, int textId, WordKeys keys)
@@ -356,7 +395,7 @@ internal static class MappingLoad
         return map;
     }
 
-    private static async Task Copy(NpgsqlConnection db, PairRows rows, CancellationToken cancellationToken)
+    private static async Task Copy(NpgsqlConnection db, PairRows rows, int[] sources, CancellationToken cancellationToken)
     {
         using (var import = db.BeginBinaryImport(
                    "COPY link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint) FROM STDIN (FORMAT BINARY)"))
@@ -370,7 +409,7 @@ internal static class MappingLoad
                 import.Write(relation, NpgsqlDbType.Text);
                 import.Write(method, NpgsqlDbType.Text);
                 Nullable(import, confidence);
-                import.Write(provenance, NpgsqlDbType.Integer);
+                import.Write(sources[provenance], NpgsqlDbType.Integer);
                 import.Write(shape, NpgsqlDbType.Uuid);
             }
 
@@ -402,7 +441,7 @@ internal static class MappingLoad
                 import.Write(link, NpgsqlDbType.Bigint);
                 import.Write(method, NpgsqlDbType.Text);
                 Nullable(import, confidence);
-                import.Write(provenance, NpgsqlDbType.Integer);
+                import.Write(sources[provenance], NpgsqlDbType.Integer);
             }
 
             import.Complete();

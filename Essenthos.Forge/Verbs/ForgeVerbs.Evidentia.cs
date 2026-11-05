@@ -256,17 +256,17 @@ internal static partial class ForgeVerbs
         var named = Positional(args, 1).Where(arg => arg.Contains('-')).ToList();
         var pairs = named.Count > 0 ? named : Mapping.EvidentiaFiles.Pairs(ledger);
         var failed = 0;
-        foreach (var pair in pairs)
+        System.Threading.Tasks.Parallel.ForEach(pairs, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 6) }, pair =>
         {
             if (!Mapping.EvidentiaFiles.CanWrite(store, pair))
             {
                 forge.Logger.LogWarning("{Pair}: the store has no words or frame of one of its texts under texts/", pair);
-                failed++;
-                continue;
+                Interlocked.Increment(ref failed);
+                return;
             }
 
             forge.Logger.LogInformation("{Outcome}", Mapping.EvidentiaFiles.Write(store, ledger, pair, leaveOut));
-        }
+        });
 
         store.Save();
         return Task.FromResult(failed == 0 ? 0 : 1);

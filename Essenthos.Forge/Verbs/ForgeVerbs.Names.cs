@@ -88,7 +88,7 @@ internal static partial class ForgeVerbs
         var outcome = await NamesLoad.Run(forge.DatabaseConnection, projection.Store, texts, CancellationToken.None);
         Console.WriteLine($"{outcome.Rows} names of {outcome.Texts} texts loaded in {outcome.Load}, indexes in {outcome.Indexes}; " +
                           $"{outcome.UnknownRecords} on a record the database lacks, {outcome.UnknownWords} on a word without an id");
-        var back = outcome.ReadBack;
+        var back = outcome.ReadBack!;
         Console.WriteLine($"read back by key: {back.Rows} rows; {back.MissingFromTable} of the products missing and {back.ExtraInTable} extra; " +
                           $"against names/live: {back.OnlyLive} only live, {back.OnlyTable} only in the table");
         return 0;

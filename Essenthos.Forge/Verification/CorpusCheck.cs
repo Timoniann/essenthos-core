@@ -780,15 +780,24 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // A name carried onto a translation's word was resolved on the word it was carried from (the
         // note says which), so that word's number is the one asked: the translation's own number says
         // nothing of how the record was chosen.
+        //
+        // The numbers several records bear are counted once, not once per annotated word: asked per word, the
+        // count over entity_name ran 632,000 times and took three minutes of the verification.
         ("words a name-resolution annotated although the name is several people's",
             $"""
+             WITH shared AS MATERIALIZED (
+                 SELECT s.strong_number FROM (
+                     SELECT n.hebrew_strong_number AS strong_number, {EntityCandidates.Resolves} AS resolves FROM entity_name n
+                     WHERE n.hebrew_strong_number IS NOT NULL
+                     UNION ALL
+                     SELECT n.greek_strong_number, {EntityCandidates.Resolves} FROM entity_name n
+                     WHERE n.greek_strong_number IS NOT NULL) s
+                 GROUP BY s.strong_number
+                 HAVING count(DISTINCT s.resolves) > 1)
              SELECT count(*) FROM word_entity a
              JOIN word w ON w.id = coalesce(substring(a.note FROM '^through [A-Za-z0-9]+ word ([0-9]+)$')::bigint, a.word_id)
              WHERE a.method = 'strong-number'
-               AND w.strong_number IS NOT NULL
-               AND (SELECT count(DISTINCT {EntityCandidates.Resolves}) FROM entity_name n
-                    WHERE n.hebrew_strong_number = w.strong_number
-                       OR n.greek_strong_number = w.strong_number) > 1
+               AND w.strong_number IN (SELECT strong_number FROM shared)
              """),
 
         // Two links naming exactly the same words in the same pair of texts are not two facts.
