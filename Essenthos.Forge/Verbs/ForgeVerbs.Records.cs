@@ -138,15 +138,16 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// Applies the decided rows (<c>--rows &lt;file&gt;</c>, else every file the Forge ships in <see cref="OwnerRows.Folder"/>) to the
-    /// names and dataset files of <c>--from &lt;Resources&gt;</c> (default the Forge's own); reads no database. Exit 1 when a row
-    /// is refused or a file is missing, and then nothing is written.
+    /// Applies the decided rows (<c>--rows &lt;file&gt;</c>, repeatable, else every file the Forge ships in <see cref="OwnerRows.Folder"/>)
+    /// to the names, dataset and record files of <c>--from &lt;Resources&gt;</c> (default the Forge's own); reads no database. Exit 1
+    /// when a row is refused or a file is missing, and then nothing is written.
     /// </summary>
     private static Task<int> OwnerRowsVerb(ForgeRun forge, string[] args)
     {
         var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
         var dryRun = args.Contains("--dry-run");
-        var rows = Option(args, "--rows") is { } file ? OwnerRows.Read([file]) : OwnerRows.Shipped();
+        var files = args.Select((arg, i) => (arg, i)).Where(a => a.arg == "--rows" && a.i + 1 < args.Length).Select(a => args[a.i + 1]).ToList();
+        var rows = files.Count > 0 ? OwnerRows.Read(files) : OwnerRows.Shipped();
         if (rows.Count == 0)
         {
             Console.Error.WriteLine($"No decided rows: none in {Path.Combine(AppContext.BaseDirectory, OwnerRows.Folder)} and no --rows given.");
