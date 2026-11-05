@@ -48,6 +48,9 @@ mapping/{from}-{to}/*	export	mapping-export	-	-	none
 records/facts/relationships	build	records-derive	Essenthos/records/facts/clauses Essenthos/records/facts/withheld-clauses Essenthos/records/records	@records	all
 records/facts/locations	build	records-derive	Essenthos/records/external-ids Essenthos/records/facts/location-supplements Essenthos/records/records OpenBible/*	@records	all
 records/facts/location-candidates	build	records-derive	Essenthos/records/external-ids Essenthos/records/facts/location-supplements Essenthos/records/records OpenBible/*	@records	all
+records/facts/images	build	records-derive	Essenthos/records/records Essenthos/records/external-ids Essenthos/records/folds Essenthos/image-choices.json Images OpenBible/*	@records	all
+records/i18n/*/images	build	records-derive	Essenthos/records/records Essenthos/records/external-ids Essenthos/records/folds Essenthos/image-choices.json Images OpenBible/*	@records	all
+records/facts/wikipedia	build	records-derive	Essenthos/records/records Essenthos/review/wikipedia-matches.json Wikidata/*	@records	all
 records/canon	build	records-canon	Essenthos/names/projected/* Essenthos/texts/*/frame Essenthos/texts/BHSA/verses Essenthos/records/records	entity_canon	all
 records/**	export	records-export	-	@records	all
 external/**	export	records-export	-	@records	all

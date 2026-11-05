@@ -89,6 +89,39 @@ internal static class WikipediaReviewList
     }
 
     /// <summary>
+    /// The item each record of the list is linked to, and what linked it: the owner's answer where he gave one
+    /// (<c>owner</c>; an answer of none links nothing), else the tie the matching made on its own. The load writes
+    /// every tie whose item has an article into the list, the tied item among its candidates, so the list and the
+    /// Wikidata items are all the links need when no load matches any more (<c>records/facts/wikipedia</c>).
+    /// </summary>
+    public static Dictionary<string, (string Qid, string By)> Links(string path)
+    {
+        var links = new Dictionary<string, (string Qid, string By)>(StringComparer.Ordinal);
+        foreach (var entry in Entries(Read(path)))
+        {
+            if (entry["record"]?.GetValue<string>() is not { Length: > 0 } slug)
+            {
+                continue;
+            }
+
+            if (entry["decision"] is JsonObject decision && decision["answer"]?.GetValue<string>() is { Length: > 0 } answer)
+            {
+                if (answer != None)
+                {
+                    links[slug] = (answer, Essenthos.Core.Database.Entities.EntityWikipedia.Evidence.Owner);
+                }
+            }
+            else if (entry["tied"] is JsonObject tied && tied["qid"]?.GetValue<string>() is { Length: > 0 } qid
+                     && tied["by"]?.GetValue<string>() is { Length: > 0 } by)
+            {
+                links[slug] = (qid, by);
+            }
+        }
+
+        return links;
+    }
+
+    /// <summary>
     /// Writes the list: the open questions, in the order given, and every entry of the owner's own file
     /// that carries an answer — rewritten with the offers this load found where the record is still
     /// open, and as he left it where it is not.

@@ -63,7 +63,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
     private const string WikidataSource = "s7cc8b2";
 
     /// <summary>How sure each kind of tie is. These are this corpus's own estimates, checked against a sample read by hand.</summary>
-    private static readonly Dictionary<string, double> Confidences = new(StringComparer.Ordinal)
+    internal static readonly IReadOnlyDictionary<string, double> Confidences = new Dictionary<string, double>(StringComparer.Ordinal)
     {
         [EntityWikipedia.Evidence.Owner] = 1.0,
         [EntityWikipedia.Evidence.Identification] = 0.95,
@@ -264,17 +264,9 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         var wanted = new Dictionary<(int, string), EntityWikipedia>();
         foreach (var (entityId, (item, by)) in chosen)
         {
-            foreach (var (language, title) in item.Articles)
+            foreach (var link in Links(item, by, entityId))
             {
-                wanted[(entityId, language)] = new EntityWikipedia
-                {
-                    EntityId = entityId,
-                    Language = language,
-                    Title = title,
-                    Qid = item.Id,
-                    MatchedBy = by,
-                    Confidence = Confidences[by],
-                };
+                wanted[(entityId, link.Language)] = link;
             }
         }
 
@@ -305,6 +297,18 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         await db.SaveChangesAsync(cancellationToken);
         return (held.Count - removed + wanted.Count, written, removed);
     }
+
+    /// <summary>The article links a record tied to <paramref name="item"/> by <paramref name="by"/> is given: one per language the item has an article in.</summary>
+    internal static IEnumerable<EntityWikipedia> Links(WikidataItem item, string by, int entityId = 0) =>
+        item.Articles.Select(article => new EntityWikipedia
+        {
+            EntityId = entityId,
+            Language = article.Key,
+            Title = article.Value,
+            Qid = item.Id,
+            MatchedBy = by,
+            Confidence = Confidences[by],
+        });
 
     /// <summary>Everything the matching reads about a record, from the corpus as it stands.</summary>
     internal async Task<List<WikipediaRecord>> Records(CancellationToken cancellationToken)

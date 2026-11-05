@@ -21,7 +21,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// </summary>
 internal static class PortraitFaces
 {
-    private const string Resource = "Essenthos.Core.Loading.Encyclopedia.PortraitFaces.json";
+    internal const string Resource = "Essenthos.Core.Loading.Encyclopedia.PortraitFaces.json";
 
     /// <summary>How many face widths across a bust is: the face, the hair and the shoulders to either side.</summary>
     internal const double BustPerFaceWidth = 2.6;

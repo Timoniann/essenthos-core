@@ -247,6 +247,7 @@ public sealed class DeskTests : IAsyncLifetime
 
         var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
         (read.Written, read.Open, read.Answered).Should().Be((true, 0, 1));
+        (read.Files, read.Unapplied, read.Entries.Single().OnSite).Should().Be((false, 0, null), "the site's file is not in this checkout");
         var summary = await Json<SummaryResponse>(await _http.GetAsync("/desk-api/summary"));
         summary.Counts.Single(c => c.Key == "wikipedia").Count.Should().Be(0, "the one record is answered");
     }
@@ -298,6 +299,37 @@ public sealed class DeskTests : IAsyncLifetime
         JsonFiles.Read(Path.Combine(Review, WikipediaReview.FileName))["entries"]![0]!["decision"].Should().BeNull();
         Logged().Select(l => (l.Before?.GetValue<string>(), l.After?.GetValue<string>())).Should().Equal(
             ((string?)null, "none"), ("none", null));
+    }
+
+    [Fact]
+    public async Task TheWikipediaPageSaysWhatTheSitesFileLinksAndWhichAnswersItDoesNotShowYet()
+    {
+        WriteWikipedia();
+        var list = JsonFiles.Read(Path.Combine(Review, WikipediaReview.FileName));
+        list["entries"]![0]!["tied"] = new JsonObject { ["qid"] = "Q2", ["by"] = "name" };
+        JsonFiles.Write(Path.Combine(Review, WikipediaReview.FileName), list);
+        var store = new ProductStore(Path.Combine(_root, "resources"));
+        KnownForFile(store, "records/facts/wikipedia", ["zechariah-5", "en", "Zechariah of Israel", "Q2", "name", "0.8"]);
+
+        var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+
+        (read.Files, read.Unapplied, read.Entries.Single().OnSite).Should().Be((true, 0, "Q2"));
+
+        (await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = "Q3", note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+        read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        read.Unapplied.Should().Be(1, "the file shows the king until the build makes it again from the answer");
+
+        KnownForFile(store, "records/facts/wikipedia", ["zechariah-5", "en", "Zechariah (prophet)", "Q3", "owner", "1"]);
+        read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        (read.Unapplied, read.Entries.Single().OnSite).Should().Be((0, "Q3"));
+
+        (await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = "none", note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+        read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        read.Unapplied.Should().Be(1, "the file still links the record he unlinked");
+
+        (await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = (string?)null, note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+        read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        read.Unapplied.Should().Be(1, "an answer taken back gives the record the matching's tie again at the next build");
     }
 
     [Fact]
