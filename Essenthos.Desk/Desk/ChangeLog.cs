@@ -12,7 +12,7 @@ namespace Essenthos.Core.Desk;
 /// <param name="Line">Where it stands in the log, from 1, which is stable because the log is only appended to.</param>
 /// <param name="At">When, in UTC.</param>
 /// <param name="Section">
-/// Which part of the console: <c>portraits</c>, <c>pictures</c>, <c>occurrences</c>, <c>records</c>,
+/// Which part of the console: <c>portraits</c>, <c>pictures</c>, <c>occurrences</c> and <c>records</c> (answers taken until 2026-11-05),
 /// <c>settings</c>, <c>deploy</c> for a deploy run (logged when it starts and when it ends), or
 /// <c>apply</c> for a run. Lines of <c>relationships</c> are from the review of a dataset's
 /// relationships the console held until 2026-09-30, and stay in the log as what was decided.
@@ -58,6 +58,9 @@ internal sealed record ChangeLogResponse(IReadOnlyList<ChangeEntry> Entries, IRe
 internal sealed class ChangeLog(DeskPaths paths)
 {
     public const string FileName = OwnerChanges.FileName;
+
+    /// <summary>The longest note an answer takes, which is a paragraph.</summary>
+    public const int LongestNote = 4000;
 
     public const string Apply = OwnerChanges.Apply;
 

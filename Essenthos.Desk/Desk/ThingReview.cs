@@ -1,19 +1,40 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Corpus;
+using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Desk;
 
-/// <param name="Answer">One of the entry's options, or null to take the answer back.</param>
-internal sealed record ThingAnswerRequest(string? Answer, string? Note);
-
-/// <param name="Scope"><c>all</c> for the record and every rule of it, <c>record</c> for its description, names and relations alone, or null to take the review back.</param>
-internal sealed record ThingRecordRequest(string? Scope);
-
-/// <summary>A record an option names, so the page can say what answering it would link the verses to.</summary>
+/// <summary>A record an option names, so the page can show its name rather than its slug.</summary>
 internal sealed record ThingRecordName(string Slug, string Name, string? LocalName, string Kind);
 
-internal sealed record ThingOption(string Text, ThingRecordName? Record, string Effect);
+internal sealed record ThingOption(string Text, ThingRecordName? Record);
+
+/// <summary>
+/// One edit the build's correction files hold for a question (<c>Essenthos.Forge/Records/OwnerRows/*.tsv</c>,
+/// applied by <c>forge owner-rows</c>): a name put on or taken off a word, or a dataset's verse row filed
+/// under another record or withdrawn.
+/// </summary>
+/// <param name="File">The correction file it is in, by name.</param>
+/// <param name="Product">The build's file it edits: <c>names/BHSA</c>, <c>external/bibledata/references</c>.</param>
+/// <param name="Op"><c>add</c>, <c>remove</c>, <c>refile</c> or <c>withdraw</c>.</param>
+/// <param name="Reference">The verse it edits (<c>1 Kgs 7:21</c>), or the row's own key where it is not a verse.</param>
+/// <param name="Word">The word of the verse, counted from 1, for an edit of a name; null for a dataset's row.</param>
+/// <param name="Record">The record it names, files the row under, or whose row goes.</param>
+/// <param name="From">For a refile, the record the row was under.</param>
+/// <param name="Why">The reading the edit rests on.</param>
+internal sealed record ThingRow(
+    string File,
+    string Product,
+    string Op,
+    string Reference,
+    int? Word,
+    ThingRecordName? Record,
+    string RecordSlug,
+    string? From,
+    string? Strong,
+    string Why);
 
 /// <param name="Key">The entry's own key where it has one, else a short digest of its record, number and verses, which is stable while the entry is.</param>
 /// <param name="List">Which review list it is on, as the list's file is named without its extension.</param>
@@ -22,7 +43,8 @@ internal sealed record ThingOption(string Text, ThingRecordName? Record, string 
 /// Each reference as the reading API addresses it, for showing its text, in step with
 /// <paramref name="References"/>: null where a reference names more than one verse.
 /// </param>
-/// <param name="Decision">What the owner answered and what that did, or null while it is open.</param>
+/// <param name="Decision">What the owner answered in the console before it stopped taking answers, or null.</param>
+/// <param name="Rows">What the build's correction files hold for the entry: the edits filed against it.</param>
 internal sealed record ThingQuestion(
     string Key,
     string List,
@@ -33,66 +55,41 @@ internal sealed record ThingQuestion(
     IReadOnlyList<string?> Addresses,
     string Question,
     IReadOnlyList<ThingOption> Options,
-    JsonNode? Decision);
+    JsonNode? Decision,
+    IReadOnlyList<ThingRow> Rows);
 
 /// <param name="List">The file's name without its extension.</param>
 /// <param name="About">What the list says it is.</param>
-internal sealed record ThingList(string List, string? About, int Entries, int Open);
+/// <param name="Open">Entries with no answer in the list.</param>
+/// <param name="Filed">Entries the correction files hold an edit for.</param>
+internal sealed record ThingList(string List, string? About, int Entries, int Open, int Filed);
 
 internal sealed record ThingQuestionsResponse(IReadOnlyList<ThingList> Lists, IReadOnlyList<ThingQuestion> Entries);
 
-/// <param name="File"><c>objects</c> or <c>observances</c>: which of the two record files holds it.</param>
-/// <param name="Scope">How far the owner has reviewed it: <c>all</c>, <c>record</c>, or null.</param>
+/// <param name="File"><c>objects</c>, <c>observances</c> or <c>narratives</c>: which of the record files holds it.</param>
+/// <param name="Scope">How far the owner reviewed it while the console took reviews: <c>all</c>, <c>record</c>, or null.</param>
 /// <param name="Record">The record as its file holds it.</param>
 internal sealed record ThingRecordEntry(string File, string? Scope, int Rules, int ReviewedRules, JsonNode Record);
 
 internal sealed record ThingRecordsResponse(IReadOnlyList<ThingRecordEntry> Records);
 
 /// <summary>
-/// The objects and appointed times: the occurrences a reading could not settle, which the owner
-/// answers, and the records themselves, which a model wrote and the owner reviews.
+/// The objects and appointed times, read and never written: the questions the review lists asked (the
+/// occurrences a reading could not settle, the verses under a people's ancestor, where the Greek stands),
+/// with the edits the build's correction files hold for each, and the object, feast and story records
+/// with their occurrence rules.
 ///
 /// <para>
-/// **An answer is the change the loader reads.** Answering an open occurrence with a record adds its
-/// verses to that record's occurrence rules in <c>ObjectRecords.json</c> or
-/// <c>ObservanceRecords.json</c>, in a rule marked reviewed, which the loader writes as the owner's
-/// ruling and not as a reading. Answering that it is none of them leaves the verses unlinked, which
-/// they already are. An option that asks for a record nobody has written yet — <em>a record of its
-/// own</em> — is recorded as the owner's answer and waits for somebody to write the record. Every
-/// answer is kept in the review list beside its question, so taking one back undoes exactly what it
-/// did.
-/// </para>
-///
-/// <para>
-/// **A review is a stamp in the file.** The loader treats a record or a rule carrying
-/// <c>reviewed</c> as the owner's, whatever the stamp says, so the stamps are chosen to tell the two
-/// sources apart: a record review writes <see cref="RecordStamp"/>, an answer writes
-/// <see cref="AnswerStamp"/>, and taking either back removes only its own.
-/// </para>
-///
-/// <para>
-/// The record files are embedded in the loader, so a change reaches the corpus on the next build and
-/// load of Essenthos.Forge, and not before.
-/// </para>
-///
-/// <para>
-/// Every list in the review folder of the same shape — <c>{ "about", "entries": [{ "question",
-/// "options", ... }] }</c> — is answered here: the verses under a people's ancestor, which the load
-/// reads back, and any list written since, whose answers wait for an agent to act on.
+/// The console stopped taking answers here on 2026-11-05 (NOT-0219): a correction the owner has, he tells
+/// the lead in chat, and the lead writes it into the file the build reads, stamped as his. So these pages
+/// show what was asked and what the files now say, and change nothing.
 /// </para>
 /// </summary>
-internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
+internal sealed class ThingReview(DeskPaths paths)
 {
-    public const string OccurrencesSection = "occurrences";
-
-    public const string RecordsSection = "records";
-
     public const string QuestionsFile = "objects-and-observances.json";
 
-    /// <summary>
-    /// The verses a dataset files under a man a people is named after that the load could not settle,
-    /// which the load keeps beside this list in the same shape and reads the answers back from.
-    /// </summary>
+    /// <summary>The verses a dataset files under a man a people is named after that the load could not settle.</summary>
     public const string AncestorsFile = "eponym-verses.json";
 
     public const string ObjectsFile = "ObjectRecords.json";
@@ -105,40 +102,19 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
     /// <summary>What each of <see cref="RecordFiles"/> is called to the console, in the same order.</summary>
     private static readonly string[] FileKeys = ["objects", "observances", "narratives"];
 
-    /// <summary>The same, as the owner's log writes one record of the file: <c>object/tabernacle</c>.</summary>
-    private static readonly string[] LogKinds = ["object", "observance", "narrative"];
+    /// <summary>
+    /// How a correction file names a review list in its <c>entry</c> column (<c>objects:41</c> is the 42nd
+    /// entry of the objects' list); a list not named here is its file name without the extension.
+    /// </summary>
+    private static readonly Dictionary<string, string> RowLists = new(StringComparer.Ordinal)
+    {
+        ["objects"] = "objects-and-observances",
+        ["eponyms"] = "eponym-verses",
+        ["septuagint"] = "septuagint-placement",
+    };
 
-    public const string All = "all";
-
-    public const string RecordOnly = "record";
-
-    /// <summary>What an answer did: its verses were written into a record's rules.</summary>
-    public const string Written = "written";
-
-    /// <summary>What an answer did: nothing, because the verses stay as they are.</summary>
-    public const string Nothing = "nothing";
-
-    /// <summary>What an answer did: nothing yet, because it asks for a record somebody has to write.</summary>
-    public const string ByHand = "by-hand";
-
-    /// <summary>What an answer did: it is kept in its list, which the next load reads and applies.</summary>
-    public const string OnLoad = "load";
-
-    private const string AnswerStampSuffix = ", on the review list";
-
-    /// <summary>The longest note taken, which is a paragraph.</summary>
-    public const int LongestNote = 4000;
-
-    /// <summary>The stamp a record review writes, in the form the record files document.</summary>
-    public static string RecordStamp(string date) => $"the project owner, {date}";
-
-    /// <summary>The stamp an answer writes on the rule it adds, which says where the ruling was made.</summary>
-    public static string AnswerStamp(string date) => $"the project owner, {date}{AnswerStampSuffix}";
-
-    /// <summary>How an option that leaves things as they are begins, in the lists written so far.</summary>
-    private static readonly string[] LeftAlone = ["none", "leave", "keep ", "stay a place", "show them as printed"];
-
-    private readonly SemaphoreSlim _gate = new(1, 1);
+    /// <summary>Where the decided edits ship, under the Forge's folder (<c>OwnerRows.Folder</c> there).</summary>
+    public string RowsFolder => Path.Combine(paths.Repository, "Essenthos.Forge", "Records", "OwnerRows");
 
     /// <summary>Every list of questions in the review folder: the objects' first, the ancestors' next, then the rest by name.</summary>
     private IEnumerable<string> QuestionLists =>
@@ -149,8 +125,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
 
     /// <summary>
     /// Whether a file in the review folder is a list of questions, remembered while the file is
-    /// unchanged: the folder also holds records of past decisions, some of them large, and every page
-    /// and count asks.
+    /// unchanged: the folder also holds records of past decisions, some of them large.
     /// </summary>
     private bool IsQuestionList(string path)
     {
@@ -194,10 +169,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
         Path.Combine(paths.Records, NarrativesFile),
     ];
 
-    /// <summary>
-    /// One record file, or none where a checkout does not have it yet: the narrative list came after
-    /// the other two, and a console that stopped answering until it arrived would be the worse outcome.
-    /// </summary>
+    /// <summary>One record file, or none where a checkout does not have it.</summary>
     private static JsonNode ReadRecords(string path) =>
         File.Exists(path) ? JsonFiles.Read(path) : new JsonObject { ["records"] = new JsonArray() };
 
@@ -206,23 +178,24 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
     public ThingQuestionsResponse ReadQuestions()
     {
         var records = Records(RecordFiles.Select(ReadRecords).ToArray());
+        var rows = Rows(records);
         var lists = new List<ThingList>();
         var entries = new List<ThingQuestion>();
         foreach (var path in QuestionLists)
         {
             var node = JsonFiles.Read(path);
             var listed = (node["entries"]?.AsArray() ?? []).OfType<JsonObject>().ToList();
+            var questions = listed
+                .Select((entry, index) => Question(ListOf(path), entry, records,
+                    rows.TryGetValue($"{ListOf(path)}:{index}", out var filed) ? filed : []))
+                .ToList();
             lists.Add(new ThingList(ListOf(path), node["about"]?.GetValue<string>(), listed.Count,
-                listed.Count(e => e["decision"] is null)));
-            entries.AddRange(listed.Select(entry => Question(ListOf(path), entry, records)));
+                listed.Count(e => e["decision"] is null), questions.Count(q => q.Rows.Count > 0)));
+            entries.AddRange(questions);
         }
 
         return new ThingQuestionsResponse(lists, entries);
     }
-
-    public int Unanswered() =>
-        QuestionLists.Sum(list =>
-            (JsonFiles.Read(list)["entries"]?.AsArray() ?? []).OfType<JsonObject>().Count(e => e["decision"] is null));
 
     public ThingRecordsResponse ReadRecords()
     {
@@ -243,180 +216,6 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
         }
 
         return new ThingRecordsResponse(entries);
-    }
-
-    public int Unreviewed() => ReadRecords().Records.Count(r => r.Scope is null);
-
-    /// <summary>Answers one open occurrence, or takes its answer back. Null where the entry or the answer is not one the list holds.</summary>
-    public async Task<ThingQuestion?> Answer(string key, ThingAnswerRequest request)
-    {
-        if ((request.Note?.Length ?? 0) > LongestNote)
-        {
-            return null;
-        }
-
-        await _gate.WaitAsync();
-        ThingQuestion answered;
-        JsonNode? before;
-        try
-        {
-            var (list, questions, entry) = QuestionLists
-                .Select(path => (Path: path, Node: JsonFiles.Read(path)))
-                .Select(read => (read.Path, read.Node,
-                    Entry: (read.Node["entries"]?.AsArray() ?? []).OfType<JsonObject>().FirstOrDefault(e => KeyOf(e) == key)))
-                .FirstOrDefault(found => found.Entry is not null);
-            var options = entry?["options"]?.AsArray().Select(o => o?.GetValue<string>()).ToList() ?? [];
-            if (entry is null || (request.Answer is not null && !options.Contains(request.Answer)))
-            {
-                return null;
-            }
-
-            var name = ListOf(list!);
-            before = entry["decision"]?.DeepClone();
-            var files = RecordFiles.Select(ReadRecords).ToArray();
-            var records = Records(files);
-            var strong = entry["strong"]?.GetValue<string>() ?? string.Empty;
-            var references = References(entry);
-            var changed = new bool[files.Length];
-
-            if (entry["decision"]?["answer"]?.GetValue<string>() is { } previous && records.TryGetValue(previous, out var was))
-            {
-                changed[was.File] |= Unwrite(was.Record, strong, references);
-            }
-
-            var note = request.Note?.Trim() ?? string.Empty;
-            if (request.Answer is null && note.Length == 0)
-            {
-                entry.Remove("decision");
-            }
-            else
-            {
-                var effect = request.Answer is null ? Nothing : EffectOf(name, request.Answer, records);
-                if (effect == Written && records.TryGetValue(request.Answer!, out var chosen))
-                {
-                    changed[chosen.File] |= Write(chosen.Record, strong, references, AnswerStamp(JsonFiles.Today()));
-                }
-
-                entry["decision"] = new JsonObject
-                {
-                    ["answer"] = request.Answer,
-                    ["note"] = note,
-                    ["decidedAt"] = JsonFiles.Now(),
-                    ["applied"] = effect,
-                };
-            }
-
-            for (var index = 0; index < files.Length; index++)
-            {
-                if (changed[index])
-                {
-                    JsonFiles.Write(RecordFiles[index], files[index]);
-                }
-            }
-
-            JsonFiles.Write(list!, questions!);
-            answered = Question(name, entry, Records(files));
-        }
-        finally
-        {
-            _gate.Release();
-        }
-
-        var after = answered.Decision;
-        await log.Append(OccurrencesSection, "answer", TargetOf(answered), Said(before), Said(after), request.Note,
-            NeedsOf(after?["applied"]?.GetValue<string>(), before?["applied"]?.GetValue<string>()),
-            $"{answered.Record?.LocalName ?? answered.Record?.Name ?? answered.RecordSlug} · {string.Join(", ", answered.References)}".Trim(' ', '·'));
-        return answered;
-    }
-
-    private static JsonObject? Said(JsonNode? decision) =>
-        decision is null ? null : new JsonObject { ["answer"] = decision["answer"]?.DeepClone(), ["note"] = decision["note"]?.DeepClone() };
-
-    /// <summary>
-    /// What has to happen before an answer shows: the next load where it wrote a rule or the load
-    /// reads it, an agent where it asks for a change by hand, and — for an answer taken back — whatever
-    /// the answer it replaced needed.
-    /// </summary>
-    private static string? NeedsOf(string? applied, string? was) =>
-        (applied, was) switch
-        {
-            (Written or OnLoad, _) or (_, Written or OnLoad) => "load",
-            (ByHand, _) or (_, ByHand) => "agent",
-            _ => null,
-        };
-
-    /// <summary>An entry as the change log names it: its list, its record or key, its number and its verses.</summary>
-    private static string TargetOf(ThingQuestion question) =>
-        string.Join(" ", new[]
-        {
-            question.List,
-            question.RecordSlug.Length > 0 ? question.RecordSlug : question.Key,
-            question.Strong,
-            string.Join(", ", question.References),
-        }.Where(part => part.Length > 0));
-
-    /// <summary>Marks a record reviewed, or takes the review back. Null where no record has the slug or the scope is not one of the three.</summary>
-    public async Task<ThingRecordEntry?> Review(string slug, ThingRecordRequest request)
-    {
-        if (request.Scope is not (null or All or RecordOnly))
-        {
-            return null;
-        }
-
-        await _gate.WaitAsync();
-        ThingRecordEntry reviewed;
-        string? before;
-        try
-        {
-            var files = RecordFiles.Select(ReadRecords).ToArray();
-            if (!Records(files).TryGetValue(slug, out var found))
-            {
-                return null;
-            }
-
-            var record = found.Record;
-            before = Scope(record);
-            var rules = (record["occurrences"]?.AsArray() ?? []).OfType<JsonObject>().ToList();
-            if (record["reviewed"]?.GetValue<string>() is { } stamp)
-            {
-                record.Remove("reviewed");
-                foreach (var rule in rules.Where(rule => rule["reviewed"]?.GetValue<string>() == stamp))
-                {
-                    rule.Remove("reviewed");
-                }
-            }
-
-            if (request.Scope is not null)
-            {
-                var now = RecordStamp(JsonFiles.Today());
-                record["reviewed"] = now;
-                if (request.Scope == All)
-                {
-                    foreach (var rule in rules.Where(rule => rule["reviewed"] is null))
-                    {
-                        rule["reviewed"] = now;
-                    }
-                }
-            }
-
-            JsonFiles.Write(RecordFiles[found.File], files[found.File]);
-            reviewed = new ThingRecordEntry(
-                FileKeys[found.File],
-                Scope(record),
-                rules.Count,
-                rules.Count(rule => rule["reviewed"] is not null),
-                record.DeepClone());
-        }
-        finally
-        {
-            _gate.Release();
-        }
-
-        await log.Append(RecordsSection, "review",
-            $"{LogKinds[Array.IndexOf(FileKeys, reviewed.File)]}/{slug}",
-            before is null ? null : JsonValue.Create(before), reviewed.Scope is null ? null : JsonValue.Create(reviewed.Scope),
-            null, "load", reviewed.Record["names"]?["ukr"]?.GetValue<string>() ?? reviewed.Record["name"]?.GetValue<string>());
-        return reviewed;
     }
 
     public static string KeyOf(JsonNode entry)
@@ -445,86 +244,80 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
         }
 
         return (record["occurrences"]?.AsArray() ?? []).OfType<JsonObject>().All(rule => rule["reviewed"] is not null)
-            ? All
-            : RecordOnly;
+            ? "all"
+            : "record";
     }
 
     /// <summary>
-    /// What answering an entry of <paramref name="list"/> with <paramref name="answer"/> does. The
-    /// objects' list writes a record's rule; the ancestors' list is read back by the load, whatever
-    /// the answer; any other list is read by whoever acts on it, so only an answer that leaves things
-    /// as they are does nothing.
+    /// The edits of the correction files, by the list and entry they settle (<c>objects-and-observances:41</c>),
+    /// each file in name order as the Forge applies them. None where the folder is not there.
     /// </summary>
-    private static string EffectOf(string list, string answer, IReadOnlyDictionary<string, (int File, JsonObject Record)> records) =>
-        list == ListOf(AncestorsFile) ? OnLoad
-        : list == ListOf(QuestionsFile) && records.ContainsKey(answer) ? Written
-        : LeftAlone.Any(alone => answer.StartsWith(alone, StringComparison.Ordinal)) ? Nothing
-        : ByHand;
-
-    /// <summary>Adds the verses to the record's answered rule for the number, making the rule if there is none.</summary>
-    private static bool Write(JsonObject record, string strong, IReadOnlyList<string> references, string stamp)
+    private Dictionary<string, List<ThingRow>> Rows(IReadOnlyDictionary<string, (int File, JsonObject Record)> records)
     {
-        if (record["occurrences"] is not JsonArray rules)
+        var rows = new Dictionary<string, List<ThingRow>>(StringComparer.Ordinal);
+        if (!Directory.Exists(RowsFolder))
         {
-            rules = [];
-            record["occurrences"] = rules;
+            return rows;
         }
 
-        var rule = rules.OfType<JsonObject>().FirstOrDefault(r => IsAnswered(r, strong));
-        if (rule is null)
+        foreach (var path in Directory.GetFiles(RowsFolder, "*.tsv").Order(StringComparer.Ordinal))
         {
-            rules.Add(new JsonObject
+            using var reader = ProductStore.HandFormat.Open(path);
+            var columns = reader.Columns.Select(c => c.Name).ToList();
+            int Column(string name) => columns.IndexOf(name) is var index and >= 0
+                ? index
+                : throw new InvalidDataException($"{path} has no column '{name}'.");
+            var (entry, product, op, at, record, from, strong, why) = (Column("entry"), Column("product"), Column("op"),
+                Column("at"), Column("record"), Column("from"), Column("strong"), Column("why"));
+
+            foreach (var row in reader.Rows())
             {
-                ["strong"] = strong,
-                ["only"] = new JsonArray(references.Select(r => (JsonNode?)r).ToArray()),
-                ["reviewed"] = stamp,
-            });
-            return true;
-        }
+                var named = row[entry] ?? string.Empty;
+                var colon = named.LastIndexOf(':');
+                if (colon < 1)
+                {
+                    continue;
+                }
 
-        var only = rule["only"]?.AsArray() ?? [];
-        rule["only"] = only;
-        var have = only.Select(r => r!.GetValue<string>()).ToHashSet(StringComparer.Ordinal);
-        var added = false;
-        foreach (var reference in references.Where(r => !have.Contains(r)))
-        {
-            only.Add(reference);
-            added = true;
-        }
+                var list = RowLists.GetValueOrDefault(named[..colon], named[..colon]);
+                var (reference, word) = Point(row[at] ?? string.Empty);
+                var slug = row[record] ?? string.Empty;
+                var key = $"{list}:{named[(colon + 1)..]}";
+                if (!rows.TryGetValue(key, out var filed))
+                {
+                    rows[key] = filed = [];
+                }
 
-        return added;
-    }
-
-    /// <summary>Takes the verses back out of the record's answered rule, and the rule with them once it holds none.</summary>
-    private static bool Unwrite(JsonObject record, string strong, IReadOnlyList<string> references)
-    {
-        if (record["occurrences"] is not JsonArray rules)
-        {
-            return false;
-        }
-
-        var changed = false;
-        foreach (var rule in rules.OfType<JsonObject>().Where(r => IsAnswered(r, strong)).ToList())
-        {
-            var only = rule["only"]?.AsArray() ?? [];
-            foreach (var item in only.Where(r => references.Contains(r!.GetValue<string>())).ToList())
-            {
-                only.Remove(item);
-                changed = true;
-            }
-
-            if (only.Count == 0)
-            {
-                rules.Remove(rule);
+                filed.Add(new ThingRow(Path.GetFileName(path), row[product] ?? string.Empty, row[op] ?? string.Empty,
+                    reference, word, Named(slug, records), slug, row[from], row[strong], row[why]?.Trim() ?? string.Empty));
             }
         }
 
-        return changed;
+        return rows;
     }
 
-    private static bool IsAnswered(JsonObject rule, string strong) =>
-        rule["strong"]?.GetValue<string>() == strong
-        && rule["reviewed"]?.GetValue<string>()?.EndsWith(AnswerStampSuffix, StringComparison.Ordinal) == true;
+    /// <summary>
+    /// A word or verse key of the build's files (<c>11.7:21.33</c>: book, chapter, verse, word) as a verse in words
+    /// (<c>1 Kgs 7:21</c>) and the word's number; a key of another shape is given back as it is.
+    /// </summary>
+    public static (string Reference, int? Word) Point(string at)
+    {
+        var dot = at.IndexOf('.');
+        var colon = at.IndexOf(':');
+        if (dot < 1 || colon < dot || !int.TryParse(at[..dot], out var book) || !BookReferences.IsInCanon(book))
+        {
+            return (at, null);
+        }
+
+        var verse = at[(colon + 1)..].Split('.');
+        if (!int.TryParse(at[(dot + 1)..colon], out var chapter) || !int.TryParse(verse[0], out var number))
+        {
+            return (at, null);
+        }
+
+        int? word = verse.Length > 1 && int.TryParse(verse[1], out var w) ? w : null;
+        return ($"{BookReferences.Abbreviation(book)} {chapter}:{number}", word);
+    }
 
     private static Dictionary<string, (int File, JsonObject Record)> Records(JsonNode[] files)
     {
@@ -553,12 +346,12 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
             : null;
 
     private static ThingQuestion Question(
-        string list, JsonObject entry, IReadOnlyDictionary<string, (int File, JsonObject Record)> records)
+        string list, JsonObject entry, IReadOnlyDictionary<string, (int File, JsonObject Record)> records, IReadOnlyList<ThingRow> rows)
     {
         var slug = entry["record"]?.GetValue<string>() ?? string.Empty;
         var options = (entry["options"]?.AsArray() ?? [])
             .Select(o => o!.GetValue<string>())
-            .Select(text => new ThingOption(text, Named(text, records), EffectOf(list, text, records)))
+            .Select(text => new ThingOption(text, Named(text, records)))
             .ToList();
         return new ThingQuestion(
             KeyOf(entry),
@@ -570,6 +363,7 @@ internal sealed class ThingReview(DeskPaths paths, ChangeLog log)
             References(entry).Select(Desk.Addresses.Of).ToList(),
             entry["question"]?.GetValue<string>() ?? string.Empty,
             options,
-            entry["decision"]?.DeepClone());
+            entry["decision"]?.DeepClone(),
+            rows);
     }
 }

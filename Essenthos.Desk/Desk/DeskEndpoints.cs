@@ -33,7 +33,6 @@ internal static class DeskEndpoints
     /// </summary>
     public static void MapSummary(this RouteGroupBuilder routes) =>
         routes.MapGet("/summary", async (
-            ThingReview things,
             WikipediaReview wikipedia,
             KnownForReview knownFor,
             PortraitBoard portraits,
@@ -42,9 +41,6 @@ internal static class DeskEndpoints
         {
             var counts = new List<SummaryCount>
             {
-                Count("occurrences", () => things.Exists ? things.Unanswered() : null,
-                    "There is no list of open questions in the review folder."),
-                Count("records", () => things.Unreviewed(), null),
                 Count("wikipedia", () => wikipedia.Unanswered(), null),
                 Count("known-for", () => knownFor.Unanswered(), null),
             };
@@ -84,6 +80,10 @@ internal static class DeskEndpoints
                 : NotThere("There is no such switch for the site."));
     }
 
+    /// <summary>
+    /// The verses to decide and the objects and feasts, read only: the console stopped taking answers on them on
+    /// 2026-11-05 (NOT-0219), and a correction goes through the lead into the build's correction files.
+    /// </summary>
     public static void MapThingReview(this RouteGroupBuilder routes)
     {
         routes.MapGet("/review/occurrences", (ThingReview review) =>
@@ -91,18 +91,7 @@ internal static class DeskEndpoints
                 ? Results.Ok(review.ReadQuestions())
                 : NotThere("The list of objects and appointed times is not in the review folder."));
 
-        routes.MapPut("/review/occurrences/{key}", async (string key, ThingAnswerRequest request, ThingReview review) =>
-            await review.Answer(key, request) is { } answered
-                ? Results.Ok(answered)
-                : Results.UnprocessableEntity(new ProblemResponse(
-                    "That question is not in the list, or the answer is not one of its options. Reload the list and answer again.")));
-
         routes.MapGet("/review/records", (ThingReview review) => review.ReadRecords());
-
-        routes.MapPut("/review/records/{slug}", async (string slug, ThingRecordRequest request, ThingReview review) =>
-            await review.Review(slug, request) is { } reviewed
-                ? Results.Ok(reviewed)
-                : Results.UnprocessableEntity(new ProblemResponse("There is no such record, or no such kind of review.")));
     }
 
     public static void MapWikipediaReview(this RouteGroupBuilder routes)

@@ -164,7 +164,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log, BuildFiles
     /// <summary>Answers one record or takes its answer back. Null where the list holds no such record or the answer is not one of its items.</summary>
     public async Task<WikipediaQuestion?> Answer(string slug, WikipediaAnswerRequest request)
     {
-        if ((request.Note?.Length ?? 0) > ThingReview.LongestNote || !Exists)
+        if ((request.Note?.Length ?? 0) > ChangeLog.LongestNote || !Exists)
         {
             return null;
         }

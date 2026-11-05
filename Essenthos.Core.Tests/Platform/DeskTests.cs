@@ -557,64 +557,71 @@ public sealed class DeskTests : IAsyncLifetime
             }
             """);
 
-    [Fact]
-    public async Task AnsweringAnOccurrenceWithARecordWritesAReviewedRuleTheLoaderReads()
+    /// <summary>
+    /// The verses to decide and the objects and feasts take no answers since 2026-11-05 (NOT-0219): the owner gives a
+    /// correction to the lead in chat. A PUT to either is not a route of the console, and nothing is written or logged.
+    /// </summary>
+    [Theory]
+    [InlineData("/desk-api/review/occurrences/{0}", "boaz-pillar")]
+    [InlineData("/desk-api/review/records/boaz-pillar", null)]
+    public async Task TheVersesToDecideAndTheObjectsAndFeastsTakeNoAnswers(string path, string? occurrenceOf)
     {
         WriteThings();
-        var key = await OccurrenceKey("boaz-pillar");
+        var target = occurrenceOf is null ? path : string.Format(path, await OccurrenceKey(occurrenceOf));
+        var files = new[]
+        {
+            Path.Combine(Review, ThingReview.QuestionsFile), Path.Combine(Records, ThingReview.ObjectsFile),
+            Path.Combine(Records, ThingReview.ObservancesFile),
+        };
+        var before = files.Select(File.ReadAllText).ToList();
 
-        var response = await Put($"/desk-api/review/occurrences/{key}", new { answer = "boaz-pillar", note = "" });
+        var response = await Put(target, new { answer = "boaz-pillar", scope = "all", note = "" });
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var boaz = Record("boaz-pillar");
-        boaz.Occurrences.Should().HaveCount(2);
-        var rule = boaz.Occurrences![1];
-        (rule.Strong, rule.Reviewed).Should().Be(("H1162", ThingReview.AnswerStamp(JsonFiles.Today())));
-        rule.Only.Should().Equal("1KI 7:21", "2CH 3:17");
-        rule.Admits(11, 7, 21, 1).Should().BeTrue();
-        Occurrences()["entries"]![0]!["decision"]!["applied"]!.GetValue<string>().Should().Be(ThingReview.Written);
-        var logged = Logged().Should().ContainSingle().Which;
-        (logged.Section, logged.Target, logged.Needs).Should().Be(
-            ("occurrences", "objects-and-observances boaz-pillar H1162 1KI 7:21, 2CH 3:17", "load"));
-    }
-
-    [Fact]
-    public async Task ChangingAnAnswerUndoesWhatTheOldOneWrote()
-    {
-        WriteThings();
-        var key = await OccurrenceKey("boaz-pillar");
-        await Put($"/desk-api/review/occurrences/{key}", new { answer = "boaz-pillar", note = "" });
-
-        await Put($"/desk-api/review/occurrences/{key}", new { answer = "none", note = "the man after all" });
-
-        var rule = Record("boaz-pillar").Occurrences.Should().ContainSingle().Which;
-        (rule.Strong, rule.Reviewed).Should().Be(("H1162", null));
-        rule.Only.Should().Equal("1KI 7");
-        rule.Except.Should().Equal("1KI 7:21");
-        var decision = Occurrences()["entries"]![0]!["decision"]!;
-        (decision["answer"]!.GetValue<string>(), decision["applied"]!.GetValue<string>(), decision["note"]!.GetValue<string>())
-            .Should().Be(("none", ThingReview.Nothing, "the man after all"));
-    }
-
-    [Fact]
-    public async Task AnAnswerAskingForANewRecordWaitsForSomebodyToWriteIt()
-    {
-        WriteThings();
-        var key = await OccurrenceKey("new-moon");
-
-        await Put($"/desk-api/review/occurrences/{key}", new { answer = "a record of its own", note = "" });
-
-        Occurrences()["entries"]![1]!["decision"]!["applied"]!.GetValue<string>().Should().Be(ThingReview.ByHand);
-        Record("new-moon").Occurrences.Should().ContainSingle("nothing is written for an answer that needs a new record");
-        Logged().Single().Needs.Should().Be("agent");
+        response.StatusCode.Should().BeOneOf(HttpStatusCode.NotFound, HttpStatusCode.MethodNotAllowed);
+        files.Select(File.ReadAllText).Should().Equal(before);
+        File.Exists(ChangeLogFile).Should().BeFalse("nothing is logged");
     }
 
     /// <summary>
-    /// A list written later in the same shape — the Septuagint's placements — is answered on the same
-    /// page, by the key its entries carry, and an answer that changes something waits for an agent.
+    /// Each question shows the edits the build's correction files hold for it: a row of
+    /// <c>Essenthos.Forge/Records/OwnerRows/*.tsv</c> names its list and entry (<c>objects:0</c> is the first entry of
+    /// the objects' list), and its word key is shown as a verse and the word's number.
     /// </summary>
     [Fact]
-    public async Task AnyListOfTheSameShapeIsAnsweredAndItsOwnKeysAreKept()
+    public async Task EachQuestionShowsTheEditsTheCorrectionFilesHoldForIt()
+    {
+        WriteThings();
+        var rows = Path.Combine(Repository, "Essenthos.Forge", "Records", "OwnerRows");
+        Directory.CreateDirectory(rows);
+        File.WriteAllText(Path.Combine(rows, "2026-11-05-review-lists.tsv"),
+            "entry\tproduct\top\tat\trecord\tfrom\trole\tstrong\tlabel\twhy\n" +
+            "objects:0\tnames/BHSA\tremove\t11.7:21.33\tboaz\t\\N\t\\N\tH1162\t\\N\tthe pillar, not the man\n" +
+            "objects:0\tnames/BHSA\tadd\t11.7:21.33\tboaz-pillar\t\\N\tthing\tH1162\t\\N\tthe pillar, not the man\n");
+
+        var read = await Json<ThingQuestionsResponse>(await _http.GetAsync("/desk-api/review/occurrences"));
+
+        read.Lists.Should().ContainSingle().Which.Should().Be(
+            new ThingList("objects-and-observances", "Occurrences a reading could not settle.", 2, 2, 1));
+        var boaz = read.Entries.Single(e => e.RecordSlug == "boaz-pillar");
+        boaz.Rows.Select(r => (r.Op, r.RecordSlug, r.Record?.Name, r.Reference, r.Word, r.Product, r.Why)).Should().Equal(
+            ("remove", "boaz", (string?)null, "1 Kgs 7:21", (int?)33, "names/BHSA", "the pillar, not the man"),
+            ("add", "boaz-pillar", "Boaz", "1 Kgs 7:21", 33, "names/BHSA", "the pillar, not the man"));
+        read.Entries.Single(e => e.RecordSlug == "new-moon").Rows.Should().BeEmpty();
+    }
+
+    [Theory]
+    [InlineData("11.7:21.33", "1 Kgs 7:21", 33)]
+    [InlineData("13.19:5", "1 Chr 19:5", null)]
+    [InlineData("not a key", "not a key", null)]
+    public void AKeyOfTheBuildsFilesIsShownAsAVerse(string at, string reference, int? word) =>
+        ThingReview.Point(at).Should().Be((reference, word));
+
+    /// <summary>
+    /// A list written later in the same shape — the Septuagint's placements — is listed on the same page by the key
+    /// its entries carry, with an answer given before shown; files of the review folder of another shape are not lists.
+    /// </summary>
+    [Fact]
+    public async Task AnyListOfTheSameShapeIsListedAndItsOwnKeysAreKept()
     {
         WriteThings();
         File.WriteAllText(Path.Combine(Review, "septuagint-placement.json"),
@@ -623,7 +630,8 @@ public sealed class DeskTests : IAsyncLifetime
               "about": "Where the Greek stands beside Hebrew it does not carry.",
               "entries": [
                 { "key": "small-swaps", "edition": "both", "references": ["GEN 31:46-52"], "question": "Place them by their words?",
-                  "options": ["place them by their words", "show them as printed"] }
+                  "options": ["place them by their words", "show them as printed"],
+                  "decision": { "answer": "place them by their words", "note": "", "decidedAt": "2026-10-01T00:00:00Z", "applied": "by-hand" } }
               ]
             }
             """);
@@ -632,102 +640,30 @@ public sealed class DeskTests : IAsyncLifetime
 
         var read = await Json<ThingQuestionsResponse>(await _http.GetAsync("/desk-api/review/occurrences"));
 
-        read.Lists.Select(l => (l.List, l.Open)).Should().Equal(("objects-and-observances", 2), ("septuagint-placement", 1));
+        read.Lists.Select(l => (l.List, l.Open)).Should().Equal(("objects-and-observances", 2), ("septuagint-placement", 0));
         var entry = read.Entries.Single(e => e.List == "septuagint-placement");
         entry.Key.Should().Be("small-swaps");
-        entry.Options.Select(o => o.Effect).Should().Equal(ThingReview.ByHand, ThingReview.Nothing);
-
-        (await Put("/desk-api/review/occurrences/small-swaps", new { answer = "place them by their words", note = "" }))
-            .StatusCode.Should().Be(HttpStatusCode.OK);
-        JsonFiles.Read(Path.Combine(Review, "septuagint-placement.json"))["entries"]![0]!["decision"]!["answer"]!
-            .GetValue<string>().Should().Be("place them by their words");
-        Logged().Single().Should().Match<ChangeEntry>(e => e.Needs == "agent" && e.Target == "septuagint-placement small-swaps GEN 31:46-52");
-    }
-
-    /// <summary>
-    /// The verses the load could not settle between a man and the people named after him are listed
-    /// beside the objects' occurrences and answered on the same page; the answer is kept in their own
-    /// list, which is where the load reads it back.
-    /// </summary>
-    [Fact]
-    public async Task AnAnswerAboutAPeoplesAncestorIsKeptInTheListTheLoadReads()
-    {
-        WriteThings();
-        MisfiledVerseLoader.ReviewFile.Should().Be(ThingReview.AncestorsFile);
-        File.WriteAllText(Path.Combine(Review, ThingReview.AncestorsFile),
-            """
-            {
-              "about": "Verses under a people's ancestor.",
-              "entries": [
-                { "record": "jacob", "label": "Israel", "strong": "H3478", "references": ["EXO 4:22"],
-                  "question": "The man or the Israelites?", "options": ["israelites", "leave as it is"] }
-              ]
-            }
-            """);
-        var objects = File.ReadAllText(Path.Combine(Review, ThingReview.QuestionsFile));
-
-        var key = await OccurrenceKey("jacob");
-        (await Put($"/desk-api/review/occurrences/{key}", new { answer = "israelites", note = "" }))
-            .StatusCode.Should().Be(HttpStatusCode.OK);
-
-        var decision = JsonFiles.Read(Path.Combine(Review, ThingReview.AncestorsFile))["entries"]![0]!["decision"]!;
-        decision["answer"]!.GetValue<string>().Should().Be("israelites");
-        decision["applied"]!.GetValue<string>().Should().Be(ThingReview.OnLoad, "the load reads the answer back, whichever it is");
-        File.ReadAllText(Path.Combine(Review, ThingReview.QuestionsFile)).Should().Be(objects);
-        MisfiledVerseLoader.Answers(Path.Combine(Review, ThingReview.AncestorsFile))
-            .Should().Contain(new KeyValuePair<(string, string, string), string>(("jacob", "Israel", "EXO 4:22"), "israelites"));
+        entry.Decision!["answer"]!.GetValue<string>().Should().Be("place them by their words");
+        entry.Options.Select(o => o.Text).Should().Equal("place them by their words", "show them as printed");
     }
 
     [Fact]
-    public async Task AnAnswerThatIsNotAnOptionIsRefused()
+    public async Task TheRecordsSayHowFarEachWasReviewed()
     {
         WriteThings();
-        var key = await OccurrenceKey("boaz-pillar");
-
-        (await Put($"/desk-api/review/occurrences/{key}", new { answer = "jachin-pillar", note = "" }))
-            .StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-    }
-
-    [Fact]
-    public async Task ReviewingARecordStampsItAndItsRulesAndTakingItBackRemovesOnlyThatStamp()
-    {
-        WriteThings();
-        var key = await OccurrenceKey("boaz-pillar");
-        await Put($"/desk-api/review/occurrences/{key}", new { answer = "boaz-pillar", note = "" });
-
-        (await Put("/desk-api/review/records/boaz-pillar", new { scope = "all" })).StatusCode.Should().Be(HttpStatusCode.OK);
-        var reviewed = Record("boaz-pillar");
-        reviewed.Reviewed.Should().Be(ThingReview.RecordStamp(JsonFiles.Today()));
-        reviewed.Occurrences!.Should().OnlyContain(rule => rule.Reviewed != null);
-
-        await Put("/desk-api/review/records/boaz-pillar", new { scope = (string?)null });
-        var undone = Record("boaz-pillar");
-        undone.Reviewed.Should().BeNull();
-        undone.Occurrences![0].Reviewed.Should().BeNull();
-        undone.Occurrences[1].Reviewed.Should().Be(ThingReview.AnswerStamp(JsonFiles.Today()), "the answer's own rule stays the owner's");
-
-        Logged().Where(e => e.Section == "records").Select(e => (e.Target, e.After?.GetValue<string>(), e.Needs)).Should().Equal(
-            ("object/boaz-pillar", "all", "load"), ("object/boaz-pillar", null, "load"));
-    }
-
-    [Fact]
-    public async Task TheRecordsSayHowFarEachHasBeenReviewed()
-    {
-        WriteThings();
-        await Put("/desk-api/review/records/new-moon", new { scope = "record" });
+        var objects = JsonFiles.Read(Path.Combine(Records, ThingReview.ObjectsFile));
+        objects["records"]![0]!["reviewed"] = "the project owner, 2026-10-01";
+        JsonFiles.Write(Path.Combine(Records, ThingReview.ObjectsFile), objects);
 
         var records = await Json<ThingRecordsResponse>(await _http.GetAsync("/desk-api/review/records"));
 
-        records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "new-moon").Scope.Should().Be(ThingReview.RecordOnly);
-        records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "boaz-pillar").Scope.Should().BeNull();
+        records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "boaz-pillar").Scope.Should().Be("record");
+        records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "new-moon").Scope.Should().BeNull();
     }
 
-    /// <summary>
-    /// The narrative records are listed under their own file, and one of them, a person with no
-    /// subtype, can be reviewed like any other; the log names it as a narrative record.
-    /// </summary>
+    /// <summary>The narrative records are listed under their own file.</summary>
     [Fact]
-    public async Task TheNarrativeRecordsAreListedAndReviewedUnderTheirOwnFile()
+    public async Task TheNarrativeRecordsAreListedUnderTheirOwnFile()
     {
         WriteThings();
         File.WriteAllText(Path.Combine(Records, ThingReview.NarrativesFile),
@@ -736,17 +672,16 @@ public sealed class DeskTests : IAsyncLifetime
               "decidedBy": "a test",
               "records": [
                 { "slug": "serpent", "kind": "person", "name": "The serpent", "distinguisher": "the serpent in the garden",
-                  "occurrences": [{ "strong": "H5175", "only": ["GEN 3:1"] }] }
+                  "reviewed": "the project owner, 2026-10-01",
+                  "occurrences": [{ "strong": "H5175", "only": ["GEN 3:1"], "reviewed": "the project owner, 2026-10-01" }] }
               ]
             }
             """);
 
-        await Put("/desk-api/review/records/serpent", new { scope = "all" });
         var records = await Json<ThingRecordsResponse>(await _http.GetAsync("/desk-api/review/records"));
 
         var serpent = records.Records.Single(r => r.Record["slug"]!.GetValue<string>() == "serpent");
-        serpent.File.Should().Be("narratives");
-        serpent.Scope.Should().Be(ThingReview.All);
+        (serpent.File, serpent.Scope, serpent.Rules, serpent.ReviewedRules).Should().Be(("narratives", "all", 1, 1));
         records.Records.Select(r => r.File).Should().Contain(["objects", "observances"]);
     }
 
@@ -814,12 +749,6 @@ public sealed class DeskTests : IAsyncLifetime
     /// back unchanged, each file the console writes into must come back byte for byte.
     /// </summary>
     [Theory]
-    [InlineData("Essenthos.Forge/Loading/Encyclopedia/ObjectRecords.json")]
-    [InlineData("Essenthos.Forge/Loading/Encyclopedia/ObservanceRecords.json")]
-    [InlineData("Essenthos.Forge/Loading/Encyclopedia/NarrativeRecords.json")]
-    [InlineData("Resources/Essenthos/review/objects-and-observances.json")]
-    [InlineData("Resources/Essenthos/review/eponym-verses.json")]
-    [InlineData("Resources/Essenthos/review/septuagint-placement.json")]
     [InlineData("Resources/Essenthos/review/wikipedia-matches.json")]
     [InlineData("Essenthos.Api/site-settings.json")]
     public void AFileWrittenBackUnchangedIsTheSameFile(string tracked)
@@ -927,14 +856,6 @@ public sealed class DeskTests : IAsyncLifetime
             : [];
 
     private JsonNode Occurrences() => JsonFiles.Read(Path.Combine(Review, ThingReview.QuestionsFile));
-
-    private ThingRecord Record(string slug)
-    {
-        var shape = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        return new[] { ThingReview.ObjectsFile, ThingReview.ObservancesFile }
-            .SelectMany(file => JsonSerializer.Deserialize<ThingFile>(File.ReadAllText(Path.Combine(Records, file)), shape)!.Records)
-            .Single(r => r.Slug == slug);
-    }
 
     private void WriteThings()
     {
