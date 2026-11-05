@@ -39,6 +39,10 @@ internal sealed record WikipediaAcceptResponse(int Accepted);
 /// <param name="Record">The record's slug.</param>
 /// <param name="Addresses">Each reference as the reading API addresses it, in step with <paramref name="References"/>, for showing its text.</param>
 /// <param name="Others">How many more items go by its names that have no article, so are not offered.</param>
+/// <param name="OnSite">
+/// The item the site's files link the record to, or <c>none</c>; null where those files are not in this checkout yet.
+/// </param>
+/// <param name="FoldedInto">The record this one was folded into since the list was written: its own link is the one shown.</param>
 internal sealed record WikipediaQuestion(
     string Record,
     string Kind,
@@ -50,23 +54,32 @@ internal sealed record WikipediaQuestion(
     int Others,
     WikipediaDecision? Decision,
     WikipediaTie? Tied = null,
-    WikipediaProposal? Proposal = null);
+    WikipediaProposal? Proposal = null,
+    string? OnSite = null,
+    string? FoldedInto = null);
 
 /// <param name="Written">Whether a load has written the list yet; until one has there is nothing to answer.</param>
 /// <param name="Open">Records the matching could not decide that have no answer yet.</param>
 /// <param name="Tied">Records the matching tied on its own that have no answer: the owner may leave them, set them to another item or to none.</param>
+/// <param name="Files">Whether the site's Wikipedia file is in this checkout, so that what is shown can be told.</param>
+/// <param name="Unapplied">Records the site's file does not link as the list now says: an answer given or taken back since the build made it.</param>
 internal sealed record WikipediaQuestionsResponse(
-    bool Written, int Open, int Answered, IReadOnlyList<WikipediaQuestion> Entries, int Tied = 0);
+    bool Written, int Open, int Answered, IReadOnlyList<WikipediaQuestion> Entries, int Tied = 0, bool Files = false, int Unapplied = 0);
 
 /// <summary>
 /// The records whose Wikipedia article the corpus could not tell from a namesake's, which the owner
 /// answers: the item each one is, or none of those listed; and the records the matching tied on its
 /// own, which he may set to another item or take back. An answer is written into the list, which
-/// every load reads back and links the record by, so it takes effect on the next load of the step.
+/// every load reads back and links the record by, and from which the build makes the site's file
+/// (<c>records/facts/wikipedia</c>), so it takes effect on the next load of the step or build. Each
+/// entry says what that file links the record to.
 /// </summary>
-internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
+internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log, BuildFiles build)
 {
     public const string FileName = "wikipedia-matches.json";
+
+    /// <summary>The site's file of article links, which the build makes from this list.</summary>
+    public const string FilesProduct = "records/facts/wikipedia";
 
     /// <summary>The agents' proposals beside the list: generated, never written by the console, read only to show and to accept.</summary>
     public const string ProposalsFileName = "wikipedia-proposals.json";
@@ -95,14 +108,56 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
         }
 
         var proposals = Proposals();
-        var entries = Entries(JsonFiles.Read(File)).Select(e => Question(e, proposals)).ToList();
+        var site = OnSite();
+        var entries = Entries(JsonFiles.Read(File)).Select(e => Question(e, proposals, site)).ToList();
         return new WikipediaQuestionsResponse(
             true,
             entries.Count(e => e.Decision is null && e.Tied is null),
             entries.Count(e => e.Decision is not null),
             entries,
-            entries.Count(e => e.Decision is null && e.Tied is not null));
+            entries.Count(e => e.Decision is null && e.Tied is not null),
+            site is not null,
+            entries.Count(Unapplied));
     }
+
+    /// <summary>
+    /// Whether the site's file does not link the record as the list now says, until the build makes it again from
+    /// the list: an answer given, changed or taken back since.
+    /// </summary>
+    public static bool Unapplied(WikipediaQuestion question) =>
+        question is { OnSite: { } shown, FoldedInto: null } && shown != Linked(question);
+
+    /// <summary>
+    /// The item the build links the record to from the list: his answer, else the matching's tie where the tied item
+    /// has an article (a tie to one with none links nothing), else none.
+    /// </summary>
+    public static string Linked(WikipediaQuestion question) =>
+        question.Decision?.Answer
+        ?? (question.Tied is { } tied && question.Candidates.Any(c => c.Qid == tied.Qid && c.Articles.Count > 0) ? tied.Qid : None);
+
+    /// <summary>The item the site's file links each record to, and the folds since; null where the file is not in this checkout.</summary>
+    private SiteLinks? OnSite()
+    {
+        if (build.Read(FilesProduct) is not { } links)
+        {
+            return null;
+        }
+
+        int slug = links.Column("slug"), qid = links.Column("qid");
+        var linked = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var row in links.Rows)
+        {
+            linked[row[slug]!] = row[qid]!;
+        }
+
+        var folds = build.Read("records/folds") is { } folded
+            ? folded.Rows.ToDictionary(row => row[folded.Column("slug")]!, row => row[folded.Column("folded_into")]!, StringComparer.Ordinal)
+            : [];
+        return new SiteLinks(linked, folds);
+    }
+
+    /// <summary>What the site's file links, record by record, and the old slugs of records folded into another.</summary>
+    private sealed record SiteLinks(Dictionary<string, string> Linked, Dictionary<string, string> Folds);
 
     public int Unanswered() => Exists ? Entries(JsonFiles.Read(File)).Count(e => e["decision"] is null && e["tied"] is null) : 0;
 
@@ -120,6 +175,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
         try
         {
             var proposals = Proposals();
+            var site = OnSite();
             var root = JsonFiles.Read(File);
             var entry = Entries(root).FirstOrDefault(e => e["record"]?.GetValue<string>() == slug);
             if (entry is null)
@@ -127,7 +183,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
                 return null;
             }
 
-            before = Question(entry, proposals);
+            before = Question(entry, proposals, site);
             if (request.Answer is not null && request.Answer != None
                 && !before.Candidates.Any(c => c.Qid == request.Answer))
             {
@@ -145,7 +201,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
             }
 
             JsonFiles.Write(File, root);
-            after = Question(entry, proposals);
+            after = Question(entry, proposals, site);
         }
         finally
         {
@@ -184,10 +240,10 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
             var root = JsonFiles.Read(File);
             foreach (var entry in Entries(root))
             {
-                if (Question(entry, proposals) is { Decision: null, Tied: null, Proposal: { Agreed: true, Confidence: "high" } proposal })
+                if (Question(entry, proposals, null) is { Decision: null, Tied: null, Proposal: { Agreed: true, Confidence: "high" } proposal })
                 {
                     entry["decision"] = new JsonObject { ["answer"] = proposal.Answer, ["note"] = AcceptedNote, ["at"] = JsonFiles.Now() };
-                    accepted.Add(Question(entry, proposals));
+                    accepted.Add(Question(entry, proposals, null));
                 }
             }
 
@@ -240,7 +296,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
     private static IEnumerable<JsonObject> Entries(JsonNode root) =>
         (root["entries"]?.AsArray() ?? []).OfType<JsonObject>();
 
-    private static WikipediaQuestion Question(JsonObject entry, IReadOnlyDictionary<string, JsonObject> proposals)
+    private static WikipediaQuestion Question(JsonObject entry, IReadOnlyDictionary<string, JsonObject> proposals, SiteLinks? site)
     {
         var references = Strings(entry["references"]);
         var candidates = (entry["candidates"]?.AsArray() ?? []).OfType<JsonObject>().Select(Offer).ToList();
@@ -260,7 +316,9 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
             entry["tied"] is JsonObject tied && tied["qid"]?.GetValue<string>() is { Length: > 0 } qid
                 ? new WikipediaTie(qid, tied["by"]?.GetValue<string>() ?? string.Empty)
                 : null,
-            proposals.TryGetValue(record, out var proposal) ? Proposal(proposal, candidates) : null);
+            proposals.TryGetValue(record, out var proposal) ? Proposal(proposal, candidates) : null,
+            site is null ? null : site.Linked.GetValueOrDefault(record) ?? None,
+            site?.Folds.GetValueOrDefault(record));
     }
 
     /// <summary>A proposal, where its answer is still one the entry offers; one a later load no longer offers is dropped.</summary>

@@ -44,6 +44,11 @@ internal sealed record PortraitsResponse(IReadOnlyList<PortraitPerson> People, b
 /// <param name="Choice">What the owner chose about it, or null where he chose nothing.</param>
 /// <param name="Option">The brief's option it was drawn from, where the prompt it was drawn from is one of them.</param>
 /// <param name="Shared">The other people whose pages our manifest lists the same picture for.</param>
+/// <param name="OnSite">
+/// Where the site's files put the picture on the page: <c>primary</c>, <c>gallery</c>, or <c>none</c> where they leave it
+/// out; null where those files are not in this checkout yet.
+/// </param>
+/// <param name="OnSiteCaption">The English caption the site's files give the picture, where they show it with one.</param>
 internal sealed record PortraitImage(
     string File,
     string Kind,
@@ -58,7 +63,9 @@ internal sealed record PortraitImage(
     string? Review,
     PictureChoice? Choice,
     PortraitOption? Option,
-    IReadOnlyList<PortraitShare> Shared);
+    IReadOnlyList<PortraitShare> Shared,
+    string? OnSite = null,
+    string? OnSiteCaption = null);
 
 /// <param name="Id">The option's letter in the brief.</param>
 internal sealed record PortraitOption(string Id, string? Label);
@@ -93,8 +100,16 @@ internal sealed record PictureSet(PicturedEntity Entity, IReadOnlyList<PortraitI
 /// pictures of every person and place, with the owner's choices about each. Read from the corpus
 /// and from the files beside the pictures.
 /// </summary>
-internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
+internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles? build = null)
 {
+    /// <summary>The site's file of pictures, which the build makes from the lists, the picture files and the owner's choices.</summary>
+    public const string FilesProduct = "records/facts/images";
+
+    /// <summary>The English captions of the site's pictures, beside them.</summary>
+    public const string CaptionsProduct = "records/i18n/eng/images";
+
+    private readonly BuildFiles _build = build ?? new BuildFiles(paths);
+
     public const int FirstTier = 50;
 
     public const int SecondTier = 10;
@@ -208,6 +223,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
         int id, string slug, JsonNode? manifest, JsonNode? brief, CancellationToken cancellationToken)
     {
         var choices = (PictureChoices.Read(paths).GetValueOrDefault(slug) ?? []).ToDictionary(c => c.File, StringComparer.Ordinal);
+        var site = OnSite(slug);
         var listed = Listed(manifest, slug).ToList();
         var shared = await SharedOf(manifest, slug, cancellationToken);
         var loaded = await db.EntityImages
@@ -251,7 +267,43 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
                 false, null, choice, null, []));
         }
 
-        return images;
+        return site is null
+            ? images
+            : [.. images.Select(i => site.GetValueOrDefault(i.File) is { } shown
+                ? i with { OnSite = shown.Role, OnSiteCaption = shown.Caption }
+                : i with { OnSite = "none" })];
+    }
+
+    /// <summary>
+    /// The role and English caption the site's files give each picture of the record, by file; null where the files
+    /// are not in this checkout.
+    /// </summary>
+    private Dictionary<string, (string Role, string? Caption)>? OnSite(string slug)
+    {
+        if (_build.Read(FilesProduct) is not { } pictures)
+        {
+            return null;
+        }
+
+        var captions = new Dictionary<(string, string, string), string>();
+        if (_build.Read(CaptionsProduct) is { } english)
+        {
+            int at = english.Column("slug"), kind = english.Column("kind"), place = english.Column("role"), ordinal = english.Column("ordinal");
+            foreach (var row in english.Rows.Where(r => r[at] == slug))
+            {
+                captions[(row[kind]!, row[place]!, row[ordinal]!)] = row[english.Column("caption")]!;
+            }
+        }
+
+        int record = pictures.Column("slug"), file = pictures.Column("file"), role = pictures.Column("role");
+        int kinds = pictures.Column("kind"), ordinals = pictures.Column("ordinal");
+        var shown = new Dictionary<string, (string, string?)>(StringComparer.Ordinal);
+        foreach (var row in pictures.Rows.Where(r => r[record] == slug))
+        {
+            shown.TryAdd(row[file]!, (row[role]!, captions.GetValueOrDefault((row[kinds]!, row[role]!, row[ordinals]!))));
+        }
+
+        return shown;
     }
 
     /// <summary>For each picture our manifest lists for the person, the other people it lists the same file for.</summary>

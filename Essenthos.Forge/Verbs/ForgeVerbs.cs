@@ -270,7 +270,7 @@ internal static partial class ForgeVerbs
         new("dataset-records", "", "Make the records a dataset supplied ours, fold them or withdraw them.", DatasetRecords),
         new("records-export", "[--into <Resources>]", "Write our records, facts, languages and external datasets as files, from the database.", RecordsExport),
         new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
-        new("records-derive", "[--from <Resources>] [--into <Resources>]", "Make the derived record files whose inputs are files (relationships, locations) from the hand files, without a database.", RecordsDerive),
+        new("records-derive", "[--from <Resources>] [--into <Resources>]", "Make the derived record files whose inputs are files (relationships, locations, pictures, Wikipedia links) from the hand files and the console's files, without a database.", RecordsDerive),
         new("records-canon", "[--from <Resources>] [--force]", "Write records/canon, which canons attest each record, from the names projection and the frames, without a database.", RecordsCanon),
         new("owner-apply", "[--from <Resources>] [--dry-run]",
             "Apply the owner's console decisions that wait on the files step (owner-changes.jsonl, needs: files) to the record files "

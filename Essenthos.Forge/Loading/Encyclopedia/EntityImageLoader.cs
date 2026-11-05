@@ -111,7 +111,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
 
     public const string ManifestFile = "manifest.json";
 
-    private const string CuratedResource = "Essenthos.Core.Loading.Encyclopedia.PublicImages.json";
+    internal const string CuratedResource = "Essenthos.Core.Loading.Encyclopedia.PublicImages.json";
 
     private const string GazetteerSource =
         "OpenBible.info Bible Geocoding thumbnails";
@@ -136,18 +136,77 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     public async Task<EntityImageOutcome> Load(string resources, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
-        var root = Path.Combine(resources, Folder);
-
         var entities = await db.Entities
-            .Select(e => new { e.Id, e.Slug, e.Kind, e.SourceId, e.OpenBibleId })
+            .Select(e => new PicturedRecord(e.Id, e.Slug, e.Kind, e.SourceId, e.OpenBibleId))
             .ToListAsync(cancellationToken);
+        var merged = await db.MergedRecords.Select(m => new { m.Slug, m.EntityId }).ToListAsync(cancellationToken);
+        var (rows, outcome) = Pictures(resources, entities, merged.Select(m => (m.Slug, m.EntityId)), logger);
+
+        // Its own transaction unless the caller already holds one, which is then the caller's to commit.
+        await using var transaction = db.Database.CurrentTransaction is null
+            ? await db.Database.BeginTransactionAsync(cancellationToken)
+            : null;
+        // Only the pictures that changed are written, so a load that lists the same ones leaves their
+        // rows as they are, ids and all.
+        var standing = await db.EntityImages.AsNoTracking().Include(i => i.Captions).ToListAsync(cancellationToken);
+        var wanted = rows.GroupBy(Key).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
+        var gone = new List<int>();
+        foreach (var image in standing)
+        {
+            var key = Key(image);
+            if (wanted.TryGetValue(key, out var count) && count > 0)
+            {
+                wanted[key] = count - 1;
+            }
+            else
+            {
+                gone.Add(image.Id);
+            }
+        }
+
+        await db.EntityImages.Where(i => gone.Contains(i.Id)).ExecuteDeleteAsync(cancellationToken);
+        foreach (var image in rows)
+        {
+            var key = Key(image);
+            if (wanted[key] > 0)
+            {
+                wanted[key]--;
+                db.EntityImages.Add(image);
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        if (transaction is not null)
+        {
+            await transaction.CommitAsync(cancellationToken);
+        }
+
+        outcome = outcome with { Elapsed = started.Elapsed };
+        logger.LogInformation("Pictured the people, places and things: {Outcome}", outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// The picture rows of the records, from the lists, the gazetteer's thumbnails, the owner's choices and the
+    /// files under <c>Images</c> of <paramref name="resources"/>; reads no database, so the load and the build's
+    /// producer of <c>records/facts/images</c> make the same rows. <paramref name="folded"/> are the old addresses
+    /// of records folded into another, with the record each became part of.
+    /// </summary>
+    internal static (List<EntityImage> Rows, EntityImageOutcome Outcome) Pictures(
+        string resources,
+        IReadOnlyList<PicturedRecord> entities,
+        IEnumerable<(string Slug, int EntityId)> folded,
+        ILogger logger)
+    {
+        var started = Stopwatch.StartNew();
+        var root = Path.Combine(resources, Folder);
         var bySlug = entities.ToDictionary(e => e.Slug, StringComparer.Ordinal);
 
         // A picture listed under the address of a record since folded into another is a picture of
         // the record it became part of, and the owner's word on it stays keyed by the address it was
         // listed under.
         var byId = entities.ToDictionary(e => e.Id);
-        foreach (var merged in await db.MergedRecords.Select(m => new { m.Slug, m.EntityId }).ToListAsync(cancellationToken))
+        foreach (var merged in folded)
         {
             if (byId.TryGetValue(merged.EntityId, out var into))
             {
@@ -287,46 +346,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         }
 
         var people = entities.Where(e => e.Kind == EntityKind.Person).Select(e => e.Id).ToHashSet();
-        var (rows, missing) = Rows(root, candidates, PortraitFaces.Read(), people);
-
-        // Its own transaction unless the caller already holds one, which is then the caller's to commit.
-        await using var transaction = db.Database.CurrentTransaction is null
-            ? await db.Database.BeginTransactionAsync(cancellationToken)
-            : null;
-        // Only the pictures that changed are written, so a load that lists the same ones leaves their
-        // rows as they are, ids and all.
-        var standing = await db.EntityImages.AsNoTracking().Include(i => i.Captions).ToListAsync(cancellationToken);
-        var wanted = rows.GroupBy(Key).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
-        var gone = new List<int>();
-        foreach (var image in standing)
-        {
-            var key = Key(image);
-            if (wanted.TryGetValue(key, out var count) && count > 0)
-            {
-                wanted[key] = count - 1;
-            }
-            else
-            {
-                gone.Add(image.Id);
-            }
-        }
-
-        await db.EntityImages.Where(i => gone.Contains(i.Id)).ExecuteDeleteAsync(cancellationToken);
-        foreach (var image in rows)
-        {
-            var key = Key(image);
-            if (wanted[key] > 0)
-            {
-                wanted[key]--;
-                db.EntityImages.Add(image);
-            }
-        }
-
-        await db.SaveChangesAsync(cancellationToken);
-        if (transaction is not null)
-        {
-            await transaction.CommitAsync(cancellationToken);
-        }
+        var (rows, missing) = Rows(logger, root, candidates, PortraitFaces.Read(), people);
 
         var outcome = new EntityImageOutcome(
             rows.Count(r => r.Source == GazetteerSource),
@@ -342,8 +362,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             hidden,
             unthings,
             started.Elapsed);
-        logger.LogInformation("Pictured the people, places and things: {Outcome}", outcome);
-        return outcome;
+        return (rows, outcome);
     }
 
     /// <summary>
@@ -406,7 +425,15 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         string root,
         IEnumerable<Candidate> candidates,
         IReadOnlyDictionary<string, PortraitFaces.Measured>? faces = null,
-        IReadOnlySet<int>? people = null)
+        IReadOnlySet<int>? people = null) =>
+        Rows(logger, root, candidates, faces, people);
+
+    private static (List<EntityImage> Rows, int Missing) Rows(
+        ILogger logger,
+        string root,
+        IEnumerable<Candidate> candidates,
+        IReadOnlyDictionary<string, PortraitFaces.Measured>? faces,
+        IReadOnlySet<int>? people)
     {
         var rows = new List<EntityImage>();
         var missing = 0;
@@ -562,6 +589,9 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         bool Glory,
         IReadOnlyDictionary<string, string>? Captions = null);
 }
+
+/// <summary>What the pictures need of a record: its kind, and the dataset ids that tell God's records and a place's thumbnail.</summary>
+internal sealed record PicturedRecord(int Id, string Slug, EntityKind Kind, string SourceId, string? OpenBibleId);
 
 /// <param name="Source">The collection the pictures come from, as a row's source says it.</param>
 internal sealed record ImageManifest(

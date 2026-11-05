@@ -3,6 +3,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Desk;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Products;
 using System.Text.Json.Nodes;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -338,9 +339,41 @@ public sealed class PortraitBoardTests : IDisposable
         list.Entities.Select(e => (e.Slug, e.Kind, e.Pictures, e.Hidden, e.Chosen)).Should().Equal(
             ("david", "person", 1, 0, 0), ("hebron", "place", 1, 1, 2));
         var set = await new PortraitBoard(_db, _paths).Pictures("hebron", default);
-        set!.Images.Select(i => (i.File, i.Loaded, i.Choice?.Hidden, i.Choice?.Caption)).Should().Equal(
-            ("openbible/hebron.jpg", true, false, "Хеврон з півдня"),
-            ("openbible/hebron-old.jpg", false, true, null));
+        set!.Images.Select(i => (i.File, i.Loaded, i.Choice?.Hidden, i.Choice?.Caption, i.OnSite)).Should().Equal(
+            ("openbible/hebron.jpg", true, false, "Хеврон з півдня", (string?)null),
+            ("openbible/hebron-old.jpg", false, true, null, null));
+    }
+
+    [Fact]
+    public async Task EachPictureSaysWhereTheSitesFileShowsIt()
+    {
+        var hebron = new Entity { Kind = EntityKind.Place, Slug = "hebron", Name = "Hebron", SourceId = "test:hebron", Source = "test" };
+        _db.Entities.Add(hebron);
+        await _db.SaveChangesAsync();
+        _db.EntityImages.Add(Image(hebron.Id, "public", "openbible/hebron.jpg"));
+        await _db.SaveChangesAsync();
+        await new PictureChoices(_paths, _log).Choose("hebron", new PictureChoiceRequest("openbible/hebron.jpg", true, false, "Хеврон", null));
+        var file = Essenthos.Core.Records.RecordFiles.All.Single(f => f.Product == PortraitBoard.FilesProduct);
+        var store = new ProductStore(_paths.BuildResources);
+        using (var writer = store.Create(file.Product, file.Kind, file.Schema(), "test", []))
+        {
+            writer.WriteAll(new string?[][]
+            {
+                ["hebron", "public", "primary", "0", "openbible/hebron.jpg", "abc", "1", "1", "c", null, "l", null, "s", null, null, null, null, null, null],
+                ["hebron", "public", "gallery", "0", "openbible/hebron-2.jpg", "abd", "1", "1", "c", null, "l", null, "s", null, null, null, null, null, null],
+            });
+        }
+
+        var captions = Essenthos.Core.Records.RecordFiles.All.Single(f => f.Product == PortraitBoard.CaptionsProduct);
+        using (var writer = store.Create(captions.Product, captions.Kind, captions.Schema(), "test", []))
+        {
+            writer.WriteAll(new string?[][] { ["hebron", "public", "primary", "0", "Hebron from the south"] });
+        }
+
+        var set = await new PortraitBoard(_db, _paths).Pictures("hebron", default);
+
+        set!.Images.Select(i => (i.File, i.Choice?.Hidden, i.OnSite, i.OnSiteCaption)).Should().Equal(
+            ("openbible/hebron.jpg", true, "primary", "Hebron from the south"));
     }
 
     private PortraitEditor Editor() => new(new PortraitBoard(_db, _paths), _paths, _log);
