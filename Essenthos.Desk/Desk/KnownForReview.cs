@@ -187,7 +187,7 @@ internal sealed class KnownForReview(DeskPaths paths, ChangeLog log, BuildFiles 
     /// <summary>Answers one entry or takes its answer back. Null where the list holds no such record or the answer is neither.</summary>
     public async Task<KnownForEntry?> Answer(string slug, KnownForAnswerRequest request)
     {
-        if ((request.Note?.Length ?? 0) > ThingReview.LongestNote || !Exists
+        if ((request.Note?.Length ?? 0) > ChangeLog.LongestNote || !Exists
             || request.Answer is not (null or Approved or Rejected))
         {
             return null;
