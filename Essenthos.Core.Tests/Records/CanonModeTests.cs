@@ -92,32 +92,6 @@ public sealed class CanonModeTests : IDisposable
         (await Shown("tanakh")).Should().HaveCount(6);
     }
 
-    /// <summary>The ids the datasets give a record are on its page: the dataset, its name, the id and how it stands to ours.</summary>
-    [Fact]
-    public async Task ARecordsPageCarriesTheIdsTheDatasetsGiveIt()
-    {
-        var mordecai = await _db.Entities.SingleAsync(e => e.Slug == "mordecai");
-        _db.RecordExternalIds.AddRange(
-            new RecordExternalId { EntityId = mordecai.Id, Dataset = "openbible", ExternalId = "a1b2c3d", Relation = RecordExternalRelations.SameAs },
-            new RecordExternalId
-            {
-                EntityId = mordecai.Id, Dataset = "bibledata", ExternalId = "person:Mordecai_2", Relation = RecordExternalRelations.Folded,
-                Note = "the id of mordecai-2, folded into this record",
-            },
-            new RecordExternalId { EntityId = mordecai.Id, Dataset = "bibledata", ExternalId = "person:Mordecai_1", Relation = RecordExternalRelations.SameAs });
-        await _db.SaveChangesAsync();
-
-        var ids = await Endpoints.EncyclopediaEndpoints.ExternalIds(_db, mordecai.Id, CancellationToken.None);
-
-        ids.Select(x => (x.Dataset, x.Name, x.ExternalId, x.Relation)).Should().Equal(
-            ("bibledata", "BibleData", "person:Mordecai_1", RecordExternalRelations.SameAs),
-            ("bibledata", "BibleData", "person:Mordecai_2", RecordExternalRelations.Folded),
-            ("openbible", "OpenBible.info Bible Geocoding", "a1b2c3d", RecordExternalRelations.SameAs));
-        ids[1].Note.Should().Be("the id of mordecai-2, folded into this record");
-        (await Endpoints.EncyclopediaEndpoints.ExternalIds(_db, (await _db.Entities.SingleAsync(e => e.Slug == "adam")).Id, CancellationToken.None))
-            .Should().BeEmpty();
-    }
-
     private void Canon(params (string Slug, string Canon)[] rows)
     {
         var store = new ProductStore(_resources);

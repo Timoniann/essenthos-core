@@ -402,7 +402,6 @@ internal static partial class EncyclopediaEndpoints
                 BuiltOnItsSite = await SharedSite(
                     db, SharedSites.All.FirstOrDefault(s => s.Earlier == entity.Slug)?.Later, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
-                ExternalIds = await ExternalIds(db, entity.Id, cancellationToken),
                 LocalName = renamed is null ? localNames.GetValueOrDefault(entity.Id) : renamed.LocalName,
                 AlsoCalled = renamed?.AlsoCalled,
                 NameFromSource = (await EntityNames.NamedOnlyBySource(
@@ -479,24 +478,6 @@ internal static partial class EncyclopediaEndpoints
     private static (string Lemma, string? Transliteration)? Lemma(
         IReadOnlyDictionary<string, (string Lemma, string? Transliteration)> lemmas, string? number) =>
         number is not null && lemmas.TryGetValue(number, out var lemma) ? lemma : null;
-
-    /// <summary>The ids the datasets give one record, by dataset and id.</summary>
-    internal static async Task<List<EntityExternalIdResponse>> ExternalIds(
-        AppDbContext db,
-        int entityId,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.RecordExternalIds
-            .Where(x => x.EntityId == entityId)
-            .OrderBy(x => x.Dataset).ThenBy(x => x.Relation != RecordExternalRelations.SameAs).ThenBy(x => x.ExternalId)
-            .Select(x => new { x.Dataset, x.ExternalId, x.Relation, x.Note })
-            .ToListAsync(cancellationToken);
-        return
-        [
-            .. rows.Select(x => new EntityExternalIdResponse(
-                x.Dataset, Datasets.All.FirstOrDefault(d => d.Id == x.Dataset)?.Name, x.ExternalId, x.Relation, x.Note)),
-        ];
-    }
 
     /// <summary>
     /// Every text's spellings of one entity, a text's heading first. The texts in the corpus's own
