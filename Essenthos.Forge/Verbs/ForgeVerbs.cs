@@ -52,6 +52,12 @@ internal static partial class ForgeVerbs
             "Write the parallel view's panes (one row of pane per text and canonical chapter) from the configured database, for the texts "
             + "named or every text whose inputs moved, and panes/<SLUG> beside them. Never writes the live corpus or the snapshot.",
             PanesVerb),
+        new("record-words", "[<text,...>] [--force]",
+            "Count what a record page reads of the words from the configured database: how often each text prints each form for each "
+            + "record under each Strong number (record_spelling, record-spellings/<SLUG>) and where each record first stands in each "
+            + "King James verse (record_position, record-positions/KJV), for the texts named or every text whose inputs moved. Never "
+            + "writes the live corpus or the snapshot.",
+            RecordWordsVerb),
         new("tables", "[<table,...>] [--from <Resources>] [--force]",
             "Write the served tables made whole from files (the lexicon, text relations, ...) as tables/<table>, each only when its sources moved. Reads no database.",
             TablesVerb),

@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading;
@@ -163,6 +164,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             return 0;
         });
         await Panes(null, true, parallel, cancellationToken);
+        await RecordWords(null, true, cancellationToken);
         await Count(cancellationToken);
     }
 
@@ -183,6 +185,39 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             }
 
             return (long)made.Sum(o => o.Panes);
+        });
+
+    /// <summary>
+    /// What a record page reads of the words, counted from the tables as they now stand: the spellings of the texts named
+    /// (every text when null) and the positions in the King James, each where its inputs moved, or all when
+    /// <paramref name="force"/> is set.
+    /// </summary>
+    public Task<long> RecordWords(IReadOnlyCollection<string>? texts, bool force, CancellationToken cancellationToken) =>
+        Timed("load", "record words", async () =>
+        {
+            var outcomes = await new RecordSpellingBuild(connectionString, store, services, logger).Run(texts, force, cancellationToken);
+            var made = outcomes.Where(o => o.Made).ToList();
+            logger.LogInformation("Record spellings: {Made} texts counted ({Rows} rows), {Current} current",
+                made.Count, made.Sum(o => o.Rows), outcomes.Count - made.Count);
+            if (made.Count > 0)
+            {
+                await Execute(connectionString, "ANALYZE record_spelling", cancellationToken);
+            }
+
+            long rows = made.Sum(o => o.Rows);
+            if (texts is null || texts.Contains(RecordPositions.Text))
+            {
+                var positions = await new RecordPositionBuild(connectionString, store, services, logger).Run(force, cancellationToken);
+                logger.LogInformation("Record positions: {Outcome}",
+                    positions is null ? "no King James" : positions.Made ? $"{positions.Rows} rows" : "current");
+                if (positions is { Made: true })
+                {
+                    await Execute(connectionString, "ANALYZE record_position", cancellationToken);
+                    rows += positions.Rows;
+                }
+            }
+
+            return rows;
         });
 
     /// <summary>The frame of the texts named, or of every text with a frame file, each text replaced in a transaction of its own.</summary>

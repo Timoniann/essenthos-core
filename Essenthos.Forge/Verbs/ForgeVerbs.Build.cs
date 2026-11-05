@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Essenthos.Core.Build;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 using Essenthos.Core.Verification;
@@ -218,6 +219,36 @@ internal static partial class ForgeVerbs
         var made = outcomes.Where(o => o.Made).ToList();
         Console.WriteLine($"{made.Count} texts made, {outcomes.Count - made.Count} current: {made.Sum(o => o.Panes)} panes, {made.Sum(o => o.Words)} words, "
                           + $"{made.Sum(o => o.Bytes)} bytes of JSON, {made.Sum(o => o.Compressed)} compressed, in {clock.Elapsed.TotalSeconds:0.0} s");
+        return 0;
+    }
+
+    /// <summary>
+    /// <c>record-words [&lt;text,...&gt;] [--force]</c>: what a record page reads of the words of the configured database (the
+    /// spellings of every text, the positions in the King James), for the texts whose inputs moved (every text named with
+    /// <c>--force</c>), with their products in the configured Resources.
+    /// </summary>
+    private static async Task<int> RecordWordsVerb(ForgeRun forge, string[] args)
+    {
+        ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
+        var clock = Stopwatch.StartNew();
+        var store = new ProductStore(forge.Resources);
+        var services = forge.Scope().ServiceProvider;
+        var texts = Slugs(args);
+        var force = args.Contains("--force");
+        var outcomes = await new RecordSpellingBuild(forge.DatabaseConnection, store, services, forge.Logger).Run(texts, force, CancellationToken.None);
+        foreach (var outcome in outcomes)
+        {
+            Console.WriteLine($"{outcome.Text,-14} {outcome.Rows,8} spellings {(outcome.Made ? $"{outcome.Elapsed.TotalSeconds,7:0.0} s" : " current")}");
+        }
+
+        if ((texts is null || texts.Contains(RecordPositions.Text))
+            && await new RecordPositionBuild(forge.DatabaseConnection, store, services, forge.Logger).Run(force, CancellationToken.None) is { } positions)
+        {
+            Console.WriteLine($"{positions.Text,-14} {positions.Rows,8} positions {(positions.Made ? $"{positions.Elapsed.TotalSeconds,7:0.0} s" : " current")}");
+        }
+
+        var made = outcomes.Where(o => o.Made).ToList();
+        Console.WriteLine($"{made.Count} texts' spellings counted, {outcomes.Count - made.Count} current: {made.Sum(o => o.Rows)} rows, in {clock.Elapsed.TotalSeconds:0.0} s");
         return 0;
     }
 

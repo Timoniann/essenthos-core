@@ -78,12 +78,6 @@ internal static class Relationships
     }
 
     /// <summary>
-    /// The text this reads the order of a verse's names in: the King James, whose numbering is the
-    /// canonical one every relationship cites.
-    /// </summary>
-    private const string OrderText = "KJV";
-
-    /// <summary>
     /// Where each counterpart's name first stands in the verse its row cites, for the rows that cite a
     /// verse another row of the page cites too: the Twelve as Matthew lists them (MAT 10:2-4), Simon
     /// before Andrew, rather than by name. Null on every other row.
@@ -113,31 +107,19 @@ internal static class Relationships
             .Distinct()
             .ToList();
 
-        // The verses first and the names in them after: starting from the names reads every word that
-        // names one of these people in every text before the King James's few are kept, which for
-        // Jesus's page is a hundred thousand rows.
-        var verses = (await db.Verses
-                .Where(v => v.Text!.Slug == OrderText
-                            && books.Contains(v.Book!.CanonicalOrdinal)
-                            && chapters.Contains(v.ChapterNumber)
-                            && numbers.Contains(v.Number))
-                .Select(v => new { v.Id, Book = v.Book!.CanonicalOrdinal, Chapter = v.ChapterNumber, Verse = v.Number })
-                .ToListAsync(cancellationToken))
-            .Where(v => shared.Contains((v.Book, v.Chapter, v.Verse)))
-            .ToDictionary(v => v.Id, v => (v.Book, v.Chapter, v.Verse));
-        if (verses.Count == 0)
-        {
-            return rows;
-        }
-
-        var ids = verses.Keys.ToList();
-        var named = await db.WordEntities
-            .Where(n => ids.Contains(n.Word!.VerseId) && slugs.Contains(n.Entity!.Slug))
-            .Select(n => new { n.Entity!.Slug, n.Word!.VerseId, n.Word.Position })
+        // Counted ahead of time by the build in the King James, whose numbering is the canonical one every relationship cites.
+        var placed = await db.RecordPositions
+            .Where(p => p.Text!.Slug == RecordPositions.Text
+                        && slugs.Contains(p.Entity!.Slug)
+                        && books.Contains(p.Book)
+                        && chapters.Contains(p.Chapter)
+                        && numbers.Contains(p.Verse))
+            .Select(p => new { p.Entity!.Slug, p.Book, p.Chapter, p.Verse, p.Position })
             .ToListAsync(cancellationToken);
-        var first = named
-            .GroupBy(n => (n.Slug, verses[n.VerseId].Book, verses[n.VerseId].Chapter, verses[n.VerseId].Verse))
-            .ToDictionary(g => g.Key, g => g.Min(n => n.Position));
+        var first = placed
+            .Where(p => shared.Contains((p.Book, p.Chapter, p.Verse)))
+            .GroupBy(p => (p.Slug, p.Book, p.Chapter, p.Verse))
+            .ToDictionary(g => g.Key, g => g.Min(p => p.Position));
 
         return
         [

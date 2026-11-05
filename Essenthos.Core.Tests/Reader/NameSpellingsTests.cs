@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -10,7 +11,7 @@ namespace Essenthos.Core.Tests.Reader;
 
 /// <summary>
 /// A name other than a record's heading is given as the texts of the reader's language print it,
-/// through the Strong number each of its words was named through.
+/// through the Strong number each of its words was named through, as the build counted it per text.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class NameSpellingsTests : IDisposable
@@ -26,7 +27,7 @@ public sealed class NameSpellingsTests : IDisposable
         var greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["Ἰωσῆς", "Ἰωσὴφ", "Ἰωσῆτος"]));
         var ohienko = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (1, 1, ["Йосипа", "Йосип", "Йосип"]));
         var kulish = Corpus.Add(_db, "UKR1871", TextKind.Translation, "ukr", (1, 1, ["Йосій", "Йосія", "Йосій"]));
-        var luther = Corpus.Add(_db, "LUTH1912", TextKind.Translation, "deu", (1, 1, ["Joses", "Joseph", "Joses"]));
+        var luther = Corpus.Add(_db, "LUTH1912", TextKind.Translation, "deu", (1, 1, ["Joses", "Joseph", "Joses"]), (1, 2, ["Salome"]));
 
         _joseph = new Entity
         {
@@ -62,7 +63,9 @@ public sealed class NameSpellingsTests : IDisposable
         Named(own, null);
         Carried(_db.WordAt(luther, 1, 1, 2), g2);
         Carried(_db.WordAt(luther, 1, 1, 3), g3);
+        Named(_db.WordAt(luther, 1, 2, 1), "G4539, read from the verse");
         _db.SaveChanges();
+        _db.CountRecordWords();
     }
 
     public void Dispose()
@@ -112,13 +115,28 @@ public sealed class NameSpellingsTests : IDisposable
     }
 
     [Fact]
-    public async Task AWordsOwnNumberCountsAndEnglishHasNone()
+    public async Task AWordsOwnNumberAndItsNotesNumberCountAndEnglishHasNone()
     {
         var german = await NameSpellings.Of(_db, _joseph.Id, Others, "deu", null, CancellationToken.None);
         var english = await NameSpellings.Of(_db, _joseph.Id, Others, "eng", null, CancellationToken.None);
 
-        german.Should().BeEquivalentTo(new Dictionary<string, string> { ["Joses"] = "Joses" });
+        german.Should().BeEquivalentTo(new Dictionary<string, string> { ["Joses"] = "Joses", ["Salome"] = "Salome" });
         english.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task ATextsSpellingsAreCountedUnderTheNumberEachWordWasNamedThrough()
+    {
+        var luther = await _db.Texts.SingleAsync(t => t.Slug == "LUTH1912");
+
+        var counted = await RecordSpellings.Count(_db, luther.Id, CancellationToken.None);
+
+        counted.Should().BeEquivalentTo(new[]
+        {
+            new RecordSpellingCount(_joseph.Id, "G2500", "Joses", 2),
+            new RecordSpellingCount(_joseph.Id, "G2501", "Joseph", 1),
+            new RecordSpellingCount(_joseph.Id, "G4539", "Salome", 1),
+        });
     }
 
     [Fact]
