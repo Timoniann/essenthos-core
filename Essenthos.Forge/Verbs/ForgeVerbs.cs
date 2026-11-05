@@ -58,10 +58,9 @@ internal static partial class ForgeVerbs
             "Convert texts from their declared sources and corrections into their products under Resources/Essenthos/texts; "
             + "a text whose inputs did not move is left as it is.",
             ConvertVerb, Least: 1),
-        new("texts", "ids|compare|corrections <text,...|all> [--out <folder>] [--parallel <n>]",
+        new("texts", "ids|compare <text,...|all> [--out <folder>] [--parallel <n>]",
             "ids: write each word's id in the configured database as the text's ids product. compare: hold the converted products "
-            + "against the configured database by key and list every difference. corrections: write a text's corrections file "
-            + "from the repairs the load still computes in code (once, before they are deleted).",
+            + "against the configured database by key and list every difference.",
             TextsVerb, Least: 2),
         new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--dry-run]",
             "Restore a release on a target, verify it there and swap it in.", Publish),

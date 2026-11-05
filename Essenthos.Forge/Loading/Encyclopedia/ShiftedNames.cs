@@ -40,8 +40,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 ///
 /// <para>
 /// It is asked of every name carried across an aligner's link, as it is carried, against what the
-/// corpus names at that moment. A link a source states is never questioned here: what corrects a
-/// source's own mapping is <see cref="CrossedNameLoader"/>.
+/// corpus names at that moment. A link a source states is never questioned here.
 /// </para>
 /// </summary>
 internal static class ShiftedNames

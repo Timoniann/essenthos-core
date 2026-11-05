@@ -58,9 +58,7 @@ internal sealed record StrayNameOutcome(
 /// </list>
 ///
 /// <para>
-/// Rulings and readings of the word itself are never touched. It runs after every pass that carries,
-/// at the end of <see cref="AnnotationCarrier"/> and as the load's own step, and finds nothing the
-/// second time; a carry leaves such a row out before writing it (<see cref="LeaveOut"/>), and so does the
+/// Rulings and readings of the word itself are never touched. It finds nothing the second time; a carry leaves such a row out before writing it (<see cref="LeaveOut"/>), and so does the
 /// name resolution, which carries afresh every time it runs (<see cref="LeaveOutOfAPass"/>).
 /// </para>
 /// </summary>

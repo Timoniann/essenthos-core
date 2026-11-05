@@ -83,8 +83,7 @@ internal sealed record ForeignNameOutcome(
 /// The same test is asked of every row <see cref="Annotating.Carry"/> reaches, so no pass writes
 /// such a name; this takes back what was written before the record whose name the word is had
 /// reached it, which in the load is most of them, because the titles are written after the names.
-/// It runs after the last pass that carries, at the end of <see cref="AnnotationCarrier"/>, and as
-/// its own verb, and finds nothing the second time.
+/// It finds nothing the second time.
 /// </para>
 /// </summary>
 internal sealed class ForeignNames(AppDbContext db, ILogger<ForeignNames> logger)

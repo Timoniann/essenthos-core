@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace Essenthos.Core.Verbs;
 
-/// <summary>The verbs of the texts as converted products: convert, export, and the one-time ids and corrections.</summary>
+/// <summary>The verbs of the texts as converted products: convert, export, and the one-time ids.</summary>
 internal static partial class ForgeVerbs
 {
     private static IReadOnlyList<string> Slugs(string argument) =>
@@ -59,16 +59,8 @@ internal static partial class ForgeVerbs
                 return await TextIds(forge, store, Slugs(args[2]));
             case "compare":
                 return await CompareTexts(forge, store, Slugs(args[2]), Option(args, "--out"), Parallel(args));
-            case "corrections":
-                foreach (var slug in Slugs(args[2]))
-                {
-                    forge.Logger.LogInformation("{Outcome}", CorrectionSeeds.Write(store, slug));
-                }
-
-                store.Save();
-                return 0;
             default:
-                forge.Logger.LogError("forge texts ids|compare|corrections <text|all>");
+                forge.Logger.LogError("forge texts ids|compare <text|all>");
                 return 1;
         }
     }

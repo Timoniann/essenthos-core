@@ -23,7 +23,7 @@ internal sealed class KingJamesNumbers : ITextStage
     private const string Zefania = "Zefania/SF_2009-01-20_ENG_KJV_(KJV+).xml";
     private const string Mapping = "mapping/KJV-OT-mapped-to-BHS-full-mapping.csv";
     private const string Tahot = "STEPBible";
-    private const string Ebible = LostPsalmOpenings.KingJamesFolder;
+    private const string Ebible = "KingJames2006";
     private const int LastOldTestamentBook = 39;
     private const int Psalms = 19;
 

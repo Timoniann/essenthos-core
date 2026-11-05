@@ -134,11 +134,7 @@ internal static class Bible4uTextSource
     /// <summary>Every translation this reader knows, by the identifier its file carries.</summary>
     public static IReadOnlyDictionary<string, TextDefinition> Definitions => Known;
 
-    /// <param name="resources">
-    /// Where the witnesses the file is corrected against are, or null to read the file exactly as it
-    /// is printed — which is what the passes re-reading it for its markup want.
-    /// </param>
-    public static TextSource Read(string path, string identifier, string? resources = null)
+    public static TextSource Read(string path, string identifier)
     {
         if (!Known.TryGetValue(identifier, out var definition))
         {
@@ -149,12 +145,8 @@ internal static class Bible4uTextSource
         }
 
         var bible = new XmlBibleParser().Parse(File.ReadAllText(path));
-        return Build(bible, definition, resources is null ? null : Bible4uRepairs.For(identifier, bible, resources));
+        return Build(bible, definition);
     }
-
-    /// <summary>The file's corrections, read beside it, for a pass that makes them on a text already loaded.</summary>
-    public static TextRepairs Repairs(string path, string identifier, string resources) =>
-        Bible4uRepairs.For(identifier, new XmlBibleParser().Parse(File.ReadAllText(path)), resources);
 
     public static TextSource Build(XmlBible.XmlBible bible, TextDefinition definition, TextRepairs? repairs = null)
     {
