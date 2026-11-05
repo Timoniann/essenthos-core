@@ -76,11 +76,13 @@ public sealed class OwnerRowsTests : IDisposable
             .. Decided,
             new("objects:118", "names/BHSA", OwnerRows.Add, "11.7:21.33", "steps-of-ahaz", null, "thing", "H4600", null, "a word that is not this one"),
             new("objects:1", "names/BHSA", OwnerRows.Add, "1.1:1.2", "nobody-of-the-name", null, "thing", "H430", null, "no such record"),
+            new("objects:0", "names/BHSA", OwnerRows.Remove, "11.7:21.34", "boaz", null, null, null, null, "a word the text does not have"),
         ];
         var refused = OwnerRows.Apply(new ProductStore(_resources), wrong, dryRun: false, Now);
-        refused.Refused.Should().HaveCount(2);
+        refused.Refused.Should().HaveCount(3);
         refused.Refused[0].Should().Contain("carries H1162, not the H4600");
         refused.Refused[1].Should().Contain("no such record");
+        refused.Refused[2].Should().Contain("has no word 11.7:21.34", "a word with no Strong number to compare is still checked to be there");
         refused.Written.Should().BeEmpty();
         File.ReadAllText(store.FullPath("names/BHSA", ProductKind.Hand)).Should().Be(before);
     }

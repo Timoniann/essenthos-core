@@ -63,7 +63,10 @@ internal static class OwnerRows
     /// <param name="Record">The record named (add, remove), filed under (refile) or whose row goes (withdraw).</param>
     /// <param name="From">For refile, the record the row is filed under now.</param>
     /// <param name="Role">For add, how the word stands for the record.</param>
-    /// <param name="Strong">For a name, the word's Strong number when the decision was read: the guard that the word is the same.</param>
+    /// <param name="Strong">
+    /// For a name, the word's Strong number when the decision was read: the guard that the word is the same. A text whose
+    /// words carry none (the Vulgate, Brenton's Greek) leaves it empty, and only the word's being there is checked.
+    /// </param>
     /// <param name="Label">For a dataset row, the label the dataset gives it.</param>
     /// <param name="Why">The reading the decision rests on; a name row's note.</param>
     internal sealed record Row(
@@ -204,7 +207,7 @@ internal static class OwnerRows
                 ? new ReferenceEdit(store)
                 : group.Key.StartsWith(NameProducts.Folder + "/", StringComparison.Ordinal)
                   && NameProducts.IsReference(group.Key[(NameProducts.Folder.Length + 1)..])
-                    ? new NameEdit(store, group.Key[(NameProducts.Folder.Length + 1)..], group.Where(r => r.Strong is not null).Select(r => r.At))
+                    ? new NameEdit(store, group.Key[(NameProducts.Folder.Length + 1)..], group.Select(r => r.At))
                     : throw new InvalidDataException($"{group.Key}: owner rows edit a reference text's names or {References}, not this file.");
             edits.Add(edit);
 
@@ -508,17 +511,14 @@ internal static class OwnerRows
         public string? Apply(Row row)
         {
             var key = WordKey.Parse(row.At, _text);
-            if (row.Strong is { } strong)
+            if (!_words.TryGetValue(key, out var held))
             {
-                if (!_words.TryGetValue(key, out var held))
-                {
-                    return $"{_text} has no word {row.At}";
-                }
+                return $"{_text} has no word {row.At}";
+            }
 
-                if (held != strong)
-                {
-                    return $"{_text} {row.At} carries {held ?? "no Strong number"}, not the {strong} the decision was read on";
-                }
+            if (row.Strong is { } strong && held != strong)
+            {
+                return $"{_text} {row.At} carries {held ?? "no Strong number"}, not the {strong} the decision was read on";
             }
 
             var at = _rows.FindIndex(r => r.Key == key && r.Row[1] == row.Record);
