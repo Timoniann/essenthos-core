@@ -8,8 +8,11 @@ internal static partial class RecordFiles
     private const string DerivedVerse =
         "(v.source LIKE 'Essenthos, from the words this corpus annotates%' OR v.source LIKE 'Essenthos, the verse a relationship of this project''s own was read from%')";
 
-    /// <summary>The verse rows a dataset states, which are the dataset's references now.</summary>
-    private const string DatasetVerse = "(v.source LIKE 'BibleData%' OR v.source LIKE 'OpenBible%')";
+    /// <summary>The verse rows BibleData states: its references, never a served verse of a record.</summary>
+    private const string WitnessVerse = "(v.source LIKE 'BibleData%')";
+
+    /// <summary>The verse rows the gazetteer states: its references, and served as the verses of the places it lists.</summary>
+    private const string GazetteerVerse = "(v.source LIKE 'OpenBible%')";
 
     /// <summary>What a row holds until its companion file fills a column a check forbids to be empty.</summary>
     private const string Pending = "pending:records-load";
@@ -29,20 +32,20 @@ internal static partial class RecordFiles
         FROM s JOIN entity e ON e.slug = s.slug ORDER BY s.slug, s.ref, s.by, s.label
         """,
         product.Contains("derived", StringComparison.Ordinal) ? [] : ["entity_verse"],
-        After: Settled("entity_verse", DatasetVerse.Replace("v.", ""),
-            "a verse row credits a dataset: the verses of a dataset are its references, never the served verses of a record"),
+        After: Settled("entity_verse", WitnessVerse.Replace("v.", ""),
+            "a verse row credits BibleData: its verses are its references, never the served verses of a record"),
         ExportLoaded: $"""
         SELECT e.slug, {Ref("v")}, v.label, v.names, v.disputed, v.withheld, v.source
         FROM entity_verse v JOIN entity e ON e.id = v.entity_id WHERE {which} ORDER BY 1, 2, 7, 3, 4, 5, 6
-        """.Replace(DatasetVerse, "false"),
+        """.Replace(WitnessVerse, "false"),
         About: about);
 
     private static RecordFile[] Facts =>
     [
-        Verses("records/facts/verses", ProductKind.Hand, $"NOT {DerivedVerse} AND NOT {DatasetVerse}",
+        Verses("records/facts/verses", ProductKind.Hand, $"NOT {DerivedVerse} AND NOT {WitnessVerse} AND NOT {GazetteerVerse}",
             "Verses a reading of ours says speak of a record, where no word of ours carries it: verse readings, the passages that command a thing, rulings, terms."),
-        Verses("records/derived/verses", ProductKind.Machine, DerivedVerse,
-            "Derived: the verses our words and relationships put a record in, and whether a word names it there. Regenerated from names and relationships; never edited."),
+        Verses("records/derived/verses", ProductKind.Machine, $"({DerivedVerse} OR {GazetteerVerse})",
+            "Derived: the verses our words and relationships put a record in, and the gazetteer's verses of the places it lists, each with whether a word names the record there. Regenerated from names, relationships and the gazetteer's references; never edited."),
 
         new("records/facts/passages", ProductKind.Hand,
             "slug role ordinal:int book:int chapter:int verse:int? end_chapter:int end_verse:int? by",

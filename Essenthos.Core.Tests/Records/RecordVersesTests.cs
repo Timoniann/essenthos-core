@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Frame;
@@ -74,6 +75,41 @@ public sealed class RecordVersesTests : IDisposable
     }
 
     [Fact]
+    public void TheGazetteersVersesAreServedUnderItsCreditAndListTheRecord()
+    {
+        var store = Store(Name("1.10:6.1", "mizraim", "name", "manual"));
+        Write(store, "records/facts/relationships", Relationship("mizraim", "son-of", "ham", "1.10:6"));
+        Write(store, "external/openbible/references",
+            ["a1", "mizraim", "1.10:6", null, "f", "f", "f"],
+            ["a1", "mizraim", "1.50:11", null, "t", "f", "f"],
+            [null, "ham", "19.78:51", null, "f", "t", "f"]);
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[6] != Own).Select(r => (r[0], r[1], r[3], r[4], r[6])).Should().Equal(
+            ("ham", "19.78:51", "f", "t", OpenBiblePlaceLoader.Source),
+            ("mizraim", "1.10:6", "t", "f", OpenBiblePlaceLoader.Source),
+            ("mizraim", "1.50:11", "f", "f", OpenBiblePlaceLoader.Source));
+    }
+
+    [Fact]
+    public void AGazetteerVerseOfATermNamesItWhereAWordCarriesItsStrongNumber()
+    {
+        var store = Store();
+        Write(store, "records/names", ["azazel", "1", "Azazel", "term", null, null, null, null, "H5799", null, null, null]);
+        using (var words = store.Create(TextWord.ProductOf("BHSA"), ProductKind.Machine, TextWord.Schema("BHSA"), "test", []))
+        {
+            words.WriteAll([Word("3.16:8.12", "H5799"), Word("3.16:9.1", "H8064")]);
+            words.Complete();
+        }
+
+        Write(store, "external/openbible/references",
+            ["a2", "azazel", "3.16:8", null, "t", "f", "f"], ["a2", "azazel", "3.16:9", null, "t", "f", "f"]);
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[0] == "azazel").Select(r => (r[1], r[3])).Should().Equal(("3.16:8", "t"), ("3.16:9", "f"));
+    }
+
+    [Fact]
     public void ANameThatMovesMovesTheVerseAndAnUnmovedStoreIsNotWrittenAgain()
     {
         var store = Store(Name("11.7:21.33", "boaz", "name", "lexical", 0.99));
@@ -89,8 +125,8 @@ public sealed class RecordVersesTests : IDisposable
     {
         var store = new ProductStore(_root);
         Write(store, "records/records",
-            Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("boaz", "person"), Record("boaz-pillar", "object"),
-            Record("dathan", "person"), Record("david", "person"), Record("izhar", "person"), Record("korah", "person"),
+            Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
+            Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
             Record("levi", "person"), Record("levites", "people", "Levites"), Record("mizraim", "person"), Record("moses", "person"));
         Write(store, "records/facts/titles", ["anointed", "david", "1.3:1", null, "test"]);
         Write(store, "records/facts/relationships");
@@ -117,6 +153,9 @@ public sealed class RecordVersesTests : IDisposable
         string own, string record, string role, string method, double? confidence = null, string source = "test",
         string origin = NameOrigins.Settled) =>
         new(WordKey.Parse(own, "BHSA"), record, role, origin, null, method, confidence, source);
+
+    private static TextWord Word(string key, string strong) =>
+        new(WordKey.Parse(key, "BHSA"), null, "w", " ", null, strong, null, null, null, null, false, null, null, null);
 
     private static string?[] Record(string slug, string kind, string? name = null) =>
         [slug, kind, null, null, name ?? slug, null, null, null, null, null, null, null];

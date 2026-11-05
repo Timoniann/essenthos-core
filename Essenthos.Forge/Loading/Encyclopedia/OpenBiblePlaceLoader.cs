@@ -57,7 +57,7 @@ internal sealed record PlacesOutcome(
 /// </summary>
 internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<OpenBiblePlaceLoader> logger)
 {
-    private const string Source =
+    internal const string Source =
         "OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0";
 
     private const string FileName = "ancient.jsonl";

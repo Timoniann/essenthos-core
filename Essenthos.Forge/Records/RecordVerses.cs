@@ -1,7 +1,9 @@
 using System.Collections.Concurrent;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Names;
@@ -22,8 +24,13 @@ namespace Essenthos.Core.Records;
 /// <item>withheld where every word naming a man in the verse is the name after <em>the sons of</em> that the owner's ruling
 /// reads as the people beside a word naming the people in the same verse of the same text (<see cref="Annotations.SonsOf"/>);</item>
 /// <item>for a record no other verse lists, the verses its relationships were read from (<see cref="RelationshipVerseLoader"/>),
-/// naming it where a word of the verse carries it in any text.</item>
+/// naming it where a word of the verse carries it in any text;</item>
+/// <item>every verse the gazetteer lists for the record its row is filed under (<c>external/openbible/references</c>), under
+/// its own credit as <see cref="OpenBiblePlaceLoader"/> stored it, naming the record where a word of the verse carries it in
+/// any text. BibleData's verses stay its references only.</item>
 /// </list>
+/// A term such a row lists is named where a word of the verse, in any text, carries one of its Strong numbers, as
+/// <see cref="DatasetLoader.NamingVerses"/> reads it: no word is annotated to a term.
 /// A base reading beside a differs is the base text's name, not the word's, and puts no verse on a page.
 /// </summary>
 internal static class RecordVerses
@@ -32,7 +39,7 @@ internal static class RecordVerses
 
     public const string Producer = "forge records-verses";
 
-    public const string Version = "1";
+    public const string Version = "2";
 
     public const string VersionNote = "verses-version";
 
@@ -42,6 +49,10 @@ internal static class RecordVerses
 
     private const string RelationshipReferences = RelationshipVerseLoader.Source;
 
+    private const string GazetteerReferences = OpenBiblePlaceLoader.Source;
+
+    private const string Gazetteer = "external/openbible/references";
+
     /// <summary>The kinds whose verses are read off the words; the words for God are read off their Strong numbers elsewhere.</summary>
     private static readonly IReadOnlySet<EntityKind> Named =
         new HashSet<EntityKind> { EntityKind.Person, EntityKind.Place, EntityKind.Title, EntityKind.Object, EntityKind.Observance };
@@ -49,10 +60,10 @@ internal static class RecordVerses
     /// <summary>The files besides the names and the frames that the verses are read from.</summary>
     private static readonly string[] Facts =
     [
-        "records/records", "records/facts/titles", "records/facts/relationships", "records/facts/verses", "external/openbible/references",
+        "records/records", "records/names", "records/facts/titles", "records/facts/relationships", "records/facts/verses", Gazetteer,
     ];
 
-    public sealed record Outcome(bool Written, long Rows, long Records, long Names, long Withheld, long FromRelationships);
+    public sealed record Outcome(bool Written, long Rows, long Records, long Names, long Withheld, long FromRelationships, long FromGazetteer);
 
     /// <summary>A name on a word, as the projection or a database's export gives it.</summary>
     /// <param name="Role">Null where the database's row predates roles.</param>
@@ -67,12 +78,13 @@ internal static class RecordVerses
         [
             .. texts.Select(NameProducts.Projected),
             .. texts.Select(FrameFile.Product),
+            .. texts.Select(TextWord.ProductOf),
             .. Facts,
         ];
         var inputs = store.Inputs(read.Select(store.Find).OfType<string>());
         if (!force && !NeedsBuild(store, inputs))
         {
-            return new Outcome(false, 0, 0, 0, 0, 0);
+            return new Outcome(false, 0, 0, 0, 0, 0, 0);
         }
 
         var (rows, outcome) = Derive(store, texts, text =>
@@ -126,6 +138,13 @@ internal static class RecordVerses
             .Select(r => (ids[r[0]!], ids[r[1]!]))
             .ToHashSet();
 
+        var gazetteerRows = store.Exists(Gazetteer) ? Read(store, Gazetteer) : [];
+        var relationshipRows = Read(store, "records/facts/relationships")
+            .Where(r => r[3] is not null && !r[8]!.StartsWith(ShownVerses.Witness, StringComparison.Ordinal))
+            .ToList();
+        var terms = Terms(store, records, ids,
+            gazetteerRows.Select(r => r[1]!).Concat(relationshipRows.SelectMany(r => new[] { r[0]!, r[2]! })));
+
         // (record, canonical verse) => whether every word naming the record there stands apart for its people.
         var named = new ConcurrentDictionary<(int Record, VerseKey Verse), bool>();
         var anyName = new ConcurrentDictionary<(int Record, VerseKey Verse), byte>();
@@ -163,6 +182,21 @@ internal static class RecordVerses
                 if (row.Source == Annotations.SonsOf)
                 {
                     sonsOf.Add((word, id));
+                }
+            }
+
+            if (terms.Count > 0 && store.Exists(TextWord.ProductOf(text)))
+            {
+                using var numbered = store.Open(TextWord.ProductOf(text), TextWord.Schema(text));
+                foreach (var numberedWord in numbered.Rows())
+                {
+                    if (numberedWord.Strong is { } strong && terms.TryGetValue(strong, out var bearing))
+                    {
+                        foreach (var term in bearing)
+                        {
+                            anyName.TryAdd((term, Placed(numberedWord.Key.Verse)), 0);
+                        }
+                    }
                 }
             }
 
@@ -207,27 +241,55 @@ internal static class RecordVerses
             }
         }
 
+        string? Names(string slug, string verse) => anyName.ContainsKey((ids[slug], VerseKey.Parse(verse))) ? "t" : "f";
+
+        // The gazetteer's rows: external_id record ref label names disputed withheld.
+        var gazetteer = gazetteerRows
+            .Where(r => ids.ContainsKey(r[1]!))
+            .Select(r => new string?[] { r[1], r[2], r[3], Names(r[1]!, r[2]!), r[5], r[6], GazetteerReferences })
+            .ToList();
+
         // A record is listed where any verse a reader is shown lists it: ours read off the words, a reading of ours by hand,
         // or the gazetteer's.
         var listed = rows.Select(r => r[0]!)
             .Concat(Read(store, "records/facts/verses").Select(r => r[0]!))
-            .Concat(store.Exists("external/openbible/references") ? Read(store, "external/openbible/references").Select(r => r[1]!) : [])
+            .Concat(gazetteer.Select(r => r[0]!))
             .ToHashSet(StringComparer.Ordinal);
-        var fromRelationships = Read(store, "records/facts/relationships")
-            .Where(r => r[3] is not null && !r[8]!.StartsWith(ShownVerses.Witness, StringComparison.Ordinal))
+        var fromRelationships = relationshipRows
             .SelectMany(r => new[] { (Slug: r[0]!, Ref: r[3]!), (Slug: r[2]!, Ref: r[3]!) })
             .Where(r => ids.ContainsKey(r.Slug) && !listed.Contains(r.Slug))
             .Distinct()
             .Select(r => new string?[]
             {
-                r.Slug, r.Ref, null, anyName.ContainsKey((ids[r.Slug], VerseKey.Parse(r.Ref))) ? "t" : "f", "f", "f", RelationshipReferences,
+                r.Slug, r.Ref, null, Names(r.Slug, r.Ref), "f", "f", RelationshipReferences,
             })
             .ToList();
         rows.AddRange(fromRelationships);
+        rows.AddRange(gazetteer);
 
         var file = RecordFiles.All.Single(f => f.Product == Product);
         var sorted = file.Sorted(rows, file.Order(file.Export));
-        return (sorted, new Outcome(false, sorted.Count, sorted.Select(r => r[0]).Distinct().Count(), read, withheld, fromRelationships.Count));
+        return (sorted, new Outcome(false, sorted.Count, sorted.Select(r => r[0]).Distinct().Count(), read, withheld, fromRelationships.Count,
+            gazetteer.Count));
+    }
+
+    /// <summary>The Strong numbers of the terms among <paramref name="listed"/>, each with the terms that bear it.</summary>
+    private static Dictionary<string, List<int>> Terms(
+        ProductStore store, List<Record> records, Dictionary<string, int> ids, IEnumerable<string> listed)
+    {
+        var wanted = listed.Where(slug => ids.TryGetValue(slug, out var id) && records[id].Kind == EntityKind.Term)
+            .ToHashSet(StringComparer.Ordinal);
+        if (wanted.Count == 0)
+        {
+            return [];
+        }
+
+        return Read(store, "records/names")
+            .Where(r => wanted.Contains(r[0]!))
+            .SelectMany(r => new[] { r[8], r[9] }.OfType<string>().Select(strong => (Strong: strong, Term: ids[r[0]!])))
+            .Distinct()
+            .GroupBy(p => p.Strong, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(p => p.Term).ToList(), StringComparer.Ordinal);
     }
 
     private static bool NeedsBuild(ProductStore store, IReadOnlyList<ProductInput> inputs)
