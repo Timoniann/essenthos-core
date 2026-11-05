@@ -42,48 +42,6 @@ public sealed class UnlinkedKingJamesVerseTests : IDisposable
     }
 
     /// <summary>
-    /// Genesis 14:5: bible4u prints <em>Emins</em> where the file, with the 1769, prints
-    /// <em>Emims</em>. Read word against word the verse was refused whole, and the Emim, named on the
-    /// Hebrew, were named on nothing in the King James.
-    /// </summary>
-    [Fact]
-    public async Task ANameTheLoadedTextSpellsOtherwiseIsLinkedAndItsNameCarries()
-    {
-        Seed(
-            [(14, 5, ["and", "the", "Emins", "in", "Shaveh", "Kiriathaim"])],
-            [(14, 5, ["וְ", "אֶת", "הָ", "אֵימִים", "בְּ", "שָׁוֵה", "קִרְיָתָיִם"])]);
-        var emim = new Entity { Kind = EntityKind.People, Slug = "emims", Name = "Emims", SourceId = "emims", Source = "a test" };
-        _db.Entities.Add(emim);
-        _db.SaveChanges();
-        _db.WordEntities.Add(new WordEntity
-        {
-            WordId = _db.WordAt(_bhsa, 14, 5, 4).Id,
-            EntityId = emim.Id,
-            Method = LinkMethod.StatedBySource,
-            Source = "a test",
-            Claims = [new WordEntityClaim { Method = LinkMethod.StatedBySource, Source = "a test" }],
-        });
-        _db.SaveChanges();
-
-        var outcome = await Load(new MappingRecord(1, 14, 5, Entries(1, 2, 3, 4, 5, 6, 7),
-        [
-            Segment(["and"], 1),
-            Segment(["the"], 3),
-            Segment(["Emims"], 4),
-            Segment(["in", "Shaveh"], 5),
-            Segment(["Kiriathaim"], 7),
-        ]));
-
-        outcome.Refused.Should().Be(0);
-        (await HebrewOf(_db.WordAt(_kjv, 14, 5, 3))).Should().Equal("אֵימִים");
-
-        await Carrier().Carry();
-        var named = await _db.WordEntities.Where(a => a.WordId == _db.WordAt(_kjv, 14, 5, 3).Id)
-            .Select(a => a.Entity!.Slug).ToListAsync();
-        named.Should().Equal("emims");
-    }
-
-    /// <summary>
     /// 1 Kings 18:33 and 34: the King James ends verse 33 where BHSA has already begun verse 34.
     /// Neither verse's Hebrew lines up with the file's, and the file's running numbers, which are
     /// BHSA's own, say which word each entry is — across the boundary where the two put it apart.
@@ -221,13 +179,4 @@ public sealed class UnlinkedKingJamesVerseTests : IDisposable
             .Select(lw => lw.Word!.Surface)
             .ToListAsync();
     }
-
-    private AnnotationCarrier Carrier() =>
-        new(
-            _db,
-            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
-            new ForeignNames(_db, NullLogger<ForeignNames>.Instance),
-            new EqualTwinNames(_db, NullLogger<EqualTwinNames>.Instance),
-            new PronounReferents(_db, NullLogger<PronounReferents>.Instance),
-            NullLogger<AnnotationCarrier>.Instance);
 }

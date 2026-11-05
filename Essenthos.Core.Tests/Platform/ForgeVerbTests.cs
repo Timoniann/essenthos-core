@@ -20,12 +20,8 @@ public sealed class ForgeVerbTests
     [InlineData(new[] { "lexicon-translations", "--from", "lexicon" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV", "BHSA", "--daughter" }, true)]
-    [InlineData(new[] { "redraw", "berean" }, false)]
-    [InlineData(new[] { "redraw", "berean", "BHSA" }, true)]
-    [InlineData(new[] { "redraw", "berean", "BHSA", "NESTLE1904" }, false)]
-    [InlineData(new[] { "kjv-greek", "TISCH" }, true)]
-    [InlineData(new[] { "kjv-greek" }, false)]
-    [InlineData(new[] { "kjv-greek", "TISCH", "WH1881" }, false)]
+    [InlineData(new[] { "texts", "ids" }, false)]
+    [InlineData(new[] { "texts", "ids", "all" }, true)]
     [InlineData(new[] { "evidentia-preview", "BSB", "BHSA", "1" }, false)]
     [InlineData(new[] { "evidentia-preview", "BSB", "BHSA", "1", "1" }, true)]
     public void AVerbTakesTheArgumentsItNeeds(string[] args, bool accepted) =>
@@ -33,13 +29,4 @@ public sealed class ForgeVerbTests
 
     [Fact]
     public void AVerbNobodyDeclaredIsNotFound() => ForgeVerbs.Find("no-such-verb").Should().BeNull();
-
-    [Fact]
-    public async Task TheKingJamesVerbRefusesOtherTextsBeforeResolvingAnyLoader()
-    {
-        var verb = ForgeVerbs.Find("kjv-greek")!;
-        var run = new ForgeRun(null!, Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance, "", "");
-        var act = () => verb.Run(run, ["kjv-greek", "BHSA"]);
-        await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*not a King James Greek witness*");
-    }
 }

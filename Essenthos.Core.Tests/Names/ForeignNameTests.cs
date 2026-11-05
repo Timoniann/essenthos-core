@@ -25,7 +25,6 @@ public sealed class ForeignNameTests : IDisposable
 
     private readonly AppDbContext _db;
     private readonly ForeignNames _foreign;
-    private readonly AnnotationCarrier _carrier;
     private readonly Text _greek;
     private readonly Text _ukrainian;
     private readonly Entity _satan;
@@ -37,9 +36,6 @@ public sealed class ForeignNameTests : IDisposable
         _db = database.NewContext();
         Clear();
         _foreign = new ForeignNames(_db, NullLogger<ForeignNames>.Instance);
-        _carrier = new AnnotationCarrier(
-            _db, new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance), _foreign,
-            new EqualTwinNames(_db, NullLogger<EqualTwinNames>.Instance), new PronounReferents(_db, NullLogger<PronounReferents>.Instance), NullLogger<AnnotationCarrier>.Instance);
 
         _greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc",
             (16, 20, ["Σατανᾶν", "Ἰησοῦ", "Χριστοῦ"]),
@@ -143,16 +139,6 @@ public sealed class ForeignNameTests : IDisposable
 
     private List<string> NamedOn(Word word) =>
         [.. _db.WordEntities.AsNoTracking().Where(a => a.WordId == word.Id).Select(a => a.Entity!.Slug).OrderBy(s => s)];
-
-    [Fact]
-    public async Task APersonsNameIsNotCarriedOntoAWordTheTextWritesAsAnothersName()
-    {
-        Link(Greek(16, 20, 1), Ukrainian(20, 4), 0.95);
-
-        await _carrier.Carry();
-
-        NamedOn(Ukrainian(20, 4)).Should().BeEmpty("Христа is how this text writes Jesus, whom the verse names");
-    }
 
     [Fact]
     public async Task ANameCarriedOntoAnothersNameIsTakenBackOnceAndOnlyOnce()

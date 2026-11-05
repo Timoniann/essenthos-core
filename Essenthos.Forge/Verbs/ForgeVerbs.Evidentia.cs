@@ -191,23 +191,6 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// The one command that writes EVIDENTIA's output into the corpus, and only what a reviewer approved
-    /// or corrected. Without --write it reports what it would write and writes nothing.
-    /// </summary>
-    private static async Task<int> EvidentiaApply(ForgeRun forge, string[] args)
-    {
-        using var applyScope = forge.Scope();
-        forge.Logger.LogInformation("\n{Outcome}", await applyScope.ServiceProvider.GetRequiredService<EvidentiaLinkWriter>()
-            .Apply(int.Parse(args[1]), args.Contains("--write")));
-        if (args.Contains("--write"))
-        {
-            await forge.Tidy();
-        }
-
-        return 0;
-    }
-
-    /// <summary>
     /// The verdicts of every run that has any, or of the runs named, written to the ledger under
     /// Resources/Essenthos/evidentia. The verbs that record a verdict do this themselves.
     /// </summary>
@@ -229,18 +212,6 @@ internal static partial class ForgeVerbs
             forge.Logger.LogInformation("{Outcome}", await ledger.Export(run, forge.Resources));
         }
 
-        return 0;
-    }
-
-    /// <summary>
-    /// The ledger's verdicts put back into the corpus: a run it does not hold written again and applied,
-    /// a verdict whose link was deleted written again. What every load does as one of its steps.
-    /// </summary>
-    private static async Task<int> EvidentiaReplay(ForgeRun forge, string[] args)
-    {
-        using var replayScope = forge.Scope();
-        forge.Logger.LogInformation("\n{Outcome}", await replayScope.ServiceProvider.GetRequiredService<EvidentiaLedger>()
-            .Replay(forge.Resources));
         return 0;
     }
 

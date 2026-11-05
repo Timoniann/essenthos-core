@@ -23,7 +23,6 @@ public sealed class StrayNameTests : IDisposable
     private const string Hebrew = "the names the Hebrew marks, a test";
 
     private readonly AppDbContext _db;
-    private readonly AnnotationCarrier _carrier;
     private readonly StrayNames _strays;
     private readonly Text _hebrew;
     private readonly Text _ukrainian;
@@ -35,14 +34,6 @@ public sealed class StrayNameTests : IDisposable
         _db = database.NewContext();
         Clear();
         _strays = new StrayNames(_db, NullLogger<StrayNames>.Instance);
-        _carrier = new AnnotationCarrier(
-            _db,
-            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
-            new ForeignNames(_db, NullLogger<ForeignNames>.Instance),
-            new EqualTwinNames(_db, NullLogger<EqualTwinNames>.Instance),
-            new PronounReferents(_db, NullLogger<PronounReferents>.Instance),
-            NullLogger<AnnotationCarrier>.Instance,
-            _strays);
 
         _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (13, 11, ["פָרַץ", "וַיִּקְרָא", "פֶּרֶץ עֻזָּא", "עַד"]),
@@ -82,26 +73,6 @@ public sealed class StrayNameTests : IDisposable
     }
 
     [Fact]
-    public async Task APlaceIsNotCarriedOntoWordsBesideTheWordThatNamesIt()
-    {
-        await _carrier.Carry();
-
-        NamedOn(UkrainianWord(13, 11, 5)).Should().BeEmpty("так is no name, and Перец-Узза stands two words before it");
-        NamedOn(UkrainianWord(13, 11, 7)).Should().BeEmpty("зветься is no name either");
-        NamedOn(UkrainianWord(13, 11, 3)).Should().Equal("perezuzzah");
-    }
-
-    [Fact]
-    public async Task WhereTheVerseNamesItNowhereElseTheFaintLinkStands()
-    {
-        _db.Database.ExecuteSqlRaw("DELETE FROM word_entity WHERE word_id = {0}", UkrainianWord(13, 11, 3).Id);
-
-        await _carrier.Carry();
-
-        NamedOn(UkrainianWord(13, 11, 5)).Should().Equal(["perezuzzah"], "a faint link is the only account of the word, and nothing contradicts it");
-    }
-
-    [Fact]
     public async Task WhatACarryWroteBeforeIsTakenBackOnceAndOnlyOnce()
     {
         Carried(UkrainianWord(13, 11, 5), _perezUzza, HebrewWord(13, 11, 3), 0.2);
@@ -120,28 +91,6 @@ public sealed class StrayNameTests : IDisposable
         second.Withdrawn.Should().Be(0);
         NamedOn(UkrainianWord(13, 11, 5)).Should().BeEmpty();
         NamedOn(UkrainianWord(13, 11, 7)).Should().BeEmpty();
-    }
-
-    [Fact]
-    public async Task APronounAndAFirmerLinkAreLeftAlone()
-    {
-        Link(HebrewWord(13, 12, 2), UkrainianWord(13, 12, 5), 0.5);
-        Link(HebrewWord(13, 12, 2), UkrainianWord(13, 12, 2), 0.75);
-
-        await _carrier.Carry();
-
-        NamedOn(UkrainianWord(13, 12, 5)).Should().Equal(["david"], "a pronoun is the pronoun pass's question");
-        NamedOn(UkrainianWord(13, 12, 2)).Should().Equal(["david"], "a link of 0.75 is not faint");
-    }
-
-    [Fact]
-    public async Task AWordWrittenAsANameWhereItStandsIsLeftAlone()
-    {
-        Link(HebrewWord(13, 12, 2), UkrainianWord(13, 12, 3), 0.5);
-
-        await _carrier.Carry();
-
-        NamedOn(UkrainianWord(13, 12, 3)).Should().Equal(["david"], "Бога is capitalised in the middle of its sentence");
     }
 
     /// <summary>
@@ -167,15 +116,6 @@ public sealed class StrayNameTests : IDisposable
         NamedOn(UkrainianWord(13, 11, 7)).Should().BeEmpty("зветься is no name either");
         taken.Withdrawn.Should().Be(0, "the resolution never wrote what the pass would take back");
         NamedOn(UkrainianWord(13, 11, 3)).Should().Equal("perezuzzah");
-    }
-
-    [Fact]
-    public async Task ASecondCarryWritesAndTakesBackNothing()
-    {
-        await _carrier.Carry();
-        var second = await _carrier.Carry();
-
-        (second.Written, second.Withdrawn).Should().Be((0, 0));
     }
 
     private Entity Record(EntityKind kind, string slug, string name)

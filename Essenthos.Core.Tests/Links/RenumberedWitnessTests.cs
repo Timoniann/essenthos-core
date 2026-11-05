@@ -291,32 +291,4 @@ public sealed class RenumberedWitnessTests : IDisposable
                 _synodal.Slug, _hebrew.Slug, SynodalNumbers(), new HashSet<(int, int, int)> { (1, 52, 0) }, apply: true))
             .Stale.Should().Be(0);
     }
-
-    /// <summary>
-    /// What the load does with it: the links move in place, so no newer link marks the verse, and the
-    /// repair names the verses for the carry. Doeg, named on the Hebrew, reaches Luther's Doeg.
-    /// </summary>
-    [Fact]
-    public async Task TheNameTheHebrewGivesDoegReachesTheWordMatchedToItAgain()
-    {
-        LutherAsTheOldNumbersDrewIt();
-        var carrier = new AnnotationCarrier(
-            _db,
-            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
-            new ForeignNames(_db, NullLogger<ForeignNames>.Instance),
-            new EqualTwinNames(_db, NullLogger<EqualTwinNames>.Instance),
-            new PronounReferents(_db, NullLogger<PronounReferents>.Instance),
-            NullLogger<AnnotationCarrier>.Instance);
-        await carrier.CarryNewLinks();
-        (await _db.WordEntities.AnyAsync(a => a.WordId == Luther(0, 5).Id)).Should().BeFalse();
-        (await _db.WordEntities.AnyAsync(a => a.WordId == Luther(0, 3).Id)).Should().BeTrue("Davids was matched to Doeg's word");
-
-        var outcome = await _repair.Run(Path.GetTempPath());
-        var carried = await carrier.CarryNewLinks(default, outcome.Verses);
-
-        carried.Since.Should().Be(carried.Through, "no link was drawn; the links moved in place");
-        (await _db.WordEntities.Where(a => a.WordId == Luther(0, 5).Id).Select(a => a.EntityId).ToListAsync())
-            .Should().Equal(_doeg.Id);
-        (await _db.WordEntities.AnyAsync(a => a.WordId == Luther(0, 3).Id)).Should().BeFalse();
-    }
 }
