@@ -186,6 +186,26 @@ internal static class AuthEndpoints
             ? email.Trim().ToLowerInvariant()
             : null;
 
+    /// <summary>
+    /// Where a sign-in the provider's handler could not finish goes: the page it started on, read back
+    /// from where the login asked to be completed, with <c>signin=failed</c>; the home page when that is
+    /// unknown.
+    /// </summary>
+    internal static string Unfinished(string? completion)
+    {
+        string? returnUrl = null;
+        if (completion is { } address && address.IndexOf('?') is var query and >= 0)
+        {
+            var asked = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(address[query..]);
+            if (asked.TryGetValue("returnUrl", out var value))
+            {
+                returnUrl = value.ToString();
+            }
+        }
+
+        return WithOutcome(Local(returnUrl), "failed");
+    }
+
     private static string WithOutcome(string url, string outcome) =>
         $"{url}{(url.Contains('?') ? '&' : '?')}signin={outcome}";
 

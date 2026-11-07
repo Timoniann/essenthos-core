@@ -135,6 +135,25 @@ internal static class AccountsSetup
         // GET, which carries a Lax cookie, and a None cookie must be Secure — which a development
         // server on plain http is not, so the correlation check failed there.
         options.CorrelationCookie.SameSite = SameSiteMode.Lax;
+        options.Events.OnRemoteFailure = SendBackUnfinished;
+    }
+
+    /// <summary>
+    /// A sign-in that came back unfinished goes back to the page it started on, told so, as every other
+    /// failed sign-in is (<c>signin=failed</c>). A reader who presses Cancel on the provider's page comes
+    /// back with <c>access_denied</c>; one who returns to a consent page with Back, or a replayed link,
+    /// brings a state that no longer matches. Each is ordinary, and unhandled each was a bare 500
+    /// (PRB-1551). Where the state could not be read, the page it started on is unknown, so it is the
+    /// home page.
+    /// </summary>
+    private static Task SendBackUnfinished(RemoteFailureContext context)
+    {
+        context.HttpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+            .CreateLogger(typeof(AccountsSetup).FullName!)
+            .LogWarning("Signing in with {Provider} did not finish: {Reason}", context.Scheme.Name, context.Failure?.Message);
+        context.Response.Redirect(Endpoints.AuthEndpoints.Unfinished(context.Properties?.RedirectUri));
+        context.HandleResponse();
+        return Task.CompletedTask;
     }
 
     private static (string Id, string Secret)? Client(IConfiguration configuration, string provider) =>
