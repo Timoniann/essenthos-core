@@ -1,0 +1,24 @@
+# producer   by hand: Qohelet of Ecclesiastes is Solomon (PRB-1568), applied by forge owner-rows
+# by         Essenthos, the project owner's ruling of 2026-11-09 that Qohelet, the Preacher of Ecclesiastes, son of David, king in Jerusalem, is Solomon, applied by claude-opus-5-5 to every word of the book that names the Preacher, on his instruction of 2026-11-09
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1568	names/BHSA	add	21.1:1.2	solomon	\N	title	H6953	\N	ECC 1:1 'the words of the Preacher, the son of David, king in Jerusalem': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/BHSA	add	21.1:2.4	solomon	\N	title	H6953	\N	ECC 1:2 'saith the Preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/BHSA	add	21.1:12.2	solomon	\N	title	H6953	\N	ECC 1:12 'I the Preacher was king over Israel in Jerusalem': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/BHSA	add	21.7:27.5	solomon	\N	title	H6953	\N	ECC 7:27 'saith the preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/BHSA	add	21.12:8.5	solomon	\N	title	H6953	\N	ECC 12:8 'saith the preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/BHSA	add	21.12:9.5	solomon	\N	title	H6953	\N	ECC 12:9 'the preacher was wise, he still taught the people knowledge': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/BHSA	add	21.12:10.2	solomon	\N	title	H6953	\N	ECC 12:10 'the preacher sought to find out acceptable words': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.1:1.2	solomon	\N	title	\N	\N	ECC 1:1 'the words of the Preacher, the son of David, king in Jerusalem': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.1:2.5	solomon	\N	title	\N	\N	ECC 1:2 'saith the Preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.1:12.2	solomon	\N	title	\N	\N	ECC 1:12 'I the Preacher was king over Israel in Jerusalem': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.7:27.6	solomon	\N	title	\N	\N	ECC 7:27 'saith the preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.12:8.5	solomon	\N	title	\N	\N	ECC 12:8 'saith the preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.12:9.5	solomon	\N	title	\N	\N	ECC 12:9 'the preacher was wise, he still taught the people knowledge': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/GRCBRENT	add	21.12:10.3	solomon	\N	title	\N	\N	ECC 12:10 'the preacher sought to find out acceptable words': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/VULGCLEM	add	21.1:1.2	solomon	\N	title	\N	\N	ECC 1:1 'the words of the Preacher, the son of David, king in Jerusalem': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/VULGCLEM	add	21.1:2.4	solomon	\N	title	\N	\N	ECC 1:2 'saith the Preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/VULGCLEM	add	21.1:12.2	solomon	\N	title	\N	\N	ECC 1:12 'I the Preacher was king over Israel in Jerusalem': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/VULGCLEM	add	21.7:28.5	solomon	\N	title	\N	\N	ECC 7:27 'saith the preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/VULGCLEM	add	21.12:8.4	solomon	\N	title	\N	\N	ECC 12:8 'saith the preacher': Qohelet is Solomon, on the project owner's ruling of 2026-11-09
+PRB-1568	names/VULGCLEM	add	21.12:9.4	solomon	\N	title	\N	\N	ECC 12:9 'the preacher was wise, he still taught the people knowledge': Qohelet is Solomon, on the project owner's ruling of 2026-11-09

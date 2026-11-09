@@ -2232,7 +2232,8 @@
    "category": "trade",
    "strongNumbers": [
     "H951",
-    "H5349"
+    "H5349",
+    "H4735"
    ],
    "labels": {
     "eng": {
@@ -3099,6 +3100,37 @@
    }
   },
   {
+   "slug": "musician",
+   "category": "trade",
+   "strongNumbers": [
+    "H8610",
+    "H3658",
+    "H5748"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Musician",
+     "masculine": "Musician",
+     "feminine": "Musician"
+    },
+    "ukr": {
+     "name": "Музикант",
+     "masculine": "Музикант",
+     "feminine": "Музикантка"
+    },
+    "deu": {
+     "name": "Musiker",
+     "masculine": "Musiker",
+     "feminine": "Musikerin"
+    },
+    "spa": {
+     "name": "Músico",
+     "masculine": "Músico",
+     "feminine": "Música"
+    }
+   }
+  },
+  {
    "slug": "nurse",
    "category": "trade",
    "strongNumbers": [
@@ -3948,7 +3980,8 @@
    "slug": "religious-teacher",
    "category": "religious_role",
    "strongNumbers": [
-    "G1320"
+    "G1320",
+    "H3925"
    ],
    "labels": {
     "eng": {
@@ -13420,6 +13453,31 @@
    ]
   },
   {
+   "person": "jabal",
+   "occupation": "herdsman",
+   "source": "read from BHSA 2021 and the King James Version by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-09 (PRB-1420, part 4, question 1)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 4:20",
+     "quote": "אֲבִ֕י יֹשֵׁ֥ב אֹ֖הֶל וּמִקְנֶֽה"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "GEN 4:20",
+     "quote": "he was the father of such as dwell in tents, and of such as have cattle"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "GEN 4:20",
+     "quote": "וַתֵּ֥לֶד עָדָ֖ה אֶת־יָבָ֑ל"
+    }
+   ]
+  },
+  {
    "person": "aaron",
    "occupation": "high-priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -21694,6 +21752,31 @@
    ]
   },
   {
+   "person": "jubal",
+   "occupation": "musician",
+   "source": "read from BHSA 2021 and the King James Version by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-09 (PRB-1420, part 4, question 1)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 4:21",
+     "quote": "אֲבִ֕י כָּל־תֹּפֵ֥שׂ כִּנֹּ֖ור וְעוּגָֽב"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "GEN 4:21",
+     "quote": "he was the father of all such as handle the harp and organ"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "GEN 4:21",
+     "quote": "וְשֵׁ֥ם אָחִ֖יו יוּבָ֑ל"
+    }
+   ]
+  },
+  {
    "person": "deborah",
    "occupation": "nurse",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -28186,6 +28269,31 @@
      "text": "NESTLE1904",
      "reference": "2TI 1:1",
      "quote": "Παῦλος ἀπόστολος Χριστοῦ Ἰησοῦ"
+    }
+   ]
+  },
+  {
+   "person": "solomon",
+   "occupation": "religious-teacher",
+   "source": "read from BHSA 2021 and the King James Version by an agent (claude-opus-5-5), on the project owner's ruling of 2026-11-09 that Qohelet of Ecclesiastes is Solomon (PRB-1568), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "ECC 12:9",
+     "quote": "עֹ֗וד לִמַּד־דַּ֨עַת֙ אֶת־הָעָ֔ם"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "ECC 12:9",
+     "quote": "he still taught the people knowledge"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "ECC 1:1",
+     "quote": "דִּבְרֵי֙ קֹהֶ֣לֶת בֶּן־דָּוִ֔ד מֶ֖לֶךְ בִּירוּשָׁלִָֽם"
     }
    ]
   },

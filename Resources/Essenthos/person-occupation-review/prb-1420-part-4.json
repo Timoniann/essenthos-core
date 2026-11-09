@@ -12,15 +12,16 @@
   "Heavenly beings the text calls שַׂר of a kingdom (Dan 10:13, 20) hold a heavenly role (owner, 2026-10-27, TSK-1254)."
  ],
  "newOccupations": [
-  "heavenly-prince-of-a-kingdom"
+  "heavenly-prince-of-a-kingdom",
+  "musician"
  ],
  "counts": {
   "rows": 252,
-  "admittedRows": 16,
-  "refused": 123,
+  "admittedRows": 19,
+  "refused": 122,
   "covered": 111,
-  "hard": 2,
-  "newPairs": 18,
+  "hard": 0,
+  "newPairs": 21,
   "newPairsNotAmongTheHeldRows": 2
  },
  "admitted": [
@@ -179,6 +180,33 @@
    "why": "2 Chr 33:6 'he observed times, and used enchantments, and used witchcraft (וְכִשֵּׁף)': the narrator's verb of sorcery said of him as his practice, by the measure the owner used for Simon of Samaria, 'which beforetime used sorcery' (Acts 8:9 μαγεύων, TSK-1218). 2 Kgs 21:6 says the same with עוֹנֵן and נִחֵשׁ.",
    "rows": [
     "52eb16e8ad7d8f79"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jabal",
+   "occupation": "herdsman",
+   "why": "Gen 4:20 'he was the father of such as dwell in tents, and of such as have cattle' (אֲבִי יֹשֵׁב אֹהֶל וּמִקְנֶה): the owner's answer A to question 1 (2026-11-09): 'father' of a way of life is the first who lived it, beside Tubal-cain whom 4:22 names a forger outright. H4735 (מִקְנֶה) added to the occupation's numbers so the word is marked.",
+   "rows": [
+    "5c087f06d973aa9f"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jubal",
+   "occupation": "musician",
+   "why": "Gen 4:21 'he was the father of all such as handle the harp and organ' (אֲבִי כָּל־תֹּפֵשׂ כִּנּוֹר וְעוּגָב): the owner's answer A to question 1 (2026-11-09), a new occupation Musician in four languages; its numbers are the phrase's (H8610, H3658, H5748).",
+   "rows": [
+    "f7ac5d7c050a95e6"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "solomon",
+   "occupation": "religious-teacher",
+   "why": "Eccl 12:9 'because the preacher was wise, he still taught the people knowledge' (עוֹד לִמַּד־דַּעַת אֶת־הָעָם): the narrator's verb, said of Qohelet, as John holds Teacher on Luke 11:1 ἐδίδαξεν. The owner ruled on 2026-11-09 that Qohelet is Solomon (PRB-1568), and the words of Ecclesiastes that name the Preacher are annotated to him, so the occupation follows the annotation (part 2). H3925 (לִמַּד) added to the occupation's numbers. Teacher rather than a new occupation: what he taught was knowledge to the people, the same office of teaching the list already holds.",
+   "rows": [
+    "aef095476df5d249"
    ],
    "notAmongTheHeldRows": null
   }
@@ -861,12 +889,6 @@
    "person": "simon-6",
    "label": "Pharisee (Φαρισαῖος)",
    "reason": "Luke 7:39 'the Pharisee which had bidden him': a party, not an office (part 1, TSK-1251)."
-  },
-  {
-   "row": "aef095476df5d249",
-   "person": "solomon",
-   "label": "Qohelet / the Teacher (preacher)",
-   "reason": "Eccl 12:9 'the Preacher... taught the people knowledge': no word of Ecclesiastes is annotated to this record, so Qohelet is not joined to Solomon in the corpus; that is the records' question, and the occupation follows the annotation (part 2)."
   },
   {
    "row": "3690e133835433ca",
@@ -1702,20 +1724,7 @@
    "reason": "Holds Apostle; John 14:22 'Judas, not Iscariot' names no further occupation."
   }
  ],
- "hard": [
-  {
-   "row": "5c087f06d973aa9f",
-   "person": "jabal",
-   "label": "Father of tent-dwellers and livestock-keepers",
-   "question": "Q1"
-  },
-  {
-   "row": "f7ac5d7c050a95e6",
-   "person": "jubal",
-   "label": "Father of all who handle the lyre and pipe (musician)",
-   "question": "Q1"
-  }
- ],
+ "hard": [],
  "ownerRulings": {
   "answered": "Part 3's two questions, answered by the owner in chat on 2026-11-09 and applied here.",
   "headOfAnAncestralHouse": {
@@ -1838,6 +1847,21 @@
    "pairs": [
     "joshua",
     "barak"
+   ]
+  },
+  "jabalAndJubal": {
+   "ruling": "The owner's answer A to question 1, 2026-11-09: Jabal holds Herdsman (Gen 4:20) and Jubal a new occupation Musician (Gen 4:21), in four languages like the other new occupations.",
+   "words": "Явал і Ювал A",
+   "pairs": [
+    "jabal",
+    "jubal"
+   ]
+  },
+  "qohelet": {
+   "ruling": "The owner, 2026-11-09 (PRB-1568 item 3): Qohelet of Ecclesiastes is Solomon; the words that name the Preacher (Eccl 1:1, 1:2, 1:12, 7:27, 12:8, 12:9, 12:10) are annotated to solomon in BHSA, Brenton's Greek and the Vulgate. Row aef095476df5d249 (12:9 'taught the people knowledge') is then decided by this part's identity rule: Teacher.",
+   "words": "Еклезіаст - прив'язати",
+   "pairs": [
+    "solomon"
    ]
   }
  }
