@@ -21,593 +21,14 @@
  ],
  "counts": {
   "rows": 458,
-  "admittedRows": 62,
-  "refused": 108,
+  "admittedRows": 35,
+  "refused": 135,
   "covered": 288,
   "hard": 0,
-  "newPairs": 110,
-  "newPairsNotAmongTheHeldRows": 54
+  "newPairs": 35,
+  "newPairsNotAmongTheHeldRows": 6
  },
  "admitted": [
-  {
-   "person": "abdon-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27: 'these were heads of fathers by their generations, chief men'. A list the text closes with the office says it of each man named (rule of part 1), as 1 Chr 5:24 and 7:7 were admitted.",
-   "rows": [
-    "14a2edd225e8d052"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "adaiah-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; said of each man named.",
-   "rows": [
-    "3fec3b243ed953ff"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "ahijah-5",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:6-7: 'these are the heads of fathers of the inhabitants of Geba... Naaman, and Ahijah, and Gera'.",
-   "rows": [
-    "2cbda34336cb58c6"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "ahio-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'.",
-   "rows": [
-    "9bc0da4f2ea240df"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "anthothijah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'.",
-   "rows": [
-    "bd76968cc3a55ef7"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "arad",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'.",
-   "rows": [
-    "815183e96d8e4734"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "athaliah-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:26-28: a son of Jeroham in the list 8:28 closes with 'heads of fathers'.",
-   "rows": [
-    "1e3e277c577fb1a0"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "beraiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "beriah-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:13 'Beriah and Shema, who were heads of fathers of the inhabitants of Aijalon'.",
-   "rows": [
-    "a98bd26d3e3d0903"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "eber-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "eder",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elah-5",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 9:7-9: the heads the list names with Sallu; their forebears in each chain are not.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elam-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "eliel-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "eliel-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elienai",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elihu-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father', with Othni, Rephael and Obed.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elijah-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elzabad-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father', with Othni, Rephael and Obed.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "gera-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:6-7 names him with Naaman and Ahijah among the heads of fathers of Geba.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "hanan",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "hananiah-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "haran-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 23:9: the three heads of fathers of Ladan, with Shelomoth.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "haziel",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 23:9: the three heads of fathers of Ladan, with Shelomoth.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "heber-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "hizki",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "ibneiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 9:7-9: the heads the list names with Sallu; their forebears in each chain are not.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "iphdeiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "ishmerai",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "ishpah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "ishpan",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "isshiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:3 'the sons of Izrahiah: Michael, Obadiah, Joel, Isshiah, five; all of them chief men (רָאשִׁים)', in the genealogy whose 7:2 and 7:4 speak of heads of their fathers' houses; said of each man named, as 1 Chr 7:7.",
-   "rows": [
-    "8c84a7d4e1aaeab8"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "izliah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "izrahiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:3: the count 'five' takes in Izrahiah with his four sons, 'all of them chief men'.",
-   "rows": [
-    "5a42de29d2d50996"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "jaareshiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "jakim",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "jeremoth-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "jeshua-3",
-   "occupation": "ancestral-house-chief",
-   "why": "Ezra 4:3 'Zerubbabel, and Jeshua, and the rest of the heads of fathers of Israel': 'the rest of' counts the two among the heads.",
-   "rows": [
-    "c0fff157e1603f51"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "jeuz",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:9-10 'these were his sons, heads of fathers'; Mesha and Mirmah are admitted on it.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "jobab-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:9-10 'these were his sons, heads of fathers'; Mesha and Mirmah are admitted on it.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "jobab-5",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "joel-5",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:3 'all of them chief men', of Izrahiah's five.",
-   "rows": [
-    "ca5a78914d3d7460"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "joha",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "malcam",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:9-10 'these were his sons, heads of fathers'; Mesha and Mirmah are admitted on it.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "mesha-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:9-10 'these were his sons, heads of fathers'.",
-   "rows": [
-    "990971d8ce774c84"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "meshullam-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "meshullam-5",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 9:7-9: the heads the list names with Sallu; their forebears in each chain are not.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "michael-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:3 'all of them chief men', of Izrahiah's five.",
-   "rows": [
-    "4898744086038a97"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "michael-5",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "mirmah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:10 'these were his sons, heads of fathers'.",
-   "rows": [
-    "5d9d072524d50510"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "naaman-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:6-7 'heads of fathers of the inhabitants of Geba... Naaman, and Ahijah, and Gera'.",
-   "rows": [
-    "dfe46080f2633231"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "obadiah-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:3 'all of them chief men', of Izrahiah's five.",
-   "rows": [
-    "d28964ff6de55495"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "obed-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 26:6-7: sons of Shemaiah 'that ruled (הַמִּמְשָׁלִים) over the house of their father... Othni, Rephael, Obed, Elzabad...'. Rule over their fathers' house is said of each son named.",
-   "rows": [
-    "15a5e40db822722a"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "othni",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father'.",
-   "rows": [
-    "f6e9c948002fad7b"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "penuel-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "rephael",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father'.",
-   "rows": [
-    "582f4b5ca0f8428f"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "sachia",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:9-10 'these were his sons, heads of fathers'; Mesha and Mirmah are admitted on it.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "sallu",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 9:9 'all these men were heads of fathers in the house of their fathers', closing 9:7-9.",
-   "rows": [
-    "687828469c3e7c09"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "semachiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father', with Othni, Rephael and Obed.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "shamsherai",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "shashak",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "shehariah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "shelomoth",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 23:9 'Shelomoth, Haziel and Haran, three: these were the heads of fathers of Ladan'.",
-   "rows": [
-    "4bfe79d477e44fea"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "shema-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:13 'Beriah and Shema, who were heads of fathers of the inhabitants of Aijalon'.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "shimrath",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "zabdi-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "zebadiah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "zebadiah-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "zerubbabel-2",
-   "occupation": "ancestral-house-chief",
-   "why": "Ezra 4:3 'Zerubbabel, and Jeshua, and the rest of the heads of fathers of Israel': 'the rest of' counts him among them.",
-   "rows": [
-    "288aa1ef2cae41c7"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "zibia",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:9-10 'these were his sons, heads of fathers'; Mesha and Mirmah are admitted on it.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "zichri-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; nine of these men were held rows and are admitted on it. The fathers the list names after 'sons of' (Beriah, Elpaal, Shimhi, Jeroham) are not among them; Shashak is, as a son of Beriah at 8:14.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "zichri-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'.",
-   "rows": [
-    "e52f39127effbe61"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "zichri-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'.",
-   "rows": [
-    "64178d9fc13123fd"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "zillethai",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'.",
-   "rows": [
-    "9f5c5f8c6bc6ffab"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "zur-2",
-   "occupation": "ancestral-house-chief",
-   "why": "Num 25:15 'Zur; he was head over the peoples of a father's house in Midian' (רֹאשׁ אֻמּוֹת בֵּית־אָב), as Zimri of 25:14 holds Head of an ancestral house on the verse before.",
-   "rows": [
-    "7bf8a4c39371fe01"
-   ],
-   "notAmongTheHeldRows": null
-  },
   {
    "person": "iddo-6",
    "occupation": "chief-at-casiphia",
@@ -926,6 +347,12 @@
    "reason": "Num 17:17-18 has his name written on Levi's rod, 'one rod for the head of their fathers' house': a rod for each tribe's head, not an office the verse gives Aaron; he holds Priest and High priest."
   },
   {
+   "row": "14a2edd225e8d052",
+   "person": "abdon-2",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27: 'these were heads of fathers by their generations, chief men'. A list the text closes with the office says it of each man named (rule of part 1), as 1 Chr 5:24 and 7:7 were admitted."
+  },
+  {
    "row": "46615df671f61524",
    "person": "abiram",
    "label": "called of the congregation",
@@ -962,10 +389,28 @@
    "reason": "The text calls him king only in his own messengers' proclamation (2 Sam 15:10), in Hushai's cry whose object is not plain (16:16) and in the people's 'whom we anointed over us' (19:10). The narrator never says he reigned."
   },
   {
+   "row": "3fec3b243ed953ff",
+   "person": "adaiah-3",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; said of each man named."
+  },
+  {
    "row": "9af1bf761356823b",
    "person": "adonibezek",
    "label": "Possible king",
    "reason": "Judg 1:7: seventy kings ate under his table. What he did to kings; the text does not call him king."
+  },
+  {
+   "row": "2cbda34336cb58c6",
+   "person": "ahijah-5",
+   "label": "голова родів мешканців Геви",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:6-7: 'these are the heads of fathers of the inhabitants of Geba... Naaman, and Ahijah, and Gera'."
+  },
+  {
+   "row": "9bc0da4f2ea240df",
+   "person": "ahio-2",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
   },
   {
    "row": "32156e8dce00ba74",
@@ -984,6 +429,18 @@
    "person": "amaziah-2",
    "label": "Prince in his family (father in a genealogy)",
    "reason": "1 Chr 4:34: Joshah's father, named in a chain; 4:38's 'princes' is said of the men named, not of each forebear."
+  },
+  {
+   "row": "bd76968cc3a55ef7",
+   "person": "anthothijah",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "815183e96d8e4734",
+   "person": "arad",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
   },
   {
    "row": "6d09492a3daf9d8d",
@@ -1016,6 +473,12 @@
    "reason": "2 Chr 22:3 'his mother was his counselor to do wickedly': what she was to her son, the king, not an office at the court."
   },
   {
+   "row": "1e3e277c577fb1a0",
+   "person": "athaliah-2",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:26-28: a son of Jeroham in the list 8:28 closes with 'heads of fathers'."
+  },
+  {
    "row": "7ec3c3d86347f012",
    "person": "azariah-of-the-wall-dedication",
    "label": "Azariah among the procession",
@@ -1032,6 +495,12 @@
    "person": "barjesus",
    "label": "with the proconsul (attendant)",
    "reason": "Acts 13:7 'who was with the proconsul': in his company; the text names no service (BSB's 'attendant' is a rendering)."
+  },
+  {
+   "row": "a98bd26d3e3d0903",
+   "person": "beriah-3",
+   "label": "head of the fathers of the inhabitants of Aijalon",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:13 'Beriah and Shema, who were heads of fathers of the inhabitants of Aijalon'."
   },
   {
    "row": "494eca6bf75128a9",
@@ -1178,6 +647,18 @@
    "reason": "Jer 41:1 'Ishmael... of the seed royal, and the chief officers of the king, and ten men with him': the officers may be a group that came with him (KJV) or his own rank (BSB). Not plain."
   },
   {
+   "row": "8c84a7d4e1aaeab8",
+   "person": "isshiah",
+   "label": "chief man (head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'the sons of Izrahiah: Michael, Obadiah, Joel, Isshiah, five; all of them chief men (רָאשִׁים)', in the genealogy whose 7:2 and 7:4 speak of heads of their fathers' houses; said of each man named, as 1 Chr 7:7."
+  },
+  {
+   "row": "5a42de29d2d50996",
+   "person": "izrahiah",
+   "label": "chief man (head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3: the count 'five' takes in Izrahiah with his four sons, 'all of them chief men'."
+  },
+  {
    "row": "d33c1ab4c37271a9",
    "person": "jaazaniah-3",
    "label": "Jaazaniah among the seventy elders with a censer",
@@ -1248,6 +729,12 @@
    "person": "jeroboam",
    "label": "servant of Solomon",
    "reason": "'Servant of Solomon' (1 Kgs 11:26, 2 Chr 13:6): his standing under Solomon; his office then was over the labour of the house of Joseph (1 Kgs 11:28), which he holds."
+  },
+  {
+   "row": "c0fff157e1603f51",
+   "person": "jeshua-3",
+   "label": "head of a fathers' house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: Ezra 4:3 'Zerubbabel, and Jeshua, and the rest of the heads of fathers of Israel': 'the rest of' counts the two among the heads."
   },
   {
    "row": "1e2663988a55f8d4",
@@ -1328,6 +815,12 @@
    "reason": "Job 29:25 'I sat as chief, and dwelt as a king in the army' is his own figure of past honour. The Ge'ez (and the Septuagint's) appendix to Job 42 calls him Jobab, a king of Edom: that names him as Jobab of Gen 36:33, another record, and is a question of identity for the records, not of his occupation."
   },
   {
+   "row": "ca5a78914d3d7460",
+   "person": "joel-5",
+   "label": "chief man (head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'all of them chief men', of Izrahiah's five."
+  },
+  {
    "row": "43fcd2920354f2dd",
    "person": "john-2",
    "label": "the elder",
@@ -1364,6 +857,12 @@
    "reason": "2 Kgs 19:13, Isa 37:13: as for the king of Hena, the verse may name one king of Sepharvaim with two more places; the record's question."
   },
   {
+   "row": "990971d8ce774c84",
+   "person": "mesha-3",
+   "label": "head of a father's house (clan head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:9-10 'these were his sons, heads of fathers'."
+  },
+  {
    "row": "87186699e15bbb27",
    "person": "meshullam-8",
    "label": "chief man (leader)",
@@ -1374,6 +873,24 @@
    "person": "micah-3",
    "label": "head/first among the sons of Uzziel",
    "reason": "1 Chr 23:20 'Micah the first (הָרֹאשׁ), and Isshiah the second': an order of rank or birth, as 23:11 'Jahath the first, and Zizah the second'."
+  },
+  {
+   "row": "4898744086038a97",
+   "person": "michael-4",
+   "label": "chief man",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'all of them chief men', of Izrahiah's five."
+  },
+  {
+   "row": "5d9d072524d50510",
+   "person": "mirmah",
+   "label": "head of a father's house (clan head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:10 'these were his sons, heads of fathers'."
+  },
+  {
+   "row": "dfe46080f2633231",
+   "person": "naaman-3",
+   "label": "head of a father's house among the inhabitants of Geba",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:6-7 'heads of fathers of the inhabitants of Geba... Naaman, and Ahijah, and Gera'."
   },
   {
    "row": "3bbb7881ad5f7b0d",
@@ -1388,10 +905,28 @@
    "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
   },
   {
+   "row": "d28964ff6de55495",
+   "person": "obadiah-3",
+   "label": "chief man",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'all of them chief men', of Izrahiah's five."
+  },
+  {
+   "row": "15a5e40db822722a",
+   "person": "obed-4",
+   "label": "Shemaiah's sons – ruling over their father's house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 26:6-7: sons of Shemaiah 'that ruled (הַמִּמְשָׁלִים) over the house of their father... Othni, Rephael, Obed, Elzabad...'. Rule over their fathers' house is said of each son named."
+  },
+  {
    "row": "c4e671e14bb0fe5f",
    "person": "ohad",
    "label": "head of a fathers' house (clan head)",
    "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
+   "row": "f6e9c948002fad7b",
+   "person": "othni",
+   "label": "Shemaiah's sons – ruling over their father's house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father'."
   },
   {
    "row": "ab216d15fac32fc1",
@@ -1424,10 +959,22 @@
    "reason": "1 Chr 23:17 'Rehabiah the first (הָרֹאשׁ)': order of rank or birth, as 23:11 'Jahath the first, Zizah the second'."
   },
   {
+   "row": "582f4b5ca0f8428f",
+   "person": "rephael",
+   "label": "Rulers over their father's house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father'."
+  },
+  {
    "row": "20ac3ef4fa73096c",
    "person": "rhoda",
    "label": "servant girl (παιδίσκη)",
    "reason": "Acts 12:13 'a maid (παιδίσκη) named Rhoda came to answer': a servant girl's standing, not an occupation."
+  },
+  {
+   "row": "687828469c3e7c09",
+   "person": "sallu",
+   "label": "head of an ancestral house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 9:9 'all these men were heads of fathers in the house of their fathers', closing 9:7-9."
   },
   {
    "row": "ce0fd4f331123282",
@@ -1482,6 +1029,12 @@
    "person": "shelomith-3",
    "label": "head/first among the sons of Izhar",
    "reason": "1 Chr 23:18 'Shelomith the first (הָרֹאשׁ)': order of rank or birth."
+  },
+  {
+   "row": "4bfe79d477e44fea",
+   "person": "shelomoth",
+   "label": "head of fathers' houses of Ladan",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 23:9 'Shelomoth, Haziel and Haran, three: these were the heads of fathers of Ladan'."
   },
   {
    "row": "cad1985615b85296",
@@ -1562,10 +1115,40 @@
    "reason": "Jer 29:26 'that ye should be officers in the house of the LORD' is Shemaiah's letter, in the plural, to the priests at large. He holds Priest and Second priest."
   },
   {
+   "row": "288aa1ef2cae41c7",
+   "person": "zerubbabel-2",
+   "label": "leader / head of the fathers' houses",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: Ezra 4:3 'Zerubbabel, and Jeshua, and the rest of the heads of fathers of Israel': 'the rest of' counts him among them."
+  },
+  {
    "row": "a82ed884faeda040",
    "person": "ziba",
    "label": "Слуга (або управитель) дому Саула",
    "reason": "2 Sam 19:17 'Ziba the servant (נַעַר) of the house of Saul': a servant's standing; BSB's 'steward' is a rendering."
+  },
+  {
+   "row": "e52f39127effbe61",
+   "person": "zichri-3",
+   "label": "head of a father's house (chief)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "64178d9fc13123fd",
+   "person": "zichri-4",
+   "label": "head of a father's house (chief)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "9f5c5f8c6bc6ffab",
+   "person": "zillethai",
+   "label": "head of a father's house (chief)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "7bf8a4c39371fe01",
+   "person": "zur-2",
+   "label": "head of a people / chief house in Midian (Zur)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: Num 25:15 'Zur; he was head over the peoples of a father's house in Midian' (רֹאשׁ אֻמּוֹת בֵּית־אָב), as Zimri of 25:14 holds Head of an ancestral house on the verse before."
   }
  ],
  "covered": [
@@ -3587,5 +3170,5 @@
   }
  ],
  "hard": [],
- "ownerRulings": "The two questions put to the owner were answered on 2026-11-09: Jesus holds no office King and no new role for it (1a), and holds the heavenly role Judge of the living and the dead (1b); nobody holds Head of an ancestral house from Exod 6:14-25 (2). Each stands above under admitted, covered or refused, marked as his ruling."
+ "ownerRulings": "The two questions put to the owner were answered on 2026-11-09: Jesus holds no office King and no new role for it (1a), and holds the heavenly role Judge of the living and the dead (1b); nobody holds Head of an ancestral house from Exod 6:14-25 (2). Each stands above under admitted, covered or refused, marked as his ruling. On 2026-11-09 the owner also ruled (part 3, question 1) that 'Head of an ancestral house' is not an occupation the site keeps: every row admitted to it here is now refused, citing his words, and prb-1420-part-4.json lists the pairs removed."
 }

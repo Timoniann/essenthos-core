@@ -18,145 +18,14 @@
  ],
  "counts": {
   "rows": 290,
-  "admittedRows": 29,
-  "refused": 69,
+  "admittedRows": 23,
+  "refused": 117,
   "covered": 150,
-  "hard": 42,
-  "newPairs": 31,
-  "newPairsNotAmongTheHeldRows": 3
+  "hard": 0,
+  "newPairs": 18,
+  "newPairsNotAmongTheHeldRows": 1
  },
  "admitted": [
-  {
-   "person": "abijah-4",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "52121a982426ace6"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "alemeth",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "dec51fe52faef888"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "anathoth",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "ed57e3fd6f73c710"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "eliezer-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: sons of Becher with the seven held rows.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "elioenai-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: sons of Becher with the seven held rows.",
-   "rows": [],
-   "notAmongTheHeldRows": true
-  },
-  {
-   "person": "jahmai",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
-   "rows": [
-    "c2aabc4c7a806781"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "jeremoth",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "5ea48fbc3307786d"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "jeriel",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
-   "rows": [
-    "d46744428a9d78d9"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "jerimoth",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:7: 'the sons of Bela: Ezbon, Uzzi, Uzziel, Jerimoth and Iri, five; heads of the house of their fathers'. The other four hold it on this verse.",
-   "rows": [
-    "29a53ec3154b23c1"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "joash-6",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "20030fa787bf8014"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "omri-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "8949105e5d242be8"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "rephaiah-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
-   "rows": [
-    "c36f1eb8ab8c6ecf"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "samuel-3",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
-   "rows": [
-    "0a43fe1ce8571aba"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "uzzi-2",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
-   "rows": [
-    "f2324baeb72264bf"
-   ],
-   "notAmongTheHeldRows": null
-  },
-  {
-   "person": "zemirah",
-   "occupation": "ancestral-house-chief",
-   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
-   "rows": [
-    "e697ef2cfe94d037"
-   ],
-   "notAmongTheHeldRows": null
-  },
   {
    "person": "ammizabad",
    "occupation": "army-division-commander",
@@ -227,6 +96,29 @@
    "why": "1 Sam 16:16-23: Saul's servants seek 'a man who is a skilful player on the harp'; David is 'skilful in playing' (16:18) and 'took the harp and played with his hand' whenever the spirit came (16:23), 'as at other times' (18:10, 19:9). A standing service at the court, said of him by the narrator.",
    "rows": [
     "4a2b58192a6bc474"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "barak",
+   "occupation": "military-commander",
+   "why": "The owner's ruling of 2026-11-09 (part 3, question 2: 'По суті да, хай буде'): the LORD commands him to take ten thousand men to Tabor (Judg 4:6-7), and he goes down with the ten thousand after him (4:14). No noun of command is said; the LORD's charge and his leading of the army are taken as the office.",
+   "rows": [
+    "31a0193861a06727",
+    "bee82009890a3f57"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "joshua",
+   "occupation": "military-commander",
+   "why": "The owner's ruling of 2026-11-09 (part 3, question 2: 'По суті да, хай буде'): Moses sends him to choose men and fight Amalek, and he overwhelms Amalek (Exod 17:9-13); he leads all the people of war against Ai and chooses thirty thousand mighty men (Josh 8:3). No noun of command is said; the LORD's charge and his leading of the army are taken as the office.",
+   "rows": [
+    "22368395c16100a3",
+    "2533b7818d189cd0",
+    "af08eca9fa1a946a",
+    "f4f3362672145773",
+    "f584a5783656a503"
    ],
    "notAmongTheHeldRows": null
   },
@@ -303,16 +195,70 @@
  ],
  "refused": [
   {
+   "row": "52121a982426ace6",
+   "person": "abijah-4",
+   "label": "mighty men of valour / heads of fathers' houses (group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
+  },
+  {
    "row": "6506129b4ce5b9db",
    "person": "abinadab-2",
    "label": "Participant in Saul's army (soldier?)",
    "reason": "1 Sam 17:13: Jesse's three eldest 'went after Saul to the battle': they served in one campaign; no title or service is named."
   },
   {
+   "row": "da247f7b956447e2",
+   "person": "ahi-2",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "c3e4e9dc6d260937",
    "person": "ahishahar",
    "label": "mighty men of valour, soldiers (sons of Jediael)",
    "reason": "1 Chr 7:11 'all these sons of Jediael, by the heads of their fathers, mighty men of valour, 17,200 fit for war' counts the house's soldiers by their heads; it does not call each man named a head or a warrior."
+  },
+  {
+   "row": "dec51fe52faef888",
+   "person": "alemeth",
+   "label": "mighty men of valour / heads of fathers' houses (group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
+  },
+  {
+   "row": "f525b4c221cbb59d",
+   "person": "amal",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "ed57e3fd6f73c710",
+   "person": "anathoth",
+   "label": "mighty men of valour / heads of fathers' houses (group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
+  },
+  {
+   "row": "5a25053720355505",
+   "person": "ara",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "361b43f7f8fef5f0",
+   "person": "arah",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "2e9309a7af08be80",
+   "person": "aram-3",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "e81395931e255725",
+   "person": "ashvath",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "6b3e10a93493999c",
@@ -325,6 +271,36 @@
    "person": "azriel",
    "label": "mighty men of valor",
    "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "70785142dfed3b37",
+   "person": "beera",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "40491f444179903f",
+   "person": "beri",
+   "label": "mighty man of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "115606e70c385fa7",
+   "person": "bezer",
+   "label": "mighty man of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "dde3b5f73f9f9ba3",
+   "person": "bimhal",
+   "label": "mighty man of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "179e116047da36e9",
+   "person": "birzaith",
+   "label": "mighty man of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "e6219300a319e925",
@@ -399,6 +375,12 @@
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
   },
   {
+   "row": "b6c35cac155562cd",
+   "person": "hanniel-2",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "2ec932daf936f2bf",
    "person": "hanoch-2",
    "label": "Пастух (група «чоловіки»)",
@@ -411,10 +393,22 @@
    "reason": "Neh 3:8 'Uzziel son of Harhaiah, of the goldsmiths': the guild is Uzziel's, at the head of the phrase; Uzziel holds Goldsmith on this verse."
   },
   {
+   "row": "234089ef5ea95f72",
+   "person": "harnepher",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "7db79df0e45e4393",
    "person": "heber",
    "label": "Пастух (група «чоловіки»)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "cea786132e37aacc",
+   "person": "heber",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "5cf324ecd5e43898",
@@ -435,6 +429,12 @@
    "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
   },
   {
+   "row": "e616296a69f1d035",
+   "person": "hotham",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "b6dfc2a163859af2",
    "person": "huppim",
    "label": "Пастух (група «чоловіки»)",
@@ -453,10 +453,28 @@
    "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
   },
   {
+   "row": "fafbd2107f1405df",
+   "person": "imna",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "41c72803b88d43c7",
    "person": "imnah",
    "label": "Пастух (група «чоловіки»)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "bae3a72283411a88",
+   "person": "imnah",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "27625fa3b14bec00",
+   "person": "imrah",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "c78f99067f0662e3",
@@ -489,10 +507,28 @@
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
   },
   {
+   "row": "2170b5258f0c0960",
+   "person": "ishvah",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "2d1bfa1ca3e352bf",
    "person": "ishvi",
    "label": "Пастух (група «чоловіки»)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "4aa436dd750eae15",
+   "person": "ishvi",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "1d97e7ca256a0009",
+   "person": "ithran-2",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "1b9afe2fce285de8",
@@ -513,16 +549,58 @@
    "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
   },
   {
+   "row": "c2aabc4c7a806781",
+   "person": "jahmai",
+   "label": "head of father's house / valiant man of might",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation."
+  },
+  {
+   "row": "ec45ea4535842960",
+   "person": "japhlet",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "921b034347a86c4a",
    "person": "javan",
    "label": "merchant (Javan, Tubal, Meshech as merchants of Tyre)",
    "reason": "Ezek 27:13 'Javan, Tubal and Meshech, they were thy merchants' names the peoples and lands that traded with Tyre, not the man of Gen 10:2."
   },
   {
+   "row": "0bb125eb7d9cd4a0",
+   "person": "jehubbah",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "794e8cfda9c2ef57",
+   "person": "jephunneh-2",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "3f018d843130d4df",
    "person": "jeremiah-2",
    "label": "mighty men of valour (gibbōrê ḥayil)",
    "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "5ea48fbc3307786d",
+   "person": "jeremoth",
+   "label": "head of father's house / mighty man of valour (Becher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
+  },
+  {
+   "row": "d46744428a9d78d9",
+   "person": "jeriel",
+   "label": "head of father's house / valiant man of might",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation."
+  },
+  {
+   "row": "29a53ec3154b23c1",
+   "person": "jerimoth",
+   "label": "head of father's house / mighty man of valour",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:7: 'the sons of Bela: Ezbon, Uzzi, Uzziel, Jerimoth and Iri, five; heads of the house of their fathers'. The other four hold it on this verse."
   },
   {
    "row": "eb1ab962df84882b",
@@ -535,6 +613,12 @@
    "person": "joab-2",
    "label": "craftsman (?) / father of Ge-harashim",
    "reason": "1 Chr 4:14 'Joab, the father of the valley of craftsmen, for they were craftsmen': 'father of' a place in Chronicles is its founder, and 'they' are its people (guide records)."
+  },
+  {
+   "row": "20030fa787bf8014",
+   "person": "joash-6",
+   "label": "head of father's house / mighty man of valour (Becher group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
   },
   {
    "row": "7d716424610ee40d",
@@ -579,10 +663,28 @@
    "reason": "1 Chr 24:6 'Shemaiah son of Nethanel, the scribe, of the Levites, wrote them': the title is Shemaiah's, at the head of the chain, and the verb is his."
   },
   {
+   "row": "8949105e5d242be8",
+   "person": "omri-2",
+   "label": "mighty man of valour (group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
+  },
+  {
+   "row": "e7424a2c17bb9c15",
+   "person": "pasach",
+   "label": "mighty man of valour (group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "0330944d569b6abe",
    "person": "perez",
    "label": "Shepherd (group claim)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "c88022aea739c8ef",
+   "person": "pispa",
+   "label": "mighty man of valour (group)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "965fb30b6e13ac16",
@@ -597,16 +699,46 @@
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
   },
   {
+   "row": "c36f1eb8ab8c6ecf",
+   "person": "rephaiah-3",
+   "label": "Head of father's house / mighty man of valour",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation."
+  },
+  {
+   "row": "54feb122461b48fe",
+   "person": "rizia",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "fc67e7d4b0f77364",
+   "person": "rohgah",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "f096f3f839df5004",
    "person": "rosh",
    "label": "Shepherd (group claim)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
   },
   {
+   "row": "0a43fe1ce8571aba",
+   "person": "samuel-3",
+   "label": "Head of father's house / mighty man of valour",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation."
+  },
+  {
    "row": "7077d927df00b88d",
    "person": "sered",
    "label": "Shepherd (group claim)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "4a0ba6bc792a28e0",
+   "person": "shamma",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "3013502a643e37fd",
@@ -627,10 +759,22 @@
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
   },
   {
+   "row": "d61c1f327e743952",
+   "person": "shelesh",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "6903264ec21589fa",
    "person": "shillem",
    "label": "Shepherd (group claim)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "984d7589231b0e00",
+   "person": "shilshah",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "c6cd60a0428331bc",
@@ -639,10 +783,28 @@
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
   },
   {
+   "row": "a2c32ed5f7753dd3",
+   "person": "shomer-2",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
+   "row": "71d66075cac09e79",
+   "person": "shual",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
+  },
+  {
    "row": "1daf863aeebb2869",
    "person": "shuni",
    "label": "Shepherd (group claim)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "9dd3d04ae0f26a33",
+   "person": "suah",
+   "label": "mighty man of valor / head of a father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   },
   {
    "row": "913f9b0f27301bb2",
@@ -669,6 +831,12 @@
    "reason": "Ezek 27:13: the people of Tubal traded with Tyre, not the man of Gen 10:2."
   },
   {
+   "row": "f2324baeb72264bf",
+   "person": "uzzi-2",
+   "label": "mighty man of valor / head of father's house (sons of Tola)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation."
+  },
+  {
    "row": "bb35b63d16ee01c0",
    "person": "zadok-9",
    "label": "mighty warrior (gibbor chayil)",
@@ -685,6 +853,12 @@
    "person": "zebedee",
    "label": "net mender in the boat (possibly fisherman)",
    "reason": "Matt 4:21, Mark 1:20: he is in the boat with his sons and the hired servants, but the text does not call him a fisherman, as it does Simon and Andrew (Matt 4:18)."
+  },
+  {
+   "row": "e697ef2cfe94d037",
+   "person": "zemirah",
+   "label": "mighty man of valor / head of father's house (sons of Becher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7)."
   },
   {
    "row": "3c37d86c8ece5498",
@@ -715,6 +889,12 @@
    "person": "zohar-2",
    "label": "shepherd / livestock keeper (group attribution)",
    "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "1f89507ccfc5acb0",
+   "person": "zophah",
+   "label": "mighty man of valor / head of a father's house (Asher)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. 1 Chr 7:40 says they are of Asher, which the genealogy holds."
   }
  ],
  "covered": [
@@ -1769,258 +1949,6 @@
    "reason": "Holds Warrior and Mighty warrior of David; 2 Sam 11 shows him in the camp and fallen."
   }
  ],
- "hard": [
-  {
-   "row": "da247f7b956447e2",
-   "person": "ahi-2",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "f525b4c221cbb59d",
-   "person": "amal",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "5a25053720355505",
-   "person": "ara",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "361b43f7f8fef5f0",
-   "person": "arah",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "2e9309a7af08be80",
-   "person": "aram-3",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "e81395931e255725",
-   "person": "ashvath",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "70785142dfed3b37",
-   "person": "beera",
-   "label": "heads of father's house, mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "40491f444179903f",
-   "person": "beri",
-   "label": "mighty man of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "115606e70c385fa7",
-   "person": "bezer",
-   "label": "mighty man of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "dde3b5f73f9f9ba3",
-   "person": "bimhal",
-   "label": "mighty man of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "179e116047da36e9",
-   "person": "birzaith",
-   "label": "mighty man of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "b6c35cac155562cd",
-   "person": "hanniel-2",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "234089ef5ea95f72",
-   "person": "harnepher",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "cea786132e37aacc",
-   "person": "heber",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "e616296a69f1d035",
-   "person": "hotham",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "fafbd2107f1405df",
-   "person": "imna",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "bae3a72283411a88",
-   "person": "imnah",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "27625fa3b14bec00",
-   "person": "imrah",
-   "label": "heads of father's house / mighty men / princes (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "2170b5258f0c0960",
-   "person": "ishvah",
-   "label": "heads of father's house / mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "4aa436dd750eae15",
-   "person": "ishvi",
-   "label": "heads of father's house / mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "1d97e7ca256a0009",
-   "person": "ithran-2",
-   "label": "heads of father's house / mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "ec45ea4535842960",
-   "person": "japhlet",
-   "label": "heads of father's house / mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "0bb125eb7d9cd4a0",
-   "person": "jehubbah",
-   "label": "heads of father's house / mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "794e8cfda9c2ef57",
-   "person": "jephunneh-2",
-   "label": "heads of father's house / mighty men of valour (Asher group)",
-   "question": "Q1"
-  },
-  {
-   "row": "e7424a2c17bb9c15",
-   "person": "pasach",
-   "label": "mighty man of valour (group)",
-   "question": "Q1"
-  },
-  {
-   "row": "c88022aea739c8ef",
-   "person": "pispa",
-   "label": "mighty man of valour (group)",
-   "question": "Q1"
-  },
-  {
-   "row": "54feb122461b48fe",
-   "person": "rizia",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "fc67e7d4b0f77364",
-   "person": "rohgah",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "4a0ba6bc792a28e0",
-   "person": "shamma",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "d61c1f327e743952",
-   "person": "shelesh",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "984d7589231b0e00",
-   "person": "shilshah",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "a2c32ed5f7753dd3",
-   "person": "shomer-2",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "71d66075cac09e79",
-   "person": "shual",
-   "label": "Mighty man of valour / head of father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "9dd3d04ae0f26a33",
-   "person": "suah",
-   "label": "mighty man of valor / head of a father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "1f89507ccfc5acb0",
-   "person": "zophah",
-   "label": "mighty man of valor / head of a father's house (Asher)",
-   "question": "Q1"
-  },
-  {
-   "row": "31a0193861a06727",
-   "person": "barak",
-   "label": "бойові дії групи названих осіб",
-   "question": "Q2"
-  },
-  {
-   "row": "bee82009890a3f57",
-   "person": "barak",
-   "label": "leader of the men of Naphtali and Zebulun",
-   "question": "Q2"
-  },
-  {
-   "row": "22368395c16100a3",
-   "person": "joshua",
-   "label": "Leader of the army in the conquest",
-   "question": "Q2"
-  },
-  {
-   "row": "2533b7818d189cd0",
-   "person": "joshua",
-   "label": "Leader of Israel / military commander",
-   "question": "Q2"
-  },
-  {
-   "row": "af08eca9fa1a946a",
-   "person": "joshua",
-   "label": "Battle leader against Amalek",
-   "question": "Q2"
-  },
-  {
-   "row": "f4f3362672145773",
-   "person": "joshua",
-   "label": "leader of the army",
-   "question": "Q2"
-  },
-  {
-   "row": "f584a5783656a503",
-   "person": "joshua",
-   "label": "military commander",
-   "question": "Q2"
-  }
- ]
+ "hard": [],
+ "ownerRulings": "The two questions put to the owner were answered on 2026-11-09: 'Head of an ancestral house' is not an occupation the site keeps, so no person holds it from any verse and the occupation is removed (1; the rows of 1 Chr 7:40 and every row admitted to it are refused, citing his words); Joshua and Barak hold Military commander (2). Each stands above, marked as his ruling; prb-1420-part-4.json lists every pair the removal took."
 }
