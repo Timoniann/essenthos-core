@@ -56,8 +56,21 @@ internal record VerseTextListResponse(string Corpus, IList<VerseTextResponse> It
 /// for a page rather than one per reference, because a page of a hundred references is a hundred
 /// round trips otherwise and the client cannot batch what the API will not take in a batch.
 /// </summary>
-internal static class VerseEndpoints
+internal static partial class VerseEndpoints
 {
+    /// <summary>
+    /// A refused request leaves a line saying which refusal it was, what was asked and from which page
+    /// by which agent, so the refusals can be traced to whoever sends them. Never the client's address,
+    /// a word asked to be marked, or the referring page's query.
+    /// </summary>
+    internal const string LogCategory = "Essenthos.Core.Verses";
+
+    private const int LoggedAddresses = 3;
+
+    private const int LongestLoggedPart = 40;
+
+    private const int LongestLoggedLine = 160;
+
     /// <summary>
     /// More addresses than a page shows. The entity page pages its references at a hundred, and a
     /// request past this is a download of the text under another name.
@@ -93,8 +106,31 @@ internal static class VerseEndpoints
             AppDbContext db,
             ICanonIndex canon,
             WordForms forms,
+            HttpContext context,
+            ILoggerFactory loggers,
             CancellationToken cancellationToken) =>
         {
+            IResult Refuse(string reason, IReadOnlyCollection<string> sample, string problem)
+            {
+                var marking = string.Join(
+                    BetweenAddresses,
+                    new (string Name, string? Value)[] { ("entity", entity), ("strong", strong), ("occupation", occupation), ("word", word) }
+                        .Where(asked => asked.Value is { Length: > 0 })
+                        .Select(asked => asked.Name));
+                Refused(
+                    loggers.CreateLogger(LogCategory),
+                    reason,
+                    RequestTiming.Printable(corpus, LongestLoggedPart),
+                    (refs ?? string.Empty).Split(BetweenAddresses, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Length,
+                    RequestTiming.Printable(
+                        string.Join(BetweenAddresses, sample.Take(LoggedAddresses).Select(one => RequestTiming.Printable(one, LongestLoggedPart))),
+                        LongestLoggedLine),
+                    marking is { Length: > 0 } ? marking : "-",
+                    RequestTiming.Printable(PageOf(context.Request.Headers.Referer.ToString()), LongestLoggedLine),
+                    RequestTiming.Printable(context.Request.Headers.UserAgent.ToString(), LongestLoggedLine));
+                return Results.BadRequest(new ProblemResponse(problem));
+            }
+
             var text = corpus is { Length: > 0 }
                 ? await canon.Text(corpus, cancellationToken)
                 : (await canon.Texts(cancellationToken)).FirstOrDefault();
@@ -111,16 +147,16 @@ internal static class VerseEndpoints
 
             if (asked.Count == 0)
             {
-                return Results.BadRequest(new ProblemResponse(
+                return Refuse("no-refs", [refs ?? string.Empty],
                     "Ask for verses with refs=book:chapter:verse, separated by commas — "
-                    + "refs=genesis:11:27,exodus:4:14. The book is its name, slug or abbreviation."));
+                    + "refs=genesis:11:27,exodus:4:14. The book is its name, slug or abbreviation.");
             }
 
             if (asked.Count > MostAddresses)
             {
-                return Results.BadRequest(new ProblemResponse(
+                return Refuse("too-many", asked,
                     $"{asked.Count} addresses is more than this endpoint answers at once. Ask for at most "
-                    + $"{MostAddresses}, or read the chapter with /v1/text/{{corpus}}/{{book}}/{{chapter}}."));
+                    + $"{MostAddresses}, or read the chapter with /v1/text/{{corpus}}/{{book}}/{{chapter}}.");
             }
 
             var wanted = new List<Address>(asked.Count);
@@ -139,9 +175,9 @@ internal static class VerseEndpoints
 
             if (unreadable.Count > 0)
             {
-                return Results.BadRequest(new ProblemResponse(
+                return Refuse("unreadable", unreadable,
                     $"\"{unreadable[0]}\" is not an address. Write it as book:chapter:verse, as in "
-                    + "genesis:11:27."));
+                    + "genesis:11:27.");
             }
 
             string? named = null;
@@ -163,16 +199,16 @@ internal static class VerseEndpoints
                 number = StrongNumbers.Normalize(strong);
                 if (number is null)
                 {
-                    return Results.BadRequest(new ProblemResponse(
-                        $"\"{strong}\" is not a Strong number. Write a language letter and digits, as H430 or G26."));
+                    return Refuse("not-strong", asked,
+                        $"\"{strong}\" is not a Strong number. Write a language letter and digits, as H430 or G26.");
                 }
             }
 
             var keys = wanted.Select(address => address.Key).Distinct().ToList();
             if (occupation is { Length: > 0 } && named is null)
             {
-                return Results.BadRequest(new ProblemResponse(
-                    "An occupation is marked as one person's: ask with entity=<person> beside occupation=<slug>."));
+                return Refuse("occupation-alone", asked,
+                    "An occupation is marked as one person's: ask with entity=<person> beside occupation=<slug>.");
             }
 
             // A word's forms are the ones its list counted, so a verse of that list marks what put it there.
@@ -182,8 +218,8 @@ internal static class VerseEndpoints
                 var terms = SearchTerms.Parse(word);
                 if (terms.Length != 1)
                 {
-                    return Results.BadRequest(new ProblemResponse(
-                        "Ask to mark one word, as word=love. A phrase is not one word of the text."));
+                    return Refuse("not-one-word", asked,
+                        "Ask to mark one word, as word=love. A phrase is not one word of the text.");
                 }
 
                 spellings = [.. (await forms.Of(text.Id, cancellationToken))
@@ -525,31 +561,56 @@ internal static class VerseEndpoints
         IReadOnlyCollection<string> numbers,
         CancellationToken cancellationToken)
     {
-        var own = await db.Words
-            .Where(w => wordIds.Contains(w.Id) && w.StrongNumber != null && numbers.Contains(w.StrongNumber))
-            .Select(w => w.Id)
-            .ToListAsync(cancellationToken);
+        // Every read is bounded by ids and the numbers are matched here, never in a query: given a
+        // common number (G2316, G4151, H853) the planner starts from every word carrying it in every
+        // text and reads their links, 22 s on the server for a page of a hundred verses.
+        var own = await Carrying(db, wordIds, numbers, cancellationToken);
 
-        // In two reads rather than one correlated query: asked as one, the planner started from
-        // every word carrying a common number (G2316, H853) and took five seconds over a page.
         var sides = await db.LinkWords
-            .Where(side => wordIds.Contains(side.WordId)
-                           && (side.Link!.Relation == LinkRelation.Renders || side.Link.Relation == LinkRelation.Equals))
+            .Where(side => wordIds.Contains(side.WordId))
             .Select(side => new { side.LinkId, side.WordId, side.Side })
             .ToListAsync(cancellationToken);
         var linkIds = sides.Select(side => side.LinkId).Distinct().ToList();
-        var carrying = (await db.LinkWords
-                .Where(other => linkIds.Contains(other.LinkId)
-                                && other.Word!.StrongNumber != null
-                                && numbers.Contains(other.Word.StrongNumber))
-                .Select(other => new { other.LinkId, other.Side })
+        var others = await db.LinkWords
+            .Where(other => linkIds.Contains(other.LinkId))
+            .Select(other => new { other.LinkId, other.WordId, other.Side })
+            .ToListAsync(cancellationToken);
+        var asked = wordIds.ToHashSet();
+        var numbered = await Carrying(
+            db, [.. others.Select(other => other.WordId).Where(id => !asked.Contains(id)).Distinct()], numbers, cancellationToken);
+        numbered.UnionWith(own);
+        var carrying = others
+            .Where(other => numbered.Contains(other.WordId))
+            .Select(other => (other.LinkId, other.Side))
+            .ToHashSet();
+        var opposite = sides
+            .Where(side => carrying.Contains((side.LinkId, side.Side == LinkSide.From ? LinkSide.To : LinkSide.From)))
+            .ToList();
+
+        var candidates = opposite.Select(side => side.LinkId).Distinct().ToList();
+        var rendering = (await db.Links
+                .Where(link => candidates.Contains(link.Id)
+                               && (link.Relation == LinkRelation.Renders || link.Relation == LinkRelation.Equals))
+                .Select(link => link.Id)
                 .ToListAsync(cancellationToken))
             .ToHashSet();
-        var rendering = sides
-            .Where(side => carrying.Contains(new { side.LinkId, Side = side.Side == LinkSide.From ? LinkSide.To : LinkSide.From }))
-            .Select(side => side.WordId);
-        return [.. own, .. rendering];
+        return [.. own, .. opposite.Where(side => rendering.Contains(side.LinkId)).Select(side => side.WordId)];
     }
+
+    /// <summary>The words among these that carry one of the numbers, read by id alone.</summary>
+    private static async Task<HashSet<long>> Carrying(
+        AppDbContext db,
+        IReadOnlyCollection<long> wordIds,
+        IReadOnlyCollection<string> numbers,
+        CancellationToken cancellationToken) =>
+        [
+            .. (await db.Words
+                    .Where(w => wordIds.Contains(w.Id))
+                    .Select(w => new { w.Id, w.StrongNumber })
+                    .ToListAsync(cancellationToken))
+                .Where(w => w.StrongNumber is not null && numbers.Contains(w.StrongNumber))
+                .Select(w => w.Id),
+        ];
 
     /// <summary>
     /// Where the marked words sit in the verse as <see cref="VerseTextResponse.Text"/> spells it,
@@ -603,6 +664,15 @@ internal static class VerseEndpoints
 
         return true;
     }
+
+    [LoggerMessage(EventId = 1, Level = LogLevel.Information,
+        Message = "verses refused {Reason} corpus={Corpus} asked={Asked} refs={Refs} marking={Marking} page={Page} agent={Agent}")]
+    private static partial void Refused(
+        ILogger logger, string reason, string corpus, int asked, string refs, string marking, string page, string agent);
+
+    /// <summary>The path of the page a request came from, without its query, which may hold what a reader searched for.</summary>
+    internal static string PageOf(string? referer) =>
+        Uri.TryCreate(referer, UriKind.Absolute, out var page) ? page.AbsolutePath : "-";
 
     /// <summary>One word of a verse, and whether it names the entity asked about.</summary>
     internal readonly record struct MarkedWord(string Surface, string Trailer, bool Named);
