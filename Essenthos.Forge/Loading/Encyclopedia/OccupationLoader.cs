@@ -198,6 +198,7 @@ internal sealed partial class OccupationLoader(AppDbContext db)
     {
         var slugs = file.Assertions.Select(a => a.Person).Distinct().ToList();
         var people = await db.Entities.Where(e => slugs.Contains(e.Slug) && e.Kind == EntityKind.Person)
+            .Select(e => new { e.Slug, e.Id })
             .ToDictionaryAsync(e => e.Slug, e => e.Id, cancellationToken);
         var folded = await db.MergedRecords.Where(m => slugs.Contains(m.Slug) && m.Entity!.Kind == EntityKind.Person)
             .Select(m => new { m.Slug, m.EntityId }).ToListAsync(cancellationToken);
@@ -266,7 +267,8 @@ internal sealed partial class OccupationLoader(AppDbContext db)
     {
         var quotes = file.Assertions.SelectMany(a => a.Witnesses).Distinct().ToList();
         var slugs = quotes.Select(q => q.Text).Distinct().ToList();
-        var texts = await db.Texts.Where(t => slugs.Contains(t.Slug)).ToDictionaryAsync(t => t.Slug, t => t.Id, cancellationToken);
+        var texts = await db.Texts.Where(t => slugs.Contains(t.Slug)).Select(t => new { t.Slug, t.Id })
+            .ToDictionaryAsync(t => t.Slug, t => t.Id, cancellationToken);
         var keys = quotes.Select(q => Address(q.Reference)!.Value).Select(Key).Distinct().ToList();
         var textIds = texts.Values.ToList();
         var verses = (await db.Verses
@@ -474,7 +476,8 @@ internal sealed partial class OccupationLoader(AppDbContext db)
 
         var numbers = numbersOf.Values.SelectMany(n => n).Distinct().ToList();
         var textIds = candidates.Select(c => c.Text).Distinct().ToList();
-        var languages = await db.Texts.Where(t => textIds.Contains(t.Id)).ToDictionaryAsync(t => t.Id, t => t.Language, cancellationToken);
+        var languages = await db.Texts.Where(t => textIds.Contains(t.Id)).Select(t => new { t.Id, t.Language })
+            .ToDictionaryAsync(t => t.Id, t => t.Language, cancellationToken);
         var uses = new Dictionary<(int Text, string Number, string Phrase), int>();
         foreach (var rendering in await db.StrongRenderings
                      .Where(r => numbers.Contains(r.StrongNumber) && textIds.Contains(r.TextId) && r.Rank <= Commonest && r.Uses >= 2)
