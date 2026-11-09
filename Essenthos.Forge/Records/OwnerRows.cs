@@ -56,6 +56,15 @@ internal static class OwnerRows
         "Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse " +
         "in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction";
 
+    /// <summary>
+    /// The header note of a file of decided rows that says who decided them (<c># by   …</c>), when it is not the review
+    /// lists of <see cref="Source"/>: another day's ruling of the owner, or an agent's reading on his instruction.
+    /// </summary>
+    public const string ByNote = "by";
+
+    private static string? DecidedBy(ProductHeader? header) =>
+        header?.Notes.LastOrDefault(note => note.Key == ByNote).Value is { Length: > 0 } by ? by : null;
+
     /// <param name="Entry">The review list and the entry of it the row settles (<c>objects:41</c>).</param>
     /// <param name="Product">The file the row edits.</param>
     /// <param name="Op">add or remove (a name on a word), refile or withdraw (a dataset's verse row).</param>
@@ -69,8 +78,10 @@ internal static class OwnerRows
     /// </param>
     /// <param name="Label">For a dataset row, the label the dataset gives it.</param>
     /// <param name="Why">The reading the decision rests on; a name row's note.</param>
+    /// <param name="By">Who decided it, from its file's <see cref="ByNote"/>; <see cref="Source"/> where the file names nobody.</param>
     internal sealed record Row(
-        string Entry, string Product, string Op, string At, string Record, string? From, string? Role, string? Strong, string? Label, string Why);
+        string Entry, string Product, string Op, string At, string Record, string? From, string? Role, string? Strong, string? Label, string Why,
+        string? By = null);
 
     public static readonly ProductSchema<Row> Schema = new ProductSchema<Row>()
         .Text("entry", r => r.Entry)
@@ -96,7 +107,8 @@ internal static class OwnerRows
     /// which is taken from the record's English line and notes; for drop, the columns a row must equal to go.
     /// </param>
     /// <param name="Why">The reading the decision rests on.</param>
-    internal sealed record RecordRow(string Entry, string Product, string Op, string Record, string Values, string Why);
+    /// <param name="By">Who decided it, from its file's <see cref="ByNote"/>: the <c>by</c> a put leaves unnamed.</param>
+    internal sealed record RecordRow(string Entry, string Product, string Op, string Record, string Values, string Why, string? By = null);
 
     public static readonly ProductSchema<RecordRow> RecordSchema = new ProductSchema<RecordRow>()
         .Text("entry", r => r.Entry)
@@ -141,12 +153,14 @@ internal static class OwnerRows
             if (path.EndsWith(RecordRowsSuffix, StringComparison.Ordinal))
             {
                 using var records = ProductStore.HandFormat.Open(path, RecordSchema);
-                decided.Records.AddRange(records.Rows());
+                var recordsBy = DecidedBy(records.Header);
+                decided.Records.AddRange(records.Rows().Select(row => row with { By = recordsBy }));
                 continue;
             }
 
             using var reader = ProductStore.HandFormat.Open(path, Schema);
-            decided.Names.AddRange(reader.Rows());
+            var by = DecidedBy(reader.Header);
+            decided.Names.AddRange(reader.Rows().Select(row => row with { By = by }));
         }
 
         return decided;
@@ -188,7 +202,7 @@ internal static class OwnerRows
         if (records is not null)
         {
             refused.AddRange(decided.Records
-                .Where(r => r.Op == Put && r.Product != Records && !records.Contains(r.Record))
+                .Where(r => r.Op == Put && r.Product != Records && KeyedByRecord(r.Product) && !records.Contains(r.Record))
                 .Select(r => $"{r.Entry} put {r.Record} in {r.Product}: no such record in records/records"));
         }
 
@@ -247,6 +261,13 @@ internal static class OwnerRows
 
         return new Outcome(decided.Count, changed.Values.Sum(), already, refused, changed, written);
     }
+
+    /// <summary>
+    /// Whether a record file's first column names a record. The renderings of English (<c>texts</c>, <c>glosses</c>) are
+    /// keyed by the English they render, so a row of theirs names no record to look for.
+    /// </summary>
+    private static bool KeyedByRecord(string product) =>
+        RecordFiles.All.FirstOrDefault(f => f.Product == product)?.Parsed is [{ Name: "slug" or "subject" }, ..];
 
     private static HashSet<string>? RecordSlugs(ProductStore store)
     {
@@ -341,7 +362,7 @@ internal static class OwnerRows
                 {
                     given[i] = file.Parsed[i].Name switch
                     {
-                        "by" => Source,
+                        "by" => row.By ?? Source,
                         "english" when row.Product.EndsWith("/lines", StringComparison.Ordinal) => English(row.Record, 1),
                         "english_sha256" when row.Product.EndsWith("/notes", StringComparison.Ordinal) =>
                             English(row.Record, 2) is { } notes ? EnglishNotes.Digest(notes) : null,
@@ -539,7 +560,7 @@ internal static class OwnerRows
                 return $"a name row is added or removed, not '{row.Op}'";
             }
 
-            var decided = new[] { key.Own, row.Record, at >= 0 ? _rows[at].Row[2] : row.Role, Method, null, Source, row.Why };
+            var decided = new[] { key.Own, row.Record, at >= 0 ? _rows[at].Row[2] : row.Role, Method, null, row.By ?? Source, row.Why };
             if (decided[2] is null || !NameRoles.All.Contains(decided[2]!))
             {
                 return $"'{decided[2]}' is no role of a name";

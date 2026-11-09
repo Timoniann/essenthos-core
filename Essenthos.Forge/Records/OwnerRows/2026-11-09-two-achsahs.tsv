@@ -1,0 +1,10 @@
+# producer   by hand: the Achsah of 1 Chronicles 2:49 made a record of her own (TSK-1434), applied by forge owner-rows
+# by         Essenthos, the project owner's ruling of 2026-11-02 that the Achsah of 1CH 2:49 is a record of her own, applied by claude-opus-5-5 reading 1CH 2:42-49, JOS 15:16-19 and JDG 1:12-15 on his instruction of 2026-11-09
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+TSK-1434	names/BHSA	remove	13.2:49.16	achsah	\N	\N	H5915	\N	the word of 1CH 2:49 names the daughter of Caleb the brother of Jerahmeel, on the project owner's ruling of 2026-11-02
+TSK-1434	names/BHSA	add	13.2:49.16	achsah-2	\N	name	H5915	\N	the word of 1CH 2:49 names the daughter of Caleb the brother of Jerahmeel, on the project owner's ruling of 2026-11-02
+TSK-1434	names/GRCBRENT	remove	13.2:49.17	achsah	\N	\N	\N	\N	the word of 1CH 2:49 names the daughter of Caleb the brother of Jerahmeel, on the project owner's ruling of 2026-11-02
+TSK-1434	names/GRCBRENT	add	13.2:49.17	achsah-2	\N	name	\N	\N	the word of 1CH 2:49 names the daughter of Caleb the brother of Jerahmeel, on the project owner's ruling of 2026-11-02
+TSK-1434	names/VULGCLEM	remove	13.2:49.16	achsah	\N	\N	\N	\N	the word of 1CH 2:49 names the daughter of Caleb the brother of Jerahmeel, on the project owner's ruling of 2026-11-02
+TSK-1434	names/VULGCLEM	add	13.2:49.16	achsah-2	\N	name	\N	\N	the word of 1CH 2:49 names the daughter of Caleb the brother of Jerahmeel, on the project owner's ruling of 2026-11-02

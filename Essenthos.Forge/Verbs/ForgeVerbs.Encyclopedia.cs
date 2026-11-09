@@ -219,7 +219,7 @@ internal static partial class ForgeVerbs
             return 0;
         }
 
-        foreach (var outcome in await references.Load(forge.Resources))
+        foreach (var outcome in await references.Load(forge.Resources, args.Contains("--replace")))
         {
             Console.WriteLine(outcome);
         }
@@ -231,7 +231,7 @@ internal static partial class ForgeVerbs
     {
         using var topicScope = forge.Scope();
         Console.WriteLine(await topicScope.ServiceProvider.GetRequiredService<NaveTopicLoader>()
-            .Load(Path.Combine(forge.Resources, "BibleData2026")));
+            .Load(Path.Combine(forge.Resources, "BibleData2026"), args.Contains("--replace")));
         return 0;
     }
 

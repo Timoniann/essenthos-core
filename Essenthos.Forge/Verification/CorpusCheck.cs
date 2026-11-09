@@ -54,6 +54,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// <summary>The name each integrity check is measured and logged under.</summary>
     public static IReadOnlyList<string> IntegrityChecks => [.. Integrity.Select(check => check.Breaks)];
 
+    /// <summary>The integrity check of cross references and topic verses that name an address the frame does not place.</summary>
+    public const string ReferencesNoTextPlaces = "cross references and topic verses naming a verse no text places";
+
     /// <summary>
     /// Hebrew prefixes and the object marker. A translation renders these inside the word they
     /// attach to, so counting them as words a translation failed to reach would report a fact about
@@ -878,6 +881,27 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
         ("relationships of a record with itself",
             "SELECT count(*) FROM entity_relationship WHERE from_entity_id = to_entity_id"),
+
+        // A cross reference or a topic's verse is a link the reader follows; one the frame does not
+        // place opens nothing (Philemon 2:10, Mark 18:42).
+        (ReferencesNoTextPlaces,
+            """
+            SELECT (SELECT count(*) FROM cross_reference c
+                    WHERE NOT EXISTS (SELECT 1 FROM verse_reference v WHERE v.canonical_book = c.book
+                                        AND v.canonical_chapter = c.chapter AND v.canonical_verse = c.verse)
+                       OR NOT EXISTS (SELECT 1 FROM verse_reference v WHERE v.canonical_book = c.to_book
+                                        AND v.canonical_chapter = c.to_chapter AND v.canonical_verse = c.to_verse)
+                       OR (c.to_end_book IS NOT NULL
+                           AND NOT EXISTS (SELECT 1 FROM verse_reference v WHERE v.canonical_book = c.to_end_book
+                                             AND v.canonical_chapter = c.to_end_chapter AND v.canonical_verse = c.to_end_verse)))
+                 + (SELECT count(*) FROM topic_reference r
+                    WHERE NOT EXISTS (SELECT 1 FROM verse_reference v WHERE v.canonical_book = r.canonical_book
+                                        AND v.canonical_chapter = r.canonical_chapter
+                                        AND v.canonical_verse = coalesce(r.first_verse, v.canonical_verse))
+                       OR (r.last_verse IS NOT NULL
+                           AND NOT EXISTS (SELECT 1 FROM verse_reference v WHERE v.canonical_book = r.canonical_book
+                                             AND v.canonical_chapter = r.canonical_chapter AND v.canonical_verse = r.last_verse)))
+            """),
 
         // A man as somebody's mother is a reading of "the wife of Hodiah" that lost the wife.
         ("family relationships saying of a man what only a woman is, or of a woman what only a man is",
