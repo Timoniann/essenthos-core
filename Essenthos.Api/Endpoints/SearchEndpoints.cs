@@ -212,6 +212,10 @@ internal static class SearchEndpoints
                     v.ChapterNumber,
                     v.Number,
                     v.Label,
+                    Frame = v.References
+                        .Where(r => r.IsPrimary && r.CanonicalBook == v.Book!.CanonicalOrdinal)
+                        .Select(r => new { r.CanonicalChapter, r.CanonicalVerse })
+                        .FirstOrDefault(),
                     Words = v.Words.OrderBy(w => w.Position)
                         .Select(w => new { w.Surface, w.Trailer, w.NormalisedText, w.GraphicalText })
                         .ToList(),
@@ -250,7 +254,11 @@ internal static class SearchEndpoints
                                     TermMatching.Folded => folded == term.Match,
                                     _ => folded.Contains(term.Match, StringComparison.Ordinal),
                                 })))),
-                        verse.Label)),
+                        verse.Label)
+                    {
+                        CanonicalChapter = verse.Frame?.CanonicalChapter,
+                        CanonicalVerse = verse.Frame?.CanonicalVerse,
+                    }),
                 ],
                 SearchTerms.Matching(matched),
                 [.. matched.Select(term => new SearchTermResponse(term.Text, SearchTerms.Name(term.Matching)))]));
@@ -357,6 +365,17 @@ internal record SearchHitResponse(
     /// not rank.
     /// </summary>
     public string? Match { get; init; }
+
+    /// <summary>
+    /// The chapter of the shared frame the verse stands at, which the reader's addresses are written in;
+    /// <see cref="Chapter"/> and <see cref="Verse"/> are the text's own numbers, which differ in the
+    /// Psalms of the Hebrew, the Septuagint's numbering and the Greek Esther. Null where the verse stands
+    /// at no address of its book.
+    /// </summary>
+    public int? CanonicalChapter { get; init; }
+
+    /// <summary>The verse of the shared frame the verse stands at, with <see cref="CanonicalChapter"/>.</summary>
+    public int? CanonicalVerse { get; init; }
 }
 
 /// <param name="Matching">How the term was matched: <c>stemmed</c>, <c>folded</c>, <c>printed-word</c> or <c>substring</c>.</param>

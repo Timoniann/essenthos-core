@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -257,6 +258,25 @@ public sealed class WithdrawnRecordTests : IDisposable
         records.Single(record => record.Entity == "zabdiel-2").Claims.Should().ContainSingle(claim =>
             claim.Relation == "descendant-of" && claim.Target == "aaron" && claim.DecidedBy != null);
         records.Single(record => record.Entity == "jaaziah").Claims.Should().NotContain(claim => claim.Target == "beno");
+    }
+
+    /// <summary>
+    /// A withdrawn address leads only to a record that stays, never to itself or to another withdrawn
+    /// record, and the API reads from the list the same answer the Forge does.
+    /// </summary>
+    [Fact]
+    public void AWithdrawnAddressLeadsOnlyToARecordThatStays()
+    {
+        var listed = WithdrawnRecordLoader.Read();
+        var slugs = listed.Select(record => record.Slug).ToHashSet(StringComparer.Ordinal);
+
+        listed.Where(record => record.LeadsTo is not null)
+            .Should().OnlyContain(record => record.LeadsTo != record.Slug && !slugs.Contains(record.LeadsTo!));
+        listed.Should().OnlyContain(record =>
+            WithdrawnAddresses.IsWithdrawn(record.Slug) && WithdrawnAddresses.LeadsTo(record.Slug) == record.LeadsTo);
+        WithdrawnAddresses.LeadsTo("gibbar-2").Should().Be("gibbar", "the children of Gibbar (EZR 2:20) are the man's");
+        WithdrawnAddresses.LeadsTo("mahalab").Should().BeNull("JOS 19:29 names nothing there");
+        WithdrawnAddresses.IsWithdrawn("gibbar").Should().BeFalse();
     }
 
     private WithdrawnRecordLoader Loader() => new(_db, NullLogger<WithdrawnRecordLoader>.Instance);

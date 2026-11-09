@@ -207,6 +207,8 @@ internal static class VerseSearch
                         verse.Label)
                     {
                         Match = partial ? Most : hit.Phrase ? Phrase : Every,
+                        CanonicalChapter = verse.CanonicalChapter,
+                        CanonicalVerse = verse.CanonicalVerse,
                     };
                 }),
             ],
@@ -458,7 +460,8 @@ internal static class VerseSearch
 
     private sealed record PageWord(string Surface, string Trailer, string? Normalised, string? Graphical);
 
-    private sealed record PageVerse(int Ordinal, int Chapter, int Number, string Label, List<PageWord> Words);
+    private sealed record PageVerse(
+        int Ordinal, int Chapter, int Number, string Label, int? CanonicalChapter, int? CanonicalVerse, List<PageWord> Words);
 
     private static async Task<Dictionary<int, PageVerse>> Verses(
         AppDbContext db, List<int> ids, CancellationToken cancellationToken)
@@ -472,12 +475,17 @@ internal static class VerseSearch
                 v.ChapterNumber,
                 v.Number,
                 v.Label,
+                Frame = v.References
+                    .Where(r => r.IsPrimary && r.CanonicalBook == v.Book!.CanonicalOrdinal)
+                    .Select(r => new { r.CanonicalChapter, r.CanonicalVerse })
+                    .FirstOrDefault(),
                 Words = v.Words.OrderBy(w => w.Position)
                     .Select(w => new PageWord(w.Surface, w.Trailer, w.NormalisedText, w.GraphicalText))
                     .ToList(),
             })
             .ToListAsync(cancellationToken);
-        return verses.ToDictionary(v => v.Id, v => new PageVerse(v.Ordinal, v.ChapterNumber, v.Number, v.Label, v.Words));
+        return verses.ToDictionary(v => v.Id, v => new PageVerse(
+            v.Ordinal, v.ChapterNumber, v.Number, v.Label, v.Frame?.CanonicalChapter, v.Frame?.CanonicalVerse, v.Words));
     }
 
     private static bool Marked(PageWord word, IReadOnlyList<ResolvedTerm> terms) =>

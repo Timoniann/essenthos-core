@@ -101,6 +101,23 @@ public sealed class VerseSearchTests : IAsyncLifetime
 
     private static List<int> Verses(SearchResultsResponse found) => [.. found.Items.Select(hit => hit.Verse)];
 
+    /// <summary>
+    /// A hit names its verse by the text's own number and by the shared frame's, which the reader's
+    /// addresses are written in: the Hebrew Psalms run a verse ahead of the English, so a link by the
+    /// own number opens the verse after, or one the frame does not have.
+    /// </summary>
+    [Fact]
+    public async Task AHitCarriesTheFramesAddressBesideTheTextsOwnNumber()
+    {
+        var placed = await _db.VerseReferences.SingleAsync(r => r.Verse!.TextId == _english.Id && r.Verse.Number == 3);
+        placed.CanonicalVerse = 9;
+        await _db.SaveChangesAsync();
+
+        var hit = (await Search(_english, "garden")).Items.Single();
+
+        (hit.Chapter, hit.Verse, hit.CanonicalChapter, hit.CanonicalVerse).Should().Be((1, 3, 1, 9));
+    }
+
     [Fact]
     public async Task AWordFindsItsOtherForms()
     {
