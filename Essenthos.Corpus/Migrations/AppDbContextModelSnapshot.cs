@@ -5879,6 +5879,12 @@ namespace Essenthos.Core.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_word_entity_word_id_entity_id");
 
+                    b.HasIndex(new[] { "WordId" }, "ix_word_entity_word_id_exception")
+                        .HasDatabaseName("ix_word_entity_word_id_exception")
+                        .HasFilter("origin IN ('added', 'differs')");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex(new[] { "WordId" }, "ix_word_entity_word_id_exception"), new[] { "EntityId", "Origin" });
+
                     b.ToTable("word_entity", null, t =>
                         {
                             t.HasCheckConstraint("ck_word_entity_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");

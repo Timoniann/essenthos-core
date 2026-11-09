@@ -162,4 +162,10 @@ public static class WordEntityOrigins
     public const string BaseReading = "base-reading";
 
     public static readonly IReadOnlyList<string> All = [Settled, Projected, Added, Differs, BaseReading];
+
+    /// <summary>
+    /// The texts a <see cref="Settled"/> name stands on: the reference texts whose names are decided on the text itself,
+    /// three originals and four witnesses. Every other text's names are projected from them or excepted against them.
+    /// </summary>
+    public static readonly IReadOnlyList<string> SettledTexts = ["BHSA", "NESTLE1904", "TR1894", "GRCBRENT", "VULGCLEM", "SP", "GEEZ81"];
 }

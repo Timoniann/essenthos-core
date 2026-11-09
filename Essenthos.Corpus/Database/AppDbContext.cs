@@ -1983,6 +1983,13 @@ public class AppDbContext : DbContext
             // unless they ask for it (IgnoreQueryFilters).
             entity.HasQueryFilter(a => a.Origin != WordEntityOrigins.BaseReading);
 
+            // The names a translation carries against its base are a few hundred among 1.6 million rows: the chapter context
+            // reads them from here rather than probing every word of the open texts.
+            entity.HasIndex(a => a.WordId, "ix_word_entity_word_id_exception")
+                .HasDatabaseName("ix_word_entity_word_id_exception")
+                .HasFilter($"origin IN ('{WordEntityOrigins.Added}', '{WordEntityOrigins.Differs}')")
+                .IncludeProperties(a => new { a.EntityId, a.Origin });
+
             entity.ToTable("word_entity", t =>
             {
                 AddProvenanceConstraints(t, "word_entity");

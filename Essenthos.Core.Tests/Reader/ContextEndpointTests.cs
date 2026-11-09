@@ -3,6 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ public sealed class ContextEndpointTests : IDisposable
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
 
-        _hebrew = Corpus.Add(_db, "test-hebrew", TextKind.CriticalEdition, "hbo",
+        _hebrew = Corpus.Add(_db, BhsaTextSource.Slug, TextKind.CriticalEdition, "hbo",
             (10, 1, ["אלה", "תולדת", "בני", "נח"]),
             (10, 2, ["בני", "יפת", "גמר"]),
             (10, 3, ["ובני", "גמר"]),
