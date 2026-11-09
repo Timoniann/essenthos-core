@@ -507,6 +507,27 @@ The recovery path is rehearsed on the workstation with synthetic accounts by
 `avioniq services run core-backup-rehearsal --set root=. --set output=backup-rehearsal`; that does not
 replace one restore from the real server.
 
+## Being told when it breaks
+
+`watch.sh` runs on the host from deploy's crontab every five minutes and writes to a Telegram group
+(TSK-1282): the site and `/v1/health/ready`, every container up and healthy, both disks under 85%, a
+dump of the accounts in the last 26 hours, ten or more API 5xx in ten minutes, readers' browsers
+reporting crashes or failed calls, and the certificate. A problem is told after two runs in a row,
+again every six hours while it lasts, and when it is gone; every day at 9:00 Kyiv time it says all is
+well. Its own log is `/srv/essenthos/logs/watch.log`.
+
+Once, by the owner:
+
+1. In Telegram, make a group, make a bot with @BotFather, add the bot to the group and write `/start`
+   in it.
+2. `ssh deploy@<server>`, `nano /srv/essenthos/deploy/.env`, add `TELEGRAM_BOT_TOKEN=<token>`, save.
+3. `sh /srv/essenthos/deploy/watch.sh --hello`: it finds the group, writes `TELEGRAM_CHAT_ID` into
+   `.env` and says hello there.
+
+Once, on a new machine: `(crontab -l; echo "*/5 * * * * /bin/sh /srv/essenthos/deploy/watch.sh >>
+/srv/essenthos/logs/watch.log 2>&1") | crontab -` as deploy. `watch.sh --dry` checks and prints what it
+found without sending anything.
+
 ## When more space is needed
 
 The data root is already on a Hetzner Volume (network storage, slower than the local disk, priced per GB):
