@@ -14,7 +14,7 @@ internal static class NameProducts
     public const string Folder = "names";
 
     /// <summary>The texts whose names are decided on the text itself: three originals and four witnesses.</summary>
-    public static readonly IReadOnlyList<string> References = ["BHSA", "NESTLE1904", "TR1894", "GRCBRENT", "VULGCLEM", "SP", "GEEZ81"];
+    public static readonly IReadOnlyList<string> References = WordEntityOrigins.SettledTexts;
 
     public const string Rules = "names/rules";
 

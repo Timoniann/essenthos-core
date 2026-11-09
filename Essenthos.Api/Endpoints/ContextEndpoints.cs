@@ -365,11 +365,15 @@ internal static class ContextEndpoints
 
     private sealed record NamedAt(string Slug, int CanonicalVerse);
 
-    /// <summary>Where a reference text's settled names fall in the chapter, by the verse of the shared numbering.</summary>
+    /// <summary>
+    /// Where a reference text's settled names fall in the chapter, by the verse of the shared numbering. Only the reference
+    /// texts' words are read: a chapter holds the words of some forty texts, and only these seven can carry a settled name.
+    /// </summary>
     private static async Task<List<NamedAt>> Settled(AppDbContext db, int book, int chapter, CancellationToken cancellationToken) =>
         await (
                 from reference in db.VerseReferences
                 where reference.IsPrimary && reference.CanonicalBook == book && reference.CanonicalChapter == chapter
+                      && WordEntityOrigins.SettledTexts.Contains(reference.Verse!.Text!.Slug)
                 join word in db.Words on reference.VerseId equals word.VerseId
                 join named in db.WordEntities on word.Id equals named.WordId
                 where named.Origin == WordEntityOrigins.Settled
@@ -396,12 +400,14 @@ internal static class ContextEndpoints
             return [];
         }
 
+        // The exceptions are a few hundred words in the whole corpus, held apart by a partial index on word_entity; only the
+        // open texts' verses of the chapter are joined to them.
         var ids = open.Select(t => t.Id).ToList();
         var rows = await (
                 from reference in db.VerseReferences
                 where reference.IsPrimary && reference.CanonicalBook == book && reference.CanonicalChapter == chapter
+                      && ids.Contains(reference.Verse!.TextId)
                 join word in db.Words on reference.VerseId equals word.VerseId
-                where ids.Contains(word.TextId)
                 join named in db.WordEntities on word.Id equals named.WordId
                 where named.Origin == WordEntityOrigins.Added || named.Origin == WordEntityOrigins.Differs
                 select new { named.Entity!.Slug, word.TextId, Origin = named.Origin!, reference.CanonicalVerse })
