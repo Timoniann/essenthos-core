@@ -17,9 +17,13 @@ internal enum Original
 /// <summary>A verse as its page shows it, in the words of the text the page's language reads.</summary>
 internal sealed record VerseView(int Book, string BookName, int Chapter, int Verse, string Text, string TextName)
 {
-    public int? Previous { get; init; }
+    /// <summary>The whole chapter in the same text, which the page shows around the verse; the verse alone where empty.</summary>
+    public IReadOnlyList<(int Number, string Text)> Verses { get; init; } = [];
 
-    public int? Next { get; init; }
+    public int ChapterCount { get; init; }
+
+    /// <summary>The language the text is written in, which the reader marks each verse with; the page's own where unknown.</summary>
+    public string? TextLanguage { get; init; }
 }
 
 internal sealed record ChapterView(
@@ -28,7 +32,11 @@ internal sealed record ChapterView(
     int Chapter,
     int ChapterCount,
     IReadOnlyList<(int Number, string Text)> Verses,
-    string TextName);
+    string TextName)
+{
+    /// <summary>The language the text is written in, which the reader marks each verse with; the page's own where unknown.</summary>
+    public string? TextLanguage { get; init; }
+}
 
 /// <summary>A piece of a record's description, linked where it names another record.</summary>
 internal sealed record LinePart(string Text, string? Href = null);
@@ -143,27 +151,9 @@ internal static partial class PageViews
     {
         var reference = t.Reference(verse.BookName, verse.Chapter, verse.Verse);
         var chapter = $"{verse.BookName} {verse.Chapter}";
-        var body = Open(language)
-            .Open("nav").Link(language.Path("/"), PageContent.SiteName).Text(Crumb)
-            .Link(language.Path(PageAddress.ChapterPath(verse.Book, verse.Chapter)), chapter).Close("nav")
-            .Element("h1", reference)
-            .Open("blockquote").Element("p", verse.Text).Close("blockquote")
-            .Element("p", verse.TextName, "source")
-            .Open("nav");
-        if (verse.Previous is { } previous)
-        {
-            body.Link(language.Path(PageAddress.VersePath(verse.Book, verse.Chapter, previous)),
-                $"← {verse.Chapter}:{previous}", "prev").Text(" ");
-        }
-
-        body.Link(language.Path(PageAddress.ChapterPath(verse.Book, verse.Chapter)), chapter);
-        if (verse.Next is { } next)
-        {
-            body.Text(" ").Link(language.Path(PageAddress.VersePath(verse.Book, verse.Chapter, next)),
-                $"{verse.Chapter}:{next} →", "next");
-        }
-
-        body.Close("nav").Close("article");
+        var verses = verse.Verses.Count > 0 ? verse.Verses : [(verse.Verse, verse.Text)];
+        var body = Reading(language, new ChapterView(verse.Book, verse.BookName, verse.Chapter,
+            Math.Max(verse.ChapterCount, verse.Chapter), verses, verse.TextName) { TextLanguage = verse.TextLanguage }, verse.Verse);
         var title = string.Join(Separator, reference, t.Quoted(Shortened(verse.Text, TitleQuoteLength)), verse.TextName);
         var beside = Beside(t, OriginalOf(verse.Book));
         var description = AroundQuote(t, verse.Text, quote => t.Text("verse.description",
@@ -193,25 +183,47 @@ internal static partial class PageViews
                 ("name", bookName),
                 ("isPartOf", StructuredData.Node("Book", ("name", textName))))));
 
-    public static PageContent Chapter(SiteLanguage language, PageWording t, ChapterView chapter)
+    /// <summary>
+    /// A chapter as the reader's first screen draws it, for a verse page and a chapter page alike: the
+    /// reading bar's room, the chapter's name, and every verse in the reader's own grid, the verse the
+    /// address names marked. The reader's stylesheet sets it exactly where the reader will, so it is
+    /// shown at once rather than held back for the script, and the reader takes its verses over as
+    /// they are while its own copy of the chapter is still on its way (essenthos-web, src/features/reader/landing.tsx).
+    /// The class names are that stylesheet's; nothing here is styled by the plain <c>.prerendered</c> rules.
+    /// </summary>
+    private static HtmlWriter Reading(SiteLanguage language, ChapterView chapter, int? landed)
     {
+        var chapterPath = PageAddress.ChapterPath(chapter.Book, chapter.Chapter);
         var reference = $"{chapter.BookName} {chapter.Chapter}";
-        var body = Open(language)
-            .Open("nav").Link(language.Path("/"), PageContent.SiteName).Close("nav")
-            .Element("h1", reference)
-            .Element("p", chapter.TextName, "source");
-        foreach (var (number, text) in chapter.Verses)
+        var body = new HtmlWriter()
+            .Open("article", "prerendered reading", lang: language.Code,
+                attributes: [("data-chapter", chapterPath), ("data-verse", landed?.ToString())])
+            .Open("div", "reading-bar").Close("div")
+            .Open("div", "reading-page")
+            .Open("nav", "reading-trail").Link(language.Path("/"), PageContent.SiteName);
+        if (landed is not null)
         {
-            body.Open("p", id: $"v{number}")
-                .Open("sup").Link(language.Path(PageAddress.VersePath(chapter.Book, chapter.Chapter, number)), number.ToString())
-                .Close("sup").Text(" ").Text(text).Close("p");
+            body.Text(Crumb).Link(language.Path(chapterPath), reference);
         }
 
-        body.Open("nav");
+        body.Close("nav")
+            .Open("div", "reading-head").Element("h1", reference).Close("div")
+            .Open("div", "verse-grid reading-verses")
+            .Element("div", chapter.TextName, "reading-pane");
+        var textLanguage = chapter.TextLanguage ?? language.Code;
+        foreach (var (number, text) in chapter.Verses)
+        {
+            body.Open("div", "verse-row", $"v{number}", attributes: ("data-landed", number == landed ? "" : null))
+                .Link(language.Path(PageAddress.VersePath(chapter.Book, chapter.Chapter, number)), number.ToString(), className: "verse-number")
+                .Open("div", "verse-cell").Element("p", text, "text-ltr", textLanguage).Close("div")
+                .Close("div");
+        }
+
+        body.Close("div").Open("nav", "reading-turns");
         if (chapter.Chapter > 1)
         {
             body.Link(language.Path(PageAddress.ChapterPath(chapter.Book, chapter.Chapter - 1)),
-                $"← {chapter.BookName} {chapter.Chapter - 1}", "prev").Text(" ");
+                $"← {chapter.BookName} {chapter.Chapter - 1}", "prev");
         }
 
         if (chapter.Chapter < chapter.ChapterCount)
@@ -220,7 +232,13 @@ internal static partial class PageViews
                 $"{chapter.BookName} {chapter.Chapter + 1} →", "next");
         }
 
-        body.Close("nav").Close("article");
+        return body.Close("nav").Close("div").Close("article");
+    }
+
+    public static PageContent Chapter(SiteLanguage language, PageWording t, ChapterView chapter)
+    {
+        var reference = $"{chapter.BookName} {chapter.Chapter}";
+        var body = Reading(language, chapter, landed: null);
         var beside = Beside(t, OriginalOf(chapter.Book));
         var opening = string.Join(' ', chapter.Verses.Take(OpeningVerses).Select(verse => verse.Text));
         var description = opening.Length > 0
