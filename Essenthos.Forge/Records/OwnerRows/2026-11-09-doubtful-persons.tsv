@@ -1,0 +1,8 @@
+# producer   by hand: doubtful person records settled from the text (PRB-1421), applied by forge owner-rows
+# by         Essenthos, read against the verses in the Hebrew with the King James beside them by claude-opus-5-5 on the project owner's instruction of 2026-11-09
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1421	names/BHSA	remove	16.12:25.5	shallum-7	\N	\N	H4918	\N	NEH 12:25 names Meshullam, a gatekeeper in the days of Joiakim (NEH 12:26), not Shallum
+PRB-1421	names/BHSA	add	16.12:25.5	meshullam-the-gatekeeper	\N	name	H4918	\N	NEH 12:25 names Meshullam, a gatekeeper in the days of Joiakim (NEH 12:26), not Shallum
+PRB-1421	names/VULGCLEM	remove	16.12:25.5	shallum-7	\N	\N	\N	\N	NEH 12:25 names Meshullam, a gatekeeper in the days of Joiakim (NEH 12:26), not Shallum
+PRB-1421	names/VULGCLEM	add	16.12:25.5	meshullam-the-gatekeeper	\N	name	\N	\N	NEH 12:25 names Meshullam, a gatekeeper in the days of Joiakim (NEH 12:26), not Shallum
