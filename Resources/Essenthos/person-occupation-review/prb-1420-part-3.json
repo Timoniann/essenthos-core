@@ -1,0 +1,2026 @@
+{
+ "what": "PRB-1420, third part: every needs_review observation of occupation-full-publication-2026-10-27-v1 left after parts 1 and 2 whose kind names a military role or a trade (290 rows: 135 military, 155 trade), decided by reading the verses. Admitted claims are in ../person-occupations.json; this file says why, and why not. Requests and the loader never read it.",
+ "decidedBy": "an agent (claude-opus-5-5), 2026-11-09",
+ "rules": [
+  "The rules of parts 1 and 2 hold (prb-1420-part-1.json, prb-1420-part-2.json).",
+  "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, with the count of the house's men, is the house's strength and standing, not a warrior's occupation of each man named; a headship the same verse states is held (1 Chr 5:24, 7:2, 7:7, 7:9).",
+  "A count by heads ('by the heads of their fathers ... 17,200 fit for war', 1 Chr 7:11) does not call each man named a head.",
+  "Warrior is the noun גִּבּוֹר said of a named man in war (2 Chr 28:7) or a list of fighting men headed so (1 Chr 12:24-29).",
+  "A king leading his own army holds King, not a military office besides.",
+  "A plural said by and of Jacob's sons (Gen 46:32-34, 47:3) is not said of each grandson the list of Gen 46 names.",
+  "'Son of' a guild (בֶּן־הָרַקָּחִים, בֶּן־הַצֹּרְפִי) is a member of it, as 'the sons of the priests' are priests (part 1).",
+  "A trade is named, or its verb said of the person as their work (Adam sent 'to till the ground'; David playing the harp before Saul 'as day by day'); one season's work (Isaac's sowing) or charity (Dorcas' garments) is not."
+ ],
+ "newOccupations": [
+  "harpist",
+  "perfumer",
+  "potter"
+ ],
+ "counts": {
+  "rows": 290,
+  "admittedRows": 29,
+  "refused": 69,
+  "covered": 150,
+  "hard": 42,
+  "newPairs": 31,
+  "newPairsNotAmongTheHeldRows": 3
+ },
+ "admitted": [
+  {
+   "person": "abijah-4",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "52121a982426ace6"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "alemeth",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "dec51fe52faef888"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "anathoth",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "ed57e3fd6f73c710"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eliezer-3",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: sons of Becher with the seven held rows.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "elioenai-3",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: sons of Becher with the seven held rows.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "jahmai",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
+   "rows": [
+    "c2aabc4c7a806781"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeremoth",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "5ea48fbc3307786d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeriel",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
+   "rows": [
+    "d46744428a9d78d9"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jerimoth",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:7: 'the sons of Bela: Ezbon, Uzzi, Uzziel, Jerimoth and Iri, five; heads of the house of their fathers'. The other four hold it on this verse.",
+   "rows": [
+    "29a53ec3154b23c1"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "joash-6",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "20030fa787bf8014"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "omri-2",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "8949105e5d242be8"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "rephaiah-3",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
+   "rows": [
+    "c36f1eb8ab8c6ecf"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "samuel-3",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
+   "rows": [
+    "0a43fe1ce8571aba"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "uzzi-2",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:2: 'the sons of Tola: Uzzi, Rephaiah, Jeriel, Jahmai, Ibsam and Shemuel, heads of their fathers' house'; Ibsam holds it on this verse. The 'mighty men of valour in their generations' with their number is the house's strength, not each man's occupation.",
+   "rows": [
+    "f2324baeb72264bf"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zemirah",
+   "occupation": "ancestral-house-chief",
+   "why": "1 Chr 7:8-9: the nine sons of Becher, 'their enrolment by their generations: heads of their fathers' houses, mighty men of valour, 20,200', as 1 Chr 7:7 is read of the five sons of Bela (admitted before). The headship is held, not a warrior's occupation (see 7:2, 7:7).",
+   "rows": [
+    "e697ef2cfe94d037"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "ammizabad",
+   "occupation": "army-division-commander",
+   "why": "1 Chr 27:6 'this is Benaiah... and his division: Ammizabad his son' (BSB 'his son Ammizabad was in charge of his division'), in the list of the twelve divisions and their commanders.",
+   "rows": [
+    "872fd53ebc469bd6"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zebadiah-5",
+   "occupation": "army-division-commander",
+   "why": "1 Chr 27:7 'the fourth for the fourth month was Asahel brother of Joab, and Zebadiah his son after him': he followed in the command of the division, in the list of its commanders.",
+   "rows": [
+    "c87061c1c206295d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "amasiah",
+   "occupation": "captain-of-thousands",
+   "why": "2 Chr 17:14-16: 'of Judah, the captains of thousands: Adnah the chief..., next to him Jehohanan the captain..., and next to him Amasiah son of Zichri... with him 200,000 mighty men'. The heading governs the list; Adnah and Jehohanan hold it on it.",
+   "rows": [
+    "899f57b177cf6df8"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jehozabad-3",
+   "occupation": "captain-of-thousands",
+   "why": "2 Chr 17:14-18: under the heading 'captains of thousands', 'next to him Jehozabad, and with him 180,000 ready for war'.",
+   "rows": [
+    "ddde725311482634"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "uzziel-2",
+   "occupation": "expedition-commander",
+   "why": "1 Chr 4:42: five hundred men went to mount Seir, 'and Pelatiah, Neariah, Rephaiah and Uzziel, the sons of Ishi, at their head' (בְּרֹאשָׁם); the other three hold Expedition commander on this verse.",
+   "rows": [
+    "bce1defce9f86c2d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "adam",
+   "occupation": "farmer",
+   "why": "Gen 3:23 'the LORD God sent him forth from the garden of Eden to till the ground' (לַעֲבֹד אֶת־הָאֲדָמָה), the very words of the occupation; 2:15 'to work it and keep it'. The work he is sent to, said of him by name (3:17-23).",
+   "rows": [
+    "da2a40ae832d6b7d",
+    "a77121839896ab1b"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "malchijah-9",
+   "occupation": "goldsmith",
+   "why": "Neh 3:31 'Malchiah the goldsmith's son' (בֶּן־הַצֹּרְפִי), BSB 'one of the goldsmiths': 'son of' the guild, as Hananiah son of the perfumers (3:8); 3:32 'the goldsmiths' repair beside him.",
+   "rows": [
+    "239ebacb29f569a7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "david",
+   "occupation": "harpist",
+   "why": "1 Sam 16:16-23: Saul's servants seek 'a man who is a skilful player on the harp'; David is 'skilful in playing' (16:18) and 'took the harp and played with his hand' whenever the spirit came (16:23), 'as at other times' (18:10, 19:9). A standing service at the court, said of him by the narrator.",
+   "rows": [
+    "4a2b58192a6bc474"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hananiah-6",
+   "occupation": "perfumer",
+   "why": "Neh 3:8 'Hananiah, son of the perfumers' (בֶּן־הָרַקָּחִים): 'son of' a guild is a member of it (BSB 'one of the perfumers'), as part 1 read 'the sons of the priests' as priests.",
+   "rows": [
+    "cb8169e7301429e8"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jashubilehem",
+   "occupation": "potter",
+   "why": "1 Chr 4:22-23: 'Jokim, the men of Cozeba, Joash, Saraph... and Jashubi-lehem... These were the potters (הַיּוֹצְרִים)': the closing line says it of the men 4:22 names.",
+   "rows": [
+    "92c16711b3b55046"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "joash-5",
+   "occupation": "potter",
+   "why": "1 Chr 4:22-23 'These were the potters', of the men 4:22 names.",
+   "rows": [
+    "9581b43ae0a1d9a4"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jokim",
+   "occupation": "potter",
+   "why": "1 Chr 4:22-23 'These were the potters', of the men 4:22 names.",
+   "rows": [
+    "d37d946c3b080884"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "saraph",
+   "occupation": "potter",
+   "why": "1 Chr 4:22-23 'These were the potters', of the men 4:22 names with Jokim and Joash.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "shemaiah-8",
+   "occupation": "scribe",
+   "why": "1 Chr 24:6 'Shemaiah son of Nethanel, the scribe, of the Levites, wrote them before the king': the title at the head of the chain (BSB 'the scribe Shemaiah') and the scribe's verb.",
+   "rows": [
+    "6db0e2794bc12509"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zadok",
+   "occupation": "warrior",
+   "why": "1 Chr 12:29 'Zadok, a young man mighty of valour, and of his father's house twenty-two captains', in the count of 'the heads armed for war' who came to David at Hebron (12:24). Read of the record the verse's word is annotated to.",
+   "rows": [
+    "eda96ff1e793e414"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zichri-10",
+   "occupation": "warrior",
+   "why": "2 Chr 28:7 'Zichri, a mighty man (גִּבּוֹר) of Ephraim, slew Maaseiah the king's son...', in Pekah's war against Judah: the noun of the occupation said of him in battle.",
+   "rows": [
+    "e57242f17a247c11"
+   ],
+   "notAmongTheHeldRows": null
+  }
+ ],
+ "refused": [
+  {
+   "row": "6506129b4ce5b9db",
+   "person": "abinadab-2",
+   "label": "Participant in Saul's army (soldier?)",
+   "reason": "1 Sam 17:13: Jesse's three eldest 'went after Saul to the battle': they served in one campaign; no title or service is named."
+  },
+  {
+   "row": "c3e4e9dc6d260937",
+   "person": "ahishahar",
+   "label": "mighty men of valour, soldiers (sons of Jediael)",
+   "reason": "1 Chr 7:11 'all these sons of Jediael, by the heads of their fathers, mighty men of valour, 17,200 fit for war' counts the house's soldiers by their heads; it does not call each man named a head or a warrior."
+  },
+  {
+   "row": "6b3e10a93493999c",
+   "person": "athaiah",
+   "label": "valiant man (Perez group)",
+   "reason": "Neh 11:6 'all the sons of Perez that dwelt at Jerusalem were 468 valiant men': the count of his house's men, not his occupation."
+  },
+  {
+   "row": "e7eaa0f67abb16c3",
+   "person": "azriel",
+   "label": "mighty men of valor",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "e6219300a319e925",
+   "person": "eliab-3",
+   "label": "Participant in Saul's army (soldier?)",
+   "reason": "1 Sam 17:13: Jesse's three eldest 'went after Saul to the battle': they served in one campaign; no title or service is named."
+  },
+  {
+   "row": "28172593fca3a93e",
+   "person": "eliel",
+   "label": "mighty men of valor",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "545603b620308216",
+   "person": "epher-3",
+   "label": "mighty men of valor",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "eac1f3fdcff45c3e",
+   "person": "ezbon-2",
+   "label": "mighty men of valour (military)",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "bac16f11d1f8d6b1",
+   "person": "gera",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "3137975a4e5c1739",
+   "person": "gershon",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "b2c8b010bc50710b",
+   "person": "gog-2",
+   "label": "military leader of troops",
+   "reason": "Ezek 38:7, 39:4: a prophecy of Gog and his hordes; 'be thou a guard unto them' is the word to him, not an office."
+  },
+  {
+   "row": "cd90e7483ae8ae27",
+   "person": "gog-2",
+   "label": "guard/commander of assembled host",
+   "reason": "Ezek 38:7, 39:4: a prophecy of Gog and his hordes; 'be thou a guard unto them' is the word to him, not an office."
+  },
+  {
+   "row": "c04cef3326be9b7a",
+   "person": "gomer-2",
+   "label": "wife of whoredoms / harlot",
+   "reason": "Hos 1:2 'a wife of whoredoms' is the sign the LORD commands, a figure of the land; not a trade or the narrator's designation (owner, TSK-1218: figures are not designations)."
+  },
+  {
+   "row": "f2ce72f7b79c1ecd",
+   "person": "guni",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "0132e789cd60f5b4",
+   "person": "haggi",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "e68943a8f6647a8f",
+   "person": "hamul",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "2ec932daf936f2bf",
+   "person": "hanoch-2",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "d6e442b7044e4438",
+   "person": "harhaiah",
+   "label": "goldsmith (guild)",
+   "reason": "Neh 3:8 'Uzziel son of Harhaiah, of the goldsmiths': the guild is Uzziel's, at the head of the phrase; Uzziel holds Goldsmith on this verse."
+  },
+  {
+   "row": "7db79df0e45e4393",
+   "person": "heber",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "5cf324ecd5e43898",
+   "person": "hezron",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "b833b6627be9604f",
+   "person": "hezron-2",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "ac7716374509ae30",
+   "person": "hodaviah-2",
+   "label": "mighty men of valor",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "b6dfc2a163859af2",
+   "person": "huppim",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "e6a6124cef6bd971",
+   "person": "hushim",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "1c704b06ceefabfd",
+   "person": "ibsam",
+   "label": "valiant men of might (military)",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "41c72803b88d43c7",
+   "person": "imnah",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "c78f99067f0662e3",
+   "person": "iob",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "353a33087f53923b",
+   "person": "iri",
+   "label": "mighty men of valour (military)",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "7b1a62cd92690539",
+   "person": "isaac",
+   "label": "sower/farmer",
+   "reason": "Gen 26:12 'Isaac sowed in that land and received a hundredfold': one year's sowing in a famine; his wealth is in flocks and herds (26:14). No trade is named."
+  },
+  {
+   "row": "c241befffe7457a2",
+   "person": "ishi-3",
+   "label": "mighty men of valour (gibbōrê ḥayil)",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "20b779d6ffbfb61d",
+   "person": "ishvah",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "2d1bfa1ca3e352bf",
+   "person": "ishvi",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "1b9afe2fce285de8",
+   "person": "jaazaniah-5",
+   "label": "captain of the forces (?)",
+   "reason": "Jer 42:1 'all the captains of the forces, and Johanan son of Kareah, and Jezaniah son of Hoshaiah': named beside the captains, not called one."
+  },
+  {
+   "row": "7a2e4b204281a19c",
+   "person": "jachin",
+   "label": "Пастух (група «чоловіки»)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "c9922baeeee9da98",
+   "person": "jahdiel",
+   "label": "mighty men of valour (gibbōrê ḥayil)",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "921b034347a86c4a",
+   "person": "javan",
+   "label": "merchant (Javan, Tubal, Meshech as merchants of Tyre)",
+   "reason": "Ezek 27:13 'Javan, Tubal and Meshech, they were thy merchants' names the peoples and lands that traded with Tyre, not the man of Gen 10:2."
+  },
+  {
+   "row": "3f018d843130d4df",
+   "person": "jeremiah-2",
+   "label": "mighty men of valour (gibbōrê ḥayil)",
+   "reason": "'Mighty men of valour' (גִּבּוֹרֵי חַיִל) in a genealogy's summary, said with the count of the house's men, is their standing and the strength of the house, not a warrior's occupation of each man; the headship the verse states is held."
+  },
+  {
+   "row": "eb1ab962df84882b",
+   "person": "jeush-2",
+   "label": "head of father's house / mighty man of valour, soldier (Jediael group)",
+   "reason": "1 Chr 7:11 'all these sons of Jediael, by the heads of their fathers, mighty men of valour, 17,200 fit for war' counts the house's soldiers by their heads; it does not call each man named a head or a warrior."
+  },
+  {
+   "row": "7b94a03c73e638ee",
+   "person": "joab-2",
+   "label": "craftsman (?) / father of Ge-harashim",
+   "reason": "1 Chr 4:14 'Joab, the father of the valley of craftsmen, for they were craftsmen': 'father of' a place in Chronicles is its founder, and 'they' are its people (guide records)."
+  },
+  {
+   "row": "7d716424610ee40d",
+   "person": "jonathan-2",
+   "label": "the mighty / warrior with bow",
+   "reason": "1 Sam 13:2 'a thousand were with Jonathan in Gibeah' says who was with him, not a rank; 2 Sam 1:22-25 is an elegy."
+  },
+  {
+   "row": "973aecad0d1183b2",
+   "person": "jonathan-2",
+   "label": "Командир тисячі воїнів",
+   "reason": "1 Sam 13:2 'a thousand were with Jonathan in Gibeah' says who was with him, not a rank; 2 Sam 1:22-25 is an elegy."
+  },
+  {
+   "row": "7b1377ab219dd2df",
+   "person": "kish",
+   "label": "גִּבֹּ֖ור חָֽיִל (mighty man of power)",
+   "reason": "1 Sam 9:1 גִּבּוֹר חָיִל: 'a mighty man of power' (KJV), 'a man of standing' (BSB): wealth or standing; no war is in view."
+  },
+  {
+   "row": "737591770358944d",
+   "person": "laadah",
+   "label": "linen workers of Beth-ashbea (possible)",
+   "reason": "1 Chr 4:21 'Laadah the father of Mareshah, and the families of the house of linen workers, of the house of Ashbea': the linen work is said of the families of Ashbea's house, not of Laadah."
+  },
+  {
+   "row": "693c6f997a1bc140",
+   "person": "meshech",
+   "label": "merchant (Javan, Tubal, Meshech as merchants of Tyre)",
+   "reason": "Ezek 27:13: the people of Meshech traded with Tyre, not the man of Gen 10:2."
+  },
+  {
+   "row": "5635c536be8345bf",
+   "person": "naomi",
+   "label": "nurse (omenet)",
+   "reason": "Ruth 4:16 'Naomi took the child, and laid it in her bosom, and became nurse (אֹמֶנֶת) unto it': a grandmother caring for her grandson, not an occupation."
+  },
+  {
+   "row": "c23d0d60f2f44caf",
+   "person": "nethanel-4",
+   "label": "писар (книжник)",
+   "reason": "1 Chr 24:6 'Shemaiah son of Nethanel, the scribe, of the Levites, wrote them': the title is Shemaiah's, at the head of the chain, and the verb is his."
+  },
+  {
+   "row": "0330944d569b6abe",
+   "person": "perez",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "965fb30b6e13ac16",
+   "person": "pocherethhazzebaim",
+   "label": "Pochereth of Zebaim",
+   "reason": "Ezra 2:57 'the children of Pochereth of Zebaim': a family name; whatever the name means, the text names no trade."
+  },
+  {
+   "row": "5ab5d990ff1dae31",
+   "person": "puvvah",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "f096f3f839df5004",
+   "person": "rosh",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "7077d927df00b88d",
+   "person": "sered",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "3013502a643e37fd",
+   "person": "shammah-2",
+   "label": "Participant in Saul's army (soldier?)",
+   "reason": "1 Sam 17:13: Jesse's three eldest 'went after Saul to the battle': they served in one campaign; no title or service is named."
+  },
+  {
+   "row": "d128233771d206db",
+   "person": "shaul-2",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "23b65ed162ce4fea",
+   "person": "shelah-2",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "6903264ec21589fa",
+   "person": "shillem",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "c6cd60a0428331bc",
+   "person": "shimron",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "1daf863aeebb2869",
+   "person": "shuni",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "913f9b0f27301bb2",
+   "person": "tabitha",
+   "label": "maker of tunics and garments",
+   "reason": "Acts 9:39 'the coats and garments which Dorcas made, while she was with them': her charity to the widows; no trade is named."
+  },
+  {
+   "row": "61099cc89e866bec",
+   "person": "tarshish-2",
+   "label": "mighty man of valor (sons of Jediael)",
+   "reason": "1 Chr 7:11 'all these sons of Jediael, by the heads of their fathers, mighty men of valour, 17,200 fit for war' counts the house's soldiers by their heads; it does not call each man named a head or a warrior."
+  },
+  {
+   "row": "6695b6d57b531fca",
+   "person": "tola",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "96b317b5ddee6154",
+   "person": "tubal",
+   "label": "merchant (Javan, Tubal, Meshech as merchants of Tyre)",
+   "reason": "Ezek 27:13: the people of Tubal traded with Tyre, not the man of Gen 10:2."
+  },
+  {
+   "row": "bb35b63d16ee01c0",
+   "person": "zadok-9",
+   "label": "mighty warrior (gibbor chayil)",
+   "reason": "1 Chr 12:29's word is annotated to zadok, who is admitted on it; this record is not named there."
+  },
+  {
+   "row": "9d2e1bd51357b7fd",
+   "person": "zebedee",
+   "label": "Батько в човні з найманими працівниками (можливе рибальство/власник човна)",
+   "reason": "Matt 4:21, Mark 1:20: he is in the boat with his sons and the hired servants, but the text does not call him a fisherman, as it does Simon and Andrew (Matt 4:18)."
+  },
+  {
+   "row": "c67284535662dc2e",
+   "person": "zebedee",
+   "label": "net mender in the boat (possibly fisherman)",
+   "reason": "Matt 4:21, Mark 1:20: he is in the boat with his sons and the hired servants, but the text does not call him a fisherman, as it does Simon and Andrew (Matt 4:18)."
+  },
+  {
+   "row": "3c37d86c8ece5498",
+   "person": "zerah-3",
+   "label": "Shepherd (group claim)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "1abc45e645a99c4b",
+   "person": "zerah-6",
+   "label": "leader of a Cushite army",
+   "reason": "2 Chr 14:9 'Zerah the Ethiopian came out against them with a host of a thousand thousand': the text names neither his rank nor an office."
+  },
+  {
+   "row": "84fd066d75880c7f",
+   "person": "zethan",
+   "label": "mighty man of valor (sons of Jediael)",
+   "reason": "1 Chr 7:11 'all these sons of Jediael, by the heads of their fathers, mighty men of valour, 17,200 fit for war' counts the house's soldiers by their heads; it does not call each man named a head or a warrior."
+  },
+  {
+   "row": "91be85e1512afe1e",
+   "person": "ziphion",
+   "label": "shepherd / livestock keeper (group attribution)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  },
+  {
+   "row": "0616d75fceb5d49f",
+   "person": "zohar-2",
+   "label": "shepherd / livestock keeper (group attribution)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names, some of them infants."
+  }
+ ],
+ "covered": [
+  {
+   "row": "c96bdead34642bb9",
+   "person": "abijam",
+   "label": "army commander",
+   "by": "king",
+   "reason": "2 Chr 13:3 'Abijah set the battle in array': a king leading his army; he holds King."
+  },
+  {
+   "row": "7c92311b25b54f88",
+   "person": "abishai",
+   "label": "Command of part of the army (Abishai)",
+   "by": "military-commander",
+   "reason": "Holds Military commander and Chief of the Three; these rows show him commanding."
+  },
+  {
+   "row": "afde41d9283d7848",
+   "person": "abishai",
+   "label": "chief/captain of the three",
+   "by": "military-commander",
+   "reason": "Holds Military commander and Chief of the Three; these rows show him commanding."
+  },
+  {
+   "row": "b739d4e3686a758d",
+   "person": "abishai",
+   "label": "battle commander (one engagement)",
+   "by": "military-commander",
+   "reason": "Holds Military commander and Chief of the Three; these rows show him commanding."
+  },
+  {
+   "row": "c9d5391dc0fed2b9",
+   "person": "abishai",
+   "label": "Командир третини війська",
+   "by": "military-commander",
+   "reason": "Holds Military commander and Chief of the Three; these rows show him commanding."
+  },
+  {
+   "row": "b3b44108348681c4",
+   "person": "abner",
+   "label": "captain of Saul's host / prince",
+   "by": "military-commander",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "bd1666e7990f4291",
+   "person": "amos",
+   "label": "herdsman and gatherer of sycomore fruit (Amos 7:14)",
+   "by": "herdsman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "2fa2b7bdfd873ea2",
+   "person": "andrew",
+   "label": "fisherman (Andrew, brother of Simon Peter)",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "4079988cb8a10469",
+   "person": "andrew",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "731705da46bd19f8",
+   "person": "andrew",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "9210a20ea6d12789",
+   "person": "andrew",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "bad7096158ad7761",
+   "person": "andrew",
+   "label": "fisher (Matt 4:18)",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "e604d027dcfdfd43",
+   "person": "andrew",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "f1c18d2370180330",
+   "person": "andrew",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "d120c881ce39231d",
+   "person": "barabbas",
+   "label": "robber / insurrectionist (λῃστής)",
+   "by": "robber",
+   "reason": "Holds Robber on John 18:40 (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "7e97f80745654fb0",
+   "person": "barjesus",
+   "label": "sorcerer (μάγος)",
+   "by": "sorcerer",
+   "reason": "Holds Sorcerer (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "5a082904d02aa24e",
+   "person": "bezalel",
+   "label": "craftsman / skilled artisan of the sanctuary",
+   "by": "craftsman",
+   "reason": "Holds Craftsman, Embroiderer and Weaver; these rows repeat his work."
+  },
+  {
+   "row": "95e84cd30b9f20cb",
+   "person": "bezalel",
+   "label": "specific sub-trades (weaver, embroiderer, metalworker, woodworker)",
+   "by": "craftsman",
+   "reason": "Holds Craftsman, Embroiderer and Weaver; these rows repeat his work."
+  },
+  {
+   "row": "d2dc723cf1802a29",
+   "person": "bezalel",
+   "label": "craftsman/artisan (Bezaleel)",
+   "by": "craftsman",
+   "reason": "Holds Craftsman, Embroiderer and Weaver; these rows repeat his work."
+  },
+  {
+   "row": "015afe174411c517",
+   "person": "david",
+   "label": "Warrior / military role",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "0379f7f16674a8e4",
+   "person": "david",
+   "label": "Warrior / mighty one",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "1604abe54fa3d3d2",
+   "person": "david",
+   "label": "Service in the host / leader of his men",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "1a123f63eae6883c",
+   "person": "david",
+   "label": "Shepherd (following the flock)",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "1ab2b17a0645b902",
+   "person": "david",
+   "label": "shepherd (following the flock)",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "269637f89401f41d",
+   "person": "david",
+   "label": "leader of a band of six hundred men",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "3df62be779011641",
+   "person": "david",
+   "label": "former shepherd (following the sheep)",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "53d9dee8a9959577",
+   "person": "david",
+   "label": "Shepherd (past)",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "594ef757af690154",
+   "person": "david",
+   "label": "military commander (captain over a thousand)",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "5a6e0230a56596d7",
+   "person": "david",
+   "label": "Leader of a band of fighting men",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "6a9095194a441299",
+   "person": "david",
+   "label": "перемоги групи, до якої названо Давида",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "792a6e0923a4149e",
+   "person": "david",
+   "label": "harpist/musician",
+   "by": "harpist",
+   "reason": "1 Sam 19:9: the same service."
+  },
+  {
+   "row": "9332753ef0ae5299",
+   "person": "david",
+   "label": "Shepherd",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "a1c9a9b69c539060",
+   "person": "david",
+   "label": "captain of the bodyguard (BSB rendering)",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "bfc3fd9bb47daab2",
+   "person": "david",
+   "label": "Навчений війні (мовець псалма)",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "c72a4765535d0f9e",
+   "person": "david",
+   "label": "leader of an armed band / warrior",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "d5605e9d80217a03",
+   "person": "david",
+   "label": "Musician / harpist",
+   "by": "harpist",
+   "reason": "1 Sam 18:10 'David played with his hand, as day by day': the service admitted on 1 Sam 16:23."
+  },
+  {
+   "row": "e5d1773b143781bf",
+   "person": "david",
+   "label": "man of war",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "f8336053b2ae425b",
+   "person": "david",
+   "label": "leader of a band of armed men",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "fd1bc9e496799be9",
+   "person": "david",
+   "label": "warrior / military role",
+   "by": "military-commander",
+   "reason": "Holds Military commander, Captain of a band and Warrior; these rows show him leading his men or speak of war in his psalms."
+  },
+  {
+   "row": "86d89df2ae6ce0a6",
+   "person": "doeg",
+   "label": "chief of Saul's herdmen",
+   "by": "chief-herdsman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "a18b58be2a454949",
+   "person": "esau",
+   "label": "hunter",
+   "by": "hunter",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "23313cb3c08d4728",
+   "person": "gideon",
+   "label": "mighty man of valor (gibbor hechayil)",
+   "by": "military-commander",
+   "reason": "Holds Military commander; Judg 6:12 is the angel's greeting and 7:16 his command of the three hundred."
+  },
+  {
+   "row": "a52b636dde62efa5",
+   "person": "gideon",
+   "label": "commander of the three hundred men",
+   "by": "military-commander",
+   "reason": "Holds Military commander; Judg 6:12 is the angel's greeting and 7:16 his command of the three hundred."
+  },
+  {
+   "row": "db0ac1032361a7e8",
+   "person": "goliath",
+   "label": "Champion (Philistine warrior)",
+   "by": "champion",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "8cde6e11f7fc2deb",
+   "person": "herod-2",
+   "label": "Herod (ruler with jurisdiction and soldiers)",
+   "by": "tetrarch",
+   "reason": "Holds Tetrarch and King; Luke 23:7-11 speaks of his jurisdiction and soldiers."
+  },
+  {
+   "row": "cbec05803f99b8df",
+   "person": "hiram-2",
+   "label": "Huram — виготовлення мідного начиння (можливий ремісник-металіст)",
+   "by": "bronze-worker",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "a52ba7963ea89f44",
+   "person": "huramabi",
+   "label": "Huram-abi — виготовлення мідного начиння для храму (можливий ремісник-металіст)",
+   "by": "craftsman",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "2a0bd42a68f806cc",
+   "person": "ittai",
+   "label": "leader of his own men",
+   "by": "military-commander",
+   "reason": "Holds Military commander (2 Sam 18:5); 15:22 shows him with his men."
+  },
+  {
+   "row": "003c43678b59aee3",
+   "person": "jacob",
+   "label": "Пастух (через «наших батьків»)",
+   "by": "shepherd",
+   "reason": "Holds Shepherd; these rows repeat his keeping of Laban's flocks."
+  },
+  {
+   "row": "2117434f94e3c085",
+   "person": "jacob",
+   "label": "Shepherd (tended sheep for a wife)",
+   "by": "shepherd",
+   "reason": "Holds Shepherd; these rows repeat his keeping of Laban's flocks."
+  },
+  {
+   "row": "8548b746417bb8b6",
+   "person": "jacob",
+   "label": "shepherd (possible, via 'our fathers')",
+   "by": "shepherd",
+   "reason": "Holds Shepherd; these rows repeat his keeping of Laban's flocks."
+  },
+  {
+   "row": "9958d3233cbb9be4",
+   "person": "jacob",
+   "label": "shepherd (pasturing Laban's flocks)",
+   "by": "shepherd",
+   "reason": "Holds Shepherd; these rows repeat his keeping of Laban's flocks."
+  },
+  {
+   "row": "cb8e90c043a712ee",
+   "person": "jacob",
+   "label": "Яків як пастух/доглядач отар Лавана",
+   "by": "shepherd",
+   "reason": "Holds Shepherd; these rows repeat his keeping of Laban's flocks."
+  },
+  {
+   "row": "453adb991dd4a1ec",
+   "person": "james",
+   "label": "net-mending in a boat",
+   "by": "fisherman",
+   "reason": "Holds Fisherman; Matt 4:21 and Mark 1:19 show him mending nets."
+  },
+  {
+   "row": "bf1d2d497e0a54d9",
+   "person": "james",
+   "label": "fisherman (possible)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman; Matt 4:21 and Mark 1:19 show him mending nets."
+  },
+  {
+   "row": "c02fd943cda91ef1",
+   "person": "jehu-2",
+   "label": "Іуй як воєначальник (капітан)",
+   "by": "military-commander",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "554d5eac422e1838",
+   "person": "jephthah",
+   "label": "mighty man of valor (gibbor chayil)",
+   "by": "military-commander",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "7d501ad85f36de07",
+   "person": "jephthah",
+   "label": "captain/head of Gilead",
+   "by": "military-commander",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "cb1d77963f4d1222",
+   "person": "jesus",
+   "label": "carpenter / craftsman (tekton)",
+   "by": "craftsman",
+   "reason": "Holds Craftsman (Mark 6:3)."
+  },
+  {
+   "row": "fcd893fb2dc19096",
+   "person": "jesus",
+   "label": "Carpenter/craftsman (KJV 'carpenter')",
+   "by": "craftsman",
+   "reason": "Holds Craftsman (Mark 6:3)."
+  },
+  {
+   "row": "03210abcfbf3f2a6",
+   "person": "joab",
+   "label": "leader of David's servants (no title in this passage)",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "2b9b991bdb782a09",
+   "person": "joab",
+   "label": "army leader in the Ammonite campaign",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "3550e8af460d5e75",
+   "person": "joab",
+   "label": "army commander",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "b026fb50a2a06064",
+   "person": "joab",
+   "label": "captain of the host",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "b7a4a6a0a9f1c4e9",
+   "person": "joab",
+   "label": "Leader of the army (Joab)",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "ca253196a2299ef9",
+   "person": "joab",
+   "label": "leader of David's army at Rabbah",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "d8520a932ea13f33",
+   "person": "joab",
+   "label": "Commander of the king's army",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "e9637d5f2b4ed958",
+   "person": "joab",
+   "label": "leader of David's host",
+   "by": "military-commander",
+   "reason": "Holds Military commander; these rows show him leading the army."
+  },
+  {
+   "row": "449fa25e586a2b79",
+   "person": "johanan",
+   "label": "captain of the forces",
+   "by": "military-commander",
+   "reason": "Holds Military commander (2 Kgs 25:23, Jer 40:7); these rows name him with the captains."
+  },
+  {
+   "row": "6e8529ac9134406c",
+   "person": "johanan",
+   "label": "Johanan as military captain",
+   "by": "military-commander",
+   "reason": "Holds Military commander (2 Kgs 25:23, Jer 40:7); these rows name him with the captains."
+  },
+  {
+   "row": "956a982eb7e44b25",
+   "person": "johanan",
+   "label": "captain of the forces (?)",
+   "by": "military-commander",
+   "reason": "Holds Military commander (2 Kgs 25:23, Jer 40:7); these rows name him with the captains."
+  },
+  {
+   "row": "4f75c83944d802c1",
+   "person": "john-2",
+   "label": "net mender in the boat (possibly fisherman)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman; Matt 4:21, Mark 1:19 show him mending nets."
+  },
+  {
+   "row": "6cbae01466b53669",
+   "person": "john-2",
+   "label": "Лагодження сітей у човні (можливе рибальство)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman; Matt 4:21, Mark 1:19 show him mending nets."
+  },
+  {
+   "row": "b34b65d468ce024a",
+   "person": "jonathan-13",
+   "label": "scribe",
+   "by": "scribe",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "edec62ec31078dd2",
+   "person": "joseph",
+   "label": "Grain seller / distributor (המשביר)",
+   "by": "governor-of-egypt",
+   "reason": "Gen 42:6 'he it was that sold to all the people of the land' is his work as governor, which he holds."
+  },
+  {
+   "row": "497703b7881c3231",
+   "person": "levi-son-of-alphaeus",
+   "label": "tax collector (sitting at the tax booth)",
+   "by": "tax-collector",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "5e50796d4e6fd24a",
+   "person": "matthew",
+   "label": "tax collector / publican (Levi?)",
+   "by": "tax-collector",
+   "reason": "Holds Tax collector (Matt 10:3); Luke 5:27's Levi is the record's question."
+  },
+  {
+   "row": "4220be07f55f166b",
+   "person": "michael-9",
+   "label": "Michael fighting the dragon",
+   "by": "heavenly-prince",
+   "reason": "Holds Great prince (Dan 12:1); Rev 12:7 'Michael and his angels fought against the dragon' is a battle in a vision, no further office."
+  },
+  {
+   "row": "4f0ac02a60e56a7e",
+   "person": "moses",
+   "label": "shepherd (kept the flock)",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "606ae50099285213",
+   "person": "nebuchadnezzar",
+   "label": "army leader in the Tyre campaign",
+   "by": "king",
+   "reason": "A king leading his army against Tyre (Ezek 29:18); he holds King."
+  },
+  {
+   "row": "ab9f5b73ad8ec625",
+   "person": "noah",
+   "label": "husbandman (farmer)",
+   "by": "farmer",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "f7e6ef4a9fed4e66",
+   "person": "noah",
+   "label": "Husbandman / vineyard planter (Noah)",
+   "by": "farmer",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "0a36fde98024e77a",
+   "person": "oholiab",
+   "label": "specific sub-trades (engraver, embroiderer, weaver)",
+   "by": "craftsman",
+   "reason": "Holds Craftsman, Craft designer, Embroiderer and Weaver; these rows repeat his work."
+  },
+  {
+   "row": "933db26bc6cf56dc",
+   "person": "oholiab",
+   "label": "Ремісник, помічник Бецалеля (імпліцитно)",
+   "by": "craftsman",
+   "reason": "Holds Craftsman, Craft designer, Embroiderer and Weaver; these rows repeat his work."
+  },
+  {
+   "row": "2a15f31c30750eb8",
+   "person": "pekah",
+   "label": "captain (earlier role of Pekah)",
+   "by": "military-officer",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "98d96e5fb73554af",
+   "person": "rachel",
+   "label": "shepherdess",
+   "by": "shepherd",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "05a81272675b0486",
+   "person": "rahab",
+   "label": "harlot",
+   "by": "harlot",
+   "reason": "Holds Harlot (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "1124201a2dfd2db1",
+   "person": "rahab",
+   "label": "harlot / prostitute",
+   "by": "harlot",
+   "reason": "Holds Harlot (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "dd7a5d18bd529201",
+   "person": "rahab",
+   "label": "harlot / prostitute (הַזֹּונָה)",
+   "by": "harlot",
+   "reason": "Holds Harlot (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "f0aea56cc374e22e",
+   "person": "rahab",
+   "label": "harlot / prostitute (זֹונָה)",
+   "by": "harlot",
+   "reason": "Holds Harlot (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "0d51e72f5f3e753b",
+   "person": "saul",
+   "label": "the mighty / warrior with sword",
+   "by": "king",
+   "reason": "A king mustering and leading his army (1 Sam 11, 15); he holds King. 2 Sam 1 is an elegy."
+  },
+  {
+   "row": "7957a6bdf1464013",
+   "person": "saul",
+   "label": "військовий провідник походу проти Амалика",
+   "by": "king",
+   "reason": "A king mustering and leading his army (1 Sam 11, 15); he holds King. 2 Sam 1 is an elegy."
+  },
+  {
+   "row": "87451d6629441042",
+   "person": "saul",
+   "label": "military commander of the levy against the Ammonites",
+   "by": "king",
+   "reason": "A king mustering and leading his army (1 Sam 11, 15); he holds King. 2 Sam 1 is an elegy."
+  },
+  {
+   "row": "719c04137cdd2a22",
+   "person": "saul-2",
+   "label": "tentmaker",
+   "by": "tentmaker",
+   "reason": "Holds Tentmaker (Acts 18:3); 1 Cor 4:12 and 9:6 speak of the same work with his hands."
+  },
+  {
+   "row": "85f47378802c8cfc",
+   "person": "saul-2",
+   "label": "Manual work for a living (unspecified)",
+   "by": "tentmaker",
+   "reason": "Holds Tentmaker (Acts 18:3); 1 Cor 4:12 and 9:6 speak of the same work with his hands."
+  },
+  {
+   "row": "a843afe2f902e4e5",
+   "person": "saul-2",
+   "label": "tentmaker",
+   "by": "tentmaker",
+   "reason": "Holds Tentmaker (Acts 18:3); 1 Cor 4:12 and 9:6 speak of the same work with his hands."
+  },
+  {
+   "row": "ffc25ebd70113320",
+   "person": "saul-2",
+   "label": "manual labour with own hands (trade unspecified)",
+   "by": "tentmaker",
+   "reason": "Holds Tentmaker (Acts 18:3); 1 Cor 4:12 and 9:6 speak of the same work with his hands."
+  },
+  {
+   "row": "01125e044d44889c",
+   "person": "simon",
+   "label": "Fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "0826ef63b9536f51",
+   "person": "simon",
+   "label": "Fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "0cc885c3bc53ada8",
+   "person": "simon",
+   "label": "Fisherman (ἁλεεῖς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "1085faac6bb7c2fe",
+   "person": "simon",
+   "label": "Fisherman (ἁλεεῖς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "13002a0089616973",
+   "person": "simon",
+   "label": "Рибалка (ἁλεεύς) за Мт 4:18",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "167371953f70cfcc",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "189fc0af4788af42",
+   "person": "simon",
+   "label": "fisherman (ἁλεεῖς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "1b1caf923491feef",
+   "person": "simon",
+   "label": "fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "1b39e620b55a8587",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "1dea3ac897093a38",
+   "person": "simon",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "30fd9ac01b1a035e",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "31bf1a5c0f4c68c6",
+   "person": "simon",
+   "label": "fisherman (fisher)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "3af23cefe8e79248",
+   "person": "simon",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "3b8d4450d93cee6d",
+   "person": "simon",
+   "label": "Рибалка (ἁλεεῖς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "3db42aba7b620774",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "5368b3c7411ab930",
+   "person": "simon",
+   "label": "Fisherman (ἁλεεύς) — identity bridge only",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "543b80699b225e0f",
+   "person": "simon",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "5aaa8a0aa3636ff8",
+   "person": "simon",
+   "label": "Fisherman (fishers)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "688e61b69da4036f",
+   "person": "simon",
+   "label": "fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "697deb39885e49ed",
+   "person": "simon",
+   "label": "fisherman (from the identity bridge Matthew 4:18)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "69c0a84ec12417d1",
+   "person": "simon",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "6b2eb9ea2a8b70ba",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "6c8296dee9f7dd57",
+   "person": "simon",
+   "label": "Fisherman (halieus)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "6ea8e9842fbca054",
+   "person": "simon",
+   "label": "Fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "7bf7d00e09fd4b9c",
+   "person": "simon",
+   "label": "Fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "8c36851264f37251",
+   "person": "simon",
+   "label": "fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "8eee7817e13e0bc1",
+   "person": "simon",
+   "label": "fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "910d337f8dec832b",
+   "person": "simon",
+   "label": "Fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "912133e0f26d4389",
+   "person": "simon",
+   "label": "fisherman (Simon Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "94e82144154768c7",
+   "person": "simon",
+   "label": "fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "af5433fa6da5d6fc",
+   "person": "simon",
+   "label": "fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "b1b3cd3b8f40f118",
+   "person": "simon",
+   "label": "Fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "b62a4681198ea92c",
+   "person": "simon",
+   "label": "fisherman (Simon called Peter, Matt 4:18)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "bb2f8da0e738f445",
+   "person": "simon",
+   "label": "fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "c0188b385ae3cab2",
+   "person": "simon",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "c2c243751702244f",
+   "person": "simon",
+   "label": "fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "c414a633586f1ec1",
+   "person": "simon",
+   "label": "fisherman (ἁλεεύς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "ced8a3592919cb6b",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "d3330f37b15fd40e",
+   "person": "simon",
+   "label": "fisherman (рибалка)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "d3efce09fa61865a",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "d5556bab453970ac",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "d795db529623ce24",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "daac2921e6fa3d4f",
+   "person": "simon",
+   "label": "fisherman (ἁλεεῖς)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "e7b8e2757b650e5b",
+   "person": "simon",
+   "label": "fisherman (Peter/Simon)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "ee7bbff8a38646ec",
+   "person": "simon",
+   "label": "fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "f25d0eeb8326d0d2",
+   "person": "simon",
+   "label": "fisherman (Matthew 4:18)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "f29aad2bece923a3",
+   "person": "simon",
+   "label": "Рибалка",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "f2e0ed47cb8f236e",
+   "person": "simon",
+   "label": "Fisherman",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "f96c30775f01b016",
+   "person": "simon",
+   "label": "fisherman (Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18; these rows repeat it from chapters where it is not said."
+  },
+  {
+   "row": "0e4f6034a950d1af",
+   "person": "simon-8",
+   "label": "sorcerer / magician",
+   "by": "sorcerer",
+   "reason": "Holds Sorcerer (owner's ruling of 2026-10-28, TSK-1218)."
+  },
+  {
+   "row": "237840fa6c5daec5",
+   "person": "sisera",
+   "label": "captain of Jabin's host",
+   "by": "military-commander",
+   "reason": "Holds the occupation on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given, or it repeats the occupation from another verse."
+  },
+  {
+   "row": "13dad647ddc765fb",
+   "person": "uriah",
+   "label": "можлива військова служба Урії",
+   "by": "warrior",
+   "reason": "Holds Warrior and Mighty warrior of David; 2 Sam 11 shows him in the camp and fallen."
+  },
+  {
+   "row": "f391a407246a6842",
+   "person": "uriah",
+   "label": "Uriah as a fighting man in Joab's camp",
+   "by": "warrior",
+   "reason": "Holds Warrior and Mighty warrior of David; 2 Sam 11 shows him in the camp and fallen."
+  }
+ ],
+ "hard": [
+  {
+   "row": "da247f7b956447e2",
+   "person": "ahi-2",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "f525b4c221cbb59d",
+   "person": "amal",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "5a25053720355505",
+   "person": "ara",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "361b43f7f8fef5f0",
+   "person": "arah",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "2e9309a7af08be80",
+   "person": "aram-3",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "e81395931e255725",
+   "person": "ashvath",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "70785142dfed3b37",
+   "person": "beera",
+   "label": "heads of father's house, mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "40491f444179903f",
+   "person": "beri",
+   "label": "mighty man of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "115606e70c385fa7",
+   "person": "bezer",
+   "label": "mighty man of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "dde3b5f73f9f9ba3",
+   "person": "bimhal",
+   "label": "mighty man of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "179e116047da36e9",
+   "person": "birzaith",
+   "label": "mighty man of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "b6c35cac155562cd",
+   "person": "hanniel-2",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "234089ef5ea95f72",
+   "person": "harnepher",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "cea786132e37aacc",
+   "person": "heber",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "e616296a69f1d035",
+   "person": "hotham",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "fafbd2107f1405df",
+   "person": "imna",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "bae3a72283411a88",
+   "person": "imnah",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "27625fa3b14bec00",
+   "person": "imrah",
+   "label": "heads of father's house / mighty men / princes (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "2170b5258f0c0960",
+   "person": "ishvah",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "4aa436dd750eae15",
+   "person": "ishvi",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "1d97e7ca256a0009",
+   "person": "ithran-2",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "ec45ea4535842960",
+   "person": "japhlet",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "0bb125eb7d9cd4a0",
+   "person": "jehubbah",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "794e8cfda9c2ef57",
+   "person": "jephunneh-2",
+   "label": "heads of father's house / mighty men of valour (Asher group)",
+   "question": "Q1"
+  },
+  {
+   "row": "e7424a2c17bb9c15",
+   "person": "pasach",
+   "label": "mighty man of valour (group)",
+   "question": "Q1"
+  },
+  {
+   "row": "c88022aea739c8ef",
+   "person": "pispa",
+   "label": "mighty man of valour (group)",
+   "question": "Q1"
+  },
+  {
+   "row": "54feb122461b48fe",
+   "person": "rizia",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "fc67e7d4b0f77364",
+   "person": "rohgah",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "4a0ba6bc792a28e0",
+   "person": "shamma",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "d61c1f327e743952",
+   "person": "shelesh",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "984d7589231b0e00",
+   "person": "shilshah",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "a2c32ed5f7753dd3",
+   "person": "shomer-2",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "71d66075cac09e79",
+   "person": "shual",
+   "label": "Mighty man of valour / head of father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "9dd3d04ae0f26a33",
+   "person": "suah",
+   "label": "mighty man of valor / head of a father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "1f89507ccfc5acb0",
+   "person": "zophah",
+   "label": "mighty man of valor / head of a father's house (Asher)",
+   "question": "Q1"
+  },
+  {
+   "row": "31a0193861a06727",
+   "person": "barak",
+   "label": "бойові дії групи названих осіб",
+   "question": "Q2"
+  },
+  {
+   "row": "bee82009890a3f57",
+   "person": "barak",
+   "label": "leader of the men of Naphtali and Zebulun",
+   "question": "Q2"
+  },
+  {
+   "row": "22368395c16100a3",
+   "person": "joshua",
+   "label": "Leader of the army in the conquest",
+   "question": "Q2"
+  },
+  {
+   "row": "2533b7818d189cd0",
+   "person": "joshua",
+   "label": "Leader of Israel / military commander",
+   "question": "Q2"
+  },
+  {
+   "row": "af08eca9fa1a946a",
+   "person": "joshua",
+   "label": "Battle leader against Amalek",
+   "question": "Q2"
+  },
+  {
+   "row": "f4f3362672145773",
+   "person": "joshua",
+   "label": "leader of the army",
+   "question": "Q2"
+  },
+  {
+   "row": "f584a5783656a503",
+   "person": "joshua",
+   "label": "military commander",
+   "question": "Q2"
+  }
+ ]
+}
