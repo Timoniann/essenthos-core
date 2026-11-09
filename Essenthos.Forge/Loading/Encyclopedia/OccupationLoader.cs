@@ -123,6 +123,11 @@ internal sealed partial class OccupationLoader(AppDbContext db)
         {
             var people = await People(file, cancellationToken);
             var quoted = await Find(file, cancellationToken);
+            // An occupation the file no longer names takes its people and their words with it, by cascade.
+            var named = file.Occupations.Select(o => o.Slug).ToList();
+            var dropped = await db.PersonOccupations.CountAsync(p => !named.Contains(p.Occupation!.Slug), cancellationToken);
+            var droppedWords = await db.OccupationWords
+                .CountAsync(w => !named.Contains(w.PersonOccupation!.Occupation!.Slug), cancellationToken);
             var concepts = await Concepts(file, cancellationToken);
 
             var held = await db.PersonOccupations.Include(p => p.Witnesses)
@@ -159,12 +164,14 @@ internal sealed partial class OccupationLoader(AppDbContext db)
                 written++;
             }
 
+            var goneIds = held.Values.Select(p => p.Id).ToList();
+            droppedWords += await db.OccupationWords.CountAsync(w => goneIds.Contains(w.PersonOccupationId), cancellationToken);
             db.PersonOccupations.RemoveRange(held.Values);
             await db.SaveChangesAsync(cancellationToken);
 
             var (marked, unmarked) = await MarkTheWords(file, people, concepts, quoted, cancellationToken);
             if (own is not null) await own.CommitAsync(cancellationToken);
-            return new(written, held.Count, wanted.Count, marked, unmarked);
+            return new(written, held.Count + dropped, wanted.Count, marked, unmarked + droppedWords);
         }
         catch
         {

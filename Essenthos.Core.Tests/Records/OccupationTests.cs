@@ -326,9 +326,22 @@ public sealed class OccupationTests : IDisposable
     [Fact]
     public async Task AnOccupationTheFileNoLongerNamesIsRemovedWithItsPeople()
     {
-        await _loader.Load(File() with { Occupations = [Physician(), Physician() with { Slug = "healer" }] });
-        await _loader.Load(File());
+        await _loader.Load(File(new("luke", "physician", [Quote()]), new("luke", "healer", [Quote()]))
+            with { Occupations = [Physician(), Physician() with { Slug = "healer" }] });
+        var outcome = await _loader.Load(File());
         (await _db.Occupations.Select(o => o.Slug).ToListAsync()).Should().Equal("physician");
+        (await _db.PersonOccupations.CountAsync()).Should().Be(1);
+        outcome.Removed.Should().Be(1);
+        outcome.WordsRemoved.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task APairTheFileNoLongerHoldsIsCountedWithTheWordsItMarked()
+    {
+        await _loader.Load(File());
+        var outcome = await _loader.Load(File(new OccupationClaim("other", "physician", [Quote()])));
+        outcome.Should().Be(new OccupationLoadOutcome(1, 1, 1, 1, 2));
+        (await _db.OccupationWords.CountAsync()).Should().Be(1);
     }
 
     [Fact]
@@ -338,13 +351,15 @@ public sealed class OccupationTests : IDisposable
         var file = (await JsonSerializer.DeserializeAsync<OccupationFile>(stream, new JsonSerializerOptions(JsonSerializerDefaults.Web)))!;
         OccupationLoader.Validate(file);
         var claims = file.Assertions.ToDictionary(a => (a.Person, a.Occupation));
-        foreach (var ruled in new[] { ("rahab", "harlot"), ("judas", "thief"), ("barjesus", "sorcerer"), ("barjesus", "false-prophet") })
+        foreach (var ruled in new[] { ("rahab", "harlot"), ("judas", "thief"), ("barjesus", "sorcerer"), ("barjesus", "false-prophet"),
+                     ("joshua", "military-commander"), ("barak", "military-commander") })
         {
             claims.Should().ContainKey(ruled);
         }
 
         file.Occupations.Single(o => o.Slug == "harlot").Category.Should().Be("designation");
         claims.Keys.Should().NotContain(("jezebel", "false-prophet"));
+        file.Occupations.Should().NotContain(o => o.Slug == "ancestral-house-chief");
         file.Occupations.Where(o => o.Category == "designation").Should().OnlyContain(o => o.StrongNumbers.Count > 0);
     }
 
