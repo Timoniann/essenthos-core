@@ -1,0 +1,81 @@
+# producer   by hand: Jeshua son of Jozadak folded into Joshua son of Jehozadak (PRB-1421), applied by forge owner-rows
+# by         Essenthos, the project owner's ruling of 2026-11-09 that Jeshua son of Jozadak and Joshua son of Jehozadak are one man ('Так, це логічно'), jeshua-3 folded into joshua-4 by claude-opus-5-5 on his instruction
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1421	names/BHSA	remove	15.2:2.5	jeshua-3	\N	\N	\N	\N	15.2:2.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	15.2:2.5	joshua-4	\N	name	\N	\N	15.2:2.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	15.3:2.3	jeshua-3	\N	\N	\N	\N	15.3:2.3 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	15.3:2.3	joshua-4	\N	name	\N	\N	15.3:2.3 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	15.3:8.25	jeshua-3	\N	\N	\N	\N	15.3:8.25 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	15.3:8.25	joshua-4	\N	name	\N	\N	15.3:8.25 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	15.4:3.6	jeshua-3	\N	\N	\N	\N	15.4:3.6 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	15.4:3.6	joshua-4	\N	name	\N	\N	15.4:3.6 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	15.5:2.8	jeshua-3	\N	\N	\N	\N	15.5:2.8 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	15.5:2.8	joshua-4	\N	name	\N	\N	15.5:2.8 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	15.10:18.13	jeshua-3	\N	\N	\N	\N	15.10:18.13 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	15.10:18.13	joshua-4	\N	name	\N	\N	15.10:18.13 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	16.7:7.5	jeshua-3	\N	\N	\N	\N	16.7:7.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	16.7:7.5	joshua-4	\N	name	\N	\N	16.7:7.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	16.12:1.15	jeshua-3	\N	\N	\N	\N	16.12:1.15 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	16.12:1.15	joshua-4	\N	name	\N	\N	16.12:1.15 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	16.12:7.13	jeshua-3	\N	\N	\N	\N	16.12:7.13 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	16.12:7.13	joshua-4	\N	name	\N	\N	16.12:7.13 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	16.12:10.2	jeshua-3	\N	\N	\N	\N	16.12:10.2 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	16.12:10.2	joshua-4	\N	name	\N	\N	16.12:10.2 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	remove	16.12:26.6	jeshua-3	\N	\N	\N	\N	16.12:26.6 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/BHSA	add	16.12:26.6	joshua-4	\N	name	\N	\N	16.12:26.6 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	15.2:2.5	jeshua-3	\N	\N	\N	\N	15.2:2.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	15.2:2.5	joshua-4	\N	name	\N	\N	15.2:2.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	15.3:2.3	jeshua-3	\N	\N	\N	\N	15.3:2.3 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	15.3:2.3	joshua-4	\N	name	\N	\N	15.3:2.3 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	15.3:8.26	jeshua-3	\N	\N	\N	\N	15.3:8.26 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	15.3:8.26	joshua-4	\N	name	\N	\N	15.3:8.26 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	15.4:3.7	jeshua-3	\N	\N	\N	\N	15.4:3.7 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	15.4:3.7	joshua-4	\N	name	\N	\N	15.4:3.7 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	15.5:2.8	jeshua-3	\N	\N	\N	\N	15.5:2.8 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	15.5:2.8	joshua-4	\N	name	\N	\N	15.5:2.8 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	15.10:18.13	jeshua-3	\N	\N	\N	\N	15.10:18.13 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	15.10:18.13	joshua-4	\N	name	\N	\N	15.10:18.13 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	16.7:7.4	jeshua-3	\N	\N	\N	\N	16.7:7.4 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	16.7:7.4	joshua-4	\N	name	\N	\N	16.7:7.4 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	16.12:1.15	jeshua-3	\N	\N	\N	\N	16.12:1.15 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	16.12:1.15	joshua-4	\N	name	\N	\N	16.12:1.15 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	16.12:7.11	jeshua-3	\N	\N	\N	\N	16.12:7.11 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	16.12:7.11	joshua-4	\N	name	\N	\N	16.12:7.11 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	16.12:10.2	jeshua-3	\N	\N	\N	\N	16.12:10.2 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	16.12:10.2	joshua-4	\N	name	\N	\N	16.12:10.2 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	remove	16.12:26.5	jeshua-3	\N	\N	\N	\N	16.12:26.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GRCBRENT	add	16.12:26.5	joshua-4	\N	name	\N	\N	16.12:26.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	15.2:2.10	jeshua-3	\N	\N	\N	\N	15.2:2.10 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	15.2:2.10	joshua-4	\N	name	\N	\N	15.2:2.10 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	15.3:2.2	jeshua-3	\N	\N	\N	\N	15.3:2.2 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	15.3:2.2	joshua-4	\N	name	\N	\N	15.3:2.2 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	15.3:8.15	jeshua-3	\N	\N	\N	\N	15.3:8.15 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	15.3:8.15	joshua-4	\N	name	\N	\N	15.3:8.15 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	15.4:3.3	jeshua-3	\N	\N	\N	\N	15.4:3.3 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	15.4:3.3	joshua-4	\N	name	\N	\N	15.4:3.3 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	15.5:2.7	jeshua-3	\N	\N	\N	\N	15.5:2.7 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	15.5:2.7	joshua-4	\N	name	\N	\N	15.5:2.7 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	16.7:7.9	jeshua-3	\N	\N	\N	\N	16.7:7.9 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	16.7:7.9	joshua-4	\N	name	\N	\N	16.7:7.9 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	16.12:1.10	jeshua-3	\N	\N	\N	\N	16.12:1.10 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	16.12:1.10	joshua-4	\N	name	\N	\N	16.12:1.10 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	16.12:7.10	jeshua-3	\N	\N	\N	\N	16.12:7.10 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	16.12:7.10	joshua-4	\N	name	\N	\N	16.12:7.10 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	16.12:10.1	jeshua-3	\N	\N	\N	\N	16.12:10.1 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	16.12:10.1	joshua-4	\N	name	\N	\N	16.12:10.1 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	remove	16.12:26.5	jeshua-3	\N	\N	\N	\N	16.12:26.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	names/GEEZ81	add	16.12:26.5	joshua-4	\N	name	\N	\N	16.12:26.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
+PRB-1421	external/bibledata/references	refile	15.2:2	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.3:2	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.3:8	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.3:9	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.4:3	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.5:2	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.8:33	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	15.10:18	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	16.7:7	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	16.12:1	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	16.12:7	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	16.12:10	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)
+PRB-1421	external/bibledata/references	refile	16.12:26	joshua-4	jeshua-3	\N	\N	\N	BibleData files this verse under Jeshua_3, who is Joshua son of Jehozadak (jeshua-3 folded into joshua-4)

@@ -145,6 +145,41 @@ public sealed class OwnerRowsTests : IDisposable
     }
 
     /// <summary>
+    /// A fold is put under the old address, which no record holds once the record's rows are dropped, and must name the
+    /// record it went into; a fold under a slug a record still holds, or into one no record holds, is refused.
+    /// </summary>
+    [Fact]
+    public void AFoldIsPutUnderAnAddressNoRecordHoldsIntoARecordThatStays()
+    {
+        var store = Files();
+        Write(store, "records/records", "slug\tkind\tsubtype\tplace_kind\tname\tsex\tsex_source\tname_gender\ttribe\torigin\tanother_name_for\tbyname",
+            "jeshua-3\tperson\t\\N\t\\N\tJeshua\tmale\t\\N\t\\N\tLevi\t\\N\t\\N\t\\N",
+            "joshua-4\tperson\t\\N\t\\N\tJoshua\tmale\t\\N\t\\N\t\\N\t\\N\t\\N\t\\N");
+        Write(store, "records/folds", "slug\tfolded_into\tname\tdistinguisher\tmethod\tconfidence\tby\treason");
+        store.Save();
+        const string fold = """{"folded_into":"joshua-4","name":"Jeshua","method":"manual","reason":"one man"}""";
+
+        var refused = OwnerRows.Apply(new ProductStore(_resources), new OwnerRows.Decided([],
+        [
+            new("PRB-1421", "records/folds", OwnerRows.Put, "jeshua-3", fold, "one man"),
+            new("PRB-1421", "records/folds", OwnerRows.Put, "jeshua-9", """{"folded_into":"nobody","name":"Jeshua","method":"manual","reason":"x"}""", "x"),
+        ]), dryRun: true, Now);
+        refused.Refused.Should().HaveCount(2).And.OnlyContain(r => r.Contains("a fold is an address no record holds"));
+
+        var decided = new OwnerRows.Decided([],
+        [
+            new("PRB-1421", "records/records", OwnerRows.Drop, "jeshua-3", "{}", "one man"),
+            new("PRB-1421", "records/folds", OwnerRows.Put, "jeshua-3", fold, "one man"),
+        ]);
+        var outcome = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
+
+        (outcome.Applied, outcome.Refused.Count).Should().Be((2, 0));
+        Rows("records/records").Select(r => r[0]).Should().Equal("joshua-4");
+        Rows("records/folds").Single().Should().Equal("jeshua-3", "joshua-4", "Jeshua", null, "manual", null, OwnerRows.Source, "one man");
+        OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now).Already.Should().Be(2);
+    }
+
+    /// <summary>
     /// A file of decided rows that says who decided them (<c># by</c>) stamps its name rows and the record rows that
     /// name no <c>by</c> with that, not the review lists' stamp; and a rendering of English, keyed by the English, is put
     /// without a record to look for.

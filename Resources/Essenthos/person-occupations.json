@@ -24705,19 +24705,6 @@
    ]
   },
   {
-   "person": "jeshua-3",
-   "occupation": "priest",
-   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "EZR 3:2",
-     "quote": "יֵשׁ֨וּעַ בֶּן־יֹֽוצָדָ֜ק וְאֶחָ֣יו הַכֹּהֲנִ֗ים"
-    }
-   ]
-  },
-  {
    "person": "joiarib-3",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -24815,6 +24802,19 @@
      "text": "BHSA",
      "reference": "1CH 15:24",
      "quote": "וּשְׁבַנְיָ֡הוּ וְיֹֽושָׁפָ֡ט וּנְתַנְאֵ֡ל וַעֲמָשַׂ֡י וּ֠זְכַרְיָהוּ וּבְנָיָ֤הוּ וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "joshua-4",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420); carried to joshua-4 when jeshua-3 was folded into him, on the project owner's ruling of 2026-11-09 that Jeshua son of Jozadak and Joshua son of Jehozadak are one man (PRB-1421)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 3:2",
+     "quote": "יֵשׁ֨וּעַ בֶּן־יֹֽוצָדָ֜ק וְאֶחָ֣יו הַכֹּהֲנִ֗ים"
     }
    ]
   },

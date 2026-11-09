@@ -46,6 +46,9 @@ internal static class OwnerRows
 
     private const string Records = "records/records";
 
+    /// <summary>Old addresses of folded records: a row's slug is held by no record, and its folded_into must be one.</summary>
+    private const string Folds = "records/folds";
+
     private const string EnglishRecords = "records/i18n/eng/records";
 
     /// <summary>How a settled name says it was decided: by a person, so no confidence.</summary>
@@ -204,6 +207,10 @@ internal static class OwnerRows
             refused.AddRange(decided.Records
                 .Where(r => r.Op == Put && r.Product != Records && KeyedByRecord(r.Product) && !records.Contains(r.Record))
                 .Select(r => $"{r.Entry} put {r.Record} in {r.Product}: no such record in records/records"));
+            refused.AddRange(decided.Records
+                .Where(r => r.Op == Put && r.Product == Folds
+                            && (records.Contains(r.Record) || FoldedInto(r.Values) is not { } into || !records.Contains(into)))
+                .Select(r => $"{r.Entry} put {r.Record} in {Folds}: a fold is an address no record holds, folded into a record of records/records"));
         }
 
         var rows = decided.Names;
@@ -267,7 +274,19 @@ internal static class OwnerRows
     /// keyed by the English they render, so a row of theirs names no record to look for.
     /// </summary>
     private static bool KeyedByRecord(string product) =>
-        RecordFiles.All.FirstOrDefault(f => f.Product == product)?.Parsed is [{ Name: "slug" or "subject" }, ..];
+        product != Folds && RecordFiles.All.FirstOrDefault(f => f.Product == product)?.Parsed is [{ Name: "slug" or "subject" }, ..];
+
+    private static string? FoldedInto(string values)
+    {
+        try
+        {
+            return (JsonNode.Parse(values) as JsonObject)?["folded_into"] is JsonValue into && into.TryGetValue<string>(out var slug) ? slug : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
 
     private static HashSet<string>? RecordSlugs(ProductStore store)
     {
