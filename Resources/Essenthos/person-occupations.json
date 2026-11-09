@@ -2402,6 +2402,35 @@
    }
   },
   {
+   "slug": "judge-of-the-living-and-the-dead",
+   "category": "heavenly_role",
+   "strongNumbers": [
+    "G2923"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Judge of the living and the dead",
+     "masculine": "Judge of the living and the dead",
+     "feminine": "Judge of the living and the dead"
+    },
+    "ukr": {
+     "name": "Суддя живих і мертвих",
+     "masculine": "Суддя живих і мертвих",
+     "feminine": "Суддя живих і мертвих"
+    },
+    "deu": {
+     "name": "Richter der Lebenden und der Toten",
+     "masculine": "Richter der Lebenden und der Toten",
+     "feminine": "Richterin der Lebenden und der Toten"
+    },
+    "spa": {
+     "name": "Juez de vivos y muertos",
+     "masculine": "Juez de vivos y muertos",
+     "feminine": "Jueza de vivos y muertos"
+    }
+   }
+  },
+  {
    "slug": "keeper-of-concubines",
    "category": "office",
    "strongNumbers": [
@@ -15662,6 +15691,25 @@
      "text": "BHSA",
      "reference": "JDG 10:1",
      "quote": "תֹּולָ֧ע בֶּן־פּוּאָ֛ה בֶּן־דֹּודֹ֖ו אִ֣ישׁ יִשָּׂשכָ֑ר"
+    }
+   ]
+  },
+  {
+   "person": "jesus",
+   "occupation": "judge-of-the-living-and-the-dead",
+   "source": "read from the Nestle 1904 by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-09 (PRB-1420, part 2, question 1b)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 10:42",
+     "quote": "οὗτός ἐστιν ὁ ὡρισμένος ὑπὸ τοῦ Θεοῦ Κριτὴς ζώντων καὶ νεκρῶν."
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "ACT 10:38",
+     "quote": "Ἰησοῦν τὸν ἀπὸ Ναζαρέθ,"
     }
    ]
   },

@@ -16,15 +16,16 @@
   "keeper-of-the-ark",
   "keeper-of-the-wardrobe",
   "king-over-the-locusts",
-  "temple-threshold-keeper"
+  "temple-threshold-keeper",
+  "judge-of-the-living-and-the-dead"
  ],
  "counts": {
   "rows": 458,
-  "admittedRows": 60,
-  "refused": 95,
-  "covered": 284,
-  "hard": 19,
-  "newPairs": 109,
+  "admittedRows": 62,
+  "refused": 108,
+  "covered": 288,
+  "hard": 0,
+  "newPairs": 110,
   "newPairsNotAmongTheHeldRows": 54
  },
  "admitted": [
@@ -724,6 +725,16 @@
    "notAmongTheHeldRows": null
   },
   {
+   "person": "jesus",
+   "occupation": "judge-of-the-living-and-the-dead",
+   "rows": [
+    "08a38f57d91ea3d7",
+    "bb30468fb30ca8e5"
+   ],
+   "notAmongTheHeldRows": null,
+   "why": "Owner's ruling of 2026-11-09 (question 1b): 'he is ordained of God to be the Judge of the living and the dead' (Acts 10:42, κριτὴς ζώντων καὶ νεκρῶν; also 2 Tim 4:1, John 5:22, 27). A heavenly role, beside Apostle and High priest (Heb 3:1, 7:21)."
+  },
+  {
    "person": "eleazar-2",
    "occupation": "keeper-of-the-ark",
    "why": "1 Sam 7:1 'they consecrated Eleazar his son to keep the ark of the LORD': a sacred charge stated of him by name. Levite alone is standing, but a stated service counts (rule of part 1).",
@@ -1185,6 +1196,12 @@
    "reason": "Acts 21:18 'unto James, and all the elders were present' does not call him an elder; Gal 2:9 'reputed to be pillars' is a figure. He holds Apostle (Gal 1:19)."
   },
   {
+   "row": "6111842908988fd7",
+   "person": "jamin",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
    "row": "c3b38cbdabca890b",
    "person": "janai",
    "label": "Janai in the Gadite list (title not stated)",
@@ -1215,6 +1232,12 @@
    "reason": "2 Kgs 12:21 (2 Chr 24:25-26) 'his servants' who killed the king: whose men they were, not a title set beside each name as 'Asaiah the king's servant'."
   },
   {
+   "row": "8533779de1934921",
+   "person": "jemuel",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
    "row": "bbd954aea9d563d9",
    "person": "jeroboam",
    "label": "Слуга Соломона",
@@ -1227,10 +1250,64 @@
    "reason": "'Servant of Solomon' (1 Kgs 11:26, 2 Chr 13:6): his standing under Solomon; his office then was over the labour of the house of Joseph (1 Kgs 11:28), which he holds."
   },
   {
+   "row": "1e2663988a55f8d4",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "3c0189ed2da78298",
+   "person": "jesus",
+   "label": "Цар (Βασιλεύς)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "454150720d5ecb8a",
+   "person": "jesus",
+   "label": "King of the Jews (accusation, inscription, mockery)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "454f57eb8f2db579",
+   "person": "jesus",
+   "label": "king (accusation)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "4ffa4cece5b6f433",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "77e5637a425b5edf",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "936e848ff6142395",
+   "person": "jesus",
+   "label": "King of Israel",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "ca685c2cf8ed5333",
+   "person": "jesus",
+   "label": "king of the Jews (title)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
    "row": "d91fc479eba80878",
    "person": "jesus",
    "label": "servant/minister of the circumcised (diakonos)",
    "reason": "Rom 15:8 'a minister (διάκονον) of the circumcision': what Christ became for them; not an office of the list."
+  },
+  {
+   "row": "f03c328cfa191185",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
   },
   {
    "row": "1f7e49755bb6c873",
@@ -1309,6 +1386,18 @@
    "person": "nathan-7",
    "label": "chief man (leader)",
    "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "c4e671e14bb0fe5f",
+   "person": "ohad",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
+   "row": "ab216d15fac32fc1",
+   "person": "pallu",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
   },
   {
    "row": "f66b7625e73de1bb",
@@ -2391,6 +2480,34 @@
    "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
   },
   {
+   "row": "7f3ac041c2b4126c",
+   "person": "jesus",
+   "label": "King of kings (the Lamb)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "91c48ed385ff79bb",
+   "person": "jesus",
+   "label": "Christ reigns (king)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "b14e81d5c358602f",
+   "person": "jesus",
+   "label": "King / holder of a throne and kingdom (the Son)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "e4446de4742dec1d",
+   "person": "jesus",
+   "label": "Christ / reigning (king)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
    "row": "193f46ba4eea301b",
    "person": "joah-3",
    "label": "Obed-edom's sons – gate or storehouse duty",
@@ -3469,120 +3586,6 @@
    "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
   }
  ],
- "hard": [
-  {
-   "row": "08a38f57d91ea3d7",
-   "person": "jesus",
-   "label": "Judge of the living and the dead",
-   "question": "Q1"
-  },
-  {
-   "row": "1e2663988a55f8d4",
-   "person": "jesus",
-   "label": "King of the Jews",
-   "question": "Q1"
-  },
-  {
-   "row": "3c0189ed2da78298",
-   "person": "jesus",
-   "label": "Цар (Βασιλεύς)",
-   "question": "Q1"
-  },
-  {
-   "row": "454150720d5ecb8a",
-   "person": "jesus",
-   "label": "King of the Jews (accusation, inscription, mockery)",
-   "question": "Q1"
-  },
-  {
-   "row": "454f57eb8f2db579",
-   "person": "jesus",
-   "label": "king (accusation)",
-   "question": "Q1"
-  },
-  {
-   "row": "4ffa4cece5b6f433",
-   "person": "jesus",
-   "label": "King of the Jews",
-   "question": "Q1"
-  },
-  {
-   "row": "77e5637a425b5edf",
-   "person": "jesus",
-   "label": "King of the Jews",
-   "question": "Q1"
-  },
-  {
-   "row": "7f3ac041c2b4126c",
-   "person": "jesus",
-   "label": "King of kings (the Lamb)",
-   "question": "Q1"
-  },
-  {
-   "row": "91c48ed385ff79bb",
-   "person": "jesus",
-   "label": "Christ reigns (king)",
-   "question": "Q1"
-  },
-  {
-   "row": "936e848ff6142395",
-   "person": "jesus",
-   "label": "King of Israel",
-   "question": "Q1"
-  },
-  {
-   "row": "b14e81d5c358602f",
-   "person": "jesus",
-   "label": "King / holder of a throne and kingdom (the Son)",
-   "question": "Q1"
-  },
-  {
-   "row": "bb30468fb30ca8e5",
-   "person": "jesus",
-   "label": "Judge (authority to execute judgment)",
-   "question": "Q1"
-  },
-  {
-   "row": "ca685c2cf8ed5333",
-   "person": "jesus",
-   "label": "king of the Jews (title)",
-   "question": "Q1"
-  },
-  {
-   "row": "e4446de4742dec1d",
-   "person": "jesus",
-   "label": "Christ / reigning (king)",
-   "question": "Q1"
-  },
-  {
-   "row": "f03c328cfa191185",
-   "person": "jesus",
-   "label": "King of the Jews",
-   "question": "Q1"
-  },
-  {
-   "row": "6111842908988fd7",
-   "person": "jamin",
-   "label": "head of a fathers' house (clan head)",
-   "question": "Q2"
-  },
-  {
-   "row": "8533779de1934921",
-   "person": "jemuel",
-   "label": "head of a fathers' house (clan head)",
-   "question": "Q2"
-  },
-  {
-   "row": "c4e671e14bb0fe5f",
-   "person": "ohad",
-   "label": "head of a fathers' house (clan head)",
-   "question": "Q2"
-  },
-  {
-   "row": "ab216d15fac32fc1",
-   "person": "pallu",
-   "label": "head of a fathers' house (clan head)",
-   "question": "Q2"
-  }
- ]
+ "hard": [],
+ "ownerRulings": "The two questions put to the owner were answered on 2026-11-09: Jesus holds no office King and no new role for it (1a), and holds the heavenly role Judge of the living and the dead (1b); nobody holds Head of an ancestral house from Exod 6:14-25 (2). Each stands above under admitted, covered or refused, marked as his ruling."
 }
