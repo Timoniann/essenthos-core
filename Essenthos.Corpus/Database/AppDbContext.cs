@@ -1852,6 +1852,11 @@ public class AppDbContext : DbContext
             // columns serve every read by pair, so no index on the pair alone is kept beside it.
             entity.HasIndex(l => new { l.FromTextId, l.ToTextId, l.Fingerprint }).IsUnique();
 
+            // Whether a link a word is in joins two given texts, answered from the index alone: an
+            // original's word is in links to every translation, and reading each link's row to learn
+            // its texts is a random read of the table per link. It also serves the foreign key.
+            entity.HasIndex(l => new { l.ToTextId, l.FromTextId, l.Id });
+
             entity.ToTable("link", t => AddProvenanceConstraints(t, "link", sourceOnTheRow: false));
         });
 

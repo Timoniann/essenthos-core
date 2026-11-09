@@ -346,33 +346,39 @@ internal static class ParallelEndpoints
         int canonicalChapter,
         CancellationToken cancellationToken)
     {
-        var rows = await db.LinkWords
-            // The text's own verses first: without this bound the planner may walk every link between
-            // the two texts, half a million for KJV and BSB (2.5 s on the server, 45 ms with it; PRB-1375).
-            .Where(side => side.Word!.Verse!.TextId == textId
-                           && side.Word.Verse.References.Any(r => r.IsPrimary
+        // The text's own verses first: without this bound the planner may walk every link between
+        // the two texts, half a million for KJV and BSB (2.5 s on the server, 45 ms with it; PRB-1375).
+        // Each direction apart, asking of the link only its texts and id, so the index holding all
+        // three answers without the table: an original's words are in links to every translation,
+        // and reading each link's row read 13,000 rows from disk for Genesis 3 of BHSA (12 s).
+        IQueryable<StrengthRow> Direction(LinkSide side, int from, int to) => db.LinkWords
+            .Where(word => word.Side == side
+                           && db.Links.Any(link => link.Id == word.LinkId && link.FromTextId == from && link.ToTextId == to)
+                           && word.Word!.Verse!.TextId == textId
+                           && word.Word.Verse.References.Any(r => r.IsPrimary
                                                                  && r.CanonicalBook == canonicalBook
-                                                                 && r.CanonicalChapter == canonicalChapter)
-                           && ((side.Side == LinkSide.From
-                                && side.Link!.FromTextId == textId
-                                && side.Link.ToTextId == againstId)
-                               || (side.Side == LinkSide.To
-                                   && side.Link!.ToTextId == textId
-                                   && side.Link.FromTextId == againstId)))
-            .Select(side => new
+                                                                 && r.CanonicalChapter == canonicalChapter))
+            .Select(word => new StrengthRow
             {
-                Canonical = side.Word!.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
-                side.LinkId,
-                side.Link!.Confidence,
-            })
+                Canonical = word.Word!.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
+                LinkId = word.LinkId,
+            });
+
+        var rows = await Direction(LinkSide.From, textId, againstId)
+            .Concat(Direction(LinkSide.To, againstId, textId))
             .Distinct()
             .ToListAsync(cancellationToken);
+        var linkIds = rows.Select(row => row.LinkId).Distinct().ToList();
+        var confidences = await db.Links
+            .Where(link => linkIds.Contains(link.Id))
+            .Select(link => new { link.Id, link.Confidence })
+            .ToDictionaryAsync(link => link.Id, link => link.Confidence, cancellationToken);
 
         return rows
             .GroupBy(row => row.Canonical)
             .ToDictionary(
                 group => group.Key,
-                group => Strength([.. group.Select(row => row.Confidence)]));
+                group => Strength([.. group.Select(row => confidences[row.LinkId])]));
     }
 
     /// <summary>
@@ -409,6 +415,13 @@ internal static class ParallelEndpoints
     /// </summary>
     private static LinkStrengthResponse Strength(IReadOnlyList<double?> confidences) =>
         new(confidences.Count, confidences.Count(c => c is null), confidences.Average());
+
+    private sealed record StrengthRow
+    {
+        public int Canonical { get; init; }
+
+        public long LinkId { get; init; }
+    }
 
 
     private static async Task<List<TextEntry>> Requested(

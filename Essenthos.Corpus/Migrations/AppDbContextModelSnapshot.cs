@@ -2720,12 +2720,12 @@ namespace Essenthos.Core.Migrations
                     b.HasKey("Id")
                         .HasName("pk_link");
 
-                    b.HasIndex("ToTextId")
-                        .HasDatabaseName("ix_link_to_text_id");
-
                     b.HasIndex("FromTextId", "ToTextId", "Fingerprint")
                         .IsUnique()
                         .HasDatabaseName("ix_link_from_text_id_to_text_id_fingerprint");
+
+                    b.HasIndex("ToTextId", "FromTextId", "Id")
+                        .HasDatabaseName("ix_link_to_text_id_from_text_id_id");
 
                     b.ToTable("link", null, t =>
                         {
