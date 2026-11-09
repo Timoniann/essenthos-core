@@ -144,6 +144,42 @@ public sealed class OwnerRowsTests : IDisposable
         refused.Written.Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A file of decided rows that says who decided them (<c># by</c>) stamps its name rows and the record rows that
+    /// name no <c>by</c> with that, not the review lists' stamp; and a rendering of English, keyed by the English, is put
+    /// without a record to look for.
+    /// </summary>
+    [Fact]
+    public void AFileSayingWhoDecidedStampsItsRowsWithThatAndARenderingNeedsNoRecord()
+    {
+        var store = Files();
+        Write(store, "records/i18n/eng/records", "slug\tline\tnotes\tmodern", "boaz-pillar\tthe left pillar\t\\N\t\\N");
+        Write(store, "records/i18n/ukr/texts", "english_sha256\ttext\tby");
+        Write(store, "records/i18n/ukr/lines", "slug\tline\tenglish\tby");
+        store.Save();
+        const string by = "Essenthos, the project owner's ruling of 2026-11-02, applied on his instruction";
+        var names = Path.Combine(_resources, "decided.tsv");
+        File.WriteAllText(names,
+            "# producer   by hand\n" + $"# by         {by}\n" +
+            "entry\tproduct\top\tat\trecord\tfrom\trole\tstrong\tlabel\twhy\n" +
+            "TSK-1434\tnames/BHSA\tadd\t11.7:15.6\tjachin-pillar\t\\N\tthing\tH5982\t\\N\tthe right pillar\n");
+        var records = Path.Combine(_resources, "decided.records.tsv");
+        File.WriteAllText(records,
+            "# producer   by hand\n" + $"# by         {by}\n" +
+            "entry\tproduct\top\trecord\tvalues\twhy\n" +
+            "TSK-1434\trecords/i18n/ukr/lines\tput\tboaz-pillar\t{\"line\":\"ліва колона\"}\tthe left pillar\n" +
+            "TSK-1434\trecords/i18n/ukr/texts\tput\t0a0b\t{\"text\":\"причина\",\"by\":\"a rendering\"}\ta reason\n");
+
+        var decided = OwnerRows.Read([names, records]);
+        var outcome = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
+
+        (outcome.Applied, outcome.Refused.Count).Should().Be((3, 0));
+        Rows("names/BHSA").Should().ContainEquivalentOf(
+            new[] { "11.7:15.6", "jachin-pillar", "thing", "manual", null, by, "the right pillar" });
+        Rows("records/i18n/ukr/lines").Should().ContainEquivalentOf(new[] { "boaz-pillar", "ліва колона", "the left pillar", by });
+        Rows("records/i18n/ukr/texts").Should().ContainEquivalentOf(new[] { "0a0b", "причина", "a rendering" });
+    }
+
     private ProductStore Files()
     {
         var store = new ProductStore(_resources);
