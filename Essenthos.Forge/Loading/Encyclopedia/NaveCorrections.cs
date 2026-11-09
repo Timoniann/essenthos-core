@@ -54,8 +54,17 @@ internal static class NaveCorrections
         new("MIRACLES", "MRK 2:9-12; 18:42,43", "MRK 2:9-12; LUK 18:42,43"),
     ];
 
+    /// <summary>
+    /// Places where the transcription has the wrong chapter: TOB's Ish-tob is 2 Samuel 10:6 and 8, where the men of
+    /// Ish-tob are hired with Zobah's (SYRIA cites the same verses), not 16:6 and 8, where Shimei curses David.
+    /// </summary>
+    public static readonly IReadOnlyList<Correction> Chapters =
+    [
+        new("TOB", "2SA 16:6,8", "2SA 10:6,8"),
+    ];
+
     private static readonly ILookup<string, Correction> BySubject =
-        All.Concat(Books).ToLookup(c => c.Subject, StringComparer.Ordinal);
+        All.Concat(Books).Concat(Chapters).ToLookup(c => c.Subject, StringComparer.Ordinal);
 
     /// <summary>The entry with this subject's listed citations read as Nave printed them.</summary>
     public static string Apply(string subject, string entry)

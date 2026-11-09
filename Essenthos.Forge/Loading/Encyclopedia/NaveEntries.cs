@@ -225,7 +225,12 @@ internal static partial class NaveEntries
 
     private static int Number(Group group) => int.Parse(group.Value, CultureInfo.InvariantCulture);
 
-    [GeneratedRegex(@"(?<![\p{L}\d])(?<code>[1-3]?[A-Za-z]{2,4})\s+(?=\d)")]
+    /// <summary>
+    /// A book code before a chapter number. A heading's last word that is also a code, followed by a
+    /// numbered book (<c>-OF MAN WITH MAN 1SA 2:25</c>, <c>-Called ISH-TOB 2SA 10:6</c>), is the heading's:
+    /// what follows a code is a chapter, never another code.
+    /// </summary>
+    [GeneratedRegex(@"(?<![\p{L}\d])(?<code>[1-3]?[A-Za-z]{2,4})\s+(?=\d)(?![1-3][A-Za-z])")]
     private static partial Regex Code();
 
     /// <summary>What separates citations: a semicolon, a full stop, or the word <c>with</c>.</summary>

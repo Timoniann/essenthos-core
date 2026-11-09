@@ -76,6 +76,28 @@ public sealed class NaveEntryTests
         citations.Should().HaveCount(2).And.OnlyContain(c => c.Book == FirstChronicles && c.Chapter == 4);
     }
 
+    /// <summary>A heading that ends in a word spelled as a book code (Manasseh, Tobit) before a numbered book keeps the word.</summary>
+    [Theory]
+    [InlineData("-OF MAN WITH MAN 1SA 2:25", "OF MAN WITH MAN", "9 2:25-25")]
+    [InlineData("-Called ISH-TOB 2SA 10:6,8", "Called ISH-TOB", "10 10:6-6; 10 10:8-8")]
+    public void AHeadingWordSpelledAsABookCodeBeforeANumberedBookIsTheHeadings(string line, string heading, string cited)
+    {
+        var read = NaveEntries.Read(line);
+
+        read.Heading.Should().Be(heading);
+        read.Unread.Should().Be(0);
+        Cited(read.Citations).Should().Be(cited);
+    }
+
+    /// <summary>Ish-tob is hired with Zobah in 2 Samuel 10; the transcription's chapter 16 is Shimei's cursing.</summary>
+    [Fact]
+    public void TobsIshTobIsReadInTheChapterThatNamesIt()
+    {
+        const string entry = "-A district in Syria JDG 11:3,5\n-Called ISH-TOB 2SA 16:6,8";
+
+        Cited(NaveEntries.Lines(NaveCorrections.Apply("TOB", entry)).Last().Citations).Should().Be("10 10:6-6; 10 10:8-8");
+    }
+
     [Fact]
     public void WhatDoesNotReadIsCountedAndTheRestIsKept()
     {
