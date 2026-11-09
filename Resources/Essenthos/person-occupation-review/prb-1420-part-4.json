@@ -1,0 +1,1844 @@
+{
+ "what": "PRB-1420, fourth and last part: every needs_review observation of occupation-full-publication-2026-10-27-v1 left after parts 1 to 3 (252 rows: identity questions, psalm superscriptions, titles of address and the rest), decided by reading the verses; and the owner's answers to part 3's questions applied. Admitted claims are in ../person-occupations.json; this file says why, and why not. Requests and the loader never read it.",
+ "decidedBy": "an agent (claude-opus-5-5), 2026-11-09",
+ "rules": [
+  "The rules of parts 1 to 3 hold (prb-1420-part-1.json to prb-1420-part-3.json).",
+  "Identity is the records' question: the occupation follows the record the verse's word is annotated to (part 2). A row asking whether two names are one man is covered where the annotated record already holds the occupation, admitted where it does not and the verse says it, and refused for a record the word does not name.",
+  "A psalm's superscription (לְ with a name) names no office, and 'psalmist' or 'author' is no occupation; לַמְנַצֵּחַ addresses the choirmaster.",
+  "συνεργός 'fellow worker' is a relation to Paul; 'man of God' and 'servant of the LORD' are honorifics; Pharisee and Zealot are parties.",
+  "A title of address (Διδάσκαλε, Ῥαββί) or a confession ('the Christ') adds nothing to the role the narrator's own verb gives (Teacher), and no office King for Jesus (owner, 2026-11-09).",
+  "Jesus' mediation and advocacy are the ministry of the heavenly High priest he holds (Heb 7:25, 8:6), not further roles.",
+  "A practice the narrator says of a person with the verb counts by the measure the owner used for Simon of Samaria (Acts 8:9 μαγεύων): Manasseh, 2 Chr 33:6 וְכִשֵּׁף. Hostile speech (Jehu of Jezebel, 2 Kgs 9:22) does not.",
+  "Heavenly beings the text calls שַׂר of a kingdom (Dan 10:13, 20) hold a heavenly role (owner, 2026-10-27, TSK-1254)."
+ ],
+ "newOccupations": [
+  "heavenly-prince-of-a-kingdom"
+ ],
+ "counts": {
+  "rows": 252,
+  "admittedRows": 16,
+  "refused": 123,
+  "covered": 111,
+  "hard": 2,
+  "newPairs": 18,
+  "newPairsNotAmongTheHeldRows": 2
+ },
+ "admitted": [
+  {
+   "person": "archippus",
+   "occupation": "christian-minister",
+   "why": "Col 4:17 'take heed to the ministry (διακονίαν) which thou hast received in the Lord, that thou fulfil it': a ministry received and to be fulfilled, said of him by Paul; the stated service counts (part 1), as διάκονος does for Timothy (1 Thess 3:2).",
+   "rows": [
+    "17cdbada6be270fc"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shammah-5",
+   "occupation": "davids-mighty-warrior",
+   "why": "2 Sam 23:33 'Shammah the Hararite' in the list of David's mighty men (23:8, the Thirty from 23:24, 'thirty and seven in all' 23:39): BHSA, KJV and the Greek list him as one of them, and the word is annotated to this record. BSB reads 'Jonathan son of Shammah the Hararite' after 1 Chr 11:34 'Jonathan son of Shage', which the records also join to him; admitted on the Hebrew's list, as part 1 admitted Oded on BHSA's reading of 2 Chr 15:8 beside BSB's Azariah.",
+   "rows": [
+    "42df538b50dad720"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "princeofgreece",
+   "occupation": "heavenly-prince-of-a-kingdom",
+   "why": "Dan 10:20 'and lo, the prince (שַׂר) of Greece shall come', in the angel's word of his fight with the prince of Persia, beside Michael 'one of the chief princes' and 'your prince' (10:13, 21): the noun of rank said of a heavenly being, so a heavenly role (owner, 2026-10-27, TSK-1254).",
+   "rows": [
+    "e5a3fb340ab5b11a"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "princeofthekingdomofpersia",
+   "occupation": "heavenly-prince-of-a-kingdom",
+   "why": "Dan 10:13 'the prince (שַׂר) of the kingdom of Persia withstood me one and twenty days; but lo, Michael, one of the chief princes, came to help me', and 10:20: the noun of rank said of a heavenly being, so a heavenly role (owner, 2026-10-27, TSK-1254).",
+   "rows": [
+    "d0815830fe09de8c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "anaiah",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "f69b4947394eb2cf"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "ater",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:18 (KJV 10:17): the list of 'the heads of the people' (10:15); the word is annotated to this record. The same verse's rule as the held rows of part 4.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "bani-4",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "759ab1b71dae42d1"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "bebai",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "581627a8a914640a"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "bezai",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "c8f00b073ec169c2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "bigvai",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "51d861263ce8ed9c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "elam-4",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "d8e9c14456ef0878"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hallohesh",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "89da3119873b1930"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hanan-5",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "c6df8bb502197c29"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hananiah-7",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "96161dac835fe050"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "harim-2",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 (KJV 10:14) 'the heads of the people (רָאשֵׁי הָעָם)' heads the list of 10:15-28, whose other men hold it (part 2). The verse's word is annotated to this record; which man of the name that is, is the records' question (part 2's rule), and the occupation follows the annotation.",
+   "rows": [
+    "f9bf0669a926f9c2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hashum",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:19 (KJV 10:18): the list of 'the heads of the people' (10:15); the word is annotated to this record (the row asked it of hashum-2, refused).",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "anah-son-of-zibeon",
+   "occupation": "shepherd",
+   "why": "Gen 36:24 'this is Anah who found the hot springs in the wilderness as he pastured (בִּרְעֹתוֹ) the donkeys of Zibeon his father': the shepherd's verb רָעָה said of him as his work in his father's house, as of Rachel (Gen 29:9) and Moses (Exod 3:1). The chief Anah of 36:29 is not this verse's question.",
+   "rows": [
+    "83223f29e2e2612e"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "manasseh-3",
+   "occupation": "sorcerer",
+   "why": "2 Chr 33:6 'he observed times, and used enchantments, and used witchcraft (וְכִשֵּׁף)': the narrator's verb of sorcery said of him as his practice, by the measure the owner used for Simon of Samaria, 'which beforetime used sorcery' (Acts 8:9 μαγεύων, TSK-1218). 2 Kgs 21:6 says the same with עוֹנֵן and נִחֵשׁ.",
+   "rows": [
+    "52eb16e8ad7d8f79"
+   ],
+   "notAmongTheHeldRows": null
+  }
+ ],
+ "refused": [
+  {
+   "row": "0770b5fd1cc765aa",
+   "person": "aaron",
+   "label": "Messenger / spokesman for the LORD",
+   "reason": "Exod 5:1 'Moses and Aaron went in and told Pharaoh, Thus says the LORD': Aaron speaks as Moses' mouth (Exod 4:16, 7:1); the owner ruled on 2026-11-01 that Aaron is not Prophet. He holds Priest and High priest."
+  },
+  {
+   "row": "477f614522004830",
+   "person": "achaicus",
+   "label": "fellow worker and laborer (possible)",
+   "reason": "1 Cor 16:16-18 asks the church to submit to 'such' and to every fellow worker; he is named among those who refreshed Paul. No office is said of him."
+  },
+  {
+   "row": "ab62b0beae66e06f",
+   "person": "achbor-2",
+   "label": "Abdon son of Micah",
+   "reason": "2 Chr 34:20 names Abdon son of Micah among the men the king sent; the verse names no office of his (Asaiah alone is 'the king's servant')."
+  },
+  {
+   "row": "58546f9788e0a828",
+   "person": "aquila",
+   "label": "συνεργός (fellow worker)",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas)."
+  },
+  {
+   "row": "21438378e4e15135",
+   "person": "ariel",
+   "label": "אֲרִאֵל מֹואָב",
+   "reason": "2 Sam 23:20, 1 Chr 11:22: Benaiah 'slew two Ariels of Moab'; whether a name or 'lion-like men', no occupation is named."
+  },
+  {
+   "row": "ac91466dc8201d3d",
+   "person": "ariel",
+   "label": "Ariel of Moab (two «Ariel» of Moab)",
+   "reason": "2 Sam 23:20, 1 Chr 11:22: Benaiah 'slew two Ariels of Moab'; whether a name or 'lion-like men', no occupation is named."
+  },
+  {
+   "row": "1ed4155c210ac1cf",
+   "person": "aristarchus",
+   "label": "fellow worker for the kingdom of God",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas)."
+  },
+  {
+   "row": "13c66aa4ad1bbdc3",
+   "person": "asaph-2",
+   "label": "psalm of Asaph (possible psalmist/author)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "1f6fdbe8b46d9aa5",
+   "person": "asaph-2",
+   "label": "Asaph — psalm ascription (musician/author?)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "84a6ff1dd5ef6292",
+   "person": "asaph-2",
+   "label": "Psalm of Asaph (ascription)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "95dad36ce85c67bc",
+   "person": "asaph-2",
+   "label": "Asaph as psalmist/composer or musician",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "e29c08c094db4d05",
+   "person": "asaph-2",
+   "label": "Псалом «Асафа» (автор чи музикант)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "e46bddfed22de71b",
+   "person": "asaph-2",
+   "label": "Psalm attributed to Asaph (possible psalmist/composer or temple musician)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "e601398f112759dc",
+   "person": "asaph-2",
+   "label": "psalmist / author ascription",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds Seer and Temple musician on verses that say them."
+  },
+  {
+   "row": "1434f56001e66242",
+   "person": "azmaveth-2",
+   "label": "Azmaveth the Baharumite (mighty man)",
+   "reason": "1 Chr 11:33's Azmaveth the Baharumite is annotated to azmaveth, not to this record."
+  },
+  {
+   "row": "3928b47bcf4dcb97",
+   "person": "benaiah",
+   "label": "Benaiah the Pirathonite",
+   "reason": "1 Chr 27:14's Benaiah the Pirathonite is another man, benaiah-2, who holds Army division commander on that verse."
+  },
+  {
+   "row": "072465cb5e663df3",
+   "person": "david",
+   "label": "Psalm superscription: choirmaster / Psalm of David",
+   "reason": "לַמְנַצֵּחַ 'to the choirmaster' addresses the psalm to the choirmaster; with the name of the psalm's man it names no office of his. A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows)."
+  },
+  {
+   "row": "4324fb333e5aad91",
+   "person": "david",
+   "label": "Michtam of David (psalm attribution)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "453576f05ef36873",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "6da0c261ce923883",
+   "person": "david",
+   "label": "choirmaster/chief musician dedication (לַמְנַצֵּחַ)",
+   "reason": "לַמְנַצֵּחַ 'to the choirmaster' addresses the psalm to the choirmaster; with the name of the psalm's man it names no office of his. A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows)."
+  },
+  {
+   "row": "79119cee91fa4547",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "7e14a2ce38cb74d9",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "907e1baa43039d3c",
+   "person": "david",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "92ae48eac1c5fab8",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "9ea53b8e04c302b3",
+   "person": "david",
+   "label": "psalmist (attribution of the psalm)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "b279ea05d246ab2c",
+   "person": "david",
+   "label": "psalmist / автор псалма",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "c97fc2cc40d497a7",
+   "person": "david",
+   "label": "Psalmist / author of Psalm 65",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "da716d19c181577b",
+   "person": "david",
+   "label": "psalmist / composer",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "df9af5a30596cee0",
+   "person": "david",
+   "label": "psalmist/author",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "e47be7c275854082",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "e69422a3520bf145",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "f5ab37a34d05091b",
+   "person": "david",
+   "label": "psalmist / author of the psalm",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows). He holds King and Harpist."
+  },
+  {
+   "row": "772428d093a987ae",
+   "person": "dishon-2",
+   "label": "Chief Dishon",
+   "reason": "Gen 36:30's chief Dishon is annotated to dishon, Seir's son (36:21), who holds Edomite chief; this is Anah's son (36:25)."
+  },
+  {
+   "row": "029a7fc8f480fc88",
+   "person": "elijah",
+   "label": "man of God (Elijah)",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "3f1e326dc3454a22",
+   "person": "elijah",
+   "label": "Elijah who was to come (Ілля, що має прийти)",
+   "reason": "Matt 11:14 says John is 'Elijah who was to come'; it names no occupation of Elijah, who holds Prophet."
+  },
+  {
+   "row": "57c5cca9a18c09d5",
+   "person": "elijah",
+   "label": "man of God (אִישׁ אֱלֹהִים)",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "acdbb808bba4c256",
+   "person": "elisha",
+   "label": "man of God (אִישׁ הָאֱלֹהִים)",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "7a8d67af094e2076",
+   "person": "er-2",
+   "label": "linen workers clans",
+   "reason": "1 Chr 4:21: the linen work is said of the families of the house of Ashbea, not of Er (as Laadah, part 3)."
+  },
+  {
+   "row": "45d04f9440444360",
+   "person": "ethan",
+   "label": "Maskil attributed to Ethan (psalmist/author?)",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows)."
+  },
+  {
+   "row": "d0b225ceb675e7ec",
+   "person": "forunatus",
+   "label": "fellow worker and laborer (possible)",
+   "reason": "1 Cor 16:16-18 asks the church to submit to 'such' and to every fellow worker; he is named among those who refreshed Paul. No office is said of him."
+  },
+  {
+   "row": "c6a6f5b12d7f0eea",
+   "person": "gahar",
+   "label": "Nethinim (temple servants) – descendants of Gahar",
+   "reason": "'The children of X' names a house of returned temple servants; the ancestor does not hold its service (part 1)."
+  },
+  {
+   "row": "1dd278cc9c460a4d",
+   "person": "gazzam",
+   "label": "Nethinim (temple servants) – descendants of Gazzam",
+   "reason": "'The children of X' names a house of returned temple servants; the ancestor does not hold its service (part 1)."
+  },
+  {
+   "row": "d2de04f45f293cae",
+   "person": "gemariah-2",
+   "label": "scribe",
+   "reason": "Jer 36:10 'Gemariah son of Shaphan the scribe': the title is Shaphan's, as another verse says (2 Kgs 22:3, 8); at 36:12 Gemariah sits among the princes, and the scribe of that day is Elishama. He holds Royal official."
+  },
+  {
+   "row": "698c2802900ce4de",
+   "person": "habakkuk",
+   "label": "choirmaster / musical direction",
+   "reason": "Hab 3:19 'to the choirmaster, on my stringed instruments' addresses the prayer to the choirmaster; it names no office of Habakkuk, who holds Prophet."
+  },
+  {
+   "row": "f56bccf20a3b471c",
+   "person": "hadad",
+   "label": "Hadad (king of Edom)",
+   "reason": "1 Chr 1:46's Hadad son of Bedad, king of Edom, is annotated to hadad-2, not to Ishmael's son."
+  },
+  {
+   "row": "8703df12a187e87a",
+   "person": "hammolecheth",
+   "label": "ha-molekhet (the queen?)",
+   "reason": "1 Chr 7:18 'his sister Hammolecheth': whatever the article in the name means, the text gives her no reign or office."
+  },
+  {
+   "row": "fe1c59a550f77f29",
+   "person": "harhas",
+   "label": "keeper of the wardrobe",
+   "reason": "2 Chr 34:22 'Shallum son of Tokhath son of Hasrah, keeper of the wardrobe': the title is Shallum's at the head of the chain (part 2, 2 Kgs 22:14)."
+  },
+  {
+   "row": "676709f5af16a24e",
+   "person": "hashabiah-2",
+   "label": "Hashabiah the Hebronite officer",
+   "reason": "1 Chr 26:30's Hashabiah 'of the Hebronites', over Israel west of the Jordan, is of Kohath's line (Hebron, Exod 6:18), the son of Jeduthun (1 Chr 25:3) of Merari's; the verse's word is annotated to this record, which looks like two men joined. Left to the records (reported); no occupation is given on it here."
+  },
+  {
+   "row": "7d2226af413ebd85",
+   "person": "hashabiah-2",
+   "label": "Hashabiah, officer of Israel west of the Jordan (26:30)",
+   "reason": "1 Chr 26:30's Hashabiah 'of the Hebronites', over Israel west of the Jordan, is of Kohath's line (Hebron, Exod 6:18), the son of Jeduthun (1 Chr 25:3) of Merari's; the verse's word is annotated to this record, which looks like two men joined. Left to the records (reported); no occupation is given on it here."
+  },
+  {
+   "row": "0d178209cc74c6d3",
+   "person": "hashabiah-3",
+   "label": "начальник левитів (Гашавія)",
+   "reason": "2 Chr 35:9's chief of the Levites is annotated to hashabiah-10, who holds Chief of the Levites on it; this record is the ruler of 1 Chr 27:17."
+  },
+  {
+   "row": "3488a780d8ca1cee",
+   "person": "hashum-2",
+   "label": "Хашум серед голів народу",
+   "reason": "Neh 10:19 (KJV 10:18)'s Hashum among the heads of the people is annotated to hashum, who is given Leader of the people on it; not to this record."
+  },
+  {
+   "row": "33cf4d8a017d0cc7",
+   "person": "hassophereth",
+   "label": "Sophereth / ha-Sopheret (\"the scribe\", feminine)",
+   "reason": "Ezra 2:55, Neh 7:57 'the children of Hassophereth': a family name among Solomon's servants; a house name holds no service (part 1)."
+  },
+  {
+   "row": "94bbfb3276ed47d0",
+   "person": "heman",
+   "label": "possible psalmist/maskil author attribution",
+   "reason": "A psalm's superscription (לְ with the name) names no office, and 'psalmist' or 'author' is not an occupation (part 1, David's psalmist rows)."
+  },
+  {
+   "row": "6bdd071481e14f31",
+   "person": "hilkiah-2",
+   "label": "Hilkiah (same name, different contexts)",
+   "reason": "1 Chr 9:11 and Neh 11:11 name him as an ancestor; the office 'ruler of the house of God' is Azariah's and Seraiah's. Neh 12:7's Hilkiah, of Jeshua's days, is hilkiah-3. He holds High priest (2 Kgs 22)."
+  },
+  {
+   "row": "e8dd80386b2e78dc",
+   "person": "hilkiah-2",
+   "label": "Hilkiah, father of Azariah (1CH 9:11)",
+   "reason": "1 Chr 9:11 and Neh 11:11 name him as an ancestor; the office 'ruler of the house of God' is Azariah's and Seraiah's. Neh 12:7's Hilkiah, of Jeshua's days, is hilkiah-3. He holds High priest (2 Kgs 22)."
+  },
+  {
+   "row": "286fe7af504dca7c",
+   "person": "jahleel",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "fc6defdd3f9c2d9e",
+   "person": "jahzeel",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "1cbae76f0ea26579",
+   "person": "jamin",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "656010d32f6542af",
+   "person": "jashen",
+   "label": "sons of Jashen",
+   "reason": "2 Sam 23:32 'of the sons of Jashen, Jonathan' (1 Chr 11:34 'the sons of Hashem'): the mighty man is the son; the father named after 'sons of' holds nothing (part 2)."
+  },
+  {
+   "row": "81aa1899ce8178d3",
+   "person": "jashen",
+   "label": "Jashen (Hashem the Gizonite?)",
+   "reason": "2 Sam 23:32 'of the sons of Jashen, Jonathan' (1 Chr 11:34 'the sons of Hashem'): the mighty man is the son; the father named after 'sons of' holds nothing (part 2)."
+  },
+  {
+   "row": "61f1715fe61264f0",
+   "person": "jehiel-4",
+   "label": "наглядач Єхіель (2Хр 31:13)",
+   "reason": "2 Chr 31:13's overseer Jehiel is annotated to jehiel-10, who holds Overseer on it; this record is Heman's son (2 Chr 29:14)."
+  },
+  {
+   "row": "c093006bf48086ad",
+   "person": "jehiel-9",
+   "label": "Jehieli (Jehiel) – treasuries",
+   "reason": "1 Chr 26:22 'the sons of Jehieli, Zetham and Joel his brother, were over the treasures': the office is the sons'."
+  },
+  {
+   "row": "43c7ec93445a989c",
+   "person": "jemuel",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "240163370c85019c",
+   "person": "jeroboam",
+   "label": "burning incense at the altar",
+   "reason": "1 Kgs 13:1 'Jeroboam stood by the altar to burn incense': a king's act at his own altar, condemned; it makes him no priest. He holds King."
+  },
+  {
+   "row": "0376291d7709ff30",
+   "person": "jesus",
+   "label": "minister of the circumcision",
+   "reason": "Rom 15:8 'Christ was made a servant (διάκονον) of the circumcision for the truth of God' says his mission to Israel, as Mark 10:45 'came to serve'; it is not the church's ministry Christian minister names."
+  },
+  {
+   "row": "07023e4b434f876d",
+   "person": "jesus",
+   "label": "Одному подібний до Сина Людського зі серпом (жнець)",
+   "reason": "Rev 14:14-16: one like a son of man reaps the earth with a sickle in a vision of judgment; a figure, not a trade."
+  },
+  {
+   "row": "6c3d632df2b7859c",
+   "person": "jesus",
+   "label": "Месія/Христос",
+   "reason": "John 4:25-26: he is the Messiah who was to come; a confession of who he is, not an office the list keeps (owner, 2026-11-09, part 2 question 1a)."
+  },
+  {
+   "row": "8c19778c0e988ad6",
+   "person": "jesus",
+   "label": "King (acclaimed by disciples)",
+   "reason": "Owner's ruling of 2026-11-09 (part 2, question 1a): no office King; Luke 19:38 is the disciples' acclamation."
+  },
+  {
+   "row": "de5ffec79763f286",
+   "person": "jesus",
+   "label": "Христос (Месія)",
+   "reason": "'Thou art the Christ' (Mark 8:29) confesses who he is, the Anointed; it is not an office the list keeps, and his kingship is said by Ruler of the kings of the earth (owner, 2026-11-09, part 2 question 1a)."
+  },
+  {
+   "row": "fe0e2477617ac39b",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (part 2, question 1a): no office King; 'King of the Jews' is Pilate's question and the charge."
+  },
+  {
+   "row": "af5a66c1dcccd12c",
+   "person": "jesus-2",
+   "label": "fellow worker for the kingdom of God",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas)."
+  },
+  {
+   "row": "b325fbb83b438558",
+   "person": "jezebel",
+   "label": "witchcraft / sorcery",
+   "reason": "2 Kgs 9:22 'the whoredoms of thy mother Jezebel and her witchcrafts' is Jehu's charge, hostile speech, and a figure for her idolatry (part 1; owner, TSK-1218: figures are not designations)."
+  },
+  {
+   "row": "fabff2b247d6c679",
+   "person": "jezer",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "2f009e8559f8c21d",
+   "person": "john",
+   "label": "John in 4:21 vs John in 4:12",
+   "reason": "Matt 4:21's John mending nets is the son of Zebedee, another man."
+  },
+  {
+   "row": "c6d3e2f7a4b000d6",
+   "person": "john-5",
+   "label": "fellow worker (Mark)",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas). He holds Ministry assistant (Acts 13:5)."
+  },
+  {
+   "row": "2f636a2a35753f86",
+   "person": "joiarib",
+   "label": "man of understanding / teacher",
+   "reason": "Ezra 8:16 מְבִינִים, absolute, 'men of understanding' (KJV), συνετούς in the Greek; BSB's 'teachers' is a gloss (as part 1 read BSB's 'fellow priests')."
+  },
+  {
+   "row": "c224c627ddd56811",
+   "person": "joshebbasshebeth",
+   "label": "possible identification with Jashobeam, head of the first division",
+   "reason": "1 Chr 27:2's Jashobeam son of Zabdiel is annotated to jashobeam-2, who holds Army division commander on it."
+  },
+  {
+   "row": "2f0ae60f55e3b8d8",
+   "person": "jozabad-4",
+   "label": "начальник левитів (Йозавад)",
+   "reason": "2 Chr 35:9's chief of the Levites is annotated to jozabad-11, who holds Chief of the Levites on it; this record is the overseer of 2 Chr 31:13."
+  },
+  {
+   "row": "f3bb2d88758b9f52",
+   "person": "jozacar",
+   "label": "Zabad vs Jozacar identity",
+   "reason": "2 Chr 24:26 names the conspirators, 'his servants' (2 Kgs 12:21): a servant's standing is not an occupation (part 2), and no office is named."
+  },
+  {
+   "row": "995b81ce89889110",
+   "person": "kingofhena",
+   "label": "цар Хени",
+   "reason": "No word of 2 Kgs 19:13 or Isa 37:13 is annotated to this record: the verse's three מֶלֶךְ are annotated to the kings of Hamath, Arpad and Sepharvaim, and Hena and Ivvah as places. Whether a king of Hena is a person of the text is the records' question (reported)."
+  },
+  {
+   "row": "114bcdcdcec807cf",
+   "person": "kingofivvah",
+   "label": "цар Іввa",
+   "reason": "No word of 2 Kgs 19:13 or Isa 37:13 is annotated to this record: the verse's three מֶלֶךְ are annotated to the kings of Hamath, Arpad and Sepharvaim, and Hena and Ivvah as places. Whether a king of Ivvah is a person of the text is the records' question (reported)."
+  },
+  {
+   "row": "7e92717a5af3d7d3",
+   "person": "kishi",
+   "label": "Левит Кішi, син Авді",
+   "reason": "2 Chr 29:12's Kish son of Abdi is annotated to kish-son-of-abdi; and 'the Levites arose' gives a standing, not an occupation (part 1)."
+  },
+  {
+   "row": "ed420ef0d6b5ff36",
+   "person": "kohath",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "7f81ac4340eee5f5",
+   "person": "lot",
+   "label": "buying, selling, planting, building in the days of Lot",
+   "reason": "Luke 17:28 'they bought, they sold, they planted, they builded' is said of the people of Lot's days, not of Lot."
+  },
+  {
+   "row": "d12fdc82375236af",
+   "person": "luke",
+   "label": "fellow worker (Luke)",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas). He holds Physician (Col 4:14)."
+  },
+  {
+   "row": "3004460f024b91ec",
+   "person": "mahath-2",
+   "label": "Левит Махат, син Амасая",
+   "reason": "2 Chr 29:12 'then the Levites arose, Mahath son of Amasai': Levite is a standing, not an occupation (part 1). He holds Overseer on 2 Chr 31:13."
+  },
+  {
+   "row": "b902ea652315fbbb",
+   "person": "malchiel",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "045977460a900080",
+   "person": "merari",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "295fedb63109239b",
+   "person": "moses",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "64fd943630412f36",
+   "person": "moses",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "76dc5f01c4b0542f",
+   "person": "moses",
+   "label": "Writer (he wrote of me)",
+   "reason": "John 5:46-47 'he wrote of me... his writings': authorship of the law is not an occupation (as 'psalmist', part 1)."
+  },
+  {
+   "row": "91b8a47b31709118",
+   "person": "moses",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "d25173cd58d0482a",
+   "person": "moses",
+   "label": "слуга Господа (עֶבֶד יְהוָה)",
+   "reason": "'Moses the servant of the LORD' (Josh 1:1) is an honour of his standing before God; a servant's standing is not an occupation (part 2), as 'man of God' is an honorific."
+  },
+  {
+   "row": "d31ce873015bc46c",
+   "person": "moses",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "f0abefef47328dfb",
+   "person": "moses",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "fc6262f3703fe8d5",
+   "person": "moses",
+   "label": "אִישׁ הָאֱלֹהִים (людина Божа)",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "583f5f6889a9726c",
+   "person": "muppim",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "b0037ff360886844",
+   "person": "naaman",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "ba0337d8fcbe0750",
+   "person": "nehemiah-3",
+   "label": "Tirshatha (governor)",
+   "reason": "Neh 7:7's Nehemiah who came up with Zerubbabel is annotated to this record; the Tirshatha of Neh 8:9 is Nehemiah son of Hachaliah, another man."
+  },
+  {
+   "row": "0239f37a336b8241",
+   "person": "nethanel-4",
+   "label": "писар",
+   "reason": "2 Chr 35:9's Nethanel, chief of the Levites, is annotated to nethanel-9, who holds Chief of the Levites on it; this record is the father of Shemaiah the scribe (1 Chr 24:6, part 3)."
+  },
+  {
+   "row": "27be961843704a3d",
+   "person": "ohad",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "dcbb5c551874e163",
+   "person": "pallu",
+   "label": "shepherd (membership of the house of Jacob)",
+   "reason": "Gen 46:32-34 and 47:3: 'the men are shepherds... both we and our fathers' is said by and of Jacob's sons who speak to Pharaoh; it is not said of each grandson the list of 46:8-27 names (part 3)."
+  },
+  {
+   "row": "f2f60c9013d381df",
+   "person": "philemon",
+   "label": "fellow worker (Philemon)",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas)."
+  },
+  {
+   "row": "2d957d6bb25f492b",
+   "person": "philip-2",
+   "label": "tetrarch of Ituraea and Trachonitis",
+   "reason": "Luke 3:1's Philip, tetrarch of Ituraea, is annotated to philip-4, who holds Tetrarch on it; this record is Herodias' husband (Matt 14:3)."
+  },
+  {
+   "row": "951a2c353de336ba",
+   "person": "rehabiah",
+   "label": "Overseer of the dedicated treasuries",
+   "reason": "1 Chr 26:25-26: 'that Shelomith and his brethren were over all the treasures'; Rehabiah is named as an ancestor in Shelomith's chain, not among the brethren in charge."
+  },
+  {
+   "row": "8a78108dd36b0821",
+   "person": "saul-2",
+   "label": "Pharisee",
+   "reason": "Phil 3:5 'as touching the law, a Pharisee': a party, not an office (part 1, TSK-1251)."
+  },
+  {
+   "row": "334812a912c321cb",
+   "person": "shemaiah",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "fdab22749a0e0c4c",
+   "person": "sihon",
+   "label": "Sihon (згадка в 48:45)",
+   "reason": "Jer 48:45 'a flame from the midst of Sihon' is a poetic figure; it names no office. He holds King on other verses."
+  },
+  {
+   "row": "0e9f3be8c3c68e60",
+   "person": "silas",
+   "label": "Silvanus as carrier or secretary of the letter",
+   "reason": "1 Pet 5:12 'by Silvanus... I have written briefly': διά may name the carrier or the secretary; no office is named."
+  },
+  {
+   "row": "9502e4eeeb517dcc",
+   "person": "simon",
+   "label": "Симон Зилот (ὁ Ζηλωτὴς)",
+   "reason": "Acts 1:13's Simon the Zealot is simon-2, another man."
+  },
+  {
+   "row": "5d145e3c22796e18",
+   "person": "simon-2",
+   "label": "Simon the Zealot / the Canaanite (ὁ Καναναῖος)",
+   "reason": "ὁ Καναναῖος, ὁ Ζηλωτής: a byname or a party, as 'Pharisee' is held a party (part 1); no occupation is named."
+  },
+  {
+   "row": "a86a13ad489cd2e8",
+   "person": "simon-2",
+   "label": "Σίμων ὁ Ζηλωτὴς (Zealot)",
+   "reason": "ὁ Καναναῖος, ὁ Ζηλωτής: a byname or a party, as 'Pharisee' is held a party (part 1); no occupation is named."
+  },
+  {
+   "row": "36465709931ae039",
+   "person": "simon-6",
+   "label": "Pharisee (Φαρισαῖος)",
+   "reason": "Luke 7:39 'the Pharisee which had bidden him': a party, not an office (part 1, TSK-1251)."
+  },
+  {
+   "row": "aef095476df5d249",
+   "person": "solomon",
+   "label": "Qohelet / the Teacher (preacher)",
+   "reason": "Eccl 12:9 'the Preacher... taught the people knowledge': no word of Ecclesiastes is annotated to this record, so Qohelet is not joined to Solomon in the corpus; that is the records' question, and the occupation follows the annotation (part 2)."
+  },
+  {
+   "row": "3690e133835433ca",
+   "person": "theangelofthelord",
+   "label": "ангел Господній (посланець)",
+   "reason": "The angel of the LORD is a being sent with a message; מַלְאָךְ / ἄγγελος names what he is, not an office of a person (part 1, Matt 28:2)."
+  },
+  {
+   "row": "6e0de0e32bfd4be5",
+   "person": "theangelofthelord",
+   "label": "angel / messenger of the LORD",
+   "reason": "The angel of the LORD is a being sent with a message; מַלְאָךְ / ἄγγελος names what he is, not an office of a person (part 1, Matt 28:2)."
+  },
+  {
+   "row": "859c88894a8c1ce4",
+   "person": "theangelofthelord",
+   "label": "messenger/angel of the LORD",
+   "reason": "The angel of the LORD is a being sent with a message; מַלְאָךְ / ἄγγελος names what he is, not an office of a person (part 1, Matt 28:2)."
+  },
+  {
+   "row": "a8a6225685be6f04",
+   "person": "theangelofthelord",
+   "label": "messenger of the LORD (malak)",
+   "reason": "The angel of the LORD is a being sent with a message; מַלְאָךְ / ἄγγελος names what he is, not an office of a person (part 1, Matt 28:2)."
+  },
+  {
+   "row": "e597b87ef3192222",
+   "person": "theangelofthelord",
+   "label": "angel of God",
+   "reason": "The angel of the LORD is a being sent with a message; מַלְאָךְ / ἄγγελος names what he is, not an office of a person (part 1, Matt 28:2)."
+  },
+  {
+   "row": "38046b30e776cdaf",
+   "person": "timothy",
+   "label": "man of God",
+   "reason": "'Man of God' is an honorific (TSK-1251; part 1: Elisha, Moses, Shemaiah)."
+  },
+  {
+   "row": "f3066bc60f79df4b",
+   "person": "timothy",
+   "label": "fellow worker",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas)."
+  },
+  {
+   "row": "98be555fa57bcbc7",
+   "person": "tyrannus",
+   "label": "school/lecture hall of Tyrannus (possible teacher or owner)",
+   "reason": "Acts 19:9 'in the school of one Tyrannus' names a hall; it says neither that he taught nor what he did."
+  },
+  {
+   "row": "01e01c7ab8908400",
+   "person": "urbanus",
+   "label": "fellow worker in Christ",
+   "reason": "συνεργός 'fellow worker' says his relation to Paul, not an office (part 1: Aristarchus, Clement, Demas)."
+  }
+ ],
+ "covered": [
+  {
+   "row": "44da58bba97e96e9",
+   "person": "abialbon",
+   "label": "Abiel the Arbathite (імовірно той самий, що Abi-albon)",
+   "by": "davids-mighty-warrior",
+   "reason": "1 Chr 11:32's Abiel the Arbathite is annotated to this record, who holds Mighty warrior of David on 2 Sam 23:31 and its list."
+  },
+  {
+   "row": "3e6b0eed3bed0e4d",
+   "person": "abijam",
+   "label": "king of Judah (Abijah)",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "6048ef254ab507c9",
+   "person": "abijam",
+   "label": "King of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "9a830403d1e8aa41",
+   "person": "abishag",
+   "label": "royal attendant/caregiver (sokenet, meshoret)",
+   "by": "royal-servant",
+   "reason": "Holds Royal servant on 1 Kgs 1:4 (סֹכֶנֶת, וַתְּשָׁרְתֵהוּ), the attendant's verb said of her (part 2)."
+  },
+  {
+   "row": "35b60d040b0bcda1",
+   "person": "achish",
+   "label": "King of Gath",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "26d9de82f7ab48e3",
+   "person": "adoniram",
+   "label": "Адорам над данню/примусовими роботами",
+   "by": "forced-labor-overseer",
+   "reason": "Holds Overseer of forced labour (1 Kgs 4:6); Adoram (2 Sam 20:24) and Hadoram (2 Chr 10:18), 'over the forced labour', are annotated to this record."
+  },
+  {
+   "row": "fa09ea5fe651b4f6",
+   "person": "adoniram",
+   "label": "Hadoram over the tribute/forced labor (not equated with Adoniram)",
+   "by": "forced-labor-overseer",
+   "reason": "Holds Overseer of forced labour (1 Kgs 4:6); Adoram (2 Sam 20:24) and Hadoram (2 Chr 10:18), 'over the forced labour', are annotated to this record."
+  },
+  {
+   "row": "3a9e4899b3686de2",
+   "person": "ahijah",
+   "label": "Ahijah the Shilonite, through whom the LORD spoke",
+   "by": "prophet",
+   "reason": "Holds the occupation on a verse that says it; this row repeats it from a verse where it is only implied or lay outside the chapter read, or of a name the same record bears."
+  },
+  {
+   "row": "3ec9d28a76e546f4",
+   "person": "apollos",
+   "label": "teacher of the things of the Lord (teaching activity)",
+   "by": "christian-minister",
+   "reason": "Holds Christian minister (1 Cor 3:5); Acts 18:25 'he taught diligently the things of the Lord' is that ministry."
+  },
+  {
+   "row": "430f7ef2650f2625",
+   "person": "azariah-3",
+   "label": "King of Judah",
+   "by": "king",
+   "reason": "Holds King; Uzziah (2 Chr 26, Isa 1:1, Hos 1:1, Zech 14:5) is his other name (2 Kgs 15:1, 15:13), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "449f577b2280f892",
+   "person": "azariah-3",
+   "label": "King of Judah",
+   "by": "king",
+   "reason": "Holds King; Uzziah (2 Chr 26, Isa 1:1, Hos 1:1, Zech 14:5) is his other name (2 Kgs 15:1, 15:13), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "be8b8c374b296cee",
+   "person": "azariah-3",
+   "label": "Uzziah, king of Judah",
+   "by": "king",
+   "reason": "Holds King; Uzziah (2 Chr 26, Isa 1:1, Hos 1:1, Zech 14:5) is his other name (2 Kgs 15:1, 15:13), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "c04ef8e800a27006",
+   "person": "azariah-3",
+   "label": "Uzziah, king of Judah (possible link to Azariah)",
+   "by": "king",
+   "reason": "Holds King; Uzziah (2 Chr 26, Isa 1:1, Hos 1:1, Zech 14:5) is his other name (2 Kgs 15:1, 15:13), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "1337d67ee4160cac",
+   "person": "balaam",
+   "label": "possible diviner/oracle-speaker (enchanter)",
+   "by": "soothsayer",
+   "reason": "Holds Soothsayer (Josh 13:22 הַקֹּוסֵם); these rows show the divination it names."
+  },
+  {
+   "row": "237037f682952e72",
+   "person": "balaam",
+   "label": "Ворожіння/пошук знаків і виголошення оракулів",
+   "by": "soothsayer",
+   "reason": "Holds Soothsayer (Josh 13:22 הַקֹּוסֵם); these rows show the divination it names."
+  },
+  {
+   "row": "cb689705c6f0a174",
+   "person": "balaam",
+   "label": "diviner / one who blesses and curses",
+   "by": "soothsayer",
+   "reason": "Holds Soothsayer (Josh 13:22 הַקֹּוסֵם); these rows show the divination it names."
+  },
+  {
+   "row": "f6f5bbd1fff148d2",
+   "person": "balaam",
+   "label": "diviner / soothsayer (הַקֹּוסֵם)",
+   "by": "soothsayer",
+   "reason": "Holds Soothsayer (Josh 13:22 הַקֹּוסֵם); these rows show the divination it names."
+  },
+  {
+   "row": "6f6f39acb5fd4934",
+   "person": "barak",
+   "label": "Barak / Bedan",
+   "by": "military-commander",
+   "reason": "Now holds Military commander by the owner's ruling of 2026-11-09 (part 3, question 2); 1 Sam 12:11 (BHSA Bedan, annotated to this record; BSB Barak) names him among those the LORD sent to deliver Israel."
+  },
+  {
+   "row": "4acbc7cb0d19f203",
+   "person": "benaiah",
+   "label": "possible military role (with the Cherethites and Pelethites)",
+   "by": "commander-of-cherethites-and-pelethites",
+   "reason": "Holds the occupation on a verse that says it; this row repeats it from a verse where it is only implied or lay outside the chapter read, or of a name the same record bears."
+  },
+  {
+   "row": "9ad4608fe14e9b95",
+   "person": "benhadad",
+   "label": "king of Aram (unnamed in 2 Kings 5)",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "994c41d2c59a09be",
+   "person": "daniel-2",
+   "label": "wise man of Babylon (group membership)",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men (Dan 2:48); Dan 2:18 names him beside them."
+  },
+  {
+   "row": "cbc68dc8af699908",
+   "person": "david",
+   "label": "king (цар)",
+   "by": "king",
+   "reason": "Holds King; 1 Sam 21:11 is Achish's servants' question."
+  },
+  {
+   "row": "17b22754274c55a4",
+   "person": "eliakim-2",
+   "label": "Eliakim / Jehoiakim (king)",
+   "by": "king",
+   "reason": "Holds King; Jehoiakim is the name Pharaoh gave him (2 Kgs 23:34), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "475a4d21e16896a6",
+   "person": "eliakim-2",
+   "label": "king of Judah (Jehoiakim?)",
+   "by": "king",
+   "reason": "Holds King; Jehoiakim is the name Pharaoh gave him (2 Kgs 23:34), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "7988e1177799fa43",
+   "person": "eliakim-2",
+   "label": "Jehoiakim king of Judah (identity with Eliakim not shown)",
+   "by": "king",
+   "reason": "Holds King; Jehoiakim is the name Pharaoh gave him (2 Kgs 23:34), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "7a23888e0c08b318",
+   "person": "eliakim-2",
+   "label": "king of Judah (Jehoiakim)",
+   "by": "king",
+   "reason": "Holds King; Jehoiakim is the name Pharaoh gave him (2 Kgs 23:34), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "d43c90a490c30d85",
+   "person": "eliakim-2",
+   "label": "king of Judah (Jehoiakim?)",
+   "by": "king",
+   "reason": "Holds King; Jehoiakim is the name Pharaoh gave him (2 Kgs 23:34), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "1c6756ba702c4312",
+   "person": "gamaliel-2",
+   "label": "teacher (implied)",
+   "by": "teacher-of-the-law",
+   "reason": "Holds Teacher of the Law (Acts 5:34 νομοδιδάσκαλος); Acts 22:3 shows Paul taught at his feet."
+  },
+  {
+   "row": "67916c27672dcb35",
+   "person": "hadar",
+   "label": "Цар Едому (Гадар/Гадад, наступник Баал-Ханана)",
+   "by": "king",
+   "reason": "Holds King (Gen 36:39); 1 Chr 1:50's Hadad, successor of Baal-hanan with his city Pai, is annotated to this record."
+  },
+  {
+   "row": "18db75e8a81e8ce8",
+   "person": "hadassah",
+   "label": "Esther the queen",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7), as part 2 read."
+  },
+  {
+   "row": "3f76e99a7aad2a48",
+   "person": "hadassah",
+   "label": "Esther the queen (possible identity with Hadassah)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7), as part 2 read."
+  },
+  {
+   "row": "ccb324c15ee79b82",
+   "person": "harim-3",
+   "label": "Harim",
+   "by": "priest",
+   "reason": "Holds Priest (1 Chr 24:8); Neh 10:6 (BHSA), among the priests who sealed, is annotated to this record, and 10:28's Harim to harim-2."
+  },
+  {
+   "row": "f86b0b9dc2d26f1c",
+   "person": "heleb",
+   "label": "Heled son of Baanah the Netophathite (possible match)",
+   "by": "davids-mighty-warrior",
+   "reason": "Holds the occupation on a verse that says it; this row repeats it from a verse where it is only implied or lay outside the chapter read, or of a name the same record bears."
+  },
+  {
+   "row": "890cabcb926a3dd3",
+   "person": "hiddai",
+   "label": "Hurai of the brooks of Gaash (possible match)",
+   "by": "davids-mighty-warrior",
+   "reason": "Holds the occupation on a verse that says it; this row repeats it from a verse where it is only implied or lay outside the chapter read, or of a name the same record bears."
+  },
+  {
+   "row": "fb288efef658a139",
+   "person": "hiram",
+   "label": "Huram/Hiram, king of Tyre",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "6269431ba4716b84",
+   "person": "isaiah",
+   "label": "Isaiah cries out / foretold",
+   "by": "prophet",
+   "reason": "Holds the occupation on a verse that says it; this row repeats it from a verse where it is only implied or lay outside the chapter read, or of a name the same record bears."
+  },
+  {
+   "row": "764c9373eec8944c",
+   "person": "jehoahaz-2",
+   "label": "king of Judah (Shallum)",
+   "by": "king",
+   "reason": "Holds King; Jer 22:11's Shallum son of Josiah is his other name, and the word is annotated to this record."
+  },
+  {
+   "row": "6bb96a0e24722730",
+   "person": "jehoiachin",
+   "label": "Jeconiah the king (possible king of Judah)",
+   "by": "king",
+   "reason": "Holds King; Coniah and Jeconiah are his other names (Jer 22:24, 24:1, 27:20, 29:2), and the words are annotated to this record."
+  },
+  {
+   "row": "6fb4b5ac268f74e7",
+   "person": "jehoiachin",
+   "label": "Jeconiah / king of Judah",
+   "by": "king",
+   "reason": "Holds King; Coniah and Jeconiah are his other names (Jer 22:24, 24:1, 27:20, 29:2), and the words are annotated to this record."
+  },
+  {
+   "row": "abff7922fc8783a5",
+   "person": "jehoiachin",
+   "label": "king of Judah (Coniah)",
+   "by": "king",
+   "reason": "Holds King; Coniah and Jeconiah are his other names (Jer 22:24, 24:1, 27:20, 29:2), and the words are annotated to this record."
+  },
+  {
+   "row": "f03d3225b30c636c",
+   "person": "jehoram-2",
+   "label": "king of Israel (unnamed in 2 Kings 5)",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "b602eb477c5dfd01",
+   "person": "jeshua-7",
+   "label": "Jeshua, який допомагав людям розуміти закон",
+   "by": "teacher-of-the-law",
+   "reason": "Holds Teacher of the Law on Neh 8:7 'caused the people to understand the law'."
+  },
+  {
+   "row": "2ad720ccd952e787",
+   "person": "jesus",
+   "label": "Teacher / Rabbi",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "2ff5161ab122a56f",
+   "person": "jesus",
+   "label": "advocate (Paraclete)",
+   "by": "heavenly-high-priest",
+   "reason": "Holds High priest (heavenly); the advocate with the Father (1 John 2:1) is the high priest who 'ever liveth to make intercession' (Heb 7:25)."
+  },
+  {
+   "row": "3c9262452210a046",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλε)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "44f31484f1cb8108",
+   "person": "jesus",
+   "label": "Teacher / Rabbi (Διδάσκαλε, Ῥαββεί)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "4d74bc505c7abeac",
+   "person": "jesus",
+   "label": "mediator of a new covenant",
+   "by": "heavenly-high-priest",
+   "reason": "Holds High priest (heavenly); Heb 12:24's 'mediator of a new covenant' is his high priest's ministry (Heb 8:6, 9:15)."
+  },
+  {
+   "row": "50e75fbd5705c06f",
+   "person": "jesus",
+   "label": "teacher (Διδάσκαλε)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "51ea2831c99c2606",
+   "person": "jesus",
+   "label": "Вершник на білому коні (цар, суддя, воїн)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "The rider of Rev 19:11-16, 'King of kings and Lord of lords': the owner ruled on 2026-11-09 that this reign is said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "5bfb429639f9cd36",
+   "person": "jesus",
+   "label": "Teacher (address)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "6aab8342d62ca5ba",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλε)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "7d3053268921c2a9",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλος)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "913144cc6c7027b5",
+   "person": "jesus",
+   "label": "Teaching (activity, no title)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "9193f30c50a4afdf",
+   "person": "jesus",
+   "label": "Teacher (address)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "91fa50be8d432cd1",
+   "person": "jesus",
+   "label": "μεσίτης (посередник)",
+   "by": "heavenly-high-priest",
+   "reason": "Holds High priest (heavenly; Heb 3:1, 7:21). The mediator of the covenant is his high priest's ministry: 'now hath he obtained a more excellent ministry, by how much also he is the mediator of a better covenant' (Heb 8:6), and 1 Tim 2:5's 'one mediator' the same."
+  },
+  {
+   "row": "af3b5b7612ec81f2",
+   "person": "jesus",
+   "label": "Rabbi / teacher",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "c2eb857480cc9b72",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλε)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "c3aa94d289df2ee6",
+   "person": "jesus",
+   "label": "teaching and preaching in synagogues",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "d14eedcf05240b96",
+   "person": "jesus",
+   "label": "Rabbi (учитель)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "e0607fdc60d19c1c",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλος) / teaching in the temple",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "f3ad3b6c6368af4a",
+   "person": "jesus",
+   "label": "teacher/preacher",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "f6e658a6b0ba6d37",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλε)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "fc2ddf7c8672c32e",
+   "person": "jesus",
+   "label": "Teacher (ὁ διδάσκαλος)",
+   "by": "religious-teacher",
+   "reason": "Holds Teacher; the narrator says he taught, and others address him Διδάσκαλε or Ῥαββί (part 1)."
+  },
+  {
+   "row": "18f455a664d50d18",
+   "person": "john",
+   "label": "the Baptist (Хреститель)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "3f37d8174fbd9553",
+   "person": "john",
+   "label": "John the Baptist (ὁ Βαπτιστής)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "5b5355225eb6bba9",
+   "person": "john",
+   "label": "the Baptist (ὁ Βαπτιστής)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "655ee2d968710969",
+   "person": "john",
+   "label": "the Baptist",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "796937d7b2a4a905",
+   "person": "john",
+   "label": "Baptist (ὁ Βαπτιστής)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "92acb9aba7d1ca33",
+   "person": "john",
+   "label": "the Baptist (ὁ Βαπτιστής)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "988f66a6f3974fae",
+   "person": "john",
+   "label": "Іоанн Хреститель (Βαπτιστής)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "a5bd0900c9c44573",
+   "person": "john",
+   "label": "the Baptist / baptizer and preacher",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "cb4e4bc4b8c178ee",
+   "person": "john",
+   "label": "Івана хрещення (хреститель)",
+   "by": "baptizer",
+   "reason": "Holds Baptizer; ὁ βαπτιστής is the narrator's name for the work he did (Matt 3:1, 3:11)."
+  },
+  {
+   "row": "2aa26d38a282a7f6",
+   "person": "john-2",
+   "label": "John (Acts 4), identity with the son of Zebedee",
+   "by": "apostle",
+   "reason": "Holds Apostle; Luke 22:8-14 and Acts 4:13 name the same John among the apostles."
+  },
+  {
+   "row": "3fc3ce3d2741bdd7",
+   "person": "john-2",
+   "label": "Apostle (apostolos)",
+   "by": "apostle",
+   "reason": "Holds Apostle; Luke 22:8-14 and Acts 4:13 name the same John among the apostles."
+  },
+  {
+   "row": "4f485e76aa75d18b",
+   "person": "jonathan-5",
+   "label": "Jonathan son of Eliahba vs Jonathan son of Shage",
+   "by": "davids-mighty-warrior",
+   "reason": "Holds Mighty warrior of David (2 Sam 23:32); 1 Chr 11:34's Jonathan son of Shage is annotated to this record."
+  },
+  {
+   "row": "4c3bb6b9e282eb50",
+   "person": "joseph-12",
+   "label": "Barnabas (apostle/worker?)",
+   "by": "apostle",
+   "reason": "Holds Apostle (Acts 14:14); Barnabas is the name the apostles gave him (Acts 4:36), and the words are annotated to this record."
+  },
+  {
+   "row": "67edebcb06be37d5",
+   "person": "joseph-12",
+   "label": "possible link to Barnabas (apostle)",
+   "by": "apostle",
+   "reason": "Holds Apostle (Acts 14:14); Barnabas is the name the apostles gave him (Acts 4:36), and the words are annotated to this record."
+  },
+  {
+   "row": "06eecb36afe5367d",
+   "person": "joshebbasshebeth",
+   "label": "Josheb-basshebeth / Adino",
+   "by": "chief-of-the-three",
+   "reason": "Holds Chief of the Three; Adino the Eznite (2 Sam 23:8) and Jashobeam son of Hachmoni (1 Chr 11:11) are annotated to this record."
+  },
+  {
+   "row": "37ef70121f72dab1",
+   "person": "joshebbasshebeth",
+   "label": "Jashobeam the Hachmonite, chief of the thirty/captains",
+   "by": "chief-of-the-three",
+   "reason": "Holds Chief of the Three; Adino the Eznite (2 Sam 23:8) and Jashobeam son of Hachmoni (1 Chr 11:11) are annotated to this record."
+  },
+  {
+   "row": "1a7467c8d74984bb",
+   "person": "joshua",
+   "label": "Ἰησοῦ (Дії 7:45)",
+   "by": "military-commander",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 2): Military commander by the LORD's charge and his leading of the army (Exod 17:9-13, Josh 8:3, Judg 4:6-14); Acts 7:45 and Heb 4:8 speak of the conquest he led."
+  },
+  {
+   "row": "f0a4a84035a28df9",
+   "person": "joshua",
+   "label": "Ἰησοῦς in Heb 4:8 (KJV \"Jesus\") as the Joshua who gave rest",
+   "by": "military-commander",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 2): Military commander by the LORD's charge and his leading of the army (Exod 17:9-13, Josh 8:3, Judg 4:6-14); Acts 7:45 and Heb 4:8 speak of the conquest he led."
+  },
+  {
+   "row": "a7d31884ad59ecfe",
+   "person": "judas",
+   "label": "one of the Twelve",
+   "by": "apostle",
+   "reason": "Holds Apostle; 'one of the Twelve' (John 6:71) is the same."
+  },
+  {
+   "row": "badc348a53bb24ee",
+   "person": "kingjareb",
+   "label": "King",
+   "by": "king",
+   "reason": "Holds King on Hos 10:6, the word annotated to this record; whether ירב is a name or 'the great king' (BSB) is the records' question."
+  },
+  {
+   "row": "0ba1f3ebd05259f3",
+   "person": "mattaniah",
+   "label": "king of Judah (Zedekiah?)",
+   "by": "king",
+   "reason": "Holds King; Zedekiah is the name the king of Babylon gave him (2 Kgs 24:17), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "780b5d0754badc2d",
+   "person": "mattaniah",
+   "label": "king of Judah (Zedekiah?)",
+   "by": "king",
+   "reason": "Holds King; Zedekiah is the name the king of Babylon gave him (2 Kgs 24:17), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "a13ffd9c19f5e447",
+   "person": "mattaniah",
+   "label": "Possible identification with Zedekiah king of Judah",
+   "by": "king",
+   "reason": "Holds King; Zedekiah is the name the king of Babylon gave him (2 Kgs 24:17), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "f6d6707ecb09e1e3",
+   "person": "mattaniah",
+   "label": "Zedekiah king of Judah",
+   "by": "king",
+   "reason": "Holds King; Zedekiah is the name the king of Babylon gave him (2 Kgs 24:17), and these verses' words are annotated to this record."
+  },
+  {
+   "row": "109361e7c5e3e042",
+   "person": "michael-9",
+   "label": "chief prince / your prince",
+   "by": "heavenly-prince",
+   "reason": "Holds Great prince (Dan 12:1); 'one of the chief princes' and 'your prince' (Dan 10:13, 21) are the same role."
+  },
+  {
+   "row": "af6399db16a1d9b1",
+   "person": "mijamin-3",
+   "label": "Mijamin (Neh 10:8) — identity not established in this packet",
+   "by": "priest",
+   "reason": "Holds Priest (Neh 10:8 KJV); Neh 12:5's Mijamin is annotated to mijamin-4."
+  },
+  {
+   "row": "e13cb271fedc6371",
+   "person": "milalai",
+   "label": "Musician/instrument player in the dedication procession",
+   "by": "temple-musician",
+   "reason": "Holds the occupation on a verse that says it; this row repeats it from a verse where it is only implied or lay outside the chapter read, or of a name the same record bears."
+  },
+  {
+   "row": "b54371c5ea34650d",
+   "person": "mordecai-2",
+   "label": "Overseer of Haman's estate",
+   "by": "household-steward",
+   "reason": "Holds Household steward on Esth 8:2, 'Esther set Mordecai over the house of Haman'."
+  },
+  {
+   "row": "8879041a26619be2",
+   "person": "moses",
+   "label": "Sent by the LORD to speak in His name",
+   "by": "prophet",
+   "reason": "Holds Prophet (Deut 34:10); Exod 5:23 'since I came to Pharaoh to speak in thy name' is that office."
+  },
+  {
+   "row": "54138d1046f57324",
+   "person": "nergalsarezer",
+   "label": "Possible identity with the Rab-mag Nergal-sar-ezer",
+   "by": "royal-official",
+   "reason": "Holds Royal official among 'the princes of the king of Babylon' (Jer 39:3); the second Nergal-sharezer, the Rab-mag, is annotated to nergalsarezer-2."
+  },
+  {
+   "row": "0510354b89c76b0c",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (ruler title)",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "5908c53b3a5c7a9e",
+   "person": "pharaoh-8",
+   "label": "King of Egypt (Pharaoh)",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "61d052d1b4b26e96",
+   "person": "pharaoh-8",
+   "label": "King of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "00ffa8f0abb2f31d",
+   "person": "saul-2",
+   "label": "Проповідь («ми проповідуємо») і можливе апостольство",
+   "by": "preacher",
+   "reason": "Holds Preacher (1 Tim 2:7 κῆρυξ); these rows show him preaching."
+  },
+  {
+   "row": "1eb1778d0bcdb048",
+   "person": "saul-2",
+   "label": "apostle (Paul)",
+   "by": "apostle",
+   "reason": "Holds Apostle (Acts 14:14); these rows read it from the letters' openings (Rom 1:1, 2 Cor 1:1, Col 1:1) outside the chapter read, or show the ministry it names."
+  },
+  {
+   "row": "3d782a023bc593fd",
+   "person": "saul-2",
+   "label": "apostle (Paul)",
+   "by": "apostle",
+   "reason": "Holds Apostle (Acts 14:14); these rows read it from the letters' openings (Rom 1:1, 2 Cor 1:1, Col 1:1) outside the chapter read, or show the ministry it names."
+  },
+  {
+   "row": "81a497d68672ff9f",
+   "person": "saul-2",
+   "label": "Ministry of testifying / preaching the kingdom",
+   "by": "christian-minister",
+   "reason": "Holds Christian minister; Acts 20:24 'the ministry which I have received of the Lord Jesus' is that ministry."
+  },
+  {
+   "row": "9a9eb334669d260c",
+   "person": "saul-2",
+   "label": "Gospel preacher",
+   "by": "preacher",
+   "reason": "Holds Preacher (1 Tim 2:7 κῆρυξ); these rows show him preaching."
+  },
+  {
+   "row": "dcac6a5147f29d50",
+   "person": "saul-2",
+   "label": "appointed to service (διακονία)",
+   "by": "christian-minister",
+   "reason": "Holds Christian minister; 1 Tim 1:12 'putting me into the ministry' is that ministry."
+  },
+  {
+   "row": "e8af469c0343c0f0",
+   "person": "saul-2",
+   "label": "apostle",
+   "by": "apostle",
+   "reason": "Holds Apostle (Acts 14:14); these rows read it from the letters' openings (Rom 1:1, 2 Cor 1:1, Col 1:1) outside the chapter read, or show the ministry it names."
+  },
+  {
+   "row": "b5f94ac44498bbb8",
+   "person": "shallum-2",
+   "label": "keeper of the wardrobe",
+   "by": "keeper-of-the-wardrobe",
+   "reason": "Holds Keeper of the wardrobe (2 Kgs 22:14, part 2): the title is his, at the head of the chain."
+  },
+  {
+   "row": "85f517dc01c705b6",
+   "person": "shalmaneser",
+   "label": "king of Assyria (unnamed)",
+   "by": "king",
+   "reason": "Holds King on a verse that names him so; this row's verse names the same king by his other name, or the reading held it only because the saying verse lay outside the chapter read. The verse's word is annotated to this record."
+  },
+  {
+   "row": "1f86b5ea8c977893",
+   "person": "shaphan",
+   "label": "scribe (possibly Shaphan)",
+   "by": "scribe",
+   "reason": "Holds Scribe (2 Kgs 22:3); Jer 36:10 'Gemariah son of Shaphan the scribe' gives it to him, as 2 Kgs 22 does."
+  },
+  {
+   "row": "1ec84f21817aa13d",
+   "person": "simon",
+   "label": "Apostle (apostolos)",
+   "by": "apostle",
+   "reason": "Holds Apostle; Luke 22:8-14 and 1 Cor 9:5 name him among the apostles."
+  },
+  {
+   "row": "23223ec04dc539d0",
+   "person": "simon",
+   "label": "Cephas among apostles?",
+   "by": "apostle",
+   "reason": "Holds Apostle; Luke 22:8-14 and 1 Cor 9:5 name him among the apostles."
+  },
+  {
+   "row": "5b79157f2fadbd06",
+   "person": "simon",
+   "label": "Fisherman (Simon called Peter)",
+   "by": "fisherman",
+   "reason": "Holds Fisherman on Matt 4:18."
+  },
+  {
+   "row": "f49af2e46d3d3384",
+   "person": "solomon",
+   "label": "Preacher (Qohelet), king in Jerusalem, identity with Solomon not established",
+   "by": "king",
+   "reason": "Holds King on verses that name him; Eccl 1:1, 1:12 add nothing."
+  },
+  {
+   "row": "0ad8883a9c8238cb",
+   "person": "thaddaeus",
+   "label": "Judas (not Iscariot)",
+   "by": "apostle",
+   "reason": "Holds Apostle; John 14:22 'Judas, not Iscariot' names no further occupation."
+  }
+ ],
+ "hard": [
+  {
+   "row": "5c087f06d973aa9f",
+   "person": "jabal",
+   "label": "Father of tent-dwellers and livestock-keepers",
+   "question": "Q1"
+  },
+  {
+   "row": "f7ac5d7c050a95e6",
+   "person": "jubal",
+   "label": "Father of all who handle the lyre and pipe (musician)",
+   "question": "Q1"
+  }
+ ],
+ "ownerRulings": {
+  "answered": "Part 3's two questions, answered by the owner in chat on 2026-11-09 and applied here.",
+  "headOfAnAncestralHouse": {
+   "ruling": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's.",
+   "words": "В чому питання? Чи вони походять від Асира - Так. Чи вони 'голова батьківського дому' - таке заняття нам не треба.",
+   "pairsRemoved": 106,
+   "heldBeforePrb1420": [
+    "ahi",
+    "azriel",
+    "eliasaph-2",
+    "eliel",
+    "elzaphan",
+    "epher-3",
+    "ezbon-2",
+    "hodaviah-2",
+    "ibsam",
+    "iri",
+    "ishi-3",
+    "jahdiel",
+    "jeremiah-2",
+    "uzzi-3",
+    "uzziel-3",
+    "zimri"
+   ],
+   "addedByPrb1420": [
+    "abdon-2",
+    "abijah-4",
+    "adaiah-3",
+    "ahijah-5",
+    "ahio-2",
+    "alemeth",
+    "anathoth",
+    "anthothijah",
+    "arad",
+    "athaliah-2",
+    "beraiah",
+    "beriah-3",
+    "eber-4",
+    "eder",
+    "elah-5",
+    "elam-2",
+    "eliel-2",
+    "eliel-3",
+    "elienai",
+    "eliezer-3",
+    "elihu-3",
+    "elijah-2",
+    "elioenai-3",
+    "elzabad-2",
+    "gera-4",
+    "hanan",
+    "hananiah-2",
+    "haran-3",
+    "haziel",
+    "heber-4",
+    "hizki",
+    "ibneiah",
+    "iphdeiah",
+    "ishmerai",
+    "ishpah",
+    "ishpan",
+    "isshiah",
+    "izliah",
+    "izrahiah",
+    "jaareshiah",
+    "jahmai",
+    "jakim",
+    "jeremoth",
+    "jeremoth-2",
+    "jeriel",
+    "jerimoth",
+    "jeshua-3",
+    "jeuz",
+    "joash-6",
+    "jobab-4",
+    "jobab-5",
+    "joel-5",
+    "joha",
+    "malcam",
+    "mesha-3",
+    "meshullam-4",
+    "meshullam-5",
+    "michael-4",
+    "michael-5",
+    "mirmah",
+    "naaman-3",
+    "obadiah-3",
+    "obed-4",
+    "omri-2",
+    "othni",
+    "penuel-2",
+    "rephael",
+    "rephaiah-3",
+    "sachia",
+    "sallu",
+    "samuel-3",
+    "semachiah",
+    "shamsherai",
+    "shashak",
+    "shehariah",
+    "shelomoth",
+    "shema-3",
+    "shimrath",
+    "uzzi-2",
+    "zabdi-2",
+    "zebadiah",
+    "zebadiah-2",
+    "zemirah",
+    "zerubbabel-2",
+    "zibia",
+    "zichri-2",
+    "zichri-3",
+    "zichri-4",
+    "zillethai",
+    "zur-2"
+   ]
+  },
+  "militaryCommander": {
+   "ruling": "Joshua and Barak hold Military commander ('По суті да, хай буде'), witnesses Exod 17:9-13, Josh 8:3, Judg 4:6-14.",
+   "pairs": [
+    "joshua",
+    "barak"
+   ]
+  }
+ }
+}

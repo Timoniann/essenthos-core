@@ -691,7 +691,7 @@ public class AppDbContext : DbContext
             entity.HasOne(w => w.PersonOccupation).WithMany(p => p.Witnesses).HasForeignKey(w => w.PersonOccupationId);
             entity.ToTable("occupation_witness", t =>
             {
-                t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity')");
+                t.HasCheckConstraint("ck_occupation_witness_kind", "kind IN ('profession', 'identity', 'own-book')");
                 t.HasCheckConstraint("ck_occupation_witness_address", "canonical_book BETWEEN 1 AND 93 AND canonical_chapter > 0 AND canonical_verse >= 0");
             });
         });

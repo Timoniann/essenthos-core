@@ -105,12 +105,12 @@ internal sealed partial class OccupationLoader(AppDbContext db)
         foreach (var claim in file.Assertions)
         {
             if (!slugs.Contains(claim.Occupation) || !pairs.Add((claim.Person, claim.Occupation))
-                || !claim.Witnesses.Any(w => w.Kind == Profession)
-                || claim.Witnesses.Any(w => w.Kind is not (Profession or Identity) || string.IsNullOrWhiteSpace(w.Quote)
+                || claim.Witnesses.Any(w => w.Kind == Profession) == claim.Witnesses.Any(w => w.Kind == OwnBook)
+                || claim.Witnesses.Any(w => w.Kind is not (Profession or Identity or OwnBook) || string.IsNullOrWhiteSpace(w.Quote)
                                             || Address(w.Reference) is null))
             {
                 throw new InvalidDataException(
-                    $"{claim.Person} as {claim.Occupation}: each person is said once per occupation, by at least one quotation saying it, each at a verse.");
+                    $"{claim.Person} as {claim.Occupation}: each person is said once per occupation, by a quotation saying it or else by their own book, never by both, each at a verse.");
             }
         }
     }
@@ -123,6 +123,11 @@ internal sealed partial class OccupationLoader(AppDbContext db)
         {
             var people = await People(file, cancellationToken);
             var quoted = await Find(file, cancellationToken);
+            // An occupation the file no longer names takes its people and their words with it, by cascade.
+            var named = file.Occupations.Select(o => o.Slug).ToList();
+            var dropped = await db.PersonOccupations.CountAsync(p => !named.Contains(p.Occupation!.Slug), cancellationToken);
+            var droppedWords = await db.OccupationWords
+                .CountAsync(w => !named.Contains(w.PersonOccupation!.Occupation!.Slug), cancellationToken);
             var concepts = await Concepts(file, cancellationToken);
 
             var held = await db.PersonOccupations.Include(p => p.Witnesses)
@@ -159,12 +164,14 @@ internal sealed partial class OccupationLoader(AppDbContext db)
                 written++;
             }
 
+            var goneIds = held.Values.Select(p => p.Id).ToList();
+            droppedWords += await db.OccupationWords.CountAsync(w => goneIds.Contains(w.PersonOccupationId), cancellationToken);
             db.PersonOccupations.RemoveRange(held.Values);
             await db.SaveChangesAsync(cancellationToken);
 
             var (marked, unmarked) = await MarkTheWords(file, people, concepts, quoted, cancellationToken);
             if (own is not null) await own.CommitAsync(cancellationToken);
-            return new(written, held.Count, wanted.Count, marked, unmarked);
+            return new(written, held.Count + dropped, wanted.Count, marked, unmarked + droppedWords);
         }
         catch
         {
@@ -181,6 +188,9 @@ internal sealed partial class OccupationLoader(AppDbContext db)
     private const string Profession = "profession";
     private const string Identity = "identity";
 
+    /// <summary>A prophet whom no text calls one: the claim rests on the book that bears his name.</summary>
+    private const string OwnBook = "own-book";
+
     private static string Fingerprint(OccupationWitness w) =>
         $"{w.Kind}|{w.Text}|{w.Reference}|{w.CanonicalBook}|{w.CanonicalChapter}|{w.CanonicalVerse}|{w.Quote}";
 
@@ -195,6 +205,7 @@ internal sealed partial class OccupationLoader(AppDbContext db)
     {
         var slugs = file.Assertions.Select(a => a.Person).Distinct().ToList();
         var people = await db.Entities.Where(e => slugs.Contains(e.Slug) && e.Kind == EntityKind.Person)
+            .Select(e => new { e.Slug, e.Id })
             .ToDictionaryAsync(e => e.Slug, e => e.Id, cancellationToken);
         var folded = await db.MergedRecords.Where(m => slugs.Contains(m.Slug) && m.Entity!.Kind == EntityKind.Person)
             .Select(m => new { m.Slug, m.EntityId }).ToListAsync(cancellationToken);
@@ -263,7 +274,8 @@ internal sealed partial class OccupationLoader(AppDbContext db)
     {
         var quotes = file.Assertions.SelectMany(a => a.Witnesses).Distinct().ToList();
         var slugs = quotes.Select(q => q.Text).Distinct().ToList();
-        var texts = await db.Texts.Where(t => slugs.Contains(t.Slug)).ToDictionaryAsync(t => t.Slug, t => t.Id, cancellationToken);
+        var texts = await db.Texts.Where(t => slugs.Contains(t.Slug)).Select(t => new { t.Slug, t.Id })
+            .ToDictionaryAsync(t => t.Slug, t => t.Id, cancellationToken);
         var keys = quotes.Select(q => Address(q.Reference)!.Value).Select(Key).Distinct().ToList();
         var textIds = texts.Values.ToList();
         var verses = (await db.Verses
@@ -471,7 +483,8 @@ internal sealed partial class OccupationLoader(AppDbContext db)
 
         var numbers = numbersOf.Values.SelectMany(n => n).Distinct().ToList();
         var textIds = candidates.Select(c => c.Text).Distinct().ToList();
-        var languages = await db.Texts.Where(t => textIds.Contains(t.Id)).ToDictionaryAsync(t => t.Id, t => t.Language, cancellationToken);
+        var languages = await db.Texts.Where(t => textIds.Contains(t.Id)).Select(t => new { t.Id, t.Language })
+            .ToDictionaryAsync(t => t.Id, t => t.Language, cancellationToken);
         var uses = new Dictionary<(int Text, string Number, string Phrase), int>();
         foreach (var rendering in await db.StrongRenderings
                      .Where(r => numbers.Contains(r.StrongNumber) && textIds.Contains(r.TextId) && r.Rank <= Commonest && r.Uses >= 2)

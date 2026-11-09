@@ -170,5 +170,5 @@ internal static class OccupationEndpoints
         .Distinct().ToList();
 
     private static List<VerseRefResponse> Verses(IList<OccupationWitnessResponse> evidence) =>
-        evidence.Where(w => w.Kind == "profession").Select(w => w.Reference).Distinct().ToList();
+        evidence.Where(w => w.Kind is "profession" or "own-book").Select(w => w.Reference).Distinct().ToList();
 }

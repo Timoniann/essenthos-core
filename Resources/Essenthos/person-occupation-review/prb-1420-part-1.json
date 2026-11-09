@@ -1,0 +1,3348 @@
+{
+ "what": "PRB-1420, first part: every needs_review observation of occupation-full-publication-2026-10-27-v1 with kind religious_role or a label about prophets, seers, priests or Levites, decided by reading the verses. Admitted claims are in ../person-occupations.json; this file says why, and why not. Requests and the loader never read it.",
+ "decidedBy": "an agent (claude-opus-5-5), 2026-11-01",
+ "rules": [
+  "The noun or the verb of the office said of this person counts; a metaphor or a denial is noted.",
+  "A book prophet whom no text calls so gets Prophet with witness kind own-book (owner, 2026-11-01); one whom a text calls so gets the ordinary witness.",
+  "A list the text heads or closes with the office says it of each person named in it. A house name (\"the children of X\") or an ancestor does not hold it.",
+  "\"X son of Y the priest\": the title is the son's unless the Greek's case, BSB or another verse says otherwise.",
+  "Levite alone is standing, not occupation (TSK-1254, status_only); a stated service counts.",
+  "A plural group, or a quoted or hostile claim, is not an office without more. \"Man of God\" is an honorific (TSK-1251).",
+  "False prophet: the text's own verdict on someone who prophesied, as Ahab son of Kolaiah (owner, TSK-1254)."
+ ],
+ "admitted": [
+  {
+   "person": "hosea",
+   "occupation": "prophet",
+   "why": "By the owner's ruling of 2026-11-01: author of a prophetic book, and no verse of BHSA, Nestle 1904, Swete, Brenton's Greek, BSB or KJV naming him has the noun or verb of the office (searched by script over every verse holding his name). Matt 2:15 cites Hos 11:1 as said through \"the prophet\" but does not name him.",
+   "rows": [
+    "76f7b1e09fc6cde4"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "obadiah-12",
+   "occupation": "prophet",
+   "why": "By the owner's ruling of 2026-11-01: author of a prophetic book, and no verse of BHSA, Nestle 1904, Swete, Brenton's Greek, BSB or KJV naming him has the noun or verb of the office (searched by script over every verse holding his name). The Obadiah of 1 Kgs 18 who hid the prophets is another record.",
+   "rows": [
+    "64df8cb4c670706d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "nahum",
+   "occupation": "prophet",
+   "why": "By the owner's ruling of 2026-11-01: author of a prophetic book, and no verse of BHSA, Nestle 1904, Swete, Brenton's Greek, BSB or KJV naming him has the noun or verb of the office (searched by script over every verse holding his name).",
+   "rows": [
+    "5799d1000d43eeb9"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zephaniah-3",
+   "occupation": "prophet",
+   "why": "By the owner's ruling of 2026-11-01: author of a prophetic book, and no verse of BHSA, Nestle 1904, Swete, Brenton's Greek, BSB or KJV naming him has the noun or verb of the office (searched by script over every verse holding his name). Zephaniah son of Maaseiah the priest (Jer 21:1) is another record.",
+   "rows": [
+    "735d82510e468b5a"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "malachi",
+   "occupation": "prophet",
+   "why": "By the owner's ruling of 2026-11-01: author of a prophetic book, and no verse of BHSA, Nestle 1904, Swete, Brenton's Greek, BSB or KJV naming him has the noun or verb of the office (searched by script over every verse holding his name). מלאכי can also be read as \"my messenger\", as the Greek does; the record and the owner take it as his name.",
+   "rows": [
+    "562581e0106f6ee2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "amos",
+   "occupation": "prophet",
+   "why": "The LORD commands him הִנָּבֵא, Amos 7:15; Amaziah at 7:12 tells him to prophesy. His denial at 7:14 (\"I was no prophet, nor a prophet's son\") is of a former standing, and 7:15 is what follows it. Ordinary witness, by the verb, as Micah.",
+   "rows": [
+    "6bdecd39f7f6e139",
+    "991a4c89665f1996",
+    "16459d3f49190d0a"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azariah-8",
+   "occupation": "prophet",
+   "why": "2 Chr 15:1-7 is his speech, and 15:8 calls those words הַנְּבוּאָה. BHSA's 15:8 names Oded; BSB has \"the prophecy of Azariah son of Oded the prophet\".",
+   "rows": [
+    "2409878b7e8168d1"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "oded",
+   "occupation": "prophet",
+   "why": "BHSA and the Greek of 2 Chr 15:8 say Oded the prophet in those words.",
+   "rows": [
+    "3fa210f706ae2d76"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eliezer-6",
+   "occupation": "prophet",
+   "why": "The verb, in the narrator's voice, of him by name.",
+   "rows": [
+    "f251d956f8e62201"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "enoch-2",
+   "occupation": "prophet",
+   "why": "The verb, of him by name, Jude 14.",
+   "rows": [
+    "9bb32725a4daad52"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eldad",
+   "occupation": "prophet",
+   "why": "The verb, of two men named, Num 11:26-27; Moses approves at 11:29.",
+   "rows": [
+    "1c2d39fb589071fd"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "medad",
+   "occupation": "prophet",
+   "why": "The verb, of two men named, Num 11:26-27; Moses approves at 11:29.",
+   "rows": [
+    "8dbbebd4f72e5c17"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "john-who-saw-the-revelation",
+   "occupation": "prophet",
+   "why": "Told \"you must prophesy\", Rev 10:11; the angel calls the prophets his brothers, 22:9; the book is the prophecy, 1:3.",
+   "rows": [
+    "fac31e577fc5dd67"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shemaiah-21",
+   "occupation": "false-prophet",
+   "why": "The same form as Ahab son of Kolaiah in this chapter: the LORD says he prophesied and was not sent.",
+   "rows": [
+    "5b7145bc02967d47"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zedekiah",
+   "occupation": "false-prophet",
+   "why": "He speaks and \"all the prophets prophesied so\", 1 Kgs 22:12; the LORD put a lying spirit in the mouth of these prophets, 22:23.",
+   "rows": [
+    "ab3625aeb45bcf1e",
+    "1b806c861e8861ae"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "pashhur-2",
+   "occupation": "false-prophet",
+   "why": "\"You prophesied to them falsely\", Jer 20:6, in the word of the LORD through Jeremiah.",
+   "rows": [
+    "c561904b9c73c93b"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shemaiah-18",
+   "occupation": "false-prophet",
+   "why": "Nehemiah says God had not sent him and he spoke the prophecy against him, hired, Neh 6:12.",
+   "rows": [
+    "d26dcbee0085f782"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "joseph-12",
+   "occupation": "prophet-or-teacher",
+   "why": "Named first in the same roster as Lucius, Simeon and Manaen; the owner's shared role, alike.",
+   "rows": [
+    "adf074798f33cfee"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "saul-2",
+   "occupation": "prophet-or-teacher",
+   "why": "Named last in the same roster; the owner's shared role, alike.",
+   "rows": [
+    "d7c5821a0c73762b"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "joseph-12",
+   "occupation": "apostle",
+   "why": "Acts 14:14 says it of both men; Paul is admitted on this verse.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "asaph-2",
+   "occupation": "seer",
+   "why": "The noun, of Asaph with David, 2 Chr 29:30.",
+   "rows": [
+    "9c2bc72a4f1cab7b"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jehoiada-2",
+   "occupation": "high-priest",
+   "why": "The verse before names Jehoiada the priest doing this very work; 2 Chr 24:6 calls him הָרֹאשׁ.",
+   "rows": [
+    "ee8aaf27dd1a7682"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeshua-3",
+   "occupation": "priest",
+   "why": "\"Jeshua son of Jozadak and his brothers the priests\", Ezra 3:2.",
+   "rows": [
+    "349392238fdc0acb",
+    "0553f29ad8eae929",
+    "b5e0753124398ddc",
+    "eb56597c3a2ad3bd"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "pashhur-2",
+   "occupation": "priest",
+   "why": "The Hebrew leaves whose title it is; the Greek's nominative and BSB say Pashhur.",
+   "rows": [
+    "c4d794c1a42d5625"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "daniel",
+   "occupation": "priest",
+   "why": "In the signed list Neh 10 closes \"these are the priests\" at 10:9, as the other 18 published on it.",
+   "rows": [
+    "b2ca9a336441a0fd"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "pashhur-the-priest",
+   "occupation": "priest",
+   "why": "In the signed list Neh 10 closes \"these are the priests\" at 10:9, as the other 18 published on it.",
+   "rows": [
+    "6cd9e4ddd11d8e18",
+    "609735d6b6f9bea1",
+    "71865c8540e94efa",
+    "edf8eaa22e0fd18c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "seraiah-6",
+   "occupation": "priest",
+   "why": "In the list Neh 12:1-7 closes \"these were the heads of the priests\", as the others published on it.",
+   "rows": [
+    "6f6a843a70dda1c4"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "iddo-5",
+   "occupation": "priest",
+   "why": "In the list Neh 12:1-7 closes \"these were the heads of the priests\", as the others published on it.",
+   "rows": [
+    "b98b68aa7eac9195"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "sallai-2",
+   "occupation": "priest",
+   "why": "In the list Neh 12:1-7 closes \"these were the heads of the priests\", as the others published on it.",
+   "rows": [
+    "9a2dbe5cb78cf900"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jehoiarib-2",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "64499fc005a604f2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jedaiah-3",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "67de6931e600645d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "harim-3",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "2c5d1136c55fe322",
+    "70d617620c91654c",
+    "8d615ffdb7d1aecc"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hakkoz",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "1afbba861ae2b0cd"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "abijah-5",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "12ed7ce3d360974e"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeshua",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "e6e96f3d6dc8b476"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eliashib-2",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "4e06553a9cd19b08"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jakim-2",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "80a740b04689f394"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "huppah",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "05c5214d4fe6922c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeshebeab",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "362d2be5c832d59f"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "bilgah",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "1a26d5f73315da95"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "immer",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "6106900ab19e685c",
+    "d074102682ce6eaf"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hezir",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "109495022cd08269"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "happizzez",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "6ffdc44283c77648"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jehezkel",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "0d33b128a7892203"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jachin-3",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "7e1c3ad3717bde10"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "gamul",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "4325f93dc7a0bc77"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "delaiah-2",
+   "occupation": "priest",
+   "why": "A lot among the heads of the sons of Aaron, 1 Chr 24:1-19, as Seorim and the others published on it.",
+   "rows": [
+    "b307579b2916f02e"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eliezer-10",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "5e413280c2c084a7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jarib",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "a43c7c51af4183e3"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "gedaliah-3",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "b98831b031c6c9b3"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "maaseiah-6",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "f47e616c6c1647b7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "maaseiah-15",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "5c4decdf61ef7560"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shemaiah-15",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "aa17df83caf12b31"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jozabad-6",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "96c7c6972a78eb60"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "netanel",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [
+    "84fc5ca81b218cdb"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hanani-3",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "zebadiah-9",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "elijah-3",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "jehiel-7",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "uzziah-2",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "elioenai-4",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "maaseiah-7",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "ishmael-6",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "elasah",
+   "occupation": "priest",
+   "why": "\"Of the sons of the priests\", Ezra 10:18, heads the list to 10:22. The phrase means priests: Ezra 2:61 \"of the sons of the priests\" is Neh 7:63 \"of the priests\", and the trumpeters of Neh 12:35 are \"the priests\" at 12:41.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "eliezer-4",
+   "occupation": "priestly-trumpeter",
+   "why": "1 Chr 15:24 says it of all seven; four were published.",
+   "rows": [
+    "f89a8a9731c516ee"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "amasai-2",
+   "occupation": "priestly-trumpeter",
+   "why": "1 Chr 15:24 says it of all seven; four were published.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "zechariah-the-trumpeting-priest",
+   "occupation": "priestly-trumpeter",
+   "why": "1 Chr 15:24 says it of all seven; four were published.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "elam-3",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "be8cdd66378ce28d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "johanan-6",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "f4742660a3d42fa0"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eliehoenai",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "d15902ffe6ffa8ce"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shemaiah-9",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "752f4e31dc45ffe6"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jehozabad-2",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "joah-3",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "nethanel-5",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "ammiel-3",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "fa1bb3e86fd9add5"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "othni",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "rephael",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "890b43b8e9c74dfd"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "obed-4",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "semachiah",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "938fdf9c73926ee7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shimri-3",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "5ad291914f1c6ea8"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hilkiah-5",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "bd002d2243a2efb8"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "tebaliah",
+   "occupation": "temple-gatekeeper",
+   "why": "Named in 1 Chr 26:1-11, which 26:12 closes \"these divisions of the gatekeepers\", as their brothers published on it.",
+   "rows": [
+    "a03a9ab771331ee3"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "mattaniah-9",
+   "occupation": "temple-gatekeeper",
+   "why": "Neh 12:25 says it of the six named; Bakbukiah and Obadiah were published on it.",
+   "rows": [
+    "81cbdc8008494fae",
+    "9933ea56d8d6af0d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shimei-10",
+   "occupation": "temple-musician",
+   "why": "A lot of the singers, 1 Chr 25; the other 22 are published on it.",
+   "rows": [
+    "18f905305f27e1ae"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azarel-5",
+   "occupation": "temple-musician",
+   "why": "A lot of the singers, 1 Chr 25; the other 22 are published on it.",
+   "rows": [
+    "cfacdbe1413e154f"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azarel-6",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [
+    "c48fe2312854a85a"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "gilalai",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [
+    "ef0c9fb97da78149"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "maai",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [
+    "b09b63eeb73575f5"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hanani-5",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [
+    "7a6277bb5b2b1420"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shemaiah-27",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [
+    "4dcc728abf210dca"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "milalai",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "judah-4",
+   "occupation": "temple-musician",
+   "why": "\"With the musical instruments of David\", Neh 12:36, as Nethanel in the same list; not priests, the text does not say so of them.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "zechariah-22",
+   "occupation": "temple-musician",
+   "why": "Leads the brothers of Neh 12:36; his line goes to Asaph, so \"sons of the priests\" of 12:35 is not said of him.",
+   "rows": [
+    "b0750290c700e973"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "eliphelehu",
+   "occupation": "temple-lyre-player",
+   "why": "1 Chr 15:21 names him with Mikneiah, who is published on it.",
+   "rows": [
+    "bc59fb2afdb7d4c6"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jaaziel",
+   "occupation": "temple-musician",
+   "why": "Aziel of 1 Chr 15:20 stands in Jaaziel's place in the same list of 15:18.",
+   "rows": [
+    "c4eaf4e5a8b116d6"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "akkub-5",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "b86fbf952281ceec"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azariah-22",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "5bc6522e878862b2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "bani-7",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "65d7bc64985379b1",
+    "293ed53f19f13b1d",
+    "1d45bec4bfbd356d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hanan-6",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "c7f09a2374acd01d",
+    "f51912c42201796f"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jamin-3",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "0cfa9fc65b4422aa"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jozabad-8",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "3143303146005fb2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "maaseiah-16",
+   "occupation": "teacher-of-the-law",
+   "why": "Neh 8:7 says \"they caused the people to understand the Law\" of all thirteen; six were published on it.",
+   "rows": [
+    "21dd4f710d6005dc"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jozabad-5",
+   "occupation": "levite-chief",
+   "why": "Neh 11:16 says it of Shabbethai and Jozabad; only Shabbethai was published.",
+   "rows": [
+    "d546c052aec812b1"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jozabad-5",
+   "occupation": "temple-outer-work-overseer",
+   "why": "Neh 11:16 says it of both.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "jeshua-5",
+   "occupation": "temple-work-overseer",
+   "why": "Ezra 3:9 says it of Jeshua and Kadmiel; Kadmiel was published.",
+   "rows": [
+    "7c2d7e1ba585f843"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hashabiah-4",
+   "occupation": "levite-temple-servant",
+   "why": "Sent for as \"ministers for the house of our God\", Ezra 8:17, and brought, 8:19.",
+   "rows": [
+    "09e8bd5c75e0084c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeshaiah-4",
+   "occupation": "levite-temple-servant",
+   "why": "Sent for as \"ministers for the house of our God\", Ezra 8:17, and brought, 8:19.",
+   "rows": [
+    "0587bbbda30d72bb"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "john",
+   "occupation": "preacher",
+   "why": "The verb, of him by name.",
+   "rows": [
+    "03bfb5a56dabc603",
+    "482f5e7eb6bebc97",
+    "8cb7f8b661c1a52a",
+    "391a30c150de343e"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "john",
+   "occupation": "religious-teacher",
+   "why": "\"John taught his disciples\", Luke 11:1; addressed διδάσκαλε, 3:12.",
+   "rows": [
+    "6cccd8ffa566c267",
+    "a07fd0610223c118"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "james-3",
+   "occupation": "apostle",
+   "why": "The owner's ruling of 2026-11-01: Gal 1:19 reads \"no other of the apostles except James\".",
+   "rows": [
+    "53832af44ab6fc99"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jeremiah-6",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: both Jeremiah and Hilkiah, Jer 1:1. No verse shows Jeremiah serving; the family is firm: Anathoth is a city of the sons of Aaron (Josh 21:13,18), Abiathar's fields are there (1 Kgs 2:26), and Jeremiah holds a right of redemption there (Jer 32:7-9).",
+   "rows": [
+    "9354c665c2163d33"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hilkiah-7",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: both Jeremiah and Hilkiah, Jer 1:1.",
+   "rows": [
+    "3e0cd6f1f59b89a7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azariah-son-of-zadok",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: 1 Kgs 4:2 opens a list of officials, each followed by his office, and \"the priest\" is the only office Azariah has. Verse 4 is no objection, Abiathar having been banished (2:27). The Greek lacks the word.",
+   "rows": [
+    "b08b41de23beb275"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zabud",
+   "occupation": "priest",
+   "why": "The owner's ruling of 2026-11-01: read as 1 Kgs 4:2, as he asked: in the same list כֹּהֵן רֵעֶה הַמֶּלֶךְ follows the name as his office. KJV renders \"principal officer\", and the Greek has only the king's friend.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  }
+ ],
+ "refused": [
+  {
+   "row": "07f694923dfc412d",
+   "person": "aaron",
+   "label": "possible prophetic role (self-claim)",
+   "reason": "Aaron and Miriam's own question, Num 12:2; the LORD's answer at 12:6-8 does not grant it."
+  },
+  {
+   "row": "8acdab316ac4e50d",
+   "person": "abel",
+   "label": "prophet (by inclusion)",
+   "reason": "A plural group, with no word said of this person by name."
+  },
+  {
+   "row": "bf0190e5bea44457",
+   "person": "abishua",
+   "label": "priest (descendant in Aaron's line)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "7e2fb3b069b9e86f",
+   "person": "agur",
+   "label": "Agur's words called an oracle/prophecy (hammassa)",
+   "reason": "המשא heads his words; it does not call him a prophet, and the verse's reading is itself uncertain."
+  },
+  {
+   "row": "b16c87e308accebe",
+   "person": "ahimaaz-2",
+   "label": "priest (descendant in Aaron's line)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "39d0d50893954a11",
+   "person": "ahitub-2",
+   "label": "priest (possible, from Aaronic lineage)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "956e09d00bc4a4e2",
+   "person": "ahitub-3",
+   "label": "priest (possible, from Aaronic lineage)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "95c1bbed1069a4b2",
+   "person": "amariah",
+   "label": "priest (possible, from Aaronic lineage)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "fcbd3ec483feeb7a",
+   "person": "amariah-2",
+   "label": "priest (possible, from Aaronic lineage)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "0a17e7a56cde6a9b",
+   "person": "apollos",
+   "label": "servant of Christ / steward of God's mysteries (disputed scope of 'us')",
+   "reason": "A figure of speech, not an office."
+  },
+  {
+   "row": "932b1417eb6ede06",
+   "person": "aristarchus",
+   "label": "fellow worker (συνεργός)",
+   "reason": "A relation to Paul, not an office."
+  },
+  {
+   "row": "3101e9babaef5aef",
+   "person": "ater-2",
+   "label": "gatekeeper (porter) descendants of Ater",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "4cb2774b0946a5ed",
+   "person": "azariah-3",
+   "label": "Azariah the priest (інша особа)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "9f1b305d7b36e636",
+   "person": "bakbakkar",
+   "label": "Levite",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "b640c406afd27acc",
+   "person": "bakbuk",
+   "label": "temple servant (Nethinim) descendants of Bakbuk",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "c8dd3b1fb444d51a",
+   "person": "bani-8",
+   "label": "Levite (Bani)",
+   "reason": "Neh 9:4-5 shows Levites calling the assembly to bless once. TSK-1254's verdict not_established."
+  },
+  {
+   "row": "ef15f274bc72fa50",
+   "person": "barkos",
+   "label": "temple servant (Nethinim) descendants of Barkos",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "0ed0b3d3049540d5",
+   "person": "barzillai-3",
+   "label": "priestly descent, excluded from priesthood",
+   "reason": "The text says they could not prove it and were excluded from the priesthood, Ezra 2:62."
+  },
+  {
+   "row": "e105f6c0df17ea72",
+   "person": "bazluth",
+   "label": "temple servant (Nethinim) descendants of Bazlith",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "9e0abc5a16bed790",
+   "person": "ben",
+   "label": "gatekeeper (porter)",
+   "reason": "The name stands only in 1 Chr 15:18 and is missing from the lists of 15:20-21; no duty is said of him."
+  },
+  {
+   "row": "6e27bafa92f95ba9",
+   "person": "berechiah-2",
+   "label": "doorkeeper for the ark",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "4453d5925acb3653",
+   "person": "berechiah-3",
+   "label": "Levite",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "a7a09434427ebe6e",
+   "person": "besai",
+   "label": "temple servant (Nethinim) descendants of Besai",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "5c9d9b222d16ad24",
+   "person": "binnui-4",
+   "label": "Binnui (Levite)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "74dbbefc27e3075c",
+   "person": "bukki-2",
+   "label": "Священик за родоводом від Аарона",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "9e811927d60c4fd9",
+   "person": "bunni",
+   "label": "Levite (platform standers)",
+   "reason": "Neh 9:4-5 shows Levites calling the assembly to bless once. TSK-1254's verdict not_established."
+  },
+  {
+   "row": "3783d91073dc25d4",
+   "person": "bunni",
+   "label": "Bunni (Levite platform)",
+   "reason": "Neh 9:4-5 shows Levites calling the assembly to bless once. TSK-1254's verdict not_established."
+  },
+  {
+   "row": "80ac748ea2c670d5",
+   "person": "buzi",
+   "label": "priest (Buzi?)",
+   "reason": "The title stands after \"son of X\" and belongs to the son: the Greek's case or BSB, or other verses, settle it."
+  },
+  {
+   "row": "e6ad23c7eb432fad",
+   "person": "chenani",
+   "label": "Levite (platform standers)",
+   "reason": "Neh 9:4-5 shows Levites calling the assembly to bless once. TSK-1254's verdict not_established."
+  },
+  {
+   "row": "219288322766b654",
+   "person": "chenaniah",
+   "label": "Music director / master of the song",
+   "reason": "מַשָּׂא of 1 Chr 15:22 is read both as song and as carrying; not settled, and he holds chief of the Levites."
+  },
+  {
+   "row": "5d8b065d01d193ad",
+   "person": "clement",
+   "label": "fellow worker (synergos) in the gospel",
+   "reason": "A relation to Paul, not an office."
+  },
+  {
+   "row": "aaa4626bbe45c24c",
+   "person": "david",
+   "label": "psalmist (sweet singer of Israel's songs)",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "4d9b02c63192e4d0",
+   "person": "david",
+   "label": "King / appointer of gatekeepers",
+   "reason": "One act of appointing others, 1 Chr 9:22; he is not called a gatekeeper."
+  },
+  {
+   "row": "add2dc350c1ff4f8",
+   "person": "david",
+   "label": "psalmist (author of the psalm)",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "b2db68b21f87793b",
+   "person": "demas",
+   "label": "fellow worker (συνεργός)",
+   "reason": "A relation to Paul, not an office."
+  },
+  {
+   "row": "b08c895cdef9d7eb",
+   "person": "elam-9",
+   "label": "Elam (трубач/священик?)",
+   "reason": "Neh 12:42 is a bare list after the priests of 12:41, whose sentence is closed; it does not say these are priests, and the next words are about the singers."
+  },
+  {
+   "row": "f7b8e1396828492b",
+   "person": "eleazar-6",
+   "label": "priest (possible)",
+   "reason": "Ezra 8:33 says \"the priest\" of Meremoth's line; Eleazar is only \"with him\"."
+  },
+  {
+   "row": "466c1deeefede24e",
+   "person": "eleazar-8",
+   "label": "Eleazar (священик?)",
+   "reason": "Neh 12:42 is a bare list after the priests of 12:41, whose sentence is closed; it does not say these are priests, and the next words are about the singers."
+  },
+  {
+   "row": "3ea2e6acb47920aa",
+   "person": "eliab-5",
+   "label": "Gatekeeper (porter)",
+   "reason": "\"The gatekeepers\" at the end of 1 Chr 15:18 belongs to Obed-edom and Jeiel, who alone are so published and so read by BSB and 15:24; the others of the list are musicians at 15:20-21."
+  },
+  {
+   "row": "cf2c3c2b61796160",
+   "person": "eliezer-11",
+   "label": "Levite",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "af0d16ea3b6448b3",
+   "person": "eliezer-7",
+   "label": "priest (son of priests)",
+   "reason": "The word of Ezra 10:18 is on eliezer-10; Ezra 8:16 calls this man a leader, not a priest."
+  },
+  {
+   "row": "fb376f04c4e0910e",
+   "person": "elijah",
+   "label": "standing before the LORD",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "35300a1fc9b68fc1",
+   "person": "eliphelehu",
+   "label": "Gatekeeper / воротар",
+   "reason": "\"The gatekeepers\" at the end of 1 Chr 15:18 belongs to Obed-edom and Jeiel, who alone are so published and so read by BSB and 15:24; the others of the list are musicians at 15:20-21."
+  },
+  {
+   "row": "b55613ed358e35c9",
+   "person": "elisha",
+   "label": "man of God",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "99af76ff2df99b0d",
+   "person": "elisha",
+   "label": "man of God",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "e274682c2576715d",
+   "person": "ezekiel",
+   "label": "Watchman",
+   "reason": "A figure of speech, not an office."
+  },
+  {
+   "row": "b982bef3b52cbc6b",
+   "person": "ezekiel",
+   "label": "watchman",
+   "reason": "A figure of speech, not an office."
+  },
+  {
+   "row": "2d097befe232f2c4",
+   "person": "ezekiel",
+   "label": "Watchman for the house of Israel",
+   "reason": "A figure of speech, not an office."
+  },
+  {
+   "row": "0ec24737f89b3809",
+   "person": "ezer-at-the-dedication",
+   "label": "Ezer (священик/співець?)",
+   "reason": "Neh 12:42 is a bare list after the priests of 12:41, whose sentence is closed; it does not say these are priests, and the next words are about the singers."
+  },
+  {
+   "row": "975e13f383001fad",
+   "person": "ezra-2",
+   "label": "Ezra the scribe/priest (possible different person)",
+   "reason": "No verse joins this name in the list of Neh 7:7 to Ezra the scribe, nor calls this one a priest."
+  },
+  {
+   "row": "43e417c1c99e18a6",
+   "person": "ezra-4",
+   "label": "Ezra у процесії (священик із сурмою?)",
+   "reason": "Neh 12:33 names him in the procession, with no word of priesthood."
+  },
+  {
+   "row": "621fb4baa3f63cd5",
+   "person": "galal",
+   "label": "Levite",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "2fbe6727658ce75d",
+   "person": "galal-who-dwelt-in-jerusalem",
+   "label": "Levite",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "8915bc205c1ec9b9",
+   "person": "giddel",
+   "label": "Temple servant (Nethinim) – descendants of Giddel",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "5bb828ee290fd6da",
+   "person": "habaiah",
+   "label": "Priestly descent claim of Habaiah's children",
+   "reason": "The text says they could not prove it and were excluded from the priesthood, Ezra 2:62."
+  },
+  {
+   "row": "ef16e4e1f27409a1",
+   "person": "habaiah",
+   "label": "Priestly descent claimed by the sons of Habaiah",
+   "reason": "The text says they could not prove it and were excluded from the priesthood, Ezra 2:62."
+  },
+  {
+   "row": "4bb45ea881385a50",
+   "person": "hagabah",
+   "label": "temple servant (Nethinim)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "29e7baf60750134c",
+   "person": "hakkoz",
+   "label": "Priestly descent claim of Koz's children",
+   "reason": "The text says they could not prove it and were excluded from the priesthood, Ezra 2:62."
+  },
+  {
+   "row": "3f2c189d12b5c621",
+   "person": "hakupha",
+   "label": "temple servant (Nethinim)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "490761670739de1e",
+   "person": "hanan-4",
+   "label": "temple servant (Nethinim)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "8294678d0d4c68a8",
+   "person": "harim-2",
+   "label": "Descendants of Harim listed among the priests",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "3a2ffc9714f84e52",
+   "person": "hashabiah-2",
+   "label": "Temple musician/prophet under Jeduthun (25:3)",
+   "reason": "1 Chr 25:3 says the verb of his father Jeduthun; 25:1 says it of the sons as a group. Published as a musician, as Bukkiah in TSK-1251."
+  },
+  {
+   "row": "65f450cf96715d68",
+   "person": "hashabiah-4",
+   "label": "possible priest (among separated chief priests)",
+   "reason": "Neh 10 and 12:24 have this name without a bridge to him; Ezra 8:24's לְ with the chief priests is not said of a priest, Ezra 8:18-19 has him a Levite."
+  },
+  {
+   "row": "8cec11c370401d51",
+   "person": "hashabiah-4",
+   "label": "Левіт Хашавія",
+   "reason": "Neh 10 and 12:24 have this name without a bridge to him; Ezra 8:24's לְ with the chief priests is not said of a priest, Ezra 8:18-19 has him a Levite."
+  },
+  {
+   "row": "64f0ca60e65bd4d3",
+   "person": "hashabiah-4",
+   "label": "Hashabiah (голова левітів)",
+   "reason": "Neh 10 and 12:24 have this name without a bridge to him; Ezra 8:24's לְ with the chief priests is not said of a priest, Ezra 8:18-19 has him a Levite."
+  },
+  {
+   "row": "fc8146f2499e6fb3",
+   "person": "heresh",
+   "label": "Levite (приналежність до левітів)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "bda034fb75523502",
+   "person": "iddo-5",
+   "label": "prophet (ambiguous referent)",
+   "reason": "The title stands after \"son of X\" and belongs to the son: the Greek's case or BSB, or other verses, settle it."
+  },
+  {
+   "row": "bf182cc2cbe4eed0",
+   "person": "igdaliah",
+   "label": "man of God",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "d74a07c0e18b1969",
+   "person": "immer-5",
+   "label": "priest (Immer or Pashhur?)",
+   "reason": "The title stands after \"son of X\" and belongs to the son: the Greek's case or BSB, or other verses, settle it."
+  },
+  {
+   "row": "369a20b26e16a5c7",
+   "person": "isaac",
+   "label": "prophets / anointed (plural group)",
+   "reason": "A plural group, with no word said of this person by name."
+  },
+  {
+   "row": "007fb2d2ae4b7288",
+   "person": "isaiah",
+   "label": "visionary / seer (prophet)",
+   "reason": "חזה here is the verb of seeing a message, said of many prophets; it is not the title ḥozeh, and he stands on the Prophet list."
+  },
+  {
+   "row": "aa4b2761d2e912eb",
+   "person": "isaiah",
+   "label": "seer/prophet (visionary)",
+   "reason": "חזה here is the verb of seeing a message, said of many prophets; it is not the title ḥozeh, and he stands on the Prophet list."
+  },
+  {
+   "row": "bb5422278f212674",
+   "person": "isaiah",
+   "label": "visionary who received the burden against Babylon",
+   "reason": "חזה here is the verb of seeing a message, said of many prophets; it is not the title ḥozeh, and he stands on the Prophet list."
+  },
+  {
+   "row": "64ad238c9891a740",
+   "person": "jacob",
+   "label": "prophets / anointed (plural group)",
+   "reason": "A plural group, with no word said of this person by name."
+  },
+  {
+   "row": "d72161960dd9243e",
+   "person": "jahaziel-3",
+   "label": "Levite (Jahaziel)",
+   "reason": "Levite is his descent; the Spirit comes on him at 2 Chr 20:14 and he speaks, with no noun or verb of the office."
+  },
+  {
+   "row": "31228b97a633b9ce",
+   "person": "james-3",
+   "label": "teacher (we who teach)",
+   "reason": "A plural group, with no word said of this person by name."
+  },
+  {
+   "row": "b42f743b35f56f26",
+   "person": "jehohanan-5",
+   "label": "Priest-trumpeter / singer at the wall dedication",
+   "reason": "Neh 12:42 is a bare list after the priests of 12:41, whose sentence is closed; it does not say these are priests, and the next words are about the singers."
+  },
+  {
+   "row": "2af70aad337d7542",
+   "person": "jehu",
+   "label": "seer (ambiguous attribution)",
+   "reason": "\"Son of Hanani the seer\": Hanani is the seer at 2 Chr 16:7. Jehu holds Prophet."
+  },
+  {
+   "row": "19544f8f92881d8e",
+   "person": "jehu",
+   "label": "seer (Jehu)",
+   "reason": "\"Son of Hanani the seer\": Hanani is the seer at 2 Chr 16:7. Jehu holds Prophet."
+  },
+  {
+   "row": "abce11ee3f182cd3",
+   "person": "jeremiah",
+   "label": "Jeremiah the prophet (ch. 51)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "dafef4bdac389fa2",
+   "person": "jeremoth-11",
+   "label": "Temple singer/musician (Levite, 15th course)",
+   "reason": "The word of 1 Chr 25:22 is on jerimoth-3, who holds it."
+  },
+  {
+   "row": "496316a7c6ff2354",
+   "person": "jeroboam",
+   "label": "Jeroboam offering sacrifices and burning incense at Bethel",
+   "reason": "One act, with no office named."
+  },
+  {
+   "row": "8eb5a2a82c17c7d7",
+   "person": "jeroham-3",
+   "label": "priestly lineage",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "3fc910be28722887",
+   "person": "jeshua-5",
+   "label": "Levite Jeshua",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "8e6dfa751809aed8",
+   "person": "jesus",
+   "label": "baptizing",
+   "reason": "John 4:2 denies it: \"Jesus himself did not baptize\"."
+  },
+  {
+   "row": "7137a7a14ffd808b",
+   "person": "johanan-3",
+   "label": "priest's office in Solomon's temple",
+   "reason": "הוּא אֲשֶׁר כִּהֵן of 1 Chr 5:36 is his son Azariah."
+  },
+  {
+   "row": "c73d653b76d8db1b",
+   "person": "john-2",
+   "label": "the elder (ὁ πρεσβύτερος)",
+   "reason": "The elder of 3 John 1 is not named; no verse joins him to this record."
+  },
+  {
+   "row": "45f5ac4129e74e88",
+   "person": "joiada-2",
+   "label": "high priest title possibly attached to Joiada",
+   "reason": "The high priest of Neh 13:28 is Eliashib, as at Neh 3:1."
+  },
+  {
+   "row": "e8cb152ebc8d2175",
+   "person": "joseph",
+   "label": "Joseph and divination",
+   "reason": "Said by his steward as part of his ruse, Gen 44:5,15."
+  },
+  {
+   "row": "c895253b1dc30dd8",
+   "person": "joseph-12",
+   "label": "Levite",
+   "reason": "\"A Levite, a Cypriot by birth\", Acts 4:36: descent, TSK-1254's verdict status_only."
+  },
+  {
+   "row": "07f60fcb091f3ad8",
+   "person": "judah-7",
+   "label": "priest's son with musical instruments",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "069ddb880ad0da05",
+   "person": "kadmiel-2",
+   "label": "Levite",
+   "reason": "Neh 9:4-5 shows Levites calling the assembly to bless once. TSK-1254's verdict not_established."
+  },
+  {
+   "row": "ad3f95e044dcd1e0",
+   "person": "levi",
+   "label": "tithe-collector (Levi receiving tithes)",
+   "reason": "Heb 7:9 says Levi paid tithes in Abraham; a figure of the argument."
+  },
+  {
+   "row": "4afcef3bc321b4dd",
+   "person": "maaseiah-14",
+   "label": "priest (possibly applies to Maaseiah)",
+   "reason": "The title stands after \"son of X\" and belongs to the son: the Greek's case or BSB, or other verses, settle it."
+  },
+  {
+   "row": "98e8a1e606847d39",
+   "person": "maaseiah-18",
+   "label": "Маасея (другий) у списку 12:42",
+   "reason": "Neh 12:42 is a bare list after the priests of 12:41, whose sentence is closed; it does not say these are priests, and the next words are about the singers."
+  },
+  {
+   "row": "f989503ee83bb305",
+   "person": "malchijah-father-of-pashhur",
+   "label": "priest (from metadata)",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "8e6559f09e27b509",
+   "person": "mattithiah-2",
+   "label": "gatekeeper (from hint)",
+   "reason": "\"The gatekeepers\" at the end of 1 Chr 15:18 belongs to Obed-edom and Jeiel, who alone are so published and so read by BSB and 15:24; the others of the list are musicians at 15:20-21."
+  },
+  {
+   "row": "719a17dc3c02b16c",
+   "person": "mattithiah-3",
+   "label": "Prophesying with the harp (Jeduthun's sons)",
+   "reason": "1 Chr 25:3 says the verb of his father Jeduthun; published as a musician, as Bukkiah in TSK-1251."
+  },
+  {
+   "row": "4d6e2937cf4bab03",
+   "person": "meshullam-16",
+   "label": "Gatekeeper Meshullam (v.25)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "133314c99a265503",
+   "person": "meshullam-18",
+   "label": "Gatekeeper Meshullam (v.25)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "4ac25181ce631d4a",
+   "person": "meshullam-8",
+   "label": "Meshullam (Levite?)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "ed8c10b13379665d",
+   "person": "micaiah-4",
+   "label": "Priest Micaiah with trumpets (v.41)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "ffdb93db8183ed81",
+   "person": "miniamin",
+   "label": "priest (possible)",
+   "reason": "BSB's \"fellow priests\" is a gloss; BHSA says the cities of the priests, and these are Levites under Kore."
+  },
+  {
+   "row": "17aacc9bb5dd19d3",
+   "person": "miniamin-2",
+   "label": "Priestly house (Miniamin) / possible priest",
+   "reason": "A house name in Neh 12:17, with Piltai its man; the priest list's Mijamin of 12:5 is held on mijamin-4."
+  },
+  {
+   "row": "ae3f911be15f86b1",
+   "person": "moadiah",
+   "label": "Priestly house (Moadiah) / possible priest",
+   "reason": "A house name in Neh 12:17, with Piltai its man; the priest list's Maadiah of 12:5 is held on maaziah-3."
+  },
+  {
+   "row": "af8f8c5e6146e04c",
+   "person": "moses",
+   "label": "Mediator / declarer of the word of YHVH",
+   "reason": "Standing between the LORD and the people is said once, Deut 5:5; he holds Prophet, and no office of mediator is named."
+  },
+  {
+   "row": "1186f4387190b85f",
+   "person": "moses",
+   "label": "man of God",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "0fafec58a13f46e8",
+   "person": "nicodemus",
+   "label": "member of the chief priests/Pharisees/rulers group",
+   "reason": "\"One of them\", John 7:50, is said of the Pharisees' number; he is not called a priest."
+  },
+  {
+   "row": "828e123f81ec76ae",
+   "person": "obadiah-5",
+   "label": "Levite (listed among the Levites)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "3101201b91b503f5",
+   "person": "obadiah-5",
+   "label": "porter / gatekeeper (Neh 12:25)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "147ec0d8bd784c45",
+   "person": "obededom",
+   "label": "Воротар/музикант Овид-Едом",
+   "reason": "The Gittite of 2 Sam 6 has his house named at 1 Chr 15:25; no verse joins him to the Levite gatekeeper, obededom-2."
+  },
+  {
+   "row": "da7cff3a8c806fce",
+   "person": "pashhur",
+   "label": "priest and chief governor (Pashur son of Immer)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "45a285b123c238ab",
+   "person": "rehum-3",
+   "label": "Levite / supervisor of the Levites' repairs",
+   "reason": "Neh 3:17 has Levites repairing, Rehum among them, once; his standing, and no office."
+  },
+  {
+   "row": "675a7d569c5b00f5",
+   "person": "saul-2",
+   "label": "servant of Christ / steward of God's mysteries",
+   "reason": "A figure of speech, not an office."
+  },
+  {
+   "row": "1c8d9d48d3918d71",
+   "person": "saul-2",
+   "label": "Pharisee",
+   "reason": "A party, not an office. TSK-1251 held it alike."
+  },
+  {
+   "row": "e54253209740eb49",
+   "person": "shebaniah-2",
+   "label": "Levite",
+   "reason": "Neh 9:4-5 shows Levites calling the assembly to bless once. TSK-1254's verdict not_established."
+  },
+  {
+   "row": "dfb30ae796e3f6a0",
+   "person": "shecaniah-3",
+   "label": "priest (possible)",
+   "reason": "BSB's \"fellow priests\" is a gloss; BHSA says the cities of the priests, and these are Levites under Kore."
+  },
+  {
+   "row": "4bfe6768d05130ed",
+   "person": "shemaiah",
+   "label": "Shemaiah the man of God",
+   "reason": "An honorific or poetic epithet, not an office; TSK-1251 excluded \"man of God\" as a separate entry alike."
+  },
+  {
+   "row": "34233e382f6552cf",
+   "person": "shemaiah-12",
+   "label": "priest (possible)",
+   "reason": "BSB's \"fellow priests\" is a gloss; BHSA says the cities of the priests, and these are Levites under Kore."
+  },
+  {
+   "row": "39159cc8cf8495e7",
+   "person": "shemiramoth",
+   "label": "gatekeeper (הַשֹּׁעֲרִים)",
+   "reason": "\"The gatekeepers\" at the end of 1 Chr 15:18 belongs to Obed-edom and Jeiel, who alone are so published and so read by BSB and 15:24; the others of the list are musicians at 15:20-21."
+  },
+  {
+   "row": "bac9430010e29d55",
+   "person": "shimei",
+   "label": "Levite (hereditary service group)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "59347ccdd1447d26",
+   "person": "shimei-14",
+   "label": "Levite",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "e9eea3408b2bedf3",
+   "person": "shobai",
+   "label": "gatekeeper clan (porters)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "df88f442dd9bf2c2",
+   "person": "silas",
+   "label": "apostle",
+   "reason": "1 Thess 2:6's \"we\" is plural and may be Paul alone; 1:1 does not call Silvanus so."
+  },
+  {
+   "row": "fd9228bea113e441",
+   "person": "temah",
+   "label": "temple servant (Nethinim)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "7ea9cf8f44d7a48c",
+   "person": "theangelofthelord",
+   "label": "angel (messenger) of the Lord",
+   "reason": "Not an office of a person, and the anarthrous phrase of Matt 28:2 joins no record."
+  },
+  {
+   "row": "c7a2a936afd54478",
+   "person": "timothy",
+   "label": "apostle",
+   "reason": "1 Thess 2:6's \"we\" is plural; 2 Cor 1:1 sets him apart: \"Paul an apostle... and Timothy our brother\"."
+  },
+  {
+   "row": "bfcc5044fbfdf8ad",
+   "person": "unni",
+   "label": "gatekeeper (הַשֹּׁעֲרִים)",
+   "reason": "\"The gatekeepers\" at the end of 1 Chr 15:18 belongs to Obed-edom and Jeiel, who alone are so published and so read by BSB and 15:24; the others of the list are musicians at 15:20-21."
+  },
+  {
+   "row": "3667681e88737d0c",
+   "person": "uriah-2",
+   "label": "priest",
+   "reason": "\"Meremoth son of Uriah the priest\": the Greek's genitive and the Hebrew both leave it open, and Meremoth holds it; not established of Uriah."
+  },
+  {
+   "row": "02feda9497157d65",
+   "person": "uzza-2",
+   "label": "temple servant (Nethinim)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "42b1a04b88fee119",
+   "person": "uzzi",
+   "label": "Possible priestly descent of Aaron's line",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "4aba5254a8af857d",
+   "person": "uzzi-5",
+   "label": "singer (descendant of Asaph)",
+   "reason": "Neh 11:22 reads either way: of the sons of Asaph, or the singers over the work. He holds overseer of the Levites."
+  },
+  {
+   "row": "ff2f27366f73772a",
+   "person": "uzzi-7",
+   "label": "priest / singer at the wall dedication",
+   "reason": "Neh 12:42 is a bare list after the priests of 12:41, whose sentence is closed; it does not say these are priests, and the next words are about the singers."
+  },
+  {
+   "row": "4ce5609b78410058",
+   "person": "uzziel",
+   "label": "Levite (hereditary service group)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "3d54d572d67fd8fc",
+   "person": "uzziel",
+   "label": "Levite in temple service (possible)",
+   "reason": "Levite is said as his standing or descent, with no service named. TSK-1254's verdict status_only: the record's tribe already says it."
+  },
+  {
+   "row": "74f0bfa70d2ed0a1",
+   "person": "zacharias-son-of-barachias",
+   "label": "Prophet (by inclusion in the series of prophets' blood)",
+   "reason": "A plural group, with no word said of this person by name."
+  },
+  {
+   "row": "a43f101b9513ea67",
+   "person": "zadok",
+   "label": "seer",
+   "reason": "A question put in the mouth of a king, read also as \"do you see?\"; not an office."
+  },
+  {
+   "row": "6ca74b48daf13f97",
+   "person": "zadok-3",
+   "label": "Possible priestly descent of Aaron's line",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "3624f0c4380c9db9",
+   "person": "zechariah-5",
+   "label": "gatekeeper (porter)",
+   "reason": "\"The gatekeepers\" at the end of 1 Chr 15:18 belongs to Obed-edom and Jeiel, who alone are so published and so read by BSB and 15:24; the others of the list are musicians at 15:20-21."
+  },
+  {
+   "row": "af05f6d0cc3f3cc2",
+   "person": "zechariah-who-taught-uzziah",
+   "label": "Той, хто мав розуміння в баченнях Божих (можливий пророк/провидець/наставник)",
+   "reason": "\"Who understood the seeing of God\", 2 Chr 26:5, with no noun or verb of the office."
+  },
+  {
+   "row": "d985ceb2ae85856b",
+   "person": "zedekiah-3",
+   "label": "Zedekiah as priest",
+   "reason": "Neh 10:2 joins him to Nehemiah the governor; the priests begin at Seraiah in 10:3."
+  },
+  {
+   "row": "45f1b2ee129d1cf4",
+   "person": "zerahiah",
+   "label": "Possible priestly descent of Aaron's line",
+   "reason": "Only an ancestor in a genealogy of Aaron or of a priest; the collective service of \"Aaron and his sons\" does not say it of him. As the review of TSK-1251 held Nadab and Ithamar."
+  },
+  {
+   "row": "3cc839887c792e56",
+   "person": "zichri-5",
+   "label": "Zichri (Abijah's priestly house)",
+   "reason": "The verse's word is another record's, and no text joins this person to it."
+  },
+  {
+   "row": "27a64bbee7d4164f",
+   "person": "ziha",
+   "label": "temple servant (Nethinim)",
+   "reason": "The list names a house (\"the children of X\"); the man himself is not said to hold it."
+  },
+  {
+   "row": "6944e0b2a7590c15",
+   "person": "aaron",
+   "label": "prophet (spokesman for Moses)",
+   "reason": "The owner's ruling of 2026-11-01: not Prophet, Exod 7:1. A prophet says what God told him; there Moses tells Aaron what to say."
+  },
+  {
+   "row": "b7b3644d00a1079c",
+   "person": "aaron",
+   "label": "prophet (spokesman for Moses)",
+   "reason": "The owner's ruling of 2026-11-01: not Prophet, Exod 7:1. A prophet says what God told him; there Moses tells Aaron what to say."
+  },
+  {
+   "row": "7c13ea115a3b0f7e",
+   "person": "aaron",
+   "label": "prophet (spokesman for Moses)",
+   "reason": "The owner's ruling of 2026-11-01: not Prophet, Exod 7:1. A prophet says what God told him; there Moses tells Aaron what to say."
+  },
+  {
+   "row": "ab14790e8f504e52",
+   "person": "andronicus",
+   "label": "ἐπίσημοι ἐν τοῖς ἀποστόλοις (apostle?)",
+   "reason": "The owner's ruling of 2026-11-01: not Apostle, Rom 16:7 is read as known to the apostles."
+  },
+  {
+   "row": "c7cf53edb3427faf",
+   "person": "junias",
+   "label": "apostle (ἐπίσημοι ἐν τοῖς ἀποστόλοις)",
+   "reason": "The owner's ruling of 2026-11-01: not Apostle, Rom 16:7 is read as known to the apostles."
+  }
+ ],
+ "covered": [
+  {
+   "row": "009fb044f597887e",
+   "person": "aaron",
+   "label": "priest (Levitical)"
+  },
+  {
+   "row": "9791a1534d9bb4d0",
+   "person": "aaron",
+   "label": "priest (office of Aaron)"
+  },
+  {
+   "row": "f0f0c9ae9ac6fd01",
+   "person": "aaron",
+   "label": "priest (designated)"
+  },
+  {
+   "row": "49572dfa47970b2e",
+   "person": "aaron",
+   "label": "Priest"
+  },
+  {
+   "row": "d55df1da2d2caa06",
+   "person": "aaron",
+   "label": "priest"
+  },
+  {
+   "row": "028212174f7180bb",
+   "person": "aaron",
+   "label": "priest (Aaron)"
+  },
+  {
+   "row": "99ec161760e75b71",
+   "person": "aaron",
+   "label": "priest (Aaron the priest)"
+  },
+  {
+   "row": "93fa112e0a6c6859",
+   "person": "aaron",
+   "label": "priest (Aaron)"
+  },
+  {
+   "row": "c7255de9824b34e8",
+   "person": "aaron",
+   "label": "priestly sacrificial service (no title in the passage)"
+  },
+  {
+   "row": "de03844061d76fae",
+   "person": "aaron",
+   "label": "priestly service (title not stated)"
+  },
+  {
+   "row": "4a35d76f175c4d3d",
+   "person": "aaron",
+   "label": "priest"
+  },
+  {
+   "row": "8d2b535755da52a0",
+   "person": "aaron",
+   "label": "Aaron as priest (priestly acts without an explicit title)"
+  },
+  {
+   "row": "77c42ce71ddeae59",
+   "person": "aaron",
+   "label": "priest (Aaron)"
+  },
+  {
+   "row": "edd9bd909fe6fd62",
+   "person": "aaron",
+   "label": "priest"
+  },
+  {
+   "row": "e7eadb49695d2464",
+   "person": "aaron",
+   "label": "priest (blessing function)"
+  },
+  {
+   "row": "5d54dec891d0f2e5",
+   "person": "aaron",
+   "label": "Aaron – priestly functions (priest)"
+  },
+  {
+   "row": "8786a41bbef23403",
+   "person": "aaron",
+   "label": "priest (Aaron's priestly service)"
+  },
+  {
+   "row": "6719f2b7e3210b07",
+   "person": "aaron",
+   "label": "priest (kohen)"
+  },
+  {
+   "row": "05d14cd0d13b2e59",
+   "person": "aaron",
+   "label": "priest (Aaron)"
+  },
+  {
+   "row": "69b8cfd5deaed14c",
+   "person": "aaron",
+   "label": "priest (Aaron the priest)"
+  },
+  {
+   "row": "c1e51c8ba65bcc12",
+   "person": "aaron",
+   "label": "priest (Aaron's garments)"
+  },
+  {
+   "row": "8886cf6c5eae2c16",
+   "person": "aaron",
+   "label": "Aaron's priestly ministry"
+  },
+  {
+   "row": "d92633a7027ac042",
+   "person": "aaron",
+   "label": "priest (order of Aaron)"
+  },
+  {
+   "row": "bd8bf65891da7a31",
+   "person": "abiathar",
+   "label": "priest"
+  },
+  {
+   "row": "e3c903886462115d",
+   "person": "abihu",
+   "label": "priest (designated)"
+  },
+  {
+   "row": "07d20b82f0737eb0",
+   "person": "abram",
+   "label": "prophet (Abraham)"
+  },
+  {
+   "row": "0b3d725355817bdf",
+   "person": "abram",
+   "label": "prophets / anointed (plural group)"
+  },
+  {
+   "row": "e84149d0f4211d28",
+   "person": "ahijah",
+   "label": "prophet Ahijah the Shilonite"
+  },
+  {
+   "row": "745610db49914a6a",
+   "person": "ahijah",
+   "label": "prophet (Ahijah the Shilonite)"
+  },
+  {
+   "row": "9b254ad91f9f217b",
+   "person": "ahijah",
+   "label": "Ahijah the Shilonite (prophet?)"
+  },
+  {
+   "row": "63b7328f079b4c21",
+   "person": "ahijah-8",
+   "label": "Levite"
+  },
+  {
+   "row": "a8bbc423032f011a",
+   "person": "ahimelech",
+   "label": "Priest of Nob"
+  },
+  {
+   "row": "bbc8d389722b4449",
+   "person": "ahimelech-3",
+   "label": "Ahimelech's service role"
+  },
+  {
+   "row": "d7afb2ef3e85c10f",
+   "person": "akkub-2",
+   "label": "gatekeeper (porter)"
+  },
+  {
+   "row": "a537159815f62da5",
+   "person": "amariah-6",
+   "label": "Amariah (priest?)"
+  },
+  {
+   "row": "afa92a77d48675ee",
+   "person": "annas",
+   "label": "high priest (Annas)"
+  },
+  {
+   "row": "139b8ec11098f2c6",
+   "person": "asaph-2",
+   "label": "Levitical singer"
+  },
+  {
+   "row": "84bb1b8eebdd1d69",
+   "person": "asaph-2",
+   "label": "singer (descendants of Asaph)"
+  },
+  {
+   "row": "1eda23a49048babb",
+   "person": "asaph-2",
+   "label": "chief of the singers (Asaph of old)"
+  },
+  {
+   "row": "e73d490813c16fa5",
+   "person": "asaph-2",
+   "label": "Asaph and chief of the singers"
+  },
+  {
+   "row": "80bc0a624466730a",
+   "person": "bakbukiah",
+   "label": "porter (gatekeeper)"
+  },
+  {
+   "row": "2841a17970dff5f1",
+   "person": "caiaphas",
+   "label": "Каяфа — можливо первосвященник"
+  },
+  {
+   "row": "463c754d55db3eb1",
+   "person": "daniel-2",
+   "label": "prophet"
+  },
+  {
+   "row": "fd95741ca397aca7",
+   "person": "david",
+   "label": "prophet"
+  },
+  {
+   "row": "13eae9a2cbd72422",
+   "person": "deborah-2",
+   "label": "prophetess and judge of Israel"
+  },
+  {
+   "row": "c342fb199aaab7bc",
+   "person": "eleazar",
+   "label": "head of a Levite father's house"
+  },
+  {
+   "row": "afb0bfa50c19fe25",
+   "person": "eleazar",
+   "label": "priest (designated)"
+  },
+  {
+   "row": "3fffafe89776d4a5",
+   "person": "eleazar",
+   "label": "priestly service (title not stated)"
+  },
+  {
+   "row": "151e39b02f5b5357",
+   "person": "eleazar",
+   "label": "priest"
+  },
+  {
+   "row": "152195a2df135212",
+   "person": "eleazar",
+   "label": "priest (Eleazar)"
+  },
+  {
+   "row": "477ca125ff098f95",
+   "person": "eleazar",
+   "label": "Eleazar the priest (?)"
+  },
+  {
+   "row": "192eef95202c8ee7",
+   "person": "eli",
+   "label": "priest (Eli the priest)"
+  },
+  {
+   "row": "8a27ca2cc087711d",
+   "person": "eli",
+   "label": "Священик Господа в Шіло"
+  },
+  {
+   "row": "3de70e918bb55d7d",
+   "person": "eliab-5",
+   "label": "Harp player (musician)"
+  },
+  {
+   "row": "fea364a2d3c30265",
+   "person": "eliashib-7",
+   "label": "Eliashib (first priest/high priest)"
+  },
+  {
+   "row": "4006bc405110dd4a",
+   "person": "eliashib-7",
+   "label": "High priest"
+  },
+  {
+   "row": "06ef7fc8eefb419d",
+   "person": "elijah",
+   "label": "man of God / prophet"
+  },
+  {
+   "row": "524ff62d453f8aed",
+   "person": "elijah",
+   "label": "prophet"
+  },
+  {
+   "row": "6be4303ae21d571d",
+   "person": "elijah",
+   "label": "Ілля як провісник (пророк)"
+  },
+  {
+   "row": "1ee1e6f52b31c106",
+   "person": "elijah",
+   "label": "prophet (implied)"
+  },
+  {
+   "row": "c66ce8d088fceb4f",
+   "person": "elijah",
+   "label": "prophet (group of prophets in 5:10, Elijah not linked)"
+  },
+  {
+   "row": "5ef64ec9c8d58b5a",
+   "person": "elisha",
+   "label": "prophet of the LORD (Elisha)"
+  },
+  {
+   "row": "cea746fc220dfbec",
+   "person": "elisha",
+   "label": "prophet"
+  },
+  {
+   "row": "06d2d00259f80be0",
+   "person": "ethan-3",
+   "label": "Ethan the singer (cymbals)"
+  },
+  {
+   "row": "9eaf28bc4d28df45",
+   "person": "ezekiel",
+   "label": "prophet"
+  },
+  {
+   "row": "f4205d595cd960d4",
+   "person": "ezekiel",
+   "label": "Priest"
+  },
+  {
+   "row": "7cec02b7067e1cc5",
+   "person": "ezekiel",
+   "label": "watchman for the house of Israel (prophetic)"
+  },
+  {
+   "row": "28e6bc91e92887d7",
+   "person": "ezekiel",
+   "label": "prophet"
+  },
+  {
+   "row": "c130508227041e47",
+   "person": "ezekiel",
+   "label": "prophet (command to prophesy)"
+  },
+  {
+   "row": "55ffe845263e1c2d",
+   "person": "ezekiel",
+   "label": "prophet (possible)"
+  },
+  {
+   "row": "4b75d357d2a74b14",
+   "person": "ezekiel",
+   "label": "prophet (пророк)"
+  },
+  {
+   "row": "c1bba633cc53b7cc",
+   "person": "ezekiel",
+   "label": "prophet"
+  },
+  {
+   "row": "10d18f6f5d867c3a",
+   "person": "ezekiel",
+   "label": "prophet (command to prophesy)"
+  },
+  {
+   "row": "04192a5bd9763452",
+   "person": "ezekiel",
+   "label": "prophet"
+  },
+  {
+   "row": "eb8d4eea9ecaa388",
+   "person": "ezekiel",
+   "label": "prophet (speaker addressed as 'son of man')"
+  },
+  {
+   "row": "c172ae2c667ba9b6",
+   "person": "ezekiel",
+   "label": "prophetic activity without an explicit title (prophet)"
+  },
+  {
+   "row": "23673f70f4bced67",
+   "person": "ezekiel",
+   "label": "prophet (command to prophesy)"
+  },
+  {
+   "row": "2792df34026ae9f7",
+   "person": "ezekiel",
+   "label": "prophet (command to prophesy)"
+  },
+  {
+   "row": "4a092f2b399c9467",
+   "person": "ezekiel",
+   "label": "prophet (commissioned)"
+  },
+  {
+   "row": "9f03c6cc9ad36d79",
+   "person": "ezekiel",
+   "label": "prophet"
+  },
+  {
+   "row": "21a5a6771a54fd87",
+   "person": "ezekiel",
+   "label": "watchman / prophet"
+  },
+  {
+   "row": "0c3ff29a87a8f676",
+   "person": "ezekiel",
+   "label": "Prophet among them"
+  },
+  {
+   "row": "83ce6a3736484059",
+   "person": "ezekiel",
+   "label": "prophet"
+  },
+  {
+   "row": "65def0ed77244a17",
+   "person": "ezekiel",
+   "label": "prophet (command to prophesy; identity not bridged)"
+  },
+  {
+   "row": "2973eaa8757e5f6c",
+   "person": "ezekiel",
+   "label": "prophet (speaker)"
+  },
+  {
+   "row": "59d1f485eb397628",
+   "person": "ezekiel",
+   "label": "prophet (possible)"
+  },
+  {
+   "row": "72ba8b762d7341e1",
+   "person": "ezekiel",
+   "label": "prophet (command to prophesy)"
+  },
+  {
+   "row": "1c336b477399b776",
+   "person": "hanani",
+   "label": "seer (ambiguous attribution)"
+  },
+  {
+   "row": "e0132fdb181d26f7",
+   "person": "hanani",
+   "label": "seer (Hanani)"
+  },
+  {
+   "row": "b6336388c514f2f2",
+   "person": "heman-2",
+   "label": "Heman as temple musician / leader of singers"
+  },
+  {
+   "row": "b3cb5a0c1736e6e2",
+   "person": "heman-2",
+   "label": "Levitical singer"
+  },
+  {
+   "row": "66439b20b46340a8",
+   "person": "hilkiah-2",
+   "label": "верховний священик / правитель дому Божого"
+  },
+  {
+   "row": "e2c85017012e94f0",
+   "person": "hodiah-2",
+   "label": "Levite (instructing the people in the law)"
+  },
+  {
+   "row": "e067170a33fa3dcd",
+   "person": "hodiah-2",
+   "label": "Левіт Ходія"
+  },
+  {
+   "row": "24d9eb87573d4a23",
+   "person": "hophni",
+   "label": "priest"
+  },
+  {
+   "row": "ed093fa8f52fa469",
+   "person": "iddo-4",
+   "label": "seer"
+  },
+  {
+   "row": "0a76cd6c148c7686",
+   "person": "isaiah",
+   "label": "Isaiah as divinely sent speaker"
+  },
+  {
+   "row": "2e666a5c99eb05fd",
+   "person": "isaiah",
+   "label": "prophet (speaking by the LORD's hand)"
+  },
+  {
+   "row": "296225a4f1f559ba",
+   "person": "isaiah",
+   "label": "prophet"
+  },
+  {
+   "row": "b5b35d6b962c348c",
+   "person": "ithamar",
+   "label": "priest (designated)"
+  },
+  {
+   "row": "0692fecb02669dd0",
+   "person": "ithamar",
+   "label": "priestly service (title not stated)"
+  },
+  {
+   "row": "23098ab109abba7b",
+   "person": "ithamar",
+   "label": "Нагляд над службою мерарітів / можливе священство"
+  },
+  {
+   "row": "a80782fd1d4974fc",
+   "person": "jahath-6",
+   "label": "Levite"
+  },
+  {
+   "row": "a1e38cdcc5df0299",
+   "person": "james",
+   "label": "apostle (James, brother of John)"
+  },
+  {
+   "row": "1be6e0c1031d4273",
+   "person": "james",
+   "label": "Apostle / one of the Twelve"
+  },
+  {
+   "row": "25dec6378f6a8999",
+   "person": "james",
+   "label": "apostle (ambiguous James)"
+  },
+  {
+   "row": "d5614c4a11b281b9",
+   "person": "james-2",
+   "label": "Apostle"
+  },
+  {
+   "row": "d6350d7d3a5ceecd",
+   "person": "james-2",
+   "label": "apostle (possible)"
+  },
+  {
+   "row": "849ebdf653df682d",
+   "person": "jedaiah-2",
+   "label": "priest (ambiguous Jedaiah)"
+  },
+  {
+   "row": "d6d73a9484424536",
+   "person": "jedaiah-5",
+   "label": "Jedaiah the priest (1CH 9:10) — possible same name"
+  },
+  {
+   "row": "bb4e1ce5ccac7434",
+   "person": "jedaiah-5",
+   "label": "priest (ambiguous Jedaiah)"
+  },
+  {
+   "row": "4768ac8d1871fb6e",
+   "person": "jeduthun",
+   "label": "temple musician / gatekeeper family"
+  },
+  {
+   "row": "050c6fcb36397bbc",
+   "person": "jeduthun",
+   "label": "Levitical singer"
+  },
+  {
+   "row": "00227aed519908cc",
+   "person": "jeiel-4",
+   "label": "gatekeeper / musician"
+  },
+  {
+   "row": "d28ebd5d05ce59af",
+   "person": "jeremiah-6",
+   "label": "пророк"
+  },
+  {
+   "row": "fe35ff9c135c9090",
+   "person": "jeremiah-6",
+   "label": "Jeremiah as speaker of the LORD's word"
+  },
+  {
+   "row": "cd522a51d2f0790b",
+   "person": "jeremiah-6",
+   "label": "prophet (prophesying)"
+  },
+  {
+   "row": "2e5449e16143230c",
+   "person": "jeremiah-6",
+   "label": "prophet (possible)"
+  },
+  {
+   "row": "6e81827bf2b2c63f",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "59339203ca42cee7",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "427aa2f0871113a8",
+   "person": "jeremiah-6",
+   "label": "Jeremiah the prophet"
+  },
+  {
+   "row": "0d2fb21bedf74b33",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "c51af10e6fe1ebd1",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "d0f6cac581cf5118",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "ca956de55edc8b5d",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "0d20e7eebdc3a20c",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "ba6f0bb1585d7d4f",
+   "person": "jeremiah-6",
+   "label": "prophet"
+  },
+  {
+   "row": "11db3f73a40f750b",
+   "person": "jeshua-7",
+   "label": "Levite (instructing the people in the law)"
+  },
+  {
+   "row": "632ede508f39e3de",
+   "person": "jeshua-7",
+   "label": "Levite"
+  },
+  {
+   "row": "6be40680936afccd",
+   "person": "jeshua-7",
+   "label": "Levite Jeshua, chief of Levites"
+  },
+  {
+   "row": "e0b568674d4e2ca1",
+   "person": "jesus",
+   "label": "teacher (teaching the disciples and crowds)"
+  },
+  {
+   "row": "4b7918f661538788",
+   "person": "jesus",
+   "label": "teacher"
+  },
+  {
+   "row": "1096fbd0bf86d149",
+   "person": "jesus",
+   "label": "prophet (self-referential saying)"
+  },
+  {
+   "row": "5b39ab8d0818e3f2",
+   "person": "jesus",
+   "label": "prophet (пророк)"
+  },
+  {
+   "row": "a2433cbb071171a2",
+   "person": "jesus",
+   "label": "Teacher/Instructor (Christ)"
+  },
+  {
+   "row": "ab4b5e5e645bdaff",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλος / διδάσκων)"
+  },
+  {
+   "row": "2af6546c52a3ce72",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλε)"
+  },
+  {
+   "row": "e0356a1918afa7b2",
+   "person": "jesus",
+   "label": "Teacher (διδάσκαλος)"
+  },
+  {
+   "row": "0845ab92b152d4a7",
+   "person": "jesus",
+   "label": "Пророк"
+  },
+  {
+   "row": "2132c2247f22a044",
+   "person": "jesus",
+   "label": "teacher / rabbi"
+  },
+  {
+   "row": "c4e67ebe985eeafe",
+   "person": "jesus",
+   "label": "rabbi / teacher"
+  },
+  {
+   "row": "2af49d4e6ba5d343",
+   "person": "jesus",
+   "label": "teacher"
+  },
+  {
+   "row": "bfe73ff9d746d216",
+   "person": "jesus",
+   "label": "prophet (implied)"
+  },
+  {
+   "row": "caaa022f814cd204",
+   "person": "jesus",
+   "label": "teacher/preacher in synagogues"
+  },
+  {
+   "row": "d24b1cdf46373f54",
+   "person": "jesus",
+   "label": "teacher (teaching in the synagogue)"
+  },
+  {
+   "row": "f445a73e993ed006",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλος)"
+  },
+  {
+   "row": "679eb64c2c7f6d35",
+   "person": "jesus",
+   "label": "prophet"
+  },
+  {
+   "row": "d0cfe75c70457bb7",
+   "person": "jesus",
+   "label": "Teacher"
+  },
+  {
+   "row": "9c8c03b4a379cb87",
+   "person": "jesus",
+   "label": "teacher (Διδάσκαλε)"
+  },
+  {
+   "row": "05037a82a69cee3e",
+   "person": "jesus",
+   "label": "teacher"
+  },
+  {
+   "row": "b9ddd55a4a7234a8",
+   "person": "jesus",
+   "label": "prophet"
+  },
+  {
+   "row": "0f38e0d0f0c483e5",
+   "person": "jesus",
+   "label": "teacher / teaching in the temple"
+  },
+  {
+   "row": "9b98610346c73186",
+   "person": "jesus",
+   "label": "Teacher (Διδάσκαλε)"
+  },
+  {
+   "row": "b8ef2ae16b8d9284",
+   "person": "jesus",
+   "label": "prophet"
+  },
+  {
+   "row": "0263915be914f219",
+   "person": "jesus",
+   "label": "Rabbi / Teacher"
+  },
+  {
+   "row": "a39268d40b28e70c",
+   "person": "jesus",
+   "label": "Rabbi / Teacher (διδάσκαλε)"
+  },
+  {
+   "row": "0b4060b017bdf89f",
+   "person": "jesus",
+   "label": "the Prophet"
+  },
+  {
+   "row": "ac20fd09d1215414",
+   "person": "jesus",
+   "label": "Teacher (Rabboni)"
+  },
+  {
+   "row": "31796c56b1df95f0",
+   "person": "jesus",
+   "label": "teacher (activity)"
+  },
+  {
+   "row": "f997ab4c261a8691",
+   "person": "jesus",
+   "label": "prophet (like Moses)"
+  },
+  {
+   "row": "b601b263c8cfa08b",
+   "person": "jesus",
+   "label": "High priest"
+  },
+  {
+   "row": "2afb33f544502aba",
+   "person": "jesus",
+   "label": "high priest"
+  },
+  {
+   "row": "2640d58b61723716",
+   "person": "joel-11",
+   "label": "prophet (possible)"
+  },
+  {
+   "row": "a031842d7c55fdbb",
+   "person": "john",
+   "label": "Ὁ Βαπτίζων («Хреститель»)"
+  },
+  {
+   "row": "b374c7c15f033e40",
+   "person": "john",
+   "label": "baptizer (one who baptizes)"
+  },
+  {
+   "row": "ab6fd9fd32f78820",
+   "person": "john",
+   "label": "baptizer (John at the Jordan)"
+  },
+  {
+   "row": "53ff18c39cf7f602",
+   "person": "john",
+   "label": "baptizer (activity)"
+  },
+  {
+   "row": "8c409bdd9d70a0ae",
+   "person": "john",
+   "label": "John baptized (Ἰωάνης ἐβάπτισεν)"
+  },
+  {
+   "row": "f7593876b6efeeb8",
+   "person": "john-2",
+   "label": "Apostle / one of the Twelve"
+  },
+  {
+   "row": "274b0c014ab4a9c0",
+   "person": "john-2",
+   "label": "apostle (possible)"
+  },
+  {
+   "row": "24eb11cb8c8b0382",
+   "person": "john-2",
+   "label": "apostle"
+  },
+  {
+   "row": "bd12bcc46a81db77",
+   "person": "joiarib-3",
+   "label": "Joiarib among the priests (Neh 12:6)"
+  },
+  {
+   "row": "b51ff1d40cedfaba",
+   "person": "jonah",
+   "label": "commissioned to cry against Nineveh (prophetic role not named)"
+  },
+  {
+   "row": "d72b745690b98530",
+   "person": "jonah",
+   "label": "prophetic proclamation to Nineveh (no explicit title)"
+  },
+  {
+   "row": "a1863275d1b61032",
+   "person": "jonah",
+   "label": "prophet Jonas"
+  },
+  {
+   "row": "22a23296ac636744",
+   "person": "jonah",
+   "label": "prophet / preacher"
+  },
+  {
+   "row": "7ce9fbde13660b5c",
+   "person": "judas",
+   "label": "One of the Twelve (εἷς τῶν δώδεκα)"
+  },
+  {
+   "row": "eee2ce50e704e8d4",
+   "person": "judas",
+   "label": "one of the twelve"
+  },
+  {
+   "row": "79c4ec172ff1655f",
+   "person": "kadmiel",
+   "label": "Levite / supervisor of temple workmen"
+  },
+  {
+   "row": "ca9f91874529da45",
+   "person": "kelita",
+   "label": "Levite (instructing the people in the law)"
+  },
+  {
+   "row": "ea6cf5355b7e8065",
+   "person": "kelita",
+   "label": "Levite"
+  },
+  {
+   "row": "444b0f528e2b16fc",
+   "person": "maaziah-2",
+   "label": "Маадія/Моадія у списку священиків"
+  },
+  {
+   "row": "3f6ed5d6aa824732",
+   "person": "malchijah-11",
+   "label": "Priest (from identity hint only)"
+  },
+  {
+   "row": "82db058814476092",
+   "person": "malchijah-11",
+   "label": "Малхія: священик із сурмою чи співак"
+  },
+  {
+   "row": "234c6a136f6d587c",
+   "person": "matthew",
+   "label": "Apostle"
+  },
+  {
+   "row": "8f47aa85bc7f5f63",
+   "person": "matthew",
+   "label": "Апостол (за списком 11)"
+  },
+  {
+   "row": "a41d8ca47f5ecd67",
+   "person": "melchizedek",
+   "label": "priest / священик"
+  },
+  {
+   "row": "4df6eb3a1b895ca6",
+   "person": "melchizedek",
+   "label": "Priest (implied by the order of Melchizedek)"
+  },
+  {
+   "row": "5dedef0de52a76fe",
+   "person": "melchizedek",
+   "label": "priest and king of Salem"
+  },
+  {
+   "row": "eac36de2b0f15691",
+   "person": "meremoth",
+   "label": "priest"
+  },
+  {
+   "row": "a7731cffea895bdf",
+   "person": "meremoth",
+   "label": "Priest"
+  },
+  {
+   "row": "5de04a7d642d6ac5",
+   "person": "micah-4",
+   "label": "prophet / seer (not explicitly titled)"
+  },
+  {
+   "row": "1b1635d45fac7b57",
+   "person": "miriam",
+   "label": "possible prophetic role (self-claim)"
+  },
+  {
+   "row": "d7c79fa0d445a011",
+   "person": "moses",
+   "label": "prophet (contrast with ordinary prophet)"
+  },
+  {
+   "row": "eafc5d3a6dbcd213",
+   "person": "moses",
+   "label": "prophet"
+  },
+  {
+   "row": "3566ca8fe1e36324",
+   "person": "nadab",
+   "label": "priest (designated)"
+  },
+  {
+   "row": "d67ded313198e40f",
+   "person": "obadiah-8",
+   "label": "Levite"
+  },
+  {
+   "row": "73b8ad43b6150688",
+   "person": "obededom-2",
+   "label": "Gatekeeper (porter)"
+  },
+  {
+   "row": "74db22fa442aa2b2",
+   "person": "pelaiah-2",
+   "label": "Levite / teacher of the law (Pelaiah)"
+  },
+  {
+   "row": "2df86609203b0037",
+   "person": "philip",
+   "label": "Апостол (за списком 11)"
+  },
+  {
+   "row": "213b4fbab9a2c0dc",
+   "person": "phinehas",
+   "label": "head of the Levite fathers' families"
+  },
+  {
+   "row": "82b6bdad83c80fb4",
+   "person": "phinehas",
+   "label": "everlasting priesthood (Phinehas)"
+  },
+  {
+   "row": "e6d28b4f74731c8e",
+   "person": "phinehas",
+   "label": "stood before the ark (ministering role?)"
+  },
+  {
+   "row": "1b25361496c31138",
+   "person": "phinehas",
+   "label": "priest / offering minister (descendant of Aaron)"
+  },
+  {
+   "row": "dcde9e7cfff2e350",
+   "person": "phinehas-2",
+   "label": "priest"
+  },
+  {
+   "row": "1821bce8d63f19ad",
+   "person": "reuel-2",
+   "label": "priest of Midian (священик Мідіану)"
+  },
+  {
+   "row": "66d88b1f5334f553",
+   "person": "reuel-2",
+   "label": "Jethro, priest of Midian"
+  },
+  {
+   "row": "fb9798f98a3d4bed",
+   "person": "samuel-2",
+   "label": "prophet"
+  },
+  {
+   "row": "901096bcbb999ce4",
+   "person": "samuel-2",
+   "label": "minister/attendant before the LORD (מְשָׁרֵת)"
+  },
+  {
+   "row": "081a8657042ef942",
+   "person": "samuel-2",
+   "label": "prophet of the LORD"
+  },
+  {
+   "row": "5d05883b6a35ec0e",
+   "person": "samuel-2",
+   "label": "ministered unto the LORD before Eli"
+  },
+  {
+   "row": "16cf2ec3134e0da0",
+   "person": "samuel-2",
+   "label": "Провидець / пророк"
+  },
+  {
+   "row": "95aa0478dd3ca788",
+   "person": "samuel-2",
+   "label": "seer/prophet"
+  },
+  {
+   "row": "d5a030e863a6cdba",
+   "person": "samuel-2",
+   "label": "Samuel speaking for the LORD (prophetic speech)"
+  },
+  {
+   "row": "c2baa54599c11af9",
+   "person": "samuel-2",
+   "label": "seer"
+  },
+  {
+   "row": "d24378f207918615",
+   "person": "samuel-2",
+   "label": "Samuel as prophet"
+  },
+  {
+   "row": "7f19b105d8c1e39d",
+   "person": "samuel-2",
+   "label": "prophet (possible)"
+  },
+  {
+   "row": "932d13f1f9569f2d",
+   "person": "saul-2",
+   "label": "apostle (Barnabas and Paul)"
+  },
+  {
+   "row": "296268ccc42a534d",
+   "person": "saul-2",
+   "label": "preacher/teacher of the kingdom of God"
+  },
+  {
+   "row": "6950bec0f48a9f2e",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "746e97f6cabb26f7",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "efffb58139da358e",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "0f1d19a8696bdc15",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "9e5f1a9e8e3ee7a0",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "4a4d3f9392ad3bcb",
+   "person": "saul-2",
+   "label": "apostle of the Gentiles"
+  },
+  {
+   "row": "32e3db62ef60608d",
+   "person": "saul-2",
+   "label": "apostle (Paul)"
+  },
+  {
+   "row": "101ec7e4dc0b5abe",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "aa2731ac382fb57b",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "40917ca41dd707b0",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "10ace6b55999b8a3",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "51170e836582648e",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "7be2c48833417623",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "cbf9b9489f00ce03",
+   "person": "saul-2",
+   "label": "apostle (апостол)"
+  },
+  {
+   "row": "34b30643423bed6f",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "3182ed8558e73e56",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "9c301af272bbcadc",
+   "person": "saul-2",
+   "label": "apostle (Paul)"
+  },
+  {
+   "row": "fae0c7c7f03b7661",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "886a267a11cdf907",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "6fcadb86ea68a9a5",
+   "person": "saul-2",
+   "label": "Apostle of Jesus Christ"
+  },
+  {
+   "row": "27a81e6b19646411",
+   "person": "saul-2",
+   "label": "Apostle"
+  },
+  {
+   "row": "b7650b10f77e540c",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "6c9561b5bf7a6f70",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "f397f9f608649c3e",
+   "person": "saul-2",
+   "label": "gospel preacher (preaching the gospel)"
+  },
+  {
+   "row": "7c9db0c210439bc9",
+   "person": "saul-2",
+   "label": "minister of Christ (diakonos)"
+  },
+  {
+   "row": "edfdc273d2855681",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "1a12fed98ce08b20",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "f6d9fa5e8dd702fc",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "42db6441627fe3f0",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "4becb422ac115df4",
+   "person": "saul-2",
+   "label": "apostle (Paul)"
+  },
+  {
+   "row": "830234e2a6e1e816",
+   "person": "saul-2",
+   "label": "apostle (Paul)"
+  },
+  {
+   "row": "adb319c9b07b4571",
+   "person": "saul-2",
+   "label": "Apostle (ἀπόστολος)"
+  },
+  {
+   "row": "0900f3bca0c87519",
+   "person": "saul-2",
+   "label": "Preacher to the Gentiles (εὐαγγελίσασθαι)"
+  },
+  {
+   "row": "7d007ba55053472b",
+   "person": "saul-2",
+   "label": "Apostle (Paul)"
+  },
+  {
+   "row": "b0de948d703d0460",
+   "person": "saul-2",
+   "label": "apostle (ἀπόστολος)"
+  },
+  {
+   "row": "f6c6db98b6e78d41",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "7115fda300f8c556",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "d6d1320917450d8d",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "25d2c12c08e33ed1",
+   "person": "saul-2",
+   "label": "Paul/Saul: apostle or teacher"
+  },
+  {
+   "row": "f70ff2129b88463d",
+   "person": "saul-2",
+   "label": "apostle / preacher / teacher of the Gentiles"
+  },
+  {
+   "row": "b300f8c650c40f22",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "d45416e0915d273b",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "98d7c25707a61bc6",
+   "person": "saul-2",
+   "label": "apostle / preacher / teacher of the Gentiles"
+  },
+  {
+   "row": "5fe715d4876b0052",
+   "person": "saul-2",
+   "label": "apostle"
+  },
+  {
+   "row": "caf5025306789cba",
+   "person": "saul-2",
+   "label": "apostle (Paul)"
+  },
+  {
+   "row": "09538216221d3a2a",
+   "person": "shabbethai-2",
+   "label": "Levite / teacher of the law (Shabbethai)"
+  },
+  {
+   "row": "32a0cc883265ebc6",
+   "person": "shallum-7",
+   "label": "gatekeeper clan (porters)"
+  },
+  {
+   "row": "12c9e46839d7b30f",
+   "person": "shebaniah-3",
+   "label": "priestly house of Shebaniah"
+  },
+  {
+   "row": "271997419dcaf8e4",
+   "person": "sherebiah-2",
+   "label": "Levite / priestly minister"
+  },
+  {
+   "row": "9d12eeacec87ad4c",
+   "person": "sherebiah-2",
+   "label": "Levite / teacher of the law (Sherebiah)"
+  },
+  {
+   "row": "7b4b72ee6e3670c4",
+   "person": "silas",
+   "label": "Пророк"
+  },
+  {
+   "row": "700d48a7438357f1",
+   "person": "simon",
+   "label": "Apostle (Simon, whom he named Peter)"
+  },
+  {
+   "row": "002c1af47785535b",
+   "person": "simon",
+   "label": "apostle (апостол)"
+  },
+  {
+   "row": "0562c5af94179593",
+   "person": "simon",
+   "label": "Апостол (Петро за списком 11)"
+  },
+  {
+   "row": "95873dc8dbba646e",
+   "person": "simon",
+   "label": "Apostle"
+  },
+  {
+   "row": "1960930559ab7a96",
+   "person": "simon",
+   "label": "commissioned preaching (доручення проповідувати)"
+  },
+  {
+   "row": "f8b21fafa34fc00d",
+   "person": "simon",
+   "label": "apostle"
+  },
+  {
+   "row": "1a52b8cfec6b27f5",
+   "person": "simon",
+   "label": "apostle (Peter of 1 Peter 1:1)"
+  },
+  {
+   "row": "aaf1ef46292e745b",
+   "person": "simon",
+   "label": "Apostle (апостол)"
+  },
+  {
+   "row": "f542c23f559aec03",
+   "person": "simon",
+   "label": "apostle"
+  },
+  {
+   "row": "d809f7777740965d",
+   "person": "talmon",
+   "label": "gatekeeper clan (porters)"
+  },
+  {
+   "row": "dc6b814e441e74c1",
+   "person": "thomas",
+   "label": "апостол (Хома)"
+  },
+  {
+   "row": "8fc0a2f1041ae751",
+   "person": "tychicus",
+   "label": "faithful servant/minister in the Lord (πιστὸς διάκονος)"
+  },
+  {
+   "row": "eeae5bb8ceade2b9",
+   "person": "zadok",
+   "label": "Possible priestly descent of Aaron's line"
+  },
+  {
+   "row": "06d62d3101c47aa8",
+   "person": "zadok",
+   "label": "священик"
+  },
+  {
+   "row": "7b29dd08fd1bb48c",
+   "person": "zechariah-13",
+   "label": "prophet (пророк)"
+  },
+  {
+   "row": "a54edacc7eb935c5",
+   "person": "zechariah-5",
+   "label": "Musician (psaltery/lyre player)"
+  }
+ ],
+ "ownerRulings": "The five questions put to the owner were answered on 2026-11-01; each stands above under refused or admitted, marked as his ruling."
+}

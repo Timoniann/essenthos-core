@@ -1,0 +1,3174 @@
+{
+ "what": "PRB-1420, second part: every needs_review observation of occupation-full-publication-2026-10-27-v1 left after part 1 whose kind is an office, a court or household service, a headship or a title of rule (458 rows; kinds containing military, trade or identity, and the rest, are for parts 3 and 4), decided by reading the verses. Admitted claims are in ../person-occupations.json; this file says why, and why not. Requests and the loader never read it.",
+ "decidedBy": "an agent (claude-opus-5-5), 2026-11-09",
+ "rules": [
+  "The rules of part 1 hold (prb-1420-part-1.json).",
+  "A row whose office the person already holds on a verse that says it is covered: the original reading held it only because the saying verse lay outside the chapter it was given, or it repeats the office from another verse.",
+  "A list the text heads or closes with a headship ('heads of fathers', 'princes in their families', 'ruled over the house of their father') says it of each man the list names, never of a forebear named in his chain or of a father named after 'sons of'.",
+  "'X son of Y, the <title>' gives the title to X at the head of the chain (Shallum, Maaseiah, Shechem).",
+  "A servant's standing (עֶבֶד, נַעַר, שִׁפְחָה, παιδίσκη) is not an occupation; the attendant's verb שֵׁרֵת said of a named person is (Joshua, Elisha, Abishag).",
+  "Leading men (רָאשִׁים, ἡγούμενοι) of a company, a procession or a church are a standing, not an office, unless a house or people is said they head.",
+  "A heavenly being's rule is a heavenly role (owner, 2026-10-27, TSK-1254).",
+  "Identity is the records' question: where a row turns on whether two names are one person, the occupation follows the record the verse's word is annotated to."
+ ],
+ "newOccupations": [
+  "chief-at-casiphia",
+  "keeper-of-the-ark",
+  "keeper-of-the-wardrobe",
+  "king-over-the-locusts",
+  "temple-threshold-keeper",
+  "judge-of-the-living-and-the-dead"
+ ],
+ "counts": {
+  "rows": 458,
+  "admittedRows": 35,
+  "refused": 135,
+  "covered": 288,
+  "hard": 0,
+  "newPairs": 35,
+  "newPairsNotAmongTheHeldRows": 6
+ },
+ "admitted": [
+  {
+   "person": "iddo-6",
+   "occupation": "chief-at-casiphia",
+   "why": "Ezra 8:17 'Iddo the chief (הָרֹאשׁ) at the place Casiphia': the noun of headship said of him and the place, as Jephthah is head over Gilead and Publius chief of the island.",
+   "rows": [
+    "6488382f9ce06764"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "nicanor",
+   "occupation": "church-servant",
+   "why": "Acts 6:3-6: chosen with Stephen for the same service.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "nicolas",
+   "occupation": "church-servant",
+   "why": "Acts 6:3-6: chosen with Stephen for the same service.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "parmenas",
+   "occupation": "church-servant",
+   "why": "Acts 6:3-6: chosen with Stephen for the same service.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "philip-3",
+   "occupation": "church-servant",
+   "why": "Acts 6:3-6: chosen with Stephen for the same service.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "prochorus",
+   "occupation": "church-servant",
+   "why": "Acts 6:3-6: chosen with Stephen for the same service.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "stephen",
+   "occupation": "church-servant",
+   "why": "Acts 6:2-6: the twelve ask for seven men 'whom we may appoint over this business', the serving (διακονεῖν) of tables, and 'they chose Stephen... and laid their hands on them'. Appointed to the church's service by name, the service Phoebe holds as Servant of the church.",
+   "rows": [
+    "02d34bf834df826a"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "timon",
+   "occupation": "church-servant",
+   "why": "Acts 6:3-6: chosen with Stephen for the same service.",
+   "rows": [],
+   "notAmongTheHeldRows": true
+  },
+  {
+   "person": "hanani-4",
+   "occupation": "city-governor",
+   "why": "Neh 7:2 'I gave my brother Hanani, and Hananiah the ruler of the palace, charge over Jerusalem'. Put in charge of the city by name; the office the text calls שַׂר הָעִיר elsewhere.",
+   "rows": [
+    "16f51f2a6fbe388c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "dionysius",
+   "occupation": "council-member",
+   "why": "Acts 17:34 Διονύσιος ὁ Ἀρεοπαγίτης: 'the Areopagite' names a member of the Areopagus, the council before which Paul spoke (17:19, 22).",
+   "rows": [
+    "1586d3587fa32651"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "caesar",
+   "occupation": "emperor",
+   "why": "Luke 3:1 'in the fifteenth year of the reign (ἡγεμονίας) of Tiberius Caesar': Καῖσαρ (G2541) is the title the occupation is made of, with his reign. The rows of Luke 23:2 and John 19:15 speak of the same Caesar.",
+   "rows": [
+    "0689be23784b689f",
+    "b982f878b1d28816",
+    "9c670da4dacd305d"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "caesaraugustus",
+   "occupation": "emperor",
+   "why": "Luke 2:1 'a decree from Caesar Augustus': both words of the title, Καῖσαρ and Αὔγουστος (G2541, G4575), with a decree for the whole world.",
+   "rows": [
+    "68039ae5446e0aa4"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "claudius",
+   "occupation": "emperor",
+   "why": "Acts 11:28 KJV (the Textus Receptus) 'in the days of Claudius Caesar', and Acts 18:2 'Claudius had commanded all Jews to depart from Rome'. Nestle lacks Καίσαρος at 11:28; the witness is the King James.",
+   "rows": [
+    "27071516d6923b19"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "mordecai-2",
+   "occupation": "household-steward",
+   "why": "Esth 8:2 'Esther set Mordecai over the house of Haman': set over a house, as Joseph is made overseer of Potiphar's (Gen 39:4), who holds Household steward on it.",
+   "rows": [
+    "c7c71b23c7354ce9"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jesus",
+   "occupation": "judge-of-the-living-and-the-dead",
+   "rows": [
+    "08a38f57d91ea3d7",
+    "bb30468fb30ca8e5"
+   ],
+   "notAmongTheHeldRows": null,
+   "why": "Owner's ruling of 2026-11-09 (question 1b): 'he is ordained of God to be the Judge of the living and the dead' (Acts 10:42, κριτὴς ζώντων καὶ νεκρῶν; also 2 Tim 4:1, John 5:22, 27). A heavenly role, beside Apostle and High priest (Heb 3:1, 7:21)."
+  },
+  {
+   "person": "eleazar-2",
+   "occupation": "keeper-of-the-ark",
+   "why": "1 Sam 7:1 'they consecrated Eleazar his son to keep the ark of the LORD': a sacred charge stated of him by name. Levite alone is standing, but a stated service counts (rule of part 1).",
+   "rows": [
+    "4dd4388ff8640b23"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shallum-2",
+   "occupation": "keeper-of-the-wardrobe",
+   "why": "2 Kgs 22:14 'Shallum son of Tikvah son of Harhas, keeper of the wardrobe' (שֹׁמֵר הַבְּגָדִים): the title is Shallum's, at the head of the chain; 2 Chr 34:22 the same.",
+   "rows": [
+    "bb9523dde51dea58"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "nimrod",
+   "occupation": "king",
+   "why": "Gen 10:10 'the beginning of his kingdom (מַמְלַכְתּוֹ) was Babel': a man whose kingdom the text names is its king, as a verb of reigning counts.",
+   "rows": [
+    "f5c7c46f624a58d0"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "rezon",
+   "occupation": "king",
+   "why": "1 Kgs 11:24-25: his band 'reigned in Damascus' and 'he was an adversary to Israel all the days of Solomon... and reigned over Aram' (KJV, BSB 'Rezon... ruled over Aram'). The verb of reigning said of him.",
+   "rows": [
+    "14648390b62fc17c"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "abaddon",
+   "occupation": "king-over-the-locusts",
+   "why": "Rev 9:11: the locusts 'have a king over them, the angel of the abyss, whose name in Hebrew is Abaddon'. A heavenly being's role, so a heavenly role (owner's ruling of 2026-10-27, TSK-1254), not the earthly King.",
+   "rows": [
+    "7f25b1173bfa2912"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "zattu",
+   "occupation": "leader-of-the-people",
+   "why": "Neh 10:15 'the heads of the people: Parosh, Pahath-moab, Elam, Zattu, Bani': the 33 others of 10:15-28 hold Leader of the people on this list; Zattu is named in it the same way.",
+   "rows": [
+    "0ac8f0c14e76eecd"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "elisha",
+   "occupation": "leaders-attendant",
+   "why": "1 Kgs 19:21 'he went after Elijah and served him' (וַיְשָׁרְתֵהוּ), the attendant's verb, as Joshua is Moses' attendant (Josh 1:1). 2 Kgs 3:11 'who poured water on the hands of Elijah' says the same service.",
+   "rows": [
+    "0f5f17c6e95fa047"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "shechem",
+   "occupation": "prince",
+   "why": "Gen 34:2 'Shechem son of Hamor the Hivite, prince (נְשִׂיא) of the land': the title is the son's, at the head (KJV, BSB).",
+   "rows": [
+    "6bd9aff6fa92cea7"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azariah-18",
+   "occupation": "regional-officer",
+   "why": "Dan 2:49: Daniel asked and the king 'set Shadrach, Meshach and Abed-nego over the affairs of the province of Babylon'; Dan 1:7 gives Azariah the name Abed-nego. Dan 1:19 (they stood before the king) is the same service, and Dan 3:12 repeats the office.",
+   "rows": [
+    "dc2308bbf8017476",
+    "1aafc499be4f3866"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hananiah-12",
+   "occupation": "regional-officer",
+   "why": "Dan 2:49 'set Shadrach, Meshach and Abed-nego over the affairs of the province of Babylon'; Dan 1:7 gives Hananiah the name Shadrach. Dan 1:19 and 3:12 are the same service.",
+   "rows": [
+    "55eb8fc07570af21",
+    "83a9c5cc5e1da867"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "mishael-3",
+   "occupation": "regional-officer",
+   "why": "Dan 2:49 'set Shadrach, Meshach and Abed-nego over the affairs of the province of Babylon'; Dan 1:7 gives Mishael the name Meshach. Dan 1:19 and 3:12 are the same service.",
+   "rows": [
+    "d3cf33bb361e3943",
+    "938d35705074d124"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "abiathar",
+   "occupation": "royal-counselor",
+   "why": "1 Chr 27:33-34: 'Ahithophel was the king's counselor... and after Ahithophel, Jehoiada son of Benaiah and Abiathar'. The verse names who followed in the office it has just named, in a list of David's officials; BSB 'Ahithophel was succeeded by Jehoiada son of Benaiah and by Abiathar'. Read as the owner read 1 Kgs 4:2 (a list of officials, each followed by his office).",
+   "rows": [
+    "b35bf75cbd2b0af9"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hushai",
+   "occupation": "royal-counselor",
+   "why": "1 Chr 27:33 'Hushai the Archite was the king's friend' (רֵעַ הַמֶּלֶךְ) in the list of David's officials, between the king's counselors; Zabud holds Royal counselor on the same title (1 Kgs 4:5).",
+   "rows": [
+    "74b1ae355a665b03"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "jehoiada-son-of-benaiah",
+   "occupation": "royal-counselor",
+   "why": "1 Chr 27:34 'after Ahithophel, Jehoiada son of Benaiah and Abiathar': who followed in the office 27:33 names (BSB 'Ahithophel was succeeded by'), in a list of David's officials.",
+   "rows": [
+    "8da649318b7654e2"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "seraiah-10",
+   "occupation": "royal-official",
+   "why": "Jer 51:59 'Seraiah was a quiet prince' / 'quartermaster' (שַׂר מְנוּחָה): whatever מְנוּחָה means, he is a שַׂר, a royal official, sent with king Zedekiah.",
+   "rows": [
+    "a8495b4ede531bb1"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "abishag",
+   "occupation": "royal-servant",
+   "why": "1 Kgs 1:4 וַתְּשָׁרְתֵהוּ, 'she served him', the attendant's verb said of her by the narrator, after 1:2 'let her stand before the king'. The same verb makes Joshua Moses' attendant (Josh 1:1).",
+   "rows": [
+    "051161ac184b53ff"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "azariah-15",
+   "occupation": "temple-ruler",
+   "why": "2 Chr 31:13 'Azariah the ruler of the house of God' (נְגִיד בֵּית־הָאֱלֹהִים), the title azariah-7 holds on 1 Chr 9:11. Read of the record the verse's word names.",
+   "rows": [
+    "968d0c0754ccef22"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "maaseiah-20",
+   "occupation": "temple-threshold-keeper",
+   "why": "Jer 35:4 'the chamber of Maaseiah son of Shallum, the keeper of the threshold' (שֹׁמֵר הַסַּף) in the house of the LORD: the title is the son's, at the head of the chain (rule of part 1). 2 Kgs 25:18 and Jer 52:24 name the office.",
+   "rows": [
+    "2b6afbb71f5cb2c5"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "hanan-7",
+   "occupation": "treasurer",
+   "why": "Neh 13:13 'I appointed treasurers over the treasuries: Shelemiah..., Zadok..., Pedaiah..., and next to them Hanan son of Zaccur... and their charge was to distribute to their brethren'. The appointing verb governs the whole list and the duty is said of all; the three others hold Treasurer on this verse.",
+   "rows": [
+    "730ace6d2952d404"
+   ],
+   "notAmongTheHeldRows": null
+  },
+  {
+   "person": "samuel",
+   "occupation": "tribal-chief",
+   "why": "Num 34:18-20 'take one prince of every tribe... of the tribe of Simeon, Shemuel son of Ammihud': the heading names each man of the list a prince, as the four admitted on 34:18.",
+   "rows": [
+    "7d99bef98794313f"
+   ],
+   "notAmongTheHeldRows": null
+  }
+ ],
+ "refused": [
+  {
+   "row": "34dbdf305007edf7",
+   "person": "aaron",
+   "label": "head of the house of Levi (Aaron)",
+   "reason": "Num 17:17-18 has his name written on Levi's rod, 'one rod for the head of their fathers' house': a rod for each tribe's head, not an office the verse gives Aaron; he holds Priest and High priest."
+  },
+  {
+   "row": "14a2edd225e8d052",
+   "person": "abdon-2",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27: 'these were heads of fathers by their generations, chief men'. A list the text closes with the office says it of each man named (rule of part 1), as 1 Chr 5:24 and 7:7 were admitted."
+  },
+  {
+   "row": "46615df671f61524",
+   "person": "abiram",
+   "label": "called of the congregation",
+   "reason": "Num 26:9 קְרוּאֵי הָעֵדָה, 'called' or 'renowned of the congregation': a standing among the people; no office is named of him."
+  },
+  {
+   "row": "2b22228f0e1f25cd",
+   "person": "abram",
+   "label": "נְשִׂיא אֱלֹהִים (mighty prince / prince of God)",
+   "reason": "Gen 23:6 is the Hittites' address to him, 'a mighty prince (נְשִׂיא אֱלֹהִים) among us': an honour paid in speech, not an office the narrator gives him."
+  },
+  {
+   "row": "68ce9cd98bc514e4",
+   "person": "absalom",
+   "label": "anointed over the people (possible king)",
+   "reason": "The text calls him king only in his own messengers' proclamation (2 Sam 15:10), in Hushai's cry whose object is not plain (16:16) and in the people's 'whom we anointed over us' (19:10). The narrator never says he reigned."
+  },
+  {
+   "row": "abcbc39f97a6a043",
+   "person": "absalom",
+   "label": "king (?)",
+   "reason": "The text calls him king only in his own messengers' proclamation (2 Sam 15:10), in Hushai's cry whose object is not plain (16:16) and in the people's 'whom we anointed over us' (19:10). The narrator never says he reigned."
+  },
+  {
+   "row": "cffdefdd0cfb112c",
+   "person": "absalom",
+   "label": "king (proclaimed)",
+   "reason": "The text calls him king only in his own messengers' proclamation (2 Sam 15:10), in Hushai's cry whose object is not plain (16:16) and in the people's 'whom we anointed over us' (19:10). The narrator never says he reigned."
+  },
+  {
+   "row": "ebbc501e112f6b79",
+   "person": "absalom",
+   "label": "Помазаний над народом (можливо, цар)",
+   "reason": "The text calls him king only in his own messengers' proclamation (2 Sam 15:10), in Hushai's cry whose object is not plain (16:16) and in the people's 'whom we anointed over us' (19:10). The narrator never says he reigned."
+  },
+  {
+   "row": "3fec3b243ed953ff",
+   "person": "adaiah-3",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'; said of each man named."
+  },
+  {
+   "row": "9af1bf761356823b",
+   "person": "adonibezek",
+   "label": "Possible king",
+   "reason": "Judg 1:7: seventy kings ate under his table. What he did to kings; the text does not call him king."
+  },
+  {
+   "row": "2cbda34336cb58c6",
+   "person": "ahijah-5",
+   "label": "голова родів мешканців Геви",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:6-7: 'these are the heads of fathers of the inhabitants of Geba... Naaman, and Ahijah, and Gera'."
+  },
+  {
+   "row": "9bc0da4f2ea240df",
+   "person": "ahio-2",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "32156e8dce00ba74",
+   "person": "ahitub-3",
+   "label": "ruler of the house of God",
+   "reason": "1 Chr 9:11 'Azariah son of Hilkiah... son of Ahitub, the ruler of the house of God': the title closes the chain and is Azariah's (Neh 11:11 gives it to Seraiah at the head of the same chain); an ancestor does not hold it."
+  },
+  {
+   "row": "1a2952e1922722fc",
+   "person": "allon",
+   "label": "Prince in his family (ancestor in a genealogy)",
+   "reason": "1 Chr 4:37-38: an ancestor in Ziza's chain. 'These mentioned by name were princes in their families' is said of the men the list names, not of each forebear in a chain (rule of part 1)."
+  },
+  {
+   "row": "7f6805a4f40a1773",
+   "person": "amaziah-2",
+   "label": "Prince in his family (father in a genealogy)",
+   "reason": "1 Chr 4:34: Joshah's father, named in a chain; 4:38's 'princes' is said of the men named, not of each forebear."
+  },
+  {
+   "row": "bd76968cc3a55ef7",
+   "person": "anthothijah",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "815183e96d8e4734",
+   "person": "arad",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "6d09492a3daf9d8d",
+   "person": "araunah",
+   "label": "Araunah \"as a king\" / \"Araunah the king\"",
+   "reason": "2 Sam 24:23 הַכֹּל נָתַן אֲרַוְנָה הַמֶּלֶךְ לַמֶּלֶךְ: 'the king' can be a vocative, 'all this, O king, Araunah gives to the king' (BSB), or 'as a king' (KJV). The verse does not make him a king."
+  },
+  {
+   "row": "d2b76f8b2ee3599f",
+   "person": "ariel-2",
+   "label": "chief man / leader",
+   "reason": "Ezra 8:16: among the men Ezra sent for, רָאשִׁים, 'leading men'. Standing among the returned, not an office; no house or people is said they head."
+  },
+  {
+   "row": "bb2bb3596fd567d7",
+   "person": "asiel",
+   "label": "Prince in his family (ancestor in a genealogy)",
+   "reason": "1 Chr 4:35: a forebear in Jehu's chain; 4:38's 'princes' is said of the men named."
+  },
+  {
+   "row": "392309385a569856",
+   "person": "athaiah",
+   "label": "chief of the province",
+   "reason": "Neh 11:3 'these are the chiefs of the province who dwelt in Jerusalem' heads the whole register of 11:3-24, priests, Levites, gatekeepers and temple servants among it: it says where the heads lived, not an office of each name."
+  },
+  {
+   "row": "9496862c84cece20",
+   "person": "athaliah",
+   "label": "counsellor to her son Ahaziah",
+   "reason": "2 Chr 22:3 'his mother was his counselor to do wickedly': what she was to her son, the king, not an office at the court."
+  },
+  {
+   "row": "1e3e277c577fb1a0",
+   "person": "athaliah-2",
+   "label": "голова родів / старійшина",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:26-28: a son of Jeroham in the list 8:28 closes with 'heads of fathers'."
+  },
+  {
+   "row": "7ec3c3d86347f012",
+   "person": "azariah-of-the-wall-dedication",
+   "label": "Azariah among the procession",
+   "reason": "Neh 12:32-33: he walks in the procession behind half of the princes of Judah; the text does not call him one of them."
+  },
+  {
+   "row": "e833f6c1c29c6abb",
+   "person": "bakbukiah",
+   "label": "second among his brethren",
+   "reason": "Neh 11:17 'second among his brethren': his rank after Mattaniah, not an office. He holds Temple gatekeeper."
+  },
+  {
+   "row": "4736a2c72bd1f864",
+   "person": "barjesus",
+   "label": "with the proconsul (attendant)",
+   "reason": "Acts 13:7 'who was with the proconsul': in his company; the text names no service (BSB's 'attendant' is a rendering)."
+  },
+  {
+   "row": "a98bd26d3e3d0903",
+   "person": "beriah-3",
+   "label": "head of the fathers of the inhabitants of Aijalon",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:13 'Beriah and Shema, who were heads of fathers of the inhabitants of Aijalon'."
+  },
+  {
+   "row": "494eca6bf75128a9",
+   "person": "binnui-4",
+   "label": "правитель півокругу Кеїла (v18)",
+   "reason": "Neh 3:18: BSB reads Binnui, but BHSA and KJV read Bavvai son of Henadad, who holds District ruler on this verse."
+  },
+  {
+   "row": "505f12d4772371fb",
+   "person": "dathan",
+   "label": "called of the congregation",
+   "reason": "Num 26:9 קְרוּאֵי הָעֵדָה: a standing among the people; no office is named of him."
+  },
+  {
+   "row": "020e3a2d76a01b56",
+   "person": "david",
+   "label": "shepherd of Jacob/Israel (ruling shepherd)",
+   "reason": "Ps 78:71-72: 'to feed Jacob his people': the shepherd figure for his rule, which he holds as King."
+  },
+  {
+   "row": "21a464b0f472e76d",
+   "person": "david",
+   "label": "Shepherd of Jacob/Israel (leading the people)",
+   "reason": "Ps 78:72: the shepherd figure for his rule, which he holds as King."
+  },
+  {
+   "row": "5c0b26768f8c75c4",
+   "person": "david",
+   "label": "ruler or judge (implied by the speaker's resolutions)",
+   "reason": "Ps 101:8 is a resolve in the psalm's first person; it names no office."
+  },
+  {
+   "row": "bad3744c9fff276f",
+   "person": "ehud",
+   "label": "deliverer (מֹושִׁ֗יעַ)",
+   "reason": "Judg 3:15 'the LORD raised them up a deliverer, Ehud': what the LORD did through him; the text never says he judged Israel."
+  },
+  {
+   "row": "33c8641d271052d3",
+   "person": "eliashib-7",
+   "label": "oversight of the temple chamber",
+   "reason": "Neh 13:4 נָתוּן בְּלִשְׁכַּת: 'set in the chamber' of the house of God. The oversight is the translations' (KJV, BSB); the Hebrew names no office. He holds Priest and High priest."
+  },
+  {
+   "row": "d6b96ddef1b10d70",
+   "person": "eliezer",
+   "label": "steward of the house / household heir",
+   "reason": "Gen 15:2 בֶּן־מֶשֶׁק בֵּיתִי is obscure: KJV 'the steward of my house', BSB 'the heir of my house'; 15:3 'one born in my house is my heir'. No office is plain."
+  },
+  {
+   "row": "e2808a0aaaaf4ef4",
+   "person": "eliezer-7",
+   "label": "chief man / leader",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing among the returned, not an office."
+  },
+  {
+   "row": "b17b362fa5e3d155",
+   "person": "elnathan-2",
+   "label": "chief man or teacher (uncertain which Elnathan)",
+   "reason": "Ezra 8:16: one of the men Ezra sent for, called רָאשִׁים or מְבִינִים; neither names an office."
+  },
+  {
+   "row": "c284d77ad296207a",
+   "person": "elnathan-3",
+   "label": "chief man / leader (first Elnathan)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "312073b9706b704b",
+   "person": "elnathan-4",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "44a2316e99324f26",
+   "person": "epaphroditus",
+   "label": "messenger/apostle of the Philippians (ἀπόστολος) and minister (λειτουργός)",
+   "reason": "Phil 2:25 'your messenger (ἀπόστολον) and minister to my need': sent by one church on one errand to Paul; not an office."
+  },
+  {
+   "row": "b52f3c264c996694",
+   "person": "gamaliel-2",
+   "label": "member of the Sanhedrin",
+   "reason": "Acts 5:34 'a Pharisee in the council stood up': he spoke in the Sanhedrin, but the text does not name him a member (no βουλευτής, as for Joseph, Mark 15:43). He holds Teacher of the Law."
+  },
+  {
+   "row": "516ce4fcb418d7cb",
+   "person": "gehazi",
+   "label": "servant/attendant of Elisha",
+   "reason": "2 Kgs 4:12, 5:20, 8:4 נַעַר, 'servant' or 'young man' of Elisha: a servant's standing, as Ziba's and Rhoda's; unlike Joshua and Elisha the text gives him no attendant's verb."
+  },
+  {
+   "row": "717b7dd064e720fa",
+   "person": "gehazi",
+   "label": "servant/attendant of Elisha",
+   "reason": "2 Kgs 4:12, 5:20, 8:4 נַעַר, 'servant' or 'young man' of Elisha: a servant's standing, as Ziba's and Rhoda's; unlike Joshua and Elisha the text gives him no attendant's verb."
+  },
+  {
+   "row": "7ce2aa0408fbdf38",
+   "person": "gehazi",
+   "label": "servant of the man of God",
+   "reason": "2 Kgs 4:12, 5:20, 8:4 נַעַר, 'servant' or 'young man' of Elisha: a servant's standing, as Ziba's and Rhoda's; unlike Joshua and Elisha the text gives him no attendant's verb."
+  },
+  {
+   "row": "d98edc8ed890eeb1",
+   "person": "giddel-2",
+   "label": "Servant of Solomon – descendants of Giddel",
+   "reason": "Neh 7:57-58 'the sons of Solomon's servants... the sons of Giddel': a family name among their descendants, not a service of Giddel."
+  },
+  {
+   "row": "ab1954d0701f0b93",
+   "person": "hadad-3",
+   "label": "Цар Арама (суб'єкт «запанував над Арамом»)",
+   "reason": "1 Kgs 11:25 'and he reigned over Aram': the verse's subject is Rezon of 11:23-24 ('the evil that Hadad did' is said in passing), as KJV and BSB read it."
+  },
+  {
+   "row": "ec49bf2680e36f2c",
+   "person": "hagar",
+   "label": "Servant (handmaid) of Sarah",
+   "reason": "Gen 25:12 'Sarah's handmaid' (שִׁפְחָה): a slave's standing, not an occupation."
+  },
+  {
+   "row": "279efe535d8dc624",
+   "person": "hamor",
+   "label": "prince of the land (possible)",
+   "reason": "Gen 34:2 'Shechem son of Hamor the Hivite, prince of the land': the title is the son's (rule of part 1; KJV, BSB)."
+  },
+  {
+   "row": "625ad7b3d13d024a",
+   "person": "harhas",
+   "label": "keeper of the wardrobe (attribution unclear)",
+   "reason": "2 Kgs 22:14 'Shallum son of Tikvah son of Harhas, keeper of the wardrobe': the title is Shallum's, at the head of the chain."
+  },
+  {
+   "row": "2f53566df9f914c6",
+   "person": "hoshaiah",
+   "label": "Leader (prince) of Judah",
+   "reason": "Neh 12:32: 'after them went Hoshaiah and half of the princes of Judah'; he walks with them, the text does not call him one."
+  },
+  {
+   "row": "67678ba802ebc692",
+   "person": "ishmael-2",
+   "label": "king's chief officers / princes of the king",
+   "reason": "Jer 41:1 'Ishmael... of the seed royal, and the chief officers of the king, and ten men with him': the officers may be a group that came with him (KJV) or his own rank (BSB). Not plain."
+  },
+  {
+   "row": "8c84a7d4e1aaeab8",
+   "person": "isshiah",
+   "label": "chief man (head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'the sons of Izrahiah: Michael, Obadiah, Joel, Isshiah, five; all of them chief men (רָאשִׁים)', in the genealogy whose 7:2 and 7:4 speak of heads of their fathers' houses; said of each man named, as 1 Chr 7:7."
+  },
+  {
+   "row": "5a42de29d2d50996",
+   "person": "izrahiah",
+   "label": "chief man (head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3: the count 'five' takes in Izrahiah with his four sons, 'all of them chief men'."
+  },
+  {
+   "row": "d33c1ab4c37271a9",
+   "person": "jaazaniah-3",
+   "label": "Jaazaniah among the seventy elders with a censer",
+   "reason": "Ezek 8:11 'in the midst of them stood Jaazaniah': he stands among the seventy elders; the text does not call him one."
+  },
+  {
+   "row": "a406eafc3768e1b6",
+   "person": "james-3",
+   "label": "pillar (reputed)",
+   "reason": "Acts 21:18 'unto James, and all the elders were present' does not call him an elder; Gal 2:9 'reputed to be pillars' is a figure. He holds Apostle (Gal 1:19)."
+  },
+  {
+   "row": "f4958b67ebcb0dc6",
+   "person": "james-3",
+   "label": "Яків (пов'язаний зі старійшинами в Єрусалимі)",
+   "reason": "Acts 21:18 'unto James, and all the elders were present' does not call him an elder; Gal 2:9 'reputed to be pillars' is a figure. He holds Apostle (Gal 1:19)."
+  },
+  {
+   "row": "6111842908988fd7",
+   "person": "jamin",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
+   "row": "c3b38cbdabca890b",
+   "person": "janai",
+   "label": "Janai in the Gadite list (title not stated)",
+   "reason": "1 Chr 5:12 'Joel the chief, and Shapham the second, and Janai, and Shaphat in Bashan': the title is given to Joel and Shapham only."
+  },
+  {
+   "row": "f9e26f5cf8151ffb",
+   "person": "jarib",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "f21b687f2ed11846",
+   "person": "jehiel-2",
+   "label": "with the king's sons",
+   "reason": "1 Chr 27:32 'Jehiel son of Hachmoni was with the king's sons': the list says whom he was with, not what he did (BSB's 'attended to' is a rendering)."
+  },
+  {
+   "row": "646ccd91c92262d0",
+   "person": "jehozabad",
+   "label": "servant of the king",
+   "reason": "2 Kgs 12:21 (2 Chr 24:25-26) 'his servants' who killed the king: whose men they were, not a title set beside each name as 'Asaiah the king's servant'."
+  },
+  {
+   "row": "fa4a4045e745fbdb",
+   "person": "jehozabad",
+   "label": "king's servant",
+   "reason": "2 Kgs 12:21 (2 Chr 24:25-26) 'his servants' who killed the king: whose men they were, not a title set beside each name as 'Asaiah the king's servant'."
+  },
+  {
+   "row": "8533779de1934921",
+   "person": "jemuel",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
+   "row": "bbd954aea9d563d9",
+   "person": "jeroboam",
+   "label": "Слуга Соломона",
+   "reason": "'Servant of Solomon' (1 Kgs 11:26, 2 Chr 13:6): his standing under Solomon; his office then was over the labour of the house of Joseph (1 Kgs 11:28), which he holds."
+  },
+  {
+   "row": "c278337a8a180870",
+   "person": "jeroboam",
+   "label": "servant of Solomon",
+   "reason": "'Servant of Solomon' (1 Kgs 11:26, 2 Chr 13:6): his standing under Solomon; his office then was over the labour of the house of Joseph (1 Kgs 11:28), which he holds."
+  },
+  {
+   "row": "c0fff157e1603f51",
+   "person": "jeshua-3",
+   "label": "head of a fathers' house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: Ezra 4:3 'Zerubbabel, and Jeshua, and the rest of the heads of fathers of Israel': 'the rest of' counts the two among the heads."
+  },
+  {
+   "row": "1e2663988a55f8d4",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "3c0189ed2da78298",
+   "person": "jesus",
+   "label": "Цар (Βασιλεύς)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "454150720d5ecb8a",
+   "person": "jesus",
+   "label": "King of the Jews (accusation, inscription, mockery)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "454f57eb8f2db579",
+   "person": "jesus",
+   "label": "king (accusation)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "4ffa4cece5b6f433",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "77e5637a425b5edf",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "936e848ff6142395",
+   "person": "jesus",
+   "label": "King of Israel",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "ca685c2cf8ed5333",
+   "person": "jesus",
+   "label": "king of the Jews (title)",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "d91fc479eba80878",
+   "person": "jesus",
+   "label": "servant/minister of the circumcised (diakonos)",
+   "reason": "Rom 15:8 'a minister (διάκονον) of the circumcision': what Christ became for them; not an office of the list."
+  },
+  {
+   "row": "f03c328cfa191185",
+   "person": "jesus",
+   "label": "King of the Jews",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King. 'King of the Jews' and 'King of Israel' are the magi's question, the crowd's cry, the charge and Pilate's inscription; his own answer is of a kingdom not of this world (John 18:36-37)."
+  },
+  {
+   "row": "1f7e49755bb6c873",
+   "person": "joash-5",
+   "label": "ruler/lord in Moab (?)",
+   "reason": "1 Chr 4:22 אֲשֶׁר־בָּעֲלוּ לְמוֹאָב can be 'who ruled in Moab' (KJV) or 'who married into Moab'; not plain."
+  },
+  {
+   "row": "8c7e3193263dce8c",
+   "person": "job",
+   "label": "Job sat as chief/head (presiding at the gate)",
+   "reason": "Job 29:25 'I sat as chief, and dwelt as a king in the army' is his own figure of past honour. The Ge'ez (and the Septuagint's) appendix to Job 42 calls him Jobab, a king of Edom: that names him as Jobab of Gen 36:33, another record, and is a question of identity for the records, not of his occupation."
+  },
+  {
+   "row": "ccd6c9d745b6e250",
+   "person": "job",
+   "label": "Ge'ez appendix identifying Job as a king (Iyobab) in Edom",
+   "reason": "Job 29:25 'I sat as chief, and dwelt as a king in the army' is his own figure of past honour. The Ge'ez (and the Septuagint's) appendix to Job 42 calls him Jobab, a king of Edom: that names him as Jobab of Gen 36:33, another record, and is a question of identity for the records, not of his occupation."
+  },
+  {
+   "row": "ca5a78914d3d7460",
+   "person": "joel-5",
+   "label": "chief man (head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'all of them chief men', of Izrahiah's five."
+  },
+  {
+   "row": "43fcd2920354f2dd",
+   "person": "john-2",
+   "label": "the elder",
+   "reason": "Gal 2:9 'pillars' is a figure; 2 John 1 'the elder' names no one, and the text does not say he is John son of Zebedee. He holds Apostle."
+  },
+  {
+   "row": "d118c59094cdfb1b",
+   "person": "john-2",
+   "label": "pillar (reputed)",
+   "reason": "Gal 2:9 'pillars' is a figure; 2 John 1 'the elder' names no one, and the text does not say he is John son of Zebedee. He holds Apostle."
+  },
+  {
+   "row": "8e369a9ff270456e",
+   "person": "jozacar",
+   "label": "servant of the king",
+   "reason": "2 Kgs 12:21 'his servants' who killed the king: whose men they were, not a court title."
+  },
+  {
+   "row": "9f125d5d8c5876b9",
+   "person": "judas-5",
+   "label": "Leading man among the brethren",
+   "reason": "Acts 15:22 'leading men among the brethren' (ἡγουμένους): standing in the church, no office. He holds Prophet (15:32)."
+  },
+  {
+   "row": "3bf49316912c1b87",
+   "person": "kingofhena",
+   "label": "King of Hena",
+   "reason": "2 Kgs 19:13, Isa 37:13 'the king of the city of Sepharvaim, Hena, and Ivah' may name one king of Sepharvaim, Hena and Ivah being places (2 Kgs 18:34 names them as cities with their gods). Whether a king of Hena is meant is the record's question."
+  },
+  {
+   "row": "b3d51e1c5c4ef6c6",
+   "person": "kingofivvah",
+   "label": "King of Ivvah",
+   "reason": "2 Kgs 19:13, Isa 37:13: as for the king of Hena, the verse may name one king of Sepharvaim with two more places; the record's question."
+  },
+  {
+   "row": "990971d8ce774c84",
+   "person": "mesha-3",
+   "label": "head of a father's house (clan head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:9-10 'these were his sons, heads of fathers'."
+  },
+  {
+   "row": "87186699e15bbb27",
+   "person": "meshullam-8",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "bd293d0caa248a56",
+   "person": "micah-3",
+   "label": "head/first among the sons of Uzziel",
+   "reason": "1 Chr 23:20 'Micah the first (הָרֹאשׁ), and Isshiah the second': an order of rank or birth, as 23:11 'Jahath the first, and Zizah the second'."
+  },
+  {
+   "row": "4898744086038a97",
+   "person": "michael-4",
+   "label": "chief man",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'all of them chief men', of Izrahiah's five."
+  },
+  {
+   "row": "5d9d072524d50510",
+   "person": "mirmah",
+   "label": "head of a father's house (clan head)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:10 'these were his sons, heads of fathers'."
+  },
+  {
+   "row": "dfe46080f2633231",
+   "person": "naaman-3",
+   "label": "head of a father's house among the inhabitants of Geba",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:6-7 'heads of fathers of the inhabitants of Geba... Naaman, and Ahijah, and Gera'."
+  },
+  {
+   "row": "3bbb7881ad5f7b0d",
+   "person": "nathan-5",
+   "label": "kohen in 'Zabud son of Nathan kohen, friend of the king'",
+   "reason": "1 Kgs 4:5 'Zabud son of Nathan, priest': the owner ruled on 2026-11-01 that the title is Zabud's."
+  },
+  {
+   "row": "7a5985d982e69c95",
+   "person": "nathan-7",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "d28964ff6de55495",
+   "person": "obadiah-3",
+   "label": "chief man",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 7:3 'all of them chief men', of Izrahiah's five."
+  },
+  {
+   "row": "15a5e40db822722a",
+   "person": "obed-4",
+   "label": "Shemaiah's sons – ruling over their father's house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 26:6-7: sons of Shemaiah 'that ruled (הַמִּמְשָׁלִים) over the house of their father... Othni, Rephael, Obed, Elzabad...'. Rule over their fathers' house is said of each son named."
+  },
+  {
+   "row": "c4e671e14bb0fe5f",
+   "person": "ohad",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
+   "row": "f6e9c948002fad7b",
+   "person": "othni",
+   "label": "Shemaiah's sons – ruling over their father's house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father'."
+  },
+  {
+   "row": "ab216d15fac32fc1",
+   "person": "pallu",
+   "label": "head of a fathers' house (clan head)",
+   "reason": "Owner's ruling of 2026-11-09 (question 2): Exod 6:14-25 is a genealogy naming the founders of clans, not an office; nobody holds Head of an ancestral house from these verses."
+  },
+  {
+   "row": "f66b7625e73de1bb",
+   "person": "pashhur",
+   "label": "princes / officials (שָׂרִים)",
+   "reason": "Jer 38:1 names four men who heard Jeremiah and 38:4 'the princes said to the king'; the text does not say the four are the princes."
+  },
+  {
+   "row": "e3cf724c889cd971",
+   "person": "pharaoh",
+   "label": "Pharaoh as ruler",
+   "reason": "Gen 12: 'Pharaoh' with his princes and house, but neither 'king' nor a verb of reigning is said of this Pharaoh; the name-title alone is not the office's word."
+  },
+  {
+   "row": "cec6dd6bf08cdd91",
+   "person": "pharaoh-6",
+   "label": "Pharaoh",
+   "reason": "1 Chr 4:18 'Bithiah the daughter of Pharaoh': named as her father only; no office is said."
+  },
+  {
+   "row": "42b9089ca1dfbde8",
+   "person": "rehabiah",
+   "label": "head/first among the sons of Eliezer",
+   "reason": "1 Chr 23:17 'Rehabiah the first (הָרֹאשׁ)': order of rank or birth, as 23:11 'Jahath the first, Zizah the second'."
+  },
+  {
+   "row": "582f4b5ca0f8428f",
+   "person": "rephael",
+   "label": "Rulers over their father's house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 26:6-7: Shemaiah's sons 'that ruled over the house of their father'."
+  },
+  {
+   "row": "20ac3ef4fa73096c",
+   "person": "rhoda",
+   "label": "servant girl (παιδίσκη)",
+   "reason": "Acts 12:13 'a maid (παιδίσκη) named Rhoda came to answer': a servant girl's standing, not an occupation."
+  },
+  {
+   "row": "687828469c3e7c09",
+   "person": "sallu",
+   "label": "head of an ancestral house",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 9:9 'all these men were heads of fathers in the house of their fathers', closing 9:7-9."
+  },
+  {
+   "row": "ce0fd4f331123282",
+   "person": "saraph",
+   "label": "had dominion in Moab",
+   "reason": "1 Chr 4:22 בָּעֲלוּ לְמוֹאָב: 'had dominion in Moab' (KJV) or 'married into Moab'; not plain."
+  },
+  {
+   "row": "d238037f08212081",
+   "person": "satan",
+   "label": "Ruler of the demons / kingdom of Satan",
+   "reason": "Luke 11:15 'Beelzebub the ruler of the demons' is the accusers' word; Jesus answers of Satan's kingdom (11:18) without naming an office."
+  },
+  {
+   "row": "558304a4dc36bd1c",
+   "person": "saul-2",
+   "label": "Appointed/set for the defence of the gospel",
+   "reason": "Phil 1:16 'set for the defence of the gospel': a charge, not an office."
+  },
+  {
+   "row": "97973efaeab6bc74",
+   "person": "saul-2",
+   "label": "Ambassador in bonds (Paul)",
+   "reason": "Eph 6:20 'I am an ambassador in bonds': a figure for his preaching."
+  },
+  {
+   "row": "aecbbb06a21cea32",
+   "person": "seraiah-5",
+   "label": "prince in his family",
+   "reason": "1 Chr 4:35: a forebear in Jehu's chain; 4:38's 'princes' is said of the men named."
+  },
+  {
+   "row": "f01aa1b2ed58ab47",
+   "person": "shamgar",
+   "label": "deliverer of Israel",
+   "reason": "Judg 3:31 'he also delivered Israel': a deed; the text does not call him a judge."
+  },
+  {
+   "row": "f409aa0ad49c6e6a",
+   "person": "shapham",
+   "label": "the second (הַמִּשְׁנֶה)",
+   "reason": "1 Chr 5:12 'Shapham the second' (הַמִּשְׁנֶה): his rank after Joel the chief; no office of the list is named."
+  },
+  {
+   "row": "9df4acc3a2e6fe5e",
+   "person": "shebuel",
+   "label": "head/first among the sons of Gershom",
+   "reason": "1 Chr 23:16 'Shebuel the first (הָרֹאשׁ)': order of rank or birth. He holds Overseer of the temple treasuries (26:24)."
+  },
+  {
+   "row": "07d7e3d535aae1b8",
+   "person": "shelomith-3",
+   "label": "head/first among the sons of Izhar",
+   "reason": "1 Chr 23:18 'Shelomith the first (הָרֹאשׁ)': order of rank or birth."
+  },
+  {
+   "row": "4bfe79d477e44fea",
+   "person": "shelomoth",
+   "label": "head of fathers' houses of Ladan",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 23:9 'Shelomoth, Haziel and Haran, three: these were the heads of fathers of Ladan'."
+  },
+  {
+   "row": "cad1985615b85296",
+   "person": "shemaiah-14",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "f26dd24b34c83327",
+   "person": "shemaiah-25",
+   "label": "Possible prince/leader of Judah",
+   "reason": "Neh 12:34: in the procession after the princes of Judah; not called one."
+  },
+  {
+   "row": "046f7e900d2cf25d",
+   "person": "shemaiah-3",
+   "label": "prince in his family",
+   "reason": "1 Chr 4:37: a forebear in Ziza's chain; 4:38's 'princes' is said of the men named."
+  },
+  {
+   "row": "ebb3d998cf10f2c6",
+   "person": "shephatiah-8",
+   "label": "possible official/prince (śar)",
+   "reason": "Jer 38:1 names four men and 38:4 'the princes'; not said to be the same."
+  },
+  {
+   "row": "00f0a205e17a07e1",
+   "person": "shetharbozenai",
+   "label": "governor/official of beyond the river",
+   "reason": "Ezra 5:3, 5:6, 6:13: named beside Tattenai the governor with his companions; the title is Tattenai's, and no office is said of Shethar-bozenai."
+  },
+  {
+   "row": "daf759ccbd99855f",
+   "person": "shetharbozenai",
+   "label": "Apharsachite associate / official of the region west of the Euphrates",
+   "reason": "Ezra 5:3, 5:6, 6:13: named beside Tattenai the governor with his companions; the title is Tattenai's, and no office is said of Shethar-bozenai."
+  },
+  {
+   "row": "54f455eee9221f6d",
+   "person": "silas",
+   "label": "Leading man among the brethren",
+   "reason": "Acts 15:22 'leading men among the brethren': standing in the church. He holds Prophet (15:32)."
+  },
+  {
+   "row": "fb3cd32533671e09",
+   "person": "tikvah",
+   "label": "keeper of the wardrobe (attribution unclear)",
+   "reason": "2 Kgs 22:14: the title 'keeper of the wardrobe' is Shallum's, at the head of the chain."
+  },
+  {
+   "row": "411af84a5356f934",
+   "person": "tobiah-2",
+   "label": "the servant / official (ha-ʿeved), the Ammonite",
+   "reason": "Neh 2:10 'Tobiah the servant (הָעֶבֶד), the Ammonite': a byname, perhaps scornful; no master or service is named (BSB's 'official' is a rendering)."
+  },
+  {
+   "row": "f808998fc90baac1",
+   "person": "zechariah-16",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "2309d062c97093a7",
+   "person": "zechariah-24",
+   "label": "chief man (leader)",
+   "reason": "Ezra 8:16 רָאשִׁים, 'leading men': standing, not an office."
+  },
+  {
+   "row": "ec9a7960096db339",
+   "person": "zechariah-3",
+   "label": "the chief (הָרֹאשׁ) — Jeiel and Zechariah",
+   "reason": "1 Chr 5:7 'the chief, Jeiel, and Zechariah': the title stands before Jeiel only (KJV, BSB)."
+  },
+  {
+   "row": "e05b9fbeb3abe69a",
+   "person": "zephaniah-2",
+   "label": "officer in the house of the LORD",
+   "reason": "Jer 29:26 'that ye should be officers in the house of the LORD' is Shemaiah's letter, in the plural, to the priests at large. He holds Priest and Second priest."
+  },
+  {
+   "row": "288aa1ef2cae41c7",
+   "person": "zerubbabel-2",
+   "label": "leader / head of the fathers' houses",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: Ezra 4:3 'Zerubbabel, and Jeshua, and the rest of the heads of fathers of Israel': 'the rest of' counts him among them."
+  },
+  {
+   "row": "a82ed884faeda040",
+   "person": "ziba",
+   "label": "Слуга (або управитель) дому Саула",
+   "reason": "2 Sam 19:17 'Ziba the servant (נַעַר) of the house of Saul': a servant's standing; BSB's 'steward' is a rendering."
+  },
+  {
+   "row": "e52f39127effbe61",
+   "person": "zichri-3",
+   "label": "head of a father's house (chief)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "64178d9fc13123fd",
+   "person": "zichri-4",
+   "label": "head of a father's house (chief)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "9f5c5f8c6bc6ffab",
+   "person": "zillethai",
+   "label": "head of a father's house (chief)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: 1 Chr 8:28 closes the list of 8:14-27 with 'heads of fathers'."
+  },
+  {
+   "row": "7bf8a4c39371fe01",
+   "person": "zur-2",
+   "label": "head of a people / chief house in Midian (Zur)",
+   "reason": "The owner's ruling of 2026-11-09 (part 3, question 1): 'Head of an ancestral house' is not an occupation the site keeps ('таке заняття нам не треба'); the occupation and every pair holding it are removed. Descent stays the genealogy's. It had been admitted: Num 25:15 'Zur; he was head over the peoples of a father's house in Midian' (רֹאשׁ אֻמּוֹת בֵּית־אָב), as Zimri of 25:14 holds Head of an ancestral house on the verse before."
+  }
+ ],
+ "covered": [
+  {
+   "row": "e847fc5cc66e3d58",
+   "person": "abijam",
+   "label": "chief ruler among his brothers / king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1eae84d1e3348e69",
+   "person": "abimelech-2",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "3d4bcbfeac40a685",
+   "person": "abimelech-2",
+   "label": "king (Abimelech made king in Shechem)",
+   "by": "king",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "5bb810c8f4d1c7ed",
+   "person": "achish",
+   "label": "Possible kingship of Achish (\"my lord the king\")",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "6ada0f7c8ab8942a",
+   "person": "achish",
+   "label": "King of Gath",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "36e2d161492a1aab",
+   "person": "admatha",
+   "label": "one of the seven princes of Persia and Media",
+   "by": "persian-royal-counselor",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "f4e80e11c13b1423",
+   "person": "adoniram",
+   "label": "Adoram over the tribute/forced labor",
+   "by": "forced-labor-overseer",
+   "reason": "Holds Overseer of forced labor on 1 Kgs 4:6. Whether Adoram of 1 Kgs 12:18 is he is the record's question, not the occupation's."
+  },
+  {
+   "row": "9be2316c3a7ec0b6",
+   "person": "adonizedek",
+   "label": "king of Jerusalem",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0113a0d762097721",
+   "person": "ahab",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3e1095a7e1389d8e",
+   "person": "ahab",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "72bddcc5e9f65620",
+   "person": "ahab",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8ffad7de33038dd7",
+   "person": "ahab",
+   "label": "Ahab: possible ruler/king role",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8cbaa0cf8f2b3a07",
+   "person": "ahaziah-2",
+   "label": "цар Юдеї",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d4241a0b8887a7ba",
+   "person": "ahithophel",
+   "label": "counsellor",
+   "by": "royal-counselor",
+   "reason": "Holds Royal counselor on 2 Sam 15:12; 2 Sam 17:14 speaks of his counsel."
+  },
+  {
+   "row": "9a309037ab392491",
+   "person": "alvah",
+   "label": "chief of Edom (alluf)",
+   "by": "edomite-chief",
+   "reason": "Holds Edomite chief on Gen 36:40. Whether 1 Chr 1:51's 'Aliah' is he is the record's question."
+  },
+  {
+   "row": "f33a37ec0b5611d9",
+   "person": "amasa",
+   "label": "Обіцяна посада воєначальника замість Йоава",
+   "by": "military-commander",
+   "reason": "Holds Military commander; 2 Sam 19:13 is David's oath to make him captain, the office he holds."
+  },
+  {
+   "row": "f1320045f4d9b500",
+   "person": "amaziah",
+   "label": "king of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "bf74fe3381a2b34c",
+   "person": "asa",
+   "label": "king of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "77630e0adc367af0",
+   "person": "asaiah",
+   "label": "servant of the king",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant on 2 Chr 34:20, עֶבֶד הַמֶּלֶךְ; 2 Kgs 22:12 says the same."
+  },
+  {
+   "row": "d2b2fdf606edb6b2",
+   "person": "athaliah",
+   "label": "Athaliah reigned over the land",
+   "by": "reigning-queen",
+   "reason": "Holds Reigning queen on 2 Kgs 11:3; 2 Chr 22:12 says the same."
+  },
+  {
+   "row": "2e1fdf8352685717",
+   "person": "azariah-3",
+   "label": "King of Judah (Uzziah)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "bb23e2c94a2c5c29",
+   "person": "azariah-3",
+   "label": "Uzziah / Azariah (king)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c890864652841399",
+   "person": "azariah-3",
+   "label": "king (Uzziah)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "e875bf0eaa66055e",
+   "person": "balak",
+   "label": "Цар Моава",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "f66814abe3ce72e4",
+   "person": "benhadad",
+   "label": "король Арама",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "74ffe80c7171a8ef",
+   "person": "caesar-2",
+   "label": "Caesar (ruler/emperor?)",
+   "by": "emperor",
+   "reason": "Holds Emperor on Acts 25:21; Acts 26:32, 27:24, 28:19 speak of the same appeal."
+  },
+  {
+   "row": "9afd268b7cc6990a",
+   "person": "caesar-2",
+   "label": "Caesar (титул/посада правителя)",
+   "by": "emperor",
+   "reason": "Holds Emperor on Acts 25:21; Acts 26:32, 27:24, 28:19 speak of the same appeal."
+  },
+  {
+   "row": "e9d820f68237c2ba",
+   "person": "caesar-2",
+   "label": "Caesar (possible ruler/emperor)",
+   "by": "emperor",
+   "reason": "Holds Emperor on Acts 25:21; Acts 26:32, 27:24, 28:19 speak of the same appeal."
+  },
+  {
+   "row": "75ed32d3833c8750",
+   "person": "cyrus",
+   "label": "anointed (title)",
+   "by": "king",
+   "reason": "Holds King; Isa 45:1 'his anointed' adds no other office."
+  },
+  {
+   "row": "17815d17925ec515",
+   "person": "daniel-2",
+   "label": "president (over the kingdom, under Darius)",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "19ba2cec612e45cb",
+   "person": "daniel-2",
+   "label": "виконував справу/службу царя",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "3d03ab7f10e2f135",
+   "person": "daniel-2",
+   "label": "sat in the gate of the king",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "764445253e003c7d",
+   "person": "daniel-2",
+   "label": "Ruler over the province of Babylon and chief of the governors over the wise men",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "783cf78fc1481820",
+   "person": "daniel-2",
+   "label": "Royal courtier / one who stood before the king",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "7f5af38f6689d8d0",
+   "person": "daniel-2",
+   "label": "Master of the magicians, astrologers, Chaldeans and soothsayers",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "c47bce5c72347666",
+   "person": "daniel-2",
+   "label": "did the king's business",
+   "by": "chief-governor-over-wise-men",
+   "reason": "Holds Chief governor over the wise men, Governor, Chief of magicians and Administrator over satraps on the verses that say them; these rows repeat them from neighbouring chapters, or say he 'did the king's business' and 'sat in the king's gate' (Dan 2:49, 8:27), which is the same service."
+  },
+  {
+   "row": "42981880112e409f",
+   "person": "darius",
+   "label": "king (Darius)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "988b735c0bad73ca",
+   "person": "darius",
+   "label": "king (implied by regnal dating)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "05709edf2b630fe7",
+   "person": "david",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0661259bcc7b9dd5",
+   "person": "david",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0aa3d50d4dd3d1ce",
+   "person": "david",
+   "label": "king / anointed (possible royal office)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0cc27dd9d58df101",
+   "person": "david",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0e7ded97e4ce71a4",
+   "person": "david",
+   "label": "David their king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1e47171b02b62657",
+   "person": "david",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "224163133d4ef7d5",
+   "person": "david",
+   "label": "Престол Давида (царська роль)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "26a164c9947de16e",
+   "person": "david",
+   "label": "Throne of David (kingship implied)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "2727db8c70cf8f89",
+   "person": "david",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "290937a296cb9c72",
+   "person": "david",
+   "label": "king (David's throne)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "2e263281db8a3b37",
+   "person": "david",
+   "label": "King / throne-holder",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3a028d04531cf596",
+   "person": "david",
+   "label": "David their king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3b22b94111545a79",
+   "person": "david",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3b85069c14f0e542",
+   "person": "david",
+   "label": "king of Israel (kingdom given to David)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "45cd46c059e89629",
+   "person": "david",
+   "label": "king (implied)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "45fa95c5de0ed334",
+   "person": "david",
+   "label": "king (third-person reference in the psalm)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "53d81df0d8440d46",
+   "person": "david",
+   "label": "Chosen to be over Israel (ruler/king)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "56687b0b3833e58a",
+   "person": "david",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "60b2b8bcf20ae9e0",
+   "person": "david",
+   "label": "king (המלך)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "642164e310a018cc",
+   "person": "david",
+   "label": "king set on Zion (\"my king\")",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "7a0dec4022a1dadf",
+   "person": "david",
+   "label": "king of Israel (reigned in Jerusalem)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "83806f4269c08ab9",
+   "person": "david",
+   "label": "king of Israel (ambiguous reference)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "86cd62672c67c512",
+   "person": "david",
+   "label": "king of the land",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "87419fbf1384d7bf",
+   "person": "david",
+   "label": "king (implied)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "97ee00ddb4c4e32b",
+   "person": "david",
+   "label": "king over Judah (king)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "99e739606bbc7c93",
+   "person": "david",
+   "label": "king (throne mentioned)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "ac8612064d6b39a1",
+   "person": "david",
+   "label": "leader and commander of the peoples (nagid u-metsavveh)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "ad2e3a1279c1fe35",
+   "person": "david",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "b66583cfc806351c",
+   "person": "david",
+   "label": "king David",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c24a26fb22bab31f",
+   "person": "david",
+   "label": "обраний бути над Ізраїлем (правитель?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d092ae4cd46a480f",
+   "person": "david",
+   "label": "king (possible)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d4166929a88fef34",
+   "person": "david",
+   "label": "anointed of the God of Jacob",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d9332763aebc60da",
+   "person": "david",
+   "label": "anointed one / Davidic king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "da2215281de80cfc",
+   "person": "david",
+   "label": "king of Israel (possible)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "f1f417a9190ec34e",
+   "person": "david",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "f1fdee0ed24c8244",
+   "person": "david",
+   "label": "David king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "fad24ae6999a0190",
+   "person": "david",
+   "label": "king / ruler (implied by \"kingdom of our father David\")",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "fcc7f76a229cadde",
+   "person": "david",
+   "label": "king (the king of the psalm)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "98ec113012c6523f",
+   "person": "debir",
+   "label": "king of Eglon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "46f348d73f220ac6",
+   "person": "ebedmelech",
+   "label": "eunuch in the king's house (court official)",
+   "by": "court-official",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "f72ad2f723c8633c",
+   "person": "eli",
+   "label": "judge of Israel",
+   "by": "judge",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "7021d2512aebe5fb",
+   "person": "eliakim",
+   "label": "Майбутнє призначення Еліякима на владу над домом (ключ дому Давида)",
+   "by": "palace-steward",
+   "reason": "Holds Royal household steward on 2 Kgs 18:18; Isa 22:20-22 is the LORD's word of the same charge."
+  },
+  {
+   "row": "96506c5dcf46f30b",
+   "person": "eliakim-2",
+   "label": "Jehoiakim king of Judah (не Eliakim)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "a714660bfaa6259c",
+   "person": "eliakim-2",
+   "label": "King of Judah (Jehoiakim)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "ef8d5e098b4eb119",
+   "person": "eliakim-2",
+   "label": "King of Judah (Jehoiakim?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "02fe2cdea7d9fa1c",
+   "person": "elisha",
+   "label": "attendant who poured water on Elijah's hands",
+   "by": "leaders-attendant",
+   "reason": "2 Kgs 3:11 'who poured water on the hands of Elijah': the service admitted on 1 Kgs 19:21."
+  },
+  {
+   "row": "3b4dd508fb2652ca",
+   "person": "felix",
+   "label": "judge over this nation",
+   "by": "governor",
+   "reason": "Holds Governor on Acts 23:24; Paul's 'judge unto this nation' (24:10) is the governor's judging."
+  },
+  {
+   "row": "817fad764069404d",
+   "person": "felix",
+   "label": "governor (прокуратор/намісник)",
+   "by": "governor",
+   "reason": "Holds Governor on Acts 23:24; Paul's 'judge unto this nation' (24:10) is the governor's judging."
+  },
+  {
+   "row": "a55d3b3b4fca406c",
+   "person": "gedaliah",
+   "label": "governor over the cities of Judah",
+   "by": "governor",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "024b69a50fdcf959",
+   "person": "hadadezer",
+   "label": "king of Zobah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "415f18e6d5c9b3d7",
+   "person": "hadadezer",
+   "label": "Overlord of subject kings (Hadadezer)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1718b6816a7c7390",
+   "person": "hadassah",
+   "label": "Esther, queen (identity with Hadassah not shown)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7)."
+  },
+  {
+   "row": "74c789cd55b4fd1e",
+   "person": "hadassah",
+   "label": "queen (Esther)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7)."
+  },
+  {
+   "row": "8c91345573bc7ab3",
+   "person": "hadassah",
+   "label": "Queen (Esther)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7)."
+  },
+  {
+   "row": "95b8dcc0be2c3552",
+   "person": "hadassah",
+   "label": "Queen Esther (possible identity)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7)."
+  },
+  {
+   "row": "e8ea1bb8147430d5",
+   "person": "hadassah",
+   "label": "queen (Esther)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7)."
+  },
+  {
+   "row": "ea20a4371aea04ea",
+   "person": "hadassah",
+   "label": "Queen (Esther)",
+   "by": "queen",
+   "reason": "Holds Queen on Esth 2:17; these rows read 'Queen Esther', the same woman (Esth 2:7)."
+  },
+  {
+   "row": "11d561bbdec61551",
+   "person": "haman",
+   "label": "Promoted above the princes and servants of the king",
+   "by": "royal-chief-official",
+   "reason": "Holds Chief royal official on Esth 3:1; 5:11 repeats his advancement."
+  },
+  {
+   "row": "496cff8702de0efb",
+   "person": "haman",
+   "label": "Підвищення над князями (без назви посади)",
+   "by": "royal-chief-official",
+   "reason": "Holds Chief royal official on Esth 3:1; 5:11 repeats his advancement."
+  },
+  {
+   "row": "b1d2c1509c61f1e3",
+   "person": "haman",
+   "label": "promoted above the princes and servants (rank without stated title)",
+   "by": "royal-chief-official",
+   "reason": "Holds Chief royal official on Esth 3:1; 5:11 repeats his advancement."
+  },
+  {
+   "row": "4a951f0856c1395a",
+   "person": "harbona",
+   "label": "chamberlain (eunuch)",
+   "by": "court-official",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "5b0d7cc58fbfd6ea",
+   "person": "harbona",
+   "label": "chamberlain who served in the king's presence",
+   "by": "court-official",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "453caab59455b40b",
+   "person": "hathach",
+   "label": "king's chamberlain appointed to attend Esther",
+   "by": "queens-attendant",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "dc1f2fc877b69416",
+   "person": "hazael",
+   "label": "Хазаїл, цар Сирії",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8bc2a75fd5736e8e",
+   "person": "hegai",
+   "label": "keeper of the women / king's chamberlain",
+   "by": "keeper-of-the-women",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "5df91922c4e1a4c9",
+   "person": "herod-2",
+   "label": "king (ὁ βασιλεύς)",
+   "by": "king",
+   "reason": "Holds King and Tetrarch; these rows repeat them."
+  },
+  {
+   "row": "ff67b692f936edb4",
+   "person": "herod-2",
+   "label": "tetrarch",
+   "by": "king",
+   "reason": "Holds King and Tetrarch; these rows repeat them."
+  },
+  {
+   "row": "0cc9d6f3981f0814",
+   "person": "hezekiah",
+   "label": "King of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "46dfc56cc1333c84",
+   "person": "hezekiah",
+   "label": "king of Judah (outside focus)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "aca81d9feb36ee69",
+   "person": "hezekiah",
+   "label": "king of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c5ed0bb9edae2a19",
+   "person": "hiram",
+   "label": "король Тиру",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "b6c7ed5b2130ce16",
+   "person": "hoham",
+   "label": "king of Hebron",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "69e58b16337dc1f7",
+   "person": "hushai",
+   "label": "counsellor",
+   "by": "royal-counselor",
+   "reason": "2 Sam 17:14 speaks of his counsel; the office is admitted on 1 Chr 27:33."
+  },
+  {
+   "row": "66ea32a2001ff8f7",
+   "person": "ishbosheth",
+   "label": "king over Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "a5ac16347aa532fd",
+   "person": "ishbosheth",
+   "label": "цар (?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "93dbeb4303a2e859",
+   "person": "jabin",
+   "label": "king of Hazor",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "41c12857ebd6d389",
+   "person": "japhia",
+   "label": "king of Lachish",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "ff999f29145d9a0c",
+   "person": "jehoahaz",
+   "label": "цар Ізраїлю (контекст 4 Цар 13)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1156c430ede9a82f",
+   "person": "jehoiachin",
+   "label": "Jeconiah (king of Judah?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "209dd0db98e80f4c",
+   "person": "jehoiachin",
+   "label": "King of Judah (Jeconiah)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "27af395d2e3a7236",
+   "person": "jehoiachin",
+   "label": "king of Judah (Jeconiah)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "67b55d55f7d753d5",
+   "person": "jehoram",
+   "label": "king of Judah (Jehoram son of Jehoshaphat)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "13b7b5b1fe9ffcd2",
+   "person": "jehoram-2",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "36e7c5c81c2ef617",
+   "person": "jehoram-2",
+   "label": "the king (הַמֶּלֶךְ)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8ba5c1f7ba937102",
+   "person": "jehoshaphat-3",
+   "label": "king of Judah (Jehoshaphat)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d7b12b4e78f3522d",
+   "person": "jehozabad-2",
+   "label": "Obed-edom's sons – gate or storehouse duty",
+   "by": "temple-gatekeeper",
+   "reason": "Holds Temple gatekeeper on 1 Chr 26:4-12; 26:15's lot for the storehouse falls to Obed-edom's sons together."
+  },
+  {
+   "row": "0574cc30172ef15d",
+   "person": "jehu-2",
+   "label": "Jehu (regnal dating)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "7e0c1bd5d785ecaa",
+   "person": "jehu-2",
+   "label": "anointed to cut off the house of Ahab",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "6472d79f106be6fb",
+   "person": "jephthah",
+   "label": "judge of Israel",
+   "by": "judge",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "b5887a92a5f45adf",
+   "person": "jeriah",
+   "label": "head/first among the sons of Hebron",
+   "by": "clan-chief",
+   "reason": "Holds Clan chief on 1 Chr 26:31 'Jerijah the chief'; 23:19 הָרֹאשׁ says the same of him."
+  },
+  {
+   "row": "34573b2d3a2c7c37",
+   "person": "jeroboam",
+   "label": "Цар Ізраїлю",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "ecd3fef5238db59b",
+   "person": "jeroboam-2",
+   "label": "Jeroboam king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "7f3ac041c2b4126c",
+   "person": "jesus",
+   "label": "King of kings (the Lamb)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "91c48ed385ff79bb",
+   "person": "jesus",
+   "label": "Christ reigns (king)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "b14e81d5c358602f",
+   "person": "jesus",
+   "label": "King / holder of a throne and kingdom (the Son)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "e4446de4742dec1d",
+   "person": "jesus",
+   "label": "Christ / reigning (king)",
+   "by": "heavenly-ruler-of-kings",
+   "reason": "Owner's ruling of 2026-11-09 (question 1a): no office King; 'King of kings' and his reign in Revelation and Hebrews are said by Ruler of the kings of the earth (Rev 1:5), which he holds."
+  },
+  {
+   "row": "193f46ba4eea301b",
+   "person": "joah-3",
+   "label": "Obed-edom's sons – gate or storehouse duty",
+   "by": "temple-gatekeeper",
+   "reason": "Holds Temple gatekeeper on 1 Chr 26; 26:15's lot falls to Obed-edom's sons together."
+  },
+  {
+   "row": "e624f94ac6532100",
+   "person": "joash-3",
+   "label": "king (enthroned in following chapter)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1a328fb59590a2c5",
+   "person": "joseph",
+   "label": "grain distributor / administrator of Egypt",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "42c2e80bff5b6361",
+   "person": "joseph",
+   "label": "Attendant to the royal prisoners",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "5fd651f72382f6f5",
+   "person": "joseph",
+   "label": "ruler / governor of Egypt",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "643e26e76d62c33b",
+   "person": "joseph",
+   "label": "Керування в’язницею / в’язнями",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "776e71014dd3c458",
+   "person": "joseph",
+   "label": "Joseph as ruler/governor of Egypt",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "79adc0e793860b9d",
+   "person": "joseph",
+   "label": "governor over the land",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "850dabe5578edac5",
+   "person": "joseph",
+   "label": "נְזִיר אֶחָיו (відокремлений/князь між братами)",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "910a4668090ba5dc",
+   "person": "joseph",
+   "label": "Overseer of Potiphar's house / ruler over Egypt",
+   "by": "governor-of-egypt",
+   "reason": "Holds Governor of Egypt, Household steward and Royal household steward. Rows on the prison (Gen 39:22, 40:4) are charges given him in prison, not offices; Deut 33:16 נְזִיר אֶחָיו is a blessing's epithet; the rest repeat his rule over Egypt."
+  },
+  {
+   "row": "077fb929cfbd55d8",
+   "person": "joshua",
+   "label": "commissioning of Joshua (charge before Eleazar)",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "3a13bcc570e39dd3",
+   "person": "joshua",
+   "label": "Moses' attendant (מְשָׁרֵת)",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "491294acd80d05bf",
+   "person": "joshua",
+   "label": "той, що стоїть перед Мойсеєм",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "528dfdc7fb162af1",
+   "person": "joshua",
+   "label": "attendant/servant of Moses",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "73ae04510f7b1535",
+   "person": "joshua",
+   "label": "Leader of Israel (implied)",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "a8c9dcdc4af7018b",
+   "person": "joshua",
+   "label": "Commissioned leader over the congregation",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "e4f7d22d5b4ca474",
+   "person": "joshua",
+   "label": "minister / attendant of Moses",
+   "by": "leaders-attendant",
+   "reason": "Holds Leader's attendant on Josh 1:1; Exod 24:13, 33:11, Num 11:28, Deut 1:38 say the same service. His commissioning (Num 27:18-23, Josh 3:7) names no office beyond what he holds."
+  },
+  {
+   "row": "58b61756ee49e244",
+   "person": "josiah",
+   "label": "king of Judah (Josiah)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "92159fc0997a4d9a",
+   "person": "josiah",
+   "label": "king of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "bd64ef8e28c4c33f",
+   "person": "josiah",
+   "label": "king of Judah (implied)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "da1bd87ca7574f18",
+   "person": "josiah",
+   "label": "цар Юди",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "dae896eb25d57d4a",
+   "person": "josiah",
+   "label": "king of Judah",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "4c0b96abc1b5300e",
+   "person": "jotham-2",
+   "label": "king of Judah (Jotham son of Uzziah)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "de2de01f44b9d202",
+   "person": "judah-4",
+   "label": "over the thanksgiving (על־הידות)",
+   "by": "temple-musician",
+   "reason": "Holds Temple musician; Neh 12:8 'over the thanksgiving, he and his brethren' is Mattaniah's charge with his brethren, the music he holds."
+  },
+  {
+   "row": "58ecd6c7f0547a76",
+   "person": "kenaz",
+   "label": "Вождь Кеназ (אַלּוּף קְנַז)",
+   "by": "edomite-chief",
+   "reason": "Holds Edomite chief; 1 Chr 1:53 repeats the chiefs of Gen 36."
+  },
+  {
+   "row": "71b8c950254f5b8b",
+   "person": "kingofdebir",
+   "label": "King of Debir",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1c533b6e13f48c83",
+   "person": "kingofshimron",
+   "label": "king of Shimron",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "bfddb66eb93ae654",
+   "person": "lemuel",
+   "label": "король (ንጉሥ ፌማ)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "29ab263a0841030d",
+   "person": "mattaniah",
+   "label": "prince of Israel (unnamed)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "9284badb3830ade8",
+   "person": "mattaniah",
+   "label": "King of Judah (Zedekiah?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d9cdfc5a45188e51",
+   "person": "mattithiah",
+   "label": "oversight of pan-baked offerings",
+   "by": "temple-cake-maker",
+   "reason": "Holds Temple cake maker on this verse, 1 Chr 9:31."
+  },
+  {
+   "row": "ffd63f9986df7480",
+   "person": "memucan",
+   "label": "prince of Persia and Media",
+   "by": "persian-royal-counselor",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "2c0f2c1fdb7ae0e3",
+   "person": "meres",
+   "label": "prince of Persia and Media",
+   "by": "persian-royal-counselor",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "718990f10f56b4f8",
+   "person": "michael-9",
+   "label": "archangel (ἀρχάγγελος)",
+   "by": "heavenly-prince",
+   "reason": "Holds Great prince (Dan 12:1); 'the archangel' (Jude 9) is held as his title."
+  },
+  {
+   "row": "35649974a3accc58",
+   "person": "mordecai-2",
+   "label": "sat in the king's gate",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "3bf32af2335cfbe7",
+   "person": "mordecai-2",
+   "label": "Сидить у царських воротах",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "3f3b889a0614725d",
+   "person": "mordecai-2",
+   "label": "appointed/recorded in the king's book (subject and office unclear)",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "45c50a18b40322ee",
+   "person": "mordecai-2",
+   "label": "Служіння при царському дворі",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "4b8ba6813d4cebf5",
+   "person": "mordecai-2",
+   "label": "sitting at the king's gate",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "59776e5e943e9059",
+   "person": "mordecai-2",
+   "label": "servitor in the king’s court (Mardocheus)",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "95bafd707643ab06",
+   "person": "mordecai-2",
+   "label": "guarding the king's kingdom",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "c6bab74f4e981862",
+   "person": "mordecai-2",
+   "label": "Court attendant (Ge'ez: who attends the courtyard)",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "d722a1e39d80231b",
+   "person": "mordecai-2",
+   "label": "sitting at the king's gate",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "dead9e40d2aa6dc6",
+   "person": "mordecai-2",
+   "label": "One who sits at the king's gate",
+   "by": "royal-servant",
+   "reason": "Holds Royal attendant (Esth 11:3, 12:5) and Second to the king (10:3). 'Sitting in the king's gate' (2:19, 2:21, 5:13, 6:10) is where he sat; the Ge'ez rows say the same service."
+  },
+  {
+   "row": "0466ed4f706b21f3",
+   "person": "moses",
+   "label": "Moses as recipient of divine instructions and intermediary",
+   "by": "judge",
+   "reason": "Holds Judge, Ruler, Priest, Prophet; these rows repeat his judging and leading, or are the LORD speaking to him (Exod 25:1)."
+  },
+  {
+   "row": "53172a61521af778",
+   "person": "moses",
+   "label": "Moses as leader of the people (shepherd of the flock, by the right hand of Moses)",
+   "by": "judge",
+   "reason": "Holds Judge, Ruler, Priest, Prophet; these rows repeat his judging and leading, or are the LORD speaking to him (Exod 25:1)."
+  },
+  {
+   "row": "5d1e465684b47fd5",
+   "person": "moses",
+   "label": "judge of the people",
+   "by": "judge",
+   "reason": "Holds Judge, Ruler, Priest, Prophet; these rows repeat his judging and leading, or are the LORD speaking to him (Exod 25:1)."
+  },
+  {
+   "row": "9548fddb6bdd55a4",
+   "person": "moses",
+   "label": "провідник і суддя Ізраїлю",
+   "by": "judge",
+   "reason": "Holds Judge, Ruler, Priest, Prophet; these rows repeat his judging and leading, or are the LORD speaking to him (Exod 25:1)."
+  },
+  {
+   "row": "34280256475e1d2d",
+   "person": "nahash",
+   "label": "king of the Ammonites",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0bbb2c3750a5d84f",
+   "person": "nebuchadnezzar",
+   "label": "King of Babylon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1643667e00875f70",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1e27529891642a7a",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "33cf04711af61cc9",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "4b2b8c3b61c0d549",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "a9f199105d2b15ad",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c3666092efba38fd",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon (unnamed in this passage)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c8cfe2bd916a143e",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon (unnamed in this passage)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "e9e22b003c6a96e7",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon (unnamed)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "f887beb926360cc0",
+   "person": "nebuchadnezzar",
+   "label": "king of Babylon (unnamed in the passage)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "13708790168caeef",
+   "person": "nethanel-5",
+   "label": "Obed-edom's sons – gate or storehouse duty",
+   "by": "temple-gatekeeper",
+   "reason": "Holds Temple gatekeeper on 1 Chr 26; 26:15's lot falls to Obed-edom's sons together."
+  },
+  {
+   "row": "47ac3f370dcb504c",
+   "person": "oreb",
+   "label": "noble (nadiv)",
+   "by": "prince",
+   "reason": "Holds Prince (Judg 7:25); Ps 83:11 is a simile naming him."
+  },
+  {
+   "row": "f16e158cb773fa37",
+   "person": "othniel",
+   "label": "deliverer (מֹושִׁ֗יעַ)",
+   "by": "judge",
+   "reason": "Holds Judge (Judg 3:10); 'deliverer' (3:9) is what he did as judge."
+  },
+  {
+   "row": "2038ae9c0641987a",
+   "person": "pekah",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "9325fc0c73a75520",
+   "person": "pekah",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "091a3401631cbef4",
+   "person": "pharaoh-2",
+   "label": "Pharaoh (ruler title)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "14b76d5e93c653ad",
+   "person": "pharaoh-2",
+   "label": "Pharaoh as king/ruler",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "4f1498bb2c6b6acd",
+   "person": "pharaoh-2",
+   "label": "Pharaoh as ruler/king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "71d3924a2b93684e",
+   "person": "pharaoh-2",
+   "label": "King of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8edcafd992aa4b51",
+   "person": "pharaoh-2",
+   "label": "Фараон як верховний володар Єгипту",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "af90ed59eaf85265",
+   "person": "pharaoh-2",
+   "label": "Pharaoh (title/ruler)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c4fcb8a35cc9abb0",
+   "person": "pharaoh-2",
+   "label": "ruler of Egypt (Pharaoh)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d898ae542b98e96c",
+   "person": "pharaoh-2",
+   "label": "Цар Єгипту (ймовірно фараон)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "381a1b304d723157",
+   "person": "pharaoh-3",
+   "label": "Pharaoh (king of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "4fb58098f35c478e",
+   "person": "pharaoh-3",
+   "label": "king of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "edafc555a95eec73",
+   "person": "pharaoh-3",
+   "label": "king (ruler)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0f87c55aeaefd9e1",
+   "person": "pharaoh-4",
+   "label": "цар Єгипту",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "12bdcb88d753dff6",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (title)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "165285eb96b233b1",
+   "person": "pharaoh-4",
+   "label": "king of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1caf593b26fc5db1",
+   "person": "pharaoh-4",
+   "label": "Pharaoh",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "2ae07e4fcd11df45",
+   "person": "pharaoh-4",
+   "label": "Той, хто сидить на троні (цар/правитель Єгипту?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3a93c2086c933217",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (king of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "7b8a895dc85d18d1",
+   "person": "pharaoh-4",
+   "label": "king of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8ebd5b0d07377929",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (title) with his host",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "9c19ab96264917dd",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (ruler of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "b5debb13e9dcaa6d",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (ruler of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "b75b5571bc246349",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (ruler of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c52dad3e912b08bd",
+   "person": "pharaoh-4",
+   "label": "Pharaoh (title)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d4c186bd8c734ebd",
+   "person": "pharaoh-4",
+   "label": "Pharaoh as ruler of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "df002e362a627c46",
+   "person": "pharaoh-4",
+   "label": "king of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "e59f0e17c11b9ba7",
+   "person": "pharaoh-4",
+   "label": "Pharaoh as ruler",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "92b5c40373e69086",
+   "person": "pharaoh-5",
+   "label": "Pharaoh, king of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "cf9b8c1b3642fb5c",
+   "person": "pharaoh-5",
+   "label": "Pharaoh",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3b15d2391a603903",
+   "person": "pharaoh-7",
+   "label": "Pharaoh (ruler of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "aacbfd051959888f",
+   "person": "pharaoh-7",
+   "label": "Pharaoh (імовірний правитель/цар Єгипту)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1ae6131e3babc102",
+   "person": "pharaoh-8",
+   "label": "Pharaoh (title of the king of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "20e62a326f871b1d",
+   "person": "pharaoh-8",
+   "label": "Pharaoh (title/name of Egyptian ruler, not identified with a specific Pharaoh)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "2428dfa26d2bf37a",
+   "person": "pharaoh-8",
+   "label": "Pharaoh (title/king of Egypt)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "4d56b5bf6c4b66aa",
+   "person": "pharaoh-8",
+   "label": "Pharaoh",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "6dd57cfcfabccc6d",
+   "person": "pharaoh-8",
+   "label": "фараон, цар Єгипту",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d0a17b6088ea3339",
+   "person": "pharaoh-8",
+   "label": "king of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d75b4413ffca6ceb",
+   "person": "pharaoh-8",
+   "label": "king of Egypt (Pharaoh)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "8f86b8f7912587c9",
+   "person": "pharaohneco",
+   "label": "King of Egypt",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "2252f12325ec16a8",
+   "person": "pilate",
+   "label": "Roman governor/judge (authority to release a prisoner)",
+   "by": "governor",
+   "reason": "Holds Governor on Matt 27:2; these rows show him judging as governor."
+  },
+  {
+   "row": "518d883d144fbf88",
+   "person": "pilate",
+   "label": "possible governor/judge",
+   "by": "governor",
+   "reason": "Holds Governor on Matt 27:2; these rows show him judging as governor."
+  },
+  {
+   "row": "5efe63fc1afbbd05",
+   "person": "pilate",
+   "label": "Pilate (judge/authority who sentences)",
+   "by": "governor",
+   "reason": "Holds Governor on Matt 27:2; these rows show him judging as governor."
+  },
+  {
+   "row": "ae0d4130504cfccd",
+   "person": "pilate",
+   "label": "authority to release and crucify; sat on the judgment seat",
+   "by": "governor",
+   "reason": "Holds Governor on Matt 27:2; these rows show him judging as governor."
+  },
+  {
+   "row": "ddea10a6a70826a6",
+   "person": "piram",
+   "label": "king of Jarmuth",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "5675b84477b6a678",
+   "person": "porcius",
+   "label": "governor (ἡγεμών)",
+   "by": "governor",
+   "reason": "Holds Governor on Acts 24:27; Acts 25-26 show the same office."
+  },
+  {
+   "row": "e7505933c4b6ad6f",
+   "person": "porcius",
+   "label": "governor / judge (намісник, суддя)",
+   "by": "governor",
+   "reason": "Holds Governor on Acts 24:27; Acts 25-26 show the same office."
+  },
+  {
+   "row": "98e94b535be4907f",
+   "person": "queenofsheba",
+   "label": "Queen of the South (βασίλισσα νότου)",
+   "by": "queen",
+   "reason": "Holds Queen (1 Kgs 10:1); 'the queen of the south' (Matt 12:42, Luke 11:31) is the same woman by her coming to hear Solomon."
+  },
+  {
+   "row": "add9e033d27c13c5",
+   "person": "queenofsheba",
+   "label": "queen (of the south)",
+   "by": "queen",
+   "reason": "Holds Queen (1 Kgs 10:1); 'the queen of the south' (Matt 12:42, Luke 11:31) is the same woman by her coming to hear Solomon."
+  },
+  {
+   "row": "8bd37806e055a766",
+   "person": "rehoboam",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "e4100074a46c7ab4",
+   "person": "rezin",
+   "label": "king of Syria",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "80d274c4aa715eb5",
+   "person": "samson",
+   "label": "Judge of Israel",
+   "by": "judge",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "20e0cbd92e1a9565",
+   "person": "samuel-2",
+   "label": "Суддя Ізраїлю",
+   "by": "judge",
+   "reason": "Holds Judge, Sanctuary attendant, Prophet and Seer; these rows repeat them."
+  },
+  {
+   "row": "3bf1b6b5e3bbf7e8",
+   "person": "samuel-2",
+   "label": "leader who directs the renewal of the kingdom / sent deliverer",
+   "by": "judge",
+   "reason": "Holds Judge, Sanctuary attendant, Prophet and Seer; these rows repeat them."
+  },
+  {
+   "row": "450aa3df2f919195",
+   "person": "samuel-2",
+   "label": "ministering before the LORD (child)",
+   "by": "judge",
+   "reason": "Holds Judge, Sanctuary attendant, Prophet and Seer; these rows repeat them."
+  },
+  {
+   "row": "01748c55565f33e0",
+   "person": "saul",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0d3e30e703dae47d",
+   "person": "saul",
+   "label": "king of Israel (past reference)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1a5c8a3c26925f15",
+   "person": "saul",
+   "label": "anointed (king?)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "42291c1ec96e1d10",
+   "person": "saul",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "49335c0d0795d694",
+   "person": "saul",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "a7a2c08053addc1b",
+   "person": "saul",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "dd101e5e8acee82e",
+   "person": "saul",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "1710b216ee1eff17",
+   "person": "saul-2",
+   "label": "apostle",
+   "by": "apostle",
+   "reason": "Holds Apostle, Christian minister and Gospel minister; these rows repeat them (Acts 26:16 ὑπηρέτην is the minister he holds)."
+  },
+  {
+   "row": "234403233fd597b4",
+   "person": "saul-2",
+   "label": "apostle",
+   "by": "apostle",
+   "reason": "Holds Apostle, Christian minister and Gospel minister; these rows repeat them (Acts 26:16 ὑπηρέτην is the minister he holds)."
+  },
+  {
+   "row": "64f918abd36e1536",
+   "person": "saul-2",
+   "label": "apostle (Paul)",
+   "by": "apostle",
+   "reason": "Holds Apostle, Christian minister and Gospel minister; these rows repeat them (Acts 26:16 ὑπηρέτην is the minister he holds)."
+  },
+  {
+   "row": "c8a76ac56063c163",
+   "person": "saul-2",
+   "label": "служитель і свідок (ὑπηρέτης καὶ μάρτυς)",
+   "by": "apostle",
+   "reason": "Holds Apostle, Christian minister and Gospel minister; these rows repeat them (Acts 26:16 ὑπηρέτην is the minister he holds)."
+  },
+  {
+   "row": "a0e8f3a3e19eacb0",
+   "person": "sennacherib",
+   "label": "king of Assyria",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "c8db1aa941b8b98c",
+   "person": "sennacherib",
+   "label": "king of Assyria",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "feca410986dbfbcd",
+   "person": "sennacherib",
+   "label": "king of Assyria (named only in context)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "2b78eaf80e5f256e",
+   "person": "shallum-7",
+   "label": "keeper of the threshold/door (attachment uncertain)",
+   "by": "temple-gatekeeper",
+   "reason": "Holds Temple gatekeeper and Chief of gatekeepers; Jer 35:4's 'keeper of the threshold' is his son Maaseiah's title."
+  },
+  {
+   "row": "cfae99d03f0845c6",
+   "person": "shalmaneser",
+   "label": "king of Assyria (unnamed)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "3433b8727912da11",
+   "person": "sihon",
+   "label": "King of Heshbon (Sihon)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "0454c2be89f510e8",
+   "person": "solomon",
+   "label": "king (המלך) in the Song",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "314fcb894e40bfca",
+   "person": "solomon",
+   "label": "king of Israel (reigned in Jerusalem)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "47dc09eea589daf8",
+   "person": "solomon",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "519dc995d22a0fe9",
+   "person": "solomon",
+   "label": "king of Israel (possible)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "5ea054537705f036",
+   "person": "solomon",
+   "label": "king (the king and the king's son of the psalm)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "83930eb6104f193b",
+   "person": "solomon",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "a2d52a9fcec2bd53",
+   "person": "solomon",
+   "label": "king",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "afd9608f5830ba25",
+   "person": "solomon",
+   "label": "king of Israel (future promise)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "d317381154757fa6",
+   "person": "solomon",
+   "label": "king / master of Jeroboam",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "e1d308a20ad7d752",
+   "person": "solomon",
+   "label": "king of Israel",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "e657bf6e2c69a641",
+   "person": "solomon",
+   "label": "king of Israel (ambiguous reference)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "ab2a725f4b84e150",
+   "person": "teman",
+   "label": "duke/chief of Edom (Teman)",
+   "by": "edomite-chief",
+   "reason": "Holds Edomite chief; 1 Chr 1:53 repeats Gen 36."
+  },
+  {
+   "row": "a7af7fa165382ea6",
+   "person": "tiglathpileser",
+   "label": "king of Assyria (unnamed)",
+   "by": "king",
+   "reason": "Holds King on a verse that says it; this row adds a verse where the office is only implied, or given outside the chapter read, or of a namesake the record already holds."
+  },
+  {
+   "row": "5fd175bff1e5fe07",
+   "person": "timna-2",
+   "label": "duke/chief of Edom (Timna)",
+   "by": "edomite-chief",
+   "reason": "Holds Edomite chief; 1 Chr 1:51 repeats Gen 36:40."
+  },
+  {
+   "row": "d7e4a99ea973b7a5",
+   "person": "vashti",
+   "label": "queen",
+   "by": "queen",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  },
+  {
+   "row": "c3dbecb6f90c55e1",
+   "person": "zabud",
+   "label": "king's friend / adviser (רֵעֶה הַמֶּלֶךְ)",
+   "by": "royal-counselor",
+   "reason": "Holds Royal counselor on this verse, 1 Kgs 4:5."
+  },
+  {
+   "row": "8d173ff610feb5e3",
+   "person": "zalmunna",
+   "label": "prince (nasik)",
+   "by": "king",
+   "reason": "Holds King (Judg 8:5); Ps 83:11 is a simile naming him."
+  },
+  {
+   "row": "762648ca14d6c4fa",
+   "person": "zebah",
+   "label": "prince (nasik)",
+   "by": "king",
+   "reason": "Holds King (Judg 8:5); Ps 83:11 is a simile naming him."
+  },
+  {
+   "row": "8d980e974ca1cd45",
+   "person": "zeeb",
+   "label": "noble (nadiv)",
+   "by": "prince",
+   "reason": "Holds Prince (Judg 7:25); Ps 83:11 is a simile naming him."
+  },
+  {
+   "row": "ecdd73233ef8cd64",
+   "person": "zethar",
+   "label": "royal chamberlain (eunuch)",
+   "by": "court-official",
+   "reason": "Holds the office on a verse that says it; the row was held only because the saying verse lay outside the chapter the reading was given."
+  }
+ ],
+ "hard": [],
+ "ownerRulings": "The two questions put to the owner were answered on 2026-11-09: Jesus holds no office King and no new role for it (1a), and holds the heavenly role Judge of the living and the dead (1b); nobody holds Head of an ancestral house from Exod 6:14-25 (2). Each stands above under admitted, covered or refused, marked as his ruling. On 2026-11-09 the owner also ruled (part 3, question 1) that 'Head of an ancestral house' is not an occupation the site keeps: every row admitted to it here is now refused, citing his words, and prb-1420-part-4.json lists the pairs removed."
+}

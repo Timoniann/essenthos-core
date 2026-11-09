@@ -62,35 +62,6 @@
    }
   },
   {
-   "slug": "ancestral-house-chief",
-   "category": "office",
-   "strongNumbers": [
-    "H7218"
-   ],
-   "labels": {
-    "eng": {
-     "name": "Head of an ancestral house",
-     "masculine": "Head of an ancestral house",
-     "feminine": "Head of an ancestral house"
-    },
-    "ukr": {
-     "name": "Голова батьківського дому",
-     "masculine": "Голова батьківського дому",
-     "feminine": "Голова батьківського дому"
-    },
-    "deu": {
-     "name": "Oberhaupt eines Vaterhauses",
-     "masculine": "Oberhaupt eines Vaterhauses",
-     "feminine": "Oberhaupt eines Vaterhauses"
-    },
-    "spa": {
-     "name": "Jefe de una casa paterna",
-     "masculine": "Jefe de una casa paterna",
-     "feminine": "Jefa de una casa paterna"
-    }
-   }
-  },
-  {
    "slug": "apostle",
    "category": "religious_role",
    "strongNumbers": [
@@ -534,6 +505,35 @@
      "name": "Comandante de carros de guerra",
      "masculine": "Comandante de carros de guerra",
      "feminine": "Comandante de carros de guerra"
+    }
+   }
+  },
+  {
+   "slug": "chief-at-casiphia",
+   "category": "office",
+   "strongNumbers": [
+    "H7218"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Chief at Casiphia",
+     "masculine": "Chief at Casiphia",
+     "feminine": "Chief at Casiphia"
+    },
+    "ukr": {
+     "name": "Голова в Касіфії",
+     "masculine": "Голова в Касіфії",
+     "feminine": "Голова в Касіфії"
+    },
+    "deu": {
+     "name": "Oberhaupt in Kasifja",
+     "masculine": "Oberhaupt in Kasifja",
+     "feminine": "Oberhaupt in Kasifja"
+    },
+    "spa": {
+     "name": "Jefe en Casifia",
+     "masculine": "Jefe en Casifia",
+     "feminine": "Jefa en Casifia"
     }
    }
   },
@@ -2001,6 +2001,35 @@
    ]
   },
   {
+   "slug": "harpist",
+   "category": "trade",
+   "strongNumbers": [
+    "H5059"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Harpist",
+     "masculine": "Harpist",
+     "feminine": "Harpist"
+    },
+    "ukr": {
+     "name": "Арфіст",
+     "masculine": "Арфіст",
+     "feminine": "Арфістка"
+    },
+    "deu": {
+     "name": "Harfenspieler",
+     "masculine": "Harfenspieler",
+     "feminine": "Harfenspielerin"
+    },
+    "spa": {
+     "name": "Arpista",
+     "masculine": "Arpista",
+     "feminine": "Arpista"
+    }
+   }
+  },
+  {
    "slug": "heavenly-apostle",
    "category": "heavenly_role",
    "strongNumbers": [
@@ -2128,6 +2157,39 @@
      "name": "Gran príncipe",
      "masculine": "Gran príncipe",
      "feminine": "Gran príncipe",
+     "description": "Función celestial"
+    }
+   }
+  },
+  {
+   "slug": "heavenly-prince-of-a-kingdom",
+   "category": "heavenly_role",
+   "strongNumbers": [
+    "H8269"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Prince of a kingdom",
+     "masculine": "Prince of a kingdom",
+     "feminine": "Prince of a kingdom",
+     "description": "Heavenly role"
+    },
+    "ukr": {
+     "name": "Князь царства",
+     "masculine": "Князь царства",
+     "feminine": "Князь царства",
+     "description": "Небесна роль"
+    },
+    "deu": {
+     "name": "Fürst eines Reiches",
+     "masculine": "Fürst eines Reiches",
+     "feminine": "Fürst eines Reiches",
+     "description": "Himmlische Rolle"
+    },
+    "spa": {
+     "name": "Príncipe de un reino",
+     "masculine": "Príncipe de un reino",
+     "feminine": "Príncipe de un reino",
      "description": "Función celestial"
     }
    }
@@ -2344,6 +2406,35 @@
    }
   },
   {
+   "slug": "judge-of-the-living-and-the-dead",
+   "category": "heavenly_role",
+   "strongNumbers": [
+    "G2923"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Judge of the living and the dead",
+     "masculine": "Judge of the living and the dead",
+     "feminine": "Judge of the living and the dead"
+    },
+    "ukr": {
+     "name": "Суддя живих і мертвих",
+     "masculine": "Суддя живих і мертвих",
+     "feminine": "Суддя живих і мертвих"
+    },
+    "deu": {
+     "name": "Richter der Lebenden und der Toten",
+     "masculine": "Richter der Lebenden und der Toten",
+     "feminine": "Richterin der Lebenden und der Toten"
+    },
+    "spa": {
+     "name": "Juez de vivos y muertos",
+     "masculine": "Juez de vivos y muertos",
+     "feminine": "Jueza de vivos y muertos"
+    }
+   }
+  },
+  {
    "slug": "keeper-of-concubines",
    "category": "office",
    "strongNumbers": [
@@ -2369,6 +2460,64 @@
      "name": "Guardián de las concubinas",
      "masculine": "Guardián de las concubinas",
      "feminine": "Guardiana de las concubinas"
+    }
+   }
+  },
+  {
+   "slug": "keeper-of-the-ark",
+   "category": "religious_role",
+   "strongNumbers": [
+    "H8104"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Keeper of the ark",
+     "masculine": "Keeper of the ark",
+     "feminine": "Keeper of the ark"
+    },
+    "ukr": {
+     "name": "Охоронець ковчега",
+     "masculine": "Охоронець ковчега",
+     "feminine": "Охоронниця ковчега"
+    },
+    "deu": {
+     "name": "Hüter der Lade",
+     "masculine": "Hüter der Lade",
+     "feminine": "Hüterin der Lade"
+    },
+    "spa": {
+     "name": "Guardián del arca",
+     "masculine": "Guardián del arca",
+     "feminine": "Guardiana del arca"
+    }
+   }
+  },
+  {
+   "slug": "keeper-of-the-wardrobe",
+   "category": "office",
+   "strongNumbers": [
+    "H8104"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Keeper of the wardrobe",
+     "masculine": "Keeper of the wardrobe",
+     "feminine": "Keeper of the wardrobe"
+    },
+    "ukr": {
+     "name": "Охоронець одягу",
+     "masculine": "Охоронець одягу",
+     "feminine": "Охоронниця одягу"
+    },
+    "deu": {
+     "name": "Hüter der Kleider",
+     "masculine": "Hüter der Kleider",
+     "feminine": "Hüterin der Kleider"
+    },
+    "spa": {
+     "name": "Guarda de las vestiduras",
+     "masculine": "Guarda de las vestiduras",
+     "feminine": "Guarda de las vestiduras"
     }
    }
   },
@@ -2429,6 +2578,35 @@
      "name": "Rey",
      "masculine": "Rey",
      "feminine": "Reina"
+    }
+   }
+  },
+  {
+   "slug": "king-over-the-locusts",
+   "category": "heavenly_role",
+   "strongNumbers": [
+    "G935"
+   ],
+   "labels": {
+    "eng": {
+     "name": "King over the locusts",
+     "masculine": "King over the locusts",
+     "feminine": "Queen over the locusts"
+    },
+    "ukr": {
+     "name": "Цар над сараною",
+     "masculine": "Цар над сараною",
+     "feminine": "Цариця над сараною"
+    },
+    "deu": {
+     "name": "König über die Heuschrecken",
+     "masculine": "König über die Heuschrecken",
+     "feminine": "Königin über die Heuschrecken"
+    },
+    "spa": {
+     "name": "Rey sobre las langostas",
+     "masculine": "Rey sobre las langostas",
+     "feminine": "Reina sobre las langostas"
     }
    }
   },
@@ -3094,6 +3272,35 @@
    }
   },
   {
+   "slug": "perfumer",
+   "category": "trade",
+   "strongNumbers": [
+    "H7546"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Perfumer",
+     "masculine": "Perfumer",
+     "feminine": "Perfumer"
+    },
+    "ukr": {
+     "name": "Пахощар",
+     "masculine": "Пахощар",
+     "feminine": "Пахощарка"
+    },
+    "deu": {
+     "name": "Salbenmischer",
+     "masculine": "Salbenmischer",
+     "feminine": "Salbenmischerin"
+    },
+    "spa": {
+     "name": "Perfumista",
+     "masculine": "Perfumista",
+     "feminine": "Perfumista"
+    }
+   }
+  },
+  {
    "slug": "persian-royal-counselor",
    "category": "office",
    "strongNumbers": [
@@ -3148,6 +3355,35 @@
      "name": "Médico",
      "masculine": "Médico",
      "feminine": "Médica"
+    }
+   }
+  },
+  {
+   "slug": "potter",
+   "category": "trade",
+   "strongNumbers": [
+    "H3335"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Potter",
+     "masculine": "Potter",
+     "feminine": "Potter"
+    },
+    "ukr": {
+     "name": "Гончар",
+     "masculine": "Гончар",
+     "feminine": "Гончарка"
+    },
+    "deu": {
+     "name": "Töpfer",
+     "masculine": "Töpfer",
+     "feminine": "Töpferin"
+    },
+    "spa": {
+     "name": "Alfarero",
+     "masculine": "Alfarero",
+     "feminine": "Alfarera"
     }
    }
   },
@@ -3422,7 +3658,8 @@
     "H5031",
     "H5012",
     "G4396",
-    "G4398"
+    "G4398",
+    "G4395"
    ],
    "labels": {
     "eng": {
@@ -4644,7 +4881,8 @@
    },
    "strongNumbers": [
     "G3097",
-    "G3096"
+    "G3096",
+    "H3784"
    ]
   },
   {
@@ -5159,6 +5397,36 @@
    }
   },
   {
+   "slug": "temple-threshold-keeper",
+   "category": "religious_role",
+   "strongNumbers": [
+    "H8104",
+    "H5592"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Keeper of the threshold",
+     "masculine": "Keeper of the threshold",
+     "feminine": "Keeper of the threshold"
+    },
+    "ukr": {
+     "name": "Сторож порога",
+     "masculine": "Сторож порога",
+     "feminine": "Сторожиха порога"
+    },
+    "deu": {
+     "name": "Hüter der Schwelle",
+     "masculine": "Hüter der Schwelle",
+     "feminine": "Hüterin der Schwelle"
+    },
+    "spa": {
+     "name": "Guarda del umbral",
+     "masculine": "Guarda del umbral",
+     "feminine": "Guarda del umbral"
+    }
+   }
+  },
+  {
    "slug": "temple-treasury-overseer",
    "category": "religious_role",
    "strongNumbers": [],
@@ -5612,364 +5880,6 @@
    ]
   },
   {
-   "person": "ahi",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:15",
-     "quote": "אֲחִי֙ בֶּן־עַבְדִּיאֵ֣ל בֶּן־גּוּנִ֔י רֹ֖אשׁ לְבֵ֥ית אֲבֹותָֽם׃"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:15",
-     "quote": "אֲחִי֙ בֶּן־עַבְדִּיאֵ֣ל בֶּן־גּוּנִ֔י רֹ֖אשׁ לְבֵ֥ית אֲבֹותָֽם׃"
-    }
-   ]
-  },
-  {
-   "person": "azriel",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    }
-   ]
-  },
-  {
-   "person": "eliasaph-2",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "NUM 3:24",
-     "quote": "וּנְשִׂ֥יא בֵֽית־אָ֖ב לַגֵּרְשֻׁנִּ֑י אֶלְיָסָ֖ף בֶּן־לָאֵֽל"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "NUM 3:24",
-     "quote": "וּנְשִׂ֥יא בֵֽית־אָ֖ב לַגֵּרְשֻׁנִּ֑י אֶלְיָסָ֖ף בֶּן־לָאֵֽל"
-    }
-   ]
-  },
-  {
-   "person": "eliel",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    }
-   ]
-  },
-  {
-   "person": "elzaphan",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "NUM 3:30",
-     "quote": "וּנְשִׂ֥יא בֵֽית־אָ֖ב לְמִשְׁפְּחֹ֣ת הַקְּהָתִ֑י אֶלִיצָפָ֖ן בֶּן־עֻזִּיאֵֽל"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "NUM 3:30",
-     "quote": "וּנְשִׂ֥יא בֵֽית־אָ֖ב לְמִשְׁפְּחֹ֣ת הַקְּהָתִ֑י אֶלִיצָפָ֖ן בֶּן־עֻזִּיאֵֽל"
-    }
-   ]
-  },
-  {
-   "person": "epher-3",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    }
-   ]
-  },
-  {
-   "person": "ezbon-2",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 7:7",
-     "quote": "heads of the house of their fathers"
-    },
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 7:7",
-     "quote": "רָאשֵׁי֙ בֵּ֣ית אָבֹ֔ות"
-    },
-    {
-     "kind": "identity",
-     "text": "KJV",
-     "reference": "1CH 7:7",
-     "quote": "And the sons of Bela; Ezbon, and Uzzi, and Uzziel, and Jerimoth, and Iri, five"
-    }
-   ]
-  },
-  {
-   "person": "hodaviah-2",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
-    }
-   ]
-  },
-  {
-   "person": "ibsam",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 7:2",
-     "quote": "heads of their father's house"
-    },
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 7:2",
-     "quote": "רָאשִׁ֤ים לְבֵית־אֲבֹותָם֙"
-    },
-    {
-     "kind": "identity",
-     "text": "KJV",
-     "reference": "1CH 7:2",
-     "quote": "And the sons of Tola; Uzzi, and Rephaiah, and Jeriel, and Jahmai, and Jibsam, and Shemuel"
-    }
-   ]
-  },
-  {
-   "person": "iri",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 7:7",
-     "quote": "heads of the house of their fathers"
-    },
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 7:7",
-     "quote": "רָאשֵׁי֙ בֵּ֣ית אָבֹ֔ות"
-    },
-    {
-     "kind": "identity",
-     "text": "KJV",
-     "reference": "1CH 7:7",
-     "quote": "And the sons of Bela; Ezbon, and Uzzi, and Uzziel, and Jerimoth, and Iri, five"
-    }
-   ]
-  },
-  {
-   "person": "ishi-3",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם"
-    },
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 5:24",
-     "quote": "these were the heads of the house of their fathers"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:23",
-     "quote": "וּבְנֵ֗י חֲצִי֙ שֵׁ֣בֶט מְנַשֶּׁ֔ה"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְיִשְׁעִ֡י"
-    }
-   ]
-  },
-  {
-   "person": "jahdiel",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם"
-    },
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 5:24",
-     "quote": "these were the heads of the house of their fathers"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:23",
-     "quote": "וּבְנֵ֗י חֲצִי֙ שֵׁ֣בֶט מְנַשֶּׁ֔ה"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְיַחְדִּיאֵ֗ל"
-    }
-   ]
-  },
-  {
-   "person": "jeremiah-2",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם"
-    },
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 5:24",
-     "quote": "these were the heads of the house of their fathers"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:23",
-     "quote": "וּבְנֵ֗י חֲצִי֙ שֵׁ֣בֶט מְנַשֶּׁ֔ה"
-    },
-    {
-     "kind": "identity",
-     "text": "BHSA",
-     "reference": "1CH 5:24",
-     "quote": "וְיִרְמְיָ֨ה"
-    }
-   ]
-  },
-  {
-   "person": "uzzi-3",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 7:7",
-     "quote": "וּבְנֵ֣י בֶ֗לַע אֶצְבֹּ֡ון וְעֻזִּ֡י וְ֠עֻזִּיאֵל וִירִימֹ֨ות וְעִירִ֜י חֲמִשָּׁ֗ה רָאשֵׁי֙ בֵּ֣ית אָבֹ֔ות גִּבֹּורֵ֖י חֲיָלִ֑ים וְהִתְיַחְשָׂ֗ם עֶשְׂרִ֤ים וּשְׁנַ֨יִם֙ אֶ֔לֶף וּשְׁלֹשִׁ֖ים וְאַרְבָּעָֽה׃ ס"
-    },
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 7:7",
-     "quote": "And the sons of Bela; Ezbon, and Uzzi, and Uzziel, and Jerimoth, and Iri, five; heads of the house of their fathers, mighty men of valour; and were reckoned by their genealogies twenty and two thousand and thirty and four."
-    }
-   ]
-  },
-  {
-   "person": "uzziel-3",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "1CH 7:7",
-     "quote": "וּבְנֵ֣י בֶ֗לַע אֶצְבֹּ֡ון וְעֻזִּ֡י וְ֠עֻזִּיאֵל וִירִימֹ֨ות וְעִירִ֜י חֲמִשָּׁ֗ה רָאשֵׁי֙ בֵּ֣ית אָבֹ֔ות גִּבֹּורֵ֖י חֲיָלִ֑ים וְהִתְיַחְשָׂ֗ם עֶשְׂרִ֤ים וּשְׁנַ֨יִם֙ אֶ֔לֶף וּשְׁלֹשִׁ֖ים וְאַרְבָּעָֽה׃ ס"
-    },
-    {
-     "kind": "profession",
-     "text": "KJV",
-     "reference": "1CH 7:7",
-     "quote": "And the sons of Bela; Ezbon, and Uzzi, and Uzziel, and Jerimoth, and Iri, five; heads of the house of their fathers, mighty men of valour; and were reckoned by their genealogies twenty and two thousand and thirty and four."
-    }
-   ]
-  },
-  {
-   "person": "zimri",
-   "occupation": "ancestral-house-chief",
-   "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
-   "witnesses": [
-    {
-     "kind": "profession",
-     "text": "BHSA",
-     "reference": "NUM 25:14",
-     "quote": "זִמְרִ֖י בֶּן־סָל֑וּא נְשִׂ֥יא בֵֽית־אָ֖ב לַשִּׁמְעֹנִֽי"
-    },
-    {
-     "kind": "identity",
-     "text": "KJV",
-     "reference": "NUM 25:14",
-     "quote": "Zimri, the son of Salu, a prince of a chief house among the Simeonites"
-    }
-   ]
-  },
-  {
    "person": "andrew",
    "occupation": "apostle",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -6046,6 +5956,25 @@
    ]
   },
   {
+   "person": "james-3",
+   "occupation": "apostle",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "GAL 1:19",
+     "quote": "ἕτερον δὲ τῶν ἀποστόλων οὐκ εἶδον, εἰ μὴ Ἰάκωβον τὸν ἀδελφὸν τοῦ Κυρίου."
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "GAL 1:19",
+     "quote": "other apostles except James, the Lord’s brother."
+    }
+   ]
+  },
+  {
    "person": "john-2",
    "occupation": "apostle",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -6061,6 +5990,25 @@
      "text": "NESTLE1904",
      "reference": "MAT 10:2",
      "quote": "Ἰάκωβος ὁ τοῦ Ζεβεδαίου καὶ Ἰωάνης ὁ ἀδελφὸς αὐτοῦ"
+    }
+   ]
+  },
+  {
+   "person": "joseph-12",
+   "occupation": "apostle",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 14:14",
+     "quote": "ἀπόστολοι Βαρνάβας καὶ Παῦλος,"
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "ACT 4:36",
+     "quote": "Ἰωσὴφ δὲ ὁ ἐπικληθεὶς Βαρνάβας"
     }
    ]
   },
@@ -6545,6 +6493,19 @@
    ]
   },
   {
+   "person": "ammizabad",
+   "occupation": "army-division-commander",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:6",
+     "quote": "וּמַ֣חֲלֻקְתֹּ֔ו עַמִּיזָבָ֖ד בְּנֹֽו׃"
+    }
+   ]
+  },
+  {
    "person": "asahel",
    "occupation": "army-division-commander",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -6871,6 +6832,19 @@
      "text": "BHSA",
      "reference": "1CH 27:11",
      "quote": "סִבְּכַ֥י הַחֻשָׁתִ֖י לַזַּרְחִ֑י"
+    }
+   ]
+  },
+  {
+   "person": "zebadiah-5",
+   "occupation": "army-division-commander",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:7",
+     "quote": "וּזְבַדְיָ֥ה בְנֹ֖ו אַחֲרָ֑יו וְעַל֙ מַחֲלֻקְתֹּ֔ו"
     }
    ]
   },
@@ -7403,6 +7377,25 @@
    ]
   },
   {
+   "person": "amasiah",
+   "occupation": "captain-of-thousands",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 17:14",
+     "quote": "לִֽיהוּדָה֙ שָׂרֵ֣י אֲלָפִ֔ים"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 17:16",
+     "quote": "וְעַל־יָדֹו֙ עֲמַסְיָ֣ה בֶן־זִכְרִ֔י"
+    }
+   ]
+  },
+  {
    "person": "elihu-2",
    "occupation": "captain-of-thousands",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -7437,6 +7430,25 @@
      "text": "BHSA",
      "reference": "1CH 12:21",
      "quote": "וִידִֽיעֲאֵל֙ וּמִיכָאֵ֣ל וְיֹוזָבָ֔ד וֶאֱלִיה֖וּא וְצִלְּתָ֑י רָאשֵׁ֥י הָאֲלָפִ֖ים אֲשֶׁ֥ר לִמְנַשֶּֽׁה"
+    }
+   ]
+  },
+  {
+   "person": "jehozabad-3",
+   "occupation": "captain-of-thousands",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 17:14",
+     "quote": "לִֽיהוּדָה֙ שָׂרֵ֣י אֲלָפִ֔ים"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 17:18",
+     "quote": "וְעַל־יָדֹ֖ו יְהֹוזָבָ֑ד"
     }
    ]
   },
@@ -7645,6 +7657,19 @@
      "text": "BHSA",
      "reference": "1KI 16:9",
      "quote": "זִמְרִ֔י שַׂ֖ר מַחֲצִ֣ית הָרָ֑כֶב"
+    }
+   ]
+  },
+  {
+   "person": "iddo-6",
+   "occupation": "chief-at-casiphia",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 8:17",
+     "quote": "עַל־אִדֹּ֣ו הָרֹ֔אשׁ בְּכָסִפְיָ֖א הַמָּקֹ֑ום"
     }
    ]
   },
@@ -8101,6 +8126,19 @@
    ]
   },
   {
+   "person": "archippus",
+   "occupation": "christian-minister",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "COL 4:17",
+     "quote": "καὶ εἴπατε Ἀρχίππῳ Βλέπε τὴν διακονίαν ἣν παρέλαβες ἐν Κυρίῳ,"
+    }
+   ]
+  },
+  {
    "person": "saul-2",
    "occupation": "christian-minister",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -8219,6 +8257,82 @@
    ]
   },
   {
+   "person": "nicanor",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "nicolas",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "parmenas",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "philip-3",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
    "person": "phoebe",
    "occupation": "church-servant",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -8238,6 +8352,69 @@
    ]
   },
   {
+   "person": "prochorus",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "stephen",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:5",
+     "quote": "ἐξελέξαντο Στέφανον,"
+    }
+   ]
+  },
+  {
+   "person": "timon",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
    "person": "amon",
    "occupation": "city-governor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -8253,6 +8430,19 @@
      "text": "BHSA",
      "reference": "2CH 18:25",
      "quote": "אָמֹ֣ון שַׂר־הָעִ֑יר"
+    }
+   ]
+  },
+  {
+   "person": "hanani-4",
+   "occupation": "city-governor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 7:2",
+     "quote": "וָאֲצַוֶּ֞ה אֶת־חֲנָ֣נִי אָחִ֗י"
     }
    ]
   },
@@ -8789,6 +8979,19 @@
      "text": "NESTLE1904",
      "reference": "2TI 4:14",
      "quote": "Ἀλέξανδρος ὁ χαλκεὺς"
+    }
+   ]
+  },
+  {
+   "person": "dionysius",
+   "occupation": "council-member",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 17:34",
+     "quote": "Διονύσιος ὁ Ἀρεοπαγείτης"
     }
    ]
   },
@@ -10230,6 +10433,37 @@
      "text": "BHSA",
      "reference": "2SA 23:39",
      "quote": "כֹּ֖ל שְׁלֹשִׁ֥ים וְשִׁבְעָֽה"
+    }
+   ]
+  },
+  {
+   "person": "shammah-5",
+   "occupation": "davids-mighty-warrior",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2SA 23:8",
+     "quote": "אֵ֛לֶּה שְׁמֹ֥ות הַגִּבֹּרִ֖ים אֲשֶׁ֣ר לְדָוִ֑ד"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2SA 23:24",
+     "quote": "עֲשָׂה־אֵ֥ל אֲחִֽי־יֹואָ֖ב בַּשְּׁלֹשִׁ֑ים"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2SA 23:39",
+     "quote": "כֹּ֖ל שְׁלֹשִׁ֥ים וְשִׁבְעָֽה׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "2SA 23:33",
+     "quote": "שַׁמָּה֙ הַֽהֲרָרִ֔י"
     }
    ]
   },
@@ -11770,6 +12004,19 @@
    ]
   },
   {
+   "person": "caesar",
+   "occupation": "emperor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "LUK 3:1",
+     "quote": "τῆς ἡγεμονίας Τιβερίου Καίσαρος,"
+    }
+   ]
+  },
+  {
    "person": "caesar-2",
    "occupation": "emperor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -11791,6 +12038,32 @@
      "text": "NESTLE1904",
      "reference": "ACT 25:11",
      "quote": "Καίσαρα ἐπικαλοῦμαι"
+    }
+   ]
+  },
+  {
+   "person": "caesaraugustus",
+   "occupation": "emperor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "LUK 2:1",
+     "quote": "ἐξῆλθεν δόγμα παρὰ Καίσαρος Αὐγούστου ἀπογράφεσθαι πᾶσαν τὴν οἰκουμένην."
+    }
+   ]
+  },
+  {
+   "person": "claudius",
+   "occupation": "emperor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "ACT 11:28",
+     "quote": "in the days of Claudius Caesar."
     }
    ]
   },
@@ -11944,6 +12217,19 @@
    ]
   },
   {
+   "person": "uzziel-2",
+   "occupation": "expedition-commander",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 4:42",
+     "quote": "וּפְלַטְיָ֡ה וּ֠נְעַרְיָה וּרְפָיָ֧ה וְעֻזִּיאֵ֛ל בְּנֵ֥י יִשְׁעִ֖י בְּרֹאשָֽׁם׃"
+    }
+   ]
+  },
+  {
    "person": "ahab-2",
    "occupation": "false-prophet",
    "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
@@ -11990,6 +12276,95 @@
      "text": "KJV",
      "reference": "ACT 13:6",
      "quote": "And when they had gone through the isle unto Paphos, they found a certain sorcerer, a false prophet, a Jew, whose name was Barjesus:"
+    }
+   ]
+  },
+  {
+   "person": "pashhur-2",
+   "occupation": "false-prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 20:6",
+     "quote": "אֲשֶׁר־נִבֵּ֥אתָ לָהֶ֖ם בַּשָּֽׁקֶר׃"
+    }
+   ]
+  },
+  {
+   "person": "shemaiah-18",
+   "occupation": "false-prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 6:12",
+     "quote": "וָאַכִּ֕ירָה וְהִנֵּ֥ה לֹֽא־אֱלֹהִ֖ים שְׁלָחֹ֑ו כִּ֤י הַנְּבוּאָה֙ דִּבֶּ֣ר עָלַ֔י"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "NEH 6:12",
+     "quote": "God had not sent him, but that he had uttered this prophecy against me"
+    }
+   ]
+  },
+  {
+   "person": "shemaiah-21",
+   "occupation": "false-prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 29:31",
+     "quote": "נִבָּ֨א לָכֶ֜ם שְׁמַעְיָ֗ה"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JER 29:31",
+     "quote": "Shemaiah the Nehelamite. Because Shemaiah has prophesied"
+    }
+   ]
+  },
+  {
+   "person": "zedekiah",
+   "occupation": "false-prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 22:12",
+     "quote": "וְכָל־הַנְּבִאִ֔ים נִבְּאִ֥ים כֵּ֖ן"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 22:23",
+     "quote": "בְּפִ֖י כָּל־נְבִיאֶ֣יךָ אֵ֑לֶּה"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1KI 22:11",
+     "quote": "צִדְקִיָּ֥ה בֶֽן־כְּנַעֲנָ֖ה"
+    }
+   ]
+  },
+  {
+   "person": "adam",
+   "occupation": "farmer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 3:23",
+     "quote": "וַֽיְשַׁלְּחֵ֛הוּ יְהוָ֥ה אֱלֹהִ֖ים מִגַּן־עֵ֑דֶן לַֽעֲבֹד֙ אֶת־הָ֣אֲדָמָ֔ה"
     }
    ]
   },
@@ -12363,6 +12738,19 @@
      "text": "KJV",
      "reference": "NEH 12:25",
      "quote": "Talmon, Akkub, were porters keeping the ward at the thresholds of the gates"
+    }
+   ]
+  },
+  {
+   "person": "malchijah-9",
+   "occupation": "goldsmith",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 3:31",
+     "quote": "מַלְכִּיָּה֙ בֶּן־הַצֹּ֣רְפִ֔י"
     }
    ]
   },
@@ -12813,6 +13201,31 @@
    ]
   },
   {
+   "person": "david",
+   "occupation": "harpist",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1SA 16:18",
+     "quote": "בֵּ֣ן לְיִשַׁי֮ בֵּ֣ית הַלַּחְמִי֒ יֹדֵ֣עַ נַ֠גֵּן"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1SA 16:23",
+     "quote": "וְלָקַ֥ח דָּוִ֛ד אֶת־הַכִּנֹּ֖ור וְנִגֵּ֣ן בְּיָדֹ֑ו"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1SA 18:10",
+     "quote": "וְדָוִ֛ד מְנַגֵּ֥ן בְּיָדֹ֖ו כְּיֹ֣ום׀ בְּיֹ֑ום"
+    }
+   ]
+  },
+  {
    "person": "jesus",
    "occupation": "heavenly-apostle",
    "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
@@ -12915,6 +13328,38 @@
      "text": "KJV",
      "reference": "DAN 12:1",
      "quote": "And at that time shall Michael stand up, the great prince which standeth for the children of thy people: and there shall be a time of trouble, such as never was since there was a nation even to that same time: and at that time thy people shall be delivered, every one that shall be found written in the book."
+    }
+   ]
+  },
+  {
+   "person": "princeofgreece",
+   "occupation": "heavenly-prince-of-a-kingdom",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 10:20",
+     "quote": "וְהִנֵּ֥ה שַׂר־יָוָ֖ן בָּֽא׃"
+    }
+   ]
+  },
+  {
+   "person": "princeofthekingdomofpersia",
+   "occupation": "heavenly-prince-of-a-kingdom",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 10:13",
+     "quote": "וְשַׂ֣ר׀ מַלְכ֣וּת פָּרַ֗ס עֹמֵ֤ד לְנֶגְדִּי֙"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 10:20",
+     "quote": "לְהִלָּחֵ֖ם עִם־שַׂ֣ר פָּרָ֑ס"
     }
    ]
   },
@@ -13213,6 +13658,31 @@
    ]
   },
   {
+   "person": "jehoiada-2",
+   "occupation": "high-priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2KI 12:11",
+     "quote": "וְהַכֹּהֵ֣ן הַגָּדֹ֔ול"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "2KI 12:10",
+     "quote": "יְהֹויָדָ֤ע הַכֹּהֵן֙"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 24:6",
+     "quote": "לִֽיהֹויָדָ֣ע הָרֹאשׁ֒"
+    }
+   ]
+  },
+  {
    "person": "joshua-4",
    "occupation": "high-priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -13322,6 +13792,19 @@
      "text": "BHSA",
      "reference": "GEN 39:4",
      "quote": "וַיִּמְצָ֨א יֹוסֵ֥ף חֵ֛ן בְּעֵינָ֖יו וַיְשָׁ֣רֶת אֹתֹ֑ו וַיַּפְקִדֵ֨הוּ֙ עַל־בֵּיתֹ֔ו"
+    }
+   ]
+  },
+  {
+   "person": "mordecai-2",
+   "occupation": "household-steward",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EST 8:2",
+     "quote": "וַתָּ֧שֶׂם אֶסְתֵּ֛ר אֶֽת־מָרְדֳּכַ֖י עַל־בֵּ֥ית הָמָֽן׃"
     }
    ]
   },
@@ -13765,6 +14248,25 @@
    ]
   },
   {
+   "person": "jesus",
+   "occupation": "judge-of-the-living-and-the-dead",
+   "source": "read from the Nestle 1904 by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-09 (PRB-1420, part 2, question 1b)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 10:42",
+     "quote": "οὗτός ἐστιν ὁ ὡρισμένος ὑπὸ τοῦ Θεοῦ Κριτὴς ζώντων καὶ νεκρῶν."
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "ACT 10:38",
+     "quote": "Ἰησοῦν τὸν ἀπὸ Ναζαρέθ,"
+    }
+   ]
+  },
+  {
    "person": "shaashgaz",
    "occupation": "keeper-of-concubines",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -13780,6 +14282,32 @@
      "text": "BHSA",
      "reference": "EST 2:14",
      "quote": "אֶל־יַ֧ד שַֽׁעֲשְׁגַ֛ז סְרִ֥יס הַמֶּ֖לֶךְ שֹׁמֵ֣ר הַפִּֽילַגְשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "eleazar-2",
+   "occupation": "keeper-of-the-ark",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1SA 7:1",
+     "quote": "וְאֶת־אֶלְעָזָ֤ר בְּנֹו֙ קִדְּשׁ֔וּ לִשְׁמֹ֖ר אֶת־אֲרֹ֥ון יְהוָֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "shallum-2",
+   "occupation": "keeper-of-the-wardrobe",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2KI 22:14",
+     "quote": "שַׁלֻּ֣ם בֶּן־תִּקְוָ֗ה בֶּן־חַרְחַס֙ שֹׁמֵ֣ר הַבְּגָדִ֔ים"
     }
    ]
   },
@@ -16722,6 +17250,19 @@
    ]
   },
   {
+   "person": "nimrod",
+   "occupation": "king",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 10:10",
+     "quote": "וַתְּהִ֨י רֵאשִׁ֤ית מַמְלַכְתֹּו֙ בָּבֶ֔ל"
+    }
+   ]
+  },
+  {
    "person": "og",
    "occupation": "king",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -17119,6 +17660,25 @@
      "text": "BHSA",
      "reference": "2KI 15:37",
      "quote": "רְצִ֖ין מֶ֣לֶךְ אֲרָ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "rezon",
+   "occupation": "king",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "1KI 11:25",
+     "quote": "So Rezon ruled over Aram"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 11:24",
+     "quote": "וַֽיִּמְלְכ֖וּ בְּדַמָּֽשֶׂק׃"
     }
    ]
   },
@@ -17584,6 +18144,19 @@
    ]
   },
   {
+   "person": "abaddon",
+   "occupation": "king-over-the-locusts",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "REV 9:11",
+     "quote": "ἔχουσιν ἐπ’ αὐτῶν βασιλέα τὸν ἄγγελον τῆς ἀβύσσου, ὄνομα αὐτῷ Ἑβραϊστί Ἀβαδδών"
+    }
+   ]
+  },
+  {
    "person": "jeroboam",
    "occupation": "labor-force-overseer",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -17698,6 +18271,25 @@
    ]
   },
   {
+   "person": "anaiah",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:23",
+     "quote": "עֲנָיָֽה׃"
+    }
+   ]
+  },
+  {
    "person": "anan",
    "occupation": "leader-of-the-people",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -17732,6 +18324,25 @@
      "text": "BHSA",
      "reference": "NEH 10:20",
      "quote": "חָרִ֥יף עֲנָתֹ֖ות נובי׃"
+    }
+   ]
+  },
+  {
+   "person": "ater",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:18",
+     "quote": "אָטֵ֥ר"
     }
    ]
   },
@@ -17812,6 +18423,82 @@
    ]
   },
   {
+   "person": "bani-4",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "בָּנִֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "bebai",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:16",
+     "quote": "בֵּבָֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "bezai",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:19",
+     "quote": "בֵּצָֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "bigvai",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:17",
+     "quote": "בִגְוַ֖י"
+    }
+   ]
+  },
+  {
    "person": "bunni-the-covenant-chief",
    "occupation": "leader-of-the-people",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -17833,6 +18520,63 @@
      "text": "BHSA",
      "reference": "NEH 10:16",
      "quote": "בֻּנִּ֥י עַזְגָּ֖ד בֵּבָֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "elam-4",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "עֵילָ֥ם"
+    }
+   ]
+  },
+  {
+   "person": "hallohesh",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:25",
+     "quote": "הַלֹּוחֵ֥שׁ"
+    }
+   ]
+  },
+  {
+   "person": "hanan-5",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:23",
+     "quote": "פְּלַטְיָ֥ה חָנָ֖ן"
     }
    ]
   },
@@ -17876,6 +18620,44 @@
      "text": "KJV",
      "reference": "NEH 10:28",
      "quote": "And the rest of the people, the priests, the Levites, the porters, the singers, the Nethinims, and all they that had separated themselves from the people of the lands unto the law of God, their wives, their sons, and their daughters, every one having knowledge, and having understanding;"
+    }
+   ]
+  },
+  {
+   "person": "hananiah-7",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:24",
+     "quote": "חֲנַנְיָ֖ה"
+    }
+   ]
+  },
+  {
+   "person": "harim-2",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:28",
+     "quote": "מַלּ֥וּךְ חָרִ֖ם"
     }
    ]
   },
@@ -17933,6 +18715,25 @@
      "text": "BHSA",
      "reference": "NEH 10:26",
      "quote": "רְח֥וּם חֲשַׁבְנָ֖ה מַעֲשֵׂיָֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "hashum",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:19",
+     "quote": "חָשֻׁ֖ם"
     }
    ]
   },
@@ -18354,6 +19155,38 @@
    ]
   },
   {
+   "person": "zattu",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם פַּרְעֹשׁ֙ פַּחַ֣ת מֹואָ֔ב עֵילָ֥ם זַתּ֖וּא בָּנִֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "elisha",
+   "occupation": "leaders-attendant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 19:21",
+     "quote": "וַיֵּ֛לֶךְ אַחֲרֵ֥י אֵלִיָּ֖הוּ וַיְשָׁרְתֵֽהוּ׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1KI 19:19",
+     "quote": "וַיִּמְצָ֞א אֶת־אֱלִישָׁ֤ע בֶּן־שָׁפָט֙"
+    }
+   ]
+  },
+  {
    "person": "joshua",
    "occupation": "leaders-attendant",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -18483,6 +19316,25 @@
      "text": "BHSA",
      "reference": "2CH 35:9",
      "quote": "וִיעִיאֵ֛ל וְיֹוזָבָ֖ד שָׂרֵ֣י הַלְוִיִּ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "jozabad-5",
+   "occupation": "levite-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 11:16",
+     "quote": "מֵרָאשֵׁ֖י הַלְוִיִּֽם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 11:16",
+     "quote": "וְשַׁבְּתַ֨י וְיֹוזָבָ֜ד"
     }
    ]
   },
@@ -18948,6 +19800,25 @@
    ]
   },
   {
+   "person": "hashabiah-4",
+   "occupation": "levite-temple-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 8:17",
+     "quote": "מְשָׁרְתִ֖ים לְבֵ֥ית אֱלֹהֵֽינוּ׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 8:19",
+     "quote": "וְאֶת־חֲשַׁבְיָ֔ה"
+    }
+   ]
+  },
+  {
    "person": "haziel",
    "occupation": "levite-temple-servant",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -19238,6 +20109,25 @@
      "text": "BHSA",
      "reference": "1CH 23:24",
      "quote": "אֵ֣לֶּה בְנֵֽי־לֵוִי֩ לְבֵ֨ית אֲבֹתֵיהֶ֜ם"
+    }
+   ]
+  },
+  {
+   "person": "jeshaiah-4",
+   "occupation": "levite-temple-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 8:17",
+     "quote": "מְשָׁרְתִ֖ים לְבֵ֥ית אֱלֹהֵֽינוּ׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 8:19",
+     "quote": "יְשַֽׁעְיָ֖ה"
     }
    ]
   },
@@ -19908,6 +20798,37 @@
    ]
   },
   {
+   "person": "barak",
+   "occupation": "military-commander",
+   "source": "read from BHSA 2021 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-09 (PRB-1420, part 3, question 2)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JDG 4:6",
+     "quote": "לֵ֤ךְ וּמָֽשַׁכְתָּ֙ בְּהַ֣ר תָּבֹ֔ור וְלָקַחְתָּ֣ עִמְּךָ֗ עֲשֶׂ֤רֶת אֲלָפִים֙ אִ֔ישׁ"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JDG 4:14",
+     "quote": "וַיֵּ֤רֶד בָּרָק֙ מֵהַ֣ר תָּבֹ֔ור וַעֲשֶׂ֧רֶת אֲלָפִ֛ים אִ֖ישׁ אַחֲרָֽיו׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JDG 4:14",
+     "quote": "So Barak came down from Mount Tabor with ten thousand men following him."
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "JDG 4:6",
+     "quote": "וַתִּקְרָא֙ לְבָרָ֣ק בֶּן־אֲבִינֹ֔עַם"
+    }
+   ]
+  },
+  {
    "person": "benaiah",
    "occupation": "military-commander",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -20396,6 +21317,37 @@
      "text": "KJV",
      "reference": "JER 40:8",
      "quote": "Then they came to Gedaliah to Mizpah, even Ishmael the son of Nethaniah, and Johanan and Jonathan the sons of Kareah, and Seraiah the son of Tanhumeth, and the sons of Ephai the Netophathite, and Jezaniah the son of a Maachathite, they and their men."
+    }
+   ]
+  },
+  {
+   "person": "joshua",
+   "occupation": "military-commander",
+   "source": "read from BHSA 2021 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-09 (PRB-1420, part 3, question 2)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EXO 17:9",
+     "quote": "וַיֹּ֨אמֶר מֹשֶׁ֤ה אֶל־יְהֹושֻׁ֨עַ֙ בְּחַר־לָ֣נוּ אֲנָשִׁ֔ים וְצֵ֖א הִלָּחֵ֣ם בַּעֲמָלֵ֑ק"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EXO 17:13",
+     "quote": "וַיַּחֲלֹ֧שׁ יְהֹושֻׁ֛עַ אֶת־עֲמָלֵ֥ק וְאֶת־עַמֹּ֖ו לְפִי־חָֽרֶב׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JOS 8:3",
+     "quote": "וַיָּ֧קָם יְהֹושֻׁ֛עַ וְכָל־עַ֥ם הַמִּלְחָמָ֖ה לַעֲלֹ֣ות הָעָ֑י"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "EXO 17:13",
+     "quote": "So Joshua overwhelmed Amalek and his army with the sword."
     }
    ]
   },
@@ -21358,6 +22310,19 @@
    ]
   },
   {
+   "person": "hananiah-6",
+   "occupation": "perfumer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 3:8",
+     "quote": "חֲנַנְיָ֖ה בֶּן־הָרַקָּחִ֑ים"
+    }
+   ]
+  },
+  {
    "person": "admatha",
    "occupation": "persian-royal-counselor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -21558,6 +22523,77 @@
    ]
   },
   {
+   "person": "jashubilehem",
+   "occupation": "potter",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 4:23",
+     "quote": "הֵ֚מָּה הַיֹּ֣וצְרִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "joash-5",
+   "occupation": "potter",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 4:23",
+     "quote": "הֵ֚מָּה הַיֹּ֣וצְרִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "jokim",
+   "occupation": "potter",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 4:23",
+     "quote": "הֵ֚מָּה הַיֹּ֣וצְרִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "saraph",
+   "occupation": "potter",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 4:23",
+     "quote": "הֵ֚מָּה הַיֹּ֣וצְרִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "john",
+   "occupation": "preacher",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "MRK 1:4",
+     "quote": "κηρύσσων βάπτισμα μετανοίας"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 13:24",
+     "quote": "προκηρύξαντος Ἰωάνου"
+    }
+   ]
+  },
+  {
    "person": "saul-2",
    "occupation": "preacher",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -21722,6 +22758,31 @@
      "text": "BHSA",
      "reference": "NUM 3:2",
      "quote": "נָדָ֑ב וַאֲבִיה֕וּא אֶלְעָזָ֖ר וְאִיתָמָֽר"
+    }
+   ]
+  },
+  {
+   "person": "abijah-5",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:10",
+     "quote": "לַאֲבִיָּ֖ה"
     }
    ]
   },
@@ -22071,6 +23132,25 @@
    ]
   },
   {
+   "person": "azariah-son-of-zadok",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 4:2",
+     "quote": "עֲזַרְיָ֥הוּ בֶן־צָדֹ֖וק הַכֹּהֵֽן׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "1KI 4:2",
+     "quote": "Azariah son of Zadok was the priest;"
+    }
+   ]
+  },
+  {
    "person": "azariah-the-covenant-priest",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22146,6 +23226,31 @@
    ]
   },
   {
+   "person": "bilgah",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:14",
+     "quote": "לְבִלְגָּה֙"
+    }
+   ]
+  },
+  {
    "person": "bilgah-2",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22190,6 +23295,50 @@
    ]
   },
   {
+   "person": "daniel",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:9",
+     "quote": "אֵ֖לֶּה הַכֹּהֲנִֽים׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:7",
+     "quote": "דָּנִיֵּ֥אל"
+    }
+   ]
+  },
+  {
+   "person": "delaiah-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:18",
+     "quote": "לִדְלָיָ֨הוּ֙"
+    }
+   ]
+  },
+  {
    "person": "eber-5",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22217,6 +23366,25 @@
      "text": "BHSA",
      "reference": "NEH 12:20",
      "quote": "לְסַלַּ֥י קַלָּ֖י לְעָמֹ֥וק עֵֽבֶר"
+    }
+   ]
+  },
+  {
+   "person": "elasah",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:22",
+     "quote": "וְאֶלְעָשָֽׂה׃"
     }
    ]
   },
@@ -22290,6 +23458,31 @@
    ]
   },
   {
+   "person": "eliashib-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:12",
+     "quote": "לְאֶלְיָשִׁיב֙"
+    }
+   ]
+  },
+  {
    "person": "eliashib-7",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22309,6 +23502,25 @@
    ]
   },
   {
+   "person": "eliezer-10",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "וֶֽאֱלִיעֶ֔זֶר"
+    }
+   ]
+  },
+  {
    "person": "eliezer-4",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22324,6 +23536,44 @@
      "text": "BHSA",
      "reference": "1CH 15:24",
      "quote": "וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "elijah-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:21",
+     "quote": "וְאֵֽלִיָּה֙"
+    }
+   ]
+  },
+  {
+   "person": "elioenai-4",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:22",
+     "quote": "אֶלְיֹועֵינַ֤י"
     }
    ]
   },
@@ -22423,6 +23673,50 @@
    ]
   },
   {
+   "person": "gamul",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:17",
+     "quote": "לְגָמ֖וּל"
+    }
+   ]
+  },
+  {
+   "person": "gedaliah-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "וּגְדַלְיָֽה׃"
+    }
+   ]
+  },
+  {
    "person": "ginnethon",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22454,6 +23748,50 @@
    ]
   },
   {
+   "person": "hakkoz",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:10",
+     "quote": "לְהַקֹּוץ֙"
+    }
+   ]
+  },
+  {
+   "person": "hanani-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:20",
+     "quote": "חֲנָ֖נִי"
+    }
+   ]
+  },
+  {
    "person": "hananiah-9",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22469,6 +23807,56 @@
      "text": "BHSA",
      "reference": "NEH 12:12",
      "quote": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "happizzez",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:15",
+     "quote": "לְהַפִּצֵּ֖ץ"
+    }
+   ]
+  },
+  {
+   "person": "harim-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:8",
+     "quote": "לְחָרִם֙"
     }
    ]
   },
@@ -22549,6 +23937,31 @@
    ]
   },
   {
+   "person": "hezir",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:15",
+     "quote": "לְחֵזִיר֙"
+    }
+   ]
+  },
+  {
    "person": "hilkiah-3",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22564,6 +23977,25 @@
      "text": "BHSA",
      "reference": "NEH 12:7",
      "quote": "סַלּ֣וּ עָמֹ֔וק חִלְקִיָּ֖ה יְדַֽעְיָ֑ה"
+    }
+   ]
+  },
+  {
+   "person": "hilkiah-7",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 1:1",
+     "quote": "יִרְמְיָ֖הוּ בֶּן־חִלְקִיָּ֑הוּ מִן־הַכֹּֽהֲנִים֙ אֲשֶׁ֣ר בַּעֲנָתֹ֔ות"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JER 1:1",
+     "quote": "Jeremiah son of Hilkiah, one of the priests in Anathoth"
     }
    ]
   },
@@ -22595,6 +24027,94 @@
      "text": "KJV",
      "reference": "1SA 1:3",
      "quote": "the two sons of Eli, Hophni and Phinehas, the priests of the LORD"
+    }
+   ]
+  },
+  {
+   "person": "huppah",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:13",
+     "quote": "לְחֻפָּה֙"
+    }
+   ]
+  },
+  {
+   "person": "iddo-5",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:7",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֧י הַכֹּהֲנִ֛ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 12:4",
+     "quote": "עִדֹּ֥וא"
+    }
+   ]
+  },
+  {
+   "person": "immer",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:14",
+     "quote": "לְאִמֵּ֖ר"
+    }
+   ]
+  },
+  {
+   "person": "ishmael-6",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:22",
+     "quote": "יִשְׁמָעֵ֣אל"
     }
    ]
   },
@@ -22637,6 +24157,31 @@
    ]
   },
   {
+   "person": "jachin-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:17",
+     "quote": "לְיָכִין֙"
+    }
+   ]
+  },
+  {
    "person": "jahaziel-the-trumpeting-priest",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22656,6 +24201,50 @@
    ]
   },
   {
+   "person": "jakim-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:12",
+     "quote": "לְיָקִ֖ים"
+    }
+   ]
+  },
+  {
+   "person": "jarib",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "וְיָרִ֖יב"
+    }
+   ]
+  },
+  {
    "person": "jedaiah-2",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22671,6 +24260,31 @@
      "text": "BHSA",
      "reference": "1CH 9:10",
      "quote": "וּמִן־הַֽכֹּהֲנִ֑ים יְדַֽעְיָ֥ה וִיהֹויָרִ֖יב וְיָכִֽין"
+    }
+   ]
+  },
+  {
+   "person": "jedaiah-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:7",
+     "quote": "לִֽידַעְיָ֖ה"
     }
    ]
   },
@@ -22702,6 +24316,50 @@
      "text": "KJV",
      "reference": "NEH 11:10",
      "quote": "Of the priests: Jedaiah the son of Joiarib, Jachin."
+    }
+   ]
+  },
+  {
+   "person": "jehezkel",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:16",
+     "quote": "לִֽיחֶזְקֵ֖אל"
+    }
+   ]
+  },
+  {
+   "person": "jehiel-7",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:21",
+     "quote": "וִיחִיאֵ֖ל"
     }
    ]
   },
@@ -22813,6 +24471,31 @@
    ]
   },
   {
+   "person": "jehoiarib-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:7",
+     "quote": "לִיהֹ֣ויָרִ֔יב"
+    }
+   ]
+  },
+  {
    "person": "jehonathan-2",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22851,6 +24534,25 @@
    ]
   },
   {
+   "person": "jeremiah-6",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 1:1",
+     "quote": "יִרְמְיָ֖הוּ בֶּן־חִלְקִיָּ֑הוּ מִן־הַכֹּֽהֲנִים֙ אֲשֶׁ֣ר בַּעֲנָתֹ֔ות"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JER 1:1",
+     "quote": "Jeremiah son of Hilkiah, one of the priests in Anathoth"
+    }
+   ]
+  },
+  {
    "person": "jeremiah-7",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -22866,6 +24568,69 @@
      "text": "BHSA",
      "reference": "NEH 10:3",
      "quote": "שְׂרָיָ֥ה עֲזַרְיָ֖ה יִרְמְיָֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "jeshebeab",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:13",
+     "quote": "לְיֶֽשֶׁבְאָ֖ב"
+    }
+   ]
+  },
+  {
+   "person": "jeshua",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:2",
+     "quote": "וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:1",
+     "quote": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 24:11",
+     "quote": "לְיֵשׁ֨וּעַ֙"
+    }
+   ]
+  },
+  {
+   "person": "jeshua-3",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 3:2",
+     "quote": "יֵשׁ֨וּעַ בֶּן־יֹֽוצָדָ֜ק וְאֶחָ֣יו הַכֹּהֲנִ֗ים"
     }
    ]
   },
@@ -22971,6 +24736,25 @@
    ]
   },
   {
+   "person": "jozabad-6",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:22",
+     "quote": "יֹוזָבָ֖ד"
+    }
+   ]
+  },
+  {
    "person": "kallai",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -23024,6 +24808,63 @@
      "text": "BHSA",
      "reference": "NEH 12:41",
      "quote": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה"
+    }
+   ]
+  },
+  {
+   "person": "maaseiah-15",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:21",
+     "quote": "מַעֲשֵׂיָ֤ה"
+    }
+   ]
+  },
+  {
+   "person": "maaseiah-6",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מַֽעֲשֵׂיָה֙"
+    }
+   ]
+  },
+  {
+   "person": "maaseiah-7",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:22",
+     "quote": "מַֽעֲשֵׂיָה֙"
     }
    ]
   },
@@ -23511,6 +25352,25 @@
    ]
   },
   {
+   "person": "netanel",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:22",
+     "quote": "נְתַנְאֵ֔ל"
+    }
+   ]
+  },
+  {
    "person": "nethanel-3",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -23564,6 +25424,50 @@
      "text": "BHSA",
      "reference": "NEH 10:6",
      "quote": "חָרִ֥ם מְרֵמֹ֖ות עֹֽבַדְיָֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "pashhur-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 20:1",
+     "quote": "פַּשְׁחוּר֙ בֶּן־אִמֵּ֣ר הַכֹּהֵ֔ן"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JER 20:1",
+     "quote": "Pashhur the priest,"
+    },
+    {
+     "kind": "profession",
+     "text": "GRCBRENT",
+     "reference": "JER 20:1",
+     "quote": "Πασχὼρ ὁ υἱὸς Ἑμμὴρ ὁ ἱερεὺς,"
+    }
+   ]
+  },
+  {
+   "person": "pashhur-the-priest",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:9",
+     "quote": "אֵ֖לֶּה הַכֹּהֲנִֽים׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 10:4",
+     "quote": "פַּשְׁח֥וּר"
     }
    ]
   },
@@ -23755,6 +25659,25 @@
    ]
   },
   {
+   "person": "sallai-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:7",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֧י הַכֹּהֲנִ֛ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 12:7",
+     "quote": "סַלּ֣וּ"
+    }
+   ]
+  },
+  {
    "person": "seorim",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -23776,6 +25699,25 @@
      "text": "BHSA",
      "reference": "1CH 24:8",
      "quote": "לִשְׂעֹרִ֖ים הָרְבִעִֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "seraiah-6",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:7",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֧י הַכֹּהֲנִ֛ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 12:1",
+     "quote": "שְׂרָיָ֥ה"
     }
    ]
   },
@@ -23956,6 +25898,25 @@
    ]
   },
   {
+   "person": "shemaiah-15",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:21",
+     "quote": "וּֽשְׁמַֽעְיָ֔ה"
+    }
+   ]
+  },
+  {
    "person": "shemaiah-19",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -24013,6 +25974,44 @@
    ]
   },
   {
+   "person": "uzziah-2",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:21",
+     "quote": "וְעֻזִיָּֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "zabud",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904 and the Berean Standard Bible by an agent (claude-opus-5-5); the project owner's ruling of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 4:5",
+     "quote": "וְזָב֧וּד בֶּן־נָתָ֛ן כֹּהֵ֖ן רֵעֶ֥ה הַמֶּֽלֶךְ׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "1KI 4:5",
+     "quote": "Zabud son of Nathan was a priest and adviser to the king;"
+    }
+   ]
+  },
+  {
    "person": "zacharias",
    "occupation": "priest",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -24053,6 +26052,25 @@
      "text": "BHSA",
      "reference": "2SA 17:15",
      "quote": "אֶל־צָדֹ֤וק וְאֶל־אֶבְיָתָר֙ הַכֹּ֣הֲנִ֔ים"
+    }
+   ]
+  },
+  {
+   "person": "zebadiah-9",
+   "occupation": "priest",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 10:18",
+     "quote": "מִבְּנֵ֣י הַכֹּהֲנִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "EZR 10:20",
+     "quote": "וּזְבַדְיָֽה׃"
     }
    ]
   },
@@ -24171,6 +26189,25 @@
    ]
   },
   {
+   "person": "amasai-2",
+   "occupation": "priestly-trumpeter",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 15:24",
+     "quote": "מחצצרים בַּחֲצֹ֣צְרֹ֔ות"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 15:24",
+     "quote": "וּשְׁבַנְיָ֡הוּ וְיֹֽושָׁפָ֡ט וּנְתַנְאֵ֡ל וַעֲמָשַׂ֡י וּ֠זְכַרְיָהוּ וּבְנָיָ֤הוּ וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים מחצצרים"
+    }
+   ]
+  },
+  {
    "person": "benaiah-the-trumpeting-priest",
    "occupation": "priestly-trumpeter",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -24186,6 +26223,25 @@
      "text": "BHSA",
      "reference": "1CH 15:24",
      "quote": "וּבְנָיָ֤הוּ וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים מחצצרים בַּחֲצֹ֣צְרֹ֔ות לִפְנֵ֖י אֲרֹ֣ון הָֽאֱלֹהִ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "eliezer-4",
+   "occupation": "priestly-trumpeter",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 15:24",
+     "quote": "מחצצרים בַּחֲצֹ֣צְרֹ֔ות"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 15:24",
+     "quote": "וּשְׁבַנְיָ֡הוּ וְיֹֽושָׁפָ֡ט וּנְתַנְאֵ֡ל וַעֲמָשַׂ֡י וּ֠זְכַרְיָהוּ וּבְנָיָ֤הוּ וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים מחצצרים"
     }
    ]
   },
@@ -24231,6 +26287,25 @@
    "person": "shebaniah",
    "occupation": "priestly-trumpeter",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 15:24",
+     "quote": "מחצצרים בַּחֲצֹ֣צְרֹ֔ות"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 15:24",
+     "quote": "וּשְׁבַנְיָ֡הוּ וְיֹֽושָׁפָ֡ט וּנְתַנְאֵ֡ל וַעֲמָשַׂ֡י וּ֠זְכַרְיָהוּ וּבְנָיָ֤הוּ וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים מחצצרים"
+    }
+   ]
+  },
+  {
+   "person": "zechariah-the-trumpeting-priest",
+   "occupation": "priestly-trumpeter",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
    "witnesses": [
     {
      "kind": "profession",
@@ -24356,6 +26431,19 @@
      "text": "BHSA",
      "reference": "JOS 13:21",
      "quote": "וְאֶת־נְשִׂיאֵ֣י מִדְיָ֗ן אֶת־אֱוִ֤י וְאֶת־רֶ֨קֶם֙ וְאֶת־צ֤וּר וְאֶת־חוּר֙ וְאֶת־רֶ֔בַע"
+    }
+   ]
+  },
+  {
+   "person": "shechem",
+   "occupation": "prince",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 34:2",
+     "quote": "שְׁכֶ֧ם בֶּן־חֲמֹ֛ור הַֽחִוִּ֖י נְשִׂ֣יא הָאָ֑רֶץ"
     }
    ]
   },
@@ -24530,6 +26618,25 @@
    ]
   },
   {
+   "person": "amos",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "AMO 7:15",
+     "quote": "לֵ֥ךְ הִנָּבֵ֖א אֶל־עַמִּ֥י יִשְׂרָאֵֽל׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "AMO 7:15",
+     "quote": "‘Go, prophesy to My people Israel.’"
+    }
+   ]
+  },
+  {
    "person": "anna",
    "occupation": "prophet",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -24564,6 +26671,25 @@
      "text": "BHSA",
      "reference": "1CH 25:2",
      "quote": "עַ֚ל יַד־אָסָ֔ף הַנִּבָּ֖א"
+    }
+   ]
+  },
+  {
+   "person": "azariah-8",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "2CH 15:8",
+     "quote": "prophecy of Azariah son of Oded the prophet,"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "2CH 15:1",
+     "quote": "וַעֲזַרְיָ֨הוּ֙ בֶּן־עֹודֵ֔ד"
     }
    ]
   },
@@ -24650,6 +26776,38 @@
    ]
   },
   {
+   "person": "eldad",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NUM 11:27",
+     "quote": "אֶלְדָּ֣ד וּמֵידָ֔ד מִֽתְנַבְּאִ֖ים בַּֽמַּחֲנֶֽה׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NUM 11:26",
+     "quote": "אֶלְדָּ֡ד"
+    }
+   ]
+  },
+  {
+   "person": "eliezer-6",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 20:37",
+     "quote": "וַיִּתְנַבֵּ֞א אֱלִיעֶ֤זֶר בֶּן־דֹּדָוָ֨הוּ֙ מִמָּ֣רֵשָׁ֔ה"
+    }
+   ]
+  },
+  {
    "person": "elijah",
    "occupation": "prophet",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -24696,6 +26854,25 @@
      "text": "BHSA",
      "reference": "2KI 6:12",
      "quote": "אֱלִישָׁ֤ע הַנָּבִיא֙"
+    }
+   ]
+  },
+  {
+   "person": "enoch-2",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "JUD 1:14",
+     "quote": "Ἐπροφήτευσεν δὲ καὶ τούτοις ἕβδομος ἀπὸ Ἀδὰμ Ἑνὼχ"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "JUD 1:14",
+     "quote": "Enoch, the seventh from Adam, also prophesied"
     }
    ]
   },
@@ -24827,6 +27004,25 @@
      "text": "KJV",
      "reference": "JER 28:1",
      "quote": "Hananiah the son of Azur the prophet"
+    }
+   ]
+  },
+  {
+   "person": "hosea",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "own-book",
+     "text": "BHSA",
+     "reference": "HOS 1:1",
+     "quote": "דְּבַר־יְהוָ֣ה׀ אֲשֶׁ֣ר הָיָ֗ה אֶל־הֹושֵׁ֨עַ֙"
+    },
+    {
+     "kind": "own-book",
+     "text": "BSB",
+     "reference": "HOS 1:1",
+     "quote": "This is the word of the LORD that came to Hosea"
     }
    ]
   },
@@ -25032,6 +27228,31 @@
    ]
   },
   {
+   "person": "john-who-saw-the-revelation",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "REV 10:11",
+     "quote": "Δεῖ σε πάλιν προφητεῦσαι"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "REV 22:9",
+     "quote": "σύνδουλός σού εἰμι καὶ τῶν ἀδελφῶν σου τῶν προφητῶν"
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "REV 1:9",
+     "quote": "Ἐγὼ Ἰωάνης,"
+    }
+   ]
+  },
+  {
    "person": "jonah",
    "occupation": "prophet",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -25084,6 +27305,44 @@
      "text": "NESTLE1904",
      "reference": "ACT 15:32",
      "quote": "Ἰούδας τε καὶ Σιλᾶς, καὶ αὐτοὶ προφῆται ὄντες"
+    }
+   ]
+  },
+  {
+   "person": "malachi",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "own-book",
+     "text": "BHSA",
+     "reference": "MAL 1:1",
+     "quote": "מַשָּׂ֥א דְבַר־יְהוָ֖ה אֶל־יִשְׂרָאֵ֑ל בְּיַ֖ד מַלְאָכִֽי׃"
+    },
+    {
+     "kind": "own-book",
+     "text": "BSB",
+     "reference": "MAL 1:1",
+     "quote": "This is the burden of the word of the LORD to Israel through Malachi:"
+    }
+   ]
+  },
+  {
+   "person": "medad",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NUM 11:27",
+     "quote": "אֶלְדָּ֣ד וּמֵידָ֔ד מִֽתְנַבְּאִ֖ים בַּֽמַּחֲנֶֽה׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NUM 11:26",
+     "quote": "מֵידָ֜ד"
     }
    ]
   },
@@ -25170,6 +27429,25 @@
    ]
   },
   {
+   "person": "nahum",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "own-book",
+     "text": "BHSA",
+     "reference": "NAM 1:1",
+     "quote": "סֵ֧פֶר חֲזֹ֛ון נַח֖וּם הָאֶלְקֹשִֽׁי׃"
+    },
+    {
+     "kind": "own-book",
+     "text": "BSB",
+     "reference": "NAM 1:1",
+     "quote": "This is the burden against Nineveh, the book of the vision of Nahum the Elkoshite:"
+    }
+   ]
+  },
+  {
    "person": "nathan-2",
    "occupation": "prophet",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -25204,6 +27482,44 @@
      "text": "BHSA",
      "reference": "NEH 6:14",
      "quote": "לְנֹועַדְיָ֤ה הַנְּבִיאָה֙"
+    }
+   ]
+  },
+  {
+   "person": "obadiah-12",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "own-book",
+     "text": "BHSA",
+     "reference": "OBA 1:1",
+     "quote": "חֲזֹ֖ון עֹֽבַדְיָ֑ה"
+    },
+    {
+     "kind": "own-book",
+     "text": "BSB",
+     "reference": "OBA 1:1",
+     "quote": "This is the vision of Obadiah:"
+    }
+   ]
+  },
+  {
+   "person": "oded",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 15:8",
+     "quote": "וְהַנְּבוּאָה֮ עֹדֵ֣ד הַנָּבִיא֒"
+    },
+    {
+     "kind": "profession",
+     "text": "GRCBRENT",
+     "reference": "2CH 15:8",
+     "quote": "προφητείαν Ἀδὰδ τοῦ προφήτου,"
     }
    ]
   },
@@ -25359,6 +27675,44 @@
    ]
   },
   {
+   "person": "zephaniah-3",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "own-book",
+     "text": "BHSA",
+     "reference": "ZEP 1:1",
+     "quote": "דְּבַר־יְהוָ֣ה׀ אֲשֶׁ֣ר הָיָ֗ה אֶל־צְפַנְיָה֙"
+    },
+    {
+     "kind": "own-book",
+     "text": "BSB",
+     "reference": "ZEP 1:1",
+     "quote": "This is the word of the LORD that came to Zephaniah"
+    }
+   ]
+  },
+  {
+   "person": "joseph-12",
+   "occupation": "prophet-or-teacher",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 13:1",
+     "quote": "προφῆται καὶ διδάσκαλοι ὅ τε Βαρνάβας καὶ Συμεὼν ὁ καλούμενος Νίγερ, καὶ Λούκιος ὁ Κυρηναῖος, Μαναήν τε Ἡρῴδου τοῦ τετραάρχου σύντροφος καὶ Σαῦλος."
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "ACT 4:36",
+     "quote": "Ἰωσὴφ δὲ ὁ ἐπικληθεὶς Βαρνάβας"
+    }
+   ]
+  },
+  {
    "person": "lucius",
    "occupation": "prophet-or-teacher",
    "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
@@ -25393,6 +27747,19 @@
      "text": "KJV",
      "reference": "ACT 13:1",
      "quote": "Now there were in the church that was at Antioch certain prophets and teachers; as Barnabas, and Simeon that was called Niger, and Lucius of Cyrene, and Manaen, which had been brought up with Herod the tetrarch, and Saul."
+    }
+   ]
+  },
+  {
+   "person": "saul-2",
+   "occupation": "prophet-or-teacher",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 13:1",
+     "quote": "προφῆται καὶ διδάσκαλοι ὅ τε Βαρνάβας καὶ Συμεὼν ὁ καλούμενος Νίγερ, καὶ Λούκιος ὁ Κυρηναῖος, Μαναήν τε Ἡρῴδου τοῦ τετραάρχου σύντροφος καὶ Σαῦλος."
     }
    ]
   },
@@ -25629,6 +27996,44 @@
    ]
   },
   {
+   "person": "azariah-18",
+   "occupation": "regional-officer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 2:49",
+     "quote": "וּמַנִּ֗י עַ֤ל עֲבִֽידְתָּא֙ דִּ֚י מְדִינַ֣ת בָּבֶ֔ל לְשַׁדְרַ֥ךְ מֵישַׁ֖ךְ וַעֲבֵ֣ד נְגֹ֑ו"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "DAN 1:7",
+     "quote": "וְלַעֲזַרְיָ֖ה עֲבֵ֥ד נְגֹֽו׃"
+    }
+   ]
+  },
+  {
+   "person": "hananiah-12",
+   "occupation": "regional-officer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 2:49",
+     "quote": "וּמַנִּ֗י עַ֤ל עֲבִֽידְתָּא֙ דִּ֚י מְדִינַ֣ת בָּבֶ֔ל לְשַׁדְרַ֥ךְ מֵישַׁ֖ךְ וַעֲבֵ֣ד נְגֹ֑ו"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "DAN 1:7",
+     "quote": "וְלַֽחֲנַנְיָה֙ שַׁדְרַ֔ךְ"
+    }
+   ]
+  },
+  {
    "person": "hashabiah-9",
    "occupation": "regional-officer",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -25650,6 +28055,25 @@
      "text": "BHSA",
      "reference": "1CH 26:30",
      "quote": "לַֽחֶבְרֹונִ֡י חֲשַׁבְיָהוּ֩ וְאֶחָ֨יו בְּנֵי־חַ֜יִל אֶ֣לֶף וּשְׁבַע־מֵאֹ֗ות עַ֚ל פְּקֻדַּ֣ת יִשְׂרָאֵ֔ל מֵעֵ֥בֶר לַיַּרְדֵּ֖ן מַעְרָ֑בָה לְכֹל֙ מְלֶ֣אכֶת יְהוָ֔ה וְלַעֲבֹדַ֖ת הַמֶּֽלֶךְ׃"
+    }
+   ]
+  },
+  {
+   "person": "mishael-3",
+   "occupation": "regional-officer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 2:49",
+     "quote": "וּמַנִּ֗י עַ֤ל עֲבִֽידְתָּא֙ דִּ֚י מְדִינַ֣ת בָּבֶ֔ל לְשַׁדְרַ֥ךְ מֵישַׁ֖ךְ וַעֲבֵ֣ד נְגֹ֑ו"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "DAN 1:7",
+     "quote": "וּלְמִֽישָׁאֵ֣ל מֵישַׁ֔ךְ"
     }
    ]
   },
@@ -25718,6 +28142,25 @@
      "text": "NESTLE1904",
      "reference": "JHN 3:3",
      "quote": "ἀπεκρίθη Ἰησοῦς καὶ εἶπεν αὐτῷ"
+    }
+   ]
+  },
+  {
+   "person": "john",
+   "occupation": "religious-teacher",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "LUK 11:1",
+     "quote": "καθὼς καὶ Ἰωάνης ἐδίδαξεν τοὺς μαθητὰς αὐτοῦ."
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "LUK 3:12",
+     "quote": "Διδάσκαλε,"
     }
    ]
   },
@@ -25885,6 +28328,25 @@
    ]
   },
   {
+   "person": "abiathar",
+   "occupation": "royal-counselor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:34",
+     "quote": "וְאַחֲרֵ֣י אֲחִיתֹ֗פֶל יְהֹויָדָ֤ע בֶּן־בְּנָיָ֨הוּ֙ וְאֶבְיָתָ֔ר"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:33",
+     "quote": "וַאֲחִיתֹ֖פֶל יֹועֵ֣ץ לַמֶּ֑לֶךְ"
+    }
+   ]
+  },
+  {
    "person": "ahithophel",
    "occupation": "royal-counselor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -25909,6 +28371,38 @@
     },
     {
      "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 27:33",
+     "quote": "וַאֲחִיתֹ֖פֶל יֹועֵ֣ץ לַמֶּ֑לֶךְ"
+    }
+   ]
+  },
+  {
+   "person": "hushai",
+   "occupation": "royal-counselor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:33",
+     "quote": "וְחוּשַׁ֥י הָאַרְכִּ֖י רֵ֥עַ הַמֶּֽלֶךְ׃"
+    }
+   ]
+  },
+  {
+   "person": "jehoiada-son-of-benaiah",
+   "occupation": "royal-counselor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:34",
+     "quote": "וְאַחֲרֵ֣י אֲחִיתֹ֗פֶל יְהֹויָדָ֤ע בֶּן־בְּנָיָ֨הוּ֙ וְאֶבְיָתָ֔ר"
+    },
+    {
+     "kind": "profession",
      "text": "BHSA",
      "reference": "1CH 27:33",
      "quote": "וַאֲחִיתֹ֖פֶל יֹועֵ֣ץ לַמֶּ֑לֶךְ"
@@ -26301,6 +28795,19 @@
    ]
   },
   {
+   "person": "seraiah-10",
+   "occupation": "royal-official",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 51:59",
+     "quote": "וּשְׂרָיָ֖ה שַׂ֥ר מְנוּחָֽה׃"
+    }
+   ]
+  },
+  {
    "person": "zechariah-9",
    "occupation": "royal-official",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -26535,6 +29042,25 @@
      "text": "KJV",
      "reference": "2SA 20:25",
      "quote": "And Sheva was scribe"
+    }
+   ]
+  },
+  {
+   "person": "abishag",
+   "occupation": "royal-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 1:4",
+     "quote": "וַתְּהִ֨י לַמֶּ֤לֶךְ סֹכֶ֨נֶת֙ וַתְּשָׁ֣רְתֵ֔הוּ"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1KI 1:3",
+     "quote": "וַֽיִּמְצְא֗וּ אֶת־אֲבִישַׁג֙ הַשּׁ֣וּנַמִּ֔ית"
     }
    ]
   },
@@ -27009,6 +29535,19 @@
    ]
   },
   {
+   "person": "shemaiah-8",
+   "occupation": "scribe",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 24:6",
+     "quote": "וַֽיִּכְתְּבֵ֡ם שְֽׁמַֽעְיָה֩ בֶן־נְתַנְאֵ֨ל הַסֹּופֵ֜ר"
+    }
+   ]
+  },
+  {
    "person": "shimshai",
    "occupation": "scribe",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -27131,6 +29670,19 @@
      "text": "BHSA",
      "reference": "AMO 7:12",
      "quote": "וַיֹּ֤אמֶר אֲמַצְיָה֙ אֶל־עָמֹ֔וס חֹזֶ֕ה"
+    }
+   ]
+  },
+  {
+   "person": "asaph-2",
+   "occupation": "seer",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 29:30",
+     "quote": "וְאָסָ֣ף הַחֹזֶ֑ה"
     }
    ]
   },
@@ -27301,6 +29853,25 @@
      "text": "BHSA",
      "reference": "GEN 4:2",
      "quote": "וַֽיְהִי־הֶ֨בֶל֙ רֹ֣עֵה צֹ֔אן"
+    }
+   ]
+  },
+  {
+   "person": "anah-son-of-zibeon",
+   "occupation": "shepherd",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 36:24",
+     "quote": "בִּרְעֹתֹ֥ו אֶת־הַחֲמֹרִ֖ים לְצִבְעֹ֥ון אָבִֽיו׃"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "GEN 36:24",
+     "quote": "as he was pasturing the donkeys of his father Zibeon.)"
     }
    ]
   },
@@ -27931,6 +30502,25 @@
    ]
   },
   {
+   "person": "manasseh-3",
+   "occupation": "sorcerer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 4), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 33:6",
+     "quote": "וְעֹונֵ֤ן וְנִחֵשׁ֙ וְֽכִשֵּׁ֔ף"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "2CH 33:6",
+     "quote": "also he observed times, and used enchantments, and used witchcraft,"
+    }
+   ]
+  },
+  {
    "person": "simon-8",
    "occupation": "sorcerer",
    "source": "read from Scripture by an agent (claude-opus-5-5) on the project owner's ruling of 2026-10-28 that a person's line says what the text calls them as well as their trade (TSK-1218), decided 2026-10-28",
@@ -28230,6 +30820,25 @@
    ]
   },
   {
+   "person": "akkub-5",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
+    }
+   ]
+  },
+  {
    "person": "asahel-2",
    "occupation": "teacher-of-the-law",
    "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
@@ -28267,6 +30876,44 @@
    ]
   },
   {
+   "person": "azariah-22",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
+    }
+   ]
+  },
+  {
+   "person": "bani-7",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
+    }
+   ]
+  },
+  {
    "person": "gamaliel-2",
    "occupation": "teacher-of-the-law",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -28282,6 +30929,25 @@
      "text": "NESTLE1904",
      "reference": "ACT 5:34",
      "quote": "Φαρισαῖος ὀνόματι Γαμαλιήλ, νομοδιδάσκαλος τίμιος παντὶ τῷ λαῷ"
+    }
+   ]
+  },
+  {
+   "person": "hanan-6",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
     }
    ]
   },
@@ -28313,6 +30979,25 @@
      "text": "KJV",
      "reference": "NEH 8:8",
      "quote": "So they read in the book in the law of God distinctly, and gave the sense, and caused them to understand the reading."
+    }
+   ]
+  },
+  {
+   "person": "jamin-3",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
     }
    ]
   },
@@ -28385,6 +31070,25 @@
    ]
   },
   {
+   "person": "jozabad-8",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
+    }
+   ]
+  },
+  {
    "person": "kelaiah",
    "occupation": "teacher-of-the-law",
    "source": "read from Scripture by Claude Sonnet 5.5 (TSK-1250), held and then decided against the Hebrew, Greek and English by Codex (TSK-1254), with the project owner's rulings of 2026-10-27 where he gave one",
@@ -28449,6 +31153,25 @@
      "text": "KJV",
      "reference": "NEH 8:8",
      "quote": "So they read in the book in the law of God distinctly, and gave the sense, and caused them to understand the reading."
+    }
+   ]
+  },
+  {
+   "person": "maaseiah-16",
+   "occupation": "teacher-of-the-law",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 8:7",
+     "quote": "וְיֵשׁ֡וּעַ וּבָנִ֡י וְשֵׁרֵֽבְיָ֣ה׀ יָמִ֡ין עַקּ֡וּב שַׁבְּתַ֣י׀ הֹֽודִיָּ֡ה מַעֲשֵׂיָ֡ה קְלִיטָ֣א עֲזַרְיָה֩ יֹוזָבָ֨ד חָנָ֤ן פְּלָאיָה֙ וְהַלְוִיִּ֔ם מְבִינִ֥ים אֶת־הָעָ֖ם לַתֹּורָ֑ה וְהָעָ֖ם עַל־עָמְדָֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "NEH 8:7",
+     "quote": "Also Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai, Hodijah, Maaseiah, Kelita, Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law: and the people stood in their place."
     }
    ]
   },
@@ -28849,6 +31572,25 @@
    ]
   },
   {
+   "person": "ammiel-3",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:5",
+     "quote": "עַמִּיאֵ֤ל"
+    }
+   ]
+  },
+  {
    "person": "bakbukiah",
    "occupation": "temple-gatekeeper",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -28864,6 +31606,44 @@
      "text": "BHSA",
      "reference": "NEH 12:25",
      "quote": "מַתַּנְיָ֧ה וּבַקְבֻּֽקְיָ֛ה עֹבַדְיָ֥ה מְשֻׁלָּ֖ם טַלְמֹ֣ון עַקּ֑וּב שֹׁמְרִ֤ים שֹֽׁועֲרִים֙"
+    }
+   ]
+  },
+  {
+   "person": "elam-3",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:3",
+     "quote": "עֵילָ֤ם"
+    }
+   ]
+  },
+  {
+   "person": "eliehoenai",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:3",
+     "quote": "אֶלְיְהֹועֵינַ֖י"
     }
    ]
   },
@@ -28926,6 +31706,25 @@
      "text": "BHSA",
      "reference": "1CH 26:15",
      "quote": "לְעֹבֵ֥ד אֱדֹ֖ם נֶ֑גְבָּה וּלְבָנָ֖יו בֵּ֥ית הָאֲסֻפִּֽים"
+    }
+   ]
+  },
+  {
+   "person": "hilkiah-5",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:11",
+     "quote": "חִלְקִיָּ֤הוּ"
     }
    ]
   },
@@ -29097,6 +31896,25 @@
    ]
   },
   {
+   "person": "jehozabad-2",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:4",
+     "quote": "יְהֹוזָבָ֣ד"
+    }
+   ]
+  },
+  {
    "person": "jeiel-4",
    "occupation": "temple-gatekeeper",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29112,6 +31930,44 @@
      "text": "BHSA",
      "reference": "1CH 15:18",
      "quote": "וְעֹבֵ֥ד אֱדֹ֛ם וִֽיעִיאֵ֖ל הַשֹּׁעֲרִֽים"
+    }
+   ]
+  },
+  {
+   "person": "joah-3",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:4",
+     "quote": "יֹואָ֤ח"
+    }
+   ]
+  },
+  {
+   "person": "johanan-6",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:3",
+     "quote": "יְהֹוחָנָ֣ן"
     }
    ]
   },
@@ -29135,6 +31991,44 @@
    ]
   },
   {
+   "person": "mattaniah-9",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:25",
+     "quote": "שֹׁמְרִ֤ים שֹֽׁועֲרִים֙ מִשְׁמָ֔ר"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 12:25",
+     "quote": "מַתַּנְיָ֧ה וּבַקְבֻּֽקְיָ֛ה עֹבַדְיָ֥ה מְשֻׁלָּ֖ם טַלְמֹ֣ון עַקּ֑וּב שֹׁמְרִ֤ים שֹֽׁועֲרִים֙"
+    }
+   ]
+  },
+  {
+   "person": "nethanel-5",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:4",
+     "quote": "וּנְתַנְאֵ֖ל"
+    }
+   ]
+  },
+  {
    "person": "obadiah-11",
    "occupation": "temple-gatekeeper",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29150,6 +32044,25 @@
      "text": "BHSA",
      "reference": "NEH 12:25",
      "quote": "עֹבַדְיָ֥ה מְשֻׁלָּ֖ם טַלְמֹ֣ון עַקּ֑וּב שֹׁמְרִ֤ים שֹֽׁועֲרִים֙ מִשְׁמָ֔ר"
+    }
+   ]
+  },
+  {
+   "person": "obed-4",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:7",
+     "quote": "וְעֹובֵ֧ד"
     }
    ]
   },
@@ -29191,6 +32104,25 @@
    ]
   },
   {
+   "person": "othni",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:7",
+     "quote": "עָ֠תְנִי"
+    }
+   ]
+  },
+  {
    "person": "peullethai",
    "occupation": "temple-gatekeeper",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29228,6 +32160,25 @@
    ]
   },
   {
+   "person": "rephael",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:7",
+     "quote": "וּרְפָאֵ֨ל"
+    }
+   ]
+  },
+  {
    "person": "sacar",
    "occupation": "temple-gatekeeper",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29261,6 +32212,25 @@
      "text": "BHSA",
      "reference": "1CH 26:15",
      "quote": "לְעֹבֵ֥ד אֱדֹ֖ם נֶ֑גְבָּה וּלְבָנָ֖יו בֵּ֥ית הָאֲסֻפִּֽים׃"
+    }
+   ]
+  },
+  {
+   "person": "semachiah",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:7",
+     "quote": "וּסְמַכְיָֽהוּ׃"
     }
    ]
   },
@@ -29315,6 +32285,44 @@
    ]
   },
   {
+   "person": "shemaiah-9",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:4",
+     "quote": "שְׁמַֽעְיָ֤ה"
+    }
+   ]
+  },
+  {
+   "person": "shimri-3",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:10",
+     "quote": "שִׁמְרִ֤י"
+    }
+   ]
+  },
+  {
    "person": "shuppim",
    "occupation": "temple-gatekeeper",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29361,6 +32369,25 @@
      "text": "KJV",
      "reference": "1CH 9:17",
      "quote": "And the porters were, Shallum, and Akkub, and Talmon"
+    }
+   ]
+  },
+  {
+   "person": "tebaliah",
+   "occupation": "temple-gatekeeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:12",
+     "quote": "לְ֠אֵלֶּה מַחְלְקֹ֨ות הַשֹּֽׁעֲרִ֜ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 26:11",
+     "quote": "טְבַלְיָ֣הוּ"
     }
    ]
   },
@@ -29508,6 +32535,19 @@
    ]
   },
   {
+   "person": "eliphelehu",
+   "occupation": "temple-lyre-player",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 15:21",
+     "quote": "וֶאֱלִֽיפְלֵ֗הוּ וּמִקְנֵיָ֨הוּ֙ וְעֹבֵ֣ד אֱדֹ֔ם וִֽיעִיאֵ֖ל וַעֲזַזְיָ֑הוּ בְּכִנֹּרֹ֥ות"
+    }
+   ]
+  },
+  {
    "person": "jeiel-4",
    "occupation": "temple-lyre-player",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29617,6 +32657,38 @@
      "text": "BHSA",
      "reference": "1CH 25:2",
      "quote": "זַכּ֧וּר וְיֹוסֵ֛ף וּנְתַנְיָ֥ה וַאֲשַׂרְאֵ֖לָה בְּנֵ֣י אָסָ֑ף"
+    }
+   ]
+  },
+  {
+   "person": "azarel-5",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 25:6",
+     "quote": "כָּל־אֵ֣לֶּה עַל־יְדֵי֩ אֲבִיהֶ֨ם בַּשִּׁ֜יר"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 25:18",
+     "quote": "עֲזַרְאֵ֔ל"
+    }
+   ]
+  },
+  {
+   "person": "azarel-6",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
     }
    ]
   },
@@ -29875,6 +32947,19 @@
    ]
   },
   {
+   "person": "gilalai",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
+    }
+   ]
+  },
+  {
    "person": "hanani-2",
    "occupation": "temple-musician",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -29896,6 +32981,19 @@
      "text": "BHSA",
      "reference": "1CH 25:5",
      "quote": "כָּל־אֵ֨לֶּה בָנִ֜ים לְהֵימָ֗ן"
+    }
+   ]
+  },
+  {
+   "person": "hanani-5",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
     }
    ]
   },
@@ -30002,6 +33100,25 @@
      "text": "BHSA",
      "reference": "1CH 25:5",
      "quote": "כָּל־אֵ֨לֶּה בָנִ֜ים לְהֵימָ֗ן"
+    }
+   ]
+  },
+  {
+   "person": "jaaziel",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 15:20",
+     "quote": "וּזְכַרְיָ֨ה וַעֲזִיאֵ֜ל וּשְׁמִֽירָמֹ֤ות וִֽיחִיאֵל֙ וְעֻנִּ֣י וֶֽאֱלִיאָ֔ב וּמַעֲשֵׂיָ֖הוּ וּבְנָיָ֑הוּ בִּנְבָלִ֖ים עַל־עֲלָמֹֽות׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 15:18",
+     "quote": "וְיַֽעֲזִיאֵ֡ל"
     }
    ]
   },
@@ -30210,6 +33327,32 @@
    ]
   },
   {
+   "person": "judah-4",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
+    }
+   ]
+  },
+  {
+   "person": "maai",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
+    }
+   ]
+  },
+  {
    "person": "mahazioth",
    "occupation": "temple-musician",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -30359,6 +33502,19 @@
    ]
   },
   {
+   "person": "milalai",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
+    }
+   ]
+  },
+  {
    "person": "nethanel-10",
    "occupation": "temple-musician",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -30502,6 +33658,19 @@
    ]
   },
   {
+   "person": "shemaiah-27",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
+    }
+   ]
+  },
+  {
    "person": "shemiramoth",
    "occupation": "temple-musician",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -30535,6 +33704,25 @@
      "text": "KJV",
      "reference": "1CH 15:20",
      "quote": "and Shemiramoth, and Jehiel, and Unni"
+    }
+   ]
+  },
+  {
+   "person": "shimei-10",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 25:6",
+     "quote": "כָּל־אֵ֣לֶּה עַל־יְדֵי֩ אֲבִיהֶ֨ם בַּשִּׁ֜יר"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 25:17",
+     "quote": "שִׁמְעִ֔י"
     }
    ]
   },
@@ -30614,6 +33802,25 @@
    ]
   },
   {
+   "person": "zechariah-22",
+   "occupation": "temple-musician",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 12:36",
+     "quote": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 12:35",
+     "quote": "זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן"
+    }
+   ]
+  },
+  {
    "person": "zechariah-5",
    "occupation": "temple-musician",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -30666,6 +33873,25 @@
      "text": "BHSA",
      "reference": "1CH 25:6",
      "quote": "כָּל־אֵ֣לֶּה עַל־יְדֵי֩ אֲבִיהֶ֨ם בַּשִּׁ֜יר"
+    }
+   ]
+  },
+  {
+   "person": "jozabad-5",
+   "occupation": "temple-outer-work-overseer",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 11:16",
+     "quote": "עַל־הַמְּלָאכָ֤ה הַחִֽיצֹנָה֙ לְבֵ֣ית הָאֱלֹהִ֔ים"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NEH 11:16",
+     "quote": "וְשַׁבְּתַ֨י וְיֹוזָבָ֜ד"
     }
    ]
   },
@@ -30723,6 +33949,19 @@
      "text": "BHSA",
      "reference": "1CH 15:18",
      "quote": "וּבְנָיָ֡הוּ וּמַֽעֲשֵׂיָ֡הוּ"
+    }
+   ]
+  },
+  {
+   "person": "azariah-15",
+   "occupation": "temple-ruler",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 31:13",
+     "quote": "וַעֲזַרְיָ֖הוּ נְגִ֥יד בֵּית־הָאֱלֹהִֽים׃"
     }
    ]
   },
@@ -31008,6 +34247,19 @@
    ]
   },
   {
+   "person": "maaseiah-20",
+   "occupation": "temple-threshold-keeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 35:4",
+     "quote": "לְלִשְׁכַּ֛ת מַעֲשֵׂיָ֥הוּ בֶן־שַׁלֻּ֖ם שֹׁמֵ֥ר הַסַּֽף׃"
+    }
+   ]
+  },
+  {
    "person": "ahijah-8",
    "occupation": "temple-treasury-overseer",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -31105,6 +34357,25 @@
      "text": "BHSA",
      "reference": "1CH 26:22",
      "quote": "זֵתָם֙ וְיֹואֵ֣ל אָחִ֔יו עַל־אֹצְרֹ֖ות בֵּ֥ית יְהוָֽה"
+    }
+   ]
+  },
+  {
+   "person": "jeshua-5",
+   "occupation": "temple-work-overseer",
+   "source": "read from BHSA 2021, the Nestle 1904, the Septuagint and the Berean Standard Bible by an agent (claude-opus-5-5), on the project owner's rulings of 2026-11-01 (PRB-1420)",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 3:9",
+     "quote": "וַיַּעֲמֹ֣ד יֵשׁ֡וּעַ בָּנָ֣יו וְ֠אֶחָיו קַדְמִיאֵ֨ל וּבָנָ֤יו בְּנֵֽי־יְהוּדָה֙ כְּאֶחָ֔ד לְנַצֵּ֛חַ עַל־עֹשֵׂ֥ה הַמְּלָאכָ֖ה בְּבֵ֣ית הָאֱלֹהִ֑ים ס בְּנֵי֙ חֵֽנָדָ֔ד בְּנֵיהֶ֥ם וַאֲחֵיהֶ֖ם הַלְוִיִּֽם׃"
+    },
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "EZR 3:9",
+     "quote": "Then stood Jeshua with his sons and his brethren, Kadmiel and his sons, the sons of Judah, together, to set forward the workmen in the house of God: the sons of Henadad, with their sons and their brethren the Levites."
     }
    ]
   },
@@ -31488,6 +34759,25 @@
      "text": "KJV",
      "reference": "LUK 6:16",
      "quote": "Judas Iscariot, which also was the traitor"
+    }
+   ]
+  },
+  {
+   "person": "hanan-7",
+   "occupation": "treasurer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 13:13",
+     "quote": "וָאֹוצְרָ֣ה עַל־אֹ֠וצָרֹות"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 13:13",
+     "quote": "וְעַל־יָדָ֔ם חָנָ֥ן בֶּן־זַכּ֖וּר בֶּן־מַתַּנְיָ֑ה"
     }
    ]
   },
@@ -33212,6 +36502,25 @@
      "text": "BHSA",
      "reference": "1CH 1:54",
      "quote": "אֵ֖לֶּה אַלּוּפֵ֥י אֱדֹֽום׃"
+    }
+   ]
+  },
+  {
+   "person": "samuel",
+   "occupation": "tribal-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NUM 34:18",
+     "quote": "וְנָשִׂ֥יא אֶחָ֛ד נָשִׂ֥יא אֶחָ֖ד מִמַּטֶּ֑ה"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NUM 34:20",
+     "quote": "שְׁמוּאֵ֖ל"
     }
    ]
   },
@@ -35136,6 +38445,25 @@
    ]
   },
   {
+   "person": "zadok",
+   "occupation": "warrior",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 12:29",
+     "quote": "וְצָדֹ֥וק נַ֖עַר גִּבֹּ֣ור חָ֑יִל"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 12:24",
+     "quote": "וְ֠אֵלֶּה מִסְפְּרֵ֞י רָאשֵׁ֤י הֶֽחָלוּץ֙ לַצָּבָ֔א"
+    }
+   ]
+  },
+  {
    "person": "zelek",
    "occupation": "warrior",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -35163,6 +38491,19 @@
      "text": "KJV",
      "reference": "1CH 11:39",
      "quote": "Zelek the Ammonite"
+    }
+   ]
+  },
+  {
+   "person": "zichri-10",
+   "occupation": "warrior",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 3), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 28:7",
+     "quote": "וַֽיַּהֲרֹ֞ג זִכְרִ֣י׀ גִּבֹּ֣ור אֶפְרַ֗יִם"
     }
    ]
   },
