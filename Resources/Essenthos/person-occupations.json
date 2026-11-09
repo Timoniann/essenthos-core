@@ -538,6 +538,35 @@
    }
   },
   {
+   "slug": "chief-at-casiphia",
+   "category": "office",
+   "strongNumbers": [
+    "H7218"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Chief at Casiphia",
+     "masculine": "Chief at Casiphia",
+     "feminine": "Chief at Casiphia"
+    },
+    "ukr": {
+     "name": "Голова в Касіфії",
+     "masculine": "Голова в Касіфії",
+     "feminine": "Голова в Касіфії"
+    },
+    "deu": {
+     "name": "Oberhaupt in Kasifja",
+     "masculine": "Oberhaupt in Kasifja",
+     "feminine": "Oberhaupt in Kasifja"
+    },
+    "spa": {
+     "name": "Jefe en Casifia",
+     "masculine": "Jefe en Casifia",
+     "feminine": "Jefa en Casifia"
+    }
+   }
+  },
+  {
    "slug": "chief-governor-over-wise-men",
    "category": "office",
    "strongNumbers": [
@@ -2373,6 +2402,64 @@
    }
   },
   {
+   "slug": "keeper-of-the-ark",
+   "category": "religious_role",
+   "strongNumbers": [
+    "H8104"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Keeper of the ark",
+     "masculine": "Keeper of the ark",
+     "feminine": "Keeper of the ark"
+    },
+    "ukr": {
+     "name": "Охоронець ковчега",
+     "masculine": "Охоронець ковчега",
+     "feminine": "Охоронниця ковчега"
+    },
+    "deu": {
+     "name": "Hüter der Lade",
+     "masculine": "Hüter der Lade",
+     "feminine": "Hüterin der Lade"
+    },
+    "spa": {
+     "name": "Guardián del arca",
+     "masculine": "Guardián del arca",
+     "feminine": "Guardiana del arca"
+    }
+   }
+  },
+  {
+   "slug": "keeper-of-the-wardrobe",
+   "category": "office",
+   "strongNumbers": [
+    "H8104"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Keeper of the wardrobe",
+     "masculine": "Keeper of the wardrobe",
+     "feminine": "Keeper of the wardrobe"
+    },
+    "ukr": {
+     "name": "Охоронець одягу",
+     "masculine": "Охоронець одягу",
+     "feminine": "Охоронниця одягу"
+    },
+    "deu": {
+     "name": "Hüter der Kleider",
+     "masculine": "Hüter der Kleider",
+     "feminine": "Hüterin der Kleider"
+    },
+    "spa": {
+     "name": "Guarda de las vestiduras",
+     "masculine": "Guarda de las vestiduras",
+     "feminine": "Guarda de las vestiduras"
+    }
+   }
+  },
+  {
    "slug": "keeper-of-the-women",
    "category": "office",
    "strongNumbers": [
@@ -2429,6 +2516,35 @@
      "name": "Rey",
      "masculine": "Rey",
      "feminine": "Reina"
+    }
+   }
+  },
+  {
+   "slug": "king-over-the-locusts",
+   "category": "heavenly_role",
+   "strongNumbers": [
+    "G935"
+   ],
+   "labels": {
+    "eng": {
+     "name": "King over the locusts",
+     "masculine": "King over the locusts",
+     "feminine": "Queen over the locusts"
+    },
+    "ukr": {
+     "name": "Цар над сараною",
+     "masculine": "Цар над сараною",
+     "feminine": "Цариця над сараною"
+    },
+    "deu": {
+     "name": "König über die Heuschrecken",
+     "masculine": "König über die Heuschrecken",
+     "feminine": "Königin über die Heuschrecken"
+    },
+    "spa": {
+     "name": "Rey sobre las langostas",
+     "masculine": "Rey sobre las langostas",
+     "feminine": "Reina sobre las langostas"
     }
    }
   },
@@ -5160,6 +5276,36 @@
    }
   },
   {
+   "slug": "temple-threshold-keeper",
+   "category": "religious_role",
+   "strongNumbers": [
+    "H8104",
+    "H5592"
+   ],
+   "labels": {
+    "eng": {
+     "name": "Keeper of the threshold",
+     "masculine": "Keeper of the threshold",
+     "feminine": "Keeper of the threshold"
+    },
+    "ukr": {
+     "name": "Сторож порога",
+     "masculine": "Сторож порога",
+     "feminine": "Сторожиха порога"
+    },
+    "deu": {
+     "name": "Hüter der Schwelle",
+     "masculine": "Hüter der Schwelle",
+     "feminine": "Hüterin der Schwelle"
+    },
+    "spa": {
+     "name": "Guarda del umbral",
+     "masculine": "Guarda del umbral",
+     "feminine": "Guarda del umbral"
+    }
+   }
+  },
+  {
    "slug": "temple-treasury-overseer",
    "category": "religious_role",
    "strongNumbers": [],
@@ -5613,6 +5759,32 @@
    ]
   },
   {
+   "person": "abdon-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "adaiah-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
    "person": "ahi",
    "occupation": "ancestral-house-chief",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -5632,6 +5804,71 @@
    ]
   },
   {
+   "person": "ahijah-5",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:6",
+     "quote": "אֵ֣לֶּה הֵ֞ם רָאשֵׁ֤י אָבֹות֙ לְיֹ֣ושְׁבֵי גֶ֔בַע"
+    }
+   ]
+  },
+  {
+   "person": "ahio-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "anthothijah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "arad",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "athaliah-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
    "person": "azriel",
    "occupation": "ancestral-house-chief",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -5647,6 +5884,84 @@
      "text": "BHSA",
      "reference": "1CH 5:24",
      "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
+    }
+   ]
+  },
+  {
+   "person": "beraiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "beriah-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:13",
+     "quote": "הֵ֚מָּה רָאשֵׁ֣י הָאָבֹ֔ות לְיֹושְׁבֵ֖י אַיָּלֹ֑ון"
+    }
+   ]
+  },
+  {
+   "person": "eber-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "eder",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "elah-5",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 9:9",
+     "quote": "כָּל־אֵ֣לֶּה אֲנָשִׁ֔ים רָאשֵׁ֥י אָבֹ֖ות לְבֵ֥ית אֲבֹתֵיהֶֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "elam-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
     }
    ]
   },
@@ -5685,6 +6000,84 @@
      "text": "BHSA",
      "reference": "1CH 5:24",
      "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
+    }
+   ]
+  },
+  {
+   "person": "eliel-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "eliel-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "elienai",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "elihu-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:6",
+     "quote": "הַמִּמְשָׁלִ֖ים לְבֵ֣ית אֲבִיהֶ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "elijah-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "elzabad-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:6",
+     "quote": "הַמִּמְשָׁלִ֖ים לְבֵ֣ית אֲבִיהֶ֑ם"
     }
    ]
   },
@@ -5752,6 +6145,97 @@
    ]
   },
   {
+   "person": "gera-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:6",
+     "quote": "אֵ֣לֶּה הֵ֞ם רָאשֵׁ֤י אָבֹות֙ לְיֹ֣ושְׁבֵי גֶ֔בַע"
+    }
+   ]
+  },
+  {
+   "person": "hanan",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "hananiah-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "haran-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 23:9",
+     "quote": "אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃"
+    }
+   ]
+  },
+  {
+   "person": "haziel",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 23:9",
+     "quote": "אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃"
+    }
+   ]
+  },
+  {
+   "person": "heber-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "hizki",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
    "person": "hodaviah-2",
    "occupation": "ancestral-house-chief",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -5767,6 +6251,19 @@
      "text": "BHSA",
      "reference": "1CH 5:24",
      "quote": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל"
+    }
+   ]
+  },
+  {
+   "person": "ibneiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 9:9",
+     "quote": "כָּל־אֵ֣לֶּה אֲנָשִׁ֔ים רָאשֵׁ֥י אָבֹ֖ות לְבֵ֥ית אֲבֹתֵיהֶֽם׃"
     }
    ]
   },
@@ -5792,6 +6289,19 @@
      "text": "KJV",
      "reference": "1CH 7:2",
      "quote": "And the sons of Tola; Uzzi, and Rephaiah, and Jeriel, and Jahmai, and Jibsam, and Shemuel"
+    }
+   ]
+  },
+  {
+   "person": "iphdeiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
     }
    ]
   },
@@ -5852,6 +6362,97 @@
    ]
   },
   {
+   "person": "ishmerai",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "ishpah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "ishpan",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "isshiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 7:3",
+     "quote": "חֲמִשָּׁ֖ה רָאשִׁ֥ים כֻּלָּֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "izliah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "izrahiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 7:3",
+     "quote": "חֲמִשָּׁ֖ה רָאשִׁ֥ים כֻּלָּֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "jaareshiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
    "person": "jahdiel",
    "occupation": "ancestral-house-chief",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -5883,6 +6484,19 @@
    ]
   },
   {
+   "person": "jakim",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
    "person": "jeremiah-2",
    "occupation": "ancestral-house-chief",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -5910,6 +6524,383 @@
      "text": "BHSA",
      "reference": "1CH 5:24",
      "quote": "וְיִרְמְיָ֨ה"
+    }
+   ]
+  },
+  {
+   "person": "jeremoth-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "jeshua-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 4:3",
+     "quote": "זְרֻבָּבֶ֜ל וְיֵשׁ֗וּעַ וּשְׁאָ֨ר רָאשֵׁ֤י הָֽאָבֹות֙ לְיִשְׂרָאֵ֔ל"
+    }
+   ]
+  },
+  {
+   "person": "jeuz",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "jobab-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "jobab-5",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "joel-5",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 7:3",
+     "quote": "חֲמִשָּׁ֖ה רָאשִׁ֥ים כֻּלָּֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "joha",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "malcam",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "mesha-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "meshullam-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "meshullam-5",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 9:9",
+     "quote": "כָּל־אֵ֣לֶּה אֲנָשִׁ֔ים רָאשֵׁ֥י אָבֹ֖ות לְבֵ֥ית אֲבֹתֵיהֶֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "michael-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 7:3",
+     "quote": "חֲמִשָּׁ֖ה רָאשִׁ֥ים כֻּלָּֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "michael-5",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "mirmah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "naaman-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:6",
+     "quote": "אֵ֣לֶּה הֵ֞ם רָאשֵׁ֤י אָבֹות֙ לְיֹ֣ושְׁבֵי גֶ֔בַע"
+    }
+   ]
+  },
+  {
+   "person": "obadiah-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 7:3",
+     "quote": "חֲמִשָּׁ֖ה רָאשִׁ֥ים כֻּלָּֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "obed-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:6",
+     "quote": "הַמִּמְשָׁלִ֖ים לְבֵ֣ית אֲבִיהֶ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "othni",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:6",
+     "quote": "הַמִּמְשָׁלִ֖ים לְבֵ֣ית אֲבִיהֶ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "penuel-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "rephael",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:6",
+     "quote": "הַמִּמְשָׁלִ֖ים לְבֵ֣ית אֲבִיהֶ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "sachia",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "sallu",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 9:9",
+     "quote": "כָּל־אֵ֣לֶּה אֲנָשִׁ֔ים רָאשֵׁ֥י אָבֹ֖ות לְבֵ֥ית אֲבֹתֵיהֶֽם׃"
+    }
+   ]
+  },
+  {
+   "person": "semachiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 26:6",
+     "quote": "הַמִּמְשָׁלִ֖ים לְבֵ֣ית אֲבִיהֶ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "shamsherai",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "shashak",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "shehariah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "shelomoth",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 23:9",
+     "quote": "אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃"
+    }
+   ]
+  },
+  {
+   "person": "shema-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:13",
+     "quote": "הֵ֚מָּה רָאשֵׁ֣י הָאָבֹ֔ות לְיֹושְׁבֵ֖י אַיָּלֹ֑ון"
+    }
+   ]
+  },
+  {
+   "person": "shimrath",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
     }
    ]
   },
@@ -5952,6 +6943,123 @@
    ]
   },
   {
+   "person": "zabdi-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "zebadiah",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "zebadiah-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "zerubbabel-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 4:3",
+     "quote": "זְרֻבָּבֶ֜ל וְיֵשׁ֗וּעַ וּשְׁאָ֨ר רָאשֵׁ֤י הָֽאָבֹות֙ לְיִשְׂרָאֵ֔ל"
+    }
+   ]
+  },
+  {
+   "person": "zibia",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:10",
+     "quote": "אֵ֥לֶּה בָנָ֖יו רָאשֵׁ֥י אָבֹֽות׃"
+    }
+   ]
+  },
+  {
+   "person": "zichri-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "zichri-3",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "zichri-4",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "zillethai",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 8:28",
+     "quote": "אֵ֣לֶּה רָאשֵׁ֥י אָבֹ֛ות לְתֹלְדֹותָ֖ם רָאשִׁ֑ים"
+    }
+   ]
+  },
+  {
    "person": "zimri",
    "occupation": "ancestral-house-chief",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -5967,6 +7075,19 @@
      "text": "KJV",
      "reference": "NUM 25:14",
      "quote": "Zimri, the son of Salu, a prince of a chief house among the Simeonites"
+    }
+   ]
+  },
+  {
+   "person": "zur-2",
+   "occupation": "ancestral-house-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NUM 25:15",
+     "quote": "כָּזְבִּ֣י בַת־צ֑וּר רֹ֣אשׁ אֻמֹּ֥ות בֵּֽית־אָ֛ב בְּמִדְיָ֖ן הֽוּא׃"
     }
    ]
   },
@@ -7688,6 +8809,19 @@
    ]
   },
   {
+   "person": "iddo-6",
+   "occupation": "chief-at-casiphia",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EZR 8:17",
+     "quote": "עַל־אִדֹּ֣ו הָרֹ֔אשׁ בְּכָסִפְיָ֖א הַמָּקֹ֑ום"
+    }
+   ]
+  },
+  {
    "person": "daniel-2",
    "occupation": "chief-governor-over-wise-men",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -8258,6 +9392,82 @@
    ]
   },
   {
+   "person": "nicanor",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "nicolas",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "parmenas",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "philip-3",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
    "person": "phoebe",
    "occupation": "church-servant",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -8277,6 +9487,69 @@
    ]
   },
   {
+   "person": "prochorus",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
+   "person": "stephen",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    },
+    {
+     "kind": "identity",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:5",
+     "quote": "ἐξελέξαντο Στέφανον,"
+    }
+   ]
+  },
+  {
+   "person": "timon",
+   "occupation": "church-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:3",
+     "quote": "οὓς καταστήσομεν ἐπὶ τῆς χρείας ταύτης·"
+    },
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 6:2",
+     "quote": "διακονεῖν τραπέζαις."
+    }
+   ]
+  },
+  {
    "person": "amon",
    "occupation": "city-governor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -8292,6 +9565,19 @@
      "text": "BHSA",
      "reference": "2CH 18:25",
      "quote": "אָמֹ֣ון שַׂר־הָעִ֑יר"
+    }
+   ]
+  },
+  {
+   "person": "hanani-4",
+   "occupation": "city-governor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 7:2",
+     "quote": "וָאֲצַוֶּ֞ה אֶת־חֲנָ֣נִי אָחִ֗י"
     }
    ]
   },
@@ -8828,6 +10114,19 @@
      "text": "NESTLE1904",
      "reference": "2TI 4:14",
      "quote": "Ἀλέξανδρος ὁ χαλκεὺς"
+    }
+   ]
+  },
+  {
+   "person": "dionysius",
+   "occupation": "council-member",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "ACT 17:34",
+     "quote": "Διονύσιος ὁ Ἀρεοπαγείτης"
     }
    ]
   },
@@ -11809,6 +13108,19 @@
    ]
   },
   {
+   "person": "caesar",
+   "occupation": "emperor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "LUK 3:1",
+     "quote": "τῆς ἡγεμονίας Τιβερίου Καίσαρος,"
+    }
+   ]
+  },
+  {
    "person": "caesar-2",
    "occupation": "emperor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -11830,6 +13142,32 @@
      "text": "NESTLE1904",
      "reference": "ACT 25:11",
      "quote": "Καίσαρα ἐπικαλοῦμαι"
+    }
+   ]
+  },
+  {
+   "person": "caesaraugustus",
+   "occupation": "emperor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "LUK 2:1",
+     "quote": "ἐξῆλθεν δόγμα παρὰ Καίσαρος Αὐγούστου ἀπογράφεσθαι πᾶσαν τὴν οἰκουμένην."
+    }
+   ]
+  },
+  {
+   "person": "claudius",
+   "occupation": "emperor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "KJV",
+     "reference": "ACT 11:28",
+     "quote": "in the days of Claudius Caesar."
     }
    ]
   },
@@ -13466,6 +14804,19 @@
    ]
   },
   {
+   "person": "mordecai-2",
+   "occupation": "household-steward",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EST 8:2",
+     "quote": "וַתָּ֧שֶׂם אֶסְתֵּ֛ר אֶֽת־מָרְדֳּכַ֖י עַל־בֵּ֥ית הָמָֽן׃"
+    }
+   ]
+  },
+  {
    "person": "esau",
    "occupation": "hunter",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -13920,6 +15271,32 @@
      "text": "BHSA",
      "reference": "EST 2:14",
      "quote": "אֶל־יַ֧ד שַֽׁעֲשְׁגַ֛ז סְרִ֥יס הַמֶּ֖לֶךְ שֹׁמֵ֣ר הַפִּֽילַגְשִׁ֑ים"
+    }
+   ]
+  },
+  {
+   "person": "eleazar-2",
+   "occupation": "keeper-of-the-ark",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1SA 7:1",
+     "quote": "וְאֶת־אֶלְעָזָ֤ר בְּנֹו֙ קִדְּשׁ֔וּ לִשְׁמֹ֖ר אֶת־אֲרֹ֥ון יְהוָֽה׃"
+    }
+   ]
+  },
+  {
+   "person": "shallum-2",
+   "occupation": "keeper-of-the-wardrobe",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2KI 22:14",
+     "quote": "שַׁלֻּ֣ם בֶּן־תִּקְוָ֗ה בֶּן־חַרְחַס֙ שֹׁמֵ֣ר הַבְּגָדִ֔ים"
     }
    ]
   },
@@ -16862,6 +18239,19 @@
    ]
   },
   {
+   "person": "nimrod",
+   "occupation": "king",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 10:10",
+     "quote": "וַתְּהִ֨י רֵאשִׁ֤ית מַמְלַכְתֹּו֙ בָּבֶ֔ל"
+    }
+   ]
+  },
+  {
    "person": "og",
    "occupation": "king",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -17259,6 +18649,25 @@
      "text": "BHSA",
      "reference": "2KI 15:37",
      "quote": "רְצִ֖ין מֶ֣לֶךְ אֲרָ֑ם"
+    }
+   ]
+  },
+  {
+   "person": "rezon",
+   "occupation": "king",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "1KI 11:25",
+     "quote": "So Rezon ruled over Aram"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 11:24",
+     "quote": "וַֽיִּמְלְכ֖וּ בְּדַמָּֽשֶׂק׃"
     }
    ]
   },
@@ -17720,6 +19129,19 @@
      "text": "BHSA",
      "reference": "NUM 31:8",
      "quote": "וְאֶת־מַלְכֵ֨י מִדְיָ֜ן הָרְג֣וּ עַל־חַלְלֵיהֶ֗ם אֶת־אֱוִ֤י וְאֶת־רֶ֨קֶם֙ וְאֶת־צ֤וּר וְאֶת־חוּר֙ וְאֶת־רֶ֔בַע חֲמֵ֖שֶׁת מַלְכֵ֣י מִדְיָ֑ן"
+    }
+   ]
+  },
+  {
+   "person": "abaddon",
+   "occupation": "king-over-the-locusts",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "NESTLE1904",
+     "reference": "REV 9:11",
+     "quote": "ἔχουσιν ἐπ’ αὐτῶν βασιλέα τὸν ἄγγελον τῆς ἀβύσσου, ὄνομα αὐτῷ Ἑβραϊστί Ἀβαδδών"
     }
    ]
   },
@@ -18490,6 +19912,38 @@
      "text": "BHSA",
      "reference": "NEH 10:22",
      "quote": "מְשֵׁיזַבְאֵ֥ל צָדֹ֖וק יַדּֽוּעַ׃"
+    }
+   ]
+  },
+  {
+   "person": "zattu",
+   "occupation": "leader-of-the-people",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 10:15",
+     "quote": "רָאשֵׁ֖י הָעָ֑ם פַּרְעֹשׁ֙ פַּחַ֣ת מֹואָ֔ב עֵילָ֥ם זַתּ֖וּא בָּנִֽי׃"
+    }
+   ]
+  },
+  {
+   "person": "elisha",
+   "occupation": "leaders-attendant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 19:21",
+     "quote": "וַיֵּ֛לֶךְ אַחֲרֵ֥י אֵלִיָּ֖הוּ וַיְשָׁרְתֵֽהוּ׃"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1KI 19:19",
+     "quote": "וַיִּמְצָ֞א אֶת־אֱלִישָׁ֤ע בֶּן־שָׁפָט֙"
     }
    ]
   },
@@ -25615,6 +27069,19 @@
    ]
   },
   {
+   "person": "shechem",
+   "occupation": "prince",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "GEN 34:2",
+     "quote": "שְׁכֶ֧ם בֶּן־חֲמֹ֛ור הַֽחִוִּ֖י נְשִׂ֣יא הָאָ֑רֶץ"
+    }
+   ]
+  },
+  {
    "person": "zeeb",
    "occupation": "prince",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -27163,6 +28630,44 @@
    ]
   },
   {
+   "person": "azariah-18",
+   "occupation": "regional-officer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 2:49",
+     "quote": "וּמַנִּ֗י עַ֤ל עֲבִֽידְתָּא֙ דִּ֚י מְדִינַ֣ת בָּבֶ֔ל לְשַׁדְרַ֥ךְ מֵישַׁ֖ךְ וַעֲבֵ֣ד נְגֹ֑ו"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "DAN 1:7",
+     "quote": "וְלַעֲזַרְיָ֖ה עֲבֵ֥ד נְגֹֽו׃"
+    }
+   ]
+  },
+  {
+   "person": "hananiah-12",
+   "occupation": "regional-officer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 2:49",
+     "quote": "וּמַנִּ֗י עַ֤ל עֲבִֽידְתָּא֙ דִּ֚י מְדִינַ֣ת בָּבֶ֔ל לְשַׁדְרַ֥ךְ מֵישַׁ֖ךְ וַעֲבֵ֣ד נְגֹ֑ו"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "DAN 1:7",
+     "quote": "וְלַֽחֲנַנְיָה֙ שַׁדְרַ֔ךְ"
+    }
+   ]
+  },
+  {
    "person": "hashabiah-9",
    "occupation": "regional-officer",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -27184,6 +28689,25 @@
      "text": "BHSA",
      "reference": "1CH 26:30",
      "quote": "לַֽחֶבְרֹונִ֡י חֲשַׁבְיָהוּ֩ וְאֶחָ֨יו בְּנֵי־חַ֜יִל אֶ֣לֶף וּשְׁבַע־מֵאֹ֗ות עַ֚ל פְּקֻדַּ֣ת יִשְׂרָאֵ֔ל מֵעֵ֥בֶר לַיַּרְדֵּ֖ן מַעְרָ֑בָה לְכֹל֙ מְלֶ֣אכֶת יְהוָ֔ה וְלַעֲבֹדַ֖ת הַמֶּֽלֶךְ׃"
+    }
+   ]
+  },
+  {
+   "person": "mishael-3",
+   "occupation": "regional-officer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "DAN 2:49",
+     "quote": "וּמַנִּ֗י עַ֤ל עֲבִֽידְתָּא֙ דִּ֚י מְדִינַ֣ת בָּבֶ֔ל לְשַׁדְרַ֥ךְ מֵישַׁ֖ךְ וַעֲבֵ֣ד נְגֹ֑ו"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "DAN 1:7",
+     "quote": "וּלְמִֽישָׁאֵ֣ל מֵישַׁ֔ךְ"
     }
    ]
   },
@@ -27438,6 +28962,25 @@
    ]
   },
   {
+   "person": "abiathar",
+   "occupation": "royal-counselor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:34",
+     "quote": "וְאַחֲרֵ֣י אֲחִיתֹ֗פֶל יְהֹויָדָ֤ע בֶּן־בְּנָיָ֨הוּ֙ וְאֶבְיָתָ֔ר"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:33",
+     "quote": "וַאֲחִיתֹ֖פֶל יֹועֵ֣ץ לַמֶּ֑לֶךְ"
+    }
+   ]
+  },
+  {
    "person": "ahithophel",
    "occupation": "royal-counselor",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -27462,6 +29005,38 @@
     },
     {
      "kind": "identity",
+     "text": "BHSA",
+     "reference": "1CH 27:33",
+     "quote": "וַאֲחִיתֹ֖פֶל יֹועֵ֣ץ לַמֶּ֑לֶךְ"
+    }
+   ]
+  },
+  {
+   "person": "hushai",
+   "occupation": "royal-counselor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:33",
+     "quote": "וְחוּשַׁ֥י הָאַרְכִּ֖י רֵ֥עַ הַמֶּֽלֶךְ׃"
+    }
+   ]
+  },
+  {
+   "person": "jehoiada-son-of-benaiah",
+   "occupation": "royal-counselor",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1CH 27:34",
+     "quote": "וְאַחֲרֵ֣י אֲחִיתֹ֗פֶל יְהֹויָדָ֤ע בֶּן־בְּנָיָ֨הוּ֙ וְאֶבְיָתָ֔ר"
+    },
+    {
+     "kind": "profession",
      "text": "BHSA",
      "reference": "1CH 27:33",
      "quote": "וַאֲחִיתֹ֖פֶל יֹועֵ֣ץ לַמֶּ֑לֶךְ"
@@ -27854,6 +29429,19 @@
    ]
   },
   {
+   "person": "seraiah-10",
+   "occupation": "royal-official",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 51:59",
+     "quote": "וּשְׂרָיָ֖ה שַׂ֥ר מְנוּחָֽה׃"
+    }
+   ]
+  },
+  {
    "person": "zechariah-9",
    "occupation": "royal-official",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -28088,6 +29676,25 @@
      "text": "KJV",
      "reference": "2SA 20:25",
      "quote": "And Sheva was scribe"
+    }
+   ]
+  },
+  {
+   "person": "abishag",
+   "occupation": "royal-servant",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "1KI 1:4",
+     "quote": "וַתְּהִ֨י לַמֶּ֤לֶךְ סֹכֶ֨נֶת֙ וַתְּשָׁ֣רְתֵ֔הוּ"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "1KI 1:3",
+     "quote": "וַֽיִּמְצְא֗וּ אֶת־אֲבִישַׁג֙ הַשּׁ֣וּנַמִּ֔ית"
     }
    ]
   },
@@ -32929,6 +34536,19 @@
    ]
   },
   {
+   "person": "azariah-15",
+   "occupation": "temple-ruler",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "2CH 31:13",
+     "quote": "וַעֲזַרְיָ֖הוּ נְגִ֥יד בֵּית־הָאֱלֹהִֽים׃"
+    }
+   ]
+  },
+  {
    "person": "azariah-7",
    "occupation": "temple-ruler",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
@@ -33206,6 +34826,19 @@
      "text": "BHSA",
      "reference": "1CH 15:19",
      "quote": "וְהַמְשֹׁ֣רְרִ֔ים הֵימָ֥ן אָסָ֖ף וְאֵיתָ֑ן"
+    }
+   ]
+  },
+  {
+   "person": "maaseiah-20",
+   "occupation": "temple-threshold-keeper",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "JER 35:4",
+     "quote": "לְלִשְׁכַּ֛ת מַעֲשֵׂיָ֥הוּ בֶן־שַׁלֻּ֖ם שֹׁמֵ֥ר הַסַּֽף׃"
     }
    ]
   },
@@ -33709,6 +35342,25 @@
      "text": "KJV",
      "reference": "LUK 6:16",
      "quote": "Judas Iscariot, which also was the traitor"
+    }
+   ]
+  },
+  {
+   "person": "hanan-7",
+   "occupation": "treasurer",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 13:13",
+     "quote": "וָאֹוצְרָ֣ה עַל־אֹ֠וצָרֹות"
+    },
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NEH 13:13",
+     "quote": "וְעַל־יָדָ֔ם חָנָ֥ן בֶּן־זַכּ֖וּר בֶּן־מַתַּנְיָ֑ה"
     }
    ]
   },
@@ -35433,6 +37085,25 @@
      "text": "BHSA",
      "reference": "1CH 1:54",
      "quote": "אֵ֖לֶּה אַלּוּפֵ֥י אֱדֹֽום׃"
+    }
+   ]
+  },
+  {
+   "person": "samuel",
+   "occupation": "tribal-chief",
+   "source": "read from BHSA 2021, the Nestle 1904, the King James Version and the Berean Standard Bible by an agent (claude-opus-5-5) (PRB-1420, part 2), decided 2026-11-09",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "NUM 34:18",
+     "quote": "וְנָשִׂ֥יא אֶחָ֛ד נָשִׂ֥יא אֶחָ֖ד מִמַּטֶּ֑ה"
+    },
+    {
+     "kind": "identity",
+     "text": "BHSA",
+     "reference": "NUM 34:20",
+     "quote": "שְׁמוּאֵ֖ל"
     }
    ]
   },
