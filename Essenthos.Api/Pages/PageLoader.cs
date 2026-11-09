@@ -185,7 +185,7 @@ internal sealed class PageLoader(
                     address.Chapter,
                     chapterCount,
                     verses,
-                    TextName(wording, text)));
+                    TextName(wording, text)) { TextLanguage = StructuredData.LanguageTag(text.Language) });
             }
         }
 
@@ -194,7 +194,8 @@ internal sealed class PageLoader(
 
     private async Task<PageContent?> Verse(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
-        if (address.Chapter > await canon.ChapterCount(address.Book, cancellationToken))
+        var chapterCount = await canon.ChapterCount(address.Book, cancellationToken);
+        if (address.Chapter > chapterCount)
         {
             return null;
         }
@@ -218,8 +219,9 @@ internal sealed class PageLoader(
                 said,
                 TextName(wording, text))
             {
-                Previous = verses.Where(verse => verse.Number < address.Verse).Select(verse => (int?)verse.Number).LastOrDefault(),
-                Next = verses.Where(verse => verse.Number > address.Verse).Select(verse => (int?)verse.Number).FirstOrDefault(),
+                Verses = verses,
+                ChapterCount = chapterCount,
+                TextLanguage = StructuredData.LanguageTag(text.Language),
             });
         }
 

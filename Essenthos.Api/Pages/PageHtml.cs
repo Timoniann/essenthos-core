@@ -50,12 +50,18 @@ internal sealed class HtmlWriter
 {
     private readonly StringBuilder _html = new();
 
-    public HtmlWriter Open(string tag, string? className = null, string? id = null, string? lang = null)
+    public HtmlWriter Open(string tag, string? className = null, string? id = null, string? lang = null,
+        params (string Name, string? Value)[] attributes)
     {
         _html.Append('<').Append(tag);
         Attribute("class", className);
         Attribute("id", id);
         Attribute("lang", lang);
+        foreach (var (name, value) in attributes)
+        {
+            Attribute(name, value);
+        }
+
         _html.Append('>');
         return this;
     }
@@ -75,10 +81,11 @@ internal sealed class HtmlWriter
         return this;
     }
 
-    public HtmlWriter Link(string href, string text, string? rel = null)
+    public HtmlWriter Link(string href, string text, string? rel = null, string? className = null)
     {
         _html.Append("<a href=\"").Append(PageHtml.Escape(href)).Append('"');
         Attribute("rel", rel);
+        Attribute("class", className);
         _html.Append('>').Append(PageHtml.Escape(text)).Append("</a>");
         return this;
     }
@@ -121,15 +128,18 @@ internal static partial class PageHtml
 
     /// <summary>
     /// Plain type for the few seconds before the application mounts, and for a reader without
-    /// scripts: the site's own colours come from its stylesheet, which the shell already loads.
+    /// scripts: the site's own colours come from its stylesheet, which the shell already loads. A
+    /// chapter's copy (<c>.reading</c>) is drawn by that stylesheet as the reader draws it, so none of
+    /// this reaches it.
     /// </summary>
     private const string Style =
-        "<style>.prerendered{max-width:44rem;margin:0 auto;padding:2rem 1rem 3rem;font:17px/1.65 Spectral,Georgia,serif}" +
-        ".prerendered h1{font-size:1.8rem;line-height:1.2;margin:0 0 .75rem}" +
-        ".prerendered nav,.prerendered .source{font:14px/1.5 'IBM Plex Sans',system-ui,sans-serif;margin:1rem 0}" +
-        ".prerendered p{margin:0 0 .75rem}.prerendered a{color:inherit}.prerendered ul{padding-left:1.2rem}" +
-        ".prerendered blockquote{margin:1rem 0;font-size:1.25rem}.prerendered sup{margin-right:.25em;opacity:.6}" +
-        ".prerendered .outline{white-space:pre-line}</style>";
+        "<style>.prerendered:not(.reading){max-width:44rem;margin:0 auto;padding:2rem 1rem 3rem;font:17px/1.65 Spectral,Georgia,serif}" +
+        ".prerendered:not(.reading) h1{font-size:1.8rem;line-height:1.2;margin:0 0 .75rem}" +
+        ".prerendered:not(.reading) nav,.prerendered:not(.reading) .source{font:14px/1.5 'IBM Plex Sans',system-ui,sans-serif;margin:1rem 0}" +
+        ".prerendered:not(.reading) p{margin:0 0 .75rem}.prerendered:not(.reading) a{color:inherit}" +
+        ".prerendered:not(.reading) ul{padding-left:1.2rem}" +
+        ".prerendered:not(.reading) blockquote{margin:1rem 0;font-size:1.25rem}.prerendered:not(.reading) sup{margin-right:.25em;opacity:.6}" +
+        ".prerendered:not(.reading) .outline{white-space:pre-line}</style>";
 
     public static string Escape(string text)
     {

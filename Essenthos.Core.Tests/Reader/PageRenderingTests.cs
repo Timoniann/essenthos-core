@@ -40,7 +40,12 @@ public sealed class PageRenderingTests
     private static readonly PageWording Ukrainian = PageWording.Compiled("uk");
 
     private static VerseView Mark33(string text) =>
-        new(41, "Від Марка", 3, 3, text, "Біблія Огієнка") { Previous = 2, Next = 4 };
+        new(41, "Від Марка", 3, 3, text, "Біблія Огієнка")
+        {
+            Verses = [(2, "І вони стежили за Ним."), (3, text), (4, "А до них Він сказав.")],
+            ChapterCount = 16,
+            TextLanguage = "uk",
+        };
 
     private static string VersePage(string text) =>
         PageHtml.Render(Shell, PageViews.Verse(SiteLanguage.Ukrainian, Ukrainian, Mark33(text)), SiteLanguage.Ukrainian, Origin);
@@ -79,7 +84,7 @@ public sealed class PageRenderingTests
         var html = PageHtml.Render(Shell, page, SiteLanguage.English, Origin);
 
         html.Should().Contain("<p>gods in the ordinary sense</p><p class=\"outline\">1) (plural)\n1a) rulers, judges\n2)")
-            .And.Contain(".prerendered .outline{white-space:pre-line}")
+            .And.Contain(".prerendered:not(.reading) .outline{white-space:pre-line}")
             .And.Contain("<p>plural of H433</p>");
     }
 
@@ -137,7 +142,7 @@ public sealed class PageRenderingTests
         var html = VersePage("<script>alert(\"x\")</script> & 'so'");
 
         html.Should().NotContain("<script>alert");
-        html.Should().Contain("<p>&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt; &amp; &#39;so&#39;</p>");
+        html.Should().Contain("<p class=\"text-ltr\" lang=\"uk\">&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt; &amp; &#39;so&#39;</p>");
         Regex.Match(html, "<meta name=\"description\" content=\"([^\"]*)\">").Groups[1].Value
             .Should().Contain("alert(&quot;x&quot;)");
     }
@@ -147,9 +152,42 @@ public sealed class PageRenderingTests
     {
         var html = VersePage("Стань посередині!");
 
-        html.Should().MatchRegex("<div id=\"root\" class=\"h-full\"><article class=\"prerendered\" lang=\"uk\">.*<h1>Від Марка 3:3</h1>.*</article></div>");
-        html.Should().Contain("<a href=\"/uk/read/mark/3/2\" rel=\"prev\">");
+        html.Should().MatchRegex("<div id=\"root\" class=\"h-full\"><article class=\"prerendered reading\" lang=\"uk\" data-chapter=\"/read/mark/3\" data-verse=\"3\">.*<h1>Від Марка 3</h1>.*</article></div>");
         html.Should().Contain("<a href=\"/uk/read/mark/3\">Від Марка 3</a>");
+        html.Should().Contain("<a href=\"/uk/read/mark/2\" rel=\"prev\">← Від Марка 2</a><a href=\"/uk/read/mark/4\" rel=\"next\">Від Марка 4 →</a>");
+    }
+
+    /// <summary>
+    /// A verse page shows the verse where the reader shows it: inside its chapter, in the reader's own
+    /// grid, marked, and every verse linked to its own page. The plain rules for pages the script
+    /// replaces leave that copy alone, since the reader's stylesheet draws it.
+    /// </summary>
+    [Fact]
+    public void AVersePageShowsItsChapterAsTheReaderDoesWithTheVerseMarked()
+    {
+        var html = VersePage("Стань посередині!");
+
+        html.Should().Contain(
+            "<div class=\"verse-row\" id=\"v2\"><a href=\"/uk/read/mark/3/2\" class=\"verse-number\">2</a>" +
+            "<div class=\"verse-cell\"><p class=\"text-ltr\" lang=\"uk\">І вони стежили за Ним.</p></div></div>" +
+            "<div class=\"verse-row\" id=\"v3\" data-landed=\"\"><a href=\"/uk/read/mark/3/3\" class=\"verse-number\">3</a>");
+        Regex.Matches(html, "data-landed").Should().HaveCount(1);
+        html.Should().Contain("<div class=\"reading-pane\">Біблія Огієнка</div>");
+        html.Should().NotMatchRegex(@"[}>,]\.prerendered[ {]", "every plain rule passes over the chapter's copy");
+    }
+
+    [Fact]
+    public void AChapterPageShowsItsVersesWithNoneMarked()
+    {
+        var page = PageViews.Chapter(SiteLanguage.English, PageWording.Compiled("en"),
+            new ChapterView(41, "Mark", 1, 16, [(1, "The beginning."), (2, "As it is written.")], "King James Version") { TextLanguage = "en" });
+
+        page.Body.Should().StartWith("<article class=\"prerendered reading\" lang=\"en\" data-chapter=\"/read/mark/1\"><div class=\"reading-bar\"></div>")
+            .And.Contain("<h1>Mark 1</h1>")
+            .And.Contain("<p class=\"text-ltr\" lang=\"en\">As it is written.</p>")
+            .And.NotContain("data-landed")
+            .And.NotContain("rel=\"prev\"")
+            .And.Contain("<a href=\"/read/mark/2\" rel=\"next\">Mark 2 →</a>");
     }
 
     [Fact]
