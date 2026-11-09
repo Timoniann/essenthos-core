@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Loading.CrossReferences;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -12,19 +13,22 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="References">Runs of verses written, one per chapter a citation reaches.</param>
 /// <param name="CrossReferencesOnly">Subjects that only send the reader elsewhere — <em>See WIND</em> — and are not written.</param>
 /// <param name="Unread">Pieces of citation that did not read as a book, chapter and verse, and were dropped.</param>
+/// <param name="LeftOut">Citations of a chapter or verse the English numbering does not have, which were not written.</param>
 internal sealed record TopicOutcome(
     bool AlreadyLoaded,
     int Topics,
     int References,
     int CrossReferencesOnly,
     int Unread,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int LeftOut = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? "Nave's topics are already loaded"
             : $"{Topics} of Nave's topics with {References} runs of verses, {CrossReferencesOnly} subjects " +
-              $"that only point elsewhere left out and {Unread} pieces of citation that did not read, in {Elapsed}";
+              $"that only point elsewhere left out, {Unread} pieces of citation that did not read and {LeftOut} citing " +
+              $"a verse no text has left out, in {Elapsed}";
 }
 
 /// <summary>
@@ -44,7 +48,9 @@ internal sealed record TopicOutcome(
 /// </para>
 ///
 /// <para>
-/// Idempotent by table: a boot after the first writes nothing.
+/// Idempotent by table: a boot after the first writes nothing; <c>replace</c> reads the index again and
+/// puts it in place of the topics written, in one transaction. A citation of a chapter or verse the
+/// English numbering does not have (MIRACLES' Exodus 3:29) is left out and named in the log.
 /// </para>
 /// </summary>
 internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> logger)
@@ -57,9 +63,9 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
         FROM STDIN (FORMAT BINARY)
         """;
 
-    public async Task<TopicOutcome> Load(string folder, CancellationToken cancellationToken = default)
+    public async Task<TopicOutcome> Load(string folder, bool replace = false, CancellationToken cancellationToken = default)
     {
-        if (await db.Topics.AnyAsync(cancellationToken))
+        if (!replace && await db.Topics.AnyAsync(cancellationToken))
         {
             logger.LogInformation("Nave's topics are already loaded");
             return new TopicOutcome(true, 0, 0, 0, 0, TimeSpan.Zero);
@@ -79,6 +85,7 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
         var topics = new List<(Topic Topic, List<(string? Heading, NaveEntries.Citation Citation)> Cited)>();
         var crossReferencesOnly = 0;
         var unread = 0;
+        var leftOut = 0;
         foreach (var row in Csv.Read(path))
         {
             var name = row["subject"].Trim();
@@ -91,7 +98,18 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
             foreach (var line in NaveEntries.Lines(NaveCorrections.Apply(name, row["entry"])))
             {
                 unread += line.Unread;
-                cited.AddRange(line.Citations.Select(citation => (line.Heading, citation)));
+                foreach (var citation in line.Citations)
+                {
+                    if (InTheFrame(citation))
+                    {
+                        cited.Add((line.Heading, citation));
+                        continue;
+                    }
+
+                    leftOut++;
+                    logger.LogWarning("Left out of Nave's {Subject}: {Book} {Chapter}:{First}-{Last}, a verse no text has",
+                        name, citation.Book, citation.Chapter, citation.FirstVerse, citation.LastVerse);
+                }
             }
 
             if (cited.Count == 0)
@@ -105,6 +123,12 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        if (replace)
+        {
+            await db.TopicReferences.ExecuteDeleteAsync(cancellationToken);
+            await db.Topics.ExecuteDeleteAsync(cancellationToken);
+        }
+
         db.Topics.AddRange(topics.Select(t => t.Topic));
         await db.SaveChangesAsync(cancellationToken);
 
@@ -140,10 +164,16 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
 
         await transaction.CommitAsync(cancellationToken);
 
-        var outcome = new TopicOutcome(false, topics.Count, references, crossReferencesOnly, unread, started.Elapsed);
+        var outcome = new TopicOutcome(false, topics.Count, references, crossReferencesOnly, unread, started.Elapsed, leftOut);
         logger.LogInformation("{Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>Whether the chapter, and each verse the citation names, is one the English numbering has.</summary>
+    private static bool InTheFrame(NaveEntries.Citation citation) =>
+        EnglishVerses.HasChapter(citation.Book, citation.Chapter)
+        && (citation.FirstVerse is not { } first || EnglishVerses.Has(new VerseAddress(citation.Book, citation.Chapter, first)))
+        && (citation.LastVerse is not { } last || EnglishVerses.Has(new VerseAddress(citation.Book, citation.Chapter, last)));
 
     private static async Task Nullable(NpgsqlBinaryImporter writer, int? value, CancellationToken cancellationToken)
     {

@@ -44,7 +44,18 @@ internal static class NaveCorrections
         new("WOMEN", "EXO 15:20; 21", "EXO 15:20,21"),
     ];
 
-    private static readonly ILookup<string, Correction> BySubject = All.ToLookup(c => c.Subject, StringComparer.Ordinal);
+    /// <summary>
+    /// Places where the transcription dropped a book's name, so its verses read in the book before: MIRACLES' <c>MRK 2:9-12;
+    /// 18:42,43</c> is Luke 18:42-43, the blind man who saw and glorified God, since Mark has sixteen chapters and Luke
+    /// 18 ends at verse 43.
+    /// </summary>
+    public static readonly IReadOnlyList<Correction> Books =
+    [
+        new("MIRACLES", "MRK 2:9-12; 18:42,43", "MRK 2:9-12; LUK 18:42,43"),
+    ];
+
+    private static readonly ILookup<string, Correction> BySubject =
+        All.Concat(Books).ToLookup(c => c.Subject, StringComparer.Ordinal);
 
     /// <summary>The entry with this subject's listed citations read as Nave printed them.</summary>
     public static string Apply(string subject, string entry)

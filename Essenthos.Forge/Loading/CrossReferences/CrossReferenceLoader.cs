@@ -12,20 +12,23 @@ namespace Essenthos.Core.Loading.CrossReferences;
 /// <param name="Rows">References written; for the parallels, pairs of verses, each both ways round.</param>
 /// <param name="Unread">Pieces of the source that did not read as a verse, and were dropped.</param>
 /// <param name="Passages">For the parallels, the passages the pairs belong to.</param>
+/// <param name="LeftOut">References read whole that name a verse the English numbering does not have, and were not written.</param>
 internal sealed record CrossReferenceOutcome(
     string Set,
     bool AlreadyLoaded,
     int Rows,
     int Unread,
     int Passages,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int LeftOut = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
             ? $"The {Set} set of cross references is already loaded"
             : Set == CrossReferenceSets.Parallels
                 ? $"{Passages} parallel passages as {Rows} rows of verse pairs, in {Elapsed}"
-                : $"{Rows} {Set} cross references, with {Unread} pieces that did not read as a verse, in {Elapsed}";
+                : $"{Rows} {Set} cross references, with {Unread} pieces that did not read as a verse and {LeftOut} naming " +
+                  $"a verse no text has left out, in {Elapsed}";
 }
 
 /// <summary>
@@ -35,8 +38,14 @@ internal sealed record CrossReferenceOutcome(
 ///
 /// <para>
 /// Idempotent set by set: a set with rows is left as it is, so adding a set to a corpus that has the
-/// others is a run of this and nothing else. The parallels read the loaded Hebrew and Greek, so they
-/// come after the texts and their lemmas.
+/// others is a run of this and nothing else; <c>replace</c> reads OpenBible's and the Treasury's again
+/// and puts them in place of the rows they wrote, in one transaction. The parallels read the loaded
+/// Hebrew and Greek, so they come after the texts and their lemmas, and are never replaced.
+/// </para>
+///
+/// <para>
+/// A reference whose verse, or the last verse of its run, the English numbering does not have is left
+/// out and named in the log: it would send the reader to a verse no text prints.
 /// </para>
 /// </summary>
 internal sealed class CrossReferenceLoader(AppDbContext db, ILogger<CrossReferenceLoader> logger)
@@ -60,30 +69,33 @@ internal sealed class CrossReferenceLoader(AppDbContext db, ILogger<CrossReferen
         ORDER BY r.canonical_book, r.canonical_chapter, r.canonical_verse, w.position
         """;
 
-    public async Task<List<CrossReferenceOutcome>> Load(string resources, CancellationToken cancellationToken = default) =>
+    public async Task<List<CrossReferenceOutcome>> Load(
+        string resources,
+        bool replace = false,
+        CancellationToken cancellationToken = default) =>
     [
-        await LoadOpenBible(resources, cancellationToken),
-        await LoadTreasury(resources, cancellationToken),
+        await LoadOpenBible(resources, replace, cancellationToken),
+        await LoadTreasury(resources, replace, cancellationToken),
         await LoadParallels(cancellationToken),
     ];
 
-    public Task<CrossReferenceOutcome> LoadOpenBible(string resources, CancellationToken cancellationToken = default) =>
+    public Task<CrossReferenceOutcome> LoadOpenBible(string resources, bool replace = false, CancellationToken cancellationToken = default) =>
         LoadSet(CrossReferenceSets.OpenBible, () =>
         {
             var (rows, unread) = OpenBibleCrossReferences.Read(
                 Path.Combine(resources, OpenBibleCrossReferences.Folder, OpenBibleCrossReferences.FileName));
             return Task.FromResult((rows, unread, 0));
-        }, cancellationToken);
+        }, replace, cancellationToken);
 
-    public Task<CrossReferenceOutcome> LoadTreasury(string resources, CancellationToken cancellationToken = default) =>
+    public Task<CrossReferenceOutcome> LoadTreasury(string resources, bool replace = false, CancellationToken cancellationToken = default) =>
         LoadSet(CrossReferenceSets.Treasury, () =>
         {
             var (rows, unread) = TreasuryReferences.Read(Path.Combine(resources, TreasuryReferences.Folder));
             return Task.FromResult((rows, unread, 0));
-        }, cancellationToken);
+        }, replace, cancellationToken);
 
     public Task<CrossReferenceOutcome> LoadParallels(CancellationToken cancellationToken = default) =>
-        LoadSet(CrossReferenceSets.Parallels, () => Detect(cancellationToken), cancellationToken);
+        LoadSet(CrossReferenceSets.Parallels, () => Detect(cancellationToken), replace: false, cancellationToken);
 
     /// <summary>The parallel passages as they would be written, one line each, for reading before they are; writes nothing.</summary>
     public async Task<List<string>> MeasureParallels(CancellationToken cancellationToken = default)
@@ -105,21 +117,27 @@ internal sealed class CrossReferenceLoader(AppDbContext db, ILogger<CrossReferen
     private async Task<CrossReferenceOutcome> LoadSet(
         string set,
         Func<Task<(List<CrossReferenceRow> Rows, int Unread, int Passages)>> read,
+        bool replace,
         CancellationToken cancellationToken)
     {
-        if (await db.CrossReferences.AnyAsync(r => r.Set == set, cancellationToken))
+        if (!replace && await db.CrossReferences.AnyAsync(r => r.Set == set, cancellationToken))
         {
             logger.LogInformation("The {Set} set of cross references is already loaded", set);
             return new CrossReferenceOutcome(set, true, 0, 0, 0, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
-        var (rows, unread, passages) = await read();
+        var (all, unread, passages) = await read();
+        var rows = set == CrossReferenceSets.Parallels ? all : InTheFrame(set, all);
         var source = CrossReferenceSets.Find(set)!.Source;
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        if (replace)
+        {
+            await db.CrossReferences.Where(r => r.Set == set).ExecuteDeleteAsync(cancellationToken);
+        }
         await using (var writer = await connection.BeginBinaryImportAsync(Import, cancellationToken))
         {
             foreach (var row in rows)
@@ -149,9 +167,29 @@ internal sealed class CrossReferenceLoader(AppDbContext db, ILogger<CrossReferen
 
         await transaction.CommitAsync(cancellationToken);
 
-        var outcome = new CrossReferenceOutcome(set, false, rows.Count, unread, passages, started.Elapsed);
+        var outcome = new CrossReferenceOutcome(set, false, rows.Count, unread, passages, started.Elapsed, all.Count - rows.Count);
         logger.LogInformation("{Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The references whose verses the English numbering has, each verse's ranked again in the order they stood; every
+    /// one left out is named.
+    /// </summary>
+    private List<CrossReferenceRow> InTheFrame(string set, List<CrossReferenceRow> rows)
+    {
+        foreach (var row in rows.Where(row => !EnglishVerses.Has(row)))
+        {
+            logger.LogWarning("Left out of the {Set} cross references: {From} to {To}{End}, a verse no text has",
+                set, row.From, row.To, row.End is { } end ? $" through {end}" : string.Empty);
+        }
+
+        return
+        [
+            .. rows.Where(EnglishVerses.Has)
+                .GroupBy(row => row.From)
+                .SelectMany(verse => verse.OrderBy(row => row.Rank).Select((row, rank) => row with { Rank = rank + 1 })),
+        ];
     }
 
     /// <summary>

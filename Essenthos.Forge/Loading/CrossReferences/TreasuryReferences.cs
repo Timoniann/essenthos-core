@@ -43,6 +43,23 @@ internal static partial class TreasuryReferences
         .Select((name, index) => (name, index))
         .ToDictionary(book => book.name, book => book.index + 1, StringComparer.Ordinal);
 
+    /// <param name="Entry">The verse whose entry holds the slip.</param>
+    /// <param name="Written">The reference as the module writes it, once in that entry.</param>
+    /// <param name="Read">The same reference as the verses it can only mean.</param>
+    internal sealed record Correction(VerseAddress Entry, string Written, string Read);
+
+    /// <summary>
+    /// Slips in the module's references where what they name cannot be a verse and what they mean is plain: Philemon
+    /// has one chapter, so <c>Phm 2:10,11</c> under the knee that bows (Genesis 49:8) and <c>Phm 2:12,13</c> between
+    /// Ephesians and Colossians (Leviticus 20:7) are Philippians; <c>Isa 58:2:4,7-9</c> is Isaiah 58:2-4 and 7-9.
+    /// </summary>
+    public static readonly IReadOnlyList<Correction> Corrections =
+    [
+        new(new VerseAddress(1, 49, 8), "Phm 2:10,11", "Php 2:10,11"),
+        new(new VerseAddress(3, 20, 7), "Phm 2:12,13", "Php 2:12,13"),
+        new(new VerseAddress(22, 5, 6), "Isa 58:2:4,7-9", "Isa 58:2-4,7-9"),
+    ];
+
     public static (List<CrossReferenceRow> Rows, int Unread) Read(string folder)
     {
         if (!Directory.Exists(folder))
@@ -72,6 +89,7 @@ internal static partial class TreasuryReferences
         var rows = new List<CrossReferenceRow>();
         var unread = 0;
         string? catchword = null;
+        VerseAddress? before = null;
         var seen = new HashSet<(VerseAddress, VerseAddress?)>();
         foreach (var line in LineBreak().Split(markup))
         {
@@ -82,6 +100,7 @@ internal static partial class TreasuryReferences
                 if (words.Length > 0 && !line.Contains("passage=", StringComparison.Ordinal))
                 {
                     catchword = Catchword(words);
+                    before = null;
                 }
 
                 continue;
@@ -89,8 +108,25 @@ internal static partial class TreasuryReferences
 
             foreach (Match reference in references)
             {
-                var (targets, missed) = Targets(from, WebUtility.HtmlDecode(reference.Groups["body"].Value));
+                var body = Corrected(from, WebUtility.HtmlDecode(reference.Groups["body"].Value));
+                var (targets, missed) = Targets(from, body);
+
+                // A line the module broke out of the one before it (Acts 7:5's "9:5; 10:11; 11:9; 34:4" after
+                // "De 6:10,11") goes on in that line's book, where the verse's own book has no such verse.
+                if (before is { } previous && !Book().IsMatch(body.TrimStart())
+                    && targets.Any(t => !EnglishVerses.Has(t.To) || t.End is { } end && !EnglishVerses.Has(end))
+                    && Targets(previous, body) is ({ Count: > 0 } continued, _) carried
+                    && continued.All(t => EnglishVerses.Has(t.To) && (t.End is not { } last || EnglishVerses.Has(last))))
+                {
+                    (targets, missed) = carried;
+                }
+
                 unread += missed;
+                if (targets.Count > 0)
+                {
+                    var (to, end) = targets[^1];
+                    before = end ?? to;
+                }
                 foreach (var (to, end) in targets)
                 {
                     if (to != from && seen.Add((to, end)))
@@ -102,6 +138,19 @@ internal static partial class TreasuryReferences
         }
 
         return (rows, unread);
+    }
+
+    private static string Corrected(VerseAddress from, string body)
+    {
+        foreach (var correction in Corrections)
+        {
+            if (correction.Entry == from)
+            {
+                body = body.Replace(correction.Written, correction.Read, StringComparison.Ordinal);
+            }
+        }
+
+        return body;
     }
 
     /// <summary>The catchword as the verse has it, without the full stop the Treasury closes it with.</summary>

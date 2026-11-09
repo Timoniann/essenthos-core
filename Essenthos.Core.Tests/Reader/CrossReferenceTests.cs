@@ -82,6 +82,25 @@ public sealed class CrossReferenceReadingTests
             (new VerseAddress(John, 6, 63), null));
     }
 
+    /// <summary>
+    /// What the shipped sets would send a reader to that no text has: OpenBible nothing once its ESV-only verse is the
+    /// frame's, the Treasury only Deuteronomy 23:15's "Phm 10:19", which the loader leaves out.
+    /// </summary>
+    [Fact]
+    public void TheShippedSetsNameOnlyVersesTheEnglishNumberingHasButOne()
+    {
+        var (openBible, _) = OpenBibleCrossReferences.Read(
+            TestResources.Path(OpenBibleCrossReferences.Folder, OpenBibleCrossReferences.FileName));
+        var (treasury, _) = TreasuryReferences.Read(TestResources.Folder(TreasuryReferences.Folder));
+
+        openBible.Where(r => !EnglishVerses.Has(r)).Should().BeEmpty();
+        treasury.Where(r => !EnglishVerses.Has(r)).Select(r => (r.From, r.To)).Should().Equal(
+            (new VerseAddress(5, 23, 15), new VerseAddress(57, 10, 19)));
+        treasury.Should().Contain(r => r.From == new VerseAddress(44, 7, 5) && r.To == new VerseAddress(5, 34, 4))
+            .And.Contain(r => r.From == new VerseAddress(32, 1, 3) && r.To == new VerseAddress(44, 26, 19))
+            .And.Contain(r => r.From == new VerseAddress(22, 5, 6) && r.To == new VerseAddress(Isaiah, 58, 7));
+    }
+
     /// <summary>The Treasury's remarks are not references, and a comma before a book is its slip for a semicolon.</summary>
     [Fact]
     public void ARemarkIsSkippedAndACommaBeforeABookSeparates()
@@ -266,6 +285,44 @@ public sealed class CrossReferenceLoadTests : IDisposable
             first.Select(r => r.Votes).Should().Equal(59, 47);
             first[0].To.Slug.Should().Be("romans");
             first[0].End!.Verse.Should().Be(20);
+        }
+        finally
+        {
+            resources.Delete(recursive: true);
+        }
+    }
+
+    /// <summary>
+    /// A pair whose far verse no text has (Philemon 2:10) is not written and the verse's others close up behind it; a
+    /// replace reads the set again in place of what it wrote, and leaves the other sets as they are.
+    /// </summary>
+    [Fact]
+    public async Task AReferenceToAVerseNoTextHasIsLeftOutAndAReplaceReadsTheSetAgain()
+    {
+        var resources = Directory.CreateTempSubdirectory();
+        try
+        {
+            var folder = Directory.CreateDirectory(Path.Combine(resources.FullName, OpenBibleCrossReferences.Folder));
+            var file = Path.Combine(folder.FullName, OpenBibleCrossReferences.FileName);
+            const string head = "From Verse\tTo Verse\tVotes\t#www.openbible.info CC-BY 2026-09-21\n";
+            await File.WriteAllTextAsync(file, head + "Gen.49.8\tPhlm.2.10\t9\nGen.49.8\tPhil.2.10\t5\nGen.49.8\tRev.5.5\t3\n");
+            _db.CrossReferences.Add(Parallel(10, 22, 2, 19, 18, 2, 1, "1-1"));
+            await _db.SaveChangesAsync();
+            var loader = new CrossReferenceLoader(_db, NullLogger<CrossReferenceLoader>.Instance);
+
+            var outcome = await loader.LoadOpenBible(resources.FullName);
+
+            (outcome.Rows, outcome.LeftOut).Should().Be((2, 1));
+            var written = await _db.CrossReferences.Where(r => r.Set == CrossReferenceSets.OpenBible)
+                .OrderBy(r => r.Rank).Select(r => new { r.ToBook, r.Rank }).ToListAsync();
+            written.Should().Equal(new { ToBook = 50, Rank = 1 }, new { ToBook = 66, Rank = 2 });
+
+            await File.WriteAllTextAsync(file, head + "Gen.49.8\tPhil.2.10\t5\n");
+            var again = await loader.LoadOpenBible(resources.FullName, replace: true);
+
+            again.AlreadyLoaded.Should().BeFalse();
+            (await _db.CrossReferences.CountAsync(r => r.Set == CrossReferenceSets.OpenBible)).Should().Be(1);
+            (await _db.CrossReferences.CountAsync(r => r.Set == CrossReferenceSets.Parallels)).Should().Be(1);
         }
         finally
         {

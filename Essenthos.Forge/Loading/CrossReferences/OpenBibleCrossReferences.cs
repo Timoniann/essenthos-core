@@ -104,14 +104,28 @@ internal static class OpenBibleCrossReferences
         return new CrossReferenceRow(from, to, end, 0, votes);
     }
 
+    /// <summary>
+    /// The verses the file numbers as the ESV does and the frame does not: the ESV ends 3 John at 1:15 and Revelation 12
+    /// at 12:18, words the King James prints as the end of 3 John 1:14 and the start of Revelation 13:1.
+    /// </summary>
+    private static readonly Dictionary<VerseAddress, VerseAddress> InTheFrame = new()
+    {
+        [new VerseAddress(64, 1, 15)] = new VerseAddress(64, 1, 14),
+        [new VerseAddress(66, 12, 18)] = new VerseAddress(66, 13, 1),
+    };
+
     private static VerseAddress? Verse(string osis)
     {
         var parts = osis.Split(Part);
-        return parts.Length == 3
-               && Ordinals.TryGetValue(parts[0], out var book)
-               && int.TryParse(parts[1], NumberStyles.None, CultureInfo.InvariantCulture, out var chapter)
-               && int.TryParse(parts[2], NumberStyles.None, CultureInfo.InvariantCulture, out var verse)
-            ? new VerseAddress(book, chapter, verse)
-            : null;
+        if (parts.Length != 3
+            || !Ordinals.TryGetValue(parts[0], out var book)
+            || !int.TryParse(parts[1], NumberStyles.None, CultureInfo.InvariantCulture, out var chapter)
+            || !int.TryParse(parts[2], NumberStyles.None, CultureInfo.InvariantCulture, out var verse))
+        {
+            return null;
+        }
+
+        var address = new VerseAddress(book, chapter, verse);
+        return InTheFrame.GetValueOrDefault(address, address);
     }
 }
