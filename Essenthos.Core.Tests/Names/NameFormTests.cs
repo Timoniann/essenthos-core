@@ -17,7 +17,7 @@ namespace Essenthos.Core.Tests.Names;
 /// sentence a reader is shown.
 ///
 /// The line under test is the broken one this work exists to repair: Aaron's, which read
-/// <em>брат Moses, з племені Levites</em> against the live corpus on 2026-09-09 because nothing had
+/// <em>брат Moses, з коліна Levites</em> against the live corpus on 2026-09-09 because nothing had
 /// declined the names his clauses point at. Everything else here is about what must not happen on
 /// the way to fixing it.
 /// </summary>
@@ -115,13 +115,13 @@ public sealed class NameFormTests : IDisposable
         await Describe("aaron");
 
         (await Line("aaron", DescriptorPhrasings.Ukrainian))
-            .Should().Be("брат Moses, з племені Levites");
+            .Should().Be("брат Moses, з коліна Levites");
 
         var outcome = await Decline("named");
 
         outcome.Declined.Should().Be(2);
         (await Line("aaron", DescriptorPhrasings.Ukrainian))
-            .Should().Be("брат Мойсея, з племені Левитів");
+            .Should().Be("брат Мойсея, з коліна Левитів");
     }
 
     /// <summary>

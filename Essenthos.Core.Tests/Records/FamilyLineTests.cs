@@ -356,11 +356,11 @@ public sealed class FamilyLineTests : IDisposable
         (await Line("tribes-judahites", "deu")).Should().Be("Nachkommen Judas");
         (await Line("tribes-judahites", "spa")).Should().Be("descendientes de Judá");
         (await Line("tribes-adnah", "eng")).Should().Be("of the tribe of Dan");
-        (await Line("tribes-adnah", "ukr")).Should().Be("з племені Дана");
+        (await Line("tribes-adnah", "ukr")).Should().Be("з коліна Дана");
         (await Line("tribes-adnah", "deu")).Should().Be("vom Stamm Dan");
         (await Line("tribes-adnah", "spa")).Should().Be("de la tribu de Dan");
         (await Line("tribes-bani", "eng")).Should().Be("of the tribe of the Levites");
-        (await Line("tribes-bani", "ukr")).Should().Be("з племені Левитів");
+        (await Line("tribes-bani", "ukr")).Should().Be("з коліна Левитів");
         (await Line("tribes-bani", "deu")).Should().Be("vom Stamm der Leviten");
         (await Line("tribes-bani", "spa")).Should().Be("de la tribu de los Levitas");
         (await Line("tribes-kohathites", "eng")).Should().Contain("descendants of Kohath").And.Contain("of the tribe of the Levites");

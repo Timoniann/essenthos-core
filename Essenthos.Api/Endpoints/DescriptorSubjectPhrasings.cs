@@ -39,7 +39,7 @@ internal static partial class DescriptorPhrasings
 
     /// <summary>
     /// The relations a people is said to have whose words agree with their subject, in the plural. A
-    /// relation absent here is said one way of one and of many: <em>з племені</em>,
+    /// relation absent here is said one way of one and of many: <em>з коліна</em>,
     /// <em>begraben in</em>, <em>Förderer</em>, and the plural <c>struck-by</c> and
     /// <c>descendants-of</c>, which are said of a people only.
     /// </summary>

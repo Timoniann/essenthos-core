@@ -358,7 +358,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.BearsTitle] = new(string.Empty, Nominative),
             [DescriptorRelations.GodOf] = new("Бог ", Genitive),
             [DescriptorRelations.ChosenInPlaceOf] = new("обраний замість ", Genitive),
-            [DescriptorRelations.OfTribe] = new("з племені ", Genitive),
+            [DescriptorRelations.OfTribe] = new("з коліна ", Genitive),
             [DescriptorRelations.OfPeople] = new("з народу ", Genitive),
             [DescriptorRelations.FromPlace] = new("з ", Genitive),
             [DescriptorRelations.LivedIn] = new("жив у ", Locative),
