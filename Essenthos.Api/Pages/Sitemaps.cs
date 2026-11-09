@@ -170,8 +170,9 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         if (name.StartsWith(Verses, StringComparison.Ordinal))
         {
             var book = BookReferences.ResolveOrdinal(name[Verses.Length..])!.Value;
+            // Verse 0, a psalm's superscription, is the chapter's page and is listed with the chapters.
             var verses = await db.VerseReferences
-                .Where(r => r.CanonicalBook == book)
+                .Where(r => r.CanonicalBook == book && r.CanonicalVerse > 0)
                 .Select(r => new { r.CanonicalChapter, r.CanonicalVerse })
                 .Distinct()
                 .ToListAsync(cancellationToken);

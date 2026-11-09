@@ -201,9 +201,11 @@ internal sealed class PageLoader(
         }
 
         var language = address.Language;
+        var chapterHeld = false;
         foreach (var text in ReaderTexts.ForBook(await Texts(cancellationToken), await Chosen(language, cancellationToken), address.Book))
         {
             var verses = await ChapterVerses(text.Id, address.Book, address.Chapter, cancellationToken);
+            chapterHeld |= verses.Count > 0;
             var said = verses.Where(verse => verse.Number == address.Verse).Select(verse => verse.Text).FirstOrDefault()
                        ?? await SpannedVerse(text.Id, address, cancellationToken);
             if (said is null)
@@ -225,14 +227,26 @@ internal sealed class PageLoader(
             });
         }
 
-        return null;
+        // A number no text places in the chapter — one edition's own numbering, linked or listed as if it
+        // were the shared frame's — is sent to the chapter it was asked in, rather than answered as nothing.
+        return chapterHeld
+            ? PageViews.NotFound(language, wording) with
+            {
+                Status = StatusCodes.Status301MovedPermanently,
+                MovedTo = PageAddress.ChapterPath(address.Book, address.Chapter),
+            }
+            : null;
     }
 
     private async Task<PageContent?> Record(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
         if (await Entity(address.Slug!, address.Language, cancellationToken) is not { } entity)
         {
-            return null;
+            // A record withdrawn with nothing in its place is gone, not missing, so a search engine
+            // forgets the address rather than asking again.
+            return WithdrawnAddresses.IsWithdrawn(address.Slug!)
+                ? PageViews.NotFound(address.Language, wording) with { Status = StatusCodes.Status410Gone }
+                : null;
         }
 
         // A record folded into another is found by its old address too, and sent to the one that stays,

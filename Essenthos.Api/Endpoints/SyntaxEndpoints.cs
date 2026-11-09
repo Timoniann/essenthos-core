@@ -77,24 +77,38 @@ internal static class SyntaxEndpoints
                 return Results.NotFound(new ProblemResponse($"There is no word group {id}."));
             }
 
-            var words = await db.WordGroupWords
+            var rows = await db.WordGroupWords
                 .Where(m => m.WordGroupId == id)
                 .OrderBy(m => m.Word!.Verse!.Book!.Position)
                 .ThenBy(m => m.Word!.Verse!.ChapterNumber)
                 .ThenBy(m => m.Word!.Verse!.Sequence)
                 .ThenBy(m => m.Word!.Verse!.Number)
                 .ThenBy(m => m.Word!.Position)
-                .Select(m => new SyntaxWordResponse(
-                    m.WordId,
-                    m.Word!.Verse!.Book!.CanonicalOrdinal,
-                    m.Word.Verse!.Book!.Name,
-                    m.Word.Verse!.ChapterNumber,
-                    m.Word.Verse!.Number,
-                    m.Word.Position,
-                    m.Word.Surface,
-                    m.Word.Trailer,
-                    m.Word.Gloss))
+                .Select(m => new
+                {
+                    Word = new SyntaxWordResponse(
+                        m.WordId,
+                        m.Word!.Verse!.Book!.CanonicalOrdinal,
+                        m.Word.Verse!.Book!.Name,
+                        m.Word.Verse!.ChapterNumber,
+                        m.Word.Verse!.Number,
+                        m.Word.Position,
+                        m.Word.Surface,
+                        m.Word.Trailer,
+                        m.Word.Gloss),
+                    Frame = m.Word.Verse!.References
+                        .Where(r => r.IsPrimary && r.CanonicalBook == m.Word.Verse!.Book!.CanonicalOrdinal)
+                        .Select(r => new { r.CanonicalChapter, r.CanonicalVerse })
+                        .FirstOrDefault(),
+                })
                 .ToListAsync(cancellationToken);
+            var words = rows
+                .Select(row => row.Word with
+                {
+                    CanonicalChapter = row.Frame?.CanonicalChapter,
+                    CanonicalVerse = row.Frame?.CanonicalVerse,
+                })
+                .ToList();
 
             return Results.Ok(new SyntaxGroupResponse(
                 group.Id, EnumSpelling.Of(group.Kind), words.Count, Features(group.Features), words)
@@ -305,6 +319,17 @@ internal record SyntaxWordResponse(
     /// morphemes, so joining them with a space writes בְּ רֵאשִׁית where the text has בְּרֵאשִׁית.
     /// </summary>
     string Trailer,
-    string? Gloss);
+    string? Gloss)
+{
+    /// <summary>
+    /// The chapter of the shared frame the word's verse stands at, which the reader's addresses are
+    /// written in; <see cref="Chapter"/> and <see cref="Verse"/> are the text's own numbers, a verse
+    /// apart in the Hebrew Psalms. Null where the verse stands at no address of its book.
+    /// </summary>
+    public int? CanonicalChapter { get; init; }
+
+    /// <summary>The verse of the shared frame the word's verse stands at, with <see cref="CanonicalChapter"/>.</summary>
+    public int? CanonicalVerse { get; init; }
+}
 
 internal record SyntaxListResponse(int Total, IList<SyntaxGroupResponse> Items);

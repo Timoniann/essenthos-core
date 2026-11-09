@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Reflection;
 using System.Text.Json;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -61,8 +60,6 @@ internal sealed record WithdrawnRecordOutcome(
 /// </summary>
 internal sealed class WithdrawnRecordLoader(AppDbContext db, ILogger<WithdrawnRecordLoader> logger)
 {
-    private const string Resource = "Essenthos.Core.Loading.Encyclopedia.WithdrawnRecords.json";
-
     private const string TimelineKind = "events or periods";
 
     private static readonly JsonSerializerOptions Shape = new()
@@ -172,11 +169,14 @@ internal sealed class WithdrawnRecordLoader(AppDbContext db, ILogger<WithdrawnRe
         return ours;
     }
 
-    internal static IReadOnlyList<WithdrawnRecord> Read()
+    internal static IReadOnlyList<WithdrawnRecord> Read() => File().Records;
+
+    /// <summary>The embedded list, shared with the API through <see cref="WithdrawnAddresses"/>.</summary>
+    internal static WithdrawnRecords File()
     {
-        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resource)
-                           ?? throw new InvalidOperationException($"{Resource} is not embedded in the Forge assembly.");
-        return JsonSerializer.Deserialize<WithdrawnRecords>(stream, Shape)?.Records ?? [];
+        using var stream = WithdrawnAddresses.Open();
+        return JsonSerializer.Deserialize<WithdrawnRecords>(stream, Shape)
+               ?? throw new InvalidOperationException($"{WithdrawnAddresses.Resource} holds no list.");
     }
 }
 
@@ -193,4 +193,9 @@ internal sealed record WithdrawnRecords(string DecidedBy, string Policy, IReadOn
 /// ruled it and when. Such a record is withdrawn only while nothing at all stands on it, since there
 /// is no dataset's part of it to tell from ours.
 /// </param>
-internal sealed record WithdrawnRecord(string Slug, string SourceId, string Why, string? OwnerRuled = null, string? OwnRecord = null);
+/// <param name="LeadsTo">
+/// The record now holding the word or the verses the withdrawn one stood for, which its old address
+/// leads to; null where nothing took its place and the address is gone.
+/// </param>
+internal sealed record WithdrawnRecord(
+    string Slug, string SourceId, string Why, string? OwnerRuled = null, string? OwnRecord = null, string? LeadsTo = null);

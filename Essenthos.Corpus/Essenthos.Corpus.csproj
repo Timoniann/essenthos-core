@@ -44,6 +44,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!-- The records withdrawn from the encyclopedia: the Forge withdraws them, and the API answers
+             their old addresses from the same list. -->
+        <EmbeddedResource Include="Corpus\WithdrawnRecords.json" LogicalName="WithdrawnRecords.json" />
+    </ItemGroup>
+
+    <ItemGroup>
         <!-- The web SDK supplies these as implicit global usings and the plain one does not, so
              they are declared rather than added to several hundred files. -->
         <Using Include="Microsoft.Extensions.Configuration" />

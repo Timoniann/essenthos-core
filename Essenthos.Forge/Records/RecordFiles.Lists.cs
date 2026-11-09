@@ -17,15 +17,16 @@ internal static partial class RecordFiles
     private static RecordFile[] Lists =>
     [
         new("records/withdrawn", ProductKind.Hand,
-            "slug dataset external_id why owner_ruled? own_record? by",
+            "slug dataset external_id why owner_ruled? own_record? leads_to? by",
             "", "", [],
-            About: Embedded("WithdrawnRecords.json").GetProperty("policy").GetString(),
+            About: WithdrawnRecordLoader.File().Policy,
             Listed: Withdrawn,
             Check: """
             SELECT count(*) FROM s
             WHERE NOT EXISTS (SELECT 1 FROM entity e WHERE e.slug = s.slug)
               AND NOT EXISTS (SELECT 1 FROM merged_record m WHERE m.slug = s.slug)
               AND s.dataset IN ('bibledata', 'openbible', 'essenthos')
+              AND (s.leads_to IS NULL OR EXISTS (SELECT 1 FROM entity e WHERE e.slug = s.leads_to))
             """,
             After: "CREATE TEMP TABLE withdrawn_slug ON COMMIT DROP AS SELECT slug FROM s"),
 
@@ -87,13 +88,12 @@ internal static partial class RecordFiles
 
     private static IEnumerable<string?[]> Withdrawn()
     {
-        var root = Embedded("WithdrawnRecords.json");
-        var by = root.GetProperty("decidedBy").GetString();
-        return WithdrawnRecordLoader.Read()
+        var list = WithdrawnRecordLoader.File();
+        return list.Records
             .Select(r =>
             {
                 var (dataset, id) = SourceIdOf(r.SourceId);
-                return new string?[] { r.Slug, dataset, id, r.Why, r.OwnerRuled, r.OwnRecord, by };
+                return new string?[] { r.Slug, dataset, id, r.Why, r.OwnerRuled, r.OwnRecord, r.LeadsTo, list.DecidedBy };
             })
             .OrderBy(r => r[0], StringComparer.Ordinal);
     }

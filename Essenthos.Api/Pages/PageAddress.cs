@@ -255,10 +255,19 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
         return InSection(language, rest, found) with { Private = found.Private || asked };
     }
 
+    /// <remarks>
+    /// Verse 0 is the shared frame's place for a psalm's superscription, which most translations print
+    /// inside their verse 1: it is not a page of its own, and its address is the chapter's, at whose head
+    /// the superscription stands.
+    /// </remarks>
     private static PageAddress? AtVerse(SiteLanguage language, string book, string chapter, string verse) =>
-        BookOf(book) is { } ordinal && Number(chapter) is { } c && Number(verse) is { } v
-            ? new PageAddress(language, PageKind.Verse, VersePath(ordinal, c, v)) { Book = ordinal, Chapter = c, Verse = v }
-            : null;
+        BookOf(book) is not { } ordinal || Number(chapter) is not { } c
+            ? null
+            : verse == "0"
+                ? new PageAddress(language, PageKind.Chapter, ChapterPath(ordinal, c)) { Book = ordinal, Chapter = c }
+                : Number(verse) is { } v
+                    ? new PageAddress(language, PageKind.Verse, VersePath(ordinal, c, v)) { Book = ordinal, Chapter = c, Verse = v }
+                    : null;
 
     private static PageAddress InSection(SiteLanguage language, string rest, PageSection section) =>
         new(language, PageKind.Section, rest) { Section = section, Private = section.Private };
