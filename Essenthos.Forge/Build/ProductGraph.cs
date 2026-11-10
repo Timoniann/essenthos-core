@@ -5,14 +5,16 @@ using Essenthos.Core.Products;
 namespace Essenthos.Core.Build;
 
 /// <summary>
-/// Who makes a product: a person (<c>hand</c>), an export from a database (<c>export</c>), the build from files (<c>build</c>),
-/// or the build from the serving database once it is filled (<c>serve</c>: <c>build --into</c> and <c>build --apply</c>
-/// run its producer at the end, never <c>forge build</c> alone).
+/// Who makes a product: a person (<c>hand</c>), an export from a database run again when wanted (<c>export</c>), an export
+/// taken once that nothing makes again (<c>kept</c>: the store is its only copy, and its exporter refuses to overwrite it),
+/// the build from files (<c>build</c>), or the build from the serving database once it is filled (<c>serve</c>:
+/// <c>build --into</c> and <c>build --apply</c> run its producer at the end, never <c>forge build</c> alone).
 /// </summary>
 internal static class ProductMaker
 {
     public const string Hand = "hand";
     public const string Export = "export";
+    public const string Kept = "kept";
     public const string Build = "build";
     public const string Serve = "serve";
 }
@@ -70,11 +72,11 @@ internal sealed partial class ProductGraph
             throw new InvalidDataException($"{Product} declares {duplicate.Key} twice.");
         }
 
-        var bad = declarations.FirstOrDefault(d => d.Maker is not (ProductMaker.Hand or ProductMaker.Export or ProductMaker.Build or ProductMaker.Serve)
+        var bad = declarations.FirstOrDefault(d => d.Maker is not (ProductMaker.Hand or ProductMaker.Export or ProductMaker.Kept or ProductMaker.Build or ProductMaker.Serve)
                                                    || d.Scope is not ("text" or "pair" or "all" or "none"));
         if (bad is not null)
         {
-            throw new InvalidDataException($"{Product}: {bad.Product} has maker '{bad.Maker}' and scope '{bad.Scope}'; makers are hand, export, build or serve, scopes text, pair, all or none.");
+            throw new InvalidDataException($"{Product}: {bad.Product} has maker '{bad.Maker}' and scope '{bad.Scope}'; makers are hand, export, kept, build or serve, scopes text, pair, all or none.");
         }
     }
 
@@ -179,6 +181,51 @@ internal sealed partial class ProductGraph
 
         return found;
     }
+
+    /// <summary>
+    /// What the build reads and cannot make, missing from the store: every product of a <c>kept</c> or <c>hand</c> line that
+    /// names one file, and every product the manifest records under a <c>kept</c> or <c>export</c> line (the aligner's pairs,
+    /// each text's ids). A producer reading a missing one would build without it and say nothing.
+    /// </summary>
+    public List<string> Missing(ProductStore store)
+    {
+        var missing = new List<string>();
+        foreach (var line in Declarations.Where(d => d.Maker is ProductMaker.Kept or ProductMaker.Hand && !d.Product.Contains('{') && !d.Product.Contains('*')))
+        {
+            if (!Present(store, line.Product))
+            {
+                missing.Add($"{line.Product} ({line.Maker}, {line.Producer})");
+            }
+        }
+
+        foreach (var entry in store.Manifest.Entries.Where(e => e.Product.StartsWith(ProductStore.EssenthosFolder + "/", StringComparison.Ordinal)))
+        {
+            if (Find(entry.Product) is { } line && line.Declaration.Maker is ProductMaker.Kept or ProductMaker.Export
+                && !File.Exists(store.FullPath(entry.Product)))
+            {
+                missing.Add($"{ProductName(entry.Product)} ({line.Declaration.Maker}, {line.Declaration.Producer})");
+            }
+        }
+
+        return missing;
+    }
+
+    /// <summary>The <c>kept</c> products the store holds under a folder of <c>Resources/Essenthos/</c>, by name.</summary>
+    public List<string> Kept(ProductStore store, string folder)
+    {
+        var essenthos = Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder);
+        var root = Path.Combine(essenthos, folder);
+        return !Directory.Exists(root)
+            ? []
+            : [.. Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+                .Where(file => !Path.GetFileName(file).StartsWith('.'))
+                .Select(file => ProductName(Path.GetRelativePath(essenthos, file)))
+                .Where(name => Find(name)?.Declaration.Maker == ProductMaker.Kept)
+                .Order(StringComparer.Ordinal)];
+    }
+
+    private static bool Present(ProductStore store, string product) =>
+        store.Exists(product) || File.Exists(store.FullPath($"{ProductStore.EssenthosFolder}/{product}"));
 
     /// <summary>A text's declared sources and the products its stages read, as the converter names its inputs.</summary>
     public static IReadOnlyCollection<string> TextSources(string slug)

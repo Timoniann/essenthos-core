@@ -72,14 +72,4 @@ internal static partial class ForgeVerbs
 
         return 0;
     }
-
-    /// <summary>Writes the database's names as <c>names/exported/&lt;SLUG&gt;</c>, for the spellings index until the names layer writes them.</summary>
-    private static async Task<int> NamesExportVerb(ForgeRun forge, string[] args)
-    {
-        var store = new ProductStore(Option(args, "--into") ?? forge.Resources);
-        var builder = new NpgsqlConnectionStringBuilder(forge.DatabaseConnection);
-        var outcome = await NamesExport.Run(forge.DatabaseConnection, store, $"{builder.Host}:{builder.Port}/{builder.Database}", CancellationToken.None);
-        Console.WriteLine($"{outcome.Names} names of {outcome.Texts} texts in {outcome.Elapsed}");
-        return 0;
-    }
 }

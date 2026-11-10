@@ -71,7 +71,7 @@ public sealed class MappingRoundTripTests : IDisposable
 
         var connectionString = _database.NewConnection().ConnectionString;
         var store = new ProductStore(Path.Combine(_root, "first"));
-        await MappingExport.Run(connectionString, store, null, 1, NullLogger.Instance, CancellationToken.None);
+        await MappingExport.Run(connectionString, store, null, (_, _) => true, 1, NullLogger.Instance, CancellationToken.None);
         var methodFiles = MappingProducts.Methods(store, "KJV-BHSA").ToDictionary(m => m, m => store.ProductInput(MappingProducts.Of("KJV-BHSA", m)).Sha256);
         var merged = MappingFiles.Merge(store, "KJV-BHSA", force: false);
         var before = await Stored();
@@ -79,7 +79,7 @@ public sealed class MappingRoundTripTests : IDisposable
         var outcome = await MappingLoad.Run(connectionString, store, NullLogger.Instance, CancellationToken.None);
         var after = await Stored();
         var again = new ProductStore(Path.Combine(_root, "again"));
-        await MappingExport.Run(connectionString, again, null, 1, NullLogger.Instance, CancellationToken.None);
+        await MappingExport.Run(connectionString, again, null, (_, _) => true, 1, NullLogger.Instance, CancellationToken.None);
 
         merged.Links.Should().Be(2);
         outcome.Unresolved.Should().Be(0);

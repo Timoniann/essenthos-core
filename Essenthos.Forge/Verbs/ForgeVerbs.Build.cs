@@ -39,6 +39,21 @@ internal static partial class ForgeVerbs
             ServingBuild.Refuse(into);
         }
 
+        var before = new ProductStore(forge.Resources);
+        var missing = ProductGraph.Read(before).Missing(before);
+        if (missing.Count > 0)
+        {
+            foreach (var product in missing)
+            {
+                forge.Logger.LogError("missing: {Product}", product);
+            }
+
+            forge.Logger.LogError("The store lacks {Count} product(s) no build producer makes. Copy them back from the backup of Resources/Essenthos "
+                                  + "(E:); an exporter run again refuses a store that holds its products, and --force is for a store that has lost them all.",
+                missing.Count);
+            return 1;
+        }
+
         if (!args.Contains("--no-products"))
         {
             var made = await BuildProducts(forge, stages);

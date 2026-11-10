@@ -105,30 +105,6 @@ internal static class RecordVerses
         return outcome with { Written = true };
     }
 
-    /// <summary>
-    /// The rows over a database's own names as <c>names/live</c> holds them (no roles), written as TSV to
-    /// <paramref name="path"/> outside the store: what the rule makes of the names a load left, to hold against that
-    /// database's export.
-    /// </summary>
-    public static Outcome WriteOverLive(ProductStore store, string path)
-    {
-        var texts = Texts(store, "live");
-        var (rows, outcome) = Derive(store, texts, text =>
-        {
-            using var reader = store.Open(NameProducts.Live(text), LiveName.Schema(text));
-            return [.. reader.Rows().Select(n => new WordName(n.Own, n.Record, null, n.Carried, n.Method, n.Confidence, n.Source))];
-        });
-        var file = RecordFiles.All.Single(f => f.Product == Product);
-        using var output = new StreamWriter(path, false, new System.Text.UTF8Encoding(false)) { NewLine = "\n" };
-        output.WriteLine(string.Join('\t', file.Parsed.Select(c => c.Name)));
-        foreach (var row in rows)
-        {
-            output.WriteLine(string.Join('\t', row.Select(value => value ?? "\\N")));
-        }
-
-        return outcome with { Written = true };
-    }
-
     private static (List<string?[]> Rows, Outcome Outcome) Derive(ProductStore store, List<string> texts, Func<string, List<WordName>> names)
     {
         var records = Records(store);

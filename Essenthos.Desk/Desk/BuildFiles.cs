@@ -27,7 +27,7 @@ internal sealed class BuildFiles(DeskPaths paths)
 
     /// <summary>
     /// A product by its name under <c>Essenthos/</c> without an extension, or null where the build has not
-    /// made it in this folder: the record files are there once the cut-over export has written them.
+    /// made it in this folder (the record files are carried in git; the rest is the build store's).
     /// Kept while the file is unchanged, since every page and count asks.
     /// </summary>
     public BuildTable? Read(string product)

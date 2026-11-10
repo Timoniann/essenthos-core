@@ -1,0 +1,520 @@
+# product    Essenthos/records/facts/passages.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+slug	role	ordinal	book	chapter	verse	end_chapter	end_verse	by
+aarons-rod	key	0	2	7	8	7	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+aarons-rod	key	1	2	7	19	7	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+aarons-rod	key	2	2	8	5	8	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+aarons-rod	key	3	2	8	16	8	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+aarons-rod	key	4	4	17	1	17	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+aarons-rod	key	5	4	20	8	20	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+aarons-rod	key	6	58	9	4	9	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-el-elohe-israel	key	0	1	33	18	33	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	0	2	30	1	30	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	1	2	37	25	37	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	2	2	40	5	40	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	3	2	40	26	40	27	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	4	3	4	7	4	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	5	3	16	12	16	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-incense	key	8	58	9	4	9	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-of-witness	key	0	6	22	10	22	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-the-lord-is-my-banner	key	0	2	17	8	17	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+altar-the-lord-is-peace	key	0	7	6	11	6	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+amnon-house	key	0	10	13	8	13	8	Essenthos, model and agent readings of named places and structures, 2026-10-26
+appointed-times	command	0	3	23	\N	23	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	command	1	4	28	\N	29	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	command	2	5	16	\N	16	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	command	3	2	23	14	23	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	command	4	2	34	18	34	26	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	key	5	13	23	31	23	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	key	6	14	8	12	8	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	key	7	15	3	5	3	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	key	8	23	1	13	1	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+appointed-times	key	9	26	45	17	45	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-bulrushes	key	0	2	2	1	2	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	0	2	25	10	25	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	1	2	37	1	37	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	2	2	40	20	40	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	3	4	10	33	10	36	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	4	5	10	1	10	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	5	6	3	1	4	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	6	6	6	\N	6	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	7	9	4	1	7	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	8	10	6	\N	6	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	9	11	8	1	8	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	10	14	35	3	35	3	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	11	24	3	16	3	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	12	58	9	4	9	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ark-of-the-covenant	key	13	66	11	19	11	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+baal-temple-jerusalem	key	0	12	11	18	11	18	Essenthos, model and agent readings of named places and structures, 2026-10-26
+baal-temple-jerusalem	key	1	14	23	17	23	17	Essenthos, model and agent readings of named places and structures, 2026-10-26
+boaz-pillar	key	0	11	7	15	7	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+boaz-pillar	key	1	14	3	15	3	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+boaz-pillar	key	2	12	25	13	25	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+boaz-pillar	key	3	24	52	17	52	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bohans-stone	key	0	6	15	6	15	6	Essenthos, model and agent readings of named places and structures, 2026-10-26
+bohans-stone	key	1	6	18	17	18	17	Essenthos, model and agent readings of named places and structures, 2026-10-26
+book-of-jashar	key	0	6	10	12	10	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+book-of-jashar	key	1	10	1	17	1	27	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+breastpiece-of-judgment	key	0	2	28	15	28	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+breastpiece-of-judgment	key	1	2	39	8	39	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+breastpiece-of-judgment	key	2	3	8	8	8	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	0	2	27	1	27	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	1	2	38	1	38	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	2	2	40	6	40	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	3	2	40	29	40	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	4	3	1	5	1	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	5	4	16	38	16	40	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	6	13	21	29	21	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-altar	key	7	14	1	5	1	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-laver	key	0	2	30	17	30	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-laver	key	1	2	38	8	38	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-laver	key	2	2	40	7	40	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-laver	key	3	2	40	11	40	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-laver	key	4	2	40	30	40	32	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-laver	key	5	3	8	11	8	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-sea	key	0	11	7	23	7	26	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-sea	key	1	11	7	39	7	39	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-sea	key	2	14	4	2	4	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-sea	key	3	12	16	17	16	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-sea	key	4	12	25	13	25	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+bronze-sea	key	5	24	52	17	52	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+caiaphas-house	key	0	40	26	57	26	57	Essenthos, model and agent readings of named places and structures, 2026-10-26
+caiaphas-house	key	1	40	26	58	26	58	Essenthos, model and agent readings of named places and structures, 2026-10-26
+cherubim	key	0	1	3	24	3	24	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+cherubim	key	1	2	25	18	25	22	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+cherubim	key	2	26	10	1	10	22	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+cross-of-christ	key	0	40	27	32	27	42	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+cross-of-christ	key	1	41	15	21	15	32	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+cross-of-christ	key	2	42	23	26	23	26	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+cross-of-christ	key	3	43	19	17	19	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+crown-of-thorns	key	0	40	27	27	27	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+crown-of-thorns	key	1	41	15	16	15	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+crown-of-thorns	key	2	43	19	1	19	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+davids-tent-for-the-ark	key	0	10	6	12	6	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+davids-tent-for-the-ark	key	1	13	15	1	15	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+davids-tent-for-the-ark	key	2	13	16	1	16	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+davids-tent-for-the-ark	key	3	14	1	4	1	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	command	0	3	16	\N	16	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	command	1	3	23	26	23	32	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	command	2	4	29	7	29	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	key	3	2	30	10	30	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	key	4	3	25	9	25	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	key	5	58	9	7	9	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	key	6	58	9	25	9	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-atonement	key	7	44	27	9	27	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-trumpets	command	0	3	23	23	23	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-trumpets	command	1	4	29	1	29	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-trumpets	key	2	15	3	1	3	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-trumpets	key	3	16	8	1	8	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+eighth-day-assembly	command	0	3	23	36	23	36	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+eighth-day-assembly	command	1	3	23	39	23	39	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+eighth-day-assembly	command	2	4	29	35	29	38	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+eighth-day-assembly	key	3	14	7	9	7	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+eighth-day-assembly	key	4	16	8	18	8	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+elijahs-mantle	key	0	11	19	13	19	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+elijahs-mantle	key	1	11	19	19	19	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+elijahs-mantle	key	2	12	2	8	2	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ezekiels-temple	key	0	26	40	1	48	35	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	0	38	7	1	7	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	1	38	8	18	8	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	2	12	25	1	25	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	3	12	25	8	25	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	4	12	25	25	25	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	5	24	39	2	39	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	6	24	41	1	41	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	key	7	24	52	4	52	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	command	0	2	23	16	23	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	command	1	2	34	22	34	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	command	2	3	23	33	23	43	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	command	3	4	29	12	29	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	command	4	5	16	13	16	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	command	5	5	31	10	31	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	key	6	11	8	2	8	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	key	7	14	7	8	7	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	key	8	15	3	4	3	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	key	9	16	8	13	8	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	key	10	38	14	16	14	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	key	11	43	7	2	7	39	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-dedication	key	0	43	10	22	10	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	0	2	12	15	12	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	1	2	13	3	13	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	2	2	23	15	23	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	3	2	34	18	34	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	4	3	23	6	23	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	5	4	28	17	28	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	command	6	5	16	3	16	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	7	14	30	13	30	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	8	14	35	17	35	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	9	15	6	22	6	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	10	41	14	1	14	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	11	42	22	1	22	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	12	44	12	3	12	3	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	key	13	44	20	6	20	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	command	0	2	23	16	23	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	command	1	2	34	22	34	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	command	2	3	23	15	23	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	command	3	4	28	26	28	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	command	4	5	16	9	16	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	key	5	14	8	13	8	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	key	6	44	2	1	2	41	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	key	7	44	20	16	20	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-weeks	key	8	46	16	8	16	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+firstfruits	command	0	3	23	9	23	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+firstfruits	key	1	46	15	20	15	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+flaming-sword	key	0	1	3	24	3	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+garden-of-eden	key	0	1	2	8	2	17	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+garden-of-eden	key	1	1	3	1	3	24	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+gideons-ephod	key	0	7	8	22	8	27	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+golden-calf	key	0	2	32	1	32	35	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+golden-calf	key	1	5	9	16	9	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+golden-calf	key	2	16	9	18	9	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+golden-calf	key	3	19	106	19	106	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+golden-calf	key	4	44	7	41	7	41	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+goliaths-sword	key	0	9	17	50	17	51	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+goliaths-sword	key	1	9	21	8	21	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+goliaths-sword	key	2	9	22	9	22	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+heavenly-sanctuary	key	0	58	8	1	8	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+heavenly-sanctuary	key	1	58	9	11	9	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+heavenly-sanctuary	key	2	58	9	23	9	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+heavenly-sanctuary	key	3	66	11	19	11	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+heavenly-sanctuary	key	4	66	15	5	15	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	0	43	2	13	2	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	1	40	21	12	21	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	2	40	24	1	24	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	3	42	1	8	1	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	4	42	2	22	2	49	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	5	44	3	1	3	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple	key	6	44	21	26	21	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+herods-temple-altar-of-incense	key	0	42	1	8	1	11	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+herods-temple-veil	key	0	40	27	50	27	51	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+herods-temple-veil	key	1	41	15	37	15	38	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+herods-temple-veil	key	2	42	23	44	23	45	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+hezekiahs-tunnel	key	0	12	20	20	20	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+hezekiahs-tunnel	key	1	14	32	2	32	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+hezekiahs-tunnel	key	2	14	32	30	32	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+hezekiahs-tunnel	key	3	23	22	9	22	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+high-priests-ephod	key	0	2	28	6	28	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+high-priests-ephod	key	1	2	39	2	39	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+high-priests-ephod	key	2	3	8	7	8	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-crown	key	0	2	28	36	28	38	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-crown	key	1	2	29	6	29	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-crown	key	2	2	39	30	39	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-crown	key	3	3	8	9	8	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-of-holies	key	0	2	26	31	26	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-of-holies	key	1	3	16	\N	16	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-of-holies	key	2	11	6	16	6	28	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-of-holies	key	3	11	8	6	8	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-of-holies	key	4	26	41	3	41	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-of-holies	key	5	58	9	1	9	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+holy-spirit	key	0	44	2	1	2	4	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+holy-spirit	key	1	45	8	1	8	27	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+inscription-on-the-cross	key	0	40	27	37	27	37	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+inscription-on-the-cross	key	1	41	15	26	15	26	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+inscription-on-the-cross	key	2	42	23	38	23	38	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+inscription-on-the-cross	key	3	43	19	19	19	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ishbosheth-house	key	0	10	4	5	4	5	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ishbosheth-house	key	1	10	4	7	4	7	Essenthos, model and agent readings of named places and structures, 2026-10-26
+jachin-pillar	key	0	11	7	15	7	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jachin-pillar	key	1	14	3	15	3	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jachin-pillar	key	2	12	25	13	25	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jachin-pillar	key	3	24	52	17	52	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jacobs-pillar	key	0	1	28	10	28	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jacobs-pillar	key	1	1	31	13	31	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jacobs-pillar	key	2	1	35	14	35	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jar-of-manna	key	0	2	16	32	16	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jar-of-manna	key	1	58	9	4	9	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jephthahs-daughter	key	0	7	11	30	11	40	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+jeroboams-feast	command	0	11	12	32	12	33	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-feast	key	1	11	13	1	13	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-golden-calves	key	0	11	12	26	12	33	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-golden-calves	key	1	12	10	29	10	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-golden-calves	key	2	12	17	16	17	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-golden-calves	key	3	14	11	15	11	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-golden-calves	key	4	14	13	8	13	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jonathan-scribe-prison	key	0	24	37	15	37	15	Essenthos, model and agent readings of named places and structures, 2026-10-26
+jordan-memorial-stones	key	0	6	4	1	4	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jordan-memorial-stones	key	1	6	4	19	4	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+josephs-tunic	key	0	1	37	3	37	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+josephs-tunic	key	1	1	37	23	37	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+josephs-tunic	key	2	1	37	31	37	33	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+josiah-zephaniah-house	key	0	38	6	10	6	10	Essenthos, model and agent readings of named places and structures, 2026-10-26
+jubilee	command	0	3	25	8	25	55	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jubilee	command	1	3	27	16	27	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jubilee	key	2	4	36	4	36	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jubilee	key	3	26	46	17	46	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+land-of-israel	key	0	26	33	24	33	24	Essenthos, model and agent readings of named places and structures, 2026-10-26
+land-of-israel	key	1	26	40	2	40	2	Essenthos, model and agent readings of named places and structures, 2026-10-26
+land-of-israel	key	2	26	40	1	40	1	Essenthos, model and agent readings of named places and structures, 2026-10-26
+land-of-israel	key	3	40	2	21	2	21	Essenthos, model and agent readings of named places and structures, 2026-10-26
+land-of-israel	key	4	26	38	19	38	19	Essenthos, model and agent readings of named places and structures, 2026-10-26
+land-of-israel	key	5	26	38	20	38	20	Essenthos, model and agent readings of named places and structures, 2026-10-26
+lords-day	key	0	66	1	10	1	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+lords-supper	command	0	40	26	26	26	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+lords-supper	command	1	41	14	22	14	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+lords-supper	command	2	42	22	14	22	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+lords-supper	command	3	46	11	23	11	26	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+lords-supper	key	4	46	10	16	10	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+lords-supper	key	5	46	11	17	11	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mary-mark-house	key	0	44	12	12	12	12	Essenthos, model and agent readings of named places and structures, 2026-10-26
+menorah	key	0	2	25	31	25	40	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+menorah	key	1	2	37	17	37	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+menorah	key	2	2	40	24	40	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+menorah	key	3	3	24	1	24	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+menorah	key	4	4	8	1	8	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+menorah	key	5	58	9	2	9	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	0	2	25	17	25	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	1	2	26	34	26	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	2	2	37	6	37	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	3	3	16	2	16	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	4	3	16	13	16	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	5	4	7	89	7	89	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	6	13	28	11	28	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+mercy-seat	key	7	58	9	5	9	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+micahs-image	key	0	7	17	1	17	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+micahs-image	key	1	7	18	14	18	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+moses-staff	key	0	2	4	1	4	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+moses-staff	key	1	2	4	17	4	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+moses-staff	key	2	2	14	16	14	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+moses-staff	key	3	2	17	5	17	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+moses-veil	key	0	2	34	29	34	35	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+moses-veil	key	1	47	3	7	3	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+naboths-field	key	0	12	9	21	9	21	Essenthos, model and agent readings of named places and structures, 2026-10-26
+naboths-field	key	1	12	9	25	9	25	Essenthos, model and agent readings of named places and structures, 2026-10-26
+naboths-field	key	2	12	9	26	9	26	Essenthos, model and agent readings of named places and structures, 2026-10-26
+nathanael	key	0	43	1	43	1	51	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+nathanael	key	1	43	21	1	21	2	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+nebuchadnezzars-dream-image	key	0	27	2	31	2	45	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+nebuchadnezzars-image	key	0	27	3	1	3	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+nehushtan	key	0	4	21	4	21	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+nehushtan	key	1	12	18	4	18	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+nehushtan	key	2	43	3	14	3	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+nephilim	key	0	1	6	1	6	4	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+nephilim	key	1	4	13	32	13	33	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+new-jerusalem	key	0	66	3	12	3	12	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+new-jerusalem	key	1	66	21	1	22	5	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+new-moon	command	0	4	10	10	10	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	command	1	4	28	11	28	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	2	9	20	5	20	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	3	12	4	23	4	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	4	23	1	13	1	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	5	23	66	23	66	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	6	26	46	1	46	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	7	30	8	5	8	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	key	8	51	2	16	2	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+nisroch-temple	key	0	23	37	38	37	38	Essenthos, model and agent readings of named places and structures, 2026-10-26
+nisroch-temple	key	1	12	19	37	19	37	Essenthos, model and agent readings of named places and structures, 2026-10-26
+noahs-ark	key	0	1	6	9	6	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	1	1	7	\N	7	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	2	1	8	\N	8	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	3	1	9	18	9	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	4	40	24	37	24	39	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	5	42	17	26	17	27	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	6	58	11	7	11	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+noahs-ark	key	7	60	3	20	3	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+obededom-house	key	0	13	13	13	13	13	Essenthos, model and agent readings of named places and structures, 2026-10-26
+obededom-house	key	1	13	15	25	15	25	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ogs-bed	key	0	5	3	1	3	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+ornans-threshingfloor	key	0	10	24	20	24	20	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	1	10	24	18	24	18	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	2	13	21	20	21	20	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	3	13	21	21	21	21	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	4	10	24	19	24	19	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	5	10	24	21	24	21	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	6	10	24	25	24	25	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	7	13	21	19	21	19	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	8	13	21	26	21	26	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	9	13	21	28	21	28	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	10	13	22	1	22	1	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	11	13	21	15	21	15	Essenthos, model and agent readings of named places and structures, 2026-10-26
+ornans-threshingfloor	key	12	10	24	16	24	16	Essenthos, model and agent readings of named places and structures, 2026-10-26
+passover	command	0	2	12	1	12	28	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	command	1	2	12	43	12	49	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	command	2	3	23	4	23	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	command	3	4	9	1	9	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	command	4	4	28	16	28	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	command	5	5	16	1	16	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	6	6	5	10	5	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	7	12	23	21	23	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	8	14	30	\N	30	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	9	14	35	1	35	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	10	15	6	19	6	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	11	40	26	17	26	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	12	42	22	7	22	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	13	43	2	13	2	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	14	43	11	55	12	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	key	15	46	5	7	5	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+peter-house	key	0	40	8	14	8	14	Essenthos, model and agent readings of named places and structures, 2026-10-26
+pharaohs-daughter	key	0	2	2	5	2	10	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+pharaohs-daughter	key	1	44	7	21	7	21	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+pharaohs-daughter	key	2	58	11	24	11	24	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+pilates-praetorium	key	0	41	15	16	15	16	Essenthos, model and agent readings of named places and structures, 2026-10-26
+pilates-praetorium	key	1	43	18	28	18	28	Essenthos, model and agent readings of named places and structures, 2026-10-26
+pilates-praetorium	key	2	43	18	33	18	33	Essenthos, model and agent readings of named places and structures, 2026-10-26
+pilates-praetorium	key	3	43	19	9	19	9	Essenthos, model and agent readings of named places and structures, 2026-10-26
+pilates-praetorium	key	4	43	18	29	18	29	Essenthos, model and agent readings of named places and structures, 2026-10-26
+purim	command	0	17	9	20	9	32	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+purim	key	1	17	3	7	3	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+purim	key	2	17	9	17	9	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+rahabs-scarlet-cord	key	0	6	2	15	2	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+rahabs-scarlet-cord	key	1	6	6	22	6	25	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	command	0	2	20	8	20	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	command	1	2	31	12	31	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	command	2	3	23	3	23	3	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	command	3	4	28	9	28	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	command	4	5	5	12	5	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	5	1	2	1	2	3	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	6	2	16	22	16	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	7	4	15	32	15	36	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	8	16	13	15	13	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	9	23	56	1	56	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	10	23	58	13	58	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	11	24	17	19	17	27	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	12	40	12	1	12	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	13	41	2	23	2	28	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	14	42	13	10	13	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	key	15	43	5	1	5	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	command	0	2	23	10	23	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	command	1	3	25	1	25	7	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	command	2	3	25	18	25	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	command	3	5	15	1	15	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	command	4	5	31	10	31	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	key	5	3	26	34	26	35	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	key	6	3	26	43	26	43	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	key	7	14	36	21	36	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	key	8	16	10	31	10	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	key	9	24	34	8	34	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sauls-spear	key	0	9	18	10	18	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sauls-spear	key	1	9	19	9	19	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sauls-spear	key	2	9	20	33	20	33	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sauls-spear	key	3	9	26	7	26	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sauls-spear	key	4	10	1	6	1	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+seamless-tunic	key	0	43	19	23	19	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+seamless-tunic	key	1	19	22	18	22	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-passover	command	0	4	9	6	9	14	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-passover	key	1	14	30	\N	30	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-temple	key	0	15	1	1	1	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-temple	key	1	15	3	1	6	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-temple	key	2	37	1	1	2	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-temple	key	3	38	4	6	4	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-temple	key	4	16	10	32	10	39	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+serpent-of-eden	key	0	1	3	1	3	15	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+serpent-of-eden	key	1	47	11	3	11	3	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+serpent-of-eden	key	2	66	12	9	12	9	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+serpent-of-eden	key	3	66	20	2	20	2	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+silver-trumpets	key	0	4	10	1	10	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-bronze-altar	key	0	14	4	1	4	1	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-bronze-altar	key	1	11	8	64	8	64	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-bronze-altar	key	2	14	7	7	7	7	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-bronze-altar	key	3	12	16	10	16	15	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-bronze-altar	key	4	26	9	2	9	2	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-golden-altar	key	0	11	6	20	6	22	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-golden-altar	key	1	11	7	48	7	48	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-golden-altar	key	2	13	28	18	28	18	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-golden-altar	key	3	14	4	19	4	19	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-golden-altar	key	4	14	26	16	26	19	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-golden-shields	key	0	11	10	16	10	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-golden-shields	key	1	11	14	25	14	28	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-golden-shields	key	2	14	9	15	9	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-golden-shields	key	3	14	12	9	12	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-lampstands	key	0	11	7	49	7	49	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lampstands	key	1	13	28	15	28	15	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lampstands	key	2	14	4	7	4	7	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lampstands	key	3	14	4	20	4	21	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lampstands	key	4	24	52	19	52	19	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lavers	key	0	11	7	38	7	39	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lavers	key	1	11	7	43	7	43	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lavers	key	2	14	4	6	4	6	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-lavers	key	3	14	4	14	4	14	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-palace	key	0	11	7	1	7	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-palace	key	1	11	9	1	9	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-palace	key	2	11	9	10	9	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-palace	key	3	14	7	11	7	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-tables	key	0	11	7	48	7	48	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-tables	key	1	13	28	16	28	16	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-tables	key	2	14	4	8	4	8	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-tables	key	3	14	4	19	4	19	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-tables	key	4	14	13	11	13	11	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-tables	key	5	14	29	18	29	18	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-temple	key	0	11	6	1	6	38	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-temple	key	1	11	7	13	7	51	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-temple	key	2	11	8	1	8	66	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-temple	key	3	14	2	1	7	22	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-temple	key	4	12	25	8	25	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-temple-veil	key	0	14	3	14	3	14	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction
+solomons-throne	key	0	11	10	18	10	20	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+solomons-throne	key	1	14	9	17	9	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+steps-of-ahaz	key	0	12	20	8	20	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+steps-of-ahaz	key	1	23	38	7	38	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	0	2	25	1	25	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	1	2	26	\N	26	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	2	2	35	4	36	38	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	3	2	40	\N	40	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	4	4	1	50	1	53	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	5	4	3	1	4	49	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	6	4	9	15	9	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	7	6	18	1	18	1	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	8	13	21	29	21	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	9	14	1	3	1	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	10	11	8	4	8	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	11	44	7	44	7	44	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	12	58	8	5	8	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tabernacle	key	13	58	9	1	9	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	0	2	25	23	25	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	1	2	37	10	37	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	2	2	40	22	40	23	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	3	3	24	5	24	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	4	4	4	7	4	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	5	9	21	1	21	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	6	40	12	3	12	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+table-of-showbread	key	7	58	9	2	9	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	0	2	24	12	24	12	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	1	2	31	18	31	18	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	2	2	32	15	32	19	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	3	2	34	1	34	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	4	2	34	28	34	29	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	5	5	4	13	4	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	6	5	9	9	9	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	7	5	10	1	10	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	8	11	8	9	8	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tablets-of-the-covenant	key	9	58	9	4	9	4	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tent-of-meeting-outside-the-camp	key	0	2	33	7	33	11	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+territory-of-issachar	key	0	11	4	17	4	17	Essenthos, model and agent readings of named places and structures, 2026-10-26
+the-seventy	key	0	42	10	1	10	20	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+the-twelve	key	0	41	3	13	3	19	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+the-twelve	key	1	40	10	1	10	5	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+the-twelve	key	2	42	6	12	6	16	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+the-twelve	key	3	44	1	13	1	26	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own
+thirty-pieces-of-silver	key	0	40	26	14	26	16	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+thirty-pieces-of-silver	key	1	40	27	3	27	10	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+thirty-pieces-of-silver	key	2	38	11	12	11	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tower-of-babel	key	0	1	11	1	11	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tower-of-siloam	key	0	42	13	1	13	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tree-of-knowledge-of-good-and-evil	key	0	1	2	9	2	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tree-of-knowledge-of-good-and-evil	key	1	1	2	16	2	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tree-of-knowledge-of-good-and-evil	key	2	1	3	1	3	17	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tree-of-life	key	0	1	2	9	2	9	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tree-of-life	key	1	1	3	22	3	24	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+tree-of-life	key	2	66	22	1	22	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	0	2	28	30	28	30	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	1	3	8	8	8	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	2	4	27	21	27	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	3	5	33	8	33	8	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	4	9	28	6	28	6	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	5	15	2	63	2	63	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+urim-and-thummim	key	6	16	7	65	7	65	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	0	2	26	31	26	35	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	1	2	36	35	36	36	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	2	2	40	3	40	3	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	3	2	40	21	40	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	4	3	16	2	16	2	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	5	3	16	12	16	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	6	4	4	5	4	5	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+veil-of-the-sanctuary	key	7	58	9	3	9	3	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+wilderness-of-judah	key	0	19	63	0	63	0	Essenthos, model and agent readings of named places and structures, 2026-10-26
+wilderness-of-judah	key	1	19	63	1	63	1	Essenthos, model and agent readings of named places and structures, 2026-10-26
+wood-offering	command	0	16	10	34	10	34	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+wood-offering	key	1	16	13	31	13	31	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+wood-offering	key	2	3	6	12	6	13	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+zeebs-winepress	key	0	7	7	25	7	25	Essenthos, model and agent readings of named places and structures, 2026-10-26

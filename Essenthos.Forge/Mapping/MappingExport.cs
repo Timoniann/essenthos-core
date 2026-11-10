@@ -9,10 +9,11 @@ using NpgsqlTypes;
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
-/// Every link of a database written out as the mapping's method files, one folder per pair of texts and one
-/// file per method (DOC-0224 §6.1, §15.3): each claim of each link a row, its words by key, its link's id kept.
-/// Re-runnable: the export of cut-over day is this again. It also seeds a pair's rulings from the rulings held
-/// in code and in <c>link-rulings.json</c>, where the pair has no rulings file yet.
+/// The links of a database written out as the mapping's method files, one folder per pair of texts and one file per
+/// method the caller asks for (DOC-0224 §6.1, §15.3): each claim of each link a row, its words by key. The build's
+/// producers make the other methods from files, so only what none of them makes is exported (the aligner's, the
+/// compositions'). It also seeds a pair's rulings from the rulings held in code and in <c>link-rulings.json</c>, where
+/// the pair has no rulings file yet.
 /// </summary>
 internal static class MappingExport
 {
@@ -21,7 +22,8 @@ internal static class MappingExport
     public sealed record PairExport(string Pair, IReadOnlyDictionary<string, long> Rows, long Links, int Rulings);
 
     public static async Task<List<PairExport>> Run(
-        string connection, ProductStore store, IReadOnlySet<string>? only, int parallel, ILogger logger, CancellationToken cancellationToken)
+        string connection, ProductStore store, IReadOnlySet<string>? only, Func<string, string, bool> exports, int parallel, ILogger logger,
+        CancellationToken cancellationToken)
     {
         var clock = Stopwatch.StartNew();
         await using var db = new NpgsqlConnection(connection);
@@ -48,7 +50,7 @@ internal static class MappingExport
             await using var own = new NpgsqlConnection(connection);
             await own.OpenAsync(token);
             var links = await PairSnapshot.Read(own, pair.From, pair.To, token);
-            var written = Write(store, pair.Name, keys.Slug(pair.From), keys.Slug(pair.To), links, keys, provenances, hashes, database);
+            var written = Write(store, pair.Name, keys.Slug(pair.From), keys.Slug(pair.To), links, keys, provenances, hashes, database, exports);
             var rulings = SeedRulings(store, pair.Name, seeds.GetValueOrDefault(pair.Name) ?? []);
             done.Add(new PairExport(pair.Name, written, links.Count, rulings));
             logger.LogInformation("{Pair}: {Links} links, {Rows} rows, at {Elapsed}", pair.Name, links.Count, written.Values.Sum(), clock.Elapsed);
@@ -60,7 +62,7 @@ internal static class MappingExport
 
     private static Dictionary<string, long> Write(
         ProductStore store, string pair, string fromText, string toText, List<StoredLink> links, WordKeys keys,
-        Provenances provenances, (string?[] Text, string?[] Fold) hashes, string database)
+        Provenances provenances, (string?[] Text, string?[] Fold) hashes, string database, Func<string, string, bool> exports)
     {
         var byMethod = new Dictionary<string, List<(int Side, WordKey First, MappingRow Row)>>(StringComparer.Ordinal);
         var verses = new HashSet<int>();
@@ -86,7 +88,7 @@ internal static class MappingExport
         }
 
         var counts = new Dictionary<string, long>(StringComparer.Ordinal);
-        foreach (var (method, rows) in byMethod.OrderBy(m => m.Key, StringComparer.Ordinal))
+        foreach (var (method, rows) in byMethod.Where(m => exports(pair, m.Key)).OrderBy(m => m.Key, StringComparer.Ordinal))
         {
             rows.Sort(static (a, b) => Order(a.Side, a.First, a.Row, b.Side, b.First, b.Row));
             using var writer = store.Create(MappingProducts.Of(pair, method), ProductKind.Machine, MappingRow.Schema,

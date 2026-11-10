@@ -58,9 +58,9 @@ internal static partial class ForgeVerbs
             "Convert texts from their declared sources and corrections into their products under Resources/Essenthos/texts; "
             + "a text whose inputs did not move is left as it is.",
             ConvertVerb, Least: 1),
-        new("texts", "ids|compare <text,...|all> [--out <folder>] [--parallel <n>]",
-            "ids: write each word's id in the configured database as the text's ids product. compare: hold the converted products "
-            + "against the configured database by key and list every difference.",
+        new("texts", "ids|compare <text,...|all> [--force] [--out <folder>] [--parallel <n>]",
+            "ids: write each word's id in the configured database as the text's ids product, kept: it refuses a text whose ids the "
+            + "store holds unless --force. compare: hold the converted products against the configured database by key and list every difference.",
             TextsVerb, Least: 2),
         new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--dry-run]",
             "Restore a release on a target, verify it there and swap it in.", Publish),
@@ -178,11 +178,12 @@ internal static partial class ForgeVerbs
         new("verse-readings", "", "Keep the verses two readings agree speak of a record.", VerseReadings),
         new("passage-readings", "", "Name the words two readings of a passage agree stand for a person.", PassageReadings),
         new("dataset-records", "", "Make the records a dataset supplied ours, fold them or withdraw them.", DatasetRecords),
-        new("records-export", "[--into <Resources>]", "Write our records, facts, languages and external datasets as files, from the database.", RecordsExport),
+        new("records-export", "[--into <Resources>] [--force]",
+            "Write our records, facts, languages and external datasets as files, from the database; refuses a store that holds them unless --force.", RecordsExport),
         new("records-load", "[--from <Resources>]", "Put the record files into the database (never live): records only from records/records.", RecordsLoad),
         new("records-derive", "[--from <Resources>] [--into <Resources>]", "Make the derived record files whose inputs are files (relationships, locations, pictures, Wikipedia links) from the hand files and the console's files, without a database.", RecordsDerive),
         new("records-canon", "[--from <Resources>] [--force]", "Write records/canon, which canons attest each record, from the names projection and the frames, without a database.", RecordsCanon),
-        new("records-verses", "[--from <Resources>] [--force] [--over-live <file>]", "Write records/derived/verses, the verses our words and relationships put each record in and the gazetteer's verses of its places, from the names projection, the frames, the relationships and the gazetteer's references, without a database; --over-live writes what the rule makes of names/live to a file instead.", RecordsVerses),
+        new("records-verses", "[--from <Resources>] [--force]", "Write records/derived/verses, the verses our words and relationships put each record in and the gazetteer's verses of its places, from the names projection, the frames, the relationships and the gazetteer's references, without a database.", RecordsVerses),
         new("owner-apply", "[--from <Resources>] [--dry-run]",
             "Apply the owner's console decisions that wait on the files step (owner-changes.jsonl, needs: files) to the record files "
             + "they concern, with his stamp on each row, then append the apply line. Reads no database.", OwnerApply, Most: 3),
@@ -191,8 +192,10 @@ internal static partial class ForgeVerbs
             + "with the owner's stamp on each row; a row the files cannot take stops it before anything is written. Reads no database.",
             OwnerRowsVerb, Most: 9),
         new("records-compare", "<port/db> <port/db> [--out <file>]", "Compare two databases' records table by table by natural key. Reads only.", RecordsCompare, Least: 2),
-        new("mapping-export", "[--into <Resources>] [--pairs A-B,...] [--parallel <n>]",
-            "Write every link of the database as the mapping's per-pair method files, words by key. Reads the database only.", MappingExportVerb),
+        new("mapping-export", "[--into <Resources>] [--pairs A-B,...] [--parallel <n>] [--force]",
+            "Write the database's links no build producer makes (the aligner's, the compositions') as the mapping's per-pair method files, "
+            + "words by key, with the pairs' ordinals and verse hashes; refuses a store that holds them unless --force. Reads the database only.",
+            MappingExportVerb),
         new("merge", "<pair> | --all [--from <Resources>] [--force] [--parallel <n>]",
             "Merge a pair's method files into its final and report by the stated precedence; losers stay in their files, marked.", Merge, Least: 1),
         new("verse-pairs", "[<FROM-TO>,...] [--from <Resources>] [--force] [--parallel <n>]",
@@ -231,16 +234,10 @@ internal static partial class ForgeVerbs
             "Make each text's indexes (Strong renderings, occurrences, search forms, spellings) from its words, its pairs' finals and the names, where an input moved. Reads no database.", IndexesVerb),
         new("indexes-load", "[--texts A,B|all] [--only strong,forms,spellings] [--from <Resources>]",
             "Put the texts' indexes into the strong, text_form and entity spelling tables of the database (never live).", IndexesLoadVerb),
-        new("names-export", "[--into <Resources>]",
-            "Write the database's names as names/exported/<SLUG>, which the spellings index reads until the names layer writes them. Reads the database only.", NamesExportVerb),
-        new("names-from-database", "[--into <Resources>] [--frozen <yyyy-mm>] [--consensus] [--force]",
-            "Write the database's names as names/live/<SLUG> by the words products' keys, and the reference texts' settled names and the rules where missing; --consensus writes only names/consensus/<SLUG>, the name-consensus pass's rows names-pairs reads, where missing. Reads the database only.", NamesFromDatabaseVerb),
         new("names-project", "[--texts A,B|all] [--from <Resources>] [--force] [--parallel <n>]",
             "Project the reference texts' settled names onto every text over the final mappings, with the rules and each text's overrides, where an input moved. Reads no database.", NamesVerb),
         new("names-load", "[--texts A,B|all] [--from <Resources>]",
-            "Put the names projection into word_entity of the database (never live), then read it back by key against the products and names/live.", NamesLoadVerb),
-        new("names-compare", "--out <folder> [--texts A,B|all] [--sample <n>] [--from <Resources>] [--write-overrides]",
-            "Compare the projection with names/live by key and record, each difference in a category, with a sample of each; write the overrides of the categories decided for the database where a text has none. Reads no database.", NamesCompareVerb),
+            "Put the names projection into word_entity of the database (never live), then read it back by key against the products.", NamesLoadVerb),
     ];
 
     public static ForgeVerb? Find(string name) =>

@@ -1,3 +1,4 @@
+using Essenthos.Core.Build;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -13,11 +14,20 @@ internal static partial class ForgeVerbs
 {
     /// <summary>
     /// Writes the record files from the database the Forge is pointed at, into <c>--into &lt;Resources&gt;</c>
-    /// (default the Forge's own Resources/). Re-runnable: the export of cut-over day is this verb again.
+    /// (default the Forge's own Resources/). The files are ours and the build reads them, so it refuses a store that holds
+    /// them unless <c>--force</c>: written again from a database, they would be what a build made of them.
     /// </summary>
     private static async Task<int> RecordsExport(ForgeRun forge, string[] args)
     {
         var resources = Option(args, "--into") ?? forge.Resources;
+        var held = new ProductStore(resources);
+        var graph = ProductGraph.Read(held);
+        if (RefusesExport(forge, args, "records-export",
+                [.. new[] { "records/records" }.Where(held.Exists), .. graph.Kept(held, "records"), .. graph.Kept(held, "external")]))
+        {
+            return 1;
+        }
+
         var oursOnly = new Dictionary<string, RecordFiles.OwnValues>(StringComparer.Ordinal);
         if (!await RecordFiles.Loaded(forge.DatabaseConnection, CancellationToken.None))
         {
@@ -90,19 +100,11 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// Writes <c>records/derived/verses</c> from the names projection, the frames, the relationships and the gazetteer's references of
-    /// <c>--from &lt;Resources&gt;</c>; reads no database. <c>--over-live &lt;file&gt;</c> writes instead what the rule makes
-    /// of the database names in <c>names/live</c>, as TSV outside the store, to hold against that database's export.
+    /// <c>--from &lt;Resources&gt;</c>; reads no database.
     /// </summary>
     private static Task<int> RecordsVerses(ForgeRun forge, string[] args)
     {
         var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
-        if (Option(args, "--over-live") is { } path)
-        {
-            var live = RecordVerses.WriteOverLive(store, path);
-            Console.WriteLine($"{live.Rows,9}  rows over names/live into {path} ({live.Records} records; {live.Names} names read, " +
-                              $"{live.Withheld} withheld, {live.FromRelationships} from relationships, {live.FromGazetteer} from the gazetteer)");
-            return Task.FromResult(0);
-        }
 
         var outcome = RecordVerses.Write(store, args.Contains("--force"));
         Console.WriteLine(outcome.Written

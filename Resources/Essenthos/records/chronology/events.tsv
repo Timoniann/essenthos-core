@@ -1,0 +1,8 @@
+# product    Essenthos/records/chronology/events.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+# Events as the dataset gives them; record names the record of ours an event is about.
+slug	name	description	kind	record	year_from_creation	bce_year	age_at_event	calculation	ref	location	location_ref	uri	notes	realm	region	region_at_the_time	name_source	sequence_in_year	by
+birthofcainan	Birth of Cainan	Cainan, son of Arphaxad and father of Shelah, stands in the Septuagint's Genesis 11:12–13 and in Luke 3:36 and not in the Hebrew, so only the Septuagint reckonings date him.	Birth	cainan	\N	\N	\N	\N	1.11:12	\N	\N	\N	\N	scripture	\N	\N	source	\N	Essenthos, from the Septuagint's Genesis 11:12–13 and Luke 3:36
+deathofcainan	Death of Cainan	Cainan, son of Arphaxad and father of Shelah, stands in the Septuagint's Genesis 11:12–13 and in Luke 3:36 and not in the Hebrew, so only the Septuagint reckonings date him.	Death	cainan	\N	\N	\N	\N	1.11:13	\N	\N	\N	\N	scripture	\N	\N	source	\N	Essenthos, from the Septuagint's Genesis 11:12–13 and Luke 3:36

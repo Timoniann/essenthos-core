@@ -1,0 +1,23 @@
+# product    Essenthos/mapping/BSB-NESTLE1904/rulings.tsv
+# inputs     
+# producer   forge mapping-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse		40.16:21.4		Berean Standard Bible translation tables	Matthew 16:21 Ἰησοῦς (1): clearbible stands over berean. BSB English reads 'From that time on Jesus began to show His disciples'; 'Jesus' renders Ἰησοῦς.
+refuse		40.20:9.1		Berean Standard Bible translation tables	Matthew 20:9 ἐλθόντες (1): clearbible stands over berean. BSB English reads 'The workers who were hired about the eleventh hour came and each received'; 'came' renders ἐλθόντες.
+refuse		41.13:22.11		Berean Standard Bible translation tables	Mark 13:22 πρὸς (1): clearbible stands over berean. BSB English reads 'to deceive even the elect'; 'to' renders πρὸς with the infinitive.
+refuse		42.18:11.16		Clear Bible Alignments	Luke 18:11 οἱ (1): berean stands over clearbible. BSB English reads 'not like other men'; 'other' renders λοιποὶ, and the article οἱ is not rendered.
+refuse		45.4:1.6		Clear Bible Alignments	Romans 4:1 τὸν (1): berean stands over clearbible. BSB English reads 'Abraham, our forefather according to the flesh'; the article τὸν before προπάτορα is not rendered.
+refuse		47.13:5.13		Clear Bible Alignments	2 Corinthians 13:5 ἑαυτοὺς (3): berean stands over clearbible. BSB English reads 'Do you not realize that Jesus Christ is in you'; the third ἑαυτοὺς, after ἐπιγινώσκετε, is not rendered.
+refuse		47.8:19.15		Clear Bible Alignments	2 Corinthians 8:19 ταύτῃ (1): berean stands over clearbible. BSB English reads 'with the gracious offering we administer'; ταύτῃ, 'this', is not rendered.
+refuse		47.8:22.13		Clear Bible Alignments	2 Corinthians 8:22 ὄντα (1): berean stands over clearbible. BSB English reads 'our brother who has proven his earnestness to us'; the participle ὄντα is not rendered.
+refuse		66.11:19.25		Clear Bible Alignments	Revelation 11:19 καὶ (4): berean stands over clearbible. BSB English reads 'flashes of lightning, rumblings, peals of thunder, an earthquake'; the καὶ between ἀστραπαὶ and φωναὶ is the comma and is not rendered.
+refuse		66.11:19.27		Clear Bible Alignments	Revelation 11:19 καὶ (5): berean stands over clearbible. BSB English reads 'flashes of lightning, rumblings, peals of thunder, an earthquake'; the καὶ between φωναὶ and βρονταὶ is the comma and is not rendered.
+refuse		66.12:15.6		Clear Bible Alignments	Revelation 12:15 τοῦ (1): berean stands over clearbible. BSB English reads 'Then from his mouth the serpent spewed water'; 'his' renders αὐτοῦ, and the article τοῦ is not rendered.
+refuse		66.16:18.4		Clear Bible Alignments	Revelation 16:18 καὶ (2): berean stands over clearbible. BSB English reads 'flashes of lightning, rumblings, peals of thunder, and a great earthquake'; the καὶ between ἀστραπαὶ and φωναὶ is the comma and is not rendered.
+refuse		66.16:18.6		Clear Bible Alignments	Revelation 16:18 καὶ (3): berean stands over clearbible. BSB English reads 'flashes of lightning, rumblings, peals of thunder, and a great earthquake'; the καὶ between φωναὶ and βρονταί is the comma and is not rendered.
+refuse		66.1:19.5		Clear Bible Alignments	Revelation 1:19 καὶ (1): berean stands over clearbible. BSB English reads 'the things you have seen, the things that are'; the first καὶ is the comma and is not rendered.
+refuse		66.2:13.14		Clear Bible Alignments	Revelation 2:13 καὶ (2): berean stands over clearbible. BSB English reads 'you hold fast to My name. You did not deny your faith'; the καὶ before οὐκ ἠρνήσω begins a new sentence and is not rendered.
+refuse		66.4:5.7		Clear Bible Alignments	Revelation 4:5 καὶ (2): berean stands over clearbible. BSB English reads 'flashes of lightning, rumblings, and peals of thunder'; the καὶ between ἀστραπαὶ and φωναὶ is the comma and is not rendered.
+refuse		66.8:5.23		Clear Bible Alignments	Revelation 8:5 καὶ (5): berean stands over clearbible. BSB English reads 'peals of thunder, rumblings, flashes of lightning, and an earthquake'; the καὶ between βρονταὶ and φωναὶ is the comma and is not rendered.
+refuse		66.8:5.25		Clear Bible Alignments	Revelation 8:5 καὶ (6): berean stands over clearbible. BSB English reads 'peals of thunder, rumblings, flashes of lightning, and an earthquake'; the καὶ between φωναὶ and ἀστραπαὶ is the comma and is not rendered.

@@ -4,6 +4,7 @@
 # exported   from localhost:5437/essenthos_core_rework_src
 # edited     by hand from here on: a row is a decision that this word names this record
 # cleaned    2026-11-04 (PRB-1467): rows carried from BHSA rows that were taken out, taken out with them
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
 own	record	role	method	confidence	source	note
 1.2:4.13	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:4.13, linked by lexical
 1.2:5.20	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:5.21, linked by lexical
@@ -6661,7 +6662,7 @@ own	record	role	method	confidence	source	note
 4.11:16.3	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.11:16.3, linked by lexical
 4.11:16.5	moses	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.11:16.5, linked by lexical
 4.11:16.12	israelites	people	rule-based	0.855	Essenthos, on the project owner's ruling of 2026-09-16 that a name a tribe shares with its ancestor names the ancestor until the sentence is read, Israel standing alone outside Genesis being the nation	frozen 2026-11: through BHSA 4.11:16.12, linked by lexical
-4.11:16.26	tabernacle	thing	model-reading	0.8835	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	frozen 2026-11: through BHSA 4.11:16.26, linked by lexical
+4.11:16.26	tent-of-meeting-outside-the-camp	thing	manual	\N	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction	ad ostium tabernaculi foederis / πρὸς τὴν σκηνὴν τοῦ μαρτυρίου / אל אהל מועד / ውስተ ደብተራ ዘመርጡል: the tent the elders went out to and Moses, Aaron and Miriam came out to, outside the camp, as the decision reads אֹהֶל מוֹעֵד in the Hebrew of the verse (NUM 11:26, 30; 12:5); not the tabernacle in the midst of the camp
 4.11:18.16	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.11:18.16, linked by lexical
 4.11:18.26	egypt	name	model-reading	0.9405	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 4.11:18.26, linked by lexical
 4.11:18.29	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.11:18.29, linked by lexical
@@ -6708,7 +6709,7 @@ own	record	role	method	confidence	source	note
 4.12:4.6	moses	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.12:4.6, linked by lexical
 4.12:4.9	aaron	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.12:4.9, linked by lexical
 4.12:4.12	miriam	name	model-reading	0.9405	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 4.12:4.12, linked by lexical
-4.12:4.16	tabernacle	thing	model-reading	0.8835	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	frozen 2026-11: through BHSA 4.12:4.16, linked by lexical
+4.12:4.16	tent-of-meeting-outside-the-camp	thing	manual	\N	Essenthos, the project owner's decision of 2026-11-05 on the questions made for him: each word read against its verse in the Hebrew or the Greek, with the King James and Kulish beside it, by claude-opus-5-5 on his instruction	ad ostium tabernaculi foederis / πρὸς τὴν σκηνὴν τοῦ μαρτυρίου / אל אהל מועד / ውስተ ደብተራ ዘመርጡል: the tent the elders went out to and Moses, Aaron and Miriam came out to, outside the camp, as the decision reads אֹהֶל מוֹעֵד in the Hebrew of the verse (NUM 11:26, 30; 12:5); not the tabernacle in the midst of the camp
 4.12:5.3	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.12:5.3, linked by lexical
 4.12:5.15	aaron	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 4.12:5.14, linked by lexical
 4.12:5.17	miriam	name	model-reading	0.9405	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 4.12:5.16, linked by lexical

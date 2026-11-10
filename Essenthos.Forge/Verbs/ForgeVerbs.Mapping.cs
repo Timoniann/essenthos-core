@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
+using Essenthos.Core.Build;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
@@ -16,12 +17,26 @@ internal static partial class ForgeVerbs
     private static int Parallelism(string[] args, int fallback) =>
         Option(args, "--parallel") is { } n ? int.Parse(n, CultureInfo.InvariantCulture) : fallback;
 
-    /// <summary>Writes every pair's method files from the database the Forge is pointed at, into <c>--into &lt;Resources&gt;</c>.</summary>
+    /// <summary>
+    /// Writes the method files no build producer makes (the aligner's, the compositions', the hashes, the pairs' ordinals)
+    /// from the database the Forge is pointed at, into <c>--into &lt;Resources&gt;</c>; refuses a store that holds them unless
+    /// <c>--force</c>.
+    /// </summary>
     private static async Task<int> MappingExportVerb(ForgeRun forge, string[] args)
     {
         var clock = Stopwatch.StartNew();
         var store = new ProductStore(Option(args, "--into") ?? forge.Resources);
-        var pairs = await MappingExport.Run(forge.DatabaseConnection, store, Pairs(args), Parallelism(args, 3), forge.Logger, CancellationToken.None);
+        var graph = ProductGraph.Read(store);
+        var only = Pairs(args);
+        if (RefusesExport(forge, args, "mapping-export",
+                [.. graph.Kept(store, MappingProducts.Folder).Where(product => only is null || only.Contains(product.Split('/')[1]))]))
+        {
+            return 1;
+        }
+
+        var pairs = await MappingExport.Run(forge.DatabaseConnection, store, only,
+            (pair, method) => graph.Find(MappingProducts.Of(pair, method))?.Declaration.Maker is not ProductMaker.Build,
+            Parallelism(args, 3), forge.Logger, CancellationToken.None);
         foreach (var pair in pairs)
         {
             Console.WriteLine($"{pair.Pair,-24} {pair.Links,9} links  {string.Join("  ", pair.Rows.Select(r => $"{r.Key} {r.Value}"))}{(pair.Rulings > 0 ? $"  rulings {pair.Rulings}" : "")}");
@@ -29,6 +44,24 @@ internal static partial class ForgeVerbs
 
         Console.WriteLine($"{pairs.Count} pairs, {pairs.Sum(p => p.Links)} links, {pairs.Sum(p => p.Rows.Values.Sum())} rows in {clock.Elapsed}");
         return 0;
+    }
+
+    /// <summary>
+    /// Whether an export must not run: the store already holds products it would write that nothing else makes, and
+    /// <c>--force</c> was not given. Written again from a database, they would be what a build made of them, not what they were.
+    /// </summary>
+    private static bool RefusesExport(ForgeRun forge, string[] args, string verb, IReadOnlyList<string> held)
+    {
+        if (held.Count == 0 || args.Contains("--force"))
+        {
+            return false;
+        }
+
+        forge.Logger.LogError(
+            "{Verb} refuses: the store already holds {Count} product(s) it writes ({Examples}). They are kept: the build reads them as they "
+            + "are and nothing makes them again. --force writes them again from the database, for a store that has lost them.",
+            verb, held.Count, string.Join(", ", held.Take(5)) + (held.Count > 5 ? ", ..." : ""));
+        return true;
     }
 
     /// <summary>

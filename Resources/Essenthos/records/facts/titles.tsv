@@ -1,0 +1,58 @@
+# product    Essenthos/records/facts/titles.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+title	bearer	ref	called	by
+anointed	cyrus	23.45:1	\N	Essenthos, on the project owner's decision of 2026-09-30 that the Anointed (Messiah, Christ) is a title with bearers, as Pharaoh is, and that its word names the person too where the text fixes who is meant
+anointed	david	10.23:1	\N	Essenthos, on the project owner's decision of 2026-09-30 that the Anointed (Messiah, Christ) is a title with bearers, as Pharaoh is, and that its word names the person too where the text fixes who is meant
+anointed	high-priest	3.4:3	\N	Essenthos, on the project owner's decision of 2026-09-30 that the Anointed (Messiah, Christ) is a title with bearers, as Pharaoh is, and that its word names the person too where the text fixes who is meant
+anointed	jesus	40.1:16	{"deu": "Christus", "eng": "Christ", "rus": "Христос", "spa": "Cristo", "ukr": "Христос"}	Essenthos, on the project owner's decision of 2026-09-30 that the Anointed (Messiah, Christ) is a title with bearers, as Pharaoh is, and that its word names the person too where the text fixes who is meant
+anointed	saul	9.24:6	\N	Essenthos, on the project owner's decision of 2026-09-30 that the Anointed (Messiah, Christ) is a title with bearers, as Pharaoh is, and that its word names the person too where the text fixes who is meant
+archangel	michael-9	65.1:9	\N	Essenthos, on the project owner's decision of 2026-10-25 that Michael is the archangel the text calls him, and that the archangel is collected as a title like the others
+caesar-title	caesar	42.3:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+caesar-title	caesar-2	44.25:8	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+caesar-title	caesaraugustus	42.2:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+caesar-title	claudius	44.11:28	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+creator	yhvh	1.1:1	{"deu": "Gott, Schöpfer des Himmels und der Erde", "eng": "God, Creator of heaven and earth", "rus": "Бог, Творец неба и земли", "spa": "Dios, Creador de los cielos y la tierra", "ukr": "Бог, Творець неба і землі"}	Essenthos, on the project owner's decision of 2026-10-25 that the line of the God of Israel starts God, Creator of heaven and earth
+giant	ahiman	4.13:33	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	anak	4.13:33	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	anakim	5.2:11	{"deu": "Riesen", "eng": "Giants", "rus": "Исполины", "spa": "Gigantes", "ukr": "Велетні"}	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	arba	6.14:15	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	emims	5.2:11	{"deu": "Riesen", "eng": "Giants", "rus": "Исполины", "spa": "Gigantes", "ukr": "Велетні"}	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	goliath	10.21:22	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	ishbibenob	10.21:16	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	lahmi	13.20:8	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	og	5.3:11	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	saph	10.21:18	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	sheshai	4.13:33	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+giant	talmai	4.13:33	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records
+governor	felix	44.23:24	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+governor	nehemiah	16.12:26	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+governor	pilate	40.27:2	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+governor	quirinius	42.2:2	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+governor	sheshbazzar	15.5:14	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+governor	tattenai	15.5:3	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+governor	zerubbabel-2	37.1:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	abiathar	41.2:26	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	ananias-3	44.23:2	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	annas	44.4:6	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	caiaphas	40.26:3	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	eliashib-7	16.3:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	hilkiah-2	12.22:4	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+high-priest	joshua-4	37.1:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh	1.12:15	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-2	1.37:36	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-3	2.1:11	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-4	2.3:10	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-5	11.3:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-6	13.4:18	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-7	23.19:11	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaoh-8	24.25:19	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+pharaoh-title	pharaohneco	12.23:29	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+proconsul	gallio	44.18:12	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+proconsul	sergius	44.13:7	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+rab-mag	nergalsarezer-2	24.39:3	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+tetrarch	herod-2	40.14:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+tetrarch	lysanias	42.3:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+tetrarch	philip-4	42.3:1	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to
+tirshatha	nehemiah	16.8:9	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to

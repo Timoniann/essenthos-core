@@ -5,42 +5,9 @@ using Npgsql;
 
 namespace Essenthos.Core.Verbs;
 
-/// <summary>The names layer as files (TSK-1448, DOC-0224 §7): settled names exported once, projected onto every text, loaded.</summary>
+/// <summary>The names layer as files (TSK-1448, DOC-0224 §7): settled names kept by hand, projected onto every text, loaded.</summary>
 internal static partial class ForgeVerbs
 {
-    /// <summary>
-    /// Writes a database's names as <c>names/live/&lt;SLUG&gt;</c>, and the reference texts' settled names and the rules where
-    /// missing; with <c>--consensus</c> only the name-consensus rows, as <c>names/consensus/&lt;SLUG&gt;</c> where missing:
-    /// <c>names-from-database [--into &lt;Resources&gt;] [--frozen 2026-11] [--consensus] [--force]</c>.
-    /// </summary>
-    private static async Task<int> NamesFromDatabaseVerb(ForgeRun forge, string[] args)
-    {
-        var store = new ProductStore(Option(args, "--into") ?? forge.Resources);
-        var builder = new NpgsqlConnectionStringBuilder(forge.DatabaseConnection);
-        var consensus = args.Contains("--consensus");
-        var outcome = await NamesFromDatabase.Run(forge.DatabaseConnection, store, $"{builder.Host}:{builder.Port}/{builder.Database}",
-            Option(args, "--frozen") ?? DateTime.UtcNow.ToString("yyyy-MM"), args.Contains("--force"), CancellationToken.None, consensus);
-        Console.WriteLine(consensus
-            ? $"{outcome.Consensus} name-consensus rows of {outcome.Texts} texts written as names/consensus, in {outcome.Elapsed}"
-            : $"{outcome.Live} names of {outcome.Texts} texts written as names/live, {outcome.Settled} as settled names, in {outcome.Elapsed}");
-        foreach (var (text, rows) in outcome.Gone.OrderBy(g => g.Key, StringComparer.Ordinal))
-        {
-            Console.WriteLine($"  {text}: {rows} names on words its words product no longer holds");
-        }
-
-        foreach (var (text, rows) in outcome.Moved.OrderBy(g => g.Key, StringComparer.Ordinal))
-        {
-            Console.WriteLine($"  {text}: {rows} name-consensus rows on a word id its words product gives another word, left out");
-        }
-
-        if (outcome.Skipped.Count > 0)
-        {
-            Console.WriteLine($"  no words product, not written: {string.Join(", ", outcome.Skipped)}");
-        }
-
-        return 0;
-    }
-
     private static IReadOnlyList<string> NamedTexts(NamesProjection projection, string[] args) =>
         Option(args, "--texts") is { } listed && listed != "all"
             ? [.. listed.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(projection.Texts.Contains)]
@@ -64,24 +31,8 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// Compares the projection with <c>names/live</c> by (key, record), each difference in a category, and writes a sample of
-    /// each: <c>names-compare --out &lt;folder&gt; [--texts A,B] [--sample n] [--from] [--write-overrides]</c>.
-    /// </summary>
-    private static Task<int> NamesCompareVerb(ForgeRun forge, string[] args)
-    {
-        var projection = new NamesProjection(new ProductStore(Option(args, "--from") ?? forge.Resources));
-        var texts = NamedTexts(projection, args);
-        var outFolder = Option(args, "--out") ?? throw new ArgumentException("names-compare needs --out <folder>.");
-        var outcome = NamesComparison.Run(projection, texts, outFolder, Option(args, "--sample") is { } sample ? int.Parse(sample) : 40, Parallelism(args, 8),
-            args.Contains("--write-overrides"));
-        Console.WriteLine($"{outcome.Equal} equal, {outcome.OnlyLive} only live, {outcome.OnlyProjection} only projected, in {outcome.Elapsed}");
-        Console.WriteLine(NamesComparison.Format(outcome.Categories));
-        return Task.FromResult(0);
-    }
-
-    /// <summary>
     /// Puts the projection into the word_entity of the database the Forge is pointed at (never live, never the snapshot), then
-    /// reads it back by key against the products and names/live: <c>names-load [--texts A,B] [--from]</c>.
+    /// reads it back by key against the products: <c>names-load [--texts A,B] [--from]</c>.
     /// </summary>
     private static async Task<int> NamesLoadVerb(ForgeRun forge, string[] args)
     {
@@ -98,8 +49,7 @@ internal static partial class ForgeVerbs
         Console.WriteLine($"{outcome.Rows} names of {outcome.Texts} texts loaded in {outcome.Load}, indexes in {outcome.Indexes}; " +
                           $"{outcome.UnknownRecords} on a record the database lacks, {outcome.UnknownWords} on a word without an id");
         var back = outcome.ReadBack!;
-        Console.WriteLine($"read back by key: {back.Rows} rows; {back.MissingFromTable} of the products missing and {back.ExtraInTable} extra; " +
-                          $"against names/live: {back.OnlyLive} only live, {back.OnlyTable} only in the table");
+        Console.WriteLine($"read back by key: {back.Rows} rows; {back.MissingFromTable} of the products missing and {back.ExtraInTable} extra");
         return 0;
     }
 }

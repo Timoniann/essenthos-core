@@ -221,7 +221,7 @@ internal static class OwnerRows
             {
                 throw new FileNotFoundException(
                     $"{group.Key} is not under {store.ResourcesPath}{Path.DirectorySeparatorChar}Essenthos. The names and record files " +
-                    "come from the cut-over export; apply these rows after it.");
+                    "are carried in git (the datasets' files are kept in the store): restore them before these rows.");
             }
 
             IRowEdit edit = group.Key == References
@@ -415,8 +415,8 @@ internal static class OwnerRows
             if (!store.Exists(product))
             {
                 throw new FileNotFoundException(
-                    $"{product} is not under {store.ResourcesPath}{Path.DirectorySeparatorChar}Essenthos. The record files come from the " +
-                    "cut-over export; apply these rows after it.");
+                    $"{product} is not under {store.ResourcesPath}{Path.DirectorySeparatorChar}Essenthos. The record files are carried in " +
+                    "git under Resources/Essenthos/records: restore them before these rows.");
             }
 
             return _edits[product] = new RecordEdit(store, file);

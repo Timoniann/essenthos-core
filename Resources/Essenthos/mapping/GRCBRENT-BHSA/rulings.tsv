@@ -1,0 +1,8 @@
+# product    Essenthos/mapping/GRCBRENT-BHSA/rulings.tsv
+# inputs     
+# producer   forge mapping-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	1.14:5.29	1.14:5.22	renders	SIL.Machine	Ὀμμαίους / זּוּזִ֖ים: Claude, 2026-10-14: the Septuagint renders the Zuzim 'strong nations'; Ὀμμαίους is the Emim at position 28.
+refuse	1.14:5.32	1.14:5.24	renders	SIL.Machine	Σαυῇ / הָ֑ם: Claude, 2026-10-14: Σαυῇ is Shaveh at position 30; the Septuagint reads 'in Ham' as 'with them'.
+refuse	17.8:9.25	17.8:9.30	renders	SIL.Machine	οἰκονόμοις / מָרְדֳּכַ֣י: Claude, 2026-11-01: οἰκονόμοις is the stewards the king commanded; Mordecai is not in the Greek's verse.

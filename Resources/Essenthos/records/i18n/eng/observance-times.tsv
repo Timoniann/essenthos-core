@@ -1,0 +1,21 @@
+# product    Essenthos/records/i18n/eng/observance-times.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+slug	n	note
+day-of-atonement	1	LEV 23:32 keeps it from the evening of the ninth to the evening of the tenth
+eighth-day-assembly	1	the eighth day counted from the fifteenth (LEV 23:39)
+fasts-of-the-exile	1	the fast of the fourth month
+fasts-of-the-exile	2	the fast of the fifth month; also ZEC 7:3, 5
+fasts-of-the-exile	3	the fast of the seventh month; also ZEC 7:5
+fasts-of-the-exile	4	the fast of the tenth month
+feast-of-booths	1	seven days
+feast-of-unleavened-bread	1	seven days; EXO 12:18 reckons from the evening of the fourteenth to the evening of the twenty-first
+jubilee	1	the trumpet sounded on the Day of Atonement of the fiftieth year
+new-moon	1	in the beginnings of your months
+passover	1	at even
+purim	1	the fourteenth and fifteenth days of Adar
+sabbath	1	the seventh day
+sabbatical-year	1	the seventh year
+sabbatical-year	2	at the end of every seven years
+second-passover	1	at even

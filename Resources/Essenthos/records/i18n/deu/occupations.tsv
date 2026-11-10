@@ -1,0 +1,205 @@
+# product    Essenthos/records/i18n/deu/occupations.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+slug	name	masculine	feminine	description
+aaronite-leader	Oberster der Aaroniden	Oberster der Aaroniden	Oberste der Aaroniden	\N
+administrative-officer	Amtsträger	Amtsträger	Amtsträgerin	\N
+apostle	Apostel	Apostel	Apostelin	\N
+archer	Bogenschütze	Bogenschütze	Bogenschützin	\N
+ark-doorkeeper	Türhüter der Bundeslade	Türhüter der Bundeslade	Türhüterin der Bundeslade	\N
+armor-bearer	Waffenträger	Waffenträger	Waffenträgerin	\N
+army-division-commander	Heeresabteilungsführer	Heeresabteilungsführer	Heeresabteilungsführerin	\N
+band-captain	Anführer einer Schar	Anführer einer Schar	Anführerin einer Schar	\N
+baptizer	Täufer	Täufer	Täuferin	\N
+bronze-worker	Bronzearbeiter	Bronzearbeiter	Bronzearbeiterin	\N
+captain-of-hundreds	Hauptmann über Hundertschaften	Hauptmann über Hundertschaften	Hauptfrau über Hundertschaften	\N
+captain-of-the-guard	Oberster der Leibwache	Oberster der Leibwache	Oberste der Leibwache	\N
+captain-of-thousands	Oberster über Tausendschaften	Oberster über Tausendschaften	Oberste über Tausendschaften	\N
+centurion	Zenturio	Zenturio	Zenturionin	\N
+champion	Vorkämpfer	Vorkämpfer	Vorkämpferin	\N
+chancellor	Kanzler	Kanzler	Kanzlerin	\N
+chariot-commander	Streitwagenführer	Streitwagenführer	Streitwagenführerin	\N
+chief-at-casiphia	Oberhaupt in Kasifja	Oberhaupt in Kasifja	Oberhaupt in Kasifja	\N
+chief-governor-over-wise-men	Oberster der Vorsteher über die Weisen	Oberster der Vorsteher über die Weisen	Oberste der Vorsteher über die Weisen	\N
+chief-herdsman	Oberster der Hirten	Oberster der Hirten	Oberste der Hirten	\N
+chief-man-of-island	Oberster der Insel	Oberster der Insel	Oberste der Insel	\N
+chief-of-court-officials	Oberster der Hofbeamten	Oberster der Hofbeamten	Oberste der Hofbeamten	\N
+chief-of-district-officers	Oberster der Bezirksverwalter	Oberster der Bezirksverwalter	Oberste der Bezirksverwalter	\N
+chief-of-gatekeepers	Oberster der Torhüter	Oberster der Torhüter	Oberste der Torhüter	\N
+chief-of-levite-leaders	Oberster der Levitenführer	Oberster der Levitenführer	Oberste der Levitenführer	\N
+chief-of-magicians	Oberster der Magier	Oberster der Magier	Oberste der Magier	\N
+chief-of-priests	Oberster der Priester	Oberster der Priester	Oberste der Priester	\N
+chief-of-the-thirty	Oberster der Dreißig	Oberster der Dreißig	Oberste der Dreißig	\N
+chief-of-the-three	Oberster der Drei	Oberster der Drei	Oberste der Drei	\N
+chief-tax-collector	Oberzöllner	Oberzöllner	Oberzöllnerin	\N
+chief-temple-officer	Oberster Tempelbeamter	Oberster Tempelbeamter	Oberste Tempelbeamtin	\N
+christian-minister	Christlicher Diener	Christlicher Diener	Christliche Dienerin	\N
+church-elder	Gemeindeältester	Gemeindeältester	Gemeindeälteste	\N
+church-servant	Diener der Gemeinde	Diener der Gemeinde	Dienerin der Gemeinde	\N
+city-governor	Stadtoberster	Stadtoberster	Stadtoberste	\N
+city-steward	Stadtverwalter	Stadtverwalter	Stadtverwalterin	\N
+clan-chief	Sippenoberhaupt	Sippenoberhaupt	Sippenoberhaupt	\N
+commander-of-cherethites-and-pelethites	Befehlshaber der Kreter und Pleter	Befehlshaber der Kreter und Pleter	Befehlshaberin der Kreter und Pleter	\N
+coppersmith	Kupferschmied	Kupferschmied	Kupferschmiedin	\N
+council-member	Ratsmitglied	Ratsmitglied	Ratsmitglied	\N
+court-official	Hofbeamter	Hofbeamter	Hofbeamtin	\N
+craftsman	Handwerker	Handwerker	Handwerkerin	\N
+cupbearer	Mundschenk	Mundschenk	Mundschenkin	\N
+davids-mighty-warrior	Held aus Davids Kriegerschar	Held aus Davids Kriegerschar	Heldin aus Davids Kriegerschar	\N
+deputy-city-governor	Stellvertretender Stadtoberster	Stellvertretender Stadtoberster	Stellvertretende Stadtoberste	\N
+deputy-over-offerings	Stellvertretender Aufseher über die Abgaben	Stellvertretender Aufseher über die Abgaben	Stellvertretende Aufseherin über die Abgaben	\N
+designer-craftsman	Kunsthandwerker	Kunsthandwerker	Kunsthandwerkerin	\N
+district-officer	Bezirksverwalter	Bezirksverwalter	Bezirksverwalterin	\N
+district-ruler	Bezirksvorsteher	Bezirksvorsteher	Bezirksvorsteherin	\N
+edomite-chief	Edomitischer Stammesfürst	Edomitischer Stammesfürst	Edomitische Stammesfürstin	\N
+embroiderer	Sticker	Sticker	Stickerin	\N
+emperor	Kaiser	Kaiser	Kaiserin	\N
+enemy-of-the-jews	Feind der Juden	Feind der Juden	Feindin der Juden	\N
+evangelist	Evangelist	Evangelist	Evangelistin	\N
+expedition-commander	Führer eines Feldzugs	Führer eines Feldzugs	Führerin eines Feldzugs	\N
+false-prophet	Falscher Prophet	falscher Prophet	falsche Prophetin	\N
+farmer	Ackerbauer	Ackerbauer	Ackerbäuerin	\N
+field-workers-overseer	Aufseher der Feldarbeiter	Aufseher der Feldarbeiter	Aufseherin der Feldarbeiter	\N
+fisherman	Fischer	Fischer	Fischerin	\N
+forced-labor-overseer	Aufseher der Fronarbeit	Aufseher der Fronarbeit	Aufseherin der Fronarbeit	\N
+fortress-commander	Festungskommandant	Festungskommandant	Festungskommandantin	\N
+freewill-offerings-supervisor	Aufseher über die freiwilligen Gaben	Aufseher über die freiwilligen Gaben	Aufseherin über die freiwilligen Gaben	\N
+gatekeeper	Torhüter	Torhüter	Torhüterin	\N
+goldsmith	Goldschmied	Goldschmied	Goldschmiedin	\N
+gospel-minister	Diener des Evangeliums	Diener des Evangeliums	Dienerin des Evangeliums	\N
+governor	Statthalter	Statthalter	Statthalterin	\N
+governor-of-egypt	Verwalter Ägyptens	Verwalter Ägyptens	Verwalterin Ägyptens	\N
+harlot	Hure	Hure	Hure	\N
+harpist	Harfenspieler	Harfenspieler	Harfenspielerin	\N
+heavenly-apostle	Apostel	Apostel	Apostel	Himmlische Rolle
+heavenly-commander	Anführer des Heeres des HERRN	Anführer des Heeres des HERRN	Anführer des Heeres des HERRN	Himmlische Rolle
+heavenly-high-priest	Hohepriester	Hohepriester	Hohepriester	Himmlische Rolle
+heavenly-prince	Großer Fürst	Großer Fürst	Großer Fürst	Himmlische Rolle
+heavenly-prince-of-a-kingdom	Fürst eines Reiches	Fürst eines Reiches	Fürst eines Reiches	Himmlische Rolle
+heavenly-ruler-of-kings	Herrscher über die Könige der Erde	Herrscher über die Könige der Erde	Herrscher über die Könige der Erde	Himmlische Rolle
+herdsman	Viehhirte	Viehhirte	Viehhirtin	\N
+high-priest	Hohepriester	Hohepriester	Hohepriesterin	\N
+household-steward	Hausverwalter	Hausverwalter	Hausverwalterin	\N
+hunter	Jäger	Jäger	Jägerin	\N
+jewish-ruler	Jüdischer Oberster	Jüdischer Oberster	Jüdische Oberste	\N
+judge	Richter	Richter	Richterin	\N
+judge-of-the-living-and-the-dead	Richter der Lebenden und der Toten	Richter der Lebenden und der Toten	Richterin der Lebenden und der Toten	\N
+keeper-of-concubines	Aufseher über die Nebenfrauen	Aufseher über die Nebenfrauen	Aufseherin über die Nebenfrauen	\N
+keeper-of-the-ark	Hüter der Lade	Hüter der Lade	Hüterin der Lade	\N
+keeper-of-the-wardrobe	Hüter der Kleider	Hüter der Kleider	Hüterin der Kleider	\N
+keeper-of-the-women	Aufseher über die Frauen	Aufseher über die Frauen	Aufseherin über die Frauen	\N
+king	König	König	Königin	\N
+king-over-the-locusts	König über die Heuschrecken	König über die Heuschrecken	Königin über die Heuschrecken	\N
+labor-force-overseer	Aufseher über die Arbeiterschaft	Aufseher über die Arbeiterschaft	Aufseherin über die Arbeiterschaft	\N
+lawyer	Rechtsgelehrter	Rechtsgelehrter	Rechtsgelehrte	\N
+leader-of-gilead	Oberhaupt von Gilead	Oberhaupt von Gilead	Oberhaupt von Gilead	\N
+leader-of-the-people	Oberster des Volkes	Oberster des Volkes	Oberste des Volkes	\N
+leaders-attendant	Gehilfe eines Anführers	Gehilfe eines Anführers	Gehilfin eines Anführers	\N
+levite-chief	Oberster der Leviten	Oberster der Leviten	Oberste der Leviten	\N
+levite-clan-chief	Oberhaupt einer Levitensippe	Oberhaupt einer Levitensippe	Oberhaupt einer Levitensippe	\N
+levite-minister	Levitischer Diener vor der Bundeslade	Levitischer Diener vor der Bundeslade	Levitische Dienerin vor der Bundeslade	\N
+levite-overseer	Aufseher der Leviten	Aufseher der Leviten	Aufseherin der Leviten	\N
+levite-tabernacle-servant	Levitischer Diener der Stiftshütte	Levitischer Diener der Stiftshütte	Levitische Dienerin der Stiftshütte	\N
+levite-temple-servant	Levitischer Tempeldiener	Levitischer Tempeldiener	Levitische Tempeldienerin	\N
+metalworker	Metallarbeiter	Metallarbeiter	Metallarbeiterin	\N
+midwife	Hebamme	Geburtshelfer	Hebamme	\N
+military-commander	Heerführer	Heerführer	Heerführerin	\N
+military-officer	Militärischer Amtsträger	Militärischer Amtsträger	Militärische Amtsträgerin	\N
+military-tribune	Militärtribun	Militärtribun	Militärtribunin	\N
+ministry-assistant	Gehilfe im Verkündigungsdienst	Gehilfe im Verkündigungsdienst	Gehilfin im Verkündigungsdienst	\N
+musician	Musiker	Musiker	Musikerin	\N
+nurse	Amme	Kinderpfleger	Amme	\N
+offerings-overseer	Aufseher über die Abgaben	Aufseher über die Abgaben	Aufseherin über die Abgaben	\N
+orator-advocate	Gerichtsredner	Gerichtsredner	Gerichtsrednerin	\N
+overseer	Aufseher	Aufseher	Aufseherin	\N
+palace-doorkeeper	Palasttürhüter	Palasttürhüter	Palasttürhüterin	\N
+palace-steward	Verwalter des Königshauses	Verwalter des Königshauses	Verwalterin des Königshauses	\N
+perfumer	Salbenmischer	Salbenmischer	Salbenmischerin	\N
+persian-royal-counselor	Fürst von Persien und Medien	Fürst von Persien und Medien	Fürstin von Persien und Medien	\N
+physician	Arzt	Arzt	Ärztin	\N
+potter	Töpfer	Töpfer	Töpferin	\N
+preacher	Verkündiger	Verkündiger	Verkündigerin	\N
+preacher-of-righteousness	Verkündiger der Gerechtigkeit	Verkündiger der Gerechtigkeit	Verkündigerin der Gerechtigkeit	\N
+president-over-satraps	Verwalter über die Satrapen	Verwalter über die Satrapen	Verwalterin über die Satrapen	\N
+priest	Priester	Priester	Priesterin	\N
+priest-of-baal	Baalspriester	Baalspriester	Baalspriesterin	\N
+priestly-trumpeter	Priesterlicher Trompeter	Priesterlicher Trompeter	Priesterliche Trompeterin	\N
+prince	Fürst	Fürst	Fürstin	\N
+prince-of-judah	Fürst von Juda	Fürst von Juda	Fürstin von Juda	\N
+proconsul	Prokonsul	Prokonsul	Prokonsulin	\N
+prophet	Prophet	Prophet	Prophetin	\N
+prophet-or-teacher	Prophet oder Lehrer	Prophet oder Lehrer	Prophetin oder Lehrerin	\N
+prophetic-company-leader	Leiter einer Prophetenschar	Leiter einer Prophetenschar	Leiterin einer Prophetenschar	\N
+purple-dealer	Purpurhändler	Purpurhändler	Purpurhändlerin	\N
+queen	Königin	Königin	Königin	\N
+queen-consort	Königsgemahlin	Königsgemahlin	Königsgemahlin	\N
+queen-mother	Königinmutter	Königinmutter	Königinmutter	\N
+queens-attendant	Diener der Königin	Diener der Königin	Dienerin der Königin	\N
+regional-officer	Regionaler Amtsträger	Regionaler Amtsträger	Regionale Amtsträgerin	\N
+reigning-queen	Regierende Königin	Regierende Königin	Regierende Königin	\N
+religious-teacher	Lehrer	Lehrer	Lehrerin	\N
+robber	Räuber	Räuber	Räuberin	\N
+royal-agent-for-people-affairs	Königlicher Beauftragter für Volksangelegenheiten	Königlicher Beauftragter für Volksangelegenheiten	Königliche Beauftragte für Volksangelegenheiten	\N
+royal-camel-overseer	Aufseher der königlichen Kamele	Aufseher der königlichen Kamele	Aufseherin der königlichen Kamele	\N
+royal-cattle-overseer	Aufseher der königlichen Rinderherden	Aufseher der königlichen Rinderherden	Aufseherin der königlichen Rinderherden	\N
+royal-chief-official	Oberster königlicher Amtsträger	Oberster königlicher Amtsträger	Oberste königliche Amtsträgerin	\N
+royal-counselor	Königlicher Ratgeber	Königlicher Ratgeber	Königliche Ratgeberin	\N
+royal-donkey-overseer	Aufseher der königlichen Esel	Aufseher der königlichen Esel	Aufseherin der königlichen Esel	\N
+royal-flock-overseer	Aufseher der königlichen Schafherden	Aufseher der königlichen Schafherden	Aufseherin der königlichen Schafherden	\N
+royal-forest-keeper	Hüter des königlichen Forstes	Hüter des königlichen Forstes	Hüterin des königlichen Forstes	\N
+royal-official	Königlicher Amtsträger	Königlicher Amtsträger	Königliche Amtsträgerin	\N
+royal-oil-store-overseer	Aufseher der königlichen Ölvorräte	Aufseher der königlichen Ölvorräte	Aufseherin der königlichen Ölvorräte	\N
+royal-orchard-overseer	Aufseher der königlichen Oliven- und Maulbeerfeigenbäume	Aufseher der königlichen Oliven- und Maulbeerfeigenbäume	Aufseherin der königlichen Oliven- und Maulbeerfeigenbäume	\N
+royal-recorder	Königlicher Geschichtsschreiber	Königlicher Geschichtsschreiber	Königliche Geschichtsschreiberin	\N
+royal-scribe	Königlicher Schreiber	Königlicher Schreiber	Königliche Schreiberin	\N
+royal-servant	Königlicher Diener	Königlicher Diener	Königliche Dienerin	\N
+royal-storehouse-overseer	Aufseher der königlichen Vorratshäuser	Aufseher der königlichen Vorratshäuser	Aufseherin der königlichen Vorratshäuser	\N
+royal-treasurer	Königlicher Schatzmeister	Königlicher Schatzmeister	Königliche Schatzmeisterin	\N
+royal-vineyard-overseer	Aufseher der königlichen Weinberge	Aufseher der königlichen Weinberge	Aufseherin der königlichen Weinberge	\N
+royal-wine-store-overseer	Aufseher der königlichen Weinvorräte	Aufseher der königlichen Weinvorräte	Aufseherin der königlichen Weinvorräte	\N
+ruler	Herrscher	Herrscher	Herrscherin	\N
+ruler-of-house-of-judah	Vorsteher des Hauses Juda	Vorsteher des Hauses Juda	Vorsteherin des Hauses Juda	\N
+sanctuary-attendant	Diener am Heiligtum	Diener am Heiligtum	Dienerin am Heiligtum	\N
+scribe	Schreiber	Schreiber	Schreiberin	\N
+second-priest	Zweiter Priester	Zweiter Priester	Zweite Priesterin	\N
+second-to-the-king	Zweiter nach dem König	Zweiter nach dem König	Zweite nach dem König	\N
+seer	Seher	Seher	Seherin	\N
+sheep-breeder	Schafzüchter	Schafzüchter	Schafzüchterin	\N
+shepherd	Schafhirte	Schafhirte	Schafhirtin	\N
+silversmith	Silberschmied	Silberschmied	Silberschmiedin	\N
+singers-overseer	Aufseher der Sänger	Aufseher der Sänger	Aufseherin der Sänger	\N
+soothsayer	Wahrsager	Wahrsager	Wahrsagerin	\N
+sorcerer	Zauberer	Zauberer	Zauberin	\N
+sycamore-fig-gatherer	Sammler von Maulbeerfeigen	Sammler von Maulbeerfeigen	Sammlerin von Maulbeerfeigen	\N
+synagogue-ruler	Synagogenvorsteher	Synagogenvorsteher	Synagogenvorsteherin	\N
+tabernacle-overseer	Aufseher über die Stiftshütte	Aufseher über die Stiftshütte	Aufseherin über die Stiftshütte	\N
+tanner	Gerber	Gerber	Gerberin	\N
+tax-collector	Zöllner	Zöllner	Zöllnerin	\N
+teacher-of-gentiles	Lehrer der Heiden	Lehrer der Heiden	Lehrerin der Heiden	\N
+teacher-of-israel	Lehrer Israels	Lehrer Israels	Lehrerin Israels	\N
+teacher-of-the-law	Gesetzeslehrer	Gesetzeslehrer	Gesetzeslehrerin	\N
+temple-cake-maker	Bäcker der Tempelfladen	Bäcker der Tempelfladen	Bäckerin der Tempelfladen	\N
+temple-gatekeeper	Tempeltorhüter	Tempeltorhüter	Tempeltorhüterin	\N
+temple-lyre-player	Leierspieler im Tempeldienst	Leierspieler im Tempeldienst	Leierspielerin im Tempeldienst	\N
+temple-musician	Tempelmusiker	Tempelmusiker	Tempelmusikerin	\N
+temple-outer-work-overseer	Aufseher der äußeren Tempelarbeiten	Aufseher der äußeren Tempelarbeiten	Aufseherin der äußeren Tempelarbeiten	\N
+temple-psaltery-player	Psalterspieler im Tempeldienst	Psalterspieler im Tempeldienst	Psalterspielerin im Tempeldienst	\N
+temple-ruler	Tempelvorsteher	Tempelvorsteher	Tempelvorsteherin	\N
+temple-servants-overseer	Aufseher der Tempeldiener	Aufseher der Tempeldiener	Aufseherin der Tempeldiener	\N
+temple-singer	Tempelsänger	Tempelsänger	Tempelsängerin	\N
+temple-singer-cymbalist	Tempelsänger und Zimbelspieler	Tempelsänger und Zimbelspieler	Tempelsängerin und Zimbelspielerin	\N
+temple-threshold-keeper	Hüter der Schwelle	Hüter der Schwelle	Hüterin der Schwelle	\N
+temple-treasury-overseer	Aufseher der Tempelschätze	Aufseher der Tempelschätze	Aufseherin der Tempelschätze	\N
+temple-work-overseer	Aufseher der Tempelausbesserung	Aufseher der Tempelausbesserung	Aufseherin der Tempelausbesserung	\N
+tentmaker	Zeltmacher	Zeltmacher	Zeltmacherin	\N
+tetrarch	Tetrarch	Tetrarch	Tetrarchin	\N
+thanksgiving-prayer-leader	Leiter des Dankgebets	Leiter des Dankgebets	Leiterin des Dankgebets	\N
+thief	Dieb	Dieb	Diebin	\N
+traitor	Verräter	Verräter	Verräterin	\N
+treasurer	Schatzmeister	Schatzmeister	Schatzmeisterin	\N
+tribal-chief	Stammesoberhaupt	Stammesoberhaupt	Stammesoberhaupt	\N
+tribal-host-commander	Führer eines Stammesheeres	Führer eines Stammesheeres	Führerin eines Stammesheeres	\N
+warrior	Krieger	Krieger	Kriegerin	\N
+warrior-chief	Anführer der Krieger	Anführer der Krieger	Anführerin der Krieger	\N
+weaver	Weber	Weber	Weberin	\N
