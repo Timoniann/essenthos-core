@@ -1,0 +1,24 @@
+# product    Essenthos/names/consensus/TISCH.tsv
+# inputs     
+# producer   forge names-from-database --consensus   (Essenthos.Forge 1.0.0+36c17765c907)
+# exported   from release 20261101a (essenthos_core of 2026-11-01, the last database the step load wrote), the rows of source 'Essenthos, read from the verses that name it'
+# kept       as it is from here on: a database built from files does not hold these rows again
+own	record
+40.1:10.10	amos-2
+40.1:10.11	amos-2
+40.10:4.7	judas
+40.26:14.9	judas
+41.3:19.3	judas
+41.14:10.3	judas
+42.22:3.8	judas
+43.1:41.6	simon
+43.1:51.2	jesus
+43.4:1.11	jesus
+43.6:71.6	judas
+43.12:4.5	judas
+43.13:2.16	judas
+43.13:26.23	judas
+45.15:5.18	jesus
+50.4:7.20	jesus
+59.2:1.12	jesus
+60.1:7.24	jesus

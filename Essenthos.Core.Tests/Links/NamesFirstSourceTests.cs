@@ -13,7 +13,7 @@ namespace Essenthos.Core.Tests.Links;
 
 /// <summary>
 /// The names of a translation placed on the original's from files, with no database: whom the original's settled names
-/// say its words name, whom the translation's verses say its words name (the name-consensus rows among its names), and
+/// say its words name, whom the translation's verses say its words name (its consensus file), and
 /// the pair's earlier method files, which keep a name off a word already linked.
 /// </summary>
 public sealed class NamesFirstSourceTests : IDisposable
@@ -64,6 +64,43 @@ public sealed class NamesFirstSourceTests : IDisposable
         Consensus(store, ("1.15:2.1", "yhvh"), ("1.15:2.2", "yhvh"), ("1.15:2.3", "abram"));
 
         Write(store).Should().ContainSingle().Which.From.Should().Be("1.15:2.3", "Lord God is a title rendered word by word");
+    }
+
+    [Fact]
+    public void A_pair_whose_translation_has_no_consensus_file_refuses_to_run()
+    {
+        var store = Store();
+        File.Delete(Path.Combine(store.ResourcesPath, store.Find(NameProducts.Consensus("DRA"))!));
+        store.Save();
+
+        var write = () => PairSources.Write(new ProductTexts(new ProductStore(_root)), MappingMethods.Names, "DRA-BHSA", force: true, _ => { });
+
+        write.Should().Throw<InvalidOperationException>().WithMessage("*names/consensus/DRA is missing*",
+            "without whom the verses say the words name, the pair would lose most of its names and the build would pass");
+    }
+
+    [Fact]
+    public void A_consensus_row_naming_a_folded_record_is_read_as_the_record_it_went_into()
+    {
+        var store = Store();
+        Consensus(store, ("1.12:4.2", "abram-old"));
+        Folds(store, ("abram-old", "abram"));
+
+        Write(store).Should().ContainSingle().Which.Evidence.Should().Be("entity+letters");
+    }
+
+    [Fact]
+    public void Every_translation_names_first_places_has_its_consensus_file_in_the_checkout()
+    {
+        var folder = TestResources.Shipped(Path.Combine(ProductStore.EssenthosFolder, "names", "consensus"));
+        var missing = NamesFirstSource.Placed
+            .Select(pair => MappingProducts.Split(pair).From)
+            .Distinct()
+            .Where(text => !File.Exists(Path.Combine(folder, $"{text}.tsv")))
+            .Order(StringComparer.Ordinal)
+            .ToList();
+
+        missing.Should().BeEmpty("a build from an export of a database built from files would place these texts' names without the consensus");
     }
 
     private ProductStore Store()
@@ -119,9 +156,22 @@ public sealed class NamesFirstSourceTests : IDisposable
 
     private static void Consensus(ProductStore store, params (string Own, string Record)[] names)
     {
-        using var writer = store.Create(NameProducts.Live("DRA"), ProductKind.Machine, LiveName.Schema("DRA"), "test", []);
-        writer.WriteAll(names.Select(name => new LiveName(WordKey.Parse(name.Own, "DRA"), name.Record, "person", "rule-based", 0.99,
-            Annotations.Consensus, null, false)));
+        using var writer = store.Create(NameProducts.Consensus("DRA"), ProductKind.Hand, ConsensusName.Schema("DRA"), "test", []);
+        writer.WriteAll(names.Select(name => new ConsensusName(WordKey.Parse(name.Own, "DRA"), name.Record)));
+    }
+
+    private sealed record FoldRow(string Slug, string Into)
+    {
+        public static readonly ProductSchema<FoldRow> Schema = new ProductSchema<FoldRow>()
+            .Text("slug", r => r.Slug)
+            .Text("folded_into", r => r.Into)
+            .Reads(row => new FoldRow(row.Text(0), row.Text(1)));
+    }
+
+    private static void Folds(ProductStore store, params (string Slug, string Into)[] folds)
+    {
+        using var writer = store.Create(NamesFirstSource.FoldsProduct, ProductKind.Hand, FoldRow.Schema, "test", []);
+        writer.WriteAll(folds.Select(fold => new FoldRow(fold.Slug, fold.Into)));
     }
 
     /// <param name="verses">Each verse's words: the surface and, for the original, its lemma (a proper noun).</param>

@@ -29,6 +29,12 @@ internal static class NameProducts
     /// <summary>A database's names of a text as they stood when exported, by key: what the projection is proved against.</summary>
     public static string Live(string text) => $"names/live/{text}";
 
+    /// <summary>
+    /// Whom a translation's verses say its words name (<see cref="ConsensusName"/>): the name-consensus pass's rows, kept as a
+    /// file because no build writes them back into a database.
+    /// </summary>
+    public static string Consensus(string text) => $"names/consensus/{text}";
+
     public static bool IsReference(string text) => References.Contains(text, StringComparer.Ordinal);
 
     public static string? Number(double? value) => value?.ToString("R", CultureInfo.InvariantCulture);
@@ -89,6 +95,19 @@ internal sealed record SettledName(WordKey Own, string Record, string Role, stri
         .Reads(row => new SettledName(
             WordKey.Parse(row.Text(0), text), row.Text(1), row.Text(2), row.Text(3), NameProducts.Number(row.TextOrNull(4)),
             row.Text(5), row.TextOrNull(6)));
+}
+
+/// <summary>
+/// A word of a translation its verses say names a record, <c>names/consensus/&lt;SLUG&gt;</c> (Hand): the rows the step load's
+/// name-consensus pass wrote (<see cref="Loading.Encyclopedia.NameConsensusPass"/>), read by names-pairs. A database built from files holds
+/// a name under the source that placed it, not under that pass's, so a later export of one cannot write this file again.
+/// </summary>
+internal sealed record ConsensusName(WordKey Own, string Record)
+{
+    public static ProductSchema<ConsensusName> Schema(string text) => new ProductSchema<ConsensusName>()
+        .OwnWordKey("own", r => r.Own)
+        .Text("record", r => r.Record)
+        .Reads(row => new ConsensusName(WordKey.Parse(row.Text(0), text), row.Text(1)));
 }
 
 /// <summary>What an override does to a word of a translation.</summary>

@@ -14,22 +14,34 @@ namespace Essenthos.Core.Names;
 /// <item><c>names/rules</c> seeded from the load's passes where missing.</item>
 /// </list>
 /// Reads the database only. Run again at the cut-over, against live as it stands then.
+/// <para>
+/// With <c>consensus</c> it writes only <c>names/consensus/&lt;SLUG&gt;</c> (<see cref="ConsensusName"/>), from a database the
+/// name-consensus pass wrote, where missing or with <c>force</c>; a row whose word id now carries another word is left out and
+/// counted.
+/// </para>
 /// </summary>
 internal static partial class NamesFromDatabase
 {
     private const string Named =
         """
-        SELECT a.word_id, t.slug, e.slug, e.kind, a.method, a.confidence, a.source, a.note
+        SELECT a.word_id, t.slug, e.slug, e.kind, a.method, a.confidence, a.source, a.note, w.text
         FROM word_entity a
         JOIN entity e ON e.id = a.entity_id
         JOIN word w ON w.id = a.word_id
         JOIN text t ON t.id = w.text_id
         """;
 
-    private sealed record Row(long Word, string Record, string Kind, string Method, double? Confidence, string Source, string? Note);
+    private sealed record Row(long Word, string Record, string Kind, string Method, double? Confidence, string Source, string? Note, string Surface);
 
     /// <param name="Gone">Names on a word the text's words product no longer holds, by text.</param>
-    public sealed record Outcome(int Texts, long Live, long Settled, IReadOnlyDictionary<string, int> Gone, IReadOnlyList<string> Skipped, TimeSpan Elapsed);
+    /// <param name="Consensus">The name-consensus rows written as names/consensus.</param>
+    /// <param name="Moved">Name-consensus rows whose word id the words product gives another surface, by text.</param>
+    public sealed record Outcome(int Texts, long Live, long Settled, IReadOnlyDictionary<string, int> Gone, IReadOnlyList<string> Skipped, TimeSpan Elapsed)
+    {
+        public long Consensus { get; init; }
+
+        public IReadOnlyDictionary<string, int> Moved { get; init; } = new Dictionary<string, int>();
+    }
 
     [System.Text.RegularExpressions.GeneratedRegex(@"through (?<text>[A-Za-z0-9]+) word (?<id>\d+)")]
     private static partial System.Text.RegularExpressions.Regex CarriedFrom();
@@ -76,7 +88,8 @@ internal static partial class NamesFromDatabase
             return cited.TryGetValue((text, id), out var key) ? $"through {key}" : $"through {text}, a word its words product no longer holds";
         });
 
-    public static async Task<Outcome> Run(string connectionString, ProductStore store, string source, string frozen, bool force, CancellationToken cancellationToken)
+    public static async Task<Outcome> Run(string connectionString, ProductStore store, string source, string frozen, bool force, CancellationToken cancellationToken,
+        bool consensus = false)
     {
         var clock = System.Diagnostics.Stopwatch.StartNew();
         var byText = new Dictionary<string, List<Row>>(StringComparer.Ordinal);
@@ -95,8 +108,14 @@ internal static partial class NamesFromDatabase
 
                 rows.Add(new Row(
                     reader.GetInt64(0), reader.GetString(2), reader.GetString(3), reader.GetString(4),
-                    reader.IsDBNull(5) ? null : reader.GetDouble(5), reader.GetString(6), reader.IsDBNull(7) ? null : reader.GetString(7)));
+                    reader.IsDBNull(5) ? null : reader.GetDouble(5), reader.GetString(6), reader.IsDBNull(7) ? null : reader.GetString(7),
+                    reader.GetString(8)));
             }
+        }
+
+        if (consensus)
+        {
+            return Consensus(store, byText, source, force, clock);
         }
 
         var gone = new System.Collections.Concurrent.ConcurrentDictionary<string, int>(StringComparer.Ordinal);
@@ -195,5 +214,79 @@ internal static partial class NamesFromDatabase
 
         store.Save();
         return new Outcome(byText.Count, live, settled, gone, [.. skipped.Order(StringComparer.Ordinal)], clock.Elapsed);
+    }
+
+    private static Outcome Consensus(ProductStore store, Dictionary<string, List<Row>> byText, string source, bool force, System.Diagnostics.Stopwatch clock)
+    {
+        var gone = new System.Collections.Concurrent.ConcurrentDictionary<string, int>(StringComparer.Ordinal);
+        var moved = new System.Collections.Concurrent.ConcurrentDictionary<string, int>(StringComparer.Ordinal);
+        var skipped = new System.Collections.Concurrent.ConcurrentBag<string>();
+        long written = 0;
+        var texts = byText
+            .Select(entry => (Text: entry.Key, Rows: entry.Value.Where(r => r.Source == Corpus.Annotations.Consensus).ToList()))
+            .Where(entry => entry.Rows.Count > 0 && (force || !store.Exists(NameProducts.Consensus(entry.Text))))
+            .ToList();
+        Parallel.ForEach(texts, new ParallelOptions { MaxDegreeOfParallelism = 8 }, entry =>
+        {
+            var (text, rows) = entry;
+            if (!store.Exists(TextWord.ProductOf(text)))
+            {
+                skipped.Add(text);
+                return;
+            }
+
+            var wanted = rows.Select(r => r.Word).ToHashSet();
+            var words = new Dictionary<long, (WordKey Key, string Surface)>(wanted.Count);
+            using (var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text)))
+            {
+                foreach (var word in reader.Rows())
+                {
+                    if (word.Id is { } id && wanted.Contains(id))
+                    {
+                        words[id] = (word.Key, word.Surface);
+                    }
+                }
+            }
+
+            var names = new List<ConsensusName>(rows.Count);
+            foreach (var row in rows)
+            {
+                if (!words.TryGetValue(row.Word, out var word))
+                {
+                    gone.AddOrUpdate(text, 1, (_, n) => n + 1);
+                }
+                else if (word.Surface != row.Surface)
+                {
+                    moved.AddOrUpdate(text, 1, (_, n) => n + 1);
+                }
+                else
+                {
+                    names.Add(new ConsensusName(word.Key, row.Record));
+                }
+            }
+
+            names.Sort((a, b) => a.Own.CompareTo(b.Own) is var order && order != 0 ? order : string.CompareOrdinal(a.Record, b.Record));
+            using var writer = store.Create(NameProducts.Consensus(text), ProductKind.Hand, ConsensusName.Schema(text),
+                ProductHeader.DescribeProducer("forge names-from-database --consensus"), [],
+                header =>
+                {
+                    header.Notes.Add(new("exported", $"from {source}, the rows of source '{Corpus.Annotations.Consensus}'"));
+                    header.Notes.Add(new("kept", "as it is from here on: a database built from files does not hold these rows again"));
+                });
+            foreach (var name in names.DistinctBy(n => (n.Own, n.Record)))
+            {
+                writer.Write(name);
+            }
+
+            writer.Complete();
+            Interlocked.Add(ref written, writer.Rows);
+        });
+
+        store.Save();
+        return new Outcome(texts.Count, 0, 0, gone, [.. skipped.Order(StringComparer.Ordinal)], clock.Elapsed)
+        {
+            Consensus = written,
+            Moved = moved,
+        };
     }
 }

@@ -18,10 +18,12 @@ namespace Essenthos.Core.Mapping;
 ///
 /// <para>
 /// <strong>Whom the translation's verses say a word names</strong> is the name-consensus pass's reading of the text
-/// (<see cref="Encyclopedia.NameConsensusPass"/>). It is read from the text's names as the database held them
-/// (<c>names/live/&lt;SLUG&gt;</c>, the rows of that pass's source): the pass reads every text of a language at once and
-/// the names every other method gave the text, which the names projection makes from the finals this file goes into, so
-/// it cannot be made here without the graph reading itself. A text with no such file is placed on the other two signals.
+/// (<see cref="Encyclopedia.NameConsensusPass"/>). It is read from <c>names/consensus/&lt;SLUG&gt;</c>, the rows of that
+/// pass's source as the step load's database held them (<see cref="ConsensusName"/>): the pass reads every text of a language
+/// at once and the names every other method gave the text, which the names projection makes from the finals this file goes
+/// into, so it cannot be made here without the graph reading itself. A database built from files holds each name under the
+/// source that placed it, so the file cannot be exported from one again, and a pair this source places refuses to run
+/// without it. A record folded into another since is read as the one it was folded into.
 /// </para>
 ///
 /// <para>
@@ -63,6 +65,8 @@ internal sealed class NamesFirstSource : IPairSource
 
     public const string RecordsProduct = "records/records";
 
+    public const string FoldsProduct = "records/folds";
+
     private static readonly IReadOnlySet<string> Kinds = new HashSet<string>(
         [EnumSpelling.Of(EntityKind.Person), EnumSpelling.Of(EntityKind.Place), EnumSpelling.Of(EntityKind.People)], StringComparer.Ordinal);
 
@@ -81,7 +85,7 @@ internal sealed class NamesFirstSource : IPairSource
         var (fromText, toText) = MappingProducts.Split(pair);
         string[] products =
         [
-            NameProducts.Settled(toText), NameProducts.Live(fromText), RecordsProduct,
+            NameProducts.Settled(toText), NameProducts.Consensus(fromText), RecordsProduct, FoldsProduct,
             .. Before.Select(method => MappingProducts.Of(pair, method)),
         ];
         return products.Select(store.Find).OfType<string>();
@@ -90,9 +94,17 @@ internal sealed class NamesFirstSource : IPairSource
     public IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log)
     {
         var (fromText, toText) = MappingProducts.Split(pair);
+        var store = texts.Store;
+        if (!store.Exists(NameProducts.Consensus(fromText)))
+        {
+            throw new InvalidOperationException(
+                $"names-pairs {pair}: {NameProducts.Consensus(fromText)} is missing, and without it the pair would lose most of its " +
+                "names with no error. It is tracked in git under Resources/Essenthos/names/consensus/: build from a checkout's " +
+                "Resources, or copy that folder into the scratch Resources; a database built from files cannot write it again.");
+        }
+
         var from = texts[fromText];
         var to = texts[toText];
-        var store = texts.Store;
         var policy = NamePolicy.Default.For(from.Language);
         var lettered = Versification(store, fromText) == Versification(store, toText);
         var source = NamedWords.Read(from, lettered);
@@ -110,8 +122,7 @@ internal sealed class NamesFirstSource : IPairSource
                 string.Join(' ', group.Targets.Order().Select(id => to.Key(id).Own.ToString())), "renders", Method,
                 NamesFirstPass.Confidence, NamesFirstPass.Source, group.Evidence, null, null))
             .ToList();
-        log($"{verses.Count} verses where the original names someone, {named.Count} words its verses say name someone " +
-            $"({(store.Exists(NameProducts.Live(fromText)) ? "the text's names" : "no names file")}), " +
+        log($"{verses.Count} verses where the original names someone, {named.Count} words its verses say name someone, " +
             $"{placings.Count(policy.Places)} pairs placed, {rows.Count} source words no link of the pair joins yet");
         return rows;
     }
@@ -293,18 +304,18 @@ internal sealed class NamesFirstSource : IPairSource
             : null;
     }
 
-    /// <summary>The translation's words its verses say name someone: the rows of the name-consensus pass among its names.</summary>
+    /// <summary>The translation's words its verses say name someone: the name-consensus pass's rows, folded records read as the one they went into.</summary>
     internal static Dictionary<long, IReadOnlySet<int>> Named(ProductStore store, ProductText from, Records records)
     {
         var byWord = new Dictionary<long, List<int>>();
-        if (store.Exists(NameProducts.Live(from.Slug)))
+        if (store.Exists(NameProducts.Consensus(from.Slug)))
         {
             var ids = PairLinkFiles.Ids(from);
-            using var reader = store.Open(NameProducts.Live(from.Slug), LiveName.Schema(from.Slug));
+            var folds = Folds(store);
+            using var reader = store.Open(NameProducts.Consensus(from.Slug), ConsensusName.Schema(from.Slug));
             foreach (var row in reader.Rows())
             {
-                if (row.Source == Annotations.Consensus && records.Ids.TryGetValue(row.Record, out var record)
-                    && ids.TryGetValue(row.Own.Own, out var word))
+                if (records.Ids.TryGetValue(Folded(row.Record, folds), out var record) && ids.TryGetValue(row.Own.Own, out var word))
                 {
                     if (!byWord.TryGetValue(word, out var named))
                     {
@@ -317,6 +328,31 @@ internal sealed class NamesFirstSource : IPairSource
         }
 
         return byWord.ToDictionary(entry => entry.Key, entry => records.Families.Of(entry.Value));
+    }
+
+    private static Dictionary<string, string> Folds(ProductStore store)
+    {
+        var folds = new Dictionary<string, string>(StringComparer.Ordinal);
+        if (store.Exists(FoldsProduct))
+        {
+            using var reader = store.Open(FoldsProduct);
+            foreach (var row in reader.Rows())
+            {
+                folds[row[0]!] = row[1]!;
+            }
+        }
+
+        return folds;
+    }
+
+    private static string Folded(string slug, IReadOnlyDictionary<string, string> folds)
+    {
+        for (var hops = 0; hops < 16 && folds.TryGetValue(slug, out var into); hops++)
+        {
+            slug = into;
+        }
+
+        return slug;
     }
 
     /// <summary>The words of either text some link of the pair's earlier method files names.</summary>

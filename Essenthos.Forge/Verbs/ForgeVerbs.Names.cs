@@ -10,18 +10,27 @@ internal static partial class ForgeVerbs
 {
     /// <summary>
     /// Writes a database's names as <c>names/live/&lt;SLUG&gt;</c>, and the reference texts' settled names and the rules where
-    /// missing: <c>names-from-database [--into &lt;Resources&gt;] [--frozen 2026-11] [--force]</c>.
+    /// missing; with <c>--consensus</c> only the name-consensus rows, as <c>names/consensus/&lt;SLUG&gt;</c> where missing:
+    /// <c>names-from-database [--into &lt;Resources&gt;] [--frozen 2026-11] [--consensus] [--force]</c>.
     /// </summary>
     private static async Task<int> NamesFromDatabaseVerb(ForgeRun forge, string[] args)
     {
         var store = new ProductStore(Option(args, "--into") ?? forge.Resources);
         var builder = new NpgsqlConnectionStringBuilder(forge.DatabaseConnection);
+        var consensus = args.Contains("--consensus");
         var outcome = await NamesFromDatabase.Run(forge.DatabaseConnection, store, $"{builder.Host}:{builder.Port}/{builder.Database}",
-            Option(args, "--frozen") ?? DateTime.UtcNow.ToString("yyyy-MM"), args.Contains("--force"), CancellationToken.None);
-        Console.WriteLine($"{outcome.Live} names of {outcome.Texts} texts written as names/live, {outcome.Settled} as settled names, in {outcome.Elapsed}");
+            Option(args, "--frozen") ?? DateTime.UtcNow.ToString("yyyy-MM"), args.Contains("--force"), CancellationToken.None, consensus);
+        Console.WriteLine(consensus
+            ? $"{outcome.Consensus} name-consensus rows of {outcome.Texts} texts written as names/consensus, in {outcome.Elapsed}"
+            : $"{outcome.Live} names of {outcome.Texts} texts written as names/live, {outcome.Settled} as settled names, in {outcome.Elapsed}");
         foreach (var (text, rows) in outcome.Gone.OrderBy(g => g.Key, StringComparer.Ordinal))
         {
             Console.WriteLine($"  {text}: {rows} names on words its words product no longer holds");
+        }
+
+        foreach (var (text, rows) in outcome.Moved.OrderBy(g => g.Key, StringComparer.Ordinal))
+        {
+            Console.WriteLine($"  {text}: {rows} name-consensus rows on a word id its words product gives another word, left out");
         }
 
         if (outcome.Skipped.Count > 0)
