@@ -91,21 +91,6 @@ public sealed class BibleDataLoadTests : IClassFixture<BibleDataLoadTests.Encycl
         (await _db.EntityRelationships.AnyAsync()).Should().BeFalse();
     }
 
-    /// <summary>
-    /// Read from the dataset's own file to tell a genealogy from a people's verse, six Levites of
-    /// Hezekiah's and Nehemiah's day are not Levi's sons beside Gershon, Kohath and Merari: the
-    /// dataset holds every other Levite of those chapters as his descendant.
-    /// </summary>
-    [Fact]
-    public void LevisSonsAreGershonKohathAndMerari()
-    {
-        var folder = Path.GetDirectoryName(TestResources.Path(BibleDataLoader.Folder, DatasetKinship.FileName))!;
-
-        var children = DatasetKinship.Read(folder).Descents.Where(d => d.Parent == "Levi_1").Select(d => d.Child);
-
-        children.Should().BeEquivalentTo(["Gershon_1", "Kohath_1", "Merari_1"]);
-    }
-
     [Fact]
     public async Task APlaceIsNamedInTheLanguagesTheTextUses()
     {

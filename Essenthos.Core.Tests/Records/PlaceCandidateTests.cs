@@ -132,37 +132,6 @@ public sealed class PlaceCandidateTests : IDisposable
     }
 
     /// <summary>
-    /// The load writes every record's answers and its point, and a second load over the same files
-    /// writes nothing; changed files replace what the first wrote.
-    /// </summary>
-    [Fact]
-    public async Task TheLoadHoldsEveryAnswerAndASecondLoadWritesNothing()
-    {
-        var sinai = Entity("a-sinai", "Mount Sinai");
-        var bether = Entity("a-bether", "Bether");
-        await _db.SaveChangesAsync();
-        var loader = new OpenBibleLocationLoader(_db, NullLogger<OpenBibleLocationLoader>.Instance);
-
-        var first = await loader.Load(_folder);
-        var second = await loader.Load(_folder);
-
-        first.AlreadyLoaded.Should().BeFalse();
-        (first.Located, first.Candidates, first.NoSite).Should().Be((1, 6, 1));
-        second.AlreadyLoaded.Should().BeTrue();
-        (await _db.PlaceLocations.Select(l => l.EntityId).ToListAsync()).Should().Equal(sinai.Id);
-        (await _db.PlaceCandidates.CountAsync(c => c.EntityId == bether.Id)).Should().Be(2);
-
-        Write(Place("a-sinai", Site("m-karkom", "Har Karkom", 600, "34.75,30.283333", "point", "mountain")));
-        var third = await loader.Load(_folder);
-
-        third.AlreadyLoaded.Should().BeFalse();
-        _db.ChangeTracker.Clear();
-        var location = await _db.PlaceLocations.SingleAsync();
-        (location.EntityId, location.ModernId, location.Score).Should().Be((sinai.Id, "m-karkom", 600));
-        (await _db.PlaceCandidates.Select(c => c.Site).ToListAsync()).Should().Equal("Har Karkom");
-    }
-
-    /// <summary>
     /// A place's page lists every answer, the likeliest marked, with the ancient place an answer
     /// takes it to be named and linked; the map carries the other sites only when asked, and a
     /// place whose likeliest answer is no site comes with them, named, so its sites can be.
@@ -176,7 +145,7 @@ public sealed class PlaceCandidateTests : IDisposable
         Entity("a-sinai", "Mount Sinai").Slug = "mount-sinai";
         Entity("a-bether", "Bether");
         await _db.SaveChangesAsync();
-        await new OpenBibleLocationLoader(_db, NullLogger<OpenBibleLocationLoader>.Instance).Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
 
         var answers = await EncyclopediaEndpoints.Candidates(_db, babylon.Id, null, CancellationToken.None);
 

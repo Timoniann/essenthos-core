@@ -27,18 +27,16 @@ namespace Essenthos.Core.Tests.Records;
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OwnRelationshipTests : IDisposable
 {
-    private const string Model = EntityDescriptorLoader.SourcePrefix + " a test, asked 2026-09-09";
+    private const string Model = Sources.DescriptorReadingPrefix + " a test, asked 2026-09-09";
 
-    private const string Owner = EntityDescriptorLoader.SourcePrefix + " the project owner, decided 2026-09-12";
+    private const string Owner = Sources.DescriptorReadingPrefix + " the project owner, decided 2026-09-12";
 
     private readonly AppDbContext _db;
-    private readonly OwnRelationshipLoader _loader;
 
     public OwnRelationshipTests(WitnessDatabase database)
     {
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
-        _loader = new OwnRelationshipLoader(_db, NullLogger<OwnRelationshipLoader>.Instance);
     }
 
     public void Dispose()
@@ -155,7 +153,7 @@ public sealed class OwnRelationshipTests : IDisposable
         Clause(one, two, DescriptorRelations.SonOf, 0.9);
         Clause(one, two, DescriptorRelations.DescendantOf, 0.9);
 
-        var outcome = await _loader.Load([], default);
+        var outcome = await Load([]);
         outcome.Written.Should().Be(0);
         outcome.Disputed.Should().Be(1);
     }
@@ -197,8 +195,7 @@ public sealed class OwnRelationshipTests : IDisposable
     }
 
     /// <summary>
-    /// A reading the list names is not written, and what else the record says is. Every clause is
-    /// read on every load, and the reading stays unwritten each time.
+    /// A reading the list names is not written, and what else the record says is.
     /// </summary>
     [Fact]
     public async Task AReadingTheListNamesIsHeldBack()
@@ -217,16 +214,12 @@ public sealed class OwnRelationshipTests : IDisposable
             new("machir", DescriptorRelations.WifeOf, "maacah-5", "1CH 7:15", null),
         ];
 
-        var outcome = await _loader.Load(held, default);
+        var outcome = await Load(held);
 
         outcome.Held.Should().Be(2);
         outcome.Written.Should().Be(1);
         (await _db.EntityRelationships.SingleAsync()).Type.Should().Be(DescriptorRelations.FatherOf);
 
-        var again = await _loader.Load(held, default);
-        again.AlreadyLoaded.Should().BeTrue();
-        again.Held.Should().Be(2, "both clauses are read again and held again");
-        (await _db.EntityRelationships.CountAsync()).Should().Be(1);
     }
 
     /// <summary>
@@ -242,8 +235,8 @@ public sealed class OwnRelationshipTests : IDisposable
         Clause(keturah, abram, DescriptorRelations.WifeOf, 0.85);
         Clause(keturah, abram, DescriptorRelations.ConcubineOf, 0.85);
 
-        var outcome = await _loader.Load(
-            [new WithheldClause("keturah", DescriptorRelations.ConcubineOf, "abram", "1CH 1:32", null)], default);
+        var outcome = await Load(
+            [new WithheldClause("keturah", DescriptorRelations.ConcubineOf, "abram", "1CH 1:32", null)]);
 
         outcome.Disputed.Should().Be(0);
         (await Relations(keturah, abram)).Should().Equal(DescriptorRelations.WifeOf);
@@ -269,98 +262,6 @@ public sealed class OwnRelationshipTests : IDisposable
             clause.Entity.Length > 0 && clause.Target.Length > 0 && vocabulary.Contains(clause.Relation)
             && !string.IsNullOrWhiteSpace(clause.Reference) && !string.IsNullOrWhiteSpace(clause.Why));
         list.Clauses.Select(clause => (clause.Entity, clause.Relation, clause.Target)).Should().OnlyHaveUniqueItems();
-    }
-
-    /// <summary>
-    /// The startup pipeline runs on every boot, and the descriptor passes arrive in batches over
-    /// days: a second run must write nothing for an entity already related and must still reach one
-    /// that was described afterwards.
-    /// </summary>
-    [Fact]
-    public async Task ASecondPassWritesNothingForAnEntityAlreadyRelated()
-    {
-        var lot = Person("lot");
-        var haran = Person("haran");
-        Clause(lot, haran, DescriptorRelations.SonOf, 0.95);
-
-        (await Load()).Written.Should().Be(1);
-
-        var again = await _loader.Load([], default);
-        again.AlreadyLoaded.Should().BeTrue();
-        (await _db.EntityRelationships.CountAsync()).Should().Be(1);
-
-        var abraham = Person("abraham");
-        Clause(abraham, haran, DescriptorRelations.BrotherOf, 0.9);
-        (await Load()).Written.Should().Be(1);
-    }
-
-    /// <summary>
-    /// The Amorite was read as Canaan's son, and the record was folded into the people, which takes
-    /// the clause away: the relationship read off it goes with it, and one the clause still states
-    /// stays the row it was.
-    /// </summary>
-    [Fact]
-    public async Task ARelationshipNoClauseStatesAnyMoreIsWithdrawn()
-    {
-        var amorites = Person("amorites");
-        var canaan = Person("canaan");
-        var gilead = Person("gilead");
-        Clause(amorites, canaan, DescriptorRelations.SonOf, 0.9);
-        Clause(amorites, gilead, DescriptorRelations.LivedIn, 0.65);
-        await Load();
-        var kept = await _db.EntityRelationships.AsNoTracking().SingleAsync(r => r.ToEntityId == gilead.Id);
-        await _db.EntityDescriptors.Where(d => d.TargetEntityId == canaan.Id).ExecuteDeleteAsync();
-
-        var outcome = await Load();
-
-        outcome.Withdrawn.Should().Be(1);
-        outcome.Written.Should().Be(0);
-        (await _db.EntityRelationships.AsNoTracking().SingleAsync()).Id.Should().Be(kept.Id);
-    }
-
-    /// <summary>A relationship standing twice is said once, and the first row is the one that stays.</summary>
-    [Fact]
-    public async Task ARelationshipWrittenTwiceIsSaidOnce()
-    {
-        var deborah = Person("deborah");
-        var rebekah = Person("rebekah");
-        Clause(deborah, rebekah, DescriptorRelations.ServantOf, 0.9);
-        await Load();
-        var first = await _db.EntityRelationships.AsNoTracking().SingleAsync();
-        _db.EntityRelationships.Add(new EntityRelationship
-        {
-            FromEntityId = first.FromEntityId, ToEntityId = first.ToEntityId, Type = first.Type,
-            Category = first.Category, CanonicalBook = first.CanonicalBook,
-            CanonicalChapter = first.CanonicalChapter, CanonicalVerse = first.CanonicalVerse,
-            Method = first.Method, Confidence = first.Confidence, Source = first.Source,
-        });
-        await _db.SaveChangesAsync();
-
-        (await Load()).Withdrawn.Should().Be(1);
-
-        (await _db.EntityRelationships.AsNoTracking().SingleAsync()).Id.Should().Be(first.Id);
-    }
-
-    /// <summary>
-    /// A clause moved to the verse that says it moves the relationship read off it: Seraiah's father
-    /// is cited where the clause cites him, not where the row was first read.
-    /// </summary>
-    [Fact]
-    public async Task ARelationshipFollowsItsClauseToAnotherVerse()
-    {
-        var azariah = Person("azariah");
-        var seraiah = Person("seraiah");
-        Clause(azariah, seraiah, DescriptorRelations.FatherOf, 0.9);
-        await Load();
-        await _db.EntityDescriptors.ExecuteUpdateAsync(d => d.SetProperty(x => x.CanonicalBook, 15)
-            .SetProperty(x => x.CanonicalChapter, 7).SetProperty(x => x.CanonicalVerse, 1));
-
-        var outcome = await Load();
-
-        (outcome.Written, outcome.Withdrawn).Should().Be((1, 1));
-        var row = await _db.EntityRelationships.AsNoTracking().SingleAsync();
-        (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse).Should().Be((15, 7, 1));
-        (await _loader.Load([], default)).AlreadyLoaded.Should().BeTrue();
     }
 
     /// <summary>
@@ -390,11 +291,34 @@ public sealed class OwnRelationshipTests : IDisposable
         _db.ChangeTracker.Clear();
     }
 
-    private async Task<OwnRelationshipOutcome> Load()
+    private sealed record Outcome(int Written, int Withheld, int Disputed, int Held);
+
+    /// <summary>
+    /// What records-derive does with <c>records/facts/clauses</c>, over the clauses this database holds: the ones the list
+    /// does not hold back settled (<see cref="OwnRelationshipLoader.Settle"/>), and the rows the pick keeps written in
+    /// place of every relationship read off a clause.
+    /// </summary>
+    private async Task<Outcome> Load(IReadOnlyList<WithheldClause>? heldByName = null)
     {
-        var outcome = await _loader.Load([], default);
-        outcome.AlreadyLoaded.Should().BeFalse();
-        return outcome;
+        var named = (heldByName ?? []).Select(c => (c.Entity, c.Relation, c.Target)).ToHashSet();
+        var read = await _db.EntityDescriptors
+            .Select(d => new
+            {
+                d.EntityId, d.TargetEntityId, d.Relation, d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse,
+                d.Method, d.Confidence, d.Source, d.Note, d.Citation, Subject = d.Entity!.Slug, Target = d.Target!.Slug,
+            })
+            .ToListAsync();
+        var clauses = read
+            .Where(d => !named.Contains((d.Subject, d.Relation, d.Target)))
+            .Select(d => new OwnRelationshipLoader.Clause(
+                d.EntityId, d.TargetEntityId, d.Relation, d.CanonicalBook, d.CanonicalChapter,
+                d.CanonicalVerse, d.Method, d.Confidence, d.Source, d.Note) { Citation = d.Citation })
+            .ToList();
+        var (rows, withheld, disputed) = OwnRelationshipLoader.Settle(clauses);
+        await _db.EntityRelationships.Where(r => r.Source.StartsWith(Sources.DescriptorReadingPrefix)).ExecuteDeleteAsync();
+        _db.EntityRelationships.AddRange(rows);
+        await _db.SaveChangesAsync();
+        return new Outcome(rows.Count, withheld, disputed, read.Count - clauses.Count);
     }
 
     private async Task<List<string>> Relations(Entity from, Entity to) =>

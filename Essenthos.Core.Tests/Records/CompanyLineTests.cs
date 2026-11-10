@@ -144,37 +144,6 @@ public sealed class CompanyLineTests : IDisposable
         (await Line("reuben", "eng")).Should().Be("brother of five brothers");
 
     /// <summary>
-    /// Jesus is the teacher of the Twelve and the Seventy and no longer of four men; the high priest of
-    /// Hebrews is one of his titles, not an office of his life, and is not in his line; and each of the
-    /// Twelve, Matthias with them, is one of them.
-    /// </summary>
-    [Fact]
-    public void TheShippedClausesSayJesusTaughtTheCompaniesAndHeldNoPriesthood()
-    {
-        var records = DescriptorFiles.Read(TestResources.Shipped(Path.Combine("Essenthos", "descriptors"))).Records
-            .ToDictionary(r => r.Entity, StringComparer.Ordinal);
-        var jesus = records["jesus"].Claims!;
-
-        jesus.Should().NotContain(c => c.Relation == DescriptorRelations.HighPriestOf || c.Relation == DescriptorRelations.PriestOf);
-        jesus.Where(c => c.Relation == DescriptorRelations.TeacherOf).Select(c => (c.Target, c.Reference)).Should()
-            .Equal(("the-twelve", "MAT 10:1"), ("the-seventy", "LUK 10:1"));
-
-        string[] twelve =
-        [
-            "simon", "andrew", "james", "john-2", "philip", "bartholomew", "thomas", "matthew", "james-2", "thaddaeus",
-            "simon-2", "judas", "judas-of-james", "matthias",
-        ];
-        foreach (var member in twelve)
-        {
-            records[member].Claims.Should().ContainSingle(c => c.Relation == DescriptorRelations.MemberOf, member)
-                .Which.Target.Should().Be("the-twelve");
-        }
-
-        records.Values.SelectMany(r => (r.Claims ?? []).Where(c => c.Relation == DescriptorRelations.MemberOf).Select(_ => r.Entity))
-            .Should().BeEquivalentTo(twelve);
-    }
-
-    /// <summary>
     /// The companies are records of their own, named in every language their pages are read in, and
     /// their number names them only where it stands for them.
     /// </summary>
@@ -196,19 +165,6 @@ public sealed class CompanyLineTests : IDisposable
         record.Names.Should().ContainKeys(["eng", "ukr", "deu", "rus", "spa"]);
         record.Forms!["ukr"].Should().ContainKey(GrammaticalCases.Genitive);
         record.Occurrences!.Any(rule => rule.Strong == strong && rule.Admits(book, chapter, verse, 1)).Should().Be(named);
-    }
-
-    /// <summary>The Lord who sends the seventy and whom they answer is Jesus, as Luke's narrative has him.</summary>
-    [Fact]
-    public void TheLordWhoSentTheSeventyIsJesus()
-    {
-        var readings = PassageReadingFiles.Read(TestResources.Shipped(PassageReadingFiles.DefaultFolder))
-            .Where(r => r.Reference is "LUK 10:1" or "LUK 10:17")
-            .ToList();
-
-        readings.Should().HaveCount(2).And.OnlyContain(r => r.Record == "jesus" && r.Text == "NESTLE1904"
-                                                            && r.Strong == "G2962" && r.Write && r.DecidedBy != null);
-        readings.Select(r => (r.Position, r.Surface)).Should().Equal((6, "Κύριος"), (8, "Κύριε"));
     }
 
     private async Task<string> Line(string slug, string language) =>

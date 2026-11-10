@@ -119,8 +119,7 @@ public sealed class LocationSupplementTests : IDisposable
         Place("mountnebo","aefaa2d");
         Place("wilderness-of-judah",null);
         await _db.SaveChangesAsync();
-        var loader = new OpenBibleLocationLoader(_db,NullLogger<OpenBibleLocationLoader>.Instance);
-        await loader.Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
         var nebo = await _db.Entities.Include(e => e.Location).SingleAsync(e => e.Slug=="mountnebo");
         nebo.Location!.CoordinatesDataset.Should().Be("pcgn");
         nebo.Location.Source.Should().StartWith("OpenBible.info").And.Contain("PCGN");
@@ -131,9 +130,6 @@ public sealed class LocationSupplementTests : IDisposable
         region.Location!.Kind.Should().Be("representative-point");
         region.Location.Score.Should().BeNull("Wikidata supplies no scholarly agreement score");
         region.Location.CoordinatesDataset.Should().Be("wikidata");
-        var before = await Fingerprint();
-        (await loader.Load(_folder)).AlreadyLoaded.Should().BeTrue();
-        (await Fingerprint()).Should().Equal(before);
     }
 
     /// <summary>
@@ -146,8 +142,7 @@ public sealed class LocationSupplementTests : IDisposable
         Place("aphek-2","a7b2e63");
         Place("antipatris",null);
         await _db.SaveChangesAsync();
-        var loader = new OpenBibleLocationLoader(_db,NullLogger<OpenBibleLocationLoader>.Instance);
-        await loader.Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
 
         var places = await _db.Entities.Include(e => e.Location).Where(e => e.Slug=="aphek-2" || e.Slug=="antipatris")
             .ToDictionaryAsync(e => e.Slug);
@@ -161,21 +156,10 @@ public sealed class LocationSupplementTests : IDisposable
             .Should().Equal(answers.Where(c => c.EntityId == places["aphek-2"].Id).Select(c => c.ModernId));
         places["antipatris"].OpenBibleId.Should().BeNull("the town takes the site's point, not its gazetteer entry");
 
-        var before = await Fingerprint();
-        (await loader.Load(_folder)).AlreadyLoaded.Should().BeTrue();
-        (await Fingerprint()).Should().Equal(before);
     }
 
     private void Place(string slug,string? gazetteer) => _db.Entities.Add(new Entity
     {
         Slug=slug,Name=slug,Kind=EntityKind.Place,Source="test",SourceId="test:"+slug,OpenBibleId=gazetteer,
     });
-
-    private async Task<string[]> Fingerprint() =>
-    [
-        .. await _db.PlaceLocations.AsNoTracking().OrderBy(l=>l.EntityId)
-            .Select(l=>l.EntityId+"|"+l.ModernId+"|"+l.Longitude+"|"+l.Latitude+"|"+l.Score+"|"+l.CoordinatesSource+"|"+l.CoordinatesDataset+"|"+l.Source).ToArrayAsync(),
-        .. await _db.PlaceCandidates.AsNoTracking().OrderBy(l=>l.EntityId).ThenBy(l=>l.Rank)
-            .Select(l=>l.EntityId+"|"+l.Rank+"|"+l.ModernId+"|"+l.Longitude+"|"+l.Latitude+"|"+l.Score+"|"+l.CoordinatesSource+"|"+l.CoordinatesDataset+"|"+l.Source).ToArrayAsync(),
-    ];
 }

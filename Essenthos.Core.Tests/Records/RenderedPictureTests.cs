@@ -1,3 +1,4 @@
+using Essenthos.Core.Products;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -85,7 +86,7 @@ public sealed class RenderedPictureTests : IDisposable
         var cherubim = Entity(EntityKind.Person, "cherubim");
         await _db.SaveChangesAsync();
 
-        var outcome = await Loader().Load(_resources);
+        var outcome = await RecordRowsWritten.Pictures(_db, _resources);
 
         (outcome.Rendered, outcome.Unthings).Should().Be((2, 1), "the cherubim's record is not a thing");
         (await Pictures(menorah)).Should().Equal(("models/menorah.jpg", "rendered", "primary"));
@@ -105,7 +106,7 @@ public sealed class RenderedPictureTests : IDisposable
             """{ "entity": "laver", "file": "models/laver.jpg", "primary": true }""",
             """{ "entity": "menorah", "file": "models/menorah.jpg", "hidden": true }""");
 
-        var outcome = await Loader().Load(_resources);
+        var outcome = await RecordRowsWritten.Pictures(_db, _resources);
 
         outcome.Hidden.Should().Be(1);
         (await Pictures(menorah)).Should().BeEmpty();
@@ -122,7 +123,7 @@ public sealed class RenderedPictureTests : IDisposable
         await _db.SaveChangesAsync();
         Choose("""{ "entity": "laver", "file": "generated/laver.jpg", "hidden": true }""");
 
-        await Loader().Load(_resources);
+        await RecordRowsWritten.Pictures(_db, _resources);
 
         (await Pictures(laver)).Should().Equal(("models/laver.jpg", "rendered", "primary"));
     }
@@ -132,7 +133,7 @@ public sealed class RenderedPictureTests : IDisposable
     {
         var menorah = Entity(EntityKind.Object, "menorah");
         await _db.SaveChangesAsync();
-        await Loader().Load(_resources);
+        await RecordRowsWritten.Pictures(_db, _resources);
 
         var picture = (await ImageEndpoints.Of(_db, menorah.Id, default, generated: false)).Single();
         picture.Kind.Should().Be("rendered");
@@ -148,7 +149,7 @@ public sealed class RenderedPictureTests : IDisposable
             .AddInMemoryCollection(new Dictionary<string, string?> { [ModelPictures.WebConfigurationKey] = Path.Combine(_resources, "no-web") })
             .Build();
 
-        var outcome = await new ModelPictures(_db, configuration, NullLogger<ModelPictures>.Instance).Draw(_resources);
+        var outcome = await new ModelPictures(configuration, NullLogger<ModelPictures>.Instance).Draw(_resources, new ProductStore(_resources));
 
         outcome.Unable.Should().Contain("no renderer");
         File.Exists(Path.Combine(_resources, EntityImageLoader.Folder, "models", "menorah.jpg")).Should().BeTrue();
@@ -165,8 +166,6 @@ public sealed class RenderedPictureTests : IDisposable
         (await _db.EntityImages.Where(i => i.EntityId == entity.Id).OrderBy(i => i.Role == "primary" ? 0 : 1).ToListAsync())
         .Select(i => (i.File, i.Kind, i.Role))
         .ToList();
-
-    private EntityImageLoader Loader() => new(_db, NullLogger<EntityImageLoader>.Instance);
 
     private Entity Entity(EntityKind kind, string slug)
     {

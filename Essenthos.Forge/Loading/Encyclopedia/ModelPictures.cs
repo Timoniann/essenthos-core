@@ -1,9 +1,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text.Json;
-using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -29,9 +28,8 @@ internal sealed record ModelPicturesOutcome(int Models, int Drawn, int Kept, int
 /// there: <c>scripts/model-pictures/render.mjs</c> builds them with the site's code in a headless
 /// Chrome of its own, lit as the site's viewer lights them, and writes each picture into
 /// <c>Resources/Images/models</c> beside a manifest that records the digest of the model it was drawn
-/// from. A run draws only the things whose digest moved; the step runs only when the models, the
-/// renderer or the things the corpus holds have moved (its files below and the <c>entity</c> table it
-/// reads). The <c>images</c> step after it loads what it drew.
+/// from. A run draws only the things whose digest moved. The things are the <c>object</c> rows of
+/// <c>records/records</c>; records-derive then reads what it drew into the pictures' record files.
 /// </para>
 ///
 /// <para>
@@ -39,7 +37,7 @@ internal sealed record ModelPicturesOutcome(int Models, int Drawn, int Kept, int
 /// <c>Models:WebPath</c> names the checkout where it is not beside this one.
 /// </para>
 /// </summary>
-internal sealed class ModelPictures(AppDbContext db, IConfiguration configuration, ILogger<ModelPictures> logger)
+internal sealed class ModelPictures(IConfiguration configuration, ILogger<ModelPictures> logger)
 {
     public const string WebConfigurationKey = "Models:WebPath";
 
@@ -60,7 +58,9 @@ internal sealed class ModelPictures(AppDbContext db, IConfiguration configuratio
             ? configured
             : Path.Combine(resources, "..", "..", "essenthos-web"));
 
-    public async Task<ModelPicturesOutcome> Draw(string resources, CancellationToken cancellationToken = default)
+    /// <param name="resources">The Resources folder the pictures are drawn into.</param>
+    /// <param name="store">The store whose records/records names the things.</param>
+    public async Task<ModelPicturesOutcome> Draw(string resources, ProductStore store, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var web = WebFolder(configuration, resources);
@@ -74,11 +74,11 @@ internal sealed class ModelPictures(AppDbContext db, IConfiguration configuratio
             return new ModelPicturesOutcome(0, 0, 0, 0, $"no renderer at {script}", started.Elapsed);
         }
 
-        var things = await db.Entities
-            .Where(e => e.Kind == EntityKind.Object)
-            .Select(e => e.Slug)
-            .OrderBy(slug => slug)
-            .ToListAsync(cancellationToken);
+        var things = RecordProducers.Read(store, "records/records")
+            .Where(row => row[1] == "object")
+            .Select(row => row[0]!)
+            .Order(StringComparer.Ordinal)
+            .ToList();
         var records = Path.Combine(Path.GetTempPath(), $"essenthos-things-{Guid.NewGuid():N}.txt");
         await File.WriteAllLinesAsync(records, things, cancellationToken);
         var output = Path.Combine(resources, EntityImageLoader.Folder, EntityImageLoader.RenderedFolder);

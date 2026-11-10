@@ -61,17 +61,10 @@
         <EmbeddedResource Include="Loading\Encyclopedia\RefusedReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SupersededReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\Distinguishers.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\OwnLines.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NoteTranslations.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\KnownFor.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\MisplacedAnnotations.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
-        <Content Remove="Loading\Encyclopedia\OwnNames.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\OwnNames.json" />
-        <Content Remove="Loading\Encyclopedia\RegisterLines.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\RegisterLines.json" />
         <Content Remove="Loading\Encyclopedia\WithheldClauses.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\WithheldClauses.json" />
         <Content Remove="Loading\Encyclopedia\TitleRecords.json" />
@@ -142,8 +135,6 @@
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\CaesarReadings.json" />
-        <Content Remove="Loading\Encyclopedia\VerseReadings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\VerseReadings.json" />
         <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\LocationSupplements.json" />
@@ -155,10 +146,6 @@
         <EmbeddedResource Include="Loading\Encyclopedia\DuplicateRecords.json" />
         <Content Remove="Loading\Encyclopedia\UssherDatings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\UssherDatings.json" />
-        <Content Remove="Loading\Encyclopedia\ReignRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\ReignRecords.json" />
-        <Content Remove="Loading\Encyclopedia\ReignRulings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\ReignRulings.json" />
 
         <!-- The peoples this corpus names, and the two things about them nothing else can supply:
              what to call the nine gentilics whose entry yields no usable English word, and the

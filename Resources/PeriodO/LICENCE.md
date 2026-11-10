@@ -30,12 +30,12 @@ each is kept beside the data (`licence-at-source.txt`, `periodo-data-LICENSE`), 
 
 **One authority states terms of its own.** THANADOS's *Stylistic Classification* carries "Licensed
 under a Creative Commons Attribution 4.0 International License" in its citation. A contributor
-cannot dedicate what it did not hold, so the loader leaves out any authority whose source names a
+cannot dedicate what it did not hold, so the producer leaves out any authority whose source names a
 licence of its own. THANADOS's periods are Central European and fall outside the selection anyway.
 
 ## What is taken, and what is ours
 
-The loader (`Essenthos.Forge/Loading/Encyclopedia/PeriodOLoader.cs`) takes the periods that touch
+The producer `forge lands` (`Essenthos.Forge/Loading/Encyclopedia/PeriodOFiles.cs`) takes the periods that touch
 4000 BCE to AD 150 and whose places are, at least half of them, in the lands the timeline draws:
 the Levant, Egypt, Mesopotamia, Anatolia, Persia, the Aegean and Rome. Measured on this version:
 1,420 periods under 71 authorities.

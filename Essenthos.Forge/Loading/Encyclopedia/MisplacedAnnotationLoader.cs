@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
 using Essenthos.Core.Corpus;
@@ -10,15 +9,6 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Listed">Verses the list names a record wrongly named in.</param>
 /// <param name="Removed">Annotations taken off the record on this run, in every text.</param>
 /// <param name="Missing">Entries naming a record the encyclopedia does not hold, or no verse.</param>
-internal sealed record MisplacedAnnotationOutcome(int Listed, int Removed, int Missing, TimeSpan Elapsed)
-{
-    public override string ToString() =>
-        Removed == 0 && Missing == 0
-            ? $"the {Listed} verses a record was wrongly named in name it no more"
-            : $"{Removed} annotations taken off the records the {Listed} verses wrongly named, " +
-              $"{Missing} entries naming no record or no verse, in {Elapsed}";
-}
-
 /// <summary>
 /// The verses where a word names a record it does not mean, taken off the record in every text.
 ///
@@ -32,11 +22,11 @@ internal sealed record MisplacedAnnotationOutcome(int Listed, int Removed, int M
 /// </para>
 ///
 /// <para>
-/// Run after every pass that names a word, so an answer a later pass wrote again is taken back
-/// again. Idempotent.
+/// The settled names (<c>names/&lt;REF&gt;</c>) were written with these taken off; what is left here is the list a
+/// pass that names words holds out (<see cref="Withhold"/>).
 /// </para>
 /// </summary>
-internal sealed class MisplacedAnnotationLoader(AppDbContext db, ILogger<MisplacedAnnotationLoader> logger)
+internal static class MisplacedAnnotationLoader
 {
     private const string Resource = "Essenthos.Core.Loading.Encyclopedia.MisplacedAnnotations.json";
 
@@ -45,16 +35,6 @@ internal sealed class MisplacedAnnotationLoader(AppDbContext db, ILogger<Misplac
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
-
-    private const string Removal =
-        """
-        DELETE FROM word_entity a
-        USING word w, verse_reference r
-        WHERE a.entity_id = {0}
-          AND w.id = a.word_id
-          AND r.verse_id = w.verse_id AND r.is_primary
-          AND r.canonical_book = {1} AND r.canonical_chapter = {2} AND r.canonical_verse = {3}
-        """;
 
     /// <summary>
     /// The pending annotations the list would take off again, held out before a pass writes them:
@@ -92,47 +72,6 @@ internal sealed class MisplacedAnnotationLoader(AppDbContext db, ILogger<Misplac
             ("entities", rows.Select(r => r.Entity).ToArray()), ("books", rows.Select(r => r.Book).ToArray()),
             ("chapters", rows.Select(r => r.Chapter).ToArray()), ("verses", rows.Select(r => r.Verse).ToArray()),
         ];
-    }
-
-    public async Task<MisplacedAnnotationOutcome> Load(CancellationToken cancellationToken = default) =>
-        await Load(Read().Annotations, cancellationToken);
-
-    internal async Task<MisplacedAnnotationOutcome> Load(
-        IReadOnlyList<MisplacedAnnotation> misplaced,
-        CancellationToken cancellationToken)
-    {
-        var started = Stopwatch.StartNew();
-        var slugs = misplaced.Select(m => m.Record).Distinct().ToList();
-        var records = await db.Entities
-            .Where(e => slugs.Contains(e.Slug))
-            .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
-
-        int removed = 0, missing = 0;
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        foreach (var entry in misplaced)
-        {
-            var citation = Citation.Parse(entry.Reference);
-            if (!records.TryGetValue(entry.Record, out var record) || citation is null)
-            {
-                logger.LogWarning(
-                    "MisplacedAnnotations.json takes \"{Record}\" off {Reference}, and the encyclopedia holds no " +
-                    "such record or the reference is no verse. Correct the entry, or take it off the list",
-                    entry.Record, entry.Reference);
-                missing++;
-                continue;
-            }
-
-            foreach (var (book, chapter, verse) in citation.Verses)
-            {
-                removed += await db.Database.ExecuteSqlRawAsync(
-                    Removal, [record, book, chapter, verse], cancellationToken);
-            }
-        }
-
-        await transaction.CommitAsync(cancellationToken);
-        var outcome = new MisplacedAnnotationOutcome(misplaced.Count, removed, missing, started.Elapsed);
-        logger.LogInformation("Took the misplaced annotations off their records: {Outcome}", outcome);
-        return outcome;
     }
 
     internal static MisplacedAnnotationFile Read()

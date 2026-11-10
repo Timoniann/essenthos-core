@@ -181,26 +181,6 @@ public sealed class OpenBibleLocationTests : IDisposable
         reading.Located.Single(l => l.PlaceId == "abfba2a").ModernId.Should().Be("mb374b4");
     }
 
-    [Fact]
-    public async Task TheLoadLocatesTheRecordsThatCarryTheIdentifierAndOnlyOnce()
-    {
-        var located = Place("a1", "Tekoa");
-        var unlocated = Place("a2", "Anab");
-        _db.SaveChanges();
-
-        var loader = new OpenBibleLocationLoader(_db, NullLogger<OpenBibleLocationLoader>.Instance);
-        var first = await loader.Load(_folder);
-        var second = await loader.Load(_folder);
-
-        first.AlreadyLoaded.Should().BeFalse();
-        first.Located.Should().Be(1);
-        first.Unheld.Should().Be(2);
-        second.AlreadyLoaded.Should().BeTrue();
-
-        (await _db.PlaceLocations.SingleAsync()).EntityId.Should().Be(located.Id);
-        (await _db.PlaceLocations.AnyAsync(l => l.EntityId == unlocated.Id)).Should().BeFalse();
-    }
-
     /// <summary>
     /// The map carries every located place with its verse count, and its confidence as the
     /// gazetteer's score over a thousand.
@@ -217,7 +197,7 @@ public sealed class OpenBibleLocationTests : IDisposable
         Naming(tekoa, 30, 1, 1);
         _db.SaveChanges();
 
-        await new OpenBibleLocationLoader(_db, NullLogger<OpenBibleLocationLoader>.Instance).Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
         var map = await EncyclopediaEndpoints.Map(_db);
 
         map.Total.Should().Be(1);

@@ -5,7 +5,9 @@ using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging.Abstractions;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
+using Npgsql;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
@@ -15,12 +17,12 @@ namespace Essenthos.Core.Tests.Records;
 /// authority, with its own ends, and in the land most of its places belong to.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class PeriodOLoaderTests : IDisposable
+public sealed class PeriodOFilesTests : IDisposable
 {
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
 
-    public PeriodOLoaderTests(WitnessDatabase database)
+    public PeriodOFilesTests(WitnessDatabase database)
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
@@ -40,48 +42,48 @@ public sealed class PeriodOLoaderTests : IDisposable
     public void ReadsAnEndAsTheSourceWritesIt(string end, int earliest, int latest)
     {
         using var document = JsonDocument.Parse(end);
-        PeriodOLoader.Bounds(document.RootElement).Should().Be(new PeriodOLoader.Range(earliest, latest));
+        PeriodOFiles.Bounds(document.RootElement).Should().Be(new PeriodOFiles.Range(earliest, latest));
     }
 
     [Fact]
     public void LeavesAnEndWithOnlyOneBoundOpen()
     {
         using var document = JsonDocument.Parse("""{"in":{"earliestYear":"-1250"}}""");
-        PeriodOLoader.Bounds(document.RootElement).Should().BeNull();
+        PeriodOFiles.Bounds(document.RootElement).Should().BeNull();
     }
 
     [Fact]
     public void DrawsAPeriodInTheLandMostOfItsPlacesBelongTo()
     {
         // King and Stager's Early Bronze: Israel, Egypt, Jordan, Lebanon, Syria, Cyprus, Turkey.
-        PeriodOLoader.RegionOf(["Q801", "Q79", "Q810", "Q822", "Q858", "Q229", "Q43"]).Should().Be("levant");
-        PeriodOLoader.RegionOf(["Q79"]).Should().Be("egypt");
-        PeriodOLoader.RegionOf(["Q41", "Q34374"]).Should().Be("aegean");
+        PeriodOFiles.RegionOf(["Q801", "Q79", "Q810", "Q822", "Q858", "Q229", "Q43"]).Should().Be("levant");
+        PeriodOFiles.RegionOf(["Q79"]).Should().Be("egypt");
+        PeriodOFiles.RegionOf(["Q41", "Q34374"]).Should().Be("aegean");
     }
 
     [Fact]
     public void LeavesOutAPeriodThatIsMostlyElsewhere()
     {
         // Greece among France, Germany and Italy is a period of Europe, not of the Aegean.
-        PeriodOLoader.RegionOf(["Q41", "Q142", "Q183", "Q38"]).Should().BeNull();
-        PeriodOLoader.RegionOf(["Q229"]).Should().BeNull();
+        PeriodOFiles.RegionOf(["Q41", "Q142", "Q183", "Q38"]).Should().BeNull();
+        PeriodOFiles.RegionOf(["Q229"]).Should().BeNull();
     }
 
     [Fact]
     public void TakesTheLandTheSourceNamesOverTheOneWithTheMostPlaces()
     {
         // EAMENA's Middle Hittite Anatolia lists Iraq, Syria and Turkey; its own words say Anatolia.
-        PeriodOLoader.RegionOf(["Q796", "Q858", "Q43"], "Anatolia").Should().Be("anatolia");
-        PeriodOLoader.RegionOf(["Q796", "Q858", "Q43"], "Ancient Mesopotamia").Should().Be("mesopotamia");
-        PeriodOLoader.RegionOf(["Q801", "Q810"], "Southern Levant").Should().Be("levant");
+        PeriodOFiles.RegionOf(["Q796", "Q858", "Q43"], "Anatolia").Should().Be("anatolia");
+        PeriodOFiles.RegionOf(["Q796", "Q858", "Q43"], "Ancient Mesopotamia").Should().Be("mesopotamia");
+        PeriodOFiles.RegionOf(["Q801", "Q810"], "Southern Levant").Should().Be("levant");
         // Words naming several lands decide nothing, and the places do.
-        PeriodOLoader.RegionOf(["Q794", "Q858", "Q822", "Q43"], "Persia, Syria, Phoenicia, Asia Minor")
+        PeriodOFiles.RegionOf(["Q794", "Q858", "Q822", "Q43"], "Persia, Syria, Phoenicia, Asia Minor")
             .Should().Be("levant");
     }
 
     [Fact]
     public void GivesATieToTheLandListedFirst() =>
-        PeriodOLoader.RegionOf(["Q79", "Q801"]).Should().Be("levant");
+        PeriodOFiles.RegionOf(["Q79", "Q801"]).Should().Be("levant");
 
     [Theory]
     [InlineData(new[] { "King, Philip J.", "Stager, Lawrence E." }, "Life in biblical Israel", 2001,
@@ -94,13 +96,13 @@ public sealed class PeriodOLoaderTests : IDisposable
         "Gates, Ancient cities (2003)")]
     [InlineData(new string[0], "British Museum", null, "British Museum")]
     public void AttributesAPeriodTheWayADateIsFollowed(string[] creators, string title, int? year, string expected) =>
-        PeriodOLoader.Attributed(creators, title, year).Should().Be(expected);
+        PeriodOFiles.Attributed(creators, title, year).Should().Be(expected);
 
     [Fact]
     public void TakesThePeriodsOfTheLandsAndSaysWhatItLeftOut()
     {
         using var document = JsonDocument.Parse(Dataset);
-        var reading = PeriodOLoader.Read(document.RootElement);
+        var reading = PeriodOFiles.Read(document.RootElement);
 
         reading.Authorities.Should().ContainSingle().Which.PeriodoId.Should().Be("p0test1");
         var periods = reading.Authorities[0].Periods.ToList();
@@ -121,21 +123,25 @@ public sealed class PeriodOLoaderTests : IDisposable
     }
 
     [Fact]
-    public async Task LoadsOnceAndServesEachAuthoritysDatesUnresolved()
+    public async Task IsWrittenOnceAndServesEachAuthoritysDatesUnresolved()
     {
         var resources = Directory.CreateTempSubdirectory("periodo-");
         try
         {
             Directory.CreateDirectory(Path.Combine(resources.FullName, "PeriodO"));
             await File.WriteAllTextAsync(Path.Combine(resources.FullName, "PeriodO", "d.json"), Dataset);
-            var loader = new PeriodOLoader(_db, NullLogger<PeriodOLoader>.Instance);
+            var store = new ProductStore(resources.FullName);
+            var first = PeriodOFiles.Write(store, force: false);
+            store.Save();
+            var second = PeriodOFiles.Write(new ProductStore(resources.FullName), force: false);
 
-            var first = await loader.Load(resources.FullName);
-            var second = await loader.Load(resources.FullName);
-
-            first.AlreadyLoaded.Should().BeFalse();
+            first.Written.Should().BeTrue();
             first.Periods.Should().Be(2);
-            second.AlreadyLoaded.Should().BeTrue();
+            second.Written.Should().BeFalse("nothing it reads moved");
+            var files = RecordFiles.All.Where(f => f.Product.StartsWith("external/periodo/", StringComparison.Ordinal)).ToList();
+            await RecordFiles.LoadFiles(
+                (NpgsqlConnection)_db.Database.GetDbConnection(), (NpgsqlTransaction)_transaction.GetDbTransaction(),
+                new ProductStore(resources.FullName), files, default);
             (await _db.PeriodDefinitions.CountAsync()).Should().Be(2);
 
             var served = await LandPeriodEndpoints.All(_db, default);

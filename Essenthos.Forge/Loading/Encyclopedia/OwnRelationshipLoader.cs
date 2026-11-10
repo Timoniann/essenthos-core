@@ -1,50 +1,11 @@
 ﻿using Essenthos.Core.Corpus;
-using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
-using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
-/// <param name="Withheld">
-/// Clauses a claim of higher standing about the same pair answers differently. Counted rather than
-/// written, because a page showing both would be the corpus contradicting itself in public.
-/// </param>
-/// <param name="Disputed">
-/// Pairs where two claims of equal standing and equal confidence answer the same question two ways,
-/// so nothing is written for them at all.
-/// </param>
-/// <param name="Held">Clauses <see cref="OwnRelationshipLoader.WithheldClauses"/> lists, left unwritten.</param>
-/// <param name="Withdrawn">
-/// Relationships no clause states any more, or that said again what another said: a clause read
-/// again, a record folded or a verse put right since they were written.
-/// </param>
-internal sealed record OwnRelationshipOutcome(
-    bool AlreadyLoaded,
-    int Entities,
-    int Written,
-    int Withheld,
-    int Disputed,
-    TimeSpan Elapsed,
-    int Held = 0,
-    int Withdrawn = 0)
-{
-    public override string ToString() =>
-        AlreadyLoaded
-            ? "the relationships this corpus reads for itself already follow its clauses"
-            : $"{Written} relationships over {Entities} entities written and {Withdrawn} no clause states "
-              + $"withdrawn, read off the descriptor clauses in {Elapsed}. {Withheld} clauses were withheld "
-              + $"because a claim of higher standing answers the same question differently, {Disputed} "
-              + $"pairs are disputed between claims of equal standing, and {Held} clauses are on the list "
-              + "of readings held back";
-}
-
-/// <summary>A reading the list holds back: a clause by the slugs of its two ends and its relation.</summary>
-/// <param name="Reference">The verse the clause was read from, for whoever weighs the entry.</param>
-/// <param name="Why">What stood against the reading, and what this corpus holds for the pair.</param>
 internal sealed record WithheldClause(string Entity, string Relation, string Target, string? Reference, string? Why);
 
 /// <param name="DecidedBy">Whose decision the list rests on, and when.</param>
@@ -89,12 +50,8 @@ internal sealed record WithheldClauseList(string DecidedBy, string Policy, IRead
 /// </para>
 ///
 /// <para>
-/// **The rows follow the clauses.** Every load settles every clause again and compares the answer
-/// with the rows this loader wrote: a row the answer holds stays as it is, a row it lacks is written,
-/// and a row no clause states any more is withdrawn. A pass asked again replaces its clauses, a fold
-/// takes the clauses of a record of another kind away and says a repeated clause once, and a verse
-/// put right moves the clause to it; a row left behind by any of them would put on a page a reading
-/// the corpus no longer holds.
+/// **The rows follow the clauses.** records-derive settles every clause of <c>records/facts/clauses</c> again
+/// whenever they move and writes <c>records/facts/relationships</c> whole (<see cref="Records.RecordProducers"/>).
 /// </para>
 ///
 /// <para>
@@ -102,7 +59,7 @@ internal sealed record WithheldClauseList(string DecidedBy, string Policy, IRead
 /// <see cref="LinkMethod.StatedBySource"/>, which nothing here writes.
 /// </para>
 /// </summary>
-internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelationshipLoader> logger)
+internal static class OwnRelationshipLoader
 {
     private const string Resource = "Essenthos.Core.Loading.Encyclopedia.WithheldClauses.json";
 
@@ -111,74 +68,6 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
-
-    public async Task<OwnRelationshipOutcome> Load(CancellationToken cancellationToken = default) =>
-        await Load(WithheldClauses().Clauses, cancellationToken);
-
-    internal async Task<OwnRelationshipOutcome> Load(
-        IReadOnlyList<WithheldClause> heldByName,
-        CancellationToken cancellationToken)
-    {
-        var started = Stopwatch.StartNew();
-
-        var read = await Clauses(cancellationToken);
-        var named = heldByName.Select(c => (c.Entity, c.Relation, c.Target)).ToHashSet();
-        var clauses = read
-            .Where(c => !named.Contains((c.Subject, c.Clause.Relation, c.Target)))
-            .Select(c => c.Clause)
-            .ToList();
-        var held = read.Count - clauses.Count;
-
-        var (wanted, withheld, disputed) = Settle(clauses);
-
-        var standing = await db.EntityRelationships
-            .Where(r => r.Source.StartsWith(EntityDescriptorLoader.SourcePrefix))
-            .ToListAsync(cancellationToken);
-        var unmatched = standing
-            .GroupBy(Key)
-            .ToDictionary(rows => rows.Key, rows => new Queue<EntityRelationship>(rows.OrderBy(r => r.Id)));
-        var rows = new List<EntityRelationship>();
-        foreach (var row in wanted)
-        {
-            if (!unmatched.TryGetValue(Key(row), out var same) || !same.TryDequeue(out _))
-            {
-                rows.Add(row);
-            }
-        }
-
-        var gone = unmatched.Values.SelectMany(left => left).ToList();
-        if (rows.Count == 0 && gone.Count == 0)
-        {
-            logger.LogInformation(
-                "Every relationship this corpus reads for itself already follows its clauses; nothing to do");
-            return new OwnRelationshipOutcome(true, 0, 0, withheld, disputed, started.Elapsed, held);
-        }
-
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        db.EntityRelationships.RemoveRange(gone);
-        db.EntityRelationships.AddRange(rows);
-        await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-
-        var outcome = new OwnRelationshipOutcome(
-            AlreadyLoaded: false,
-            Entities: rows.Select(r => r.FromEntityId).Distinct().Count(),
-            Written: rows.Count,
-            withheld,
-            disputed,
-            started.Elapsed,
-            held,
-            gone.Count);
-
-        logger.LogInformation("Read the relationships off the clauses: {Outcome}", outcome);
-        return outcome;
-    }
-
-    /// <summary>Everything a relationship read off a clause says, so two rows saying the same are one.</summary>
-    private static (int, int, string, string, int?, int?, int?, string?, LinkMethod, double?, string, string?) Key(
-        EntityRelationship row) =>
-        (row.FromEntityId, row.ToEntityId, row.Type, row.Category, row.CanonicalBook, row.CanonicalChapter,
-            row.CanonicalVerse, row.Citation, row.Method, row.Confidence, row.Source, row.Notes);
 
     /// <summary>The readings held back by name, as the list beside this loader states them.</summary>
     internal static WithheldClauseList WithheldClauses()
@@ -272,36 +161,6 @@ internal sealed class OwnRelationshipLoader(AppDbContext db, ILogger<OwnRelation
             Source = clause.Source,
             Notes = clause.Note,
         };
-
-    /// <summary>Each clause with the slugs of its two ends, which is how a reading held back is named.</summary>
-    private async Task<List<(Clause Clause, string Subject, string Target)>> Clauses(
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.EntityDescriptors
-            .Select(d => new
-            {
-                d.EntityId, d.TargetEntityId, d.Relation,
-                d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse,
-                d.Method, d.Confidence, d.Source, d.Note, d.Citation,
-                Subject = d.Entity!.Slug,
-                Target = d.Target!.Slug,
-            })
-            .ToListAsync(cancellationToken);
-
-        return
-        [
-            .. rows.Select(d => (
-                new Clause(
-                    d.EntityId, d.TargetEntityId, d.Relation,
-                    d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse,
-                    d.Method, d.Confidence, d.Source, d.Note)
-                {
-                    Citation = d.Citation,
-                },
-                d.Subject,
-                d.Target)),
-        ];
-    }
 
     /// <summary>One descriptor clause, flattened for the pick.</summary>
     internal sealed record Clause(

@@ -87,7 +87,7 @@ public sealed class RecordListFilesTests : IDisposable
     [Fact]
     public void TheFoldsDeclinedFileHoldsEveryDeclinedPair()
     {
-        using var stream = typeof(RecordFiles).Assembly.GetManifestResourceStream(DuplicateRecordLoader.Resource)!;
+        using var stream = typeof(RecordFiles).Assembly.GetManifestResourceStream("Essenthos.Core.Loading.Encyclopedia.DuplicateRecords.json")!;
         using var json = JsonDocument.Parse(stream);
         var declined = json.RootElement.GetProperty("declined").EnumerateArray()
             .Select(d => (d.GetProperty("strongNumber").GetString(), d.GetProperty("pair")[0].GetString(),

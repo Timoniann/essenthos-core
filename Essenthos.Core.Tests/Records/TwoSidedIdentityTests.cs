@@ -17,10 +17,6 @@ namespace Essenthos.Core.Tests.Records;
 public sealed partial class TwoSidedIdentityTests
 {
     [Fact]
-    public void EveryAlternativeIsSaidOnBothRecords() =>
-        OneSided(Alternatives(), Folded(), SenseReadingFiles.HeldApart().Pairs).Should().BeEmpty();
-
-    [Fact]
     public void NoAlternativeJoinsTwoTheOwnerHeldApart()
     {
         var apart = SenseReadingFiles.HeldApart().Pairs;
@@ -152,11 +148,6 @@ public sealed partial class TwoSidedIdentityTests
                 .Where(alternative => alternative.Slug is not null)
                 .Select(alternative => new Said(title.Slug, alternative.Slug!, alternative.Back is not null))),
     ];
-
-    private static Dictionary<string, string> Folded() =>
-        DuplicateRecordLoader.Read().Merges
-            .GroupBy(pair => pair.Folds, StringComparer.Ordinal)
-            .ToDictionary(group => group.Key, group => group.First().Keeps, StringComparer.Ordinal);
 
     /// <summary>
     /// The notes whose sentence offers another man, each answered where some record standing at a verse
