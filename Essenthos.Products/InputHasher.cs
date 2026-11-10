@@ -6,7 +6,7 @@ using Essenthos.Core.Products.Tsv;
 namespace Essenthos.Core.Products;
 
 /// <summary>
-/// The SHA-256 of every file a build reads, remembered in <c>Essenthos/build/hashes.tsv</c> by
+/// The hash of every file a build reads (<see cref="ProductDigest"/>: a product's without its provenance), remembered in <c>Essenthos/build/hashes.tsv</c> by
 /// path, size and last write time so that twenty gigabytes of sources are hashed once and
 /// thereafter only when one of them moved. <see cref="Rehash"/> ignores the memory for one run.
 /// A folder is hashed as the list of its files' paths and hashes, so that a file added, taken out
@@ -15,6 +15,9 @@ namespace Essenthos.Core.Products;
 public sealed class InputHasher
 {
     public const string CacheProduct = "Essenthos/build/hashes.tsv";
+
+    /// <summary>The header note naming the <see cref="ProductDigest.Rule"/> the remembered products were hashed under.</summary>
+    private const string DigestNote = "digest";
 
     private static readonly ProductSchema<Entry> Schema = new ProductSchema<Entry>()
         .Text("path", entry => entry.Path)
@@ -36,7 +39,8 @@ public sealed class InputHasher
         if (File.Exists(cache))
         {
             using var reader = TsvFormat.Instance.Open(cache, Schema);
-            foreach (var entry in reader.Rows())
+            var sameRule = reader.Header?.Notes.Any(note => note.Key == DigestNote && note.Value == ProductDigest.Rule) == true;
+            foreach (var entry in reader.Rows().Where(entry => sameRule || !ProductDigest.IsProduct(entry.Path)))
             {
                 _entries[entry.Path] = entry;
             }
@@ -98,7 +102,7 @@ public sealed class InputHasher
         }
 
         Interlocked.Increment(ref _misses);
-        var sha256 = Sha256Of(file.FullName);
+        var sha256 = ProductDigest.Of(file.FullName);
         _entries[relative] = new Entry(relative, file.Length, writtenTicks, sha256);
         return sha256;
     }
@@ -130,6 +134,7 @@ public sealed class InputHasher
         lock (_save)
         {
             var header = new ProductHeader(CacheProduct, [], "input hashes by path, size and last write time; delete to hash everything again");
+            header.Notes.Add(new(DigestNote, ProductDigest.Rule));
             using var writer = TsvFormat.Instance.Create(Path.Combine(_root, CacheProduct), header, Schema);
             writer.WriteAll(_entries.Values.OrderBy(entry => entry.Path, StringComparer.Ordinal));
         }

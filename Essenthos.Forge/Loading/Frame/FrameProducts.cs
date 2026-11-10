@@ -70,7 +70,7 @@ internal static class FrameProducts
 
             var framed = Framed(store, slug, tradition, rules, titled);
             CanonicalFrameLoader.Write(new Text { Slug = slug, Name = slug, Language = string.Empty, Versification = tradition }, rules, store,
-                framed, "products");
+                framed, "products", inputs);
             lock (outcomes)
             {
                 outcomes.Add(new Outcome(slug, framed.Verses.Count, framed.Rows.Count, framed.Titles, true));
@@ -80,6 +80,7 @@ internal static class FrameProducts
         return [.. outcomes.OrderBy(o => o.Slug, StringComparer.Ordinal)];
     }
 
+    /// <summary>What a text's frame is current against, which is also what its file records.</summary>
     private static IReadOnlyList<ProductInput> Inputs(ProductStore store, string slug) =>
         store.Inputs([
             "Versification/TVTMS.txt",

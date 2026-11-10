@@ -225,9 +225,11 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     }
 
     /// <summary>Writes the text's frame file, its header naming what it was made from and what decided it.</summary>
-    internal static void Write(Text text, VersificationRules rules, ProductStore store, FramedText framed, string source)
+    /// <param name="inputs">What the caller asked of the file to call it current; by default what <paramref name="framed"/> was read from.</param>
+    internal static void Write(Text text, VersificationRules rules, ProductStore store, FramedText framed, string source,
+        IReadOnlyList<ProductInput>? inputs = null)
     {
-        var inputs = store.Inputs([
+        inputs ??= store.Inputs([
             "Versification/TVTMS.txt",
             .. framed.Letters is { } letters ? [letters] : Array.Empty<string>(),
             .. framed.Manifest is { } manifest ? [manifest] : Array.Empty<string>(),

@@ -113,6 +113,28 @@ public sealed class BuildManifest
         return entry;
     }
 
+    /// <summary>Records another hash for products whose files did not change, as a change of the hashing rule needs; saves once.</summary>
+    public void Rehash(IEnumerable<(string Product, string Sha256)> products)
+    {
+        lock (_lock)
+        {
+            var any = false;
+            foreach (var (product, sha256) in products)
+            {
+                if (_entries.TryGetValue(product, out var entry))
+                {
+                    _entries[product] = entry with { Sha256 = sha256 };
+                    any = true;
+                }
+            }
+
+            if (any)
+            {
+                Save();
+            }
+        }
+    }
+
     public void Forget(string product)
     {
         lock (_lock)

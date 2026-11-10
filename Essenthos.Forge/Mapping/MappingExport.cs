@@ -90,6 +90,11 @@ internal static class MappingExport
         var counts = new Dictionary<string, long>(StringComparer.Ordinal);
         foreach (var (method, rows) in byMethod.Where(m => exports(pair, m.Key)).OrderBy(m => m.Key, StringComparer.Ordinal))
         {
+            if (MadeByProducer(store, MappingProducts.Of(pair, method)))
+            {
+                continue;
+            }
+
             rows.Sort(static (a, b) => Order(a.Side, a.First, a.Row, b.Side, b.First, b.Row));
             using var writer = store.Create(MappingProducts.Of(pair, method), ProductKind.Machine, MappingRow.Schema,
                 ProductHeader.DescribeProducer(Producer), [], header => header.Notes.Add(new("exported", $"from {database}")));
@@ -116,6 +121,18 @@ internal static class MappingExport
         }
 
         return counts;
+    }
+
+    /// <summary>Whether the store holds the method file as a producer wrote it, which an export must not overwrite.</summary>
+    internal static bool MadeByProducer(ProductStore store, string product)
+    {
+        if (!store.Exists(product))
+        {
+            return false;
+        }
+
+        using var reader = store.Open(product);
+        return reader.Header is { } header && !ProductHeader.WithoutVersion(header.Producer).Equals(Producer, StringComparison.Ordinal);
     }
 
     /// <summary>The order every mapping file is written in: by its first key, then by the words, then by who says it.</summary>

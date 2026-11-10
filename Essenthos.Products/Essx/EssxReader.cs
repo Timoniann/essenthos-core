@@ -16,12 +16,15 @@ public sealed class EssxReader : IDisposable
 {
     private readonly SafeFileHandle _handle;
 
-    private EssxReader(string path, SafeFileHandle handle, EssxFooter footer, long length)
+    private readonly long _footerOffset;
+
+    private EssxReader(string path, SafeFileHandle handle, EssxFooter footer, long length, long footerOffset)
     {
         Path = path;
         _handle = handle;
         Footer = footer;
         Length = length;
+        _footerOffset = footerOffset;
         Tables = [.. footer.Tables.Select(table => new EssxTable(this, table))];
     }
 
@@ -75,7 +78,7 @@ public sealed class EssxReader : IDisposable
                 throw new ProductFormatException($"{path}: empty footer.");
             }
 
-            return new EssxReader(path, handle, footer, length);
+            return new EssxReader(path, handle, footer, length, footerOffset);
         }
         catch
         {
@@ -116,11 +119,19 @@ public sealed class EssxReader : IDisposable
     public bool Verify(out string fileSha256) => Verify(out _, out fileSha256);
 
     /// <summary><see cref="Verify(out string)"/>, with the hash of the bytes before the trailer's hash as computed now, which a sound file has stored.</summary>
-    public bool Verify(out string computedSha256, out string fileSha256)
+    public bool Verify(out string computedSha256, out string fileSha256) => Verify(out computedSha256, out fileSha256, out _);
+
+    /// <summary>
+    /// <see cref="Verify(out string, out string)"/>, and in the same pass the file's <see cref="ProductDigest"/>: the hash a
+    /// build manifest records and a consumer's header names.
+    /// </summary>
+    public bool Verify(out string computedSha256, out string fileSha256, out string digest)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        using var content = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         computedSha256 = string.Empty;
         fileSha256 = string.Empty;
+        digest = string.Empty;
         var buffer = new byte[1 << 20];
         var remaining = Length - EssxLayout.HashLength;
         long at = 0;
@@ -133,10 +144,17 @@ public sealed class EssxReader : IDisposable
             }
 
             hash.AppendData(buffer, 0, read);
+            if (at < _footerOffset)
+            {
+                content.AppendData(buffer, 0, (int)Math.Min(read, _footerOffset - at));
+            }
+
             at += read;
             remaining -= read;
         }
 
+        content.AppendData(DigestedFooter());
+        digest = Convert.ToHexStringLower(content.GetHashAndReset());
         var stored = StoredHash();
         var computed = hash.GetCurrentHash();
         computedSha256 = Convert.ToHexStringLower(computed);
@@ -144,6 +162,43 @@ public sealed class EssxReader : IDisposable
         hash.AppendData(stored);
         fileSha256 = Convert.ToHexStringLower(hash.GetHashAndReset());
         return matches;
+    }
+
+    /// <summary>The file's <see cref="ProductDigest"/>: every byte before the footer, then the footer without its provenance.</summary>
+    public string Digest()
+    {
+        using var content = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        var buffer = new byte[1 << 20];
+        long at = 0;
+        while (at < _footerOffset)
+        {
+            var read = RandomAccess.Read(_handle, buffer.AsSpan(0, (int)Math.Min(buffer.Length, _footerOffset - at)), at);
+            if (read == 0)
+            {
+                throw new ProductFormatException($"{Path}: short read at {at}.");
+            }
+
+            content.AppendData(buffer, 0, read);
+            at += read;
+        }
+
+        content.AppendData(DigestedFooter());
+        return Convert.ToHexStringLower(content.GetHashAndReset());
+    }
+
+    /// <summary>The footer as the digest reads it: each input's hash and the producer's version left out.</summary>
+    private byte[] DigestedFooter()
+    {
+        var json = new byte[Length - EssxLayout.TrailerLength - _footerOffset];
+        RandomAccess.Read(_handle, json, _footerOffset);
+        var footer = JsonSerializer.Deserialize(json, EssxLayout.Json.EssxFooter)!;
+        footer.Product.Producer = ProductHeader.WithoutVersion(footer.Product.Producer);
+        foreach (var input in footer.Product.Inputs)
+        {
+            input.Sha256 = string.Empty;
+        }
+
+        return JsonSerializer.SerializeToUtf8Bytes(footer, EssxLayout.Json.EssxFooter);
     }
 
     internal byte[] Read(long offset, long length, string codec, long rawLength)
