@@ -155,7 +155,7 @@ public sealed class RecordVersesTests : IDisposable
         new(WordKey.Parse(own, "BHSA"), record, role, origin, null, method, confidence, source);
 
     private static TextWord Word(string key, string strong) =>
-        new(WordKey.Parse(key, "BHSA"), null, "w", " ", null, strong, null, null, null, null, false, null, null, null);
+        new(WordKey.Parse(key, "BHSA"), "w", " ", null, strong, null, null, null, null, false, null, null, null);
 
     private static string?[] Record(string slug, string kind, string? name = null) =>
         [slug, kind, null, null, name ?? slug, null, null, null, null, null, null, null];

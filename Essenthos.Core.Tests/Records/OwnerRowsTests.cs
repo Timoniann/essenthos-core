@@ -243,7 +243,7 @@ public sealed class OwnerRowsTests : IDisposable
     }
 
     private static TextWord Word(string key, string strong) =>
-        new(WordKey.Parse(key, "BHSA"), null, "w", " ", null, strong, null, null, null, null, false, null, null, null);
+        new(WordKey.Parse(key, "BHSA"), "w", " ", null, strong, null, null, null, null, false, null, null, null);
 
     private void Write(ProductStore store, string product, params string[] lines)
     {

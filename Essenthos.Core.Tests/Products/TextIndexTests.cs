@@ -33,7 +33,7 @@ public sealed class TextIndexTests : IDisposable
     private static void Words(ProductStore store, string slug, params (string Surface, string? Strong, string? Morphology)[] words)
     {
         using var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []);
-        writer.WriteAll(words.Select((w, at) => new TextWord(new WordKey(slug, new VerseKey(1, 1, 1), at + 1), 100 + at,
+        writer.WriteAll(words.Select((w, at) => new TextWord(new WordKey(slug, new VerseKey(1, 1, 1), at + 1),
             w.Surface, " ", null, w.Strong, null, w.Morphology, w.Surface.ToLowerInvariant(), null, false, null, null, null)));
     }
 

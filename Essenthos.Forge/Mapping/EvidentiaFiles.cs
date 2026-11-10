@@ -364,7 +364,8 @@ internal static class EvidentiaFiles
     /// <summary>
     /// The words of one text by the ledger's address: canonical book, chapter and verse of the word's verse's primary
     /// place in the frame, and the word's ordinal among the words standing there, in the edition's own order
-    /// (chapter, verse number, position, id), as <see cref="EvidentiaLedger"/> numbers them.
+    /// (chapter, verse number, position, then the rest of the key: book and verse label), as <see cref="EvidentiaLedger"/>
+    /// numbers them.
     /// </summary>
     internal sealed class CanonicalWords
     {
@@ -388,7 +389,7 @@ internal static class EvidentiaFiles
                 }
             }
 
-            var at = new Dictionary<(int Book, int Chapter, int Verse), List<(TextWord Word, long Order)>>();
+            var at = new Dictionary<(int Book, int Chapter, int Verse), List<TextWord>>();
             var words = new CanonicalWords(text);
             using (var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text)))
             {
@@ -412,7 +413,7 @@ internal static class EvidentiaFiles
                         at[address] = list = [];
                     }
 
-                    list.Add((word, word.Id ?? long.MaxValue));
+                    list.Add(word);
                 }
             }
 
@@ -420,15 +421,15 @@ internal static class EvidentiaFiles
             {
                 list.Sort((a, b) =>
                 {
-                    var order = a.Word.Key.Verse.Chapter.CompareTo(b.Word.Key.Verse.Chapter);
-                    if (order == 0) order = a.Word.Key.Verse.Verse.CompareTo(b.Word.Key.Verse.Verse);
-                    if (order == 0) order = a.Word.Key.Position.CompareTo(b.Word.Key.Position);
-                    if (order == 0) order = a.Order.CompareTo(b.Order);
+                    var order = a.Key.Verse.Chapter.CompareTo(b.Key.Verse.Chapter);
+                    if (order == 0) order = a.Key.Verse.Verse.CompareTo(b.Key.Verse.Verse);
+                    if (order == 0) order = a.Key.Position.CompareTo(b.Key.Position);
+                    if (order == 0) order = a.Key.CompareTo(b.Key);
                     return order;
                 });
                 for (var n = 0; n < list.Count; n++)
                 {
-                    words._byAddress[(address.Book, address.Chapter, address.Verse, n + 1)] = (list[n].Word.Key, list[n].Word.Surface);
+                    words._byAddress[(address.Book, address.Chapter, address.Verse, n + 1)] = (list[n].Key, list[n].Surface);
                 }
             }
 

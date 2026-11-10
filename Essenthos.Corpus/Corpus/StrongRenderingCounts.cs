@@ -90,13 +90,16 @@ internal static class StrongRenderingCounts
     internal const string Rendered =
         """
         rendered AS (
-            SELECT number, original, string_agg(lower(text), ' ' ORDER BY verse_number, position, id) AS phrase
+            SELECT number, original,
+                   string_agg(lower(text), ' ' ORDER BY verse_number, position, book, chapter, label COLLATE "C") AS phrase
             FROM (
-                SELECT DISTINCT p.number, p.original, w.id, w.text, v.number AS verse_number, w.position
+                SELECT DISTINCT p.number, p.original, w.id, w.text, v.number AS verse_number, w.position,
+                       b.canonical_ordinal AS book, v.chapter_number AS chapter, v.label
                 FROM pairs p
                 JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
                 JOIN word w ON w.id = o.word_id AND w.text_id = @text
                 JOIN verse v ON v.id = w.verse_id
+                JOIN book b ON b.id = v.book_id
             ) rendering
             GROUP BY number, original
         )

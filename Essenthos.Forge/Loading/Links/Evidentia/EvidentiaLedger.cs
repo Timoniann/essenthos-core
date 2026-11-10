@@ -145,10 +145,11 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         FROM (
             SELECT w.id, r.canonical_book AS book, r.canonical_chapter AS chapter, r.canonical_verse AS verse,
                    row_number() OVER (PARTITION BY r.canonical_book, r.canonical_chapter, r.canonical_verse
-                                      ORDER BY v.chapter_number, v.number, w.position, w.id)::int AS nth,
+                                      ORDER BY v.chapter_number, v.number, w.position, b.canonical_ordinal, v.label COLLATE "C")::int AS nth,
                    w.text AS surface
             FROM word w
             JOIN verse v ON v.id = w.verse_id
+            JOIN book b ON b.id = v.book_id
             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
             WHERE w.text_id = @text AND r.canonical_book = ANY(@books)) x
         """;

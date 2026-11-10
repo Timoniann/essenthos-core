@@ -210,6 +210,25 @@ internal sealed partial class ProductGraph
         return missing;
     }
 
+    /// <summary>
+    /// Takes out of the manifest every product no line declares whose file is gone: what a retired line made, once its files
+    /// are deleted. One whose file is still there stays, and the graph check names it.
+    /// </summary>
+    public List<string> Forget(ProductStore store)
+    {
+        var gone = store.Manifest.Entries
+            .Where(e => e.Product.StartsWith(ProductStore.EssenthosFolder + "/", StringComparison.Ordinal) && e.Product != BuildManifest.Product
+                        && Find(e.Product) is null && !File.Exists(store.FullPath(e.Product)))
+            .Select(e => e.Product)
+            .ToList();
+        foreach (var product in gone)
+        {
+            store.Manifest.Forget(product);
+        }
+
+        return gone;
+    }
+
     /// <summary>The <c>kept</c> products the store holds under a folder of <c>Resources/Essenthos/</c>, by name.</summary>
     public List<string> Kept(ProductStore store, string folder)
     {

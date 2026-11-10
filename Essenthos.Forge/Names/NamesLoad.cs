@@ -3,14 +3,13 @@ using System.Globalization;
 using System.Text;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Products;
-using Essenthos.Core.Products.Essx;
 using Npgsql;
 
 namespace Essenthos.Core.Names;
 
 /// <summary>
-/// The names projection into a serving database's <c>word_entity</c> (DOC-0224 §7.3): every row of it, by the word id its
-/// text's words product carries and the record's id by slug in the database, with its <c>role</c> and <c>origin</c> (a
+/// The names projection into a serving database's <c>word_entity</c> (DOC-0224 §7.3): every row of it, by the id of a word
+/// its text's words product holds (computed from the key, <see cref="WordIdTable"/>) and the record's id by slug in the database, with its <c>role</c> and <c>origin</c> (a
 /// <c>base-reading</c> row is the base's record beside a <c>differs</c> one on the same word, the second card), and a carried
 /// name's note naming the word it was carried from by its id, as the API reads it. The texts' rows are made at once and copied
 /// one COPY per text in one transaction; the table's indexes are dropped before and made after. When asked, the table is
@@ -48,7 +47,7 @@ internal static class NamesLoad
         }
 
         var clock = Stopwatch.StartNew();
-        var ids = new WordIdCache(store);
+        var ids = new WordIdCache(store, WordIdTable.For(store));
 
         // Each text's lines are made at once; they are copied in the texts' order, so the table is the same row for row.
         var lines = new (List<string> Lines, long UnknownRecords, long UnknownWords)[texts.Count];
@@ -118,11 +117,11 @@ internal static class NamesLoad
     }
 
     /// <summary>Each text's word ids by key, read once however many texts carry names through it.</summary>
-    private sealed class WordIdCache(ProductStore store)
+    private sealed class WordIdCache(ProductStore store, WordIdTable table)
     {
         private readonly System.Collections.Concurrent.ConcurrentDictionary<string, Lazy<Dictionary<string, long>>> _texts = new(StringComparer.Ordinal);
 
-        public Dictionary<string, long> Of(string text) => _texts.GetOrAdd(text, t => new Lazy<Dictionary<string, long>>(() => WordIds(store, t))).Value;
+        public Dictionary<string, long> Of(string text) => _texts.GetOrAdd(text, t => new Lazy<Dictionary<string, long>>(() => WordIds(store, table, t))).Value;
     }
 
     private static async Task<Comparison> ReadBack(NpgsqlConnection connection, ProductStore store, IReadOnlyList<string> texts,
@@ -130,9 +129,10 @@ internal static class NamesLoad
     {
         var slugs = records.ToDictionary(r => r.Value, r => r.Key);
         var keys = new Dictionary<long, (string Text, string Own)>();
+        var wordIds = WordIdTable.For(store);
         foreach (var text in texts)
         {
-            foreach (var (own, id) in WordIds(store, text))
+            foreach (var (own, id) in WordIds(store, wordIds, text))
             {
                 keys[id] = (text, own);
             }
@@ -162,38 +162,13 @@ internal static class NamesLoad
         return new Comparison(table.Count, products.Count(p => !table.Contains(p)), table.Count(t => !products.Contains(t)));
     }
 
-    private static Dictionary<string, long> WordIds(ProductStore store, string text)
+    /// <summary>The id of every word the text's words product holds, by its key without the text.</summary>
+    private static Dictionary<string, long> WordIds(ProductStore store, WordIdTable table, string text)
     {
         var ids = new Dictionary<string, long>(StringComparer.Ordinal);
-        if (store.Find(TextWord.ProductOf(text)) is { } relative && relative.EndsWith(EssxLayout.Extension, StringComparison.Ordinal))
+        foreach (var key in WordIdCollisions.Keys(store, text))
         {
-            // Two columns of the words product decoded, not all of them.
-            using var file = EssxReader.Open(store.FullPath(relative));
-            var table = file.Table(EssxFormat.TableName);
-            for (var g = 0; g < table.RowGroups; g++)
-            {
-                var group = table.ReadGroup(g, ["own", "id"]);
-                var own = group.Column("own");
-                var id = group.Column("id");
-                for (var r = 0; r < group.Rows; r++)
-                {
-                    if (id.Integer(r) is { } value)
-                    {
-                        ids[WordKey.Parse(own.Text(r)!, text).Own] = value;
-                    }
-                }
-            }
-
-            return ids;
-        }
-
-        using var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text));
-        foreach (var word in reader.Rows())
-        {
-            if (word.Id is { } id)
-            {
-                ids[word.Key.Own] = id;
-            }
+            ids[key.Own] = table.Of(key);
         }
 
         return ids;

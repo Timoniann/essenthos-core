@@ -186,7 +186,7 @@ public sealed class NamesFirstSourceTests : IDisposable
         using (var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []))
         {
             writer.WriteAll(verses.SelectMany(verse => verse.Words.Select((word, n) => new TextWord(
-                new WordKey(slug, VerseKey.Parse(verse.Verse), n + 1), null, word.Surface, " ", word.Lemma, null, null,
+                new WordKey(slug, VerseKey.Parse(verse.Verse), n + 1), word.Surface, " ", word.Lemma, null, null,
                 word.Lemma is null ? null : Name, null, null, false, null, null, null))));
         }
 

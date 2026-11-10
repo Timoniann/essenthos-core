@@ -273,13 +273,13 @@ internal static class TextIndexes
             }));
         var primary = LinkedOriginals.Primary(originals);
 
-        var words = new Dictionary<string, (int Verse, int Position, long Id, string Lower)>(StringComparer.Ordinal);
+        var words = new Dictionary<string, (int Verse, int Position, WordKey Key, string Lower)>(StringComparer.Ordinal);
         if (primary.Count > 0)
         {
             using var reader = context.Store.Open(TextWord.ProductOf(text), TextWord.Schema(text));
             foreach (var word in reader.Rows())
             {
-                words[word.Key.Own] = (word.Key.Verse.Verse, word.Key.Position, word.Id ?? long.MaxValue, word.Surface.ToLowerInvariant());
+                words[word.Key.Own] = (word.Key.Verse.Verse, word.Key.Position, word.Key, word.Surface.ToLowerInvariant());
             }
         }
 
@@ -323,7 +323,7 @@ internal static class TextIndexes
                          .ThenBy(r => r.Key.Number, StringComparer.Ordinal))
             {
                 var ordered = mine.Select(own => (Own: own, Word: words[own]))
-                    .OrderBy(w => w.Word.Verse).ThenBy(w => w.Word.Position).ThenBy(w => w.Word.Id)
+                    .OrderBy(w => w.Word.Verse).ThenBy(w => w.Word.Position).ThenBy(w => w.Word.Key)
                     .ToList();
                 writer.Write(new StrongIndexRow(
                     number,

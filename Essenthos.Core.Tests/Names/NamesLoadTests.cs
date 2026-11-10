@@ -78,13 +78,22 @@ public sealed class NamesLoadTests : IDisposable
         (await _db.WordEntities.IgnoreQueryFilters().CountAsync()).Should().Be(3);
     }
 
+    /// <summary>The text's words as its words product, each word renumbered in the database with the id its key gives it, as a build does.</summary>
     private async Task<long[]> Words(ProductStore store, string slug)
     {
-        var words = await _db.Words.Where(w => w.Text!.Slug == slug).OrderBy(w => w.Position).ToListAsync();
-        using var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []);
-        writer.WriteAll(words.Select((word, at) => new TextWord(new WordKey(slug, new VerseKey(1, 1, 11), at + 1), word.Id,
-            word.Surface, " ", null, null, null, null, null, null, false, null, null, null)));
-        return [.. words.Select(w => w.Id)];
+        var words = await _db.Words.Where(w => w.Text!.Slug == slug).OrderBy(w => w.Position).AsNoTracking().ToListAsync();
+        var keys = words.Select((_, at) => new WordKey(slug, new VerseKey(1, 1, 11), at + 1)).ToList();
+        using (var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []))
+        {
+            writer.WriteAll(words.Select((word, at) => new TextWord(keys[at], word.Surface, " ", null, null, null, null, null, null, false, null, null, null)));
+        }
+
+        for (var at = 0; at < words.Count; at++)
+        {
+            await _db.Database.ExecuteSqlRawAsync("UPDATE word SET id = {0} WHERE id = {1}", WordIds.Of(keys[at]), words[at].Id);
+        }
+
+        return [.. keys.Select(key => WordIds.Of(key))];
     }
 
     private async Task<List<(long Word, string Record, string? Role, string? Origin, string? Note)>> Rows()

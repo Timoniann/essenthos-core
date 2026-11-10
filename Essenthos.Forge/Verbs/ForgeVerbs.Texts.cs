@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace Essenthos.Core.Verbs;
 
-/// <summary>The verbs of the texts as converted products: convert, export, and the one-time ids.</summary>
+/// <summary>The verbs of the texts as converted products: convert, compare and export.</summary>
 internal static partial class ForgeVerbs
 {
     private static IReadOnlyList<string> Slugs(string argument) =>
@@ -44,6 +44,8 @@ internal static partial class ForgeVerbs
             });
         }
 
+        // Every text's words are read for the ids that meet, so the file follows whichever text moved.
+        forge.Logger.LogInformation("{Outcome}", WordIdCollisions.Update(store, force));
         store.Save();
         forge.Logger.LogInformation("{Count} texts in {Seconds:0.0} s{Failed}", slugs.Count, started.Elapsed.TotalSeconds,
             failed.IsEmpty ? string.Empty : $"; failed: {string.Join(", ", failed.Order())}");
@@ -55,49 +57,12 @@ internal static partial class ForgeVerbs
         var store = new ProductStore(forge.Resources);
         switch (args[1])
         {
-            case "ids":
-                var slugs = Slugs(args[2]);
-                return RefusesExport(forge, args, "texts ids", [.. slugs.Select(TextWordId.ProductOf).Where(store.Exists)])
-                    ? 1
-                    : await TextIds(forge, store, slugs);
             case "compare":
                 return await CompareTexts(forge, store, Slugs(args[2]), Option(args, "--out"), Parallel(args));
             default:
-                forge.Logger.LogError("forge texts ids|compare <text|all>");
+                forge.Logger.LogError("forge texts compare <text|all>");
                 return 1;
         }
-    }
-
-    /// <summary>
-    /// The ids every word of the texts holds in the configured database, written as each text's ids product, and the
-    /// ceiling new words take their ids above raised to the database's highest. The ids are kept: a database built from
-    /// the store holds the ids conversion gave out, so they are taken once, for a store that has none.
-    /// </summary>
-    private static async Task<int> TextIds(ForgeRun forge, ProductStore store, IReadOnlyList<string> slugs)
-    {
-        var database = new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database;
-        await using (var connection = new NpgsqlConnection(forge.DatabaseConnection))
-        {
-            await connection.OpenAsync();
-            var highest = await TextSnapshot.HighestWordId(connection);
-            WordIdCeiling.Raise(forge.Resources, highest);
-            forge.Logger.LogInformation("Word id ceiling: {Ceiling} ({Database} holds ids up to {Highest})", WordIdCeiling.Read(forge.Resources), database, highest);
-        }
-
-        foreach (var slug in slugs)
-        {
-            await using var connection = new NpgsqlConnection(forge.DatabaseConnection);
-            await connection.OpenAsync();
-            var ids = await TextSnapshot.ReadIds(connection, slug);
-            using var writer = store.Create(TextWordId.ProductOf(slug), ProductKind.Machine, TextWordId.Schema(slug),
-                ProductHeader.DescribeProducer($"forge texts ids {slug}"), [],
-                header => header.Notes.Add(new("from", $"the word table of {database}")));
-            writer.WriteAll(ids);
-            forge.Logger.LogInformation("{Slug}: {Count} ids from {Database}", slug, ids.Count, database);
-        }
-
-        store.Save();
-        return 0;
     }
 
     /// <summary>Each text's products held against the configured database by key; the differences are written per text.</summary>

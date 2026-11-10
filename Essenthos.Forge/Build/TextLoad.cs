@@ -12,8 +12,8 @@ namespace Essenthos.Core.Build;
 /// <summary>
 /// The texts' products into an empty serving database: <c>text</c>, <c>book</c>, <c>chapter</c>, <c>verse</c>, <c>word</c>,
 /// the notes and stated verse numbers, and the four kinds of word group the converter keeps on the words (supplied,
-/// restored, doubtful, subscription). Book, chapter and verse ids are given here in catalogue and key order; word ids are
-/// the ones the words products carry. Words go in over one connection per text, sixteen texts at a time.
+/// restored, doubtful, subscription). Book, chapter and verse ids are given here in catalogue and key order; a word's id is
+/// computed from its key (<see cref="WordIdTable"/>). Words go in over one connection per text, sixteen texts at a time.
 /// </summary>
 internal static class TextLoad
 {
@@ -145,11 +145,12 @@ internal static class TextLoad
         }
 
         var groups = new Groups();
+        var ids = WordIdTable.For(store);
         long words = 0;
         long notes = 0;
         await Parallel.ForEachAsync(texts, new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (text, token) =>
         {
-            var (written, noted) = await LoadWords(connectionString, store, text, groups, token);
+            var (written, noted) = await LoadWords(connectionString, store, text, ids, groups, token);
             Interlocked.Add(ref words, written);
             Interlocked.Add(ref notes, noted);
         });
@@ -168,8 +169,8 @@ internal static class TextLoad
         return (new Outcome(texts.Count, verseCount, words, notes, clock.Elapsed), groups);
     }
 
-    private static async Task<(long Words, long Notes)> LoadWords(string connectionString, ProductStore store, LoadedText text, Groups groups,
-        CancellationToken cancellationToken)
+    private static async Task<(long Words, long Notes)> LoadWords(string connectionString, ProductStore store, LoadedText text, WordIdTable ids,
+        Groups groups, CancellationToken cancellationToken)
     {
         var strongServed = TextWordLoad.StrongServed(store, text.Slug);
         var byKey = new Dictionary<WordKey, long>();
@@ -187,7 +188,7 @@ internal static class TextLoad
             using var reader = store.Open(TextWord.ProductOf(text.Slug), TextWord.Schema(text.Slug));
             foreach (var word in reader.Rows())
             {
-                var id = word.Id ?? throw new InvalidOperationException($"{word.Key} has no id; convert the text again.");
+                var id = ids.Of(word.Key);
                 var verse = text.Verses.TryGetValue(word.Key.Verse, out var known)
                     ? known
                     : throw new InvalidOperationException($"{word.Key}: its verse is not in the text's verse manifest.");

@@ -37,7 +37,7 @@ public sealed class FrameProductsTests : IDisposable
         using (var writer = store.Create(TextWord.ProductOf(Slug), ProductKind.Machine, TextWord.Schema(Slug), "test", []))
         {
             writer.WriteAll(verses.SelectMany(verse => verse.Item2.Split(' ').Select((surface, n) => new TextWord(
-                new WordKey(Slug, VerseKey.Parse(verse.Item1), n + 1), null, surface, " ", null, null, null, null, null, null, false, null, null, null))));
+                new WordKey(Slug, VerseKey.Parse(verse.Item1), n + 1), surface, " ", null, null, null, null, null, null, false, null, null, null))));
         }
 
         using (var writer = store.Create(VerseManifestRow.ProductOf(Slug), ProductKind.Machine, VerseManifestRow.Schema, "test", []))

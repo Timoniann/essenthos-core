@@ -113,7 +113,7 @@ public sealed class StatedAlignmentSourceTests : IDisposable
         using (var writer = store.Create(TextWord.ProductOf(text), ProductKind.Machine, TextWord.Schema(text), "test", []))
         {
             writer.WriteAll(new[] { ("50.1:16", sixteen), ("50.1:17", seventeen) }.SelectMany(verse => verse.Item2.Select((surface, n) =>
-                new TextWord(new WordKey(text, VerseKey.Parse(verse.Item1), n + 1), null, surface, " ", null, null, null, null,
+                new TextWord(new WordKey(text, VerseKey.Parse(verse.Item1), n + 1), surface, " ", null, null, null, null,
                     WordFolding.Fold(surface, language), null, false, null, null, null))));
         }
 
