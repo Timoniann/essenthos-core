@@ -20,8 +20,8 @@ public sealed class ForgeVerbTests
     [InlineData(new[] { "lexicon-translations", "--from", "lexicon" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV", "BHSA", "--daughter" }, true)]
-    [InlineData(new[] { "texts", "ids" }, false)]
-    [InlineData(new[] { "texts", "ids", "all" }, true)]
+    [InlineData(new[] { "texts", "compare" }, false)]
+    [InlineData(new[] { "texts", "compare", "all" }, true)]
     [InlineData(new[] { "evidentia-preview", "BSB", "BHSA", "1" }, false)]
     [InlineData(new[] { "evidentia-preview", "BSB", "BHSA", "1", "1" }, true)]
     public void AVerbTakesTheArgumentsItNeeds(string[] args, bool accepted) =>

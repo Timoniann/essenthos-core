@@ -96,7 +96,7 @@ public sealed class PairRuleSourcesTests : IDisposable
         using (var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []))
         {
             writer.WriteAll(verses.SelectMany(verse => verse.Words.Select((word, n) => new TextWord(
-                new WordKey(slug, VerseKey.Parse(verse.Verse), n + 1), null, word.Surface, " ", null, null, null, word.Morphology,
+                new WordKey(slug, VerseKey.Parse(verse.Verse), n + 1), word.Surface, " ", null, null, null, word.Morphology,
                 null, null, false, null, null, null))));
         }
 

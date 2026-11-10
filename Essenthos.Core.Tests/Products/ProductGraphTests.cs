@@ -1,4 +1,5 @@
 ﻿using Essenthos.Core.Build;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Products;
 using Essenthos.Core.Verbs;
 using FluentAssertions;
@@ -142,7 +143,7 @@ public sealed class ProductGraphTests : IDisposable
         var graph = new ProductGraph(
         [
             new("mapping/pairs", ProductMaker.Kept, "mapping-export", [], [], "none"),
-            new("build/word-id-ceiling", ProductMaker.Kept, "texts ids all", [], [], "none"),
+            new("build/kept-once", ProductMaker.Kept, "an-export", [], [], "none"),
         ]);
         var store = new ProductStore(_root);
 
@@ -150,9 +151,26 @@ public sealed class ProductGraphTests : IDisposable
 
         Make(store, "mapping/pairs");
         Directory.CreateDirectory(Path.Combine(_root, "Essenthos", "build"));
-        File.WriteAllText(Path.Combine(_root, "Essenthos", "build", "word-id-ceiling"), "1000");
+        File.WriteAllText(Path.Combine(_root, "Essenthos", "build", "kept-once"), "1000");
 
         graph.Missing(store).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void A_product_no_line_declares_is_forgotten_once_its_file_is_gone()
+    {
+        var graph = new ProductGraph([new("mapping/pairs", ProductMaker.Kept, "mapping-export", [], [], "none")]);
+        var store = new ProductStore(_root);
+        Make(store, "mapping/pairs");
+        Make(store, "texts/KJV/ids");
+
+        graph.Forget(store).Should().BeEmpty("a file still there is the graph check's to name");
+
+        File.Delete(store.FullPath("texts/KJV/ids", ProductKind.Machine));
+        var relative = store.RelativePath("texts/KJV/ids", ProductKind.Machine);
+        graph.Forget(store).Should().Equal(relative);
+        store.Manifest.Get(relative).Should().BeNull();
+        graph.Check(store.Manifest).Should().BeEmpty();
     }
 
     [Fact]
@@ -160,8 +178,8 @@ public sealed class ProductGraphTests : IDisposable
     {
         var graph = ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));
 
-        foreach (var kept in new[] { "texts/KJV/ids", "mapping/pairs", "mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
-                     "build/word-id-ceiling", "external/tsk/cross-references", "records/derived/occupation-words" })
+        foreach (var kept in new[] { "mapping/pairs", "mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
+                     "external/tsk/cross-references", "records/derived/occupation-words" })
         {
             graph.Find(kept)!.Value.Declaration.Maker.Should().Be(ProductMaker.Kept, kept);
         }
@@ -173,6 +191,9 @@ public sealed class ProductGraphTests : IDisposable
 
         graph.Find("mapping/KJV-BHSA/stated")!.Value.Declaration.Maker.Should().Be(ProductMaker.Build);
         graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("names-from-database") || d.Producer.StartsWith("names-export"));
+        graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("texts ids") || d.Product.EndsWith("/ids", StringComparison.Ordinal),
+            "a word's id is computed from its key, never kept");
+        graph.Find(WordIdCollision.Product)!.Value.Declaration.Producer.Should().StartWith("convert");
     }
 
     [Fact]

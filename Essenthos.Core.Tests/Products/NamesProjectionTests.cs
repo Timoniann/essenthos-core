@@ -35,7 +35,7 @@ public sealed class NamesProjectionTests : IDisposable
     private static void Words(ProductStore store, string slug, params string[] surfaces)
     {
         using var writer = store.Create(TextWord.ProductOf(slug), ProductKind.Machine, TextWord.Schema(slug), "test", []);
-        writer.WriteAll(surfaces.Select((surface, at) => new TextWord(new WordKey(slug, new VerseKey(2, 3, 4), at + 1), 100 + at,
+        writer.WriteAll(surfaces.Select((surface, at) => new TextWord(new WordKey(slug, new VerseKey(2, 3, 4), at + 1),
             surface, " ", null, null, null, null, surface.ToLowerInvariant(), null, false, null, null, null)));
     }
 

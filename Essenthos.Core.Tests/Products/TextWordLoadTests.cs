@@ -25,7 +25,7 @@ public sealed class TextWordLoadTests(WitnessDatabase database) : IDisposable
                 header.Notes.Add(new(StrongTerms.Served, served));
             }
         });
-        writer.WriteAll(Enumerable.Range(1, 3).Select(at => new TextWord(new WordKey(slug, new VerseKey(1, 1, 1), at), 100 + at,
+        writer.WriteAll(Enumerable.Range(1, 3).Select(at => new TextWord(new WordKey(slug, new VerseKey(1, 1, 1), at),
             $"w{at}", " ", null, $"H{at}", null, null, $"w{at}", null, false, null, null, null)));
     }
 
@@ -47,7 +47,7 @@ public sealed class TextWordLoadTests(WitnessDatabase database) : IDisposable
         await Execute(connection, $"""
             CREATE TABLE {table} (
                 text text NOT NULL, own_book int NOT NULL, own_chapter int NOT NULL, own_chapter_label text NOT NULL, own_verse int NOT NULL,
-                own_verse_label text NOT NULL, own_position int NOT NULL, id bigint, surface text NOT NULL, trailer text NOT NULL, lemma text,
+                own_verse_label text NOT NULL, own_position int NOT NULL, surface text NOT NULL, trailer text NOT NULL, lemma text,
                 strong text, gloss text, morphology text, normalised text, graphical text, elided boolean NOT NULL, break text, supplied int,
                 restored int, supplied_mark text, doubtful int, brackets int, subscription int)
             """);

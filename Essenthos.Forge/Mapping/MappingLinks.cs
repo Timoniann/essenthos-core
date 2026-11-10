@@ -9,8 +9,7 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// The links a generator reads, from the mapping's finals instead of the database (DOC-0224 §6, generators read
 /// files): each pair's final, its keys resolved to the word ids of the database the generator's words still come
-/// from, so that the generator's own code is unchanged. Once the texts are products (TSK-1443) the ids come from
-/// <c>texts/&lt;SLUG&gt;/ids</c> and no database is read at all. What a generator writes goes back to a method file
+/// from, so that the generator's own code is unchanged. What a generator writes goes back to a method file
 /// (<see cref="WriteComposed"/>), and the merge decides what of it becomes a link.
 /// </summary>
 internal sealed class MappingLinks(ProductStore store, WordKeys keys, IReadOnlyDictionary<int, string?> languages)

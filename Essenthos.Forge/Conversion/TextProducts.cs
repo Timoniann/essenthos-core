@@ -3,9 +3,8 @@
 namespace Essenthos.Core.Conversion;
 
 /// <summary>
-/// One word of a converted text, as <c>texts/&lt;SLUG&gt;/words</c> holds it: the key, the id the database
-/// gives it (kept from the corpus it was first exported from, null for a word that is new), and every
-/// column of the word row.
+/// One word of a converted text, as <c>texts/&lt;SLUG&gt;/words</c> holds it: the key and every column of the
+/// word row. Its id in a database is computed from the key (<see cref="WordIds"/>), never carried.
 /// </summary>
 /// <param name="Supplied">Which supplied span of its verse the word stands in, counting runs from 1; null outside one.</param>
 /// <param name="Restored">The same for the spans an editor restored from other manuscripts.</param>
@@ -16,7 +15,6 @@ namespace Essenthos.Core.Conversion;
 /// </remarks>
 internal sealed record TextWord(
     WordKey Key,
-    long? Id,
     string Surface,
     string Trailer,
     string? Lemma,
@@ -42,7 +40,6 @@ internal sealed record TextWord(
 
     public static ProductSchema<TextWord> Schema(string text) => new ProductSchema<TextWord>()
         .OwnWordKey("own", w => w.Key)
-        .OptionalInteger("id", w => w.Id)
         .Text("surface", w => w.Surface)
         .Text("trailer", w => w.Trailer)
         .OptionalText("lemma", w => w.Lemma)
@@ -61,43 +58,26 @@ internal sealed record TextWord(
         .OptionalInteger("subscription", w => w.Subscription)
         .Reads(row => new TextWord(
             WordKey.Parse(row.Text(0), text),
-            row.IntegerOrNull(1),
+            row.Text(1),
             row.Text(2),
-            row.Text(3),
+            row.TextOrNull(3),
             row.TextOrNull(4),
             row.TextOrNull(5),
-            row.TextOrNull(6),
-            row.JsonOrNull(7),
+            row.JsonOrNull(6),
+            row.TextOrNull(7),
             row.TextOrNull(8),
-            row.TextOrNull(9),
-            row.Boolean(10),
-            row.TextOrNull(11),
-            row.Int32OrNull(12),
-            row.Int32OrNull(13))
+            row.Boolean(9),
+            row.TextOrNull(10),
+            row.Int32OrNull(11),
+            row.Int32OrNull(12))
         {
-            SuppliedMark = row.TextOrNull(14),
-            Doubtful = row.Int32OrNull(15),
-            Brackets = row.Int32OrNull(16),
-            Subscription = row.Int32OrNull(17),
+            SuppliedMark = row.TextOrNull(13),
+            Doubtful = row.Int32OrNull(14),
+            Brackets = row.Int32OrNull(15),
+            Subscription = row.Int32OrNull(16),
         });
 
     public VerseWord Hashed => new(Surface, Trailer, Lemma, Strong, Morphology, Gloss);
-}
-
-/// <summary>
-/// The id a word of the corpus holds, by key, with the word as the corpus reads it: what <c>forge texts ids</c> exports
-/// from a corpus, so that every later conversion gives each word the id it already has, and a word a correction moved
-/// within its verse is still found by its letters (<see cref="TextWordIds"/>).
-/// </summary>
-internal sealed record TextWordId(WordKey Key, long Id, string Surface)
-{
-    public static string ProductOf(string text) => $"texts/{text}/ids";
-
-    public static ProductSchema<TextWordId> Schema(string text) => new ProductSchema<TextWordId>()
-        .OwnWordKey("own", w => w.Key)
-        .Integer("id", w => w.Id)
-        .Text("surface", w => w.Surface)
-        .Reads(row => new TextWordId(WordKey.Parse(row.Text(0), text), row.Integer(1), row.Text(2)));
 }
 
 /// <summary>

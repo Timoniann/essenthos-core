@@ -134,7 +134,7 @@ public sealed class SuppliedWordSourceTests : IDisposable
         using (var writer = store.Create(TextWord.ProductOf(text), ProductKind.Machine, TextWord.Schema(text), "test", []))
         {
             writer.WriteAll(verses.SelectMany(verse => verse.Words.Select((word, n) => new TextWord(
-                new WordKey(text, VerseKey.Parse(verse.Verse), n + 1), null, word.Surface, " ", null, null, null, null, null, null, false, null,
+                new WordKey(text, VerseKey.Parse(verse.Verse), n + 1), word.Surface, " ", null, null, null, null, null, null, false, null,
                 word.Supplied, null))));
         }
 

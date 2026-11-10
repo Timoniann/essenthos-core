@@ -8,7 +8,8 @@ namespace Essenthos.Core.Build;
 /// <summary>
 /// The served tables loaded whole from a product: made from files (<see cref="TableProducts"/>, <c>tables/&lt;table&gt;</c>), or,
 /// for the ones no producer makes yet, carried from a database as <c>carried/&lt;table&gt;</c> so that a build
-/// still reads files only: every column as Postgres prints it, a text by its slug, a word by its id (word ids are the products' own). Loaded through a staging table, each row put back on the text,
+/// still reads files only: every column as Postgres prints it, a text by its slug, a word by its id (computed from its key,
+/// so the same in every database built from the same words). Loaded through a staging table, each row put back on the text,
 /// verse and word the new database holds there; a row whose word or verse the products no longer hold is left out and
 /// counted. Each table leaves this list when the package that owns it writes it as a product.
 /// </summary>

@@ -79,18 +79,17 @@ internal interface ITextStage
     void Apply(ConvertedText text, string resources);
 }
 
-internal sealed record ConversionOutcome(string Slug, bool Unchanged, int Verses, long Words, TimeSpan Elapsed, WordIdOutcome? Ids = null)
+internal sealed record ConversionOutcome(string Slug, bool Unchanged, int Verses, long Words, TimeSpan Elapsed)
 {
     public override string ToString() => Unchanged
         ? $"{Slug}: inputs unchanged, nothing written"
-        : $"{Slug}: {Verses} verses, {Words} words in {Elapsed.TotalSeconds:0.0} s; ids: {Ids}";
+        : $"{Slug}: {Verses} verses, {Words} words in {Elapsed.TotalSeconds:0.0} s";
 }
 
 /// <summary>
 /// <c>forge convert</c>: a text from its declared sources into its products. Reads through the load's
-/// reader, applies the corrections file, runs the stages that apply to it, gives each word the id it held
-/// (<see cref="TextWordIds"/>), and writes <c>words</c>, <c>verses</c>, <c>notes</c>, <c>books</c> and
-/// <c>text</c>. Nothing is written when no input moved since the products were made.
+/// reader, applies the corrections file, runs the stages that apply to it, and writes <c>words</c>,
+/// <c>verses</c>, <c>notes</c>, <c>books</c> and <c>text</c>. Nothing is written when no input moved since the products were made.
 /// </summary>
 internal static class TextConverter
 {
@@ -109,12 +108,9 @@ internal static class TextConverter
         paths.AddRange(Stages.Where(stage => stage.AppliesTo(text.Slug)).SelectMany(stage => stage.Products(text.Slug))
             .Select(product => store.Find(product) ?? throw new FileNotFoundException(
                 $"{text.Slug} is converted from {product}, which has not been made under {store.ResourcesPath}; convert that text first.")));
-        foreach (var product in (string[])[TextCorrections.ProductOf(text.Slug), TextWordId.ProductOf(text.Slug)])
+        if (store.Find(TextCorrections.ProductOf(text.Slug)) is { } corrections)
         {
-            if (store.Find(product) is { } found)
-            {
-                paths.Add(found);
-            }
+            paths.Add(corrections);
         }
 
         return store.Inputs(paths.Distinct(StringComparer.Ordinal).Where(path => Exists(store, path)));
@@ -148,11 +144,8 @@ internal static class TextConverter
         }
 
         var text = Read(store, declared);
-        var (ids, outcome) = TextWordIds.Assign(store, text);
-        text.Provenance.Add(new("ids", outcome.ToString()));
-        text.Provenance.Add(new(WordIdOutcome.GivenNote, outcome.Given.ToString(System.Globalization.CultureInfo.InvariantCulture)));
-        Write(store, text, inputs, ids);
-        return new ConversionOutcome(slug, false, text.Verses.Count, text.Verses.Sum(v => (long)v.Words.Count), started.Elapsed, outcome);
+        Write(store, text, inputs);
+        return new ConversionOutcome(slug, false, text.Verses.Count, text.Verses.Sum(v => (long)v.Words.Count), started.Elapsed);
     }
 
     /// <summary>The text read, corrected and put through its stages, without writing anything.</summary>
@@ -283,7 +276,7 @@ internal static class TextConverter
         return new ConvertedText { Slug = definition.Slug, Definition = definition, Books = books, Verses = verses, Notes = notes };
     }
 
-    private static void Write(ProductStore store, ConvertedText text, IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<VerseKey, long?[]> ids)
+    private static void Write(ProductStore store, ConvertedText text, IReadOnlyList<ProductInput> inputs)
     {
         var slug = text.Slug;
         var producer = ProductHeader.DescribeProducer($"forge convert {slug}");
@@ -295,11 +288,10 @@ internal static class TextConverter
             foreach (var verse in text.Verses)
             {
                 using var hasher = new VerseHasher();
-                var given = ids[verse.Key];
                 foreach (var (at, word) in verse.Words.Index())
                 {
                     var key = new WordKey(slug, verse.Key, at + 1);
-                    var row = new TextWord(key, given[at], word.Surface, word.Trailer, word.Lemma,
+                    var row = new TextWord(key, word.Surface, word.Trailer, word.Lemma,
                         word.Strong, word.Gloss, word.Morphology, word.Normalised, word.Graphical, word.Elided, word.Break,
                         word.Supplied, word.Restored)
                     {

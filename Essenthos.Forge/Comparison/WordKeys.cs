@@ -7,8 +7,8 @@ namespace Essenthos.Core.Comparison;
 /// <summary>
 /// Every word of one database by its key and back: <c>KJV 1.1:1.3</c> for a word id, and the id for a key.
 /// What turns rows that point at words into rows two databases can be compared on, and what a loader
-/// resolves the keys of a product file through. Held as arrays by id, so all 29 M words of the corpus
-/// take about a quarter of a gigabyte and a lookup is two array reads.
+/// resolves the keys of a product file through. A word id is a hash of its key (<see cref="WordIds"/>), so the words
+/// are held in arrays sorted by id and found by binary search: all 29 M words take about 0.4 GB, a key 25 compares.
 /// </summary>
 internal sealed class WordKeys
 {
@@ -17,6 +17,7 @@ internal sealed class WordKeys
     private readonly int[] _verseText;
     private readonly VerseKey[] _verseKey;
     private readonly string?[] _verseOwn;
+    private readonly long[] _wordIds;
     private readonly int[] _wordVerse;
     private readonly short[] _wordPosition;
     private Dictionary<(int Text, VerseKey Verse), int>? _verses;
@@ -24,13 +25,14 @@ internal sealed class WordKeys
     private long[]? _ids;
     private short[]? _positions;
 
-    private WordKeys(Dictionary<int, string> texts, int[] verseText, VerseKey[] verseKey, int[] wordVerse, short[] wordPosition)
+    private WordKeys(Dictionary<int, string> texts, int[] verseText, VerseKey[] verseKey, long[] wordIds, int[] wordVerse, short[] wordPosition)
     {
         _texts = texts;
         _textIds = texts.ToDictionary(pair => pair.Value, pair => pair.Key, StringComparer.Ordinal);
         _verseText = verseText;
         _verseKey = verseKey;
         _verseOwn = new string?[verseKey.Length];
+        _wordIds = wordIds;
         _wordVerse = wordVerse;
         _wordPosition = wordPosition;
     }
@@ -57,7 +59,7 @@ internal sealed class WordKeys
         }
 
         var maxVerse = await Scalar(connection, "SELECT coalesce(max(id), 0) FROM verse", cancellationToken);
-        var maxWord = await Scalar(connection, "SELECT coalesce(max(id), 0) FROM word", cancellationToken);
+        var wordCount = await Scalar(connection, "SELECT count(*) FROM word", cancellationToken);
         var verseText = new int[maxVerse + 1];
         var verseKey = new VerseKey[maxVerse + 1];
         using (var export = connection.BeginBinaryExport(
@@ -78,22 +80,43 @@ internal sealed class WordKeys
             }
         }
 
-        var wordVerse = new int[maxWord + 1];
-        var wordPosition = new short[maxWord + 1];
+        // Each word's verse and position packed beside its id, so that one sort orders all three.
+        var wordIds = new long[wordCount];
+        var packed = new long[wordCount];
         var count = 0;
         using (var export = connection.BeginBinaryExport(
                          "COPY (SELECT id, verse_id, position FROM word) TO STDOUT (FORMAT BINARY)"))
         {
             while (export.StartRow() >= 0)
             {
-                var id = export.Read<long>(NpgsqlDbType.Bigint);
-                wordVerse[id] = export.Read<int>(NpgsqlDbType.Integer);
-                wordPosition[id] = checked((short)export.Read<int>(NpgsqlDbType.Integer));
-                count++;
+                if (count == wordCount)
+                {
+                    throw new InvalidOperationException("The word table grew while its keys were read.");
+                }
+
+                wordIds[count] = export.Read<long>(NpgsqlDbType.Bigint);
+                var verse = export.Read<int>(NpgsqlDbType.Integer);
+                var position = checked((short)export.Read<int>(NpgsqlDbType.Integer));
+                packed[count++] = ((long)verse << 16) | (ushort)position;
             }
         }
 
-        var keys = new WordKeys(texts, verseText, verseKey, wordVerse, wordPosition) { Words = count };
+        if (count < wordCount)
+        {
+            Array.Resize(ref wordIds, count);
+            Array.Resize(ref packed, count);
+        }
+
+        Array.Sort(wordIds, packed);
+        var wordVerse = new int[count];
+        var wordPosition = new short[count];
+        for (var i = 0; i < count; i++)
+        {
+            wordVerse[i] = (int)(packed[i] >> 16);
+            wordPosition[i] = (short)(ushort)packed[i];
+        }
+
+        var keys = new WordKeys(texts, verseText, verseKey, wordIds, wordVerse, wordPosition) { Words = count };
         if (reverse)
         {
             keys.BuildReverse();
@@ -102,11 +125,11 @@ internal sealed class WordKeys
         return keys;
     }
 
-    public bool Has(long word) => word > 0 && word < _wordVerse.Length && _wordVerse[word] != 0;
+    public bool Has(long word) => Array.BinarySearch(_wordIds, word) >= 0;
 
-    public int VerseOf(long word) => _wordVerse[word];
+    public int VerseOf(long word) => Verse(word);
 
-    public int TextOf(long word) => _verseText[_wordVerse[word]];
+    public int TextOf(long word) => _verseText[Verse(word)];
 
     public VerseKey VerseKeyOf(int verse) => _verseKey[verse];
 
@@ -114,16 +137,18 @@ internal sealed class WordKeys
 
     public WordKey Key(long word)
     {
-        var verse = Verse(word);
-        return new WordKey(_texts[_verseText[verse]], _verseKey[verse], _wordPosition[word]);
+        var at = At(word);
+        var verse = _wordVerse[at];
+        return new WordKey(_texts[_verseText[verse]], _verseKey[verse], _wordPosition[at]);
     }
 
     /// <summary>The key without its text, <c>1.1:1.3</c>, as a file of one text or one pair writes it.</summary>
     public string Own(long word)
     {
-        var verse = Verse(word);
+        var at = At(word);
+        var verse = _wordVerse[at];
         var own = _verseOwn[verse] ??= _verseKey[verse].ToString();
-        return string.Concat(own, ".", _wordPosition[word].ToString(System.Globalization.CultureInfo.InvariantCulture));
+        return string.Concat(own, ".", _wordPosition[at].ToString(System.Globalization.CultureInfo.InvariantCulture));
     }
 
     /// <summary>The word a key names, or null where this database has no such word.</summary>
@@ -147,8 +172,10 @@ internal sealed class WordKeys
 
     public long? Id(int textId, WordKey key) => Id(textId, key.Verse, key.Position);
 
-    private int Verse(long word) =>
-        Has(word) ? _wordVerse[word] : throw new KeyNotFoundException($"The database has no word {word}.");
+    private int At(long word) =>
+        Array.BinarySearch(_wordIds, word) is var at and >= 0 ? at : throw new KeyNotFoundException($"The database has no word {word}.");
+
+    private int Verse(long word) => _wordVerse[At(word)];
 
     private void BuildReverse()
     {
@@ -163,12 +190,9 @@ internal sealed class WordKeys
         }
 
         var start = new int[verses + 1];
-        for (long w = 1; w < _wordVerse.Length; w++)
+        for (var w = 0; w < _wordVerse.Length; w++)
         {
-            if (_wordVerse[w] != 0)
-            {
-                start[_wordVerse[w] + 1]++;
-            }
+            start[_wordVerse[w] + 1]++;
         }
 
         for (var v = 1; v <= verses; v++)
@@ -179,14 +203,11 @@ internal sealed class WordKeys
         var fill = (int[])start.Clone();
         var ids = new long[Words];
         var positions = new short[Words];
-        for (long w = 1; w < _wordVerse.Length; w++)
+        for (var w = 0; w < _wordVerse.Length; w++)
         {
-            if (_wordVerse[w] != 0)
-            {
-                var at = fill[_wordVerse[w]]++;
-                ids[at] = w;
-                positions[at] = _wordPosition[w];
-            }
+            var at = fill[_wordVerse[w]]++;
+            ids[at] = _wordIds[w];
+            positions[at] = _wordPosition[w];
         }
 
         for (var v = 1; v < verses; v++)

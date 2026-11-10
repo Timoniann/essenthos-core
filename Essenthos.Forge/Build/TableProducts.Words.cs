@@ -19,7 +19,8 @@ namespace Essenthos.Core.Build;
 /// <summary>
 /// The served tables of word-level statements made from files: BHSA's syntax (<c>word_group</c> kinds the words do not carry,
 /// <c>word_group_word</c>), the second parsings of Nestle 1904 (<c>word_parsing</c>) and the Strong numbers a source proposes
-/// beside a word's own (<c>word_strong</c>). A word is the one its text's words product names, by id; the readings are the
+/// beside a word's own (<c>word_strong</c>). A word is the one its text's words product names, by the id its key gives it
+/// (<see cref="WordIdTable"/>); the readings are the
 /// load steps' own (<see cref="SyntaxLoader"/>, <see cref="MorphGntParsingLoader"/>, <see cref="MaculaAnnotationLoader"/>,
 /// <see cref="SeptuagintStrongLoader"/>, <see cref="BereanNumberLoader"/>, <see cref="NewTestamentLinkLoader"/>).
 /// </summary>
@@ -36,17 +37,20 @@ internal static partial class TableProducts
     private static readonly Table[] Words =
     [
         new("word_group", ["id", "text", "kind", "parent_id", "position", "features", "mother_group_id", "mother_word_id"],
-            ["etcbc"], [TextWord.ProductOf(Bhsa), TextBook.ProductOf(Bhsa)], SyntaxGroupRows),
-        new("word_group_word", ["word_group_id", "word_id"], ["etcbc"], [TextWord.ProductOf(Bhsa), TextBook.ProductOf(Bhsa)], SyntaxMemberRows),
+            ["etcbc"], [TextWord.ProductOf(Bhsa), TextBook.ProductOf(Bhsa), WordIdCollision.Product], SyntaxGroupRows),
+        new("word_group_word", ["word_group_id", "word_id"], ["etcbc"], [TextWord.ProductOf(Bhsa), TextBook.ProductOf(Bhsa), WordIdCollision.Product],
+            SyntaxMemberRows),
         new("word_parsing", ["id", "word_id", "lemma", "morphology", "method", "confidence", "source", "note"],
-            ["MorphGnt", "Macula"], [TextWord.ProductOf(Nestle)], ParsingRows),
+            ["MorphGnt", "Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ParsingRows),
         new("word_strong", ["id", "word_id", "number", "method", "confidence", "source", "note"],
             [StrongHebrew, StrongGreek, BereanTables],
-            [TextWord.ProductOf(Brenton), TextWord.ProductOf(Berean), FrameFile.Product(Berean), TextWord.ProductOf(KingJames)],
+            [TextWord.ProductOf(Brenton), TextWord.ProductOf(Berean), FrameFile.Product(Berean), TextWord.ProductOf(KingJames), WordIdCollision.Product],
             WordStrongRows, store => TextConverter.Inputs(store, TextCatalogue.Find(KingJames))),
     ];
 
     private static (ProductStore Store, List<SyntaxLoader.GroupDraft> Drafts)? _syntax;
+
+    private static (ProductStore Store, WordIdTable Ids)? _ids;
 
     private static List<TextWord> WordsOf(ProductStore store, string slug)
     {
@@ -54,8 +58,17 @@ internal static partial class TableProducts
         return reader.ReadAll();
     }
 
-    private static long IdOf(TextWord word) =>
-        word.Id ?? throw new InvalidDataException($"{word.Key} has no id in its words product; convert it again after texts ids.");
+    private static WordIdTable Ids(ProductStore store)
+    {
+        if (_ids is { } held && ReferenceEquals(held.Store, store))
+        {
+            return held.Ids;
+        }
+
+        var ids = WordIdTable.For(store);
+        _ids = (store, ids);
+        return ids;
+    }
 
     /// <summary>BHSA's syntax drafted as the load drafts it, numbered from 1 in draft order.</summary>
     private static List<SyntaxLoader.GroupDraft> Syntax(ProductStore store)
@@ -76,7 +89,7 @@ internal static partial class TableProducts
         foreach (var word in WordsOf(store, Bhsa).OrderBy(w => positions[w.Key.Verse.Book]).ThenBy(w => w.Key.Verse.Chapter)
                      .ThenBy(w => w.Key.Verse.Verse).ThenBy(w => w.Key.Position))
         {
-            bySlot[++slot] = IdOf(word);
+            bySlot[++slot] = Ids(store).Of(word.Key);
         }
 
         var drafts = SyntaxLoader.Drafts(BhsaProject.Load(store.FullPath("etcbc")), bySlot);
@@ -104,6 +117,7 @@ internal static partial class TableProducts
         var nestle = WordsOf(store, Nestle).OrderBy(w => w.Key.Verse.Book).ThenBy(w => w.Key.Verse.Chapter).ThenBy(w => w.Key.Verse.Verse)
             .ThenBy(w => w.Key.Position).ToList();
         var lines = new List<string?[]>(280_000);
+        var ids = Ids(store);
 
         var witness = nestle.Select(w =>
         {
@@ -117,13 +131,13 @@ internal static partial class TableProducts
             var word = parsing[row.Parsing];
             var printed = row.Match == MorphGntMatch.Printed;
             lines.Add([
-                Int(IdOf(nestle[row.Witness])), word.Lemma, MorphGntParsingLoader.Morphology(word), lexical,
+                Int(ids.Of(nestle[row.Witness].Key)), word.Lemma, MorphGntParsingLoader.Morphology(word), lexical,
                 Float(printed ? MorphGntParsingLoader.PrintedConfidence : MorphGntParsingLoader.SpellingConfidence), MorphGntParsingLoader.Source,
                 printed ? null : MorphGntParsingLoader.Note(witness[row.Witness], word),
             ]);
         }
 
-        var annotated = nestle.Select(w => new MaculaAnnotationLoader.WitnessWord(IdOf(w), w.Key.Verse.Book, w.Key.Verse.Chapter, w.Key.Verse.Verse,
+        var annotated = nestle.Select(w => new MaculaAnnotationLoader.WitnessWord(ids.Of(w.Key), w.Key.Verse.Book, w.Key.Verse.Chapter, w.Key.Verse.Verse,
             w.Key.Position, w.Surface)).ToArray();
         var annotation = MaculaReader.ReadFile(store.FullPath("Macula"));
         MaculaAnnotationLoader.Check(annotated, annotation);
@@ -174,13 +188,14 @@ internal static partial class TableProducts
         }
 
         var lexical = EnumSpelling.Of(LinkMethod.Lexical);
+        var ids = Ids(store);
         foreach (var word in WordsOf(store, Brenton).Where(w => w.Lemma is not null))
         {
             var (numbers, bridged) = SeptuagintStrongLoader.Numbers(entries, GreekLetters.Bare(word.Lemma!));
             var confidence = bridged ? SeptuagintStrongLoader.BridgedConfidence : SeptuagintStrongLoader.Shared(Math.Max(1, numbers.Count));
             foreach (var number in numbers)
             {
-                yield return [Int(IdOf(word)), number, lexical, Float(confidence), SeptuagintStrongLoader.Source, $"through the lemma {word.Lemma}"];
+                yield return [Int(ids.Of(word.Key)), number, lexical, Float(confidence), SeptuagintStrongLoader.Source, $"through the lemma {word.Lemma}"];
             }
         }
     }
@@ -197,12 +212,13 @@ internal static partial class TableProducts
             }
         }
 
+        var ids = Ids(store);
         var english = WordsOf(store, Berean)
             .Select(w => (Word: w, At: primary.TryGetValue(w.Key.Verse, out var moved) ? moved : FrameFile.AtOwn(w.Key.Verse)))
             .GroupBy(w => (w.At.Book, w.At.Chapter, w.At.Verse))
             .ToDictionary(g => g.Key, g => g
                 .OrderBy(w => w.Word.Key.Verse.Chapter).ThenBy(w => w.Word.Key.Verse.Verse).ThenBy(w => w.Word.Key.Position)
-                .Select(w => new BereanLinkLoader.Word(IdOf(w.Word), 0, w.Word.Surface, w.Word.Strong))
+                .Select(w => new BereanLinkLoader.Word(ids.Of(w.Word.Key), 0, w.Word.Surface, w.Word.Strong))
                 .ToList());
 
         var numbered = new HashSet<(long Word, string Number)>(800_000);
@@ -240,7 +256,8 @@ internal static partial class TableProducts
     /// </summary>
     private static List<string?[]> KingJamesPhrases(ProductStore store)
     {
-        var ids = WordsOf(store, KingJames).ToDictionary(w => w.Key, IdOf);
+        var table = Ids(store);
+        var ids = WordsOf(store, KingJames).ToDictionary(w => w.Key, w => table.Of(w.Key));
         var text = TextConverter.Read(store, TextCatalogue.Find(KingJames));
         var verses = text.Verses.Where(v => v.Key.VerseLabel.Length == 0).ToDictionary(v => (v.Key.Book, v.Key.Chapter, v.Key.Verse));
         var stated = EnumSpelling.Of(LinkMethod.StatedBySource);

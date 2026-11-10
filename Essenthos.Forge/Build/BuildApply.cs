@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Mapping;
@@ -24,7 +25,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 {
     public List<BuildStage> Stages { get; } = [];
 
-    private static readonly string[] TextLayer = ["texts/{text}/words", "texts/{text}/verses", "texts/{text}/notes", "texts/{text}/books", "texts/{text}/text"];
+    private static readonly string[] TextLayer =
+        ["texts/{text}/words", "texts/{text}/verses", "texts/{text}/notes", "texts/{text}/books", "texts/{text}/text", WordIdCollision.Product];
 
     public async Task<Applied?> Run(CancellationToken cancellationToken)
     {

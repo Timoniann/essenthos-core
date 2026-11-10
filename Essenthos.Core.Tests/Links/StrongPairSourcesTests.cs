@@ -117,7 +117,6 @@ public sealed class StrongPairSourcesTests : IDisposable
             "Essenthos/texts/LUTH1912/words.essx", "Essenthos/texts/LUTH1912/frame.essx", "Essenthos/texts/LUTH1912/text.tsv",
             "Essenthos/texts/RP2018/words.essx", "Essenthos/texts/RP2018/frame.essx", "Essenthos/texts/RP2018/text.tsv", "Luther1912/01.usfm",
             "Essenthos/texts/BHSA/words.essx", "Essenthos/texts/NESTLE1904/words.essx", "Essenthos/texts/LUTH1912/corrections.tsv",
-            "Essenthos/texts/LUTH1912/ids.essx",
         ];
         string[] laid = ["ChineseUnion1919/ChiUn/module.txt", "Segond1910Strong/FreSegond1910/module.txt", "ReinaValera1909/01.usfm"];
         string[] lexical =

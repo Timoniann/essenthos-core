@@ -42,7 +42,6 @@ internal static class TextComparison
         ("doubtful", w => w.Doubtful?.ToString()),
         ("brackets", w => w.Brackets?.ToString()),
         ("subscription", w => w.Subscription?.ToString()),
-        ("id", w => w.Id?.ToString()),
     ];
 
     public static List<TextDifference> Compare(TextSnapshot corpus, IReadOnlyList<TextWord> words, IReadOnlyList<VerseManifestRow> verses,

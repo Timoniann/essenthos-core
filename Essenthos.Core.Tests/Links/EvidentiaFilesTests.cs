@@ -144,11 +144,10 @@ public sealed class EvidentiaFilesTests : IDisposable
 
     private static void Words(ProductStore store, string text, params (string Verse, string[] Words)[] verses)
     {
-        var id = text == "KJV" ? 100 : 200;
         using (var writer = store.Create(TextWord.ProductOf(text), ProductKind.Machine, TextWord.Schema(text), "test", []))
         {
             writer.WriteAll(verses.SelectMany(verse => verse.Words.Select((surface, n) => new TextWord(
-                new WordKey(text, VerseKey.Parse(verse.Verse), n + 1), ++id, surface, " ", null, null, null, null, null, null, false, null, null, null))));
+                new WordKey(text, VerseKey.Parse(verse.Verse), n + 1), surface, " ", null, null, null, null, null, null, false, null, null, null))));
         }
 
         using var frame = store.Create(FrameFile.Product(text), ProductKind.Machine, FrameRow.Schema, "test", []);

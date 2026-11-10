@@ -5,7 +5,7 @@ namespace Essenthos.Core.Conversion;
 
 /// <summary>
 /// A text as a corpus database holds it, read into the shapes of the converted products: what
-/// <c>forge texts ids</c> takes the ids from and what <c>forge texts compare</c> holds a conversion against.
+/// <c>forge texts compare</c> holds a conversion against.
 /// Reads only.
 /// </summary>
 internal sealed class TextSnapshot
@@ -67,38 +67,6 @@ internal sealed class TextSnapshot
         return await command.ExecuteScalarAsync() is int id ? id : null;
     }
 
-    /// <summary>Only the ids, by key, in key order.</summary>
-    public static async Task<List<TextWordId>> ReadIds(NpgsqlConnection connection, string slug)
-    {
-        var text = await TextId(connection, slug) ?? throw new InvalidOperationException($"The database holds no text {slug}.");
-        var ids = new List<TextWordId>(1 << 20);
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT w.id, b.canonical_ordinal, v.chapter_number, v.number, v.label, w."position", w."text"
-            FROM word w JOIN verse v ON v.id = w.verse_id JOIN book b ON b.id = v.book_id
-            WHERE w.text_id = @text
-            ORDER BY b.canonical_ordinal, v.chapter_number, v.number, v.label COLLATE "C", w."position"
-            """, connection) { CommandTimeout = 0 };
-        command.Parameters.AddWithValue("text", text);
-        await using var reader = await command.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            ids.Add(new TextWordId(
-                new WordKey(slug, new VerseKey(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetString(4)), reader.GetInt32(5)),
-                reader.GetInt64(0), reader.GetString(6)));
-        }
-
-        return ids;
-    }
-
-    /// <summary>The highest word id the database has given out: the larger of the table's highest and its sequence's last.</summary>
-    public static async Task<long> HighestWordId(NpgsqlConnection connection)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT GREATEST((SELECT coalesce(max(id), 0) FROM word), (SELECT last_value FROM word_id_seq))", connection);
-        return Convert.ToInt64(await command.ExecuteScalarAsync());
-    }
-
     public static async Task<TextSnapshot> Read(NpgsqlConnection connection, string slug)
     {
         var text = await TextId(connection, slug) ?? throw new InvalidOperationException($"The database holds no text {slug}.");
@@ -133,7 +101,7 @@ internal sealed class TextSnapshot
                     wordGroups.AddRange(memberships.Select(g => (words.Count, g.Group, g.Kind, g.Position, g.Features)));
                 }
 
-                words.Add(new TextWord(key, id, reader.GetString(6), reader.GetString(7), Text(reader, 8), Text(reader, 9), Text(reader, 10),
+                words.Add(new TextWord(key, reader.GetString(6), reader.GetString(7), Text(reader, 8), Text(reader, 9), Text(reader, 10),
                     Text(reader, 11), Text(reader, 12), Text(reader, 13), reader.GetBoolean(14), Text(reader, 15), null, null));
             }
         }

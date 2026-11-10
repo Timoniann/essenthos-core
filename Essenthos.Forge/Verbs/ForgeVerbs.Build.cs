@@ -133,6 +133,11 @@ internal static partial class ForgeVerbs
     private static async Task<bool> BuildProducts(ForgeRun forge, List<BuildStage> stages)
     {
         var graph = ProductGraph.Read(new ProductStore(forge.Resources));
+        foreach (var gone in graph.Forget(new ProductStore(forge.Resources)))
+        {
+            forge.Logger.LogInformation("products: {Product} is declared by no line and gone from the store; the manifest forgets it", gone);
+        }
+
         foreach (var producer in graph.Order())
         {
             var arguments = producer.Split(' ', StringSplitOptions.RemoveEmptyEntries);
