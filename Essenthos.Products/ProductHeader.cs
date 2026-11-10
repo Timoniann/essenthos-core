@@ -91,7 +91,8 @@ public sealed class ProductHeader
 
     /// <summary>
     /// <c>forge convert KJV   (Essenthos.Forge 1.0.0+2b87c172)</c>: the verb as the producer names it,
-    /// and the entry assembly with its informational version, which carries the commit.
+    /// and the entry assembly with its informational version, which carries the commit. The version is provenance for a
+    /// reader: <see cref="ProductDigest"/> leaves it out, so a new commit alone moves no product's hash.
     /// </summary>
     public static string DescribeProducer(string verb)
     {
@@ -99,7 +100,38 @@ public sealed class ProductHeader
         var version = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
                       ?? assembly.GetName().Version?.ToString()
                       ?? "unversioned";
-        return $"{verb}   ({assembly.GetName().Name} {version})";
+        return $"{verb}{VersionOpen}{assembly.GetName().Name} {version})";
+    }
+
+    private const string VersionOpen = "   (";
+
+    /// <summary>The producer without the assembly and version <see cref="DescribeProducer"/> adds: what a product's digest reads of it.</summary>
+    public static string WithoutVersion(string producer)
+    {
+        var at = producer.LastIndexOf(VersionOpen, StringComparison.Ordinal);
+        return at > 0 && producer.EndsWith(')') ? producer[..at] : producer;
+    }
+
+    /// <summary>
+    /// A header line as <see cref="ProductDigest"/> reads it: an <c>inputs</c> line names the paths without their hashes,
+    /// a <c>producer</c> line drops the version; every other line is itself.
+    /// </summary>
+    internal static string DigestedLine(string line)
+    {
+        var text = line.StartsWith("# ", StringComparison.Ordinal) ? line[2..] : line.TrimStart('#');
+        var end = text.EndsWith('\n') ? text.EndsWith("\r\n", StringComparison.Ordinal) ? text.Length - 2 : text.Length - 1 : text.Length;
+        if (!TryNamed(text[..end], out var name, out var value))
+        {
+            return line;
+        }
+
+        return name switch
+        {
+            InputsName => $"# {name}  " + string.Join(' ', value.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(part => part.LastIndexOf(ProductInput.Separator) is var at and > 0 ? part[..at] : part)) + "\n",
+            ProducerName => $"# {name}  {WithoutVersion(value)}\n",
+            _ => line,
+        };
     }
 
     /// <summary>

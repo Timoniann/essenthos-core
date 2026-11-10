@@ -131,7 +131,7 @@ public sealed class ProductStoreTests : IDisposable
         entry.Should().NotBeNull();
         entry!.Rows.Should().Be(2);
         entry.Inputs.Should().Equal(inputs);
-        entry.Sha256.Should().Be(InputHasher.Sha256Of(Path.Combine(_root, "Essenthos", "texts", "KJV", "words.tsv")));
+        entry.Sha256.Should().Be(ProductDigest.Of(Path.Combine(_root, "Essenthos", "texts", "KJV", "words.tsv")));
         entry.Built.Should().BeCloseTo(DateTimeOffset.UtcNow, TimeSpan.FromMinutes(1));
         BuildManifest.Load(_root).Get(entry.Product).Should().Be(entry, "the manifest is saved as each product completes");
     }

@@ -244,10 +244,10 @@ internal sealed class EssxInspector(DeskPaths paths)
 
         var clock = Stopwatch.StartNew();
         using var reader = EssxReader.Open(opened.Path);
-        var ok = reader.Verify(out var computedSha256, out var fileSha256);
+        var ok = reader.Verify(out var computedSha256, out var fileSha256, out var digest);
         var ms = clock.Elapsed.TotalMilliseconds;
         var manifest = opened.Uploaded ? null : ManifestHash(opened.Path);
-        return new EssxVerifyView(ok, Convert.ToHexStringLower(reader.StoredHash()), computedSha256, fileSha256, manifest, manifest is null ? null : manifest == fileSha256, ms);
+        return new EssxVerifyView(ok, Convert.ToHexStringLower(reader.StoredHash()), computedSha256, fileSha256, manifest, manifest is null ? null : manifest == digest || manifest == fileSha256, ms);
     }
 
     /// <summary>
