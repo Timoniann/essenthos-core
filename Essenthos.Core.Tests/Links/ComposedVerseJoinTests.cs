@@ -1,10 +1,7 @@
-using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities;
-using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Links;
@@ -15,88 +12,69 @@ namespace Essenthos.Core.Tests.Links;
 /// Philippians 1:16 and 1:17 stand in the critical text's order — and carried onto a text that
 /// orders them the other way, the crossing names the wrong verse.
 /// </summary>
-[Collection(WitnessDatabaseCollection.Name)]
 public sealed class ComposedVerseJoinTests : IDisposable
 {
-    private readonly AppDbContext _db;
-    private readonly Text _english;
-    private readonly Text _greek;
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "essenthos-compose-test", Guid.NewGuid().ToString("N"));
+    private readonly ProductStore _store;
 
-    public ComposedVerseJoinTests(WitnessDatabase database)
+    public ComposedVerseJoinTests()
     {
-        _db = database.NewContext();
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _english = Corpus.Add(_db, "TYN1534", TextKind.Translation, "eng",
-            (1, 16, ["The", "one"]), (1, 17, ["The", "other"]), (1, 18, ["What", "then"]));
-        _greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc",
-            (1, 16, ["οἱ", "δὲ"]), (1, 17, ["οἱ", "μὲν"]), (1, 18, ["τί", "γάρ"]));
-        _db.SaveChanges();
+        _store = new ProductStore(_root);
+        ProductCorpus.Text(_store, "TYN1534", "eng", [("1.1:16", ["The", "one"]), ("1.1:17", ["The", "other"]), ("1.1:18", ["What", "then"])]);
+        ProductCorpus.Text(_store, "NESTLE1904", "grc", [("1.1:16", ["οἱ", "δὲ"]), ("1.1:17", ["οἱ", "μὲν"]), ("1.1:18", ["τί", "γάρ"])]);
     }
 
     public void Dispose()
     {
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _db.Dispose();
+        if (Directory.Exists(_root))
+        {
+            Directory.Delete(_root, recursive: true);
+        }
     }
 
     [Fact]
-    public async Task AWordReachesItsOwnVerseAndNotTheNextOne()
+    public void AWordReachesItsOwnVerseAndNotTheNextOne()
     {
-        var joins = await Joins();
+        var joins = Joins();
 
-        joins.Joins(Word(_english, 16), Word(_greek, 16)).Should().BeTrue();
-        joins.Joins(Word(_english, 16), Word(_greek, 17)).Should().BeFalse();
+        joins.Joins(Word(16), Word(16)).Should().BeTrue();
+        joins.Joins(Word(16), Word(17)).Should().BeFalse();
     }
 
     [Fact]
-    public async Task AVerseLinkJoinsTwoVersesAtDifferentAddressesEitherWayItIsStored()
+    public void AVerseLinkJoinsTwoVersesAtDifferentAddressesEitherWayItIsStored()
     {
-        VerseLink(_greek, 18, _english, 17);
+        using (var writer = _store.Create(MappingProducts.Of("NESTLE1904-TYN1534", VerseLinkFiles.Name), ProductKind.Machine, VerseLinkRow.Schema,
+                   "test", []))
+        {
+            writer.WriteAll([new VerseLinkRow("1.1:18", "1.1:17", "renders", "stated-by-source", null, "a test", null)]);
+        }
 
-        var joins = await Joins();
+        var joins = Joins();
 
-        joins.Joins(Word(_english, 17), Word(_greek, 18)).Should().BeTrue();
-        joins.Joins(Word(_english, 16), Word(_greek, 18)).Should().BeFalse();
+        joins.Joins(Word(17), Word(18)).Should().BeTrue();
+        joins.Joins(Word(16), Word(18)).Should().BeFalse();
     }
 
     [Fact]
-    public async Task ACompositionDropsTheAnswerItsMiddleTextCarriedAcrossVerses()
+    public void ACompositionDropsTheAnswerItsMiddleTextCarriedAcrossVerses()
     {
-        var joins = await Joins();
         var middle = 9_000_000L;
         var composed = CompositionPipeline.Compose(
-            [(Word(_english, 16), middle, 0.9)],
-            new (long Bridge, long To, double Confidence)[] { (middle, Word(_greek, 17), 1.0), (middle, Word(_greek, 16), 0.5) }
+            [(Word(16), middle, 0.9)],
+            new (long Bridge, long To, double Confidence)[] { (middle, Word(17), 1.0), (middle, Word(16), 0.5) }
                 .ToLookup(row => row.Bridge, row => (row.To, row.Confidence)),
-            joins);
+            Joins());
 
-        composed.Should().ContainSingle().Which.To.Should().Be(Word(_greek, 16));
+        composed.Should().ContainSingle().Which.To.Should().Be(Word(16));
     }
 
-    private async Task<VerseJoins> Joins()
+    private VerseJoins Joins()
     {
-        await _db.Database.OpenConnectionAsync();
-        return await VerseJoins.Load(
-            (NpgsqlConnection)_db.Database.GetDbConnection(), _english.Id, _greek.Id, CancellationToken.None);
+        var texts = new ProductTexts(_store);
+        return VerseJoins.Of(_store, texts["TYN1534"], texts["NESTLE1904"]);
     }
 
-    private long Word(Text text, int verse) => _db.WordAt(text, 1, verse, 1).Id;
-
-    private void VerseLink(Text from, int fromVerse, Text to, int toVerse)
-    {
-        _db.VerseLinks.Add(new VerseLink
-        {
-            FromTextId = from.Id,
-            ToTextId = to.Id,
-            Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource,
-            Source = "a test",
-            Verses =
-            [
-                new VerseLinkVerse { VerseId = _db.VerseAt(from, 1, fromVerse).Id, Side = LinkSide.From },
-                new VerseLinkVerse { VerseId = _db.VerseAt(to, 1, toVerse).Id, Side = LinkSide.To },
-            ],
-        });
-        _db.SaveChanges();
-    }
+    /// <summary>The first word of a verse: both texts print two words a verse from 1:16.</summary>
+    private static long Word(int verse) => (verse - 16) * 2;
 }

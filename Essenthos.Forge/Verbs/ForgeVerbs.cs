@@ -84,12 +84,21 @@ internal static partial class ForgeVerbs
         // Links between texts.
         new("rejected-renderings", "", "Withdraw the specifically rejected statistical renderings and refresh their carried names.",
             RejectedRenderingVerb),
-        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--replace] [--outside <text>]",
-            "Align two texts with SIL's statistical aligner and write the result as aligner links.", Align,
-            Least: 2),
-        new("compose", "<from> <via[,via]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--refresh] [--dry-run]",
-            "Compose a text's links to an original through aligned intermediates; --refresh redraws only the verses whose middle text gained links since.", Compose,
-            Least: 3),
+        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--from <Resources>]",
+            "Align two texts with SIL's statistical aligner from the store's files into the pair's aligner method file, training the answer "
+            + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise. Reads no database.",
+            Align, Least: 2),
+        new("aligner-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
+            "Write each aligned pair's aligner method file from the answer stored in Resources/Alignments for both texts' words, where an input moved. "
+            + "Never trains: a pair with no answer for its words keeps its file and waits for align. Reads no database.",
+            (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Aligner)),
+        new("compose", "<from> <via[,via]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--dry-run] [--from <Resources>]",
+            "Compose a text's links to an original through aligned intermediates from the store's files into the pair's composed method file, training "
+            + "the hops it lacks; --dry-run scores it and writes nothing. Reads no database.", Compose, Least: 3),
+        new("composed-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
+            "Write each composed pair's composed method file as its composition is declared, from the stored answers, the middle texts' finals and the "
+            + "pair's final, where an input moved. Never trains. Reads no database.",
+            (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Composed)),
         new("score", "<from> <to> [--min <c,...>] [--model <m>] [--surface] [--stated] [--suppletion] [--pairs <file>]",
             "What an aligner threshold costs, against the pair's stated links. Writes nothing.", Score, Least: 2),
         new("score-anchors", "<from> <to> [--min <c,...>] [--model <m>] [--fold <n>]",
@@ -231,8 +240,6 @@ internal static partial class ForgeVerbs
             "Put every pair's final into the database (never live): link, link_word, link_claim and provenance, by COPY.", MappingLoadVerb),
         new("mapping-compare", "<port/db> <port/db> [--out <folder>] [--pairs A-B,...] [--parallel <n>]",
             "Compare two databases' links and claims by key, grouped by pair and method. Reads only.", MappingCompare, Least: 2),
-        new("compose-file", "<from> <via[,via]> <to> --files <Resources> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured]",
-            "Compose from the mapping files' links into the pair's composed method file; words and frame from the database, which it never writes.", ComposeFile, Least: 3),
         new("indexes", "[--texts A,B|all] [--only strong,occurrences,forms,spellings] [--from <Resources>] [--force] [--parallel <n>]",
             "Make each text's indexes (Strong renderings, occurrences, search forms, spellings) from its words, its pairs' finals and the names, where an input moved. Reads no database.", IndexesVerb),
         new("indexes-load", "[--texts A,B|all] [--only strong,forms,spellings] [--from <Resources>]",

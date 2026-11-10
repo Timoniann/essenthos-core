@@ -128,7 +128,7 @@ public sealed class OccupationTests : IDisposable
                        }
                    }))
             {
-                writer.WriteAll(rows.Select(w => new TextWord(w.Key, null, w.Surface, " ", null, _strong.GetValueOrDefault((slug, w.Key.Position)),
+                writer.WriteAll(rows.Select(w => new TextWord(w.Key, w.Surface, " ", null, _strong.GetValueOrDefault((slug, w.Key.Position)),
                     null, null, lower ? w.Surface.ToLowerInvariant() : null, null, false, null, null, null)));
                 writer.Complete();
             }

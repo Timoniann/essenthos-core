@@ -65,24 +65,6 @@ public sealed class RejectedRenderingTests : IDisposable
     }
 
     [Fact]
-    public async Task ComposingTheStatisticalRoutesOmitsTheRejectedPairsAndKeepsActualSatan()
-    {
-        await db.Database.OpenConnectionAsync();
-        var pipeline = new CompositionPipeline(db,
-            new AlignmentPipeline(db, NullLogger<AlignmentPipeline>.Instance), NullLogger<CompositionPipeline>.Instance);
-        var russian = words[Christ].Text!;
-        var greek = words[Satan].Text!;
-        var proposals = RejectedRenderings.All.Where(r => r.To.Text == "NESTLE1904")
-            .Select(r => new RoutedLink(words[r.From].Id, words[r.To].Id, 0.98, Route.Written | Route.Composed)).ToList();
-        var actual = words[new("RUSV", "1CO 5:5", 2, "сатане")];
-        proposals.Add(new(actual.Id, words[Satan].Id, 0.99, Route.Written));
-        (await pipeline.Write((NpgsqlConnection)db.Database.GetDbConnection(), russian, greek, ["KJV"], proposals,
-            CancellationToken.None)).Should().Be((1, 0));
-        var link = await db.Links.Include(l => l.Words).SingleAsync();
-        link.Words.Select(w => w.WordId).Should().BeEquivalentTo([actual.Id, words[Satan].Id]);
-    }
-
-    [Fact]
     public async Task WarmWithdrawalRemovesOnlyRejectedLinksAndTheirCarriedAnnotationsAndRepeatsWithoutWriting()
     {
         AddWarmLinks();

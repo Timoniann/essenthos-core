@@ -22,88 +22,70 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// Alignment is computed once per pair of texts, not per request, so it is a batch run rather than
-    /// part of the load. <c>--outside BHSA</c> trains on every verse the pair shares and writes only where
-    /// BHSA has no verse: the King James's Apocrypha against the Greek it was translated from, and not its
-    /// Old Testament.
+    /// Alignment is computed once per pair of texts, not per request, so it is a run of its own rather than a step of the
+    /// build: <c>align</c> writes the pair's <c>aligner</c> method file from the store's files, training the answer where none
+    /// stored was made from the two texts' words as they stand (minutes of CPU per pair), which <c>aligner-pairs</c> in the
+    /// build never does. A pair the aligner is declared over (<see cref="AlignerSource.Pairs"/>) runs as declared;
+    /// <c>--outside BHSA</c> trains on every verse the pair shares and writes only where BHSA has no verse.
     /// </summary>
-    private static async Task<int> Align(ForgeRun forge, string[] args)
+    private static Task<int> Align(ForgeRun forge, string[] args)
     {
-        using var alignScope = forge.Scope();
-        var pipeline = alignScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
-        var confidence = Array.IndexOf(args, "--min");
-        var alignOne = Identifier(args[1]);
-        var alignTwo = Identifier(args[2]);
-        forge.Logger.LogInformation("{Outcome}", await pipeline.Run(
-            alignOne,
-            alignTwo,
-            AlignmentStore.Workspace($"{alignOne}-{alignTwo}"),
-            confidence >= 0 && confidence + 1 < args.Length
-                ? double.Parse(args[confidence + 1], CultureInfo.InvariantCulture)
-                : null,
-            args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
-            replace: args.Contains("--replace"),
-            outsideSlug: Option(args, "--outside") is { } outside ? Identifier(outside) : null));
-        await forge.Replay(alignScope, (from, to) => Between(from, to, alignOne, alignTwo));
-        await forge.Tidy();
-        return 0;
+        var (from, to) = (Identifier(args[1]), Identifier(args[2]));
+        var declared = AlignerSource.Pairs.FirstOrDefault(pair => pair.From == from && pair.To == to) ?? new AlignedPair(from, to);
+        var pair = declared with
+        {
+            Model = Option(args, "--model") ?? declared.Model,
+            Minimum = Option(args, "--min") is { } min ? double.Parse(min, CultureInfo.InvariantCulture) : declared.Minimum,
+            Outside = Option(args, "--outside") is { } outside ? Identifier(outside) : declared.Outside,
+        };
+        return WriteMethodFile(forge, args, MappingMethods.Aligner, pair.Name, new AlignerSource([pair]) { Trains = true });
     }
 
     /// <summary>
     /// The second route to the same word, through a text whose own links to the target are stated.
     /// Russian against Hebrew is one hard hop; Russian against the King James is an easy one, and the
-    /// King James against BHSA is not a hop at all.
+    /// King James against BHSA is not a hop at all. Drawn from the store's files into the pair's <c>composed</c> method file,
+    /// training the hops it lacks.
     /// </summary>
     private static async Task<int> Compose(ForgeRun forge, string[] args)
     {
-        var (composeFrom, composeVia, composeTo) = (args[1], args[2], args[3]);
-        using var composeScope = forge.Scope();
-        var composer = composeScope.ServiceProvider.GetRequiredService<CompositionPipeline>();
+        var (from, to) = (Identifier(args[1]), Identifier(args[3]));
         // One middle text or two, named together: KJV,BSB.
-        var composeVias = composeVia.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier).ToList();
-        var least = Array.IndexOf(args, "--min");
+        var vias = args[2].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier).ToList();
 
         // How often each combination of readings must have named the stated word to be written at all.
-        var composePrecision = Option(args, "--precision") is { } bar
-            ? double.Parse(bar, CultureInfo.InvariantCulture)
-            : Admission.DefaultPrecision;
-        var composeMinimum = least >= 0 && least + 1 < args.Length
-            ? double.Parse(args[least + 1], CultureInfo.InvariantCulture)
-            : AlignmentPipeline.DefaultMinimumConfidence;
+        var precision = Option(args, "--precision") is { } bar ? double.Parse(bar, CultureInfo.InvariantCulture) : Admission.DefaultPrecision;
+        var minimum = Option(args, "--min") is { } least ? double.Parse(least, CultureInfo.InvariantCulture) : (double?)null;
+        var store = new Products.ProductStore(Option(args, "--from") ?? forge.Resources);
+        var texts = new ProductTexts(store);
 
-        // A trial: the same three readings and the same merge, scored against what the corpus holds and
-        // written nowhere. --books trains on a few canonical books alone, which is the cheap first look;
-        // --explain <file> writes every answer each reading gave, for asking why a word was left bare.
+        // A trial: the same three readings and the same merge, scored against what the corpus holds and written nowhere.
+        // --books trains on a few canonical books alone, which is the cheap first look; --explain <file> writes every answer
+        // each reading gave, for asking why a word was left bare.
         if (args.Contains("--dry-run"))
         {
+            var aligner = new AlignerFiles(texts, new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(line => forge.Logger.LogInformation("{Line}", line))));
+            var composer = new CompositionPipeline(texts, aligner, forge.Logger);
             forge.Logger.LogInformation("\n{Report}", await composer.Measure(
-                Identifier(composeFrom),
-                composeVias,
-                Identifier(composeTo),
-                composeMinimum,
-                Option(args, "--books") is { } composeBooks
-                    ? composeBooks.Split(',').Select(int.Parse).ToHashSet()
-                    : null,
-                composePrecision,
-                Option(args, "--explain"),
-                args.Contains("--daughter"),
-                Agreeing(args)));
+                from, vias, to, minimum ?? AlignmentPipeline.DefaultMinimumConfidence,
+                Option(args, "--books") is { } books ? books.Split(',').Select(int.Parse).ToHashSet() : null,
+                precision, Option(args, "--explain"), args.Contains("--daughter"), Agreeing(args)));
             return 0;
         }
 
-        forge.Logger.LogInformation("{Outcome}", await composer.Run(
-            Identifier(composeFrom),
-            composeVias,
-            Identifier(composeTo),
-            least >= 0 ? composeMinimum : null,
-            composePrecision,
-            args.Contains("--unmeasured"),
-            args.Contains("--daughter"),
-            Agreeing(args),
-            args.Contains("--refresh")));
-        await forge.Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
-        await forge.Tidy();
-        return 0;
+        var pair = new ComposedPair(from, vias, to, minimum, precision, args.Contains("--unmeasured"), args.Contains("--daughter"), Agreeing(args));
+        return await WriteMethodFile(forge, args, MappingMethods.Composed, pair.Name, new ComposedSource([pair]) { Trains = true });
+    }
+
+    /// <summary>One pair's method file written by one source that may train its model, whatever the file was made from.</summary>
+    private static Task<int> WriteMethodFile(ForgeRun forge, string[] args, string method, string pair, IPairSource source)
+    {
+        var store = new Products.ProductStore(Option(args, "--from") ?? forge.Resources);
+        var outcome = PairSources.Write(new ProductTexts(store), method, pair, force: true,
+            line => forge.Logger.LogInformation("{Line}", line), [source]);
+        store.Save();
+        forge.Logger.LogInformation("{Outcome}", outcome.ToString());
+        return Task.FromResult(outcome.Written is null ? 1 : 0);
     }
 
     /// <summary>

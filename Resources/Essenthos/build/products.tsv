@@ -4,8 +4,9 @@
 #   {name} is one path segment bound across the line, * one segment, ** any depth; the first line that matches a product is its line.
 # maker: hand (people edit it; carried in git), build (forge build runs the producer), serve (made from the serving database
 #   once build --into or build --apply has filled it; forge build alone never runs it), kept (written once by an export from a
-#   database and never again: the store is its only copy, the exporter refuses a store that holds it unless --force, and forge
-#   build fails when one is missing), export (written from a database whenever asked).
+#   database, or by a verb run by hand whose output stands as made: forge build never runs its producer, the store is its only
+#   copy, the exporter refuses a store that holds it unless --force, and forge build fails when one is missing), export
+#   (written from a database whenever asked).
 # producer: the Forge verb and arguments the build runs, once per distinct producer, in the order the inputs ask for.
 # inputs: what the product may read, as patterns under Resources/; {sources} is the text's declared sources in the catalogue.
 #   A product whose header names an input no pattern of its line covers fails the build.
@@ -45,6 +46,18 @@ mapping/{from}-{to}/possessive	build	possessive-pairs	Essenthos/mapping/{from}-{
 mapping/{from}-{to}/names	build	names-pairs	Essenthos/mapping/{from}-{to}/stated Essenthos/mapping/{from}-{to}/strong Essenthos/mapping/{from}-{to}/aligner Essenthos/mapping/{from}-{to}/composed Essenthos/mapping/{from}-{to}/lexical Essenthos/mapping/{from}-{to}/name-list Essenthos/mapping/{from}-{to}/possessive Essenthos/names/{to} Essenthos/names/consensus/{from} Essenthos/records/records Essenthos/records/folds Essenthos/texts/{from}/words Essenthos/texts/{to}/words Essenthos/texts/{from}/frame Essenthos/texts/{to}/frame Essenthos/texts/{from}/text Essenthos/texts/{to}/text	-	none
 mapping/{from}-{to}/evidentia	build	evidentia-pairs	Essenthos/evidentia/{from}-{to}-* Essenthos/mapping/{from}-{to}/stated Essenthos/mapping/{from}-{to}/strong Essenthos/mapping/{from}-{to}/aligner Essenthos/mapping/{from}-{to}/composed Essenthos/mapping/{from}-{to}/names Essenthos/mapping/{from}-{to}/name-list Essenthos/mapping/{from}-{to}/possessive Essenthos/mapping/{from}-{to}/lexical Essenthos/mapping/{from}-{to}/rule Essenthos/mapping/{from}-{to}/manual Essenthos/mapping/{from}-{to}/hashes Essenthos/texts/{from}/words Essenthos/texts/{to}/words Essenthos/texts/{from}/frame Essenthos/texts/{to}/frame	-	none
 mapping/{from}-{to}/verses	build	verse-pairs --parallel 8	Essenthos/texts/{from}/verses Essenthos/texts/{to}/verses Essenthos/texts/{from}/frame Essenthos/texts/{to}/frame Essenthos/mapping/{from}-{to}/final Essenthos/versification/*	verse_link verse_link_verse	pair
+mapping/BSB-KJV/aligner	kept	align BSB KJV (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/UBIO-KJV/aligner	kept	align UBIO KJV (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/GRCBRENT-KJV/aligner	kept	align GRCBRENT KJV (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/GEEZ81-GRCBRENT/aligner	kept	align GEEZ81 GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/ALEX-NESTLE1904/aligner	kept	align ALEX NESTLE1904 (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/BRENTON-GRCBRENT/aligner	kept	align BRENTON GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/KJV-GRCBRENT/aligner	kept	align KJV GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/WEB-GRCBRENT/aligner	kept	align WEB GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/RUSV-GRCBRENT/aligner	kept	align RUSV GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/ALEX-GRCBRENT/aligner	kept	align ALEX GRCBRENT (by hand; the file is authoritative)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/{from}-{to}/aligner	build	aligner-pairs	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Alignments/**	-	none
+mapping/{from}-{to}/composed	kept	compose (by hand; composed-pairs <pair> --force draws a declared pair)	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Essenthos/texts/BHSA/books etcbc Essenthos/mapping/*/final Essenthos/mapping/{from}-{to}/verses Essenthos/mapping/{to}-{from}/verses Alignments/**	-	none
 mapping/{from}-{to}/rulings	hand	by hand (seeded once by mapping-export)	-	-	none
 mapping/{from}-{to}/*	kept	mapping-export	-	-	none
 records/facts/relationships	build	records-derive	Essenthos/records/facts/clauses Essenthos/records/facts/withheld-clauses Essenthos/records/records	@records	all

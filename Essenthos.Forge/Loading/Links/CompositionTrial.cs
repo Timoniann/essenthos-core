@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Text;
-using Npgsql;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -64,57 +63,57 @@ internal sealed class CompositionTrial
     public int RivalWords => _rivalWords;
     public (int Proposed, int Agreed) Held => (_stated.Proposed, _stated.Agreed);
 
-    public static async Task<CompositionScope> Scope(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
+    public static CompositionScope Scope(
+        Mapping.ProductTexts texts,
+        string fromSlug,
+        string toSlug,
         IReadOnlyDictionary<long, HashSet<long>> stated,
-        IReadOnlySet<int>? books,
-        CancellationToken cancellationToken)
+        IReadOnlySet<int>? books)
     {
-        var within = books?.ToArray() ?? await TargetBooks(connection, toTextId, cancellationToken);
-
-        var words = new Dictionary<long, (int, string)>(700_000);
-        await using (var command = new NpgsqlCommand(
-            """
-            SELECT w.id, r.canonical_book, lower(w.text)
-            FROM word w
-            JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
-            WHERE w.text_id = @from AND NOT w.elided AND r.canonical_book = ANY(@books)
-            """, connection))
+        var target = texts[toSlug];
+        var within = books ?? target.Verses.SelectMany(target.Addresses).Select(address => address.Book).ToHashSet();
+        var from = texts[fromSlug];
+        var words = new Dictionary<long, (int, string)>(from.Words.Count);
+        foreach (var verse in from.Verses)
         {
-            command.Parameters.AddWithValue("from", fromTextId);
-            command.Parameters.AddWithValue("books", within);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
+            var book = from.Primary(verse).Book;
+            if (!within.Contains(book))
             {
-                words[reader.GetInt64(0)] = (reader.GetInt32(1), reader.GetString(2));
+                continue;
+            }
+
+            foreach (var id in from.InVerse(verse).Where(id => !from.Words[id].Elided))
+            {
+                words[id] = (book, from.Words[id].Surface.ToLowerInvariant());
             }
         }
 
+        // Every final the source text is in, on either side: a word any settled link names is linked, and kept unless only
+        // this pair's own aligner links name it.
         var linked = new HashSet<long>(words.Count);
         var kept = new HashSet<long>(words.Count);
-        await using (var command = new NpgsqlCommand(
-            """
-            SELECT lw.word_id,
-                   bool_and(l.method = 'aligner' AND l.from_text_id = @from AND l.to_text_id = @to)
-            FROM link_word lw
-            JOIN link l ON l.id = lw.link_id
-            JOIN word w ON w.id = lw.word_id
-            WHERE w.text_id = @from
-            GROUP BY lw.word_id
-            """,
-            connection))
+        var ids = Mapping.PairLinkFiles.Ids(from);
+        foreach (var pair in Mapping.MappingProducts.Pairs(texts.Store))
         {
-            command.Parameters.AddWithValue("from", fromTextId);
-            command.Parameters.AddWithValue("to", toTextId);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
+            var (one, other) = Mapping.MappingProducts.Split(pair);
+            var product = Mapping.MappingProducts.Of(pair, Mapping.MappingProducts.Final);
+            if ((one != fromSlug && other != fromSlug) || !texts.Store.Exists(product))
             {
-                linked.Add(reader.GetInt64(0));
-                if (!reader.GetBoolean(1))
+                continue;
+            }
+
+            using var reader = texts.Store.Open(product, Mapping.FinalRow.Schema);
+            foreach (var row in reader.Rows().Where(row => row.Settled))
+            {
+                var mine = pair == Mapping.MappingProducts.Pair(fromSlug, toSlug)
+                           && Mapping.MappingMethods.DatabaseMethod(row.Method) == Database.Entities.Enums.LinkMethod.Aligner;
+                foreach (var id in Mapping.PairLinkFiles.Words(one == fromSlug ? row.From : row.To, ids))
                 {
-                    kept.Add(reader.GetInt64(0));
+                    linked.Add(id);
+                    if (!mine)
+                    {
+                        kept.Add(id);
+                    }
                 }
             }
         }
@@ -272,25 +271,6 @@ internal sealed class CompositionTrial
 
     private static string Share(int part, int whole) =>
         whole == 0 ? "–" : ((double)part / whole).ToString("P1", CultureInfo.InvariantCulture);
-
-    private static async Task<int[]> TargetBooks(NpgsqlConnection connection, int textId, CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT DISTINCT r.canonical_book
-            FROM verse_reference r JOIN verse v ON v.id = r.verse_id
-            WHERE v.text_id = @text
-            """, connection);
-        command.Parameters.AddWithValue("text", textId);
-        var books = new List<int>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            books.Add(reader.GetInt32(0));
-        }
-
-        return [.. books];
-    }
 
     private sealed class Tally
     {

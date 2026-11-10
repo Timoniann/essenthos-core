@@ -1,9 +1,8 @@
-using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -14,7 +13,6 @@ namespace Essenthos.Core.Tests.Links;
 /// reloaded, the live corpus's words and a cold build's. Each set of inputs keeps its own answer, in a
 /// folder of the workspace named by their digest, and training one never clears another.
 /// </summary>
-[Collection(WitnessDatabaseCollection.Name)]
 public sealed class AlignmentKeyedAnswerTests : IDisposable
 {
     private static readonly (int Chapter, int Verse, string[] Words)[] Verses =
@@ -26,29 +24,24 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     private const string Straight = "0-0:0.9:0.9 1-1:0.9:0.9 2-2:0.9:0.9";
     private const string Crossed = "0-2:0.9:0.9 1-1:0.9:0.9 2-0:0.9:0.9";
 
-    private readonly AppDbContext _db;
-    private readonly AlignmentPipeline _aligner;
-    private readonly string _workspace =
-        Path.Combine(Path.GetTempPath(), "essenthos-align-test", Guid.NewGuid().ToString("N"));
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "essenthos-align-test", Guid.NewGuid().ToString("N"));
+    private readonly ProductStore _store;
+    private readonly AlignmentPipeline _aligner = new(null, NullLogger<AlignmentPipeline>.Instance);
+    private readonly string _workspace;
 
-    public AlignmentKeyedAnswerTests(WitnessDatabase database)
+    public AlignmentKeyedAnswerTests()
     {
-        _db = database.NewContext();
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _aligner = new AlignmentPipeline(_db, NullLogger<AlignmentPipeline>.Instance);
-
-        Corpus.Add(_db, "BSB", TextKind.Translation, "eng", Verses);
-        Corpus.Add(_db, "KJV", TextKind.Translation, "eng", Verses);
-        _db.SaveChanges();
+        _store = new ProductStore(_root);
+        _workspace = Path.Combine(_root, "Alignments", "BSB-KJV");
+        Write("BSB", Verses);
+        Write("KJV", Verses);
     }
 
     public void Dispose()
     {
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _db.Dispose();
-        if (Directory.Exists(_workspace))
+        if (Directory.Exists(_root))
         {
-            Directory.Delete(_workspace, recursive: true);
+            Directory.Delete(_root, recursive: true);
         }
     }
 
@@ -58,9 +51,9 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
         Store(_workspace, Lines(Verses), Lines(Rendered("earth", "land")), Crossed);
         Store(Keyed(Lines(Verses), Lines(Verses)), Lines(Verses), Lines(Verses), Straight);
 
-        var proposals = await _aligner.Proposals("BSB", "KJV", _workspace, 0.1);
+        var proposals = await Proposals();
 
-        await OnTheirOwnPositions(proposals);
+        OnTheirOwnPositions(proposals);
         File.ReadAllLines(Path.Combine(_workspace, "target.txt")).Should().Equal(Lines(Rendered("earth", "land")));
         File.ReadAllText(Path.Combine(_workspace, "alignment", "pharaoh.txt")).Should().StartWith(Crossed);
     }
@@ -70,9 +63,9 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     {
         Store(_workspace, Lines(Verses), Lines(Verses), Straight);
 
-        var proposals = await _aligner.Proposals("BSB", "KJV", _workspace, 0.1);
+        var proposals = await Proposals();
 
-        await OnTheirOwnPositions(proposals);
+        OnTheirOwnPositions(proposals);
         Directory.GetDirectories(_workspace).Should().OnlyContain(folder => !Path.GetFileName(folder).StartsWith("inputs-"));
     }
 
@@ -83,15 +76,24 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
         var renamed = Rendered("earth", "land");
         Store(Keyed(Lines(Verses), Lines(renamed)), Lines(Verses), Lines(renamed), Crossed);
 
-        var before = await _aligner.Proposals("BSB", "KJV", _workspace, 0.1);
-        await _db.Words.Where(w => w.Text!.Slug == "KJV" && w.Surface == "earth")
-            .ExecuteUpdateAsync(set => set.SetProperty(w => w.Surface, "land"));
-        var after = await _aligner.Proposals("BSB", "KJV", _workspace, 0.1);
+        var before = await Proposals();
+        Write("KJV", renamed);
+        var after = await Proposals();
 
-        await OnTheirOwnPositions(before);
-        var at = await Positions();
-        after.Should().HaveCount(6).And.Contain(pair => at[pair.From].Position != at[pair.To].Position);
+        OnTheirOwnPositions(before);
+        after.Should().HaveCount(6).And.Contain(pair => pair.From % 3 != pair.To % 3);
         Directory.GetDirectories(_workspace, "inputs-*").Should().HaveCount(2);
+    }
+
+    [Fact]
+    public async Task ABuildFindingNoAnswerForTheWordsAsTheyStandTrainsNothingAndSaysWhichPairWaits()
+    {
+        Store(_workspace, Lines(Verses), Lines(Rendered("earth", "land")), Crossed);
+
+        var reading = () => Proposals();
+
+        await reading.Should().ThrowAsync<StoredAlignmentMissingException>().WithMessage("*BSB-KJV*other words*");
+        Directory.GetDirectories(_workspace, "inputs-*").Should().BeEmpty();
     }
 
     [Fact]
@@ -257,12 +259,14 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
         File.WriteAllLines(Path.Combine(folder, "alignment", "pharaoh.txt"), [answer, answer]);
     }
 
-    private async Task<Dictionary<long, (int Number, int Position)>> Positions() =>
-        await _db.Words.ToDictionaryAsync(w => w.Id, w => (w.Verse!.Number, w.Position));
+    private Task<IReadOnlyList<(long From, long To, double Confidence)>> Proposals() =>
+        new AlignerFiles(new ProductTexts(_store), new AlignmentPipeline(null, NullLogger<AlignmentPipeline>.Instance) { Trains = false })
+            .Proposals("BSB", "KJV", "BSB-KJV", 0.1);
 
-    private async Task OnTheirOwnPositions(IReadOnlyList<(long From, long To, double Confidence)> proposals)
-    {
-        var at = await Positions();
-        proposals.Should().HaveCount(6).And.OnlyContain(pair => at[pair.From].Equals(at[pair.To]));
-    }
+    private void Write(string slug, (int Chapter, int Verse, string[] Words)[] verses) =>
+        ProductCorpus.Text(_store, slug, "eng", [.. verses.Select(verse => ($"1.{verse.Chapter}:{verse.Verse}", verse.Words))]);
+
+    /// <summary>Both texts print three words a verse, so a word's place in its text names its verse and position alike.</summary>
+    private static void OnTheirOwnPositions(IReadOnlyList<(long From, long To, double Confidence)> proposals) =>
+        proposals.Should().HaveCount(6).And.OnlyContain(pair => pair.From == pair.To);
 }

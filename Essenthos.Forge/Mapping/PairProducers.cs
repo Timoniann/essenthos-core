@@ -15,9 +15,10 @@ internal sealed class ProductText
     private readonly Dictionary<VerseKey, (int Start, int Count)> _verses;
     private readonly Dictionary<VerseKey, IReadOnlyList<VerseKey>> _frame;
     private readonly Lazy<Dictionary<(int Book, int Chapter, int Verse), List<int>>> _byAddress;
+    private readonly Lazy<Dictionary<VerseKey, int>> _sequence;
 
     private ProductText(string slug, string language, List<TextWord> words, List<VerseKey> order,
-        Dictionary<VerseKey, (int, int)> verses, Dictionary<VerseKey, IReadOnlyList<VerseKey>> frame)
+        Dictionary<VerseKey, (int, int)> verses, Dictionary<VerseKey, IReadOnlyList<VerseKey>> frame, Func<Dictionary<VerseKey, int>> sequence)
     {
         Slug = slug;
         Language = language;
@@ -26,6 +27,7 @@ internal sealed class ProductText
         _verses = verses;
         _frame = frame;
         _byAddress = new Lazy<Dictionary<(int, int, int), List<int>>>(Group);
+        _sequence = new Lazy<Dictionary<VerseKey, int>>(sequence);
     }
 
     public string Slug { get; }
@@ -81,7 +83,21 @@ internal sealed class ProductText
             }
         }
 
-        return new ProductText(slug, IndexContext.Declared(store, slug).Language, words, order, verses, frame);
+        return new ProductText(slug, IndexContext.Declared(store, slug).Language, words, order, verses, frame, () => Sequences(store, slug));
+    }
+
+    /// <summary>Where the edition prints each verse in its chapter, from its verses product; empty where the store has none.</summary>
+    public IReadOnlyDictionary<VerseKey, int> Sequence => _sequence.Value;
+
+    private static Dictionary<VerseKey, int> Sequences(ProductStore store, string slug)
+    {
+        if (!store.Exists(VerseManifestRow.ProductOf(slug)))
+        {
+            return [];
+        }
+
+        using var reader = store.Open(VerseManifestRow.ProductOf(slug), VerseManifestRow.Schema);
+        return reader.Rows().ToDictionary(row => row.Own, row => row.Sequence);
     }
 
     /// <summary>The ids of a verse's words in order; empty where the text has no such verse.</summary>

@@ -178,7 +178,7 @@ public sealed class ProductGraphTests : IDisposable
     {
         var graph = ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));
 
-        foreach (var kept in new[] { "mapping/pairs", "mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
+        foreach (var kept in new[] { "mapping/pairs", "mapping/KJV-GRCBRENT/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
                      "external/openbible/records" })
         {
             graph.Find(kept)!.Value.Declaration.Maker.Should().Be(ProductMaker.Kept, kept);
@@ -200,6 +200,7 @@ public sealed class ProductGraphTests : IDisposable
             graph.Find(made)!.Value.Declaration.Should().Match<ProductDeclaration>(d => d.Maker == ProductMaker.Build && d.Producer == producer, made);
         }
 
+        graph.Find("mapping/DRA-VULGCLEM/aligner")!.Value.Declaration.Maker.Should().Be(ProductMaker.Build, "its stored answer reproduces the kept rows");
         graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("names-from-database") || d.Producer.StartsWith("names-export"));
         graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("texts ids") || d.Product.EndsWith("/ids", StringComparison.Ordinal),
             "a word's id is computed from its key, never kept");
