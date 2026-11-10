@@ -187,14 +187,15 @@ Resources/Essenthos/page-readings/pages-swete-*/progress.*
 # Resources/Essenthos is the build store (build/products.tsv says who makes each file). What people edit is carried:
 # the hand files, the record files (records/**, ours, edited by owner-rows and owner-apply), the settled names and
 # each pair's rulings. What a build or the serving build makes is left out, and so is what an export made once and
-# nothing makes again (kept: texts/*/ids, mapping/pairs, aligner, composed, hashes, external/**, two record files):
+# nothing makes again (kept: mapping/pairs, the aligner and composed files a build does not remake, hashes, external/**):
 # the backup mirrors Resources/ whole, which is where those live. Every rule below sits below the line that carries
 # Resources/Essenthos/.
 
 # The texts as converted products: forge convert writes each text's words, verses, notes, books, declaration and
-# frame from its sources, and the words are the corpus itself, which stays out. Kept: texts/*/ids. Carried: the
-# corrections people edit.
+# frame from its sources, and the words are the corpus itself, which stays out; convert also lists the word keys whose
+# ids meet (texts/word-id-collisions, TSK-1580). Carried: the corrections people edit.
 Resources/Essenthos/texts/*/*
+Resources/Essenthos/texts/word-id-collisions.essx
 !Resources/Essenthos/texts/*/corrections.tsv
 
 # The names layer's machine products (TSK-1448): the projection onto every text, and the database names earlier
