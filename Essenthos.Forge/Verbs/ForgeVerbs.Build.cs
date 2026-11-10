@@ -22,10 +22,12 @@ internal static partial class ForgeVerbs
             : connection;
 
     /// <summary>
-    /// <c>build [--into &lt;db&gt; [--replace]] [--apply] [--level skip|essentials|all] [--parallel n] [--no-products]</c>: every product
-    /// whose inputs moved is made again by its producer, in the order the declared graph gives, and the graph is held against
-    /// what each producer read; then a fresh database is filled from the products (<c>--into</c>), or the configured one
-    /// takes what moved since it was built (<c>--apply</c>); then verify at the level asked; then <c>build/report-&lt;n&gt;</c>.
+    /// <c>build [--into &lt;db&gt; [--seed &lt;db&gt;] [--replace]] [--apply] [--owner-rows [--rows &lt;file&gt;]...] [--level skip|essentials|all]
+    /// [--parallel n] [--no-products]</c>: the owner's decided rows applied to the store when asked; every product whose inputs
+    /// moved is made again by its producer, in the order the declared graph gives, and the graph is held against what each
+    /// producer read; then a fresh database is filled from the products (<c>--into</c>), or the seed is cloned into it and takes
+    /// what moved since the seed was built (<c>--into --seed</c>, the daily path), or the configured one takes what moved since it
+    /// was built (<c>--apply</c>); then verify at the level asked; then <c>build/report-&lt;n&gt;</c>.
     /// </summary>
     private static async Task<int> BuildVerb(ForgeRun forge, string[] args)
     {
@@ -34,9 +36,16 @@ internal static partial class ForgeVerbs
         var level = Option(args, "--level") ?? BuildVerify.Essentials;
         var stages = new List<BuildStage>();
         var into = Option(args, "--into");
+        var seed = Option(args, "--seed");
         if (into is not null)
         {
             ServingBuild.Refuse(into);
+        }
+
+        if (seed is not null && into is null)
+        {
+            forge.Logger.LogError("--seed names the database cloned into the one --into names; give both");
+            return 1;
         }
 
         var before = new ProductStore(forge.Resources);
@@ -52,6 +61,20 @@ internal static partial class ForgeVerbs
                                   + "(E:); an exporter run again refuses a store that holds its products, and --force is for a store that has lost them all.",
                 missing.Count);
             return 1;
+        }
+
+        if (args.Contains("--owner-rows"))
+        {
+            var deciding = Stopwatch.StartNew();
+            string[] rows = ["owner-rows", .. args.Select((arg, i) => (arg, i)).Where(a => a.arg == "--rows" && a.i + 1 < args.Length)
+                .SelectMany(a => new[] { "--rows", args[a.i + 1] })];
+            var decided = await OwnerRowsVerb(forge, rows);
+            stages.Add(new BuildStage("products", "owner rows", deciding.Elapsed, 0, decided == 0 ? "" : $"exit {decided}"));
+            if (decided != 0)
+            {
+                forge.Logger.LogError("owner-rows failed with {Exit}: nothing built", decided);
+                return 1;
+            }
         }
 
         if (!args.Contains("--no-products"))
@@ -86,7 +109,19 @@ internal static partial class ForgeVerbs
             }
         }
 
-        if (into is not null)
+        if (into is not null && seed is not null)
+        {
+            var cloning = Stopwatch.StartNew();
+            await DatabaseClone.Run(forge.DatabaseConnection, store, seed, into, args.Contains("--replace"), forge.Logger, CancellationToken.None);
+            stages.Add(new BuildStage("database", $"clone of {seed}", cloning.Elapsed, 0));
+            if (await Apply(forge, store, graph, level, stages) is not { } passed)
+            {
+                return 1;
+            }
+
+            verified = passed;
+        }
+        else if (into is not null)
         {
             var serving = new ServingBuild(forge.DatabaseConnection, store, forge.Scope().ServiceProvider, forge.Logger);
             await serving.Create(args.Contains("--replace"), CancellationToken.None);
@@ -101,21 +136,12 @@ internal static partial class ForgeVerbs
         }
         else if (args.Contains("--apply"))
         {
-            var apply = new BuildApply(forge.DatabaseConnection, store, graph, forge.Scope().ServiceProvider, forge.Logger);
-            var applied = await apply.Run(CancellationToken.None);
-            stages.AddRange(apply.Stages);
-            if (applied is null)
+            if (await Apply(forge, store, graph, level, stages) is not { } passed)
             {
                 return 1;
             }
 
-            if (applied.Changed.Count > 0)
-            {
-                var verify = Stopwatch.StartNew();
-                verified = await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, applied.Pairs,
-                    CorpusCheck.RenderedFloor, forge.Logger);
-                stages.Add(new BuildStage("verify", level, verify.Elapsed, 0, verified ? "passed" : "FAILED"));
-            }
+            verified = passed;
         }
 
         stages.Add(new BuildStage("build", "whole", clock.Elapsed, 0, verified ? "" : "verify failed"));
@@ -127,6 +153,44 @@ internal static partial class ForgeVerbs
 
         Console.WriteLine($"report: {report}");
         return verified ? 0 : 1;
+    }
+
+    /// <summary>
+    /// What moved since the configured database was served, applied to it, then verified at <paramref name="level"/> when anything
+    /// did; null when the apply refused.
+    /// </summary>
+    private static async Task<bool?> Apply(ForgeRun forge, ProductStore store, ProductGraph graph, string level, List<BuildStage> stages)
+    {
+        var apply = new BuildApply(forge.DatabaseConnection, store, graph, forge.Scope().ServiceProvider, forge.Logger);
+        var applied = await apply.Run(CancellationToken.None);
+        stages.AddRange(apply.Stages);
+        if (applied is null)
+        {
+            return null;
+        }
+
+        if (applied.Changed.Count == 0)
+        {
+            return true;
+        }
+
+        var verify = Stopwatch.StartNew();
+        var verified = await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, applied.Pairs,
+            CorpusCheck.RenderedFloor, forge.Logger);
+        stages.Add(new BuildStage("verify", level, verify.Elapsed, 0, verified ? "passed" : "FAILED"));
+        return verified;
+    }
+
+    /// <summary>
+    /// <c>clone &lt;from&gt; &lt;to&gt; [--replace]</c>: a served database of the configured server copied whole into another, with its
+    /// <c>build/served</c> state, so <c>build --apply</c> on the copy takes only what moved. Before a swap, the next database is
+    /// cloned into the seed the next day's <c>build --into &lt;next&gt; --seed &lt;seed&gt;</c> starts from.
+    /// </summary>
+    private static async Task<int> CloneVerb(ForgeRun forge, string[] args)
+    {
+        await DatabaseClone.Run(forge.DatabaseConnection, new ProductStore(forge.Resources), args[1], args[2], args.Contains("--replace"), forge.Logger,
+            CancellationToken.None);
+        return 0;
     }
 
     /// <summary>Every build producer of the declared graph run once, in order, then the graph held against what was read.</summary>
