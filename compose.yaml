@@ -30,21 +30,23 @@ services:
     # full_page_writes and synchronous_commit are left at their defaults.
     command:
       - postgres
-      # A quarter of the machine Postgres runs in. The reader's working set fits in 2 GB, but a load
-      # and verify walk link (4 GB), link_word (6 GB) and word (6.4 GB) again and again.
+      # A fifth of the 20 GB WSL machine Postgres runs in (owner 2026-11-11: the workstation reached
+      # 100% memory with 8GB here and WSL at half the 62 GB). The reader's working set fits in 2 GB;
+      # a load and verify walk link (4 GB), link_word (6 GB) and word (6.4 GB) through the page cache.
       - -c
-      - shared_buffers=8GB
+      - shared_buffers=4GB
       # What the planner may assume is cached: shared_buffers plus the page cache the rest of the
-      # 30 GB machine leaves, with room for the other containers and the backends' own memory.
+      # 20 GB machine leaves, with room for the other containers and the backends' own memory.
       - -c
-      - effective_cache_size=20GB
+      - effective_cache_size=12GB
       # 64MB rather than the default 4MB: `forge verify` takes 105 s against 117 s. Per sort or hash,
       # per worker, so it stays where it was measured rather than growing with the workers.
       - -c
       - work_mem=64MB
       # Index builds and the loads' VACUUM over 50-million-row tables; parallel index builds share it.
+      # 1GB rather than 2GB since 2026-11-11, to keep a full build's peaks inside the 20 GB machine.
       - -c
-      - maintenance_work_mem=2GB
+      - maintenance_work_mem=1GB
       # Autovacuum's workers would each take maintenance_work_mem; three of them at 2 GB is 6 GB
       # nobody asked for.
       - -c
