@@ -6,10 +6,13 @@ designation the text gives them (*the harlot*, *a thief*) — is held in four ta
 (who decided it, in `source`, never served) and `occupation_witness` (the quotations). `occupation_word` holds
 the words that name an occupation in the verses that say it.
 
-## The file and the load step
+## The file and its producer
 
-`Resources/Essenthos/person-occupations.json` is the reviewed inventory, in git. The load step `occupations`
-(`core-load --set only=occupations`, or the Forge verb `occupations`) reads it; a second load writes nothing.
+`Resources/Essenthos/person-occupations.json` is the reviewed inventory, in git. `forge build` runs the producer
+`occupations`, which reads it with the records and the texts' words, frames, finals and Strong indexes and writes the
+record files `records/facts/occupations`, `records/i18n/*/occupations`, `records/facts/person-occupations`,
+`records/facts/occupation-witnesses` and `records/derived/occupation-words` (words by key); `build --into` and
+`build --apply` load them. A run with nothing moved writes nothing. No verb writes the database.
 
 ```json
 {

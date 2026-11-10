@@ -198,12 +198,12 @@ internal static partial class RecordFiles
             """,
             []),
 
-        new("external/bibledata/topics", ProductKind.Hand,
+        new("external/bibledata/topics", ProductKind.Machine,
             "slug name by",
             "SELECT slug, name, source FROM topic ORDER BY 1",
             "INSERT INTO topic (slug, name, source) SELECT slug, name, by FROM s ORDER BY slug",
             ["topic", "topic_reference"]),
-        new("external/bibledata/topic-references", ProductKind.Hand,
+        new("external/bibledata/topic-references", ProductKind.Machine,
             "slug n:int book:int chapter:int first_verse:int? last_verse:int? heading?",
             """
             SELECT t.slug, row_number() OVER (PARTITION BY r.topic_id ORDER BY r.id), r.canonical_book, r.canonical_chapter, r.first_verse, r.last_verse, r.heading
@@ -215,8 +215,8 @@ internal static partial class RecordFiles
             """,
             []),
 
-        CrossReferences("openbible", "external/openbible/cross-references", ProductKind.Hand),
-        CrossReferences("tsk", "external/tsk/cross-references", ProductKind.Hand),
+        CrossReferences("openbible", "external/openbible/cross-references", ProductKind.Machine),
+        CrossReferences("tsk", "external/tsk/cross-references", ProductKind.Machine),
         CrossReferences("parallels", "records/derived/parallels", ProductKind.Machine),
     ];
 }

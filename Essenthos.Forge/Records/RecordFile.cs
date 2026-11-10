@@ -14,6 +14,9 @@ internal enum RecordColumnType
 
     /// <summary>Canonical verses in order: a flat <c>int[]</c> of triples in SQL, keys joined by a space in the file.</summary>
     Refs,
+
+    /// <summary>A word's own address in its text, <c>1.1:1.3</c> (<see cref="WordKey.Own"/>): text in SQL, sorted by key.</summary>
+    Own,
 }
 
 internal sealed record RecordColumn(string Name, RecordColumnType Type, bool Nullable)
@@ -37,6 +40,7 @@ internal sealed record RecordColumn(string Name, RecordColumnType Type, bool Nul
                 "json" => RecordColumnType.Json,
                 "ref" => RecordColumnType.Ref,
                 "refs" => RecordColumnType.Refs,
+                "own" => RecordColumnType.Own,
                 var other => throw new ArgumentException($"Unknown column type '{other}' in '{word}'."),
             };
             return new RecordColumn(name, type, nullable);
@@ -45,7 +49,7 @@ internal sealed record RecordColumn(string Name, RecordColumnType Type, bool Nul
 
     public string SqlType => Type switch
     {
-        RecordColumnType.Text => "text",
+        RecordColumnType.Text or RecordColumnType.Own => "text",
         RecordColumnType.Integer => "bigint",
         RecordColumnType.Boolean => "boolean",
         RecordColumnType.Json => "jsonb",
@@ -184,9 +188,13 @@ internal sealed record RecordFile(
                 .CompareTo(long.Parse(b, System.Globalization.CultureInfo.InvariantCulture)),
             RecordColumnType.Ref or RecordColumnType.Refs => Keys(a).Zip(Keys(b)).Select(p => p.First.CompareTo(p.Second))
                 .FirstOrDefault(c => c != 0) is var first and not 0 ? first : Keys(a).Length.CompareTo(Keys(b).Length),
+            RecordColumnType.Own => WordKey.Parse(a, OwnText).CompareTo(WordKey.Parse(b, OwnText)),
             _ => string.CompareOrdinal(a, b),
         };
     }
+
+    /// <summary>The text an own address is read under when two are compared; both are of one text.</summary>
+    private const string OwnText = "-";
 
     private static VerseKey[] Keys(string text) =>
         [.. text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(key => VerseKey.Parse(key))];

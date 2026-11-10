@@ -332,7 +332,7 @@ internal static class RecordProducers
         row.Category, row.Citation, EnumSpelling.Of(row.Method), Number(row.Confidence), row.Source, row.Notes,
     ];
 
-    private static RecordFile File(string product) => RecordFiles.All.Single(f => f.Product == product);
+    internal static RecordFile File(string product) => RecordFiles.All.Single(f => f.Product == product);
 
     private static HashSet<string> Slugs(ProductStore from) =>
         Read(from, "records/records").Select(r => r[0]!).ToHashSet(StringComparer.Ordinal);
@@ -343,10 +343,21 @@ internal static class RecordProducers
         return [.. reader.ReadAll()];
     }
 
-    private static long Write(
+    /// <summary>
+    /// Writes a record file in the order its export writes it. A copy of it in the other format, left by an export that
+    /// wrote it as the other kind, is removed with its manifest entry, so a reader cannot find two.
+    /// </summary>
+    internal static long Write(
         ProductStore into, RecordFile file, IEnumerable<string?[]> rows, string producer, IReadOnlyList<ProductInput> inputs,
         Action<ProductHeader>? annotate = null)
     {
+        var other = into.RelativePath(file.Product, file.Kind == ProductKind.Hand ? ProductKind.Machine : ProductKind.Hand);
+        if (System.IO.File.Exists(into.FullPath(other)))
+        {
+            System.IO.File.Delete(into.FullPath(other));
+            into.Manifest.Forget(other);
+        }
+
         using var writer = into.Create(file.Product, file.Kind, file.Schema(), ProductHeader.DescribeProducer(producer), inputs,
             header =>
             {
@@ -361,7 +372,7 @@ internal static class RecordProducers
         return writer.Rows;
     }
 
-    private static string[] Paths(ProductStore store, params string[] products) =>
+    internal static string[] Paths(ProductStore store, params string[] products) =>
         [.. products.Select(p => store.RelativePath(p, File(p).Kind))];
 
     private static string RelativeToResources(ProductStore store, string path) =>

@@ -241,7 +241,7 @@ internal static partial class RecordFiles
             After: Settled("person_presence", $"evidence = '[\"{Pending}\"]'::jsonb", "a presence has no evidence"),
             About: "What each presence was read from. Evidence: never served."),
 
-        new("records/facts/occupations", ProductKind.Hand,
+        new("records/facts/occupations", ProductKind.Machine,
             "slug category strong_numbers",
             "SELECT slug, category, array_to_string(strong_numbers, ' ') FROM occupation ORDER BY 1",
             """
@@ -249,7 +249,7 @@ internal static partial class RecordFiles
             SELECT slug, category, coalesce(string_to_array(nullif(strong_numbers, ''), ' '), '{}') FROM s ORDER BY slug
             """,
             ["occupation", "occupation_label", "person_occupation", "occupation_witness", "occupation_word"]),
-        .. Languages.Where(l => l != "rus").Select(language => new RecordFile($"records/i18n/{language}/occupations", ProductKind.Hand,
+        .. Languages.Where(l => l != "rus").Select(language => new RecordFile($"records/i18n/{language}/occupations", ProductKind.Machine,
             "slug name masculine feminine description?",
             $"""
             SELECT o.slug, l.name, l.masculine, l.feminine, l.description FROM occupation_label l JOIN occupation o ON o.id = l.occupation_id
@@ -260,7 +260,7 @@ internal static partial class RecordFiles
             SELECT o.id, '{language}', s.name, s.masculine, s.feminine, s.description FROM s JOIN occupation o ON o.slug = s.slug ORDER BY s.slug
             """,
             [])),
-        new("records/facts/person-occupations", ProductKind.Hand,
+        new("records/facts/person-occupations", ProductKind.Machine,
             "person occupation by",
             """
             SELECT e.slug, o.slug, p.source FROM person_occupation p JOIN entity e ON e.id = p.person_id JOIN occupation o ON o.id = p.occupation_id
@@ -271,7 +271,7 @@ internal static partial class RecordFiles
             SELECT e.id, o.id, s.by FROM s JOIN entity e ON e.slug = s.person JOIN occupation o ON o.slug = s.occupation ORDER BY s.person, s.occupation
             """,
             []),
-        new("records/facts/occupation-witnesses", ProductKind.Hand,
+        new("records/facts/occupation-witnesses", ProductKind.Machine,
             "person occupation n:int kind text reference ref:ref quote",
             $"""
             SELECT e.slug, o.slug, row_number() OVER (PARTITION BY w.person_occupation_id ORDER BY w.id), w.kind, w.text, w.reference, {Ref("w")}, w.quote
@@ -287,19 +287,29 @@ internal static partial class RecordFiles
             [],
             About: "The quotations each occupation stands on, as the named text prints them at its own address (reference)."),
         new("records/derived/occupation-words", ProductKind.Machine,
-            "person occupation word_id:int",
+            "person occupation text own:own",
             """
-            SELECT e.slug, o.slug, w.word_id FROM occupation_word w JOIN person_occupation p ON p.id = w.person_occupation_id
-            JOIN entity e ON e.id = p.person_id JOIN occupation o ON o.id = p.occupation_id ORDER BY 1, 2, 3
+            SELECT e.slug, o.slug, t.slug, b.canonical_ordinal || '.' || v.chapter_number || ':' || v.number || v.label || '.' || x.position
+            FROM occupation_word w JOIN person_occupation p ON p.id = w.person_occupation_id
+            JOIN entity e ON e.id = p.person_id JOIN occupation o ON o.id = p.occupation_id
+            JOIN word x ON x.id = w.word_id JOIN verse v ON v.id = x.verse_id JOIN book b ON b.id = v.book_id JOIN text t ON t.id = x.text_id
+            ORDER BY 1, 2, 3, 4
             """,
             """
             INSERT INTO occupation_word (person_occupation_id, word_id)
-            SELECT p.id, s.word_id FROM s JOIN entity e ON e.slug = s.person JOIN occupation o ON o.slug = s.occupation
-            JOIN person_occupation p ON p.person_id = e.id AND p.occupation_id = o.id ORDER BY s.person, s.occupation, s.word_id
+            SELECT p.id, x.id
+            FROM (SELECT s.*, regexp_match(s.own, '^([0-9]+)\.([0-9]+):([0-9]+)([^.]*)\.([0-9]+)$') k FROM s) s
+            JOIN entity e ON e.slug = s.person JOIN occupation o ON o.slug = s.occupation
+            JOIN person_occupation p ON p.person_id = e.id AND p.occupation_id = o.id
+            JOIN text t ON t.slug = s.text
+            JOIN book b ON b.text_id = t.id AND b.canonical_ordinal = s.k[1]::int
+            JOIN verse v ON v.book_id = b.id AND v.chapter_number = s.k[2]::int AND v.number = s.k[3]::int AND v.label = s.k[4]
+            JOIN word x ON x.verse_id = v.id AND x.position = s.k[5]::int
+            ORDER BY s.person, s.occupation, s.text, s.own
             """,
             [],
             Requires: "EXISTS (SELECT 1 FROM word)",
-            About: "Derived: the words that name each occupation, by word id until word keys land (TSK-1443). Regenerated from the occupations and the mapping."),
+            About: "The words that name each occupation in the verses that say it, by word key (text and own address); made by forge occupations."),
 
         new("records/facts/gentilics", ProductKind.Hand,
             "strong origin_strong kind origin? people? statement by",

@@ -161,7 +161,7 @@ public sealed class ProductGraphTests : IDisposable
         var graph = ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));
 
         foreach (var kept in new[] { "texts/KJV/ids", "mapping/pairs", "mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
-                     "build/word-id-ceiling", "external/tsk/cross-references", "records/derived/occupation-words" })
+                     "build/word-id-ceiling", "external/openbible/records" })
         {
             graph.Find(kept)!.Value.Declaration.Maker.Should().Be(ProductMaker.Kept, kept);
         }
@@ -171,7 +171,17 @@ public sealed class ProductGraphTests : IDisposable
             graph.Find(hand)!.Value.Declaration.Maker.Should().Be(ProductMaker.Hand, hand);
         }
 
-        graph.Find("mapping/KJV-BHSA/stated")!.Value.Declaration.Maker.Should().Be(ProductMaker.Build);
+        foreach (var (made, producer) in new[]
+                 {
+                     ("mapping/KJV-BHSA/stated", "stated-pairs"), ("records/derived/occupation-words", "occupations"),
+                     ("records/facts/person-occupations", "occupations"), ("records/i18n/ukr/occupations", "occupations"),
+                     ("records/derived/parallels", "cross-references"), ("external/tsk/cross-references", "cross-references"),
+                     ("external/bibledata/topic-references", "topics"),
+                 })
+        {
+            graph.Find(made)!.Value.Declaration.Should().Match<ProductDeclaration>(d => d.Maker == ProductMaker.Build && d.Producer == producer, made);
+        }
+
         graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("names-from-database") || d.Producer.StartsWith("names-export"));
     }
 

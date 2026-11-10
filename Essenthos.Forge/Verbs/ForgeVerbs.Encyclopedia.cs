@@ -3,6 +3,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Verbs;
@@ -13,13 +14,16 @@ namespace Essenthos.Core.Verbs;
 /// </summary>
 internal static partial class ForgeVerbs
 {
-    /// <summary>Apply only the occupations file, and mark the words that name them, on an already loaded encyclopedia.</summary>
-    private static async Task<int> Occupations(ForgeRun forge, string[] args)
+    /// <summary>
+    /// <c>occupations [--from &lt;Resources&gt;] [--force]</c>: the occupation record files from <c>person-occupations.json</c>,
+    /// the records and the texts' words, frames, finals and Strong indexes, where an input moved. Reads no database.
+    /// </summary>
+    private static Task<int> Occupations(ForgeRun forge, string[] args)
     {
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OccupationLoader>()
-            .Load(forge.Resources, CancellationToken.None));
-        return 0;
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        Console.WriteLine(OccupationFiles.Write(store, args.Contains("--force")));
+        store.Save();
+        return Task.FromResult(0);
     }
 
     /// <summary>Apply only admitted person-presence findings to an already loaded encyclopedia.</summary>
@@ -201,38 +205,39 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// The cross references and the detected parallels, for a corpus loaded before they were. --measure
-    /// prints the parallel passages the originals give, and writes nothing.
+    /// <c>cross-references [--from &lt;Resources&gt;] [--force] [--measure]</c>: OpenBible's and the Treasury's cross references
+    /// and the parallels found in the originals, as the files the build loads, each where its inputs moved. --measure
+    /// prints the parallel passages the originals give, and writes nothing. Reads no database.
     /// </summary>
-    private static async Task<int> CrossReferences(ForgeRun forge, string[] args)
+    private static Task<int> CrossReferences(ForgeRun forge, string[] args)
     {
-        using var referenceScope = forge.Scope();
-        var references = referenceScope.ServiceProvider
-            .GetRequiredService<Loading.CrossReferences.CrossReferenceLoader>();
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
         if (args.Contains("--measure"))
         {
-            foreach (var line in await references.MeasureParallels())
+            foreach (var line in Loading.CrossReferences.CrossReferenceFiles.MeasureParallels(store, forge.Logger))
             {
                 Console.WriteLine(line);
             }
 
-            return 0;
+            return Task.FromResult(0);
         }
 
-        foreach (var outcome in await references.Load(forge.Resources, args.Contains("--replace")))
+        foreach (var outcome in Loading.CrossReferences.CrossReferenceFiles.Write(store, args.Contains("--force"), forge.Logger))
         {
             Console.WriteLine(outcome);
         }
 
-        return 0;
+        store.Save();
+        return Task.FromResult(0);
     }
 
-    private static async Task<int> Topics(ForgeRun forge, string[] args)
+    /// <summary><c>topics [--from &lt;Resources&gt;] [--force]</c>: Nave's topics as the files the build loads, where the index moved. Reads no database.</summary>
+    private static Task<int> Topics(ForgeRun forge, string[] args)
     {
-        using var topicScope = forge.Scope();
-        Console.WriteLine(await topicScope.ServiceProvider.GetRequiredService<NaveTopicLoader>()
-            .Load(Path.Combine(forge.Resources, "BibleData2026"), args.Contains("--replace")));
-        return 0;
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        Console.WriteLine(NaveTopicFiles.Write(store, args.Contains("--force"), forge.Logger));
+        store.Save();
+        return Task.FromResult(0);
     }
 
     /// <summary>

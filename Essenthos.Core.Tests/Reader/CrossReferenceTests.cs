@@ -3,6 +3,8 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.CrossReferences;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -235,16 +237,73 @@ public sealed class ParallelDetectorTests
 
     [Fact]
     public void TheSharedWordsAreWrittenAsPositionPairs() =>
-        CrossReferenceLoader.Words([(1, 1), (2, 3), (4, 5)]).Should().Be("1-1 2-3 4-5");
+        CrossReferenceFiles.Words([(1, 1), (2, 3), (4, 5)]).Should().Be("1-1 2-3 4-5");
+}
+
+/// <summary>The producer of OpenBible's set over a small file of its shape: the file the build loads into cross_reference.</summary>
+public sealed class CrossReferenceFileTests : IDisposable
+{
+    private const string Head = "From Verse\tTo Verse\tVotes\t#www.openbible.info CC-BY 2026-09-21\n";
+
+    private readonly string _resources = Path.Combine(Path.GetTempPath(), "essenthos-products", Guid.NewGuid().ToString("N"));
+
+    public CrossReferenceFileTests() => Directory.CreateDirectory(Path.Combine(_resources, OpenBibleCrossReferences.Folder));
+
+    public void Dispose()
+    {
+        if (Directory.Exists(_resources))
+        {
+            Directory.Delete(_resources, recursive: true);
+        }
+    }
+
+    private string Source => Path.Combine(_resources, OpenBibleCrossReferences.Folder, OpenBibleCrossReferences.FileName);
+
+    private List<string?[]> Rows()
+    {
+        using var reader = new ProductStore(_resources).Open(CrossReferenceFiles.OpenBibleProduct,
+            RecordProducers.File(CrossReferenceFiles.OpenBibleProduct).Schema());
+        return [.. reader.ReadAll()];
+    }
+
+    private CrossReferenceOutcome Written() => CrossReferenceFiles.OpenBible(new ProductStore(_resources), force: false, NullLogger.Instance);
+
+    [Fact]
+    public void ASetIsWrittenRankedByItsVotesAndOnlyAgainWhenItsFileMoves()
+    {
+        File.WriteAllText(Source, Head + "Gen.1.1\tRev.3.14\t47\nGen.1.1\tRom.1.19-Rom.1.20\t59\nGen.1.1\tJob.1.1\t-3\nGen.1.2\tPs.33.6\t10\n");
+
+        Written().Rows.Should().Be(4);
+        Rows().Select(r => (r[0], r[1], r[2], r[3], r[4], r[9])).Should().Equal(
+            ("1.1:1", "18.1:1", null, "3", "-3", CrossReferenceSets.OpenBibleSource),
+            ("1.1:1", "45.1:19", "45.1:20", "1", "59", CrossReferenceSets.OpenBibleSource),
+            ("1.1:1", "66.3:14", null, "2", "47", CrossReferenceSets.OpenBibleSource),
+            ("1.1:2", "19.33:6", null, "1", "10", CrossReferenceSets.OpenBibleSource));
+
+        var store = new ProductStore(_resources);
+        var file = RecordProducers.File(CrossReferenceFiles.OpenBibleProduct);
+        store.NeedsBuild(file.Product, file.Kind, store.Inputs($"{OpenBibleCrossReferences.Folder}/{OpenBibleCrossReferences.FileName}"))
+            .Should().BeFalse();
+    }
+
+    /// <summary>A pair whose far verse no text has (Philemon 2:10) is not written, and the verse's others close up behind it.</summary>
+    [Fact]
+    public void AReferenceToAVerseNoTextHasIsLeftOut()
+    {
+        File.WriteAllText(Source, Head + "Gen.49.8\tPhlm.2.10\t9\nGen.49.8\tPhil.2.10\t5\nGen.49.8\tRev.5.5\t3\n");
+
+        Written();
+        Rows().Select(r => (r[1], r[3])).Should().Equal(("50.2:10", "1"), ("66.5:5", "2"));
+    }
 }
 
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class CrossReferenceLoadTests : IDisposable
+public sealed class CrossReferencePassageTests : IDisposable
 {
     private readonly AppDbContext _db;
 
-    public CrossReferenceLoadTests(WitnessDatabase database)
+    public CrossReferencePassageTests(WitnessDatabase database)
     {
         _db = database.NewContext();
         Clear();
@@ -257,78 +316,6 @@ public sealed class CrossReferenceLoadTests : IDisposable
     }
 
     private void Clear() => _db.CrossReferences.ExecuteDelete();
-
-    [Fact]
-    public async Task ASetIsWrittenOnceAndServedByVotesWithoutThoseVotedDown()
-    {
-        var resources = Directory.CreateTempSubdirectory();
-        try
-        {
-            var folder = Directory.CreateDirectory(Path.Combine(resources.FullName, OpenBibleCrossReferences.Folder));
-            await File.WriteAllTextAsync(
-                Path.Combine(folder.FullName, OpenBibleCrossReferences.FileName),
-                "From Verse\tTo Verse\tVotes\t#www.openbible.info CC-BY 2026-09-21\n" +
-                "Gen.1.1\tRev.3.14\t47\nGen.1.1\tRom.1.19-Rom.1.20\t59\nGen.1.1\tJob.1.1\t-3\nGen.1.2\tPs.33.6\t10\n");
-            var loader = new CrossReferenceLoader(_db, NullLogger<CrossReferenceLoader>.Instance);
-
-            var outcome = await loader.LoadOpenBible(resources.FullName);
-            var again = await loader.LoadOpenBible(resources.FullName);
-
-            outcome.Rows.Should().Be(4);
-            again.AlreadyLoaded.Should().BeTrue();
-            (await _db.CrossReferences.CountAsync()).Should().Be(4);
-
-            var set = CrossReferenceSets.Find(CrossReferenceSets.OpenBible)!;
-            var chapter = await CrossReferenceEndpoints.InChapter(_db, set, 1, 1, default);
-            chapter.Verses.Select(v => v.Verse).Should().Equal(1, 2);
-            var first = chapter.Verses[0].References;
-            first.Select(r => r.Votes).Should().Equal(59, 47);
-            first[0].To.Slug.Should().Be("romans");
-            first[0].End!.Verse.Should().Be(20);
-        }
-        finally
-        {
-            resources.Delete(recursive: true);
-        }
-    }
-
-    /// <summary>
-    /// A pair whose far verse no text has (Philemon 2:10) is not written and the verse's others close up behind it; a
-    /// replace reads the set again in place of what it wrote, and leaves the other sets as they are.
-    /// </summary>
-    [Fact]
-    public async Task AReferenceToAVerseNoTextHasIsLeftOutAndAReplaceReadsTheSetAgain()
-    {
-        var resources = Directory.CreateTempSubdirectory();
-        try
-        {
-            var folder = Directory.CreateDirectory(Path.Combine(resources.FullName, OpenBibleCrossReferences.Folder));
-            var file = Path.Combine(folder.FullName, OpenBibleCrossReferences.FileName);
-            const string head = "From Verse\tTo Verse\tVotes\t#www.openbible.info CC-BY 2026-09-21\n";
-            await File.WriteAllTextAsync(file, head + "Gen.49.8\tPhlm.2.10\t9\nGen.49.8\tPhil.2.10\t5\nGen.49.8\tRev.5.5\t3\n");
-            _db.CrossReferences.Add(Parallel(10, 22, 2, 19, 18, 2, 1, "1-1"));
-            await _db.SaveChangesAsync();
-            var loader = new CrossReferenceLoader(_db, NullLogger<CrossReferenceLoader>.Instance);
-
-            var outcome = await loader.LoadOpenBible(resources.FullName);
-
-            (outcome.Rows, outcome.LeftOut).Should().Be((2, 1));
-            var written = await _db.CrossReferences.Where(r => r.Set == CrossReferenceSets.OpenBible)
-                .OrderBy(r => r.Rank).Select(r => new { r.ToBook, r.Rank }).ToListAsync();
-            written.Should().Equal(new { ToBook = 50, Rank = 1 }, new { ToBook = 66, Rank = 2 });
-
-            await File.WriteAllTextAsync(file, head + "Gen.49.8\tPhil.2.10\t5\n");
-            var again = await loader.LoadOpenBible(resources.FullName, replace: true);
-
-            again.AlreadyLoaded.Should().BeFalse();
-            (await _db.CrossReferences.CountAsync(r => r.Set == CrossReferenceSets.OpenBible)).Should().Be(1);
-            (await _db.CrossReferences.CountAsync(r => r.Set == CrossReferenceSets.Parallels)).Should().Be(1);
-        }
-        finally
-        {
-            resources.Delete(recursive: true);
-        }
-    }
 
     [Fact]
     public async Task APassageIsFoundByAnyPairOfItsVersesWithItsExtentOnBothSides()

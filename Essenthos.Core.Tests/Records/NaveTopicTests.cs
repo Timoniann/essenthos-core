@@ -1,7 +1,7 @@
-using Essenthos.Core.Database;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -126,7 +126,7 @@ public sealed class NaveEntryTests
     [Fact]
     public void TheShippedIndexReadsAlmostWhole()
     {
-        var path = TestResources.Path("BibleData2026", NaveTopicLoader.FileName);
+        var path = TestResources.Path("BibleData2026", NaveTopicFiles.FileName);
         var rows = Essenthos.Core.Loading.Encyclopedia.Csv.Read(path).ToList();
         var lines = rows.SelectMany(row => NaveEntries.Lines(row["entry"])).ToList();
 
@@ -172,7 +172,7 @@ public sealed class NaveEntryTests
     [Fact]
     public void EveryCorrectionMatchesTheShippedIndexOnceAndTurnsAChapterIntoAVerse()
     {
-        var path = TestResources.Path("BibleData2026", NaveTopicLoader.FileName);
+        var path = TestResources.Path("BibleData2026", NaveTopicFiles.FileName);
         var rows = Essenthos.Core.Loading.Encyclopedia.Csv.Read(path).ToList();
 
         foreach (var correction in NaveCorrections.All)
@@ -193,25 +193,17 @@ public sealed class NaveEntryTests
     }
 }
 
-/// <summary>
-/// The loader over a small index of its own shape. Asked of Postgres because the references go in
-/// by binary copy, and a copy that got a column's type wrong fails only there.
-/// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
-[Collection(WitnessDatabaseCollection.Name)]
-public sealed class NaveTopicLoadTests : IDisposable
+/// <summary>The producer over a small index of its own shape: the two files the build loads into topic and topic_reference.</summary>
+public sealed class NaveTopicFileTests : IDisposable
 {
-    private readonly AppDbContext _db;
-    private readonly string _folder;
+    private readonly string _resources = Path.Combine(Path.GetTempPath(), "essenthos-products", Guid.NewGuid().ToString("N"));
 
-    public NaveTopicLoadTests(WitnessDatabase database)
+    public NaveTopicFileTests()
     {
-        _db = database.NewContext();
-        Clear();
-        _folder = Directory.CreateTempSubdirectory("nave-").FullName;
+        Directory.CreateDirectory(Path.Combine(_resources, NaveTopicFiles.Folder));
         File.WriteAllText(
-            Path.Combine(_folder, NaveTopicLoader.FileName),
-            "\uFEFFsection,subject,entry\n" +
+            Path.Combine(_resources, NaveTopicFiles.Folder, NaveTopicFiles.FileName),
+            "﻿section,subject,entry\n" +
             "A,AARON,\"-Lineage of EXO 6:16-20\n-Makes the golden calf EXO 32; ACT 7:40\n-Rod of, buds NUM 17\"\n" +
             "A,ABASEMENT,\"-See HUMILITY\"\n" +
             "L,LORD'S SUPPER,\"MAT 26:26-28\"\n");
@@ -219,51 +211,40 @@ public sealed class NaveTopicLoadTests : IDisposable
 
     public void Dispose()
     {
-        Clear();
-        _db.Dispose();
-        Directory.Delete(_folder, recursive: true);
+        if (Directory.Exists(_resources))
+        {
+            Directory.Delete(_resources, recursive: true);
+        }
+    }
+
+    private List<string?[]> Rows(string product)
+    {
+        using var reader = new ProductStore(_resources).Open(product, RecordProducers.File(product).Schema());
+        return [.. reader.ReadAll()];
     }
 
     [Fact]
-    public async Task ASubjectIsWrittenWithTheVersesFiledUnderItAndOneThatOnlyPointsElsewhereIsNot()
+    public void ASubjectIsWrittenWithTheVersesFiledUnderItAndOneThatOnlyPointsElsewhereIsNot()
     {
-        var outcome = await new NaveTopicLoader(_db, NullLogger<NaveTopicLoader>.Instance).Load(_folder);
+        var outcome = NaveTopicFiles.Write(new ProductStore(_resources), force: false, NullLogger.Instance);
 
-        outcome.Topics.Should().Be(2);
-        outcome.CrossReferencesOnly.Should().Be(1);
-        outcome.References.Should().Be(5);
-        outcome.Unread.Should().Be(0);
-
-        var aaron = await _db.Topics.Include(t => t.References).SingleAsync(t => t.Slug == "aaron");
-        aaron.Name.Should().Be("AARON");
-        aaron.References.Select(r => (r.CanonicalBook, r.CanonicalChapter, r.FirstVerse, r.LastVerse, r.Heading))
-            .Should().BeEquivalentTo(new (int, int, int?, int?, string?)[]
-            {
-                (2, 6, 16, 20, "Lineage of"),
-                (2, 32, null, null, "Makes the golden calf"),
-                (44, 7, 40, 40, "Makes the golden calf"),
-                (4, 17, null, null, "Rod of, buds"),
-            });
-
-        var supper = await _db.Topics.Include(t => t.References).SingleAsync(t => t.Slug == "lordssupper");
-        supper.References.Should().ContainSingle().Which.Heading.Should().BeNull();
+        (outcome.Topics, outcome.CrossReferencesOnly, outcome.References, outcome.Unread).Should().Be((2, 1, 5, 0));
+        Rows(NaveTopicFiles.TopicsProduct).Select(r => (r[0], r[1])).Should().Equal(("aaron", "AARON"), ("lordssupper", "LORD'S SUPPER"));
+        Rows(NaveTopicFiles.ReferencesProduct).Where(r => r[0] == "aaron").Select(r => (r[1], r[2], r[3], r[4], r[5], r[6]))
+            .Should().Equal(
+                ("1", "2", "6", "16", "20", "Lineage of"),
+                ("2", "2", "32", null, null, "Makes the golden calf"),
+                ("3", "44", "7", "40", "40", "Makes the golden calf"),
+                ("4", "4", "17", null, null, "Rod of, buds"));
+        Rows(NaveTopicFiles.ReferencesProduct).Single(r => r[0] == "lordssupper")[6].Should().BeNull();
     }
 
     [Fact]
-    public async Task ASecondBootWritesNothing()
+    public void ASecondRunWithTheIndexUnmovedWritesNothing()
     {
-        var loader = new NaveTopicLoader(_db, NullLogger<NaveTopicLoader>.Instance);
-        await loader.Load(_folder);
+        NaveTopicFiles.Write(new ProductStore(_resources), force: false, NullLogger.Instance).Written.Should().BeTrue();
 
-        var again = await loader.Load(_folder);
-
-        again.AlreadyLoaded.Should().BeTrue();
-        (await _db.TopicReferences.CountAsync()).Should().Be(5);
-    }
-
-    private void Clear()
-    {
-        _db.TopicReferences.ExecuteDelete();
-        _db.Topics.ExecuteDelete();
+        NaveTopicFiles.Write(new ProductStore(_resources), force: false, NullLogger.Instance).Written.Should().BeFalse();
+        Rows(NaveTopicFiles.ReferencesProduct).Should().HaveCount(5);
     }
 }
