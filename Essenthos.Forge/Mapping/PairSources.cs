@@ -1,3 +1,5 @@
+using Essenthos.Core.Build;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Mapping;
@@ -57,6 +59,8 @@ internal static class PairSources
         new GreekWitnessSource(MappingMethods.Lexical),
         new GreekLetterSource(),
         new HebrewLetterSource(),
+        new AlignerSource(),
+        new ComposedSource(),
         new NameListSource(),
         new PossessiveSource(),
         new NamesFirstSource(),
@@ -71,29 +75,44 @@ internal static class PairSources
     /// <summary>The verb that writes a file of every pair, as the header and the declared graph name it.</summary>
     public static string Producer(string file) => $"forge {file}-pairs";
 
-    public sealed record Outcome(string Pair, bool Current, MethodFiles.Written? Written, IReadOnlyList<string> Sources);
+    /// <summary>The verb that trains a model's answer again for one pair of a file a model draws.</summary>
+    private static string Regenerates(string file) => file == MappingMethods.Composed ? "compose" : "align";
+
+    /// <param name="Waiting">Why the file was left as it was though an input moved: a model's answer for the words as they stand is not stored.</param>
+    public sealed record Outcome(string Pair, bool Current, MethodFiles.Written? Written, IReadOnlyList<string> Sources, string? Waiting = null)
+    {
+        public override string ToString() => Current ? $"{Pair}: current" : Waiting is not null ? $"{Pair}: left as it was, {Waiting}" : Written!.ToString();
+    }
 
     /// <summary>
     /// The pairs some source of the file speaks about whose two texts the store holds; and the pairs whose file of a method
     /// holds rows a source of that method now writes into another file, so the file gives them up. A pair is the mapping's
     /// when its folder holds a method file: a folder with only the verse links verse-pairs writes from two frames, after
-    /// every producer, would bring a pair in on the build after the one that made it.
+    /// every producer, would bring a pair in on the build after the one that made it. A pair whose file the declared graph
+    /// keeps (maker <c>kept</c>) is left out unless it is named: that file is authoritative and only a verb run by hand remakes it.
     /// </summary>
-    public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null) =>
-    [
-        .. MappingProducts.Pairs(texts.Store)
-            .Where(pair => only is null || only.Contains(pair))
-            .Where(pair => MappingProducts.Methods(texts.Store, pair).Count > 0)
-            .Where(pair => All.Any(source => source.States(pair)
+    public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null)
+    {
+        var graph = texts.Store.Exists(ProductGraph.Product) ? ProductGraph.Read(texts.Store) : null;
+        return
+        [
+            .. MappingProducts.Pairs(texts.Store)
+                .Where(pair => only is null || only.Contains(pair))
+                .Where(pair => only is not null || graph?.Find(MappingProducts.Of(pair, file))?.Declaration.Maker != ProductMaker.Kept)
+                .Where(pair => MappingProducts.Methods(texts.Store, pair).Count > 0)
+                .Where(pair => All.Any(source => source.States(pair)
                 && (source.File == file || (source.Method == file && texts.Store.Exists(MappingProducts.Of(pair, file))))))
-            .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),
-    ];
+                .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),
+        ];
+    }
 
     /// <summary>Writes the pair's method file from its sources, unless every input is as the file was made from.</summary>
-    public static Outcome Write(ProductTexts texts, string file, string pair, bool force, Action<string> log)
+    /// <param name="registry">The sources to read, <see cref="All"/> unless a verb runs one of them otherwise (a model allowed to train).</param>
+    public static Outcome Write(ProductTexts texts, string file, string pair, bool force, Action<string> log, IReadOnlyList<IPairSource>? registry = null)
     {
+        registry ??= All;
         var store = texts.Store;
-        var sources = All.Where(source => source.File == file && source.States(pair)).ToList();
+        var sources = registry.Where(source => source.File == file && source.States(pair)).ToList();
         var inputs = MethodFiles.TextInputs(store, pair)
             .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
             .DistinctBy(input => input.Path)
@@ -108,7 +127,17 @@ internal static class PairSources
         foreach (var source in sources)
         {
             var before = rows.Count;
-            rows.AddRange(source.Rows(texts, pair, line => log($"{pair} {source.Name}: {line}")));
+            try
+            {
+                rows.AddRange(source.Rows(texts, pair, line => log($"{pair} {source.Name}: {line}")));
+            }
+            catch (StoredAlignmentMissingException missing)
+            {
+                // D1: a model trained again is not the same model, so the build never trains one. The file keeps the rows
+                // it has; the merge holds those of a moved verse stale until the pair is aligned again by hand.
+                return new Outcome(pair, false, null, [.. sources.Select(s => s.Name)], $"{missing.Message}: run forge {Regenerates(file)} for it");
+            }
+
             log($"{pair} {source.Name}: {rows.Count - before} rows");
         }
 
@@ -117,7 +146,7 @@ internal static class PairSources
 
         // A row of a source that writes another file of the pair is not carried into this one: that file holds it.
         var written = MethodFiles.Write(store, pair, file, rows, Producer(file), inputs,
-            made => All.Any(source => source.States(pair) && source.Makes(made)));
+            made => registry.Any(source => source.States(pair) && source.Makes(made)));
         var side = MappingProducts.Of(pair, MappingProducts.StrongYielded);
         if (file == MappingMethods.Strong && (yielded.Count > 0 || store.Exists(side)))
         {

@@ -1,14 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using Essenthos.Core.Configuration;
-using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Npgsql;
-using NpgsqlTypes;
-
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Products;
 namespace Essenthos.Core.Loading.Links;
 
 /// <param name="Reached">Pairs the composed routes propose, before merging.</param>
@@ -57,10 +52,7 @@ internal sealed record CompositionOutcome(
 ///
 /// The merge is <see cref="Routes"/>. This class only fetches, joins and writes.
 /// </summary>
-internal sealed class CompositionPipeline(
-    AppDbContext db,
-    AlignmentPipeline aligner,
-    ILogger<CompositionPipeline> logger)
+internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles aligner, ILogger logger)
 {
     /// <summary>
     /// How faint a proposal may be and still count as one route's half of an agreement.
@@ -74,12 +66,7 @@ internal sealed class CompositionPipeline(
     /// </summary>
     public const double AgreementFloor = 0.1;
 
-    /// <summary>
-    /// Where the links a run reads come from and where its answers go: null for the database, or the mapping's
-    /// files, whose finals it reads and whose <c>composed</c> method file it writes (<c>forge compose-file</c>).
-    /// </summary>
-    internal Mapping.MappingLinks? Files { get; set; }
-
+    private readonly MappingLinks _links = new(texts);
     /// <param name="viaSlugs">
     /// The middle texts, one or two. A second is a second route that shares no evidence with the
     /// first, so the two agreeing is worth as much as either agreeing with the direct alignment.
@@ -99,11 +86,7 @@ internal sealed class CompositionPipeline(
     /// The threshold, or null for the one measured for a daughter version of the source's language,
     /// and <see cref="AlignmentPipeline.DefaultMinimumConfidence"/> where none was.
     /// </param>
-    /// <param name="refresh">
-    /// Redraw only the verses where a middle text gained links to the target since the pair was
-    /// composed (<see cref="Stale"/>), and leave the rest of the pair as it stands.
-    /// </param>
-    public async Task<CompositionOutcome> Run(
+    public async Task<(CompositionOutcome Outcome, List<MappingRow> Rows)> Run(
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
         string toSlug,
@@ -112,44 +95,18 @@ internal sealed class CompositionPipeline(
         bool unmeasured = false,
         bool daughter = false,
         int agreeing = 1,
-        bool refresh = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
-        var from = await Text(fromSlug, cancellationToken);
-        var to = await Text(toSlug, cancellationToken);
+        var language = texts[fromSlug].Language;
         var measured = daughter
-            ? MeasuredThrough.GetValueOrDefault(from.Language ?? string.Empty)
-            : unmeasured ? MeasuredUnstated.GetValueOrDefault(from.Language ?? string.Empty) : null;
+            ? MeasuredThrough.GetValueOrDefault(language)
+            : unmeasured ? MeasuredUnstated.GetValueOrDefault(language) : null;
         var threshold = minimumConfidence ?? measured?.Minimum ?? AlignmentPipeline.DefaultMinimumConfidence;
 
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-
-        IReadOnlySet<int>? verses = null;
-        if (refresh && Files is not null)
-        {
-            throw new InvalidOperationException("A composition read from the mapping files is drawn whole; --refresh reads the database's link ids.");
-        }
-
-        if (refresh)
-        {
-            verses = await Stale(connection, fromSlug, viaSlugs, toSlug, daughter, cancellationToken);
-            if (verses.Count == 0)
-            {
-                var current = new CompositionOutcome(
-                    fromSlug, string.Join(" and ", viaSlugs), toSlug, 0, 0, 0, 0, 0, 0,
-                    "nothing to redraw: no middle text gained links since the pair was composed", started.Elapsed, 0);
-                logger.LogInformation("Composed {Outcome}", current);
-                return current;
-            }
-        }
-
-        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
-        var statements = await KeyOf(connection, from.Id, to.Id, cancellationToken);
-        var (admission, _) = await Admit(
-            connection, from, viaSlugs, to, proposed, statements, threshold, precision, false, null,
-            cancellationToken);
+        var proposed = await Propose(fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
+        var statements = Key(fromSlug, toSlug);
+        var (admission, _) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, threshold, precision, false, null, cancellationToken);
         if (admission.Floors.Count == 0 && !unmeasured)
         {
             throw new InvalidOperationException(
@@ -159,15 +116,8 @@ internal sealed class CompositionPipeline(
         }
 
         var merged = Merge(proposed, admission, agreeing);
-        var (fresh, corroborated) = Files is not null
-            ? WriteFiles(from, to, [.. viaSlugs], merged,
-                measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0) ? measured.Note : null)
-            : await Write(
-            connection, from, to, [.. viaSlugs], merged, cancellationToken,
-            measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0)
-                ? measured.Note
-                : null,
-            verses);
+        var (rows, fresh, corroborated) = Rows(fromSlug, toSlug, [.. viaSlugs], merged,
+            measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0) ? measured.Note : null);
 
         var outcome = new CompositionOutcome(
             fromSlug, string.Join(" and ", viaSlugs), toSlug,
@@ -178,79 +128,14 @@ internal sealed class CompositionPipeline(
             fresh,
             corroborated,
             admission.Describe([.. viaSlugs]),
-            started.Elapsed,
-            verses?.Count);
+            started.Elapsed);
 
         logger.LogInformation("Composed {Outcome}", outcome);
-        return outcome;
+        return (outcome, rows);
     }
 
     /// <summary>How the source of every link a composition or an alignment writes begins (<see cref="Routes.Describe"/>).</summary>
     internal const string Machine = "SIL.Machine";
-
-    /// <summary>
-    /// The verses of the source a composition no longer reflects: those at the canonical address of a
-    /// verse in which a middle text holds a link to the target newer than every link the pair's
-    /// composition wrote. A middle text's links are its own mapping, reloaded or redrawn on their own
-    /// schedule — the King James's psalm titles were first linked to BHSA after every text composed
-    /// through it — and a composition only ever reached what its middle text reached when it ran.
-    /// Empty for a pair that was never composed, which a run draws whole.
-    ///
-    /// <para>
-    /// The middle links counted are the ones the composition goes through: a source's statements,
-    /// and for a daughter version every link of the middle text (<see cref="Carried"/>).
-    /// </para>
-    /// </summary>
-    public static async Task<IReadOnlySet<int>> Stale(
-        NpgsqlConnection connection,
-        string fromSlug,
-        IReadOnlyList<string> viaSlugs,
-        string toSlug,
-        bool daughter,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            WITH pair AS (
-                SELECT (SELECT id FROM text WHERE upper(slug) = upper(@from)) AS from_id,
-                       (SELECT id FROM text WHERE upper(slug) = upper(@to)) AS to_id
-            ),
-            composed AS (
-                SELECT max(l.id) AS through
-                FROM pair
-                JOIN link l ON l.from_text_id = pair.from_id AND l.to_text_id = pair.to_id
-                JOIN provenance p ON p.id = l.provenance_id
-                WHERE l.method = 'aligner' AND starts_with(p.source, @machine)
-            )
-            SELECT DISTINCT verse.id
-            FROM pair
-            CROSS JOIN composed
-            JOIN text via ON upper(via.slug) = ANY(@vias)
-            JOIN link l ON l.from_text_id = via.id AND l.to_text_id = pair.to_id AND l.id > composed.through
-            JOIN link_word side ON side.link_id = l.id AND side.side = 'from'
-            JOIN word middle ON middle.id = side.word_id
-            JOIN verse_reference there ON there.verse_id = middle.verse_id
-            JOIN verse_reference here ON here.canonical_book = there.canonical_book
-                 AND here.canonical_chapter = there.canonical_chapter
-                 AND here.canonical_verse = there.canonical_verse
-            JOIN verse ON verse.id = here.verse_id AND verse.text_id = pair.from_id
-            WHERE l.method NOT IN ('aligner', 'rule-based') OR @aligned
-            """, connection);
-        command.Parameters.AddWithValue("from", fromSlug);
-        command.Parameters.AddWithValue("to", toSlug);
-        command.Parameters.AddWithValue("vias", viaSlugs.Select(via => via.ToUpperInvariant()).ToArray());
-        command.Parameters.AddWithValue("machine", Machine);
-        command.Parameters.AddWithValue("aligned", daughter);
-
-        var verses = new HashSet<int>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            verses.Add(reader.GetInt32(0));
-        }
-
-        return verses;
-    }
 
     /// <summary>
     /// What a run would write and how far it would carry the text, without writing anything: the
@@ -275,24 +160,17 @@ internal sealed class CompositionPipeline(
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
-        var from = await Text(fromSlug, cancellationToken);
-        var to = await Text(toSlug, cancellationToken);
-
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-
-        var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, true, books, cancellationToken, daughter);
+        var proposed = await Propose(fromSlug, viaSlugs, toSlug, true, books, cancellationToken, daughter);
         var trained = started.Elapsed;
-        var statements = await KeyOf(connection, from.Id, to.Id, cancellationToken);
-        var scope = await CompositionTrial.Scope(connection, from.Id, to.Id, statements, books, cancellationToken);
+        var statements = Key(fromSlug, toSlug);
+        var scope = CompositionTrial.Scope(texts, fromSlug, toSlug, statements, books);
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
-        var (admission, measured) = await Admit(
-            connection, from, viaSlugs, to, proposed, statements, minimumConfidence, precision, true, books,
+        var (admission, measured) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, minimumConfidence, precision, true, books,
             cancellationToken);
 
         if (explain is not null)
         {
-            await Explain(explain, fromSlug, viaSlugs, proposed, admission, agreeing, books, cancellationToken);
+            await Explain(explain, fromSlug, viaSlugs, toSlug, proposed, admission, agreeing, books, cancellationToken);
         }
 
         var report = new StringBuilder()
@@ -312,7 +190,6 @@ internal sealed class CompositionPipeline(
 
         return report.ToString();
     }
-
     /// <summary>
     /// Every answer each reading gave, one line per pair, for working out why a word was left
     /// without a link: whether nothing proposed anything for it, or a combination was refused, or
@@ -323,6 +200,7 @@ internal sealed class CompositionPipeline(
         string path,
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
+        string toSlug,
         Proposed proposed,
         Admission admission,
         int agreeing,
@@ -330,24 +208,26 @@ internal sealed class CompositionPipeline(
         CancellationToken cancellationToken)
     {
         var chosen = Merge(proposed, admission, agreeing).Select(link => (link.From, link.To)).ToHashSet();
+        var (from, to) = (texts[fromSlug], texts[toSlug]);
         await using var writer = new StreamWriter(path, false, new UTF8Encoding(false));
         await writer.WriteLineAsync("reading\tfrom\tto\tconfidence\tadmitted\tchosen");
         foreach (var link in Routes.MergeFamilies(proposed.Written, proposed.Reduced, [.. proposed.Composed]))
         {
             await writer.WriteLineAsync(string.Join('\t',
-                Admission.Name(link.Route, [.. viaSlugs]), link.From, link.To,
+                Admission.Name(link.Route, [.. viaSlugs]), from.Key(link.From).Own, to.Key(link.To).Own,
                 link.Confidence.ToString("F4", CultureInfo.InvariantCulture),
                 admission.Admits(link) ? 1 : 0, chosen.Contains((link.From, link.To)) ? 1 : 0));
         }
 
         foreach (var viaSlug in viaSlugs)
         {
-            foreach (var (from, bridge, confidence) in await aligner.Proposals(
+            var via = texts[viaSlug];
+            foreach (var (word, bridge, confidence) in await aligner.Proposals(
                          fromSlug, viaSlug, Workspace(fromSlug, viaSlug, true, books), AgreementFloor,
                          books: books, cancellationToken: cancellationToken))
             {
                 await writer.WriteLineAsync(string.Join('\t',
-                    $"to {viaSlug}", from, bridge, confidence.ToString("F4", CultureInfo.InvariantCulture), 0, 0));
+                    $"to {viaSlug}", from.Key(word).Own, via.Key(bridge).Own, confidence.ToString("F4", CultureInfo.InvariantCulture), 0, 0));
             }
         }
     }
@@ -360,7 +240,6 @@ internal sealed class CompositionPipeline(
 
     /// <param name="daughter">See <see cref="Run"/>.</param>
     private async Task<Proposed> Propose(
-        NpgsqlConnection connection,
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
         string toSlug,
@@ -369,9 +248,7 @@ internal sealed class CompositionPipeline(
         CancellationToken cancellationToken,
         bool daughter = false)
     {
-        var from = await Text(fromSlug, cancellationToken);
-        var to = await Text(toSlug, cancellationToken);
-        var joins = await VerseJoins.Load(connection, from.Id, to.Id, cancellationToken);
+        var joins = VerseJoins.Of(texts.Store, texts[fromSlug], texts[toSlug]);
 
         IReadOnlyList<(long From, long To, double Confidence)> reduced = daughter
             ? []
@@ -386,26 +263,23 @@ internal sealed class CompositionPipeline(
         var composed = new List<IReadOnlyList<(long From, long To, double Confidence)>>(viaSlugs.Count);
         foreach (var viaSlug in viaSlugs)
         {
-            var via = await Text(viaSlug, cancellationToken);
             var first = await aligner.Proposals(
                 fromSlug, viaSlug, Workspace(fromSlug, viaSlug, trial, books), AgreementFloor,
                 books: books, cancellationToken: cancellationToken);
-            composed.Add(Compose(first, Files?.Carried(via.Id, to.Id, daughter) ?? await Carried(connection, via.Id, to.Id, daughter, cancellationToken), joins));
+            composed.Add(Compose(first, _links.Carried(viaSlug, toSlug, daughter), joins));
         }
 
         return new Proposed(written, reduced, composed);
     }
-
     /// <summary>
     /// Which answers a run writes: measured on the pair's own statements where it has enough, and
     /// otherwise on the other texts in its language that state the target, each composed the same
     /// way. Also returns what each combination scored from each confidence up, for a dry run to print.
     /// </summary>
     private async Task<(Admission Admission, string Measured)> Admit(
-        NpgsqlConnection connection,
-        Database.Entities.Text from,
+        string fromSlug,
         IReadOnlyList<string> viaSlugs,
-        Database.Entities.Text to,
+        string toSlug,
         Proposed proposed,
         IReadOnlyDictionary<long, HashSet<long>> statements,
         double minimumConfidence,
@@ -420,33 +294,32 @@ internal sealed class CompositionPipeline(
             : Admission.Everything(minimumConfidence);
         if (own.Floors.Count > 0)
         {
-            return (own, $"  {from.Slug} to {to.Slug}, on its own statements:{Environment.NewLine}" +
+            return (own, $"  {fromSlug} to {toSlug}, on its own statements:{Environment.NewLine}" +
                          Admission.Curves(every, statements, [.. viaSlugs]));
         }
 
         var measured = new List<(string Text, Route Reads, IReadOnlyDictionary<Route, RouteFloor> Floors)>();
         var report = new StringBuilder();
-        foreach (var proxy in Files?.Proxies(from.Id, to.Id) ?? await Proxies(connection, from, to.Id, cancellationToken))
+        foreach (var proxy in _links.Proxies(fromSlug, toSlug))
         {
-            var vias = viaSlugs.Where(via => via != proxy.Slug).ToList();
-            var proxyProposed = await Propose(connection, proxy.Slug, vias, to.Slug, trial, books, cancellationToken);
-            var proxyStatements = await KeyOf(connection, proxy.Id, to.Id, cancellationToken);
+            var vias = viaSlugs.Where(via => via != proxy).ToList();
+            var proxyProposed = await Propose(proxy, vias, toSlug, trial, books, cancellationToken);
+            var proxyStatements = Key(proxy, toSlug);
             var proxyEvery = Merge(proxyProposed, Admission.Everything(minimumConfidence));
             var floors = Admission.Measure(proxyEvery, proxyStatements, minimumConfidence, precision);
 
             var middles = vias.Select(via => Routes.Middles[viaSlugs.ToList().IndexOf(via)]).ToArray();
             measured.Add((
-                proxy.Slug,
+                proxy,
                 middles.Aggregate(Route.Written | Route.Reduced, (reads, middle) => reads | middle),
                 floors.Floors.ToDictionary(entry => Translated(entry.Key, middles), entry => entry.Value)));
-            report.AppendLine($"  {proxy.Slug} to {to.Slug} through {string.Join(" and ", vias)}, on its statements; " +
+            report.AppendLine($"  {proxy} to {toSlug} through {string.Join(" and ", vias)}, on its statements; " +
                               floors.Describe([.. vias]))
                 .AppendLine(Admission.Curves(proxyEvery, proxyStatements, [.. vias]));
         }
 
         return (Admission.Borrow(measured, [.. viaSlugs], minimumConfidence, precision), report.ToString());
     }
-
     /// <summary>
     /// A route as another composition numbers it, renumbered for this one: its middle texts are
     /// this pair's, named in another order or with one left out.
@@ -464,45 +337,6 @@ internal sealed class CompositionPipeline(
         }
 
         return translated;
-    }
-
-    /// <summary>
-    /// The other texts in the source's language whose words a source states a word of the target for,
-    /// enough of them to measure on, most first. For English against the originals, the King James
-    /// and the Berean; not a text EVIDENTIA alone links, whose links are another inference, nor one
-    /// whose only statements are the words it prints as its own (<see cref="Admission.Measures"/>).
-    /// </summary>
-    private static async Task<List<(int Id, string Slug)>> Proxies(
-        NpgsqlConnection connection,
-        Database.Entities.Text from,
-        int toTextId,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT t.id, t.slug
-            FROM link l
-            JOIN text t ON t.id = l.from_text_id
-            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
-            WHERE l.to_text_id = @to AND l.method NOT IN ('aligner', 'rule-based') AND t.language = @language AND t.id <> @from
-              AND EXISTS (SELECT 1 FROM link_word r WHERE r.link_id = l.id AND r.side = 'to')
-            GROUP BY t.id, t.slug
-            HAVING count(DISTINCT f.word_id) >= @fewest
-            ORDER BY count(DISTINCT f.word_id) DESC, t.slug
-            """, connection);
-        command.Parameters.AddWithValue("to", toTextId);
-        command.Parameters.AddWithValue("language", from.Language);
-        command.Parameters.AddWithValue("from", from.Id);
-        command.Parameters.AddWithValue("fewest", Admission.FewestToMeasure);
-
-        var proxies = new List<(int, string)>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            proxies.Add((reader.GetInt32(0), reader.GetString(1)));
-        }
-
-        return proxies;
     }
 
     /// <summary>
@@ -545,10 +379,9 @@ internal sealed class CompositionPipeline(
     /// </summary>
     internal static string Workspace(
         string from, string to, bool trial = false, IReadOnlySet<int>? books = null, bool written = false) =>
-        AlignmentStore.Workspace(
-            $"{from}-{to}" + (trial ? "-trial" : string.Empty) +
-            (books is null ? string.Empty : $"-books-{string.Join('-', books.Order())}") +
-            (written ? "-written" : string.Empty));
+        $"{from}-{to}" + (trial ? "-trial" : string.Empty) +
+        (books is null ? string.Empty : $"-books-{string.Join('-', books.Order())}") +
+        (written ? "-written" : string.Empty);
 
     /// <summary>
     /// The two hops joined at the middle text's word. One link of the middle text may name several
@@ -611,48 +444,6 @@ internal sealed class CompositionPipeline(
     };
 
     /// <summary>
-    /// What the middle text's words carry to the target. A null confidence is a link somebody
-    /// stated, which adds no doubt of its own and passes the first hop's through unchanged -- which
-    /// is the whole reason this route is worth walking.
-    /// </summary>
-    /// <param name="aligned">
-    /// Whether the middle text's own aligner links count, at their confidence, and EVIDENTIA's
-    /// rule-based ones with them. For a daughter version they are the only way its mother reaches
-    /// the target: Brenton's links to BHSA are all the aligner's. Otherwise neither is walked, so
-    /// one inference is never the next one's bridge.
-    /// </param>
-    private static async Task<ILookup<long, (long To, double Confidence)>> Carried(
-        NpgsqlConnection connection,
-        int viaTextId,
-        int toTextId,
-        bool aligned,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT f.word_id, t.word_id, l.confidence,
-                   (SELECT count(*) FROM link_word n WHERE n.link_id = l.id AND n.side = 'from')
-            FROM link l
-            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
-            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @via AND l.to_text_id = @to AND (l.method NOT IN ('aligner', 'rule-based') OR @aligned)
-            """, connection);
-        command.Parameters.AddWithValue("via", viaTextId);
-        command.Parameters.AddWithValue("to", toTextId);
-        command.Parameters.AddWithValue("aligned", aligned);
-
-        var rows = new List<(long Bridge, long To, double Confidence)>(400_000);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            rows.Add((reader.GetInt64(0), reader.GetInt64(1),
-                Confidence(reader, 2) * SpecificityOf(reader.GetInt64(3))));
-        }
-
-        return rows.ToLookup(row => row.Bridge, row => (row.To, row.Confidence));
-    }
-
-    /// <summary>
     /// How often a composed link running through a middle link of this size turns out to be right,
     /// as a share of how often one running through a stated one-to-one pair does.
     ///
@@ -693,109 +484,49 @@ internal sealed class CompositionPipeline(
     internal static double SpecificityOf(long englishWords) =>
         Confirmed[(int)Math.Clamp(englishWords, 1, Confirmed.Length) - 1] / Confirmed[0];
 
-    private static double Confidence(NpgsqlDataReader reader, int column) =>
-        reader.IsDBNull(column) ? 1 : reader.GetDouble(column);
-
     /// <summary>
-    /// Replaces the aligner links between the two texts with the merged set, in one transaction, so
-    /// there is never a moment where a pair is claimed twice by two routes that have not been
-    /// reconciled.
+    /// The merged answers as rows of the pair's <c>composed</c> method file.
     ///
     /// <para>
-    /// Given <paramref name="verses"/>, only those verses of the source are redrawn: the links this
-    /// composition or an alignment wrote from their words, and the aligner's agreements with a
-    /// statement there, are replaced by the merged pairs from their words, and everything else stands.
-    /// A link another pass wrote as the aligner's, the names settled by spelling, is kept, and a
-    /// merged pair over its words becomes a claim on it.
+    /// A pair a source has already stated is not written as a link of its own. The routes reach words the interlinear
+    /// also annotates — the same word of the Ukrainian against the same word of the Hebrew — and a second link saying that
+    /// is not a second fact: it makes a word pair nobody doubts read as contended, and it double-counts it in every measure.
+    /// So the guess is a row of the stated link's shape, which the merge folds into that link as a claim, and the stated
+    /// link keeps the source's identity because a guess can be rebuilt by running the aligner again and a statement cannot
+    /// be rebuilt at all.
     /// </para>
     ///
     /// <para>
-    /// A pair a source has already stated is not written again. The routes reach words the
-    /// interlinear also annotates — the same word of the Ukrainian against the same word of the
-    /// Hebrew — and a second row saying that is not a second fact: it makes a word pair nobody
-    /// doubts read as contended, and it double-counts it in every measure. So the guess becomes a
-    /// claim on the link that states the pair, which is what <c>link_claim</c> is for, and the
-    /// stated row keeps the source's identity because a guess can be rebuilt by running the aligner
-    /// again and a statement cannot be rebuilt at all.
-    /// </para>
-    ///
-    /// <para>
-    /// A pair onto a word of the target that something other than the aligner says the translation
-    /// does not render is not written either. That is the answer standing on the word, as an empty
-    /// answer on a source word is; and a rerun that put the guess back would show the word as
-    /// unrendered and rendered at once, undoing every guess an absence was allowed to withdraw.
+    /// A pair onto a word of the target that something other than the aligner says the translation does not render is not
+    /// written either. That is the answer standing on the word, as an empty answer on a source word is; and a guess put
+    /// back would show the word as unrendered and rendered at once. Nor is a pair the held editions' wording rules out
+    /// (<see cref="RejectedRenderings"/>).
     /// </para>
     /// </summary>
-    internal async Task<(int Fresh, int Corroborated)> Write(
-        NpgsqlConnection connection,
-        Database.Entities.Text from,
-        Database.Entities.Text to,
-        string[] viaSlugs,
-        IReadOnlyList<RoutedLink> merged,
-        CancellationToken cancellationToken,
-        string? note = null,
-        IReadOnlySet<int>? verses = null)
+    internal (List<MappingRow> Rows, int Fresh, int Corroborated) Rows(
+        string fromSlug, string toSlug, string[] viaSlugs, IReadOnlyList<RoutedLink> merged, string? note)
     {
-        if (verses is not null)
-        {
-            var inScope = await WordsOf(connection, verses, cancellationToken);
-            merged = [.. merged.Where(link => inScope.Contains(link.From))];
-        }
-
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
-        var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
-        var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken, rules: true)).Keys.ToHashSet();
-        var unrendered = await Unrendered(connection, from.Id, to.Id, cancellationToken);
-        var rejected = await RejectedRenderings.Locate(connection, cancellationToken);
+        var stated = _links.Stated(fromSlug, toSlug);
+        var claimed = _links.Statements(fromSlug, toSlug, rules: true).Keys.ToHashSet();
+        var unrendered = _links.Unrendered(fromSlug, toSlug);
+        var rejected = aligner.Rejected(fromSlug, toSlug);
         var (fresh, agreeing) = Split(
-            [.. merged.Where(link => !unrendered.Contains(link.To) && !rejected.Contains((link.From, link.To))
-                && !rejected.Contains((link.To, link.From)))],
+            [.. merged.Where(link => !unrendered.Contains(link.To) && !rejected.Contains((link.From, link.To)))],
             stated, claimed, viaSlugs);
-
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-
-        await using (var delete = new NpgsqlCommand(
-            verses is null
-                ? "DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to AND method = 'aligner'"
-                : DeleteInVerses,
-            connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
-        {
-            delete.Parameters.AddWithValue("from", from.Id);
-            delete.Parameters.AddWithValue("to", to.Id);
-            delete.Parameters.AddWithValue("verses", verses?.ToArray() ?? []);
-            delete.Parameters.AddWithValue("machine", Machine);
-            await delete.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await using (var withdraw = new NpgsqlCommand(
-                         verses is null ? WithdrawEarlierAgreement : WithdrawEarlierAgreementInVerses, connection,
-                         (NpgsqlTransaction)transaction.GetDbTransaction()))
-        {
-            withdraw.Parameters.AddWithValue("from", from.Id);
-            withdraw.Parameters.AddWithValue("to", to.Id);
-            withdraw.Parameters.AddWithValue("aligner", EnumSpelling.Of(LinkMethod.Aligner));
-            withdraw.Parameters.AddWithValue("verses", verses?.ToArray() ?? []);
-            await withdraw.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await LinkWriter.Write(
-            connection,
-            (NpgsqlTransaction)transaction.GetDbTransaction(),
-            [
-                .. fresh.Select(link => new NewLink(
-                    from.Id, to.Id, LinkRelation.Renders, LinkMethod.Aligner, Routes.Written(link.Confidence),
-                    Routes.Describe(link.Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"), null,
-                    [link.From], [link.To])),
-            ],
-            cancellationToken);
-
-        await LinkClaims.Corroborate(
-            connection, transaction, agreeing, LinkMethod.Aligner, Agreement, cancellationToken);
-
-        await transaction.CommitAsync(cancellationToken);
-        return (fresh.Count, agreeing.Count);
+        var agreed = stated.ToDictionary(pair => pair.Value, pair => pair.Key);
+        var (from, to) = (texts[fromSlug], texts[toSlug]);
+        List<MappingRow> rows =
+        [
+            .. fresh.Select(link => Row(from, to, link.From, link.To, Routes.Written(link.Confidence),
+                Routes.Describe(link.Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"), null)),
+            .. agreeing.Select(a => Row(from, to, agreed[a.Link].From, agreed[a.Link].To, a.Confidence, a.Source, null)),
+        ];
+        return (rows, fresh.Count, agreeing.Count);
     }
 
+    private static MappingRow Row(ProductText from, ProductText to, long fromWord, long toWord, double confidence, string source, string? evidence) =>
+        new(from.Key(fromWord).Own.ToString(), to.Key(toWord).Own.ToString(), "renders", MappingMethods.Composed, confidence, source, evidence,
+            null, null);
     /// <summary>
     /// The merged pairs divided into the ones that become links of their own and the ones that
     /// become a second claim on a link a source already wrote.
@@ -843,182 +574,6 @@ internal sealed class CompositionPipeline(
     }
 
     /// <summary>
-    /// The aligner's answers an earlier run left as claims on links a source states. A run replaces
-    /// the aligner's links between two texts, and its agreement with a statement is part of what it
-    /// answered, so that is replaced too: left in place, a rerun stacks a second aligner claim on
-    /// every stated pair it reaches again, under a differently worded route, and keeps an agreement
-    /// the model no longer makes on every pair it does not.
-    /// </summary>
-    private const string WithdrawEarlierAgreement =
-        """
-        DELETE FROM link_claim c
-        USING link l
-        WHERE c.link_id = l.id AND l.from_text_id = @from AND l.to_text_id = @to
-          AND l.method <> @aligner AND c.method = @aligner
-        """;
-
-    /// <summary><see cref="WithdrawEarlierAgreement"/> on the links from a word of <c>@verses</c>.</summary>
-    private const string WithdrawEarlierAgreementInVerses =
-        """
-        DELETE FROM link_claim c
-        USING link l
-        WHERE c.link_id = l.id AND l.from_text_id = @from AND l.to_text_id = @to
-          AND l.method <> @aligner AND c.method = @aligner
-          AND EXISTS (SELECT 1 FROM link_word side JOIN word w ON w.id = side.word_id
-                      WHERE side.link_id = l.id AND side.side = 'from' AND w.verse_id = ANY(@verses))
-        """;
-
-    /// <summary>The links a composition or an alignment wrote from a word of <c>@verses</c>.</summary>
-    private const string DeleteInVerses =
-        """
-        DELETE FROM link l
-        USING provenance p
-        WHERE p.id = l.provenance_id AND starts_with(p.source, @machine)
-          AND l.from_text_id = @from AND l.to_text_id = @to AND l.method = 'aligner'
-          AND EXISTS (SELECT 1 FROM link_word side JOIN word w ON w.id = side.word_id
-                      WHERE side.link_id = l.id AND side.side = 'from' AND w.verse_id = ANY(@verses))
-        """;
-
-    private static async Task<HashSet<long>> WordsOf(
-        NpgsqlConnection connection, IReadOnlySet<int> verses, CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand("SELECT id FROM word WHERE verse_id = ANY(@verses)", connection);
-        command.Parameters.AddWithValue("verses", verses.ToArray());
-        var words = new HashSet<long>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            words.Add(reader.GetInt64(0));
-        }
-
-        return words;
-    }
-
-    /// <summary>
-    /// What the aligner writes when it arrives at a pair somebody has already stated.
-    /// </summary>
-    private const string Agreement =
-        "The aligner reached a pair this source states, so it stands as a second voice for that " +
-        "link rather than as a rival link naming the same two words.";
-
-    /// <summary>
-    /// The word pairs a source has already stated for these two texts, by the two words they name.
-    ///
-    /// Only the links naming one word on each side, because that is the only shape a composed link
-    /// has and therefore the only one it can duplicate: a stated link naming a phrase says
-    /// something no single pair says, and a link with no word on one side is an absence rather than
-    /// a correspondence. The aligner's own rows are left out because they are about to be deleted
-    /// and rewritten.
-    /// </summary>
-    private static async Task<Dictionary<(long From, long To), long>> Stated(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
-        string relation,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT min(f.word_id), min(t.word_id), l.id
-            FROM link l
-            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
-            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @from AND l.to_text_id = @to
-              AND l.relation = @relation AND l.method <> 'aligner'
-            GROUP BY l.id
-            HAVING count(*) = 1
-            """, connection);
-        command.Parameters.AddWithValue("from", fromTextId);
-        command.Parameters.AddWithValue("to", toTextId);
-        command.Parameters.AddWithValue("relation", relation);
-
-        var stated = new Dictionary<(long, long), long>(20_000);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            stated[(reader.GetInt64(0), reader.GetInt64(1))] = reader.GetInt64(2);
-        }
-
-        return stated;
-    }
-
-    /// <summary>
-    /// The target words each source word is joined to by a link that is not the aligner's: the
-    /// words that already have an answer standing on them, and what it is. A source word a source
-    /// says renders nothing has an answer too, and it is the empty one.
-    /// </summary>
-    /// <param name="rules">
-    /// Whether EVIDENTIA's rule-based links count. They are an answer standing on a word, which a
-    /// composition must not write a guess beside; they are not a statement to measure one against,
-    /// which would score one inference by another.
-    /// </param>
-    internal static async Task<Dictionary<long, HashSet<long>>> Statements(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
-        CancellationToken cancellationToken,
-        bool rules = false)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT f.word_id, t.word_id
-            FROM link l
-            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
-            LEFT JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.method <> 'aligner' AND (l.method <> 'rule-based' OR @rules)
-            """, connection);
-        command.Parameters.AddWithValue("from", fromTextId);
-        command.Parameters.AddWithValue("to", toTextId);
-        command.Parameters.AddWithValue("rules", rules);
-
-        var statements = new Dictionary<long, HashSet<long>>(400_000);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            var word = reader.GetInt64(0);
-            if (!statements.TryGetValue(word, out var targets))
-            {
-                statements[word] = targets = [];
-            }
-
-            if (!reader.IsDBNull(1))
-            {
-                targets.Add(reader.GetInt64(1));
-            }
-        }
-
-        return statements;
-    }
-
-    /// <summary>The target words a link that is not the aligner's says the source text does not render.</summary>
-    private static async Task<HashSet<long>> Unrendered(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
-            SELECT t.word_id
-            FROM link l
-            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            WHERE l.from_text_id = @from AND l.to_text_id = @to AND l.relation = @omits AND l.method <> 'aligner'
-            """, connection);
-        command.Parameters.AddWithValue("from", fromTextId);
-        command.Parameters.AddWithValue("to", toTextId);
-        command.Parameters.AddWithValue("omits", EnumSpelling.Of(LinkRelation.Omits));
-
-        var words = new HashSet<long>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            words.Add(reader.GetInt64(0));
-        }
-
-        return words;
-    }
-
-    /// <summary>
     /// What a run is measured against: the statements, each read as naming the whole written word
     /// of the target it names rather than the one word of it the corpus divides out.
     ///
@@ -1037,14 +592,10 @@ internal sealed class CompositionPipeline(
     /// the noun is not made right by a statement about its article.
     /// </para>
     /// </summary>
-    internal static async Task<Dictionary<long, HashSet<long>>> Key(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
-        CancellationToken cancellationToken)
+    internal Dictionary<long, HashSet<long>> Key(string fromSlug, string toSlug)
     {
-        var statements = await Statements(connection, fromTextId, toTextId, cancellationToken);
-        var together = WrittenTogether(await Spelling(connection, toTextId, cancellationToken));
+        var statements = _links.Statements(fromSlug, toSlug, rules: false);
+        var together = WrittenTogether(Spelling(texts[toSlug]));
         foreach (var targets in statements.Values)
         {
             foreach (var target in targets.ToArray())
@@ -1058,7 +609,6 @@ internal sealed class CompositionPipeline(
 
         return statements;
     }
-
     /// <summary>
     /// For each word of a written word the corpus divides, the parts of it written joined to the
     /// next: its proclitics.
@@ -1092,78 +642,15 @@ internal sealed class CompositionPipeline(
         return together;
     }
 
-    private static async Task<List<(long Id, int Verse, string Trailer)>> Spelling(
-        NpgsqlConnection connection,
-        int textId,
-        CancellationToken cancellationToken)
+    /// <summary>Every word of a text in reading order, by its place in the text: its verse and what follows it.</summary>
+    internal static List<(long Id, int Verse, string Trailer)> Spelling(ProductText text)
     {
-        await using var command = new NpgsqlCommand(
-            "SELECT id, verse_id, trailer FROM word WHERE text_id = @text ORDER BY verse_id, position", connection);
-        command.Parameters.AddWithValue("text", textId);
-
-        var words = new List<(long, int, string)>(500_000);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
+        var words = new List<(long, int, string)>(text.Words.Count);
+        for (var verse = 0; verse < text.Verses.Count; verse++)
         {
-            words.Add((reader.GetInt64(0), reader.GetInt32(1), reader.GetString(2)));
+            words.AddRange(text.InVerse(text.Verses[verse]).Select(id => ((long)id, verse, text.Words[id].Trailer)));
         }
 
         return words;
     }
-
-    /// <summary><see cref="Key"/>, with the statements read from the mapping files where the run reads them.</summary>
-    private async Task<Dictionary<long, HashSet<long>>> KeyOf(
-        NpgsqlConnection connection, int fromTextId, int toTextId, CancellationToken cancellationToken)
-    {
-        if (Files is null)
-        {
-            return await Key(connection, fromTextId, toTextId, cancellationToken);
-        }
-
-        var statements = Files.Statements(fromTextId, toTextId, rules: false);
-        var together = WrittenTogether(await Spelling(connection, toTextId, cancellationToken));
-        foreach (var targets in statements.Values)
-        {
-            foreach (var target in targets.ToArray())
-            {
-                if (together.TryGetValue(target, out var joined))
-                {
-                    targets.UnionWith(joined);
-                }
-            }
-        }
-
-        return statements;
-    }
-
-    /// <summary>
-    /// <see cref="Write"/> for a run that reads the mapping files: the same pairs are kept and left out (a stated pair
-    /// becomes an agreement, a word another method answers for gets no guess, an unrendered target word none either),
-    /// and they go to the pair's <c>composed</c> method file instead of the database. The rejected renderings are the
-    /// pair's rulings, which the merge applies.
-    /// </summary>
-    private (int Fresh, int Corroborated) WriteFiles(
-        Database.Entities.Text from, Database.Entities.Text to, string[] viaSlugs, IReadOnlyList<RoutedLink> merged, string? note)
-    {
-        var stated = Files!.Stated(from.Id, to.Id);
-        var claimed = Files.Statements(from.Id, to.Id, rules: true).Keys.ToHashSet();
-        var unrendered = Files.Unrendered(from.Id, to.Id);
-        var (fresh, agreeing) = Split([.. merged.Where(link => !unrendered.Contains(link.To))], stated, claimed, viaSlugs);
-        var agreed = stated.ToDictionary(pair => pair.Value, pair => pair.Key);
-        Files.WriteComposed(from.Slug, to.Slug,
-        [
-            .. fresh.Select(link => (link.From, link.To, Routes.Written(link.Confidence),
-                Routes.Describe(link.Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"), (string?)null)),
-            .. agreeing.Select(a => (agreed[a.Link].From, agreed[a.Link].To, a.Confidence, a.Source, (string?)Agreement)),
-        ],
-        [
-            .. viaSlugs.Select(via => Mapping.MappingProducts.Of(Mapping.MappingProducts.Pair(via, to.Slug), Mapping.MappingProducts.Final)),
-            Mapping.MappingProducts.Of(Mapping.MappingProducts.Pair(from.Slug, to.Slug), Mapping.MappingProducts.Final),
-        ]);
-        return (fresh.Count, agreeing.Count);
-    }
-
-    private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>
-        await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
-        ?? throw new InvalidOperationException($"There is no text \"{slug}\".");
 }

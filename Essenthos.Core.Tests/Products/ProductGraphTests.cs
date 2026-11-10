@@ -160,7 +160,7 @@ public sealed class ProductGraphTests : IDisposable
     {
         var graph = ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));
 
-        foreach (var kept in new[] { "texts/KJV/ids", "mapping/pairs", "mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
+        foreach (var kept in new[] { "texts/KJV/ids", "mapping/pairs", "mapping/KJV-GRCBRENT/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
                      "build/word-id-ceiling", "external/tsk/cross-references", "records/derived/occupation-words" })
         {
             graph.Find(kept)!.Value.Declaration.Maker.Should().Be(ProductMaker.Kept, kept);
@@ -172,6 +172,7 @@ public sealed class ProductGraphTests : IDisposable
         }
 
         graph.Find("mapping/KJV-BHSA/stated")!.Value.Declaration.Maker.Should().Be(ProductMaker.Build);
+        graph.Find("mapping/DRA-VULGCLEM/aligner")!.Value.Declaration.Maker.Should().Be(ProductMaker.Build, "its stored answer reproduces the kept rows");
         graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("names-from-database") || d.Producer.StartsWith("names-export"));
     }
 

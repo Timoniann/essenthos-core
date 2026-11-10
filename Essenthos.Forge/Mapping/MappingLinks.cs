@@ -1,92 +1,61 @@
-using Essenthos.Core.Comparison;
+using System.Collections.Concurrent;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
-using Npgsql;
 
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
-/// The links a generator reads, from the mapping's finals instead of the database (DOC-0224 §6, generators read
-/// files): each pair's final, its keys resolved to the word ids of the database the generator's words still come
-/// from, so that the generator's own code is unchanged. Once the texts are products (TSK-1443) the ids come from
-/// <c>texts/&lt;SLUG&gt;/ids</c> and no database is read at all. What a generator writes goes back to a method file
-/// (<see cref="WriteComposed"/>), and the merge decides what of it becomes a link.
+/// The links a composition reads, from the mapping's finals (DOC-0224 §6, generators read files): each pair's settled
+/// claims, their words by their place in their own text (<see cref="ProductText"/>). What a composition writes goes to a
+/// method file, and the merge decides what of it becomes a link.
 /// </summary>
-internal sealed class MappingLinks(ProductStore store, WordKeys keys, IReadOnlyDictionary<int, string?> languages)
+internal sealed class MappingLinks(ProductTexts texts)
 {
-    /// <summary>One link of a final: its words by id and its settled claim.</summary>
+    /// <summary>One link of a final: its words by their place in each text, and its settled claim.</summary>
     internal sealed record FinalLink(long Id, string Relation, LinkMethod Method, double? Confidence, long[] From, long[] To);
 
-    private readonly Dictionary<string, List<FinalLink>> _finals = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, Lazy<List<FinalLink>>> _finals = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, Lazy<Dictionary<string, int>>> _ids = new(StringComparer.Ordinal);
 
-    public ProductStore Store => store;
-
-    public WordKeys Keys => keys;
-
-    public static async Task<MappingLinks> Open(ProductStore store, NpgsqlConnection connection, CancellationToken cancellationToken)
-    {
-        var keys = await WordKeys.Load(connection, reverse: true, cancellationToken);
-        var languages = new Dictionary<int, string?>();
-        await using var command = new NpgsqlCommand("SELECT id, language FROM text", connection);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            languages[reader.GetInt32(0)] = reader.IsDBNull(1) ? null : reader.GetString(1);
-        }
-
-        return new MappingLinks(store, keys, languages);
-    }
+    /// <summary>The finals a composition of the pair may read, relative to Resources: its own, its middle texts', and its proxies'.</summary>
+    public static IEnumerable<string> Inputs(ProductStore store, string fromSlug, IEnumerable<string> viaSlugs, string toSlug) =>
+        viaSlugs.Append(fromSlug).Select(slug => MappingProducts.Pair(slug, toSlug))
+            .Concat(ProxyPairs(store, fromSlug, toSlug))
+            .Distinct(StringComparer.Ordinal)
+            .Select(pair => store.Find(MappingProducts.Of(pair, MappingProducts.Final))).OfType<string>();
 
     /// <summary>The links of a pair's final; empty where the pair has none.</summary>
-    public List<FinalLink> Links(int fromTextId, int toTextId)
-    {
-        var pair = MappingProducts.Pair(keys.Slug(fromTextId), keys.Slug(toTextId));
-        lock (_finals)
-        {
-            if (_finals.TryGetValue(pair, out var cached))
-            {
-                return cached;
-            }
-        }
+    public List<FinalLink> Links(string fromSlug, string toSlug) =>
+        _finals.GetOrAdd(MappingProducts.Pair(fromSlug, toSlug), pair => new Lazy<List<FinalLink>>(() => Read(pair, fromSlug, toSlug))).Value;
 
-        var links = new List<FinalLink>();
-        var product = MappingProducts.Of(pair, MappingProducts.Final);
-        if (store.Exists(product))
-        {
-            using var reader = store.Open(product, FinalRow.Schema);
-            foreach (var row in reader.Rows().Where(r => r.Settled))
-            {
-                var from = Ids(row.From, fromTextId);
-                var to = Ids(row.To, toTextId);
-                if (from is not null && to is not null)
-                {
-                    links.Add(new FinalLink(row.Id, row.Relation, MappingMethods.DatabaseMethod(row.Method), row.Confidence, from, to));
-                }
-            }
-        }
-
-        lock (_finals)
-        {
-            _finals[pair] = links;
-        }
-
-        return links;
-    }
-
-    /// <summary>What <see cref="CompositionPipeline"/> reads as the middle text's links to the target (its <c>Carried</c>).</summary>
-    public ILookup<long, (long To, double Confidence)> Carried(int viaTextId, int toTextId, bool aligned) =>
-        Links(viaTextId, toTextId)
+    /// <summary>What a composition reads as the middle text's links to the target, each at its confidence and its specificity.</summary>
+    /// <param name="aligned">
+    /// Whether the middle text's own aligner links count, at their confidence, and EVIDENTIA's rule-based ones with them: for a
+    /// daughter version they are the only way its mother reaches the target. Otherwise neither is walked, so one inference is
+    /// never the next one's bridge.
+    /// </param>
+    public ILookup<long, (long To, double Confidence)> Carried(string viaSlug, string toSlug, bool aligned) =>
+        Links(viaSlug, toSlug)
             .Where(l => l.To.Length > 0 && (aligned || l.Method is not (LinkMethod.Aligner or LinkMethod.RuleBased)))
             .SelectMany(l => l.From.SelectMany(f => l.To.Select(t => (Bridge: f, To: t,
                 Confidence: (l.Confidence ?? 1) * CompositionPipeline.SpecificityOf(l.From.Length)))))
             .ToLookup(r => r.Bridge, r => (r.To, r.Confidence));
 
-    /// <summary>The target words each source word is joined to by a link that is not the aligner's (its <c>Statements</c>).</summary>
-    public Dictionary<long, HashSet<long>> Statements(int fromTextId, int toTextId, bool rules)
+    /// <summary>
+    /// The target words each source word is joined to by a link that is not the aligner's: the words that already have an
+    /// answer standing on them, and what it is. A source word a source says renders nothing has an answer too, the empty one.
+    /// </summary>
+    /// <param name="rules">
+    /// Whether EVIDENTIA's rule-based links count. They are an answer standing on a word, which a composition must not write a
+    /// guess beside; they are not a statement to measure one against, which would score one inference by another.
+    /// </param>
+    public Dictionary<long, HashSet<long>> Statements(string fromSlug, string toSlug, bool rules)
     {
         var statements = new Dictionary<long, HashSet<long>>();
-        foreach (var link in Links(fromTextId, toTextId).Where(l => l.Method != LinkMethod.Aligner && (rules || l.Method != LinkMethod.RuleBased)))
+        foreach (var link in Links(fromSlug, toSlug).Where(l => l.Method != LinkMethod.Aligner && (rules || l.Method != LinkMethod.RuleBased)))
         {
             foreach (var word in link.From)
             {
@@ -102,86 +71,111 @@ internal sealed class MappingLinks(ProductStore store, WordKeys keys, IReadOnlyD
         return statements;
     }
 
-    /// <summary>The one-to-one renderings a method other than the aligner states, by their two words (its <c>Stated</c>).</summary>
-    public Dictionary<(long From, long To), long> Stated(int fromTextId, int toTextId) =>
-        Links(fromTextId, toTextId)
+    /// <summary>
+    /// The word pairs a source has already stated for the two texts, by their two words, with the link's id: only the links
+    /// naming one word on each side, the only shape a composed link has and so the only one it can duplicate.
+    /// </summary>
+    public Dictionary<(long From, long To), long> Stated(string fromSlug, string toSlug) =>
+        Links(fromSlug, toSlug)
             .Where(l => l.Relation == "renders" && l.Method != LinkMethod.Aligner && l.From.Length == 1 && l.To.Length == 1)
             .GroupBy(l => (l.From[0], l.To[0]))
             .ToDictionary(g => g.Key, g => g.First().Id);
 
-    /// <summary>The target words a method other than the aligner says the source does not render (its <c>Unrendered</c>).</summary>
-    public HashSet<long> Unrendered(int fromTextId, int toTextId) =>
-        [.. Links(fromTextId, toTextId).Where(l => l.Relation == "omits" && l.Method != LinkMethod.Aligner).SelectMany(l => l.To)];
+    /// <summary>The target words a link that is not the aligner's says the source text does not render.</summary>
+    public HashSet<long> Unrendered(string fromSlug, string toSlug) =>
+        [.. Links(fromSlug, toSlug).Where(l => l.Relation == "omits" && l.Method != LinkMethod.Aligner).SelectMany(l => l.To)];
 
-    /// <summary>The other texts of the source's language whose stated links to the target are enough to measure on (its <c>Proxies</c>).</summary>
-    public List<(int Id, string Slug)> Proxies(int fromTextId, int toTextId)
+    /// <summary>
+    /// The other texts in the source's language whose words a source states a word of the target for, enough of them to
+    /// measure on, most first: for English against the originals, the King James and the Berean; not a text EVIDENTIA alone
+    /// links, whose links are another inference.
+    /// </summary>
+    public List<string> Proxies(string fromSlug, string toSlug)
     {
-        var language = languages.GetValueOrDefault(fromTextId);
-        var target = keys.Slug(toTextId);
-        var proxies = new List<(int Id, string Slug, int Words)>();
-        foreach (var pair in MappingProducts.Pairs(store).Where(p => p.EndsWith("-" + target, StringComparison.Ordinal)))
+        var proxies = new List<(string Slug, int Words)>();
+        foreach (var pair in ProxyPairs(texts.Store, fromSlug, toSlug))
         {
-            var (fromText, _) = MappingProducts.Split(pair);
-            if (keys.TextId(fromText) is not { } id || id == fromTextId || languages.GetValueOrDefault(id) != language)
+            var (proxy, _) = MappingProducts.Split(pair);
+            if (!texts.Holds(proxy))
             {
                 continue;
             }
 
-            var words = Links(id, toTextId)
+            var words = Links(proxy, toSlug)
                 .Where(l => l.To.Length > 0 && l.Method is not (LinkMethod.Aligner or LinkMethod.RuleBased))
                 .SelectMany(l => l.From).Distinct().Count();
             if (words >= Admission.FewestToMeasure)
             {
-                proxies.Add((id, fromText, words));
+                proxies.Add((proxy, words));
             }
         }
 
-        return [.. proxies.OrderByDescending(p => p.Words).ThenBy(p => p.Slug, StringComparer.Ordinal).Select(p => (p.Id, p.Slug))];
+        return [.. proxies.OrderByDescending(p => p.Words).ThenBy(p => p.Slug, StringComparer.Ordinal).Select(p => p.Slug)];
     }
 
-    /// <summary>
-    /// A composition's answers as the pair's <c>composed</c> method file, replacing what it held: the fresh pairs and
-    /// the agreements with a stated pair alike, since an agreement is a row of the stated link's shape and the merge
-    /// folds it into that link as a claim. The pair's verse hashes gain the verses the rows cite where a text's
-    /// manifest gives them.
-    /// </summary>
-    public long WriteComposed(string fromSlug, string toSlug, IEnumerable<(long From, long To, double Confidence, string Source, string? Evidence)> rows,
-        IReadOnlyList<string> readFrom)
+    /// <summary>The pairs into the target from another text of the source's language that have a final.</summary>
+    private static IEnumerable<string> ProxyPairs(ProductStore store, string fromSlug, string toSlug)
     {
-        var pair = MappingProducts.Pair(fromSlug, toSlug);
-        var written = rows
-            .Select(r => new MappingRow(keys.Own(r.From), keys.Own(r.To), "renders", MappingMethods.Composed, r.Confidence, r.Source, r.Evidence, null, null))
-            .Select(r => (Sort: MappingText.SortKey(r.From, r.To, fromSlug, toSlug), Row: r))
-            .ToList();
-        written.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));
-        var inputs = readFrom.Select(store.Find).OfType<string>().Select(store.Input).ToList();
-        using var writer = store.Create(MappingProducts.Of(pair, MappingMethods.Composed), ProductKind.Machine, MappingRow.Schema,
-            ProductHeader.DescribeProducer($"forge compose-file {fromSlug} {toSlug}"), inputs);
-        writer.WriteAll(written.Select(w => w.Row));
-        MappingFiles.RecordHashes(store, pair, written.Select(w => w.Row));
-        return written.Count;
+        var language = Language(store, fromSlug);
+        foreach (var pair in MappingProducts.Pairs(store).Where(p => p.EndsWith("-" + toSlug, StringComparison.Ordinal)))
+        {
+            var (proxy, _) = MappingProducts.Split(pair);
+            if (proxy != fromSlug && store.Exists(MappingProducts.Of(pair, MappingProducts.Final))
+                && store.Exists(TextField.ProductOf(proxy)) && Language(store, proxy) == language)
+            {
+                yield return pair;
+            }
+        }
     }
 
-    private long[]? Ids(string own, int textId)
+    private static string Language(ProductStore store, string slug) => IndexContext.Declared(store, slug).Language;
+
+    private List<FinalLink> Read(string pair, string fromSlug, string toSlug)
     {
-        if (own.Length == 0)
+        var links = new List<FinalLink>();
+        var product = MappingProducts.Of(pair, MappingProducts.Final);
+        if (!texts.Store.Exists(product))
+        {
+            return links;
+        }
+
+        var fromIds = Ids(fromSlug);
+        var toIds = Ids(toSlug);
+        using var reader = texts.Store.Open(product, FinalRow.Schema);
+        foreach (var row in reader.Rows().Where(r => r.Settled))
+        {
+            if (Words(row.From, fromIds) is { } from && Words(row.To, toIds) is { } to)
+            {
+                links.Add(new FinalLink(row.Id, row.Relation, MappingMethods.DatabaseMethod(row.Method), row.Confidence, from, to));
+            }
+        }
+
+        return links;
+    }
+
+    private Dictionary<string, int> Ids(string slug) =>
+        _ids.GetOrAdd(slug, s => new Lazy<Dictionary<string, int>>(() => PairLinkFiles.Ids(texts[s]))).Value;
+
+    /// <summary>A row's words by their place in the text; null where the text no longer holds one of them.</summary>
+    private static long[]? Words(string keys, Dictionary<string, int> ids)
+    {
+        if (keys.Length == 0)
         {
             return [];
         }
 
-        var text = keys.Slug(textId);
-        var parts = own.Split(' ');
-        var ids = new long[parts.Length];
+        var parts = keys.Split(' ');
+        var words = new long[parts.Length];
         for (var i = 0; i < parts.Length; i++)
         {
-            if (keys.Id(textId, WordKey.Parse(parts[i], text)) is not { } id)
+            if (!ids.TryGetValue(parts[i], out var id))
             {
                 return null;
             }
 
-            ids[i] = id;
+            words[i] = id;
         }
 
-        return ids;
+        return words;
     }
 }

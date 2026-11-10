@@ -85,11 +85,12 @@ internal static partial class ForgeVerbs
         {
             var outcome = PairSources.Write(texts, method, pair, args.Contains("--force"), line => forge.Logger.LogInformation("{Line}", line));
             results.Add(outcome);
-            forge.Logger.LogInformation("{Outcome}", outcome.Current ? $"{pair} {method}: current" : outcome.Written!.ToString());
+            forge.Logger.LogInformation("{Outcome}", outcome.Current ? $"{pair} {method}: current" : outcome.ToString());
         });
 
         store.Save();
-        Console.WriteLine($"{method}: {results.Count(r => !r.Current)} pairs written, {results.Count(r => r.Current)} current, in {clock.Elapsed}");
+        Console.WriteLine($"{method}: {results.Count(r => r.Written is not null)} pairs written, {results.Count(r => r.Current)} current, "
+                          + $"{results.Count(r => r.Waiting is not null)} waiting for a model's answer, in {clock.Elapsed}");
         return Task.FromResult(named.Count > 0 && named.Any(p => !pairs.Contains(p)) ? 1 : 0);
     }
 
@@ -215,37 +216,6 @@ internal static partial class ForgeVerbs
         }
 
         Console.WriteLine($"compared in {clock.Elapsed}");
-        return 0;
-    }
-
-    /// <summary>
-    /// A composition that reads its links from the mapping's finals under <c>--files &lt;Resources&gt;</c> and writes its
-    /// answers to the pair's <c>composed</c> method file there; the words and the frame still come from the database
-    /// the Forge is pointed at, which it never writes. Not recorded in the recipe: nothing in the database changes.
-    /// </summary>
-    private static async Task<int> ComposeFile(ForgeRun forge, string[] args)
-    {
-        var store = new ProductStore(Option(args, "--files") ?? forge.Resources);
-        using var scope = forge.Scope();
-        var composer = scope.ServiceProvider.GetRequiredService<CompositionPipeline>();
-        await using (var db = new NpgsqlConnection(forge.DatabaseConnection))
-        {
-            await db.OpenAsync();
-            composer.Files = await MappingLinks.Open(store, db, CancellationToken.None);
-        }
-
-        var minimum = Option(args, "--min") is { } min ? double.Parse(min, CultureInfo.InvariantCulture) : (double?)null;
-        var precision = Option(args, "--precision") is { } bar ? double.Parse(bar, CultureInfo.InvariantCulture) : Admission.DefaultPrecision;
-        forge.Logger.LogInformation("{Outcome}", await composer.Run(
-            Identifier(args[1]),
-            [.. args[2].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier)],
-            Identifier(args[3]),
-            minimum,
-            precision,
-            args.Contains("--unmeasured"),
-            args.Contains("--daughter"),
-            Agreeing(args)));
-        store.Save();
         return 0;
     }
 }

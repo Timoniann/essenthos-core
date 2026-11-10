@@ -1,10 +1,6 @@
-using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities;
-using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Products;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Links;
@@ -15,88 +11,46 @@ namespace Essenthos.Core.Tests.Links;
 /// both are there: the verse links join each to the verse standing there and not to one another, so
 /// a word pair between them crosses a verse pair nothing joins.
 /// </summary>
-[Collection(WitnessDatabaseCollection.Name)]
 public sealed class CoveredAddressAlignmentTests : IDisposable
 {
-    private readonly AppDbContext _db;
-    private readonly AlignmentPipeline _aligner;
-    private readonly string _workspace =
-        Path.Combine(Path.GetTempPath(), "essenthos-align-test", Guid.NewGuid().ToString("N"));
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "essenthos-align-test", Guid.NewGuid().ToString("N"));
+    private readonly ProductStore _store;
 
-    public CoveredAddressAlignmentTests(WitnessDatabase database)
+    public CoveredAddressAlignmentTests()
     {
-        _db = database.NewContext();
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _aligner = new AlignmentPipeline(_db, NullLogger<AlignmentPipeline>.Instance);
-
-        var source = Corpus.Add(_db, "BSB", TextKind.Translation, "eng",
-            (1, 1, ["void"]), (1, 2, ["earth"]), (1, 3, ["earth"]));
-        var target = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
-            (1, 1, ["earth"]), (1, 2, ["earth"]), (1, 3, ["void"]));
-        _db.SaveChanges();
-
-        Covers(source, 3);
-        Covers(target, 1);
-        _db.SaveChanges();
+        _store = new ProductStore(_root);
+        ProductCorpus.Text(_store, "BSB", "eng", ProductCorpus.Genesis(["void"], ["earth"], ["earth"]), ("1.1:3", ["1.1:3", "1.1:2"]));
+        ProductCorpus.Text(_store, "KJV", "eng", ProductCorpus.Genesis(["earth"], ["earth"], ["void"]), ("1.1:1", ["1.1:1", "1.1:2"]));
     }
 
     public void Dispose()
     {
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _db.Dispose();
-        if (Directory.Exists(_workspace))
+        if (Directory.Exists(_root))
         {
-            Directory.Delete(_workspace, recursive: true);
+            Directory.Delete(_root, recursive: true);
         }
     }
 
     [Fact]
     public async Task TwoVersesThatOnlyCoverAnAddressAreNotPairedThere()
     {
-        Prepare(
-            source: ["void", "earth earth", "earth"],
-            target: ["earth", "earth earth", "void"],
-            answers: ["0-0:0.9:0.9", "0-0:0.9:0.9 0-1:0.9:0.9 1-0:0.9:0.9 1-1:0.9:0.9", "0-0:0.9:0.9"]);
+        // Each verse is one word, and the two at 1:2 on each side are the same word, so the lines read the same in
+        // whichever order the verses come.
+        ProductCorpus.Answer(Path.Combine(_root, "Alignments", "BSB-KJV"),
+            ProductCorpus.Stems("void", "earth earth", "earth"),
+            ProductCorpus.Stems("earth", "earth earth", "void"),
+            "0-0:0.9:0.9", "0-0:0.9:0.9 0-1:0.9:0.9 1-0:0.9:0.9 1-1:0.9:0.9", "0-0:0.9:0.9");
 
-        var proposals = await _aligner.Proposals("BSB", "KJV", _workspace, 0.1, selection: Selection.All);
+        var proposals = await ProductCorpus.Aligner(_store).Proposals("BSB", "KJV", "BSB-KJV", 0.1, selection: Selection.All);
 
-        var verseOf = await _db.Words.ToDictionaryAsync(w => w.Id, w => w.Verse!.Number);
-        proposals.Select(pair => (verseOf[pair.From], verseOf[pair.To])).Should().BeEquivalentTo(
+        // A word's place in either text is its verse less one: each verse holds one word.
+        proposals.Select(pair => (pair.From + 1, pair.To + 1)).Should().BeEquivalentTo(
         [
-            (1, 1),
-            (2, 2),
-            (2, 1),
-            (3, 2),
-            (3, 3),
+            (1L, 1L),
+            (2L, 2L),
+            (2L, 1L),
+            (3L, 2L),
+            (3L, 3L),
         ]);
-    }
-
-    /// <summary>The verse at 1:<paramref name="verse"/> of a text covers 1:2 as well.</summary>
-    private void Covers(Text text, int verse) =>
-        _db.VerseReferences.Add(new VerseReference
-        {
-            Verse = _db.VerseAt(text, 1, verse),
-            CanonicalBook = 1,
-            CanonicalChapter = 1,
-            CanonicalVerse = 2,
-            IsPrimary = false,
-        });
-
-    /// <summary>
-    /// A workspace as a finished run leaves it. Each verse is one word, and the two at 1:2 on each
-    /// side are the same word, so the lines read the same in whichever order the verses come.
-    /// </summary>
-    private void Prepare(string[] source, string[] target, string[] answers)
-    {
-        static string[] Tokens(string[] lines) =>
-        [
-            .. lines.Select(line => string.Join(' ',
-                line.Split(' ').Select(word => AlignmentTokens.One(EnglishStemmer.Stem(word))))),
-        ];
-
-        Directory.CreateDirectory(Path.Combine(_workspace, "alignment"));
-        File.WriteAllLines(Path.Combine(_workspace, "source.txt"), Tokens(source));
-        File.WriteAllLines(Path.Combine(_workspace, "target.txt"), Tokens(target));
-        File.WriteAllLines(Path.Combine(_workspace, "alignment", "pharaoh.txt"), answers);
     }
 }

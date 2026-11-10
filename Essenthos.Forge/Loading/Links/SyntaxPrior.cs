@@ -82,6 +82,38 @@ internal sealed class SyntaxPrior
             word => (word.Phrase, word.Clause, word.Sentence)));
 
     /// <summary>
+    /// The phrase, clause and sentence of every word, from the groups the analysis is drafted into
+    /// (<see cref="SyntaxLoader.Drafts"/>), each word by the id the drafts gave it: what <see cref="Read"/>
+    /// reads of a database those drafts were loaded into, read from the analysis itself.
+    /// </summary>
+    public static SyntaxPrior Of(IReadOnlyList<SyntaxLoader.GroupDraft> groups)
+    {
+        var units = new Dictionary<long, (long Phrase, long Clause, long Sentence)>(450_000);
+        for (var group = 0; group < groups.Count; group++)
+        {
+            var draft = groups[group];
+            if (draft.Kind is not (Database.Entities.Enums.WordGroupKind.Phrase or Database.Entities.Enums.WordGroupKind.Clause
+                or Database.Entities.Enums.WordGroupKind.Sentence))
+            {
+                continue;
+            }
+
+            foreach (var word in draft.Words)
+            {
+                units.TryGetValue(word, out var standing);
+                units[word] = draft.Kind switch
+                {
+                    Database.Entities.Enums.WordGroupKind.Phrase => standing with { Phrase = group + 1 },
+                    Database.Entities.Enums.WordGroupKind.Clause => standing with { Clause = group + 1 },
+                    _ => standing with { Sentence = group + 1 },
+                };
+            }
+        }
+
+        return new SyntaxPrior(units);
+    }
+
+    /// <summary>
     /// What each relation is worth, as the log of how much likelier it is among the proposals a
     /// source agrees with than among the ones it does not.
     ///
