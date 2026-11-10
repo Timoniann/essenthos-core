@@ -7,7 +7,6 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Names;
@@ -85,16 +84,9 @@ public sealed class WordNamesSeveralTests : IDisposable
     private async Task<List<string>> Shown(Word word) =>
         [.. (await Annotations.AllOf(_db, word.Id, CancellationToken.None)).Select(named => named.Slug)];
 
-    private async Task<List<int>> Cited(Entity entity)
-    {
-        await new OwnReferenceLoader(_db, NullLogger<OwnReferenceLoader>.Instance).Load();
-        return await _db.EntityVerses.Where(v => v.EntityId == entity.Id)
-            .OrderBy(v => v.CanonicalVerse).Select(v => v.CanonicalVerse).ToListAsync();
-    }
-
     /// <summary>
     /// Christ in Jesus Christ: the title and its bearer at the same standing and the same confidence.
-    /// The word names both, the man first, and the verse is on both pages.
+    /// The word names both, the man first.
     /// </summary>
     [Fact]
     public async Task ATitleAndItsBearerAreBothNamedTheBearerFirst()
@@ -107,9 +99,6 @@ public sealed class WordNamesSeveralTests : IDisposable
 
         (await Shown(Greek(1, 2))).Should().Equal("jesus", "anointed");
         (await Annotations.Of(_db, Greek(1, 2).Id, CancellationToken.None))!.Slug.Should().Be("jesus");
-        (await Cited(jesus)).Should().Equal(1);
-        (await Cited(anointed)).Should().Equal(1);
-        (await ContextEndpoints.Named(_db, 1, 1, CancellationToken.None)).Keys.Should().BeEquivalentTo("jesus", "anointed");
     }
 
     /// <summary>The bearer stands first whichever of the two outranks the other, and the title beside him.</summary>
@@ -139,8 +128,6 @@ public sealed class WordNamesSeveralTests : IDisposable
         Annotate(Greek(2, 1), jesus, LinkMethod.RuleBased, 0.72);
 
         (await Shown(Greek(2, 1))).Should().Equal("jesus", "anointed");
-        (await Cited(jesus)).Should().Equal(2);
-        (await Cited(anointed)).Should().Equal(2);
     }
 
     /// <summary>A title alone is the whole answer: John 1:20 names the title and nobody.</summary>
@@ -151,7 +138,6 @@ public sealed class WordNamesSeveralTests : IDisposable
         Annotate(Greek(2, 1), anointed, LinkMethod.RuleBased, 0.99);
 
         (await Shown(Greek(2, 1))).Should().Equal("anointed");
-        (await Cited(anointed)).Should().Equal(2);
     }
 
     /// <summary>
@@ -170,8 +156,6 @@ public sealed class WordNamesSeveralTests : IDisposable
 
         (await Shown(Greek(2, 1))).Should().BeEmpty();
         (await Shown(Greek(4, 1))).Should().Equal("abilene");
-        (await Cited(tetrarch)).Should().BeEmpty();
-        (await Cited(abilene)).Should().Equal(4);
     }
 
     /// <summary>The Shunammite: Abishag and her people, the higher standing first.</summary>
@@ -184,7 +168,6 @@ public sealed class WordNamesSeveralTests : IDisposable
         Annotate(Greek(3, 1), abishag, LinkMethod.RuleBased, 0.95);
 
         (await Shown(Greek(3, 1))).Should().Equal("abishag", "shunamites");
-        (await Cited(abishag)).Should().Equal(3);
     }
 
     /// <summary>Two men on one word are one answer, the one of higher standing, as before.</summary>
@@ -197,7 +180,6 @@ public sealed class WordNamesSeveralTests : IDisposable
         Annotate(Greek(4, 1), sisera, LinkMethod.ModelReading, 0.9);
 
         (await Shown(Greek(4, 1))).Should().Equal("barak");
-        (await Cited(sisera)).Should().BeEmpty();
     }
 
     /// <summary>A man and a town on one word are one answer too: the reading that outranks the other.</summary>
@@ -210,7 +192,6 @@ public sealed class WordNamesSeveralTests : IDisposable
         Annotate(Greek(4, 1), mountSeir, LinkMethod.ModelReading, 0.9);
 
         (await Shown(Greek(4, 1))).Should().Equal("mountseir");
-        (await Cited(seir)).Should().BeEmpty();
     }
 
     /// <summary>

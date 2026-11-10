@@ -65,40 +65,14 @@ public sealed class NamesFirstPassTests : IDisposable
     }
 
     /// <summary>
-    /// Japheth, Gomer and Magog are named by the verses and spelt alike on both sides: placed, and written
-    /// as a rule's links. 마대와 is MD as Μαδοί is, but in a script without capitals two consonants
-    /// are no name by their letters alone, and nothing else says it is one: left.
+    /// Japheth, Gomer and Magog are named by the verses and spelt alike on both sides: placed. 마대와 is MD as Μαδοί is,
+    /// but in a script without capitals two consonants are no name by their letters alone, and nothing else says it is
+    /// one: left. The pass measures and writes nothing; names-pairs writes the links from files.
     /// </summary>
     [Fact]
-    public async Task PlacesTheNamesTheVersesAndTheLettersAgreeOnAndWritesThem()
+    public async Task PlacesTheNamesTheVersesAndTheLettersAgreeOnAndWritesNothing()
     {
-        var report = await Pass().Run("KRV", "GRCBRENT", null, null, NamePolicy.Default, held: false, output: null, apply: true);
-
-        report.Should().Contain("Wrote 3 links of names");
-        var links = await Links();
-        links.Should().BeEquivalentTo([(1, 2), (3, 3), (4, 5)]);
-        (await _db.Links.AllAsync(link => link.Method == LinkMethod.RuleBased && link.Confidence == NamesFirstPass.Confidence))
-            .Should().BeTrue();
-    }
-
-    /// <summary>A second run finds every name already linked and writes nothing.</summary>
-    [Fact]
-    public async Task ASecondRunWritesNothing()
-    {
-        await Pass().Run("KRV", "GRCBRENT", null, null, NamePolicy.Default, held: false, output: null, apply: true);
-        var after = await _db.Links.CountAsync();
-
-        var again = await Pass().Run("KRV", "GRCBRENT", null, null, NamePolicy.Default, held: false, output: null, apply: true);
-
-        again.Should().Contain("Wrote 0 links of names");
-        (await _db.Links.CountAsync()).Should().Be(after);
-    }
-
-    /// <summary>Without --apply the pass reports and writes nothing.</summary>
-    [Fact]
-    public async Task WritesNothingUnlessAsked()
-    {
-        var report = await Pass().Run("KRV", "GRCBRENT", null, null, NamePolicy.Default, held: false, output: null, apply: false);
+        var report = await Pass().Run("KRV", "GRCBRENT", null, null, NamePolicy.Default, held: false, output: null);
 
         report.Should().Contain("3 pairs placed");
         (await _db.Links.CountAsync()).Should().Be(0);
@@ -137,10 +111,9 @@ public sealed class NamesFirstPassTests : IDisposable
 
         _db.SaveChanges();
 
-        var report = await Pass().Run("DRA", "BHSA", null, null, NamePolicy.Default, held: false, output: null, apply: true);
+        var report = await Pass().Run("DRA", "BHSA", null, null, NamePolicy.Default, held: false, output: null);
 
-        report.Should().Contain("Wrote 1 links of names");
-        (await Links()).Should().BeEquivalentTo([(1, 2)]);
+        report.Should().Contain("1 pairs placed");
     }
 
     private Entity Person(string slug)
@@ -158,15 +131,4 @@ public sealed class NamesFirstPassTests : IDisposable
 
     private NamesFirstPass Pass() =>
         new(_db, new AlignmentPipeline(_db, NullLogger<AlignmentPipeline>.Instance), NullLogger<NamesFirstPass>.Instance);
-
-    private async Task<List<(int Korean, int Greek)>> Links() =>
-        (await _db.Links.AsNoTracking()
-            .Select(link => new
-            {
-                Korean = link.Words.Single(word => word.Side == LinkSide.From).Word!.Position,
-                Greek = link.Words.Single(word => word.Side == LinkSide.To).Word!.Position,
-            })
-            .ToListAsync())
-        .Select(link => (link.Korean, link.Greek))
-        .ToList();
 }

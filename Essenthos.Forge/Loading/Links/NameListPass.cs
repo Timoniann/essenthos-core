@@ -1,11 +1,8 @@
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using System.Text;
 using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using NpgsqlTypes;
 
 namespace Essenthos.Core.Loading.Links;
 
@@ -57,89 +54,17 @@ internal sealed record NameListOutcome(
 /// <para>
 /// Aligning a pair again settles the names as it reads the model's answer. This is for the links
 /// already in the corpus, which would otherwise wait for every pair to be aligned and composed again
-/// — hours each — for a correction that needs only the words and the links. Without
-/// <c>--apply</c> it reports and writes nothing; with it, the contradicting links go and the
-/// settled pairs are written, as the aligner's, at <see cref="NameLists.Settled"/>.
+/// — hours each — for a correction that needs only the words and the links. It measures the
+/// configured database and writes nothing; the pairs it settles are the pair's <c>name-list</c>
+/// method file, which <c>name-list-pairs</c> makes from the store.
 /// </para>
 /// </summary>
 internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, ILogger<NameListPass> logger)
 {
     internal const string Source = "the names of the verse, paired by spelling and order";
 
-    /// <summary>
-    /// The links only the names wrote — this pass's, and the pairs the aligner added for the names
-    /// alone — whose two words the letters no longer read as one name, taken back. An alignment
-    /// replayed on an empty corpus settles its names by the rule as it stands; this brings a corpus
-    /// whose names were settled by an earlier rule to the same links, without aligning again. A link
-    /// any other method also claims, or a review has looked at, is left where it is.
-    /// </summary>
-    public static async Task<string> WithdrawUnlike(AppDbContext db, CancellationToken cancellationToken = default)
-    {
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        var unlike = new List<long>();
-        var held = 0;
-        var read = 0;
-
-        await using (var command = new NpgsqlCommand(
-                         """
-                         WITH named AS MATERIALIZED (
-                             SELECT l.id, l.from_text_id, l.to_text_id
-                             FROM link l
-                             WHERE l.method = 'aligner'
-                               AND l.provenance_id IN (SELECT p.id FROM provenance p
-                                                       WHERE starts_with(p.source, @pass) OR strpos(p.source, @added) > 0)
-                         )
-                         SELECT n.id,
-                                fw.text, fw.morphology ->> 'consonantal', ft.language,
-                                tw.text, tw.morphology ->> 'consonantal', tt.language,
-                                EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = n.id AND c.method <> 'aligner')
-                                OR EXISTS (SELECT 1 FROM evidentia_review r WHERE r.link_id = n.id)
-                         FROM named n
-                         JOIN link_word f ON f.link_id = n.id AND f.side = 'from'
-                         JOIN word fw ON fw.id = f.word_id
-                         JOIN text ft ON ft.id = n.from_text_id
-                         JOIN link_word t ON t.link_id = n.id AND t.side = 'to'
-                         JOIN word tw ON tw.id = t.word_id
-                         JOIN text tt ON tt.id = n.to_text_id
-                         WHERE (SELECT count(*) FROM link_word w WHERE w.link_id = n.id) = 2
-                         """, connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
-        {
-            command.Parameters.AddWithValue("pass", Source);
-            command.Parameters.AddWithValue("added", NameLists.AddedSource);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                read++;
-                var from = NameLists.Skeleton(
-                    reader.IsDBNull(2) ? reader.GetString(1) : reader.GetString(2), reader.GetString(3));
-                var to = NameLists.Skeleton(
-                    reader.IsDBNull(5) ? reader.GetString(4) : reader.GetString(5), reader.GetString(6));
-                if (NameLists.Alike(from, to) >= NameLists.LeastLikeness)
-                {
-                    continue;
-                }
-
-                if (reader.GetBoolean(7))
-                {
-                    held++;
-                }
-                else
-                {
-                    unlike.Add(reader.GetInt64(0));
-                }
-            }
-        }
-
-        var withdrawn = await db.Links.Where(link => unlike.Contains(link.Id)).ExecuteDeleteAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-        return $"Of {read} links the names alone wrote, {withdrawn} whose words the letters no longer read as one " +
-               $"name withdrawn, and {held} such held by another method or a review";
-    }
-
     /// <param name="chapters">
-    /// Chapters to report on apart from the whole, as canonical book and chapter. Applying always
-    /// covers every verse read.
+    /// Chapters to report on apart from the whole, as canonical book and chapter.
     /// </param>
     /// <param name="books">Canonical books to read, or all of them.</param>
     public async Task<string> Run(
@@ -147,7 +72,6 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
         string toSlug,
         IReadOnlySet<(int Book, int Chapter)> chapters,
         IReadOnlySet<int>? books,
-        bool apply,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -165,8 +89,6 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
 
             var whole = new Tally();
             var within = new Tally();
-            var refused = new HashSet<long>();
-            var added = new List<(long From, long To)>();
             var refuseStrays = AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language);
             var common = AlignmentPipeline.MarksNoNames(from.Language) ? CommonWords(source, target, links) : null;
 
@@ -178,27 +100,14 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
                 {
                     within.Add(verse);
                 }
-
-                refused.UnionWith(verse.Refused);
-                added.AddRange(verse.Added);
             }
 
-            var rejected = await RejectedRenderings.Locate(connection, cancellationToken);
-            var adding = added.Distinct()
-                .Where(pair => !rejected.Contains((pair.From, pair.To)) && !rejected.Contains((pair.To, pair.From)))
-                .ToList();
             var report = new StringBuilder()
                 .AppendLine(whole.Outcome(fromSlug, toSlug, "every verse read").ToString());
             if (chapters.Count > 0)
             {
                 report.AppendLine(within.Outcome(fromSlug, toSlug, "the chapters asked for").ToString())
                     .AppendLine(await Examples(connection, within, cancellationToken));
-            }
-
-            if (apply)
-            {
-                await Write(connection, from.Id, to.Id, refused, adding, cancellationToken);
-                report.AppendLine($"Withdrew {refused.Count} links and wrote {adding.Count}.");
             }
 
             logger.LogInformation("Settled the names of {From} against {To} in {Elapsed}", fromSlug, toSlug,
@@ -585,39 +494,6 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
         }
 
         return lines.ToString();
-    }
-
-    private async Task Write(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
-        IReadOnlyCollection<long> refused,
-        IReadOnlyList<(long From, long To)> added,
-        CancellationToken cancellationToken)
-    {
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-
-        await using (var delete = new NpgsqlCommand(
-                         "DELETE FROM link WHERE id = ANY(@ids) AND method = 'aligner'", connection))
-        {
-            delete.Parameters.AddWithValue("ids", refused.ToArray());
-            await delete.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        if (added.Count > 0)
-        {
-            await LinkWriter.Write(
-                connection,
-                (NpgsqlTransaction)transaction.GetDbTransaction(),
-                [
-                    .. added.Select(pair => new NewLink(
-                        fromTextId, toTextId, LinkRelation.Renders, LinkMethod.Aligner, NameLists.Settled, Source, null,
-                        [pair.From], [pair.To])),
-                ],
-                cancellationToken);
-        }
-
-        await transaction.CommitAsync(cancellationToken);
     }
 
     /// <param name="Guessed">The aligner's links by source word: the link, and the word it reaches.</param>

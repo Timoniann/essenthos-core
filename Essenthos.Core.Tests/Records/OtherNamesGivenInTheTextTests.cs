@@ -1,7 +1,5 @@
-using Essenthos.Core.Database.Entities;
-using Essenthos.Core.Loading.Encyclopedia;
+﻿using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
@@ -11,11 +9,10 @@ namespace Essenthos.Core.Tests.Records;
 /// The name is said in the line and its words carry the person; the same words where the text means
 /// something else carry nobody.
 /// </summary>
-[Collection(WitnessDatabaseCollection.Name)]
-public sealed class OtherNamesGivenInTheTextTests(WitnessDatabase database) : OwnRecordTests(database)
+public sealed class OtherNamesGivenInTheTextTests
 {
-    /// <summary>Where מָגוֹר is the common 'terror on every side', not Pashhur's name.</summary>
-    private static readonly string[] TerrorOnEverySide = ["JER 6:25", "JER 20:10", "JER 46:5", "JER 49:29"];
+    private static readonly IReadOnlyList<OwnRecordRuling> Rulings =
+        [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)];
 
     [Fact]
     public void MagorMissabibIsRuledAtJeremiah20_3AndAtNoOtherVerse()
@@ -28,34 +25,4 @@ public sealed class OtherNamesGivenInTheTextTests(WitnessDatabase database) : Ow
             .Select(r => (r.Text, r.Position)).Should()
             .BeEquivalentTo([("BHSA", 24), ("BHSA", 26), ("SWETE", 22)]);
     }
-
-    [Fact]
-    public async Task TheNameIsPashhursAndTheTerrorOnEverySideIsNobodys()
-    {
-        var bare = TerrorOnEverySide
-            .Select(reference => new RuledWord("BHSA", reference, 15, "מָגוֹר"))
-            .ToList();
-        var placed = Db.Place(bare);
-        foreach (var word in placed.Values)
-        {
-            word.StrongNumber = "H4032";
-        }
-
-        await Db.SaveChangesAsync();
-
-        await Load();
-
-        var ruled = Rulings.Where(r => r.Existing == "pashhur-2" && r.Reference == "JER 20:3")
-            .Select(r => Words[r.Word]).ToList();
-        ruled.Should().HaveCount(3);
-        foreach (var word in ruled)
-        {
-            (await Db.WordEntities.Where(a => a.WordId == word).Select(a => a.Entity!.Slug).ToListAsync())
-                .Should().Equal("pashhur-2");
-        }
-
-        (await Db.WordEntities.CountAsync(a => placed.Values.Select(w => w.Id).Contains(a.WordId)))
-            .Should().Be(0, "'terror on every side' names nobody");
-    }
-
 }

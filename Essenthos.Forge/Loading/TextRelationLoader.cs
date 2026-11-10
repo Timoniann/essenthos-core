@@ -1,21 +1,10 @@
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
 using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading;
-
-internal sealed record TextRelationOutcome(int Written, int Removed, int Kept, int Skipped, TimeSpan Elapsed)
-{
-    public override string ToString() => Written == 0 && Removed == 0
-        ? $"the {Kept} relations between texts are already as the list states them"
-        : $"{Written} relations between texts written and {Removed} removed, {Kept} kept, {Skipped} naming a " +
-          $"text this corpus does not hold, in {Elapsed}";
-}
 
 /// <param name="From">The text the claim is about, by its slug.</param>
 /// <param name="To">The text it stands in that relation to, by its slug.</param>
@@ -31,18 +20,12 @@ internal sealed record TextRelationEntry(
     string Source);
 
 /// <summary>
-/// What each text was translated from, revised from, compared with or shares a tradition with, from
-/// the list this project keeps in <c>TextRelations.json</c>. Each claim names its texts by slug and
-/// the work it rests on, and says only what that work or the text's own record establishes.
-///
-/// <para>
-/// The list is the only thing that writes the table, so the table is made to match it: a claim no
-/// longer listed is removed, one listed and missing is written, and a second run changes nothing.
-/// A claim naming a text the corpus does not hold is passed over rather than refused, so a corpus
-/// loaded without that text still gets the rest.
-/// </para>
+/// What each text was translated from, revised from, compared with or shares a tradition with, as first listed in
+/// <c>TextRelations.json</c>. Each claim names its texts by slug and the work it rests on, and says only what that work or
+/// the text's own record establishes. The list seeds the hand file <c>texts/relations</c> and the names layer's bases where
+/// either is missing; <c>text_relation</c> is the build's <c>tables/text_relation</c>, made from that hand file.
 /// </summary>
-internal sealed class TextRelationLoader(AppDbContext db, ILogger<TextRelationLoader> logger)
+internal static class TextRelationLoader
 {
     private const string Resource = "Essenthos.Core.Loading.TextRelations.json";
 
@@ -52,65 +35,6 @@ internal sealed class TextRelationLoader(AppDbContext db, ILogger<TextRelationLo
     private static readonly JsonSerializerOptions Shape = new() { PropertyNameCaseInsensitive = true };
 
     public static readonly IReadOnlyList<TextRelationEntry> All = ReadList();
-
-    public async Task<TextRelationOutcome> Load(CancellationToken cancellationToken = default) =>
-        await Load(All, cancellationToken);
-
-    internal async Task<TextRelationOutcome> Load(
-        IReadOnlyList<TextRelationEntry> entries,
-        CancellationToken cancellationToken = default)
-    {
-        var started = Stopwatch.StartNew();
-        var texts = await db.Texts.ToDictionaryAsync(t => t.Slug, t => t.Id, StringComparer.OrdinalIgnoreCase,
-            cancellationToken);
-
-        var wanted = new List<TextRelation>();
-        var skipped = 0;
-        foreach (var entry in entries)
-        {
-            if (!texts.TryGetValue(entry.From, out var from) || !texts.TryGetValue(entry.To, out var to))
-            {
-                skipped++;
-                continue;
-            }
-
-            wanted.Add(new TextRelation
-            {
-                FromTextId = from,
-                ToTextId = to,
-                Relation = EnumSpelling.ToTextRelationKind(entry.Relation),
-                Scope = entry.Scope,
-                Note = entry.Note,
-                Source = entry.Source,
-            });
-        }
-
-        var existing = await db.TextRelations.ToListAsync(cancellationToken);
-        var stale = existing.Where(row => !wanted.Any(want => Same(row, want))).ToList();
-        var missing = wanted.Where(want => !existing.Any(row => Same(row, want))).ToList();
-
-        if (stale.Count > 0 || missing.Count > 0)
-        {
-            await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-            db.TextRelations.RemoveRange(stale);
-            db.TextRelations.AddRange(missing);
-            await db.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-        }
-
-        var outcome = new TextRelationOutcome(
-            missing.Count, stale.Count, existing.Count - stale.Count, skipped, started.Elapsed);
-        logger.LogInformation("{Outcome}", outcome);
-        return outcome;
-    }
-
-    private static bool Same(TextRelation left, TextRelation right) =>
-        left.FromTextId == right.FromTextId
-        && left.ToTextId == right.ToTextId
-        && left.Relation == right.Relation
-        && left.Scope == right.Scope
-        && left.Note == right.Note
-        && left.Source == right.Source;
 
     private static List<TextRelationEntry> ReadList()
     {

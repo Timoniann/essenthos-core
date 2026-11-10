@@ -16,8 +16,8 @@ public sealed class ForgeVerbTests
 
     [Theory]
     [InlineData(new[] { "build" }, true)]
-    [InlineData(new[] { "lexicon-translations" }, true)]
-    [InlineData(new[] { "lexicon-translations", "--from", "lexicon" }, false)]
+    [InlineData(new[] { "owner-apply", "--from", "Resources", "--dry-run" }, true)]
+    [InlineData(new[] { "owner-apply", "--from", "Resources", "--dry-run", "more" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV", "BHSA", "--daughter" }, true)]
     [InlineData(new[] { "texts", "compare" }, false)]

@@ -275,7 +275,7 @@ public sealed class NameListPassTests : IDisposable
     }
 
     [Fact]
-    public async Task TheWrongNameIsWithdrawnAndTheRightOneWritten()
+    public async Task TheWrongNameIsCountedAndNothingIsWritten()
     {
         Link(3, 3);
         Link(4, 4);
@@ -284,59 +284,10 @@ public sealed class NameListPassTests : IDisposable
 
         var pass = new NameListPass(
             _db, new AlignmentPipeline(_db, NullLogger<AlignmentPipeline>.Instance), NullLogger<NameListPass>.Instance);
-        var report = await pass.Run("GRCBRENT", "BHSA", new HashSet<(int, int)> { (1, 46) }, null, apply: true);
+        var report = await pass.Run("GRCBRENT", "BHSA", new HashSet<(int, int)> { (1, 46) }, null);
 
-        report.Should().Contain("1 contradict it");
-        var links = await _db.Links.AsNoTracking()
-            .Select(link => new
-            {
-                link.Id,
-                link.Confidence,
-                From = link.Words.Single(word => word.Side == LinkSide.From).Word!.Position,
-                To = link.Words.Single(word => word.Side == LinkSide.To).Word!.Position,
-            })
-            .ToListAsync();
-
-        links.Should().NotContain(link => link.Id == wrong.Id);
-        links.Should().Contain(link => link.From == 8 && link.To == 7 && link.Confidence == NameLists.Settled);
-        links.Should().Contain(link => link.From == 6 && link.To == 5);
-        (await _db.LinkClaims.CountAsync()).Should().Be(links.Count);
-    }
-
-    /// <summary>
-    /// A pair the names alone wrote under a looser rule is taken back once the letters no longer read
-    /// it as one name: RST against STN, as Христа against Satan. A pair they still read so stays, and
-    /// so does one another method also claims.
-    /// </summary>
-    [Fact]
-    public async Task APairTheLettersNoLongerReadAsOneNameIsTakenBack()
-    {
-        var greek = await _db.Words.SingleAsync(w => w.TextId == _greek.Id && w.Position == 10);
-        greek.Surface = "Ῥίστα";
-        var hebrew = await _db.Words.SingleAsync(w => w.TextId == _hebrew.Id && w.Position == 9);
-        hebrew.Morphology = JsonDocument.Parse("""{"pos": "nmpr", "consonantal": "סתן"}""");
-        await _db.SaveChangesAsync();
-        NameLists.Likeness("RST", "STN").Should().BeGreaterThanOrEqualTo(NameLists.LeastLikeness);
-
-        var added = $"SIL.Machine ibm4, symmetrised och, {NameLists.AddedSource}";
-        var unlike = Link(10, 9, added);
-        var alike = Link(6, 5, NameListPass.Source);
-        var held = Link(3, 9, added);
-        _db.LinkClaims.Add(new LinkClaim
-        {
-            Link = held, Method = LinkMethod.Manual, Provenance = new() { Source = "a reader's ruling" },
-        });
-        var model = Link(8, 9);
-        await _db.SaveChangesAsync();
-
-        var report = await NameListPass.WithdrawUnlike(_db);
-        var again = await NameListPass.WithdrawUnlike(_db);
-
-        report.Should().Contain("1 whose words").And.Contain("1 such held");
-        again.Should().Contain("0 whose words");
-        var left = await _db.Links.Select(link => link.Id).ToListAsync();
-        left.Should().BeEquivalentTo([alike.Id, held.Id, model.Id]);
-        left.Should().NotContain(unlike.Id);
+        report.Should().Contain(", 1 contradict it");
+        (await _db.Links.Select(link => link.Id).ToListAsync()).Should().Contain(wrong.Id).And.HaveCount(4);
     }
 
     private Link Link(int greek, int hebrew, string source = "SIL.Machine, aligned as written")

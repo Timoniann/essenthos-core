@@ -64,11 +64,4 @@ internal sealed class ForgeRun(IServiceProvider services, ILogger logger, string
         logger.LogInformation("{Outcome}", EvidentiaFiles.Write(store, resources, pair));
         store.Save();
     }
-
-    /// <summary>
-    /// The ledger's verdicts on the runs a command's texts reach, put back after it rewrote their links
-    /// and deleted, with a link it replaced, the claims a verdict had put on it.
-    /// </summary>
-    public async Task Replay(IServiceScope scope, Func<string, string, bool> runs) =>
-        logger.LogInformation("\n{Outcome}", await scope.ServiceProvider.GetRequiredService<EvidentiaLedger>().Replay(resources, runs));
 }

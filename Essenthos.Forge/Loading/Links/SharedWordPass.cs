@@ -52,7 +52,8 @@ internal sealed class SharedWordPass(AppDbContext db, ILogger<SharedWordPass> lo
     private static IEnumerable<(string, string?, string?)> Words(string? person, string? number, params string[] forms) =>
         forms.Select(form => (form, person, number));
 
-    public async Task<string> Run(string fromSlug, string toSlug, bool apply, CancellationToken cancellationToken = default)
+    /// <summary>How many of the configured database's links of the pair the rule would withdraw; it writes nothing.</summary>
+    public async Task<string> Run(string fromSlug, string toSlug, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var from = await db.Texts.SingleAsync(t => t.Slug == fromSlug, cancellationToken);
@@ -104,18 +105,11 @@ internal sealed class SharedWordPass(AppDbContext db, ILogger<SharedWordPass> lo
             }
         }
 
-        if (apply)
-        {
-            await using var withdraw = new NpgsqlCommand(
-                "DELETE FROM link WHERE id IN (SELECT link FROM dumped)", connection, transaction);
-            await withdraw.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await transaction.CommitAsync(cancellationToken);
+        await transaction.RollbackAsync(cancellationToken);
         logger.LogInformation("Read the shared words of {From} against {To} in {Elapsed}", fromSlug, toSlug, started.Elapsed);
 
         return $"{fromSlug} to {toSlug}: {found:N0} aligner links put a pronoun or particle on a Hebrew word it does not agree with "
-               + $"and another word of the verse, not beside it, renders; {(apply ? "withdrawn" : "nothing withdrawn without --apply")}\n  "
+               + $"and another word of the verse, not beside it, renders\n  "
                + string.Join(", ", forms);
     }
 

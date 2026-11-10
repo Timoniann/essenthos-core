@@ -19,8 +19,6 @@ internal static partial class ForgeVerbs
         new("help", "", "This list.", Help),
 
         // The build, the corpus measures and the releases.
-        new("lexicon-translations", "", "Load only published Strong translations beside the English dictionary.",
-            LexiconTranslations, Most: 0),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
         new("build", "[--into <database> [--replace]] [--apply] [--level skip|essentials|all] [--parallel <n>] [--no-products]",
             "Make every product whose inputs moved, in the order build/products declares, and fail on a read it does not declare; then fill "
@@ -71,19 +69,12 @@ internal static partial class ForgeVerbs
             "Write the frame files of the texts named, or of every text, whose inputs moved: from each text's verse manifest, words, titles and "
             + "declaration and the versification data. Reads no database.",
             FrameFiles),
-        new("frame-load", "[<text,...>] [--database <name>]",
-            "Fill the verse references of every text that has a frame file from the file, in the corpus or in another database on its server.",
-            FrameLoad),
         new("frame-check", "[--database <name>] [--out <file>]",
             "Compute every text's canonical frame and compare it with the one the corpus holds, verse by verse. "
             + "Writes nothing to the corpus; --database reads another database on its server, --out writes the computed frame as a file.",
             FrameCheck),
-        new("verse-links", "", "Complete verse correspondences from the current frame and sourced word links.", VerseLinks),
-        new("relations", "", "Make what each text was translated or revised from match the list kept by hand.", Relations),
 
         // Links between texts.
-        new("rejected-renderings", "", "Withdraw the specifically rejected statistical renderings and refresh their carried names.",
-            RejectedRenderingVerb),
         new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--from <Resources>]",
             "Align two texts with SIL's statistical aligner from the store's files into the pair's aligner method file, training the answer "
             + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise. Reads no database.",
@@ -108,17 +99,17 @@ internal static partial class ForgeVerbs
         new("reina-valera-strong-score", "",
             "Score what Gómez's numbers would draw for the Reina-Valera against Clear Bible's alignment. Writes nothing.",
             ReinaValeraStrongScore),
-        new("names", "<from> <to> [--chapters b:c,...] [--books b,...] [--apply]",
-            "Settle the names of each verse by spelling and order over links already written.", Names,
+        new("names", "<from> <to> [--chapters b:c,...] [--books b,...]",
+            "Measure what settling the names of each verse by spelling and order would change in the configured database's links. Writes nothing.", Names,
             Least: 2),
-        new("names-first", "<from> <to> [--books b,...] [--names-from <name-consensus --out folder>] [--target-lemmas glaux] [--alone entity,letters,spelling|none] [--uneven] [--single] [--held] [--out <folder>] [--apply]",
-            "Place every name of a translation on the original's word naming the same person, place or people, by whom both name, their letters and the text's own spelling.",
+        new("names-first", "<from> <to> [--books b,...] [--names-from <name-consensus --out folder>] [--target-lemmas glaux] [--alone entity,letters,spelling|none] [--uneven] [--single] [--held] [--out <folder>]",
+            "Measure placing every name of a translation on the original's word naming the same person, place or people, by whom both name, their letters and the text's own spelling, against the configured database's links. Writes no database.",
             NamesFirst, Least: 2),
-        new("possessives", "<from> <to> [--apply]",
-            "Link the possessive a Slavic text writes beside the word rendering a suffixed Hebrew word.", Possessives,
+        new("possessives", "<from> <to>",
+            "Count the possessives a Slavic text writes beside the word rendering a suffixed Hebrew word that the configured database does not link. Writes nothing.", Possessives,
             Least: 2),
-        new("unshare", "<from> <to> [--apply]",
-            "Withdraw the aligner's links that put a pronoun or particle on a word another word renders.", Unshare,
+        new("unshare", "<from> <to>",
+            "Count the configured database's aligner links that put a pronoun or particle on a word another word renders. Writes nothing.", Unshare,
             Least: 2),
 
         // EVIDENTIA.
@@ -258,9 +249,6 @@ internal static partial class ForgeVerbs
 
     private static string? Option(string[] args, string name) =>
         Array.IndexOf(args, name) is var at and >= 0 && at + 1 < args.Length ? args[at + 1] : null;
-
-    private static bool Between(string from, string to, string one, string two) =>
-        (from == one && to == two) || (from == two && to == one);
 
     // The arguments from a position up to the first option.
     private static IEnumerable<string> Positional(string[] arguments, int from) =>

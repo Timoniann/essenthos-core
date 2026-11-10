@@ -10,17 +10,6 @@ namespace Essenthos.Core.Verbs;
 
 internal static partial class ForgeVerbs
 {
-    private static async Task<int> RejectedRenderingVerb(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        var db = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Database.AppDbContext>();
-        Console.WriteLine(await RejectedRenderings.Withdraw(db));
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnRecordLoader>().Load(forge.Resources));
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
-        Console.WriteLine($"{await Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRawAsync(db.Database, VerseNaming.Sql)} verse naming flags refreshed");
-        return 0;
-    }
-
     /// <summary>
     /// Alignment is computed once per pair of texts, not per request, so it is a run of its own rather than a step of the
     /// build: <c>align</c> writes the pair's <c>aligner</c> method file from the store's files, training the answer where none
@@ -180,9 +169,9 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// The names of each verse settled by spelling and order over links already written, so a pair need
-    /// not be aligned again for it. Reports and writes nothing without --apply. --chapters 1:46,40:1
-    /// reports those chapters apart, with examples; --books 1,13 reads those canonical books only.
+    /// What settling the names of each verse by spelling and order would change in the configured database's links,
+    /// measured; it writes nothing (name-list-pairs makes the links from files). --chapters 1:46,40:1 reports those
+    /// chapters apart, with examples; --books 1,13 reads those canonical books only.
     /// </summary>
     private static async Task<int> Names(ForgeRun forge, string[] args)
     {
@@ -197,20 +186,14 @@ internal static partial class ForgeVerbs
             Identifier(namesFrom),
             Identifier(namesTo),
             chapters,
-            Option(args, "--books") is { } namesBooks ? namesBooks.Split(',').Select(int.Parse).ToHashSet() : null,
-            args.Contains("--apply")));
-        if (args.Contains("--apply"))
-        {
-            await forge.Replay(namesScope, (from, to) => Between(from, to, Identifier(namesFrom), Identifier(namesTo)));
-        }
-
+            Option(args, "--books") is { } namesBooks ? namesBooks.Split(',').Select(int.Parse).ToHashSet() : null));
         return 0;
     }
 
     /// <summary>
     /// The names of a translation placed on the original's words naming the same person, place or
-    /// people. Reports, and scores against the pair's stated links where it has any; writes nothing
-    /// without --apply.
+    /// people, measured against the configured database's links and scored against the pair's stated links where it
+    /// has any; it writes no database (names-pairs makes the links from files).
     /// </summary>
     private static async Task<int> NamesFirst(ForgeRun forge, string[] args)
     {
@@ -235,19 +218,13 @@ internal static partial class ForgeVerbs
             new NamePolicy(alone, Even: !args.Contains("--uneven"), Repeated: !args.Contains("--single")),
             args.Contains("--held"),
             Option(args, "--out"),
-            args.Contains("--apply"),
             targetLemmas: TargetLemmas(forge, args, Identifier(namesTo))));
-        if (args.Contains("--apply"))
-        {
-            await forge.Replay(namesScope, (from, to) => Between(from, to, Identifier(namesFrom), Identifier(namesTo)));
-        }
-
         return 0;
     }
 
     /// <summary>
     /// <c>--target-lemmas glaux</c>: the Septuagint's words with no lemma read with GLAUx's leading one, whatever share
-    /// of its evidence agrees, so every word whose form GLAUx knows has a lemma. A measurement; refused with --apply.
+    /// of its evidence agrees, so every word whose form GLAUx knows has a lemma.
     /// </summary>
     private static Func<string, string?>? TargetLemmas(ForgeRun forge, string[] args, string target)
     {
@@ -256,10 +233,10 @@ internal static partial class ForgeVerbs
             return null;
         }
 
-        if (source != "glaux" || target != Glaux.GlauxLemmaLoader.Septuagint || args.Contains("--apply"))
+        if (source != "glaux" || target != Glaux.GlauxLemmaLoader.Septuagint)
         {
             throw new ArgumentException(
-                $"--target-lemmas takes glaux, for {Glaux.GlauxLemmaLoader.Septuagint} as the target, and only without --apply.");
+                $"--target-lemmas takes glaux, for {Glaux.GlauxLemmaLoader.Septuagint} as the target.");
         }
 
         return Glaux.GlauxLemmaLoader.Leading(Path.Combine(forge.Resources, "Glaux", "xml"));
@@ -267,25 +244,26 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// The possessive a Slavic translation writes beside the word that renders a Hebrew word with a
-    /// pronominal suffix, linked to the same Hebrew word by a rule. Reports and writes nothing without --apply.
+    /// pronominal suffix, that the configured database does not link to the same Hebrew word, counted; it writes nothing
+    /// (possessive-pairs makes the links from files).
     /// </summary>
     private static async Task<int> Possessives(ForgeRun forge, string[] args)
     {
         using var possessiveScope = forge.Scope();
         forge.Logger.LogInformation("\n{Report}", await possessiveScope.ServiceProvider.GetRequiredService<PossessivePass>().Run(
-            Identifier(args[1]), Identifier(args[2]), args.Contains("--apply")));
+            Identifier(args[1]), Identifier(args[2])));
         return 0;
     }
 
     /// <summary>
     /// The aligner's links that put a pronoun or particle on a Hebrew word another word of the verse,
-    /// not beside it, renders, withdrawn. Reports and writes nothing without --apply.
+    /// not beside it, renders, counted in the configured database; it writes nothing.
     /// </summary>
     private static async Task<int> Unshare(ForgeRun forge, string[] args)
     {
         using var unshareScope = forge.Scope();
         forge.Logger.LogInformation("\n{Report}", await unshareScope.ServiceProvider.GetRequiredService<SharedWordPass>().Run(
-            Identifier(args[1]), Identifier(args[2]), args.Contains("--apply")));
+            Identifier(args[1]), Identifier(args[2])));
         return 0;
     }
 }

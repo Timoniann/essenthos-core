@@ -5,7 +5,6 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Links;
@@ -56,7 +55,8 @@ internal sealed record NamePolicy(NameSignal Alone, bool Even, bool Repeated = t
 /// verses say whom its words name (<see cref="Encyclopedia.NameConsensus"/>), and the letters and the
 /// text's own spellings do the rest. So it reaches a text nothing links yet, and on a text something
 /// does link it is measured against the links its edition states, which it never reads for anything
-/// else. Without <c>--apply</c> it reports and writes nothing.
+/// else. It measures the configured database and writes nothing; the links are the pair's <c>names</c> method file,
+/// which <c>names-pairs</c> makes from the store (<see cref="Mapping.NamesFirstSource"/>).
 /// </para>
 /// </summary>
 internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner, ILogger<NamesFirstPass> logger)
@@ -124,7 +124,6 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         NamePolicy policy,
         bool held,
         string? output,
-        bool apply,
         CancellationToken cancellationToken = default,
         Func<string, string?>? targetLemmas = null)
     {
@@ -214,11 +213,6 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
                     originals, slugs, source, held, from.Language, cancellationToken);
                 await Missed(Path.Combine(output, $"{fromSlug}-{toSlug}-missed.tsv"), verses, placings, policy, links, slugs, held,
                     cancellationToken);
-            }
-
-            if (apply)
-            {
-                report.AppendLine(await Apply(connection, from.Id, to.Id, placings, policy, links, cancellationToken));
             }
 
             logger.LogInformation("Placed the names of {From} on {To} in {Elapsed}", fromSlug, toSlug, started.Elapsed);
@@ -542,36 +536,6 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         }
 
         await File.WriteAllTextAsync(path, lines.ToString(), cancellationToken);
-    }
-
-    /// <summary>
-    /// The placed pairs written as links, as a rule's: only where neither word is linked in the pair
-    /// yet, so nothing the pair already states or a review settled is touched.
-    /// </summary>
-    private async Task<string> Apply(
-        NpgsqlConnection connection,
-        int fromTextId,
-        int toTextId,
-        IReadOnlyList<NamePlacing> placings,
-        NamePolicy policy,
-        PairLinks links,
-        CancellationToken cancellationToken)
-    {
-        var rejected = await RejectedRenderings.Locate(connection, cancellationToken);
-        var drafts = placings
-            .Where(policy.Places)
-            .Where(placing => !links.Sources.Contains(placing.Source) && !links.Targets.Contains(placing.Target))
-            .Where(placing => !rejected.Contains((placing.Source, placing.Target)) && !rejected.Contains((placing.Target, placing.Source)))
-            .GroupBy(placing => placing.Source)
-            .Select(group => new NewLink(
-                fromTextId, toTextId, LinkRelation.Renders, LinkMethod.RuleBased, Confidence, Source,
-                Combination(group.First().Signals), [group.Key], [.. group.Select(placing => placing.Target).Distinct()]))
-            .ToList();
-
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var written = await LinkWriter.Write(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), drafts, cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-        return $"Wrote {written.Written:N0} links of names; {written.Joined:N0} named words a link already joined.";
     }
 
     /// <summary>The Lord of אֲדֹנָי יְהוִה, <em>the Lord GOD</em>.</summary>

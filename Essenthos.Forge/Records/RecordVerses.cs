@@ -20,7 +20,7 @@ namespace Essenthos.Core.Records;
 /// <item>every record a word names, as the reader is told it (<see cref="Annotations.Settle"/>), at the primary canonical
 /// address of the word's verse, once however many words and texts name it there: a person, a place, a title, an object or an
 /// observance under <see cref="OwnReferences"/> with no label, a people under <see cref="PeopleReferences"/> with its name as
-/// the label (<see cref="OwnReferenceLoader"/>, <see cref="PeopleLoader"/>);</item>
+/// the label (<see cref="PeopleLoader"/>);</item>
 /// <item>withheld where every word naming a man in the verse is the name after <em>the sons of</em> that the owner's ruling
 /// reads as the people beside a word naming the people in the same verse of the same text (<see cref="Annotations.SonsOf"/>);</item>
 /// <item>for a record no other verse lists, the verses its relationships were read from (<see cref="RelationshipVerseLoader"/>),
@@ -29,8 +29,8 @@ namespace Essenthos.Core.Records;
 /// its own credit as <see cref="OpenBiblePlaceLoader"/> stored it, naming the record where a word of the verse carries it in
 /// any text. BibleData's verses stay its references only.</item>
 /// </list>
-/// A term such a row lists is named where a word of the verse, in any text, carries one of its Strong numbers, as
-/// <see cref="VerseNaming.Sql"/> reads it: no word is annotated to a term.
+/// A term such a row lists is named where a word of the verse, in any text, carries one of its Strong numbers: no word is
+/// annotated to a term.
 /// A base reading beside a differs is the base text's name, not the word's, and puts no verse on a page.
 /// </summary>
 internal static class RecordVerses
