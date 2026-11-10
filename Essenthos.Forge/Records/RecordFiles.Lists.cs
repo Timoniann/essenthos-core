@@ -169,7 +169,7 @@ internal static partial class RecordFiles
             ("passage-role", PassageRoles.All),
             ("observance-cycle", ObservanceCycles.All),
             ("presence-category", PersonPresenceCategories),
-            ("occupation-category", OccupationLoader.Categories),
+            ("occupation-category", OccupationFiles.Categories),
             ("gentilic-kind", [Strong.GentilicKinds.Patronymic, Strong.GentilicKinds.Patrial, Strong.GentilicKinds.Either]),
             ("grammatical-case", GrammaticalCases.All),
             ("ruler-realm", RulerRealms.All),

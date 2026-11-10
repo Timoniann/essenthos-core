@@ -1,38 +1,31 @@
-using System.Diagnostics;
+using System.Globalization;
 using Essenthos.Core.Corpus;
-using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading.CrossReferences;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using NpgsqlTypes;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
+/// <param name="Written">False where both files were current and nothing was read.</param>
 /// <param name="Topics">Subjects written, which is those citing at least one verse.</param>
 /// <param name="References">Runs of verses written, one per chapter a citation reaches.</param>
 /// <param name="CrossReferencesOnly">Subjects that only send the reader elsewhere — <em>See WIND</em> — and are not written.</param>
 /// <param name="Unread">Pieces of citation that did not read as a book, chapter and verse, and were dropped.</param>
 /// <param name="LeftOut">Citations of a chapter or verse the English numbering does not have, which were not written.</param>
-internal sealed record TopicOutcome(
-    bool AlreadyLoaded,
-    int Topics,
-    int References,
-    int CrossReferencesOnly,
-    int Unread,
-    TimeSpan Elapsed,
-    int LeftOut = 0)
+internal sealed record TopicOutcome(bool Written, int Topics, int References, int CrossReferencesOnly, int Unread, int LeftOut)
 {
     public override string ToString() =>
-        AlreadyLoaded
-            ? "Nave's topics are already loaded"
+        !Written
+            ? $"{NaveTopicFiles.TopicsProduct} and {NaveTopicFiles.ReferencesProduct} are current"
             : $"{Topics} of Nave's topics with {References} runs of verses, {CrossReferencesOnly} subjects " +
               $"that only point elsewhere left out, {Unread} pieces of citation that did not read and {LeftOut} citing " +
-              $"a verse no text has left out, in {Elapsed}";
+              "a verse no text has left out";
 }
 
 /// <summary>
-/// Nave's Topical Bible: some five thousand subjects and the verses Orville Nave filed under each.
+/// Nave's Topical Bible: some five thousand subjects and the verses Orville Nave filed under each, as the files
+/// <c>external/bibledata/topics</c> and <c>external/bibledata/topic-references</c> the build loads into <c>topic</c> and
+/// <c>topic_reference</c>.
 ///
 /// <para>
 /// **On trial.** It is loaded so a reader can see the topics a chapter's verses are filed under
@@ -48,31 +41,30 @@ internal sealed record TopicOutcome(
 /// </para>
 ///
 /// <para>
-/// Idempotent by table: a boot after the first writes nothing; <c>replace</c> reads the index again and
-/// puts it in place of the topics written, in one transaction. A citation of a chapter or verse the
-/// English numbering does not have (MIRACLES' Exodus 3:29) is left out and named in the log.
+/// Made again only when the index moved. A citation of a chapter or verse the English numbering does not have
+/// (MIRACLES' Exodus 3:29) is left out and named in the log. A topic's references keep the order Nave cites them in.
 /// </para>
 /// </summary>
-internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> logger)
+internal static class NaveTopicFiles
 {
+    public const string Folder = "BibleData2026";
+
     public const string FileName = "NavesTopicalDictionary.csv";
 
-    private const string ReferenceImport =
-        """
-        COPY topic_reference (topic_id, canonical_book, canonical_chapter, first_verse, last_verse, heading)
-        FROM STDIN (FORMAT BINARY)
-        """;
+    public const string Producer = "forge topics";
 
-    public async Task<TopicOutcome> Load(string folder, bool replace = false, CancellationToken cancellationToken = default)
+    public const string TopicsProduct = "external/bibledata/topics";
+
+    public const string ReferencesProduct = "external/bibledata/topic-references";
+
+    /// <summary>One subject as it is written, with the verses filed under it in the order they are cited.</summary>
+    internal sealed record NaveTopic(string Slug, string Name, IReadOnlyList<(string? Heading, NaveEntries.Citation Citation)> Cited);
+
+    /// <summary>Writes both files when the index moved, or when forced.</summary>
+    public static TopicOutcome Write(ProductStore store, bool force, ILogger logger)
     {
-        if (!replace && await db.Topics.AnyAsync(cancellationToken))
-        {
-            logger.LogInformation("Nave's topics are already loaded");
-            return new TopicOutcome(true, 0, 0, 0, 0, TimeSpan.Zero);
-        }
-
-        var started = Stopwatch.StartNew();
-        var path = Path.Combine(folder, FileName);
+        var source = $"{Folder}/{FileName}";
+        var path = store.FullPath(source);
         if (!File.Exists(path))
         {
             throw new FileNotFoundException(
@@ -81,8 +73,35 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
                 path);
         }
 
+        var inputs = store.Inputs(source);
+        var topicsFile = RecordProducers.File(TopicsProduct);
+        var referencesFile = RecordProducers.File(ReferencesProduct);
+        if (!force && !store.NeedsBuild(topicsFile.Product, topicsFile.Kind, inputs)
+                   && !store.NeedsBuild(referencesFile.Product, referencesFile.Kind, inputs))
+        {
+            return new TopicOutcome(false, 0, 0, 0, 0, 0);
+        }
+
+        var (topics, outcome) = Read(path, logger);
+        RecordProducers.Write(store, topicsFile, topics.Select(t => new string?[] { t.Slug, t.Name, Sources.Naves }), Producer, inputs);
+        RecordProducers.Write(store, referencesFile,
+            topics.SelectMany(t => t.Cited.Select((cited, index) => new string?[]
+            {
+                t.Slug, Integer(index + 1), Integer(cited.Citation.Book), Integer(cited.Citation.Chapter),
+                Integer(cited.Citation.FirstVerse), Integer(cited.Citation.LastVerse), cited.Heading,
+            })),
+            Producer, inputs);
+        return outcome;
+    }
+
+    /// <summary>
+    /// Every subject citing a verse of the English numbering, each citation once in the order it is first cited, its
+    /// slug its letters with a number after a second subject folding to the same ones.
+    /// </summary>
+    internal static (List<NaveTopic> Topics, TopicOutcome Outcome) Read(string path, ILogger logger)
+    {
         var slugs = new HashSet<string>(StringComparer.Ordinal);
-        var topics = new List<(Topic Topic, List<(string? Heading, NaveEntries.Citation Citation)> Cited)>();
+        var topics = new List<NaveTopic>();
         var crossReferencesOnly = 0;
         var unread = 0;
         var leftOut = 0;
@@ -118,55 +137,10 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
                 continue;
             }
 
-            var topic = new Topic { Slug = UniqueSlug(name, slugs), Name = name, Source = Sources.Naves };
-            topics.Add((topic, cited));
+            topics.Add(new NaveTopic(UniqueSlug(name, slugs), name, [.. cited.Distinct()]));
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        if (replace)
-        {
-            await db.TopicReferences.ExecuteDeleteAsync(cancellationToken);
-            await db.Topics.ExecuteDeleteAsync(cancellationToken);
-        }
-
-        db.Topics.AddRange(topics.Select(t => t.Topic));
-        await db.SaveChangesAsync(cancellationToken);
-
-        var references = 0;
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        await using (var writer = await connection.BeginBinaryImportAsync(ReferenceImport, cancellationToken))
-        {
-            foreach (var (topic, cited) in topics)
-            {
-                foreach (var (heading, citation) in cited.Distinct())
-                {
-                    await writer.StartRowAsync(cancellationToken);
-                    await writer.WriteAsync(topic.Id, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(citation.Book, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(citation.Chapter, NpgsqlDbType.Integer, cancellationToken);
-                    await Nullable(writer, citation.FirstVerse, cancellationToken);
-                    await Nullable(writer, citation.LastVerse, cancellationToken);
-                    if (heading is null)
-                    {
-                        await writer.WriteNullAsync(cancellationToken);
-                    }
-                    else
-                    {
-                        await writer.WriteAsync(heading, NpgsqlDbType.Text, cancellationToken);
-                    }
-
-                    references++;
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await transaction.CommitAsync(cancellationToken);
-
-        var outcome = new TopicOutcome(false, topics.Count, references, crossReferencesOnly, unread, started.Elapsed, leftOut);
-        logger.LogInformation("{Outcome}", outcome);
-        return outcome;
+        return (topics, new TopicOutcome(true, topics.Count, topics.Sum(t => t.Cited.Count), crossReferencesOnly, unread, leftOut));
     }
 
     /// <summary>Whether the chapter, and each verse the citation names, is one the English numbering has.</summary>
@@ -174,18 +148,6 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
         EnglishVerses.HasChapter(citation.Book, citation.Chapter)
         && (citation.FirstVerse is not { } first || EnglishVerses.Has(new VerseAddress(citation.Book, citation.Chapter, first)))
         && (citation.LastVerse is not { } last || EnglishVerses.Has(new VerseAddress(citation.Book, citation.Chapter, last)));
-
-    private static async Task Nullable(NpgsqlBinaryImporter writer, int? value, CancellationToken cancellationToken)
-    {
-        if (value is { } number)
-        {
-            await writer.WriteAsync(number, NpgsqlDbType.Integer, cancellationToken);
-        }
-        else
-        {
-            await writer.WriteNullAsync(cancellationToken);
-        }
-    }
 
     /// <summary><c>AARON</c> is <c>aaron</c>; a second subject folding to the same letters takes a number.</summary>
     private static string UniqueSlug(string name, HashSet<string> taken)
@@ -199,4 +161,6 @@ internal sealed class NaveTopicLoader(AppDbContext db, ILogger<NaveTopicLoader> 
 
         return unique;
     }
+
+    private static string? Integer(int? value) => value?.ToString(CultureInfo.InvariantCulture);
 }

@@ -144,11 +144,28 @@ internal static partial class RecordFiles
         }
 
         await Execute(db, transaction, SchemaSql, cancellationToken);
-        var tables = All.SelectMany(f => f.Tables).Distinct().ToList();
+        var loaded = await LoadFiles(db, transaction, store, All, cancellationToken);
+        loaded.Add((RecordCanons.Product, await RecordCanons.Load(db, transaction, store, cancellationToken)));
+        return loaded;
+    }
+
+    /// <summary>
+    /// The files given, put into the database inside the caller's transaction: the tables they fill emptied with
+    /// <c>CASCADE</c> first, then each file staged and inserted, a file whose rows do not all land failing the load.
+    /// </summary>
+    internal static async Task<List<(string Product, long Rows)>> LoadFiles(
+        NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, IReadOnlyList<RecordFile> files, CancellationToken cancellationToken)
+    {
+        if (Untouchable.Contains(db.Database, StringComparer.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException($"records-load does not write {db.Database}; load into a database of your own.");
+        }
+
+        var tables = files.SelectMany(f => f.Tables).Distinct().ToList();
         await Execute(db, transaction, $"TRUNCATE {string.Join(", ", tables)} RESTART IDENTITY CASCADE", cancellationToken);
 
         var loaded = new List<(string, long)>();
-        foreach (var file in All)
+        foreach (var file in files)
         {
             if (file.Requires is { } requirement && !await Holds(db, transaction, requirement, cancellationToken))
             {
@@ -211,7 +228,6 @@ internal static partial class RecordFiles
             loaded.Add((file.Product, rows.Count));
         }
 
-        loaded.Add((RecordCanons.Product, await RecordCanons.Load(db, transaction, store, cancellationToken)));
         return loaded;
     }
 
