@@ -157,32 +157,4 @@ public sealed class AngelLineTests : IDisposable
         (await Line("gabriel", "eng")).Should().StartWith("angel of ");
     }
 
-    /// <summary>
-    /// What tradition says of Gabriel is said on his record as tradition, and the notes of both angels
-    /// and the title reach every language the encyclopedia renders notes in.
-    /// </summary>
-    [Fact]
-    public void TheNotesSayWhatTheTextCallsThemAndAreRendered()
-    {
-        var says = SenseReadingFiles.AllRulings()
-            .SelectMany(file => file.Rulings)
-            .Where(r => r.Existing is "michael-9" or "gabriel" && r.Says?.Notes is not null)
-            .ToDictionary(r => r.Existing!, r => r.Says!.Notes!);
-        says.Keys.Should().BeEquivalentTo(["michael-9", "gabriel"]);
-        says["gabriel"].Should().Contain("Tradition counts him among the archangels; the text calls him an angel");
-        says["michael-9"].Should().Contain("JUD 1:9").And.Contain("DAN 12:1").And.Contain("REV 12:7");
-
-        var notes = new Dictionary<string, string>(says, StringComparer.Ordinal)
-        {
-            ["archangel"] = SenseReadingFiles.Titles().Titles.Single(t => t.Slug == "archangel").Notes,
-        };
-        var rendered = NoteTranslationLoader.Read().Where(r => notes.ContainsKey(r.Slug)).ToList();
-        rendered.Select(r => r.Slug).Should().BeEquivalentTo(notes.Keys);
-        foreach (var record in rendered)
-        {
-            record.English.Should().Be(notes[record.Slug]);
-            EnglishNotes.Digest(record.English).Should().Be(record.Sha256);
-            record.Languages().Select(one => one.Language).Should().Equal("ukr", "deu", "spa");
-        }
-    }
 }

@@ -45,8 +45,6 @@ public sealed class LocationSupplementFixtureTests : IDisposable
         Directory.Delete(_folder, recursive: true);
     }
 
-    private OpenBibleLocationLoader Loader() => new(_db, NullLogger<OpenBibleLocationLoader>.Instance);
-
     private async Task Places()
     {
         foreach (var (slug, gazetteer) in new[]
@@ -68,7 +66,7 @@ public sealed class LocationSupplementFixtureTests : IDisposable
     public async Task APointAnotherSourceMeasuredIsCreditedToItAndKeepsTheGazetteersScore()
     {
         await Places();
-        await Loader().Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
 
         var nebo = await _db.Entities.Include(e => e.Location).Include(e => e.Candidates).SingleAsync(e => e.Slug == "mountnebo");
         nebo.Location!.Score.Should().Be(812);
@@ -86,7 +84,7 @@ public sealed class LocationSupplementFixtureTests : IDisposable
     public async Task ARegionTheSourceScoresNotHasNoScoreRatherThanZero()
     {
         await Places();
-        await Loader().Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
 
         var region = await _db.Entities.Include(e => e.Location).Include(e => e.Candidates)
             .SingleAsync(e => e.Slug == "wilderness-of-judah");
@@ -99,29 +97,10 @@ public sealed class LocationSupplementFixtureTests : IDisposable
     public async Task ARecordWithoutTheGazetteersIdBorrowsNoPointFromItsTwin()
     {
         await Places();
-        await Loader().Load(_folder);
+        await RecordRowsWritten.Locations(_db, _folder);
 
         (await _db.PlaceLocations.CountAsync(l => l.Entity!.Slug == "susa")).Should().Be(1);
         (await _db.PlaceLocations.CountAsync(l => l.Entity!.Slug == "shushan")).Should().Be(0);
         (await _db.PlaceCandidates.CountAsync(c => c.Entity!.Slug == "shushan")).Should().Be(0);
     }
-
-    [Fact]
-    public async Task ASecondLoadWritesNothing()
-    {
-        await Places();
-        (await Loader().Load(_folder)).AlreadyLoaded.Should().BeFalse();
-        var before = await Fingerprint();
-
-        (await Loader().Load(_folder)).AlreadyLoaded.Should().BeTrue();
-        (await Fingerprint()).Should().Equal(before);
-    }
-
-    private async Task<string[]> Fingerprint() =>
-    [
-        .. await _db.PlaceLocations.AsNoTracking().OrderBy(l => l.EntityId)
-            .Select(l => l.EntityId + "|" + l.Score + "|" + l.CoordinatesDataset + "|" + l.Source).ToArrayAsync(),
-        .. await _db.PlaceCandidates.AsNoTracking().OrderBy(c => c.EntityId).ThenBy(c => c.Rank)
-            .Select(c => c.EntityId + "|" + c.Rank + "|" + c.Score + "|" + c.CoordinatesDataset + "|" + c.Source).ToArrayAsync(),
-    ];
 }

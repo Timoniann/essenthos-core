@@ -16,7 +16,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Ties">The records the matching tied on its own that the owner's list also holds, to confirm or take back.</param>
 /// <param name="Unmatched">Records no item goes by the name of.</param>
 /// <param name="Decided">Records settled by the owner's word.</param>
-/// <param name="Rows">Article links held: one per record and language.</param>
+/// <param name="Rows">Article links the ties give: one per record and language.</param>
 /// <param name="ByKind">For each kind of record: how many were tied, how many are ambiguous and how many no item goes by the name of.</param>
 internal sealed record WikipediaOutcome(
     bool Skipped,
@@ -26,19 +26,17 @@ internal sealed record WikipediaOutcome(
     int Unmatched,
     int Decided,
     int Rows,
-    int Written,
-    int Removed,
     TimeSpan Elapsed,
     IReadOnlyDictionary<string, (int Tied, int Ambiguous, int Unmatched)>? ByKind = null,
     int Ties = 0)
 {
     public override string ToString() =>
         Skipped
-            ? "the Wikipedia links are as they were, because the Wikidata items are not here"
+            ? "the owner's Wikipedia list is as it was, because the Wikidata items are not here"
             : $"{Linked.Values.Sum()} records tied to a Wikidata item ({string.Join(", ", Linked.OrderByDescending(l => l.Value).Select(l => $"{l.Value} by {l.Key}"))}), " +
               $"{Ambiguous} left because the evidence does not tell them from a namesake ({Questions} listed for the owner, and {Ties} ties of the matching beside them), " +
-              $"{Unmatched} that no item goes by the name of, {Decided} settled by the owner; {Rows} article links held " +
-              $"({Written} written, {Removed} removed) in {Elapsed}" +
+              $"{Unmatched} that no item goes by the name of, {Decided} settled by the owner; {Rows} article links " +
+              $"in {Elapsed}" +
               (ByKind is null
                   ? string.Empty
                   : "; by kind: " + string.Join(
@@ -47,15 +45,11 @@ internal sealed record WikipediaOutcome(
 }
 
 /// <summary>
-/// Links each person, place and thing to the article each language's Wikipedia has on it, through the
-/// Wikidata item the record is. The matching is <see cref="WikipediaMatcher"/>: a record is tied to an
-/// item only where nothing else could be the item. The records it cannot decide are written to the
-/// owner's list, and what he answers there overrides the matching.
-///
-/// <para>
-/// Re-run whenever the corpus or his answers change: it writes only the rows that differ from what is
-/// held, in one transaction, so a second run on an unchanged corpus leaves every row and id as it was.
-/// </para>
+/// Matches each person, place and thing of a database to the Wikidata item the record is. The matching is
+/// <see cref="WikipediaMatcher"/>: a record is tied to an item only where nothing else could be the item. The ties
+/// and the records it cannot decide are written to the owner's list, and what he answers there overrides the
+/// matching. It writes no database: records-derive makes <c>records/facts/wikipedia</c> from the list
+/// (<see cref="Records.RecordProducers.Wikipedia"/>), linking each tied item's articles as <see cref="Links"/> does.
 /// </summary>
 internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, ILogger<WikipediaLinkLoader> logger)
 {
@@ -90,7 +84,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         catch (FileNotFoundException exception)
         {
             logger.LogWarning("{Message}", exception.Message);
-            return new WikipediaOutcome(true, new Dictionary<string, int>(), 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+            return new WikipediaOutcome(true, new Dictionary<string, int>(), 0, 0, 0, 0, 0, started.Elapsed);
         }
 
         var records = await Records(cancellationToken);
@@ -155,7 +149,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         var taken = chosen.Values.Select(c => c.Item.Id).ToHashSet(StringComparer.Ordinal);
         var questions = Questions(records, matches, taken, answers);
 
-        var (rows, written, removed) = await Replace(chosen, cancellationToken);
+        var rows = chosen.Values.Sum(c => Links(c.Item, c.By).Count());
 
         var database = db.Database.GetDbConnection().Database;
         var target = lists.For(resources, WikipediaReviewList.FileName, database);
@@ -176,9 +170,9 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         }
 
         var outcome = new WikipediaOutcome(
-            false, linked, ambiguous, questions.Count(q => q.Tied is null), unmatched, decided, rows, written, removed,
+            false, linked, ambiguous, questions.Count(q => q.Tied is null), unmatched, decided, rows,
             started.Elapsed, byKind, questions.Count(q => q.Tied is not null));
-        logger.LogInformation("Linked the records to Wikipedia: {Outcome}", outcome);
+        logger.LogInformation("Matched the records to Wikidata: {Outcome}", outcome);
         return outcome;
     }
 
@@ -252,51 +246,6 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
 
     private static string Reference((int Book, int Chapter, int Verse) verse) =>
         $"{BookCodes.Code(verse.Book) ?? verse.Book.ToString()} {verse.Chapter}:{verse.Verse}";
-
-    /// <summary>
-    /// Makes the table hold exactly the links decided: rows that differ are rewritten, new ones added,
-    /// rows no longer decided removed, all in one transaction so a failure leaves the links as they were.
-    /// </summary>
-    private async Task<(int Rows, int Written, int Removed)> Replace(
-        Dictionary<int, (WikidataItem Item, string By)> chosen,
-        CancellationToken cancellationToken)
-    {
-        var wanted = new Dictionary<(int, string), EntityWikipedia>();
-        foreach (var (entityId, (item, by)) in chosen)
-        {
-            foreach (var link in Links(item, by, entityId))
-            {
-                wanted[(entityId, link.Language)] = link;
-            }
-        }
-
-        var held = await db.EntityWikipedia.ToListAsync(cancellationToken);
-        var written = 0;
-        var removed = 0;
-        foreach (var row in held)
-        {
-            if (!wanted.Remove((row.EntityId, row.Language), out var replacement))
-            {
-                db.EntityWikipedia.Remove(row);
-                removed++;
-            }
-            else if (row.Title != replacement.Title || row.Qid != replacement.Qid
-                                                    || row.MatchedBy != replacement.MatchedBy
-                                                    || row.Confidence != replacement.Confidence)
-            {
-                row.Title = replacement.Title;
-                row.Qid = replacement.Qid;
-                row.MatchedBy = replacement.MatchedBy;
-                row.Confidence = replacement.Confidence;
-                written++;
-            }
-        }
-
-        db.EntityWikipedia.AddRange(wanted.Values);
-        written += wanted.Count;
-        await db.SaveChangesAsync(cancellationToken);
-        return (held.Count - removed + wanted.Count, written, removed);
-    }
 
     /// <summary>The article links a record tied to <paramref name="item"/> by <paramref name="by"/> is given: one per language the item has an article in.</summary>
     internal static IEnumerable<EntityWikipedia> Links(WikidataItem item, string by, int entityId = 0) =>

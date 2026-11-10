@@ -192,24 +192,4 @@ public sealed class CalledLineTests : IDisposable
             .Which.References.Should().ContainSingle(v => v.BookOrdinal == 43 && v.Chapter == 11 && v.Verse == 16);
     }
 
-    [Fact]
-    public async Task ASecondLoadOfTheTitlesAndNamesWritesNothing()
-    {
-        await Load();
-        var called = await _db.TitleBearers.Where(b => b.Called != null)
-            .Select(b => new { b.Id, b.Called }).OrderBy(b => b.Id).ToListAsync();
-        var bynames = await _db.Entities.Where(e => e.Byname != null)
-            .Select(e => new { e.Id, e.Byname }).OrderBy(e => e.Id).ToListAsync();
-        called.Should().NotBeEmpty();
-        bynames.Should().NotBeEmpty();
-
-        _db.ChangeTracker.Clear();
-        await new TitleLoader(_db, NullLogger<TitleLoader>.Instance).Load();
-        (await new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance).Load()).Bynamed.Should().Be(0);
-
-        (await _db.TitleBearers.Where(b => b.Called != null).Select(b => new { b.Id, b.Called }).OrderBy(b => b.Id).ToListAsync())
-            .Should().Equal(called);
-        (await _db.Entities.Where(e => e.Byname != null).Select(e => new { e.Id, e.Byname }).OrderBy(e => e.Id).ToListAsync())
-            .Should().Equal(bynames);
-    }
 }

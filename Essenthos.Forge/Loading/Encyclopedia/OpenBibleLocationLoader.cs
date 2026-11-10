@@ -52,7 +52,7 @@ internal sealed record LocationsOutcome(
 /// Resources/OpenBible/LICENCE.md.
 /// </para>
 /// </summary>
-internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBibleLocationLoader> logger)
+internal static class OpenBibleLocationLoader
 {
     private const string Source =
         "OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0";
@@ -117,67 +117,6 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
     /// read. A representative point has a role of its own; the other three are drawn as the point.
     /// </summary>
     private static string Role(string kind) => kind == "representative point" ? "representative_point" : "point";
-
-    public async Task<LocationsOutcome> Load(string folder, CancellationToken cancellationToken = default)
-    {
-        var started = Stopwatch.StartNew();
-        var ancient = Path.Combine(folder, AncientFile);
-        var modern = Path.Combine(folder, ModernFile);
-        if (!File.Exists(ancient) || !File.Exists(modern))
-        {
-            logger.LogWarning(
-                "No place locations: {Ancient} and {Modern} are both needed. Run " +
-                "scripts/fetch-openbible.ps1; without them no place has a point on a map.",
-                ancient, modern);
-            return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
-        }
-
-        var supplement = LocationSupplement.Read();
-        var read = supplement.Apply(Read(ancient, modern));
-        var regionSlugs = supplement.Regions.Select(r => r.Slug).ToList();
-        var laterTowns = SharedSites.All.Select(s => s.Later).ToList();
-
-        var places = await db.Entities
-            .Where(e => e.Kind == EntityKind.Place
-                        && (e.OpenBibleId != null || regionSlugs.Contains(e.Slug) || laterTowns.Contains(e.Slug)))
-            .Select(e => new Place(e.Id, e.Slug, e.OpenBibleId))
-            .ToListAsync(cancellationToken);
-        var (locations, candidates, unheld) = Locate(read, supplement, places);
-
-        if (await Holds(locations, candidates, cancellationToken))
-        {
-            return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
-        }
-
-        // The points and the answers are replaced together or not at all: a place must never be
-        // left with a point its answers no longer give, nor without the point it had.
-        await using (var own = db.Database.CurrentTransaction is null
-                         ? await db.Database.BeginTransactionAsync(cancellationToken)
-                         : null)
-        {
-            await db.PlaceCandidates.ExecuteDeleteAsync(cancellationToken);
-            await db.PlaceLocations.ExecuteDeleteAsync(cancellationToken);
-            foreach (var gone in db.ChangeTracker.Entries()
-                         .Where(e => e.Entity is PlaceLocation or PlaceCandidate).ToList())
-            {
-                gone.State = EntityState.Detached;
-            }
-
-            db.PlaceLocations.AddRange(locations);
-            db.PlaceCandidates.AddRange(candidates);
-            await db.SaveChangesAsync(cancellationToken);
-            if (own is not null)
-            {
-                await own.CommitAsync(cancellationToken);
-            }
-        }
-
-        var outcome = new LocationsOutcome(
-            false, locations.Count, candidates.Count, read.OpenStreetMap, read.Commercial, read.NoSite,
-            read.Unidentified, unheld, started.Elapsed);
-        logger.LogInformation("Located the places: {Outcome}", outcome);
-        return outcome;
-    }
 
     /// <summary>A place record the gazetteer can locate: by its id there, or as a region or a later town.</summary>
     internal sealed record Place(int Id, string Slug, string? OpenBibleId);
@@ -272,33 +211,8 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
         return (locations, candidates, unheld);
     }
 
-    /// <summary>Whether the tables already hold exactly these rows, so a load writes nothing.</summary>
-    private async Task<bool> Holds(
-        List<PlaceLocation> locations, List<PlaceCandidate> candidates, CancellationToken cancellationToken)
-    {
-        var heldLocations = await db.PlaceLocations.AsNoTracking().ToListAsync(cancellationToken);
-        var heldCandidates = await db.PlaceCandidates.AsNoTracking().ToListAsync(cancellationToken);
-        return heldLocations.Count == locations.Count
-               && heldCandidates.Count == candidates.Count
-               && heldLocations.Select(Row).ToHashSet().SetEquals(locations.Select(Row))
-               && heldCandidates.Select(Row).ToHashSet().SetEquals(candidates.Select(Row));
-    }
-
     /// <summary>The gazetteer's credit, and where another source gave the coordinates, that source's too.</summary>
     private static string Credited(string? coordinates) => coordinates is null ? Source : $"{Source}; coordinates: {coordinates}";
-
-    private static string Row(PlaceLocation l) =>
-        string.Join('\u001f',
-            l.EntityId, Exact(l.Longitude), Exact(l.Latitude), l.Kind, l.Score, l.ModernId, l.CoordinatesSource,
-            l.CoordinatesDataset, l.Source);
-
-    private static string Row(PlaceCandidate c) =>
-        string.Join('\u001f',
-            c.EntityId, c.Rank, c.Score, c.ModernId, c.Site, Exact(c.Longitude), Exact(c.Latitude), c.Kind,
-            c.RadiusMeters, c.SiteType, c.Relation, c.ThroughOpenBibleId, c.Special, c.Withheld,
-            string.Join(',', c.Grounds), c.CoordinatesSource, c.CoordinatesDataset, c.Source);
-
-    private static string Exact(double? value) => value?.ToString("R", CultureInfo.InvariantCulture) ?? "";
 
     /// <param name="PlaceId">The gazetteer's identifier for the ancient place — what an entity holds.</param>
     /// <param name="Score">Null where the source of the point scores nothing.</param>

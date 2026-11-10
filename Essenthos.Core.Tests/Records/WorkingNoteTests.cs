@@ -24,9 +24,9 @@ namespace Essenthos.Core.Tests.Records;
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class WorkingNoteTests : IDisposable
 {
-    private const string Owner = EntityDescriptorLoader.SourcePrefix + " the project owner, decided 2026-09-13";
+    private const string Owner = Sources.DescriptorReadingPrefix + " the project owner, decided 2026-09-13";
 
-    private const string Model = EntityDescriptorLoader.SourcePrefix + " claude-sonnet-5, asked 2026-09-09";
+    private const string Model = Sources.DescriptorReadingPrefix + " claude-sonnet-5, asked 2026-09-09";
 
     private static readonly string[] Notes =
     [

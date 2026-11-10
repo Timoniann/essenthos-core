@@ -58,15 +58,4 @@ public sealed class OtherNamesGivenInTheTextTests(WitnessDatabase database) : Ow
             .Should().Be(0, "'terror on every side' names nobody");
     }
 
-    [Theory]
-    [InlineData("pashhur-2", "JER 20:3", "Magor-missabib", "Маґор-Міссавів")]
-    [InlineData("naomi", "RUT 1:20", "Mara", "Мара")]
-    public void TheOtherNameTheVerseGivesIsSaidInTheLine(string entity, string reference, string english, string ukrainian)
-    {
-        var byname = OwnNameLoader.Read().Bynames!.Single(b => b.Entity == entity);
-
-        byname.Reference.Should().Be(reference);
-        byname.Names["eng"].Should().Equal(english);
-        byname.Names["ukr"].Should().Equal(ukrainian);
-    }
 }

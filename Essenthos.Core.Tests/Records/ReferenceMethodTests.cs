@@ -31,15 +31,6 @@ public sealed class ReferenceMethodTests
             .Should().Be(ReferenceMethods.ModelReading);
     }
 
-    /// <summary>Every sentence the shipped verse readings write is a reading by models.</summary>
-    [Fact]
-    public void EverySentenceTheVerseReadingsWriteIsAModelReading()
-    {
-        var file = VerseReadingFiles.Read();
-
-        file.ReferenceSources.Should().OnlyContain(source => ReferenceMethods.Of(source) == ReferenceMethods.ModelReading);
-    }
-
     [Theory]
     [InlineData("Essenthos, from the words this corpus annotates to the people", ReferenceMethods.AnnotatedWords)]
     [InlineData("Essenthos, from Strong's Dictionary entry for the word and every word BHSA numbers with it", ReferenceMethods.Lexicon)]

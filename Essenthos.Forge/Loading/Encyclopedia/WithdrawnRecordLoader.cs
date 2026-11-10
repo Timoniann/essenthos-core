@@ -1,36 +1,7 @@
-using System.Diagnostics;
 using System.Text.Json;
 using Essenthos.Core.Corpus;
-using Essenthos.Core.Database;
-using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
-
-/// <param name="Withdrawn">Records removed on this run, which is all of them on a cold corpus and none after.</param>
-/// <param name="Kept">
-/// Records the list names that carry something of ours the owner has not ruled on, or that an event or a
-/// period stands on, left where they are and named in the log.
-/// </param>
-/// <param name="RuledOut">
-/// The withdrawn records that carried something of ours, which went with them on the owner's ruling and
-/// are named with what went.
-/// </param>
-internal sealed record WithdrawnRecordOutcome(
-    int Withdrawn,
-    IReadOnlyList<string> Kept,
-    TimeSpan Elapsed,
-    IReadOnlyList<string>? RuledOut = null)
-{
-    public override string ToString() =>
-        Withdrawn == 0 && Kept.Count == 0
-            ? "the records a dataset filed under a word that is no name are already withdrawn"
-            : $"{Withdrawn} records a dataset filed under a word that is no name withdrawn" +
-              (RuledOut is not { Count: > 0 }
-                  ? ""
-                  : $", {RuledOut.Count} of them with what this corpus held on them, as the owner ruled ({string.Join("; ", RuledOut)})") +
-              (Kept.Count == 0 ? "" : $", {Kept.Count} kept for what this corpus holds on them ({string.Join(", ", Kept)})") +
-              $", in {Elapsed}";
-}
 
 /// <summary>
 /// The records a dataset filed under a word that is nobody's name — <em>waters</em>, <em>a despicable
@@ -54,120 +25,17 @@ internal sealed record WithdrawnRecordOutcome(
 /// </para>
 ///
 /// <para>
-/// What the dataset says of the record stays in its files on disk. Idempotent: a record already
-/// gone is not looked for again.
+/// What the dataset says of the record stays in its files on disk. The record files hold the list as
+/// <c>records/withdrawn</c>, which the records load checks against what it loads.
 /// </para>
 /// </summary>
-internal sealed class WithdrawnRecordLoader(AppDbContext db, ILogger<WithdrawnRecordLoader> logger)
+internal static class WithdrawnRecordLoader
 {
-    private const string TimelineKind = "events or periods";
-
     private static readonly JsonSerializerOptions Shape = new()
     {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
-
-    public async Task<WithdrawnRecordOutcome> Load(CancellationToken cancellationToken = default) =>
-        await Load(Read(), cancellationToken);
-
-    internal async Task<WithdrawnRecordOutcome> Load(
-        IReadOnlyList<WithdrawnRecord> records,
-        CancellationToken cancellationToken)
-    {
-        var started = Stopwatch.StartNew();
-        var slugs = records.Select(record => record.Slug).ToList();
-        var held = await db.Entities.Where(entity => slugs.Contains(entity.Slug)).ToListAsync(cancellationToken);
-
-        var withdrawn = 0;
-        var kept = new List<string>();
-        var ruledOut = new List<string>();
-        foreach (var record in records)
-        {
-            var entity = held.FirstOrDefault(e => e.Slug == record.Slug && e.SourceId == record.SourceId);
-            if (entity is null || (Datasets.Of(entity.Source) == Datasets.Own && record.OwnRecord is null))
-            {
-                continue;
-            }
-
-            var dataset = record.OwnRecord is null ? Datasets.Of(entity.Source) : null;
-            var ours = await Ours(entity.Id, dataset, cancellationToken);
-            var standing = record.OwnerRuled is null
-                ? ours
-                : ours.Where(kind => kind == TimelineKind).ToList();
-            if (standing.Count > 0)
-            {
-                logger.LogWarning(
-                    "{Slug} is listed as no name and kept: this corpus holds {Ours} on it. Decide what becomes " +
-                    "of those before it is withdrawn",
-                    record.Slug, string.Join(", ", standing));
-                kept.Add(record.Slug);
-                continue;
-            }
-
-            if (ours.Count > 0)
-            {
-                ruledOut.Add($"{record.Slug}: {string.Join(", ", ours)}");
-            }
-
-            logger.LogInformation("Withdrew {Slug}, a record under a word that is no name: {Why}", record.Slug, record.Why);
-            db.Entities.Remove(entity);
-            withdrawn++;
-        }
-
-        await db.SaveChangesAsync(cancellationToken);
-        var outcome = new WithdrawnRecordOutcome(withdrawn, kept, started.Elapsed, ruledOut);
-        logger.LogInformation("The records that are no name: {Outcome}", outcome);
-        return outcome;
-    }
-
-    /// <summary>What this corpus, and not the record's own dataset, holds on the record, by kind.</summary>
-    private async Task<List<string>> Ours(int entity, string? dataset, CancellationToken cancellationToken)
-    {
-        var ours = new List<string>();
-        if (await db.WordEntities.AnyAsync(a => a.EntityId == entity, cancellationToken))
-        {
-            ours.Add("annotated words");
-        }
-
-        var verses = await db.EntityVerses.Where(v => v.EntityId == entity).Select(v => v.Source).Distinct()
-            .ToListAsync(cancellationToken);
-        if (verses.Any(source => Datasets.Of(source) == Datasets.Own))
-        {
-            ours.Add("verses read off our words");
-        }
-
-        if (await db.EntityDescriptors.AnyAsync(d => d.EntityId == entity || d.TargetEntityId == entity, cancellationToken))
-        {
-            ours.Add("a line under a name");
-        }
-
-        var ties = await db.EntityRelationships
-            .Where(r => r.FromEntityId == entity || r.ToEntityId == entity)
-            .Select(r => r.Source).Distinct().ToListAsync(cancellationToken);
-        if (ties.Any(source => Datasets.Of(source) != dataset))
-        {
-            ours.Add("relationships");
-        }
-
-        if (await db.EntityImages.AnyAsync(i => i.EntityId == entity, cancellationToken))
-        {
-            ours.Add("pictures");
-        }
-
-        if (await db.Events.AnyAsync(e => e.EntityId == entity, cancellationToken)
-            || await db.Periods.AnyAsync(p => p.EntityId == entity, cancellationToken))
-        {
-            ours.Add(TimelineKind);
-        }
-
-        if (await db.MergedRecords.AnyAsync(m => m.EntityId == entity, cancellationToken))
-        {
-            ours.Add("records folded into it");
-        }
-
-        return ours;
-    }
 
     internal static IReadOnlyList<WithdrawnRecord> Read() => File().Records;
 

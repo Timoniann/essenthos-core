@@ -4,7 +4,9 @@ using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
+using Npgsql;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
@@ -18,9 +20,9 @@ public sealed class CommandmentFileTests
     private const int Genesis = 1;
     private const int Deuteronomy = 5;
 
-    private static readonly string Shipped = Path.Combine([AppContext.BaseDirectory, .. CommandmentLoader.FilePath]);
+    private static readonly string Shipped = TestResources.Shipped(CommandmentFiles.Source);
 
-    private static readonly List<Commandment> Commandments = CommandmentLoader.Read(Shipped);
+    private static readonly List<Commandment> Commandments = CommandmentFiles.Read(Shipped);
 
     private static Commandment Of(string kind, int number) =>
         Commandments.Single(c => c.Kind == kind && c.Number == number);
@@ -83,7 +85,7 @@ public sealed class CommandmentFileTests
     [InlineData("Lev. 16:3", 0)]
     [InlineData("XYZ 1:1", 0)]
     public void AReferenceReadsOrIsRefused(string verses, int runs) =>
-        (CommandmentLoader.References(verses)?.Count ?? 0).Should().Be(runs);
+        (CommandmentFiles.References(verses)?.Count ?? 0).Should().Be(runs);
 }
 
 [Collection(WitnessDatabaseCollection.Name)]
@@ -106,20 +108,38 @@ public sealed class CommandmentLoadTests : IDisposable
     [Fact]
     public async Task TheCountIsWrittenOnceAndListedPositiveFirst()
     {
-        var loader = new CommandmentLoader(_db, NullLogger<CommandmentLoader>.Instance);
-        var path = Path.Combine([AppContext.BaseDirectory, .. CommandmentLoader.FilePath]);
+        var resources = Path.Combine(Path.GetTempPath(), "essenthos-products", Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(Path.Combine(resources, "Maimonides"));
+        File.Copy(TestResources.Shipped(CommandmentFiles.Source), Path.Combine(resources, CommandmentFiles.Source));
+        try
+        {
+            var store = new ProductStore(resources);
+            var outcome = CommandmentFiles.Write(store, force: false);
+            store.Save();
+            var again = CommandmentFiles.Write(new ProductStore(resources), force: false);
 
-        var outcome = await loader.Load(path);
-        var again = await loader.Load(path);
+            (outcome.Written, outcome.Positive, outcome.Negative).Should().Be((true, 248, 365));
+            again.Written.Should().BeFalse("nothing it reads moved");
 
-        (outcome.Positive, outcome.Negative).Should().Be((248, 365));
-        again.AlreadyLoaded.Should().BeTrue();
+            var files = RecordFiles.All.Where(f => f.Product.StartsWith("external/maimonides/", StringComparison.Ordinal)).ToList();
+            await using (var connection = new NpgsqlConnection(_db.Database.GetConnectionString()))
+            {
+                await connection.OpenAsync();
+                await using var transaction = await connection.BeginTransactionAsync();
+                await RecordFiles.LoadFiles(connection, transaction, new ProductStore(resources), files, default);
+                await transaction.CommitAsync();
+            }
 
-        var all = await CommandmentEndpoints.All(_db, default);
-        all.Should().HaveCount(613);
-        all[0].Should().Match<CommandmentResponse>(c => c.Kind == CommandmentKinds.Positive && c.Number == 1);
-        all[^1].Should().Match<CommandmentResponse>(c => c.Kind == CommandmentKinds.Negative && c.Number == 365);
-        all[0].References[0].Book.Slug.Should().Be("exodus");
+            var all = await CommandmentEndpoints.All(_db, default);
+            all.Should().HaveCount(613);
+            all[0].Should().Match<CommandmentResponse>(c => c.Kind == CommandmentKinds.Positive && c.Number == 1);
+            all[^1].Should().Match<CommandmentResponse>(c => c.Kind == CommandmentKinds.Negative && c.Number == 365);
+            all[0].References[0].Book.Slug.Should().Be("exodus");
+        }
+        finally
+        {
+            Directory.Delete(resources, recursive: true);
+        }
     }
 
     [Fact]
@@ -130,7 +150,7 @@ public sealed class CommandmentLoadTests : IDisposable
         {
             File.WriteAllText(path, "kind\tnumber\tmishneh_torah\ttitle\tverses\tnote\npositive\t1\t1\tTo know\tEXO 20:2\t\n");
 
-            var read = () => CommandmentLoader.Read(path);
+            var read = () => CommandmentFiles.Read(path);
 
             read.Should().Throw<InvalidDataException>().WithMessage("*248*");
         }

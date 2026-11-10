@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Records;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -69,8 +70,42 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
             ["claims"] = new JsonObject(),
         }.ToJsonString();
 
-    private WikipediaLinkLoader Loader(string? ownerDatabase = null) =>
-        new(_db, new ReviewLists(ownerDatabase ?? _owner), NullLogger<WikipediaLinkLoader>.Instance);
+    private Matching Loader(string? ownerDatabase = null) => new(this, new ReviewLists(ownerDatabase ?? _owner));
+
+    /// <summary>
+    /// The matching, then the links records-derive makes from the list it wrote (<see cref="RecordProducers.Wikipedia"/>),
+    /// written into this database by record so a test can read them as a page does.
+    /// </summary>
+    private sealed class Matching(WikipediaLinkLoaderTests tests, ReviewLists lists)
+    {
+        public async Task<WikipediaOutcome> Load(string resources)
+        {
+            var outcome = await new WikipediaLinkLoader(tests._db, lists, NullLogger<WikipediaLinkLoader>.Instance).Load(resources);
+            if (!outcome.Skipped)
+            {
+                await tests.Link(lists.For(resources, WikipediaReviewList.FileName, tests._owner));
+            }
+
+            return outcome;
+        }
+    }
+
+    private async Task Link(string list)
+    {
+        var wikidata = WikidataItems.Read(_resources);
+        var records = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal);
+        _db.ChangeTracker.Clear();
+        await _db.EntityWikipedia.ExecuteDeleteAsync();
+        foreach (var (slug, (qid, by)) in WikipediaReviewList.Links(list))
+        {
+            if (records.TryGetValue(slug, out var id) && wikidata.TryGet(qid, out var item) && item.HasArticle)
+            {
+                _db.EntityWikipedia.AddRange(WikipediaLinkLoader.Links(item, by, id));
+            }
+        }
+
+        await _db.SaveChangesAsync();
+    }
 
     private Entity Person(string slug, string name, string line = "")
     {
@@ -116,20 +151,6 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
             "habakkuk uk Авакум Q1 name");
         outcome.Rows.Should().Be(3);
         outcome.Linked.Should().Equal(new Dictionary<string, int> { ["name"] = 1 });
-    }
-
-    [Fact]
-    public async Task ASecondRunLeavesEveryRowAndIdAsItWas()
-    {
-        Person("habakkuk", "Habakkuk");
-        await Loader().Load(_resources);
-        var ids = await _db.EntityWikipedia.AsNoTracking().OrderBy(w => w.Id).Select(w => w.Id).ToListAsync();
-
-        var again = await Loader().Load(_resources);
-
-        again.Written.Should().Be(0);
-        again.Removed.Should().Be(0);
-        (await _db.EntityWikipedia.AsNoTracking().OrderBy(w => w.Id).Select(w => w.Id).ToListAsync()).Should().Equal(ids);
     }
 
     [Fact]
@@ -185,7 +206,6 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
         var again = await Loader().Load(_resources);
 
         (await Held()).Should().Equal("zechariah en Zechariah (prophet) Q3 owner", "zechariah es Zacarías Q3 owner");
-        again.Written.Should().Be(0);
         var entry = ((JsonArray)Review()["entries"]!).OfType<JsonObject>().Single();
         ((string)entry["decision"]!["answer"]!).Should().Be("Q3");
         ((string)entry["tied"]!["qid"]!).Should().Be("Q5");
@@ -233,7 +253,6 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
         var outcome = await Loader().Load(_resources);
 
         (await Held()).Should().BeEmpty();
-        outcome.Removed.Should().Be(3);
         outcome.Decided.Should().Be(1);
     }
 

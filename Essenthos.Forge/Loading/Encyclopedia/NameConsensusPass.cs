@@ -14,8 +14,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <summary>
 /// <see cref="NameConsensus"/> over the corpus: every text read for the words naming each person,
 /// place, people, title, thing and appointed time the originals name, measured against the texts
-/// whose annotations came across a link the text's own edition states or numbers, and, when asked,
-/// written as our own annotations on the words nothing else names.
+/// whose annotations came across a link the text's own edition states or numbers. It writes nothing
+/// to the database: the names it once wrote are the hand files names/consensus/&lt;SLUG&gt;.
 ///
 /// <para>
 /// <strong>An entity's verses are the originals'.</strong> The verses on an encyclopedia page are
@@ -43,12 +43,6 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// sometimes lands on an <em>of</em>.
 /// </para>
 ///
-/// <para>
-/// <strong>What it writes</strong> is one annotation on each word the settled findings name that
-/// no annotation of any method names yet, credited to us, with the precision measured for the
-/// entity's kind and size as its confidence. A word already annotated to another entity is not
-/// touched: it goes to a review list.
-/// </para>
 /// </summary>
 internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPass> logger)
 {
@@ -118,24 +112,15 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
 
     private const int ExamplesShown = 12;
 
-    /// <summary>The review list of the words where a finding and an annotation already there disagree.</summary>
-    public static readonly string[] ReviewFile = ["Essenthos", "review", "name-consensus-disagreements.json"];
-
     /// <param name="texts">The texts to read, or every text.</param>
     /// <param name="precision">The precision each kind's bar must reach on the measured texts.</param>
     /// <param name="output">A folder to write each text's findings and words into, or none.</param>
     /// <param name="bar">One bar for every kind, or null to choose each on the measured texts.</param>
-    /// <param name="apply">Whether to write the annotations, rather than only report them.</param>
-    /// <param name="replace">Whether to take back what an earlier run wrote first, rather than skip a text that has it.</param>
-    /// <param name="resources">The resources folder, where the review list is written when applying.</param>
     public async Task<string> Run(
         IReadOnlyCollection<string>? texts,
         double precision,
         string? output,
         ConsensusBar? bar,
-        bool apply = false,
-        bool replace = false,
-        string? resources = null,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -171,12 +156,11 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 logger.LogInformation("Read {Text}", text.Slug);
             }
 
-            var (bars, confidence) = Report(report, measured, precision, bar);
+            var (bars, _) = Report(report, measured, precision, bar);
 
             async Task Add(Reading reading)
             {
-                int? written = apply ? await Apply(connection, reading, bars, confidence, replace, cancellationToken) : null;
-                Addition(reading, bars, slugs, table, examples, disagreements, written);
+                Addition(reading, bars, slugs, table, examples, disagreements, null);
                 if (output is not null)
                 {
                     await Write(output, reading, bars, slugs, cancellationToken);
@@ -249,13 +233,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 report.AppendLine().AppendLine($"Findings and words written to {output}.");
             }
 
-            if (apply && resources is not null)
-            {
-                var path = Path.Combine([resources, .. ReviewFile]);
-                await Review(path, disagreements, texts is null, cancellationToken);
-                report.AppendLine().AppendLine($"{disagreements.Count:N0} words where a finding disagrees with an annotation already there, listed in {path}.");
-            }
-
             report.AppendLine().AppendLine($"Read {done.Count} texts in {started.Elapsed:hh\\:mm\\:ss}.");
             return report.ToString();
         }
@@ -278,10 +255,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
 
         return verses;
     }
-
-    /// <summary>Whether any text already holds an annotation this pass wrote, which is what the load asks before running it.</summary>
-    public async Task<bool> Written(CancellationToken cancellationToken) =>
-        await db.WordEntities.AnyAsync(annotation => annotation.Source == Source, cancellationToken);
 
     /// <summary>One text read: what the consensus found, and what the text's annotations already say.</summary>
     /// <param name="Annotated">
@@ -728,137 +701,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
 
         return named.Where(pair => verseOf.ContainsKey(pair.Word)).Select(pair => (verseOf[pair.Word], pair.Entity)).Distinct().Count();
     }
-
-    /// <summary>
-    /// Writes the text's settled findings as annotations on the words nothing names yet, in one
-    /// transaction, and returns how many it wrote. A text already holding what an earlier run wrote is
-    /// left as it is unless <paramref name="replace"/>, which takes those back first.
-    /// </summary>
-    private async Task<int> Apply(
-        NpgsqlConnection connection,
-        Reading reading,
-        ConsensusBars bars,
-        Confidence confidence,
-        bool replace,
-        CancellationToken cancellationToken)
-    {
-        await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
-        const string ours =
-            """
-            FROM word_entity a USING word w
-            WHERE w.id = a.word_id AND w.text_id = (SELECT id FROM text WHERE slug = @text) AND a.source = @source
-            """;
-        if (replace)
-        {
-            await using var withdraw = new NpgsqlCommand($"DELETE {ours}", connection, transaction);
-            withdraw.Parameters.AddWithValue("text", reading.Slug);
-            withdraw.Parameters.AddWithValue("source", Source);
-            var withdrawn = await withdraw.ExecuteNonQueryAsync(cancellationToken);
-            logger.LogInformation("{Text}: took back {Count} annotations an earlier run wrote", reading.Slug, withdrawn);
-        }
-        else
-        {
-            await using var exists = new NpgsqlCommand(
-                """
-                SELECT EXISTS (SELECT 1 FROM word_entity a JOIN word w ON w.id = a.word_id
-                               WHERE w.text_id = (SELECT id FROM text WHERE slug = @text) AND a.source = @source)
-                """, connection, transaction);
-            exists.Parameters.AddWithValue("text", reading.Slug);
-            exists.Parameters.AddWithValue("source", Source);
-            if ((bool)(await exists.ExecuteScalarAsync(cancellationToken))!)
-            {
-                logger.LogInformation("{Text}: already holds what an earlier run wrote; --replace writes it again", reading.Slug);
-                return 0;
-            }
-        }
-
-        var findingOf = reading.Findings.ToDictionary(finding => finding.Entity);
-        var rows = NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts)
-            .Where(word => !reading.Annotated.ContainsKey(word.Word))
-            .Select(word =>
-            {
-                var finding = findingOf[word.Entity];
-                return (word.Word, word.Entity, (double?)confidence.Of(finding), false, Note(finding));
-            })
-            .ToList();
-
-        await using (var workspace = new NpgsqlCommand(Annotating.Workspace, connection, transaction))
-        {
-            await workspace.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await Annotating.Seed(connection, rows, cancellationToken);
-        int written;
-        await using (var insert = new NpgsqlCommand(
-                         """
-                         INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note)
-                         SELECT a.word_id, a.entity_id, @method, a.confidence, @source, a.note
-                         FROM pending_annotation a
-                         WHERE NOT EXISTS (SELECT 1 FROM word_entity e WHERE e.word_id = a.word_id)
-                         ON CONFLICT (word_id, entity_id) DO NOTHING
-                         """, connection, transaction))
-        {
-            insert.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.RuleBased));
-            insert.Parameters.AddWithValue("source", Source);
-            written = await insert.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await using (var claim = new NpgsqlCommand(Annotating.Claim, connection, transaction))
-        {
-            claim.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.RuleBased));
-            claim.Parameters.AddWithValue("source", Source);
-            await claim.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await transaction.CommitAsync(cancellationToken);
-        logger.LogInformation("{Text}: wrote {Count} annotations", reading.Slug, written);
-        return written;
-    }
-
-    /// <summary>What a written annotation says of how it was read.</summary>
-    private static string Note(NameFinding finding)
-    {
-        var name = finding.Name!;
-        return string.Create(CultureInfo.InvariantCulture,
-            $"the word its verses share in this text: {string.Join(", ", name.Forms.Take(3))}, " +
-            $"printed in {name.Covered} of its {finding.Verses} verses, {name.Specificity:P0} of the verses printing it being its own");
-    }
-
-    /// <summary>
-    /// The review list, written whole. Only a run over every text replaces the list; a run over some
-    /// of them keeps the other texts' entries and replaces its own.
-    /// </summary>
-    private static async Task Review(
-        string path,
-        IReadOnlyList<Disagreement> found,
-        bool everyText,
-        CancellationToken cancellationToken)
-    {
-        var json = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        };
-        var kept = new List<Disagreement>();
-        if (!everyText && File.Exists(path))
-        {
-            var texts = found.Select(entry => entry.Text).ToHashSet(StringComparer.Ordinal);
-            var earlier = JsonSerializer.Deserialize<ReviewList>(await File.ReadAllTextAsync(path, cancellationToken), json);
-            kept.AddRange((earlier?.Words ?? []).Where(entry => !texts.Contains(entry.Text)));
-        }
-
-        var list = new ReviewList(
-            "Words where the name read from the verses that name an entity disagrees with an annotation the word already carries. "
-            + "Nothing here was written: the annotation already there stands. Reference is canonical book:chapter:verse, "
-            + "position the word's place in the verse from 1, found the entity the verses read, annotated what the word carries now.",
-            DateTimeOffset.UtcNow,
-            [.. kept.Concat(found).OrderBy(entry => entry.Text, StringComparer.Ordinal).ThenBy(entry => entry.Reference, StringComparer.Ordinal).ThenBy(entry => entry.Position)]);
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        await File.WriteAllTextAsync(path, JsonSerializer.Serialize(list, json) + "\n", cancellationToken);
-    }
-
-    private sealed record ReviewList(string About, DateTimeOffset Written, IReadOnlyList<Disagreement> Words);
 
     private static async Task Write(
         string output,

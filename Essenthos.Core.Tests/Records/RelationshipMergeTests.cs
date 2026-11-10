@@ -29,9 +29,9 @@ namespace Essenthos.Core.Tests.Records;
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class RelationshipMergeTests : IDisposable
 {
-    private const string Model = EntityDescriptorLoader.SourcePrefix + " a test, asked 2026-09-09";
+    private const string Model = Sources.DescriptorReadingPrefix + " a test, asked 2026-09-09";
 
-    private const string Owner = EntityDescriptorLoader.SourcePrefix + " the project owner, decided 2026-09-12";
+    private const string Owner = Sources.DescriptorReadingPrefix + " the project owner, decided 2026-09-12";
 
     private readonly AppDbContext _db;
 

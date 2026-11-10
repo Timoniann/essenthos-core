@@ -1,31 +1,30 @@
-using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
-using Microsoft.EntityFrameworkCore;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
+/// <param name="Written">False where both files were current and the dataset was not read.</param>
 internal sealed record PeriodOOutcome(
-    bool AlreadyLoaded,
+    bool Written,
     int Authorities,
     int Periods,
     int OutsideTheWindow,
     int Elsewhere,
     int Unplaced,
     int OpenEnded,
-    int Licensed,
-    TimeSpan Elapsed)
+    int Licensed)
 {
     public override string ToString() =>
-        AlreadyLoaded
-            ? "the periods of the lands are already loaded, or PeriodO has not been fetched"
+        !Written
+            ? $"{PeriodOFiles.AuthoritiesProduct} and {PeriodOFiles.DefinitionsProduct} are current"
             : $"{Periods} periods of the lands under {Authorities} authorities; left out: " +
               $"{OutsideTheWindow} outside the years, {Elsewhere} mostly elsewhere, {Unplaced} " +
               $"placed nowhere, {OpenEnded} with an open end, {Licensed} under an authority's own " +
-              $"licence; in {Elapsed}";
+              "licence";
 }
 
 /// <summary>
@@ -42,12 +41,25 @@ internal sealed record PeriodOOutcome(
 /// keeps its range where the source gives one. What is ours is only the choice of what to take — a
 /// period of these lands that touches 4000 BCE to AD 150 — and the region it is drawn under, read
 /// off the places the source says it covers. <c>Resources/PeriodO/LICENCE.md</c> has the rest.
+///
+/// <para>
+/// Written as <c>external/periodo/authorities</c> and <c>external/periodo/definitions</c>, the files the build loads into
+/// <c>period_authority</c> and <c>period_definition</c>, and made again only when the dataset moved.
+/// </para>
 /// </summary>
-internal sealed class PeriodOLoader(AppDbContext db, ILogger<PeriodOLoader> logger)
+internal static class PeriodOFiles
 {
     internal const string Source = "PeriodO, data.perio.do, public domain";
 
-    private const string FileName = "d.json";
+    public const string Folder = "PeriodO";
+
+    public const string FileName = "d.json";
+
+    public const string Producer = "forge lands";
+
+    public const string AuthoritiesProduct = "external/periodo/authorities";
+
+    public const string DefinitionsProduct = "external/periodo/definitions";
 
     /// <summary>The years taken, astronomical: 4000 BCE is <c>-3999</c>.</summary>
     internal const int FirstYear = -3999;
@@ -96,33 +108,48 @@ internal sealed class PeriodOLoader(AppDbContext db, ILogger<PeriodOLoader> logg
         .SelectMany(r => r.Items.Select(item => (item, r.Region)))
         .ToDictionary(pair => pair.item, pair => pair.Region, StringComparer.Ordinal);
 
-    public async Task<PeriodOOutcome> Load(string resources, CancellationToken cancellationToken = default)
+    /// <summary>Writes both files when the dataset moved, or when forced.</summary>
+    public static PeriodOOutcome Write(ProductStore store, bool force)
     {
-        var started = Stopwatch.StartNew();
-        var path = Path.Combine(resources, "PeriodO", FileName);
+        var source = $"{Folder}/{FileName}";
+        var path = store.FullPath(source);
         if (!File.Exists(path))
         {
-            logger.LogWarning(
-                "No periods of the lands: {Path} is not there. Run scripts/fetch-periodo.ps1.", path);
-            return new PeriodOOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
+            throw new FileNotFoundException(
+                $"The periods of the lands are read from {path}, which is not there. Run scripts/fetch-periodo.ps1, or point " +
+                "Dataset:ResourcesPath at a corpus that has it.",
+                path);
         }
 
-        if (await db.PeriodDefinitions.AnyAsync(cancellationToken))
+        var inputs = store.Inputs(source);
+        var authoritiesFile = RecordProducers.File(AuthoritiesProduct);
+        var definitionsFile = RecordProducers.File(DefinitionsProduct);
+        if (!force && !store.NeedsBuild(authoritiesFile.Product, authoritiesFile.Kind, inputs)
+                   && !store.NeedsBuild(definitionsFile.Product, definitionsFile.Kind, inputs))
         {
-            return new PeriodOOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+            return new PeriodOOutcome(false, 0, 0, 0, 0, 0, 0, 0);
         }
 
-        await using var stream = File.OpenRead(path);
-        using var document = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
-        var read = Read(document.RootElement);
+        Reading read;
+        using (var document = JsonDocument.Parse(File.ReadAllBytes(path)))
+        {
+            read = Read(document.RootElement);
+        }
 
-        db.PeriodAuthorities.AddRange(read.Authorities);
-        await db.SaveChangesAsync(cancellationToken);
-
-        var outcome = read.Outcome with { Elapsed = started.Elapsed };
-        logger.LogInformation("Loaded the periods of the lands: {Outcome}", outcome);
-        return outcome;
+        RecordProducers.Write(store, authoritiesFile, read.Authorities.Select(a => new string?[]
+        {
+            a.PeriodoId, a.Attribution, a.Citation, a.Title, a.Creators, Integer(a.YearPublished), a.Locator, a.Uri,
+        }), Producer, inputs);
+        RecordProducers.Write(store, definitionsFile, read.Authorities.SelectMany(a => a.Periods.Select(d => new string?[]
+        {
+            d.PeriodoId, a.PeriodoId, d.Label, d.LanguageTag, d.Labels, d.Region, d.Coverage, d.CoverageDescription,
+            d.StartLabel, Integer(d.StartEarliest), Integer(d.StartLatest), d.StopLabel, Integer(d.StopEarliest),
+            Integer(d.StopLatest), d.Broader, d.Note, d.EditorialNote, d.Source,
+        })), Producer, inputs);
+        return read.Outcome;
     }
+
+    private static string? Integer(int? value) => value?.ToString(CultureInfo.InvariantCulture);
 
     internal sealed record Reading(List<PeriodAuthority> Authorities, PeriodOOutcome Outcome);
 
@@ -223,8 +250,7 @@ internal sealed class PeriodOLoader(AppDbContext db, ILogger<PeriodOLoader> logg
 
         return new Reading(
             authorities,
-            new PeriodOOutcome(false, authorities.Count, periods, outside, elsewhere, unplaced, open, licensed,
-                TimeSpan.Zero));
+            new PeriodOOutcome(true, authorities.Count, periods, outside, elsewhere, unplaced, open, licensed));
     }
 
     /// <summary>

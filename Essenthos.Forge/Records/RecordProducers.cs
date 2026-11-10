@@ -337,7 +337,7 @@ internal static class RecordProducers
     private static HashSet<string> Slugs(ProductStore from) =>
         Read(from, "records/records").Select(r => r[0]!).ToHashSet(StringComparer.Ordinal);
 
-    private static List<string?[]> Read(ProductStore from, string product)
+    internal static List<string?[]> Read(ProductStore from, string product)
     {
         using var reader = from.Open(product, File(product).Schema());
         return [.. reader.ReadAll()];

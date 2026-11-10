@@ -1,41 +1,45 @@
-using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading.Frame;
-using Microsoft.EntityFrameworkCore;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
-internal sealed record CommandmentOutcome(bool AlreadyLoaded, int Positive, int Negative, int References, TimeSpan Elapsed)
+/// <param name="Written">False where both files were current and the count was not read.</param>
+internal sealed record CommandmentOutcome(bool Written, int Positive, int Negative, int References)
 {
     public override string ToString() =>
-        AlreadyLoaded
-            ? "the commandments are already loaded"
+        !Written
+            ? $"{CommandmentFiles.CommandmentsProduct} and {CommandmentFiles.ReferencesProduct} are current"
             : $"{Positive} positive and {Negative} negative commandments in Maimonides' count, resting on " +
-              $"{References} runs of verses, in {Elapsed}";
+              $"{References} runs of verses";
 }
 
 /// <summary>
-/// The 613 commandments as Maimonides counted them, from <c>Resources/Maimonides/commandments.tsv</c>.
+/// The 613 commandments as Maimonides counted them, from <c>Resources/Maimonides/commandments.tsv</c>, as the files
+/// <c>external/maimonides/commandments</c> and <c>external/maimonides/commandment-references</c> the build loads into
+/// <c>commandment</c> and <c>commandment_reference</c>.
 ///
 /// <para>
 /// The file is this project's curation of two public-domain works, written by
 /// <c>scripts/maimonides.py</c> and carried in the repository; its <c>LICENCE.md</c> says what is
-/// whose. It is read from the output folder, like the world history, so no fetch stands between a
-/// clean checkout and the count. Its verses are already in the shared English numbering and say so
-/// where they were moved, and that note is kept on the row.
-/// </para>
-///
-/// <para>
-/// Idempotent by table: a boot after the first writes nothing.
+/// whose. Its verses are already in the shared English numbering and say so where they were moved,
+/// and that note is kept on the row. Made again only when the file moved.
 /// </para>
 /// </summary>
-internal sealed partial class CommandmentLoader(AppDbContext db, ILogger<CommandmentLoader> logger)
+internal static partial class CommandmentFiles
 {
-    public static readonly string[] FilePath = ["Resources", "Maimonides", "commandments.tsv"];
+    public const string Source = "Maimonides/commandments.tsv";
+
+    public const string Producer = "forge commandments";
+
+    public const string CommandmentsProduct = "external/maimonides/commandments";
+
+    public const string ReferencesProduct = "external/maimonides/commandment-references";
 
     /// <summary>How many of each kind the count has. A file with another number is not this count.</summary>
     internal static readonly IReadOnlyDictionary<string, int> Counts = new Dictionary<string, int>
@@ -44,28 +48,36 @@ internal sealed partial class CommandmentLoader(AppDbContext db, ILogger<Command
         [CommandmentKinds.Negative] = 365,
     };
 
-    public async Task<CommandmentOutcome> Load(string path, CancellationToken cancellationToken = default)
+    /// <summary>Writes both files when the count moved, or when forced.</summary>
+    public static CommandmentOutcome Write(ProductStore store, bool force)
     {
-        if (await db.Commandments.AnyAsync(cancellationToken))
+        var inputs = store.Inputs(Source);
+        var commandmentsFile = RecordProducers.File(CommandmentsProduct);
+        var referencesFile = RecordProducers.File(ReferencesProduct);
+        if (!force && !store.NeedsBuild(commandmentsFile.Product, commandmentsFile.Kind, inputs)
+                   && !store.NeedsBuild(referencesFile.Product, referencesFile.Kind, inputs))
         {
-            logger.LogInformation("The commandments are already loaded");
-            return new CommandmentOutcome(true, 0, 0, 0, TimeSpan.Zero);
+            return new CommandmentOutcome(false, 0, 0, 0);
         }
 
-        var started = Stopwatch.StartNew();
-        var commandments = Read(path);
-        db.Commandments.AddRange(commandments);
-        await db.SaveChangesAsync(cancellationToken);
-
-        var outcome = new CommandmentOutcome(
-            false,
+        var commandments = Read(store.FullPath(Source));
+        RecordProducers.Write(store, commandmentsFile, commandments.Select(c => new string?[]
+        {
+            c.Kind, Integer(c.Number), Integer(c.MishnehTorahNumber), c.Title, c.Note, c.Source,
+        }), Producer, inputs);
+        RecordProducers.Write(store, referencesFile, commandments.SelectMany(c => c.References.Select((r, index) => new string?[]
+        {
+            c.Kind, Integer(c.Number), Integer(index + 1), Integer(r.CanonicalBook), Integer(r.CanonicalChapter),
+            Integer(r.FirstVerse), Integer(r.LastVerse),
+        })), Producer, inputs);
+        return new CommandmentOutcome(
+            true,
             commandments.Count(c => c.Kind == CommandmentKinds.Positive),
             commandments.Count(c => c.Kind == CommandmentKinds.Negative),
-            commandments.Sum(c => c.References.Count),
-            started.Elapsed);
-        logger.LogInformation("{Outcome}", outcome);
-        return outcome;
+            commandments.Sum(c => c.References.Count));
     }
+
+    private static string Integer(int value) => value.ToString(CultureInfo.InvariantCulture);
 
     /// <summary>The file as rows, refused whole where any row does not read or the count is not Maimonides'.</summary>
     internal static List<Commandment> Read(string path)
@@ -74,7 +86,7 @@ internal sealed partial class CommandmentLoader(AppDbContext db, ILogger<Command
         {
             throw new FileNotFoundException(
                 $"The commandments are read from {path}, which is not there. It is committed under " +
-                "Resources/Maimonides and copied beside the build; rebuild Essenthos.Forge, or rewrite it " +
+                "Resources/Maimonides; restore it from git, or rewrite it " +
                 "with scripts/maimonides.py.",
                 path);
         }

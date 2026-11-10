@@ -175,7 +175,7 @@ public sealed class EntityImageTests : IDisposable
         Entity(EntityKind.Person, "aaron");
         await _db.SaveChangesAsync();
 
-        var outcome = await Loader().Load(_resources);
+        var outcome = await RecordRowsWritten.Pictures(_db, _resources);
 
         outcome.Places.Should().Be(2);
         outcome.Generated.Should().Be(2);
@@ -207,8 +207,8 @@ public sealed class EntityImageTests : IDisposable
         Entity(EntityKind.Place, "tel-own", openBibleId: "a-own");
         await _db.SaveChangesAsync();
 
-        await Loader().Load(_resources);
-        var second = await Loader().Load(_resources);
+        await RecordRowsWritten.Pictures(_db, _resources);
+        var second = await RecordRowsWritten.Pictures(_db, _resources);
 
         second.Places.Should().Be(1);
         (await _db.EntityImages.CountAsync()).Should().Be(1);
@@ -220,7 +220,7 @@ public sealed class EntityImageTests : IDisposable
         var own = Entity(EntityKind.Place, "tel-own", openBibleId: "a-own");
         var moses = Entity(EntityKind.Person, "moses");
         await _db.SaveChangesAsync();
-        await Loader().Load(_resources);
+        await RecordRowsWritten.Pictures(_db, _resources);
         _db.EntityImages.Add(new EntityImage
         {
             EntityId = moses.Id, Kind = "public", Role = "primary", File = "commons/Moses.jpg", Digest = "0123456789ab",
@@ -258,7 +258,7 @@ public sealed class EntityImageTests : IDisposable
         var own = Entity(EntityKind.Place, "tel-own", openBibleId: "a-own");
         var moses = Entity(EntityKind.Person, "moses");
         await _db.SaveChangesAsync();
-        await Loader().Load(_resources);
+        await RecordRowsWritten.Pictures(_db, _resources);
 
         var stored = await _db.EntityImages.SingleAsync(i => i.EntityId == moses.Id && i.Role == "primary");
         stored.Should().BeEquivalentTo(new { Caption = "Moses at eighty", Credit = "Essenthos", Licence = "Our own work" },
@@ -328,7 +328,7 @@ public sealed class EntityImageTests : IDisposable
             }
             """);
 
-        var outcome = await Loader().Load(_resources);
+        var outcome = await RecordRowsWritten.Pictures(_db, _resources);
 
         outcome.Refused.Should().Be(2, "a picture of God not marked as the glory and any picture of a word for God are refused");
         var kept = await _db.EntityImages.Where(i => i.EntityId == god.Id || i.EntityId == father.Id || i.EntityId == elohim.Id)
@@ -379,7 +379,7 @@ public sealed class EntityImageTests : IDisposable
             }
             """);
 
-        var outcome = await Loader().Load(_resources);
+        var outcome = await RecordRowsWritten.Pictures(_db, _resources);
 
         (outcome.Withheld, outcome.Hidden).Should().Be((2, 1));
         (await _db.EntityImages.AnyAsync(i => i.EntityId == satellite.Id)).Should().BeFalse();
@@ -413,7 +413,7 @@ public sealed class EntityImageTests : IDisposable
               ]
             }
             """);
-        await Loader().Load(_resources);
+        await RecordRowsWritten.Pictures(_db, _resources);
 
         var stored = await _db.EntityImages.Include(i => i.Captions).SingleAsync(i => i.EntityId == moses.Id);
         stored.Captions.Select(c => (c.Language, c.Caption)).Should().BeEquivalentTo(
@@ -512,7 +512,7 @@ public sealed class EntityImageTests : IDisposable
         EntityImageLoader.Candidate Candidate(int entity, string file) => new(
             entity, file, "generated", "primary", file, null, "Credit", null, "Licence", null, "Source", null, false);
 
-        var (rows, _) = new EntityImageLoader(_db, NullLogger<EntityImageLoader>.Instance).Rows(
+        var (rows, _) = EntityImageLoader.Rows(NullLogger.Instance,
             root,
             [Candidate(1, "generated/moses.jpg"), Candidate(2, "generated/aaron.jpg"), Candidate(3, "commons/hebron.jpg")],
             faces,
@@ -545,7 +545,7 @@ public sealed class EntityImageTests : IDisposable
             entity, slug, "generated", "gallery", "generated/adam-and-eve.jpg", null, "Credit", null, "Licence", null,
             "Source", null, false);
 
-        var (rows, _) = new EntityImageLoader(_db, NullLogger<EntityImageLoader>.Instance).Rows(
+        var (rows, _) = EntityImageLoader.Rows(NullLogger.Instance,
             root, [Candidate(1, "adam"), Candidate(2, "eve")], faces, new HashSet<int> { 1, 2 });
 
         var adam = rows.Single(r => r.EntityId == 1);
@@ -624,8 +624,6 @@ public sealed class EntityImageTests : IDisposable
 
     private OpenBibleThumbnails.Reading Read() => OpenBibleThumbnails.Read(
         Path.Combine(_resources, "OpenBible", "ancient.jsonl"), Path.Combine(_resources, "OpenBible", "image.jsonl"));
-
-    private EntityImageLoader Loader() => new(_db, NullLogger<EntityImageLoader>.Instance);
 
     private Entity Entity(EntityKind kind, string slug, string? openBibleId = null, string? sourceId = null)
     {
