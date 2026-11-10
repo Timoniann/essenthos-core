@@ -14,16 +14,15 @@ namespace Essenthos.Core.Names;
 /// <c>base-reading</c> row is the base's record beside a <c>differs</c> one on the same word, the second card), and a carried
 /// name's note naming the word it was carried from by its id, as the API reads it. The texts' rows are made at once and copied
 /// one COPY per text in one transaction; the table's indexes are dropped before and made after. When asked, the table is
-/// then read back by key and compared with the products and
-/// with <c>names/live</c>, the database the names were exported from.
+/// then read back by key and compared with the products.
 /// </summary>
 internal static class NamesLoad
 {
     public sealed record Outcome(long Rows, int Texts, long UnknownRecords, long UnknownWords, TimeSpan Load, TimeSpan Indexes, Comparison? ReadBack);
 
-    /// <param name="Products">(key, record) rows the products hold that the table does not, and the other way.</param>
-    /// <param name="Live">(key, record) rows names/live holds that the table does not, and the other way.</param>
-    public sealed record Comparison(long Rows, long MissingFromTable, long ExtraInTable, long OnlyLive, long OnlyTable);
+    /// <param name="MissingFromTable">(key, record) rows the products hold that the table does not.</param>
+    /// <param name="ExtraInTable">(key, record) rows the table holds that the products do not.</param>
+    public sealed record Comparison(long Rows, long MissingFromTable, long ExtraInTable);
 
     private const string Indexes =
         """
@@ -31,8 +30,8 @@ internal static class NamesLoad
         CREATE INDEX IF NOT EXISTS ix_word_entity_entity_id ON word_entity (entity_id);
         """;
 
-    /// <param name="readBack">Read the table back and compare it with the products and names/live (the names-load verb's
-    /// proof); a build discards the comparison, so it leaves it out.</param>
+    /// <param name="readBack">Read the table back and compare it with the products (the names-load verb's proof); a build
+    /// discards the comparison, so it leaves it out.</param>
     public static async Task<Outcome> Run(string connectionString, ProductStore store, IReadOnlyList<string> texts, CancellationToken cancellationToken,
         bool readBack = true)
     {
@@ -150,32 +149,17 @@ internal static class NamesLoad
             }
         }
 
-        long missing = 0, onlyLive = 0;
         var products = new HashSet<(string, string, string)>();
-        var live = new HashSet<(string, string, string)>();
         foreach (var text in texts)
         {
-            using (var reader = store.Open(NameProducts.Projected(text), ProjectedName.Schema(text)))
+            using var reader = store.Open(NameProducts.Projected(text), ProjectedName.Schema(text));
+            foreach (var name in reader.Rows().Where(n => records.ContainsKey(n.Record)))
             {
-                foreach (var name in reader.Rows().Where(n => records.ContainsKey(n.Record)))
-                {
-                    products.Add((text, name.Own.Own, name.Record));
-                }
-            }
-
-            if (store.Exists(NameProducts.Live(text)))
-            {
-                using var reader = store.Open(NameProducts.Live(text), LiveName.Schema(text));
-                foreach (var name in reader.Rows())
-                {
-                    live.Add((text, name.Own.Own, name.Record));
-                }
+                products.Add((text, name.Own.Own, name.Record));
             }
         }
 
-        missing = products.Count(p => !table.Contains(p));
-        onlyLive = live.Count(l => !table.Contains(l));
-        return new Comparison(table.Count, missing, table.Count(t => !products.Contains(t)), onlyLive, table.Count(t => !live.Contains(t)));
+        return new Comparison(table.Count, products.Count(p => !table.Contains(p)), table.Count(t => !products.Contains(t)));
     }
 
     private static Dictionary<string, long> WordIds(ProductStore store, string text)

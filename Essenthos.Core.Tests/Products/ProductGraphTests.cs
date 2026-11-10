@@ -112,6 +112,70 @@ public sealed class ProductGraphTests : IDisposable
     }
 
     [Fact]
+    public void A_missing_kept_product_the_manifest_records_is_named()
+    {
+        var store = new ProductStore(_root);
+        var graph = new ProductGraph(
+        [
+            new("mapping/pairs", ProductMaker.Kept, "mapping-export", [], [], "none"),
+            new("mapping/{from}-{to}/final", ProductMaker.Build, "merge --all", [], ["link"], "pair"),
+            new("mapping/{from}-{to}/*", ProductMaker.Kept, "mapping-export", [], [], "none"),
+        ]);
+        Make(store, "mapping/pairs");
+        Make(store, "mapping/KJV-BHSA/aligner");
+        Make(store, "mapping/KJV-BHSA/composed");
+        Make(store, "mapping/KJV-BHSA/final");
+
+        graph.Missing(store).Should().BeEmpty();
+        graph.Kept(store, "mapping").Should().Equal("mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/pairs");
+
+        File.Delete(store.FullPath("mapping/KJV-BHSA/aligner", ProductKind.Machine));
+        File.Delete(store.FullPath("mapping/KJV-BHSA/final", ProductKind.Machine));
+
+        graph.Missing(store).Should().ContainSingle().Which.Should().StartWith("mapping/KJV-BHSA/aligner (kept",
+            "a build product is made again; a kept one is not, and the build must not run without it");
+    }
+
+    [Fact]
+    public void A_kept_product_that_names_one_file_must_be_there_even_with_no_manifest()
+    {
+        var graph = new ProductGraph(
+        [
+            new("mapping/pairs", ProductMaker.Kept, "mapping-export", [], [], "none"),
+            new("build/word-id-ceiling", ProductMaker.Kept, "texts ids all", [], [], "none"),
+        ]);
+        var store = new ProductStore(_root);
+
+        graph.Missing(store).Should().HaveCount(2);
+
+        Make(store, "mapping/pairs");
+        Directory.CreateDirectory(Path.Combine(_root, "Essenthos", "build"));
+        File.WriteAllText(Path.Combine(_root, "Essenthos", "build", "word-id-ceiling"), "1000");
+
+        graph.Missing(store).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void The_checked_in_graph_keeps_what_no_producer_makes_and_carries_what_people_edit()
+    {
+        var graph = ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));
+
+        foreach (var kept in new[] { "texts/KJV/ids", "mapping/pairs", "mapping/KJV-BHSA/aligner", "mapping/KJV-BHSA/composed", "mapping/KJV-BHSA/hashes",
+                     "build/word-id-ceiling", "external/tsk/cross-references", "records/derived/occupation-words" })
+        {
+            graph.Find(kept)!.Value.Declaration.Maker.Should().Be(ProductMaker.Kept, kept);
+        }
+
+        foreach (var hand in new[] { "records/records", "records/facts/clauses", "names/BHSA", "mapping/KJV-BHSA/rulings" })
+        {
+            graph.Find(hand)!.Value.Declaration.Maker.Should().Be(ProductMaker.Hand, hand);
+        }
+
+        graph.Find("mapping/KJV-BHSA/stated")!.Value.Declaration.Maker.Should().Be(ProductMaker.Build);
+        graph.Declarations.Should().NotContain(d => d.Producer.StartsWith("names-from-database") || d.Producer.StartsWith("names-export"));
+    }
+
+    [Fact]
     public void The_checked_in_graph_reads_and_names_only_verbs_the_forge_has()
     {
         var graph = ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));

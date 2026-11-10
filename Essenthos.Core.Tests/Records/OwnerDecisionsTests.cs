@@ -119,7 +119,7 @@ public sealed class OwnerDecisionsTests : IDisposable
 
         var apply = () => OwnerDecisions.Apply(new ProductStore(_resources), dryRun: false, Now);
 
-        apply.Should().Throw<FileNotFoundException>().WithMessage("*cut-over export*");
+        apply.Should().Throw<FileNotFoundException>().WithMessage("*carried in git*");
         File.ReadAllText(Log).Length.Should().Be(length);
     }
 

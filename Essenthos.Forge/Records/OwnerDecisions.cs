@@ -162,8 +162,7 @@ internal static class OwnerDecisions
                 {
                     throw new FileNotFoundException(
                         $"{file.Product} is not under {store.ResourcesPath}{Path.DirectorySeparatorChar}Essenthos. The build's record files " +
-                        "come from the cut-over export (forge records-export); until it is taken, a known-for decision reaches the site " +
-                        "through the old load (core-load --set only=known-for), and this step waits.");
+                        "are carried in git under Resources/Essenthos/records: restore them from the checkout before this step.");
                 }
 
                 using var reader = store.Open(file.Product);

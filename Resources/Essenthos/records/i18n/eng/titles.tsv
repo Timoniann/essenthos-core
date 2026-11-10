@@ -1,0 +1,58 @@
+# product    Essenthos/records/i18n/eng/titles.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+title	bearer	ref	note
+anointed	cyrus	23.45:1	Thus saith the LORD to his anointed, to Cyrus, whose right hand I have holden.
+anointed	david	10.23:1	David the son of Jesse, the man who was raised up on high, the anointed of the God of Jacob; so also 2SA 19:21; 22:51; PSA 18:50.
+anointed	high-priest	3.4:3	If the priest that is anointed do sin according to the sin of the people; so also LEV 4:5, 4:16 and 6:22. The Law names the office and no man: the high priest, upon whose head the anointing oil was poured (LEV 21:10).
+anointed	jesus	40.1:16	Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ.
+anointed	saul	9.24:6	David of Saul: The LORD forbid that I should do this thing unto my master, the LORD's anointed; so also 1SA 24:10; 26:9, 26:11, 26:16, 26:23; 2SA 1:14, 1:16.
+archangel	michael-9	65.1:9	Yet Michael the archangel, when contending with the devil he disputed about the body of Moses.
+caesar-title	caesar	42.3:1	In the fifteenth year of the reign of Tiberius Caesar; the Caesar of the tribute money in the Gospels.
+caesar-title	caesar-2	44.25:8	Paul answers that he has not offended against Caesar, and appeals to him in the verses that follow.
+caesar-title	caesaraugustus	42.2:1	There went out a decree from Caesar Augustus, that all the world should be taxed.
+caesar-title	claudius	44.11:28	A great dearth came to pass in the days of Claudius Caesar, as the King James and the Textus Receptus read.
+creator	yhvh	1.1:1	In the beginning God created the heaven and the earth.
+giant	ahiman	4.13:33	And there we saw the giants, the sons of Anak, which come of the giants; Ahiman, Sheshai and Talmai, the children of Anak, were in Hebron (NUM 13:22).
+giant	anak	4.13:33	And there we saw the giants, the sons of Anak, which come of the giants.
+giant	anakim	5.2:11	Which also were accounted giants, as the Anakims; but the Moabites call them Emims.
+giant	arba	6.14:15	And the name of Hebron before was Kirjath-arba; which Arba was a great man among the Anakims.
+giant	emims	5.2:11	Which also were accounted giants, as the Anakims; but the Moabites call them Emims.
+giant	goliath	10.21:22	These four were born to the giant in Gath, and fell by the hand of David, and by the hand of his servants; Goliath the Gittite is one of them (2SA 21:19).
+giant	ishbibenob	10.21:16	And Ishbi-benob, which was of the sons of the giant, the weight of whose spear weighed three hundred shekels of brass.
+giant	lahmi	13.20:8	These were born unto the giant in Gath; and they fell by the hand of David, and by the hand of his servants; Lahmi the brother of Goliath is one of them (1CH 20:5).
+giant	og	5.3:11	For only Og king of Bashan remained of the remnant of giants; behold, his bedstead was a bedstead of iron.
+giant	saph	10.21:18	Then Sibbechai the Hushathite slew Saph, which was of the sons of the giant.
+giant	sheshai	4.13:33	And there we saw the giants, the sons of Anak, which come of the giants; Ahiman, Sheshai and Talmai, the children of Anak, were in Hebron (NUM 13:22).
+giant	talmai	4.13:33	And there we saw the giants, the sons of Anak, which come of the giants; Ahiman, Sheshai and Talmai, the children of Anak, were in Hebron (NUM 13:22).
+governor	felix	44.23:24	To bring Paul safe unto Felix the governor.
+governor	nehemiah	16.12:26	In the days of Nehemiah the governor, and of Ezra the priest.
+governor	pilate	40.27:2	They delivered him to Pontius Pilate the governor.
+governor	quirinius	42.2:2	This taxing was first made when Cyrenius was governor of Syria.
+governor	sheshbazzar	15.5:14	Sheshbazzar, whom he had made governor.
+governor	tattenai	15.5:3	Tatnai, governor on this side the river.
+governor	zerubbabel-2	37.1:1	Zerubbabel the son of Shealtiel, governor of Judah.
+high-priest	abiathar	41.2:26	He went into the house of God in the days of Abiathar the high priest.
+high-priest	ananias-3	44.23:2	The high priest Ananias commanded them that stood by him to smite him on the mouth.
+high-priest	annas	44.4:6	Annas the high priest, and Caiaphas, and John, and Alexander.
+high-priest	caiaphas	40.26:3	The palace of the high priest, who was called Caiaphas.
+high-priest	eliashib-7	16.3:1	Eliashib the high priest rose up with his brethren the priests, and they builded the sheep gate.
+high-priest	hilkiah-2	12.22:4	Go up to Hilkiah the high priest.
+high-priest	joshua-4	37.1:1	Joshua the son of Josedech, the high priest.
+pharaoh-title	pharaoh	1.12:15	The princes of Pharaoh saw Sarai and commended her before Pharaoh, and she was taken into Pharaoh's house.
+pharaoh-title	pharaoh-2	1.37:36	The Midianites sold Joseph into Egypt unto Potiphar, an officer of Pharaoh's.
+pharaoh-title	pharaoh-3	2.1:11	Israel built for Pharaoh treasure cities, Pithom and Raamses.
+pharaoh-title	pharaoh-4	2.3:10	The LORD sends Moses unto Pharaoh, to bring the children of Israel out of Egypt.
+pharaoh-title	pharaoh-5	11.3:1	Solomon made affinity with Pharaoh king of Egypt, and took Pharaoh's daughter.
+pharaoh-title	pharaoh-6	13.4:18	Bithiah the daughter of Pharaoh, whom Mered took.
+pharaoh-title	pharaoh-7	23.19:11	The princes of Zoan are fools, the counsel of the wise counsellors of Pharaoh is become brutish.
+pharaoh-title	pharaoh-8	24.25:19	Pharaoh king of Egypt, and his servants, and his princes, among those made to drink the cup.
+pharaoh-title	pharaohneco	12.23:29	Pharaoh-nechoh king of Egypt went up against the king of Assyria; the title and the name together.
+proconsul	gallio	44.18:12	When Gallio was the deputy of Achaia.
+proconsul	sergius	44.13:7	The deputy of the country, Sergius Paulus, a prudent man.
+rab-mag	nergalsarezer-2	24.39:3	Nergal-sharezer, Rab-mag, with all the residue of the princes of the king of Babylon.
+tetrarch	herod-2	40.14:1	At that time Herod the tetrarch heard of the fame of Jesus.
+tetrarch	lysanias	42.3:1	Lysanias the tetrarch of Abilene.
+tetrarch	philip-4	42.3:1	His brother Philip tetrarch of Ituraea and of the region of Trachonitis.
+tirshatha	nehemiah	16.8:9	Nehemiah, which is the Tirshatha, and Ezra the priest the scribe.

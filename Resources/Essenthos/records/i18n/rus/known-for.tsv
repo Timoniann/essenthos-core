@@ -1,0 +1,5 @@
+# product    Essenthos/records/i18n/rus/known-for.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+slug	ordinal	text

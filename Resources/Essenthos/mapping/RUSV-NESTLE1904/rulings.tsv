@@ -1,0 +1,7 @@
+# product    Essenthos/mapping/RUSV-NESTLE1904/rulings.tsv
+# inputs     
+# producer   forge mapping-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	45.16:20.14	45.16:20.8	renders	SIL.Machine	Христа / Σατανᾶν: Codex, 2026-10-05: the Synodal names Jesus Christ here; Satan is separately named at position 5.
+refuse	46.5:5.15	46.5:5.5	renders	SIL.Machine	Христа / Σατανᾷ: Codex, 2026-10-05: the Synodal adds Christ after Jesus; Satan is separately named at position 2.

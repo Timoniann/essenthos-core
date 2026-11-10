@@ -1,0 +1,13 @@
+# product    Essenthos/records/i18n/rus/texts.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# Renderings of English the records and the datasets give (lines, places today, reasons, event names), keyed by the English's SHA-256.
+english_sha256	text	by
+27e60d95d12d5792d2de2c0008c651aa406f381b8d61767bf1291a9c30aaf7ca	Мешуллам, стерёгший ворота рядом с Талмоном и Аккувом во дни Иоакима (NEH 12:25-26), может быть этим привратником, названным в иной форме.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
+378af917af816f4bf504e242c6467a7d7dfdd1dd7da2e805f0f79b480e01bfcd	Иисус Навин 15:16 и Судьи 1:12 называют Ахсу дочерью Халева, сына Иефонниина; 1 Паралипоменон 2:49 называет Ахсу дочерью Халева, брата Иерахмеила. Если эти два Халева — один человек, то и две Ахсы — одна женщина.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
+4648c28eea98a1506403154311bbcaf765d70ad4e87e907efdb7962553a51e3c	Шаллум — первый из привратников рядом с Аккувом и Талмоном (1CH 9:17), а сыновья Шаллума — привратники вернувшихся (EZR 2:42); этот Мешуллам стережёт ворота рядом с Талмоном и Аккувом (NEH 12:25).	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
+5e2a0e9d9103488b9ecbaca3626eab5669f34a642601a2e85e644a2e0d8f2abc	Озиил из 1 Паралипоменон 15:20 стоит на том месте, которое этот Яазиил занимает в списке 15:18.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
+88e423166e0b16d9b39bf91620009eff7aad2e03854d07014ceb9935ddedbdae	1 Паралипоменон 15:20 называет Озиила на том месте, где 1 Паралипоменон 15:18 ставит Яазиила, между Захарией и Шемирамофом среди тех же левитов.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
+b2f0ba82b9d68dcee876bbce0f7384da48e30ef2143dc662b0d0f62827b0516f	1 Паралипоменон 2:49 называет Ахсу, дочь Халева, брата Иерахмеила; это та же Ахса, если два Халева — один человек.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09

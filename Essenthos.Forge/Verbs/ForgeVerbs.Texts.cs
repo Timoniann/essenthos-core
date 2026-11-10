@@ -56,7 +56,10 @@ internal static partial class ForgeVerbs
         switch (args[1])
         {
             case "ids":
-                return await TextIds(forge, store, Slugs(args[2]));
+                var slugs = Slugs(args[2]);
+                return RefusesExport(forge, args, "texts ids", [.. slugs.Select(TextWordId.ProductOf).Where(store.Exists)])
+                    ? 1
+                    : await TextIds(forge, store, slugs);
             case "compare":
                 return await CompareTexts(forge, store, Slugs(args[2]), Option(args, "--out"), Parallel(args));
             default:
@@ -67,7 +70,8 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// The ids every word of the texts holds in the configured database, written as each text's ids product, and the
-    /// ceiling new words take their ids above raised to the database's highest.
+    /// ceiling new words take their ids above raised to the database's highest. The ids are kept: a database built from
+    /// the store holds the ids conversion gave out, so they are taken once, for a store that has none.
     /// </summary>
     private static async Task<int> TextIds(ForgeRun forge, ProductStore store, IReadOnlyList<string> slugs)
     {

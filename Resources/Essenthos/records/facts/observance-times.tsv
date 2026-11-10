@@ -1,0 +1,23 @@
+# product    Essenthos/records/facts/observance-times.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+slug	n	cycle	ref	month	day	last_day	by
+day-of-atonement	1	yearly	3.23:27	7	10	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+day-of-trumpets	1	yearly	3.23:24	7	1	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+eighth-day-assembly	1	yearly	3.23:36	7	22	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	1	yearly	38.8:19	4	\N	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	2	yearly	38.8:19	5	\N	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	3	yearly	38.8:19	7	\N	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+fasts-of-the-exile	4	yearly	38.8:19	10	\N	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-booths	1	yearly	3.23:34	7	15	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+feast-of-unleavened-bread	1	yearly	3.23:6	1	15	21	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jeroboams-feast	1	yearly	11.12:32	8	15	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+jubilee	1	fiftieth-year	3.25:9	7	10	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+new-moon	1	monthly	4.28:11	\N	1	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+passover	1	yearly	3.23:5	1	14	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+purim	1	yearly	17.9:21	12	14	15	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbath	1	weekly	2.20:10	\N	7	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	1	seventh-year	3.25:4	\N	\N	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+sabbatical-year	2	seventh-year	5.15:1	\N	\N	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own
+second-passover	1	yearly	4.9:11	2	14	\N	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own

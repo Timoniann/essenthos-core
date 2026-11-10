@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/GEEZ81-GRCBRENT/rulings.tsv
+# inputs     
+# producer   forge mapping-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	17.9:9.17	17.8:9.30	renders	SIL.Machine	σατραπῶν / ወለመሳፍንቱ: Claude, 2026-11-01: σατραπῶν is the satraps' chiefs, and the Ge'ez word is its princes; neither is a name.

@@ -60,8 +60,7 @@ internal sealed record KnownForReviewResponse(
 /// build's files hold (<c>records/facts/known-for</c>, its references and its languages), so each entry
 /// says whether they show it, and its clauses are theirs where they do. An answer is written beside its
 /// entry and logged as waiting on the <see cref="OwnerChanges.Files"/> step: an agent applies it to those
-/// files with the owner's stamp (<c>forge owner-apply</c>). Until the cut-over export puts the files in the
-/// checkout, the old load still reads the answer from the list.
+/// files with the owner's stamp (<c>forge owner-apply</c>).
 /// </para>
 /// </summary>
 internal sealed class KnownForReview(DeskPaths paths, ChangeLog log, BuildFiles build)

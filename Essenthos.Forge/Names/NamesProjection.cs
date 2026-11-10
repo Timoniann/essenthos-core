@@ -728,15 +728,14 @@ internal sealed partial class NamesProjection
     }
 
     /// <summary>
-    /// A text's own names as the spellings index reads them (<see cref="ExportedName"/>), from <c>names/projected</c>: the
-    /// columns <c>names-export</c> computes in SQL from word_entity, computed the same way. A name is a guess where an aligner's
+    /// A text's own names as the spellings index reads them (<see cref="IndexedName"/>), from <c>names/projected</c>. A name is a guess where an aligner's
     /// link carried it; firm where a person or a source settled it, or it is sure enough; spellable where its word is neither
     /// a pronoun nor a word its language never names anybody with.
     /// </summary>
-    public List<ExportedName> IndexNames(string text)
+    public List<IndexedName> IndexNames(string text)
     {
         var words = WordsOf(text);
-        var names = new List<ExportedName>();
+        var names = new List<IndexedName>();
         using var reader = Store.Open(NameProducts.Projected(text), ProjectedName.Schema(text));
         foreach (var name in reader.Rows().Where(n => NameOrigins.IsOwn(n.Origin)))
         {
@@ -746,7 +745,7 @@ internal sealed partial class NamesProjection
                 ? name.Confidence >= Loading.Encyclopedia.SearchSpellings.HighConfidence
                 : name.Method is "manual" or "stated-by-source" || name.Confidence is null || name.Confidence >= Loading.Encyclopedia.SearchSpellings.HighConfidence;
             var spellable = words.TryGetValue(name.Own.Own, out var word) && !word.NeverAName && !word.Pronoun;
-            names.Add(new ExportedName(name.Own, name.Record, guessed ? name.Confidence : null, thing, firm, spellable));
+            names.Add(new IndexedName(name.Own, name.Record, guessed ? name.Confidence : null, thing, firm, spellable));
         }
 
         return names;

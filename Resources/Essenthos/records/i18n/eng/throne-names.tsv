@@ -1,0 +1,8 @@
+# product    Essenthos/records/i18n/eng/throne-names.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+ruler	ref	name	by
+azariah-3	14.26:1	Uzziah	Essenthos, on the project owner's request of 2026-09-26 that the kings be set side by side with the prophets the text places in their days, each placement resting on the verse that states it
+eliakim-2	12.23:34	Jehoiakim	Essenthos, on the project owner's request of 2026-09-26 that the kings be set side by side with the prophets the text places in their days, each placement resting on the verse that states it
+mattaniah	12.24:17	Zedekiah	Essenthos, on the project owner's request of 2026-09-26 that the kings be set side by side with the prophets the text places in their days, each placement resting on the verse that states it

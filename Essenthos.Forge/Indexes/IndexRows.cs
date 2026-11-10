@@ -15,12 +15,6 @@ internal static class IndexProducts
     public static readonly string[] All = [Strong, Occurrences, Forms, Spellings];
 
     public static string Of(string text, string index) => $"texts/{text}/index/{index}";
-
-    /// <summary>
-    /// The names the database still holds, exported for the spellings until the names layer (P6) produces them from
-    /// files: <c>names/exported/&lt;SLUG&gt;</c>.
-    /// </summary>
-    public static string ExportedNames(string text) => $"names/exported/{text}";
 }
 
 /// <summary>
@@ -120,10 +114,7 @@ internal sealed record SpellingRow(
             row.TextOrNull(6), IndexText.Number(row.TextOrNull(7)), row.Boolean(8), row.Boolean(9), row.Int32(10)));
 }
 
-/// <summary>
-/// One annotation naming a word, as the database holds it today: <c>names/exported/&lt;SLUG&gt;</c>. A stand-in until the
-/// names layer (P6) writes names from files; the spellings index reads names only through it.
-/// </summary>
+/// <summary>One name on a word of a text as the spellings index reads it, from the names projection (<c>NamesProjection.IndexNames</c>).</summary>
 /// <param name="Guess">The annotation's confidence where an aligner's link carried it; null otherwise.</param>
 /// <param name="Thing">The record is a thing, a feast or a title.</param>
 /// <param name="Firm">A ruling, a source's statement, or sure enough.</param>
@@ -131,18 +122,7 @@ internal sealed record SpellingRow(
 /// The word can spell a name at all: not a word its language never names anybody with, and not a pronoun
 /// (<c>Annotating.NeverAName</c>, <c>Pronouns.IsWord</c>).
 /// </param>
-internal sealed record ExportedName(WordKey Own, string Record, double? Guess, bool Thing, bool Firm, bool Spellable)
-{
-    public static ProductSchema<ExportedName> Schema(string text) => new ProductSchema<ExportedName>()
-        .OwnWordKey("own", r => r.Own)
-        .Text("record", r => r.Record)
-        .OptionalText("guess", r => IndexText.Number(r.Guess))
-        .Boolean("thing", r => r.Thing)
-        .Boolean("firm", r => r.Firm)
-        .Boolean("spellable", r => r.Spellable)
-        .Reads(row => new ExportedName(
-            WordKey.Parse(row.Text(0), text), row.Text(1), IndexText.Number(row.TextOrNull(2)), row.Boolean(3), row.Boolean(4), row.Boolean(5)));
-}
+internal sealed record IndexedName(WordKey Own, string Record, double? Guess, bool Thing, bool Firm, bool Spellable);
 
 internal static class IndexText
 {

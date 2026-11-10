@@ -1,0 +1,126 @@
+# product    Essenthos/records/alternatives.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# Who else a record may be. The reason, in English, is in i18n/eng/alternatives.
+slug	n	alternative	describes	back	by
+abimelech	1	\N	one king of Gerar whose own name was Abimelech, who dealt with Abraham (GEN 20-21) and again with Isaac (GEN 26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
+abimelech	2	\N	two kings of Gerar, Abraham's and Isaac's, who both bore Abimelech as a personal name	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
+abimelech	3	achish	\N	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
+abishalom	1	uriel-of-gibeah	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+achish	1	abimelech	\N	t	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
+achsah	1	achsah-2	\N	t	Essenthos, the project owner's ruling of 2026-11-02 that the Achsah of 1CH 2:49 is a record of her own, applied by claude-opus-5-5 reading 1CH 2:42-49, JOS 15:16-19 and JDG 1:12-15 on his instruction of 2026-11-09
+achsah-2	1	achsah	\N	f	Essenthos, the project owner's ruling of 2026-11-02 that the Achsah of 1CH 2:49 is a record of her own, applied by claude-opus-5-5 reading 1CH 2:42-49, JOS 15:16-19 and JDG 1:12-15 on his instruction of 2026-11-09
+ahasuerus	1	ahasuerus-father-of-darius	\N	t	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
+ahasuerus-father-of-darius	1	ahasuerus	\N	f	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
+ahuzzath	1	\N	one man named Ahuzzath, a friend of the king of Gerar in Isaac's day (GEN 26:26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
+anah	1	anah-son-of-zibeon	\N	t	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
+anah-son-of-zibeon	1	beeri	\N	f	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
+anah-son-of-zibeon	2	anah	\N	f	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
+arumah	1	tormah	\N	t	Essenthos, the place names the Hebrew marks and the translations read as common words, each read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12
+azariah-of-the-wall-dedication	1	seraiah-6	\N	f	Essenthos, on the project owner's ruling of 2026-09-06
+azariah-son-of-zephaniah	1	uzziah	\N	f	Essenthos, Hebrew names read against their verses by claude-opus-5-5 on the project owner's instruction, 2026-10-14
+aziel	1	jaaziel	\N	f	Essenthos, read against the verses in the Hebrew with the King James beside them by claude-opus-5-5 on the project owner's instruction of 2026-11-09
+azubah-2	1	jerioth	\N	t	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+barachias	1	berechiah-6	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+beeri	1	anah-son-of-zibeon	\N	t	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
+berechiah-6	1	barachias	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+bethsaida	1	bethsaida-2	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+bethsaida-2	1	bethsaida	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+eliam-2	1	hepher-the-mecherathite	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+hazazontamar	1	hazazontamar-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+hazazontamar-2	1	hazazontamar	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+hepher-the-mecherathite	1	eliam-2	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+hilkiah-3	1	hilkiah-at-ezras-right-hand	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+hilkiah-at-ezras-right-hand	1	hilkiah-3	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+iezer	1	\N	the Abiezer whom Hammolecheth, Gilead's sister, bore (1 Chronicles 7:18), the same man under a shorter name	f	Essenthos, on the project owner's decision of 2026-09-29 that whether Iezer of Numbers 26:30 is the Abiezer of 1 Chronicles 7:18 is left open
+iezer	2	\N	a son of Gilead, and another man than the Abiezer whom Hammolecheth bore	f	Essenthos, on the project owner's decision of 2026-09-29 that whether Iezer of Numbers 26:30 is the Abiezer of 1 Chronicles 7:18 is left open
+immer	1	immer-5	\N	t	Essenthos, on the names a dataset lists a verse for, each occurrence read against its verse by claude-sonnet-5-5 and claude-opus-5-5 independently, and a third time by claude-opus-5-5 where the two differed, 2026-09-30
+immer-5	1	immer	\N	f	Essenthos, on the names a dataset lists a verse for, each occurrence read against its verse by claude-sonnet-5-5 and claude-opus-5-5 independently, and a third time by claude-opus-5-5 where the two differed, 2026-09-30
+jaaziel	1	aziel	\N	t	Essenthos, read against the verses in the Hebrew with the King James beside them by claude-opus-5-5 on the project owner's instruction of 2026-11-09
+james-3	1	james-son-of-mary	\N	t	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+james-son-of-mary	1	james-3	\N	f	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+jehiel-4	1	jehiel-ruler-of-the-house-of-god	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jehiel-ruler-of-the-house-of-god	1	jehiel-4	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jehoahaz-2	1	johanan-firstborn-of-josiah	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jehoiada	1	jehoiada-son-of-benaiah	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jehoiada-son-of-benaiah	1	jehoiada	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jehu-2	1	zimri-in-jezebels-cry	\N	t	Essenthos, on the project owner's ruling of 2026-09-06
+jeiel-4	1	jeiel-the-alamoth-psaltery-player	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jeiel-the-alamoth-psaltery-player	1	jeiel-4	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+jerioth	1	azubah-2	\N	f	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+jerioth	2	\N	a second wife of Caleb, by whom Jesher, Shobab and Ardon were born	f	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+jerioth	3	\N	the daughter of Caleb and Azubah, by whom the three sons came	f	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+jerioth	4	\N	the name of Azubah's father, naming whose daughter she was	f	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+jerioth	5	\N	not a name at all, but a description of the woman — from the curtains she wore, kept or made	f	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+jerioth	6	\N	a copyist's error, which the text has to be emended to repair	f	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+joel-son-of-azariah	1	shaul-3	\N	f	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+johanan-firstborn-of-josiah	1	jehoahaz-2	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+john-2	1	john-who-saw-the-revelation	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+john-who-saw-the-revelation	1	john-2	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+jokmeam	1	jokmeam-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+jokmeam	2	jokneam	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+jokmeam-2	1	jokmeam	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+jokneam	1	jokmeam	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+joseph-7	1	joses-son-of-mary	\N	t	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+joses-son-of-mary	1	joseph-7	\N	f	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+judith	1	oholibamah-wife-of-esau	\N	t	Essenthos, on the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own and that an identification the text does not settle is shown with every reading, applied to Esau's wives of Genesis 36:2-3 and to Anah by claude-opus-5-5, 2026-10-07
+kish-son-of-abdi	1	kishi	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+kishi	1	kish-son-of-abdi	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+levi-son-of-alphaeus	1	matthew	\N	f	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+mahanehdan	1	mahanehdan-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+mahanehdan-2	1	mahanehdan	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+mary	1	mary-7	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+mary-4	1	mary-7	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+mary-7	1	mary	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+mary-7	2	mary-4	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+matthew	1	levi-son-of-alphaeus	\N	t	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+meshullam-the-gatekeeper	1	shallum-7	\N	f	Essenthos, read against the verses in the Hebrew with the King James beside them by claude-opus-5-5 on the project owner's instruction of 2026-11-09
+michael-2	1	michael-the-gadite-forefather	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+michael-the-gadite-forefather	1	michael-2	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+migdol	1	migdol-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+migdol	2	migdol-3	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+migdol-2	1	migdol-3	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+migdol-2	2	migdol	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+migdol-3	1	migdol	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+migdol-3	2	migdol-2	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+oholibamah-wife-of-esau	1	judith	\N	f	Essenthos, on the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own and that an identification the text does not settle is shown with every reading, applied to Esau's wives of Genesis 36:2-3 and to Anah by claude-opus-5-5, 2026-10-07
+phicol	1	\N	one man named Phicol, who commanded the army of Gerar under Abraham's Abimelech and again under Isaac's (GEN 21:22; 26:26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
+ramah	1	ramah-4	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+ramah-4	1	ramah	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+redsea	1	redsea-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+redsea	2	redsea-3	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+redsea-2	1	redsea	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+redsea-3	1	redsea	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+sela-2	1	sela-3	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+sela-3	1	sela-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+seraiah-6	1	azariah-of-the-wall-dedication	\N	t	Essenthos, on the project owner's ruling of 2026-09-06
+shallum-7	1	meshullam-the-gatekeeper	\N	t	Essenthos, read against the verses in the Hebrew with the King James beside them by claude-opus-5-5 on the project owner's instruction of 2026-11-09
+shalman	1	shalmaneser	\N	f	Essenthos, the names the Hebrew marks that nothing read, each word read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12
+shalmaneser	1	shalman	\N	t	Essenthos, the names the Hebrew marks that nothing read, each word read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12
+shaphan	1	shaphan-5	\N	t	Essenthos, 59 verses where two men of one name were identified, each read in the original by gpt-6.1-sol and by a blind judge, 2026-10-08
+shaphan-5	1	shaphan	\N	f	Essenthos, 59 verses where two men of one name were identified, each read in the original by gpt-6.1-sol and by a blind judge, 2026-10-08
+shaul-3	1	joel-son-of-azariah	\N	t	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07
+tadmor	1	tamar-4	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+tamar-4	1	tamar-5	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+tamar-4	2	tadmor	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+tamar-5	1	tamar-4	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+tormah	1	arumah	\N	f	Essenthos, the place names the Hebrew marks and the translations read as common words, each read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12
+uriel-of-gibeah	1	abishalom	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+uzziah	1	azariah-son-of-zephaniah	\N	t	Essenthos, Hebrew names read against their verses by claude-opus-5-5 on the project owner's instruction, 2026-10-14
+zacharias-son-of-barachias	1	zechariah-12	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+zacharias-son-of-barachias	2	zechariah-13	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+zechariah-12	1	zacharias-son-of-barachias	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+zechariah-13	1	zechariah-who-taught-uzziah	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+zechariah-13	2	zechariah-25	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+zechariah-13	3	zacharias-son-of-barachias	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+zechariah-25	1	zechariah-13	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
+zechariah-5	1	zechariah-the-trumpeting-priest	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+zechariah-the-trumpeting-priest	1	zechariah-5	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+zechariah-who-taught-uzziah	1	zechariah-13	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+zimmah	1	zimmah-the-later-gershonite	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+zimmah-the-later-gershonite	1	zimmah	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
+zimri-2	1	zimri-in-jezebels-cry	\N	t	Essenthos, on the project owner's ruling of 2026-09-06
+zimri-in-jezebels-cry	1	zimri-2	\N	f	Essenthos, on the project owner's ruling of 2026-09-06
+zimri-in-jezebels-cry	2	jehu-2	\N	f	Essenthos, on the project owner's ruling of 2026-09-06

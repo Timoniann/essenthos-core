@@ -1,0 +1,7 @@
+# product    Essenthos/mapping/GRCBRENT-KJV/rulings.tsv
+# inputs     
+# producer   forge mapping-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	1.14:5.29	1.14:5.24	renders	SIL.Machine	Ὀμμαίους / Zuzims: Claude, 2026-10-14: Ὀμμαίους is the King James's Emims at position 29, not the Zuzims.
+refuse	1.14:5.32	1.14:5.29	renders	SIL.Machine	Σαυῇ / Emins: Claude, 2026-10-14: Σαυῇ is the King James's Shaveh at position 31, not the Emims.

@@ -184,20 +184,48 @@ Resources/Essenthos/generation/
 Resources/Essenthos/page-readings/pages-swete-*/out/
 Resources/Essenthos/page-readings/pages-swete-*/progress.*
 
-# The texts as converted products: forge convert writes each text's words, verses, notes, books and declaration
-# from its sources, and the words are the corpus itself, which stays out. Carried: the corrections people edit,
-# and the frame files forge frame-files writes, as before. Below the line that carries Resources/Essenthos/.
+# Resources/Essenthos is the build store (build/products.tsv says who makes each file). What people edit is carried:
+# the hand files, the record files (records/**, ours, edited by owner-rows and owner-apply), the settled names and
+# each pair's rulings. What a build or the serving build makes is left out, and so is what an export made once and
+# nothing makes again (kept: texts/*/ids, mapping/pairs, aligner, composed, hashes, external/**, two record files):
+# the backup mirrors Resources/ whole, which is where those live. Every rule below sits below the line that carries
+# Resources/Essenthos/.
+
+# The texts as converted products: forge convert writes each text's words, verses, notes, books, declaration and
+# frame from its sources, and the words are the corpus itself, which stays out. Kept: texts/*/ids. Carried: the
+# corrections people edit.
 Resources/Essenthos/texts/*/*
 !Resources/Essenthos/texts/*/corrections.tsv
-!Resources/Essenthos/texts/*/frame.tsv
 
-# The names layer's machine products (TSK-1448): the projection onto every text and a database's names kept for the
-# proof. Carried: the settled names, rules, bases and overrides people edit. Below the line that carries Resources/Essenthos/.
+# The names layer's machine products (TSK-1448): the projection onto every text, and the database names earlier
+# proofs exported (nothing makes them now). Carried: the settled names, consensus, rules, bases and overrides.
 Resources/Essenthos/names/projected/
 Resources/Essenthos/names/live/
+Resources/Essenthos/names/exported/
 
 # The served tables forge tables makes whole from files (TSK-1449): machine products, made again from their sources.
 Resources/Essenthos/tables/
+Resources/Essenthos/carried/
+
+# The mapping: every pair's method files, merge and verse links (2.5 GB). Carried: the rulings people edit.
+Resources/Essenthos/mapping/*
+!Resources/Essenthos/mapping/*/
+Resources/Essenthos/mapping/*/*
+!Resources/Essenthos/mapping/*/rulings.tsv
+
+# Record files the build makes (binary products, and the pictures' captions per language), and the external
+# datasets' rows (kept; each dataset's own licence, not ours to carry).
+Resources/Essenthos/records/**/*.essx
+Resources/Essenthos/records/i18n/*/images.tsv
+Resources/Essenthos/external/
+
+# What the serving build counts, and the build's own state: the manifest, the hash memory, reports, what each
+# database was built from, the word id ceiling (kept). Carried: the declared graph.
+Resources/Essenthos/panes/
+Resources/Essenthos/record-spellings/
+Resources/Essenthos/record-positions/
+Resources/Essenthos/build/*
+!Resources/Essenthos/build/products.tsv
 
 # Maimonides' count of the commandments as this project curated it from two public-domain works:
 # 613 rows, 59 KB. The downloads it is written from stay out, and scripts/maimonides.py puts them back.

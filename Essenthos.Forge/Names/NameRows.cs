@@ -26,9 +26,6 @@ internal static class NameProducts
 
     public static string Projected(string text) => $"names/projected/{text}";
 
-    /// <summary>A database's names of a text as they stood when exported, by key: what the projection is proved against.</summary>
-    public static string Live(string text) => $"names/live/{text}";
-
     /// <summary>
     /// Whom a translation's verses say its words name (<see cref="ConsensusName"/>): the name-consensus pass's rows, kept as a
     /// file because no build writes them back into a database.
@@ -237,26 +234,4 @@ internal sealed record ProjectedName(
         .Reads(row => new ProjectedName(
             WordKey.Parse(row.Text(0), text), row.Text(1), row.Text(2), row.Text(3), row.TextOrNull(4), row.Text(5),
             NameProducts.Number(row.TextOrNull(6)), row.Text(7), row.TextOrNull(8)));
-}
-
-/// <summary>
-/// A name as a database holds it, <c>names/live/&lt;SLUG&gt;</c> (Machine), by the key of the word that carries the
-/// database's word id in the text's words product: what the projection is compared with.
-/// </summary>
-/// <param name="Kind">The record's kind.</param>
-/// <param name="Carried">The row was carried along a link from another text's word (its note begins <c>through</c>).</param>
-internal sealed record LiveName(WordKey Own, string Record, string Kind, string Method, double? Confidence, string Source, string? Note, bool Carried)
-{
-    public static ProductSchema<LiveName> Schema(string text) => new ProductSchema<LiveName>()
-        .OwnWordKey("own", r => r.Own)
-        .Text("record", r => r.Record)
-        .Text("kind", r => r.Kind)
-        .Text("method", r => r.Method)
-        .OptionalText("confidence", r => NameProducts.Number(r.Confidence))
-        .Text("source", r => r.Source)
-        .OptionalText("note", r => r.Note)
-        .Boolean("carried", r => r.Carried)
-        .Reads(row => new LiveName(
-            WordKey.Parse(row.Text(0), text), row.Text(1), row.Text(2), row.Text(3), NameProducts.Number(row.TextOrNull(4)),
-            row.Text(5), row.TextOrNull(6), row.Boolean(7)));
 }

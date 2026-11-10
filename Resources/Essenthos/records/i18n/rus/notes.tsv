@@ -1,0 +1,6 @@
+# product    Essenthos/records/i18n/rus/notes.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+# A record's notes in this language; english_sha256 is the English they render, so a changed English shows them stale.
+slug	notes	english_sha256	by

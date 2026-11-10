@@ -1,0 +1,10 @@
+# product    Essenthos/records/facts/location-supplements.tsv
+# inputs     
+# producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
+# exported   from essenthos_core
+# Coordinates read from a named source other than the gazetteer, for sites whose gazetteer point cannot be held, and regions the gazetteer does not place; region_of names the record a region is the point of.
+modern_id	dataset	site	lon	lat	region_of	credit	by
+m25a76c	pcgn	Jabal al Naba	35.74611111111111	31.76222222222222	\N	PCGN, Jordan Toponymic Factfile 2025, p.8; Contains public sector information licensed under the Open Government Licence v3.0; https://assets.publishing.service.gov.uk/media/694152af5431f4f94d7f0aca/Jordan_Toponymic_Factfile.pdf	Essenthos Codex agent reading held geographical names, Bible citations and named independent coordinate sources on the owner's instruction, 2026-10-26; no new LLM calls
+m5d9754	wikidata	Sarepta	35.295833333333	33.4575	\N	Wikidata Q616837, revision 2521611391, P625; CC0 1.0; https://www.wikidata.org/wiki/Special:EntityData/Q616837.json?revision=2521611391	Essenthos Codex agent reading held geographical names, Bible citations and named independent coordinate sources on the owner's instruction, 2026-10-26; no new LLM calls
+m83f9b8	drews-han-2010	Tell Abu Sefeh	32.3543	30.8606	\N	Drews and Han, 2010, Dynamics of Wind Setdown at Suez and the Eastern Nile Delta, Table 1; CC BY; https://doi.org/10.1371/journal.pone.0012481	Essenthos Codex agent reading held geographical names, Bible citations and named independent coordinate sources on the owner's instruction, 2026-10-26; no new LLM calls
+wikidata:Q2046004	wikidata	Judaean Desert	35.3	31.7	wilderness-of-judah	Wikidata Q2046004, revision 2549290202, P625; CC0 1.0; https://www.wikidata.org/wiki/Special:EntityData/Q2046004.json?revision=2549290202	Essenthos Codex agent reading held geographical names, Bible citations and named independent coordinate sources on the owner's instruction, 2026-10-26; no new LLM calls
