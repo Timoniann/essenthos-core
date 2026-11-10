@@ -236,7 +236,7 @@ public sealed class OwnRelationshipTests : IDisposable
         Clause(keturah, abram, DescriptorRelations.ConcubineOf, 0.85);
 
         var outcome = await Load(
-            [new WithheldClause("keturah", DescriptorRelations.ConcubineOf, "abram", "1CH 1:32", null)], default);
+            [new WithheldClause("keturah", DescriptorRelations.ConcubineOf, "abram", "1CH 1:32", null)]);
 
         outcome.Disputed.Should().Be(0);
         (await Relations(keturah, abram)).Should().Equal(DescriptorRelations.WifeOf);

@@ -152,7 +152,7 @@ internal static partial class RecordFiles
         EventDates("external/shulman/event-dates", "'shulman'"),
         EventDates("records/chronology/event-dates", "'septuagint', 'septuagint-alexandrinus'"),
 
-        new("external/periodo/authorities", ProductKind.Hand,
+        new("external/periodo/authorities", ProductKind.Machine,
             "periodo_id attribution citation title? creators? year_published:int? locator? uri?",
             "SELECT periodo_id, attribution, citation, title, creators, year_published, locator, uri FROM period_authority ORDER BY 1",
             """
@@ -160,7 +160,7 @@ internal static partial class RecordFiles
             SELECT periodo_id, attribution, citation, title, creators, year_published, locator, uri FROM s ORDER BY periodo_id
             """,
             ["period_authority", "period_definition"]),
-        new("external/periodo/definitions", ProductKind.Hand,
+        new("external/periodo/definitions", ProductKind.Machine,
             "periodo_id authority label language_tag? labels:json? region coverage:json? coverage_description? start_label? start_earliest:int start_latest:int stop_label? stop_earliest:int stop_latest:int broader? note? editorial_note? by",
             """
             SELECT d.periodo_id, a.periodo_id, d.label, d.language_tag, d.labels::text, d.region, d.coverage::text, d.coverage_description,
@@ -177,7 +177,7 @@ internal static partial class RecordFiles
             """,
             []),
 
-        new("external/maimonides/commandments", ProductKind.Hand,
+        new("external/maimonides/commandments", ProductKind.Machine,
             "kind number:int mishneh_torah_number:int title note? by",
             "SELECT kind, number, mishneh_torah_number, title, note, source FROM commandment ORDER BY 1, 2",
             """
@@ -185,7 +185,7 @@ internal static partial class RecordFiles
             SELECT kind, number, mishneh_torah_number, title, note, by FROM s ORDER BY kind, number
             """,
             ["commandment", "commandment_reference"]),
-        new("external/maimonides/commandment-references", ProductKind.Hand,
+        new("external/maimonides/commandment-references", ProductKind.Machine,
             "kind number:int n:int book:int chapter:int first_verse:int last_verse:int",
             """
             SELECT c.kind, c.number, row_number() OVER (PARTITION BY r.commandment_id ORDER BY r.id), r.canonical_book, r.canonical_chapter, r.first_verse, r.last_verse
