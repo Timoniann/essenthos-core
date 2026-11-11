@@ -129,6 +129,7 @@ public sealed class EntitySearchTests : IDisposable
     private void Clear()
     {
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
+        _db.Database.ExecuteSqlRaw($"DELETE FROM {ExternalReferences.Table}");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
     }
 
@@ -162,6 +163,10 @@ public sealed class EntitySearchTests : IDisposable
             Occurrences = occurrences, Heading = heading,
         });
 
+    /// <summary>
+    /// Verses that name the record; with a label, the dataset lists them too, saying which name each
+    /// uses, as the record files keep its verses: apart from the ones a reader is shown.
+    /// </summary>
     private void Named(Entity entity, int verses, string? label = null, int from = 1)
     {
         for (var verse = from; verse < from + verses; verse++)
@@ -169,8 +174,18 @@ public sealed class EntitySearchTests : IDisposable
             _db.EntityVerses.Add(new EntityVerse
             {
                 EntityId = entity.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = verse,
-                Label = label, Source = BibleDataLoader.Source,
+                Source = BibleDataLoader.Source,
             });
+        }
+
+        if (label is not null)
+        {
+            _db.Database.ExecuteSqlRaw(
+                $$"""
+                  INSERT INTO {{ExternalReferences.Table}} (dataset, entity_id, canonical_book, canonical_chapter, canonical_verse, label, names, disputed, withheld)
+                  SELECT '{{ExternalReferences.BibleData}}', {0}, 1, 1, v, {1}, true, false, false FROM generate_series({2}, {3}) v
+                  """,
+                entity.Id, label, from, from + verses - 1);
         }
     }
 
