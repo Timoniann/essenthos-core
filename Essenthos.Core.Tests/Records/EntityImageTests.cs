@@ -458,6 +458,26 @@ public sealed class EntityImageTests : IDisposable
     }
 
     /// <summary>
+    /// jeshua-3 was folded into joshua-4, and its portrait, still listed under jeshua-3, shows on joshua-4's page;
+    /// the owner hid it there, so the console keyed his word by joshua-4. The choice reaches the picture either way.
+    /// </summary>
+    [Fact]
+    public void AChoiceMadeOnThePageOfTheRecordAFoldedPictureJoinedReachesIt()
+    {
+        EntityImageLoader.Candidate Candidate(string slug, string file) => new(
+            7, slug, "generated", "gallery", file, null, "Essenthos", null, "CC BY 4.0", null, "Essenthos", null, false);
+
+        var choices = new ImageChoiceFile([new ImageChoice("joshua-4", "generated/jeshua-3.webp", Hidden: true)]);
+        var candidates = new[] { Candidate("joshua-4", "generated/joshua-4.webp"), Candidate("jeshua-3", "generated/jeshua-3.webp") };
+
+        var applied = ImageChoices.Apply(candidates, choices, out var hidden, new Dictionary<int, string> { [7] = "joshua-4" });
+
+        applied.Select(c => c.File).Should().Equal("generated/joshua-4.webp");
+        hidden.Should().Be(1);
+        ImageChoices.Apply(candidates, choices, out _).Should().HaveCount(2, "without the records' slugs only the listed address matches");
+    }
+
+    /// <summary>
     /// Aaron's face stands a fifth of the way across a tall portrait: the bust is the square around
     /// it, a little headroom above and the shoulders below, and never runs off the picture.
     /// </summary>

@@ -276,7 +276,8 @@ internal static class EntityImageLoader
         }
 
         var choices = ImageChoices.Read(Path.Combine(resources, ImageChoices.Folder, ImageChoices.FileName));
-        candidates = FillIn(ImageChoices.Apply(candidates, choices, out var hidden), ImageChoices.Leading(choices));
+        candidates = FillIn(
+            ImageChoices.Apply(candidates, choices, out var hidden, entities.ToDictionary(e => e.Id, e => e.Slug)), ImageChoices.Leading(choices));
 
         var refused = candidates.RemoveAll(c =>
         {
