@@ -136,7 +136,7 @@ internal static partial class RecordFiles
     /// and is the caller's to fill again before it commits.
     /// </summary>
     public static async Task<List<(string Product, long Rows)>> Load(
-        NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, CancellationToken cancellationToken)
+        NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, CancellationToken cancellationToken, Action<string, TimeSpan>? took = null)
     {
         if (Untouchable.Contains(db.Database, StringComparer.OrdinalIgnoreCase))
         {
@@ -144,7 +144,7 @@ internal static partial class RecordFiles
         }
 
         await Execute(db, transaction, SchemaSql, cancellationToken);
-        var loaded = await LoadFiles(db, transaction, store, All, cancellationToken);
+        var loaded = await LoadFiles(db, transaction, store, All, cancellationToken, took);
         loaded.Add((RecordCanons.Product, await RecordCanons.Load(db, transaction, store, cancellationToken)));
         return loaded;
     }
@@ -152,25 +152,44 @@ internal static partial class RecordFiles
     /// <summary>
     /// The files given, put into the database inside the caller's transaction: the tables they fill emptied with
     /// <c>CASCADE</c> first, then each file staged and inserted, a file whose rows do not all land failing the load.
+    /// <paramref name="took"/> hears how long the emptying and each file took.
     /// </summary>
     internal static async Task<List<(string Product, long Rows)>> LoadFiles(
-        NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, IReadOnlyList<RecordFile> files, CancellationToken cancellationToken)
+        NpgsqlConnection db, NpgsqlTransaction transaction, ProductStore store, IReadOnlyList<RecordFile> files, CancellationToken cancellationToken,
+        Action<string, TimeSpan>? took = null)
     {
         if (Untouchable.Contains(db.Database, StringComparer.OrdinalIgnoreCase))
         {
             throw new InvalidOperationException($"records-load does not write {db.Database}; load into a database of your own.");
         }
 
+        var clock = System.Diagnostics.Stopwatch.StartNew();
         var tables = files.SelectMany(f => f.Tables).Distinct().ToList();
         await Execute(db, transaction, $"TRUNCATE {string.Join(", ", tables)} RESTART IDENTITY CASCADE", cancellationToken);
+        took?.Invoke("emptying the tables", clock.Elapsed);
 
         var loaded = new List<(string, long)>();
         foreach (var file in files)
         {
+            clock.Restart();
+            try
+            {
+                await LoadFile(file);
+            }
+            finally
+            {
+                took?.Invoke(file.Product, clock.Elapsed);
+            }
+        }
+
+        return loaded;
+
+        async Task LoadFile(RecordFile file)
+        {
             if (file.Requires is { } requirement && !await Holds(db, transaction, requirement, cancellationToken))
             {
                 loaded.Add((file.Product, -1));
-                continue;
+                return;
             }
 
             using var reader = store.Open(file.Product, file.Schema());
@@ -209,7 +228,7 @@ internal static partial class RecordFiles
                 }
 
                 loaded.Add((file.Product, rows.Count));
-                continue;
+                return;
             }
 
             var written = await Execute(db, transaction, file.Load, cancellationToken);
@@ -227,8 +246,6 @@ internal static partial class RecordFiles
 
             loaded.Add((file.Product, rows.Count));
         }
-
-        return loaded;
     }
 
     /// <summary>

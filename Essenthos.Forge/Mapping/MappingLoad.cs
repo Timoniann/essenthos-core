@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading.Channels;
 using Essenthos.Core.Comparison;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -37,7 +38,11 @@ internal static class MappingLoad
         long Unresolved,
         List<string> Sources);
 
-    public static async Task<Outcome> Run(string connection, ProductStore store, ILogger logger, CancellationToken cancellationToken)
+    /// <summary>
+    /// Every pair's final into the database. <paramref name="resolved"/> resolves the keys; without it the texts' ids are read from
+    /// the database, which must then hold the texts already.
+    /// </summary>
+    public static async Task<Outcome> Run(string connection, ProductStore store, ILogger logger, CancellationToken cancellationToken, ILinkWords? resolved = null)
     {
         var clock = Stopwatch.StartNew();
         await using var db = new NpgsqlConnection(connection);
@@ -47,9 +52,9 @@ internal static class MappingLoad
             throw new InvalidOperationException($"The mapping load never writes {db.Database}; point it at a database of its own.");
         }
 
-        var keys = await WordKeys.Load(db, reverse: true, cancellationToken);
-        logger.LogInformation("{Words} words of {Database} read in {Elapsed}", keys.Words, db.Database, clock.Elapsed);
         var pairs = MappingProducts.Pairs(store).Where(p => store.Exists(MappingProducts.Of(p, MappingProducts.Final))).ToList();
+        var keys = resolved ?? await Words(store, db, Texts(pairs), cancellationToken);
+        logger.LogInformation("The texts' word ids found in {Elapsed}", clock.Elapsed);
         var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
 
         // The pairs are read several at once and handed on in their order, so the provenance ids and every row's place in
@@ -104,7 +109,7 @@ internal static class MappingLoad
         long links = 0, words = 0, claims = 0, unresolved = 0;
         await foreach (var rows in channel.Reader.ReadAllAsync(cancellationToken))
         {
-            await Copy(db, rows, Globalize(rows.Sources, provenance), cancellationToken);
+            await Copy(db, rows, Globalize(rows.Sources, provenance), cancellationToken, freeze: true);
             links += rows.Links.Count;
             words += rows.Words.Count;
             claims += rows.Claims.Count;
@@ -118,7 +123,7 @@ internal static class MappingLoad
         await reading;
         logger.LogInformation("{Links} links, {Words} link words, {Claims} claims copied at {Elapsed}", links, words, claims, clock.Elapsed);
 
-        using (var import = db.BeginBinaryImport("COPY provenance (id, source) FROM STDIN (FORMAT BINARY)"))
+        using (var import = db.BeginBinaryImport("COPY provenance (id, source) FROM STDIN (FORMAT BINARY, FREEZE)"))
         {
             foreach (var (source, id) in provenance)
             {
@@ -174,9 +179,11 @@ internal static class MappingLoad
     }
 
     /// <summary>
-    /// The links of the pairs named replaced from their finals inside the caller's transaction, every other pair's left as it
-    /// is: each pair's links deleted (their words and claims go with them), its final copied in with the ids it keeps, and a
-    /// source the database has not seen given the next provenance id. Indexes and keys stay; this is for a few pairs.
+    /// The links of the pairs named made what their finals say inside the caller's transaction, every other pair's left as it
+    /// is. A link's id is derived from its words, so a pair's links are matched by id: one the final no longer holds, or holds
+    /// otherwise (relation, settled claim, words, roles or claims), is deleted with its words and claims, and one the database
+    /// lacks or held otherwise is copied in; the rest stand. A source the database has not seen takes the next provenance id.
+    /// Indexes and keys stay; this is for a few pairs.
     /// </summary>
     public static async Task<Outcome> ReplacePairs(NpgsqlConnection db, ProductStore store, IReadOnlyCollection<string> pairs, ILogger logger,
         CancellationToken cancellationToken)
@@ -187,7 +194,8 @@ internal static class MappingLoad
             throw new InvalidOperationException($"The mapping load never writes {db.Database}; point it at a database of its own.");
         }
 
-        var keys = await WordKeys.Load(db, reverse: true, cancellationToken);
+        var keys = await Words(store, db, Texts(pairs), cancellationToken);
+        logger.LogInformation("The pairs' word ids found in {Elapsed}", clock.Elapsed);
         var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
         await using (var command = new NpgsqlCommand("SELECT source, id FROM provenance", db))
         await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
@@ -208,20 +216,39 @@ internal static class MappingLoad
         foreach (var pair in pairs)
         {
             var (fromText, toText) = MappingProducts.Split(pair);
-            await using (var delete = new NpgsqlCommand("DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to", db))
-            {
-                delete.Parameters.AddWithValue("from", keys.TextId(fromText) ?? throw new InvalidDataException($"The database has no text {fromText}."));
-                delete.Parameters.AddWithValue("to", keys.TextId(toText) ?? throw new InvalidDataException($"The database has no text {toText}."));
-                var deleted = await delete.ExecuteNonQueryAsync(cancellationToken);
-                logger.LogInformation("{Pair}: {Deleted} links deleted", pair, deleted);
-            }
-
+            var fromId = keys.TextId(fromText) ?? throw new InvalidDataException($"The database has no text {fromText}.");
+            var toId = keys.TextId(toText) ?? throw new InvalidDataException($"The database has no text {toText}.");
             if (!store.Exists(MappingProducts.Of(pair, MappingProducts.Final)))
             {
+                await using var delete = new NpgsqlCommand("DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to", db) { CommandTimeout = 0 };
+                delete.Parameters.AddWithValue("from", fromId);
+                delete.Parameters.AddWithValue("to", toId);
+                logger.LogInformation("{Pair}: no final, {Deleted} links deleted", pair, await delete.ExecuteNonQueryAsync(cancellationToken));
                 continue;
             }
 
-            var rows = Read(store, pair, keys);
+            var all = Read(store, pair, keys);
+            var wanted = Signatures(
+                all.Links.Select(l => (l.Id, l.Relation, l.Method, l.Confidence, all.Sources[l.Provenance - 1], l.Shape)),
+                all.Words,
+                all.Claims.Select(c => (c.Link, c.Method, c.Confidence, all.Sources[c.Provenance - 1])));
+            var held = await Held(db, fromId, toId, cancellationToken);
+            var gone = held.Where(h => !wanted.TryGetValue(h.Key, out var signature) || signature != h.Value).Select(h => h.Key).ToArray();
+            var fresh = wanted.Where(w => !held.TryGetValue(w.Key, out var signature) || signature != w.Value).Select(w => w.Key).ToHashSet();
+            if (gone.Length > 0)
+            {
+                await using var delete = new NpgsqlCommand("DELETE FROM link WHERE id = ANY(@ids)", db) { CommandTimeout = 0 };
+                delete.Parameters.AddWithValue("ids", gone);
+                await delete.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            logger.LogInformation("{Pair}: {Gone} links deleted, {Fresh} copied, {Same} as they were", pair, gone.Length, fresh.Count, wanted.Count - fresh.Count);
+            var rows = all with
+            {
+                Links = [.. all.Links.Where(l => fresh.Contains(l.Id))],
+                Words = [.. all.Words.Where(w => fresh.Contains(w.Link))],
+                Claims = [.. all.Claims.Where(c => fresh.Contains(c.Link))],
+            };
             var sources = Globalize(rows.Sources, provenance);
             if (provenance.Count > known)
             {
@@ -256,11 +283,84 @@ internal static class MappingLoad
     /// <summary>How many pairs are read at once ahead of the COPY.</summary>
     private const int Readers = 6;
 
+    private static List<string> Texts(IEnumerable<string> pairs) =>
+        [.. pairs.Select(MappingProducts.Split).SelectMany(p => new[] { p.From, p.To }).Distinct(StringComparer.Ordinal)];
+
+    /// <summary>
+    /// The words the keys of these texts name: worked out from the words products where the store holds every text's, else read
+    /// from the database.
+    /// </summary>
+    private static async Task<ILinkWords> Words(ProductStore store, NpgsqlConnection db, IReadOnlyCollection<string> texts, CancellationToken cancellationToken) =>
+        texts.All(t => store.Exists(TextWord.ProductOf(t)))
+            ? await ProductWords.Read(store, db, texts, cancellationToken)
+            : await WordKeys.Load(db, reverse: true, cancellationToken);
+
+    /// <summary>
+    /// What each link of a pair is, by id, in one string: its relation, settled method, confidence and source, its shape, its
+    /// words with their sides, heads and roles, and its claims; the same for rows read from a final and from a database.
+    /// </summary>
+    private static Dictionary<long, string> Signatures(
+        IEnumerable<(long Id, string Relation, string Method, double? Confidence, string Source, Guid Shape)> links,
+        IEnumerable<(long Link, long Word, bool From, long? Head, string? Role)> words,
+        IEnumerable<(long Link, string Method, double? Confidence, string Source)> claims)
+    {
+        static string Number(double? value) => value?.ToString("R", System.Globalization.CultureInfo.InvariantCulture) ?? "-";
+        var byLink = words.GroupBy(w => w.Link).ToDictionary(g => g.Key,
+            g => string.Join(' ', g.Select(w => $"{w.Word}:{(w.From ? 'f' : 't')}:{w.Head}:{w.Role}").Order(StringComparer.Ordinal)));
+        var claimed = claims.GroupBy(c => c.Link).ToDictionary(g => g.Key,
+            g => string.Join('\u001f', g.Select(c => $"{c.Method}\u001e{Number(c.Confidence)}\u001e{c.Source}").Order(StringComparer.Ordinal)));
+        return links.ToDictionary(l => l.Id, l => string.Join('\u001d', l.Relation, l.Method, Number(l.Confidence), l.Source, l.Shape.ToString(),
+            byLink.GetValueOrDefault(l.Id) ?? "", claimed.GetValueOrDefault(l.Id) ?? ""));
+    }
+
+    /// <summary>The links of one pair as the database holds them, by <see cref="Signatures"/>.</summary>
+    private static async Task<Dictionary<long, string>> Held(NpgsqlConnection db, int fromId, int toId, CancellationToken cancellationToken)
+    {
+        var links = new List<(long, string, string, double?, string, Guid)>();
+        var words = new List<(long, long, bool, long?, string?)>();
+        var claims = new List<(long, string, double?, string)>();
+        var from = EnumSpelling.Of(LinkSide.From);
+        await using (var command = new NpgsqlCommand(
+                         """
+                         SELECT l.id, l.relation, l.method, l.confidence, coalesce(p.source, ''), l.fingerprint FROM link l
+                         LEFT JOIN provenance p ON p.id = l.provenance_id WHERE l.from_text_id = @from AND l.to_text_id = @to;
+                         SELECT w.link_id, w.word_id, w.side, w.head_word_id, w.role FROM link_word w JOIN link l ON l.id = w.link_id
+                         WHERE l.from_text_id = @from AND l.to_text_id = @to;
+                         SELECT c.link_id, c.method, c.confidence, coalesce(p.source, '') FROM link_claim c JOIN link l ON l.id = c.link_id
+                         LEFT JOIN provenance p ON p.id = c.provenance_id WHERE l.from_text_id = @from AND l.to_text_id = @to;
+                         """, db) { CommandTimeout = 0 })
+        {
+            command.Parameters.AddWithValue("from", fromId);
+            command.Parameters.AddWithValue("to", toId);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                links.Add((reader.GetInt64(0), reader.GetString(1), reader.GetString(2), reader.IsDBNull(3) ? null : reader.GetDouble(3), reader.GetString(4),
+                    reader.GetGuid(5)));
+            }
+
+            await reader.NextResultAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                words.Add((reader.GetInt64(0), reader.GetInt64(1), reader.GetString(2) == from, reader.IsDBNull(3) ? null : reader.GetInt64(3),
+                    reader.IsDBNull(4) ? null : reader.GetString(4)));
+            }
+
+            await reader.NextResultAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                claims.Add((reader.GetInt64(0), reader.GetString(1), reader.IsDBNull(2) ? null : reader.GetDouble(2), reader.GetString(3)));
+            }
+        }
+
+        return Signatures(links, words, claims);
+    }
+
     /// <summary>
     /// One pair's final as rows to copy; a claim's provenance is the pair's own number of its source, counted from 1 in the
     /// order the file first names each (<see cref="PairRows.Sources"/>), until <see cref="Globalize"/> numbers it for the database.
     /// </summary>
-    private static PairRows Read(ProductStore store, string pair, WordKeys keys)
+    private static PairRows Read(ProductStore store, string pair, ILinkWords keys)
     {
         var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
         var (fromText, toText) = MappingProducts.Split(pair);
@@ -350,7 +450,7 @@ internal static class MappingLoad
         return ids;
     }
 
-    private static long[]? Resolve(string own, string text, int textId, WordKeys keys)
+    private static long[]? Resolve(string own, string text, int textId, ILinkWords keys)
     {
         if (own.Length == 0)
         {
@@ -372,7 +472,7 @@ internal static class MappingLoad
         return ids;
     }
 
-    private static Dictionary<long, (long? Head, string? Role)> Roles(string? roles, string text, int textId, WordKeys keys)
+    private static Dictionary<long, (long? Head, string? Role)> Roles(string? roles, string text, int textId, ILinkWords keys)
     {
         var map = new Dictionary<long, (long?, string?)>();
         if (roles is null)
@@ -395,10 +495,12 @@ internal static class MappingLoad
         return map;
     }
 
-    private static async Task Copy(NpgsqlConnection db, PairRows rows, int[] sources, CancellationToken cancellationToken)
+    private static async Task Copy(NpgsqlConnection db, PairRows rows, int[] sources, CancellationToken cancellationToken, bool freeze = false)
     {
+        // Into tables this transaction emptied, the rows go in frozen: nothing reads them again only to mark them committed.
+        var options = freeze ? "FORMAT BINARY, FREEZE" : "FORMAT BINARY";
         using (var import = db.BeginBinaryImport(
-                   "COPY link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint) FROM STDIN (FORMAT BINARY)"))
+                   $"COPY link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint) FROM STDIN ({options})"))
         {
             foreach (var (id, from, to, relation, method, confidence, provenance, shape) in rows.Links)
             {
@@ -418,7 +520,7 @@ internal static class MappingLoad
 
         var fromSide = EnumSpelling.Of(LinkSide.From);
         var toSide = EnumSpelling.Of(LinkSide.To);
-        using (var import = db.BeginBinaryImport("COPY link_word (link_id, word_id, side, head_word_id, role) FROM STDIN (FORMAT BINARY)"))
+        using (var import = db.BeginBinaryImport($"COPY link_word (link_id, word_id, side, head_word_id, role) FROM STDIN ({options})"))
         {
             foreach (var (link, word, from, head, role) in rows.Words)
             {
@@ -433,7 +535,7 @@ internal static class MappingLoad
             import.Complete();
         }
 
-        using (var import = db.BeginBinaryImport("COPY link_claim (link_id, method, confidence, provenance_id) FROM STDIN (FORMAT BINARY)"))
+        using (var import = db.BeginBinaryImport($"COPY link_claim (link_id, method, confidence, provenance_id) FROM STDIN ({options})"))
         {
             foreach (var (link, method, confidence, provenance) in rows.Claims)
             {

@@ -10,7 +10,7 @@ namespace Essenthos.Core.Comparison;
 /// resolves the keys of a product file through. A word id is a hash of its key (<see cref="WordIds"/>), so the words
 /// are held in arrays sorted by id and found by binary search: all 29 M words take about 0.4 GB, a key 25 compares.
 /// </summary>
-internal sealed class WordKeys
+internal sealed class WordKeys : Mapping.ILinkWords
 {
     private readonly Dictionary<int, string> _texts;
     private readonly Dictionary<string, int> _textIds;

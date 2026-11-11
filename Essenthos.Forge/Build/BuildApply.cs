@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
 using Essenthos.Core.Indexes;
@@ -77,7 +78,6 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var forms = new SortedSet<string>(StringComparer.Ordinal);
         var frames = new SortedSet<string>(StringComparer.Ordinal);
         var verses = new SortedSet<string>(StringComparer.Ordinal);
-        var panes = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, names = false, spellings = false;
         foreach (var product in changed)
@@ -115,12 +115,10 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 case "texts/{text}/index/spellings":
                     spellings = true;
                     break;
-                // The store lists one table of panes and record words; a list written since this database was served came
-                // from another database (a fresh build from the same store, an apply on another copy) and does not describe
-                // this one's rows, so those texts are read again even where the list's own inputs are current.
-                case "panes/{text}":
-                    panes.Add(bound["text"]);
-                    break;
+                // The store lists one table of record words; a list written since this database was served came from another
+                // database (a fresh build from the same store, an apply on another copy) and does not describe this one's rows,
+                // so those texts are counted again even where the list's own inputs are current. The panes keep their bodies
+                // and are matched to the table by hash whatever wrote them.
                 case "record-spellings/{text}" or "record-positions/{text}":
                     recordWords.Add(bound["text"]);
                     break;
@@ -137,6 +135,13 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             await connection.OpenAsync(cancellationToken);
             await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
             long rows = 0;
+            var step = Stopwatch.StartNew();
+            void Done(string what)
+            {
+                logger.LogInformation("apply: {What} in {Seconds:0.0} s", what, step.Elapsed.TotalSeconds);
+                step.Restart();
+            }
+
             if (pairs.Count > 0)
             {
                 var outcome = await MappingLoad.ReplacePairs(connection, store, pairs, logger, cancellationToken);
@@ -146,6 +151,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 }
 
                 rows += outcome.Links;
+                Done($"{pairs.Count} pairs");
             }
 
             if (verses.Count > 0)
@@ -157,36 +163,45 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 }
 
                 rows += outcome.Links;
+                Done($"verse links of {verses.Count} pairs");
             }
 
             if (records)
             {
-                await Keep(connection, cancellationToken);
-                foreach (var (_, count) in await RecordFiles.Load(connection, transaction, store, cancellationToken))
+                var kept = await Detach(connection, cancellationToken);
+                var took = new List<(string File, TimeSpan Elapsed)>();
+                foreach (var (_, count) in await RecordFiles.Load(connection, transaction, store, cancellationToken, (file, elapsed) => took.Add((file, elapsed))))
                 {
                     rows += Math.Max(count, 0);
                 }
 
-                var lost = await Restore(connection, cancellationToken);
+                logger.LogInformation("apply: the slowest record files: {Files}",
+                    string.Join(", ", took.OrderByDescending(t => t.Elapsed).Take(5).Select(t => $"{t.File} {t.Elapsed.TotalSeconds:0.0} s")));
+                Done("records");
+                var (moved, lost) = await Attach(connection, kept, cancellationToken);
                 if (lost > 0)
                 {
                     logger.LogWarning("{Lost} names and spellings stood on records the files no longer hold", lost);
                 }
 
+                Done(moved ? "names, spellings and record words moved to the records' new ids" : "names, spellings and record words kept: no record's id moved");
                 spellings = true;
             }
 
             if (strong.Count > 0)
             {
                 rows += (await IndexLoad.Strong(connection, store, strong, cancellationToken)).Rows;
+                Done($"Strong indexes of {strong.Count} texts");
             }
 
             if (forms.Count > 0)
             {
                 rows += (await IndexLoad.Forms(connection, store, forms, cancellationToken)).Rows;
+                Done($"forms of {forms.Count} texts");
             }
 
             await transaction.CommitAsync(cancellationToken);
+            Done("commit");
             return rows;
         });
 
@@ -223,13 +238,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             return 0;
         });
 
-        // The panes and what a record page reads of the words read what the steps above left, so they come last; only the
-        // texts whose inputs moved are made again, and those whose list moved since this database was served.
-        if (panes.Count > 0)
-        {
-            await serving.Panes(panes, true, PaneParallelism, cancellationToken);
-        }
-
+        // The panes and what a record page reads of the words read what the steps above left, so they come last: a pane is read
+        // again only where its chapter's inputs moved, and the table takes every pane of the products it lacks.
         await serving.Panes(null, false, PaneParallelism, cancellationToken);
         if (recordWords.Count > 0)
         {
@@ -268,26 +278,72 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             .Concat(then.Keys.Where(t => !now.ContainsKey(t))).Order(StringComparer.Ordinal)];
     }
 
-    /// <summary>The names on words and the spellings, by record slug, before a records load empties them.</summary>
-    private static async Task Keep(NpgsqlConnection connection, CancellationToken cancellationToken)
+    /// <summary>
+    /// The tables outside the record files that point at a record, which a records load would empty through their keys' CASCADE:
+    /// the names on words and the spellings, kept across the load, and the record words, counted again when emptied.
+    /// </summary>
+    private static readonly string[] OnRecords = ["word_entity", "entity_rendering", "entity_search_spelling", "record_spelling", "record_position"];
+
+    /// <summary>
+    /// Before a records load: every record's id by slug written down, and the keys from <see cref="OnRecords"/> to the records
+    /// taken off, so the load's CASCADE leaves those tables as they are. Returns the keys, to put back.
+    /// </summary>
+    private static async Task<List<(string Table, string Name, string Definition)>> Detach(NpgsqlConnection connection, CancellationToken cancellationToken)
     {
+        var keys = new List<(string, string, string)>();
+        await using (var command = new NpgsqlCommand(
+                         """
+                         SELECT conrelid::regclass::text, quote_ident(conname), pg_get_constraintdef(oid) FROM pg_constraint
+                         WHERE contype = 'f' AND confrelid = 'entity'::regclass AND conrelid::regclass::text = ANY(@tables) ORDER BY 1, 2
+                         """, connection))
+        {
+            command.Parameters.AddWithValue("tables", OnRecords);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                keys.Add((reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+            }
+        }
+
+        var sql = new System.Text.StringBuilder("CREATE TEMP TABLE kept_ids ON COMMIT DROP AS SELECT id, slug FROM entity;\n");
+        foreach (var (table, name, _) in keys)
+        {
+            sql.Append(CultureInfo.InvariantCulture, $"ALTER TABLE {table} DROP CONSTRAINT {name};\n");
+        }
+
+        await using var detach = new NpgsqlCommand(sql.ToString(), connection) { CommandTimeout = 0 };
+        await detach.ExecuteNonQueryAsync(cancellationToken);
+        return keys;
+    }
+
+    /// <summary>
+    /// After a records load: where every record kept its id (the records are numbered in slug order, so an edit that adds or
+    /// removes none moves none), the rows of <see cref="OnRecords"/> stand as they were. Otherwise the names and spellings are
+    /// moved to the new id of their record's slug, those whose record is gone are dropped and counted, and the record words are
+    /// emptied, to be counted again. The keys go back on, validated, either way.
+    /// </summary>
+    private static async Task<(bool Moved, long Lost)> Attach(NpgsqlConnection connection, List<(string Table, string Name, string Definition)> keys,
+        CancellationToken cancellationToken)
+    {
+        await using (var count = new NpgsqlCommand(
+                         "SELECT count(*) FROM kept_ids k LEFT JOIN entity e ON e.id = k.id WHERE e.slug IS DISTINCT FROM k.slug", connection) { CommandTimeout = 0 })
+        {
+            if (Convert.ToInt64(await count.ExecuteScalarAsync(cancellationToken), CultureInfo.InvariantCulture) == 0)
+            {
+                await Reattach(connection, keys, cancellationToken);
+                return (false, 0);
+            }
+        }
+
         await using var command = new NpgsqlCommand(
             """
             CREATE TEMP TABLE kept_names ON COMMIT DROP AS
-                SELECT w.word_id, e.slug, w.method, w.confidence, w.source, w.note, w.role, w.origin FROM word_entity w JOIN entity e ON e.id = w.entity_id;
+                SELECT w.word_id, k.slug, w.method, w.confidence, w.source, w.note, w.role, w.origin FROM word_entity w JOIN kept_ids k ON k.id = w.entity_id;
             CREATE TEMP TABLE kept_renderings ON COMMIT DROP AS
-                SELECT e.slug, r.text_id, r.form, r.folded, r.occurrences, r.heading FROM entity_rendering r JOIN entity e ON e.id = r.entity_id;
+                SELECT k.slug, r.text_id, r.form, r.folded, r.occurrences, r.heading FROM entity_rendering r JOIN kept_ids k ON k.id = r.entity_id;
             CREATE TEMP TABLE kept_spellings ON COMMIT DROP AS
-                SELECT e.slug, s.form, s.folded FROM entity_search_spelling s JOIN entity e ON e.id = s.entity_id;
-            """, connection) { CommandTimeout = 0 };
-        await command.ExecuteNonQueryAsync(cancellationToken);
-    }
-
-    /// <summary>What <see cref="Keep"/> held, put back on the records of the same slug; the rows whose record is gone are counted.</summary>
-    private static async Task<long> Restore(NpgsqlConnection connection, CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            """
+                SELECT k.slug, s.form, s.folded FROM entity_search_spelling s JOIN kept_ids k ON k.id = s.entity_id;
+            TRUNCATE word_entity, entity_rendering, entity_search_spelling, record_spelling, record_position CASCADE;
             INSERT INTO word_entity (word_id, entity_id, method, confidence, source, note, role, origin)
                 SELECT k.word_id, e.id, k.method, k.confidence, k.source, k.note, k.role, k.origin FROM kept_names k JOIN entity e ON e.slug = k.slug;
             INSERT INTO entity_rendering (entity_id, text_id, form, folded, occurrences, heading)
@@ -298,6 +354,17 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                  + (SELECT count(*) FROM kept_renderings k WHERE NOT EXISTS (SELECT 1 FROM entity e WHERE e.slug = k.slug))
                  + (SELECT count(*) FROM kept_spellings k WHERE NOT EXISTS (SELECT 1 FROM entity e WHERE e.slug = k.slug));
             """, connection) { CommandTimeout = 0 };
-        return Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken));
+        var lost = Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken), CultureInfo.InvariantCulture);
+        await Reattach(connection, keys, cancellationToken);
+        return (true, lost);
+    }
+
+    private static async Task Reattach(NpgsqlConnection connection, List<(string Table, string Name, string Definition)> keys, CancellationToken cancellationToken)
+    {
+        foreach (var (table, name, definition) in keys)
+        {
+            await using var command = new NpgsqlCommand($"ALTER TABLE {table} ADD CONSTRAINT {name} {definition}", connection) { CommandTimeout = 0 };
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
     }
 }

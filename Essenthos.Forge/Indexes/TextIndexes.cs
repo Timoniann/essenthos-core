@@ -55,7 +55,7 @@ internal sealed class IndexContext
 
     /// <summary>What the names of a text's product depend on besides the product: the rules and records the projection's columns are read with.</summary>
     public IEnumerable<string> NamesInputs(string slug) =>
-        NamesProduct(slug) is null ? [] : [Names.NameProducts.Rules, Names.NamesProjection.RecordsProduct];
+        NamesProduct(slug) is null ? [] : [Names.NameProducts.Rules, Essenthos.Core.Records.RecordKinds.Product];
 
     /// <summary>A text's names as the indexes read them, from <see cref="NamesProduct"/>.</summary>
     public List<IndexedName> IndexedNamesOf(string slug) =>

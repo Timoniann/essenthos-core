@@ -27,7 +27,8 @@ internal sealed record RecordSpellingOutcome(string Text, bool Made, int Rows, T
 /// The spellings a record page reads (<c>record_spelling</c>, <see cref="RecordSpellings"/>): per text, how often it prints
 /// each form for each record under each Strong number. A product of the serving stage (<c>build/products</c>, maker
 /// <c>serve</c>): <c>build --into</c> counts every text once the database is filled, <c>build --apply</c> and
-/// <c>forge record-words</c> only the texts whose inputs moved, each replaced in a transaction of its own.
+/// <c>forge record-words</c> only the texts whose inputs moved, each replaced in a transaction of its own; a text whose product
+/// is current but whose rows the table lacks (a fresh database) takes them from the product.
 /// <c>record-spellings/&lt;SLUG&gt;</c> lists what the table holds for the text, records by slug, and names the products
 /// the counted tables were loaded from.
 /// </summary>
@@ -48,6 +49,7 @@ internal sealed class RecordSpellingBuild(string connectionString, ProductStore 
         var held = await db.RecordSpellings.GroupBy(s => s.TextId).Select(g => new { g.Key, Count = g.Count() })
             .ToDictionaryAsync(g => g.Key, g => g.Count, cancellationToken);
         var slugs = await db.Entities.Select(e => new { e.Id, e.Slug }).ToDictionaryAsync(e => e.Id, e => e.Slug, cancellationToken);
+        var ids = slugs.ToDictionary(s => s.Value, s => s.Key, StringComparer.Ordinal);
 
         var outcomes = new List<RecordSpellingOutcome>();
         foreach (var text in texts.Where(t => only is null || only.Contains(t.Slug)))
@@ -55,10 +57,23 @@ internal sealed class RecordSpellingBuild(string connectionString, ProductStore 
             var clock = Stopwatch.StartNew();
             var inputs = Inputs(text.Slug, texts.Select(t => t.Slug));
             var product = Product(text.Slug);
-            if (!force && !store.NeedsBuild(product, ProductKind.Machine, inputs) && Listed(product) == held.GetValueOrDefault(text.Id))
+            if (!force && !store.NeedsBuild(product, ProductKind.Machine, inputs))
             {
-                outcomes.Add(new RecordSpellingOutcome(text.Slug, false, held.GetValueOrDefault(text.Id), clock.Elapsed));
-                continue;
+                if (Listed(product) == held.GetValueOrDefault(text.Id))
+                {
+                    outcomes.Add(new RecordSpellingOutcome(text.Slug, false, held.GetValueOrDefault(text.Id), clock.Elapsed));
+                    continue;
+                }
+
+                // The product is current and the table does not hold it (a fresh database, or a records load emptied it): its
+                // rows are copied, each record found by slug, rather than counted again.
+                if (Stored(product, ids) is { } stored)
+                {
+                    await Replace(text.Id, stored, cancellationToken);
+                    logger.LogInformation("Record spellings of {Text}: {Rows} rows copied in {Seconds:0.0} s", text.Slug, stored.Count, clock.Elapsed.TotalSeconds);
+                    outcomes.Add(new RecordSpellingOutcome(text.Slug, true, stored.Count, clock.Elapsed));
+                    continue;
+                }
             }
 
             var counted = (await RecordSpellings.Count(db, text.Id, cancellationToken))
@@ -86,6 +101,24 @@ internal sealed class RecordSpellingBuild(string connectionString, ProductStore 
         return outcomes;
     }
 
+    /// <summary>A text's product's rows with each record's id, or null where a record it names is not in the database.</summary>
+    private List<RecordSpellingCount>? Stored(string product, IReadOnlyDictionary<string, int> ids)
+    {
+        using var reader = store.Open(product, RecordSpellingRow.Schema);
+        var rows = new List<RecordSpellingCount>();
+        foreach (var row in reader.Rows())
+        {
+            if (!ids.TryGetValue(row.Record, out var id))
+            {
+                return null;
+            }
+
+            rows.Add(new RecordSpellingCount(id, row.Number, row.Form, checked((int)row.Occurrences)));
+        }
+
+        return rows;
+    }
+
     /// <summary>How many rows a text's product lists, or -1 where there is none.</summary>
     private int Listed(string product)
     {
@@ -100,11 +133,11 @@ internal sealed class RecordSpellingBuild(string connectionString, ProductStore 
 
     /// <summary>
     /// The products the counted tables were loaded from, where this store holds them: the text's words and the names on
-    /// them, the records, and every text's words, whose Strong numbers a name carried from an original is counted under.
+    /// them, the records' slugs, and every text's words, whose Strong numbers a name carried from an original is counted under.
     /// </summary>
     internal List<ProductInput> Inputs(string text, IEnumerable<string> texts)
     {
-        var products = new List<string> { $"texts/{text}/words", NameProducts.Projected(text), "records/records" };
+        var products = new List<string> { $"texts/{text}/words", NameProducts.Projected(text), Records.RecordKinds.Product };
         products.AddRange(texts.Select(t => $"texts/{t}/words"));
         return [.. store.Inputs(products.Distinct(StringComparer.Ordinal).Select(store.Find).OfType<string>().Order(StringComparer.Ordinal))];
     }

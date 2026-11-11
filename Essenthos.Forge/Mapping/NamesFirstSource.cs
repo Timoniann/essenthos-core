@@ -63,7 +63,7 @@ internal sealed class NamesFirstSource : IPairSource
         MappingMethods.NameList, MappingMethods.Possessive,
     ];
 
-    public const string RecordsProduct = "records/records";
+    public const string RecordsProduct = Essenthos.Core.Records.RecordKinds.Product;
 
     public const string FoldsProduct = "records/folds";
 
@@ -201,6 +201,13 @@ internal sealed class NamesFirstSource : IPairSource
             var ids = new Dictionary<string, int>(StringComparer.Ordinal);
             var kinds = new List<string>();
             var aliases = new List<(string Slug, string Other)>();
+            if (!store.Exists(RecordsProduct) && store.Exists("records/records"))
+            {
+                throw new InvalidOperationException(
+                    $"names-pairs: {RecordsProduct} is missing while records/records is there, and without it every pair would lose its names " +
+                    "with no error. records-derive makes it (forge build runs it first).");
+            }
+
             if (store.Exists(RecordsProduct))
             {
                 using var reader = store.Open(RecordsProduct);
