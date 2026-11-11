@@ -1,0 +1,71 @@
+# product    Essenthos/mapping/UBIO-BHSA/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	4.10:29.7	4.10:29.7			the gentilic «мідіянітянина» renders the Hebrew gentilic (midianites), not the name of reuel-2 it stands beside
+accept	4.10:29.7	4.10:29.9	renders		the gentilic «мідіянітянина» renders the Hebrew gentilic (midianites), not the name of reuel-2 it stands beside
+refuse	7.6:11.14	7.6:11.15			the gentilic «аві-езріянину» renders the Hebrew gentilic (abiezrites), not the name of joash it stands beside
+accept	7.6:11.14	7.6:11.18	renders		the gentilic «аві-езріянину» renders the Hebrew gentilic (abiezrites), not the name of joash it stands beside
+refuse	7.13:2.7	7.13:2.6			the gentilic «данівець» renders the Hebrew gentilic (danites), not the name of zorah it stands beside
+accept	7.13:2.7	7.13:2.10	renders		the gentilic «данівець» renders the Hebrew gentilic (danites), not the name of zorah it stands beside
+refuse	9.22:9.3	9.22:9.3			the gentilic «ідумеянин» renders the Hebrew gentilic (edomites), not the name of doeg it stands beside
+accept	9.22:9.3	9.22:9.5	renders		the gentilic «ідумеянин» renders the Hebrew gentilic (edomites), not the name of doeg it stands beside
+refuse	9.22:18.13	9.22:18.16			the gentilic «ідумеянин» renders the Hebrew gentilic (edomites), not the name of doeg it stands beside
+accept	9.22:18.13	9.22:18.18	renders		the gentilic «ідумеянин» renders the Hebrew gentilic (edomites), not the name of doeg it stands beside
+refuse	9.22:22.12	9.22:22.14			the gentilic «ідумеянин» renders the Hebrew gentilic (edomites), not the name of doeg it stands beside
+accept	9.22:22.12	9.22:22.16	renders		the gentilic «ідумеянин» renders the Hebrew gentilic (edomites), not the name of doeg it stands beside
+refuse	9.30:5.9	9.30:5.6			the gentilic «їзреелітка» renders the Hebrew gentilic (jezreelites), not the name of ahinoam-2 it stands beside
+accept	9.30:5.9	9.30:5.8	renders		the gentilic «їзреелітка» renders the Hebrew gentilic (jezreelites), not the name of ahinoam-2 it stands beside
+refuse	10.2:2.10	10.2:2.9			the gentilic «їзреелітка» renders the Hebrew gentilic (jezreelites), not the name of ahinoam-2 it stands beside
+accept	10.2:2.10	10.2:2.11	renders		the gentilic «їзреелітка» renders the Hebrew gentilic (jezreelites), not the name of ahinoam-2 it stands beside
+refuse	10.17:5.6	10.17:5.8			the gentilic «аркеянина» renders the Hebrew gentilic (archites), not the name of hushai it stands beside
+accept	10.17:5.6	10.17:5.10	renders		the gentilic «аркеянина» renders the Hebrew gentilic (archites), not the name of hushai it stands beside
+refuse	10.17:14.10	10.17:14.10			the gentilic «аркеянина» renders the Hebrew gentilic (archites), not the name of hushai it stands beside
+accept	10.17:14.10	10.17:14.12	renders		the gentilic «аркеянина» renders the Hebrew gentilic (archites), not the name of hushai it stands beside
+refuse	10.20:26.3	10.20:26.3			the gentilic «яірянин» renders the Hebrew gentilic (jairites), not the name of ira it stands beside
+accept	10.20:26.3	10.20:26.5	renders		the gentilic «яірянин» renders the Hebrew gentilic (jairites), not the name of ira it stands beside
+refuse	10.21:8.27	10.21:8.30			the gentilic «мехолатянина» renders the Hebrew gentilic (mecholathites), not the name of adriel it stands beside
+accept	10.21:8.27	10.21:8.34	renders		the gentilic «мехолатянина» renders the Hebrew gentilic (mecholathites), not the name of adriel it stands beside
+refuse	10.23:36.7	10.23:36.5			the gentilic «ґадянин» renders the Hebrew gentilic (gadites), not the name of zobah it stands beside
+accept	10.23:36.7	10.23:36.8	renders		the gentilic «ґадянин» renders the Hebrew gentilic (gadites), not the name of zobah it stands beside
+refuse	11.21:4.16	11.21:4.15			the gentilic «їзреелянин» renders the Hebrew gentilic (jezreelites), not the name of naboth it stands beside
+accept	11.21:4.16	11.21:4.17	renders		the gentilic «їзреелянин» renders the Hebrew gentilic (jezreelites), not the name of naboth it stands beside
+refuse	13.3:1.14	13.3:1.13			the gentilic «їзреелітянки» renders the Hebrew gentilic (jezreelites), not the name of amnon it stands beside
+accept	13.3:1.14	13.3:1.17	renders		the gentilic «їзреелітянки» renders the Hebrew gentilic (jezreelites), not the name of amnon it stands beside
+refuse	13.11:33.1	13.11:33.1			the gentilic «бахарум'янин» renders the Hebrew gentilic (baharumites), not the name of azmaveth it stands beside
+accept	13.11:33.1	13.11:33.3	renders		the gentilic «бахарум'янин» renders the Hebrew gentilic (baharumites), not the name of azmaveth it stands beside
+refuse	13.11:34.2	13.11:34.2			the gentilic «ґізонянина» renders the Hebrew gentilic (gizonites), not the name of jashen it stands beside
+accept	13.11:34.2	13.11:34.4	renders		the gentilic «ґізонянина» renders the Hebrew gentilic (gizonites), not the name of jashen it stands beside
+refuse	13.11:37.1	13.11:37.1			the gentilic «кармелянин» renders the Hebrew gentilic (carmelites), not the name of hezro it stands beside
+accept	13.11:37.1	13.11:37.3	renders		the gentilic «кармелянин» renders the Hebrew gentilic (carmelites), not the name of hezro it stands beside
+refuse	13.11:43.5	13.11:43.5			the gentilic «мітнянин» renders the Hebrew gentilic (mithnites), not the name of joshaphat it stands beside
+accept	13.11:43.5	13.11:43.7	renders		the gentilic «мітнянин» renders the Hebrew gentilic (mithnites), not the name of joshaphat it stands beside
+refuse	13.12:4.2	13.12:4.2			the gentilic «ґів'онянин» renders the Hebrew gentilic (gibeonites), not the name of ishmaiah-2 it stands beside
+accept	13.12:4.2	13.12:4.4	renders		the gentilic «ґів'онянин» renders the Hebrew gentilic (gibeonites), not the name of ishmaiah-2 it stands beside
+refuse	13.12:4.18	13.12:5.8			the gentilic «ґедерянин» renders the Hebrew gentilic (gederathites), not the name of jozabad it stands beside
+accept	13.12:4.18	13.12:5.10	renders		the gentilic «ґедерянин» renders the Hebrew gentilic (gederathites), not the name of jozabad it stands beside
+refuse	13.27:29.9	13.27:29.10			the gentilic «шаронянин» renders the Hebrew gentilic (sharonites), not the name of shitrai it stands beside
+accept	13.27:29.9	13.27:29.12	renders		the gentilic «шаронянин» renders the Hebrew gentilic (sharonites), not the name of shitrai it stands beside
+refuse	16.2:19.4	16.2:19.3			the gentilic «хоронянин» renders the Hebrew gentilic (horonites), not the name of sanballat it stands beside
+accept	16.2:19.4	16.2:19.5	renders		the gentilic «хоронянин» renders the Hebrew gentilic (horonites), not the name of sanballat it stands beside
+refuse	16.13:28.12	16.13:28.13			the gentilic «хоронянина» renders the Hebrew gentilic (horonites), not the name of sanballat it stands beside
+accept	16.13:28.12	16.13:28.15	renders		the gentilic «хоронянина» renders the Hebrew gentilic (horonites), not the name of sanballat it stands beside
+refuse	18.2:11.20	18.2:11.20			the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+accept	18.2:11.20	18.2:11.22	renders		the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+refuse	18.4:1.3	18.4:1.3			the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+accept	18.4:1.3	18.4:1.5	renders		the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+refuse	18.15:1.3	18.15:1.3			the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+accept	18.15:1.3	18.15:1.5	renders		the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+refuse	18.22:1.3	18.22:1.3			the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+accept	18.22:1.3	18.22:1.5	renders		the gentilic «теманянин» renders the Hebrew gentilic (temanites), not the name of eliphaz-2 it stands beside
+refuse	18.32:6.3	18.32:6.3			the gentilic «бузянин» renders the Hebrew gentilic (buzites), not the name of elihu-5 it stands beside
+accept	18.32:6.3	18.32:6.7	renders		the gentilic «бузянин» renders the Hebrew gentilic (buzites), not the name of elihu-5 it stands beside
+refuse	24.38:7.3	24.38:7.3			the gentilic «мурин» renders the Hebrew gentilic (cushites), not the name of ebedmelech it stands beside
+accept	24.38:7.3	24.38:7.5	renders		the gentilic «мурин» renders the Hebrew gentilic (cushites), not the name of ebedmelech it stands beside
+refuse	24.38:12.3	24.38:12.3			the gentilic «мурин» renders the Hebrew gentilic (cushites), not the name of ebedmelech it stands beside
+accept	24.38:12.3	24.38:12.5	renders		the gentilic «мурин» renders the Hebrew gentilic (cushites), not the name of ebedmelech it stands beside
+refuse	24.39:16.5	24.39:16.5			the gentilic «мурина» renders the Hebrew gentilic (cushites), not the name of ebedmelech it stands beside
+accept	24.39:16.5	24.39:16.7	renders		the gentilic «мурина» renders the Hebrew gentilic (cushites), not the name of ebedmelech it stands beside
+refuse	24.40:8.23	24.40:8.23			the gentilic «нетофеянина» renders the Hebrew gentilic (netophathites), not the name of ephai it stands beside
+accept	24.40:8.23	24.40:8.25	renders		the gentilic «нетофеянина» renders the Hebrew gentilic (netophathites), not the name of ephai it stands beside
