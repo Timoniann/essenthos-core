@@ -20,11 +20,18 @@ internal static partial class ForgeVerbs
 
         // The build, the corpus measures and the releases.
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
-        new("build", "[--into <database> [--replace]] [--apply] [--level skip|essentials|all] [--parallel <n>] [--no-products]",
-            "Make every product whose inputs moved, in the order build/products declares, and fail on a read it does not declare; then fill "
-            + "a new database of the configured server from the products (--into), or replace in the configured one what moved since it was "
-            + "built (--apply); then verify at the level asked and write build/report-<n>. Never builds into the live corpus or the snapshot.",
+        new("build", "[--into <database> [--seed <database>] [--replace]] [--apply] [--owner-rows [--rows <file>]...] [--level skip|essentials|all] [--parallel <n>] [--no-products]",
+            "Apply the owner's decided rows to the store when asked (--owner-rows, as owner-rows does); make every product whose inputs moved, "
+            + "in the order build/products declares, and fail on a read it does not declare; then fill a new database of the configured server "
+            + "from the products (--into), or clone the seed into it and replace there what moved since the seed was built (--into --seed, the "
+            + "daily path), or replace in the configured one what moved since it was built (--apply); then verify at the level asked and write "
+            + "build/report-<n>. Never builds into the live corpus or the snapshot.",
             BuildVerb),
+        new("clone", "<from> <to> [--replace]",
+            "Copy a database build --into or --apply made into another of the configured server (CREATE DATABASE ... TEMPLATE, nobody may be "
+            + "connected to the first) with its build/served state, so build --apply on the copy takes only what moved. Before a swap: "
+            + "clone the next database into the seed. Never copies into or from the live corpus or the snapshot.",
+            CloneVerb, Least: 2, Most: 3),
         new("panes", "[<text,...>] [--force] [--parallel <n>]",
             "Write the parallel view's panes (one row of pane per text and canonical chapter) from the configured database, for the texts "
             + "named or every text whose inputs moved, and panes/<SLUG> beside them. Never writes the live corpus or the snapshot.",

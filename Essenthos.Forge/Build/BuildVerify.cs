@@ -47,6 +47,31 @@ internal static class ServedState
         store.Save();
     }
 
+    /// <summary>The note of a state copied with its database, naming the database it was copied from.</summary>
+    public const string ClonedNote = "cloned-from";
+
+    /// <summary>
+    /// The state of <paramref name="from"/> written as <paramref name="to"/>'s, inputs and their hashes, rows and notes as they
+    /// are, for a database copied whole from it.
+    /// </summary>
+    public static void Copy(ProductStore store, string from, string to)
+    {
+        var (header, rows) = Read(store, from) ?? throw new InvalidOperationException($"No {Product(from)} to copy.");
+        using var writer = store.Create(Product(to), ProductKind.Hand, ServedTable.Schema, ProductHeader.DescribeProducer($"forge clone {from} {to}"),
+            header.Inputs, copy =>
+            {
+                copy.Notes.AddRange(header.Notes.Where(n => n.Key != ClonedNote));
+                copy.Notes.Add(new(ClonedNote, from));
+            });
+        foreach (var (table, count) in rows.OrderBy(r => r.Key, StringComparer.Ordinal))
+        {
+            writer.Write(new ServedTable(table, count));
+        }
+
+        writer.Complete();
+        store.Save();
+    }
+
     public static (ProductHeader Header, Dictionary<string, long> Rows)? Read(ProductStore store, string database)
     {
         if (!store.Exists(Product(database)))
@@ -228,8 +253,7 @@ internal static class BuildVerify
         await using var reader = await command.ExecuteReaderAsync();
         await reader.ReadAsync();
         var (keys, unvalidated) = (reader.GetInt64(0), reader.GetInt64(1));
-        var built = ServedState.Read(store, database)?.Header.Notes.LastOrDefault(n => n.Key == ServedState.KeysNote).Value;
-        var pass = unvalidated == 0 && (built is null || long.Parse(built, CultureInfo.InvariantCulture) == keys);
+        var built = ServedState.Read(store, database)?.Header.Notes.LastOrDefault(n => n.Key == ServedState.KeysNote).Value;        var pass = unvalidated == 0 && (built is null || long.Parse(built, CultureInfo.InvariantCulture) == keys);
         report.AppendLine(CultureInfo.InvariantCulture,
             $"foreign keys: {keys} in place{(built is null ? "" : $", the build made {built}")}, {unvalidated} not validated{(pass ? "" : ": FAILS")}");
         return pass;

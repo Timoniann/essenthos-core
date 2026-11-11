@@ -1,11 +1,13 @@
 ﻿using System.Diagnostics;
 using Essenthos.Core.Conversion;
+using Essenthos.Core.Database;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Names;
 using Essenthos.Core.Products;
 using Essenthos.Core.Records;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Essenthos.Core.Build;
@@ -38,6 +40,19 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             return null;
         }
 
+        // A migration may change what the loads write into tables nothing here replaces, so a database behind this Forge's
+        // migrations (a seed cloned before they were merged) is built again, not applied.
+        using (var scope = services.CreateScope())
+        {
+            var pending = (await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.GetPendingMigrationsAsync(cancellationToken)).ToList();
+            if (pending.Count > 0)
+            {
+                logger.LogError("{Database} lacks {Count} migration(s) of this Forge ({Migrations}): build --into a new database", database, pending.Count,
+                    string.Join(", ", pending));
+                return null;
+            }
+        }
+
         var changed = Changed(served.Header);
         if (changed.Count == 0)
         {
@@ -46,8 +61,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             // The panes and what a record page reads of the words still answer for themselves: a database built before
             // them, or a product made since, is caught up.
             var catchUp = new ServingBuild(connectionString, store, services, logger);
-            var panes = await catchUp.Panes(null, false, PaneParallelism, cancellationToken);
-            if (panes + await catchUp.RecordWords(null, false, cancellationToken) > 0)
+            var caught = await catchUp.Panes(null, false, PaneParallelism, cancellationToken);
+            if (caught + await catchUp.RecordWords(null, false, cancellationToken) > 0)
             {
                 await catchUp.Count(cancellationToken);
                 await WriteServed(database, catchUp.Rows, cancellationToken);
@@ -62,6 +77,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var forms = new SortedSet<string>(StringComparer.Ordinal);
         var frames = new SortedSet<string>(StringComparer.Ordinal);
         var verses = new SortedSet<string>(StringComparer.Ordinal);
+        var panes = new SortedSet<string>(StringComparer.Ordinal);
+        var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, names = false, spellings = false;
         foreach (var product in changed)
         {
@@ -97,6 +114,15 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                     break;
                 case "texts/{text}/index/spellings":
                     spellings = true;
+                    break;
+                // The store lists one table of panes and record words; a list written since this database was served came
+                // from another database (a fresh build from the same store, an apply on another copy) and does not describe
+                // this one's rows, so those texts are read again even where the list's own inputs are current.
+                case "panes/{text}":
+                    panes.Add(bound["text"]);
+                    break;
+                case "record-spellings/{text}" or "record-positions/{text}":
+                    recordWords.Add(bound["text"]);
                     break;
                 case var p when p.StartsWith("records/", StringComparison.Ordinal) || p.StartsWith("external/", StringComparison.Ordinal):
                     records = true;
@@ -198,8 +224,18 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         });
 
         // The panes and what a record page reads of the words read what the steps above left, so they come last; only the
-        // texts whose inputs moved are made again.
+        // texts whose inputs moved are made again, and those whose list moved since this database was served.
+        if (panes.Count > 0)
+        {
+            await serving.Panes(panes, true, PaneParallelism, cancellationToken);
+        }
+
         await serving.Panes(null, false, PaneParallelism, cancellationToken);
+        if (recordWords.Count > 0)
+        {
+            await serving.RecordWords(recordWords, true, cancellationToken);
+        }
+
         await serving.RecordWords(null, false, cancellationToken);
         await serving.Count(cancellationToken);
         await WriteServed(database, serving.Rows, cancellationToken);
