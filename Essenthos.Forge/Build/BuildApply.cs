@@ -80,7 +80,6 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var verses = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, names = false, spellings = false;
-        var movedRecords = new HashSet<string>(StringComparer.Ordinal);
         foreach (var product in changed)
         {
             if (graph.Find(product) is not { } line)
@@ -125,7 +124,6 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                     break;
                 case var p when p.StartsWith("records/", StringComparison.Ordinal) || p.StartsWith("external/", StringComparison.Ordinal):
                     records = true;
-                    movedRecords.Add(PaneInputs.ProductOf(product));
                     break;
             }
         }
@@ -171,17 +169,14 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             if (records)
             {
                 var kept = await Detach(connection, cancellationToken);
-                var (loaded, left) = await RecordFiles.LoadMoved(connection, transaction, store, movedRecords, cancellationToken);
-                foreach (var (_, count) in loaded)
+                var took = new List<(string File, TimeSpan Elapsed)>();
+                foreach (var (_, count) in await RecordFiles.Load(connection, transaction, store, cancellationToken, (file, elapsed) => took.Add((file, elapsed))))
                 {
                     rows += Math.Max(count, 0);
                 }
 
-                foreach (var group in left)
-                {
-                    logger.LogInformation("apply: records left as they stand (nothing they share moved): {Group}", group);
-                }
-
+                logger.LogInformation("apply: the slowest record files: {Files}",
+                    string.Join(", ", took.OrderByDescending(t => t.Elapsed).Take(5).Select(t => $"{t.File} {t.Elapsed.TotalSeconds:0.0} s")));
                 Done("records");
                 var (moved, lost) = await Attach(connection, kept, cancellationToken);
                 if (lost > 0)

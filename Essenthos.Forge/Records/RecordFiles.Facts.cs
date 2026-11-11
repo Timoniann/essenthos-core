@@ -303,7 +303,7 @@ internal static partial class RecordFiles
             JOIN person_occupation p ON p.person_id = e.id AND p.occupation_id = o.id
             JOIN text t ON t.slug = s.text
             JOIN book b ON b.text_id = t.id AND b.canonical_ordinal = s.k[1]::int
-            JOIN verse v ON v.book_id = b.id AND v.chapter_number = s.k[2]::int AND v.number = s.k[3]::int AND v.label = s.k[4]
+            JOIN verse v ON v.text_id = t.id AND v.book_id = b.id AND v.chapter_number = s.k[2]::int AND v.number = s.k[3]::int AND v.label = s.k[4]
             JOIN word x ON x.verse_id = v.id AND x.position = s.k[5]::int
             ORDER BY s.person, s.occupation, s.text, s.own
             """,
