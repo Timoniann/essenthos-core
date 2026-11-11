@@ -80,6 +80,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var verses = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, names = false, spellings = false;
+        var movedRecords = new HashSet<string>(StringComparer.Ordinal);
         foreach (var product in changed)
         {
             if (graph.Find(product) is not { } line)
@@ -124,6 +125,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                     break;
                 case var p when p.StartsWith("records/", StringComparison.Ordinal) || p.StartsWith("external/", StringComparison.Ordinal):
                     records = true;
+                    movedRecords.Add(PaneInputs.ProductOf(product));
                     break;
             }
         }
@@ -169,9 +171,15 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             if (records)
             {
                 var kept = await Detach(connection, cancellationToken);
-                foreach (var (_, count) in await RecordFiles.Load(connection, transaction, store, cancellationToken))
+                var (loaded, left) = await RecordFiles.LoadMoved(connection, transaction, store, movedRecords, cancellationToken);
+                foreach (var (_, count) in loaded)
                 {
                     rows += Math.Max(count, 0);
+                }
+
+                foreach (var group in left)
+                {
+                    logger.LogInformation("apply: records left as they stand (nothing they share moved): {Group}", group);
                 }
 
                 Done("records");

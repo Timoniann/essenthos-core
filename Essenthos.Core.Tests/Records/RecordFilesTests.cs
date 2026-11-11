@@ -19,6 +19,19 @@ public sealed class RecordFilesTests : IDisposable
     }
 
     [Fact]
+    public void TheCrossReferencesLoadApartFromTheRecordsAndTheOccupationsWithThem()
+    {
+        var groups = RecordFiles.Groups(RecordFiles.All, [("occupation_word", "person_occupation"), ("topic_reference", "topic")]);
+        List<RecordFile> Of(string product) => groups.Single(g => g.Any(f => f.Product == product));
+
+        Of("external/tsk/cross-references").Select(f => f.Product).Should().BeEquivalentTo(
+            "external/openbible/cross-references", "external/tsk/cross-references", "records/derived/parallels");
+        Of("external/bibledata/topic-references").Select(f => f.Product).Should().BeEquivalentTo(
+            "external/bibledata/topics", "external/bibledata/topic-references");
+        Of("records/facts/person-occupations").Should().Contain(f => f.Product == "records/records", "an occupation names its holder by slug");
+    }
+
+    [Fact]
     public void NoRecordFileCarriesADatasetSource()
     {
         var records = RecordFiles.All.Single(f => f.Product == "records/records");
