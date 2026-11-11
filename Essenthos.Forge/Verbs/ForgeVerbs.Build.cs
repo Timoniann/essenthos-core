@@ -126,12 +126,23 @@ internal static partial class ForgeVerbs
             var serving = new ServingBuild(forge.DatabaseConnection, store, forge.Scope().ServiceProvider, forge.Logger);
             await serving.Create(args.Contains("--replace"), CancellationToken.None);
             await serving.Fill(parallel, CancellationToken.None);
+
+            // The whole verification reads nothing build/served holds, so it runs while the foreign keys are validated; the
+            // essentials hold the database to build/served and find every key validated, so they wait for both. build/served is
+            // written only once every key holds.
+            var verify = Stopwatch.StartNew();
+            var verifying = level == BuildVerify.Essentials
+                ? null
+                : BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, null, CorpusCheck.RenderedFloor,
+                    forge.Logger, analyzed: true);
+            await serving.Validating;
             var keys = await ForeignKeys(forge.DatabaseConnection);
             ServedState.Write(store, graph, serving.Database, serving.Rows, keys, $"forge build --into {serving.Database}");
             stages.AddRange(serving.Stages);
-            var verify = Stopwatch.StartNew();
-            verified = await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, null, CorpusCheck.RenderedFloor,
-                forge.Logger);
+            verified = verifying is not null
+                ? await verifying
+                : await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, null, CorpusCheck.RenderedFloor,
+                    forge.Logger, analyzed: true);
             stages.Add(new BuildStage("verify", level, verify.Elapsed, 0, verified ? "passed" : "FAILED"));
         }
         else if (args.Contains("--apply"))
@@ -284,8 +295,9 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// <c>panes [&lt;text,...&gt;] [--force] [--parallel n]</c>: the panes of the configured database, for the texts whose inputs
-    /// moved (every text named with <c>--force</c>), with their products in the configured Resources.
+    /// <c>panes [&lt;text,...&gt;] [--force] [--parallel n]</c>: the panes of the configured database, read again where a
+    /// chapter's inputs moved (every chapter of the texts named with <c>--force</c>), copied from the products in the configured
+    /// Resources where they did not.
     /// </summary>
     private static async Task<int> PanesVerb(ForgeRun forge, string[] args)
     {
@@ -296,13 +308,14 @@ internal static partial class ForgeVerbs
         foreach (var outcome in outcomes)
         {
             Console.WriteLine(outcome.Made
-                ? $"{outcome.Text,-14} {outcome.Panes,6} panes {outcome.Words,10} words {outcome.Bytes,12} bytes {outcome.Compressed,11} compressed {outcome.Elapsed.TotalSeconds,7:0.0} s"
+                ? $"{outcome.Text,-14} {outcome.Panes,6} panes {outcome.Read,6} read {outcome.Copied,6} copied {outcome.Words,10} words {outcome.Bytes,12} bytes {outcome.Compressed,11} compressed {outcome.Elapsed.TotalSeconds,7:0.0} s"
                 : $"{outcome.Text,-14} {outcome.Panes,6} panes  current");
         }
 
         var made = outcomes.Where(o => o.Made).ToList();
-        Console.WriteLine($"{made.Count} texts made, {outcomes.Count - made.Count} current: {made.Sum(o => o.Panes)} panes, {made.Sum(o => o.Words)} words, "
-                          + $"{made.Sum(o => o.Bytes)} bytes of JSON, {made.Sum(o => o.Compressed)} compressed, in {clock.Elapsed.TotalSeconds:0.0} s");
+        Console.WriteLine($"{made.Count} texts changed, {outcomes.Count - made.Count} current: {made.Sum(o => o.Read)} panes read, {made.Sum(o => o.Copied)} rows copied "
+                          + $"or deleted, {made.Sum(o => o.Words)} words, {made.Sum(o => o.Bytes)} bytes of JSON, {made.Sum(o => o.Compressed)} compressed, "
+                          + $"in {clock.Elapsed.TotalSeconds:0.0} s");
         return 0;
     }
 

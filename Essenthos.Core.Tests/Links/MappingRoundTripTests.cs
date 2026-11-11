@@ -102,6 +102,71 @@ public sealed class MappingRoundTripTests : IDisposable
         Rows(store, "stated")[0].Roles.Should().Be("1.1:1.2=attached@1.1:1.3");
     }
 
+    [Fact]
+    public async Task ReplacingAPairTouchesOnlyTheLinksWhoseFinalRowsChanged()
+    {
+        var kjv = await Words("KJV");
+        var bhsa = await Words("BHSA");
+        var (from, to) = (await Text("KJV"), await Text("BHSA"));
+        await using (var connection = _database.NewConnection())
+        {
+            await connection.OpenAsync();
+            await LinkWriter.Write(connection, null,
+            [
+                new NewLink(from, to, LinkRelation.Renders, LinkMethod.StatedBySource, null, Berean, null, [kjv[0], kjv[1], kjv[2]], [bhsa[0], bhsa[1]]),
+                new NewLink(from, to, LinkRelation.Renders, LinkMethod.StrongNumber, 0.9, "Zefania KJV+ Strong numbers", null, [kjv[3]], [bhsa[2]]),
+            ], CancellationToken.None);
+        }
+
+        var connectionString = _database.NewConnection().ConnectionString;
+        var store = new ProductStore(Path.Combine(_root, "first"));
+        await MappingExport.Run(connectionString, store, null, (_, _) => true, 1, NullLogger.Instance, CancellationToken.None);
+        MappingFiles.Merge(store, "KJV-BHSA", force: false);
+        await MappingLoad.Run(connectionString, store, NullLogger.Instance, CancellationToken.None);
+        var claims = await Claims();
+
+        List<FinalRow> final;
+        using (var reader = store.Open(MappingProducts.Of("KJV-BHSA", MappingProducts.Final), FinalRow.Schema))
+        {
+            final = reader.ReadAll();
+        }
+
+        var strong = final.Single(r => r.Method == "strong").Id;
+        using (var writer = store.Create(MappingProducts.Of("KJV-BHSA", MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "test", []))
+        {
+            writer.WriteAll(final.Select(r => r.Id == strong ? r with { Confidence = 0.95 } : r));
+        }
+
+        await using (var connection = _database.NewConnection())
+        {
+            await connection.OpenAsync();
+            await using var transaction = await connection.BeginTransactionAsync();
+            var outcome = await MappingLoad.ReplacePairs(connection, store, ["KJV-BHSA"], NullLogger.Instance, CancellationToken.None);
+            await transaction.CommitAsync();
+            outcome.Links.Should().Be(1, "only the link whose claim changed is copied again");
+        }
+
+        var after = await Claims();
+        after.Where(c => c.Link != strong).Should().Equal(claims.Where(c => c.Link != strong), "a link the final holds as it was keeps its rows");
+        after.Where(c => c.Link == strong).Select(c => c.Id).Should().NotIntersectWith(claims.Where(c => c.Link == strong).Select(c => c.Id));
+        (await Stored()).Should().ContainSingle(row => row.Contains("0.95"));
+    }
+
+    private async Task<List<(long Link, long Id)>> Claims()
+    {
+        await using var connection = _database.NewConnection();
+        await connection.OpenAsync();
+        await using var command = new NpgsqlCommand("SELECT link_id, id FROM link_claim ORDER BY link_id, id", connection);
+        var rows = new List<(long, long)>();
+        await using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            rows.Add((reader.GetInt64(0), reader.GetInt64(1)));
+        }
+
+        return rows;
+    }
+
     private static List<MappingRow> Rows(ProductStore store, string method)
     {
         using var reader = store.Open(MappingProducts.Of("KJV-BHSA", method), MappingRow.Schema);

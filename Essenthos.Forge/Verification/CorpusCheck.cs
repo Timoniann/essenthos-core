@@ -610,6 +610,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
            AND NOT EXISTS (SELECT 1 FROM walk w WHERE w.start = p.other AND w.up = p.one)
          """;
 
+    /// <summary>The integrity checks that read faster with merge joins off (the word table's id order is no order on disk): 35 s against 49 s.</summary>
+    private static readonly HashSet<string> HashedChecks = new(StringComparer.Ordinal) { "word links crossing a verse pair no verse link joins" };
+
     /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
@@ -1065,8 +1068,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// <summary>
     /// The measures <paramref name="wanted"/> names (by the name each is logged under, or <c>integrity</c> for every integrity
     /// check), or all of them; a measure not asked for comes back empty and an integrity check not asked for is left out.
+    /// <paramref name="analyzed"/> says the caller has just analyzed every table it wrote, so the statistics are not taken again
+    /// (a build validating its foreign keys meanwhile holds the lock ANALYZE waits for).
     /// </summary>
-    public async Task<CorpusMeasures> Measure(Func<string, bool>? wanted, CancellationToken cancellationToken = default)
+    public async Task<CorpusMeasures> Measure(Func<string, bool>? wanted, CancellationToken cancellationToken = default, bool analyzed = false)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -1077,8 +1082,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // earlier, smaller state of the table — make the contention sweep nest a loop over every
         // link; it then does not finish in fifteen minutes, where with fresh statistics it takes a
         // second.
-        await using (var analyze = new NpgsqlCommand("ANALYZE", connection))
+        if (!analyzed)
         {
+            await using var analyze = new NpgsqlCommand("ANALYZE", connection);
             await analyze.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -1097,15 +1103,18 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         };
 
         var stranded = sessions.Read("stranded", StrandedSql, reader => new Stranded(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)), hashed: true);
 
         var coverage = sessions.Read("coverage", CoverageSql, reader => new Coverage(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6),
             (int)reader.GetInt64(7), (int)reader.GetInt64(8)));
 
+        // Word ids are hashes of their keys, so the word table's id order is no order on disk: a merge join that walks it by id
+        // reads its pages at random. Hashed instead, unaligned took 48 s where it took 108 s, contention 54 s where 76 s and
+        // stranded 45 s where 52 s (2026-11-11, the same rows); reach and coverage gain nothing and stay as they are.
         var unaligned = sessions.Read("unaligned", UnalignedSql, reader => new Unaligned(
-            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)));
+            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)), hashed: true);
 
         var pairing = sessions.Read("pairing", PairingSql, reader => new Pairing(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
@@ -1113,7 +1122,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
         var contention = sessions.Read("contention", ContentionSql, reader => new Contention(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-            (int)reader.GetInt64(4), (int)reader.GetInt64(5)));
+            (int)reader.GetInt64(4), (int)reader.GetInt64(5)), hashed: true);
 
         // Single-threaded, deliberately. These sweep every link in the corpus, and Postgres
         // parallelises them across workers that share their sort state through /dev/shm — which a
@@ -1123,7 +1132,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // repository's compose file; not needing it belongs here.
         var integrity = Integrity
             .Select(check => sessions.Read(check.Breaks, check.Sql,
-                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true, integrity: true))
+                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true, integrity: true, hashed: HashedChecks.Contains(check.Breaks)))
             .ToList();
 
         var reach = sessions.Read("reach", ReachSql,
@@ -1227,24 +1236,30 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         CancellationToken cancellationToken)
     {
         /// <summary>
-        /// Seconds each measure took on the whole corpus with six sessions (2026-10-21), so the longest
+        /// Seconds each measure took on the whole corpus with six sessions (2026-11-11), so the longest
         /// start first and the last to start are short. Only the order they start in comes from here.
         /// </summary>
         private static readonly Dictionary<string, double> Expected = new(StringComparer.Ordinal)
         {
-            ["contention"] = 68,
-            ["word links crossing a verse pair no verse link joins"] = 67,
-            ["stranded"] = 60,
-            ["link words whose text disagrees with the link's own"] = 53,
-            ["unaligned"] = 47,
-            ["coverage"] = 45,
-            ["reach"] = 27,
-            ["crowding"] = 25,
-            ["words shown as having no counterpart and as rendered at once"] = 21,
-            ["pairing"] = 20,
-            ["agreement"] = 11,
+            ["unaligned"] = 50,
+            ["contention"] = 55,
+            ["reach"] = 64,
+            ["coverage"] = 58,
+            ["word links crossing a verse pair no verse link joins"] = 57,
+            ["stranded"] = 45,
+            ["link words whose text disagrees with the link's own"] = 47,
+            ["words shown as having no counterpart and as rendered at once"] = 31,
+            ["crowding"] = 28,
+            ["pairing"] = 19,
+            ["agreement"] = 15,
+            ["absences whose relation contradicts the side the words are on"] = 14,
+            ["links naming no word on either side"] = 12,
+            ["cross references and topic verses naming a verse no text places"] = 12,
             ["links no claim stands on, so nothing says what asserted them"] = 9,
-            ["verse links saying again what another link of the same pair says"] = 8,
+            ["words going with a word of another text, or on a link that renders nothing"] = 7,
+            ["absence"] = 6,
+            ["variation"] = 6,
+            ["verse links saying again what another link of the same pair says"] = 6,
         };
 
         private readonly List<(double Expected, Func<Task> Start)> _waiting = [];
@@ -1259,7 +1274,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             Func<NpgsqlDataReader, T> row,
             Action<NpgsqlCommand>? parameters = null,
             bool singleThreaded = false,
-            bool integrity = false)
+            bool integrity = false,
+            bool hashed = false)
         {
             if (!Wanted(what) && !(integrity && Wanted(IntegrityName)))
             {
@@ -1271,7 +1287,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             {
                 try
                 {
-                    result.SetResult(await Measure(what, sql, row, parameters, singleThreaded));
+                    result.SetResult(await Measure(what, sql, row, parameters, singleThreaded, hashed));
                 }
                 catch (Exception exception)
                 {
@@ -1307,7 +1323,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             string sql,
             Func<NpgsqlDataReader, T> row,
             Action<NpgsqlCommand>? parameters,
-            bool singleThreaded)
+            bool singleThreaded,
+            bool hashed)
         {
             var took = Stopwatch.StartNew();
             await using var opened = Degree > 1 ? own.CloneWith(own.ConnectionString) : null;
@@ -1322,6 +1339,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                 await Execute(connection, "SET max_parallel_workers_per_gather = 0");
             }
 
+            if (hashed)
+            {
+                await Execute(connection, "SET enable_mergejoin = off");
+            }
+
             List<T> rows;
             try
             {
@@ -1332,6 +1354,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                 if (singleThreaded)
                 {
                     await Execute(connection, "RESET max_parallel_workers_per_gather");
+                }
+
+                if (hashed)
+                {
+                    await Execute(connection, "RESET enable_mergejoin");
                 }
             }
 

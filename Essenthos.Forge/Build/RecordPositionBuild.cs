@@ -46,7 +46,7 @@ internal sealed class RecordPositionBuild(string connectionString, ProductStore 
         var held = await db.RecordPositions.CountAsync(p => p.TextId == text.Id, cancellationToken);
         var product = Product(text.Slug);
         var inputs = store.Inputs(
-            new[] { $"texts/{text.Slug}/words", $"texts/{text.Slug}/verses", $"texts/{text.Slug}/books", NameProducts.Projected(text.Slug), "records/records" }
+            new[] { $"texts/{text.Slug}/words", $"texts/{text.Slug}/verses", $"texts/{text.Slug}/books", NameProducts.Projected(text.Slug), Records.RecordKinds.Product }
                 .Select(store.Find).OfType<string>().Order(StringComparer.Ordinal)).ToList();
         if (!force && !store.NeedsBuild(product, ProductKind.Machine, inputs) && Listed(product) == held)
         {

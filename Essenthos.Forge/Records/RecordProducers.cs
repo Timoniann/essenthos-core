@@ -28,6 +28,7 @@ internal static class RecordProducers
     /// </summary>
     public static List<(string Product, long Rows)> Derive(ProductStore from, ProductStore into, string openBible) =>
     [
+        RecordKinds.Write(from, into),
         Relationships(from, into),
         .. Locations(from, into, openBible),
         .. Images(from, into),

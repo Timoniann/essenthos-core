@@ -106,7 +106,8 @@ internal static class BuildVerify
         IReadOnlySet<string>? texts,
         IReadOnlyCollection<string>? touchedPairs,
         double floor,
-        ILogger logger)
+        ILogger logger,
+        bool analyzed = false)
     {
         if (level == Skip && only is null)
         {
@@ -118,14 +119,14 @@ internal static class BuildVerify
         var check = scope.ServiceProvider.GetRequiredService<CorpusCheck>();
         if (only is not null)
         {
-            var measured = Keep(await check.Measure(only.Contains, CancellationToken.None), texts);
+            var measured = Keep(await check.Measure(only.Contains, CancellationToken.None, analyzed), texts);
             logger.LogInformation("\n{Report}", measured.Describe());
             return only.Contains("coverage") ? CorpusGate.Pass(measured, floor, logger) : measured.Broken == 0;
         }
 
         if (level == All)
         {
-            var measures = await check.Measure();
+            var measures = await check.Measure(null, CancellationToken.None, analyzed);
             await check.Record(measures);
             measures = Keep(measures, texts);
             logger.LogInformation("\n{Report}", measures.Describe());
@@ -146,7 +147,7 @@ internal static class BuildVerify
         var report = new StringBuilder();
         var pass = await Counts(connectionString, store, database, report);
         pass &= await Keys(connectionString, store, database, report);
-        var coverage = Keep(await check.Measure(name => name is "coverage" or "unaligned" or "pairing", CancellationToken.None), texts);
+        var coverage = Keep(await check.Measure(name => name is "coverage" or "unaligned" or "pairing", CancellationToken.None, analyzed), texts);
         if (touchedPairs is not null)
         {
             coverage = coverage with { Pairing = [.. coverage.Pairing.Where(p => touchedPairs.Contains($"{p.Text}-{p.Against}") || touchedPairs.Contains($"{p.Against}-{p.Text}"))] };

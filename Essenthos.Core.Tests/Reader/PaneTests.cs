@@ -4,6 +4,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Names;
 using Essenthos.Core.Products;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -185,17 +186,18 @@ public sealed class PaneBuildTests : IDisposable
         Make(store, "texts/KJV/words", "one");
         Make(store, "texts/BSB/words", "one");
 
-        var first = await Run(store);
+        var first = await Run(store, Pair);
         first.Where(o => o.Made).Select(o => o.Text).Should().BeEquivalentTo("BSB", "KJV");
         first.Single(o => o.Text == "KJV").Panes.Should().Be(2);
-        (await Held()).Should().Be(3);
+        (await Held(Pair)).Should().Be(3);
 
-        (await Run(store)).Should().OnlyContain(o => !o.Made, "nothing a pane reads has moved");
+        (await Run(store, Pair)).Should().OnlyContain(o => !o.Made, "nothing a pane reads has moved");
 
         Make(store, "texts/BSB/words", "two");
-        var third = await Run(store);
+        var third = await Run(store, Pair);
         third.Where(o => o.Made).Select(o => o.Text).Should().Equal("BSB");
-        (await Held()).Should().Be(3, "a text's panes are replaced, not added to");
+        third.Single(o => o.Text == "BSB").Read.Should().Be(1);
+        (await Held(Pair)).Should().Be(3, "a text's panes are replaced, not added to");
 
         await using (var connection = _database.NewConnection())
         {
@@ -204,7 +206,41 @@ public sealed class PaneBuildTests : IDisposable
             await delete.ExecuteNonQueryAsync();
         }
 
-        (await Run(store)).Where(o => o.Made).Select(o => o.Text).Should().Equal(["KJV"], "the table no longer holds what KJV's product lists");
+        var fourth = await Run(store, Pair);
+        fourth.Where(o => o.Made).Select(o => o.Text).Should().Equal(["KJV"], "the table no longer holds what KJV's product keeps");
+        fourth.Single(o => o.Text == "KJV").Should().Match<PaneOutcome>(o => o.Read == 0 && o.Copied == 1, "the body is copied from the product, not read again");
+        (await Held(Pair)).Should().Be(3);
+    }
+
+    [Fact]
+    public async Task ANameOnOneChapterReadsThatChapterAgainAndCopiesTheRest()
+    {
+        await using (var db = _database.NewContext())
+        {
+            Corpus.Add(db, "ASV", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning"]), (2, 1, ["Thus"]));
+            db.SaveChanges();
+        }
+
+        var store = new ProductStore(_root);
+        Make(store, "texts/ASV/words", "one");
+        (await Run(store, "ASV")).Single().Read.Should().Be(2);
+
+        await using (var connection = _database.NewConnection())
+        {
+            await connection.OpenAsync();
+            await using var delete = new Npgsql.NpgsqlCommand("DELETE FROM pane WHERE text_id = (SELECT id FROM text WHERE slug = 'ASV')", connection);
+            await delete.ExecuteNonQueryAsync();
+        }
+
+        using (var names = store.Create(NameProducts.Projected("ASV"), ProductKind.Machine, ProjectedName.Schema("ASV"), "test", []))
+        {
+            names.Write(new ProjectedName(WordKey.Parse("1.1:1.3", "ASV"), "adam", "name", "settled", null, "manual", null, "test"));
+            names.Complete();
+        }
+
+        var outcome = (await Run(store, "ASV")).Single();
+        outcome.Should().Match<PaneOutcome>(o => o.Made && o.Read == 1 && o.Copied == 2, "Genesis 1's names moved and Genesis 2's inputs did not");
+        (await Held("ASV")).Should().Be(2);
     }
 
     private void Make(ProductStore store, string product, string value)
@@ -214,18 +250,20 @@ public sealed class PaneBuildTests : IDisposable
         writer.Complete();
     }
 
-    private async Task<IReadOnlyList<PaneOutcome>> Run(ProductStore store)
+    private static readonly string[] Pair = ["KJV", "BSB"];
+
+    private async Task<IReadOnlyList<PaneOutcome>> Run(ProductStore store, params string[] texts)
     {
         var services = new ServiceCollection();
         services.AddScoped(_ => _database.NewContext());
         await using var provider = services.BuildServiceProvider(validateScopes: true);
         await using var connection = _database.NewConnection();
-        return await new PaneBuild(connection.ConnectionString, store, provider, NullLogger.Instance).Run(null, false, 4, default);
+        return await new PaneBuild(connection.ConnectionString, store, provider, NullLogger.Instance).Run(texts, false, 4, default);
     }
 
-    private async Task<int> Held()
+    private async Task<int> Held(params string[] texts)
     {
         await using var db = _database.NewContext();
-        return await db.Panes.CountAsync();
+        return await db.Panes.CountAsync(p => texts.Contains(db.Texts.Single(t => t.Id == p.TextId).Slug));
     }
 }

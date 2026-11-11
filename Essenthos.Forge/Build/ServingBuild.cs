@@ -30,9 +30,10 @@ internal sealed record BuildStage(string Stage, string What, TimeSpan Elapsed, l
 
 /// <summary>
 /// A serving database made from the products alone (DOC-0224 §13): created and migrated, every secondary index and foreign
-/// key dropped, the tables filled by COPY (texts first, then every other load at once, each after the loads it reads, while
-/// the texts' indexes are made), the other indexes made again in parallel, ANALYZE, then the panes and the record words
-/// counted while the foreign keys are added and validated. It never touches the live corpus or the shared snapshot.
+/// key dropped, the tables filled by COPY (the texts and the links at once, then every other load, each after the loads it
+/// reads, while the texts' indexes are made), the other indexes made again in parallel, ANALYZE, the foreign keys put back
+/// unvalidated, then the panes and the record words while the keys are validated (<see cref="Validating"/>). It never touches
+/// the live corpus or the shared snapshot.
 /// </summary>
 internal sealed class ServingBuild(string connectionString, ProductStore store, IServiceProvider services, ILogger logger)
 {
@@ -87,9 +88,28 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         });
     }
 
+    /// <summary>
+    /// The foreign keys being validated once <see cref="Fill"/> has returned: every key is in place by then, enforced on what
+    /// is written next, and the rows already in are checked meanwhile. It fails when one does not hold.
+    /// </summary>
+    public Task<long> Validating { get; private set; } = Task.FromResult(0L);
+
     public async Task Fill(int parallel, CancellationToken cancellationToken)
     {
         var (indexes, keys) = await Unindex(cancellationToken);
+
+        // The links need no row of the texts: a word's id is its key's and a text's id its place in the text load's order,
+        // and every key was already found among the words by the file checks. So they load beside the texts.
+        var mapping = Timed("load", "mapping", async () =>
+        {
+            var outcome = await MappingLoad.Run(connectionString, store, logger, cancellationToken, await Task.Run(() => ProductWords.Read(store), cancellationToken));
+            if (outcome.Unresolved > 0)
+            {
+                throw new InvalidOperationException($"{outcome.Unresolved} links name a word key the texts do not hold.");
+            }
+
+            return outcome.Links;
+        });
         var groups = await Timed("load", "texts", async () =>
         {
             var (outcome, collected) = await TextLoad.Run(connectionString, store, parallel, cancellationToken);
@@ -125,16 +145,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         // once along the chains their reads make: the names and the spellings wait for the records, the word groups for
         // the carried word_group rows whose highest id they number after.
         await Task.WhenAll(
-            Timed("load", "mapping", async () =>
-            {
-                var outcome = await MappingLoad.Run(connectionString, store, logger, cancellationToken);
-                if (outcome.Unresolved > 0)
-                {
-                    throw new InvalidOperationException($"{outcome.Unresolved} links name a word key the texts do not hold.");
-                }
-
-                return outcome.Links;
-            }),
+            mapping,
             RecordsThenNames(cancellationToken),
             CarriedThenGroups(groups.collected, cancellationToken),
             frame,
@@ -151,13 +162,14 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             return 0;
         });
 
-        // The panes and the record words read the same filled and indexed tables and write tables of their own; the foreign
-        // keys only read the tables they check, so they are added and validated meanwhile, and the build fails as before when
-        // one does not hold.
+        // Every foreign key goes back unvalidated, which takes no time and enforces it on every row written from here on; the
+        // rows already in are validated meanwhile, beside the panes and the record words (which read the filled tables and
+        // write their own) and whatever the caller runs next, and the build fails when one does not hold (Validating).
+        await Timed("database", "foreign keys", () => AddKeys(keys, cancellationToken));
+        Validating = Timed("database", "foreign keys validated", () => ValidateKeys(keys, sizes, parallel, cancellationToken));
         await Task.WhenAll(
-            Timed("database", "foreign keys", () => AddKeys(keys, sizes, parallel, cancellationToken)),
-            Panes(null, true, parallel, cancellationToken),
-            RecordWords(null, true, cancellationToken));
+            Panes(null, false, parallel, cancellationToken),
+            RecordWords(null, false, cancellationToken));
         await Count(cancellationToken);
     }
 
@@ -212,22 +224,23 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
     }
 
     /// <summary>
-    /// The panes of the texts named (every text when null) whose inputs moved, or all of them when <paramref name="force"/>
-    /// is set (a fresh database holds none), read from the tables as they now stand.
+    /// The panes of the texts named (every text when null): read from the tables as they now stand where a chapter's inputs
+    /// moved (every chapter when <paramref name="force"/> is set), copied from the products where they did not, and the table
+    /// matched to the products. Returns the rows of the table read or copied.
     /// </summary>
     public Task<long> Panes(IReadOnlyCollection<string>? texts, bool force, int parallel, CancellationToken cancellationToken) =>
         Timed("load", "panes", async () =>
         {
             var outcomes = await new PaneBuild(connectionString, store, services, logger).Run(texts, force, parallel, cancellationToken);
             var made = outcomes.Where(o => o.Made).ToList();
-            logger.LogInformation("Panes: {Made} texts made ({Panes} panes, {Compressed} bytes compressed), {Current} current",
-                made.Count, made.Sum(o => o.Panes), made.Sum(o => o.Compressed), outcomes.Count - made.Count);
+            logger.LogInformation("Panes: {Made} texts changed, {Read} panes read ({Compressed} bytes compressed), {Copied} rows copied or deleted; {Current} texts as they were",
+                made.Count, made.Sum(o => o.Read), made.Sum(o => o.Compressed), made.Sum(o => o.Copied), outcomes.Count - made.Count);
             if (made.Count > 0)
             {
                 await Execute(connectionString, "ANALYZE pane", cancellationToken);
             }
 
-            return (long)made.Sum(o => o.Panes);
+            return (long)made.Sum(o => o.Copied);
         });
 
     /// <summary>
@@ -404,33 +417,62 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         return indexes.Count - gone.Count;
     }
 
-    /// <summary>The dropped foreign keys added again, the largest tables first and <paramref name="parallel"/> at once, each validated.</summary>
-    private async Task<long> AddKeys(List<Definition> keys, Dictionary<string, long> sizes, int parallel, CancellationToken cancellationToken)
+    /// <summary>
+    /// The dropped foreign keys added again unvalidated (<c>NOT VALID</c>): each holds for every row written after it, and
+    /// <see cref="ValidateKeys"/> checks the rows already in. A key on a column a loader's schema step removed is reported.
+    /// </summary>
+    private async Task<long> AddKeys(List<Definition> keys, CancellationToken cancellationToken)
     {
-        var present = new HashSet<string>(StringComparer.Ordinal);
-        await using (var connection = new NpgsqlConnection(connectionString))
+        var present = await PresentKeys(cancellationToken);
+        var gone = new List<string>();
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        foreach (var key in keys.Where(k => !present.Contains(k.Name)))
         {
-            await connection.OpenAsync(cancellationToken);
-            await using var command = new NpgsqlCommand("SELECT conname FROM pg_constraint WHERE contype = 'f' AND connamespace = 'public'::regnamespace", connection);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
+            try
             {
-                present.Add(reader.GetString(0));
+                await Execute(connection, $"ALTER TABLE {key.Table} ADD CONSTRAINT \"{key.Name}\" {key.Sql} NOT VALID", cancellationToken);
+            }
+            catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
+            {
+                gone.Add($"{key.Name}: {exception.MessageText}");
             }
         }
 
-        var gone = new ConcurrentBag<string>();
+        if (gone.Count > 0)
+        {
+            logger.LogWarning("{Count} foreign keys stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
+        }
+
+        return keys.Count - gone.Count;
+    }
+
+    /// <summary>
+    /// Every foreign key not yet validated, validated: the largest tables first and <paramref name="parallel"/> at once. A key
+    /// whose rows do not hold fails, naming each.
+    /// </summary>
+    private async Task<long> ValidateKeys(List<Definition> keys, Dictionary<string, long> sizes, int parallel, CancellationToken cancellationToken)
+    {
+        var unvalidated = new HashSet<string>(StringComparer.Ordinal);
+        await using (var connection = new NpgsqlConnection(connectionString))
+        {
+            await connection.OpenAsync(cancellationToken);
+            await using var command = new NpgsqlCommand(
+                "SELECT conname FROM pg_constraint WHERE contype = 'f' AND NOT convalidated AND connamespace = 'public'::regnamespace", connection);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                unvalidated.Add(reader.GetString(0));
+            }
+        }
+
         var failed = new ConcurrentBag<string>();
-        await Parallel.ForEachAsync(keys.Where(k => !present.Contains(k.Name)).OrderByDescending(k => sizes.GetValueOrDefault(k.Table)),
+        await Parallel.ForEachAsync(keys.Where(k => unvalidated.Contains(k.Name)).OrderByDescending(k => sizes.GetValueOrDefault(k.Table)),
             new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (key, token) =>
             {
                 try
                 {
-                    await Execute(connectionString, $"ALTER TABLE {key.Table} ADD CONSTRAINT \"{key.Name}\" {key.Sql}", token);
-                }
-                catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
-                {
-                    gone.Add($"{key.Name}: {exception.MessageText}");
+                    await Execute(connectionString, $"ALTER TABLE {key.Table} VALIDATE CONSTRAINT \"{key.Name}\"", token);
                 }
                 catch (PostgresException exception)
                 {
@@ -438,17 +480,27 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
                 }
             });
 
-        if (!gone.IsEmpty)
-        {
-            logger.LogWarning("{Count} foreign keys stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
-        }
-
         if (!failed.IsEmpty)
         {
             throw new InvalidOperationException($"{failed.Count} foreign keys do not hold on the loaded rows:\n  " + string.Join("\n  ", failed.Order()));
         }
 
-        return keys.Count;
+        return unvalidated.Count;
+    }
+
+    private async Task<HashSet<string>> PresentKeys(CancellationToken cancellationToken)
+    {
+        var present = new HashSet<string>(StringComparer.Ordinal);
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        await using var command = new NpgsqlCommand("SELECT conname FROM pg_constraint WHERE contype = 'f' AND connamespace = 'public'::regnamespace", connection);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            present.Add(reader.GetString(0));
+        }
+
+        return present;
     }
 
     public async Task Count(CancellationToken cancellationToken)
