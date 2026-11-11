@@ -31,33 +31,7 @@ public sealed partial class SourceCreditTests
 
     /// <summary>Record files whose <c>why</c> is written on a word as the note a reader's page can show.</summary>
     private static readonly string[] ReasonsServed =
-        ["NamesReadPerVerseRecords.json", "EponymReadings.json", "NarrativeRecords.json"];
-
-    /// <summary>
-    /// The lines that credit a decision in their own <c>decidedBy</c>: a descriptor clause, a passage
-    /// reading and a kin statement each write it into the source of the row it makes.
-    /// </summary>
-    [Fact]
-    public void No_line_that_credits_a_decision_names_a_ticket_or_an_instruction()
-    {
-        var found = new List<string>();
-        foreach (var folder in new[] { "descriptors", "references", "kin" })
-        {
-            var essenthos = TestResources.Shipped(Path.Combine("Essenthos", folder));
-            foreach (var file in Directory.GetFiles(essenthos, "*.jsonl"))
-            {
-                var lineNumber = 0;
-                foreach (var line in File.ReadLines(file).Where(line => !string.IsNullOrWhiteSpace(line)))
-                {
-                    lineNumber++;
-                    using var record = JsonDocument.Parse(line);
-                    Walk(found, $"{folder}/{Path.GetFileName(file)}:{lineNumber}", record.RootElement, ["decidedBy"]);
-                }
-            }
-        }
-
-        found.Should().BeEmpty("a decision's credit is served with the row, and a reader is owed where it comes from, not our board");
-    }
+        ["NamesReadPerVerseRecords.json", "NarrativeRecords.json"];
 
     /// <summary>
     /// The record files that write rows under a <c>source</c> of their own, and the reasons they put

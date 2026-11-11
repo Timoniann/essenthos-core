@@ -35,7 +35,7 @@ public sealed class OpenHebrewCuvTests
     {
         var runs = OpenHebrewCuvMapping.Runs(Genesis);
 
-        var placed = OpenHebrewCuvLinkLoader.Place(runs, ["起初", "神", "創造", "淵", "面上"], out var realigned);
+        var placed = OpenHebrewCuvLinks.Place(runs, ["起初", "神", "創造", "淵", "面上"], out var realigned);
 
         realigned.Should().BeFalse();
         placed.Select(p => (string.Join(',', p.Words), string.Join(',', p.Positions))).Should().Equal(
@@ -52,7 +52,7 @@ public sealed class OpenHebrewCuvTests
         var runs = OpenHebrewCuvMapping.Runs(
             "％〈H251＝c1｜10｜E1〉他姪兒</a>（原文是弟兄）％〈H7617＝c1｜11｜E2〉被擄去</a>");
 
-        var placed = OpenHebrewCuvLinkLoader.Place(runs, ["他姪兒", "被擄去"], out var realigned);
+        var placed = OpenHebrewCuvLinks.Place(runs, ["他姪兒", "被擄去"], out var realigned);
 
         realigned.Should().BeTrue();
         placed.Select(p => (string.Join(',', p.Words), string.Join(',', p.Positions))).Should().Equal(
@@ -65,7 +65,7 @@ public sealed class OpenHebrewCuvTests
     {
         var runs = OpenHebrewCuvMapping.Runs("％〈H1＝c1｜1｜E1〉甲</a>％〈H2＝c1｜2｜E2〉乙</a>％〈H3＝c1｜3｜E3〉丙</a>");
 
-        var placed = OpenHebrewCuvLinkLoader.Place(runs, ["甲乙", "丙"], out _);
+        var placed = OpenHebrewCuvLinks.Place(runs, ["甲乙", "丙"], out _);
 
         placed.Select(p => (string.Join(',', p.Words), string.Join(',', p.Positions))).Should().Equal(
             ("0", "1,2"), ("1", "3"));

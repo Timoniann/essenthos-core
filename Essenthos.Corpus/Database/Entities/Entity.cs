@@ -508,8 +508,8 @@ public class EntityName
     /// are one place seen several ways: Zion the settlement and Mount Zion its hill, Samaria the
     /// city and Samaria the country called after it, Egypt and the brook, the sea and the river
     /// named after Egypt, Edom and Idumea, Jerusalem and Salem. Left null on all of them, the
-    /// number names several records and <see cref="Loading.Encyclopedia.EntityAnnotationLoader"/>
-    /// refuses to resolve it, so 146 words that name Zion today would name nobody.
+    /// number names several records and nothing can resolve it, so 146 words that name Zion would
+    /// name nobody.
     ///
     /// <para>
     /// So the row says whose name it is. The number then answers with one record — the one the

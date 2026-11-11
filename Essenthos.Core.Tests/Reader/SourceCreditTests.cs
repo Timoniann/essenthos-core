@@ -52,7 +52,7 @@ public sealed class SourceCreditTests : IAsyncLifetime
             LinkId = bju.Id,
             Method = LinkMethod.Lexical,
             Confidence = 0.8,
-            Provenance = new() { Source = Essenthos.Core.Loading.Links.OldTestamentLinkLoader.StatedSource, Note = "a test" },
+            Provenance = new() { Source = Essenthos.Core.Loading.Links.OldTestamentLinks.StatedSource, Note = "a test" },
         });
         await _db.SaveChangesAsync();
 

@@ -111,17 +111,6 @@ public sealed class CrossWireStrongTests : IDisposable
     public void OnlyFhlsPrefixNumbersAreTranslated(string lemma, string[] expected) =>
         UnionStrongNumbers.Read(lemma, fhlPrefixes: false).Should().Equal(expected);
 
-    [Fact]
-    public void ANumberingIsNamedByItsModuleOrItsText()
-    {
-        CrossWireStrongLinkLoader.Named([]).Should().HaveCount(CrossWireStrongLinkLoader.All.Count);
-        CrossWireStrongLinkLoader.Named(["gersch", "LSG1910", "--apply"]).Select(n => n.Module)
-            .Should().Equal("GerSch", "FreSegond1910");
-
-        var unknown = () => CrossWireStrongLinkLoader.Named(["RusVZh"]);
-        unknown.Should().Throw<ArgumentException>().WithMessage("*RusVZh*");
-    }
-
     /// <summary>
     /// Every numbering is credited by a prefix no other dataset claims, because the credit is the
     /// only place a link records whose numbers it was drawn from.
@@ -129,9 +118,9 @@ public sealed class CrossWireStrongTests : IDisposable
     [Fact]
     public void EveryNumberingHasItsOwnCreditAndADeclaration()
     {
-        var credits = CrossWireStrongLinkLoader.All.Select(n => n.Credit).ToList();
+        var credits = CrossWireNumberings.All.Select(n => n.Credit).ToList();
 
-        credits.Should().OnlyHaveUniqueItems().And.NotContain(UnionStrongLinkLoader.Credit);
+        credits.Should().OnlyHaveUniqueItems().And.NotContain(UnionStrongLinks.Credit);
         foreach (var credit in credits)
         {
             Essenthos.Core.Corpus.Datasets.All.Should().ContainSingle(dataset => dataset.Prefix == credit, credit);

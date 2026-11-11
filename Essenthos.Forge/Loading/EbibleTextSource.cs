@@ -406,7 +406,7 @@ internal static class EbibleTextSource
     /// <para>
     /// The owner decided on 2026-09-20 that the numbers may be read as an input to the mapping and
     /// never shown — the position the Synodal's numbering is already loaded under
-    /// (<see cref="Links.SynodalStrongLinkLoader"/>). This set is what keeps them off the word:
+    /// (<see cref="Links.SynodalStrongLinks"/>). This set is what keeps them off the word:
     /// nothing here stores a Spanish Strong number, so nothing serves one. The pass that reads them
     /// in memory to draw links is <see cref="Links.ReinaValeraStrongLinkLoader"/>, through <see cref="Numbers"/>.
     /// </para>

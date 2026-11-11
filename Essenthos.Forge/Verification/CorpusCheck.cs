@@ -1170,7 +1170,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                 (int)reader.GetInt64(4)),
             parameters: command =>
             {
-                command.Parameters.AddWithValue("source", SeptuagintLinkLoader.Source);
+                command.Parameters.AddWithValue("source", SeptuagintLinks.Source);
                 command.Parameters.AddWithValue("texts", Varied);
             });
 

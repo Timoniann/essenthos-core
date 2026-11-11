@@ -17,7 +17,7 @@ namespace Essenthos.Core.Tests.Links;
 public class BereanHebrewJoinTests
 {
     private static List<List<int>>? Join(string[] berean, string[] bhsa) =>
-        BereanLinkLoader.Letters(
+        BereanLinks.Letters(
             [.. berean.Select(HebrewLetters.Of)],
             [.. bhsa.Select(HebrewLetters.Of)]);
 
@@ -95,11 +95,11 @@ public class BereanHebrewJoinTests
     public void SaysAWordTwoBereanWordsShareIsUnrenderedOnceOrNotAtAll(string first, string second, int omits)
     {
         var rows = new[] { Row(1, 1, first), Row(2, 2, second) };
-        var ours = first.Trim() == "-" ? new List<BereanLinkLoader.Word>() : [new(100, 1, "Bethlehem", null)];
+        var ours = first.Trim() == "-" ? new List<BereanLinks.Word>() : [new(100, 1, "Bethlehem", null)];
         List<List<long>> witness = [[7], [7]];
-        var drafts = new List<BereanLinkLoader.Draft>();
+        var drafts = new List<BereanLinks.Draft>();
 
-        BereanLinkLoader.Pair(rows, ours, witness, drafts, new BereanLinkLoader.Silences()).Should().BeTrue();
+        BereanLinks.Pair(rows, ours, witness, drafts, new BereanLinks.Silences()).Should().BeTrue();
 
         drafts.Count(draft => draft.Relation == LinkRelation.Omits).Should().Be(omits);
     }

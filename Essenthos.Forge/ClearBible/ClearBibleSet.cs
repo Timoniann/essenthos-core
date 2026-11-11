@@ -44,7 +44,7 @@ internal enum ClearBibleNumbering
     /// The translation's own words, counted the way the records count them, because the release's
     /// token file does not: every word divided after an elided article or pronoun, a hyphenated word
     /// kept whole and each mark of punctuation counted as a word. See
-    /// <see cref="Loading.Links.ClearBibleLinkLoader.Retokenised"/>.
+    /// <see cref="Loading.Links.ClearBibleLinks.Retokenised"/>.
     /// </summary>
     Retokenised,
 }
@@ -66,7 +66,7 @@ internal enum ClearBibleNumbering
 /// </param>
 /// <param name="Shift">
 /// The translation's word for <em>and</em>, where the set puts source words on it that the word after
-/// it renders; null where it does not. See <see cref="Loading.Links.ClearBibleLinkLoader.Shifted"/>.
+/// it renders; null where it does not. See <see cref="Loading.Links.ClearBibleLinks.Shifted"/>.
 /// </param>
 /// <param name="Numbering">Where the numbers the records give the translation's words come from.</param>
 /// <summary>

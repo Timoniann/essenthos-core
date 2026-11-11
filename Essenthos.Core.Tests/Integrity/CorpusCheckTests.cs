@@ -3,6 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Utils;
 using Essenthos.Core.Verbs;
 using Essenthos.Core.Verification;
 using FluentAssertions;
@@ -1052,13 +1053,27 @@ public sealed class CorpusCheckTests : IDisposable
             (1, 4, ["ἐγώ", "εἰμι", "ὁ", "ποιμήν"]));
         await _db.SaveChangesAsync();
 
-        await new Essenthos.Core.Loading.Links.SeptuagintLinkLoader(
-                _db, NullLogger<Essenthos.Core.Loading.Links.SeptuagintLinkLoader>.Instance)
-            .Load("SBLGNT", "NESTLE1904");
+        var drafts = new List<SeptuagintLinks.GreekDraft>();
+        foreach (var verse in Enumerable.Range(1, 4))
+        {
+            SeptuagintLinks.Pair(Greek(holmes, verse), Greek(nestle, verse), drafts);
+        }
+
+        await LinkWriter.Write(
+            (Npgsql.NpgsqlConnection)_db.Database.GetDbConnection(), (Npgsql.NpgsqlTransaction)_transaction.GetDbTransaction(),
+            [.. drafts.Select(d => new NewLink(holmes.Id, nestle.Id, d.Relation, LinkMethod.Lexical, d.Confidence, SeptuagintLinks.Source, null, d.From, d.To))],
+            default);
 
         (await _check.Measure()).Variation.Should().ContainSingle()
             .Which.Should().Be(new Variation("SBLGNT", "NESTLE1904", Units: 3, Addresses: 3, Shared: 4));
     }
+
+    private List<SeptuagintLinks.GreekWord> Greek(Text text, int verse) =>
+    [
+        .. _db.Words.Where(w => w.TextId == text.Id && w.Verse!.ChapterNumber == 1 && w.Verse.Number == verse).OrderBy(w => w.Position)
+            .AsEnumerable()
+            .Select(w => new SeptuagintLinks.GreekWord(w.Id, new WitnessForm(GreekLetters.Bare(w.Surface), GreekLetters.Bare(w.Lemma ?? string.Empty)))),
+    ];
 
     /// <summary>Two places of one name that read alike to a reader, in any of the four languages, are a break.</summary>
     [Fact]

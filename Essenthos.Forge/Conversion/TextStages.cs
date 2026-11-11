@@ -79,7 +79,7 @@ internal sealed class SeptuagintLemmas : ITextStage
             throw new DirectoryNotFoundException($"GLAUx is not at {directory}; Brenton's Greek is converted with its lemmas or not at all. Run scripts/fetch-glaux.ps1.");
         }
 
-        var (lexicon, spelling) = GlauxLemmaLoader.Read(directory);
+        var (lexicon, spelling) = GlauxLemmas.Read(directory);
         foreach (var (_, _, word) in text.Words())
         {
             var form = word.Normalised is { Length: > 0 } folded ? folded : GreekLetters.Bare(word.Surface);

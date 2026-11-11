@@ -194,7 +194,7 @@ internal sealed record ThingRelation(string Type, string To, string Reference, s
 /// the verse (<c>NUM 8:2#2</c>). Absent means everywhere.
 /// </param>
 /// <param name="With">
-/// Another Strong number that has to stand within <see cref="ThingLoader.Reach"/> words of the
+/// Another Strong number that has to stand within <see cref="Reach"/> words of the
 /// occurrence in the same verse: <em>altar</em> beside <em>incense</em>.
 /// </param>
 /// <param name="Reviewed">
@@ -208,6 +208,13 @@ internal sealed record OccurrenceRule(
     string? With,
     string? Reviewed = null)
 {
+    /// <summary>
+    /// How near a second word has to stand for <see cref="With"/>, in words of the witness. BHSA writes
+    /// the article and the prepositions as words of their own, so <em>the altar of the incense</em> is
+    /// three words and the two that matter are two apart.
+    /// </summary>
+    internal const int Reach = 3;
+
     public bool Admits(int book, int chapter, int verse, int nth) =>
         (Only is null || Only.Any(span => ScriptureSpan.Parse(span).Holds(book, chapter, verse, nth)))
         && (Except is null || !Except.Any(span => ScriptureSpan.Parse(span).Holds(book, chapter, verse, nth)));
@@ -244,6 +251,54 @@ internal static class ThingRelations
     {
         PartOf, KeptIn, StandsIn, StandsAt, MadeBy, ReplacedBy, HeldAt, Commemorates,
     };
+
+    /// <summary>
+    /// How sure a reading here is, which nobody has measured for these records. It is the rate the
+    /// corpus measured for a model's reading of a verse at the band it was not most sure of — 186
+    /// readings re-read, 13 wrong — and not the higher rate of its confident band, because no second
+    /// pass has re-read these and a number that claimed one had would overstate them.
+    /// </summary>
+    internal const double ByReading = 0.93;
+
+    /// <summary>
+    /// The relations a record's file states, each as the row it is written as (its two ends left for
+    /// the caller to set); null where the encyclopedia holds no record of the other end or the
+    /// reference is not a verse.
+    /// </summary>
+    internal static IEnumerable<(ThingRelation Relation, EntityRelationship? Row)> Of(
+        ThingSet set, ThingRecord record, Func<string, bool> holds)
+    {
+        var reviewed = record.Reviewed is not null;
+        foreach (var relation in record.Related ?? [])
+        {
+            if (!All.Contains(relation.Type))
+            {
+                throw new InvalidDataException(
+                    $"{record.Slug} is related to {relation.To} as \"{relation.Type}\", which is not a relation " +
+                    $"these records stand in. Use one of {string.Join(", ", All)}.");
+            }
+
+            var verse = ScriptureSpan.Parse(relation.Reference);
+            if (!holds(relation.To) || !verse.IsVerse)
+            {
+                yield return (relation, null);
+                continue;
+            }
+
+            yield return (relation, new EntityRelationship
+            {
+                Type = relation.Type,
+                Category = RelationshipCategories.Read,
+                CanonicalBook = verse.Book,
+                CanonicalChapter = verse.FromChapter,
+                CanonicalVerse = verse.FromVerse,
+                Method = reviewed ? LinkMethod.Manual : LinkMethod.ModelReading,
+                Confidence = reviewed ? null : ByReading,
+                Source = set.SourceOf(reviewed),
+                Notes = relation.Note,
+            });
+        }
+    }
 }
 
 /// <summary>

@@ -47,7 +47,7 @@ internal static class TestResources
     /// or not the file is there, because the tests over it check for it rather than failing.
     /// </summary>
     public static string SynodalStrong =>
-        System.IO.Path.Combine([ResolvedPath.Value, .. Essenthos.Core.Loading.Links.SynodalStrongLinkLoader.EditionFile]);
+        System.IO.Path.Combine([ResolvedPath.Value, .. Essenthos.Core.Loading.Links.SynodalStrongLinks.EditionFile]);
 
     /// <summary>
     /// A folder this checkout ships under its own <c>Resources/</c>, such as the descriptor clauses: the

@@ -449,7 +449,7 @@ internal sealed partial class NamesProjection
     private static readonly HashSet<string> Capitalised = new(["yhvh", "jesus", "holy-spirit"], StringComparer.Ordinal);
 
     /// <summary>
-    /// The names carried onto pronouns that may not stay (the owner's ruling of 2026-10-07, <c>PronounReferents</c>): a
+    /// The names carried onto pronouns that may not stay (the owner's ruling of 2026-10-07): a
     /// pronoun keeps a person only where it is certainly clear who it is. Either the text capitalises it where a sentence does
     /// not begin and the person is YHVH, Jesus or the Holy Spirit; or the pronoun states a sex the person has (or no sex is
     /// recorded for him), the text names him by a word that is not a pronoun in the same verse or the one before, nobody else

@@ -7,7 +7,7 @@ namespace Essenthos.Core.Tests.Records;
 /// <summary>
 /// What the published register says, read as the reader will see it.
 ///
-/// <see cref="PlaceRegisterLoader"/> titles a page with the name on the line and annotates the words
+/// The register titled a page with the name on the line and annotates the words
 /// its number stands at, so a line naming something that is not a place is a page that is not about
 /// one. Twenty-three of them were: <em>fire</em>, <em>hell</em>, <em>market(-place)</em>, <em>place
 /// that was far off</em>, and a slug made out of a lexicographer's aside about an orthographic

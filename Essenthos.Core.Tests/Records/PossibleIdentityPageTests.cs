@@ -5,7 +5,8 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
-using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,15 +52,11 @@ public sealed class PossibleIdentityPageTests : IDisposable
     {
         var (mary, other) = Pair();
         var back = EnglishNotes.Digest(Back);
-        await new TextTranslationLoader(_db, NullLogger<TextTranslationLoader>.Instance).Load(
-            new Dictionary<(string Language, string Sha), (string Text, string Source)>
-            {
-                [("ukr", back)] = (Rendered, "a test rendering"),
-                [("deu", back)] = ("Die Maria", "a test rendering"),
-                [("spa", back)] = ("La María", "a test rendering"),
-            },
-            1,
-            default);
+        _db.TextTranslations.AddRange(
+            new TextTranslation { Language = "ukr", EnglishSha256 = back, Text = Rendered, Source = "a test rendering" },
+            new TextTranslation { Language = "deu", EnglishSha256 = back, Text = "Die Maria", Source = "a test rendering" },
+            new TextTranslation { Language = "spa", EnglishSha256 = back, Text = "La María", Source = "a test rendering" });
+        await _db.SaveChangesAsync();
 
         await using var app = await Host();
         using var client = new HttpClient { BaseAddress = new Uri(app.Urls.Single()) };
@@ -93,33 +90,28 @@ public sealed class PossibleIdentityPageTests : IDisposable
     }
 
     /// <summary>
-    /// Every reason the files give an alternative or its back is rendered in all three languages, and the
-    /// file renders nothing no file says any more.
+    /// Every reason the record files give an alternative or its back is rendered in each reader's language, by the
+    /// digest of its English, in the record files' renderings.
     /// </summary>
     [Fact]
     public void EveryShippedReasonIsRenderedInEveryLanguage()
     {
-        var said = SenseReadingFiles.AllRulings()
-            .SelectMany(file => file.Rulings)
-            .SelectMany(ruling => ruling.Alternatives ?? [])
-            .Concat(SenseReadingFiles.Titles().Titles.SelectMany(title => title.Alternatives ?? []))
-            .SelectMany(alternative => new[] { alternative.Reason, alternative.Back })
-            .OfType<string>()
-            .ToHashSet(StringComparer.Ordinal);
-        var file = Reasons();
-        file.Source.Should().Contain("machine translation");
+        var store = new ProductStore(TestResources.Shipped("."));
+        var said = Rows(store, "records/i18n/eng/alternatives").Select(row => row[2]).OfType<string>().ToHashSet(StringComparer.Ordinal);
 
-        var rendered = file.Entries.ToDictionary(entry => entry.English, StringComparer.Ordinal);
-        said.Where(reason => !rendered.ContainsKey(reason)).Should().BeEmpty();
-        rendered.Keys.Where(english => !said.Contains(english)).Should().BeEmpty();
-        file.Entries.Where(entry => entry.Rendered().Count() != 3).Select(entry => entry.English).Should().BeEmpty();
+        said.Should().NotBeEmpty();
+        foreach (var language in new[] { "ukr", "deu", "spa" })
+        {
+            var rendered = Rows(store, $"records/i18n/{language}/texts").Select(row => row[0]!).ToHashSet(StringComparer.OrdinalIgnoreCase);
+            said.Where(reason => !rendered.Contains(EnglishNotes.Digest(reason))).Should().BeEmpty(language);
+        }
     }
 
-    /// <summary>The shipped renderings of the alternatives' reasons, one file among the records' translations.</summary>
-    internal static TextTranslationLoader.TextTranslationFile Reasons()
+    private static List<string?[]> Rows(ProductStore store, string product)
     {
-        var path = TestResources.Shipped(Path.Combine("Essenthos", TextTranslationLoader.Folder, "alternative-reasons.json"));
-        return TextTranslationLoader.Read(File.ReadAllText(path), path);
+        var file = RecordFiles.All.Single(f => f.Product == product);
+        using var reader = store.Open(file.Product, file.Schema());
+        return [.. reader.ReadAll()];
     }
 
     private (Entity Mary, Entity Other) Pair()

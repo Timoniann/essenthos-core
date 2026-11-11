@@ -34,7 +34,7 @@ public class ClearBibleEditionJoinTests
             ("βαπτισμα", "G908"), ("μετανοιας", "G3341"), ("εις", "G1519"), ("αφεσιν", "G859"),
             ("αμαρτιων", "G266"));
 
-        ClearBibleLinkLoader.Counterparts(bgnt, nestle)
+        ClearBibleLinks.Counterparts(bgnt, nestle)
             .Should().Equal(0, 1, 2, 3, 4, 5, 6, -1, 7, 8, 9, 10, 11, 12);
     }
 
@@ -45,7 +45,7 @@ public class ClearBibleEditionJoinTests
     /// </summary>
     [Fact]
     public void RefusesADifferentWordStandingInTheSamePlace() =>
-        ClearBibleLinkLoader.Counterparts(
+        ClearBibleLinks.Counterparts(
                 Forms(("ηλθεν", "G2064"), ("και", "G2532"), ("ειπεν", "G2036")),
                 Forms(("ηλθεν", "G2064"), ("κατ", "G2596"), ("ειπεν", "G2036")))
             .Should().Equal(0, -1, 2);
@@ -55,7 +55,7 @@ public class ClearBibleEditionJoinTests
     [InlineData("G1138", "G1138")]
     [InlineData("", "G1138")]
     public void PlacesAWordTheOtherEditionSpellsDifferently(string theirs, string ours) =>
-        ClearBibleLinkLoader.Counterparts(
+        ClearBibleLinks.Counterparts(
                 Forms(("υιου", "G5207"), ("δαυιδ", theirs)),
                 Forms(("υιου", "G5207"), ("δαυειδ", ours)))
             .Should().Equal(0, 1);

@@ -256,7 +256,7 @@ public class LexicalNumberTests
     [Fact]
     public void A_number_is_a_word_of_content_where_most_of_its_words_are_of_an_open_class()
     {
-        var lexical = Loading.StrongRenderingLoader.Lexical(
+        var lexical = Indexes.IndexLoad.Lexical(
         [
             ("H4480", "prep", 7000),
             ("H430", "subs", 2600),

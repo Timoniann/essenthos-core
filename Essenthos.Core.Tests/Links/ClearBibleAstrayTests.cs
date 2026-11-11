@@ -34,7 +34,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
     {
         var renders = new Dictionary<string, (int, int)> { ["04013019005"] = (4_013_018, 4_013_018) };
 
-        ClearBibleLinkLoader.Astray(
+        ClearBibleLinks.Astray(
                 Record("o040130190012", "04013019005"),
                 renders,
                 Placed((4_013_019, 4_013_018)),
@@ -51,7 +51,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
     {
         var renders = new Dictionary<string, (int, int)> { ["09024003003"] = (9_024_003, 9_024_003) };
 
-        ClearBibleLinkLoader.Astray(
+        ClearBibleLinks.Astray(
                 Record("o090240040021", "09024003003"),
                 renders,
                 Placed((9_024_003, 9_024_002)),
@@ -69,7 +69,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
     {
         var renders = new Dictionary<string, (int, int)> { ["11016030006"] = (11_016_030, 11_016_030) };
 
-        ClearBibleLinkLoader.Astray(
+        ClearBibleLinks.Astray(
                 Record("o110160290051", "11016030006"),
                 renders,
                 Placed((11_016_030, 11_016_030)),
@@ -86,7 +86,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
     {
         var renders = new Dictionary<string, (int, int)> { ["44019041001"] = (44_019_040, 44_019_040) };
 
-        ClearBibleLinkLoader.Astray(
+        ClearBibleLinks.Astray(
                 Record("n440190410011", "440190410011"), renders, Placed((44_019_041, 44_019_041)), null)
             .Should().BeFalse();
     }
@@ -100,7 +100,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
     {
         var renders = new Dictionary<string, (int, int)> { ["50001016001"] = (50_001_016, 50_001_016) };
 
-        ClearBibleLinkLoader.Astray(
+        ClearBibleLinks.Astray(
                 Record("n50001016001", "50001016001"),
                 renders,
                 Placed((50_001_016, 50_001_016)),
@@ -110,7 +110,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
 
     [Fact]
     public void ARecordTheFileSaysNothingAboutIsKept() =>
-        ClearBibleLinkLoader.Astray(
+        ClearBibleLinks.Astray(
                 Record("o040130190012", "04013019005"),
                 new Dictionary<string, (int, int)>(),
                 Placed((4_013_019, 4_013_018)),
@@ -156,7 +156,7 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
             }
         }
 
-        var astray = records.Where(record => ClearBibleLinkLoader.Astray(record, renders, targetFrame, sourceFrame))
+        var astray = records.Where(record => ClearBibleLinks.Astray(record, renders, targetFrame, sourceFrame))
             .ToList();
         var chapters = astray
             .Select(record => ClearBibleAlignment.Verse(record.Target[0])!.Value / 1000)
@@ -173,112 +173,4 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
 
     private static HashSet<int> Canonical(IEnumerable<CanonicalReference> references) =>
         [.. references.Select(reference => ClearBibleAlignment.Verse(reference.Book, reference.Chapter, reference.Verse))];
-}
-
-/// <summary>
-/// The loader over a database: a record pairing verses by number is refused and the one beside it
-/// written, and withdrawing a set takes the verse links its word links stated with it.
-/// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
-[Collection(WitnessDatabaseCollection.Name)]
-public sealed class ClearBibleAstrayLoadTests : IDisposable
-{
-    private const string Statement = "Clear Bible test set";
-
-    private readonly AppDbContext _db;
-    private readonly ClearBibleLinkLoader _loader;
-    private readonly string _folder;
-    private readonly ClearBibleSet _set;
-
-    public ClearBibleAstrayLoadTests(WitnessDatabase database)
-    {
-        _db = database.NewContext();
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _loader = new ClearBibleLinkLoader(_db, NullLogger<ClearBibleLinkLoader>.Instance);
-
-        // The Spanish 13:19 renders the Hebrew 13:18, and the frame places it there.
-        Corpus.Add(_db, "SPANISH", TextKind.Translation, "es",
-            (13, 18, ["mirad", "vosotros"]), (13, 19, ["ved", "tierra"]));
-        Corpus.Add(_db, "HEBREW", TextKind.CriticalEdition, "hbo",
-            (13, 17, ["mirad", "vosotros"]), (13, 18, ["ved", "tierra"]), (13, 19, ["mah", "haarets"]));
-        _db.SaveChanges();
-        _db.Database.ExecuteSqlRaw(
-            """
-            UPDATE verse_reference r SET canonical_verse = r.canonical_verse - 1
-            FROM verse v JOIN text t ON t.id = v.text_id
-            WHERE r.verse_id = v.id AND t.slug = 'SPANISH'
-            """);
-
-        _folder = Path.Combine(Path.GetTempPath(), $"essenthos-clearbible-{Guid.NewGuid():N}");
-        Directory.CreateDirectory(_folder);
-        File.WriteAllLines(Path.Combine(_folder, "target.tsv"),
-        [
-            "id\tsource_verse\ttext\tskip_space_after\texclude\tid_range_end\tsource_verse_range_end",
-            "01013018001\t01013017\tmirad\t\t\t\t",
-            "01013018002\t01013017\tvosotros\t\t\t\t",
-            "01013019001\t01013018\tved\t\t\t\t",
-            "01013019002\t01013018\ttierra\t\t\t\t",
-        ]);
-        File.WriteAllLines(Path.Combine(_folder, "source.tsv"),
-        [
-            "id\taltId\ttext\tstrongs\tgloss",
-            "o010130170011\t\tmirad\t\t", "o010130170021\t\tvosotros\t\t",
-            "o010130180011\t\tved\t\t", "o010130180021\t\ttierra\t\t",
-            "o010130190011\t\tmah\t\t", "o010130190021\t\thaarets\t\t",
-        ]);
-        File.WriteAllText(Path.Combine(_folder, "alignment.json"),
-            """
-            {"records": [
-              {"source": ["o010130180021"], "target": ["01013019002"]},
-              {"source": ["o010130190021"], "target": ["01013019001"]}
-            ]}
-            """);
-        _set = new ClearBibleSet(
-            "SPANISH", "HEBREW", "alignment.json", "target.tsv", "source.tsv", ClearBibleJoin.Letters, Statement);
-    }
-
-    public void Dispose()
-    {
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _db.Dispose();
-        Directory.Delete(_folder, recursive: true);
-    }
-
-    [Fact]
-    public async Task TheRecordPairingVersesByNumberIsRefusedAndTheOtherWritten()
-    {
-        var outcome = await _loader.Load(_folder, _set);
-
-        (outcome.Records, outcome.Astray, outcome.Added).Should().Be((2, 1, 1));
-        var words = await _db.LinkWords.Where(word => word.Link!.Provenance!.Source == Statement)
-            .Select(word => word.Word!.Surface).ToListAsync();
-        words.Should().BeEquivalentTo(["tierra", "tierra"]);
-    }
-
-    [Fact]
-    public async Task WithdrawingASetTakesTheVerseLinksItStated()
-    {
-        await _loader.Load(_folder, _set);
-        var spanish = _db.Texts.Single(text => text.Slug == "SPANISH");
-        var hebrew = _db.Texts.Single(text => text.Slug == "HEBREW");
-        _db.VerseLinks.Add(new VerseLink
-        {
-            FromTextId = spanish.Id,
-            ToTextId = hebrew.Id,
-            Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource,
-            Source = Statement,
-            Verses =
-            [
-                new VerseLinkVerse { VerseId = _db.VerseAt(spanish, 13, 19).Id, Side = LinkSide.From },
-                new VerseLinkVerse { VerseId = _db.VerseAt(hebrew, 13, 19).Id, Side = LinkSide.To },
-            ],
-        });
-        await _db.SaveChangesAsync();
-
-        await _loader.Withdraw(_set);
-
-        (await _db.VerseLinks.CountAsync(link => link.Source == Statement)).Should().Be(0);
-        (await _db.Links.CountAsync(link => link.Provenance!.Source == Statement)).Should().Be(0);
-    }
 }

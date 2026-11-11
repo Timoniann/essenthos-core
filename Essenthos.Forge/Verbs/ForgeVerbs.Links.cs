@@ -233,13 +233,13 @@ internal static partial class ForgeVerbs
             return null;
         }
 
-        if (source != "glaux" || target != Glaux.GlauxLemmaLoader.Septuagint)
+        if (source != "glaux" || target != Glaux.GlauxLemmas.Septuagint)
         {
             throw new ArgumentException(
-                $"--target-lemmas takes glaux, for {Glaux.GlauxLemmaLoader.Septuagint} as the target.");
+                $"--target-lemmas takes glaux, for {Glaux.GlauxLemmas.Septuagint} as the target.");
         }
 
-        return Glaux.GlauxLemmaLoader.Leading(Path.Combine(forge.Resources, "Glaux", "xml"));
+        return Glaux.GlauxLemmas.Leading(Path.Combine(forge.Resources, "Glaux", "xml"));
     }
 
     /// <summary>

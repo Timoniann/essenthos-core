@@ -59,7 +59,7 @@ internal sealed record StrongMatchDraft(
 /// <para>
 /// It is one file because it is one method used twice. The King James reaches the Greek through the
 /// Zefania KJV+ tags, which arrive in a separate edition and have to be laid onto the loaded words
-/// first (<see cref="NewTestamentLinkLoader"/>); Luther 1912 carries its tags in the file the text
+/// first (<see cref="NewTestamentLinks"/>); Luther 1912 carries its tags in the file the text
 /// itself came from, so its numbers are already on the corpus's own words
 /// (<see cref="TaggedTextLinkLoader"/>). Everything between those two ends — grouping by the
 /// effective number, pairing repeated numbers in order, and what each shape is worth — is the same

@@ -65,14 +65,10 @@ public sealed class SeptuagintArithmeticPageTests : IDisposable
             }),
         });
         await _db.SaveChangesAsync();
-        await new TextTranslationLoader(_db, NullLogger<TextTranslationLoader>.Instance).Load(
-            new Dictionary<(string Language, string Sha), (string Text, string Source)>
-            {
-                [("ukr", EnglishNotes.Digest("Birth of Peleg"))] = ("Народження Пелеґа", "a test rendering"),
-                [("ukr", EnglishNotes.Digest("Birth of Eber"))] = ("Народження Евера", "a test rendering"),
-            },
-            1,
-            default);
+        _db.TextTranslations.AddRange(
+            new TextTranslation { Language = "ukr", EnglishSha256 = EnglishNotes.Digest("Birth of Peleg"), Text = "Народження Пелеґа", Source = "a test rendering" },
+            new TextTranslation { Language = "ukr", EnglishSha256 = EnglishNotes.Digest("Birth of Eber"), Text = "Народження Евера", Source = "a test rendering" });
+        await _db.SaveChangesAsync();
 
         await using var app = await Host();
         using var client = new HttpClient { BaseAddress = new Uri(app.Urls.Single()) };

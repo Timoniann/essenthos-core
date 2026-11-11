@@ -9,7 +9,7 @@ using Essenthos.Core.TextusReceptus;
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
-/// The King James New Testament against a Greek edition, as <see cref="NewTestamentLinkLoader"/> draws it (DOC-0224 §6.1):
+/// The King James New Testament against a Greek edition, as <see cref="NewTestamentLinks"/> draws it (DOC-0224 §6.1):
 /// the Zefania KJV+ tags laid onto the King James's words (<see cref="TaggedEdition.Align"/> under
 /// <see cref="AmericanSpelling.Fold"/>, as the conversion lays them), their Strong numbers matched within the verse
 /// (<c>strong</c>), and the untagged English function words given a Greek word by the morphology the edition states
@@ -29,7 +29,7 @@ internal sealed class KingJamesGreekSource : IPairSource
 
     private const string KingJames = "KJV";
 
-    private static readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<VerseKey, List<NewTestamentLinkLoader.TaggedWord>>>> Laid = new();
+    private static readonly ConditionalWeakTable<ProductTexts, Lazy<Dictionary<VerseKey, List<NewTestamentLinks.TaggedWord>>>> Laid = new();
 
     private readonly bool _lexical;
 
@@ -58,7 +58,7 @@ internal sealed class KingJamesGreekSource : IPairSource
 
     /// <summary>The source's words before the witness's name, and after it.</summary>
     private (string Before, string After) Frame =>
-        (_lexical ? NewTestamentLinkLoader.RecoveredSource("\0") : NewTestamentLinkLoader.Source("\0")).Split('\0') is [var before, var after]
+        (_lexical ? NewTestamentLinks.RecoveredSource("\0") : NewTestamentLinks.Source("\0")).Split('\0') is [var before, var after]
             ? (before, after)
             : throw new InvalidOperationException("A King James source names its witness once.");
 
@@ -85,10 +85,10 @@ internal sealed class KingJamesGreekSource : IPairSource
         var (fromText, toText) = MappingProducts.Split(pair);
         var english = texts[fromText];
         var greek = texts[toText];
-        var tagged = Laid.GetValue(texts, t => new Lazy<Dictionary<VerseKey, List<NewTestamentLinkLoader.TaggedWord>>>(() => Lay(t, log))).Value;
+        var tagged = Laid.GetValue(texts, t => new Lazy<Dictionary<VerseKey, List<NewTestamentLinks.TaggedWord>>>(() => Lay(t, log))).Value;
         var offset = (long)english.Words.Count;
 
-        var pairs = new List<NewTestamentLinkLoader.VersePair>(8_000);
+        var pairs = new List<NewTestamentLinks.VersePair>(8_000);
         int unframed = 0;
         foreach (var (own, tags) in tagged)
         {
@@ -99,26 +99,26 @@ internal sealed class KingJamesGreekSource : IPairSource
             }
 
             var words = english.InVerse(own)
-                .Select(id => new NewTestamentLinkLoader.Word(id, english.Words[id].Surface, english.Words[id].Strong, default)).ToList();
-            var witness = at.Select(id => new NewTestamentLinkLoader.Word(offset + id, greek.Words[id].Surface, greek.Words[id].Strong,
+                .Select(id => new NewTestamentLinks.Word(id, english.Words[id].Surface, english.Words[id].Strong, default)).ToList();
+            var witness = at.Select(id => new NewTestamentLinks.Word(offset + id, greek.Words[id].Surface, greek.Words[id].Strong,
                 GreekMorphology.Parse(Morphology(greek.Words[id].Morphology)))).ToList();
-            pairs.Add(new NewTestamentLinkLoader.VersePair(tags, words, witness));
+            pairs.Add(new NewTestamentLinks.VersePair(tags, words, witness));
         }
 
         var resolution = GreekNumberResolution.Admit(
             StrongNumberSource.GreekEntries(texts.Store),
             pairs.SelectMany(p => p.Greek).Where(w => w.Strong is not null).Select(w => w.Strong!).ToHashSet(StringComparer.Ordinal),
-            NewTestamentLinkLoader.Occurrences(pairs));
+            NewTestamentLinks.Occurrences(pairs));
 
         var source = Named(texts.Store, pair, toText);
         var rows = new List<MappingRow>(_lexical ? 20_000 : 130_000);
         int unmatched = 0, resolved = 0, phrases = 0;
         foreach (var verse in pairs)
         {
-            foreach (var draft in NewTestamentLinkLoader.Build(verse, resolution, ref unmatched, ref resolved, ref phrases))
+            foreach (var draft in NewTestamentLinks.Build(verse, resolution, ref unmatched, ref resolved, ref phrases))
             {
-                var lexical = draft.Kind == NewTestamentLinkLoader.GreekMatch.FunctionWord;
-                if (draft.Kind == NewTestamentLinkLoader.GreekMatch.Supplied || lexical != _lexical)
+                var lexical = draft.Kind == NewTestamentLinks.GreekMatch.FunctionWord;
+                if (draft.Kind == NewTestamentLinks.GreekMatch.Supplied || lexical != _lexical)
                 {
                     continue;
                 }
@@ -158,15 +158,15 @@ internal sealed class KingJamesGreekSource : IPairSource
 
     /// <summary>
     /// The Zefania tags laid onto each King James verse they agree with, one tag per word (an untagged word has none), as
-    /// <see cref="NewTestamentLinkLoader.Project"/> lays them; the first number from the words product.
+    /// <see cref="NewTestamentLinks.Project"/> lays them; the first number from the words product.
     /// </summary>
-    private static Dictionary<VerseKey, List<NewTestamentLinkLoader.TaggedWord>> Lay(ProductTexts texts, Action<string> log)
+    private static Dictionary<VerseKey, List<NewTestamentLinks.TaggedWord>> Lay(ProductTexts texts, Action<string> log)
     {
         var english = texts[KingJames];
         var added = Added(texts.Store);
-        var laid = new Dictionary<VerseKey, List<NewTestamentLinkLoader.TaggedWord>>(8_000);
+        var laid = new Dictionary<VerseKey, List<NewTestamentLinks.TaggedWord>>(8_000);
         int refused = 0, set = 0, cleared = 0;
-        foreach (var (address, tags) in NewTestamentLinkLoader.Tagged(texts.Store.FullPath(Zefania)))
+        foreach (var (address, tags) in NewTestamentLinks.Tagged(texts.Store.FullPath(Zefania)))
         {
             var own = new VerseKey(address.Item1, address.Item2, string.Empty, address.Item3, string.Empty);
             if (!english.Has(own))
@@ -179,13 +179,13 @@ internal sealed class KingJamesGreekSource : IPairSource
             var (head, tail) = added.GetValueOrDefault(own);
             var ids = all.Skip(head).Take(all.Count - head - tail).ToList();
             var spans = TaggedEdition.Align([.. tags.Select(tag => tag.Text)], [.. ids.Select(id => english.Words[id].Surface)], AmericanSpelling.Fold);
-            if (TaggedEdition.Agreement(spans, ids.Count) < NewTestamentLinkLoader.SameVerse)
+            if (TaggedEdition.Agreement(spans, ids.Count) < NewTestamentLinks.SameVerse)
             {
                 refused++;
                 continue;
             }
 
-            var projected = NewTestamentLinkLoader.Project(tags, ids.Count, spans);
+            var projected = NewTestamentLinks.Project(tags, ids.Count, spans);
             for (var i = 0; i < projected.Count; i++)
             {
                 var number = english.Words[ids[i]].Strong;
@@ -207,8 +207,8 @@ internal sealed class KingJamesGreekSource : IPairSource
                 }
             }
 
-            laid[own] = [.. Enumerable.Repeat(new NewTestamentLinkLoader.TaggedWord(string.Empty, [], false), head), .. projected,
-                .. Enumerable.Repeat(new NewTestamentLinkLoader.TaggedWord(string.Empty, [], false), tail)];
+            laid[own] = [.. Enumerable.Repeat(new NewTestamentLinks.TaggedWord(string.Empty, [], false), head), .. projected,
+                .. Enumerable.Repeat(new NewTestamentLinks.TaggedWord(string.Empty, [], false), tail)];
         }
 
         log($"{Zefania} laid onto {laid.Count} verses, {refused} refused; {set} numbers the words product holds otherwise, {cleared} it clears");
@@ -234,5 +234,5 @@ internal sealed class KingJamesGreekSource : IPairSource
     private string Named(ProductStore store, string pair, string toText) =>
         StrongNumberSource.Previous(store, pair, Method,
             source => Witness(source) is { } name && TextAliases.Of(toText).Append(toText).Any(alias => string.Equals(alias, name, StringComparison.OrdinalIgnoreCase)))
-        ?? (_lexical ? NewTestamentLinkLoader.RecoveredSource(toText) : NewTestamentLinkLoader.Source(toText));
+        ?? (_lexical ? NewTestamentLinks.RecoveredSource(toText) : NewTestamentLinks.Source(toText));
 }

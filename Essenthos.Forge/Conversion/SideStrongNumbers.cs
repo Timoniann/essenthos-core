@@ -23,13 +23,13 @@ internal sealed class SideStrongNumbers : ITextStage
     {
         var layers = new Dictionary<string, Layer>(StringComparer.Ordinal)
         {
-            [Bible4uTextSource.Synodal] = new(string.Join('/', SynodalStrongLinkLoader.EditionFile),
-                resources => SynodalStrongEdition.Read(Path.Combine([resources, .. SynodalStrongLinkLoader.EditionFile])), Stated: true),
+            [Bible4uTextSource.Synodal] = new(string.Join('/', SynodalStrongLinks.EditionFile),
+                resources => SynodalStrongEdition.Read(Path.Combine([resources, .. SynodalStrongLinks.EditionFile])), Stated: true),
             [EbibleTextSource.ReinaValera] = new(string.Join('/', ReinaValeraStrongLinkLoader.EditionFolder),
                 resources => EbibleTextSource.Numbers(Path.Combine([resources, .. ReinaValeraStrongLinkLoader.EditionFolder]))),
         };
 
-        foreach (var numbering in CrossWireStrongLinkLoader.All)
+        foreach (var numbering in CrossWireNumberings.All)
         {
             var folder = (SwordTextSource.Texts.GetValueOrDefault(numbering.Module) ?? SwordTextSource.Numberings[numbering.Module]).Folder;
             layers[numbering.Slug] = new(folder, resources => SwordTextSource.Numbers(Path.Combine(resources, folder)));

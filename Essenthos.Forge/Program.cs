@@ -56,7 +56,6 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 });
 
 builder.Services.AddScoped<CanonicalFrameLoader>();
-builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
 builder.Services.AddSingleton<ILanguagePack, EnglishLanguagePack>();
 builder.Services.AddSingleton<ILanguagePack, UkrainianLanguagePack>();
@@ -95,15 +94,10 @@ builder.Services.AddScoped(services => new CorpusCheck(
 builder.Services.AddScoped<GeezLexiconMeasure>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
-builder.Services.AddScoped<SynodalStrongLinkLoader>();
-builder.Services.AddScoped<UnionStrongLinkLoader>();
 builder.Services.AddScoped<ReinaValeraStrongLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<ModelPictures>();
 builder.Services.AddScoped<WikipediaLinkLoader>();
-builder.Services.AddScoped<ForeignNames>();
-builder.Services.AddScoped<PronounReferents>();
-builder.Services.AddScoped<StrayNames>();
 builder.Services.AddSingleton(_ => ReviewLists.Read(builder.Configuration));
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<NameConsensusPass>();

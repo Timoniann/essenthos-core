@@ -239,7 +239,7 @@ public class ClearBibleRetokenisedTests
     [InlineData("«Je ", new[] { "«", "Je" })]
     [InlineData("qu’il ", new[] { "qu’", "il" })]
     public void AWordIsCountedTheWayTheRecordsCountIt(string written, string[] pieces) =>
-        ClearBibleLinkLoader.Pieces(written).Select(piece => piece.Text).Should().Equal(pieces);
+        ClearBibleLinks.Pieces(written).Select(piece => piece.Text).Should().Equal(pieces);
 
     /// <summary>
     /// Matthew 8:9 as the records count it: <em>τούτῳ</em> on <em>un</em>, the twenty-fourth piece,
@@ -262,7 +262,7 @@ public class ClearBibleRetokenisedTests
             new ClearBibleRecord(["n40008010002"], ["40008010004"]),
         };
 
-        ClearBibleLinkLoader.Misnumbered(records, tokens).Should().BeEquivalentTo([40008009, 40008010]);
+        ClearBibleLinks.Misnumbered(records, tokens).Should().BeEquivalentTo([40008009, 40008010]);
     }
 
     [Theory]

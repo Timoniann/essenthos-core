@@ -76,7 +76,7 @@ internal sealed class KingJamesNumbers : ITextStage
     {
         var numbered = 0;
         var supplied = new HashSet<ConvertedWord>(ReferenceEqualityComparer.Instance);
-        foreach (var (address, tags) in NewTestamentLinkLoader.Tagged(zefania))
+        foreach (var (address, tags) in NewTestamentLinks.Tagged(zefania))
         {
             if (!verses.TryGetValue(address, out var verse))
             {
@@ -87,12 +87,12 @@ internal sealed class KingJamesNumbers : ITextStage
             var words = verse.Words.Where(word => !word.Added).ToList();
             // Zefania spells the American way (honorable, offense, heretic); the words are put in step on one spelling.
             var spans = TaggedEdition.Align([.. tags.Select(tag => tag.Text)], [.. words.Select(word => word.Surface)], AmericanSpelling.Fold);
-            if (TaggedEdition.Agreement(spans, words.Count) < NewTestamentLinkLoader.SameVerse)
+            if (TaggedEdition.Agreement(spans, words.Count) < NewTestamentLinks.SameVerse)
             {
                 continue;
             }
 
-            var projected = NewTestamentLinkLoader.Project(tags, words.Count, spans);
+            var projected = NewTestamentLinks.Project(tags, words.Count, spans);
             for (var i = 0; i < projected.Count; i++)
             {
                 if (projected[i].Numbers.Count > 0)
