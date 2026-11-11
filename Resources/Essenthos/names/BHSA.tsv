@@ -7655,6 +7655,7 @@ own	record	role	method	confidence	source	note
 4.23:11.5	balaam	name	lexical	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1109, which BHSA marks pers
 4.23:12.10	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 4.23:13.4	balak	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1111, which BHSA marks pers
+4.23:14.4	zophim	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H6839, which the King James renders 'Zophim'
 4.23:14.8	pisgah	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H6449, which BHSA marks topo
 4.23:15.4	balak	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1111, which BHSA marks pers
 4.23:16.3	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
@@ -16536,6 +16537,7 @@ own	record	role	method	confidence	source	note
 10.5:9.3	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 10.5:9.11	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 10.5:9.14	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
+10.5:9.18	millo	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H4407, which the King James renders 'Millo'
 10.5:10.3	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 10.5:10.8	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 10.5:11.3	hiram	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H2438, read as hiram with high confidence: Explicitly named king of Tyre sending messengers and materials to David.
@@ -18847,6 +18849,7 @@ own	record	role	method	confidence	source	note
 11.9:15.14	solomons-temple	thing	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	H1004 at 1 Kings 9:15, which the record file reads as Solomon's Temple
 11.9:15.15	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 11.9:15.18	solomons-palace	thing	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	H1004 at 1 Kings 9:15, which the record file reads as Solomon's Palace
+11.9:15.22	millo	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H4407, which the King James renders 'Millo'
 11.9:15.26	jerusalem	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H3389, which BHSA marks topo
 11.9:15.29	hazor	name	lexical	0.95	Essenthos, telling apart the places that share a name: the gazetteer states this verse names it, BHSA marks the word a name, and a reading of the verse made without seeing the gazetteer says the same	H2674, read as hazor — the gazetteer places this verse at it and a reading of the verse, made without seeing that, says the same (Solomon's fortified cities Hazor, Megiddo, Gezer — the northern royal city.)
 11.9:15.32	megiddo	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H4023, which BHSA marks topo
@@ -18881,6 +18884,7 @@ own	record	role	method	confidence	source	note
 11.9:23.10	solomon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8010, which BHSA marks pers
 11.9:24.3	pharaoh-5	name	model-reading	0.9	Essenthos, which king Pharaoh means at each verse, read from the verse by two language models, claude-sonnet-5-5 and claude-opus-5-5, on 2026-09-30, and a third time by claude-opus-5-5 where the two differed	H6547 at 1 Kings 9:24: 1KI 9:24, 'Pharaoh's daughter came up out of the city of David unto her house which Solomon had built for her': the father of Solomon's wife.
 11.9:24.7	david	name	strong-number	0.9	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
+11.9:24.17	millo	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H4407, which the King James renders 'Millo'
 11.9:25.3	solomon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8010, which BHSA marks pers
 11.9:25.18	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 11.9:25.25	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
@@ -19047,6 +19051,7 @@ own	record	role	method	confidence	source	note
 11.11:26.12	zeruah	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H6871, which BHSA marks pers
 11.11:26.17	solomon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8010, which BHSA marks pers
 11.11:27.11	solomon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8010, which BHSA marks pers
+11.11:27.15	millo	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H4407, which the King James renders 'Millo'
 11.11:27.20	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 11.11:28.4	jeroboam	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H3379, read as jeroboam with high confidence: Same narrative, Solomon's servant Jeroboam I.
 11.11:28.9	solomon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8010, which BHSA marks pers
@@ -23942,6 +23947,7 @@ own	record	role	method	confidence	source	note
 13.11:6.23	zeruiah	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H6870, which BHSA marks pers
 13.11:7.3	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 13.11:7.12	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
+13.11:8.9	millo	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H4407, which the King James renders 'Millo'
 13.11:8.15	joab	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H3097, read as joab with high confidence: Repairs the rest of the city, same narrative.
 13.11:9.3	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 13.11:9.8	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
@@ -25222,6 +25228,8 @@ own	record	role	method	confidence	source	note
 13.26:16.5	hosah	name	lexical	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H2621, which BHSA marks pers
 13.26:16.11	shallecheth	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H7996, which BHSA marks topo
 13.26:17.5	levites	people	lexical	0.9	the gentilic Strong's Dictionary derives, resolving to exactly one people	H3881, which Strong's Dictionary derives from H3878: "patronymically from לֵוִי (H3878)"
+13.26:18.3	parbar	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H6503, which the King James renders 'Parbar'
+13.26:18.14	parbar	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H6503, which the King James renders 'Parbar'
 13.26:19.8	korahites	people	lexical	0.9	the gentilic Strong's Dictionary derives, resolving to exactly one people	H7145, which Strong's Dictionary derives from H7141: "patronymic from קֹרַח (H7141)"
 13.26:19.12	merari	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H4847, which BHSA marks pers
 13.26:20.3	levites	people	lexical	0.9	the gentilic Strong's Dictionary derives, resolving to exactly one people	H3881, which Strong's Dictionary derives from H3878: "patronymically from לֵוִי (H3878)"
@@ -27575,6 +27583,7 @@ own	record	role	method	confidence	source	note
 14.32:2.6	sennacherib	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5576, which BHSA marks pers
 14.32:2.13	jerusalem	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H3389, which BHSA marks topo
 14.32:4.26	assyria	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H804, read as assyria with high confidence: 'Kings of Assyria' seeking water - empire.
+14.32:5.27	millo	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H4407, which the King James renders 'Millo'
 14.32:5.29	david	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1732, which BHSA marks pers
 14.32:7.11	sennacherib	name	model-reading	0.85	Essenthos, a reading of the passage by claude-sonnet-5-5, prompt references-2, upheld by a second reading by claude-sonnet-5-5, asked 2026-09-29	'the king of Assyria', which 32:1-2 fixes as Sennacherib.
 14.32:7.12	assyria	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H804, read as assyria with high confidence: 'King of Assyria' feared by people - empire.
@@ -31490,6 +31499,7 @@ own	record	role	method	confidence	source	note
 19.132:2.8	jacob	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H3290, read as jacob with high confidence: Mighty God of Jacob, psalm re David's vow.
 19.132:5.5	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 19.132:5.9	jacob	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H3290, read as jacob with high confidence: Habitation for mighty God of Jacob, psalm.
+19.132:6.4	ephrathah	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H672, which the King James renders 'Ephratah'
 19.132:6.8	jaar	name	manual	\N	Essenthos, the names the Hebrew marks that nothing read, each word read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12	'We found it in the fields of Jaar': BHSA marks it a place name, the town of the ark (Kiriath-jearim).
 19.132:8.2	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 19.132:8.7	ark-of-the-covenant	thing	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	H727 at Psalms 132:8, which the record file reads as Ark of the Covenant
@@ -36340,6 +36350,7 @@ own	record	role	method	confidence	source	note
 26.20:27.6	ezekiel	name	rule-based	0.99	Essenthos, reading a title the text itself fixes to one bearer	בֶּן־אָדָם, 'son of man', as God addresses Ezekiel throughout his book
 26.20:27.13	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H136, which BHSA marks pers
 26.20:27.14	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3069, which BHSA marks pers
+26.20:29.15	bamah	name	rule-based	0.8	Essenthos, a name no word carried, read off the King James word that renders it at a verse the datasets list for the record, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	H1117, which the King James renders 'Bamah'
 26.20:30.5	israelites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-09-16 that a name a tribe shares with its ancestor names the ancestor until the sentence is read, Israel standing alone outside Genesis being the nation	H3478, Israel standing alone outside Genesis, so the nation
 26.20:30.8	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H136, which BHSA marks pers
 26.20:30.9	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3069, which BHSA marks pers
