@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -119,6 +120,7 @@ public sealed class WitnessDatabase : IAsyncLifetime
         await using (var context = NewContext(template))
         {
             await context.Database.MigrateAsync();
+            await context.Database.ExecuteSqlRawAsync(ExternalReferences.Schema);
             await context.Database.ExecuteSqlRawAsync(NoAutovacuumSql);
         }
 

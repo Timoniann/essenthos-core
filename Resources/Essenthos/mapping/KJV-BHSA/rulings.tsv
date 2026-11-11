@@ -1,0 +1,21 @@
+# product    Essenthos/mapping/KJV-BHSA/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	1.41:56.20 1.41:56.21 1.41:56.22	1.41:56.27			Genesis 41:56: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	1.41:56.31 1.41:56.32	1.41:56.20			Genesis 41:56: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	1.41:56.20 1.41:56.21 1.41:56.22	1.41:56.20	renders		Genesis 41:56: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	1.41:56.31 1.41:56.32	1.41:56.27	renders		Genesis 41:56: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	2.11:3.11 2.11:3.12 2.11:3.13	2.11:3.19			Exodus 11:3: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	2.11:3.24 2.11:3.25	2.11:3.10			Exodus 11:3: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	2.11:3.11 2.11:3.12 2.11:3.13	2.11:3.10	renders		Exodus 11:3: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	2.11:3.24 2.11:3.25	2.11:3.19	renders		Exodus 11:3: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	2.12:30.15 2.12:30.16	2.12:30.17			Exodus 12:30: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	2.12:30.23 2.12:30.24	2.12:30.11			Exodus 12:30: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	2.12:30.15 2.12:30.16	2.12:30.11	renders		Exodus 12:30: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	2.12:30.23 2.12:30.24	2.12:30.17	renders		Exodus 12:30: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	2.7:21.14 2.7:21.15 2.7:21.16	2.7:21.30			Exodus 7:21: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+refuse	2.7:21.34 2.7:21.35	2.7:21.16			Exodus 7:21: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	2.7:21.14 2.7:21.15 2.7:21.16	2.7:21.16	renders		Exodus 7:21: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
+accept	2.7:21.34 2.7:21.35	2.7:21.30	renders		Exodus 7:21: the King James's 'Egyptians' and 'Egypt' stand in the Hebrew's order, the people before the land; the stated alignment crosses them
