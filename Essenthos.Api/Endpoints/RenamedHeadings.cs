@@ -71,9 +71,11 @@ internal static class RenamedHeadings
 
     /// <summary>
     /// Records whose heading a person ruled against the name their verses are filed under: Junia, whose
-    /// one verse the dataset files as Junias, stays Junia.
+    /// one verse the dataset files as Junias, stays Junia. The high priest of Haggai and Zechariah stays Joshua, the name
+    /// he is best known by, although Ezra and Nehemiah's Jeshua, folded into his record, labels more verses (the owner,
+    /// 2026-11-11).
     /// </summary>
-    private static readonly HashSet<string> RuledHeadings = ["person:Junias_1"];
+    private static readonly HashSet<string> RuledHeadings = ["person:Junias_1", "person:Joshua_4"];
 
     public static async Task<Dictionary<int, RenamedHeading>> Of(
         AppDbContext db,
