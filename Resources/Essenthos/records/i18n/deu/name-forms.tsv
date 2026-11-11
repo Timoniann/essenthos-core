@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	genitive	Aarons	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -8654,9 +8654,6 @@ sahar	nominative	Sahar	model-reading	1	read from Scripture by claude-sonnet-5, a
 salamis	genitive	Salamis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
 salamis	locative	Salamis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
 salamis	nominative	Salamis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
-salcah	genitive	Salchas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#359b9ac96644b711
-salcah	locative	Salcha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#359b9ac96644b711
-salcah	nominative	Salcha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#359b9ac96644b711
 salecah	genitive	Salchas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#bb3659a2bbe82255
 salecah	locative	Salcha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#bb3659a2bbe82255
 salecah	nominative	Salcha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#bb3659a2bbe82255

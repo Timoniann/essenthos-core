@@ -4,7 +4,7 @@
 # exported   from localhost:5437/essenthos_core_rework_src
 # edited     by hand from here on: a row is a decision that this word names this record
 # cleaned    2026-11-04 (PRB-1467): rows carried from BHSA rows that were taken out, taken out with them
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 own	record	role	method	confidence	source	note
 1.2:4.13	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:4.13, linked by lexical
 1.2:5.20	yhvh	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:5.21, linked by lexical
@@ -8753,7 +8753,7 @@ own	record	role	method	confidence	source	note
 5.3:9.11	senir	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 5.3:9.11, linked by lexical
 5.3:10.8	gilead-4	name	model-reading	0.9405	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 5.3:10.8, linked by lexical
 5.3:10.12	bashan	name	strong-number	0.76	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	frozen 2026-11: through BHSA 5.3:10.12, linked by lexical
-5.3:10.14	salcah	name	strong-number	0.855	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 5.3:10.14, linked by lexical
+5.3:10.14	salecah	name	manual	\N	Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)	5.3:10.14 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
 5.3:10.16	edrei	name	lexical	0.9025	Essenthos, telling apart the places that share a name: the gazetteer states this verse names it, BHSA marks the word a name, and a reading of the verse made without seeing the gazetteer says the same	frozen 2026-11: through BHSA 5.3:10.16, linked by lexical
 5.3:10.19	og	name	strong-number	0.9405	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 5.3:10.19, linked by lexical
 5.3:10.21	bashan	name	strong-number	0.76	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	frozen 2026-11: through BHSA 5.3:10.22, linked by lexical

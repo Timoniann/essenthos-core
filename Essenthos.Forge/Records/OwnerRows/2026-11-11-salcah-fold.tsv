@@ -1,0 +1,32 @@
+# producer   by hand: Salcah folded into Salecah, one town of Bashan written twice (PRB-1418), applied by forge owner-rows
+# by         Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1418	names/BHSA	remove	5.3:10.14	salcah	\N	\N	\N	\N	5.3:10.14 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	add	5.3:10.14	salecah	\N	name	\N	\N	5.3:10.14 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	remove	6.12:5.8	salcah	\N	\N	\N	\N	6.12:5.8 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	add	6.12:5.8	salecah	\N	name	\N	\N	6.12:5.8 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	remove	6.13:11.20	salcah	\N	\N	\N	\N	6.13:11.20 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	add	6.13:11.20	salecah	\N	name	\N	\N	6.13:11.20 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	remove	13.5:11.12	salcah	\N	\N	\N	\N	13.5:11.12 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/BHSA	add	13.5:11.12	salecah	\N	name	\N	\N	13.5:11.12 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	remove	5.3:10.11	salcah	\N	\N	\N	\N	5.3:10.11 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	add	5.3:10.11	salecah	\N	name	\N	\N	5.3:10.11 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	remove	6.12:5.7	salcah	\N	\N	\N	\N	6.12:5.7 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	add	6.12:5.7	salecah	\N	name	\N	\N	6.12:5.7 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	remove	6.13:11.19	salcah	\N	\N	\N	\N	6.13:11.19 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	add	6.13:11.19	salecah	\N	name	\N	\N	6.13:11.19 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	remove	13.5:11.10	salcah	\N	\N	\N	\N	13.5:11.10 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GRCBRENT	add	13.5:11.10	salecah	\N	name	\N	\N	13.5:11.10 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GEEZ81	remove	5.3:10.10	salcah	\N	\N	\N	\N	5.3:10.10 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GEEZ81	add	5.3:10.10	salecah	\N	name	\N	\N	5.3:10.10 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GEEZ81	remove	6.12:5.7	salcah	\N	\N	\N	\N	6.12:5.7 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/GEEZ81	add	6.12:5.7	salecah	\N	name	\N	\N	6.12:5.7 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/VULGCLEM	remove	5.3:10.16	salcah	\N	\N	\N	\N	5.3:10.16 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/VULGCLEM	add	5.3:10.16	salecah	\N	name	\N	\N	5.3:10.16 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/VULGCLEM	remove	6.13:11.17	salcah	\N	\N	\N	\N	6.13:11.17 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/VULGCLEM	add	6.13:11.17	salecah	\N	name	\N	\N	6.13:11.17 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/VULGCLEM	remove	13.5:11.12	salcah	\N	\N	\N	\N	13.5:11.12 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/VULGCLEM	add	13.5:11.12	salecah	\N	name	\N	\N	13.5:11.12 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/SP	remove	5.3:10.14	salcah	\N	\N	\N	\N	5.3:10.14 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
+PRB-1418	names/SP	add	5.3:10.14	salecah	\N	name	\N	\N	5.3:10.14 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah

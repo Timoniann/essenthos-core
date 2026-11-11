@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # Our records. No dataset source: where a record came from is its claims; a dataset's id for it is in records/external-ids.
 slug	kind	subtype	place_kind	name	sex	sex_source	name_gender	tribe	origin	another_name_for	byname
 aaron	person	\N	\N	Aaron	male	\N	\N	Levi	\N	\N	\N
@@ -3973,7 +3973,6 @@ sacar	person	\N	\N	Sacar	male	\N	\N	Levi	\N	\N	\N
 sachia	person	\N	\N	Sachia	male	\N	\N	Benjamin	\N	\N	\N
 sahar	place	\N	settlement, special	Sahar	\N	\N	\N	\N	\N	\N	\N
 salamis	place	\N	settlement	Salamis	\N	\N	\N	\N	\N	\N	\N
-salcah	place	\N	\N	Salcah	\N	\N	\N	\N	\N	\N	\N
 salecah	place	\N	settlement	Salecah	\N	\N	\N	\N	\N	\N	\N
 salem	place	\N	settlement	Salem	\N	\N	\N	\N	\N	jerusalem	\N
 salim	place	\N	settlement, wadi	Salim	\N	\N	\N	\N	\N	\N	\N

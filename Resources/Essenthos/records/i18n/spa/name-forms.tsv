@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aarón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3957,7 +3957,6 @@ sacar	nominative	Sachâr	model-reading	1	declined by claude-opus-5-5, asked 2026
 sachia	nominative	Sochîas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 sahar	nominative	Sahar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 salamis	nominative	Salamina	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-salcah	nominative	Salca	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 salecah	nominative	Salchâ	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 salem	nominative	Salem	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 salim	nominative	Salim	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N

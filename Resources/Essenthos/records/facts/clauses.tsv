@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # What the text says a record is, clause by clause: the line, and the source of every relationship.
 subject	ordinal	relation	target	ref	citation	witness	original	method	confidence	by	run	note
 aaron	1	brother-of	moses	2.4:14	\N	\N	\N	model-reading	0.97	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe	\N
@@ -5743,7 +5743,6 @@ sachia	1	brother-of	jeuz	13.8:10	\N	\N	\N	model-reading	0.7	read from Scripture 
 sachia	2	brother-of	mirmah	13.8:10	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0009.jsonl#440970e1b12a869d	\N
 sachia	3	son-of	shaharaim	13.8:10	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0009.jsonl#440970e1b12a869d	8:10 "And Jeuz, and Shachia, and Mirma. These were his sons" names Sachia as Shaharaim's son.
 sachia	4	son-of	hodesh	13.8:10	\N	\N	\N	manual	\N	read from Scripture by an agent reading 1CH 8:10 on the project owner's instruction, decided 2026-09-26	zz-words-0009.jsonl#440970e1b12a869d	agent: 1CH 8:9-10 'he begat of Hodesh his wife, Jobab, and Zibia, and Mesha, and Malcham, And Jeuz, and Shachia, and Mirma' - one list; in the Hebrew Sachia is still an object of 'begat of Hodesh', and the LXX runs the list the same way.
-salcah	1	city-in	bashan	5.3:10	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#359b9ac96644b711	\N
 salecah	1	city-in	bashan	5.3:10	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#bb3659a2bbe82255	\N
 salem	1	near	zion	19.76:2	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#e99d7ea12b00113f	\N
 salim	1	near	aenon	43.3:23	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#ccff56d8f5884683	\N

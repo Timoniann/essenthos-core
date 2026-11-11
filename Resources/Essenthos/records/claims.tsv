@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # Why each record exists, and who said so.
 slug	method	confidence	by	note
 aaron	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -6903,7 +6903,6 @@ sachia	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one 
 sahar	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as af9e903, kept as ours by the rework of 2026-11	\N
 salamis	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G4529 "Salamis, a place in Cyprus" — no location tag, and the gloss names a place under a headword that is a name
 salamis	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as afa863b, which is where this record's coordinates come from and whose they stay
-salcah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H5548 "Salcah, a place East of the Jordan" — the tag and the gloss both say place
 salecah	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as ac3bc41, kept as ours by the rework of 2026-11	\N
 salem	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G4532 "Salem (i.e. Shalem), a place in Palestine" — no location tag, and the gloss names a place under a headword that is a name; H8004 "Shalem, an early name of Jerusalem" — the lexicon left it open and BHSA marks the word a place and nothing else
 salem	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as aad7e4e, which is where this record's coordinates come from and whose they stay

@@ -4,7 +4,7 @@
 # exported   from localhost:5437/essenthos_core_rework_src
 # edited     by hand from here on: a row is a decision that this word names this record
 # cleaned    2026-11-04 (PRB-1467): rows carried onto this text from translations taken out where the word is no proper noun of BHSA the record bears and BHSA never names the record by that word itself
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 own	record	role	method	confidence	source	note
 1.2:4.13	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 1.2:5.21	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
@@ -8901,7 +8901,7 @@ own	record	role	method	confidence	source	note
 5.3:9.11	senir	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8149, which BHSA marks topo
 5.3:10.8	gilead-4	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H1568, read as gilead-4 with high confidence: 'All Gilead and all Bashan' — territorial listing.
 5.3:10.12	bashan	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H1316, which BHSA marks topo
-5.3:10.14	salcah	name	strong-number	0.9	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5548, which BHSA marks topo
+5.3:10.14	salecah	name	manual	\N	Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)	5.3:10.14 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
 5.3:10.16	edrei	name	lexical	0.95	Essenthos, telling apart the places that share a name: the gazetteer states this verse names it, BHSA marks the word a name, and a reading of the verse made without seeing the gazetteer says the same	H154, read as edrei — the gazetteer places this verse at it and a reading of the verse, made without seeing that, says the same (Listed among cities of Og's kingdom in Bashan/Gilead.)
 5.3:10.19	og	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5747, which BHSA marks pers
 5.3:10.22	bashan	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H1316, which BHSA marks topo
@@ -10754,7 +10754,7 @@ own	record	role	method	confidence	source	note
 6.12:4.14	ashtaroth	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H6252, which BHSA marks topo
 6.12:4.17	edrei	name	lexical	0.95	Essenthos, telling apart the places that share a name: the gazetteer states this verse names it, BHSA marks the word a name, and a reading of the verse made without seeing the gazetteer says the same	H154, read as edrei — the gazetteer places this verse at it and a reading of the verse, made without seeing that, says the same (Og's capital paired with Ashtaroth, in Bashan.)
 6.12:5.5	mounthermon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H2768, which BHSA marks topo
-6.12:5.8	salcah	name	strong-number	0.9	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5548, which BHSA marks topo
+6.12:5.8	salecah	name	manual	\N	Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)	6.12:5.8 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
 6.12:5.13	bashan	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H1316, which BHSA marks topo
 6.12:5.17	geshurites	people	lexical	0.9	the gentilic Strong's Dictionary derives, resolving to exactly one people	H1651, which Strong's Dictionary derives from H1650: "patrial from גְּשׁוּר (H1650)"
 6.12:5.20	maachathites	people	lexical	0.9	the gentilic Strong's Dictionary derives, resolving to exactly one people	H4602, which Strong's Dictionary derives from H4601: "patrial from מַעֲכָה (H4601)"
@@ -10897,7 +10897,7 @@ own	record	role	method	confidence	source	note
 6.13:11.10	maachathites	people	lexical	0.9	the gentilic Strong's Dictionary derives, resolving to exactly one people	H4602, which Strong's Dictionary derives from H4601: "patrial from מַעֲכָה (H4601)"
 6.13:11.14	mounthermon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H2768, which BHSA marks topo
 6.13:11.18	bashan	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H1316, which BHSA marks topo
-6.13:11.20	salcah	name	strong-number	0.9	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5548, which BHSA marks topo
+6.13:11.20	salecah	name	manual	\N	Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)	6.13:11.20 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
 6.13:12.3	og	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5747, which BHSA marks pers
 6.13:12.6	bashan	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H1316, which BHSA marks topo
 6.13:12.10	ashtaroth	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	H6252, which BHSA marks topo
@@ -23000,7 +23000,7 @@ own	record	role	method	confidence	source	note
 13.5:11.2	gadites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H1121, sons of H1410, so the people of that name
 13.5:11.3	gad	name	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H1410, after sons of, so the man the tribe is named after
 13.5:11.10	bashan	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H1316, which BHSA marks topo
-13.5:11.12	salcah	name	strong-number	0.9	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H5548, which BHSA marks topo
+13.5:11.12	salecah	name	manual	\N	Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)	13.5:11.12 names Salcah, the town of Bashan, which is the gazetteer's Salecah: salcah folded into salecah
 13.5:12.1	joel-4	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H3100, read as joel-4 with high confidence: Gadite chief in Bashan, matching candidate's distinguisher (1CH 5:12/5:11).
 13.5:12.5	shapham	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H8223, which BHSA marks pers
 13.5:12.9	janai	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3285, which BHSA marks pers

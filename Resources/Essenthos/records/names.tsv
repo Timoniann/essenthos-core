@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # The names a record bears, in its order (n). Their meanings are in i18n/eng/names.
 slug	n	label	kind	hebrew	hebrew_transliterated	greek	greek_transliterated	hebrew_strong	greek_strong	aspect_of	by
 aaron	1	Aaron	proper name	אַהֲרֹ֤ן	aharon	Ααρων	Aarōn	H175	\N	\N	\N
@@ -5546,9 +5546,9 @@ sacar	1	Sacar	proper name	שָׂכָר	sakhar	Σωχαρ	Sōxar	H7940	\N	\N	\N
 sachia	1	Sachia	proper name	שָׂכְיָה	sakhəyah	Σαβια	Sabia	H7634	\N	\N	\N
 sahar	1	Zahar	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 salamis	1	Salamis	name	\N	\N	Σαλαμίς	\N	\N	G4529	\N	\N
-salcah	1	Salcah	name	\N	\N	\N	\N	H5548	\N	\N	\N
 salecah	1	Salchah	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 salecah	2	Salekah	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
+salecah	3	Salcah	name	\N	\N	\N	\N	H5548	\N	\N	\N
 salem	1	Salem	name	\N	\N	Σαλήμ	\N	\N	G4532	jerusalem	\N
 salem	2	Salem	name	\N	\N	\N	\N	H8004	\N	\N	\N
 salim	1	Salim	name	\N	\N	Σαλείμ	\N	\N	G4530	\N	\N

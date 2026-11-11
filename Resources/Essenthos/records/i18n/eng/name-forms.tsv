@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aaron	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -3912,7 +3912,6 @@ sacar	nominative	Sacar	model-reading	1	read from Scripture by claude-sonnet-5, a
 sachia	nominative	Sachia	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0009.jsonl#440970e1b12a869d
 sahar	nominative	Sahar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0121.jsonl#27f442d0b85c991a
 salamis	nominative	Salamis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
-salcah	nominative	Salcah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#359b9ac96644b711
 salecah	nominative	Salecah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#bb3659a2bbe82255
 salem	nominative	Salem	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0122.jsonl#e99d7ea12b00113f
 salim	nominative	Salim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#ccff56d8f5884683
