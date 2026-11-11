@@ -83,10 +83,10 @@ internal sealed class SyntaxPrior
 
     /// <summary>
     /// The phrase, clause and sentence of every word, from the groups the analysis is drafted into
-    /// (<see cref="SyntaxLoader.Drafts"/>), each word by the id the drafts gave it: what <see cref="Read"/>
+    /// (<see cref="SyntaxGroups.Drafts"/>), each word by the id the drafts gave it: what <see cref="Read"/>
     /// reads of a database those drafts were loaded into, read from the analysis itself.
     /// </summary>
-    public static SyntaxPrior Of(IReadOnlyList<SyntaxLoader.GroupDraft> groups)
+    public static SyntaxPrior Of(IReadOnlyList<SyntaxGroups.GroupDraft> groups)
     {
         var units = new Dictionary<long, (long Phrase, long Clause, long Sentence)>(450_000);
         for (var group = 0; group < groups.Count; group++)

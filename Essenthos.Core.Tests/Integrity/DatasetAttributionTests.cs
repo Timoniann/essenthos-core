@@ -172,7 +172,7 @@ public sealed class DatasetAttributionTests
         tahot.LinkClaims.Should().BeTrue();
         tahot.Licence.Should().Be("CC BY-NC 3.0");
         tahot.Obliges.Should().Contain("NonCommercial");
-        Datasets.Credited(OldTestamentLinkLoader.StatedSource).Should().BeSameAs(tahot);
+        Datasets.Credited(OldTestamentLinks.StatedSource).Should().BeSameAs(tahot);
     }
 
     /// <summary>
@@ -318,15 +318,15 @@ public sealed class DatasetAttributionTests
 
     [Fact]
     public void TheSeptuagintLetterAlignmentIsClaimedAsOurOwn() =>
-        Datasets.Of(SeptuagintLinkLoader.Source).Should().Be(Datasets.Own);
+        Datasets.Of(SeptuagintLinks.Source).Should().Be(Datasets.Own);
 
     /// <summary>
     /// A parsing is neither an entity nor a link, so a dataset that contributes only parsings is
     /// credited only if its declaration says it does and claims the string its rows carry.
     /// </summary>
     [Theory]
-    [InlineData(MaculaAnnotationLoader.Source, "macula")]
-    [InlineData(MorphGntParsingLoader.Source, "morphgnt")]
+    [InlineData(MaculaAnnotation.Source, "macula")]
+    [InlineData(MorphGntAnnotation.Source, "morphgnt")]
     public void EachSecondAnalysisOfTheGreekIsCredited(string source, string dataset)
     {
         Datasets.Of(source).Should().Be(dataset);

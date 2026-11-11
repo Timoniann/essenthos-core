@@ -3,6 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -47,7 +48,9 @@ internal sealed record RenamedHeading(string Name, string? LocalName, string For
 /// in 20, Barnabas in 28 and Joseph in one, Abraham in 206 and Abram in 51. Each verse the dataset
 /// lists says which name it uses, so the count is read from the records rather than kept as a list of
 /// renamed people: whichever proper name labels the most verses heads, where it labels more than the
-/// name the record is filed under.
+/// name the record is filed under. The dataset's verses are not shown to a reader and are kept apart
+/// from the verses that are (<see cref="ExternalReferences"/>); both are counted, with the labels of
+/// the verses our own readings put a person in.
 /// </para>
 ///
 /// <para>
@@ -76,6 +79,8 @@ internal static class RenamedHeadings
     /// 2026-11-11).
     /// </summary>
     private static readonly HashSet<string> RuledHeadings = ["person:Junias_1", "person:Joshua_4"];
+
+    private sealed record LabelledVerses(int EntityId, string Label, int Verses);
 
     public static async Task<Dictionary<int, RenamedHeading>> Of(
         AppDbContext db,
@@ -110,10 +115,16 @@ internal static class RenamedHeadings
             .Where(n => personIds.Contains(n.EntityId))
             .Select(n => new { n.EntityId, n.Label, n.Kind })
             .ToListAsync(cancellationToken);
-        var labelled = await db.EntityVerses
-            .Where(v => personIds.Contains(v.EntityId) && v.Label != null)
-            .GroupBy(v => new { v.EntityId, v.Label })
-            .Select(g => new { g.Key.EntityId, g.Key.Label, Verses = g.Count() })
+        var labelled = await db.Database.SqlQueryRaw<LabelledVerses>(
+                $"""
+                 SELECT entity_id, label, count(*)::int AS verses
+                 FROM (SELECT entity_id, label FROM entity_verse WHERE entity_id = ANY(@ids) AND label IS NOT NULL
+                       UNION ALL
+                       SELECT entity_id, label FROM {ExternalReferences.Table}
+                       WHERE dataset = '{ExternalReferences.BibleData}' AND entity_id = ANY(@ids) AND label IS NOT NULL) l
+                 GROUP BY 1, 2
+                 """,
+                new NpgsqlParameter<int[]>("ids", [.. personIds]))
             .ToListAsync(cancellationToken);
 
         var renamed = new Dictionary<int, (string Name, string Former)>();

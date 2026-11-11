@@ -145,6 +145,33 @@ public sealed class OwnerRowsTests : IDisposable
     }
 
     /// <summary>
+    /// The occupation files are made by the build from person-occupations.json: a row aimed at one would be applied and
+    /// then written over by the next forge build, so it is refused with what to edit instead, and nothing is written.
+    /// </summary>
+    [Fact]
+    public void ARowAimedAtAFileTheBuildMakesIsRefusedWithWhatToEditInstead()
+    {
+        var store = Files();
+        Write(store, "build/products", "product\tmaker\tproducer\tinputs\ttables\tscope",
+            "records/facts/occupations\tbuild\toccupations\tEssenthos/person-occupations.json\t-\tall",
+            "records/**\thand\tby hand\t-\t-\tall",
+            "names/{text}\thand\tby hand\t-\t-\tnone");
+        Write(store, "records/facts/occupations", "slug\toccupation\tby", "solomon\tking\tmodel");
+        store.Save();
+        var before = File.ReadAllText(store.FullPath("records/facts/occupations", ProductKind.Hand));
+
+        var outcome = OwnerRows.Apply(new ProductStore(_resources), new OwnerRows.Decided(
+            [new("objects:50", "names/BHSA", OwnerRows.Add, "11.7:22.1", "steps-of-ahaz", null, "thing", "H8010", null, "a hand file")],
+            [new("occupations:3", "records/facts/occupations", OwnerRows.Put, "god", """{"occupation":"king"}""", "a built file")]),
+            dryRun: false, Now);
+
+        outcome.Refused.Should().ContainSingle().Which.Should()
+            .Contain("records/facts/occupations").And.Contain("occupations").And.Contain("Essenthos/person-occupations.json");
+        outcome.Written.Should().BeEmpty("one refused row stops every row");
+        File.ReadAllText(store.FullPath("records/facts/occupations", ProductKind.Hand)).Should().Be(before);
+    }
+
+    /// <summary>
     /// A fold is put under the old address, which no record holds once the record's rows are dropped, and must name the
     /// record it went into; a fold under a slug a record still holds, or into one no record holds, is refused.
     /// </summary>

@@ -274,7 +274,7 @@ public sealed class SynodalStrongLinkTests : IDisposable
     [Fact]
     public void TheNumberingIsDeclaredAndItsLinksAreClaimed()
     {
-        var source = $"{SynodalStrongLinkLoader.Credit}, matched within the verse against BHSA";
+        var source = $"{SynodalStrongLinks.Credit}, matched within the verse against BHSA";
 
         Datasets.Match(source)!.Obliges.Should().Contain("not for profit");
         Datasets.Of(source).Should().Be("bju-synodal-strong");

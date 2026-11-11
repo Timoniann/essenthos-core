@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Essenthos.Core.Build;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Names;
@@ -179,6 +180,8 @@ internal static class OwnerRows
     public static Outcome Apply(ProductStore store, Decided decided, bool dryRun, DateTimeOffset now)
     {
         var refused = new List<string>();
+        var count = decided.Count;
+        decided = WithoutBuilt(store, decided, refused);
         var changed = new Dictionary<string, int>(StringComparer.Ordinal);
         var already = 0;
         var edits = new List<IFileEdit>();
@@ -266,13 +269,43 @@ internal static class OwnerRows
             store.Save();
         }
 
-        return new Outcome(decided.Count, changed.Values.Sum(), already, refused, changed, written);
+        return new Outcome(count, changed.Values.Sum(), already, refused, changed, written);
     }
 
     /// <summary>
     /// Whether a record file's first column names a record. The renderings of English (<c>texts</c>, <c>glosses</c>) are
     /// keyed by the English they render, so a row of theirs names no record to look for.
     /// </summary>
+    /// <summary>
+    /// The rows aimed at files the build makes, refused with what to edit instead, and the rest. Such a row would be applied
+    /// and then written over by the next <c>forge build</c> (the occupation files, made from <c>person-occupations.json</c>;
+    /// PRB-1587). A store without <c>build/products</c> refuses nothing.
+    /// </summary>
+    private static Decided WithoutBuilt(ProductStore store, Decided decided, List<string> refused)
+    {
+        if (!store.Exists(ProductGraph.Product))
+        {
+            return decided;
+        }
+
+        var graph = ProductGraph.Read(store);
+        bool Built(string entry, string op, string record, string product)
+        {
+            if (graph.Find(product) is not { Declaration: { Maker: ProductMaker.Build or ProductMaker.Serve } made })
+            {
+                return false;
+            }
+
+            refused.Add($"{entry} {op} {record} in {product}: the build makes this file ({made.Producer}), so the next forge build " +
+                        $"would write it again; edit what it reads instead: {string.Join(' ', made.Inputs)}");
+            return true;
+        }
+
+        return new Decided(
+            [.. decided.Names.Where(r => !Built(r.Entry, r.Op, r.Record, r.Product))],
+            [.. decided.Records.Where(r => !Built(r.Entry, r.Op, r.Record, r.Product))]);
+    }
+
     private static bool KeyedByRecord(string product) =>
         product != Folds && RecordFiles.All.FirstOrDefault(f => f.Product == product)?.Parsed is [{ Name: "slug" or "subject" }, ..];
 

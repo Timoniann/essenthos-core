@@ -274,7 +274,7 @@ internal sealed record TitleRecord(
 /// princes of Judah, <em>pechah</em> of Solomon's or Nebuchadnezzar's officers.
 /// </param>
 /// <param name="With">
-/// Another Strong number that has to stand within <see cref="ThingLoader.Reach"/> words in the same
+/// Another Strong number that has to stand within <see cref="OccurrenceRule.Reach"/> words in the same
 /// verse: <em>the priest</em> beside <em>great</em>.
 /// </param>
 /// <param name="Singular">

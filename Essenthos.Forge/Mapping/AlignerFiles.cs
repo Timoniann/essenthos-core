@@ -367,7 +367,7 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             bySlot[++slot] = id;
         }
 
-        return SyntaxPrior.Of(SyntaxLoader.Drafts(BhsaProject.Load(texts.Store.FullPath(SyntaxSource)), bySlot));
+        return SyntaxPrior.Of(SyntaxGroups.Drafts(BhsaProject.Load(texts.Store.FullPath(SyntaxSource)), bySlot));
     }
 
     /// <summary>

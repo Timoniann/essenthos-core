@@ -443,8 +443,8 @@ public sealed class RenamedInALineTests : IDisposable
         Clear();
 
         var ohienko = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (1, 1, ["слово"]));
-        var paul = Person("saul-2", "Saul", ("Saul", BibleDataLoader.LabelKind), ("Paul", BibleDataLoader.LabelKind));
-        var barnabas = Person("joseph-12", "Joseph", ("Joseph", BibleDataLoader.LabelKind), ("Barnabas", BibleDataLoader.LabelKind));
+        var paul = Person("saul-2", "Saul", ("Saul", Credits.ProperName), ("Paul", Credits.ProperName));
+        var barnabas = Person("joseph-12", "Joseph", ("Joseph", Credits.ProperName), ("Barnabas", Credits.ProperName));
         var silas = Person("silas", "Silas");
         var mark = Person("mark", "Mark");
         _db.SaveChanges();
@@ -532,7 +532,7 @@ public sealed class RenamedInALineTests : IDisposable
             _db.EntityVerses.Add(new EntityVerse
             {
                 EntityId = entity.Id, CanonicalBook = 44, CanonicalChapter = 13, CanonicalVerse = verse,
-                Label = label, Source = BibleDataLoader.Source,
+                Label = label, Source = Credits.BibleData,
             });
         }
     }

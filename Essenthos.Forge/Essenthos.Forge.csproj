@@ -62,7 +62,6 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SupersededReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\KnownFor.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\MisplacedAnnotations.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
         <Content Remove="Loading\Encyclopedia\WithheldClauses.json" />
@@ -89,7 +88,6 @@
         <EmbeddedResource Include="Loading\Encyclopedia\PhilipRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalJehoiakimRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\RevelationTribeRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\EponymReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OhienkoAdamRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OhienkoGentilicRecords.json" />
@@ -144,8 +142,6 @@
         <EmbeddedResource Include="Loading\Encyclopedia\NarrativeRecords.json" />
         <Content Remove="Loading\Encyclopedia\DuplicateRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\DuplicateRecords.json" />
-        <Content Remove="Loading\Encyclopedia\UssherDatings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\UssherDatings.json" />
 
         <!-- The peoples this corpus names, and the two things about them nothing else can supply:
              what to call the nine gentilics whose entry yields no usable English word, and the

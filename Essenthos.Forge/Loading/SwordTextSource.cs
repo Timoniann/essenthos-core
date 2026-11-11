@@ -46,12 +46,12 @@ internal sealed record SwordText(
 
 /// <param name="Numbers">
 /// The Strong numbers the edition writes on the element the word came from, in the corpus's series;
-/// empty for a word no element claims. Never stored: <see cref="UnionStrongLinkLoader"/> reads them.
+/// empty for a word no element claims. Never stored: <see cref="UnionStrongLinks"/> reads them.
 /// </param>
 /// <param name="Unit">The element the word came from, so a phrase tagged once is one rendering.</param>
 /// <param name="Positions">
 /// The places of the Greek words the element renders in the Received Text verse, where the module
-/// states them; empty elsewhere. Never stored: <see cref="CrossWirePositionLinkLoader"/> reads them.
+/// states them; empty elsewhere. Never stored: <see cref="CrossWirePositions"/> reads them.
 /// </param>
 internal sealed record SwordWord(
     string Surface, string Trailer, IReadOnlyList<string> Numbers, int Unit, bool Elided,

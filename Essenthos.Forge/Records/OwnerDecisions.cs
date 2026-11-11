@@ -169,7 +169,7 @@ internal static class OwnerDecisions
                 _files[file.Product] = (file, [.. reader.Rows().Select(row => (string?[])row.Clone())], reader.Header);
             }
 
-            var held = KnownForLoader.Read().Records.Select(r => r.Slug).ToHashSet(StringComparer.Ordinal);
+            var held = KnownForFile.Read().Records.Select(r => r.Slug).ToHashSet(StringComparer.Ordinal);
             var (records, folds) = Records();
             var list = File.Exists(listPath) ? KnownForReviewList.Read(listPath) : null;
             var proposals = (list?.Records ?? []).ToDictionary(r => r.Slug, StringComparer.Ordinal);

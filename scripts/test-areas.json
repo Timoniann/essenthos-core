@@ -28,10 +28,7 @@
     { "path": "scripts/test-areas.json", "areas": ["all"] },
     { "path": "scripts/test-affected.ps1", "areas": [] },
 
-    { "path": "Essenthos.Core.Tests/Resources/descriptors/**", "areas": ["Records", "Names"] },
     { "path": "Essenthos.Core.Tests/Resources/relationships/**", "areas": ["Records"] },
-    { "path": "Essenthos.Core.Tests/Resources/name-forms/**", "areas": ["Names"] },
-    { "path": "Essenthos.Core.Tests/Resources/titles/**", "areas": ["Names"] },
     { "path": "Essenthos.Core.Tests/Resources/evidentia/**", "areas": ["Evidentia"] },
     { "path": "Essenthos.Core.Tests/**", "areas": ["all"] },
 
@@ -147,11 +144,8 @@
     { "path": "scripts/*.sql", "areas": ["Platform"] },
     { "path": "scripts/**", "areas": [] },
 
-    { "path": "Resources/Essenthos/descriptors/**", "areas": ["Records", "Names"] },
     { "path": "Resources/Essenthos/review/**", "areas": ["Platform", "Records", "Names"] },
     { "path": "Resources/Essenthos/evidentia/**", "areas": ["Evidentia"] },
-    { "path": "Resources/Essenthos/name-forms/**", "areas": ["Names"] },
-    { "path": "Resources/Essenthos/name-glosses/**", "areas": ["Names"] },
     { "path": "Resources/Essenthos/lexicon/**", "areas": ["Lexicon"] },
     { "path": "Resources/Essenthos/page-readings/**", "areas": ["Witnesses"] },
     { "path": "Resources/Essenthos/sites/**", "areas": ["Platform"] },

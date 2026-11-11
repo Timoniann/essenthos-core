@@ -6,7 +6,7 @@ namespace Essenthos.Core.Mapping;
 
 /// <summary>
 /// Two Greek editions of the New Testament paired by the Strong numbers both carry, within each address of the frame, and
-/// the words no number answers matched by their place in the verse (<see cref="GreekWitnessLinkLoader"/> has the reasons),
+/// the words no number answers matched by their place in the verse (<see cref="GreekWitnessLinks"/> has the reasons),
 /// read from both texts' words and frames. One pairing makes both methods' rows: the numbers' pairings and absences are
 /// <c>strong</c>, the leftovers matched by place <c>lexical</c>; each method's source takes its own.
 /// </summary>
@@ -24,8 +24,8 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
         pair is "NESTLE1904-TR1894" or "RP2018-TR1894" or "TISCH-TR1894" or "WH1881-TR1894" or "TISCH-NESTLE1904" or "WH1881-NESTLE1904";
 
     public bool Makes(string source) => method == MappingMethods.Strong
-        ? source is GreekWitnessLinkLoader.Source or GreekWitnessLinkLoader.LemmatisedSource
-        : source == GreekWitnessLinkLoader.SubstitutionSource;
+        ? source is GreekWitnessLinks.Source or GreekWitnessLinks.LemmatisedSource
+        : source == GreekWitnessLinks.SubstitutionSource;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) => [];
 
@@ -45,9 +45,9 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
     /// Every address both editions fill, paired as the database's loader paired it. A word's id is its place in its text's
     /// words, plus <see cref="Second"/> for the second edition's, its position the one its key gives.
     /// </summary>
-    internal static List<GreekWitnessLinkLoader.GreekDraft> Drafts(ProductText from, ProductText to, out int verses)
+    internal static List<GreekWitnessLinks.GreekDraft> Drafts(ProductText from, ProductText to, out int verses)
     {
-        var drafts = new List<GreekWitnessLinkLoader.GreekDraft>(150_000);
+        var drafts = new List<GreekWitnessLinks.GreekDraft>(150_000);
         verses = 0;
         foreach (var (address, left) in from.ByAddress)
         {
@@ -57,12 +57,12 @@ internal sealed class GreekWitnessSource(string method) : IPairSource
             }
 
             verses++;
-            GreekWitnessLinkLoader.Pair(Words(from, left, 0), Words(to, right, Second), drafts);
+            GreekWitnessLinks.Pair(Words(from, left, 0), Words(to, right, Second), drafts);
         }
 
         return drafts;
     }
 
-    private static List<GreekWitnessLinkLoader.GreekWord> Words(ProductText text, List<int> ids, long offset) =>
-        [.. ids.Select(id => new GreekWitnessLinkLoader.GreekWord(offset + id, text.Words[id].Key.Position, text.Words[id].Surface, text.Words[id].Strong))];
+    private static List<GreekWitnessLinks.GreekWord> Words(ProductText text, List<int> ids, long offset) =>
+        [.. ids.Select(id => new GreekWitnessLinks.GreekWord(offset + id, text.Words[id].Key.Position, text.Words[id].Surface, text.Words[id].Strong))];
 }

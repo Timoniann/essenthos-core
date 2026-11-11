@@ -19,7 +19,7 @@ namespace Essenthos.Core.Strong;
 /// </summary>
 internal static partial class CompiledHebrewStrongs
 {
-    public const string Source = BibleDataLoader.Source;
+    public const string Source = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
 
     public const string File = "HebrewStrongs.csv";
 

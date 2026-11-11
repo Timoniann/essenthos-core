@@ -48,8 +48,8 @@ public sealed class StrongPairSourcesTests : IDisposable
     public void A_source_makes_the_rows_of_its_numbering_under_any_name_of_the_witness()
     {
         var synodal = Source(MappingMethods.Strong, "RUSV-RP2018");
-        synodal.Makes(SynodalStrongLinkLoader.Credit + ", matched within the verse against ROBINSONPIERPONT2018").Should().BeTrue();
-        synodal.Makes(SynodalStrongLinkLoader.Credit + ", matched within the verse against RP2018").Should().BeTrue();
+        synodal.Makes(SynodalStrongLinks.Credit + ", matched within the verse against ROBINSONPIERPONT2018").Should().BeTrue();
+        synodal.Makes(SynodalStrongLinks.Credit + ", matched within the verse against RP2018").Should().BeTrue();
         synodal.Makes("the Strong numbers LUTH1912 carries, matched within the verse against RP2018").Should().BeFalse();
 
         Source(MappingMethods.Strong, "LUTH1912-TR1894").Makes("the Strong numbers LUTH1912 carries, matched within the verse against SCRIVENER1894")

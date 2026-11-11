@@ -3,6 +3,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links.Evidentia;
 using Essenthos.Core.Products;
 using Npgsql;
 using NpgsqlTypes;
@@ -20,6 +21,25 @@ namespace Essenthos.Core.Indexes;
 /// </summary>
 internal static class IndexLoad
 {
+    /// <summary>
+    /// Whether each number is a word of content: most of the words carrying it, in every edition
+    /// that states a part of speech, are of an open class. A number no edition classes is unknown.
+    /// </summary>
+    internal static IReadOnlyDictionary<string, bool> Lexical(IEnumerable<(string Number, string Label, int Words)> classes) =>
+        classes
+            .GroupBy(row => row.Number, StringComparer.Ordinal)
+            .Select(number =>
+            {
+                var language = number.Key.StartsWith('G') ? "grc" : "hbo";
+                var classed = number
+                    .Where(row => EvidentiaMorphologyLabels.PartOfSpeech(row.Label, language) is not null)
+                    .ToList();
+                var open = classed.Where(row => EvidentiaMorphologyLabels.IsOpenClass(row.Label, language)).Sum(row => row.Words);
+                return (number.Key, Known: classed.Count > 0, Open: open * 2 > classed.Sum(row => row.Words));
+            })
+            .Where(number => number.Known)
+            .ToDictionary(number => number.Key, number => number.Open, StringComparer.Ordinal);
+
     public sealed record Outcome(string Table, long Rows, int Texts, TimeSpan Elapsed, string? Note = null)
     {
         public override string ToString() => $"{Table}: {Rows} rows of {Texts} texts in {Elapsed.TotalSeconds:0.0} s{(Note is null ? "" : $"; {Note}")}";
@@ -72,7 +92,7 @@ internal static class IndexLoad
             occurrences[slug] = [.. reader.Rows()];
         }
 
-        var lexical = StrongRenderingLoader.Lexical(occurrences
+        var lexical = Lexical(occurrences
             .Where(o => Renderings.Original.Contains(ids[o.Key].Language))
             .SelectMany(o => o.Value)
             .Where(row => row.Pos is not null)

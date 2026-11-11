@@ -64,11 +64,11 @@ internal sealed class StrongNumberSource : IPairSource
     public static readonly IReadOnlyList<StrongNumberSource> All =
     [
         new("LUTH1912", ["BHSA", "NESTLE1904", "RP2018", "TR1550", "TR1894"], null),
-        new(Bible4uTextSource.Synodal, SynodalStrongLinkLoader.Witnesses, SynodalStrongLinkLoader.Credit),
-        new(SwordTextSource.ChineseUnion, UnionStrongLinkLoader.Witnesses, UnionStrongLinkLoader.Credit),
-        new(SwordTextSource.ChineseUnionSimplified, UnionStrongLinkLoader.Witnesses, UnionStrongLinkLoader.Credit),
+        new(Bible4uTextSource.Synodal, SynodalStrongLinks.Witnesses, SynodalStrongLinks.Credit),
+        new(SwordTextSource.ChineseUnion, UnionStrongLinks.Witnesses, UnionStrongLinks.Credit),
+        new(SwordTextSource.ChineseUnionSimplified, UnionStrongLinks.Witnesses, UnionStrongLinks.Credit),
         new(EbibleTextSource.ReinaValera, ReinaValeraStrongLinkLoader.Witnesses, ReinaValeraStrongLinkLoader.Credit),
-        .. CrossWireStrongLinkLoader.All.Select(numbering => new StrongNumberSource(numbering.Slug, numbering.Witnesses, numbering.Credit)),
+        .. CrossWireNumberings.All.Select(numbering => new StrongNumberSource(numbering.Slug, numbering.Witnesses, numbering.Credit)),
     ];
 
     public string Method => MappingMethods.Strong;

@@ -40,7 +40,7 @@ internal enum EditionMatch
 /// the King James New Testament failed to reach, including the doxology of the Lord's Prayer.
 ///
 /// The second case is a third party's tokenisation of a text this corpus holds:
-/// <see cref="ClearBibleLinkLoader"/> places their word ids by what each token is written with
+/// <see cref="ClearBibleLinks"/> places their word ids by what each token is written with
 /// rather than by where it stands, because their tokeniser makes a word of punctuation and the
 /// Westminster morphology divides the Hebrew into 469,476 morphemes where BHSA divides it into
 /// 426,590 words. The question is the same one — <em>which of our words is this word of theirs</em>

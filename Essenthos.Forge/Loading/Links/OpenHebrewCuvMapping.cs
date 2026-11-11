@@ -23,7 +23,7 @@ internal sealed record OhbVerse(int Book, int Chapter, int Verse, IReadOnlyList<
 /// **The spans are FHL's.** The file is FHL's tagged text, in which each span carries the Strong
 /// numbers FHL gave it, and Eliran Wong put after each number the running number of the BHS word it
 /// stands for — the same numbers his King James mapping writes, so they reach BHSA the same way
-/// (<see cref="OldTestamentLinkLoader.WordsByRunningNumber"/>). A span opens with <c>％〈…〉</c>; a
+/// (<see cref="OldTestamentLinks.ByRunningNumber"/>). A span opens with <c>％〈…〉</c>; a
 /// further number of the same span follows it as <c>〈…〉&lt;sup&gt;S&lt;/sup&gt;</c>, and belongs
 /// to the text printed just before it, whether or not that text opened a span — <em>面</em> in
 /// Genesis 1:2 is printed bare and then given H5921 and H6440. A marker with no running number —

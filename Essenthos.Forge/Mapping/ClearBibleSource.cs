@@ -6,9 +6,9 @@ namespace Essenthos.Core.Mapping;
 
 /// <summary>
 /// Which word of a translation renders which Hebrew or Greek word, as Clear Bible's hand-made alignments state it
-/// (<see cref="ClearBibleLinkLoader"/> has the measurements and the reasons, <see cref="ClearBibleSet"/> each set's
+/// (<see cref="ClearBibleLinks"/> has the measurements and the reasons, <see cref="ClearBibleSet"/> each set's
 /// files and join), read from <c>ClearBible/data/</c> and both texts' words and frames. The join is the loader's own
-/// (<see cref="ClearBibleLinkLoader.Join"/>); only the words come from the products instead of the database.
+/// (<see cref="ClearBibleLinks.Join"/>); only the words come from the products instead of the database.
 ///
 /// <para>
 /// The sets number every word by the verse its own edition prints it in, so a record's translation words are found in
@@ -70,7 +70,7 @@ internal sealed class ClearBibleSource : IPairSource
             }
         }
 
-        var joined = ClearBibleLinkLoader.Join(
+        var joined = ClearBibleLinks.Join(
             texts.Store.FullPath(Folder),
             set,
             new ClearBibleSide(
@@ -102,9 +102,9 @@ internal sealed class ClearBibleSource : IPairSource
     private static string Relative(string path) => $"{Folder}/{path.Replace('\\', '/')}";
 
     /// <summary>A text's words by the verse it prints them in, as <see cref="ClearBibleAlignment.Address"/> numbers verses.</summary>
-    private static Dictionary<(int, int, int), List<ClearBibleLinkLoader.Word>> Printed(ProductText text)
+    private static Dictionary<(int, int, int), List<ClearBibleLinks.Word>> Printed(ProductText text)
     {
-        var words = new Dictionary<(int, int, int), List<ClearBibleLinkLoader.Word>>(text.Verses.Count);
+        var words = new Dictionary<(int, int, int), List<ClearBibleLinks.Word>>(text.Verses.Count);
         foreach (var verse in text.Verses)
         {
             var address = (verse.Book, verse.Chapter, verse.Verse);
@@ -124,10 +124,10 @@ internal sealed class ClearBibleSource : IPairSource
     /// translation prints, the witness's words at that verse's frame address; under an address the translation prints no
     /// verse at, the witness's words standing there.
     /// </summary>
-    private static Dictionary<(int, int, int), List<ClearBibleLinkLoader.Word>> Placed(ProductText witness, ProductText translation)
+    private static Dictionary<(int, int, int), List<ClearBibleLinks.Word>> Placed(ProductText witness, ProductText translation)
     {
         var words = witness.ByAddress.ToDictionary(address => address.Key, address => address.Value.Select(id => Word(witness, id)).ToList());
-        var printed = new Dictionary<(int, int, int), List<ClearBibleLinkLoader.Word>>(words);
+        var printed = new Dictionary<(int, int, int), List<ClearBibleLinks.Word>>(words);
         foreach (var verse in translation.Verses)
         {
             var own = (verse.Book, verse.Chapter, verse.Verse);
@@ -148,12 +148,12 @@ internal sealed class ClearBibleSource : IPairSource
         return printed;
     }
 
-    private static ClearBibleLinkLoader.Word Word(ProductText text, int id) =>
-        new(id, ClearBibleLinkLoader.Comparable(text.Words[id].Surface, text.Language), text.Words[id].Strong);
+    private static ClearBibleLinks.Word Word(ProductText text, int id) =>
+        new(id, ClearBibleLinks.Comparable(text.Words[id].Surface, text.Language), text.Words[id].Strong);
 
-    private static List<ClearBibleLinkLoader.PrintedWord> InOrder(ProductText text) =>
+    private static List<ClearBibleLinks.PrintedWord> InOrder(ProductText text) =>
     [
-        .. text.Words.Select((word, id) => new ClearBibleLinkLoader.PrintedWord(
+        .. text.Words.Select((word, id) => new ClearBibleLinks.PrintedWord(
             word.Key.Verse.Book, word.Key.Verse.Chapter, word.Key.Verse.Verse, word.Key.Position, id, word.Surface, word.Trailer)),
     ];
 

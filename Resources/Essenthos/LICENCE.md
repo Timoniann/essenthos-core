@@ -5,6 +5,8 @@ is not somebody else's data, which is why it is the one folder the repository ca
 
 ## descriptors/
 
+The folder was deleted on 2026-11-11 (PRB-1592): nothing had read it since its rows became the record files. The clauses are `records/facts/clauses` and its relationships `records/facts/relationships`, under the terms below.
+
 The claims the encyclopedia says under a name — *son of Reuel*, *Moses' father-in-law*, *нащадки
 Моава* — as structure rather than prose, with the verse each was read from and the name forms each
 language needs. One newline-delimited JSON file per batch, in the shape DOC-0191 fixes.
@@ -28,6 +30,8 @@ language needs. One newline-delimited JSON file per batch, in the shape DOC-0191
   anyone's property; the wording, the structure and the readings here are this project's.
 
 ## name-forms/
+
+The folder was deleted on 2026-11-11 (PRB-1592); the forms are `records/i18n/<language>/name-forms`, under the terms below.
 
 The same names in the cases a rendered line puts them in — *Мойсея*, *Левитів*, *Moses*,
 *Moisés* — for the entities somebody else's clause names rather than for the entity a pass
@@ -66,6 +70,8 @@ Newline-delimited JSON, read by `PlaceRegisterLoader`.
   here are this project's.
 
 ## persons/
+
+The folder was deleted on 2026-11-11 (PRB-1592); what it settled is in `records/records` and `records/claims`, under the terms below.
 
 Which of the men who share a name this verse is about — one line per bearer the pass considered, the
 refusals with the records, because what a register is asked next is why somebody is not in it.

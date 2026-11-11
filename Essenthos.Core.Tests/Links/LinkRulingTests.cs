@@ -81,13 +81,13 @@ public class LinkRulingTests
             Row(4, 4, "ἔλαβον", " each received "),
         };
         var ours = "The workers each received".Split(' ')
-            .Select((word, at) => new BereanLinkLoader.Word(100 + at, 1, word, null))
+            .Select((word, at) => new BereanLinks.Word(100 + at, 1, word, null))
             .ToList();
         List<List<long>> witness = [.. rows.Select(row => new List<long> { (long)row.OriginalOrder })];
-        var drafts = new List<BereanLinkLoader.Draft>();
-        var silences = new BereanLinkLoader.Silences();
+        var drafts = new List<BereanLinks.Draft>();
+        var silences = new BereanLinks.Silences();
 
-        BereanLinkLoader.Pair(rows, ours, witness, drafts, silences, new HashSet<long> { 1 }).Should().BeTrue();
+        BereanLinks.Pair(rows, ours, witness, drafts, silences, new HashSet<long> { 1 }).Should().BeTrue();
 
         drafts.Should().ContainSingle(draft => draft.Relation == LinkRelation.Omits)
             .Which.To.Should().Equal(2);
