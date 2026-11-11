@@ -63,14 +63,14 @@ public sealed class EntitySearchTests : IDisposable
 
         var ohienko = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (1, 1, ["слово"]));
 
-        _david = Record("david", "David", ("David", BibleDataLoader.LabelKind), ("King David", "title"), ("King of Israel", "title"));
-        _jesus = Record("jesus", "Jesus", ("Jesus", BibleDataLoader.LabelKind), ("Son of David", "title"), ("Son of Abraham", "title"));
-        _god = Record("yhvh", "YHVH", ("YHVH", BibleDataLoader.LabelKind), ("God of Abraham", "title"));
-        _abram = Record("abram", "Abram", ("Abram", BibleDataLoader.LabelKind), ("Abraham", BibleDataLoader.LabelKind));
-        _barnabas = Record("joseph-12", "Joseph", ("Joseph", BibleDataLoader.LabelKind), ("Barnabas", BibleDataLoader.LabelKind));
-        _paul = Record("saul-2", "Saul", ("Saul", BibleDataLoader.LabelKind), ("Paul", BibleDataLoader.LabelKind));
-        _elijah = Record("elijah", "Elijah", ("Elijah", BibleDataLoader.LabelKind), ("Elijah the Tishbite", BibleDataLoader.LabelKind));
-        _cityOfDavid = Record("cityofdavid", "City of David", ("City of David", BibleDataLoader.LabelKind));
+        _david = Record("david", "David", ("David", Credits.ProperName), ("King David", "title"), ("King of Israel", "title"));
+        _jesus = Record("jesus", "Jesus", ("Jesus", Credits.ProperName), ("Son of David", "title"), ("Son of Abraham", "title"));
+        _god = Record("yhvh", "YHVH", ("YHVH", Credits.ProperName), ("God of Abraham", "title"));
+        _abram = Record("abram", "Abram", ("Abram", Credits.ProperName), ("Abraham", Credits.ProperName));
+        _barnabas = Record("joseph-12", "Joseph", ("Joseph", Credits.ProperName), ("Barnabas", Credits.ProperName));
+        _paul = Record("saul-2", "Saul", ("Saul", Credits.ProperName), ("Paul", Credits.ProperName));
+        _elijah = Record("elijah", "Elijah", ("Elijah", Credits.ProperName), ("Elijah the Tishbite", Credits.ProperName));
+        _cityOfDavid = Record("cityofdavid", "City of David", ("City of David", Credits.ProperName));
         _db.SaveChanges();
 
         Nominative(_david, "Давид");
@@ -169,7 +169,7 @@ public sealed class EntitySearchTests : IDisposable
             _db.EntityVerses.Add(new EntityVerse
             {
                 EntityId = entity.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = verse,
-                Label = label, Source = BibleDataLoader.Source,
+                Label = label, Source = Credits.BibleData,
             });
         }
     }

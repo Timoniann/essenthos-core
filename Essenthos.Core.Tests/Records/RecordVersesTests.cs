@@ -38,7 +38,7 @@ public sealed class RecordVersesTests : IDisposable
         [
             ["anointed", "1.3:1", null, "t", "f", "f", Own],
             ["david", "1.3:1", null, "t", "f", "f", Own],
-            ["levites", "1.6:1", "Levites", "t", "f", "f", PeopleLoader.FromOurOwnWords],
+            ["levites", "1.6:1", "Levites", "t", "f", "f", Credits.OurPeopleWords],
             ["moses", "1.1:1", null, "t", "f", "f", Own],
             ["moses", "1.5:9", null, "t", "f", "f", Own],
         ], options => options.WithStrictOrdering(),
@@ -86,9 +86,9 @@ public sealed class RecordVersesTests : IDisposable
         RecordVerses.Write(store, force: true);
 
         Rows(store).Where(r => r[6] != Own).Select(r => (r[0], r[1], r[3], r[4], r[6])).Should().Equal(
-            ("ham", "19.78:51", "f", "t", OpenBiblePlaceLoader.Source),
-            ("mizraim", "1.10:6", "t", "f", OpenBiblePlaceLoader.Source),
-            ("mizraim", "1.50:11", "f", "f", OpenBiblePlaceLoader.Source));
+            ("ham", "19.78:51", "f", "t", Credits.OpenBible),
+            ("mizraim", "1.10:6", "t", "f", Credits.OpenBible),
+            ("mizraim", "1.50:11", "f", "f", Credits.OpenBible));
     }
 
     [Fact]

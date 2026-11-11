@@ -28,7 +28,7 @@ public class BereanSilenceTests
             Row(6, 6, "τὸν", " - "),
             Row(7, 7, "Θεόν", " God "),
         };
-        var silences = new BereanLinkLoader.Silences();
+        var silences = new BereanLinks.Silences();
 
         var drafts = Pair(rows, "Whoever does not love does not know God", silences);
 
@@ -54,7 +54,7 @@ public class BereanSilenceTests
             Row(2, 1, "οὐ", " vvv "),
             Row(3, 2, "μὴ", " vvv "),
         };
-        var silences = new BereanLinkLoader.Silences();
+        var silences = new BereanLinks.Silences();
 
         var drafts = Pair(rows, "you will not answer", silences);
 
@@ -75,7 +75,7 @@ public class BereanSilenceTests
             Row(2, 2, "αὐτῷ", string.Empty),
             Row(3, 3, "δὲ", " vvv "),
         };
-        var silences = new BereanLinkLoader.Silences();
+        var silences = new BereanLinks.Silences();
 
         var drafts = Pair(rows, "says", silences);
 
@@ -84,15 +84,15 @@ public class BereanSilenceTests
         (silences.Moved, silences.Unmarked, silences.Absent).Should().Be((1, 1, 0));
     }
 
-    private static List<BereanLinkLoader.Draft> Pair(BereanRow[] rows, string english, BereanLinkLoader.Silences silences)
+    private static List<BereanLinks.Draft> Pair(BereanRow[] rows, string english, BereanLinks.Silences silences)
     {
         var ours = english.Split(' ')
-            .Select((word, at) => new BereanLinkLoader.Word(100 + at, 1, word, null))
+            .Select((word, at) => new BereanLinks.Word(100 + at, 1, word, null))
             .ToList();
         List<List<long>> witness = [.. rows.Select(row => new List<long> { (long)row.OriginalOrder })];
-        var drafts = new List<BereanLinkLoader.Draft>();
+        var drafts = new List<BereanLinks.Draft>();
 
-        BereanLinkLoader.Pair(rows, ours, witness, drafts, silences).Should().BeTrue();
+        BereanLinks.Pair(rows, ours, witness, drafts, silences).Should().BeTrue();
         return drafts;
     }
 

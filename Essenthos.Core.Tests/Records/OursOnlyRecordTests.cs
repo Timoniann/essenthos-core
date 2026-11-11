@@ -60,8 +60,8 @@ public sealed class OursOnlyRecordTests : IDisposable
         var (bare, target) = (Supplied("bare", "male", null), Person("target"));
         await _db.SaveChangesAsync();
         Clause(bare, "father-of", target);
-        Verse(bare, BibleDataLoader.Source);
-        Tie(bare, "father-of", target, BibleDataLoader.Source);
+        Verse(bare, Credits.BibleData);
+        Tie(bare, "father-of", target, Credits.BibleData);
         await _db.SaveChangesAsync();
 
         (await OursOnlyRecords.Among(_db, ["bare"], default)).Should().BeEmpty();
@@ -263,7 +263,7 @@ public sealed class OursOnlyRecordTests : IDisposable
         var entity = Person(slug);
         entity.Sex = sex;
         entity.Tribe = tribe;
-        entity.Source = BibleDataLoader.Source;
+        entity.Source = Credits.BibleData;
         entity.Distinguisher = "a line only BibleData states";
         entity.Notes = "notes only BibleData states";
         return entity;

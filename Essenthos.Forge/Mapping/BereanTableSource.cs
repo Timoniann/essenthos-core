@@ -9,7 +9,7 @@ using Essenthos.Core.Utils;
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
-/// Which Berean word renders which original word, as the Berean's translation tables state it (<see cref="BereanLinkLoader"/>
+/// Which Berean word renders which original word, as the Berean's translation tables state it (<see cref="BereanLinks"/>
 /// has the measurements and the reasons), read from <c>Berean/bsb_tables.tsv</c> and both texts' words and frames.
 ///
 /// <para>
@@ -30,7 +30,7 @@ internal sealed class BereanTableSource : IPairSource
 
     private const string Source = "Berean Standard Bible translation tables, bereanbible.com, public domain";
 
-    /// <summary>How much of a verse's Strong numbers must agree before its order is believed (<see cref="BereanLinkLoader"/>).</summary>
+    /// <summary>How much of a verse's Strong numbers must agree before its order is believed (<see cref="BereanLinks"/>).</summary>
     private const double Agreeing = 0.5;
 
     /// <summary>The verse a psalm's title stands inside where the tables print one.</summary>
@@ -63,8 +63,8 @@ internal sealed class BereanTableSource : IPairSource
             }
         }
 
-        var drafts = new List<BereanLinkLoader.Draft>(150_000);
-        var silences = new BereanLinkLoader.Silences();
+        var drafts = new List<BereanLinks.Draft>(150_000);
+        var silences = new BereanLinks.Silences();
         int verses = 0, divided = 0, drifted = 0, disputed = 0, unframed = 0;
         foreach (var (reference, rows) in BereanTable.Verses(texts.Store.FullPath(Tables)))
         {
@@ -97,7 +97,7 @@ internal sealed class BereanTableSource : IPairSource
                     continue;
                 }
 
-                var (agreed, of) = BereanLinkLoader.Agreement(rows, witness);
+                var (agreed, of) = BereanLinks.Agreement(rows, witness);
                 if (of > 0 && (double)agreed / of < Agreeing)
                 {
                     disputed++;
@@ -106,7 +106,7 @@ internal sealed class BereanTableSource : IPairSource
 
                 run = [.. witness.Select(word => new List<long> { word.Id })];
             }
-            else if (BereanLinkLoader.Letters(
+            else if (BereanLinks.Letters(
                          [.. rows.Select(row => HebrewLetters.Of(row.Original))],
                          [.. witness.Select(word => HebrewLetters.Of(word.Surface))]) is { } matched)
             {
@@ -114,8 +114,8 @@ internal sealed class BereanTableSource : IPairSource
             }
             else if (number == FirstVerse
                      && witnessText.ByAddress.TryGetValue((address.Book, address.Chapter, CanonicalReference.TitleVerse), out var titleAt)
-                     && (List<BereanLinkLoader.Word>)[.. Words(witnessText, titleAt), .. witness] is var titled
-                     && BereanLinkLoader.Letters(
+                     && (List<BereanLinks.Word>)[.. Words(witnessText, titleAt), .. witness] is var titled
+                     && BereanLinks.Letters(
                          [.. rows.Select(row => HebrewLetters.Of(row.Original))],
                          [.. titled.Select(word => HebrewLetters.Of(word.Surface))]) is { } withTitle)
             {
@@ -127,7 +127,7 @@ internal sealed class BereanTableSource : IPairSource
                 continue;
             }
 
-            if (!BereanLinkLoader.Pair(rows, ours, run, drafts, silences, overruled))
+            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled))
             {
                 drifted++;
                 continue;
@@ -144,6 +144,6 @@ internal sealed class BereanTableSource : IPairSource
             draft.Relation.ToString().ToLowerInvariant(), Method, null, Source, null, null, null));
     }
 
-    private static List<BereanLinkLoader.Word> Words(ProductText text, IEnumerable<int> ids) =>
-        [.. ids.Select(id => new BereanLinkLoader.Word(id, 0, text.Words[id].Surface, text.Words[id].Strong))];
+    private static List<BereanLinks.Word> Words(ProductText text, IEnumerable<int> ids) =>
+        [.. ids.Select(id => new BereanLinks.Word(id, 0, text.Words[id].Surface, text.Words[id].Strong))];
 }

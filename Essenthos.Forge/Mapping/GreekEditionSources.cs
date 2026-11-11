@@ -10,7 +10,7 @@ using Essenthos.Core.TextusReceptus;
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
-/// Stephanus 1550 against Scrivener 1894 from the composite both are printed from (<see cref="PrintedEditionLinkLoader"/>):
+/// Stephanus 1550 against Scrivener 1894 from the composite both are printed from (<see cref="PrintedEditionLinks"/>):
 /// each verse's segments, a word outside a variant group and a group inside one, laid against each other. Both texts are
 /// converted from the same file, so a file verse is each text's own verse of that number.
 /// </summary>
@@ -27,7 +27,7 @@ internal sealed class PrintedEditionSource : IPairSource
 
     public bool States(string pair) => pair == $"{Stephanus}-{Scrivener}";
 
-    public bool Makes(string source) => source == PrintedEditionLinkLoader.Source;
+    public bool Makes(string source) => source == PrintedEditionLinks.Source;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) => [Parsed];
 
@@ -35,7 +35,7 @@ internal sealed class PrintedEditionSource : IPairSource
     {
         var first = texts[Stephanus];
         var second = texts[Scrivener];
-        var drafts = new List<PrintedEditionLinkLoader.EditionDraft>(150_000);
+        var drafts = new List<PrintedEditionLinks.EditionDraft>(150_000);
         int verses = 0, unequal = 0;
         foreach (var book in TextusReceptusTextSource.Books)
         {
@@ -62,14 +62,14 @@ internal sealed class PrintedEditionSource : IPairSource
                 }
 
                 verses++;
-                PrintedEditionLinkLoader.Pair(verse, other, left, right, drafts);
+                PrintedEditionLinks.Pair(verse, other, left, right, drafts);
             }
         }
 
         log($"{verses} verses, {drafts.Count} links; {unequal} verses whose words are not the file's");
         return drafts.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(first.Key)),
             MappingText.Keys(draft.To.Select(second.Key)),
-            draft.Relation.ToString().ToLowerInvariant(), Method, null, PrintedEditionLinkLoader.Source, null, null, null));
+            draft.Relation.ToString().ToLowerInvariant(), Method, null, PrintedEditionLinks.Source, null, null, null));
     }
 }
 
@@ -106,9 +106,9 @@ internal sealed class ByzantineApparatusSource : IPairSource
     public string Name => "byzantine-apparatus";
 
     public bool States(string pair) =>
-        ByzantineApparatusLinkLoader.Witnesses.Any(witness => pair == $"{ByzantineTextSource.Slug}-{witness.Witness}");
+        ByzantineApparatusLinks.Witnesses.Any(witness => pair == $"{ByzantineTextSource.Slug}-{witness.Witness}");
 
-    public bool Makes(string source) => source == ByzantineApparatusLinkLoader.Credit;
+    public bool Makes(string source) => source == ByzantineApparatusLinks.Credit;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
         [Apparatus, .. Standing.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>()];
@@ -118,7 +118,7 @@ internal sealed class ByzantineApparatusSource : IPairSource
         var (fromText, toText) = MappingProducts.Split(pair);
         var robinson = texts[fromText];
         var witness = texts[toText];
-        var kinds = ByzantineApparatusLinkLoader.Witnesses.Single(w => w.Witness == toText).Kinds;
+        var kinds = ByzantineApparatusLinks.Witnesses.Single(w => w.Witness == toText).Kinds;
 
         var ours = new Dictionary<(int, int, int), IReadOnlyList<CorpusWord>>(8_000);
         var theirs = new Dictionary<(int, int, int), IReadOnlyList<CorpusWord>>(8_000);
@@ -132,17 +132,17 @@ internal sealed class ByzantineApparatusSource : IPairSource
             }
         }
 
-        var laid = ByzantineApparatus.Lay(ByzantineApparatusLinkLoader.Read(texts.Store.FullPath(Folder)), ours, theirs, kinds);
+        var laid = ByzantineApparatus.Lay(ByzantineApparatusLinks.Read(texts.Store.FullPath(Folder)), ours, theirs, kinds);
         var standing = PairStanding.Read(texts.Store, pair, Standing, robinson, witness);
         var offset = PairStanding.Offset(robinson);
         var admitted = laid.Links
-            .Where(link => !ByzantineApparatusLinkLoader.Contrary(link with { To = [.. link.To.Select(id => id + offset)] }, standing))
+            .Where(link => !ByzantineApparatusLinks.Contrary(link with { To = [.. link.To.Select(id => id + offset)] }, standing))
             .ToList();
         log($"{laid}; {admitted.Count} links, {laid.Links.Count - admitted.Count} left out where the pair already says otherwise");
         return admitted.Select(link => new MappingRow(MappingText.Keys(link.From.Select(robinson.Key)),
             MappingText.Keys(link.To.Select(witness.Key)),
-            link.Relation.ToString().ToLowerInvariant(), Method, null, ByzantineApparatusLinkLoader.Credit,
-            ByzantineApparatusLinkLoader.Notes[link.Kind], null, null));
+            link.Relation.ToString().ToLowerInvariant(), Method, null, ByzantineApparatusLinks.Credit,
+            ByzantineApparatusLinks.Notes[link.Kind], null, null));
     }
 
     private static List<CorpusWord> Corpus(ProductText text, IEnumerable<int> ids) =>
@@ -162,7 +162,7 @@ internal sealed class ByzantineApparatusSource : IPairSource
 /// </summary>
 internal sealed class ReceivedTextPositionSource : IPairSource
 {
-    private static readonly SwordPositions Module = CrossWirePositionLinkLoader.All.Single();
+    private static readonly SwordPositions Module = CrossWirePositions.All.Single();
 
     public static string Folder => SwordTextSource.Texts[Module.Module].Folder.Replace('\\', '/');
 
@@ -170,7 +170,7 @@ internal sealed class ReceivedTextPositionSource : IPairSource
 
     public string Name => "received-text-positions";
 
-    public bool States(string pair) => CrossWirePositionLinkLoader.Witnesses.Any(witness => pair == $"{Module.Slug}-{witness}");
+    public bool States(string pair) => CrossWirePositions.Witnesses.Any(witness => pair == $"{Module.Slug}-{witness}");
 
     public bool Makes(string source) => source == Module.Credit;
 
@@ -209,7 +209,7 @@ internal sealed class ReceivedTextPositionSource : IPairSource
 }
 
 /// <summary>
-/// What a pair's method files already say, as <see cref="ByzantineApparatusLinkLoader.PairStanding"/> holds it for a loader:
+/// What a pair's method files already say, as <see cref="ByzantineApparatusLinks.PairStanding"/> holds it for a loader:
 /// each shape's relation, and the words rendered and the words called absent, by <see cref="ProductText"/> ids, the TO
 /// text's shifted past the FROM text's (<see cref="Offset"/>) so that the two never share an id, as words of the corpus do not.
 /// </summary>
@@ -218,12 +218,12 @@ internal static class PairStanding
     /// <summary>What a TO word's id is shifted by beside the FROM text's.</summary>
     public static long Offset(ProductText from) => from.Words.Count;
 
-    public static ByzantineApparatusLinkLoader.PairStanding Read(
+    public static ByzantineApparatusLinks.PairStanding Read(
         ProductStore store, string pair, IEnumerable<string> methods, ProductText from, ProductText to)
     {
         var fromIds = Ids(from);
         var toIds = Ids(to);
-        var standing = new ByzantineApparatusLinkLoader.PairStanding([], [], []);
+        var standing = new ByzantineApparatusLinks.PairStanding([], [], []);
         foreach (var row in Rows(store, pair, methods))
         {
             List<long> left = [.. MappingText.Split(row.From).Select(key => (long)fromIds[key])];

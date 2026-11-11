@@ -250,7 +250,7 @@ internal static class RecordProducers
         {
             foreach (var record in ThingFiles.Read(set).Records.Where(r => slugs.Contains(r.Slug)))
             {
-                rows.AddRange(ThingLoader.Relations(set, record, slugs.Contains)
+                rows.AddRange(ThingRelations.Of(set, record, slugs.Contains)
                     .Where(r => r.Row is not null).Select(r => Row(record.Slug, r.Relation.To, r.Row!)));
             }
         }

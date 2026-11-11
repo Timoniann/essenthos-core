@@ -15,7 +15,7 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// </summary>
 public sealed class DraftedSyntax
 {
-    private readonly Dictionary<WordGroupKind, List<SyntaxLoader.GroupDraft>> _byKind;
+    private readonly Dictionary<WordGroupKind, List<SyntaxGroups.GroupDraft>> _byKind;
 
     public DraftedSyntax()
     {
@@ -23,15 +23,15 @@ public sealed class DraftedSyntax
 
         // The loader maps each BHSA slot to the corpus word written for it. Nothing here is about
         // that mapping, so a slot stands for itself.
-        Drafts = SyntaxLoader.Drafts(Bhsa, Bhsa.Words.ToDictionary(word => word.SlotId, word => (long)word.SlotId));
+        Drafts = SyntaxGroups.Drafts(Bhsa, Bhsa.Words.ToDictionary(word => word.SlotId, word => (long)word.SlotId));
         _byKind = Drafts.GroupBy(draft => draft.Kind).ToDictionary(kind => kind.Key, kind => kind.ToList());
     }
 
     internal BhsaProject Bhsa { get; }
 
-    internal List<SyntaxLoader.GroupDraft> Drafts { get; }
+    internal List<SyntaxGroups.GroupDraft> Drafts { get; }
 
-    internal List<SyntaxLoader.GroupDraft> Of(WordGroupKind kind) => _byKind[kind];
+    internal List<SyntaxGroups.GroupDraft> Of(WordGroupKind kind) => _byKind[kind];
 
     /// <summary>One Text-Fabric feature file, read the way the loader reads it.</summary>
     internal static IDocument<T> Feature<T>(string name) =>
@@ -282,7 +282,7 @@ public class SyntaxTests(DraftedSyntax syntax) : IClassFixture<DraftedSyntax>
         .GroupBy(value => value)
         .ToDictionary(value => value.Key, value => value.Count());
 
-    private static bool Inside(SyntaxLoader.GroupDraft draft, SyntaxLoader.GroupDraft parent)
+    private static bool Inside(SyntaxGroups.GroupDraft draft, SyntaxGroups.GroupDraft parent)
     {
         var at = 0;
         foreach (var slot in draft.Slots)
@@ -301,7 +301,7 @@ public class SyntaxTests(DraftedSyntax syntax) : IClassFixture<DraftedSyntax>
         return true;
     }
 
-    private static string? Value(SyntaxLoader.GroupDraft draft, string key)
+    private static string? Value(SyntaxGroups.GroupDraft draft, string key)
     {
         if (draft.Features is not { } features)
         {

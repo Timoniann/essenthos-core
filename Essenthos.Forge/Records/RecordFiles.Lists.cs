@@ -189,7 +189,7 @@ internal static partial class RecordFiles
             .OrderBy(r => r[0], StringComparer.Ordinal).ThenBy(r => r[1], StringComparer.Ordinal);
     }
 
-    /// <summary>The categories <see cref="PersonPresenceLoader"/> admits.</summary>
+    /// <summary>The categories a person's presence at a place is filed under.</summary>
     private static readonly string[] PersonPresenceCategories = ["present", "buried"];
 
     private static JsonElement Embedded(string file)

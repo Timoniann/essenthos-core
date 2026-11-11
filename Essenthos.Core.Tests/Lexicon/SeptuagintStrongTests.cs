@@ -19,7 +19,7 @@ public class SeptuagintStrongTests
     [Fact]
     public void TakesTheNumberWhoseLemmaTheDictionaryWritesTheSameWay()
     {
-        var (numbers, bridged) = SeptuagintStrongLoader.Numbers(
+        var (numbers, bridged) = SeptuagintStrongs.Numbers(
             Lexicon(("θεοσ", ["G2316"])), "θεοσ");
 
         numbers.Should().Equal("G2316");
@@ -33,7 +33,7 @@ public class SeptuagintStrongTests
     [Fact]
     public void ReachesAKoineEntryFromAnAtticCitationForm()
     {
-        var (numbers, bridged) = SeptuagintStrongLoader.Numbers(
+        var (numbers, bridged) = SeptuagintStrongs.Numbers(
             Lexicon(("γινομαι", ["G1096"])), "γιγνομαι");
 
         numbers.Should().Equal("G1096");
@@ -47,7 +47,7 @@ public class SeptuagintStrongTests
     [Fact]
     public void PrefersTheUnchangedLemmaOverAnythingTheBridgeWouldRewriteItTo()
     {
-        var (numbers, bridged) = SeptuagintStrongLoader.Numbers(
+        var (numbers, bridged) = SeptuagintStrongs.Numbers(
             Lexicon(("γιγνομαι", ["G9999"]), ("γινομαι", ["G1096"])), "γιγνομαι");
 
         numbers.Should().Equal("G9999");
@@ -57,7 +57,7 @@ public class SeptuagintStrongTests
     [Fact]
     public void ProposesEveryCandidateWhereTheLexiconClaimsALemmaTwice()
     {
-        var (numbers, _) = SeptuagintStrongLoader.Numbers(
+        var (numbers, _) = SeptuagintStrongs.Numbers(
             Lexicon(("αυτου", ["G846", "G847"])), "αυτου");
 
         numbers.Should().HaveCount(2);
@@ -70,9 +70,9 @@ public class SeptuagintStrongTests
     [Fact]
     public void DividesTheConfidenceAmongTheCandidates()
     {
-        SeptuagintStrongLoader.Shared(1).Should().Be(SeptuagintStrongLoader.Single);
-        SeptuagintStrongLoader.Shared(2).Should().BeLessThan(SeptuagintStrongLoader.Single);
-        SeptuagintStrongLoader.Shared(3).Should().BeLessThan(SeptuagintStrongLoader.Shared(2));
+        SeptuagintStrongs.Shared(1).Should().Be(SeptuagintStrongs.Single);
+        SeptuagintStrongs.Shared(2).Should().BeLessThan(SeptuagintStrongs.Single);
+        SeptuagintStrongs.Shared(3).Should().BeLessThan(SeptuagintStrongs.Shared(2));
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class SeptuagintStrongTests
     [Fact]
     public void ProposesNothingForALemmaNoEntryAnswers()
     {
-        var (numbers, _) = SeptuagintStrongLoader.Numbers(Lexicon(("θεοσ", ["G2316"])), "φαραω");
+        var (numbers, _) = SeptuagintStrongs.Numbers(Lexicon(("θεοσ", ["G2316"])), "φαραω");
         numbers.Should().BeEmpty();
     }
 }

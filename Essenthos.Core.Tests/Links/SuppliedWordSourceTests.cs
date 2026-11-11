@@ -109,9 +109,9 @@ public sealed class SuppliedWordSourceTests : IDisposable
         var standing = PairStanding.Read(store, "RP2018-TR1894", [MappingMethods.Strong], texts["RP2018"], texts["TR1894"]);
         var offset = PairStanding.Offset(texts["RP2018"]);
 
-        ByzantineApparatusLinkLoader.Contrary(new ApparatusLink('B', LinkRelation.Expands, [0], []), standing).Should().BeFalse();
-        ByzantineApparatusLinkLoader.Contrary(new ApparatusLink('B', LinkRelation.Expands, [1], []), standing).Should().BeTrue();
-        ByzantineApparatusLinkLoader.Contrary(new ApparatusLink('B', LinkRelation.Equals, [1], [0 + offset]), standing).Should().BeTrue();
+        ByzantineApparatusLinks.Contrary(new ApparatusLink('B', LinkRelation.Expands, [0], []), standing).Should().BeFalse();
+        ByzantineApparatusLinks.Contrary(new ApparatusLink('B', LinkRelation.Expands, [1], []), standing).Should().BeTrue();
+        ByzantineApparatusLinks.Contrary(new ApparatusLink('B', LinkRelation.Equals, [1], [0 + offset]), standing).Should().BeTrue();
     }
 
     /// <summary>The Synodal's Genesis 1:1 with two marked runs and its 1:2 with one, BHSA holding only 1:1; a marked word in Matthew too.</summary>

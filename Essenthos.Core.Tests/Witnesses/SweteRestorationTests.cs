@@ -27,27 +27,6 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
     public void TheVerseReadsAsSwetePrintedIt(int chapter, int verse, string printed) =>
         Swete.Text(swete.Verse(Genesis, chapter, verse)).Should().Be(printed);
 
-    /// <summary>
-    /// With the lost words back, Genesis can be read from Swete alone: every number is found, every
-    /// life of chapter 5 closes and Noah's does too, which the transcription's three hundred did not.
-    /// Codex Alexandrinus then reads as it is known to — Methuselah at 187, Arphaxad's 430, Eber's 370,
-    /// Nahor begetting at 79 and living 129 after.
-    /// </summary>
-    [Fact]
-    public void GenesisReadsWholeFromSwete()
-    {
-        var read = SeptuagintReckoning.Read(Genesis5To12());
-
-        read.Problems.Should().BeEmpty();
-        read.Values["noah-after"].Value.Should().Be(350);
-        read.Values["abram-leaves-haran"].Value.Should().Be(75);
-        read.Values["methuselah-begets"].Value.Should().Be(187);
-        read.Values["arphaxad-after"].Value.Should().Be(430);
-        read.Values["eber-after"].Value.Should().Be(370);
-        read.Values["nahor-begets"].Value.Should().Be(79);
-        read.Values["nahor-after"].Value.Should().Be(129);
-    }
-
     [Fact]
     public void ARestorationThatNoLongerFindsItsWordsStopsTheRead()
     {

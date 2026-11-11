@@ -46,9 +46,9 @@ public sealed class OursOnlyReferenceTests : IDisposable
         _db.SaveChanges();
 
         Listed(FirstKings, 1, 10, null, Ours);
-        Listed(FirstKings, 1, 10, "Solomon", BibleDataLoader.Source);
-        Listed(Ecclesiastes, 1, 1, "the Preacher", BibleDataLoader.Source);
-        Listed(Ecclesiastes, 1, 12, "the Preacher", BibleDataLoader.Source, disputed: true);
+        Listed(FirstKings, 1, 10, "Solomon", Credits.BibleData);
+        Listed(Ecclesiastes, 1, 1, "the Preacher", Credits.BibleData);
+        Listed(Ecclesiastes, 1, 12, "the Preacher", Credits.BibleData, disputed: true);
         _db.SaveChanges();
     }
 
@@ -61,7 +61,7 @@ public sealed class OursOnlyReferenceTests : IDisposable
 
     [Fact]
     public void TheWitnessIsTheDatasetsOwnSource() =>
-        BibleDataLoader.Source.Should().StartWith(ShownVerses.Witness);
+        Credits.BibleData.Should().StartWith(ShownVerses.Witness);
 
     [Fact]
     public async Task ThePageCountsOnlyTheVersesOursState()
@@ -122,7 +122,7 @@ public sealed class OursOnlyReferenceTests : IDisposable
             _db.EntityVerses.Add(new EntityVerse
             {
                 EntityId = shallum.Id, CanonicalBook = 12, CanonicalChapter = 15, CanonicalVerse = verse,
-                Source = BibleDataLoader.Source,
+                Source = Credits.BibleData,
             });
         }
 

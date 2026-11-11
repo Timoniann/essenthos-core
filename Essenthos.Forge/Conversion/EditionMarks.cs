@@ -6,8 +6,8 @@ namespace Essenthos.Core.Conversion;
 /// <summary>
 /// What the Greek editions print as brackets, taken out of the words and kept as marks: Nestle's <c>[[…]]</c> and
 /// <c>[…]</c> as doubtful spans with their number of brackets, the Stephanus <c>[προς …]</c> as subscriptions, and
-/// Brenton's two only taken out. A span runs on through the verses of its chapter. The load's <c>edition-marks</c>
-/// step (<see cref="EditionMarkLoader"/>), done to the words before they are written.
+/// Brenton's two only taken out. A span runs on through the verses of its chapter. Done to the words before they are
+/// written.
 /// </summary>
 internal sealed class EditionBrackets : ITextStage
 {

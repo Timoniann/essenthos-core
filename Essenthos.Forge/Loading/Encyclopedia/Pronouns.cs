@@ -10,7 +10,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// that is masculine or neuter (<em>αὐτοῦ</em>) is taken for the masculine, since a person is what it
 /// is carried onto, and one that is only neuter or says no gender (<em>αὐτό</em>, <em>με</em>,
 /// <em>αὐτῶν</em>) says no sex. A pronoun is never a name and never a spelling of
-/// one; whether the person it refers to may be shown on it is <see cref="PronounReferents"/>'s rule.
+/// one; whether the person it refers to may be shown on it is the names projection's rule (<see cref="Names.NamesProjection"/>).
 /// </summary>
 internal static class Pronouns
 {

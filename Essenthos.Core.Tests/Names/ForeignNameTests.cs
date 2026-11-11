@@ -5,7 +5,6 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Names;
@@ -24,7 +23,6 @@ public sealed class ForeignNameTests : IDisposable
     private const string Lexicon = "the lexicon's capitalised lemma, a test";
 
     private readonly AppDbContext _db;
-    private readonly ForeignNames _foreign;
     private readonly Text _greek;
     private readonly Text _ukrainian;
     private readonly Entity _satan;
@@ -35,7 +33,6 @@ public sealed class ForeignNameTests : IDisposable
     {
         _db = database.NewContext();
         Clear();
-        _foreign = new ForeignNames(_db, NullLogger<ForeignNames>.Instance);
 
         _greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc",
             (16, 20, ["Σατανᾶν", "Ἰησοῦ", "Χριστοῦ"]),
@@ -139,74 +136,6 @@ public sealed class ForeignNameTests : IDisposable
 
     private List<string> NamedOn(Word word) =>
         [.. _db.WordEntities.AsNoTracking().Where(a => a.WordId == word.Id).Select(a => a.Entity!.Slug).OrderBy(s => s)];
-
-    [Fact]
-    public async Task ANameCarriedOntoAnothersNameIsTakenBackOnceAndOnlyOnce()
-    {
-        var satan = Greek(16, 20, 1);
-        Name(Ukrainian(20, 4), _satan, LinkMethod.StrongNumber, 0.89,
-            $"through NESTLE1904 word {satan.Id}, linked by aligner");
-        Name(Ukrainian(20, 2), _satan, LinkMethod.StrongNumber, 0.94,
-            $"through NESTLE1904 word {satan.Id}, linked by aligner");
-        await _db.SaveChangesAsync();
-
-        var first = await _foreign.Withdraw();
-        var second = await _foreign.Withdraw();
-
-        first.Withdrawn.Should().Be(1);
-        second.Withdrawn.Should().Be(0);
-        NamedOn(Ukrainian(20, 4)).Should().BeEmpty();
-        NamedOn(Ukrainian(20, 2)).Should().Equal("satan");
-    }
-
-    [Fact]
-    public async Task ARulingOnTheWordItselfIsNotTakenBackBySpelling()
-    {
-        var satan = Greek(16, 20, 1);
-        var carried = Name(Ukrainian(20, 4), _satan, LinkMethod.StrongNumber, 0.89,
-            $"through NESTLE1904 word {satan.Id}, linked by aligner");
-        carried.Claims.Add(new WordEntityClaim
-        {
-            Method = LinkMethod.Manual, Confidence = null, Source = "a person's ruling", Note = "read here",
-        });
-        await _db.SaveChangesAsync();
-
-        (await _foreign.Withdraw()).Withdrawn.Should().Be(0);
-        NamedOn(Ukrainian(20, 4)).Should().Contain("satan");
-    }
-
-    [Fact]
-    public async Task ASpellingTheTextUsesForThePersonWhereTheOtherIsUnnamedIsTheirs()
-    {
-        // The text writes Satan Христа in two verses whose originals name no Jesus: then Христа is a
-        // second spelling of Satan in this text, however often it is Jesus's.
-        var more = Corpus.AddBook(_db, _ukrainian, 46, "Corinthians", (5, 5, ["і", "Христа"]), (5, 6, ["і", "Христа"]));
-        _db.SaveChanges();
-        _db.Database.ExecuteSqlRaw("UPDATE word SET normalised_text = lower(text) WHERE normalised_text IS NULL");
-        foreach (var verse in new[] { 5, 6 })
-        {
-            var word = _db.Words.Single(w => w.TextId == more.Id && w.Verse!.Book!.CanonicalOrdinal == 46
-                                              && w.Verse.Number == verse && w.Position == 2);
-            Name(word, _satan, LinkMethod.Manual, null, "a ruling");
-        }
-
-        var jesus = Corpus.AddBook(_db, _ukrainian, 43, "John",
-            [.. Enumerable.Range(1, 6).Select(verse => (1, verse, new[] { "у", "Христа" }))]);
-        _db.SaveChanges();
-        _db.Database.ExecuteSqlRaw("UPDATE word SET normalised_text = lower(text) WHERE normalised_text IS NULL");
-        foreach (var word in _db.Words.Where(w => w.TextId == jesus.Id && w.Verse!.Book!.CanonicalOrdinal == 43
-                                                  && w.Position == 2).ToList())
-        {
-            Name(word, _jesus, LinkMethod.RuleBased, 0.97, "the title the text fixes");
-        }
-
-        var satan = Greek(16, 20, 1);
-        Name(Ukrainian(20, 4), _satan, LinkMethod.StrongNumber, 0.89,
-            $"through NESTLE1904 word {satan.Id}, linked by aligner");
-        await _db.SaveChangesAsync();
-
-        (await _foreign.Withdraw()).Withdrawn.Should().Be(0);
-    }
 
     [Fact]
     public async Task AReadingOfTheWordItselfOutranksACarriedNameWhateverItsMethod()

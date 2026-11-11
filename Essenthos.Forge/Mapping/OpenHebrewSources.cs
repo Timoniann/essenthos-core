@@ -5,15 +5,15 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
-using Word = Essenthos.Core.Loading.Links.OldTestamentLinkLoader.Word;
+using Word = Essenthos.Core.Loading.Links.OldTestamentLinks.Word;
 
 namespace Essenthos.Core.Mapping;
 
 /// <summary>
 /// The Open Hebrew Bible's King James mapping read against both texts' words, as the database's
-/// <see cref="OldTestamentLinkLoader"/> reads it on a load with no links yet: each verse whose Hebrew joins BHSA by
+/// <see cref="OldTestamentLinks"/> reads it on a load with no links yet: each verse whose Hebrew joins BHSA by
 /// position and glosses, else through the running word numbers, is lined up with the King James and drawn
-/// (<see cref="OldTestamentLinkLoader.Build"/>). The King James's words are those standing at the mapping's verse and
+/// (<see cref="OldTestamentLinks.Build"/>). The King James's words are those standing at the mapping's verse and
 /// BHSA's those standing at the same frame address, a psalm's title before its first verse, as the loader grouped them.
 /// Read once per run and shared by the stated and lexical sources and by the Chinese Union's, which borrows only the
 /// running numbers (the mapping's Hebrew against BHSA's words) and so reads neither the King James nor TAHOT.
@@ -30,17 +30,17 @@ internal sealed class OpenHebrewReading
 
     private readonly ProductTexts _texts;
     private readonly Lazy<Hebrew> _hebrew;
-    private readonly Lazy<(List<OldTestamentLinkLoader.LinkDraft> Drafts, string Summary)> _drafts;
+    private readonly Lazy<(List<OldTestamentLinks.LinkDraft> Drafts, string Summary)> _drafts;
 
     private OpenHebrewReading(ProductTexts texts)
     {
         _texts = texts;
         _hebrew = new Lazy<Hebrew>(ReadHebrew);
-        _drafts = new Lazy<(List<OldTestamentLinkLoader.LinkDraft>, string)>(Draw);
+        _drafts = new Lazy<(List<OldTestamentLinks.LinkDraft>, string)>(Draw);
     }
 
     /// <summary>The King James's links, English word ids being KJV's and Hebrew ones BHSA's (<see cref="ProductText"/> ids).</summary>
-    public IReadOnlyList<OldTestamentLinkLoader.LinkDraft> Drafts => _drafts.Value.Drafts;
+    public IReadOnlyList<OldTestamentLinks.LinkDraft> Drafts => _drafts.Value.Drafts;
 
     public string Summary => _drafts.Value.Summary;
 
@@ -77,9 +77,9 @@ internal sealed class OpenHebrewReading
         var placed = new Dictionary<long, int>(430_000);
         foreach (var record in records)
         {
-            if (OldTestamentLinkLoader.JoinHebrew(record, verses, out _) is { } bhsa)
+            if (OldTestamentLinks.JoinHebrew(record, verses, out _) is { } bhsa)
             {
-                OldTestamentLinkLoader.Place(record, bhsa, placed);
+                OldTestamentLinks.Place(record, bhsa, placed);
                 joined[record] = bhsa;
             }
             else
@@ -88,14 +88,14 @@ internal sealed class OpenHebrewReading
             }
         }
 
-        var byNumber = OldTestamentLinkLoader.WordsByNumber(records, verses, placed, out var split);
+        var byNumber = OldTestamentLinks.WordsByNumber(records, verses, placed, out var split);
         var numbers = byNumber.Concat(split).ToDictionary(
             pair => pair.Key,
             pair => (IReadOnlyList<long>)[.. pair.Value.Also.Prepend(pair.Value.Id)]);
         return new Hebrew(records, verses, joined, unjoined, byNumber, split, numbers);
     }
 
-    private (List<OldTestamentLinkLoader.LinkDraft>, string) Draw()
+    private (List<OldTestamentLinks.LinkDraft>, string) Draw()
     {
         var hebrew = _hebrew.Value;
         var folder = _texts.Store.FullPath(Tahot);
@@ -103,7 +103,7 @@ internal sealed class OpenHebrewReading
         var segmentation = volumes.Length > 0 ? TahotSegmentation.Read(volumes) : null;
         var english = ByAddress(_texts[Bible4uTextSource.KingJames]);
 
-        var drafts = new List<OldTestamentLinkLoader.LinkDraft>(400_000);
+        var drafts = new List<OldTestamentLinks.LinkDraft>(400_000);
         int joined = 0, numbered = 0, refused = 0;
         foreach (var record in hebrew.Records)
         {
@@ -116,7 +116,7 @@ internal sealed class OpenHebrewReading
         // A verse the file and BHSA divide differently is read word by word through the running numbers.
         foreach (var record in hebrew.Unjoined)
         {
-            _ = OldTestamentLinkLoader.ByRunningNumber(record, hebrew.ByNumber, hebrew.Split) is { } bhsa && Take(record, bhsa)
+            _ = OldTestamentLinks.ByRunningNumber(record, hebrew.ByNumber, hebrew.Split) is { } bhsa && Take(record, bhsa)
                 ? numbered++
                 : refused++;
         }
@@ -128,7 +128,7 @@ internal sealed class OpenHebrewReading
         bool Take(MappingRecord record, IReadOnlyList<Word?> bhsa)
         {
             if (!english.TryGetValue((record.Book, record.Chapter, record.Verse), out var kjv)
-                || OldTestamentLinkLoader.Build(record, kjv, bhsa, segmentation?.Align(record.Book, record.Chapter, record.Verse, record.Hebrew))
+                || OldTestamentLinks.Build(record, kjv, bhsa, segmentation?.Align(record.Book, record.Chapter, record.Verse, record.Hebrew))
                     is not { } made)
             {
                 return false;
@@ -161,7 +161,7 @@ internal sealed class OpenHebrewStatedSource : IPairSource
 
     public bool States(string pair) => pair == Pair;
 
-    public bool Makes(string source) => source == OldTestamentLinkLoader.Source;
+    public bool Makes(string source) => source == OldTestamentLinks.Source;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) => [OpenHebrewReading.Mapping, OpenHebrewReading.Tahot];
 
@@ -186,7 +186,7 @@ internal sealed class OpenHebrewLexicalSource : IPairSource
 
     public bool States(string pair) => pair == OpenHebrewStatedSource.Pair;
 
-    public bool Makes(string source) => source is OldTestamentLinkLoader.Source or OldTestamentLinkLoader.StatedSource;
+    public bool Makes(string source) => source is OldTestamentLinks.Source or OldTestamentLinks.StatedSource;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) => [OpenHebrewReading.Mapping, OpenHebrewReading.Tahot];
 
@@ -198,8 +198,8 @@ internal sealed class OpenHebrewLexicalSource : IPairSource
             .Select(row => row with
             {
                 Confidence = HebrewPrefixes.Stated,
-                Source = OldTestamentLinkLoader.StatedSource,
-                Evidence = OldTestamentLinkLoader.StatedNote,
+                Source = OldTestamentLinks.StatedSource,
+                Evidence = OldTestamentLinks.StatedNote,
             }));
         log($"{drafts.Count} function words matched to their prefixes, {drafts.Count(draft => draft.Stated)} of them where TAHOT prints the gloss");
         return rows;
@@ -209,7 +209,7 @@ internal sealed class OpenHebrewLexicalSource : IPairSource
 internal static class OpenHebrewRows
 {
     /// <summary>The rows of the drafts, one per shape and relation, the first draft of a shape standing as the database kept it.</summary>
-    public static IEnumerable<MappingRow> Of(ProductTexts texts, IEnumerable<OldTestamentLinkLoader.LinkDraft> drafts, string method)
+    public static IEnumerable<MappingRow> Of(ProductTexts texts, IEnumerable<OldTestamentLinks.LinkDraft> drafts, string method)
     {
         var english = texts[Bible4uTextSource.KingJames];
         var hebrew = texts[BhsaTextSource.Slug];
@@ -218,8 +218,8 @@ internal static class OpenHebrewRows
         {
             var row = new MappingRow(MappingText.Keys(draft.English.Select(english.Key)),
                 MappingText.Keys(draft.Hebrew.Select(hebrew.Key)),
-                OldTestamentLinkLoader.RelationOf(draft).ToString().ToLowerInvariant(),
-                method, draft.Confidence, OldTestamentLinkLoader.Source, null, null, null);
+                OldTestamentLinks.RelationOf(draft).ToString().ToLowerInvariant(),
+                method, draft.Confidence, OldTestamentLinks.Source, null, null, null);
             if (seen.Add(row.Shape))
             {
                 yield return row;
@@ -230,14 +230,14 @@ internal static class OpenHebrewRows
 
 /// <summary>
 /// The Chinese Union Version's Old Testament linked to BHSA by the Open Hebrew Bible's mapping, as the database's
-/// <see cref="OpenHebrewCuvLinkLoader"/> draws it: FHL's spans laid onto the traditional text's words by their letters, the
+/// <see cref="OpenHebrewCuvLinks"/> draws it: FHL's spans laid onto the traditional text's words by their letters, the
 /// simplified text taking them by place wherever its verse holds as many words, and each span's running numbers read as
 /// the King James mapping reads them now (<see cref="OpenHebrewReading.Numbers"/>). The Chinese verses are the text's own;
 /// the running numbers name BHSA's words directly.
 /// </summary>
 internal sealed class OpenHebrewCuvSource : IPairSource
 {
-    public static readonly string File = string.Join('/', OpenHebrewCuvLinkLoader.File);
+    public static readonly string File = string.Join('/', OpenHebrewCuvLinks.File);
 
     public string Method => MappingMethods.Stated;
 
@@ -246,7 +246,7 @@ internal sealed class OpenHebrewCuvSource : IPairSource
     public bool States(string pair) =>
         pair == $"{SwordTextSource.ChineseUnion}-{BhsaTextSource.Slug}" || pair == $"{SwordTextSource.ChineseUnionSimplified}-{BhsaTextSource.Slug}";
 
-    public bool Makes(string source) => source.StartsWith(OpenHebrewCuvLinkLoader.Credit, StringComparison.Ordinal);
+    public bool Makes(string source) => source.StartsWith(OpenHebrewCuvLinks.Credit, StringComparison.Ordinal);
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
     [
@@ -275,7 +275,7 @@ internal sealed class OpenHebrewCuvSource : IPairSource
                 continue;
             }
 
-            var placements = OpenHebrewCuvLinkLoader.Place(verse.Runs, [.. lettered.Select(id => texts[SwordTextSource.ChineseUnion].Words[id].Surface)], out var lined);
+            var placements = OpenHebrewCuvLinks.Place(verse.Runs, [.. lettered.Select(id => texts[SwordTextSource.ChineseUnion].Words[id].Surface)], out var lined);
             realigned += lined ? 1 : 0;
             words.TryGetValue(key, out var ours);
             var sameWords = ours is not null && ours.Count == lettered.Count;
@@ -297,7 +297,7 @@ internal sealed class OpenHebrewCuvSource : IPairSource
 
                 rows.Add(new MappingRow(MappingText.Keys(placement.Words.Select(i => chinese.Key(ours![i]))),
                     MappingText.Keys(hebrewWords.Select(hebrew.Key)),
-                    LinkRelation.Renders.ToString().ToLowerInvariant(), Method, null, OpenHebrewCuvLinkLoader.Credit, null, null, null));
+                    LinkRelation.Renders.ToString().ToLowerInvariant(), Method, null, OpenHebrewCuvLinks.Credit, null, null, null));
             }
         }
 

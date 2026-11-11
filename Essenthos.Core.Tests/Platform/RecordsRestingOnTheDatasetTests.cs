@@ -43,11 +43,11 @@ public sealed class RecordsRestingOnTheDatasetTests : IDisposable
         var own = Record("own", "Essenthos, a record of our own");
         await _db.SaveChangesAsync();
         Verse(byVerse, "Essenthos, from the words this corpus annotates to the person or the place they name");
-        Verse(placed, BibleDataLoader.Source);
+        Verse(placed, Credits.BibleData);
         Verse(placed, "OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0");
         Tie(byTie, own, "Essenthos, read from the verse by a test");
         Tie(own, byTieInward, "Essenthos, read from the verse by a test");
-        Tie(tiedByDataset, own, BibleDataLoader.Source);
+        Tie(tiedByDataset, own, Credits.BibleData);
         await _db.SaveChangesAsync();
 
         var listed = await Resting();
@@ -87,7 +87,7 @@ public sealed class RecordsRestingOnTheDatasetTests : IDisposable
         throw new FileNotFoundException($"No scripts/{Script} above {AppContext.BaseDirectory}.");
     }
 
-    private Entity Record(string slug, string source = BibleDataLoader.Source)
+    private Entity Record(string slug, string source = Credits.BibleData)
     {
         var entity = new Entity
         {

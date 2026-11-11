@@ -8,7 +8,7 @@ namespace Essenthos.Core.Loading;
 /// </summary>
 internal static class StrongRelationLoader
 {
-    public const string HebrewSource = StrongGentilicLoader.Source;
+    public const string HebrewSource = "Strong's Hebrew dictionary by James Strong, 1890, public domain";
 
     public const string GreekSource = "Strong's Greek dictionary by James Strong, 1890, public domain";
 }
