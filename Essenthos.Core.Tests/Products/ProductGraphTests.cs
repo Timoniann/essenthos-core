@@ -157,6 +157,23 @@ public sealed class ProductGraphTests : IDisposable
     }
 
     [Fact]
+    public void A_served_product_made_under_an_older_line_is_forgotten_and_a_built_one_still_fails()
+    {
+        var graph = new ProductGraph(
+        [
+            new("texts/{text}/words", ProductMaker.Build, "convert all", ["bible4u/*"], ["word"], "text"),
+            new("panes/{text}", ProductMaker.Serve, "panes", ["Essenthos/texts/{text}/words"], ["pane"], "text"),
+        ]);
+        var store = new ProductStore(_root);
+        Make(store, "texts/KJV/words", "bible4u/kjv.xml", "secret.txt");
+        Make(store, "panes/KJV", "Essenthos/texts/KJV/words.essx", "secret.txt");
+
+        graph.ForgetOutdatedServed(store).Should().Equal(store.RelativePath("panes/KJV", ProductKind.Machine));
+        store.Manifest.Get(store.RelativePath("panes/KJV", ProductKind.Machine)).Should().BeNull("the serving build makes it again");
+        graph.Check(store.Manifest, _ => []).Should().ContainSingle().Which.Product.Should().EndWith("texts/KJV/words.essx");
+    }
+
+    [Fact]
     public void A_product_no_line_declares_is_forgotten_once_its_file_is_gone()
     {
         var graph = new ProductGraph([new("mapping/pairs", ProductMaker.Kept, "mapping-export", [], [], "none")]);

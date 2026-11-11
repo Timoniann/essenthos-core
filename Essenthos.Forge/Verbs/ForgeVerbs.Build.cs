@@ -228,7 +228,13 @@ internal static partial class ForgeVerbs
             }
         }
 
-        var undeclared = graph.Check(new ProductStore(forge.Resources).Manifest);
+        var checkedStore = new ProductStore(forge.Resources);
+        foreach (var outdated in graph.ForgetOutdatedServed(checkedStore))
+        {
+            forge.Logger.LogWarning("{Product} was made under an older line of {Graph}: the serving build makes it again", outdated, ProductGraph.Product);
+        }
+
+        var undeclared = graph.Check(checkedStore.Manifest);
         foreach (var read in undeclared)
         {
             forge.Logger.LogError("undeclared: {Read}", read);

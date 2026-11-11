@@ -229,6 +229,26 @@ internal sealed partial class ProductGraph
         return gone;
     }
 
+    /// <summary>
+    /// Takes out of the manifest every <c>serve</c> product that reads an input its line no longer declares: it was made under an
+    /// older line, so it is not current, and the serving build (<c>build --into</c>, <c>--apply</c>) makes it again. Without this
+    /// a change to a serve line would fail <c>forge build</c> before the serving build could ever make the product again.
+    /// </summary>
+    public List<string> ForgetOutdatedServed(ProductStore store)
+    {
+        var outdated = Check(store.Manifest)
+            .Where(read => read.Input is not null && Find(read.Product) is { Declaration.Maker: ProductMaker.Serve })
+            .Select(read => read.Product)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        foreach (var product in outdated)
+        {
+            store.Manifest.Forget(product);
+        }
+
+        return outdated;
+    }
+
     /// <summary>The <c>kept</c> products the store holds under a folder of <c>Resources/Essenthos/</c>, by name.</summary>
     public List<string> Kept(ProductStore store, string folder)
     {
