@@ -55,7 +55,6 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(databaseConnection, npgsql => npgsql.CommandTimeout(commandTimeout));
 });
 
-builder.Services.AddScoped<TextRelationLoader>();
 builder.Services.AddScoped<CanonicalFrameLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
 builder.Services.AddScoped<AlignmentPipeline>();
@@ -93,7 +92,6 @@ builder.Services.AddScoped<SharedWordPass>();
 var verifySessions = builder.Configuration.GetValue("Verification:Sessions", 1);
 builder.Services.AddScoped(services => new CorpusCheck(
     services.GetRequiredService<AppDbContext>(), services.GetRequiredService<ILogger<CorpusCheck>>(), verifySessions));
-builder.Services.AddScoped<StrongTranslationLoader>();
 builder.Services.AddScoped<GeezLexiconMeasure>();
 builder.Services.AddScoped<InterlinearLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
@@ -103,11 +101,9 @@ builder.Services.AddScoped<ReinaValeraStrongLinkLoader>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<ModelPictures>();
 builder.Services.AddScoped<WikipediaLinkLoader>();
-builder.Services.AddScoped<OwnRecordLoader>();
 builder.Services.AddScoped<ForeignNames>();
 builder.Services.AddScoped<PronounReferents>();
 builder.Services.AddScoped<StrayNames>();
-builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddSingleton(_ => ReviewLists.Read(builder.Configuration));
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<NameConsensusPass>();

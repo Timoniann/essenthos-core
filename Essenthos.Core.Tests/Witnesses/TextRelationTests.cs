@@ -1,10 +1,10 @@
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Witnesses;
@@ -64,7 +64,7 @@ public sealed class TextRelationFileTests
 }
 
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class TextRelationLoadTests : IAsyncLifetime
+public sealed class TextRelationServedTests : IAsyncLifetime
 {
     private const string Prefix = "RELATION-";
     private static readonly string English = Prefix + "KJV";
@@ -74,7 +74,7 @@ public sealed class TextRelationLoadTests : IAsyncLifetime
 
     private readonly AppDbContext _db;
 
-    public TextRelationLoadTests(WitnessDatabase database) => _db = database.NewContext();
+    public TextRelationServedTests(WitnessDatabase database) => _db = database.NewContext();
 
     public async Task InitializeAsync()
     {
@@ -99,32 +99,6 @@ public sealed class TextRelationLoadTests : IAsyncLifetime
         new(American, English, "revised-from", null, null, "its title page"),
     ];
 
-    [Fact]
-    public async Task TheListIsWrittenOnceAndASecondRunChangesNothing()
-    {
-        var loader = new TextRelationLoader(_db, NullLogger<TextRelationLoader>.Instance);
-
-        var first = await loader.Load(Listed);
-        var again = await loader.Load(Listed);
-
-        (first.Written, first.Removed).Should().Be((3, 0));
-        (again.Written, again.Removed, again.Kept).Should().Be((0, 0, 3));
-        (await _db.TextRelations.CountAsync()).Should().Be(3);
-    }
-
-    [Fact]
-    public async Task AClaimNoLongerListedIsRemovedAndOneNamingAnAbsentTextIsPassedOver()
-    {
-        var loader = new TextRelationLoader(_db, NullLogger<TextRelationLoader>.Instance);
-        await loader.Load(Listed);
-
-        var outcome = await loader.Load(
-            [Listed[0], Listed[1], new(American, Prefix + "ABSENT", "revised-from", null, null, "nobody")]);
-
-        (outcome.Removed, outcome.Skipped).Should().Be((1, 1));
-        (await _db.TextRelations.AnyAsync(r => r.FromText!.Slug == American)).Should().BeFalse();
-    }
-
     /// <summary>
     /// A text's page answers from both ends: the King James says what it rests on, and the Hebrew
     /// says which texts rest on it.
@@ -132,7 +106,7 @@ public sealed class TextRelationLoadTests : IAsyncLifetime
     [Fact]
     public async Task ATextIsServedItsOwnClaimsFirstAndTheClaimsOthersMakeOfIt()
     {
-        await new TextRelationLoader(_db, NullLogger<TextRelationLoader>.Instance).Load(Listed);
+        await Write(Listed);
         var english = await _db.Texts.SingleAsync(t => t.Slug == English);
         var hebrew = await _db.Texts.SingleAsync(t => t.Slug == Hebrew);
 
@@ -146,6 +120,21 @@ public sealed class TextRelationLoadTests : IAsyncLifetime
         ofEnglish[0].Should().Match<TextRelationResponse>(r => r.Note == "the Masoretic" && r.Source == "Tov");
         ofHebrew.Should().ContainSingle()
             .Which.Should().Be(new TextRelationResponse("same-family-as", English, true, "1-39", "the Masoretic", "Tov"));
+    }
+
+    private async Task Write(IEnumerable<TextRelationEntry> entries)
+    {
+        var texts = await _db.Texts.Where(t => t.Slug.StartsWith(Prefix)).ToDictionaryAsync(t => t.Slug, t => t.Id);
+        _db.TextRelations.AddRange(entries.Select(entry => new TextRelation
+        {
+            FromTextId = texts[entry.From],
+            ToTextId = texts[entry.To],
+            Relation = EnumSpelling.ToTextRelationKind(entry.Relation),
+            Scope = entry.Scope,
+            Note = entry.Note,
+            Source = entry.Source,
+        }));
+        await _db.SaveChangesAsync();
     }
 
     private async Task Clear()

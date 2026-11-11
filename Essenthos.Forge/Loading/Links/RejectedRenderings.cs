@@ -1,17 +1,10 @@
-using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
-using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Links;
 
 internal sealed record RejectedRendering(RuledWord From, RuledWord To, string Reason);
-
-internal sealed record RejectedRenderingOutcome(int Links, int Annotations)
-{
-    public override string ToString() => $"{Links} rejected statistical renderings and {Annotations} annotations carried solely over them withdrawn";
-}
 
 /// <summary>Specific statistical pairings contradicted by the held editions' wording.</summary>
 internal static class RejectedRenderings
@@ -119,61 +112,5 @@ internal static class RejectedRenderings
         return drafts.Where(draft => !Statistical(draft) || draft.From.Count != 1 || draft.To.Count != 1
             || !(rejected.Contains((draft.From.Single(), draft.To.Single()))
                  || rejected.Contains((draft.To.Single(), draft.From.Single())))).ToArray();
-    }
-
-    public static async Task<RejectedRenderingOutcome> Withdraw(AppDbContext db, CancellationToken cancellationToken = default)
-    {
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var pairs = await Locate((NpgsqlConnection)db.Database.GetDbConnection(), cancellationToken);
-        var shapes = pairs.Select(p => LinkShape.Of([p.From], [p.To])).ToArray();
-        var links = await db.Links.AsNoTracking().Include(l => l.Provenance)
-            .Include(l => l.Claims).ThenInclude(c => c.Provenance)
-            .Include(l => l.Words)
-            .Where(l => l.Fingerprint != null && shapes.Contains(l.Fingerprint.Value))
-            .ToListAsync(cancellationToken);
-        foreach (var link in links)
-        {
-            if (link.Words.Count != 2 || !pairs.Contains((
-                    link.Words.Single(w => w.Side == LinkSide.From).WordId,
-                    link.Words.Single(w => w.Side == LinkSide.To).WordId))) continue;
-            if (link.Method != LinkMethod.Aligner || link.Relation != LinkRelation.Renders
-                || !link.Provenance!.Source.StartsWith("SIL.Machine", StringComparison.Ordinal)
-                || link.Claims.Any(c => c.Method != LinkMethod.Aligner
-                    || !c.Provenance!.Source.StartsWith("SIL.Machine", StringComparison.Ordinal)))
-                throw new InvalidDataException($"Protected evidence stands on a rejected rendering ({link.Id}); no links were withdrawn.");
-        }
-        var ids = links.Where(link => link.Words.Count == 2 && pairs.Contains((
-            link.Words.Single(w => w.Side == LinkSide.From).WordId,
-            link.Words.Single(w => w.Side == LinkSide.To).WordId))).Select(link => link.Id).ToArray();
-
-        var targets = pairs.Select(p => p.From).Distinct().ToArray();
-        var origins = pairs.Select(p => p.To).Distinct().ToArray();
-        var routes = await db.Words.Where(w => origins.Contains(w.Id))
-            .Select(w => new { w.Id, Slug = w.Text!.Slug }).ToListAsync(cancellationToken);
-        var annotations = await db.WordEntities.AsNoTracking().Include(a => a.Claims).Include(a => a.Entity)
-            .Where(a => targets.Contains(a.WordId))
-            .ToListAsync(cancellationToken);
-        HashSet<string> Routes(long word) => pairs.Where(p => p.From == word).Select(p =>
-            $"through {routes.Single(w => w.Id == p.To).Slug} word {p.To}, linked by aligner").ToHashSet();
-
-        // Another record's name reached the word over a rejected link and nothing else stands behind it;
-        // a word's own reading or another route is simply not this withdrawal's business.
-        annotations = [.. annotations.Where(a => a.Entity!.Slug == "satan" || (Routes(a.WordId) is var through
-            && through.Contains(a.Note ?? string.Empty) && a.Claims.All(c => through.Contains(c.Note ?? string.Empty))))];
-        foreach (var annotation in annotations.Where(a => a.Entity!.Slug == "satan"))
-        {
-            var notes = Routes(annotation.WordId);
-            if (annotation.Method != LinkMethod.StrongNumber || annotation.Source != EntityAnnotationLoader.GreekResolution
-                || !notes.Contains(annotation.Note ?? string.Empty)
-                || annotation.Claims.Any(c => c.Method != LinkMethod.StrongNumber
-                    || c.Source != EntityAnnotationLoader.GreekResolution && c.Source != EntityAnnotationLoader.VerseList
-                    || !notes.Contains(c.Note ?? string.Empty)))
-                throw new InvalidDataException($"Protected evidence stands on a rejected rendering's annotation ({annotation.Id}); nothing was withdrawn.");
-        }
-        var withdrawn = await db.Links.Where(l => ids.Contains(l.Id)).ExecuteDeleteAsync(cancellationToken);
-        var annotationIds = annotations.Select(a => a.Id).ToArray();
-        var unnamed = await db.WordEntities.Where(a => annotationIds.Contains(a.Id)).ExecuteDeleteAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-        return new(withdrawn, unnamed);
     }
 }

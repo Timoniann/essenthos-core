@@ -36,7 +36,11 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
     /// <summary>Person, number, and gender or null for any, of each form.</summary>
     internal static readonly IReadOnlyList<(string Form, string? Person, string? Number, string? Gender)> Forms = BuildForms();
 
-    public async Task<string> Run(string fromSlug, string toSlug, bool apply, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// What the rule would add to the configured database's links of the pair; it writes nothing. The links themselves are
+    /// the pair's <c>possessive</c> method file, which <c>possessive-pairs</c> makes from the store.
+    /// </summary>
+    public async Task<string> Run(string fromSlug, string toSlug, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var from = await db.Texts.SingleAsync(t => t.Slug == fromSlug, cancellationToken);
@@ -88,22 +92,11 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
             }
         }
 
-        if (apply)
-        {
-            await using var write = new NpgsqlCommand(Write, connection, transaction);
-            write.Parameters.AddWithValue("from", from.Id);
-            write.Parameters.AddWithValue("to", to.Id);
-            write.Parameters.AddWithValue(
-                "provenance", await ProvenanceIds.Of(connection, transaction, Source, null, cancellationToken));
-            write.Parameters.AddWithValue("confidence", Confidence);
-            await write.ExecuteNonQueryAsync(cancellationToken);
-        }
-
         await transaction.CommitAsync(cancellationToken);
         logger.LogInformation("Read the possessives of {From} against {To} in {Elapsed}", fromSlug, toSlug, started.Elapsed);
 
         return $"{fromSlug} to {toSlug}: {found:N0} possessives reaching nothing stand beside a word linked to a suffixed word they agree with, "
-               + $"over {suffixed:N0} suffixed words; {(apply ? "linked" : "nothing written without --apply")}\n"
+               + $"over {suffixed:N0} suffixed words\n"
                + string.Join('\n', examples);
     }
 
@@ -174,28 +167,6 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
         ) n ON TRUE
         ORDER BY p.id
         LIMIT 8
-        """;
-
-    private const string Write =
-        """
-        WITH numbered AS (
-            SELECT word, hebrew, nextval(pg_get_serial_sequence('link', 'id')) AS id FROM possessive
-        ),
-        links AS (
-            INSERT INTO link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint)
-            SELECT id, @from, @to, 'renders', 'rule-based', @confidence, @provenance,
-                   md5('f' || word || ' t' || hebrew)::uuid
-            FROM numbered
-            RETURNING id
-        ),
-        claims AS (
-            INSERT INTO link_claim (link_id, method, confidence, provenance_id)
-            SELECT id, 'rule-based', @confidence, @provenance FROM numbered
-        ),
-        froms AS (
-            INSERT INTO link_word (link_id, word_id, side) SELECT id, word, 'from' FROM numbered
-        )
-        INSERT INTO link_word (link_id, word_id, side) SELECT id, hebrew, 'to' FROM numbered
         """;
 
     private static List<(string, string?, string?, string?)> BuildForms()

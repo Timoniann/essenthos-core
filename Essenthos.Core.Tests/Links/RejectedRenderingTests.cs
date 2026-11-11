@@ -5,7 +5,6 @@ using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 using Xunit;
 
@@ -19,7 +18,6 @@ public sealed class RejectedRenderingTests : IDisposable
     private static readonly RuledWord Christ = new("RUSV", "1CO 5:5", 15, "Христа");
     private static readonly RuledWord Satan = new("NESTLE1904", "1CO 5:5", 5, "Σατανᾷ");
     private const string Source = "SIL.Machine, aligned as written and as stems and through KJV";
-    private static readonly RejectedRendering[] Satanic = [.. RejectedRenderings.All.Where(r => r.From.Text == "RUSV")];
 
     public RejectedRenderingTests(WitnessDatabase database)
     {
@@ -62,62 +60,6 @@ public sealed class RejectedRenderingTests : IDisposable
         var admitted = await RejectedRenderings.Admitted((NpgsqlConnection)db.Database.GetDbConnection(),
             [.. rejected, .. reverse, correct, sourced, manual, phrase], CancellationToken.None);
         admitted.Should().Equal(correct, sourced, manual, phrase);
-    }
-
-    [Fact]
-    public async Task WarmWithdrawalRemovesOnlyRejectedLinksAndTheirCarriedAnnotationsAndRepeatsWithoutWriting()
-    {
-        AddWarmLinks();
-        AddCarriedAnnotations();
-        var kept = await db.Links.Where(l => l.Method == LinkMethod.StrongNumber).Select(l => l.Id).ToArrayAsync();
-        var preserved = await db.WordEntities.Where(a => a.Note == "independent seed").Select(a => a.Id).ToArrayAsync();
-
-        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(4, 2));
-        (await db.Links.Select(l => l.Id).ToArrayAsync()).Should().BeEquivalentTo(kept);
-        (await db.WordEntities.Select(a => a.Id).ToArrayAsync()).Should().BeEquivalentTo(preserved);
-        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(0, 0));
-        (await db.Links.Select(l => l.Id).ToArrayAsync()).Should().BeEquivalentTo(kept);
-        (await db.WordEntities.Select(a => a.Id).ToArrayAsync()).Should().BeEquivalentTo(preserved);
-    }
-
-    [Theory]
-    [InlineData(LinkMethod.Manual)]
-    [InlineData(LinkMethod.StatedBySource)]
-    [InlineData(LinkMethod.RuleBased)]
-    public async Task ProtectedLinkClaimsStopTheEntireWithdrawal(LinkMethod method)
-    {
-        AddWarmLinks();
-        AddCarriedAnnotations();
-        var link = db.Links.First(l => l.Method == LinkMethod.Aligner);
-        link.Claims.Add(new LinkClaim { Method = method, Confidence = method == LinkMethod.RuleBased ? 0.98 : null,
-            Provenance = new() { Source = "protected testimony" } });
-        await db.SaveChangesAsync();
-        var links = await db.Links.CountAsync();
-        var annotations = await db.WordEntities.CountAsync();
-        var withdraw = () => RejectedRenderings.Withdraw(db);
-        await withdraw.Should().ThrowAsync<InvalidDataException>().WithMessage("*Protected evidence*");
-        (await db.Links.CountAsync()).Should().Be(links);
-        (await db.WordEntities.CountAsync()).Should().Be(annotations);
-    }
-
-    [Theory]
-    [InlineData(LinkMethod.Manual)]
-    [InlineData(LinkMethod.StatedBySource)]
-    [InlineData(LinkMethod.RuleBased)]
-    public async Task IndependentAnnotationEvidenceStopsTheEntireWithdrawal(LinkMethod method)
-    {
-        AddWarmLinks();
-        AddCarriedAnnotations();
-        var annotation = db.WordEntities.First(a => a.Note != "independent seed");
-        annotation.Claims.Add(new WordEntityClaim { Method = method,
-            Confidence = method == LinkMethod.RuleBased ? 0.98 : null, Source = "protected testimony", Note = "direct reading" });
-        await db.SaveChangesAsync();
-        var links = await db.Links.CountAsync();
-        var annotations = await db.WordEntities.CountAsync();
-        var withdraw = () => RejectedRenderings.Withdraw(db);
-        await withdraw.Should().ThrowAsync<InvalidDataException>().WithMessage("*Protected evidence*");
-        (await db.Links.CountAsync()).Should().Be(links);
-        (await db.WordEntities.CountAsync()).Should().Be(annotations);
     }
 
     [Theory]
@@ -164,23 +106,18 @@ public sealed class RejectedRenderingTests : IDisposable
     /// <summary>
     /// Genesis 14:5 in the Septuagint: the Zuzim are rendered "strong nations", and the aligner paired
     /// the names after them one place off, the Emim's Ὀμμαίους with the Zuzim and Shaveh's Σαυῇ with
-    /// Ham. Those pairings are withdrawn, and a second withdrawal finds nothing.
+    /// Ham. Each of those pairings is found at its words, so no writer and no rulings seed can miss it.
     /// </summary>
     [Fact]
-    public async Task TheSeptuagintsGenesisFourteenFiveNamesArePairedNoMoreOnePlaceOff()
+    public async Task TheSeptuagintsGenesisFourteenFivePairingsAreFoundAtTheirWords()
     {
         var genesis = RejectedRenderings.All.Where(r => r.From.Reference == "GEN 14:5").ToList();
         genesis.Should().HaveCount(5);
-        foreach (var ruling in genesis)
-        {
-            AddLink(words[ruling.From], words[ruling.To], LinkMethod.Aligner, "SIL.Machine, aligned as written and as stems");
-        }
+        await db.Database.OpenConnectionAsync();
 
-        db.SaveChanges();
+        var found = await RejectedRenderings.Locate((NpgsqlConnection)db.Database.GetDbConnection(), genesis, CancellationToken.None);
 
-        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(5, 0));
-        (await db.Links.CountAsync()).Should().Be(0);
-        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(0, 0));
+        found.Should().BeEquivalentTo(genesis.Select(r => (words[r.From].Id, words[r.To].Id)));
     }
 
     /// <summary>
@@ -205,57 +142,4 @@ public sealed class RejectedRenderingTests : IDisposable
 
     private static NewLink Draft(Word from, Word to) => new(from.TextId, to.TextId, LinkRelation.Renders,
         LinkMethod.Aligner, 0.98, Source, null, [from.Id], [to.Id]);
-
-    private void AddWarmLinks()
-    {
-        foreach (var ruling in Satanic)
-        {
-            AddLink(words[ruling.From], words[ruling.To], LinkMethod.Aligner, Source);
-            var position = ruling.From.Reference.StartsWith("ROM", StringComparison.Ordinal) ? 5 : 2;
-            AddLink(words[new("RUSV", ruling.From.Reference, position, position == 5 ? "сатану" : "сатане")],
-                words[ruling.To], LinkMethod.StrongNumber, "the edition's stated numbering");
-        }
-        db.SaveChanges();
-    }
-
-    private void AddLink(Word from, Word to, LinkMethod method, string source)
-    {
-        var link = new Link { FromTextId = from.TextId, ToTextId = to.TextId, Relation = LinkRelation.Renders,
-            Method = method, Confidence = 0.98, Provenance = new() { Source = source },
-            Fingerprint = LinkShape.Of([from.Id], [to.Id]) };
-        link.Words.Add(new() { Word = from, Side = LinkSide.From });
-        link.Words.Add(new() { Word = to, Side = LinkSide.To });
-        link.Claims.Add(new() { Method = method, Confidence = 0.98, Provenance = link.Provenance });
-        db.Links.Add(link);
-    }
-
-    private void AddCarriedAnnotations()
-    {
-        var satan = new Entity { Slug = "satan", Name = "Satan", SourceId = "satan", Source = "a test", Kind = EntityKind.Person };
-        db.Entities.Add(satan);
-        foreach (var ruling in Satanic.DistinctBy(r => r.From))
-        {
-            var note = $"through {ruling.To.Text} word {words[ruling.To].Id}, linked by aligner";
-            db.WordEntities.Add(new() { Word = words[ruling.From], Entity = satan, Method = LinkMethod.StrongNumber,
-                Confidence = 0.9702, Source = EntityAnnotationLoader.GreekResolution, Note = note,
-                Claims = [new() { Method = LinkMethod.StrongNumber, Confidence = 0.833,
-                    Source = EntityAnnotationLoader.GreekResolution, Note = note },
-                    new() { Method = LinkMethod.StrongNumber, Confidence = 0.9702,
-                    Source = EntityAnnotationLoader.VerseList, Note = note }] });
-        }
-        foreach (var word in words.Values.Where(w => w.Surface is "Σατανᾶν" or "Σατανᾷ" or "σατανα" or "сатану" or "сатане"))
-            db.WordEntities.Add(new() { Word = word, Entity = satan, Method = LinkMethod.StrongNumber,
-                Confidence = 0.99, Source = EntityAnnotationLoader.GreekResolution, Note = "independent seed" });
-        foreach (var slug in new[] { "jesus", "anointed" })
-        {
-            var entity = new Entity { Slug = slug, Name = slug, SourceId = slug, Source = "a test",
-                Kind = slug == "jesus" ? EntityKind.Person : EntityKind.Title };
-            db.Entities.Add(entity);
-            db.WordEntities.Add(new() { Word = words[new("RUSV", "ROM 16:20", 14, "Христа")], Entity = entity,
-                Method = LinkMethod.RuleBased, Confidence = 0.9702, Source = "the independently resolved title/bearer",
-                Note = "independent seed", Claims = [new() { Method = LinkMethod.RuleBased, Confidence = 0.9702,
-                    Source = "the independently resolved title/bearer", Note = "independent seed" }] });
-        }
-        db.SaveChanges();
-    }
 }

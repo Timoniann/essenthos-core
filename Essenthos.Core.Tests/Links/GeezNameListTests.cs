@@ -75,20 +75,17 @@ public sealed class GeezNameListTests : IDisposable
     /// <summary>
     /// ወማዴ is MD and so is Μαδοί, and nothing of the pair is linked to either: they are paired. ወያጎግ
     /// stays unlinked, because its letters spell only a G and Μαγώγ is MG: the verse puts it where
-    /// Magog stands, and no letter of it says so. Every link already there stays.
+    /// Magog stands, and no letter of it says so. No link already there is contradicted, and the pass writes nothing.
     /// </summary>
     [Fact]
     public async Task MadaiIsPairedAndMagogIsLeftWhereItsLettersCannotSayIt()
     {
         var before = TenTwoAsItStands();
 
-        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)> { (1, 10) }, null, apply: true);
+        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)> { (1, 10) }, null);
 
-        report.Should().Contain("Withdrew 0 links");
-        var links = await Links(10, 2);
-        links.Should().HaveCount(before + 1);
-        links.Should().Contain((5, 7, NameLists.Settled));
-        links.Should().NotContain(link => link.Geez == 4);
+        Chapters(report).Should().Contain(", 0 contradict it").And.Contain("and 1 settled pairs are linked by nothing");
+        (await Links(10, 2)).Should().HaveCount(before);
     }
 
     /// <summary>
@@ -103,9 +100,9 @@ public sealed class GeezNameListTests : IDisposable
         FourteenFiveAsItStands();
         var before = await Links(14, 5);
 
-        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)> { (1, 14) }, null, apply: true);
+        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)> { (1, 14) }, null);
 
-        report.Should().Contain("Withdrew 0 links");
+        Chapters(report).Should().Contain(", 0 contradict it").And.Contain("and 0 settled pairs are linked by nothing");
         (await Links(14, 5)).Should().BeEquivalentTo(before);
         NameLists.Skeleton("በአስጣሮስ", "gez").Should().Be("STRS");
         NameLists.Skeleton("Ἀσταρὼθ").Should().Be("STRT");
@@ -123,10 +120,9 @@ public sealed class GeezNameListTests : IDisposable
             Link(1, verse, 1, 1);
         }
 
-        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)>(), null, apply: true);
+        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)> { (1, 1) }, null);
 
-        report.Should().Contain("Withdrew 0 links");
-        (await Links(1, 6)).Should().BeEmpty();
+        Chapters(report).Should().Contain(", 0 contradict it").And.Contain("and 0 settled pairs are linked by nothing");
     }
 
     /// <summary>The same with the readings below the bar: four against ἀπό may be a misplaced name.</summary>
@@ -138,24 +134,14 @@ public sealed class GeezNameListTests : IDisposable
             Link(1, verse, 1, 1);
         }
 
-        await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)>(), null, apply: true);
+        var report = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)> { (1, 1) }, null);
 
-        (await Links(1, 6)).Should().BeEquivalentTo([(2, 3, NameLists.Settled)]);
+        Chapters(report).Should().Contain("and 1 settled pairs are linked by nothing");
     }
 
-    /// <summary>A second run finds every name it paired already linked, and writes nothing.</summary>
-    [Fact]
-    public async Task ASecondRunWritesNothing()
-    {
-        TenTwoAsItStands();
-        await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)>(), null, apply: true);
-        var after = await _db.Links.CountAsync();
-
-        var again = await Pass().Run("GEEZ81", "GRCBRENT", new HashSet<(int, int)>(), null, apply: true);
-
-        again.Should().Contain("Withdrew 0 links and wrote 0.");
-        (await _db.Links.CountAsync()).Should().Be(after);
-    }
+    /// <summary>The report's line for the chapters asked for.</summary>
+    private static string Chapters(string report) =>
+        report.Split(Environment.NewLine).Single(line => line.Contains("the chapters asked for", StringComparison.Ordinal));
 
     private int TenTwoAsItStands()
     {

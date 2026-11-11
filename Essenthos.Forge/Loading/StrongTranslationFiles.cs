@@ -39,8 +39,6 @@ internal sealed record StrongTranslationRecord(
 /// </summary>
 internal static class StrongTranslationFiles
 {
-    public const string ConfigurationKey = "Dataset:LexiconTranslationsPath";
-
     /// <summary>Under the corpus sources, in this project's own folder rather than a dataset's.</summary>
     public static readonly string DefaultFolder = Path.Combine("Essenthos", "lexicon");
 

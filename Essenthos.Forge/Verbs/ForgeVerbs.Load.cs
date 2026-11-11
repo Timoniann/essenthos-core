@@ -13,14 +13,6 @@ namespace Essenthos.Core.Verbs;
 
 internal static partial class ForgeVerbs
 {
-    private static async Task<int> LexiconTranslations(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        var outcome = await scope.ServiceProvider.GetRequiredService<StrongTranslationLoader>().Load(forge.Resources);
-        forge.Logger.LogInformation("{Outcome}", outcome);
-        return outcome.NoTranslations || outcome.Refused.Total > 0 ? 1 : 0;
-    }
-
     /// <summary>
     /// VACUUM (ANALYZE) of the tables that need it, or of the ones named. The steps that write millions of
     /// rows end with this themselves; on its own it is for after a step that does not.
@@ -116,29 +108,6 @@ internal static partial class ForgeVerbs
         return Task.FromResult(0);
     }
 
-    /// <summary>Every text's rows of <c>verse_reference</c> filled from its frame file, in the configured corpus or <c>--database</c>.</summary>
-    private static async Task<int> FrameLoad(ForgeRun forge, string[] args)
-    {
-        var store = new ProductStore(forge.Resources);
-        await using var db = OnDatabase(forge, Option(args, "--database"));
-        var loader = new CanonicalFrameLoader(db, forge.Logger is ILogger<CanonicalFrameLoader> typed
-            ? typed
-            : Microsoft.Extensions.Logging.Abstractions.NullLogger<CanonicalFrameLoader>.Instance);
-        var slugs = Slugs(args);
-
-        foreach (var text in await db.Texts.AsNoTracking().OrderBy(t => t.Slug).ToListAsync())
-        {
-            if ((slugs is not null && !slugs.Contains(text.Slug)) || !store.Exists(Loading.Frame.FrameFile.Product(text.Slug)))
-            {
-                continue;
-            }
-
-            Console.WriteLine(await loader.Fill(text, store));
-        }
-
-        return 0;
-    }
-
     /// <summary>The texts named before the first option, or null for every text.</summary>
     private static HashSet<string>? Slugs(string[] args)
     {
@@ -222,23 +191,5 @@ internal static partial class ForgeVerbs
 
         return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
             .UseNpgsql(connection.ConnectionString, npgsql => npgsql.CommandTimeout(1800)).Options);
-    }
-
-    private static async Task<int> VerseLinks(ForgeRun forge, string[] args)
-    {
-        using var scope = forge.Scope();
-        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
-        return 0;
-    }
-
-    /// <summary>
-    /// What each text was translated from, revised from or shares a tradition with, made to match the
-    /// list kept by hand. The load does this once the texts are in; this is that step alone.
-    /// </summary>
-    private static async Task<int> Relations(ForgeRun forge, string[] args)
-    {
-        using var relationScope = forge.Scope();
-        Console.WriteLine(await relationScope.ServiceProvider.GetRequiredService<TextRelationLoader>().Load());
-        return 0;
     }
 }
