@@ -48,10 +48,14 @@ internal static class ImageChoices
     /// The candidates with the owner's choices applied: a hidden one left out and counted, a caption
     /// replaced, with the list's translations of the caption it replaces dropped, and a picture he
     /// chose to lead with made the primary of its kind for its entity — the one it was primary before
-    /// joining the gallery — and moved ahead so it is the first of them.
+    /// joining the gallery — and moved ahead so it is the first of them. A choice names the picture by the address it
+    /// is listed under or by the record it belongs to now (<paramref name="recordSlugs"/>): the console shows a picture
+    /// listed under a record since folded into another on the page of the record it became part of, and keys the
+    /// owner's word by that page (jeshua-3's portrait hidden on joshua-4's page, 2026-11-11).
     /// </summary>
     public static List<EntityImageLoader.Candidate> Apply(
-        IReadOnlyList<EntityImageLoader.Candidate> candidates, ImageChoiceFile choices, out int hidden)
+        IReadOnlyList<EntityImageLoader.Candidate> candidates, ImageChoiceFile choices, out int hidden,
+        IReadOnlyDictionary<int, string>? recordSlugs = null)
     {
         var by = new Dictionary<(string, string), ImageChoice>();
         foreach (var choice in choices.Images)
@@ -59,14 +63,19 @@ internal static class ImageChoices
             by[(choice.Entity, Normal(choice.File))] = choice;
         }
 
-        var chosen = by.Where(c => c.Value.Primary == true && c.Value.Hidden != true).Select(c => c.Key).ToHashSet();
-        var leading = candidates.Where(c => chosen.Contains((c.Slug, c.File))).Select(c => (c.EntityId, c.Kind)).ToHashSet();
+        ImageChoice? Find(EntityImageLoader.Candidate candidate) =>
+            by.TryGetValue((candidate.Slug, candidate.File), out var listed) ? listed
+            : recordSlugs?.GetValueOrDefault(candidate.EntityId) is { } slug && by.TryGetValue((slug, candidate.File), out var paged) ? paged
+            : null;
+        bool Chosen(EntityImageLoader.Candidate candidate) => Find(candidate) is { Primary: true } c && c.Hidden != true;
+
+        var leading = candidates.Where(Chosen).Select(c => (c.EntityId, c.Kind)).ToHashSet();
 
         hidden = 0;
         var kept = new List<EntityImageLoader.Candidate>(candidates.Count);
         foreach (var candidate in candidates)
         {
-            by.TryGetValue((candidate.Slug, candidate.File), out var choice);
+            var choice = Find(candidate);
             if (choice?.Hidden == true)
             {
                 hidden++;
@@ -76,7 +85,7 @@ internal static class ImageChoices
             var role = candidate.Role;
             if (leading.Contains((candidate.EntityId, candidate.Kind)))
             {
-                role = chosen.Contains((candidate.Slug, candidate.File)) ? EntityImageLoader.Primary : EntityImageLoader.Gallery;
+                role = Chosen(candidate) ? EntityImageLoader.Primary : EntityImageLoader.Gallery;
             }
 
             var own = !string.IsNullOrWhiteSpace(choice?.Caption);
@@ -90,7 +99,7 @@ internal static class ImageChoices
             });
         }
 
-        return kept.OrderBy(c => chosen.Contains((c.Slug, c.File)) ? 0 : 1).ToList();
+        return kept.OrderBy(c => Chosen(c) ? 0 : 1).ToList();
     }
 
     /// <summary>The pictures the owner chose to lead with, by slug and file, leaving out any he also hid.</summary>
