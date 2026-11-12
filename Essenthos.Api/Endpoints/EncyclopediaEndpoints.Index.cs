@@ -26,6 +26,7 @@ internal static partial class EncyclopediaEndpoints
             AppDbContext db,
             IServiceScopeFactory scopes,
             SiteSettingsFile settings,
+            [FromServices] PlacePictures? places,
             CancellationToken cancellationToken) =>
         {
             if (sort is { Length: > 0 } && !Sorts.Contains(sort))
@@ -110,7 +111,7 @@ internal static partial class EncyclopediaEndpoints
 
             var described = await describing;
             var pictured = await ImageEndpoints.Leading(
-                db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages));
+                db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages), places, words);
             var undescribed = named
                 .Where(row => !described.ContainsKey(row.Slug)
                               && page.First(e => e.Slug == row.Slug) is { Distinguisher: null, LocalDistinguisher: null })

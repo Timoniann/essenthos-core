@@ -9,6 +9,7 @@ source page and licence, because no two pictures here need share them.
 | `openbible/` | OpenBible.info's 512x512 place thumbnails | per picture, from its `image.jsonl`; see `../OpenBible/LICENCE.md` | `scripts/fetch-images.ps1` |
 | `commons/` | public works chosen for people and things, listed in `Essenthos.Forge/Loading/Encyclopedia/PublicImages.json` | per entry, read on each file's Wikimedia Commons page | `scripts/fetch-images.ps1` |
 | `generated/` | our own identity portraits, one per person, with a `manifest.json` | ours; the manifest states the credit and licence shown | by hand |
+| `places/` | a picture of each place drawn from the site's own map, one per language (`places/<eng\|ukr\|deu\|spa>/<slug>.webp`, 1024x1536), with a `manifest.json` | ours, drawn from OpenStreetMap (ODbL 1.0), OpenBible.info (CC BY 4.0), Natural Earth (public domain) and Terrain Tiles (public domain, credit asked); shown with that credit | `scripts/place-pictures/render.mjs` in essenthos-web (avioniq action `place-pictures`) |
 
 ## The rules every picture is loaded under
 
@@ -23,6 +24,11 @@ source page and licence, because no two pictures here need share them.
   of the words the text uses of God, is refused by the loader whoever listed it.
 - **Places are real, present-day photographs** or satellite views, never paintings of how a place
   might have looked.
+- **A place's map is ours and is credited.** The pictures in `places/` are drawn from the site's own
+  map, so they are not rows of `entity_image`: the API reads the folder and leads a place's pictures
+  with its map in the reader's language (English where there is none), under the map's credit:
+  © OpenStreetMap contributors (ODbL 1.0, for the coast close up and the outlines it draws), OpenBible.info
+  (CC BY 4.0, the places and their outlines), Natural Earth and Terrain Tiles (SRTM, GMTED2010, ETOPO1).
 
 ## The curated public works
 
@@ -58,3 +64,11 @@ Drop the file into `generated/` and list it in `generated/manifest.json`:
 from 0 to 1 across and down, so a small crop keeps it. `glory` marks the picture of God's glory described
 above, and is read on no other entry. Then
 `dotnet run --project Essenthos.Forge -c Release -- images`.
+
+## The places' maps
+
+`places/manifest.json` lists every picture with the digest of what it was drawn from (the place's
+sites, the view, the borders, places and names drawn, the picture's version and the map's own files)
+and the names it prints. The renderer draws only the pictures whose digest moved, so run it after
+every corpus build that moved places or regions; `all` draws every one. Neither the manifest nor the
+pictures are edited by hand.

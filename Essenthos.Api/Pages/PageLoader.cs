@@ -74,7 +74,8 @@ internal sealed class PageLoader(
     ICanonIndex canon,
     SiteSettingsFile settings,
     PageCache cache,
-    DownloadsCatalogue downloads)
+    DownloadsCatalogue downloads,
+    PlacePictures? places = null)
 {
     /// <summary>How many of a record's verses its page links to; the page itself lists them all.</summary>
     private const int VersesNamed = 8;
@@ -311,7 +312,7 @@ internal sealed class PageLoader(
             tally.References,
             mentions)
         {
-            Image = await Picture(entity.Slug, cancellationToken),
+            Image = await Picture(entity.Slug, language.Corpus, cancellationToken),
             Coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null,
             SameAs = await SameAs(entity.Id, cancellationToken),
         });
@@ -346,7 +347,7 @@ internal sealed class PageLoader(
         await Entity(address.Slug!, address.Language, cancellationToken) is { } entity
             ? PageViews.FamilyTree(
                 address.Language, wording, $"/family-tree?person={Uri.EscapeDataString(entity.Slug)}", entity.Shown,
-                await Picture(entity.Slug, cancellationToken))
+                await Picture(entity.Slug, address.Language.Corpus, cancellationToken))
             : null;
 
     private async Task<PageContent?> Event(PageAddress address, PageWording wording, CancellationToken cancellationToken)
@@ -375,7 +376,7 @@ internal sealed class PageLoader(
         if (found.Entity is { } slug && await Entity(slug, language, cancellationToken) is { } entity)
         {
             links.Add((PageAddress.RecordPath(entity.Kind, entity.Slug), entity.Shown));
-            image = await Picture(entity.Slug, cancellationToken);
+            image = await Picture(entity.Slug, language.Corpus, cancellationToken);
         }
 
         if (found is { CanonicalBook: { } book, CanonicalChapter: { } chapter, CanonicalVerse: { } verse })
@@ -649,8 +650,8 @@ internal sealed class PageLoader(
         return new ShownEntity(entity.Id, entity.Slug, entity.Kind, string.IsNullOrEmpty(local) ? name : local, entity.Distinguisher);
     }
 
-    private async Task<string?> Picture(string slug, CancellationToken cancellationToken) =>
-        (await ImageEndpoints.Leading(db, [slug], cancellationToken, settings.Is(SiteSettings.GeneratedImages)))
+    private async Task<string?> Picture(string slug, string language, CancellationToken cancellationToken) =>
+        (await ImageEndpoints.Leading(db, [slug], cancellationToken, settings.Is(SiteSettings.GeneratedImages), places, language))
         .GetValueOrDefault(slug)?.Url;
 
     private static string TextName(PageWording wording, ReaderText text) =>
