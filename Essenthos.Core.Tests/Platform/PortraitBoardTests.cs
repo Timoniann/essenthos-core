@@ -6,6 +6,7 @@ using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Products;
 using System.Text.Json.Nodes;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Xunit;
 
@@ -63,6 +64,7 @@ public sealed class PortraitBoardTests : IDisposable
         });
         _db.EntityImages.Add(Image(david.Id, "public", "commons/david.jpg"));
         await _db.SaveChangesAsync();
+        await AsTheBuildLeavesIt();
 
         File.WriteAllText(Path.Combine(_paths.Generated, "david.webp"), "a portrait");
         File.WriteAllText(Path.Combine(_paths.Generated, "glory.webp"), "light");
@@ -391,6 +393,14 @@ public sealed class PortraitBoardTests : IDisposable
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();
+        if (sourceId?.StartsWith("person:", StringComparison.Ordinal) == true)
+        {
+            _db.RecordExternalIds.Add(new RecordExternalId
+            {
+                EntityId = entity.Id, Dataset = "bibledata", ExternalId = sourceId, Relation = RecordExternalRelations.SameAs,
+            });
+        }
+
         for (var verse = 1; verse <= verses; verse++)
         {
             _db.EntityVerses.Add(new EntityVerse
@@ -405,6 +415,13 @@ public sealed class PortraitBoardTests : IDisposable
 
         return entity;
     }
+
+    /// <summary>
+    /// The record's dataset columns gone, as a database built from the record files has them: what a dataset
+    /// calls a record is read from <see cref="RecordExternalId"/> alone.
+    /// </summary>
+    private Task AsTheBuildLeavesIt() => _db.Database.ExecuteSqlRawAsync(
+        "ALTER TABLE entity DROP COLUMN source, DROP COLUMN source_id, DROP COLUMN open_bible_id");
 
     private static EntityImage Image(int entity, string kind, string file) => new()
     {

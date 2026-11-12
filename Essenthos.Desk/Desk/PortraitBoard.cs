@@ -371,7 +371,8 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
                     .FirstOrDefault(),
                 e.Distinguisher,
                 e.Sex,
-                e.SourceId,
+                e.Slug == DivineRecords.HolySpiritSlug
+                || e.ExternalIds.Any(x => x.ExternalId.StartsWith(DivineRecords.GodSourcePrefix)),
                 e.Verses.Select(v => new { v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse }).Distinct().Count(),
                 e.Images.Any(i => i.Kind == Public),
                 e.Images.Any(i => i.Kind == Generated)))
@@ -409,8 +410,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
     {
         var listed = Listed(manifest, row.Slug).ToList();
         var brief = BriefOf(briefs, row.Slug);
-        var neverPictured = DivineRecords.Contains(row.SourceId);
-        var status = StatusOf(brief, listed, neverPictured);
+        var status = StatusOf(brief, listed, row.Divine);
         var question = brief?["owner_decision_needed"] is JsonValue asked && asked.TryGetValue<string>(out var text)
                        && !string.IsNullOrWhiteSpace(text)
             ? text
@@ -427,7 +427,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
             listed.Any(e => OnDisk(File(e))),
             row.Generated,
             brief is not null,
-            neverPictured,
+            row.Divine,
             listed.Any(Glory),
             status,
             question,
@@ -519,7 +519,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
         string? LocalName,
         string? Distinguisher,
         string? Sex,
-        string SourceId,
+        bool Divine,
         int Verses,
         bool Public,
         bool Generated);
