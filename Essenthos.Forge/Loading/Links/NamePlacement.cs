@@ -254,10 +254,16 @@ internal static class NamePlacement
             return false;
         }
 
-        var elsewhere = byFamily.ToDictionary(pair => pair.Key, pair => pair.Value.Count(at => at != verse));
-        var total = elsewhere.Values.Sum();
+        static int Elsewhere(HashSet<int> verses, int verse) => verses.Count - (verses.Contains(verse) ? 1 : 0);
+        var total = 0;
+        foreach (var verses in byFamily.Values)
+        {
+            total += Elsewhere(verses, verse);
+        }
+
         return total > 0 && target.Families.Any(family =>
-            elsewhere.TryGetValue((family, target.Spelling), out var count) && count > 0 && count >= SpellingShare * total);
+            byFamily.TryGetValue((family, target.Spelling), out var verses) && Elsewhere(verses, verse) is > 0 and var count
+            && count >= SpellingShare * total);
     }
 
     private sealed record Candidate(

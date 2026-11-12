@@ -147,6 +147,8 @@ internal sealed class ProductTexts(ProductStore store)
 {
     private readonly ConcurrentDictionary<string, Lazy<ProductText>> _texts = new(StringComparer.Ordinal);
 
+    private readonly ConcurrentDictionary<string, Lazy<object>> _shared = new(StringComparer.Ordinal);
+
     public ProductStore Store => store;
 
     public ProductText this[string slug] =>
@@ -154,6 +156,13 @@ internal sealed class ProductTexts(ProductStore store)
 
     /// <summary>Whether the store holds both products a producer reads of a text.</summary>
     public bool Holds(string slug) => ProductText.Products(slug).All(store.Exists);
+
+    /// <summary>
+    /// What the pairs of a run read alike, made once for all of them: the original's side of a reference shared by every
+    /// translation's pair. The value is shared between threads, so nobody may change it.
+    /// </summary>
+    public T Shared<T>(string key, Func<T> make) where T : class =>
+        (T)_shared.GetOrAdd(key, _ => new Lazy<object>(() => make())).Value;
 }
 
 /// <summary>

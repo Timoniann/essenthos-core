@@ -60,6 +60,6 @@ internal static class PairLinkFiles
     }
 
     /// <summary>The ids of a row's keys a text holds; a key it no longer holds is left out.</summary>
-    public static List<int> Words(string keys, Dictionary<string, int> ids) =>
+    public static List<int> Words(string keys, IReadOnlyDictionary<string, int> ids) =>
         [.. MappingText.Split(keys).Select(key => ids.TryGetValue(key, out var id) ? id : -1).Where(id => id >= 0)];
 }

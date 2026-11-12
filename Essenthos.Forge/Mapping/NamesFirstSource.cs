@@ -108,11 +108,12 @@ internal sealed class NamesFirstSource : IPairSource
         var policy = NamePolicy.Default.For(from.Language);
         var lettered = Versification(store, fromText) == Versification(store, toText);
         var source = NamedWords.Read(from, lettered);
-        var target = NamedWords.Read(to, lettered);
-        var records = Records.Read(store);
-        var originals = Originals(store, to, records);
-        var named = Named(store, from, records);
-        var (linkedSources, linkedTargets) = Linked(store, pair, from, to);
+        var target = texts.Shared($"named words {toText} {lettered}", () => NamedWords.Read(to, lettered));
+        var records = texts.Shared("names-first records", () => Records.Read(store));
+        var (fromIds, toIds) = (PairLinkFiles.Ids(from), texts.Shared($"key ids {toText}", () => PairLinkFiles.Ids(to)));
+        var originals = texts.Shared($"names-first originals {toText}", () => Originals(store, to, records, toIds));
+        var named = Named(store, from, records, fromIds);
+        var (linkedSources, linkedTargets) = Linked(store, pair, fromIds, toIds);
         var capitalised = Capitalised(from);
 
         var verses = Verses(source, target, from, to, originals, named, capitalised);
@@ -235,10 +236,9 @@ internal sealed class NamesFirstSource : IPairSource
     /// The original's words that name a person, a place or a people, from its settled names (<see cref="NamesFirstPass"/> has
     /// why a common noun and the אֲדֹנָי beside יְהוִה are weighed but never placed).
     /// </summary>
-    internal static Dictionary<long, Original> Originals(ProductStore store, ProductText to, Records records)
+    internal static Dictionary<long, Original> Originals(ProductStore store, ProductText to, Records records, IReadOnlyDictionary<string, int> ids)
     {
         var byWord = new Dictionary<long, List<int>>();
-        var ids = PairLinkFiles.Ids(to);
         if (store.Exists(NameProducts.Settled(to.Slug)))
         {
             using var reader = store.Open(NameProducts.Settled(to.Slug), SettledName.Schema(to.Slug));
@@ -312,12 +312,11 @@ internal sealed class NamesFirstSource : IPairSource
     }
 
     /// <summary>The translation's words its verses say name someone: the name-consensus pass's rows, folded records read as the one they went into.</summary>
-    internal static Dictionary<long, IReadOnlySet<int>> Named(ProductStore store, ProductText from, Records records)
+    internal static Dictionary<long, IReadOnlySet<int>> Named(ProductStore store, ProductText from, Records records, IReadOnlyDictionary<string, int> ids)
     {
         var byWord = new Dictionary<long, List<int>>();
         if (store.Exists(NameProducts.Consensus(from.Slug)))
         {
-            var ids = PairLinkFiles.Ids(from);
             var folds = Folds(store);
             using var reader = store.Open(NameProducts.Consensus(from.Slug), ConsensusName.Schema(from.Slug));
             foreach (var row in reader.Rows())
@@ -363,10 +362,9 @@ internal sealed class NamesFirstSource : IPairSource
     }
 
     /// <summary>The words of either text some link of the pair's earlier method files names.</summary>
-    private static (HashSet<long> Sources, HashSet<long> Targets) Linked(ProductStore store, string pair, ProductText from, ProductText to)
+    private static (HashSet<long> Sources, HashSet<long> Targets) Linked(
+        ProductStore store, string pair, IReadOnlyDictionary<string, int> fromIds, IReadOnlyDictionary<string, int> toIds)
     {
-        var fromIds = PairLinkFiles.Ids(from);
-        var toIds = PairLinkFiles.Ids(to);
         var (sources, targets) = (new HashSet<long>(), new HashSet<long>());
         foreach (var method in Before)
         {
