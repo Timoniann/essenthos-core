@@ -11,6 +11,9 @@ namespace Essenthos.Core.Conversion;
 /// whose glosses agree, and, between two such words, one for one where both sides hold as many words as
 /// each other. Where they do not, a word is paired only by an agreeing gloss, and one left unpaired keeps
 /// no number. No frame is needed, because neither side is read by verse address.
+/// The divine name is numbered by its own pointing, not by the file: Strong's H3069 is the name pointed with the
+/// vowels of Elohim (a hireq under the vav), read so where it stands beside אֲדֹנָי; every other spelling is H3068.
+/// The file gives H3069 to several hundred words pointed to be read Adonai, and H3068 to some pointed as Elohim.
 /// </summary>
 internal sealed class BhsaStrongNumbers : ITextStage
 {
@@ -46,8 +49,34 @@ internal sealed class BhsaStrongNumbers : ITextStage
             }
         }
 
+        var pointed = 0;
+        foreach (var word in words)
+        {
+            if (DivineName(word.Lemma, word.Surface) is { } number && word.Strong != number)
+            {
+                word.Strong = number;
+                pointed++;
+            }
+        }
+
         text.Provenance.Add(new("strong", $"{Mapping} (Open Hebrew Bible, CC BY-NC 4.0): {numbered} words by running number"));
+        text.Provenance.Add(new("strong-pointed", $"{pointed} numbers of the divine name set by its pointing (H3069 pointed as Elohim, else H3068)"));
     }
+
+    /// <summary>The number of a word of the divine name by its pointing: H3069 with a hireq under the vav, else H3068; null for any other lemma.</summary>
+    public static string? DivineName(string? lemma, string surface)
+    {
+        if (lemma is null || Consonants(lemma) != "יהוה")
+        {
+            return null;
+        }
+
+        var vav = surface.LastIndexOf('ו');
+        var he = surface.LastIndexOf('ה');
+        return vav >= 0 && he > vav && surface.AsSpan(vav + 1, he - vav - 1).Contains('ִ') ? "H3069" : "H3068";
+    }
+
+    private static string Consonants(string word) => string.Concat(word.Where(c => c is >= 'א' and <= 'ת'));
 
     private static IEnumerable<(int Word, int Entry)> Pair(List<ConvertedWord> words, List<(string? Strong, string Gloss)> entries)
     {

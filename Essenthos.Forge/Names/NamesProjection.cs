@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 
@@ -17,7 +18,7 @@ namespace Essenthos.Core.Names;
 internal sealed partial class NamesProjection
 {
     /// <summary>Raised with any change to what the projection writes or how; a product made by another version is made again.</summary>
-    public const string Version = "2";
+    public const string Version = "3";
 
     public const string VersionNote = "names-version";
 
@@ -170,7 +171,8 @@ internal sealed partial class NamesProjection
     /// <param name="Sex">The sex a pronoun states, where it states one.</param>
     /// <param name="Verse">The verse's place in the text's print order.</param>
     /// <param name="Form">The form words are counted by: the normalised form, or the bare surface where the text has none.</param>
-    internal sealed record Word(WordKey Key, string Surface, bool Cased, bool WrittenAsName, bool Pronoun, bool NeverAName, bool Possessive, string? Sex, int Verse, string Form);
+    /// <param name="Joined">The word before it ends in a hyphen: a part of a name the text writes as two words (<em>Ramoth–gilead</em>).</param>
+    internal sealed record Word(WordKey Key, string Surface, bool Cased, bool WrittenAsName, bool Pronoun, bool NeverAName, bool Possessive, string? Sex, int Verse, string Form, string? Strong = null, bool Joined = false);
 
     /// <summary>What a name was not carried for, by (own key, record): the rule that refused it.</summary>
     internal static class Refusals
@@ -182,6 +184,7 @@ internal sealed partial class NamesProjection
         public const string Floor = "below-the-floor";
         public const string Suppressed = "suppressed";
         public const string Foreign = "another-record's-name";
+        public const string Several = "a-link-of-several-people";
     }
 
     /// <param name="Names">The text's names, sorted by key and record.</param>
@@ -277,6 +280,8 @@ internal sealed partial class NamesProjection
         var bookBases = NameBases.Of(text, Bases);
         var candidates = new Dictionary<(string Own, string Record), Candidate>();
         var linkedTo = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+        var ofSeveral = new HashSet<(string Own, string Record)>();
+        var confirmed = new HashSet<(string Own, string Record)>();
         var priorities = bookBases.Count == 0 ? 0 : bookBases.Values.Max(b => b.Count);
         for (var priority = 0; priority < priorities; priority++)
         {
@@ -346,21 +351,28 @@ internal sealed partial class NamesProjection
                         continue;
                     }
 
-                    var heads = Heads(mineKeys, words);
-                    foreach (var key in mineKeys.Where(k => !heads.Contains(k)))
+                    var (heads, nameHeads) = Heads(mineKeys, words);
+                    foreach (var key in mineKeys)
                     {
                         var why = words.TryGetValue(key, out var word) && word.NeverAName ? Refusals.NeverAName : Refusals.NotHead;
-                        foreach (var (_, name) in named)
+                        foreach (var (_, name) in named.Where(n => !(n.Name.Role == NameRoles.Name ? nameHeads : heads).Contains(key)))
                         {
                             refused.TryAdd((key, name.Record), why);
                         }
                     }
 
                     var link = row.Confidence ?? 1.0;
-                    foreach (var head in heads)
+                    var several = named.Where(n => n.Name.Role == NameRoles.Name).Select(n => n.Name.Record).Distinct(StringComparer.Ordinal).Count() > 1
+                                  && mineKeys.Count(k => !words.TryGetValue(k, out var w) || !w.NeverAName) > 1;
+                    foreach (var head in heads.Union(nameHeads))
                     {
-                        foreach (var (their, name) in named)
+                        foreach (var (their, name) in named.Where(n => (n.Name.Role == NameRoles.Name ? nameHeads : heads).Contains(head)))
                         {
+                            if (name.Role == NameRoles.Name)
+                            {
+                                (several ? ofSeveral : confirmed).Add((head, name.Record));
+                            }
+
                             var through = $"{reference} {their}";
                             if (!candidates.TryGetValue((head, name.Record), out var candidate))
                             {
@@ -376,6 +388,16 @@ internal sealed partial class NamesProjection
             }
         }
 
+        // A link of several words on both sides naming several people says that they are there, not which word is which, so
+        // a person goes to a word only where another link joins it to him (RP2018's variant units: Martha and Mary, Aquila
+        // and Priscilla).
+        foreach (var key in ofSeveral.Where(k => candidates.ContainsKey(k) && !confirmed.Contains(k)).ToList())
+        {
+            candidates.Remove(key);
+            refused[key] = Refusals.Several;
+        }
+
+        Unpaired(candidates, words);
         foreach (var (key, candidate) in candidates.Where(c => Worth(c.Value.Link, c.Value.Settled) < Rules.FloorOver(c.Value.LinkMethod)).ToList())
         {
             candidates.Remove(key);
@@ -416,17 +438,60 @@ internal sealed partial class NamesProjection
 
     private static double Worth(double link, SettledName name) => link * (name.Confidence ?? 1.0);
 
+    /// <summary>
+    /// A repeated Strong number paired in the order both texts write it (<see cref="StrongNumberMatch.PairedInOrder"/>) is worth
+    /// less than a number written once, because the occurrences could be paired the other way round. Where every word of the
+    /// verse tagged with the number takes the same records, either pairing names the same people, so the name over such a
+    /// link is worth what it is over an unambiguous match (Matthew 1:2: <em>Abraham begat Isaac; and Isaac begat Jacob</em>).
+    /// </summary>
+    private static void Unpaired(Dictionary<(string Own, string Record), Candidate> candidates, IReadOnlyDictionary<string, Word> words)
+    {
+        static bool Paired(double link) => Math.Abs(link - StrongNumberMatch.PairedInOrder) < 1e-9
+                                           || Math.Abs(link - (StrongNumberMatch.PairedInOrder - StrongNumberMatch.ResolvedNumber)) < 1e-9;
+
+        var paired = candidates.Where(c => c.Value.LinkMethod == MappingMethods.Strong && Paired(c.Value.Link)
+                                           && words.TryGetValue(c.Key.Own, out var w) && w.Strong is not null)
+            .Select(c => c.Key).ToList();
+        if (paired.Count == 0)
+        {
+            return;
+        }
+
+        var recordsOf = candidates.Keys.GroupBy(k => k.Own, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(k => k.Record).Order(StringComparer.Ordinal).ToList(), StringComparer.Ordinal);
+        var verses = paired.Select(k => words[k.Own].Verse).ToHashSet();
+        var tagged = words.Values.Where(w => w.Strong is not null && verses.Contains(w.Verse))
+            .GroupBy(w => (w.Verse, w.Strong!))
+            .ToDictionary(g => g.Key, g => g.Select(w => w.Key.Own).ToList());
+        foreach (var key in paired)
+        {
+            var word = words[key.Own];
+            var same = tagged[(word.Verse, word.Strong!)];
+            var records = recordsOf[key.Own];
+            if (same.Count > 1 && same.All(own => recordsOf.TryGetValue(own, out var theirs) && theirs.SequenceEqual(records, StringComparer.Ordinal)))
+            {
+                var candidate = candidates[key];
+                candidate.Link = Math.Round(candidate.Link + StrongNumberMatch.Unambiguous - StrongNumberMatch.PairedInOrder, 2);
+            }
+        }
+    }
+
     private static int Order(ProjectedName a, ProjectedName b) =>
         a.Own.CompareTo(b.Own) is var order && order != 0 ? order : string.CompareOrdinal(a.Record, b.Record) is var record && record != 0
             ? record : string.CompareOrdinal(a.Origin, b.Origin);
 
-    /// <summary>The words of a link's side of the text that take the names of its other side (<see cref="NameRules.Head"/>).</summary>
-    private HashSet<string> Heads(List<string> keys, IReadOnlyDictionary<string, Word> words)
+    /// <summary>
+    /// The words of a link's side of the text that take the names of its other side (<see cref="NameRules.Head"/>), and those that
+    /// take a person's or a place's name: where the rule adds the words written as names and the side has one, those alone, so
+    /// the last word of <em>to Moses in marriage</em> is not Moses.
+    /// </summary>
+    private (HashSet<string> All, HashSet<string> Names) Heads(List<string> keys, IReadOnlyDictionary<string, Word> words)
     {
         var eligible = keys.Where(k => !words.TryGetValue(k, out var w) || !w.NeverAName).ToList();
         if (eligible.Count == 0 || Rules.HeadRule == NameRules.HeadAll)
         {
-            return new HashSet<string>(eligible, StringComparer.Ordinal);
+            var all = new HashSet<string>(eligible, StringComparer.Ordinal);
+            return (all, all);
         }
 
         var head = eligible[^1];
@@ -437,12 +502,24 @@ internal sealed partial class NamesProjection
         }
 
         var heads = new HashSet<string>([head], StringComparer.Ordinal);
-        if (Rules.HeadRule == NameRules.HeadLastAndCapitals)
+        if (Rules.HeadRule != NameRules.HeadLastAndCapitals)
         {
-            heads.UnionWith(eligible.Where(k => words.TryGetValue(k, out var w) && w.WrittenAsName && !w.Pronoun));
+            return (heads, heads);
         }
 
-        return heads;
+        var capitals = eligible.Where(k => words.TryGetValue(k, out var w) && (w.WrittenAsName || w.Joined) && !w.Pronoun).ToHashSet(StringComparer.Ordinal);
+        heads.UnionWith(capitals.Where(k => words[k].WrittenAsName));
+        if (!capitals.Any(k => words[k].WrittenAsName))
+        {
+            return (heads, heads);
+        }
+
+        if (words.TryGetValue(head, out var final) && final.Surface.TrimStart('\'', '’', '‘', '"', '“', '«', '(', '[') is { Length: > 0 } letters && char.IsUpper(letters[0]))
+        {
+            capitals.Add(head);
+        }
+
+        return (heads, capitals);
     }
 
     /// <summary>The records a capitalised pronoun in the middle of a sentence may show.</summary>
@@ -670,22 +747,29 @@ internal sealed partial class NamesProjection
             }
 
             var writtenAsName = followsOpenSentence && capital.Length > 0 && char.IsUpper(capital[0]);
+            var afterApostrophe = previous is not null && previous.Key.Verse == word.Key.Verse && EndsInApostrophe(previous.Trailer);
             words[word.Key.Own] = new Word(
                 word.Key,
                 word.Surface,
                 cased,
                 writtenAsName,
                 Rules.IsPronoun(language, bare),
-                Rules.IsNeverAName(language, bare, language == "hbo" ? NameRules.PartOfSpeech(word.Morphology) : null, word.Strong, word.Normalised),
-                PossessiveEnding().IsMatch(word.Surface),
+                Rules.IsNeverAName(language, bare, language == "hbo" ? NameRules.PartOfSpeech(word.Morphology) : null, word.Strong, word.Normalised)
+                || (afterApostrophe && bare.Equals("s", StringComparison.OrdinalIgnoreCase)),
+                PossessiveEnding().IsMatch(word.Surface) || EndsInApostrophe(word.Trailer),
                 Rules.SexOf(language, bare),
                 verse,
-                word.Normalised ?? bare);
+                word.Normalised ?? bare,
+                word.Strong,
+                previous is not null && previous.Key.Verse == word.Key.Verse && previous.Trailer.Trim() is "-" or "‐" or "‑" or "–");
             previous = word;
         }
 
         return words;
     }
+
+    /// <summary>A trailer that is an apostrophe: the text writes a possessive's <em>s</em> as a word of its own (<em>wife’ s</em>, <em>LORD 'S</em>).</summary>
+    private static bool EndsInApostrophe(string trailer) => trailer.Trim() is "'" or "’";
 
     /// <summary>Applies the text's overrides to its projected names.</summary>
     private void Override(string text, List<ProjectedName> names, Dictionary<(string, string), string> refused)

@@ -1,0 +1,8 @@
+# producer   by hand: two Levites of Nehemiah 10 in Brenton's Greek named by their own spelling (PRB-1474), applied by forge owner-rows
+# by         Essenthos, the words of Nehemiah 10:11-13 in Brenton's Greek read against the Hebrew of NEH 10:10-12 by claude-opus-5-5 on the project owner's instruction of 2026-11-12
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1474	names/GRCBRENT	remove	16.10:12.2	hashabiah-4	\N	\N	\N	\N	Φελία, Ἀνάν, Μιχά, Ῥοώβ, Ἀσεβίας follow Pelaiah, Hanan, Mica, Rehob, Hashabiah (NEH 10:10-11): Ἀνάν is Hanan
+PRB-1474	names/GRCBRENT	add	16.10:12.2	hanan-6	\N	name	\N	\N	Φελία, Ἀνάν, Μιχά, Ῥοώβ, Ἀσεβίας follow Pelaiah, Hanan, Mica, Rehob, Hashabiah (NEH 10:10-11): Ἀνάν is Hanan
+PRB-1474	names/GRCBRENT	remove	16.10:13.1	zaccur-6	\N	\N	\N	\N	Ἀσεβίας, Ζακχώρ follow Hashabiah (NEH 10:11) and Zaccur (NEH 10:12): Ἀσεβίας is Hashabiah, and Zaccur is the next word
+PRB-1474	names/GRCBRENT	add	16.10:13.1	hashabiah-4	\N	name	\N	\N	Ἀσεβίας, Ζακχώρ follow Hashabiah (NEH 10:11) and Zaccur (NEH 10:12): Ἀσεβίας is Hashabiah, and Zaccur is the next word

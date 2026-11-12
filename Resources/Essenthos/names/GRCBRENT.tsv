@@ -5,7 +5,7 @@
 # edited     by hand from here on: a row is a decision that this word names this record
 # cleaned    2026-11-04 (PRB-1467, TSK-1448): two rows read wrong taken out (Isa 23:1 tarshish-4, Num 1:13 deuel); 29 gaps filled where a translation of it named a record another reference text names
 # cleaned    2026-11-04 (TSK-1448, the owner's answer to Q3): 87 words carrying two persons or places from carries that disagree, each read against its verse: 82 keep one, 4 name neither (2 given the record the word does name), 0 name both, 1 unclear and left as they were; 91 rows taken out; the 82 rows kept were read too and are manual 0.98 now
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 own	record	role	method	confidence	source	note
 1.2:4.13	yhvh	name	strong-number	0.9702	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:4.13, linked by aligner
 1.2:5.22	yhvh	name	rule-based	0.5448831201000001	Essenthos, read from the verses that name it	frozen 2026-11: through GEEZ81 1.2:5.14, linked by aligner
@@ -28244,10 +28244,10 @@ own	record	role	method	confidence	source	note
 16.10:11.6	hodiah-2	name	manual	0.78341952848541	Essenthos, Hebrew names read against their verses by claude-opus-5-5 on the project owner's instruction, 2026-10-14	frozen 2026-11: through BHSA 16.10:11.4, linked by aligner
 16.10:11.7	kelita	name	model-reading	0.9702	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 16.10:11.5, linked by aligner
 16.10:12.1	pelaiah-2	name	manual	0.98	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-11-04 (TSK-1448)	2026-11-04: read against its verse: Φελία, Ἀνάν, Μιχά, Ῥοώβ follow Pelaiah, Hanan, Mica, Rehob (Neh 10:10-11): this word is Pelaiah, neither Hashabiah nor Mica
-16.10:12.2	hashabiah-4	name	manual	0.98	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1	frozen 2026-11: through BHSA 16.10:12.3, linked by aligner
+16.10:12.2	hanan-6	name	manual	\N	Essenthos, the words of Nehemiah 10:11-13 in Brenton's Greek read against the Hebrew of NEH 10:10-12 by claude-opus-5-5 on the project owner's instruction of 2026-11-12	Φελία, Ἀνάν, Μιχά, Ῥοώβ, Ἀσεβίας follow Pelaiah, Hanan, Mica, Rehob, Hashabiah (NEH 10:10-11): Ἀνάν is Hanan
 16.10:12.3	mica-2	name	manual	0.98	Essenthos, on the genealogy review's names several men share, each occurrence read against its verse by claude-sonnet-5 and checked by claude-opus-5-5, 2026-09-28	frozen 2026-11: through BHSA 16.10:12.1, linked by aligner
 16.10:12.4	rehob-2	name	model-reading	0.8610967463407556	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 16.10:12.2, linked by aligner
-16.10:13.1	zaccur-6	name	model-reading	0.9114	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 16.10:13.1, linked by aligner
+16.10:13.1	hashabiah-4	name	manual	\N	Essenthos, the words of Nehemiah 10:11-13 in Brenton's Greek read against the Hebrew of NEH 10:10-12 by claude-opus-5-5 on the project owner's instruction of 2026-11-12	Ἀσεβίας, Ζακχώρ follow Hashabiah (NEH 10:11) and Zaccur (NEH 10:12): Ἀσεβίας is Hashabiah, and Zaccur is the next word
 16.10:13.2	zaccur-6	name	model-reading	0.9114	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 16.10:13.1, linked by aligner
 16.10:13.3	sherebiah-2	name	model-reading	0.9702	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 16.10:13.2, linked by aligner
 16.10:13.4	shebaniah-5	name	manual	0.98	Essenthos, five verses where two men of one name were identified, read in the original by gpt-6.1-sol, a blind judge and claude-fable-5-1, settled by their majority, 2026-10-08	frozen 2026-11: through BHSA 16.10:13.3, linked by aligner

@@ -195,4 +195,119 @@ public sealed class NamesProjectionTests : IDisposable
         ], options => options.WithStrictOrdering());
         NameBases.Of("DRA", bases)[2].Should().Equal("VULGCLEM", "BHSA");
     }
+
+    /// <summary>A store of ENG over BHSA in one verse: ENG's words as <c>surface|trailer|strong</c>, the final's links and BHSA's settled names.</summary>
+    private ProductStore Verse(string[] english, string[] hebrew, FinalRow[] links, SettledName[] settled)
+    {
+        var store = new ProductStore(_resources);
+        Declare(store, "ENG", "eng", "translation");
+        Declare(store, "BHSA", "hbo", "critical-edition");
+        using (var writer = store.Create(TextWord.ProductOf("ENG"), ProductKind.Machine, TextWord.Schema("ENG"), "test", []))
+        {
+            writer.WriteAll(english.Select((word, at) => word.Split('|')).Select((parts, at) => new TextWord(new WordKey("ENG", new VerseKey(2, 3, 4), at + 1),
+                parts[0], parts.Length > 1 ? parts[1] : " ", null, parts.Length > 2 ? parts[2] : null, null, null, parts[0].ToLowerInvariant(), null, false, null, null, null)));
+        }
+
+        Words(store, "BHSA", hebrew);
+        using (var writer = store.Create(MappingProducts.Of("ENG-BHSA", MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "test", []))
+        {
+            writer.WriteAll(links);
+        }
+
+        using (var writer = store.Create(NameProducts.Settled("BHSA"), ProductKind.Hand, SettledName.Schema("BHSA"), "test", []))
+        {
+            writer.WriteAll(settled);
+        }
+
+        using (var writer = store.Create(NameProducts.Rules, ProductKind.Hand, NameRuleRow.Schema, "test", []))
+        {
+            writer.WriteAll(NameRules.Seed().Select(r => r.Rule == NameRules.Head ? r with { Value = NameRules.HeadLastAndCapitals } : r));
+        }
+
+        store.Save();
+        return store;
+    }
+
+    private static FinalRow Strong(long id, string from, string to, double confidence) =>
+        new(id, from, to, "renders", null, true, MappingMethods.Strong, confidence, "test");
+
+    [Fact]
+    public void ARepeatedNumberPairedInOrderCarriesTheNameWhenEveryOccurrenceNamesTheSamePerson()
+    {
+        var store = Verse(
+            ["Abraham| |G11", "begat| |G1080", "Isaac|; |G2464", "and", "Isaac|; |G2464", "begat|; |G1080", "Jacob|; |G2384", "and|; |G1161", "Jacob| |G2384"],
+            ["אַבְרָהָם", "הוֹלִיד", "יִצְחָק", "יִצְחָק", "הוֹלִיד", "יַעֲקֹב", "רְאוּבֵן"],
+            [
+                Strong(1, Key(3), Key(3), 0.7), Strong(2, Key(5), Key(4), 0.7),
+                Strong(3, Key(7), Key(6), 0.7), Strong(4, Key(9), Key(7), 0.7),
+            ],
+            [Settled(3, "isaac", 0.99), Settled(4, "isaac", 0.99), Settled(6, "jacob", 0.99), Settled(7, "reuben", 0.99)]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(3), "isaac"), (Key(5), "isaac")],
+            "both Isaacs name Isaac whichever way the pair goes; the two Jacobs are paired with words naming two people");
+        names.Names.Single(n => n.Own.Own == Key(3)).Confidence.Should().BeApproximately(0.9 * 0.99, 1e-9);
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(7), "jacob"), "below-the-floor"));
+    }
+
+    [Fact]
+    public void APersonOfALinkNamingSeveralGoesOnlyToAWordAnotherLinkJoinsToHim()
+    {
+        var store = Verse(
+            ["to", "Jerusalem", "to", "Bethphage"],
+            ["εἰς", "Ἰεροσόλυμα", "εἰς", "Βηθφαγή"],
+            [Link(1, Key(2), Key(2), 0.95), Link(3, Key(4), Key(4), 0.95), Link(2, $"{Key(1)} {Key(2)} {Key(3)} {Key(4)}", $"{Key(1)} {Key(2)} {Key(3)} {Key(4)}")],
+            [Settled(2, "jerusalem"), Settled(4, "bethphage")]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(2), "jerusalem"), (Key(4), "bethphage")]);
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(4), "jerusalem"), "a-link-of-several-people"));
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(2), "bethphage"), "a-link-of-several-people"));
+    }
+
+    [Fact]
+    public void ALinkOfSeveralWordsNamingSeveralPeopleAloneNamesNobody()
+    {
+        var store = Verse(
+            ["Aquila", "and", "Priscilla"],
+            ["Πρίσκιλλα", "καὶ", "Ἀκύλας"],
+            [Link(1, $"{Key(1)} {Key(2)} {Key(3)}", $"{Key(1)} {Key(2)} {Key(3)}")],
+            [Settled(1, "priscilla"), Settled(3, "aquila")]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Should().BeEmpty("the link says both are there, not which word is which");
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(3), "aquila"), "a-link-of-several-people"));
+    }
+
+    [Fact]
+    public void APersonsNameGoesToTheWordWrittenAsANameNotToTheLastWordOfThePhrase()
+    {
+        var store = Verse(
+            ["and", "he", "gave", "Zipporah", "to", "Moses", "in", "marriage"],
+            ["וַיִּתֵּן", "צִפֹּרָה", "לְמֹשֶׁה"],
+            [Link(1, Key(4), Key(2)), Link(2, $"{Key(5)} {Key(6)} {Key(7)} {Key(8)}", Key(3))],
+            [Settled(2, "zipporah"), Settled(3, "moses")]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(4), "zipporah"), (Key(6), "moses")]);
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(8), "moses"), "not-the-head"));
+    }
+
+    [Fact]
+    public void APossessivesLoneSIsNeverTheName()
+    {
+        var store = Verse(
+            ["Is", "the", "LORD| '", "S", "hand"],
+            ["הֲיַד", "יְהוָה"],
+            [Link(1, $"{Key(3)} {Key(4)}", Key(2)), Link(2, Key(4), Key(2))],
+            [Settled(2, "yhvh")]);
+
+        var names = new NamesProjection(store).Project("ENG");
+
+        names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(3), "yhvh")]);
+    }
 }
