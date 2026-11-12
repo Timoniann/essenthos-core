@@ -210,6 +210,14 @@ internal static class DeskEndpoints
             return await board.List(db, cancellationToken);
         });
 
+        routes.MapGet("/texts/mapping", (MappingBoard board) => board.Read());
+
+        routes.MapPost("/texts/mapping/count", (MappingBoard board) =>
+        {
+            board.Recount();
+            return board.Read();
+        });
+
         routes.MapGet("/texts/problems", async (TextProblems problems, AppDbContext db, CancellationToken cancellationToken) =>
         {
             var texts = await db.Texts.AsNoTracking().ToListAsync(cancellationToken);

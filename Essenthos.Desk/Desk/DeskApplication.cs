@@ -52,6 +52,7 @@ internal static class DeskApplication
         builder.Services.AddScoped<PortraitEditor>();
         builder.Services.AddSingleton<TextBoard>();
         builder.Services.AddSingleton<TextProblems>();
+        builder.Services.AddSingleton<MappingBoard>();
         builder.Services.AddSingleton<PageReadings>();
         builder.Services.AddSingleton<Visitors>();
         builder.Services.AddSingleton<EssxInspector>();
