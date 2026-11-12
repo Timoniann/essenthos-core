@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	genitive	Aarons	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -161,9 +161,6 @@ absalom	nominative	Absalom	model-reading	1	read from Scripture by claude-sonnet-
 accad	genitive	Akkads	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
 accad	locative	Akkad	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
 accad	nominative	Akkad	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
-accho	genitive	Akkos	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
-accho	locative	Akko	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
-accho	nominative	Akko	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
 acco	genitive	Akkos	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
 acco	locative	Akko	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
 acco	nominative	Akko	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
@@ -513,9 +510,6 @@ akkub-5	genitive	Akkubs	model-reading	1	read from Scripture by claude-sonnet-5, 
 akkub-5	nominative	Akkub	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0006.jsonl#f44cb72030118599
 akrabbim	genitive	Akrabbims	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
 akrabbim	nominative	Akrabbim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
-alammelech	genitive	Allammelechs	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Alammelechs», checked 2026-10-31	\N
-alammelech	locative	Allammelech	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Alammelech», checked 2026-10-31	\N
-alammelech	nominative	Allammelech	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Alammelech», checked 2026-10-31	\N
 alemeth	genitive	Alemeths	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth	nominative	Alemeth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth-2	genitive	Alemeths	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0028.jsonl#0c8022e9871a0970
@@ -2012,9 +2006,6 @@ bithynia	nominative	Bithynien	model-reading	1	read from Scripture by claude-sonn
 biziothiah	genitive	Bizjotjas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0024.jsonl#cf05402f31a50918
 biziothiah	locative	Bizjotja	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 biziothiah	nominative	Bizjotja	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0024.jsonl#cf05402f31a50918
-bizjothjah	genitive	Bisjothjas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Bisjotjas», checked 2026-10-31	\N
-bizjothjah	locative	Bisjothja	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Bisjotja», checked 2026-10-31	\N
-bizjothjah	nominative	Bisjothja	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Bisjotja», checked 2026-10-31	\N
 biztha	genitive	Bisthas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Bifthas», checked 2026-10-31	\N
 biztha	nominative	Bistha	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Biftha», checked 2026-10-31	\N
 blastus	genitive	Blastus'	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#f6cf9a330048ff70
@@ -2110,8 +2101,6 @@ caiaphas	nominative	Kaiphas	model-reading	1	read from Scripture by claude-opus-5
 cain	genitive	Kains	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
 cain	locative	Kain	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
 cain	nominative	Kain	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
-cain-2	genitive	Hakains	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Kains», checked 2026-10-31	\N
-cain-2	nominative	Hakain	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Kain», checked 2026-10-31	\N
 cainan	genitive	Kenans	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#89036c275defbaab
 cainan	nominative	Kenan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#89036c275defbaab
 calah	genitive	Kalahs	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Kalachs», checked 2026-10-31	\N
@@ -2294,8 +2283,6 @@ chorazin	locative	Chorazin	model-reading	1	declined by claude-sonnet-5, asked 20
 chorazin	nominative	Chorazin	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#56a3d30a2c44a839
 chub	genitive	Kubs	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#7b3f1ed8f468457c
 chub	nominative	Kub	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#7b3f1ed8f468457c
-chun	genitive	Kuns	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#662509f97c83edbd
-chun	nominative	Kun	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#662509f97c83edbd
 chuza	genitive	Chusas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Chuzas», checked 2026-10-31	\N
 chuza	locative	Chusas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Chuzas», checked 2026-10-31	\N
 chuza	nominative	Chusas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Chuzas», checked 2026-10-31	\N
@@ -2310,8 +2297,6 @@ cityofpalms	genitive	Palmenstadt	model-reading	1	read from Scripture by claude-s
 cityofpalms	nominative	Palmenstadt	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#f3750ca7d30faaa8
 cityofsalt	genitive	Salzstadt	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#2bc1ce381d3d60c4
 cityofsalt	nominative	Salzstadt	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#2bc1ce381d3d60c4
-clauda	genitive	Klaudas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Kaudas», checked 2026-10-31	\N
-clauda	nominative	Klauda	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Kauda», checked 2026-10-31	\N
 claudia	genitive	Klaudias	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Claudias», checked 2026-10-31	\N
 claudia	nominative	Klaudia	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Claudia», checked 2026-10-31	\N
 claudius	genitive	Klaudius'	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#1a499610e4a4640b
@@ -2623,8 +2608,6 @@ ebez	nominative	Ebez	model-reading	1	read from Scripture by claude-sonnet-5, ask
 ebron	genitive	Hebrons	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#5bc22f20c9c889da
 ebron	locative	Ebron	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 ebron	nominative	Hebron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#5bc22f20c9c889da
-ebronah	genitive	Abronas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed
-ebronah	nominative	Abrona	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed
 ecbatana	genitive	Ahmethas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Achmethas», checked 2026-10-31	\N
 ecbatana	locative	Ahmetha	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Achmetha», checked 2026-10-31	\N
 ecbatana	nominative	Ahmetha	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Achmetha», checked 2026-10-31	\N
@@ -2768,8 +2751,6 @@ eleazar-8	genitive	Eleasars	model-reading	1	read from Scripture by claude-sonnet
 eleazar-8	nominative	Eleasar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#fed4ea2d23563131
 eleazar-9	genitive	Eleasars	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0139.jsonl#016f18021dcd7203
 eleazar-9	nominative	Eleasar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0139.jsonl#016f18021dcd7203
-eleph	genitive	Elephs	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0041.jsonl#59be1c46128f1129
-eleph	nominative	Eleph	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0041.jsonl#59be1c46128f1129
 elhanan	genitive	Elhanans	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#1a00061ba5345809
 elhanan	nominative	Elhanan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#1a00061ba5345809
 elhanan-son-of-dodo	genitive	Elhanans	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-08	zz-zz-zz-zz-zz-kin3-0000.jsonl#421ebccf0f346a04
@@ -4024,9 +4005,6 @@ hanun-3	nominative	Hanun	model-reading	1	read from Scripture by claude-sonnet-5,
 hapharaim	genitive	Hafarajims	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
 hapharaim	locative	Hafarajim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
 hapharaim	nominative	Hafarajim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
-haphraim	genitive	Hapharaims	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0004.jsonl#487ab7eac318a154
-haphraim	locative	Hapharaim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0004.jsonl#487ab7eac318a154
-haphraim	nominative	Hapharaim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0004.jsonl#487ab7eac318a154
 happizzez	genitive	Hapizzez'	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Happizez'», checked 2026-10-31	\N
 happizzez	nominative	Hapizzez	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Happizez», checked 2026-10-31	\N
 hara	genitive	Haras	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0060.jsonl#380c106730c45463
@@ -4748,9 +4726,6 @@ irmoab	nominative	Ir-Moab	model-reading	1	declined by claude-opus-5-5, asked 202
 irnahash	genitive	Ir-Nahas'	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
 irnahash	locative	Ir-Nahas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
 irnahash	nominative	Ir-Nahas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
-iron	genitive	Jereons	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Jireons», checked 2026-10-31	\N
-iron	locative	Jereon	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Jireon», checked 2026-10-31	\N
-iron	nominative	Jereon	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Jireon», checked 2026-10-31	\N
 irpeel	genitive	Jerpeels	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Jirpeels», checked 2026-10-31	\N
 irpeel	locative	Jerpeel	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Jirpeel», checked 2026-10-31	\N
 irpeel	nominative	Jerpeel	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Jirpeel», checked 2026-10-31	\N
@@ -5372,8 +5347,6 @@ jemuel	genitive	Jemuels	model-reading	1	read from Scripture by claude-sonnet-5, 
 jemuel	nominative	Jemuel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0272.jsonl#1c1761cb03e2f0a4
 jephthah	genitive	Jeftas	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#20d34f07a354e1b1
 jephthah	nominative	Jefta	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#20d34f07a354e1b1
-jephthah-2	genitive	Jephthahs	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-jephthah-2	nominative	Jephthah	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 jephthahs-daughter	genitive	der Tochter Jephthahs	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
 jephthahs-daughter	nominative	die Tochter Jephthahs	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
 jephunneh	genitive	Jephunnes	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0005.jsonl#fde82518398ddf99
@@ -5557,9 +5530,6 @@ jether-3	genitive	Jethers	model-reading	1	read from Scripture by claude-sonnet-5
 jether-3	nominative	Jether	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#02c7d0c04eb40ea9
 jetheth	genitive	Jetheths	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#7b7d63facd8a8daa
 jetheth	nominative	Jetheth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#7b7d63facd8a8daa
-jethlah	genitive	Jethlas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
-jethlah	locative	Jethla	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
-jethlah	nominative	Jethla	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
 jetur	genitive	Jeturs	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#a49e4c6c3622a5c6
 jetur	nominative	Jetur	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#a49e4c6c3622a5c6
 jeuel	genitive	Jeguels	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#8cf9e6b570d3ce41
@@ -6251,9 +6221,6 @@ kishion	nominative	Kisjon	model-reading	1	read from Scripture by claude-sonnet-5
 kishon	genitive	Kisons	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#95a94b4d8e6fe0e1
 kishon	locative	Kison	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 kishon	nominative	Kison	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#95a94b4d8e6fe0e1
-kithlish	genitive	Kithlis'	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
-kithlish	locative	Kithlis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
-kithlish	nominative	Kithlis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
 kitron	genitive	Kitrons	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0062.jsonl#7bcab484267a1c5e
 kitron	locative	Kitron	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 kitron	nominative	Kitron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0062.jsonl#7bcab484267a1c5e
@@ -6683,8 +6650,6 @@ makirites	nominative	Machiriter	model-reading	1	read from Scripture by claude-so
 makkedah	genitive	Makkedas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
 makkedah	locative	Makkeda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
 makkedah	nominative	Makkeda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
-maktesh	genitive	Maktesch	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-maktesh	nominative	Maktesch	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 malachi	genitive	Maleachis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0342.jsonl#6beb04821c140041
 malachi	nominative	Maleachi	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0342.jsonl#6beb04821c140041
 malcam	genitive	Malchams	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0004.jsonl#0ef434d806865889
@@ -6779,8 +6744,6 @@ maon-2	nominative	Maon	model-reading	1	read from Scripture by claude-sonnet-5, a
 marah	genitive	Maras	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
 marah	locative	Mara	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
 marah	nominative	Mara	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
-maralah	genitive	Marealas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Maralahs», checked 2026-10-31	\N
-maralah	nominative	Mareala	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Maralah», checked 2026-10-31	\N
 mareal	genitive	Marealas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Maralahs», checked 2026-10-31	\N
 mareal	nominative	Mareala	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Maralah», checked 2026-10-31	\N
 mareshah	genitive	Maresas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Mareschas», checked 2026-10-31	\N
@@ -6935,9 +6898,6 @@ mehunim	genitive	Meuniter	model-reading	1	read from Scripture by claude-sonnet-5
 mehunim	nominative	Meuniter	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0005.jsonl#566a1682a201b5dd
 mejarkon	genitive	Me-Jarkons	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee
 mejarkon	nominative	Me-Jarkon	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee
-mekonah	genitive	Mechonas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
-mekonah	locative	Mechona	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
-mekonah	nominative	Mechona	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
 melatiah	genitive	Melatjas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1d411950900972a7
 melatiah	nominative	Melatja	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1d411950900972a7
 melchi	genitive	Melchis	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0355.jsonl#0a0567381daf9edc
@@ -8336,9 +8296,6 @@ rabshakeh	nominative	Rabschake	model-reading	1	read from Scripture by claude-son
 racal	genitive	Rachals	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
 racal	locative	Rachal	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
 racal	nominative	Rachal	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
-rachal	genitive	Rachals	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
-rachal	locative	Rachal	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
-rachal	nominative	Rachal	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
 rachel	genitive	Rahels	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
 rachel	nominative	Rahel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
 raddai	genitive	Raddais	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#17c3e67e85d130cf
@@ -8451,9 +8408,6 @@ rechab-3	genitive	Rechabs	model-reading	1	read from Scripture by claude-sonnet-5
 rechab-3	nominative	Rechab	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0431.jsonl#81c2d04bf4cff79d
 rechabites	genitive	Rechabiter	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#3e1bef2ad5ae9e9f
 rechabites	nominative	Rechabiter	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#3e1bef2ad5ae9e9f
-rechah	genitive	Rechas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
-rechah	locative	Recha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
-rechah	nominative	Recha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
 redsea	genitive	Schilfmeers	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
 redsea	locative	Schilfmeer	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
 redsea	nominative	Schilfmeer	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
@@ -8904,9 +8858,6 @@ shabbethai-2	genitive	Sabthais	model-reading	1	read from Scripture by claude-son
 shabbethai-2	nominative	Sabthai	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#d6efac47ce5d5aa3
 shaharaim	genitive	Saharaims	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
 shaharaim	nominative	Saharaim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
-shahazimah	genitive	Sahazimas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sahazumas», checked 2026-10-31	\N
-shahazimah	locative	Sahazima	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sahazuma», checked 2026-10-31	\N
-shahazimah	nominative	Sahazima	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sahazuma», checked 2026-10-31	\N
 shahazumah	genitive	Sahazimas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sahazumas», checked 2026-10-31	\N
 shahazumah	locative	Sahazima	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sahazuma», checked 2026-10-31	\N
 shahazumah	nominative	Sahazima	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sahazuma», checked 2026-10-31	\N
@@ -9317,12 +9268,6 @@ shiba	genitive	Sebas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-
 shiba	nominative	Seba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shichemites	genitive	Sichemiter	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#259165efee0b4164
 shichemites	nominative	Sichemiter	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#259165efee0b4164
-shicron	genitive	Sichrons	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sikkerons», checked 2026-10-31	\N
-shicron	locative	Sichron	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sikkeron», checked 2026-10-31	\N
-shicron	nominative	Sichron	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sikkeron», checked 2026-10-31	\N
-shihon	genitive	Sions	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#3f6fb835171f2552
-shihon	locative	Sion	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#3f6fb835171f2552
-shihon	nominative	Sion	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#3f6fb835171f2552
 shihor	genitive	Sihors	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0478.jsonl#6a7de7e90264b657
 shihor	locative	Sihor	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0130.jsonl#8ca6c7e93a4a1a79
 shihor	nominative	Sihor	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0478.jsonl#6a7de7e90264b657
@@ -10279,9 +10224,6 @@ uzziel-6	genitive	Usiels	model-reading	1	read from Scripture by claude-sonnet-5,
 uzziel-6	nominative	Usiel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#0c9a6fe9caa76984
 uzzielites	genitive	Usieliter	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#ca5f608dff41dae8
 uzzielites	nominative	Usieliter	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#ca5f608dff41dae8
-vaheb	genitive	Vahebs	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Wahebs», checked 2026-10-31	\N
-vaheb	locative	Vaheb	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Waheb», checked 2026-10-31	\N
-vaheb	nominative	Vaheb	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Waheb», checked 2026-10-31	\N
 vaizatha	genitive	Vajesathas	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Wajesathas», checked 2026-10-31	\N
 vaizatha	nominative	Vajesatha	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Wajesatha», checked 2026-10-31	\N
 valleygate	genitive	Taltors	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#df65be9a89db4861
@@ -10543,9 +10485,6 @@ zarethan	nominative	Zarthan	model-reading	1	read from Scripture by claude-sonnet
 zarethshahar	genitive	Zereth-Sahars	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
 zarethshahar	locative	Zereth-Sahar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
 zarethshahar	nominative	Zereth-Sahar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
-zarthan	genitive	Zarthans	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
-zarthan	locative	Zarthan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
-zarthan	nominative	Zarthan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
 zattu	genitive	Satthus	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sattus», checked 2026-10-31	\N
 zattu	nominative	Satthu	stated-by-source	\N	Essenthos, as the Luther Bible 1912 prints it, where it was «Sattu», checked 2026-10-31	\N
 zaza	genitive	Sasas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#7bf8155febd1d139
@@ -10722,9 +10661,6 @@ zerahiah-2	nominative	Serahja	stated-by-source	\N	Essenthos, as the Luther Bible
 zered	genitive	Sereds	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
 zered	locative	Sered	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
 zered	nominative	Sered	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
-zereda	genitive	Zeredas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
-zereda	locative	Zereda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
-zereda	nominative	Zereda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
 zeredah	genitive	Zeredas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
 zeredah	locative	Zereda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
 zeredah	nominative	Zereda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
@@ -10732,8 +10668,6 @@ zeredah-2	genitive	Zeredathas	model-reading	1	read from Scripture by claude-sonn
 zeredah-2	nominative	Zeredatha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#238e832ef41119a4
 zererah	genitive	Zereraths	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f
 zererah	nominative	Zererath	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f
-zererath	genitive	Zereraths	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0150.jsonl#c349b2d702bd1f38
-zererath	nominative	Zererath	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0150.jsonl#c349b2d702bd1f38
 zeresh	genitive	Seres'	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#13ce1446e77557e0
 zeresh	nominative	Seres	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#13ce1446e77557e0
 zereth	genitive	Zereths	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#a48624da290f1b0f

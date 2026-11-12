@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # What the text says a record is, clause by clause: the line, and the source of every relationship.
 subject	ordinal	relation	target	ref	citation	witness	original	method	confidence	by	run	note
 aaron	1	brother-of	moses	2.4:14	\N	\N	\N	model-reading	0.97	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe	\N
@@ -175,7 +175,6 @@ absalom	4	brother-of	amnon	10.13:4	\N	\N	\N	model-reading	0.85	read from Scriptu
 absalom	5	killed-by	joab	10.18:14	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-13	zz-zz-zz-zz-zz-kin3-0000.jsonl#9af603cc7b691ea1	the verse states it, decided on the review page
 absalom	6	brother-of	solomon	11.2:7	\N	\N	\N	manual	\N	read from Scripture by an agent reading 1KI 2:7 on the project owner's instruction, decided 2026-10-08	zz-zz-zz-zz-zz-kin3-0000.jsonl#9af603cc7b691ea1	1KI 2:7: David to Solomon, 'Absalom thy brother' (אַבְשָׁלוֹם אָחִיךָ).
 accad	1	city-in	shinar	1.10:10	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468	\N
-accho	1	city-in	asher-2	7.1:31	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166	\N
 acco	1	city-in	asher-2	7.1:31	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c	\N
 achaia	1	near	macedonia	44.19:21	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#dcba19f49b5e8a84	\N
 achan	1	son-of	carmi-2	6.7:1	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0009.jsonl#0d07677869ffd6ac	\N
@@ -410,7 +409,6 @@ aiah-2	3	grandfather-of	mephibosheth-2	10.21:8	\N	\N	\N	model-reading	0.75	read 
 aiath	1	near	migron-2	23.10:28	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0026.jsonl#97bd3451aa1308f5	\N
 aiath	2	near	michmash	23.10:28	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0026.jsonl#97bd3451aa1308f5	\N
 aija	1	city-in	benjamin-5	16.11:31	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0002.jsonl#99834a46959cd2e7	\N
-aija	2	near	migron-2	23.10:28	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0002.jsonl#99834a46959cd2e7	\N
 aijalon	1	city-in	shephelah	14.28:18	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0026.jsonl#5eae490bdc68dec5	\N
 aijalon-2	1	city-in	zebulun-2	7.12:12	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0002.jsonl#2a13bba86d885cd5	\N
 ain	1	near	riblah-2	4.34:11	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0026.jsonl#a8151d037857ad25	\N
@@ -1631,8 +1629,6 @@ eber-3	3	brother-of	shemed	13.8:12	\N	\N	\N	model-reading	0.85	read from Scriptu
 eber-4	1	son-of	shashak	13.8:22	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#d49f1ba0dcb95077	v22-25 form one list ending 'the sons of Shashak', naming Heber (Eber) among them.
 eber-5	1	descendant-of	amok	16.12:20	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#9f34bd2b48da276f	\N
 ebron	1	city-in	hammon	6.19:28	\N	\N	\N	model-reading	0.3	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#5bc22f20c9c889da	\N
-ebronah	1	near	jotbathah	4.33:34	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed	\N
-ebronah	2	near	eziongeber	4.33:35	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed	\N
 ecbatana	1	city-in	media	15.6:2	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#033478385e169069	\N
 eden	1	son-of	joah-the-later-gershonite	14.29:12	\N	\N	\N	manual	\N	read from Scripture by an agent reading 2CH 29:12 on the project owner's instruction of 2026-10-13, decided 2026-10-13	batch-0132.jsonl#0013bbb46401b75a	'Of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah' (2CH 29:12).
 eden	2	of-people	gershonites	14.29:12	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#0013bbb46401b75a	\N
@@ -4248,9 +4244,8 @@ lahmi	2	killed-by	elhanan	13.20:5	\N	\N	\N	model-reading	0.9	read from Scripture
 lahmi	3	bears-title	giant	13.20:5	1CH 20:5; 1CH 20:8	\N	\N	manual	0.95	read from Scripture by the project owner, decided 2026-10-25	reask-0072.jsonl#1cc2defe9381024c	The owner's decision of 2026-10-25 that every giant's line says giant, as an angel's says angel. Lahmi the brother of Goliath (1CH 20:5): 'these were born unto the giant in Gath' (1CH 20:8).
 laish	1	father-of	palti-2	9.25:44	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0324.jsonl#01319e4395a64530	\N
 laish	2	from-place	gallim	9.25:44	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0324.jsonl#01319e4395a64530	\N
-laish-2	1	near	gallim	23.10:30	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0063.jsonl#9ea4443fafbcef05	\N
-laish-2	2	near	anathoth-3	23.10:30	\N	\N	\N	model-reading	0.35	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0063.jsonl#9ea4443fafbcef05	\N
 laishah	1	near	gallim	23.10:30	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0324.jsonl#c805569624e54024	\N
+laishah	2	near	anathoth-3	23.10:30	\N	\N	\N	model-reading	0.35	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0063.jsonl#9ea4443fafbcef05	\N
 lamech	1	son-of	methushael	1.4:18	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0073.jsonl#1ee21a5b6e3a5107	\N
 lamech	2	husband-of	adah	1.4:19	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0073.jsonl#1ee21a5b6e3a5107	\N
 lamech	3	husband-of	zillah	1.4:19	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0073.jsonl#1ee21a5b6e3a5107	\N
@@ -6814,7 +6809,6 @@ uzziel-4	1	son-of	heman-2	13.25:4	\N	\N	\N	model-reading	0.85	read from Scriptur
 uzziel-5	1	descendant-of	jeduthun	14.29:14	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#875c916a0ae53c49	\N
 uzziel-6	1	son-of	harhaiah	16.3:8	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#0c9a6fe9caa76984	\N
 uzzielites	1	descendants-of	kohath	4.3:27	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#ca5f608dff41dae8	\N
-vaheb	1	near	suphah	4.21:14	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0143.jsonl#32095afff23125be	\N
 valleygate	1	city-in	jerusalem	14.26:9	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#df65be9a89db4861	\N
 valleyofachor	1	near	debir-3	6.15:7	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0104.jsonl#1aba6f793957a5fd	\N
 valleyofaijalon	1	near	gibeon	6.10:12	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0524.jsonl#93ad8b0f495aa2ba	\N
@@ -6944,9 +6938,6 @@ zarephath	2	city-in	canaan-2	31.1:20	\N	\N	\N	model-reading	0.4	read from Script
 zarethan	1	near	adam-2	6.3:16	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#504182d232de3ec7	\N
 zarethan	2	near	bethshan	11.4:12	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#504182d232de3ec7	\N
 zarethan	3	near	succoth	11.7:46	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#504182d232de3ec7	\N
-zarthan	1	near	adam-2	6.3:16	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa	\N
-zarthan	2	near	bethshan	11.4:12	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa	\N
-zarthan	3	near	succoth	11.7:46	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa	\N
 zattu	1	ancestor-of	elioenai-5	15.10:27	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#b84494230acd140a	\N
 zattu	2	descendant-of	jacob	15.2:8	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 2:8 on the project owner's instruction, decided 2026-09-26	zz-words-0011.jsonl#b84494230acd140a	agent: EZR 2:8 'The children of Zattu' falls under EZR 2:2 'the number of the men of the people of Israel'; EZR 2:59 sets apart only those who could not show they were of Israel.
 zaza	1	son-of	jonathan-6	13.2:33	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#7bf8155febd1d139	\N
@@ -7093,7 +7084,6 @@ zerahiah	1	son-of	uzzi	13.6:6	\N	\N	\N	model-reading	0.95	read from Scripture by
 zerahiah	2	father-of	meraioth	13.6:6	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#da3c0208a5f83184	\N
 zerahiah-2	1	father-of	eliehoenai-2	15.8:4	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#497abbde10b60884	\N
 zerahiah-2	2	descendant-of	pahathmoab	15.8:4	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 8:4 on the project owner's instruction, decided 2026-09-26	zz-words-0011.jsonl#497abbde10b60884	agent: EZR 8:4 'Of the sons of Pahathmoab; Elihoenai the son of Zerahiah' (LXX alike).
-zereda	1	near	succoth	14.4:17	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d	\N
 zeredah-2	1	near	succoth	14.4:17	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#238e832ef41119a4	\N
 zererah	1	near	bethshittah	7.7:22	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f	\N
 zererah	2	near	abelmeholah	7.7:22	\N	\N	\N	model-reading	0.4	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f	\N

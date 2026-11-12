@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # Why each record exists, and who said so.
 slug	method	confidence	by	note
 aaron	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -146,7 +146,6 @@ absalom	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradySteph
 absalom	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Absalom #2, "third son of David, killer of first-born son Amnon, also leader of revolt against his father-David" — 87 verses of this corpus print the name, and the reading assigns them to this bearer
 accad	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	surveyed as a8b7a6b, which is where this record's coordinates come from and whose they stay
 accad	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H390 "Accad, a place in Babylon" — the tag and the gloss both say place
-accho	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H5910 "Akko (from its situation on a bay)" — the tag and the gloss both say place
 acco	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a5f4dfc, kept as ours by the rework of 2026-11	\N
 achaia	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G882 "Achaia (i.e. Greece), a country of Europe" — no location tag, and the gloss names a place under a headword that is a name
 achaia	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as aef4242, which is where this record's coordinates come from and whose they stay
@@ -439,7 +438,6 @@ akkub-3	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumer
 akkub-5	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Akkub #5, "a Levite who helped Ezra expound the law to the people" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 akrabbim	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4610 "Steep of Scorpions, a place in the Desert" — the tag and the gloss both say place
 akrabbim	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a39267b, which is where this record's coordinates come from and whose they stay
-alammelech	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H487 "Allammelek, a place in Palestine" — the tag and the gloss both say place
 alemeth	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 alemeth	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Alemeth #3, no clause of the lexicon — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 alemeth-2	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -1621,7 +1619,6 @@ bithron	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H
 bithynia	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G978 "Bithynia, a region of Asia" — no location tag, and the gloss names a place under a headword that is a name
 bithynia	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a5c0cb0, which is where this record's coordinates come from and whose they stay
 biziothiah	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a2227ba, kept as ours by the rework of 2026-11	\N
-bizjothjah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H964 "Bizjothjah, a place in Palestine" — the tag and the gloss both say place
 biztha	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 biztha	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Biztha — H968 "one of Ahasuerus' (Xerxes') eunuchs". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
 blastus	manual	\N	Essenthos, a record BibleData supplied as person:Blastus_1, kept as ours by the rework of 2026-11	\N
@@ -1689,7 +1686,6 @@ caesareaphilippi	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, g
 caiaphas	manual	\N	Essenthos, a record BibleData supplied as person:Caiaphas_1, kept as ours by the rework of 2026-11	\N
 caiaphas-house	model-reading	0.93	Essenthos, model and agent readings of named places and structures, 2026-10-26	Дім первосвященика, прямо ідентифікованого як Каяфа в Мт 26:57,58. Не переносити автоматично цю ідентичність на двір Анни/первосвященика в Ів 18:15.
 cain	manual	\N	Essenthos, a record BibleData supplied as person:Cain_1, kept as ours by the rework of 2026-11	\N
-cain-2	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7014 "Kajin, the name of the first child, also of a place in Palestine, and of an Oriental tribe" — no location tag, and the gloss names a place under a headword that is a name
 cainan	manual	\N	Essenthos, a record BibleData supplied as person:Cainan_1, kept as ours by the rework of 2026-11	\N
 calah	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	surveyed as ae1f807, which is where this record's coordinates come from and whose they stay
 calah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3625 "Kelach, a place in Assyria" — the tag and the gloss both say place
@@ -1816,7 +1812,6 @@ chorashan	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads
 chorazin	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G5523 "Chorazin, a place in Palestine" — no location tag, and the gloss names a place under a headword that is a name
 chorazin	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a593a48, which is where this record's coordinates come from and whose they stay
 chub	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3552 "Kub, a country near Egypt" — the tag and the gloss both say place
-chun	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3560 "Kun, a place in Syria" — the tag and the gloss both say place
 chuza	manual	\N	Essenthos, a record BibleData supplied as person:Chuza_1, kept as ours by the rework of 2026-11	\N
 cilicia	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G2791 "Cilicia, a region of Asia Minor" — no location tag, and the gloss names a place under a headword that is a name
 cilicia	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as ad63819, which is where this record's coordinates come from and whose they stay
@@ -1824,7 +1819,6 @@ cityofdavid	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github
 cityofdestruction	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as adca4b1, kept as ours by the rework of 2026-11	\N
 cityofpalms	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a529e92, kept as ours by the rework of 2026-11	\N
 cityofsalt	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as acc1702, kept as ours by the rework of 2026-11	\N
-clauda	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	G2802 "Claude, an island near Crete" — no location tag, and the gloss names a place under a headword that is a name
 claudia	manual	\N	Essenthos, a record BibleData supplied as person:Claudia_1, kept as ours by the rework of 2026-11	\N
 claudius	manual	\N	Essenthos, a record BibleData supplied as person:Claudius_1, kept as ours by the rework of 2026-11	\N
 claudius-2	manual	\N	Essenthos, a record BibleData supplied as person:Claudius_2, kept as ours by the rework of 2026-11	\N
@@ -2064,7 +2058,6 @@ ebez	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H77 
 ebez	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as acd9b19, which is where this record's coordinates come from and whose they stay
 ebron	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H5683 "Ebron, a place in Palestine" — the tag and the gloss both say place
 ebron	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a728e07, which is where this record's coordinates come from and whose they stay
-ebronah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H5684 "Ebronah, place in the Desert" — no location tag, and the gloss names a place under a headword that is a name
 ecbatana	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H307 "Achmetha (i.e. Ecbatana), the summer capital of Persia" — the tag and the gloss both say place
 ecbatana	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a212ef7, which is where this record's coordinates come from and whose they stay
 eden	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -2179,7 +2172,6 @@ eleazar-8	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradySte
 eleazar-8	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Eleazar #3, "the priest who rebuilt and dedicated the restored walls of Jerusalem in time of Ezra" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 eleazar-9	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 eleazar-9	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Eleazar #8, no clause of the lexicon — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
-eleph	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H507 "Eleph, a place in Palestine" — the tag and the gloss both say place
 elhanan	manual	\N	Essenthos, a record BibleData supplied as person:Elhanan_1, kept as ours by the rework of 2026-11	\N
 elhanan	manual	\N	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07	'Elhanan the son of Jaare-oregim, a Bethlehemite' slew the Gittite in the war at Gob; 1 Chronicles 20:5 calls him the son of Jair and the man he slew Lahmi the brother of Goliath.
 elhanan-son-of-dodo	manual	\N	Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07	'Elhanan the son of Dodo of Bethlehem', one of the thirty (2SA 23:24, 1CH 11:26); the Elhanan who slew a giant of Gath is the son of Jaare-oregim (2SA 21:19), called the son of Jair in 1 Chronicles 20:5.
@@ -3173,7 +3165,6 @@ hanun-2	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumer
 hanun-3	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 hanun-3	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Hanun #3, "the 6th son of Zalaph, who also assisted in the repair of the wall of Jerusalem, apparently on the east side" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 hapharaim	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a6309c7, kept as ours by the rework of 2026-11	\N
-haphraim	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H2663 "Chapharajim, a place in Palestine" — the tag and the gloss both say place
 happizzez	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 happizzez	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Happizzez — H6483 "a priest,  chief of the 18th course in the service of the temple in the time of David". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
 hara	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H2024 "Hara, a region of Media" — the tag and the gloss both say place
@@ -3752,7 +3743,6 @@ irijah	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one 
 irmoab	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a6c0a5f, kept as ours by the rework of 2026-11	\N
 irnahash	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H5904 "Ir-Nachash, a place in Palestine" — no location tag, and the gloss names a place under a headword that is a name
 irnahash	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a31913c, which is where this record's coordinates come from and whose they stay
-iron	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3375 "Jiron, a place in Palestine" — the tag and the gloss both say place
 irpeel	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3416 "Jirpeel, a place in Palestine" — the tag and the gloss both say place
 irpeel	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a21b934, which is where this record's coordinates come from and whose they stay
 irshemesh	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H5905 "Ir-Shemesh, a place in Palestine" — the tag and the gloss both say place
@@ -4286,7 +4276,6 @@ jemimah	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one
 jemuel	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 jemuel	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Nemuel #1, "the eldest son of Simeon" — 2 verses of this corpus print the name, and the reading assigns them to this bearer
 jephthah	manual	\N	Essenthos, a record BibleData supplied as person:Jephthah_1, kept as ours by the rework of 2026-11	\N
-jephthah-2	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3316 "Jiphtach, an Israelite; also a place in Palestine" — the tag and the gloss both say place
 jephthahs-daughter	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	Read verse by verse by claude-opus-5-5 on 2026-10-28, on the project owner's instruction of that day that Jephthah's daughter have her own page. בַּת is she at JDG 11:34 (the first: 'his daughter came out to meet him'), JDG 11:35 ('Alas, my daughter') and JDG 11:40 (the second: 'the daughter of Jephthah'); the second of JDG 11:34 ('neither son nor daughter') and the first of JDG 11:40 ('the daughters of Israel') are not. The name row carries no Strong number, so that Jephthah's H3316 gains no further bearer.
 jephunneh	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 jephunneh	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Jephunneh #1, "a Kenezite and father of Caleb the spy from the tribe of Judah" — 15 verses of this corpus print the name, and the reading assigns them to this bearer
@@ -4444,7 +4433,6 @@ jether-3	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStep
 jether-3	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Jether #6, "a son of Ezra, a Judaite" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 jetheth	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 jetheth	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Jetheth — H3509 "one of the dukes of Edom who came of Esau". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 4 verses of this corpus attest it
-jethlah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3494 "Jithlah, a place in Palestine" — the tag and the gloss both say place
 jetur	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 jetur	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Jetur — H3195 "a son of Ishmael whose descendants warred with Israel east of the Jordan 1a) also called 'Ituraea'". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 5 verses of this corpus attest it
 jeuel	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -4993,7 +4981,6 @@ kishion	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H
 kishion	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a20364a, which is where this record's coordinates come from and whose they stay
 kishon	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7028 "Kishon, a river of Palestine" — the tag and the gloss both say place
 kishon	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a5a6458, which is where this record's coordinates come from and whose they stay
-kithlish	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3798 "Kithlish, a place in Palestine" — the tag and the gloss both say place
 kitron	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7003 "Kitron, a place in Palestine" — the tag and the gloss both say place
 kitron	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as ae5cc46, which is where this record's coordinates come from and whose they stay
 kittim-2	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H3794 "a Kittite or Cypriote; hence, an islander in general, i.e. the Greeks or Romans on the shores opposite Palestine" — no location tag, and the gloss names a place under a headword that is a name
@@ -5327,7 +5314,6 @@ makheloth	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbib
 makirites	stated-by-source	\N	Strong's Hebrew dictionary by James Strong, 1890, public domain	H4354, patronymic of H4353: "patronymical from מָכִיר (H4353)"
 makkedah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4719 "Makkedah, a place in Palestine" — the tag and the gloss both say place
 makkedah	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as abf8e4e, which is where this record's coordinates come from and whose they stay
-maktesh	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4389 "dell; the Maktesh, a place in Jerusalem" — no location tag, and the gloss names a place under a headword that is a name
 malachi	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 malachi	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Malachi — H4401 "the prophet who wrote the last book of the Old Testament; nothing else is known". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
 malcam	manual	\N	Essenthos, a record BibleData supplied as person:Malcam_1, kept as ours by the rework of 2026-11	\N
@@ -5404,7 +5390,6 @@ maon-2	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4
 maon-2	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a6845b1, which is where this record's coordinates come from and whose they stay
 marah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4785 "Marah, a place in the Desert" — no location tag, and the gloss names a place under a headword that is a name
 marah	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as ad3970d, which is where this record's coordinates come from and whose they stay
-maralah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4831 "Maralah, a place in Palestine" — the tag and the gloss both say place
 mareal	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as ad04336, kept as ours by the rework of 2026-11	\N
 mareshah	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 mareshah	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Mareshah #2, no clause of the lexicon — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
@@ -5536,7 +5521,6 @@ mehunim	stated-by-source	\N	Biblia Hebraica Stuttgartensia Amstelodamensis	H4586
 mehunim	stated-by-source	\N	Strong's Hebrew dictionary by James Strong, 1890, public domain	H4586: "a Meunite, or inhabitant of Maon (only in plural)"
 mejarkon	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4313 "Me-haj-Jarkon, a place in Palestine" — the tag and the gloss both say place
 mejarkon	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a7d1972, which is where this record's coordinates come from and whose they stay
-mekonah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H4368 "Mekonah, a place in Palestine" — the tag and the gloss both say place
 melatiah	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 melatiah	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Melatiah — H4424 "a Gibeonite who assisted in rebuilding the wall of Jerusalem". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
 melchi	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -6662,7 +6646,6 @@ rabbith	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbible
 rabsaris	manual	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to	The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.
 rabshakeh	manual	\N	Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to	The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.
 racal	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a446973, kept as ours by the rework of 2026-11	\N
-rachal	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7403 "Rakal, a place in Palestine" — the tag and the gloss both say place
 rachel	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 rachel	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Rachel — H7354 "daughter of Laban,  wife of Jacob,  and mother of Joseph and Benjamin". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 89 verses of this corpus attest it
 raddai	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -6745,7 +6728,6 @@ rechab-2	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enume
 rechab-3	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 rechab-3	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Rechab #2, "father of Malchijah, a leader of the district of Beth Haccerem and repairer of the wall of Jerusalem in the time of Nehemiah" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 rechabites	manual	\N	Essenthos, the names the Hebrew marks that nothing read, each word read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12	בֵּית הָרֵכָבִים, the house of the Rechabites: BHSA analyses the word as a gentilic, and the chapter says who they are, the sons of Jonadab son of Rechab (JER 35:6).
-rechah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7397 "Rekah, a place in Palestine" — the tag and the gloss both say place
 redsea	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	surveyed as a3ba698, which is where this record's coordinates come from and whose they stay
 redsea	lexical	0.85	Essenthos, from the place names Strong's Dictionary heads	H5489 "the Reed (Sea)" — the lexicon left it open and BHSA marks the word a place and nothing else
 redsea-2	lexical	0.85	Essenthos, from the place names Strong's Dictionary heads	H5489 "the Reed (Sea)" — the lexicon left it open and BHSA marks the word a place and nothing else
@@ -7094,7 +7076,6 @@ shabbethai-2	stated-by-source	\N	BibleData by Brady Stephenson, github.com/Brady
 shabbethai-2	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Shabbethai #1, "a Levite in the time of Ezra and Nehemiah" — 3 verses of this corpus print the name, and the reading assigns them to this bearer
 shaharaim	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 shaharaim	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Shaharaim — H7842 "a Benjamite,  father of Jobab,  Zibia,  Mesha,  Malcham,  Jeuz, Shachia,  Mirma,  Abitub,  and Elpaal". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
-shahazimah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7831 "Shachatsom, a place in Palestine" — the tag and the gloss both say place
 shahazumah	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a5b01f4, kept as ours by the rework of 2026-11	\N
 shalishah	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H8031 "Shalishah, a place in Palestine" — no location tag, and the gloss names a place under a headword that is a name
 shalishah	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a25f8e2, which is where this record's coordinates come from and whose they stay
@@ -7463,8 +7444,6 @@ shiba	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephen
 shiba	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Shiba — H7656 "the well named by Isaac and near Beersheba". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
 shiba	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7656 "Shebah, a well in Palestine" — the tag and the gloss both say place
 shichemites	stated-by-source	\N	Strong's Hebrew dictionary by James Strong, 1890, public domain	H7930, patronymic of H7928: "patronymic from שֶׁכֶם (H7928)"
-shicron	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7942 "drunkenness, Shikkeron, a place in Palestine" — the tag and the gloss both say place
-shihon	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7866 "Shijon, a place in Palestine" — the tag and the gloss both say place
 shihor	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7883 "Shichor, a stream of Egypt" — no location tag, and the gloss names a place under a headword that is a name
 shihor	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a305f43, which is where this record's coordinates come from and whose they stay; surveyed as a475518, which is where this record's coordinates come from and whose they stay
 shihorlibnath	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H7884 "Shichor-Libnath, a stream of Palestine" — no location tag, and the gloss names a place under a headword that is a name
@@ -8186,7 +8165,6 @@ uzziel-5	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enume
 uzziel-6	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this man as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 uzziel-6	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Uzziel #6, "son of Harhaiah, probably a priest and a goldsmith, who took part in repairing the wall under Nehemiah" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 uzzielites	stated-by-source	\N	Strong's Hebrew dictionary by James Strong, 1890, public domain	H5817, patronymic of H5816: "patronymically from עֻזִּיאֵל (H5816)"
-vaheb	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H2052 "Vaheb, a place in Moab" — the tag and the gloss both say place
 vaizatha	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 vaizatha	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Vaizatha — H2055 "one of the 10 sons of Haman who were hanged with their father". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 2 verses of this corpus attest it
 valleygate	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a81b7b1, kept as ours by the rework of 2026-11	\N
@@ -8379,7 +8357,6 @@ zarephath	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads
 zarephath	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as a6fa2d3, which is where this record's coordinates come from and whose they stay
 zarethan	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as afa84ca, kept as ours by the rework of 2026-11	\N
 zarethshahar	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H6890 "Tsereth-hash-Shachar, a place in Palestine" — the tag and the gloss both say place
-zarthan	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H6891 "Tsarethan, a place in Palestine" — the tag and the gloss both say place
 zattu	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 zattu	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Zattu — H2240 "a family of exiles who returned with Zerubbabel". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 9 verses of this corpus attest it
 zaza	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
@@ -8541,11 +8518,9 @@ zerahiah-2	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradySt
 zerahiah-2	model-reading	0.9	Essenthos, from the bearers Strong's Dictionary enumerates under the name	Zerahiah #2, "father of Elihoenai of the sons of Pahath-moab, whose descendants returned from the captivity with Ezra" — 1 verse of this corpus prints the name, and the reading assigns it to this bearer
 zered	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H2218 "Zered, a brook East of the Dead Sea" — the tag and the gloss both say place
 zered	stated-by-source	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0	surveyed as ab5161f, which is where this record's coordinates come from and whose they stay
-zereda	lexical	0.95	Essenthos, from the place names Strong's Dictionary heads	H6868 "Tseredah, a place in Palestine" — the tag and the gloss both say place
 zeredah	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a07ae2d, kept as ours by the rework of 2026-11	\N
 zeredah-2	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a6dc035, kept as ours by the rework of 2026-11	\N
 zererah	manual	\N	Essenthos, a record OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0 supplied as a0bccbd, kept as ours by the rework of 2026-11	\N
-zererath	lexical	0.85	Essenthos, from the place names Strong's Dictionary heads	H6888 "Tsererah for Tseredah" — the lexicon left it open and BHSA marks the word a place and nothing else
 zeresh	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay
 zeresh	lexical	0.95	Essenthos, from the names Strong's Dictionary heads for one bearer	Zeresh — H2238 "the wife of Haman,  the Agagite". Strong heads the name and numbers one bearer under it, no other record of this corpus carries the name, and 6 verses of this corpus attest it
 zereth	stated-by-source	\N	BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0	holds this one as a record of its own, which is where this record's relationships, verses and descriptors come from and whose they stay

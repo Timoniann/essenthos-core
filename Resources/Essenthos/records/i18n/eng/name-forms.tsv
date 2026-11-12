@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aaron	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -79,7 +79,6 @@ abram	nominative	Abram	model-reading	1	read from Scripture by claude-sonnet-5, a
 abronah	nominative	Ebronah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#1c16229edcdd3278
 absalom	nominative	Absalom	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-zz-zz-zz-zz-kin3-0000.jsonl#9af603cc7b691ea1
 accad	nominative	Accad	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
-accho	nominative	Accho	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
 acco	nominative	Acco	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
 achaia	nominative	Achaia	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#dcba19f49b5e8a84
 achaicus	nominative	Achaicus	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0000.jsonl#864899826a059e04
@@ -240,7 +239,6 @@ akkub-2	nominative	Akkub	model-reading	1	read from Scripture by claude-sonnet-5,
 akkub-3	nominative	Akkub	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#b5bfe0567589a283
 akkub-5	nominative	Akkub	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0006.jsonl#f44cb72030118599
 akrabbim	nominative	Akrabbim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
-alammelech	nominative	Alammelech	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0006.jsonl#2cc1e31e4ffb5646
 alemeth	nominative	Alemeth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth-2	nominative	Alemeth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0028.jsonl#0c8022e9871a0970
 alemeth-3	nominative	Alemeth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0003.jsonl#b791de4fad3d5315
@@ -891,7 +889,6 @@ bithia	nominative	Bithia	model-reading	1	read from Scripture by claude-sonnet-5,
 bithron	nominative	Bithron	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 bithynia	nominative	Bithynia	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#0fa2d2369141e8fb
 biziothiah	nominative	Bizjothjah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0024.jsonl#cf05402f31a50918
-bizjothjah	nominative	Bizjothjah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#4b48c3215b16dccd
 biztha	nominative	Biztha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#6c2e8aafeacd71c8
 blastus	nominative	Blastus	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#f6cf9a330048ff70
 boaz	nominative	Boaz	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#e613d7af6a4699e2
@@ -928,7 +925,6 @@ caesarea	nominative	Caesarea	model-reading	1	read from Scripture by claude-sonne
 caesareaphilippi	nominative	Caesarea Philippi	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0033.jsonl#1950fb7d71979f45
 caiaphas	nominative	Caiaphas	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#da21dd178ae7a302
 cain	nominative	Cain	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
-cain-2	nominative	Cain	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 cainan	nominative	Cainan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#89036c275defbaab
 calah	nominative	Calah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#70b3b75115663632
 calcol	nominative	Calcol	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#ca008ac70949d904
@@ -1017,14 +1013,12 @@ chorazin	genitive	Chorazin	model-reading	1	read from Scripture by claude-sonnet-
 chorazin	locative	Chorazin	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#56a3d30a2c44a839
 chorazin	nominative	Chorazin	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#56a3d30a2c44a839
 chub	nominative	Chub	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#7b3f1ed8f468457c
-chun	nominative	Chun	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#662509f97c83edbd
 chuza	nominative	Chuza	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0028.jsonl#39ea109b84095349
 cilicia	nominative	Cilicia	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0028.jsonl#883a68ffc2ebc6f3
 cityofdavid	nominative	City of David	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#0a02622265bea4ea
 cityofdestruction	nominative	City of Destruction	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#3bd6ce2fa26a27bb
 cityofpalms	nominative	City of Palms	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#f3750ca7d30faaa8
 cityofsalt	nominative	City of Salt	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#2bc1ce381d3d60c4
-clauda	nominative	Clauda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#8d80dc7c8daa9717
 claudia	nominative	Claudia	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#6e2e13cfd82aacb3
 claudius	nominative	Claudius	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#1a499610e4a4640b
 claudius-2	nominative	Claudius Lysias	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0028.jsonl#826344ffe534c7a3
@@ -1158,7 +1152,6 @@ eber-4	nominative	Eber	model-reading	1	read from Scripture by claude-sonnet-5, a
 eber-5	nominative	Eber	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#9f34bd2b48da276f
 ebez	nominative	Ebez	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0031.jsonl#e45621cc96981857
 ebron	nominative	Ebron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#5bc22f20c9c889da
-ebronah	nominative	Ebronah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed
 ecbatana	nominative	Ecbatana	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#033478385e169069
 eden	nominative	Eden	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#0013bbb46401b75a
 eden-2	nominative	Eden	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#77d3365fdb3b3ff4
@@ -1221,7 +1214,6 @@ eleazar-6	nominative	Eleazar	model-reading	1	read from Scripture by claude-sonne
 eleazar-7	nominative	Eleazar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0139.jsonl#1eab0be109db86ad
 eleazar-8	nominative	Eleazar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#fed4ea2d23563131
 eleazar-9	nominative	Eleazar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0139.jsonl#016f18021dcd7203
-eleph	nominative	Eleph	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0041.jsonl#59be1c46128f1129
 elhanan	nominative	Elhanan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#1a00061ba5345809
 elhanan-son-of-dodo	nominative	Elhanan	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-08	zz-zz-zz-zz-zz-kin3-0000.jsonl#421ebccf0f346a04
 eli	nominative	Eli	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#c63eed6d8b2afa33
@@ -1782,7 +1774,6 @@ hanun	nominative	Hanun	model-reading	1	read from Scripture by claude-sonnet-5, a
 hanun-2	nominative	Hanun	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0203.jsonl#50757b8b3d35415d
 hanun-3	nominative	Hanun	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0203.jsonl#47d1ae9a83c8fb63
 hapharaim	nominative	Hapharaim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
-haphraim	nominative	Haphraim	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 happizzez	nominative	Happizzez	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-rulings-0000.jsonl#00fb96b8ed5eec2a
 hara	nominative	Hara	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0060.jsonl#380c106730c45463
 haradah	nominative	Haradah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0203.jsonl#649885ecafbb841f
@@ -2120,7 +2111,6 @@ iri	nominative	Iri	model-reading	1	read from Scripture by claude-sonnet-5, asked
 irijah	nominative	Irijah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0240.jsonl#e92c007293bffc47
 irmoab	nominative	Ir-moab	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0240.jsonl#174ca2b936f42baa
 irnahash	nominative	Ir-nahash	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
-iron	nominative	Iron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#e6c89a91d0331289
 irpeel	nominative	Irpeel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#647fb4c628628505
 irshemesh	nominative	Irshemesh	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#c3cd99b297ac682e
 iru	nominative	Iru	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0240.jsonl#afce44f4490940b9
@@ -2418,7 +2408,6 @@ jekuthiel	nominative	Jekuthiel	model-reading	1	read from Scripture by claude-son
 jemimah	nominative	Jemima	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#18ab398f8dc9473d
 jemuel	nominative	Jemuel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0272.jsonl#1c1761cb03e2f0a4
 jephthah	nominative	Jephthah	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#20d34f07a354e1b1
-jephthah-2	nominative	Jephthah	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 jephthahs-daughter	nominative	Jephthah's daughter	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
 jephunneh	nominative	Jephunneh	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0005.jsonl#fde82518398ddf99
 jephunneh-2	nominative	Jephunneh	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0273.jsonl#06f9043a6335dc71
@@ -2504,7 +2493,6 @@ jether	nominative	Jether	model-reading	1	read from Scripture by claude-sonnet-5,
 jether-2	nominative	Jether	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#f226518f3e9d3aae
 jether-3	nominative	Jether	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#02c7d0c04eb40ea9
 jetheth	nominative	Jetheth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#7b7d63facd8a8daa
-jethlah	nominative	Jethlah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
 jetur	nominative	Jetur	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#a49e4c6c3622a5c6
 jeuel	nominative	Jeuel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#8cf9e6b570d3ce41
 jeuel-2	nominative	Jeuel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0283.jsonl#57c94ef9c608b1ed
@@ -2826,7 +2814,6 @@ kish-son-of-abdi	nominative	Kish	model-reading	1	read from Scripture by claude-s
 kishi	nominative	Kishi	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0320.jsonl#70fb4d879cb622dc
 kishion	nominative	Kishion	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0062.jsonl#8ee4ac1da83c9d85
 kishon	nominative	Kishon	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#95a94b4d8e6fe0e1
-kithlish	nominative	Kithlish	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
 kitron	nominative	Kitron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0062.jsonl#7bcab484267a1c5e
 kittim-2	nominative	Kittim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#e27cde0175dca896
 kittim-h3794	nominative	Kittim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#a17808917a63d4c6
@@ -3018,7 +3005,6 @@ makaz	nominative	Makaz	model-reading	1	read from Scripture by claude-sonnet-5, a
 makheloth	nominative	Makheloth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0341.jsonl#cec33a88ab4ea29c
 makirites	nominative	Makirites	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0341.jsonl#5d6fa2c3b722702c
 makkedah	nominative	Makkedah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
-maktesh	nominative	Maktesh	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 malachi	nominative	Malachi	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0342.jsonl#6beb04821c140041
 malcam	nominative	Malcam	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0004.jsonl#0ef434d806865889
 malchiel	nominative	Malchiel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0342.jsonl#37200259b18e1472
@@ -3062,7 +3048,6 @@ maoch	nominative	Maoch	model-reading	1	read from Scripture by claude-sonnet-5, a
 maon	nominative	Maon	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#d1fb6a6646796a44
 maon-2	nominative	Maon	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0077.jsonl#27b5e9d13272c148
 marah	nominative	Marah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
-maralah	nominative	Maralah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0096.jsonl#2dbb3ec4ee594755
 mareal	nominative	Maralah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0347.jsonl#434b1cc06c5903fb
 mareshah	nominative	Mareshah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0347.jsonl#87f819e2b6caee45
 mareshah-2	nominative	Mareshah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0347.jsonl#bcbb58f814e64c8c
@@ -3136,7 +3121,6 @@ mehujael	nominative	Mehujael	model-reading	1	read from Scripture by claude-sonne
 mehuman	nominative	Mehuman	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#4e173e1868a201cd
 mehunim	nominative	Mehunim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0005.jsonl#566a1682a201b5dd
 mejarkon	nominative	Mejarkon	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee
-mekonah	nominative	Mekonah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
 melatiah	nominative	Melatiah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1d411950900972a7
 melchi	nominative	Melchi	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0355.jsonl#0a0567381daf9edc
 melchi-2	nominative	Melchi	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0004.jsonl#262df278fad2714e
@@ -3779,7 +3763,6 @@ rabbith	nominative	Rabbith	model-reading	1	read from Scripture by claude-sonnet-
 rabsaris	nominative	Rab-saris	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#419ff07e7c4bf249
 rabshakeh	nominative	Rabshakeh	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b8b142922fa94fcf
 racal	nominative	Racal	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
-rachal	nominative	Rachal	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
 rachel	nominative	Rachel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
 raddai	nominative	Raddai	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#17c3e67e85d130cf
 rahab	nominative	Rahab	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0427.jsonl#be0c40074dad0fff
@@ -3824,7 +3807,6 @@ rechab	nominative	Rechab	model-reading	1	read from Scripture by claude-sonnet-5,
 rechab-2	nominative	Rechab	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0431.jsonl#71023012f93d2b3d
 rechab-3	nominative	Rechab	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0431.jsonl#81c2d04bf4cff79d
 rechabites	nominative	Rechabites	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#3e1bef2ad5ae9e9f
-rechah	nominative	Rechah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
 redsea	nominative	Red Sea	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
 redsea-2	nominative	Red Sea	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0431.jsonl#975b85374a17bde8
 redsea-3	nominative	Red Sea	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0432.jsonl#87cd5fa72a26a323
@@ -4018,7 +4000,6 @@ shaaraim-2	nominative	Shaaraim	model-reading	1	read from Scripture by claude-son
 shaashgaz	nominative	Shaashgaz	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0101.jsonl#227b19921e2d4708
 shabbethai-2	nominative	Shabbethai	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#d6efac47ce5d5aa3
 shaharaim	nominative	Shaharaim	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
-shahazimah	nominative	Shahazimah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0088.jsonl#a396031864db40c2
 shahazumah	nominative	Shahazumah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
 shalishah	nominative	Shalishah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#1496f94bbf033c85
 shallecheth	nominative	Shallecheth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#0efe7dc605c9c5ef
@@ -4215,8 +4196,6 @@ sheva	nominative	Sheva	model-reading	1	read from Scripture by claude-opus-5-5, a
 sheva-2	nominative	Sheva	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0010.jsonl#3c9daa761ec75d8a
 shiba	nominative	Shebah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#c78b0e182d4dae48
 shichemites	nominative	Shechemites	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#259165efee0b4164
-shicron	nominative	Shicron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0130.jsonl#39556715e3e0422f
-shihon	nominative	Shihon	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 shihor	nominative	Shihor	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0478.jsonl#6a7de7e90264b657
 shihorlibnath	nominative	Shihor-libnath	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask2-0003.jsonl#085ba5744babae21
 shikkeron	nominative	Shikkeron	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0092.jsonl#d28d8bd3e7c8afa2
@@ -4656,7 +4635,6 @@ uzziel-4	nominative	Uzziel	model-reading	1	read from Scripture by claude-sonnet-
 uzziel-5	nominative	Uzziel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#875c916a0ae53c49
 uzziel-6	nominative	Uzziel	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#0c9a6fe9caa76984
 uzzielites	nominative	Uzzielites	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#ca5f608dff41dae8
-vaheb	nominative	Vaheb	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0143.jsonl#32095afff23125be
 vaizatha	nominative	Vajezatha	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#64d1f27a7e20a313
 valleygate	nominative	Valley Gate	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#df65be9a89db4861
 valleyofachor	nominative	Valley of Achor	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0104.jsonl#1aba6f793957a5fd
@@ -4764,7 +4742,6 @@ zarchites	nominative	Zarchites	model-reading	1	read from Scripture by claude-son
 zarephath	nominative	Zarephath	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#79f740494070b228
 zarethan	nominative	Zarethan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#504182d232de3ec7
 zarethshahar	nominative	Zareth-shahar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
-zarthan	nominative	Zarthan	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
 zattu	nominative	Zattu	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#b84494230acd140a
 zaza	nominative	Zaza	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#7bf8155febd1d139
 zebadiah	nominative	Zebadiah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#d4b29bdd859496fd
@@ -4847,11 +4824,9 @@ zerah-6	nominative	Zerah	model-reading	1	read from Scripture by claude-sonnet-5,
 zerahiah	nominative	Zerahiah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#da3c0208a5f83184
 zerahiah-2	nominative	Zerahiah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#497abbde10b60884
 zered	nominative	Zered	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
-zereda	nominative	Zereda	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
 zeredah	nominative	Zeredah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
 zeredah-2	nominative	Zeredathah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#238e832ef41119a4
 zererah	nominative	Zererath	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f
-zererath	nominative	Zererath	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0150.jsonl#c349b2d702bd1f38
 zeresh	nominative	Zeresh	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#13ce1446e77557e0
 zereth	nominative	Zereth	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#a48624da290f1b0f
 zerethshahar	nominative	Zarethshahar	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0547.jsonl#8860f65bcd56ebe5

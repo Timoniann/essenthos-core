@@ -1,0 +1,10 @@
+# producer   by hand: the town Jiphtah, which Strong's headword H3316 wrote as a place 'Jephthah', folded into the gazetteer's Iphtah (PRB-1418), applied by forge owner-rows
+# by         Essenthos: jephthah-2, the place record Strong's headword H3316 made for the town of Joshua 15:43, folded into Iphtah, the gazetteer's record of the same town, read against the one verse both hold by claude-opus-5-5 on 2026-11-12 (PRB-1418)
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1418	names/BHSA	remove	6.15:43.2	jephthah-2	\N	\N	\N	\N	6.15:43.2 names Jiphtah, the town of Judah, which is the gazetteer's Iphtah: jephthah-2 folded into iphtah
+PRB-1418	names/BHSA	add	6.15:43.2	iphtah	\N	name	\N	\N	6.15:43.2 names Jiphtah, the town of Judah, which is the gazetteer's Iphtah: jephthah-2 folded into iphtah
+PRB-1418	names/GRCBRENT	remove	6.15:43.2	jephthah-2	\N	\N	\N	\N	6.15:43.2 names Jiphtah, the town of Judah, which is the gazetteer's Iphtah: jephthah-2 folded into iphtah
+PRB-1418	names/GRCBRENT	add	6.15:43.2	iphtah	\N	name	\N	\N	6.15:43.2 names Jiphtah, the town of Judah, which is the gazetteer's Iphtah: jephthah-2 folded into iphtah
+PRB-1418	names/VULGCLEM	remove	6.15:43.1	jephthah-2	\N	\N	\N	\N	6.15:43.1 names Jiphtah, the town of Judah, which is the gazetteer's Iphtah: jephthah-2 folded into iphtah
+PRB-1418	names/VULGCLEM	add	6.15:43.1	iphtah	\N	name	\N	\N	6.15:43.1 names Jiphtah, the town of Judah, which is the gazetteer's Iphtah: jephthah-2 folded into iphtah

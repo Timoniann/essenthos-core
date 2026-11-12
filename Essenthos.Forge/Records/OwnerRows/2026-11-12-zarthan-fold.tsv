@@ -1,0 +1,24 @@
+# producer   by hand: Zarthan folded into Zarethan, one town of the Jordan valley written twice (PRB-1418), applied by forge owner-rows
+# by         Essenthos: Zarthan, the record Strong's headword H6891 made, folded into Zarethan, the gazetteer's record of the same town, read against the three verses both hold by claude-opus-5-5 on 2026-11-12 (PRB-1418)
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1418	names/BHSA	remove	6.3:16.22	zarthan	\N	\N	\N	\N	6.3:16.22 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/BHSA	add	6.3:16.22	zarethan	\N	name	\N	\N	6.3:16.22 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/BHSA	remove	11.4:12.12	zarthan	\N	\N	\N	\N	11.4:12.12 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/BHSA	add	11.4:12.12	zarethan	\N	name	\N	\N	11.4:12.12 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/BHSA	remove	11.7:46.16	zarthan	\N	\N	\N	\N	11.7:46.16 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/BHSA	add	11.7:46.16	zarethan	\N	name	\N	\N	11.7:46.16 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GRCBRENT	remove	6.3:16.17	zarthan	\N	\N	\N	\N	6.3:16.17 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GRCBRENT	add	6.3:16.17	zarethan	\N	name	\N	\N	6.3:16.17 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GRCBRENT	remove	11.4:12.15	zarthan	\N	\N	\N	\N	11.4:12.15 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GRCBRENT	add	11.4:12.15	zarethan	\N	name	\N	\N	11.4:12.15 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GRCBRENT	remove	11.7:33.17	zarthan	\N	\N	\N	\N	11.7:33.17 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GRCBRENT	add	11.7:33.17	zarethan	\N	name	\N	\N	11.7:33.17 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GEEZ81	remove	11.4:12.10	zarthan	\N	\N	\N	\N	11.4:12.10 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/GEEZ81	add	11.4:12.10	zarethan	\N	name	\N	\N	11.4:12.10 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/VULGCLEM	remove	6.3:16.22	zarthan	\N	\N	\N	\N	6.3:16.22 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/VULGCLEM	add	6.3:16.22	zarethan	\N	name	\N	\N	6.3:16.22 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/VULGCLEM	remove	11.4:12.14	zarthan	\N	\N	\N	\N	11.4:12.14 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/VULGCLEM	add	11.4:12.14	zarethan	\N	name	\N	\N	11.4:12.14 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/VULGCLEM	remove	11.7:46.14	zarthan	\N	\N	\N	\N	11.7:46.14 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan
+PRB-1418	names/VULGCLEM	add	11.7:46.14	zarethan	\N	name	\N	\N	11.7:46.14 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan

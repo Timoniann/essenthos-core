@@ -1,0 +1,14 @@
+# producer   by hand: place words that stood on another record moved to the gazetteer's record the verse names: Laishah, Uzal, Avva, Rimmono, Magadan, Arimathea and Pelusium (PRB-1418), applied by forge owner-rows
+# by         Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	record	values	why
+PRB-1418	records/facts/clauses	drop	laish-2	{"ordinal": 1}	laish-2's clause 'near gallim' was read from 23.10:30, whose word is the gazetteer's laishah
+PRB-1418	records/facts/clauses	drop	laish-2	{"ordinal": 2}	laish-2's clause 'near anathoth-3' was read from 23.10:30, whose word is the gazetteer's laishah
+PRB-1418	records/facts/clauses	put	laishah	{"ordinal": 2, "relation": "near", "target": "anathoth-3", "ref": "23.10:30", "citation": null, "witness": null, "original": null, "method": "model-reading", "confidence": "0.35", "by": "read from Scripture by claude-sonnet-5, asked 2026-09-16", "run": "rest-0063.jsonl#9ea4443fafbcef05", "note": null}	laish-2's clause 'near anathoth-3' was read from 23.10:30, whose word is the gazetteer's laishah
+PRB-1418	records/names	put	laishah	{"n": 1, "label": "Laishah", "kind": "name", "hebrew_strong": "H3919"}	The word of ISA 10:30 that names Laishah is Strong's H3919, now on this record
+PRB-1418	records/names	put	avva	{"n": 2, "label": "Avva", "kind": "name", "hebrew_strong": "H5755"}	The word of 2KI 17:24 that names Avva is Strong's H5755, now on this record
+PRB-1418	records/names	put	rimmono	{"n": 1, "label": "Rimmono", "kind": "name", "hebrew_strong": "H7417"}	The word of 1CH 6:77 that names Rimmono is Strong's H7417, now on this record
+PRB-1418	records/names	put	magadan	{"n": 1, "label": "Magadan", "kind": "name", "greek": "Μαγαδάν", "greek_strong": "G3093"}	The word of MAT 15:39 that names Magadan in Nestle is numbered G3093, now on this record
+PRB-1418	records/names	put	arimathea	{"n": 1, "label": "Arimathaea", "kind": "name", "greek": "Ἀριμαθαία", "greek_strong": "G707"}	Arimathea's Greek name, Strong's G707, moved from Ramah with its four words
+PRB-1418	records/names	put	pelusium	{"n": 1, "label": "Sin", "kind": "name", "hebrew_strong": "H5512"}	The word of EZK 30:15-16 that names Sin, the city of Egypt, is Strong's H5512, now on this record
+PRB-1418	records/names	drop	ramah	{"n": 1}	Ramah's name Arimathaea (G707) belongs to the gazetteer's Arimathea, which now holds its four words

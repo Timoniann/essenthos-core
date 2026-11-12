@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	genitive	Аарона	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -168,9 +168,6 @@ absalom	nominative	Авесалом	model-reading	1	read from Scripture by claud
 accad	genitive	Аккада	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
 accad	locative	Аккаді	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
 accad	nominative	Аккад	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468
-accho	genitive	Акко	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
-accho	locative	Акко	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
-accho	nominative	Акко	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#2692438a39455166
 acco	genitive	Акко	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
 acco	locative	Акко	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
 acco	nominative	Акко	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c
@@ -529,9 +526,6 @@ akkub-5	nominative	Аккув	model-reading	1	read from Scripture by claude-sonn
 akrabbim	genitive	Акраббіму	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
 akrabbim	locative	Акраббімі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
 akrabbim	nominative	Акраббім	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
-alammelech	genitive	Алламмелеха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0006.jsonl#2cc1e31e4ffb5646
-alammelech	locative	Алламмелесі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0006.jsonl#2cc1e31e4ffb5646
-alammelech	nominative	Алламмелех	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0006.jsonl#2cc1e31e4ffb5646
 alemeth	genitive	Алемета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth	nominative	Алемет	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth-2	genitive	Алемета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0028.jsonl#0c8022e9871a0970
@@ -1086,8 +1080,8 @@ asher	nominative	Асир	model-reading	1	read from Scripture by claude-sonnet-5
 asher-2	genitive	Асира	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 asher-2	locative	Асирі	model-reading	1	declined by GPT-6 (Codex), asked 2026-10-04	\N
 asher-2	nominative	Асир	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-asherites	genitive	асирця	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#c2a283f1f2044edc
-asherites	nominative	асирець	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#c2a283f1f2044edc
+asherites	genitive	асирців	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12 (PRB-1570, PRB-1602)	\N
+asherites	nominative	асирці	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12 (PRB-1570, PRB-1602)	\N
 ashhur	genitive	Ашхура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#ce1a57801614b7e5
 ashhur	nominative	Ашхур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#ce1a57801614b7e5
 ashkelon	genitive	Ашкелону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#461b7ad99fa74843
@@ -2084,9 +2078,6 @@ bithynia	nominative	Віфінія	model-reading	1	read from Scripture by claude
 biziothiah	genitive	Бізйотеї	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0024.jsonl#cf05402f31a50918
 biziothiah	locative	Бізйотеї	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 biziothiah	nominative	Бізйотея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0024.jsonl#cf05402f31a50918
-bizjothjah	genitive	Бізйотеї	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#4b48c3215b16dccd
-bizjothjah	locative	Бізйотеї	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#4b48c3215b16dccd
-bizjothjah	nominative	Бізйотея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#4b48c3215b16dccd
 biztha	genitive	Біззети	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#6c2e8aafeacd71c8
 biztha	nominative	Біззета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#6c2e8aafeacd71c8
 blastus	genitive	Власта	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0103.jsonl#f6cf9a330048ff70
@@ -2193,9 +2184,6 @@ caiaphas-house	nominative	Дім Каяфи	model-reading	0.93	Essenthos, model 
 cain	genitive	Каїна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
 cain	locative	Каїні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
 cain	nominative	Каїн	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0025.jsonl#96c156465b679e0a
-cain-2	genitive	Каїна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0022.jsonl#83a13a0f238a447b
-cain-2	locative	Каїні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0022.jsonl#83a13a0f238a447b
-cain-2	nominative	Каїн	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 cainan	genitive	Каїнама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#89036c275defbaab
 cainan	nominative	Каїнам	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#89036c275defbaab
 calah	genitive	Калаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0108.jsonl#70b3b75115663632
@@ -2383,9 +2371,6 @@ chorazin	nominative	Хоразін	model-reading	1	read from Scripture by claude
 chub	genitive	Кува	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#7b3f1ed8f468457c
 chub	locative	Куві	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#7b3f1ed8f468457c
 chub	nominative	Кув	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#7b3f1ed8f468457c
-chun	genitive	Куну	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#662509f97c83edbd
-chun	locative	Куні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#662509f97c83edbd
-chun	nominative	Кун	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#662509f97c83edbd
 chuza	genitive	Худзи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0028.jsonl#39ea109b84095349
 chuza	locative	Худзі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0028.jsonl#39ea109b84095349
 chuza	nominative	Худза	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0028.jsonl#39ea109b84095349
@@ -2404,9 +2389,6 @@ cityofpalms	nominative	Місто Пальм	model-reading	1	read from Scripture
 cityofsalt	genitive	Ір-Гаммелаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#2bc1ce381d3d60c4
 cityofsalt	locative	Ір-Гаммелаху	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#2bc1ce381d3d60c4
 cityofsalt	nominative	Ір-Гаммелах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#2bc1ce381d3d60c4
-clauda	genitive	Клавди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#8d80dc7c8daa9717
-clauda	locative	Клавді	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#8d80dc7c8daa9717
-clauda	nominative	Клавда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0035.jsonl#8d80dc7c8daa9717
 claudia	genitive	Клавдії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#6e2e13cfd82aacb3
 claudia	nominative	Клавдія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#6e2e13cfd82aacb3
 claudius	genitive	Клавдія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0116.jsonl#1a499610e4a4640b
@@ -2736,9 +2718,6 @@ ebez	nominative	Евес	model-reading	1	read from Scripture by claude-sonnet-5,
 ebron	genitive	Еврону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#5bc22f20c9c889da
 ebron	locative	Евроні	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 ebron	nominative	Еврон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#5bc22f20c9c889da
-ebronah	genitive	Аврони	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed
-ebronah	locative	Авроні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed
-ebronah	nominative	Аврона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0040.jsonl#127ff8df3445d0ed
 ecbatana	genitive	Ахмети	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#033478385e169069
 ecbatana	locative	Ахметі	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 ecbatana	nominative	Ахмета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#033478385e169069
@@ -2885,9 +2864,6 @@ eleazar-8	genitive	Елеазара	model-reading	1	read from Scripture by claud
 eleazar-8	nominative	Елеазар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#fed4ea2d23563131
 eleazar-9	genitive	Елеазара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0139.jsonl#016f18021dcd7203
 eleazar-9	nominative	Елеазар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0139.jsonl#016f18021dcd7203
-eleph	genitive	Елефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0041.jsonl#59be1c46128f1129
-eleph	locative	Елефі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0041.jsonl#59be1c46128f1129
-eleph	nominative	Елеф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0041.jsonl#59be1c46128f1129
 elhanan	genitive	Елханана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#1a00061ba5345809
 elhanan	nominative	Елханан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0033.jsonl#1a00061ba5345809
 elhanan-son-of-dodo	genitive	Елханана	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-08	zz-zz-zz-zz-zz-kin3-0000.jsonl#421ebccf0f346a04
@@ -4197,9 +4173,6 @@ hanun-3	nominative	Ханун	model-reading	1	read from Scripture by claude-sonn
 hapharaim	genitive	Хафараїму	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
 hapharaim	locative	Хафараїмі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
 hapharaim	nominative	Хафараїм	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0048.jsonl#5a984e47bb7686bc
-haphraim	genitive	Хафараїму	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0004.jsonl#487ab7eac318a154
-haphraim	locative	Хафараїмі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0004.jsonl#487ab7eac318a154
-haphraim	nominative	Хафараїм	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0004.jsonl#487ab7eac318a154
 happizzez	genitive	Гаппіццеца	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-rulings-0000.jsonl#00fb96b8ed5eec2a
 happizzez	nominative	Гаппіццец	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-rulings-0000.jsonl#00fb96b8ed5eec2a
 hara	genitive	Хари	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0060.jsonl#380c106730c45463
@@ -4949,9 +4922,6 @@ irmoab	nominative	Їр-Моав	model-reading	1	read from Scripture by claude-so
 irnahash	genitive	Ір-Нахашу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
 irnahash	locative	Ір-Нахаші	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
 irnahash	nominative	Ір-Нахаш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#da72612066b1731d
-iron	genitive	Їр'она	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#e6c89a91d0331289
-iron	locative	Їр'оні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#e6c89a91d0331289
-iron	nominative	Їр'он	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#e6c89a91d0331289
 irpeel	genitive	Їрпеїла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#647fb4c628628505
 irpeel	locative	Їрпеїлі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#647fb4c628628505
 irpeel	nominative	Їрпеїл	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0070.jsonl#647fb4c628628505
@@ -5584,9 +5554,6 @@ jemuel	genitive	Ємуїла	model-reading	1	read from Scripture by claude-sonne
 jemuel	nominative	Ємуїл	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0272.jsonl#1c1761cb03e2f0a4
 jephthah	genitive	Їфтаха	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#20d34f07a354e1b1
 jephthah	nominative	Їфтах	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#20d34f07a354e1b1
-jephthah-2	genitive	Їфтаха	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-jephthah-2	locative	Їфтасі	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-jephthah-2	nominative	Їфтах	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 jephthahs-daughter	genitive	дочки Їфтаха	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
 jephthahs-daughter	locative	дочці Їфтаха	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
 jephthahs-daughter	nominative	Дочка Їфтаха	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
@@ -5771,9 +5738,6 @@ jether-3	genitive	Єтера	model-reading	1	read from Scripture by claude-sonne
 jether-3	nominative	Єтер	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#02c7d0c04eb40ea9
 jetheth	genitive	Єтета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#7b7d63facd8a8daa
 jetheth	nominative	Єтет	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#7b7d63facd8a8daa
-jethlah	genitive	Їтли	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
-jethlah	locative	Їтлі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
-jethlah	nominative	Їтла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0079.jsonl#58c5277663c1a45d
 jetur	genitive	Єтура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#a49e4c6c3622a5c6
 jetur	nominative	Єтур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#a49e4c6c3622a5c6
 jeuel	genitive	Єуїла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0282.jsonl#8cf9e6b570d3ce41
@@ -6489,9 +6453,6 @@ kishion	nominative	Кішйон	model-reading	1	read from Scripture by claude-so
 kishon	genitive	Кішону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#95a94b4d8e6fe0e1
 kishon	locative	Кішоні	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 kishon	nominative	Кішон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#95a94b4d8e6fe0e1
-kithlish	genitive	Кітлішу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
-kithlish	locative	Кітліші	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
-kithlish	nominative	Кітліш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#6d4f0fb5213fc7a3
 kitron	genitive	Кітрону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0062.jsonl#7bcab484267a1c5e
 kitron	locative	Кітроні	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 kitron	nominative	Кітрон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0062.jsonl#7bcab484267a1c5e
@@ -6940,8 +6901,6 @@ makirites	nominative	Махіри	model-reading	1	read from Scripture by claude-
 makkedah	genitive	Маккеди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
 makkedah	locative	Маккеді	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
 makkedah	nominative	Маккеда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0076.jsonl#50ace8da2e98ac7d
-maktesh	genitive	Махтешу	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-maktesh	nominative	Махтеш	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 malachi	genitive	Малахії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0342.jsonl#6beb04821c140041
 malachi	nominative	Малахія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0342.jsonl#6beb04821c140041
 malcam	genitive	Малкама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0004.jsonl#0ef434d806865889
@@ -7037,9 +6996,6 @@ maon-2	nominative	Маон	model-reading	1	read from Scripture by claude-sonnet-
 marah	genitive	Мари	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
 marah	locative	Марі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
 marah	nominative	Мара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0346.jsonl#c64ffabddcf5a49e
-maralah	genitive	Мар'али	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0096.jsonl#2dbb3ec4ee594755
-maralah	locative	Мар'алі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0096.jsonl#2dbb3ec4ee594755
-maralah	nominative	Мар'ала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0096.jsonl#2dbb3ec4ee594755
 mareal	genitive	Мар'али	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0347.jsonl#434b1cc06c5903fb
 mareal	locative	Мар'алі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0347.jsonl#434b1cc06c5903fb
 mareal	nominative	Мар'ала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0347.jsonl#434b1cc06c5903fb
@@ -7202,9 +7158,6 @@ mehunim	nominative	меуніти	model-reading	1	read from Scripture by claude-
 mejarkon	genitive	Ме-Яркону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee
 mejarkon	locative	Ме-Ярконі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee
 mejarkon	nominative	Ме-Яркон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee
-mekonah	genitive	Мехони	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
-mekonah	locative	Мехоні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
-mekonah	nominative	Мехона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3ef84070a1c1f4a6
 melatiah	genitive	Мелатії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1d411950900972a7
 melatiah	nominative	Мелатія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1d411950900972a7
 melchi	genitive	Мелхія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0355.jsonl#0a0567381daf9edc
@@ -8694,9 +8647,6 @@ rabshakeh	nominative	Рабсак	model-reading	1	read from Scripture by claude-
 racal	genitive	Рахала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
 racal	locative	Рахалі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
 racal	nominative	Рахал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
-rachal	genitive	Рахала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
-rachal	locative	Рахалі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
-rachal	nominative	Рахал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b7308ef6eb8744f
 rachel	genitive	Рахілі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
 rachel	nominative	Рахіль	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
 raddai	genitive	Раддая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#17c3e67e85d130cf
@@ -8813,9 +8763,6 @@ rechab-3	genitive	Рехава	model-reading	1	read from Scripture by claude-son
 rechab-3	nominative	Рехав	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0431.jsonl#81c2d04bf4cff79d
 rechabites	genitive	Рехавітів	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#3e1bef2ad5ae9e9f
 rechabites	nominative	Рехавіти	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#3e1bef2ad5ae9e9f
-rechah	genitive	Рехи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
-rechah	locative	Ресі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
-rechah	nominative	Реха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#383caf996b28522c
 redsea	genitive	Червоного моря	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
 redsea	locative	Червоному морі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
 redsea	nominative	Червоне море	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0084.jsonl#43e6bb1af4c4aaf0
@@ -9285,9 +9232,6 @@ shabbethai-2	genitive	Шаббетая	model-reading	1	read from Scripture by cl
 shabbethai-2	nominative	Шаббетай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#d6efac47ce5d5aa3
 shaharaim	genitive	Шахараїма	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
 shaharaim	nominative	Шахараїм	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
-shahazimah	genitive	Шахаціми	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0088.jsonl#a396031864db40c2
-shahazimah	locative	Шахацімі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0088.jsonl#a396031864db40c2
-shahazimah	nominative	Шахаціма	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0088.jsonl#a396031864db40c2
 shahazumah	genitive	Шахаціми	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
 shahazumah	locative	Шахацимі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
 shahazumah	nominative	Шахацима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
@@ -9706,12 +9650,6 @@ shiba	locative	Шів'ї	model-reading	1	read from Scripture by claude-sonnet-5,
 shiba	nominative	Шів'а	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#c78b0e182d4dae48
 shichemites	genitive	Шехемів	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#259165efee0b4164
 shichemites	nominative	Шехеми	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0477.jsonl#259165efee0b4164
-shicron	genitive	Шіккарону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0130.jsonl#39556715e3e0422f
-shicron	locative	Шіккароні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0130.jsonl#39556715e3e0422f
-shicron	nominative	Шіккарон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0130.jsonl#39556715e3e0422f
-shihon	genitive	Шіону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#3f6fb835171f2552
-shihon	locative	Шіоні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#3f6fb835171f2552
-shihon	nominative	Шіон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#3f6fb835171f2552
 shihor	genitive	Шіхору	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0478.jsonl#6a7de7e90264b657
 shihor	locative	Шіхорі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0478.jsonl#6a7de7e90264b657
 shihor	nominative	Шіхор	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0478.jsonl#6a7de7e90264b657
@@ -10706,9 +10644,6 @@ uzziel-6	genitive	Уззіїла	model-reading	1	read from Scripture by claude-s
 uzziel-6	nominative	Уззіїл	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#0c9a6fe9caa76984
 uzzielites	genitive	Аззіїлівців	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#ca5f608dff41dae8
 uzzielites	nominative	Аззіїлівці	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0523.jsonl#ca5f608dff41dae8
-vaheb	genitive	Вагева	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0143.jsonl#32095afff23125be
-vaheb	locative	Вагеві	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0143.jsonl#32095afff23125be
-vaheb	nominative	Вагев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0143.jsonl#32095afff23125be
 vaizatha	genitive	Вайзати	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#64d1f27a7e20a313
 vaizatha	nominative	Вайзата	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#64d1f27a7e20a313
 valleygate	genitive	Долинної брами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#df65be9a89db4861
@@ -10989,9 +10924,6 @@ zarethan	nominative	Цортан	model-reading	1	read from Scripture by claude-s
 zarethshahar	genitive	Церет-Гашшахару	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
 zarethshahar	locative	Церет-Гашшахарі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
 zarethshahar	nominative	Церет-Гашшахар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
-zarthan	genitive	Цортану	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
-zarthan	locative	Цартані	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
-zarthan	nominative	Цартан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#b20047005b1c9cfa
 zattu	genitive	Затту	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#b84494230acd140a
 zattu	nominative	Затту	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#b84494230acd140a
 zaza	genitive	Зази	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#7bf8155febd1d139
@@ -11172,9 +11104,6 @@ zerahiah-2	nominative	Зерахія	model-reading	1	read from Scripture by clau
 zered	genitive	Зереду	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
 zered	locative	Зереді	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
 zered	nominative	Зеред	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#d819a058b07e61f5
-zereda	genitive	Цереди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
-zereda	locative	Цереді	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
-zereda	nominative	Цереда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#98f8243d11f2033d
 zeredah	genitive	Цереди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
 zeredah	locative	Цереді	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
 zeredah	nominative	Цереда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0149.jsonl#7060f385a931ed06
@@ -11184,9 +11113,6 @@ zeredah-2	nominative	Цереда	model-reading	1	read from Scripture by claude-
 zererah	genitive	Церери	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f
 zererah	locative	Церері	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f
 zererah	nominative	Церера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#4b453e045318882f
-zererath	genitive	Церери	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0150.jsonl#c349b2d702bd1f38
-zererath	locative	Церері	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0150.jsonl#c349b2d702bd1f38
-zererath	nominative	Церера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0150.jsonl#c349b2d702bd1f38
 zeresh	genitive	Зереш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#13ce1446e77557e0
 zeresh	nominative	Зереш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0546.jsonl#13ce1446e77557e0
 zereth	genitive	Церета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#a48624da290f1b0f
