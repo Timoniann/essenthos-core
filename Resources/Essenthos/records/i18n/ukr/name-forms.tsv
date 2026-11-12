@@ -8691,9 +8691,9 @@ ramah-4	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet
 ramah-5	genitive	Рами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0119.jsonl#db3a30ec54bc2d4c
 ramah-5	locative	Рамі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0119.jsonl#db3a30ec54bc2d4c
 ramah-5	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0119.jsonl#db3a30ec54bc2d4c
-ramah-6	genitive	Рами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#90279fc505e51a4b
-ramah-6	locative	Рамі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#90279fc505e51a4b
-ramah-6	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#90279fc505e51a4b
+ramah-6	genitive	Рамат-Неґеву	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
+ramah-6	locative	Рамат-Неґеві	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
+ramah-6	nominative	Рамат-Неґев	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
 ramah-7	genitive	Рами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e
 ramah-7	locative	Рамі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e
 ramah-7	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e
@@ -8703,9 +8703,6 @@ ramah-8	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet
 ramah-9	genitive	Рами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#75145dbcf94fd9f3
 ramah-9	locative	Рамі	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 ramah-9	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#75145dbcf94fd9f3
-ramathaimzophim	genitive	Раматаїм-Цофіму	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#cf654d955f3fcd1a
-ramathaimzophim	locative	Раматаїм-Цофімі	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
-ramathaimzophim	nominative	Раматаїм-Цофім	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#cf654d955f3fcd1a
 ramathites	genitive	рам'ян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#9cb94a9e37146130
 ramathites	nominative	рам'яни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#9cb94a9e37146130
 ramathlehi	genitive	Рамат-Лехі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#045d3991a13d5f77
@@ -8714,8 +8711,6 @@ ramathlehi	nominative	Рамат-Лехі	model-reading	1	read from Scripture by
 ramathmizpeh	genitive	Рамат Гамміцпі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#ad764fb68587bab2
 ramathmizpeh	locative	Рамат Гамміцпі	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 ramathmizpeh	nominative	Рамат Гамміцпі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#ad764fb68587bab2
-ramathofthesouth	genitive	Рамот-Неґеву	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-ramathofthesouth	nominative	Рамот-Неґев	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rameses	genitive	Рамесесу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b7f115b86084bd42
 rameses	locative	Рамесесі	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 rameses	nominative	Рамесес	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b7f115b86084bd42
@@ -8724,9 +8719,6 @@ ramiah	nominative	Рам'я	model-reading	1	read from Scripture by claude-sonnet
 ramoth	genitive	Рамота	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#04e0b1b3b895821d
 ramoth	locative	Рамоті	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 ramoth	nominative	Рамот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#04e0b1b3b895821d
-ramoth-2	genitive	Рамота	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#86f32fe10e439c0c
-ramoth-2	locative	Рамоті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#86f32fe10e439c0c
-ramoth-2	nominative	Рамот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#86f32fe10e439c0c
 ramoth-3	genitive	Рамота	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#cc03de3a0b2086da
 ramoth-3	locative	Рамоті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#cc03de3a0b2086da
 ramoth-3	nominative	Рамот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#cc03de3a0b2086da

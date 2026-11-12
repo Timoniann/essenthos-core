@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # Who else a record may be. The reason, in English, is in i18n/eng/alternatives.
 slug	n	alternative	describes	back	by
 abimelech	1	\N	one king of Gerar whose own name was Abimelech, who dealt with Abraham (GEN 20-21) and again with Isaac (GEN 26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
@@ -23,6 +23,7 @@ azariah-of-the-wall-dedication	1	seraiah-6	\N	f	Essenthos, on the project owner'
 azariah-son-of-zephaniah	1	uzziah	\N	f	Essenthos, Hebrew names read against their verses by claude-opus-5-5 on the project owner's instruction, 2026-10-14
 aziel	1	jaaziel	\N	f	Essenthos, read against the verses in the Hebrew with the King James beside them by claude-opus-5-5 on the project owner's instruction of 2026-11-09
 azubah-2	1	jerioth	\N	t	Essenthos, on the project owner's decision of 2026-09-16 that Jerioth of 1 Chronicles 2:18 is a person the verse does not identify, and that every reading of the clause is shown
+baalathbeer	1	ramah-6	\N	t	Essenthos, Ramath of the south and Baalath-beer of JOS 19:8 read against their verse by claude-opus-5-5 on the project owner's word of 2026-11-12
 barachias	1	berechiah-6	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
 beeri	1	anah-son-of-zibeon	\N	t	Essenthos, on the report of records holding several people, each occurrence read against its verse by claude-opus-5-5, 2026-09-25
 berechiah-6	1	barachias	\N	t	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
@@ -89,6 +90,7 @@ oholibamah-wife-of-esau	1	judith	\N	f	Essenthos, on the project owner's decision
 phicol	1	\N	one man named Phicol, who commanded the army of Gerar under Abraham's Abimelech and again under Isaac's (GEN 21:22; 26:26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
 ramah	1	ramah-4	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 ramah-4	1	ramah	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+ramah-6	1	baalathbeer	\N	f	Essenthos, Ramath of the south and Baalath-beer of JOS 19:8 read against their verse by claude-opus-5-5 on the project owner's word of 2026-11-12
 redsea	1	redsea-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 redsea	2	redsea-3	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 redsea-2	1	redsea	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01

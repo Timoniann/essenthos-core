@@ -5362,20 +5362,22 @@ ramah-3	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-4	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-4	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-4	5	Ramathaim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
+ramah-4	6	Ramathaimzophim	name	\N	\N	\N	\N	H7436	\N	\N	\N
+ramah-4	7	Ramathaim Zophim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramah-5	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-5	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-6	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-6	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-6	5	Ramath	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
+ramah-6	6	Ramath of the south	name	\N	\N	\N	\N	H7418	\N	\N	\N
+ramah-6	7	Ramoth	name	\N	\N	\N	\N	H7216	\N	\N	\N
+ramah-6	8	Ramoth-negev	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramah-7	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-7	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-8	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-8	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-9	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-9	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
-ramathaimzophim	1	Ramathaimzophim	name	\N	\N	\N	\N	H7436	\N	\N	\N
-ramathaimzophim	2	Ramathaim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
-ramathaimzophim	3	Ramathaim Zophim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramathites	1	Ramathites	gentilic	\N	\N	\N	\N	H7435	\N	\N	\N
 ramathlehi	1	Ramath-lehi	name	\N	\N	\N	\N	H7437	\N	\N	\N
 ramathlehi	2	Jawbone Hill	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
@@ -5383,13 +5385,10 @@ ramathlehi	3	Ramath Lehi	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geoc
 ramathmizpeh	1	Ramath-mizpeh	name	\N	\N	\N	\N	H7434	\N	\N	\N
 ramathmizpeh	2	Ramah-Mizpeh	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramathmizpeh	3	Ramath Mizpah	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
-ramathofthesouth	1	Ramath of the south	name	\N	\N	\N	\N	H7418	\N	\N	\N
 rameses	1	Rameses	proper name	רַעְמְסֵס	raəməses	Ραμεσση	Ramessē	H7486	\N	\N	\N
 rameses	2	Raamses	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramiah	1	Ramiah	proper name	רַמְיָה	raməyah	Ραμια	Ramia	H7422	\N	\N	\N
 ramoth	1	Ramoth	name	\N	\N	\N	\N	H7216	\N	\N	\N
-ramoth-2	1	Ramoth	name	\N	\N	\N	\N	H7216	\N	\N	\N
-ramoth-2	2	Ramoth-negev	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramoth-3	1	Ramoth	name	\N	\N	\N	\N	H7216	\N	\N	\N
 ramothgilead	1	Ramoth-gilead	name	\N	\N	\N	\N	H7433	\N	\N	\N
 ramothgilead	2	Ramoth Gilead	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0

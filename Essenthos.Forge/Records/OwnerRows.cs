@@ -12,7 +12,7 @@ namespace Essenthos.Core.Records;
 /// <summary>
 /// Questions the owner's review lists asked, settled from the texts on his word and written as edits of the files the
 /// build reads (NOT-0219): a name settled on a word of a reference text (<c>names/&lt;REF&gt;</c>), a dataset's verse
-/// row filed under another record of ours (<c>external/bibledata/references</c>), or a row of a record file
+/// row filed under another record of ours (<c>external/bibledata/references</c>, <c>external/openbible/references</c>), or a row of a record file
 /// (<c>records/**</c>: a record made, its names, lines and passages, a known-for clause moved to it). Each decided edit is
 /// a row of a file in <see cref="Folder"/>, the record files' rows in files ending <see cref="RecordRowsSuffix"/>;
 /// applying them again changes nothing, and a row the files cannot take (a word that is not there, a Strong number that
@@ -44,6 +44,9 @@ internal static class OwnerRows
     public const string Drop = "drop";
 
     private const string References = "external/bibledata/references";
+
+    /// <summary>The gazetteer's verse rows, refiled when the place they are filed under is folded into another.</summary>
+    private const string GazetteerReferences = "external/openbible/references";
 
     private const string Records = "records/records";
 
@@ -227,12 +230,12 @@ internal static class OwnerRows
                     "are carried in git (the datasets' files are kept in the store): restore them before these rows.");
             }
 
-            IRowEdit edit = group.Key == References
-                ? new ReferenceEdit(store)
+            IRowEdit edit = group.Key is References or GazetteerReferences
+                ? new ReferenceEdit(store, group.Key)
                 : group.Key.StartsWith(NameProducts.Folder + "/", StringComparison.Ordinal)
                   && NameProducts.IsReference(group.Key[(NameProducts.Folder.Length + 1)..])
                     ? new NameEdit(store, group.Key[(NameProducts.Folder.Length + 1)..], group.Select(r => r.At))
-                    : throw new InvalidDataException($"{group.Key}: owner rows edit a reference text's names or {References}, not this file.");
+                    : throw new InvalidDataException($"{group.Key}: owner rows edit a reference text's names, {References} or {GazetteerReferences}, not this file.");
             edits.Add(edit);
 
             foreach (var row in group)
@@ -652,8 +655,9 @@ internal static class OwnerRows
     }
 
     /// <summary>
-    /// The dataset's verse rows, each filed under a record of ours. A refiled row hangs on a record the dataset gave no
-    /// id of its own, so its id goes as the export writes it for such a record; where that record already holds the
+    /// The dataset's verse rows, each filed under a record of ours. A BibleData row refiled hangs on a record the dataset
+    /// gave no id of its own, so its id goes as the export writes it for such a record; a gazetteer row keeps the id of the
+    /// place it was listed under, which is folded into the record it moves to. Where that record already holds the
     /// dataset's row at the verse, the moving row is dropped, since a record holds one row per dataset and verse.
     /// </summary>
     private sealed class ReferenceEdit : IRowEdit
@@ -664,14 +668,17 @@ internal static class OwnerRows
         private const int Label = 3;
 
         private readonly ProductStore _store;
-        private readonly RecordFile _file = RecordFiles.All.Single(f => f.Product == References);
+        private readonly RecordFile _file;
+        private readonly bool _keepsIds;
         private readonly List<string?[]> _rows;
         private readonly ProductHeader? _header;
 
-        public ReferenceEdit(ProductStore store)
+        public ReferenceEdit(ProductStore store, string product)
         {
             _store = store;
-            using var reader = store.Open(References);
+            _file = RecordFiles.All.Single(f => f.Product == product);
+            _keepsIds = product == GazetteerReferences;
+            using var reader = store.Open(product);
             _header = reader.Header;
             _rows = [.. reader.Rows().Select(row => (string?[])row.Clone())];
         }
@@ -698,7 +705,7 @@ internal static class OwnerRows
                     break;
                 case Refile:
                     _rows[at][Filed] = row.Record;
-                    _rows[at][Id] = null;
+                    _rows[at][Id] = _keepsIds ? _rows[at][Id] : null;
                     break;
                 default:
                     return $"a dataset row is refiled or withdrawn, not '{row.Op}'";
