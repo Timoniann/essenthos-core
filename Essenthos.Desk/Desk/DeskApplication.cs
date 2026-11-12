@@ -55,6 +55,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton<PageReadings>();
         builder.Services.AddSingleton<Visitors>();
         builder.Services.AddSingleton<EssxInspector>();
+        builder.Services.AddSingleton<EssxConverter>();
         builder.Services.AddSingleton(new OperationAllowance(
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();
@@ -91,6 +92,7 @@ internal static class DeskApplication
         desk.MapServerBackups();
         desk.MapVisitors();
         desk.MapEssx();
+        desk.MapEssxConversion();
 
         return app;
     }

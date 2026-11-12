@@ -145,4 +145,59 @@ public sealed class DeskEssxTests : IAsyncLifetime
         problem.Should().Contain("x.essx").And.NotContain("cache");
         Directory.EnumerateFiles(Path.Combine(_root, "cache", "essx")).Should().BeEmpty("a file that cannot be read is not kept");
     }
+
+    [Fact]
+    public async Task AProductGoesToTsvAndBackToTheSameRowsAndNothingIsWrittenBesideIt()
+    {
+        var product = Path.Combine(Owner, "texts", "KJV", "words.essx");
+        var before = File.GetLastWriteTimeUtc(product);
+        var view = await Json<EssxFileView>(await _http.PostAsJsonAsync("/desk-api/essx/open", new EssxOpenRequest("texts/KJV/words.essx")));
+
+        var tsv = await Json<EssxConversionView>(await _http.PostAsync($"/desk-api/essx/files/{view.Id}/convert", null));
+        (tsv.Name, tsv.From, tsv.Format, tsv.Rows).Should().Be(("words.tsv", "words.essx", "tsv", 1000L));
+        tsv.Columns.Select(c => c.Type).Should().Equal("wordkey", "text", "integer");
+        var download = await _http.GetAsync($"/desk-api/essx/converted/{tsv.Id}");
+        download.StatusCode.Should().Be(HttpStatusCode.OK);
+        download.Content.Headers.ContentDisposition!.FileName.Should().Contain("words.tsv");
+        var text = await download.Content.ReadAsByteArrayAsync();
+
+        var essx = await Json<EssxConversionView>(await _http.PostAsync("/desk-api/essx/convert?name=words.tsv&compress=true", new ByteArrayContent(text)));
+        (essx.Name, essx.Format, essx.Rows, essx.Compressed).Should().Be(("words.essx", "essx", 1000L, true));
+        essx.Columns.Select(c => c.Type).Should().Equal("wordkey", "text", "integer");
+        var made = await _http.GetByteArrayAsync($"/desk-api/essx/converted/{essx.Id}");
+
+        var again = await Json<EssxConversionView>(await _http.PostAsync("/desk-api/essx/convert?name=words.essx", new ByteArrayContent(made)));
+        (await _http.GetByteArrayAsync($"/desk-api/essx/converted/{again.Id}")).Should().Equal(text, "the TSV of the .essx made from a TSV is that TSV");
+
+        var opened = await Json<EssxFileView>(await _http.PostAsync($"/desk-api/essx/converted/{essx.Id}/open", null));
+        (opened.Name, opened.Path, opened.Header.Rows).Should().Be(("words.essx", null, 1000L));
+        (await _http.DeleteAsync($"/desk-api/essx/files/{opened.Id}")).StatusCode.Should().Be(HttpStatusCode.NoContent);
+        (await _http.GetAsync($"/desk-api/essx/converted/{essx.Id}")).StatusCode.Should().Be(HttpStatusCode.OK, "closing the opened copy leaves the download");
+
+        (await _http.DeleteAsync($"/desk-api/essx/converted/{essx.Id}")).StatusCode.Should().Be(HttpStatusCode.NoContent);
+        (await _http.GetAsync($"/desk-api/essx/converted/{essx.Id}")).StatusCode.Should().Be(HttpStatusCode.NotFound);
+        Directory.EnumerateFiles(Owner, "*", SearchOption.AllDirectories).Should().Equal(product);
+        File.GetLastWriteTimeUtc(product).Should().Be(before);
+    }
+
+    [Fact]
+    public async Task AHandWrittenTableBecomesAnEssxAndWhatIsNotATableIsRefused()
+    {
+        var table = "\uFEFFbook\tname\tverses\n1\tGenesis\t1533\n2\tExodus\t\\N\n"u8.ToArray();
+        var essx = await Json<EssxConversionView>(await _http.PostAsync("/desk-api/essx/convert?name=books.tsv", new ByteArrayContent(table)));
+        essx.Rows.Should().Be(2);
+        essx.Columns.Select(c => (c.Name, c.Type, c.Nullable)).Should().Equal(("book", "integer", false), ("name", "text", false), ("verses", "integer", true));
+        var view = await Json<EssxFileView>(await _http.PostAsync($"/desk-api/essx/converted/{essx.Id}/open", null));
+        view.Header.Product.Should().Be("books.essx");
+        var rows = await Json<EssxRowsView>(await _http.GetAsync($"/desk-api/essx/files/{view.Id}/rows"));
+        rows.Rows.Should().BeEquivalentTo(new[] { new[] { "1", "Genesis", "1533" }, new string?[] { "2", "Exodus", null } }, o => o.WithStrictOrdering());
+
+        var notATable = await _http.PostAsync("/desk-api/essx/convert?name=notes.txt", new ByteArrayContent("x"u8.ToArray()));
+        notATable.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        var ragged = await _http.PostAsync("/desk-api/essx/convert?name=ragged.tsv", new ByteArrayContent("a\tb\n1\n"u8.ToArray()));
+        ragged.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
+        var problem = await ragged.Content.ReadAsStringAsync();
+        problem.Should().Contain("ragged.tsv").And.NotContain("converted");
+        Directory.EnumerateDirectories(Path.Combine(_root, "cache", "essx", "converted")).Should().ContainSingle("a failed conversion keeps nothing");
+    }
 }

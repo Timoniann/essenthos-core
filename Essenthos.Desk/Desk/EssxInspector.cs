@@ -188,6 +188,24 @@ internal sealed class EssxInspector(DeskPaths paths)
         }
     }
 
+    /// <summary>
+    /// A file made on the desk, opened as a dropped one: a copy of it goes to the cache, so closing it there
+    /// leaves the original to be downloaded.
+    /// </summary>
+    public EssxFileView? OpenCopy(string path, string name)
+    {
+        Directory.CreateDirectory(Uploads);
+        var id = Guid.NewGuid().ToString("N");
+        var full = System.IO.Path.Combine(Uploads, id + EssxLayout.Extension);
+        File.Copy(path, full);
+        _files[id] = new Opened(full, name, true, new ConcurrentDictionary<string, Filter>(StringComparer.Ordinal));
+        return View(id);
+    }
+
+    /// <summary>Where an open file's bytes are and what it is called, for a conversion to read.</summary>
+    public (string Path, string Name)? Source(string id) =>
+        _files.TryGetValue(id, out var opened) ? (opened.Path, opened.Name) : null;
+
     public bool Close(string id)
     {
         if (!_files.TryRemove(id, out var opened))
