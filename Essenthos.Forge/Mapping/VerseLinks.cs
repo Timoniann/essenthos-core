@@ -95,8 +95,9 @@ internal sealed record PairFrames(TextFrame From, TextFrame To, bool ReverseLink
 /// <item>The Ge'ez's chapters placed by its reading of the Greek are that reading's links, and its books divided
 /// its own way are joined through the verse map, each with the line's confidence.</item>
 /// <item>A verse covering a further address joins what stands there primarily in the other text.</item>
-/// <item>A verse pair a source's own word links cross, or a transposition, where no verse link joins it, is a
-/// link of its own; then the covering again, and a link stated twice is one.</item>
+/// <item>A verse pair a source's own word links cross, or a transposition, or a link made by hand (a ruling's accepted
+/// shape included), where no verse link joins it, is a link of its own; then the covering again, and a link stated twice
+/// is one.</item>
 /// </list>
 /// </summary>
 internal static class VerseLinks
@@ -104,6 +105,8 @@ internal static class VerseLinks
     private const string StatedNote = "the verse this source's own word links put against that one";
 
     private const string TransposedNote = "the passage these word links find written at another place";
+
+    private const string ByHandNote = "the verse a word link made by hand puts against that one";
 
     public static DeclaredVersePair? Declaration(string from, string to) =>
         VerseLinkLoader.DeclaredPairs.FirstOrDefault(pair => pair.From == from && pair.To == to);
@@ -377,18 +380,36 @@ internal static class VerseLinks
     }
 
     /// <summary>
-    /// The verse pairs a stated source's word links cross, or a transposition's, where nothing joins them yet: a source
-    /// saying this word renders that one says the two verses answer each other. A model's link testifies to nothing and
-    /// is never one of them (<see cref="VerseLinkLoader"/>'s StatedVerseImport).
+    /// The verse pairs a stated source's word links cross, or a transposition's, or a link made by hand (a person's, or a
+    /// ruling's accepted shape), where nothing joins them yet: a source or a person saying this word renders that one says
+    /// the two verses answer each other. Where a source and a hand link cross the same two verses, the source's stands. A
+    /// model's link testifies to nothing and is never one of them (<see cref="VerseLinkLoader"/>'s StatedVerseImport).
     /// </summary>
     private static IEnumerable<Draft> Stated(PairFrames frames, IReadOnlyList<FinalRow> final, Func<int, int, bool> joined)
     {
         var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
+        var manual = EnumSpelling.Of(LinkMethod.Manual);
         var crossings = new Dictionary<(int From, int To), (string Source, bool Transposed, string? Method, double? Confidence)>();
+        var byHand = new Dictionary<(int From, int To), string>();
         foreach (var row in final.Where(r => r.Settled))
         {
             var method = EnumSpelling.Of(MappingMethods.DatabaseMethod(row.Method));
             var transposes = row.Relation == "transposes";
+            if (method == manual && !transposes)
+            {
+                foreach (var from in Verses(frames.From, row.From))
+                {
+                    foreach (var to in Verses(frames.To, row.To))
+                    {
+                        byHand[(from, to)] = byHand.TryGetValue((from, to), out var source) && string.CompareOrdinal(source, row.Source) <= 0
+                            ? source
+                            : row.Source;
+                    }
+                }
+
+                continue;
+            }
+
             if (method != stated && !transposes)
             {
                 continue;
@@ -408,10 +429,16 @@ internal static class VerseLinks
             }
         }
 
-        foreach (var ((from, to), c) in crossings.OrderBy(c => c.Key))
+        foreach (var (from, to) in crossings.Keys.Union(byHand.Keys).Order())
         {
             if (joined(from, to))
             {
+                continue;
+            }
+
+            if (!crossings.TryGetValue((from, to), out var c))
+            {
+                yield return new Draft([from], [to], "renders", manual, null, byHand[(from, to)], ByHandNote);
                 continue;
             }
 

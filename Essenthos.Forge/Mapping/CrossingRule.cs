@@ -8,8 +8,8 @@ namespace Essenthos.Core.Mapping;
 /// aligner, a composition, the names paired by spelling: the corpus's <see cref="LinkMethod.Aligner"/>) and no verse link
 /// of the pair, either way round, joins the two verses. The aligner pairs words only inside verses the frame puts at one
 /// address, so such a link was drawn under an earlier frame and names a verse that is no longer the other's counterpart.
-/// A link any other method claims stands wherever it points; a stated source's crossing makes a verse link of its own
-/// (<see cref="VerseLinks"/>). This is the rule the verse-links load step applied to a corpus, unchanged; the owner's
+/// A link any other method claims stands wherever it points; a stated source's crossing, or a hand link's (a ruling's
+/// accepted shape), makes a verse link of its own (<see cref="VerseLinks"/>). This is the rule the verse-links load step applied to a corpus, unchanged; the owner's
 /// question on PRB-1480 is whether it should keep machine links into the next or previous verse, and the answer goes here.
 /// </summary>
 internal static class CrossingRule
