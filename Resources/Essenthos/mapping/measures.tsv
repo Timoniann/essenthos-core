@@ -1,0 +1,51 @@
+# product    Essenthos/mapping/measures.tsv
+# producer   by hand: measured precision of the mapping to the originals, read by the owner's console (texts page)
+# One row per measurement actually made. An estimate is not a measurement and has no row here.
+#
+# Columns, tab-separated:
+#   text       the text's slug, or * for a method measured on its own benchmark
+#   original   BHSA, NESTLE1904 or TR1894, or * for every original of the text
+#   testament  OT, NT or *
+#   method     the method whose links were judged (stated, strong, evidentia, composed, aligner, names, ...), or all
+#   band       the links judged by how sure the method is of them: all, >=0.9, 0.7-0.9 or <0.7
+#   kind       precision: judged against a reference taken as right (a hand alignment, a hand-scored sample);
+#              agreement: two independent sources compared word by word, neither taken as right
+#   precision  the share judged right, in percent; a word is right when every original word its link names is one the reference names
+#   n          how many words were judged
+#   against    what they were judged against
+#   source     the ticket that holds the measurement
+#   date       when it was measured
+#   note       anything a reader of the figure needs
+text	original	testament	method	band	kind	precision	n	against	source	date	note
+BSB	NESTLE1904	NT	stated	all	agreement	97.6	158938	Clear Bible's hand alignment of the same translation	AUD-0115	2026-11-12	the Berean's own tables against Clear
+AVD1865	BHSA	OT	stated	all	agreement	56.0	285143	Clear Bible's hand alignment (WLCM-AVD)	AUD-0115	2026-11-12	BSOJ against Clear; 95.7% overlap: the two cut the Arabic words differently
+AVD1865	NESTLE1904	NT	stated	all	agreement	84.3	98166	Clear Bible's hand alignment (SBLGNT-AVD)	AUD-0115	2026-11-12	BSOJ against Clear
+IRV2019	BHSA	OT	stated	all	agreement	97.6	383433	Clear Bible's hand alignment (WLCM-IRVHin)	AUD-0115	2026-11-12	Door43 against Clear; the two may not be independent
+IRV2019	NESTLE1904	NT	stated	all	agreement	99.8	133877	Clear Bible's hand alignment (SBLGNT-IRVHin)	AUD-0115	2026-11-12	Door43 against Clear; the two may not be independent
+LSG1910	NESTLE1904	NT	stated	all	agreement	89.5	79890	Clear Bible's hand alignment (SBLGNT-LSG)	AUD-0115	2026-11-12	Door43 against Clear
+CUV	BHSA	OT	strong	all	precision	80.9	265596	the Open Hebrew Bible's hand mapping of the CUV to BHS	AUD-0115	2026-11-12	FHL's numbers; 99.8% name at least one right word
+CUV	BHSA	OT	strong	>=0.9	precision	94.1	193685	the Open Hebrew Bible's hand mapping of the CUV to BHS	AUD-0115	2026-11-12	\N
+CUV	BHSA	OT	strong	0.7-0.9	precision	99.9	32094	the Open Hebrew Bible's hand mapping of the CUV to BHS	AUD-0115	2026-11-12	\N
+CUV	BHSA	OT	strong	<0.7	precision	1.5	39817	the Open Hebrew Bible's hand mapping of the CUV to BHS	AUD-0115	2026-11-12	contended sets: the right word with wrong ones beside it
+LSG1910	BHSA	OT	strong	all	precision	96.8	180998	Clear Bible's hand alignment (WLCM-LSG)	AUD-0115	2026-11-12	numbers laid from the CrossWire module
+LSG1910	BHSA	OT	strong	>=0.9	precision	98.1	149368	Clear Bible's hand alignment (WLCM-LSG)	AUD-0115	2026-11-12	\N
+LSG1910	BHSA	OT	strong	0.7-0.9	precision	95.5	29986	Clear Bible's hand alignment (WLCM-LSG)	AUD-0115	2026-11-12	\N
+LSG1910	BHSA	OT	strong	<0.7	precision	3.3	1644	Clear Bible's hand alignment (WLCM-LSG)	AUD-0115	2026-11-12	contended sets
+LSG1910	NESTLE1904	NT	strong	all	precision	87.7	85316	Clear Bible's hand alignment (SBLGNT-LSG)	AUD-0115	2026-11-12	\N
+LSG1910	NESTLE1904	NT	strong	>=0.9	precision	97.2	61945	Clear Bible's hand alignment (SBLGNT-LSG)	AUD-0115	2026-11-12	\N
+LSG1910	NESTLE1904	NT	strong	0.7-0.9	precision	90.6	14487	Clear Bible's hand alignment (SBLGNT-LSG)	AUD-0115	2026-11-12	\N
+LSG1910	NESTLE1904	NT	strong	<0.7	precision	16.8	8884	Clear Bible's hand alignment (SBLGNT-LSG)	AUD-0115	2026-11-12	contended sets
+RV1909	BHSA	OT	strong	all	precision	90.4	276118	Clear Bible's hand alignment (WLCM-RV09)	AUD-0115	2026-11-12	Rubén Gómez's numbers
+RV1909	BHSA	OT	strong	>=0.9	precision	95.1	214582	Clear Bible's hand alignment (WLCM-RV09)	AUD-0115	2026-11-12	\N
+RV1909	BHSA	OT	strong	0.7-0.9	precision	91.1	46163	Clear Bible's hand alignment (WLCM-RV09)	AUD-0115	2026-11-12	\N
+RV1909	BHSA	OT	strong	<0.7	precision	23.5	15373	Clear Bible's hand alignment (WLCM-RV09)	AUD-0115	2026-11-12	contended sets
+RV1909	NESTLE1904	NT	strong	all	precision	87.7	113827	Clear Bible's hand alignment (SBLGNT-RV09)	AUD-0115	2026-11-12	\N
+RV1909	NESTLE1904	NT	strong	>=0.9	precision	98.7	74698	Clear Bible's hand alignment (SBLGNT-RV09)	AUD-0115	2026-11-12	\N
+RV1909	NESTLE1904	NT	strong	0.7-0.9	precision	95.3	22764	Clear Bible's hand alignment (SBLGNT-RV09)	AUD-0115	2026-11-12	\N
+RV1909	NESTLE1904	NT	strong	<0.7	precision	26.7	16365	Clear Bible's hand alignment (SBLGNT-RV09)	AUD-0115	2026-11-12	contended sets
+RUSV	NESTLE1904	NT	strong	all	precision	88.6	1087	Door43's hand alignment of Titus, Philemon and 2 John	AUD-0115	2026-11-12	Bob Jones University's numbers; three short books only
+RV1909	BHSA	OT	evidentia	all	precision	95.9	6855	Clear Bible's hand alignment (WLCM-RV09)	AUD-0115	2026-11-12	\N
+RV1909	NESTLE1904	NT	evidentia	all	precision	97.6	41280	Clear Bible's hand alignment (SBLGNT-RV09)	AUD-0115	2026-11-12	\N
+ALM1911	BHSA	OT	composed	all	precision	94.8	154	a hand-scored sample drawn in proportion to the readings	PRB-0757	2026-09-25	\N
+UBIO	*	*	aligner	all	precision	92.8	4401	unfoldingWord's Ukrainian interlinear (uk_ubio)	DOC-0184	2026-09-04	the aligner run alone, one target per word at 0.25; the compositions that carry the text now are not measured on their own
+BSB	BHSA	OT	names	all	precision	100.0	297	the held-out part of the Berean's key	TSK-1086	2026-10-15	names placed first; 99.6% on the development part

@@ -51,6 +51,8 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(TextProblemsResponse))]
 [JsonSerializable(typeof(TextReaderRequest))]
 [JsonSerializable(typeof(TextReaderResponse))]
+[JsonSerializable(typeof(MappingResponse))]
+[JsonSerializable(typeof(MappingSnapshot))]
 [JsonSerializable(typeof(VisitorRunsResponse))]
 [JsonSerializable(typeof(VisitorRunResponse))]
 [JsonSerializable(typeof(VisitorSessionResponse))]
