@@ -338,6 +338,20 @@ public sealed class WordFormsTests
             .Equal("светит", "светил", "светить");
     }
 
+    /// <summary>
+    /// <em>свет</em> (light) and <em>свят</em> (holy) both end like a verb's third person, and read so
+    /// would share a root of two letters; a root that short is a verb's only where it ends in a vowel
+    /// or a soft sign, as <em>пьет</em> and <em>пьют</em> do.
+    /// </summary>
+    [Fact]
+    public void TwoNounsInAVerbsEndingShareNoRootOfTwoLetters()
+    {
+        var index = new FormIndex("rus", [new("свет", 60), new("свят", 37), new("пьет", 3), new("пьют", 2)]);
+
+        index.Matching("свет", exact: false).Select(form => form.Text).Should().Equal("свет");
+        index.Matching("пьет", exact: false).Select(form => form.Text).Should().Equal("пьет", "пьют");
+    }
+
     [Fact]
     public void ALanguageWithNoStemmerIsMatchedAsSpelled()
     {

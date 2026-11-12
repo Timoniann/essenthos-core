@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
@@ -73,6 +74,36 @@ internal sealed record StrongView(
     string? Outline = null);
 
 internal sealed record BookLink(int Ordinal, string Name);
+
+/// <summary>A verse in a list of verses: where it is, as the page's language cites it, and what it says.</summary>
+internal sealed record ListedVerse(int Book, int Chapter, int Verse, string Label, string? Text);
+
+/// <summary>How many verses of a list stand in one book.</summary>
+internal sealed record BookCount(int Ordinal, string Name, int Count);
+
+/// <summary>One page of every verse of a record or a Strong number.</summary>
+/// <param name="English">The list's own address, without its page.</param>
+/// <param name="Page">The address of the record's or the number's page.</param>
+/// <param name="Name">What the record or the number is called on its page.</param>
+/// <param name="Section">The section the record's or the number's page is listed in.</param>
+/// <param name="TextName">The text the verses are quoted from.</param>
+internal sealed record VersesView(
+    string English,
+    string Page,
+    string Name,
+    string? Section,
+    int Total,
+    int Skip,
+    int Take,
+    IReadOnlyList<BookCount> Books,
+    IReadOnlyList<ListedVerse> Verses,
+    string? TextName)
+{
+    public bool Indexed { get; init; } = true;
+
+    /// <summary>Whether the description says how many verses there are; a record's page does, a number's does not.</summary>
+    public bool Counted { get; init; } = true;
+}
 
 /// <summary>
 /// Each kind of page's title, description and essentials, from what the loader found and the reader's
@@ -300,7 +331,11 @@ internal static partial class PageViews
                     .Text(i < record.FirstVerses.Count - 1 ? ";" : record.References > record.FirstVerses.Count ? "; …" : "");
             }
 
-            body.Close("p");
+            body.Close("p")
+                .Open("p")
+                .Link(language.Path(PageAddress.VersesPath(PageAddress.RecordPath(record.Kind, record.Slug))),
+                    t.Text("verses.all", ("count", record.References.ToString(CultureInfo.InvariantCulture))))
+                .Close("p");
         }
 
         body.Close("article");
@@ -396,8 +431,13 @@ internal static partial class PageViews
             body.Element("p", entry.Derivation);
         }
 
-        body.Close("article");
         var strongPath = $"/strong/{entry.Number}";
+        if (entry.Lemma is not null)
+        {
+            body.Open("p").Link(language.Path(PageAddress.VersesPath(strongPath)), t.Text("verses.every")).Close("p");
+        }
+
+        body.Close("article");
         var lexicon = PageSections.Named("lexicon");
         return Page(StatusCodes.Status200OK, t.Titled(head), head, description, body) with
         {
@@ -415,6 +455,90 @@ internal static partial class PageViews
                     ("name", t.Text($"page.{lexicon.Key}.title")),
                     ("url", link(lexicon.Path))))),
         };
+    }
+
+    /// <summary>
+    /// One page of every verse of a record or a Strong number, under the books they are in, each book
+    /// with how many of the list's verses it holds, and the earlier and later pages linked.
+    /// </summary>
+    public static PageContent Verses(SiteLanguage language, PageWording t, VersesView list)
+    {
+        var title = t.Text("verses.title", ("name", list.Name));
+        var body = Open(language).Open("nav").Link(language.Path("/"), PageContent.SiteName).Text(Crumb);
+        if (list.Section is { } section)
+        {
+            body.Link(language.Path(PageSections.Named(section).Path), t.Text($"page.{section}.title")).Text(Crumb);
+        }
+
+        body.Link(language.Path(list.Page), list.Name).Close("nav")
+            .Element("h1", title)
+            .Element("p", t.Counted("verses.count", list.Total) +
+                          (list.TextName is { } text ? " " + t.Text("verses.quotedFrom", ("text", text)) : ""));
+
+        var counts = list.Books.ToDictionary(book => book.Ordinal);
+        foreach (var inBook in list.Verses.GroupBy(verse => verse.Book))
+        {
+            var heading = counts.TryGetValue(inBook.Key, out var book) ? $"{book.Name} ({book.Count})" : inBook.First().Label;
+            body.Element("h2", heading).Open("ul");
+            foreach (var verse in inBook)
+            {
+                body.Open("li").Link(language.Path(PageAddress.VersePath(verse.Book, verse.Chapter, verse.Verse)), verse.Label);
+                if (verse.Text is { Length: > 0 } said)
+                {
+                    body.Text(" " + said);
+                }
+
+                body.Close("li");
+            }
+
+            body.Close("ul");
+        }
+
+        if (list.Skip > 0 || list.Skip + list.Take < list.Total)
+        {
+            body.Open("nav");
+            string At(int skip) => language.Path(list.English) + Paged(skip, list.Take);
+            if (list.Skip > 0)
+            {
+                body.Link(At(Math.Max(0, list.Skip - list.Take)), t.Text("verses.earlier"), "prev");
+            }
+
+            if (list.Skip + list.Take < list.Total)
+            {
+                body.Link(At(list.Skip + list.Take), t.Text("verses.later"), "next");
+            }
+
+            body.Close("nav");
+        }
+
+        body.Close("article");
+        return Page(StatusCodes.Status200OK, t.Titled(title), title,
+            t.Text("verses.description", ("name", list.Name)) + (list.Counted ? " " + t.Counted("verses.count", list.Total) : ""), body) with
+        {
+            Canonical = list.Indexed ? list.English : null,
+            Indexed = list.Indexed,
+            PageType = "CollectionPage",
+            Trail = list.Section is null
+                ? [Start, new Crumb(list.Name, list.Page), new Crumb(title, list.English)]
+                : [Start, new Crumb(t.Text($"page.{list.Section}.title"), PageSections.Named(list.Section).Path),
+                    new Crumb(list.Name, list.Page), new Crumb(title, list.English)],
+        };
+    }
+
+    private static string Paged(int skip, int take)
+    {
+        var query = new List<string>(2);
+        if (skip > 0)
+        {
+            query.Add($"skip={skip}");
+        }
+
+        if (take != PageAddress.VersesPerPage)
+        {
+            query.Add($"take={take}");
+        }
+
+        return query.Count == 0 ? "" : "?" + string.Join('&', query);
     }
 
     /// <summary>An event, a period, a text: a name, what the source says of it, and a few links.</summary>

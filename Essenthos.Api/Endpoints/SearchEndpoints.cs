@@ -90,6 +90,7 @@ internal static class SearchEndpoints
             [FromQuery] int? take,
             AppDbContext db,
             ICanonIndex index,
+            WordForms forms,
             CancellationToken cancellationToken) =>
         {
             var terms = SearchTerms.Parse(q);
@@ -132,9 +133,10 @@ internal static class SearchEndpoints
 
             if (!Unspaced.Contains(language))
             {
+                var paradigm = language is "rus" or "ukr" ? await forms.Of(text.Id, cancellationToken) : null;
                 return Results.Ok(await VerseSearch.Search(
                     db, text.Id, text.Slug, language, TypedQuery.Parse(q), scope, widening,
-                    Math.Max(0, skip ?? 0), Math.Clamp(take ?? 20, 1, MostPerPage), cancellationToken));
+                    Math.Max(0, skip ?? 0), Math.Clamp(take ?? 20, 1, MostPerPage), cancellationToken, paradigm));
             }
 
             // Every term narrows the set of verses. Each is resolved on its own so that the

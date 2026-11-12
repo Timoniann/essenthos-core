@@ -132,6 +132,17 @@
     "uses_one": "Kommt {{count}}-mal in der Bibel vor.",
     "uses_other": "Kommt {{count}}-mal in der Bibel vor."
   },
+  "verses": {
+    "title": "{{name}}: alle Verse",
+    "description": "{{name}} in allen Versen der Bibel, jeweils mit dem Wortlaut, nach Büchern.",
+    "count_one": "{{count}} Vers.",
+    "count_other": "{{count}} Verse.",
+    "quotedFrom": "Zitiert nach {{text}}.",
+    "earlier": "Frühere Verse",
+    "later": "Weitere Verse",
+    "all": "Alle Verse ({{count}})",
+    "every": "Alle Verse, in denen es steht"
+  },
   "event": {
     "description": "{{name}}: wann es nach jeder biblischen Chronologie geschah, und die Verse, aus denen es gelesen wird."
   },

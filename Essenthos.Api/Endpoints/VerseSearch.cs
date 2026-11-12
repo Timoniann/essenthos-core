@@ -87,7 +87,7 @@ internal static class TypedQuery
 /// <c>like</c> for part of a word, whose one pattern is <see cref="Forms"/>' only entry.
 /// </param>
 /// <param name="Joint">A joint of the language (<see cref="SearchWords.Joint"/>), which a verse need not hold.</param>
-/// <param name="Count">How many words of the text it matches, for weighing a near spelling.</param>
+/// <param name="Count">How many words of the text are the word typed or a form of it, for weighing a near spelling.</param>
 internal sealed record ResolvedTerm(
     TypedTerm Typed,
     string Folded,
@@ -96,7 +96,37 @@ internal sealed record ResolvedTerm(
     string Column,
     bool Joint,
     string? Stem,
-    long Count);
+    long Count)
+{
+    /// <summary>
+    /// How near each of <see cref="Forms"/> is to what was typed, a <see cref="FormTier"/> each in the
+    /// same order; empty where every form is the word itself.
+    /// </summary>
+    public IReadOnlyList<int> Tiers { get; init; } = [];
+}
+
+/// <summary>
+/// How near a form of the text is to the word a reader typed, nearest first: a verse holding the word
+/// as typed comes before one holding another form of it, and both before a verse holding only a
+/// word that begins with the letters typed or has them inside it.
+/// </summary>
+internal static class FormTier
+{
+    /// <summary>The form typed: <em>світ</em> for <em>світ</em>.</summary>
+    public const int Typed = 0;
+
+    /// <summary>Another form of the same word: <em>світу</em>, <em>світі</em>, <em>світом</em>.</summary>
+    public const int SameWord = 1;
+
+    /// <summary>
+    /// A word that begins with the letters typed, or one only the stemmer joins to it:
+    /// <em>світило</em>, <em>світити</em>, <em>світильник</em>.
+    /// </summary>
+    public const int Begins = 2;
+
+    /// <summary>A word with the letters typed inside it: <em>освітити</em>, <em>просвітлення</em>.</summary>
+    public const int Inside = 3;
+}
 
 /// <summary>A near spelling the text prints where it does not print what was typed, or prints it rarely.</summary>
 internal sealed record NearSpelling(string Term, string Instead);
@@ -114,9 +144,17 @@ internal sealed record NearSpelling(string Term, string Instead);
 /// </para>
 ///
 /// <para>
+/// A word typed outside quotation marks also matches the words that begin with it or hold it inside
+/// them, so a reader who remembers only part of a word finds it: <em>світ</em> finds <em>світильник</em>
+/// and <em>освітити</em> too. They rank after the word itself and its forms (<see cref="FormTier"/>).
+/// Russian and Ukrainian forms are told by their endings (<see cref="SlavicParadigm"/>), so
+/// <em>світу</em> is a form of <em>світ</em> and <em>світити</em> only a word that begins like it.
+/// </para>
+///
+/// <para>
 /// Verses come in order of how much of the query they hold: the words side by side as typed first,
-/// then every word including the joints, then every required word, and inside each the closest
-/// together first, then canonical order. When no verse holds every required word of a query of three
+/// then every word including the joints, then every required word, then the verse whose words are
+/// nearest to the ones typed, and inside each the closest together first, then canonical order. When no verse holds every required word of a query of three
 /// or more, the verses holding most of them are offered instead, each marked as only like the query.
 /// Nothing is matched loosely without saying so: a word the text does not print, or prints rarely
 /// beside a near spelling it prints often, is answered with that spelling as a suggestion, and the
@@ -157,7 +195,8 @@ internal static class VerseSearch
         SearchWidening widening,
         int skip,
         int take,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        FormIndex? paradigm = null)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -167,7 +206,7 @@ internal static class VerseSearch
         var terms = new List<ResolvedTerm>(typed.Count);
         foreach (var term in typed)
         {
-            terms.Add(await Resolve(db, connection, textId, language, term, widening, counted, cancellationToken));
+            terms.Add(await Resolve(db, connection, textId, language, term, widening, counted, paradigm, cancellationToken));
         }
 
         // A query of nothing but joints asks for them.
@@ -227,6 +266,7 @@ internal static class VerseSearch
     }
 
     /// <summary>The words one typed term matches in the text, and how.</summary>
+    /// <param name="paradigm">The text's forms read by their endings, for Russian and Ukrainian; null for any other.</param>
     internal static async Task<ResolvedTerm> Resolve(
         AppDbContext db,
         NpgsqlConnection connection,
@@ -235,12 +275,48 @@ internal static class VerseSearch
         TypedTerm term,
         SearchWidening widening,
         bool counted,
+        FormIndex? paradigm,
         CancellationToken cancellationToken)
     {
         var folded = WordFolding.Fold(term.Text, language);
         if (term.Phrase is null && SearchWords.Joint(folded, language) is { } spellings)
         {
-            return new ResolvedTerm(term, folded, TermMatching.Folded, spellings, Normalised, true, null, 0);
+            return new ResolvedTerm(term, folded, TermMatching.Folded, spellings, Normalised, true, null, 0)
+            {
+                Tiers = [.. spellings.Select(spelling => spelling == folded ? FormTier.Typed : FormTier.SameWord)],
+            };
+        }
+
+        var words = db.Words.Where(w => w.TextId == textId);
+        if (counted && term.Phrase is null)
+        {
+            var ranked = await RankedForms(
+                connection, textId, language, folded, paradigm,
+                widening != SearchWidening.WholeWordOnly && folded.Length >= SearchTerms.ShortestPart,
+                cancellationToken);
+            var whole = ranked.Forms.Where(form => form.Tier <= FormTier.SameWord || form.Stemmed).ToList();
+
+            // No form of the word: a Hebrew word printed as several rows is that word before it is
+            // part of a longer one.
+            if (whole.Count == 0 && await words.AnyAsync(w => w.GraphicalText == folded, cancellationToken))
+            {
+                return new ResolvedTerm(term, folded, TermMatching.Printed, [folded], Graphical, false, null, 0);
+            }
+
+            if (ranked.Forms.Count == 0)
+            {
+                return new ResolvedTerm(term, folded, TermMatching.Folded, [folded], Normalised, false, ranked.Stem, 0);
+            }
+
+            var matching = whole.Count == 0 ? TermMatching.Substring
+                : whole.Count == 1 && whole[0].Form == folded ? TermMatching.Folded
+                : TermMatching.Stemmed;
+            return new ResolvedTerm(
+                term, folded, matching, [.. ranked.Forms.Select(form => form.Form)], Normalised, false, ranked.Stem,
+                ranked.Count)
+            {
+                Tiers = [.. ranked.Forms.Select(form => form.Tier)],
+            };
         }
 
         if (widening == SearchWidening.PartOfAWord)
@@ -249,15 +325,6 @@ internal static class VerseSearch
                 term, folded, TermMatching.Substring, [LikePatterns.Containing(folded)], Like, false, null, 0);
         }
 
-        if (counted && term.Phrase is null && SearchWords.Stems(language))
-        {
-            var stemmed = await FormsOfStem(connection, textId, language, folded, cancellationToken);
-            var forms = stemmed.Forms.Count > 0 ? stemmed.Forms : [folded];
-            var matching = forms.Count > 1 || forms[0] != folded ? TermMatching.Stemmed : TermMatching.Folded;
-            return new ResolvedTerm(term, folded, matching, forms, Normalised, false, stemmed.Stem, stemmed.Count);
-        }
-
-        var words = db.Words.Where(w => w.TextId == textId);
         var count = counted
             ? await Scalar<long>(
                 connection,
@@ -276,10 +343,9 @@ internal static class VerseSearch
             return new ResolvedTerm(term, folded, TermMatching.Printed, [folded], Graphical, false, null, 0);
         }
 
-        // A text nothing here stems keeps the old widening to part of a word, said in the response:
-        // a reader of unpointed Hebrew or unaccented Greek types the front of a word.
-        if (widening == SearchWidening.AsFarAsNeeded && !SearchWords.Stems(language)
-            && folded.Length >= SearchTerms.ShortestPart)
+        // A text whose forms are not counted keeps the old widening to part of a word, said in the
+        // response: a reader of unpointed Hebrew or unaccented Greek types the front of a word.
+        if (widening == SearchWidening.AsFarAsNeeded && folded.Length >= SearchTerms.ShortestPart)
         {
             return new ResolvedTerm(
                 term, folded, TermMatching.Substring, [LikePatterns.Containing(folded)], Like, false, null, 0);
@@ -294,35 +360,97 @@ internal static class VerseSearch
 
     private const string Like = "like";
 
-    /// <summary>The stem of a folded word in the text's language, and every form of the text that has it.</summary>
-    private static async Task<(string Stem, IReadOnlyList<string> Forms, long Count)> FormsOfStem(
+    /// <summary>A form of the text a typed word matches, how near it is, and whether the stemmer joins it to the word.</summary>
+    internal sealed record RankedForm(string Form, int Tier, bool Stemmed, int Occurrences);
+
+    /// <param name="Count">How many words of the text are the word typed or a form of it.</param>
+    internal sealed record Ranked(string? Stem, IReadOnlyList<RankedForm> Forms, long Count);
+
+    /// <summary>
+    /// Every form of the text a folded word matches, nearest first: the word itself, its other forms,
+    /// then — where <paramref name="widen"/> — the words beginning with it and the words holding it.
+    ///
+    /// <para>
+    /// The other forms are the ones sharing its stem: Postgres's Snowball stem, or the Ukrainian one
+    /// made here (<see cref="SearchWords"/>). Russian and Ukrainian are read by their endings instead
+    /// (<paramref name="paradigm"/>), since the stemmer lands a verb on the noun it is made from —
+    /// <em>світити</em> on <em>світ</em> — and what only the stemmer joins ranks as a word beginning like it.
+    /// </para>
+    /// </summary>
+    internal static async Task<Ranked> RankedForms(
         NpgsqlConnection connection,
         int textId,
         string language,
         string folded,
+        FormIndex? paradigm,
+        bool widen,
         CancellationToken cancellationToken)
     {
-        var stem = SearchWords.StemHere(folded, language) ?? await Scalar<string>(
-            connection,
-            "SELECT coalesce(nullif((ts_lexize(@dictionary::regdictionary, @form))[1], ''), @form)",
-            cancellationToken,
-            ("dictionary", SearchWords.Dictionary(language)!),
-            ("form", folded));
-
-        var forms = new List<string>();
-        long count = 0;
-        await using var command = new NpgsqlCommand(
-            "SELECT form, occurrences FROM text_form WHERE text_id = @text AND stem = @stem", connection);
-        command.Parameters.AddWithValue("text", textId);
-        command.Parameters.AddWithValue("stem", stem);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
+        string? stem = null;
+        if (SearchWords.Stems(language))
         {
-            forms.Add(reader.GetString(0));
-            count += reader.GetInt32(1);
+            stem = SearchWords.StemHere(folded, language) ?? await Scalar<string>(
+                connection,
+                "SELECT coalesce(nullif((ts_lexize(@dictionary::regdictionary, @form))[1], ''), @form)",
+                cancellationToken,
+                ("dictionary", SearchWords.Dictionary(language)!),
+                ("form", folded));
         }
 
-        return (stem, forms, count);
+        var found = new Dictionary<string, RankedForm>(StringComparer.Ordinal);
+        await using (var command = new NpgsqlCommand { Connection = connection })
+        {
+            command.Parameters.AddWithValue("text", textId);
+            command.Parameters.AddWithValue("form", folded);
+            var sql = new StringBuilder("SELECT form, occurrences, ");
+            if (stem is null)
+            {
+                sql.Append("false AS stemmed FROM text_form WHERE text_id = @text AND (form = @form");
+            }
+            else
+            {
+                command.Parameters.AddWithValue("stem", stem);
+                sql.Append("stem = @stem AS stemmed FROM text_form WHERE text_id = @text AND (form = @form OR stem = @stem");
+            }
+
+            if (widen)
+            {
+                command.Parameters.AddWithValue("inside", LikePatterns.Containing(folded));
+                sql.Append(" OR form LIKE @inside");
+            }
+
+            command.CommandText = sql.Append(')').ToString();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                var form = reader.GetString(0);
+                var stemmed = reader.GetBoolean(2);
+                var tier = form == folded ? FormTier.Typed
+                    : stemmed && paradigm is null ? FormTier.SameWord
+                    : stemmed || form.StartsWith(folded, StringComparison.Ordinal) ? FormTier.Begins
+                    : FormTier.Inside;
+                found[form] = new RankedForm(form, tier, stemmed, reader.GetInt32(1));
+            }
+        }
+
+        foreach (var form in paradigm?.Matching(folded, exact: false) ?? [])
+        {
+            var tier = form.Text == folded ? FormTier.Typed : FormTier.SameWord;
+            found[form.Text] = found.TryGetValue(form.Text, out var known)
+                ? known with { Tier = Math.Min(known.Tier, tier) }
+                : new RankedForm(form.Text, tier, false, form.Count);
+        }
+
+        var forms = found.Values
+            .OrderBy(form => form.Tier)
+            .ThenByDescending(form => form.Occurrences)
+            .ThenBy(form => form.Form, StringComparer.Ordinal)
+            .ToList();
+        return new Ranked(
+            stem,
+            forms,
+            forms.Where(form => form.Tier <= FormTier.SameWord || (paradigm is null && form.Stemmed))
+                .Sum(form => (long)form.Occurrences));
     }
 
     internal sealed record Hit(int Verse, bool Phrase);
@@ -360,8 +488,8 @@ internal static class VerseSearch
             };
             command.Parameters.AddWithValue(parameter, term.Column == Like ? term.Forms[0] : term.Forms.ToArray());
             command.Parameters.AddWithValue($"e{index}", term.Folded);
-            var exact = term.Column == Normalised ? $"w.normalised_text = @e{index}" : "false";
-            return $"SELECT w.verse_id, w.position, {index} AS term, {exact} AS exact FROM word w WHERE w.text_id = @text AND {match}"
+            var tier = Tier(command, index, parameter, term);
+            return $"SELECT w.verse_id, w.position, {index} AS term, {tier} AS tier FROM word w WHERE w.text_id = @text AND {match}"
                    + (within is null ? string.Empty : $" AND w.verse_id IN (SELECT verse_id FROM {within})");
         }
 
@@ -390,7 +518,7 @@ internal static class VerseSearch
         }
 
         sql.Append("), held AS (SELECT verse_id, count(DISTINCT term) AS held, max(position) - min(position) AS span FROM scoped GROUP BY verse_id HAVING count(DISTINCT term) >= @least)");
-        sql.Append(", hits AS (SELECT verse_id, position, term, exact FROM scoped WHERE verse_id IN (SELECT verse_id FROM held)");
+        sql.Append(", hits AS (SELECT verse_id, position, term, tier FROM scoped WHERE verse_id IN (SELECT verse_id FROM held)");
         foreach (var (term, index) in jointTerms)
         {
             sql.Append(" UNION ALL ").Append(Select(index, term, "held"));
@@ -398,9 +526,11 @@ internal static class VerseSearch
 
         sql.Append(')');
 
-        // Side by side as typed: every term at its own distance from the first.
-        sql.Append(", phrases AS (SELECT DISTINCT verse_id FROM hits GROUP BY verse_id, position - term HAVING count(DISTINCT term) = @count)");
-        sql.Append(", whole AS (SELECT verse_id, count(DISTINCT term) AS terms, count(DISTINCT term) FILTER (WHERE exact) AS exact FROM hits GROUP BY verse_id)");
+        // Side by side as typed: every term at its own distance from the first, each a form of the word
+        // typed rather than a word merely holding it.
+        sql.Append($", phrases AS (SELECT DISTINCT verse_id FROM hits WHERE tier <= {FormTier.SameWord} GROUP BY verse_id, position - term HAVING count(DISTINCT term) = @count)");
+        sql.Append(", nearest AS (SELECT verse_id, term, min(tier) AS tier FROM hits GROUP BY verse_id, term)");
+        sql.Append(", whole AS (SELECT verse_id, count(*) AS terms, sum(tier) AS tiers FROM nearest GROUP BY verse_id)");
 
         var phrases = terms.Select((term, index) => (term.Typed.Phrase, index))
             .Where(t => t.Phrase is not null)
@@ -418,7 +548,7 @@ internal static class VerseSearch
         sql.Append(
             $"""
              , ranked AS (
-                 SELECT h.verse_id, h.held, h.span, j.terms, j.exact, p.verse_id IS NOT NULL AND @count > 1 AS phrase
+                 SELECT h.verse_id, h.held, h.span, j.terms, j.tiers, p.verse_id IS NOT NULL AND @count > 1 AS phrase
                  FROM held h
                  JOIN whole j ON j.verse_id = h.verse_id
                  LEFT JOIN phrases p ON p.verse_id = h.verse_id
@@ -428,7 +558,7 @@ internal static class VerseSearch
              FROM ranked r
              JOIN verse v ON v.id = r.verse_id
              JOIN book b ON b.id = v.book_id
-             ORDER BY r.phrase DESC, r.held DESC, r.terms DESC, r.exact DESC, r.span,
+             ORDER BY r.phrase DESC, r.held DESC, r.terms DESC, r.tiers, r.span,
                       b.canonical_ordinal, v.chapter_number, v.sequence, v.number, v.label
              OFFSET @skip LIMIT @take
              """);
@@ -456,6 +586,23 @@ internal static class VerseSearch
         }
 
         return (total, page);
+    }
+
+    /// <summary>The SQL that says how near a matched word is to what was typed, as a <see cref="FormTier"/>.</summary>
+    private static string Tier(NpgsqlCommand command, int index, string forms, ResolvedTerm term)
+    {
+        if (term.Column == Like)
+        {
+            return $"CASE WHEN w.normalised_text = @e{index} THEN {FormTier.Typed} ELSE {FormTier.Inside} END";
+        }
+
+        if (term.Column != Normalised || term.Tiers.Count != term.Forms.Count || term.Tiers.All(tier => tier == FormTier.Typed))
+        {
+            return "0";
+        }
+
+        command.Parameters.AddWithValue($"t{index}", term.Tiers.ToArray());
+        return $"(@t{index}::int[])[array_position(@{forms}::text[], w.normalised_text)]";
     }
 
     private sealed record PageWord(string Surface, string Trailer, string? Normalised, string? Graphical);

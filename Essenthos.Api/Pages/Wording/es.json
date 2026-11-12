@@ -134,6 +134,18 @@
     "uses_many": "Aparece {{count}} veces en la Biblia.",
     "uses_other": "Aparece {{count}} veces en la Biblia."
   },
+  "verses": {
+    "title": "{{name}}: todos los versículos",
+    "description": "{{name}} en todos los versículos de la Biblia, con el texto de cada uno, libro por libro.",
+    "count_one": "{{count}} versículo.",
+    "count_many": "{{count}} versículos.",
+    "count_other": "{{count}} versículos.",
+    "quotedFrom": "Citado de {{text}}.",
+    "earlier": "Versículos anteriores",
+    "later": "Versículos siguientes",
+    "all": "Todos los versículos ({{count}})",
+    "every": "Todos los versículos donde aparece"
+  },
   "event": {
     "description": "{{name}}: cuándo ocurrió según cada cronología bíblica, y los versículos de los que se deduce."
   },

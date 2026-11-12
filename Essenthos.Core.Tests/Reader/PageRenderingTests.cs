@@ -211,6 +211,9 @@ public sealed class PageRenderingTests
     [InlineData("/uk/", "Home", "/")]
     [InlineData("/es/people/moses", "Record", "/people/moses")]
     [InlineData("/strong/h430", "Strong", "/strong/H430")]
+    [InlineData("/strong/h430/verses", "Verses", "/strong/H430/verses")]
+    [InlineData("/uk/people/david/verses", "Verses", "/people/david/verses")]
+    [InlineData("/people/david/verses/more", "NotFound", "/people/david/verses/more")]
     [InlineData("/timeline/kings", "Section", "/timeline/kings")]
     [InlineData("/uk/genealogies/jesus", "Section", "/genealogies/jesus")]
     [InlineData("/read/mark/0", "NotFound", "/read/mark/0")]
@@ -248,6 +251,57 @@ public sealed class PageRenderingTests
                 "shepherd, servant of someone", line, 0, []));
 
         page.Body.Should().Contain("<p><a href=\"/uk/occupations/shepherd\">shepherd</a>, servant of someone</p>");
+    }
+
+    [Fact]
+    public void OnlyTheFirstPageOfAListOfVersesAtTheUsualSizeIsIndexed()
+    {
+        PageAddress.Parse("/places/jerusalem/verses").Should().Match<PageAddress>(a =>
+            a.Indexed && a.Skip == 0 && a.Take == PageAddress.VersesPerPage && a.RecordKind == EntityKind.Place);
+        PageAddress.Parse("/places/jerusalem/verses", new Dictionary<string, string> { ["skip"] = "40" })
+            .Should().Match<PageAddress>(a => !a.Indexed && a.Skip == 40);
+        PageAddress.Parse("/places/jerusalem/verses", new Dictionary<string, string> { ["take"] = "100" })
+            .Should().Match<PageAddress>(a => !a.Indexed && a.Take == 100);
+        PageAddress.Parse("/places/jerusalem/verses", new Dictionary<string, string> { ["take"] = "7" })
+            .Take.Should().Be(PageAddress.VersesPerPage, "a size the page does not offer is the usual one");
+    }
+
+    /// <summary>
+    /// A page of every verse of a record lists its verses under their books, each book with how many
+    /// of the record's verses it holds, every verse linked to its page and quoted, and the next page
+    /// linked for a crawler to follow.
+    /// </summary>
+    [Fact]
+    public void AListOfVersesGroupsThemByBookAndLinksTheNextPage()
+    {
+        var page = PageViews.Verses(SiteLanguage.Ukrainian, Ukrainian, new VersesView(
+            "/people/david/verses", "/people/david", "Давид", PageSections.Encyclopedia, 1023, 0, 20,
+            [new BookCount(8, "Рут", 2), new BookCount(9, "1 Самуїлова", 287)],
+            [
+                new ListedVerse(8, 4, 17, "Рут 4:17", "і породив Єссея, батька Давидового."),
+                new ListedVerse(9, 16, 13, "1 Самуїлова 16:13", "і зійшов Дух Господній на Давида"),
+            ],
+            "Біблія Огієнка"));
+
+        var html = PageHtml.Render(Shell, page, SiteLanguage.Ukrainian, Origin);
+
+        Title(html).Should().Be("Давид: усі вірші · Essenthos");
+        page.Body.Should().Contain("<h2>Рут (2)</h2><ul><li><a href=\"/uk/read/ruth/4/17\">Рут 4:17</a> і породив Єссея")
+            .And.Contain("<h2>1 Самуїлова (287)</h2>")
+            .And.Contain("<a href=\"/uk/people/david\">Давид</a>")
+            .And.Contain("1023 вірші.")
+            .And.Contain("<a href=\"/uk/people/david/verses?skip=20\" rel=\"next\">Наступні вірші</a>")
+            .And.NotContain("rel=\"prev\"");
+        html.Should().Contain("<link rel=\"canonical\" href=\"https://essenthos.org/uk/people/david/verses\"");
+    }
+
+    [Fact]
+    public void ARecordsPageLinksToEveryVerseOfIt()
+    {
+        var page = PageViews.Record(SiteLanguage.English, PageWording.Compiled("en"),
+            new RecordView(EntityKind.Person, "david", "David", "king of Israel", [], 1023, [new VerseMention(8, 4, 17, "Ruth 4:17")]));
+
+        page.Body.Should().Contain("<a href=\"/people/david/verses\">All verses (1023)</a>");
     }
 
     [Fact]

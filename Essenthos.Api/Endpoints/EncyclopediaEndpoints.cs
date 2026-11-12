@@ -30,9 +30,9 @@ internal static partial class EncyclopediaEndpoints
     /// and no book a thousand chapters — Psalm 119 is 176 verses and Psalms is 150 chapters, and
     /// both stay that way.
     /// </summary>
-    private const int ChapterStride = 1_000;
+    internal const int ChapterStride = 1_000;
 
-    private const int BookStride = 1_000_000;
+    internal const int BookStride = 1_000_000;
 
     /// <summary>
     /// How many verses name an entity, how many namings they hold, and how many of those verses
