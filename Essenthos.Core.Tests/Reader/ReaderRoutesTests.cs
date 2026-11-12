@@ -13,8 +13,12 @@ namespace Essenthos.Core.Tests.Reader;
 /// </summary>
 public sealed partial class ReaderRoutesTests
 {
-    /// <summary>A catalogue of components for whoever works on them, linked from nowhere and no page to find.</summary>
-    private static readonly string[] NotForASearchEngine = ["/dev/ui"];
+    /// <summary>
+    /// Pages linked from nowhere and no page to find: a catalogue of components for whoever works on them,
+    /// and the pages the place-picture renderer draws each place's picture on.
+    /// </summary>
+    private static readonly string[] NotForASearchEngine =
+        ["/dev/ui", "/dev/place-picture/$slug", "/dev/place-pictures"];
 
     private static readonly IReadOnlyDictionary<string, string> Samples = new Dictionary<string, string>
     {
