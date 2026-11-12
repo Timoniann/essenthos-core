@@ -62,4 +62,5 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(EssxRowsView))]
 [JsonSerializable(typeof(EssxDictionaryView))]
 [JsonSerializable(typeof(EssxFeaturesView))]
+[JsonSerializable(typeof(EssxConversionView))]
 internal sealed partial class DeskJsonContext : JsonSerializerContext;
