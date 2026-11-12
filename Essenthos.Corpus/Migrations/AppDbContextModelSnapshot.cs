@@ -3569,6 +3569,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("modern_id");
 
+                    b.Property<string>("OutlineId")
+                        .HasColumnType("text")
+                        .HasColumnName("outline_id");
+
                     b.Property<int?>("RadiusMeters")
                         .HasColumnType("integer")
                         .HasColumnName("radius_meters");
@@ -3608,6 +3612,9 @@ namespace Essenthos.Core.Migrations
 
                     b.HasKey("EntityId", "Rank")
                         .HasName("pk_place_candidate");
+
+                    b.HasIndex("OutlineId")
+                        .HasDatabaseName("ix_place_candidate_outline_id");
 
                     b.ToTable("place_candidate", null, t =>
                         {
@@ -3681,6 +3688,66 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_place_location_latitude", "latitude BETWEEN -90 AND 90");
 
                             t.HasCheckConstraint("ck_place_location_longitude", "longitude BETWEEN -180 AND 180");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PlaceOutline", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Coarse")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("coarse");
+
+                    b.Property<string>("Dataset")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("dataset");
+
+                    b.Property<double>("East")
+                        .HasColumnType("double precision")
+                        .HasColumnName("east");
+
+                    b.Property<string>("Fine")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("fine");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("kind");
+
+                    b.Property<double>("North")
+                        .HasColumnType("double precision")
+                        .HasColumnName("north");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<double>("South")
+                        .HasColumnType("double precision")
+                        .HasColumnName("south");
+
+                    b.Property<double>("West")
+                        .HasColumnType("double precision")
+                        .HasColumnName("west");
+
+                    b.HasKey("Id")
+                        .HasName("pk_place_outline");
+
+                    b.ToTable("place_outline", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_place_outline_box", "west BETWEEN -180 AND 180 AND east BETWEEN -180 AND 180 AND south BETWEEN -90 AND 90 AND north BETWEEN -90 AND 90 AND west <= east AND south <= north");
+
+                            t.HasCheckConstraint("ck_place_outline_dataset", "dataset IN ('openbible', 'openstreetmap')");
+
+                            t.HasCheckConstraint("ck_place_outline_kind", "kind IN ('rough-boundary', 'confidence-bands', 'probable-area', 'precise')");
                         });
                 });
 
@@ -6934,7 +7001,15 @@ namespace Essenthos.Core.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_place_candidate_entity_entity_id");
 
+                    b.HasOne("Essenthos.Core.Database.Entities.PlaceOutline", "Outline")
+                        .WithMany()
+                        .HasForeignKey("OutlineId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_place_candidate_place_outlines_outline_id");
+
                     b.Navigation("Entity");
+
+                    b.Navigation("Outline");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.PlaceLocation", b =>

@@ -309,7 +309,62 @@ public class PlaceCandidate
 
     public required string Source { get; set; }
 
+    /// <summary>
+    /// The outline the answer is drawn by where it is an area the gazetteer has a shape for: its
+    /// identifier there, the key of <see cref="PlaceOutline"/>. Null where the answer is a point, a
+    /// circle of <see cref="RadiusMeters"/>, or an area of no known shape.
+    /// </summary>
+    public string? OutlineId { get; set; }
+
+    public PlaceOutline? Outline { get; set; }
+
     public override string ToString() => $"PlaceCandidate({EntityId} #{Rank} {Site ?? Special})";
+}
+
+/// <summary>
+/// The shape of a land, a sea or an area a place lies somewhere in, as the gazetteer draws it: its
+/// own rough boundary, its bands of how sure the sources are that the land reached so far, an area
+/// a place probably lies in, or OpenStreetMap's exact outline of a modern feature. Kept at two
+/// levels of detail, so a map of the whole region carries a few points per land and a map of one
+/// place the shape as drawn.
+/// </summary>
+public class PlaceOutline
+{
+    /// <summary>The gazetteer's identifier for the shape: <c>g228665</c>.</summary>
+    public required string Id { get; set; }
+
+    /// <summary>
+    /// <c>rough-boundary</c>, <c>confidence-bands</c> (nested areas, the widest the least sure),
+    /// <c>probable-area</c> (the place lies somewhere in it) or <c>precise</c> (OpenStreetMap's).
+    /// </summary>
+    public required string Kind { get; set; }
+
+    /// <summary>
+    /// Whose shape it is, as a declared dataset: <c>openbible</c> for the gazetteer's own drawing,
+    /// <c>openstreetmap</c> for OpenStreetMap's, which its licence keeps in a file of its own.
+    /// </summary>
+    public required string Dataset { get; set; }
+
+    public required string Source { get; set; }
+
+    public double West { get; set; }
+
+    public double South { get; set; }
+
+    public double East { get; set; }
+
+    public double North { get; set; }
+
+    /// <summary>
+    /// The shape for a map of the whole region, as JSON: <c>[{"confidence":10,"rings":[[lon,lat,lon,lat,…],…]},…]</c>,
+    /// one entry per band (one for every kind but bands, whose confidence is null), the outer ring first.
+    /// </summary>
+    public required string Coarse { get; set; }
+
+    /// <summary>The same shape for a map of one place, closer to the drawing.</summary>
+    public required string Fine { get; set; }
+
+    public override string ToString() => $"PlaceOutline({Id} {Kind} {Dataset})";
 }
 
 /// <summary>

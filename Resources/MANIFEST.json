@@ -175,9 +175,9 @@
     "sha256": "e6b39b02e268a1b540cff8d8e0ac954721653fad16d901c2c58f21c7fbd19bad"
   },
   "OpenBible": {
-    "bytes": 200533638,
-    "files": 6,
-    "sha256": "2869859a610d0c3fd7f8cb11475b84dc2c0aaf308198693e262ab5292cc01e9f"
+    "bytes": 221422660,
+    "files": 752,
+    "sha256": "e17de5bdb3c33c6b2f388cc3c40b510ffdf10566e17d36424c18d85136ad0fe4"
   },
   "OpenBibleCrossReferences": {
     "bytes": 8316252,

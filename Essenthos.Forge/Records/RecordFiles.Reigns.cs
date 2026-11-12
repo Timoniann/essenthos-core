@@ -171,6 +171,14 @@ internal static partial class RecordFiles
             ["entity_wikipedia"],
             About: "Derived from Wikidata, the gazetteer's identifications and the owner's answers in review/wikipedia-matches.json; never edited."),
 
+        Outlines("records/facts/region-outlines", "openbible", ["place_outline"],
+            "Derived: the gazetteer's own drawings of the lands and areas its sites stand for, CC BY 4.0 as the rest of " +
+            "OpenBible.info's Bible Geocoding; never edited. coarse and fine are the shape at two levels of detail."),
+        Outlines("records/facts/region-outlines-osm", "openstreetmap", [],
+            "Derived from OpenStreetMap data, © OpenStreetMap contributors, under the Open Database License 1.0 " +
+            "(opendatacommons.org/licenses/odbl/1-0/), as OpenBible.info's Bible Geocoding gives it, simplified. Kept in a " +
+            "file of its own and never merged into another; a database made from it is ODbL too. Never edited."),
+
         new("records/facts/locations", ProductKind.Machine,
             "slug lon lat kind score:int? modern_id coordinates_source dataset? by",
             """
@@ -185,22 +193,45 @@ internal static partial class RecordFiles
             ["place_location", "place_candidate"],
             About: "Derived: where a place is, from the gazetteer and the location supplements; never edited."),
         new("records/facts/location-candidates", ProductKind.Machine,
-            "slug rank:int score:int? modern_id? site? lon? lat? kind? radius_m:int? site_type? relation? through_openbible? special? withheld? grounds? coordinates_source? dataset? by",
+            "slug rank:int score:int? modern_id? site? lon? lat? kind? radius_m:int? site_type? relation? through_openbible? special? withheld? grounds? coordinates_source? dataset? by outline?",
             """
             SELECT e.slug, c.rank, c.score, c.modern_id, c.site, c.longitude::text, c.latitude::text, c.kind, c.radius_meters, c.site_type, c.relation,
-                   c.through_open_bible_id, c.special, c.withheld, array_to_string(c.grounds, '|'), c.coordinates_source, c.coordinates_dataset, c.source
+                   c.through_open_bible_id, c.special, c.withheld, array_to_string(c.grounds, '|'), c.coordinates_source, c.coordinates_dataset, c.source,
+                   c.outline_id
             FROM place_candidate c JOIN entity e ON e.id = c.entity_id ORDER BY 1, 2
             """,
             """
             INSERT INTO place_candidate (entity_id, rank, score, modern_id, site, longitude, latitude, kind, radius_meters, site_type, relation,
-                                         through_open_bible_id, special, withheld, grounds, coordinates_source, coordinates_dataset, source)
+                                         through_open_bible_id, special, withheld, grounds, coordinates_source, coordinates_dataset, source, outline_id)
             SELECT e.id, s.rank, s.score, s.modern_id, s.site, s.lon::double precision, s.lat::double precision, s.kind, s.radius_m, s.site_type,
-                   s.relation, s.through_openbible, s.special, s.withheld, string_to_array(s.grounds, '|'), s.coordinates_source, s.dataset, s.by
+                   s.relation, s.through_openbible, s.special, s.withheld, string_to_array(s.grounds, '|'), s.coordinates_source, s.dataset, s.by,
+                   s.outline
             FROM s JOIN entity e ON e.slug = s.slug ORDER BY s.slug, s.rank
             """,
             [],
-            About: "Derived: the sites proposed for a place, best first; through_openbible is the gazetteer's id of the place a site was reached through."),
+            About: "Derived: the sites proposed for a place, best first; through_openbible is the gazetteer's id of the place a site was reached " +
+                   "through; outline is the shape an area is drawn by, in region-outlines or region-outlines-osm."),
     ];
+
+    /// <summary>
+    /// One owner's outlines of the shared table, a file each so that their licences never meet in one; the first
+    /// empties the table for both.
+    /// </summary>
+    private static RecordFile Outlines(string product, string dataset, string[] empties, string about) =>
+        new(product, ProductKind.Machine,
+            "id kind dataset west south east north by coarse fine",
+            $"""
+            SELECT o.id, o.kind, o.dataset, o.west::text, o.south::text, o.east::text, o.north::text, o.source, o.coarse, o.fine
+            FROM place_outline o WHERE o.dataset = '{dataset}' ORDER BY 1
+            """,
+            $"""
+            INSERT INTO place_outline (id, kind, dataset, west, south, east, north, source, coarse, fine)
+            SELECT s.id, s.kind, s.dataset, s.west::double precision, s.south::double precision, s.east::double precision,
+                   s.north::double precision, s.by, s.coarse, s.fine
+            FROM s WHERE s.dataset = '{dataset}' ORDER BY s.id
+            """,
+            empties,
+            About: about);
 
     /// <summary>Every file, in the order the load writes them: records first, then what stands on them.</summary>
     public static RecordFile[] All => Every.Value;
