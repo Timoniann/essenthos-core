@@ -40,11 +40,20 @@ public sealed class VerseSearchTests : IAsyncLifetime
             (1, 8, ["життям", "вічним"]),
             (1, 9, ["вийшли", "з", "Рамесесу"]),
             (1, 10, ["і", "прийшли", "до", "Рамесес"]),
-            (1, 11, ["їсть", "хліб"]));
+            (1, 11, ["їсть", "хліб"]),
+            (1, 12, ["освітив", "землю"]),
+            (1, 13, ["світильник", "горить"]),
+            (1, 14, ["щоб", "світити", "на", "землю"]),
+            (1, 15, ["світу", "цього"]),
+            (1, 16, ["Бог", "так", "полюбив", "світ"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (1, 1, ["God", "so", "loved", "the", "world"]),
             (1, 2, ["love", "thy", "neighbour"]),
-            (1, 3, ["a", "garden"]));
+            (1, 3, ["a", "garden"]),
+            (1, 4, ["delight", "thyself"]),
+            (1, 5, ["lightning", "came"]),
+            (1, 6, ["lights", "in", "the", "firmament"]),
+            (1, 7, ["the", "light", "shineth"]));
         _db.SaveChanges();
 
         foreach (var word in _db.Words.ToList())
@@ -94,10 +103,12 @@ public sealed class VerseSearchTests : IAsyncLifetime
         return Task.CompletedTask;
     }
 
-    private Task<SearchResultsResponse> Search(Text text, string query, int skip = 0) =>
-        VerseSearch.Search(
+    private async Task<SearchResultsResponse> Search(
+        Text text, string query, int skip = 0, SearchWidening widening = SearchWidening.AsFarAsNeeded) =>
+        await VerseSearch.Search(
             _db, text.Id, text.Slug, text.Language, TypedQuery.Parse(query), new SearchScope(null, null, null),
-            SearchWidening.AsFarAsNeeded, skip, 20, CancellationToken.None);
+            widening, skip, 20, CancellationToken.None,
+            text.Language is "ukr" or "rus" ? new FormIndex(text.Language, await WordForms.Spellings(_db, text.Id, CancellationToken.None)) : null);
 
     private static List<int> Verses(SearchResultsResponse found) => [.. found.Items.Select(hit => hit.Verse)];
 
@@ -123,6 +134,38 @@ public sealed class VerseSearchTests : IAsyncLifetime
     {
         (await Search(_ohienko, "життя")).Items.Select(hit => hit.Verse).Should().BeEquivalentTo([1, 2, 7, 8]);
         Verses(await Search(_english, "loved")).Should().BeEquivalentTo([1, 2], "Snowball reads loved and love as one word");
+    }
+
+    /// <summary>
+    /// A reader who knows part of a word finds the words holding it, after the word itself: «світ»
+    /// (world) first, then its own forms, then the words beginning with it — the verb «світити» (to
+    /// shine) the stemmer lands on the noun, «світильник» — and last a word with it inside.
+    /// </summary>
+    [Fact]
+    public async Task TheWordTypedComesFirstThenItsFormsThenTheWordsHoldingIt()
+    {
+        var found = await Search(_ohienko, "світ");
+
+        Verses(found).Should().Equal(16, 15, 13, 14, 12);
+        found.Items[^1].Snippet.Should().Contain("<em>освітив</em>");
+        found.Terms.Single().Matching.Should().Be("stemmed");
+    }
+
+    [Fact]
+    public async Task AnEnglishWordRanksTheSameWay() =>
+        Verses(await Search(_english, "light")).Should().Equal(7, 6, 5, 4);
+
+    [Fact]
+    public async Task WholeWordsOnlyLeavesOutTheWordsMerelyHoldingIt() =>
+        Verses(await Search(_ohienko, "світ", widening: SearchWidening.WholeWordOnly)).Should().Equal(16, 15, 14);
+
+    [Fact]
+    public async Task PartOfAWordAloneIsFoundAndSaidToBe()
+    {
+        var found = await Search(_ohienko, "світильн");
+
+        Verses(found).Should().Equal(13);
+        found.Terms.Single().Matching.Should().Be("substring");
     }
 
     [Fact]

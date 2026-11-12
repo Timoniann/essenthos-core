@@ -10,10 +10,14 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 internal enum SearchWidening
 {
-    /// <summary>Whole word, then printed word, then part of one. What a caller who says nothing gets.</summary>
+    /// <summary>
+    /// What a caller who says nothing gets: the word and its forms first, then the words that begin
+    /// with it or hold it, ranked after them, where the text's forms are counted; elsewhere the whole
+    /// word, then the printed word, then part of one.
+    /// </summary>
     AsFarAsNeeded,
 
-    /// <summary>Whole word and printed word only: <em>beginn</em> answers nothing rather than <em>beginning</em>.</summary>
+    /// <summary>The word, its forms and the printed word only: <em>beginn</em> answers nothing rather than <em>beginning</em>.</summary>
     WholeWordOnly,
 
     /// <summary>Part of a word straight away, so a stem answers without having to fail twice first.</summary>

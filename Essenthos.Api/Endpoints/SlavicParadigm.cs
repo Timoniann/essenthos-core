@@ -36,9 +36,13 @@ internal static class SlavicParadigm
 
     /// <summary>
     /// A verb's stem before its thematic vowel may be two letters — <em>бу-ти</em>, <em>бу-в</em>,
-    /// <em>да-ти</em> —, because the ending it is read by is one no noun has.
+    /// <em>да-ти</em>, <em>пь-ет</em> —, because the ending it is read by is one no noun has; but only a
+    /// root ending in a vowel or a soft sign, or every noun in -ет, -ят, -ат is a verb's person
+    /// (<em>свет</em> and <em>свят</em> would share the root <em>св-</em>).
     /// </summary>
     private const int ShortestVerbRoot = 2;
+
+    private const string ShortRootEnds = "аеиоуыэюяіїєёь";
 
     private const string Vowels = "аеиоуыэюяіїєё";
 
@@ -154,10 +158,16 @@ internal static class SlavicParadigm
 
         foreach (var thematic in Thematic)
         {
-            if (beforeEnding.EndsWith(thematic, StringComparison.Ordinal)
-                && beforeEnding.Length - thematic.Length >= (thematic.Length == 0 ? ShortestVerbRoot : ShortestStem))
+            if (!beforeEnding.EndsWith(thematic, StringComparison.Ordinal))
             {
-                found.Add((Kind.Verb, beforeEnding[..^thematic.Length]));
+                continue;
+            }
+
+            var root = beforeEnding[..^thematic.Length];
+            if (root.Length >= ShortestStem
+                || (thematic.Length == 0 && root.Length >= ShortestVerbRoot && ShortRootEnds.Contains(root[^1])))
+            {
+                found.Add((Kind.Verb, root));
             }
         }
     }
