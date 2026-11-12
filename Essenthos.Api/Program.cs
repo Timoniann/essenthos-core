@@ -76,6 +76,7 @@ builder.Services.AddSingleton(services => DownloadsCatalogue.From(
 builder.Services.AddSingleton(services =>
     new PictureCopies(images, pictureCache, services.GetRequiredService<ILogger<PictureCopies>>()));
 builder.Services.AddSingleton(services => PictureCrops.FromCorpus(services.GetRequiredService<IServiceScopeFactory>()));
+builder.Services.AddSingleton(new PlacePictures(images));
 
 // Each page of the reader written out for a search engine or a link preview, which the proxy asks
 // for before it falls back to the plain application.

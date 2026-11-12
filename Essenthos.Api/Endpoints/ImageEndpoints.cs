@@ -192,12 +192,17 @@ internal static class ImageEndpoints
     /// The reader's language, whose caption is given where the list wrote one in it; the English
     /// caption otherwise.
     /// </param>
+    /// <param name="map">
+    /// A place's picture drawn from the site's map, which leads the list wherever there is one; every
+    /// other picture then joins the gallery behind it.
+    /// </param>
     public static async Task<List<EntityImageResponse>> Of(
         AppDbContext db,
         int entityId,
         CancellationToken cancellationToken,
         bool generated = true,
-        string? language = null)
+        string? language = null,
+        PlacePicture? map = null)
     {
         var images = await db.EntityImages
             .Where(i => i.EntityId == entityId && (generated || i.Kind != Generated))
@@ -212,7 +217,7 @@ internal static class ImageEndpoints
             })
             .ToListAsync(cancellationToken);
 
-        return
+        List<EntityImageResponse> listed =
         [
             .. images.Select(i => i.Kind is Generated or Rendered
                 ? new EntityImageResponse(
@@ -229,14 +234,25 @@ internal static class ImageEndpoints
                     Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight, i.Width, i.Height),
                 }),
         ];
+        return map is null
+            ? listed
+            : [PlacePictures.Response(map), .. listed.Select(image => image with { Role = Gallery })];
     }
+
+    private const string Gallery = "gallery";
 
     /// <summary>
     /// The picture each of several entities leads with, by slug, for a list or a tree to show small.
-    /// Only the entities that have one are in it.
+    /// Only the entities that have one are in it. Where <paramref name="places"/> is given, a place's
+    /// picture drawn from the map, in <paramref name="language"/>, leads as it does on its page.
     /// </summary>
     public static async Task<Dictionary<string, EntityThumbnailResponse>> Leading(
-        AppDbContext db, IReadOnlyCollection<string> slugs, CancellationToken cancellationToken, bool generated = true)
+        AppDbContext db,
+        IReadOnlyCollection<string> slugs,
+        CancellationToken cancellationToken,
+        bool generated = true,
+        PlacePictures? places = null,
+        string? language = null)
     {
         var primaries = await db.EntityImages
             .Where(i => i.Role == Primary && slugs.Contains(i.Entity!.Slug) && (generated || i.Kind != Generated))
@@ -247,7 +263,7 @@ internal static class ImageEndpoints
             })
             .ToListAsync(cancellationToken);
 
-        return primaries
+        var leading = primaries
             .GroupBy(i => i.Slug)
             .ToDictionary(
                 group => group.Key,
@@ -260,6 +276,22 @@ internal static class ImageEndpoints
                     })
                     .First(),
                 StringComparer.Ordinal);
+        if (places is not null)
+        {
+            foreach (var slug in slugs)
+            {
+                if (places.For(slug, language) is { } map)
+                {
+                    leading[slug] = new EntityThumbnailResponse(Url(map.File, map.Digest), PlacePictures.Kind, 0.5, 0.5)
+                    {
+                        Width = map.Width,
+                        Height = map.Height,
+                    };
+                }
+            }
+        }
+
+        return leading;
     }
 }
 
@@ -270,7 +302,8 @@ internal static class ImageEndpoints
 /// <param name="Url">Where it is served, relative to the API's own address.</param>
 /// <param name="Kind">
 /// <c>public</c> for an openly licensed work of somebody else's, <c>generated</c> for ours, <c>rendered</c>
-/// for ours drawn from a thing's 3D model.
+/// for ours drawn from a thing's 3D model, <c>map</c> for ours drawn from the site's map of a place, which
+/// carries the map's credit.
 /// </param>
 /// <param name="Role"><c>primary</c> for the picture a page leads with, <c>gallery</c> for the rest.</param>
 /// <param name="Caption">What it shows, fit to be its alternative text. Null where the source says nothing.</param>

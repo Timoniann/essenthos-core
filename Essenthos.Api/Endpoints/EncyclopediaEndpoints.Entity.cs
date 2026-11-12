@@ -99,6 +99,7 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? prose,
             AppDbContext db,
             SiteSettingsFile settings,
+            [FromServices] PlacePictures? places,
             CancellationToken cancellationToken) =>
         {
             slug = await MergedAddresses.Current(db, slug, cancellationToken);
@@ -410,7 +411,8 @@ internal static partial class EncyclopediaEndpoints
                     .GetValueOrDefault(entity.Id),
                 Renderings = await Renderings(db, entity.Id, cancellationToken),
                 Images = await ImageEndpoints.Of(
-                    db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language),
+                    db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language,
+                    entity.Kind == EntityKind.Place ? places?.For(entity.Slug, words) : null),
                 Bearers =
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
