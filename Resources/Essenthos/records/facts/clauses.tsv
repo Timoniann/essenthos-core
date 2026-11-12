@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # What the text says a record is, clause by clause: the line, and the source of every relationship.
 subject	ordinal	relation	target	ref	citation	witness	original	method	confidence	by	run	note
 aaron	1	brother-of	moses	2.4:14	\N	\N	\N	model-reading	0.97	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe	\N
@@ -5540,7 +5540,6 @@ princeofthekingdomofpersia	1	commander-of	persia	27.10:13	\N	\N	\N	model-reading
 priscilla	1	wife-of	aquila	44.18:2	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#1146fe7012557dbd	\N
 priscilla	2	companion-of	saul-2	44.18:18	\N	\N	\N	manual	\N	read from Scripture by an agent (claude-opus-5-5) reading ACT 18:18 on the project owner's instruction of 2026-10-14, decided 2026-10-14	batch-0423.jsonl#1146fe7012557dbd	Paul 'sailed thence into Syria, and with him Priscilla and Aquila' (ACT 18:18); he had lodged and worked with them at Corinth (ACT 18:2-3), and calls them 'my helpers in Christ Jesus' (ROM 16:3).
 ptolemais	1	near	tyre	44.21:7	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0083.jsonl#b388d85a4db0dff4	\N
-puah	1	of-people	hebrews	2.1:15	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#6bee5f4e934bb6c7	\N
 puah-2	1	father-of	tola-2	7.10:1	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#4222712fa0c3f95f	\N
 puah-2	2	son-of	dodo	7.10:1	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#4222712fa0c3f95f	\N
 pul	1	king-of	assyria	12.15:19	\N	\N	\N	model-reading	0.97	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0424.jsonl#7abd46a828d639f0	\N
@@ -6336,7 +6335,6 @@ shinab	1	king-of	admah	1.14:2	\N	\N	\N	model-reading	0.95	read from Scripture by
 shiphi	1	father-of	ziza	13.4:37	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0484.jsonl#08eb2e71a971bff0	\N
 shiphi	2	son-of	allon	13.4:37	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0484.jsonl#08eb2e71a971bff0	\N
 shiphmites	1	from-place	shepham	13.27:27	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0484.jsonl#ca50435882f45c25	\N
-shiphrah	1	of-people	hebrews	2.1:15	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0484.jsonl#c9f659db32ff86d1	\N
 shiphtan	1	father-of	kemuel-2	4.34:24	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0010.jsonl#541b482919399e3d	\N
 shiphtan	2	descendant-of	ephraim	4.34:24	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-13	zz-words-0010.jsonl#541b482919399e3d	the verse states it, decided on the review page
 shisha	1	father-of	elihoreph	11.4:3	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0484.jsonl#1d60f4c7bf4261c8	\N

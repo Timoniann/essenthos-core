@@ -1,0 +1,6 @@
+# producer   by hand: Rahab named in Matthew 1:5 (PRB-1548), applied by forge owner-rows
+# by         Essenthos, the word of Matthew 1:5 read against the verse by claude-opus-5-5 on the project owner's instruction of 2026-11-12
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1548	names/TR1894	add	40.1:5.8	rahab	\N	name	G4477	\N	'Salmon begat Booz of Rachab' (MAT 1:5): the mother of Boaz, whom her record holds as mother-of boaz from this verse; the Greek writes her name Ραχαβ here and Ρααβ in HEB 11:31 and JAS 2:25
+PRB-1548	names/NESTLE1904	add	40.1:5.8	rahab	\N	name	G4477	\N	'Salmon begat Booz of Rachab' (MAT 1:5): the mother of Boaz, whom her record holds as mother-of boaz from this verse; the Greek writes her name Ῥαχάβ here and Ῥαάβ in HEB 11:31 and JAS 2:25

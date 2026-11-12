@@ -1,0 +1,13 @@
+# product    Essenthos/mapping/BRENTON-GRCBRENT/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	16.10:10.7	16.10:11.7			Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+accept	16.10:10.7	16.10:12.1	renders		Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+accept	16.10:10.8	16.10:12.2	renders		Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+refuse	16.10:11.1	16.10:12.1			Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+accept	16.10:11.1	16.10:12.3	renders		Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+accept	16.10:11.3	16.10:13.1	renders		Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+refuse	16.10:12.1	16.10:13.1			Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
+accept	16.10:12.1	16.10:13.2	renders		Nehemiah 10:10-12: Brenton's English numbers the Levites one verse lower than his Greek, and the aligner joined Phelia, Micha and Zacchor each to the name before its own; every name is the Greek name it spells
