@@ -9,6 +9,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <UserSecretsId>essenthos-core</UserSecretsId>
+        <!-- The producers run a dozen pairs at once, and one workstation heap stops all of them for each collection. -->
+        <ServerGarbageCollection>true</ServerGarbageCollection>
     </PropertyGroup>
 
     <ItemGroup>

@@ -61,7 +61,7 @@ public sealed class NamesFirstSourceTests : IDisposable
             ("1.15:2", [("אֲדֹנָי", NamesFirstPass.Adonai), ("יְהוִה", NamesFirstPass.Yhwh), ("אַבְרָם", "אַבְרָם")]));
         Records(store, ("abram", "person"), ("yhvh", "person"));
         Settled(store, ("1.15:2.1", "yhvh"), ("1.15:2.2", "yhvh"), ("1.15:2.3", "abram"));
-        Consensus(store, ("1.15:2.1", "yhvh"), ("1.15:2.2", "yhvh"), ("1.15:2.3", "abram"));
+        Consensus(store, "DRA", ("1.15:2.1", "yhvh"), ("1.15:2.2", "yhvh"), ("1.15:2.3", "abram"));
 
         Write(store).Should().ContainSingle().Which.From.Should().Be("1.15:2.3", "Lord God is a title rendered word by word");
     }
@@ -83,10 +83,28 @@ public sealed class NamesFirstSourceTests : IDisposable
     public void A_consensus_row_naming_a_folded_record_is_read_as_the_record_it_went_into()
     {
         var store = Store();
-        Consensus(store, ("1.12:4.2", "abram-old"));
+        Consensus(store, "DRA", ("1.12:4.2", "abram-old"));
         Folds(store, ("abram-old", "abram"));
 
         Write(store).Should().ContainSingle().Which.Evidence.Should().Be("entity+letters");
+    }
+
+    [Fact]
+    public void Pairs_of_one_run_place_what_each_places_alone()
+    {
+        var store = Store();
+        Text(store, "KJV", "eng", ("1.12:4", [("So", null), ("Abram", null), ("departed", null)]));
+        Consensus(store, "KJV", ("1.12:4.2", "abram"));
+        string[] pairs = ["DRA-BHSA", "KJV-BHSA"];
+        var source = new NamesFirstSource();
+        var alone = pairs.Select(pair => source.Rows(new ProductTexts(store), pair, _ => { }).ToList()).ToList();
+
+        var texts = new ProductTexts(store);
+        var together = pairs.Select(pair => source.Rows(texts, pair, _ => { }).ToList()).ToList();
+
+        alone.Should().AllSatisfy(rows => rows.Should().ContainSingle());
+        together.Should().BeEquivalentTo(alone, options => options.WithStrictOrdering(),
+            "what the pairs of a reference share is the original's side, never one translation's");
     }
 
     [Fact]
@@ -110,7 +128,7 @@ public sealed class NamesFirstSourceTests : IDisposable
         Text(store, "BHSA", "hbo", ("1.12:4", [("וַיֵּלֶךְ", "הלך"), ("אַבְרָם", "אַבְרָם")]));
         Records(store, ("abram", "person"));
         Settled(store, ("1.12:4.2", "abram"));
-        Consensus(store, ("1.12:4.2", "abram"));
+        Consensus(store, "DRA", ("1.12:4.2", "abram"));
         return store;
     }
 
@@ -154,10 +172,10 @@ public sealed class NamesFirstSourceTests : IDisposable
             new SettledName(WordKey.Parse(name.Own, "BHSA"), name.Record, NameRoles.Name, "manual", null, "a test", null)));
     }
 
-    private static void Consensus(ProductStore store, params (string Own, string Record)[] names)
+    private static void Consensus(ProductStore store, string slug, params (string Own, string Record)[] names)
     {
-        using var writer = store.Create(NameProducts.Consensus("DRA"), ProductKind.Hand, ConsensusName.Schema("DRA"), "test", []);
-        writer.WriteAll(names.Select(name => new ConsensusName(WordKey.Parse(name.Own, "DRA"), name.Record)));
+        using var writer = store.Create(NameProducts.Consensus(slug), ProductKind.Hand, ConsensusName.Schema(slug), "test", []);
+        writer.WriteAll(names.Select(name => new ConsensusName(WordKey.Parse(name.Own, slug), name.Record)));
     }
 
     private sealed record FoldRow(string Slug, string Into)
