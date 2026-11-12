@@ -1,0 +1,152 @@
+# producer   by hand: 22 places Strong's headwords wrote under the King James spelling beside the gazetteer's record of the same place, folded into the gazetteer's records (PRB-1418), applied by forge owner-rows
+# by         Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; each of these 22 is the gazetteer's record of a place whose word stood on a record Strong's headword made under the King James spelling, at the same verse
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1418	names/BHSA	remove	7.1:31.6	accho	\N	\N	\N	\N	7.1:31.6 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco
+PRB-1418	names/BHSA	add	7.1:31.6	acco	\N	name	\N	\N	7.1:31.6 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco
+PRB-1418	names/GRCBRENT	remove	7.1:31.7	accho	\N	\N	\N	\N	7.1:31.7 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco
+PRB-1418	names/GRCBRENT	add	7.1:31.7	acco	\N	name	\N	\N	7.1:31.7 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco
+PRB-1418	names/VULGCLEM	remove	7.1:31.6	accho	\N	\N	\N	\N	7.1:31.6 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco
+PRB-1418	names/VULGCLEM	add	7.1:31.6	acco	\N	name	\N	\N	7.1:31.6 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco
+PRB-1418	names/BHSA	remove	6.19:26.2	alammelech	\N	\N	\N	\N	6.19:26.2 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/BHSA	add	6.19:26.2	allammelech	\N	name	\N	\N	6.19:26.2 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/GRCBRENT	remove	6.19:26.2	alammelech	\N	\N	\N	\N	6.19:26.2 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/GRCBRENT	add	6.19:26.2	allammelech	\N	name	\N	\N	6.19:26.2 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/GEEZ81	remove	6.19:26.1	alammelech	\N	\N	\N	\N	6.19:26.1 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/GEEZ81	add	6.19:26.1	allammelech	\N	name	\N	\N	6.19:26.1 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/VULGCLEM	remove	6.19:26.2	alammelech	\N	\N	\N	\N	6.19:26.2 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/VULGCLEM	add	6.19:26.2	allammelech	\N	name	\N	\N	6.19:26.2 names Alammelech, a town of Asher (JOS 19:26), the gazetteer's Allammelech: alammelech folded into allammelech
+PRB-1418	names/BHSA	remove	6.15:28.7	bizjothjah	\N	\N	\N	\N	6.15:28.7 names Bizjothjah, a town of Judah named with Beersheba (JOS 15:28), the gazetteer's Biziothiah: bizjothjah folded into biziothiah
+PRB-1418	names/BHSA	add	6.15:28.7	biziothiah	\N	name	\N	\N	6.15:28.7 names Bizjothjah, a town of Judah named with Beersheba (JOS 15:28), the gazetteer's Biziothiah: bizjothjah folded into biziothiah
+PRB-1418	names/VULGCLEM	remove	6.15:28.6	bizjothjah	\N	\N	\N	\N	6.15:28.6 names Bizjothjah, a town of Judah named with Beersheba (JOS 15:28), the gazetteer's Biziothiah: bizjothjah folded into biziothiah
+PRB-1418	names/VULGCLEM	add	6.15:28.6	biziothiah	\N	name	\N	\N	6.15:28.6 names Bizjothjah, a town of Judah named with Beersheba (JOS 15:28), the gazetteer's Biziothiah: bizjothjah folded into biziothiah
+PRB-1418	names/BHSA	remove	6.15:57.2	cain-2	\N	\N	\N	\N	6.15:57.2 names Cain, a town of the hill country of Judah (JOS 15:57), the gazetteer's Kain: cain-2 folded into kain
+PRB-1418	names/BHSA	add	6.15:57.2	kain	\N	name	\N	\N	6.15:57.2 names Cain, a town of the hill country of Judah (JOS 15:57), the gazetteer's Kain: cain-2 folded into kain
+PRB-1418	names/BHSA	remove	13.18:8.6	chun	\N	\N	\N	\N	13.18:8.6 names Chun, a city of Hadarezer from which David took bronze (1CH 18:8), the gazetteer's Cun: chun folded into cun
+PRB-1418	names/BHSA	add	13.18:8.6	cun	\N	name	\N	\N	13.18:8.6 names Chun, a city of Hadarezer from which David took bronze (1CH 18:8), the gazetteer's Cun: chun folded into cun
+PRB-1418	names/GRCBRENT	remove	13.18:8.8	chun	\N	\N	\N	\N	13.18:8.8 names Chun, a city of Hadarezer from which David took bronze (1CH 18:8), the gazetteer's Cun: chun folded into cun
+PRB-1418	names/GRCBRENT	add	13.18:8.8	cun	\N	name	\N	\N	13.18:8.8 names Chun, a city of Hadarezer from which David took bronze (1CH 18:8), the gazetteer's Cun: chun folded into cun
+PRB-1418	names/VULGCLEM	remove	13.18:8.5	chun	\N	\N	\N	\N	13.18:8.5 names Chun, a city of Hadarezer from which David took bronze (1CH 18:8), the gazetteer's Cun: chun folded into cun
+PRB-1418	names/VULGCLEM	add	13.18:8.5	cun	\N	name	\N	\N	13.18:8.5 names Chun, a city of Hadarezer from which David took bronze (1CH 18:8), the gazetteer's Cun: chun folded into cun
+PRB-1418	names/NESTLE1904	remove	44.27:16.6	clauda	\N	\N	\N	\N	44.27:16.6 names Clauda, the island under which Paul's ship ran (ACT 27:16), the gazetteer's Cauda: clauda folded into cauda
+PRB-1418	names/NESTLE1904	add	44.27:16.6	cauda	\N	name	\N	\N	44.27:16.6 names Clauda, the island under which Paul's ship ran (ACT 27:16), the gazetteer's Cauda: clauda folded into cauda
+PRB-1418	names/TR1894	remove	44.27:16.6	clauda	\N	\N	\N	\N	44.27:16.6 names Clauda, the island under which Paul's ship ran (ACT 27:16), the gazetteer's Cauda: clauda folded into cauda
+PRB-1418	names/TR1894	add	44.27:16.6	cauda	\N	name	\N	\N	44.27:16.6 names Clauda, the island under which Paul's ship ran (ACT 27:16), the gazetteer's Cauda: clauda folded into cauda
+PRB-1418	names/VULGCLEM	remove	44.27:16.8	clauda	\N	\N	\N	\N	44.27:16.8 names Clauda, the island under which Paul's ship ran (ACT 27:16), the gazetteer's Cauda: clauda folded into cauda
+PRB-1418	names/VULGCLEM	add	44.27:16.8	cauda	\N	name	\N	\N	44.27:16.8 names Clauda, the island under which Paul's ship ran (ACT 27:16), the gazetteer's Cauda: clauda folded into cauda
+PRB-1418	names/BHSA	remove	4.33:34.8	ebronah	\N	\N	\N	\N	4.33:34.8 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/BHSA	add	4.33:34.8	abronah	\N	name	\N	\N	4.33:34.8 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/BHSA	remove	4.33:35.4	ebronah	\N	\N	\N	\N	4.33:35.4 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/BHSA	add	4.33:35.4	abronah	\N	name	\N	\N	4.33:35.4 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GRCBRENT	remove	4.33:34.8	ebronah	\N	\N	\N	\N	4.33:34.8 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GRCBRENT	add	4.33:34.8	abronah	\N	name	\N	\N	4.33:34.8 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GRCBRENT	remove	4.33:35.4	ebronah	\N	\N	\N	\N	4.33:35.4 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GRCBRENT	add	4.33:35.4	abronah	\N	name	\N	\N	4.33:35.4 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GEEZ81	remove	4.33:34.6	ebronah	\N	\N	\N	\N	4.33:34.6 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GEEZ81	add	4.33:34.6	abronah	\N	name	\N	\N	4.33:34.6 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GEEZ81	remove	4.33:35.3	ebronah	\N	\N	\N	\N	4.33:35.3 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/GEEZ81	add	4.33:35.3	abronah	\N	name	\N	\N	4.33:35.3 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/VULGCLEM	remove	4.33:34.6	ebronah	\N	\N	\N	\N	4.33:34.6 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/VULGCLEM	add	4.33:34.6	abronah	\N	name	\N	\N	4.33:34.6 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/VULGCLEM	remove	4.33:35.3	ebronah	\N	\N	\N	\N	4.33:35.3 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/VULGCLEM	add	4.33:35.3	abronah	\N	name	\N	\N	4.33:35.3 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/SP	remove	4.33:34.8	ebronah	\N	\N	\N	\N	4.33:34.8 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/SP	add	4.33:34.8	abronah	\N	name	\N	\N	4.33:34.8 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/SP	remove	4.33:35.4	ebronah	\N	\N	\N	\N	4.33:35.4 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/SP	add	4.33:35.4	abronah	\N	name	\N	\N	4.33:35.4 names Ebronah, a camp of the wilderness journey between Jotbathah and Ezion-geber (NUM 33:34, NUM 33:35), the gazetteer's Abronah: ebronah folded into abronah
+PRB-1418	names/BHSA	remove	6.18:28.4	eleph	\N	\N	\N	\N	6.18:28.4 names Eleph, a town of Benjamin (JOS 18:28), the gazetteer's Haeleph: eleph folded into haeleph
+PRB-1418	names/BHSA	add	6.18:28.4	haeleph	\N	name	\N	\N	6.18:28.4 names Eleph, a town of Benjamin (JOS 18:28), the gazetteer's Haeleph: eleph folded into haeleph
+PRB-1418	names/VULGCLEM	remove	6.18:28.3	eleph	\N	\N	\N	\N	6.18:28.3 names Eleph, a town of Benjamin (JOS 18:28), the gazetteer's Haeleph: eleph folded into haeleph
+PRB-1418	names/VULGCLEM	add	6.18:28.3	haeleph	\N	name	\N	\N	6.18:28.3 names Eleph, a town of Benjamin (JOS 18:28), the gazetteer's Haeleph: eleph folded into haeleph
+PRB-1418	names/BHSA	remove	6.19:19.2	haphraim	\N	\N	\N	\N	6.19:19.2 names Haphraim, a town of Issachar (JOS 19:19), the gazetteer's Hapharaim: haphraim folded into hapharaim
+PRB-1418	names/BHSA	add	6.19:19.2	hapharaim	\N	name	\N	\N	6.19:19.2 names Haphraim, a town of Issachar (JOS 19:19), the gazetteer's Hapharaim: haphraim folded into hapharaim
+PRB-1418	names/GRCBRENT	remove	6.19:19.2	haphraim	\N	\N	\N	\N	6.19:19.2 names Haphraim, a town of Issachar (JOS 19:19), the gazetteer's Hapharaim: haphraim folded into hapharaim
+PRB-1418	names/GRCBRENT	add	6.19:19.2	hapharaim	\N	name	\N	\N	6.19:19.2 names Haphraim, a town of Issachar (JOS 19:19), the gazetteer's Hapharaim: haphraim folded into hapharaim
+PRB-1418	names/VULGCLEM	remove	6.19:19.2	haphraim	\N	\N	\N	\N	6.19:19.2 names Haphraim, a town of Issachar (JOS 19:19), the gazetteer's Hapharaim: haphraim folded into hapharaim
+PRB-1418	names/VULGCLEM	add	6.19:19.2	hapharaim	\N	name	\N	\N	6.19:19.2 names Haphraim, a town of Issachar (JOS 19:19), the gazetteer's Hapharaim: haphraim folded into hapharaim
+PRB-1418	names/BHSA	remove	6.19:38.2	iron	\N	\N	\N	\N	6.19:38.2 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/BHSA	add	6.19:38.2	yiron	\N	name	\N	\N	6.19:38.2 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/GRCBRENT	remove	6.19:38.2	iron	\N	\N	\N	\N	6.19:38.2 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/GRCBRENT	add	6.19:38.2	yiron	\N	name	\N	\N	6.19:38.2 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/GEEZ81	remove	6.19:38.1	iron	\N	\N	\N	\N	6.19:38.1 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/GEEZ81	add	6.19:38.1	yiron	\N	name	\N	\N	6.19:38.1 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/VULGCLEM	remove	6.19:38.2	iron	\N	\N	\N	\N	6.19:38.2 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/VULGCLEM	add	6.19:38.2	yiron	\N	name	\N	\N	6.19:38.2 names Iron, a fenced city of Naphtali (JOS 19:38), the gazetteer's Yiron: iron folded into yiron
+PRB-1418	names/BHSA	remove	6.19:42.6	jethlah	\N	\N	\N	\N	6.19:42.6 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/BHSA	add	6.19:42.6	ithlah	\N	name	\N	\N	6.19:42.6 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/GRCBRENT	remove	6.19:42.6	jethlah	\N	\N	\N	\N	6.19:42.6 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/GRCBRENT	add	6.19:42.6	ithlah	\N	name	\N	\N	6.19:42.6 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/GEEZ81	remove	6.19:42.3	jethlah	\N	\N	\N	\N	6.19:42.3 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/GEEZ81	add	6.19:42.3	ithlah	\N	name	\N	\N	6.19:42.3 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/VULGCLEM	remove	6.19:42.5	jethlah	\N	\N	\N	\N	6.19:42.5 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/VULGCLEM	add	6.19:42.5	ithlah	\N	name	\N	\N	6.19:42.5 names Jethlah, a town of Dan (JOS 19:42), the gazetteer's Ithlah: jethlah folded into ithlah
+PRB-1418	names/BHSA	remove	6.15:40.6	kithlish	\N	\N	\N	\N	6.15:40.6 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/BHSA	add	6.15:40.6	chitlish	\N	name	\N	\N	6.15:40.6 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/GRCBRENT	remove	6.15:40.6	kithlish	\N	\N	\N	\N	6.15:40.6 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/GRCBRENT	add	6.15:40.6	chitlish	\N	name	\N	\N	6.15:40.6 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/GEEZ81	remove	6.15:40.3	kithlish	\N	\N	\N	\N	6.15:40.3 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/GEEZ81	add	6.15:40.3	chitlish	\N	name	\N	\N	6.15:40.3 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/VULGCLEM	remove	6.15:40.5	kithlish	\N	\N	\N	\N	6.15:40.5 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/VULGCLEM	add	6.15:40.5	chitlish	\N	name	\N	\N	6.15:40.5 names Kithlish, a town of the lowland of Judah (JOS 15:40), the gazetteer's Chitlish: kithlish folded into chitlish
+PRB-1418	names/BHSA	remove	6.19:11.8	maralah	\N	\N	\N	\N	6.19:11.8 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/BHSA	add	6.19:11.8	mareal	\N	name	\N	\N	6.19:11.8 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/GRCBRENT	remove	6.19:11.4	maralah	\N	\N	\N	\N	6.19:11.4 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/GRCBRENT	add	6.19:11.4	mareal	\N	name	\N	\N	6.19:11.4 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/GEEZ81	remove	6.19:11.3	maralah	\N	\N	\N	\N	6.19:11.3 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/GEEZ81	add	6.19:11.3	mareal	\N	name	\N	\N	6.19:11.3 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/VULGCLEM	remove	6.19:11.5	maralah	\N	\N	\N	\N	6.19:11.5 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/VULGCLEM	add	6.19:11.5	mareal	\N	name	\N	\N	6.19:11.5 names Maralah, a place on Zebulun's border (JOS 19:11), the gazetteer's Mareal: maralah folded into mareal
+PRB-1418	names/BHSA	remove	16.11:28.6	mekonah	\N	\N	\N	\N	16.11:28.6 names Mekonah, a town of Judah resettled after the exile, named with Ziklag (NEH 11:28), the gazetteer's Meconah: mekonah folded into meconah
+PRB-1418	names/BHSA	add	16.11:28.6	meconah	\N	name	\N	\N	16.11:28.6 names Mekonah, a town of Judah resettled after the exile, named with Ziklag (NEH 11:28), the gazetteer's Meconah: mekonah folded into meconah
+PRB-1418	names/GEEZ81	remove	16.11:28.2	mekonah	\N	\N	\N	\N	16.11:28.2 names Mekonah, a town of Judah resettled after the exile, named with Ziklag (NEH 11:28), the gazetteer's Meconah: mekonah folded into meconah
+PRB-1418	names/GEEZ81	add	16.11:28.2	meconah	\N	name	\N	\N	16.11:28.2 names Mekonah, a town of Judah resettled after the exile, named with Ziklag (NEH 11:28), the gazetteer's Meconah: mekonah folded into meconah
+PRB-1418	names/VULGCLEM	remove	16.11:28.6	mekonah	\N	\N	\N	\N	16.11:28.6 names Mekonah, a town of Judah resettled after the exile, named with Ziklag (NEH 11:28), the gazetteer's Meconah: mekonah folded into meconah
+PRB-1418	names/VULGCLEM	add	16.11:28.6	meconah	\N	name	\N	\N	16.11:28.6 names Mekonah, a town of Judah resettled after the exile, named with Ziklag (NEH 11:28), the gazetteer's Meconah: mekonah folded into meconah
+PRB-1418	names/BHSA	remove	9.30:29.5	rachal	\N	\N	\N	\N	9.30:29.5 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/BHSA	add	9.30:29.5	racal	\N	name	\N	\N	9.30:29.5 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/GRCBRENT	remove	9.30:29.4	rachal	\N	\N	\N	\N	9.30:29.4 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/GRCBRENT	add	9.30:29.4	racal	\N	name	\N	\N	9.30:29.4 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/GEEZ81	remove	9.30:29.15	rachal	\N	\N	\N	\N	9.30:29.15 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/GEEZ81	add	9.30:29.15	racal	\N	name	\N	\N	9.30:29.15 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/VULGCLEM	remove	9.30:29.4	rachal	\N	\N	\N	\N	9.30:29.4 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/VULGCLEM	add	9.30:29.4	racal	\N	name	\N	\N	9.30:29.4 names Rachal, a town of Judah to which David sent spoil (1SA 30:29), the gazetteer's Racal: rachal folded into racal
+PRB-1418	names/BHSA	remove	13.4:12.17	rechah	\N	\N	\N	\N	13.4:12.17 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/BHSA	add	13.4:12.17	recah	\N	name	\N	\N	13.4:12.17 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/GRCBRENT	remove	13.4:12.14	rechah	\N	\N	\N	\N	13.4:12.14 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/GRCBRENT	add	13.4:12.14	recah	\N	name	\N	\N	13.4:12.14 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/GRCBRENT	remove	13.4:12.19	rechah	\N	\N	\N	\N	13.4:12.19 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/GRCBRENT	add	13.4:12.19	recah	\N	name	\N	\N	13.4:12.19 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/VULGCLEM	remove	13.4:12.15	rechah	\N	\N	\N	\N	13.4:12.15 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/VULGCLEM	add	13.4:12.15	recah	\N	name	\N	\N	13.4:12.15 names Rechah, the place whose men are named in the families of Judah (1CH 4:12), the gazetteer's Recah: rechah folded into recah
+PRB-1418	names/BHSA	remove	6.19:22.8	shahazimah	\N	\N	\N	\N	6.19:22.8 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/BHSA	add	6.19:22.8	shahazumah	\N	name	\N	\N	6.19:22.8 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/GRCBRENT	remove	6.19:22.9	shahazimah	\N	\N	\N	\N	6.19:22.9 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/GRCBRENT	add	6.19:22.9	shahazumah	\N	name	\N	\N	6.19:22.9 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/GEEZ81	remove	6.19:22.6	shahazimah	\N	\N	\N	\N	6.19:22.6 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/GEEZ81	add	6.19:22.6	shahazumah	\N	name	\N	\N	6.19:22.6 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/VULGCLEM	remove	6.19:22.8	shahazimah	\N	\N	\N	\N	6.19:22.8 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/VULGCLEM	add	6.19:22.8	shahazumah	\N	name	\N	\N	6.19:22.8 names Shahazimah, a place on Issachar's border by Tabor (JOS 19:22), the gazetteer's Shahazumah: shahazimah folded into shahazumah
+PRB-1418	names/BHSA	remove	6.15:11.13	shicron	\N	\N	\N	\N	6.15:11.13 names Shicron, a place on Judah's northern border (JOS 15:11), the gazetteer's Shikkeron: shicron folded into shikkeron
+PRB-1418	names/BHSA	add	6.15:11.13	shikkeron	\N	name	\N	\N	6.15:11.13 names Shicron, a place on Judah's northern border (JOS 15:11), the gazetteer's Shikkeron: shicron folded into shikkeron
+PRB-1418	names/GRCBRENT	remove	6.15:11.15	shicron	\N	\N	\N	\N	6.15:11.15 names Shicron, a place on Judah's northern border (JOS 15:11), the gazetteer's Shikkeron: shicron folded into shikkeron
+PRB-1418	names/GRCBRENT	add	6.15:11.15	shikkeron	\N	name	\N	\N	6.15:11.15 names Shicron, a place on Judah's northern border (JOS 15:11), the gazetteer's Shikkeron: shicron folded into shikkeron
+PRB-1418	names/VULGCLEM	remove	6.15:11.10	shicron	\N	\N	\N	\N	6.15:11.10 names Shicron, a place on Judah's northern border (JOS 15:11), the gazetteer's Shikkeron: shicron folded into shikkeron
+PRB-1418	names/VULGCLEM	add	6.15:11.10	shikkeron	\N	name	\N	\N	6.15:11.10 names Shicron, a place on Judah's northern border (JOS 15:11), the gazetteer's Shikkeron: shicron folded into shikkeron
+PRB-1418	names/BHSA	remove	6.19:19.4	shihon	\N	\N	\N	\N	6.19:19.4 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/BHSA	add	6.19:19.4	shion	\N	name	\N	\N	6.19:19.4 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/GRCBRENT	remove	6.19:19.4	shihon	\N	\N	\N	\N	6.19:19.4 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/GRCBRENT	add	6.19:19.4	shion	\N	name	\N	\N	6.19:19.4 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/GEEZ81	remove	6.19:19.1	shihon	\N	\N	\N	\N	6.19:19.1 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/GEEZ81	add	6.19:19.1	shion	\N	name	\N	\N	6.19:19.1 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/VULGCLEM	remove	6.19:19.4	shihon	\N	\N	\N	\N	6.19:19.4 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/VULGCLEM	add	6.19:19.4	shion	\N	name	\N	\N	6.19:19.4 names Shihon, a town of Issachar (JOS 19:19), the gazetteer's Shion: shihon folded into shion
+PRB-1418	names/BHSA	remove	4.21:14.9	vaheb	\N	\N	\N	\N	4.21:14.9 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/BHSA	add	4.21:14.9	waheb	\N	name	\N	\N	4.21:14.9 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/GRCBRENT	remove	4.21:14.10	vaheb	\N	\N	\N	\N	4.21:14.10 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/GRCBRENT	add	4.21:14.10	waheb	\N	name	\N	\N	4.21:14.10 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/GEEZ81	remove	4.21:14.8	vaheb	\N	\N	\N	\N	4.21:14.8 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/GEEZ81	add	4.21:14.8	waheb	\N	name	\N	\N	4.21:14.8 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/SP	remove	4.21:14.9	vaheb	\N	\N	\N	\N	4.21:14.9 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/SP	add	4.21:14.9	waheb	\N	name	\N	\N	4.21:14.9 names Vaheb, the place the book of the wars of the LORD names by Suphah (NUM 21:14), the gazetteer's Waheb: vaheb folded into waheb
+PRB-1418	names/BHSA	remove	7.7:22.26	zererath	\N	\N	\N	\N	7.7:22.26 names Zererath, the place toward which Midian's host fled, by Beth-shittah (JDG 7:22), the gazetteer's Zererah: zererath folded into zererah
+PRB-1418	names/BHSA	add	7.7:22.26	zererah	\N	name	\N	\N	7.7:22.26 names Zererath, the place toward which Midian's host fled, by Beth-shittah (JDG 7:22), the gazetteer's Zererah: zererath folded into zererah

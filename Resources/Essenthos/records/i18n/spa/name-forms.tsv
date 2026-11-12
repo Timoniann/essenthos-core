@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-11
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aarón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -80,7 +80,6 @@ abram	nominative	Abram	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 p
 abronah	nominative	Abrona	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 absalom	nominative	Absalom	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 accad	nominative	Accad	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-accho	nominative	Achô	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 acco	nominative	Achô	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 achaia	nominative	Acaya	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 achaicus	nominative	Achâico	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -242,7 +241,6 @@ akkub-2	nominative	Accub	model-reading	1	declined by claude-opus-5-5, asked 2026
 akkub-3	nominative	Accub	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 akkub-5	nominative	Accub	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 akrabbim	nominative	Acrabim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-alammelech	nominative	Alammelec	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 alemeth	nominative	Alemeth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 alemeth-2	nominative	Alemeth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 alemeth-3	nominative	Alemeth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -910,7 +908,6 @@ bithia	nominative	Bethia	model-reading	1	declined by claude-opus-5-5, asked 2026
 bithron	nominative	Bitrón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 bithynia	nominative	Bithinia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 biziothiah	nominative	Bizotia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-bizjothjah	nominative	Bizotia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 biztha	nominative	Biztha	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 blastus	nominative	Blasto	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 boaz	nominative	Booz	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -955,7 +952,6 @@ caesarea	nominative	Cesarea	model-reading	1	declined by claude-opus-5-5, asked 2
 caesareaphilippi	nominative	Cesarea de Filipo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 caiaphas	nominative	Caifás	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cain	nominative	Caín	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-cain-2	nominative	Caín	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 cainan	nominative	Cainán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 calah	nominative	Calah	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 calcol	nominative	Calcol	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1031,14 +1027,12 @@ chloe	nominative	Cloé	model-reading	1	declined by claude-opus-5-5, asked 2026-1
 chorashan	nominative	Chôrasán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chorazin	nominative	Corazín	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chub	nominative	Chûb	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-chun	nominative	Chûn	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chuza	nominative	Chuza	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cilicia	nominative	Cilicia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cityofdavid	nominative	ciudad de David	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cityofdestruction	nominative	ciudad Herez	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cityofpalms	nominative	ciudad de las palmas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cityofsalt	nominative	ciudad de la sal	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-clauda	nominative	Clauda	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 claudia	nominative	Claudia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 claudius	nominative	Claudio	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 claudius-2	nominative	Claudio Lisias	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1179,7 +1173,6 @@ eber-4	nominative	Heber	model-reading	1	declined by claude-opus-5-5, asked 2026-
 eber-5	nominative	Eber	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ebez	nominative	Ebes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ebron	nominative	Hebrón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-ebronah	nominative	Abrona	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ecbatana	nominative	Achmetta	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eden	nominative	Edén	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eden-2	nominative	Edén	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1244,7 +1237,6 @@ eleazar-6	nominative	Eleazar	model-reading	1	declined by claude-opus-5-5, asked 
 eleazar-7	nominative	Eleazar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eleazar-8	nominative	Eleazar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eleazar-9	nominative	Eleazar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-eleph	nominative	Eleph	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 elhanan	nominative	Elhanan	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 elhanan-son-of-dodo	nominative	Elchânan	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eli	nominative	Eli	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1812,7 +1804,6 @@ hanun	nominative	Hanán	model-reading	1	declined by claude-opus-5-5, asked 2026-
 hanun-2	nominative	Hanún	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 hanun-3	nominative	Anún	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 hapharaim	nominative	Hapharaim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-haphraim	nominative	Hapharaim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 happizzez	nominative	Aphses	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 hara	nominative	Ara	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 haradah	nominative	Harada	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -2145,7 +2136,6 @@ iri	nominative	Hir	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14
 irijah	nominative	Irías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 irmoab	nominative	Ir-moab	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 irnahash	nominative	Naas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-iron	nominative	Irón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 irpeel	nominative	Irpeel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 irshemesh	nominative	Ir-semes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 iru	nominative	Iru	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -2452,7 +2442,6 @@ jekuthiel	nominative	Icuthiel	model-reading	1	declined by claude-opus-5-5, asked
 jemimah	nominative	Jemimah	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jemuel	nominative	Jemuel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jephthah	nominative	Jephté	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-jephthah-2	nominative	Jiphta	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 prints it, where it was «Jephté», checked 2026-10-31	\N
 jephthahs-daughter	nominative	la hija de Jephté	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-24, on the project owner's decision that the beings, things and places the narratives turn on are records of their own	\N
 jephunneh	nominative	Jephone	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 jephunneh-2	nominative	Jephone	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -2542,7 +2531,6 @@ jether	nominative	Jether	model-reading	1	declined by claude-opus-5-5, asked 2026
 jether-2	nominative	Jether	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jether-3	nominative	Jeter	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jetheth	nominative	Jetheth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-jethlah	nominative	Jeth-la	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jetur	nominative	Jetur	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jeuel	nominative	Jehuel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 jeuel-2	nominative	Jeiel	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -2869,7 +2857,6 @@ kish-son-of-abdi	nominative	Cis	model-reading	1	declined by claude-sonnet-5, ask
 kishi	nominative	Chîsi	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 kishion	nominative	Chisión	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kishon	nominative	Cisón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-kithlish	nominative	Chîtlis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kitron	nominative	Chîtron	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kittim-2	nominative	Chîttim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kittim-h3794	nominative	Chîttim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3064,7 +3051,6 @@ makaz	nominative	Maccas	model-reading	1	declined by claude-opus-5-5, asked 2026-
 makheloth	nominative	Maceloth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 makirites	nominative	Machîritas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 makkedah	nominative	Maceda	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-maktesh	nominative	Mactes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 malachi	nominative	Malaquías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 malcam	nominative	Milcom	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 malchiel	nominative	Malchîel	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -3109,7 +3095,6 @@ maoch	nominative	Maoch	model-reading	1	declined by claude-sonnet-5, asked 2026-0
 maon	nominative	Maón	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 maon-2	nominative	Maón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 marah	nominative	Mara	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-maralah	nominative	Merala	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mareal	nominative	Merala	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mareshah	nominative	Maresa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mareshah-2	nominative	Maresa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3183,7 +3168,6 @@ mehujael	nominative	Mehujael	model-reading	1	declined by claude-opus-5-5, asked 
 mehuman	nominative	Mehumán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mehunim	nominative	Meunim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mejarkon	nominative	Mejarcón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-mekonah	nominative	Mechôna	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 melatiah	nominative	Melatías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 melchi	nominative	Melchî	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 melchi-2	nominative	Melchî	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -3819,7 +3803,6 @@ rabbith	nominative	Rabbit	model-reading	1	declined by claude-opus-5-5, asked 202
 rabsaris	nominative	Rabsaris	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rabshakeh	nominative	Rabsaces	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 racal	nominative	Rachâl	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-rachal	nominative	Rachâl	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rachel	nominative	Rachêl	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 prints it, where it was «Raquel», checked 2026-10-31	\N
 raddai	nominative	Radai	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ragmat	nominative	Ragmat	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3867,7 +3850,6 @@ rechab	nominative	Rechâb	model-reading	1	declined by claude-sonnet-5, asked 202
 rechab-2	nominative	Rechâb	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rechab-3	nominative	Rechâb	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rechabites	nominative	Rechâbitas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-rechah	nominative	Rechâ	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 redsea	nominative	mar Bermejo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 redsea-2	nominative	mar Bermejo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 redsea-3	nominative	mar Bermejo	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -4067,7 +4049,6 @@ shaaraim-2	nominative	Saaraim	model-reading	1	declined by claude-opus-5-5, asked
 shaashgaz	nominative	Saasgaz	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shabbethai-2	nominative	Sabethai	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shaharaim	nominative	Saharaim	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
-shahazimah	nominative	Sahasim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shahazumah	nominative	Sahasim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shalishah	nominative	Salisa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shallecheth	nominative	Sallechêt	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4264,8 +4245,6 @@ sheva	nominative	Seba	model-reading	1	declined by claude-opus-5-5, asked 2026-10
 sheva-2	nominative	Seva	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shiba	nominative	Seba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shichemites	nominative	Sechêmitas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-shicron	nominative	Sichêron	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-shihon	nominative	Sión	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shihor	nominative	Sihor	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shihorlibnath	nominative	Sihor-libnath	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 shikkeron	nominative	Sichêron	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4698,7 +4677,6 @@ uzziel-4	nominative	Uzziel	model-reading	1	declined by claude-opus-5-5, asked 20
 uzziel-5	nominative	Uzziel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 uzziel-6	nominative	Uzziel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 uzzielites	nominative	Uzzielitas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-vaheb	nominative	Vaheb	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 vaizatha	nominative	Vaizatha	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 valleygate	nominative	puerta del Valle	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 valleyofachor	nominative	valle de Achor	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -4811,7 +4789,6 @@ zarchites	nominative	Zarahi	model-reading	1	declined by claude-opus-5-5, asked 2
 zarephath	nominative	Sarepta	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zarethan	nominative	Sarthán	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 zarethshahar	nominative	Zerethshahar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-zarthan	nominative	Sarthán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zattu	nominative	Zattu	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 zaza	nominative	Zaza	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zebadiah	nominative	Zebadías	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -4895,11 +4872,9 @@ zerah-6	nominative	Zera	model-reading	1	declined by claude-opus-5-5, asked 2026-
 zerahiah	nominative	Zeraías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zerahiah-2	nominative	Zarahi	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 zered	nominative	Zered	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-zereda	nominative	Sereda	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zeredah	nominative	Sereda	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zeredah-2	nominative	Seredat	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zererah	nominative	Cerera	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
-zererath	nominative	Cerera	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zeresh	nominative	Zeres	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zereth	nominative	Sereth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zerethshahar	nominative	Zerethshahar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
