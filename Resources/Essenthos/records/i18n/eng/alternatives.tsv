@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
 slug	n	reason
 abimelech	1	Both accounts name him alike, Abimelech king of Gerar with Phicol the commander of his army, and neither says a new king has come. Against it, Isaac's dealings with him fall after Abraham's death (GEN 26:18), most of a lifetime after Abraham's, and the same two names recurring is as well explained by titles as by one very long reign.
 abimelech	2	A king named after his father would give the text as it stands, the Abimelech of Genesis 26 another man than the Abimelech of Genesis 20-21. Nothing in the text tells a name repeated in a line of kings from a title.
@@ -22,6 +22,7 @@ azariah-of-the-wall-dedication	1	The head of a house who returned in 538, whom N
 azariah-son-of-zephaniah	1	He stands where Uzziah son of Uriel stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names.
 aziel	1	1 Chronicles 15:20 names Aziel in the place 1 Chronicles 15:18 gives Jaaziel, between Zechariah and Shemiramoth among the same Levites.
 azubah-2	1	Jerioth, named beside her under the same verb (1CH 2:18), may be her second name: Caleb begat children of Azubah his wife, who was also called Jerioth. It accounts for 'her sons' without needing a second woman.
+baalathbeer	1	Ramath of the south, named beside it in JOS 19:8, may be this same town; the text does not say.
 barachias	1	The prophet Zechariah's father is Berechiah (Zechariah 1:1), the same name; whether the Zacharias of Matthew 23:35 is the prophet the text does not say.
 beeri	1	Anah the son of Zibeon, the father of Esau's wife Aholibamah (GEN 36:2, 36:24), may be he, if Esau's wives of 26:34 and 36:2 are the same women under other names. The text does not say so, and 36:2 calls Anah's line Hivite.
 berechiah-6	1	Matthew 23:35 names Barachias the father of the Zacharias slain between the temple and the altar, the name of this father of the prophet Zechariah; whether that Zacharias is the prophet the text does not say.
@@ -88,6 +89,7 @@ oholibamah-wife-of-esau	1	Genesis 26:34 names Esau's wife Judith the daughter of
 phicol	1	The text gives the same name and the same office in both accounts and does not say they are two men; if Abimelech was one long-reigning king, one commander serving him throughout is possible.
 ramah	1	Samuel's Ramah (1SA 1:19; 7:17) may be this town; the text does not say.
 ramah-4	1	The Ramah of Benjamin (JOS 18:25) may be Samuel's town; the text does not say.
+ramah-6	1	Baalath-beer, named beside it in JOS 19:8, may be this same town; the text does not say.
 redsea	1	The sea Israel crossed (EXO 15:4) may be this one; the text calls both the Red Sea.
 redsea	2	The Red Sea by Ezion-geber in Edom (1KI 9:26) may be this one; the text calls both the Red Sea.
 redsea-2	1	The Red Sea of the locusts and of the camp after Elim (EXO 10:19; NUM 33:10) may be this sea; the text calls both the Red Sea.

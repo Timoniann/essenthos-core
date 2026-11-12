@@ -1900,7 +1900,6 @@ elizur	1	son-of	shedeur	4.1:5	\N	\N	\N	model-reading	0.97	read from Scripture by
 elizur	2	commander-of	reuben	4.2:10	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#b2c340046dc098f2	\N
 elkanah	1	son-of	korah-3	2.6:24	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#5c34be17ff46bf8a	\N
 elkanah	2	of-people	korahites	2.6:24	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#5c34be17ff46bf8a	\N
-elkanah-2	1	from-place	ramathaimzophim	9.1:1	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#fd939c734d80d301	\N
 elkanah-2	2	of-people	ephrathites	9.1:1	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#fd939c734d80d301	\N
 elkanah-2	3	son-of	jeroham	9.1:1	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#fd939c734d80d301	\N
 elkanah-2	4	husband-of	hannah	9.1:8	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0151.jsonl#fd939c734d80d301	\N
@@ -5592,7 +5591,6 @@ ramathites	1	from-place	ramah-9	13.27:27	\N	\N	\N	model-reading	0.75	read from S
 rameses	1	region-of	egypt	1.47:11	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b7f115b86084bd42	\N
 rameses	2	near	succoth-2	2.12:37	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b7f115b86084bd42	\N
 ramiah	1	descendant-of	parosh	15.10:25	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#ca1cd9cc1f4e074c	\N
-ramoth-2	1	region-of	negev	9.30:27	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#86f32fe10e439c0c	\N
 ramoth-3	1	city-in	gilead-4	5.4:43	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#cc03de3a0b2086da	\N
 ramothgilead	1	city-in	gilead-4	11.22:3	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#f1a0e3f89ae54f7b	\N
 raphah-2	1	son-of	binea	13.8:37	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0430.jsonl#70f4c4edf2fe1d49	\N
