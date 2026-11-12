@@ -268,14 +268,18 @@ internal static class RecordProducers
 
     /// <summary>
     /// Where each place is and the sites proposed for it, from the gazetteer's files, the location
-    /// supplements and the records' gazetteer ids (<see cref="OpenBibleLocationLoader.Locate"/>).
+    /// supplements and the records' gazetteer ids (<see cref="OpenBibleLocationLoader.Locate"/>); and the
+    /// outlines those sites are drawn by (<see cref="OpenBibleOutlines"/>), the gazetteer's own in one
+    /// file and OpenStreetMap's in another, each under its own licence.
     /// </summary>
     public static IEnumerable<(string Product, long Rows)> Locations(ProductStore from, ProductStore into, string openBible)
     {
         var ancient = Path.Combine(openBible, "ancient.jsonl");
         var modern = Path.Combine(openBible, "modern.jsonl");
+        var geometry = Path.Combine(openBible, OpenBibleOutlines.IndexFile);
+        var index = System.IO.File.Exists(geometry) ? OpenBibleOutlines.Index(geometry) : null;
         var supplement = Supplement(from);
-        var read = supplement.Apply(OpenBibleLocationLoader.Read(ancient, modern));
+        var read = supplement.Apply(OpenBibleLocationLoader.Read(ancient, modern, index));
         var regions = supplement.Regions.Select(r => r.Slug).ToHashSet(StringComparer.Ordinal);
         var laterTowns = SharedSites.All.Select(s => s.Later).ToHashSet(StringComparer.Ordinal);
         var openBibleIds = Read(from, "records/external-ids")
@@ -294,7 +298,10 @@ internal static class RecordProducers
 
         var (locations, candidates, _) = OpenBibleLocationLoader.Locate(read, supplement, places);
         var inputs = from.Inputs([.. Paths(from, "records/records", "records/external-ids", "records/facts/location-supplements"),
-            RelativeToResources(from, ancient), RelativeToResources(from, modern)]);
+            RelativeToResources(from, ancient), RelativeToResources(from, modern),
+            .. index is null
+                ? Array.Empty<string>()
+                : [RelativeToResources(from, geometry), RelativeToResources(from, Path.Combine(openBible, OpenBibleOutlines.Folder))]]);
         void Shared(ProductHeader header) => header.Notes.Add(new("shared-sites", string.Join(" ", SharedSites.All.Select(s => $"{s.Earlier}>{s.Later}"))));
 
         var locationFile = File("records/facts/locations");
@@ -311,11 +318,41 @@ internal static class RecordProducers
             {
                 places[c.EntityId].Slug, Integer(c.Rank), Integer(c.Score), c.ModernId, c.Site, Number(c.Longitude), Number(c.Latitude),
                 c.Kind, Integer(c.RadiusMeters), c.SiteType, c.Relation, c.ThroughOpenBibleId, c.Special, c.Withheld,
-                string.Join('|', c.Grounds), c.CoordinatesSource, c.CoordinatesDataset, c.Source,
+                string.Join('|', c.Grounds), c.CoordinatesSource, c.CoordinatesDataset, c.Source, c.OutlineId,
             }),
             Producer + " locations", inputs, Shared);
-        return [(locationFile.Product, located), (candidateFile.Product, proposed)];
+
+        var outlines = index is null
+            ? []
+            : OpenBibleOutlines.Outlines(openBible, index, candidates.Select(c => c.OutlineId).OfType<string>());
+        var written = new List<(string, long)> { (locationFile.Product, located), (candidateFile.Product, proposed) };
+        foreach (var (product, dataset, licence, source) in new[]
+                 {
+                     (OwnOutlines, Datasets.OpenBibleId, "CC BY 4.0, https://creativecommons.org/licenses/by/4.0/", OpenBibleOutlines.OwnSource),
+                     (OpenStreetMapOutlines, OpenBibleOutlines.OpenStreetMapDataset,
+                         "ODbL 1.0, https://opendatacommons.org/licenses/odbl/1-0/ (© OpenStreetMap contributors, openstreetmap.org/copyright)",
+                         OpenBibleOutlines.OpenStreetMapSource),
+                 })
+        {
+            written.Add((product, Write(into, File(product),
+                outlines.Where(o => o.Dataset == dataset).Select(o => new string?[]
+                {
+                    o.Id, o.Kind, o.Dataset, Number(o.West), Number(o.South), Number(o.East), Number(o.North), o.Source, o.Coarse, o.Fine,
+                }),
+                Producer + " locations", inputs, header =>
+                {
+                    header.Notes.Add(new("licence", licence));
+                    header.Notes.Add(new("source", source));
+                    header.Notes.Add(new("detail", OpenBibleOutlines.Detail));
+                })));
+        }
+
+        return written;
     }
+
+    internal const string OwnOutlines = "records/facts/region-outlines";
+
+    internal const string OpenStreetMapOutlines = "records/facts/region-outlines-osm";
 
     /// <summary>The location supplements as the hand file states them.</summary>
     private static LocationSupplement Supplement(ProductStore from)

@@ -218,8 +218,9 @@ public static class Datasets
         // The place layer, which the dataset above marks in progress: 118 places referenced only
         // through Genesis and Exodus against 1,342 across 61 books. Attribution 4.0 is why this and
         // not Theographic, whose 7,310 place references are share-alike. The places are taken, and
-        // one point per place where the gazetteer credits that point to anyone but OpenStreetMap;
-        // the geometry, and every point it credits to OpenStreetMap, are ODbL and are not.
+        // one point per place where the gazetteer credits that point to anyone but OpenStreetMap, and the
+        // gazetteer's own drawings of lands and areas. The outlines it took from OpenStreetMap (ODbL) are
+        // held in a file of their own and credited on the map as OpenStreetMap's, never as this dataset's.
         new("openbible", "OpenBible.info Bible Geocoding", "Stephen Smith", "CC BY 4.0",
             "https://creativecommons.org/licenses/by/4.0/",
             "https://github.com/openbibleinfo/Bible-Geocoding-Data",
@@ -228,7 +229,8 @@ public static class Datasets
             + "identification recorded. It is what the place layer reaches past Exodus on, and where "
             + "it names a place the other dataset already had, the reference joins that same entry "
             + "rather than making a second one. It also says where each place is, and the map of "
-            + "places is drawn from its most confident identification of each.",
+            + "places is drawn from its most confident identification of each, a land by the outline the "
+            + "gazetteer draws of it.",
             "OpenBible.info"),
 
         // Its own entry rather than a line under BibleData, because the words are Ussher's and the

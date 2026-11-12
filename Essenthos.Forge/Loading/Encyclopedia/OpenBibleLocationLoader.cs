@@ -183,6 +183,7 @@ internal static class OpenBibleLocationLoader
                     CoordinatesSource = answer.CoordinatesSource,
                     CoordinatesDataset = answer.CoordinatesDataset,
                     Source = Credited(answer.CoordinatesCredit),
+                    OutlineId = answer.Outline,
                 }));
             }
         }
@@ -255,6 +256,9 @@ internal static class OpenBibleLocationLoader
 
         /// <summary>Where in that dataset they were read, for the row's own credit.</summary>
         public string? CoordinatesCredit { get; init; }
+
+        /// <summary>The gazetteer's shape the answer is drawn by (<see cref="OpenBibleOutlines.Choose"/>), where it has one.</summary>
+        public string? Outline { get; init; }
     }
 
     /// <param name="Candidates">Every place's answers, the likeliest first, by the gazetteer's id.</param>
@@ -269,9 +273,11 @@ internal static class OpenBibleLocationLoader
 
     /// <summary>
     /// Every place's answers, and its likeliest one as its point where the terms allow it, with a
-    /// count of each reason a place has none.
+    /// count of each reason a place has none. With the geometry index, each answer that is an area
+    /// the gazetteer has a shape for names it.
     /// </summary>
-    internal static Reading Read(string ancientFile, string modernFile)
+    internal static Reading Read(
+        string ancientFile, string modernFile, IReadOnlyDictionary<string, OpenBibleOutlines.Entry>? outlines = null)
     {
         var modern = new Dictionary<string, Modern>(StringComparer.Ordinal);
         foreach (var line in File.ReadLines(modernFile))
@@ -307,7 +313,7 @@ internal static class OpenBibleLocationLoader
                 continue;
             }
 
-            var answers = Answers(root, modern);
+            var answers = Answers(root, modern, outlines);
             if (answers.Count == 0)
             {
                 unidentified++;
@@ -349,7 +355,8 @@ internal static class OpenBibleLocationLoader
     /// answer that is no site at the same score, and a tie between sites to the lower modern
     /// identifier, so a reload answers the same.
     /// </summary>
-    private static List<Candidate> Answers(JsonElement root, Dictionary<string, Modern> modern)
+    private static List<Candidate> Answers(
+        JsonElement root, Dictionary<string, Modern> modern, IReadOnlyDictionary<string, OpenBibleOutlines.Entry>? outlines)
     {
         var found = new List<Candidate>();
         if (!root.TryGetProperty("identifications", out var identifications)
@@ -363,7 +370,7 @@ internal static class OpenBibleLocationLoader
         {
             foreach (var association in associations.EnumerateObject())
             {
-                if (Site(association, identifications, modern) is { } site)
+                if (Site(association, identifications, modern, outlines) is { } site)
                 {
                     found.Add(site);
                 }
@@ -403,7 +410,10 @@ internal static class OpenBibleLocationLoader
 
     /// <summary>One modern location a place is identified with, or null where the gazetteer gives it no score.</summary>
     private static Candidate? Site(
-        JsonProperty association, JsonElement identifications, Dictionary<string, Modern> modern)
+        JsonProperty association,
+        JsonElement identifications,
+        Dictionary<string, Modern> modern,
+        IReadOnlyDictionary<string, OpenBibleOutlines.Entry>? outlines)
     {
         var value = association.Value;
         if (value.ValueKind != JsonValueKind.Object
@@ -461,7 +471,10 @@ internal static class OpenBibleLocationLoader
             null,
             withheld,
             Grounds(identification),
-            point is null ? null : credit.CoordinatesSource);
+            point is null ? null : credit.CoordinatesSource)
+        {
+            Outline = outlines is null ? null : OpenBibleOutlines.Choose(resolution, outlines),
+        };
 
         // A site the gazetteer scores but whose point cannot be read is still its answer, without a point.
         Candidate Unread() => new(

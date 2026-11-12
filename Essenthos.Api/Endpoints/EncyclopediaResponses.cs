@@ -461,6 +461,12 @@ internal record PlacePointResponse(
     /// whose name no other shares, or where nothing is said of it in that language.
     /// </summary>
     public string? Distinguisher { get; init; }
+
+    /// <summary>
+    /// The outline the place is drawn by where its likeliest answer is an area with a shape, by the
+    /// gazetteer's identifier (<c>/v1/places/outlines</c> gives the shape). Null otherwise.
+    /// </summary>
+    public string? Outline { get; init; }
 }
 
 /// <summary>How many of the map's places a chapter names.</summary>
@@ -496,6 +502,9 @@ internal record PlaceVariantResponse(string Slug, string? Site, double Lon, doub
 {
     /// <summary>How far round the point the place is taken to lie, in kilometres, where the gazetteer says.</summary>
     public double? RadiusKm { get; init; }
+
+    /// <summary>The outline the answer is drawn by, as on <see cref="PlacePointResponse.Outline"/>.</summary>
+    public string? Outline { get; init; }
 }
 
 /// <summary>A place on the map only through its proposed sites, named and counted as a point is.</summary>
@@ -566,7 +575,35 @@ internal record PlaceCandidateResponse(
 
     /// <summary>The ancient place this answer takes the place to be, where it is that: Babylon of Revelation, Rome.</summary>
     public EntityTribeResponse? Through { get; init; }
+
+    /// <summary>
+    /// The outline the answer is drawn by where it is an area with a shape, by the gazetteer's
+    /// identifier (<c>/v1/places/outlines</c> gives the shape); null for a point, a circle of
+    /// <paramref name="RadiusKm"/>, or an area of no known shape.
+    /// </summary>
+    public string? Outline { get; init; }
 }
+
+/// <param name="Detail"><c>coarse</c> for a map of the whole region (within about a kilometre), <c>fine</c> for a map of one place.</param>
+internal record PlaceOutlinesResponse(string Detail, IList<PlaceOutlineResponse> Items);
+
+/// <summary>The shape of a land, a sea or an area a place lies in.</summary>
+/// <param name="Id">The gazetteer's identifier, as answers name it.</param>
+/// <param name="Kind">
+/// <c>rough-boundary</c>, <c>confidence-bands</c> (nested areas, the widest the least sure),
+/// <c>probable-area</c> (the place lies somewhere in it) or <c>precise</c>.
+/// </param>
+/// <param name="By">
+/// Whose shape it is, as a declared dataset: <c>openbible</c>, or <c>openstreetmap</c>, whose notice
+/// (© OpenStreetMap contributors) a map drawing it must carry.
+/// </param>
+/// <param name="Box">West, south, east, north, in degrees.</param>
+/// <param name="Bands">One for every kind but bands, whose widest comes first.</param>
+internal record PlaceOutlineResponse(string Id, string Kind, string By, double[] Box, IList<PlaceOutlineBand> Bands);
+
+/// <param name="Confidence">How sure the sources are, in percent, that the land reached this far; null outside bands.</param>
+/// <param name="Rings">Each ring as longitude, latitude pairs in one flat list, closed, the outer ring first.</param>
+internal record PlaceOutlineBand(int? Confidence, IList<double[]> Rings);
 
 /// <param name="Confidence">
 /// How sure, and null exactly where a person or a source stated it rather than a process concluding

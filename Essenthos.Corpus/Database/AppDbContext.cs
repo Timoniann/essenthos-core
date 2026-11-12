@@ -238,6 +238,8 @@ public class AppDbContext : DbContext
     /// <summary>Every site its gazetteer proposes for a place, ranked by its score.</summary>
     public DbSet<PlaceCandidate> PlaceCandidates { get; set; } = null!;
 
+    public DbSet<PlaceOutline> PlaceOutlines { get; set; } = null!;
+
     /// <summary>The pictures of people and places, each credited, and whether it is ours.</summary>
     public DbSet<EntityImage> EntityImages { get; set; } = null!;
 
@@ -544,6 +546,25 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint(
                     "ck_place_candidate_site_or_special",
                     "(modern_id IS NULL) <> (special IS NULL)");
+            });
+
+            entity.HasOne(c => c.Outline)
+                .WithMany()
+                .HasForeignKey(c => c.OutlineId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<PlaceOutline>(entity =>
+        {
+            entity.ToTable("place_outline", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_place_outline_kind",
+                    "kind IN ('rough-boundary', 'confidence-bands', 'probable-area', 'precise')");
+                t.HasCheckConstraint("ck_place_outline_dataset", "dataset IN ('openbible', 'openstreetmap')");
+                t.HasCheckConstraint(
+                    "ck_place_outline_box",
+                    "west BETWEEN -180 AND 180 AND east BETWEEN -180 AND 180 AND south BETWEEN -90 AND 90 AND north BETWEEN -90 AND 90 AND west <= east AND south <= north");
             });
         });
 

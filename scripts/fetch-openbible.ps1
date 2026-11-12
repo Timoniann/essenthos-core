@@ -13,7 +13,7 @@
     ancient.jsonl and modern.jsonl are taken: the places, and the modern locations whose credits
     say whose coordinates each point is. The repository also holds thousands of GeoJSON and KML
     geometry files and images: the geometry is partly derived from OpenStreetMap and carries ODbL
-    1.0, which is share-alike, so none of it is downloaded here. modern.jsonl carries some
+    1.0, so it is fetched apart, by fetch-openbible-geometry.ps1, and kept apart. modern.jsonl carries some
     OpenStreetMap coordinates too, each credited as such, and the loader holds none of those; see
     the LICENCE.md kept beside the data.
 

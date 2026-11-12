@@ -26,6 +26,17 @@ internal static partial class EncyclopediaEndpoints
                 ? Results.Ok(await Map(db, language, cancellationToken, prose, variants ?? false, mode))
                 : ApiResults.NotFound($"There is no canon \"{canon}\". Try one of: {Canons.Names}."));
 
+        // The shapes the regions are drawn by, apart from the map: a map of the whole region asks for
+        // every one at the coarse detail once, and a map of one place for its own few at the fine one.
+        routes.MapGet("/places/outlines", async (
+            [FromQuery] string? detail,
+            [FromQuery] string? ids,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+            detail is null or "coarse" or "fine"
+                ? Results.Ok(await Outlines(db, detail == "fine", Ids(ids), cancellationToken))
+                : ApiResults.NotFound($"There is no detail \"{detail}\". Try coarse or fine."));
+
         // How many of the map's places a chapter names: the reader's link to the map under a chapter
         // says so, and fetching the whole map to count them was most of what a chapter downloaded.
         routes.MapGet("/places/map/{book}/{chapter:int}", async (
@@ -36,6 +47,44 @@ internal static partial class EncyclopediaEndpoints
             BookReferences.ResolveOrdinal(book) is { } ordinal
                 ? Results.Ok(new ChapterPlacesResponse(await LocatedIn(db, ordinal, chapter, cancellationToken)))
                 : ApiResults.NotFound(BookReferences.FormatHint(book)));
+    }
+
+    /// <summary>The most outlines one request names; a place has a handful, and the whole set is asked for without names.</summary>
+    private const int MostOutlinesNamed = 200;
+
+    private static string[]? Ids(string? ids) =>
+        string.IsNullOrWhiteSpace(ids)
+            ? null
+            : [.. ids.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Distinct().Take(MostOutlinesNamed)];
+
+    /// <summary>
+    /// The outlines asked for by the gazetteer's identifiers, or every one, each with whose it is, the
+    /// box round it, and its bands at the detail asked for.
+    /// </summary>
+    internal static async Task<PlaceOutlinesResponse> Outlines(
+        AppDbContext db, bool fine, IReadOnlyCollection<string>? ids, CancellationToken cancellationToken)
+    {
+        var query = db.PlaceOutlines.AsNoTracking();
+        if (ids is not null)
+        {
+            query = query.Where(o => ids.Contains(o.Id));
+        }
+
+        var rows = await query
+            .OrderBy(o => o.Id)
+            .Select(o => new { o.Id, o.Kind, o.Dataset, o.West, o.South, o.East, o.North, Shape = fine ? o.Fine : o.Coarse })
+            .ToListAsync(cancellationToken);
+        return new PlaceOutlinesResponse(
+            fine ? "fine" : "coarse",
+            [
+                .. rows.Select(o => new PlaceOutlineResponse(
+                    o.Id,
+                    o.Kind,
+                    o.Dataset,
+                    [o.West, o.South, o.East, o.North],
+                    System.Text.Json.JsonSerializer.Deserialize(o.Shape, AppJsonSerializerContext.Default.ListPlaceOutlineBand)
+                    ?? [])),
+            ]);
     }
 
     /// <summary>
@@ -81,6 +130,12 @@ internal static partial class EncyclopediaEndpoints
                 l.Score,
                 l.Source,
                 l.CoordinatesDataset,
+                // A place's own shape, where its likeliest answer is the area; an answer that puts it
+                // somewhere inside a wider land draws that land on its own page, not on the map of all.
+                Outline = l.Entity.Candidates
+                    .Where(c => c.Rank == 0 && (c.Relation == null || c.Relation != "in"))
+                    .Select(c => c.OutlineId)
+                    .FirstOrDefault(),
                 References = l.Entity.Verses
                     .AsQueryable().Where(ShownVerses.IsShown)
                     .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
@@ -138,6 +193,7 @@ internal static partial class EncyclopediaEndpoints
                     LocalName = local.GetValueOrDefault(p.EntityId),
                     NameFromSource = bySource.Contains(p.EntityId),
                     Distinguisher = told.GetValueOrDefault(p.Slug),
+                    Outline = p.Outline,
                 }),
             ])
         {
@@ -167,6 +223,7 @@ internal static partial class EncyclopediaEndpoints
                 Kind = c.Kind!,
                 c.Score,
                 c.RadiusMeters,
+                c.OutlineId,
             })
             .ToListAsync(cancellationToken);
 
@@ -202,6 +259,7 @@ internal static partial class EncyclopediaEndpoints
                 .. rows.Select(r => new PlaceVariantResponse(r.Slug, r.Site, r.Lon, r.Lat, r.Kind, r.Score / ScoreScale)
                 {
                     RadiusKm = r.RadiusMeters / 1000.0,
+                    Outline = r.OutlineId,
                 }),
             ],
             [
@@ -268,6 +326,7 @@ internal static partial class EncyclopediaEndpoints
             {
                 CoordinatesSource = r.CoordinatesSource,
                 CoordinatesBy = r.CoordinatesDataset,
+                Outline = r.OutlineId,
                 LocalSite = TextTranslations.In(sites, r.Site),
                 Through = r.ThroughOpenBibleId is { } id && through.TryGetValue(id, out var place)
                     ? new EntityTribeResponse(

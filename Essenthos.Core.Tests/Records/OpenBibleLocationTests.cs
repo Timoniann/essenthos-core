@@ -160,6 +160,34 @@ public sealed class OpenBibleLocationTests : IDisposable
     }
 
     /// <summary>
+    /// The real geometry: 428 answers are drawn by a shape, 215 shapes in all, of which the 34
+    /// OpenStreetMap drew are every one the index credits to it; Moab is drawn by nine bands.
+    /// </summary>
+    [Fact]
+    public void TheRealGeometryDrawsAnAreaByItsOwnersShape()
+    {
+        var folder = TestResources.OpenBibleFolder;
+        var index = OpenBibleOutlines.Index(Path.Combine(folder, OpenBibleOutlines.IndexFile));
+
+        var reading = OpenBibleLocationLoader.Read(
+            Path.Combine(folder, "ancient.jsonl"), Path.Combine(folder, "modern.jsonl"), index);
+        var drawn = reading.Candidates.Values.SelectMany(a => a).Select(c => c.Outline).OfType<string>().ToList();
+
+        drawn.Should().HaveCount(428);
+        drawn.Distinct().Should().HaveCount(215);
+        drawn.Distinct().Count(id => index[id].OpenStreetMap).Should().Be(34);
+        File.ReadLines(Path.Combine(folder, OpenBibleOutlines.IndexFile))
+            .Select(line => JsonDocument.Parse(line).RootElement)
+            .Where(root => drawn.Contains(root.GetProperty("id").GetString()!))
+            .Should().OnlyContain(root => (root.GetProperty("format").GetString() == "osm") == index[root.GetProperty("id").GetString()!].OpenStreetMap);
+
+        var moab = reading.Candidates["aa0b1d6"][0];
+        moab.Outline.Should().Be("g228665");
+        var bands = OpenBibleOutlines.Read(Path.Combine(folder, OpenBibleOutlines.Folder, index["g228665"].File), index["g228665"]);
+        bands.Select(b => b.Confidence).Should().Equal(10, 20, 30, 40, 50, 60, 70, 80, 90);
+    }
+
+    /// <summary>
     /// Mount Sinai's likeliest site is Jebel Musa; the others the gazetteer scores are held below it,
     /// Arabia's Jabal al Lawz among them, and each answer's point is its own site's.
     /// </summary>
