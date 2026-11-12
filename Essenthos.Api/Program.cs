@@ -158,6 +158,7 @@ v1.MapParallel();
 v1.MapPanes();
 v1.MapDifferences();
 v1.MapStrong();
+v1.MapStrongVerses();
 v1.MapVariedRenderings();
 v1.MapStrongBooks();
 v1.MapRenderings();

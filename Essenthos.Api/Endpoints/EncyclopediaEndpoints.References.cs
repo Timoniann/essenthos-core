@@ -9,13 +9,24 @@ namespace Essenthos.Core.Endpoints;
 
 internal static partial class EncyclopediaEndpoints
 {
-    /// <summary>The verses that name an entity, a page at a time.</summary>
+    /// <summary>The most verses one page of a record's verses holds: the longest page its list of every verse offers.</summary>
+    internal const int MostReferencesPerPage = 200;
+
+    /// <summary>The order that lists a record's verses as the books run, for a list grouped by book.</summary>
+    internal const string CanonicalOrder = "canonical";
+
+    /// <summary>
+    /// The verses that name an entity, a page at a time: the naming verses first, then those read as
+    /// speaking of it, then those that only concern it — or, with <c>order=canonical</c>, every verse as
+    /// the books run, each saying which it is.
+    /// </summary>
     private static void MapReferences(IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities/{slug}/references", async (
             string slug,
             [FromQuery] int? skip,
             [FromQuery] int? take,
+            [FromQuery] string? order,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -32,10 +43,17 @@ internal static partial class EncyclopediaEndpoints
             // repeated in a list of verses, with nothing on the page saying why.
             var references = db.EntityVerses.Shown().Where(v => v.EntityId == entity);
 
+            if (order is { Length: > 0 } && order != CanonicalOrder)
+            {
+                return Results.BadRequest(new ProblemResponse(
+                    $"'{order}' is not an order of verses. Leave it out for the naming verses first, or ask for '{CanonicalOrder}'."));
+            }
+
             var total = await Addresses(references).CountAsync(cancellationToken);
-            var wanted = await NamingFirst(references)
+            var ordered = order == CanonicalOrder ? Addresses(references).OrderBy(address => address) : NamingFirst(references);
+            var wanted = await ordered
                 .Skip(Math.Max(0, skip ?? 0))
-                .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
+                .Take(Math.Clamp(take ?? 50, 1, MostReferencesPerPage))
                 .ToListAsync(cancellationToken);
 
             var namings = await references

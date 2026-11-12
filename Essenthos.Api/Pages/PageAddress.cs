@@ -18,6 +18,7 @@ internal enum PageKind
     Event,
     Period,
     Strong,
+    Verses,
     Text,
     Search,
     Section,
@@ -105,6 +106,9 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
 
     public int Skip { get; init; }
 
+    /// <summary>How many verses a page of a list of verses holds, where the address asks for other than the usual.</summary>
+    public int Take { get; init; }
+
     /// <summary>A reader's own page, or a list a query picked: a page to open and never one to index.</summary>
     public bool Private { get; init; }
 
@@ -151,6 +155,14 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
     }
 
     public static string ChapterPath(int book, int chapter) => $"/read/{BookReferences.Slug(book)}/{chapter}";
+
+    /// <summary>The page listing every verse of a record or of a Strong number, from the page of the record or the number.</summary>
+    public static string VersesPath(string page) => $"{page}/verses";
+
+    /// <summary>The page sizes a list of verses offers; any other asked for is the usual one.</summary>
+    public static readonly IReadOnlyList<int> VersePageSizes = [10, 20, 50, 100, 200];
+
+    public const int VersesPerPage = 20;
 
     public static string VersePath(int book, int chapter, int verse) => $"{ChapterPath(book, chapter)}/{verse}";
 
@@ -199,6 +211,16 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
                 return StrongNumbers.Normalize(number) is { } strong
                     ? new PageAddress(language, PageKind.Strong, $"/strong/{strong}") { Slug = strong }
                     : notFound;
+
+            case ["strong", var number, "verses"]:
+                return StrongNumbers.Normalize(number) is { } listed
+                    ? Listing(new PageAddress(language, PageKind.Verses, VersesPath($"/strong/{listed}")) { Slug = listed }, query)
+                    : notFound;
+
+            case [var route, var slug, "verses"] when RecordRoutes.TryGetValue(route, out var kind):
+                return Listing(
+                    new PageAddress(language, PageKind.Verses, VersesPath($"/{route}/{slug}")) { Slug = slug, RecordKind = kind },
+                    query);
 
             case ["events", var slug]:
                 return new PageAddress(language, PageKind.Event, $"/events/{slug}") { Slug = slug };
@@ -268,6 +290,19 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
                 : Number(verse) is { } v
                     ? new PageAddress(language, PageKind.Verse, VersePath(ordinal, c, v)) { Book = ordinal, Chapter = c, Verse = v }
                     : null;
+
+    /// <summary>
+    /// A list of verses at the page the address asks for. Only its first page at the usual size is a
+    /// page to index; every other is the same list cut elsewhere.
+    /// </summary>
+    private static PageAddress Listing(PageAddress address, IReadOnlyDictionary<string, string> query)
+    {
+        var skip = query.TryGetValue("skip", out var offset) && int.TryParse(offset, out var parsed) ? Math.Max(0, parsed) : 0;
+        var take = query.TryGetValue("take", out var size) && int.TryParse(size, out var asked) && VersePageSizes.Contains(asked)
+            ? asked
+            : VersesPerPage;
+        return address with { Skip = skip, Take = take, Private = skip > 0 || take != VersesPerPage };
+    }
 
     private static PageAddress InSection(SiteLanguage language, string rest, PageSection section) =>
         new(language, PageKind.Section, rest) { Section = section, Private = section.Private };

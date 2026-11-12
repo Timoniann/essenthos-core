@@ -100,6 +100,7 @@ internal sealed class PageLoader(
             PageKind.Event => await Event(address, wording, cancellationToken),
             PageKind.Period => await Period(address, wording, cancellationToken),
             PageKind.Strong => await Strong(address, wording, cancellationToken),
+            PageKind.Verses => await Verses(address, wording, cancellationToken),
             PageKind.Text => await Text(address, wording, cancellationToken),
             PageKind.Search => PageViews.Search(wording, address.Query!),
             PageKind.Section when address.Section?.Key == "downloads" =>
@@ -455,6 +456,146 @@ internal sealed class PageLoader(
             translated?.Definition ?? entry.Definition,
             translated?.Derivation ?? entry.Derivation,
             translated?.DetailedDefinition ?? entry.DetailedDefinition));
+    }
+
+    /// <summary>
+    /// One page of every verse of a record or a Strong number, as the books run, each verse quoted from
+    /// the text the page's language reads, under its book and the book's count.
+    /// </summary>
+    private async Task<PageContent?> Verses(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    {
+        var language = address.Language;
+        string name;
+        string page;
+        string? section;
+        int total;
+        List<int> wanted;
+        IReadOnlyList<EntityReferenceBookResponse> books;
+        if (address.RecordKind is not null)
+        {
+            if (await Entity(address.Slug!, language, cancellationToken) is not { } entity)
+            {
+                return null;
+            }
+
+            page = PageAddress.RecordPath(entity.Kind, entity.Slug);
+            if (entity.Slug != address.Slug || PageAddress.VersesPath(page) != address.English)
+            {
+                return PageViews.NotFound(language, wording) with
+                {
+                    Status = StatusCodes.Status301MovedPermanently,
+                    MovedTo = PageAddress.VersesPath(page),
+                };
+            }
+
+            var references = db.EntityVerses.Shown().Where(v => v.EntityId == entity.Id);
+            total = await EncyclopediaEndpoints.Addresses(references).CountAsync(cancellationToken);
+            wanted = await EncyclopediaEndpoints.Addresses(references).OrderBy(a => a)
+                .Skip(address.Skip).Take(address.Take).ToListAsync(cancellationToken);
+            books = await EncyclopediaEndpoints.ReferenceBooks(references, cancellationToken);
+            name = entity.Shown;
+            section = PageSections.Encyclopedia;
+        }
+        else
+        {
+            var number = address.Slug!;
+            var entry = await db.StrongEntries
+                .Where(e => e.StrongNumber == number)
+                .Select(e => new { e.Lemma, e.Transliteration })
+                .FirstOrDefaultAsync(cancellationToken);
+            if (entry is null)
+            {
+                return null;
+            }
+
+            var list = await StrongVerseEndpoints.Page(db, canon, number, null, address.Skip, address.Take, cancellationToken);
+            books = [.. list.Books ?? (await StrongVerseEndpoints.Page(db, canon, number, list.Corpus, 0, 1, cancellationToken)).Books ?? []];
+            total = list.Total;
+            wanted = [.. list.Items.Select(verse => Address(verse.Book.Ordinal, verse.Chapter, verse.Verse))];
+            var word = string.Join(' ', new[] { entry.Lemma, entry.Transliteration }.Where(part => !string.IsNullOrEmpty(part)));
+            name = word.Length > 0 ? $"{word} ({number})" : number;
+            page = $"/strong/{number}";
+            section = "lexicon";
+        }
+
+        if (address.Skip > 0 && wanted.Count == 0)
+        {
+            return null;
+        }
+
+        var said = await TextsAt(language, wanted, cancellationToken);
+        var rows = new List<ListedVerse>(wanted.Count);
+        foreach (var at in wanted)
+        {
+            var (book, chapter, verse) = (at / EncyclopediaEndpoints.BookStride,
+                at % EncyclopediaEndpoints.BookStride / EncyclopediaEndpoints.ChapterStride, at % EncyclopediaEndpoints.ChapterStride);
+            rows.Add(new ListedVerse(book, chapter, verse,
+                wording.Reference(await BookName(language, wording, book, cancellationToken), chapter, verse),
+                said.GetValueOrDefault(at)));
+        }
+
+        var counted = new List<BookCount>(books.Count);
+        foreach (var book in books.OrderBy(book => book.Book.Ordinal))
+        {
+            counted.Add(new BookCount(book.Book.Ordinal, await BookName(language, wording, book.Book.Ordinal, cancellationToken), book.Count));
+        }
+
+        var chosen = await Chosen(language, cancellationToken);
+        return PageViews.Verses(language, wording, new VersesView(
+            address.English, page, name, section, total, address.Skip, address.Take, counted, rows,
+            chosen is null ? null : TextName(wording, chosen))
+        {
+            Indexed = address.Indexed,
+            Counted = address.RecordKind is not null,
+        });
+    }
+
+    private static int Address(int book, int chapter, int verse) =>
+        (book * EncyclopediaEndpoints.BookStride) + (chapter * EncyclopediaEndpoints.ChapterStride) + verse;
+
+    /// <summary>
+    /// Verses by their frame addresses as plain text, each from the first text of the page's language
+    /// that holds its book.
+    /// </summary>
+    private async Task<Dictionary<int, string>> TextsAt(
+        SiteLanguage language, IReadOnlyList<int> addresses, CancellationToken cancellationToken)
+    {
+        var said = new Dictionary<int, string>();
+        var texts = await Texts(cancellationToken);
+        var chosen = await Chosen(language, cancellationToken);
+        foreach (var inBook in addresses.GroupBy(at => at / EncyclopediaEndpoints.BookStride))
+        {
+            foreach (var text in ReaderTexts.ForBook(texts, chosen, inBook.Key))
+            {
+                var missing = inBook.Where(at => !said.ContainsKey(at)).ToHashSet();
+                if (missing.Count == 0)
+                {
+                    break;
+                }
+
+                var chapters = missing.Select(at => at % EncyclopediaEndpoints.BookStride / EncyclopediaEndpoints.ChapterStride)
+                    .Distinct().ToList();
+                var placed = await db.VerseReferences
+                    .Where(r => r.IsPrimary && r.CanonicalBook == inBook.Key && chapters.Contains(r.CanonicalChapter)
+                                && r.Verse!.TextId == text.Id)
+                    .Select(r => new { r.CanonicalChapter, r.CanonicalVerse, r.VerseId })
+                    .ToListAsync(cancellationToken);
+                var verses = placed
+                    .Select(p => (At: Address(inBook.Key, p.CanonicalChapter, p.CanonicalVerse), p.VerseId))
+                    .Where(p => missing.Contains(p.At))
+                    .ToList();
+                var words = await Said([.. verses.Select(v => v.VerseId)], cancellationToken);
+                foreach (var (at, verseId) in verses)
+                {
+                    if (words.TryGetValue(verseId, out var plain))
+                    {
+                        said.TryAdd(at, plain);
+                    }
+                }
+            }
+        }
+
+        return said;
     }
 
     private async Task<PageContent?> Text(PageAddress address, PageWording wording, CancellationToken cancellationToken)

@@ -132,6 +132,17 @@
     "uses_one": "Used {{count}} time in the Bible.",
     "uses_other": "Used {{count}} times in the Bible."
   },
+  "verses": {
+    "title": "{{name}}: all verses",
+    "description": "{{name}} in every verse of the Bible, with the words of each, book by book.",
+    "count_one": "{{count}} verse.",
+    "count_other": "{{count}} verses.",
+    "quotedFrom": "Quoted from {{text}}.",
+    "earlier": "Earlier verses",
+    "later": "Later verses",
+    "all": "All verses ({{count}})",
+    "every": "Every verse where it stands"
+  },
   "event": {
     "description": "{{name}}: when it happened by each reckoning of the Bible's chronology, and the verses it is read from."
   },
