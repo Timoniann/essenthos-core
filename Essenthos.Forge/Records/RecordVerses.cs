@@ -20,7 +20,10 @@ namespace Essenthos.Core.Records;
 /// <item>every record a word names, as the reader is told it (<see cref="Annotations.Settle"/>), at the primary canonical
 /// address of the word's verse, once however many words and texts name it there: a person, a place, a title, an object or an
 /// observance under <see cref="OwnReferences"/> with no label, a people under <see cref="PeopleReferences"/> with its name as
-/// the label;</item>
+/// the label. A verse the frame stands at several addresses (a psalm's title printed in its first verse) lists the record
+/// at the one of them where a verse standing at a single address names it, else at its primary one, so the title and the
+/// verse after it are not both listed for a name only one of them holds. A name carried from a word standing at a psalm's
+/// title stands at the title too, where the carrying text's frame does not know its verse holds the title;</item>
 /// <item>withheld where every word naming a man in the verse is the name after <em>the sons of</em> that the owner's ruling
 /// reads as the people beside a word naming the people in the same verse of the same text (<see cref="Annotations.SonsOf"/>);</item>
 /// <item>for a record no other verse lists, the verses its relationships were read from (<see cref="RelationshipVerseLoader"/>),
@@ -39,7 +42,7 @@ internal static class RecordVerses
 
     public const string Producer = "forge records-verses";
 
-    public const string Version = "2";
+    public const string Version = "3";
 
     public const string VersionNote = "verses-version";
 
@@ -68,8 +71,11 @@ internal static class RecordVerses
 
     /// <summary>A name on a word, as the projection or a database's export gives it.</summary>
     /// <param name="Role">Null where the database's row predates roles.</param>
-    /// <param name="Carried">Carried along a link from another text's word.</param>
-    internal sealed record WordName(WordKey Own, string Record, string? Role, bool Carried, string Method, double? Confidence, string Source);
+    /// <param name="Through">The word of another text it was carried from, with that text (<c>BHSA 19.3:1.3</c>); null when not carried.</param>
+    internal sealed record WordName(WordKey Own, string Record, string? Role, string? Through, string Method, double? Confidence, string Source)
+    {
+        public bool Carried => Through is not null;
+    }
 
     /// <summary>Writes <c>records/derived/verses</c> when an input moved or the rule's version did, or when forced.</summary>
     public static Outcome Write(ProductStore store, bool force)
@@ -92,7 +98,7 @@ internal static class RecordVerses
         {
             using var reader = store.Open(NameProducts.Projected(text), ProjectedName.Schema(text));
             return [.. reader.Rows().Where(n => NameOrigins.IsOwn(n.Origin))
-                .Select(n => new WordName(n.Own, n.Record, n.Role, n.Through is not null, n.Method, n.Confidence, n.Source))];
+                .Select(n => new WordName(n.Own, n.Record, n.Role, n.Through, n.Method, n.Confidence, n.Source))];
         });
         var file = RecordFiles.All.Single(f => f.Product == Product);
         using var writer = store.Create(Product, file.Kind, file.Schema(), ProductHeader.DescribeProducer(Producer), inputs,
@@ -126,11 +132,38 @@ internal static class RecordVerses
         var named = new ConcurrentDictionary<(int Record, VerseKey Verse), bool>();
         var anyName = new ConcurrentDictionary<(int Record, VerseKey Verse), byte>();
         var apart = new ConcurrentDictionary<int, byte>();
+        var spanning = new ConcurrentBag<(int Record, IReadOnlyList<VerseKey> Addresses, bool Apart)>();
+        var frames = new ConcurrentDictionary<string, Dictionary<VerseKey, IReadOnlyList<VerseKey>>>(StringComparer.Ordinal);
+        IReadOnlyList<VerseKey> AddressesIn(string text, VerseKey own) =>
+            frames.GetOrAdd(text, t => Frame(store, t)).TryGetValue(own, out var addresses) ? addresses : [FrameFile.AtOwn(own)];
         long read = 0;
         Parallel.ForEach(texts, new ParallelOptions { MaxDegreeOfParallelism = 8 }, text =>
         {
-            var frame = Frame(store, text);
-            VerseKey Placed(VerseKey own) => frame.TryGetValue(own, out var address) ? address : FrameFile.AtOwn(own);
+            IReadOnlyList<VerseKey> Addresses(VerseKey own) => AddressesIn(text, own);
+            VerseKey Placed(VerseKey own) => Addresses(own)[0];
+
+            // The title a carried name's word stands at, where the name's verse is that psalm's first and does not stand at it.
+            VerseKey? TitleOf(WordName name)
+            {
+                var own = Addresses(name.Own.Verse);
+                if (own[0].Verse != 1 || name.Through is not { } through)
+                {
+                    return null;
+                }
+
+                var space = through.IndexOf(' ');
+                if (space < 1)
+                {
+                    return null;
+                }
+
+                var baseText = through[..space];
+                var title = AddressesIn(baseText, WordKey.Parse(through[(space + 1)..], baseText).Verse)[0];
+                return title.Verse == CanonicalReference.TitleVerse && own[0].Book == title.Book && own[0].Chapter == title.Chapter
+                    && !own.Contains(title)
+                        ? title
+                        : null;
+            }
 
             var rows = names(text).Where(n => ids.ContainsKey(n.Record)).ToList();
             Interlocked.Add(ref read, rows.Count);
@@ -138,6 +171,7 @@ internal static class RecordVerses
             var keys = new List<WordKey>();
             var claimed = new List<Annotations.Claimed>(rows.Count);
             var sonsOf = new HashSet<(long Word, int Record)>();
+            var titles = new Dictionary<(long Word, int Record), VerseKey>();
             foreach (var row in rows)
             {
                 if (!words.TryGetValue(row.Own, out var word))
@@ -156,6 +190,11 @@ internal static class RecordVerses
                     Role = row.Role,
                 });
                 anyName.TryAdd((id, Placed(row.Own.Verse)), 0);
+                if (TitleOf(row) is { } title)
+                {
+                    titles[(word, id)] = title;
+                }
+
                 if (row.Source == Annotations.SonsOf)
                 {
                     sonsOf.Add((word, id));
@@ -192,14 +231,30 @@ internal static class RecordVerses
 
             foreach (var (word, answers) in settled)
             {
-                var verse = Placed(keys[(int)word].Verse);
+                var verseAddresses = Addresses(keys[(int)word].Verse);
                 foreach (var answer in answers)
                 {
+                    IReadOnlyList<VerseKey> addresses =
+                        titles.TryGetValue((word, answer.EntityId), out var title) ? [.. verseAddresses, title] : verseAddresses;
                     var isApart = standsApart.Contains((word, answer.EntityId));
-                    named.AddOrUpdate((answer.EntityId, verse), isApart, (_, all) => all && isApart);
+                    if (addresses.Count == 1)
+                    {
+                        named.AddOrUpdate((answer.EntityId, addresses[0]), isApart, (_, all) => all && isApart);
+                    }
+                    else
+                    {
+                        spanning.Add((answer.EntityId, addresses, isApart));
+                    }
                 }
             }
         });
+
+        var single = named.Keys.ToHashSet();
+        foreach (var (id, addresses, isApart) in spanning)
+        {
+            var verse = addresses.FirstOrDefault(address => single.Contains((id, address)), addresses[0]);
+            named.AddOrUpdate((id, verse), isApart, (_, all) => all && isApart);
+        }
 
         var rows = new List<string?[]>();
         long withheld = 0;
@@ -290,10 +345,10 @@ internal static class RecordVerses
             : [];
     }
 
-    /// <summary>The primary frame address of every verse a text's frame places away from its own address.</summary>
-    private static Dictionary<VerseKey, VerseKey> Frame(ProductStore store, string text)
+    /// <summary>The frame addresses of every verse a text's frame places away from its own address, the primary one first.</summary>
+    private static Dictionary<VerseKey, IReadOnlyList<VerseKey>> Frame(ProductStore store, string text)
     {
-        var frame = new Dictionary<VerseKey, VerseKey>();
+        var frame = new Dictionary<VerseKey, IReadOnlyList<VerseKey>>();
         if (!store.Exists(FrameFile.Product(text)))
         {
             return frame;
@@ -304,7 +359,7 @@ internal static class RecordVerses
         {
             foreach (var (own, canonical) in row.Verses())
             {
-                frame[own] = canonical[0];
+                frame[own] = canonical;
             }
         }
 

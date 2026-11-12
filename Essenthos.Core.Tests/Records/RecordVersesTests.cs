@@ -121,38 +121,123 @@ public sealed class RecordVersesTests : IDisposable
         Rows(store).Select(r => (r[0], r[1])).Should().Equal(("boaz-pillar", "11.7:21"));
     }
 
+    [Fact]
+    public void APsalmTitleATranslationPrintsInItsFirstVerseIsListedOnceAtTheTitle()
+    {
+        // BHSA numbers Psalm 3's title as its verse 1, which the frame stands at the title (3:0); the King James prints the
+        // title inside its verse 1, which the frame stands at 3:1 and at the title.
+        var store = Store(
+            Name("19.3:1.3", "david", "name", "strong-number"),
+            Name("19.3:1.7", "absalom", "name", "strong-number"),
+            Name("19.3:2.1", "yhvh", "name", "strong-number"),
+            Name("19.18:1.5", "yhvh", "name", "strong-number"),
+            Name("19.18:2.3", "yhvh", "name", "strong-number"));
+        Frame(store, "BHSA",
+            new FrameRow(VerseKey.Parse("19.3:1"), null, [VerseKey.Parse("19.3:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.3:2"), 9, [VerseKey.Parse("19.3:1")], "moved"),
+            new FrameRow(VerseKey.Parse("19.18:1"), null, [VerseKey.Parse("19.18:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.18:2"), 50, [VerseKey.Parse("19.18:1")], "moved"));
+        Frame(store, "KJV",
+            new FrameRow(VerseKey.Parse("19.3:1"), null, [VerseKey.Parse("19.3:1"), VerseKey.Parse("19.3:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.4:1"), null, [VerseKey.Parse("19.4:1"), VerseKey.Parse("19.4:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.18:1"), null, [VerseKey.Parse("19.18:1"), VerseKey.Parse("19.18:0")], "title"));
+        WriteNames(store, "KJV",
+            Name("19.3:1.4", "david", "name", "strong-number", text: "KJV"),
+            Name("19.3:1.9", "absalom", "name", "strong-number", text: "KJV"),
+            Name("19.3:1.12", "yhvh", "name", "strong-number", text: "KJV"),
+            Name("19.4:1.4", "david", "name", "manual", text: "KJV"),
+            Name("19.18:1.8", "yhvh", "name", "strong-number", text: "KJV"));
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[1]!.StartsWith("19.", StringComparison.Ordinal)).Select(r => (r[0], r[1])).Should().Equal(
+            [("absalom", "19.3:0"), ("david", "19.3:0"), ("david", "19.4:1"), ("yhvh", "19.3:1"), ("yhvh", "19.18:0"), ("yhvh", "19.18:1")],
+            "a name in the title stays at the title and one in the psalm's first line at its verse; a verse no single-address "
+            + "verse names the record at stays at its primary address; a record the title and the first line both name keeps both");
+    }
+
+    [Fact]
+    public void AVerseWhosePrimaryAddressIsTheTitleListsTheFirstLinesNameAtItsVerse()
+    {
+        // BHSA's Psalm 51 title is its verses 1 and 2, both standing at the title; the Ge'ez prints the title and the first
+        // line in its verse 1, which the frame stands at the title first.
+        var store = Store(
+            Name("19.51:1.3", "david", "name", "strong-number"),
+            Name("19.51:2.2", "nathan", "name", "strong-number"),
+            Name("19.51:3.2", "yhvh", "name", "strong-number"));
+        Frame(store, "BHSA",
+            new FrameRow(VerseKey.Parse("19.51:1"), null, [VerseKey.Parse("19.51:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.51:2"), null, [VerseKey.Parse("19.51:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.51:3"), 21, [VerseKey.Parse("19.51:1")], "moved"));
+        Frame(store, "GEEZ81",
+            new FrameRow(VerseKey.Parse("19.51:1"), null, [VerseKey.Parse("19.51:0"), VerseKey.Parse("19.51:1")], "title"));
+        WriteNames(store, "GEEZ81",
+            Name("19.51:1.2", "david", "name", "rule-based", text: "GEEZ81"),
+            Name("19.51:1.9", "yhvh", "name", "rule-based", text: "GEEZ81"));
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[1]!.StartsWith("19.", StringComparison.Ordinal)).Select(r => (r[0], r[1])).Should().Equal(
+            [("david", "19.51:0"), ("nathan", "19.51:0"), ("yhvh", "19.51:1")],
+            "the Ge'ez verse's God is the first line's, which BHSA names at verse 1, not the title's");
+    }
+
+    [Fact]
+    public void ANameCarriedFromAPsalmTitleIsListedAtTheTitleWhereTheTextsFrameDoesNotKnowItsVerseHoldsIt()
+    {
+        // Young's Psalm 3:1 prints the title and the first line, and its frame stands it at 3:1 alone.
+        var store = Store(Name("19.3:1.3", "david", "name", "strong-number"), Name("19.3:2.1", "yhvh", "name", "strong-number"));
+        Frame(store, "BHSA",
+            new FrameRow(VerseKey.Parse("19.3:1"), null, [VerseKey.Parse("19.3:0")], "title"),
+            new FrameRow(VerseKey.Parse("19.3:2"), 9, [VerseKey.Parse("19.3:1")], "moved"));
+        WriteNames(store, "YLT",
+            Name("19.3:1.4", "david", "name", "strong-number", text: "YLT", through: "BHSA 19.3:1.3"),
+            Name("19.3:1.12", "yhvh", "name", "strong-number", text: "YLT", through: "BHSA 19.3:2.1"),
+            Name("19.3:2.3", "david", "name", "strong-number", text: "YLT", through: "BHSA 19.3:1.3"));
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[1]!.StartsWith("19.", StringComparison.Ordinal)).Select(r => (r[0], r[1])).Should().Equal(
+            [("david", "19.3:0"), ("david", "19.3:2"), ("yhvh", "19.3:1")],
+            "the name carried from the title stands at the title; the first line's stays at verse 1; a verse past the first "
+            + "keeps its own address whatever it was carried from");
+    }
+
     private ProductStore Store(params ProjectedName[] names)
     {
         var store = new ProductStore(_root);
         Write(store, "records/records",
             Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
             Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
-            Record("levi", "person"), Record("levites", "people", "Levites"), Record("mizraim", "person"), Record("moses", "person"));
+            Record("levi", "person"), Record("levites", "people", "Levites"), Record("mizraim", "person"), Record("moses", "person"),
+            Record("absalom", "person"), Record("nathan", "person"), Record("yhvh", "person"));
         Write(store, "records/facts/titles", ["anointed", "david", "1.3:1", null, "test"]);
         Write(store, "records/facts/relationships");
         Write(store, "records/facts/verses");
-        using (var frame = store.Create(FrameFile.Product("BHSA"), ProductKind.Machine, FrameRow.Schema, "test", []))
-        {
-            frame.Write(new FrameRow(VerseKey.Parse("1.5:2"), null, [VerseKey.Parse("1.5:9")], "renumbered"));
-            frame.Complete();
-        }
+        Frame(store, "BHSA", new FrameRow(VerseKey.Parse("1.5:2"), null, [VerseKey.Parse("1.5:9")], "renumbered"));
 
         WriteNames(store, names);
         RecordVerses.Write(store, force: true);
         return store;
     }
 
-    private static void WriteNames(ProductStore store, params ProjectedName[] names)
+    private static void Frame(ProductStore store, string text, params FrameRow[] rows)
     {
-        using var writer = store.Create(NameProducts.Projected("BHSA"), ProductKind.Machine, ProjectedName.Schema("BHSA"), "test", []);
+        using var frame = store.Create(FrameFile.Product(text), ProductKind.Machine, FrameRow.Schema, "test", []);
+        frame.WriteAll(rows);
+        frame.Complete();
+    }
+
+    private static void WriteNames(ProductStore store, params ProjectedName[] names) => WriteNames(store, "BHSA", names);
+
+    private static void WriteNames(ProductStore store, string text, params ProjectedName[] names)
+    {
+        using var writer = store.Create(NameProducts.Projected(text), ProductKind.Machine, ProjectedName.Schema(text), "test", []);
         writer.WriteAll(names);
         writer.Complete();
     }
 
     private static ProjectedName Name(
         string own, string record, string role, string method, double? confidence = null, string source = "test",
-        string origin = NameOrigins.Settled) =>
-        new(WordKey.Parse(own, "BHSA"), record, role, origin, null, method, confidence, source);
+        string origin = NameOrigins.Settled, string text = "BHSA", string? through = null) =>
+        new(WordKey.Parse(own, text), record, role, origin, through, method, confidence, source);
 
     private static TextWord Word(string key, string strong) =>
         new(WordKey.Parse(key, "BHSA"), "w", " ", null, strong, null, null, null, null, false, null, null, null);
