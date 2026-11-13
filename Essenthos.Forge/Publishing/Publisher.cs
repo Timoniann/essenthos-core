@@ -25,9 +25,12 @@ namespace Essenthos.Core.Publishing;
 /// corpus is dropped behind a maintenance page and the release restored in its place, and a rollback is
 /// publishing the earlier release again.
 ///
-/// Row-level patches were ruled out by measurement rather than taste: every rebuild renumbers every
-/// sequence key, so a diff between two builds is most of the corpus, and the whole corpus is a 376 MB
-/// file that dumps in 37 seconds and restores in under a minute.
+/// A target with <see cref="ReleaseTarget.ByDifference"/> is sent only the rows that changed since the
+/// release held by the copy it keeps beside the live one (<see cref="ReleaseDifference"/>): the copy is
+/// patched inside one transaction that sums every table it changed against the release before it commits,
+/// checked like a restored one, and swapped in. Since the corpus is built from files with stable keys a
+/// day's difference is a small part of the 22 GB a restore writes; where there is no such copy, no
+/// difference can be made or applying it fails, the release is restored whole.
 ///
 /// Nothing here builds anything on a target, opens a writable corpus connection as the API's role,
 /// or dumps a second time for production: production is only offered a release its <c>After</c>
@@ -218,8 +221,10 @@ internal sealed class Publisher(
     /// Read the target and the release, apply the same refusals a publication would, say every step that
     /// would follow, and touch nothing — no ssh, no upload, no database.
     /// </param>
+    /// <param name="everyTable">Applying a difference, sum every table against the release, not only the ones it changes.</param>
     public async Task<int> Publish(
-        string targetName, string? releaseName, bool withoutRehearsal, CancellationToken cancellationToken, bool dryRun = false)
+        string targetName, string? releaseName, bool withoutRehearsal, CancellationToken cancellationToken, bool dryRun = false,
+        bool everyTable = false)
     {
         var target = ReleaseTarget.Read(configuration, targetName, Repository);
         var host = new TargetHost(target);
@@ -254,18 +259,20 @@ internal sealed class Publisher(
         var started = DateTimeOffset.UtcNow;
         var inContainer = $"/releases/{record.Name}.dump";
 
-        // Resumable: an artefact already there with the right hash is not sent twice.
-        if (await RemoteSha(host, inContainer, cancellationToken) != record.Sha256)
+        var difference = target.ByDifference ? await DifferenceFor(host, record, cancellationToken) : null;
+        if (difference?.Record is { } patch)
         {
-            logger.LogInformation("Uploading {Bytes:N0} bytes to {Target}", record.Bytes, target.Name);
-            await host.Upload(dump, cancellationToken);
-            if (await RemoteSha(host, inContainer, cancellationToken) is var arrived && arrived != record.Sha256)
+            if (!await Send(host, Path.Combine(Releases, patch.File), patch.Sha256, patch.Bytes, cancellationToken))
             {
-                logger.LogError("The upload arrived as {Arrived}, not {Expected}. Nothing was restored", arrived, record.Sha256);
                 return 1;
             }
         }
+        else if (difference is null && !await Send(host, dump, record.Sha256, record.Bytes, cancellationToken))
+        {
+            return 1;
+        }
 
+        var sending = DateTimeOffset.UtcNow;
         var pictures = await SendImages(host, cancellationToken);
 
         if (!await SendDownloads(host, null, cancellationToken))
@@ -279,13 +286,41 @@ internal sealed class Publisher(
             return 1;
         }
 
+        logger.LogInformation("Pictures and downloads sent in {Seconds:F0} s", (DateTimeOffset.UtcNow - sending).TotalSeconds);
         var served = Ledger(target.Name).LastOrDefault().Release;
         // The owner's choice (2026-10-30): a release the target's rehearsal already took has been through the
         // gate on these same bytes there, so the target does not measure it again behind its updating page.
         rehearsedOn = target.After is { } rehearsal && PublishedTo(record.Name).Contains(rehearsal) ? rehearsal : null;
-        var placed = target.Copies == 1
-            ? await ReplaceInPlace(host, record, inContainer, pictures, served, cancellationToken)
-            : await SwapBeside(host, record, inContainer, pictures, started, cancellationToken);
+        var uploaded = $"{record.Name}{ReleaseUploads.Extension}";
+        bool placed;
+        var outcome = difference is null
+            ? Patched.Unapplied
+            : await PlaceByDifference(host, record, difference, pictures, everyTable, cancellationToken);
+        if (outcome == Patched.Placed)
+        {
+            placed = true;
+            uploaded = difference!.Record?.File ?? uploaded;
+        }
+        else if (outcome == Patched.Refused)
+        {
+            return 1;
+        }
+        else
+        {
+            if (difference is not null)
+            {
+                logger.LogWarning("Publishing {Name} to {Target} whole instead", record.Name, target.Name);
+                if (!await Send(host, dump, record.Sha256, record.Bytes, cancellationToken))
+                {
+                    return 1;
+                }
+            }
+
+            placed = target.Copies == 1
+                ? await ReplaceInPlace(host, record, inContainer, pictures, served, cancellationToken)
+                : await SwapBeside(host, record, inContainer, pictures, DateTimeOffset.UtcNow, cancellationToken);
+        }
+
         if (!placed)
         {
             return 1;
@@ -295,7 +330,7 @@ internal sealed class Publisher(
             Path.Combine(Releases, $"{record.Name}.published"),
             $"{target.Name}\t{DateTimeOffset.UtcNow:O}\n", cancellationToken);
 
-        await RemoveOldUploads(host, record.Name, cancellationToken);
+        await RemoveOldUploads(host, record.Name, uploaded, cancellationToken);
 
         if (target.KeepsPrevious)
         {
@@ -317,12 +352,225 @@ internal sealed class Publisher(
     }
 
     /// <summary>
+    /// Puts a file into the target's releases folder unless it is there already with the same SHA-256,
+    /// which is what makes an interrupted publication resumable, and checks what arrived.
+    /// </summary>
+    private async Task<bool> Send(TargetHost host, string file, string sha, long bytes, CancellationToken cancellationToken)
+    {
+        var inContainer = $"/releases/{Path.GetFileName(file)}";
+        if (await RemoteSha(host, inContainer, cancellationToken) == sha)
+        {
+            logger.LogInformation("{File} is on {Target} already", Path.GetFileName(file), host.Target.Name);
+            return true;
+        }
+
+        logger.LogInformation("Uploading {File}, {Bytes:N0} bytes, to {Target}", Path.GetFileName(file), bytes, host.Target.Name);
+        var started = DateTimeOffset.UtcNow;
+        await host.Upload(file, cancellationToken);
+        if (await RemoteSha(host, inContainer, cancellationToken) is var arrived && arrived != sha)
+        {
+            logger.LogError("The upload arrived as {Arrived}, not {Expected}. Nothing was restored", arrived, sha);
+            return false;
+        }
+
+        logger.LogInformation("Uploaded in {Seconds:F0} s", (DateTimeOffset.UtcNow - started).TotalSeconds);
+        return true;
+    }
+
+    /// <summary>
+    /// What publishing by difference needs, or null, said why, when the release is to be restored whole:
+    /// the copy kept beside the live corpus, the release it holds, and the difference from that release to
+    /// this one, found among the releases here or made from their two dumps. A copy that already holds the
+    /// release needs no difference at all, which is what a rollback finds.
+    /// </summary>
+    private async Task<DifferencePlan?> DifferenceFor(TargetHost host, ReleaseRecord record, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        if (!await host.DatabaseExists(target.Previous, cancellationToken))
+        {
+            logger.LogInformation(
+                "{Target} keeps no copy beside its live corpus ({Previous}) for a difference to be applied to, so {Name} is restored whole; " +
+                "the copy it replaces is kept for the next publication", target.Name, target.Previous, record.Name);
+            return null;
+        }
+
+        var held = await ReleaseName(host, target.Previous, cancellationToken);
+        if (held is null)
+        {
+            logger.LogInformation("{Previous} on {Target} says it is no release, so {Name} is restored whole", target.Previous, target.Name, record.Name);
+            return null;
+        }
+
+        if (held == record.Name)
+        {
+            logger.LogInformation("{Previous} on {Target} holds {Name} already: nothing to send but the swap", target.Previous, target.Name, record.Name);
+            return new DifferencePlan(held, null);
+        }
+
+        var difference = await Difference(held, record.Name, cancellationToken);
+        if (difference is null)
+        {
+            return null;
+        }
+
+        if (difference.Bytes > record.Bytes * ReleaseDifference.LargestShare)
+        {
+            logger.LogInformation(
+                "The difference from {Base} to {Name} is {Bytes:N0} bytes, {Share:P0} of the release's dump, so restoring the dump costs less",
+                held, record.Name, difference.Bytes, (double)difference.Bytes / record.Bytes);
+            return null;
+        }
+
+        logger.LogInformation(
+            "{Previous} on {Target} holds {Base}: sending the difference to {Name}, {Bytes:N0} bytes ({Share:P1} of the dump), {Changed} tables changed",
+            target.Previous, target.Name, held, record.Name, difference.Bytes, (double)difference.Bytes / record.Bytes, difference.Changed.Count);
+        return new DifferencePlan(held, difference);
+    }
+
+    /// <summary>
+    /// The difference from <paramref name="from"/> to <paramref name="release"/>: the one already made here
+    /// when its file is whole, otherwise made now from the two dumps. Null, said why, when neither can be.
+    /// </summary>
+    private async Task<DifferenceRecord?> Difference(string from, string release, CancellationToken cancellationToken)
+    {
+        if (ReleaseDifference.Read(Releases, release, from) is { } made
+            && File.Exists(Path.Combine(Releases, made.File))
+            && new FileInfo(Path.Combine(Releases, made.File)).Length == made.Bytes
+            && await Sha256(Path.Combine(Releases, made.File), cancellationToken) == made.Sha256)
+        {
+            return made;
+        }
+
+        foreach (var name in new[] { from, release })
+        {
+            if (!File.Exists(Path.Combine(Releases, $"{name}.dump")))
+            {
+                logger.LogInformation("{Folder} has no dump of {Name}, so no difference from {From} to {Release} can be made", Releases, name, from, release);
+                return null;
+            }
+        }
+
+        return await new ReleaseDifference(loggers.CreateLogger<ReleaseDifference>())
+            .Make(Releases, from, release, DifferenceParallelism, cancellationToken);
+    }
+
+    /// <summary>How many tables a difference compares at once; each runs two pg_restore and holds both sides' hashes.</summary>
+    private int DifferenceParallelism => configuration.GetValue("Publish:DifferenceParallel", 6);
+
+    /// <summary>
+    /// <c>forge difference</c>: makes the difference from one release to another here, ahead of a publication
+    /// that would otherwise make it as it starts.
+    /// </summary>
+    public async Task<int> MakeDifference(string from, string? releaseName, CancellationToken cancellationToken)
+    {
+        var record = ReadRecord(releaseName);
+        if (from == record.Name)
+        {
+            logger.LogError("A release has no difference from itself");
+            return 1;
+        }
+
+        return await Difference(from, record.Name, cancellationToken) is null ? 1 : 0;
+    }
+
+    /// <summary>
+    /// The copy kept beside the live corpus becomes the incoming one, the difference is applied to it in its
+    /// one transaction, the tables it changed are vacuumed and analysed, and the copy is checked as a restored
+    /// one would be and swapped in, the live one taking its place as the copy kept for next time.
+    /// <see cref="Patched.Unapplied"/> when the difference did not apply, which leaves the copy as it was and
+    /// the live corpus untouched, so the caller restores the release whole; <see cref="Patched.Refused"/> when
+    /// the release itself fails a check, which a whole restore would fail the same way.
+    /// </summary>
+    private async Task<Patched> PlaceByDifference(
+        TargetHost host, ReleaseRecord record, DifferencePlan plan, IReadOnlyDictionary<string, string> pictures, bool everyTable,
+        CancellationToken cancellationToken)
+    {
+        var target = host.Target;
+        await Drop(host, [target.Incoming, target.Retired], cancellationToken);
+        await Rename(host, target.Previous, target.Incoming, cancellationToken);
+        var started = DateTimeOffset.UtcNow;
+        if (plan.Record is { } difference)
+        {
+            logger.LogInformation("Applying the difference from {Base} to {Name} to {Incoming}, which nothing reads{Every}",
+                plan.Base, record.Name, target.Incoming, everyTable ? ", summing every table" : "");
+            bool applied;
+            try
+            {
+                applied = await host.ApplyDifference(difference.File, target.Incoming, everyTable, cancellationToken);
+            }
+            catch (InvalidOperationException exception)
+            {
+                logger.LogWarning("The difference did not apply, and {Incoming} is still {Base}: {Message}",
+                    target.Incoming, plan.Base, exception.Message.Split('\n', 2).Last().Trim());
+                applied = false;
+            }
+
+            var holds = await ReleaseName(host, target.Incoming, cancellationToken);
+            if (!applied || holds != record.Name)
+            {
+                if (applied)
+                {
+                    logger.LogWarning("The difference ran but {Incoming} says it is {Holds}, not {Name}", target.Incoming, holds ?? "no release", record.Name);
+                }
+
+                await Rename(host, target.Incoming, target.Previous, cancellationToken);
+                return Patched.Unapplied;
+            }
+
+            logger.LogInformation("Applied in {Seconds:F0} s; every changed table sums to the release's", (DateTimeOffset.UtcNow - started).TotalSeconds);
+            var tables = string.Join(", ", difference.Changed.Select(table => $"public.{TargetHost.Identifier(table.Table)}"));
+            if (tables.Length > 0)
+            {
+                var vacuuming = DateTimeOffset.UtcNow;
+                await host.Sql(target.Incoming, $"VACUUM (ANALYZE) {tables}", cancellationToken);
+                logger.LogInformation("The {Count} changed tables vacuumed and analysed in {Seconds:F0} s",
+                    difference.Changed.Count, (DateTimeOffset.UtcNow - vacuuming).TotalSeconds);
+            }
+        }
+
+        if (!await Check(host, record, pictures, cancellationToken))
+        {
+            await Rename(host, target.Incoming, target.Previous, cancellationToken);
+            logger.LogError("The live corpus of {Target} is untouched; {Previous} now holds {Name}", target.Name, target.Previous, record.Name);
+            return Patched.Refused;
+        }
+
+        await Grant(host, cancellationToken);
+        await WithApiStopped(host, () => Swap(host, cancellationToken), cancellationToken);
+        logger.LogInformation("{Target} serves {Name}, patched from {Base} in {Seconds:F0} s; {Previous} keeps the release it replaced for the next difference",
+            target.Name, record.Name, plan.Base, (DateTimeOffset.UtcNow - started).TotalSeconds, target.Previous);
+        return Patched.Placed;
+    }
+
+    /// <summary>A database renamed, with whoever is connected to it put out first.</summary>
+    private static async Task Rename(TargetHost host, string from, string to, CancellationToken cancellationToken)
+    {
+        await Disconnect(host, from, cancellationToken);
+        await host.Sql("postgres",
+            [$"ALTER DATABASE {TargetHost.Identifier(from)} RENAME TO {TargetHost.Identifier(to)}",
+             $"ALTER DATABASE {TargetHost.Identifier(to)} WITH ALLOW_CONNECTIONS true"],
+            cancellationToken);
+    }
+
+    /// <summary>How a publication by difference ended.</summary>
+    private enum Patched
+    {
+        Placed,
+        Refused,
+        Unapplied,
+    }
+
+    /// <param name="Base">The release the copy beside the live corpus holds.</param>
+    /// <param name="Record">The difference from it, or null when the copy holds the release already.</param>
+    private sealed record DifferencePlan(string Base, DifferenceRecord? Record);
+
+    /// <summary>
     /// Once <paramref name="published"/> is live, the dumps in the target's releases folder that neither
     /// it nor a rollback needs are deleted, by the rule in <see cref="ReleaseUploads"/>, and every file is
     /// named with what happened to it. The publication has succeeded by then, so a failure here is said
     /// and leaves the folder as it was found, but does not fail it.
     /// </summary>
-    private async Task RemoveOldUploads(TargetHost host, string published, CancellationToken cancellationToken)
+    private async Task RemoveOldUploads(TargetHost host, string published, string uploaded, CancellationToken cancellationToken)
     {
         var target = host.Target;
         try
@@ -331,7 +579,7 @@ internal sealed class Publisher(
             var serving = await ReleaseName(host, target.Database, cancellationToken);
             var previous = ReleaseUploads.Previous(Ledger(target.Name), published);
             var previousOnTarget = target.KeepsPrevious ? await ReleaseName(host, target.Previous, cancellationToken) : null;
-            var plan = ReleaseUploads.Choose(files.Keys, published, serving, previous, target.KeepsPrevious, previousOnTarget);
+            var plan = ReleaseUploads.Choose(files.Keys, published, serving, previous, target.KeepsPrevious, previousOnTarget, uploaded);
             if (plan.Refusal is { } refusal)
             {
                 logger.LogWarning("Nothing was removed from {Folder} on {Target}, which holds {Count} files, {Bytes:N0} bytes: {Refusal}",
@@ -406,7 +654,7 @@ internal sealed class Publisher(
 
         await Grant(host, cancellationToken);
         await WithApiStopped(host, () => Swap(host, cancellationToken), cancellationToken);
-        if (!target.KeepsPrevious)
+        if (!target.KeepsPrevious && !target.ByDifference)
         {
             await Drop(host, [target.Previous], cancellationToken);
         }
@@ -510,7 +758,17 @@ internal sealed class Publisher(
         // gets the plans of an empty database.
         await host.Sql(target.Incoming, "VACUUM ANALYZE", cancellationToken);
         logger.LogInformation("Restored in {Seconds:F0} s", (DateTimeOffset.UtcNow - started).TotalSeconds);
+        return await Check(host, record, pictures, cancellationToken);
+    }
 
+    /// <summary>
+    /// The checks a copy passes before it is swapped in, however it came to hold the release: its label,
+    /// its pictures, the gate unless the rehearsal ran it on these bytes, and every reader's bookmark.
+    /// </summary>
+    private async Task<bool> Check(
+        TargetHost host, ReleaseRecord record, IReadOnlyDictionary<string, string> pictures, CancellationToken cancellationToken)
+    {
+        var target = host.Target;
         var restored = await host.Sql(target.Incoming, "SELECT name FROM corpus_release", cancellationToken);
         if (restored != record.Name)
         {
@@ -640,6 +898,15 @@ internal sealed class Publisher(
         }
         else
         {
+            if (target.ByDifference)
+            {
+                logger.LogInformation(
+                    "  2a. if {Previous} on {Target} holds a release whose dump is here, send the difference from it instead of the dump (made here first if it is not), " +
+                    "rename it {Incoming}, apply the difference in one transaction that sums every table it changes against {Name}, vacuum and analyse those tables, " +
+                    "check it as in step 4, and swap it in, keeping the copy it replaces as {Previous}; otherwise, or if the difference does not apply, upload the dump and go on",
+                    target.Previous, target.Name, target.Incoming, record.Name, target.Previous);
+            }
+
             if (!target.KeepsPrevious)
             {
                 logger.LogInformation("  2c. drop any {Previous} left by an earlier publication", target.Previous);

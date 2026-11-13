@@ -54,7 +54,8 @@ namespace Essenthos.Core.Publishing;
 /// <param name="Copies">
 /// The most corpus databases the target ever holds. 3, the default: the live one, the previous one
 /// kept for <c>forge rollback</c>, and an incoming one restored beside them. 2: live and incoming, and
-/// the replaced one is dropped after the swap. 1: the live one is dropped and the incoming one restored
+/// the replaced one is dropped after the swap, or kept beside the live one with <see cref="ByDifference"/>
+/// and dropped before a whole restore. 1: the live one is dropped and the incoming one restored
 /// in its place while the site shows its maintenance page. Below 3 a rollback is a publication of the
 /// earlier release from this machine.
 /// </param>
@@ -62,6 +63,13 @@ namespace Essenthos.Core.Publishing;
 /// How many jobs <c>pg_restore</c> runs at once, each building an index with up to the target's
 /// <c>maintenance_work_mem</c>. 4 by default; a server whose Postgres has a small memory limit takes
 /// fewer, because a restore killed for memory on a one-copy target leaves it with no corpus.
+/// </param>
+/// <param name="ByDifference">
+/// Publish a release as the difference from the release held by the copy beside the live corpus, which
+/// the target keeps after each swap for that purpose instead of dropping it (<see cref="ReleaseDifference"/>).
+/// The difference is applied into that copy, which nothing reads, checked there and swapped in; where there
+/// is no such copy, no difference can be made, or it fails, the release is restored whole as without it.
+/// Needs <see cref="Copies"/> of 2 or more: the copy kept is the one the next publication restores into.
 /// </param>
 /// <param name="Maintenance">
 /// The file under the data root whose presence makes the target's proxy answer with the maintenance
@@ -84,7 +92,8 @@ internal sealed record ReleaseTarget(
     string? Downloads = null,
     int Copies = ReleaseTarget.MostCopies,
     string Maintenance = ReleaseTarget.DefaultMaintenance,
-    int RestoreJobs = ReleaseTarget.DefaultRestoreJobs)
+    int RestoreJobs = ReleaseTarget.DefaultRestoreJobs,
+    bool ByDifference = false)
 {
     public const int MostCopies = 3;
 
@@ -157,6 +166,15 @@ internal sealed record ReleaseTarget(
             dataRoot = Path.GetFullPath(Path.Combine(repository, dataRoot));
         }
 
+        var copies = ReadCopies(section, name);
+        var byDifference = bool.TryParse(section["ByDifference"], out var difference) && difference;
+        if (byDifference && copies < 2)
+        {
+            throw new InvalidOperationException(
+                $"Publish:Targets:{name}:ByDifference needs a copy of the corpus beside the live one to apply a difference to, " +
+                $"and Copies is {copies}. Set Copies to 2, or take ByDifference away.");
+        }
+
         return new ReleaseTarget(
             name,
             local,
@@ -172,9 +190,10 @@ internal sealed record ReleaseTarget(
             section["Password"] is { Length: > 0 } password ? password : FromEnvFile(section["EnvFile"], repository),
             section["AppDatabase"] is { Length: > 0 } app ? app : null,
             section["Downloads"] is { Length: > 0 } downloads ? downloads : null,
-            ReadCopies(section, name),
+            copies,
             section["Maintenance"] is { Length: > 0 } maintenance ? maintenance.Trim('/', '\\') : DefaultMaintenance,
-            ReadRestoreJobs(section, name));
+            ReadRestoreJobs(section, name),
+            byDifference);
     }
 
     private static int ReadRestoreJobs(IConfigurationSection section, string name) =>

@@ -10,14 +10,15 @@ namespace Essenthos.Core.Publishing;
 /// full. The rule, in order:
 /// <list type="number">
 /// <item>Nothing is removed unless the target's live corpus says it is the release just published, the
-/// dump of that release is in the folder, and this machine's ledger names the release the target served
+/// file uploaded for it (its dump, or the difference applied) is in the folder, and this machine's ledger names the release the target served
 /// before it. Where the target keeps that release as a copy of its own, the copy must say the same.
 /// Otherwise every file stays and the reason is given.</item>
 /// <item>The dump of the live release stays, and so does the dump of the one served before it, which a
 /// rollback publishes again without uploading it a second time.</item>
 /// <item>A dump named after both stays: an upload a later publication has not finished, which it resumes.</item>
-/// <item>Every other release dump goes.</item>
-/// <item>A file not named like a release dump (<c>yyyymmdd</c>, a letter, <c>.dump</c>) is never touched.</item>
+/// <item>Every other release dump goes, and so does every difference (<c>&lt;release&gt;.from-&lt;release&gt;.sql.gz</c>)
+/// that is not newer than both: once applied it is needed by nothing.</item>
+/// <item>A file named like neither (<c>yyyymmdd</c>, a letter, <c>.dump</c>) is never touched.</item>
 /// </list>
 /// </summary>
 internal static partial class ReleaseUploads
@@ -29,6 +30,13 @@ internal static partial class ReleaseUploads
     private static partial Regex ReleaseName();
 
     public static bool IsReleaseName(string? name) => name is not null && ReleaseName().IsMatch(name);
+
+    [GeneratedRegex(@"^(?<release>[0-9]{8}[a-z])\.from-(?<base>[0-9]{8}[a-z])\.sql\.gz$")]
+    private static partial Regex DifferenceName();
+
+    /// <summary>The release and base a difference in the folder is between, or null for a file that is not one.</summary>
+    public static (string Release, string Base)? DifferenceOf(string file) =>
+        DifferenceName().Match(file) is { Success: true } match ? (match.Groups["release"].Value, match.Groups["base"].Value) : null;
 
     /// <summary>The release a dump in the folder is of, or null for a file that is not a release dump.</summary>
     public static string? ReleaseOf(string file) =>
@@ -49,9 +57,10 @@ internal static partial class ReleaseUploads
     /// <param name="previous">The release the target served before, from this machine's ledger.</param>
     /// <param name="keepsPrevious">Whether the target holds the release before the live one as a copy.</param>
     /// <param name="previousOnTarget">What that copy says it is, where the target keeps one.</param>
+    /// <param name="uploaded">The file this publication uploaded, when not the release's dump: the difference it applied.</param>
     public static Plan Choose(
         IReadOnlyCollection<string> files, string published, string? serving, string? previous,
-        bool keepsPrevious = false, string? previousOnTarget = null)
+        bool keepsPrevious = false, string? previousOnTarget = null, string? uploaded = null)
     {
         if (!IsReleaseName(published))
         {
@@ -64,9 +73,10 @@ internal static partial class ReleaseUploads
                 $"the live corpus says it is {(string.IsNullOrEmpty(serving) ? "no release" : $"release {serving}")}, not {published}, so which release is live cannot be told");
         }
 
-        if (!files.Contains(published + Extension))
+        uploaded ??= published + Extension;
+        if (!files.Contains(uploaded))
         {
-            return Plan.Refused(files, $"{published}{Extension} is not among the files listed, so the listing may not be of the folder the release was uploaded to");
+            return Plan.Refused(files, $"{uploaded} is not among the files listed, so the listing may not be of the folder the release was uploaded to");
         }
 
         if (previous is null)
@@ -92,7 +102,18 @@ internal static partial class ReleaseUploads
         foreach (var file in files.Order(StringComparer.Ordinal))
         {
             var release = ReleaseOf(file);
-            if (release is null)
+            if (release is null && DifferenceOf(file) is { } difference)
+            {
+                if (string.CompareOrdinal(difference.Release, newest) > 0)
+                {
+                    keep.Add(new Kept(file, "a difference newer than the live release, not yet applied"));
+                }
+                else
+                {
+                    remove.Add(file);
+                }
+            }
+            else if (release is null)
             {
                 untouched.Add(file);
             }
