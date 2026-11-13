@@ -458,10 +458,14 @@ Only `essenthos_app` (accounts, and later what readers write) cannot be rebuilt;
   says `BACKUP_ALLOW_UNENCRYPTED=yes`.
 - A failure is visible: the container turns **unhealthy** once a database's last good dump is older
   than 26 hours (`BACKUP_STALE_HOURS`); `docker compose ps backup` shows it.
-- **Off the machine**: the owner's console copies the newest encrypted dump of each database to
-  `E:\Projects\Essenthos\server-backups` on a button and once a day while it runs (over ssh to
-  `Publish:Targets:prod:Ssh`, checked against the server's `sha256sum`). The `backup-offsite` service can
-  copy them to an rclone remote as well.
+- **Off the machine**: `scripts/pull-account-backups.ps1` on the owner's workstation copies the
+  encrypted dumps it does not have yet to `E:\Projects\Essenthos\server-backups` (`-Folder` for
+  another place), each checked against the server's size and `sha256sum` and refused unless it begins
+  as an encrypted file; it keeps what the owner's console keeps (the newest 7 of each database by
+  default, none but the newest older than 14 days). The daily `backup` action runs it; the console
+  keeps the same folder by the same rule and copies the newest dump of each database into it, on a
+  button and once a day while it runs. The
+  `backup-offsite` service can copy them to an rclone remote as well.
 - A changed `backup.sh` or `backup-offsite.sh` reaches its container only on
   `docker compose up -d --force-recreate backup backup-offsite`.
 
@@ -495,17 +499,25 @@ within six weeks: a copy kept anywhere keeps to that.
 
 ### Restoring
 
-Run once before the backup is believed, into a scratch database, never over the live one. The dump is
-decrypted on the owner's machine and streamed in, never in the clear on the server:
+On the owner's workstation, never on the server, and never over the live corpus. The newest copy of
+`essenthos_app` on E: is decrypted by the owner's gpg, which asks for the key's passphrase itself, and
+streamed into a new database in a local container, never written out in the clear:
 
-    scp deploy@2.29.125.205:/srv/essenthos/backups/essenthos_app-<stamp>.dump.gpg .   # or the console's copy on E:
-    gpg --decrypt essenthos_app-<stamp>.dump.gpg | ssh deploy@2.29.125.205 'cd /srv/essenthos/deploy &&
-      docker compose exec -T backup sh -c "createdb -h db restore_test && pg_restore -h db -d restore_test &&
-        psql -h db -d restore_test -c \"\dt\" && dropdb -h db restore_test"'
+    pwsh -NoProfile -File scripts/restore-account-backup.ps1                       # into essenthos_app_restored on core-test-db
+    pwsh -NoProfile -File scripts/restore-account-backup.ps1 -File <copy>.dump.gpg -Into <name> -Replace
+    pwsh -NoProfile -File scripts/restore-account-backup.ps1 -Container essenthos-rehearsal-db-1 -Into essenthos_app -Replace
 
-The recovery path is rehearsed on the workstation with synthetic accounts by
+It restores into `<name>_restoring`, compares every table's rows with the dump's own count, checks that
+every table the dump lists is there, that every sequence stands where the dump left it and that the
+data-protection keys came back, and only then renames it to `<name>`, replacing an existing one only
+with `-Replace`. A failed or short restore is dropped and leaves the previous database as it was.
+Ownership and grants are left out: the server's roles are not the workstation's. Restored into the
+rehearsal stack's `essenthos_app`, its API signs readers in with their server sessions.
+
+The whole path (backup.sh, the pull from a stand-in server, the restore through Gpg4win with a throwaway
+key, sessions and data-protection keys after it) is rehearsed with synthetic accounts by
 `avioniq services run core-backup-rehearsal --set root=. --set output=backup-rehearsal`; that does not
-replace one restore from the real server.
+replace one restore of a real backup with the owner's key.
 
 ## Being told when it breaks
 
