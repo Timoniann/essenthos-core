@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Corpus;
 
 /// <summary>
 /// Which spellings of a Russian or Ukrainian text are forms of one word, read off their endings.

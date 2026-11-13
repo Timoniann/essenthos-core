@@ -1,6 +1,5 @@
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
-using Essenthos.Core.Loading.Links;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
@@ -72,92 +71,4 @@ internal sealed class WordForms(IServiceScopeFactory scopes)
             .Select(g => new WordForm(g.Key, g.Count()))
             .ToListAsync(cancellationToken);
     }
-}
-
-/// <summary>One spelling a text prints, and how many times it prints it.</summary>
-internal sealed record WordForm(string Text, int Count);
-
-internal sealed class FormIndex
-{
-    /// <summary>
-    /// Written three ways across the Ukrainian texts, and part of no stem: <em>любов'ю</em> is a
-    /// form of <em>любов</em> however its apostrophe is typed.
-    /// </summary>
-    private static readonly char[] Apostrophes = ['\'', '’', 'ʼ'];
-
-    private readonly Func<string, IEnumerable<WordForm>> _formsOf;
-
-    public FormIndex(string language, IEnumerable<WordForm> spellings)
-    {
-        Language = language;
-        var forms = spellings.ToList();
-        if (language is "rus" or "ru" or "ukr" or "uk")
-        {
-            Stems = true;
-            var russian = language is "rus" or "ru";
-            var bySpelling = forms.ToLookup(form => Bare(form.Text), StringComparer.Ordinal);
-            var byParadigm = forms
-                .SelectMany(form => SlavicParadigm.Stems(Bare(form.Text), russian).Select(stem => (stem, form)))
-                .ToLookup(pair => pair.stem, pair => pair.form);
-            _formsOf = folded => bySpelling[folded]
-                .Concat(SlavicParadigm.Stems(folded, russian).SelectMany(stem => byParadigm[stem]))
-                .Distinct();
-        }
-        else
-        {
-            var stemmer = Stemmer(language);
-            Stems = stemmer is not null;
-            var stem = stemmer ?? (word => word);
-            var byStem = forms.ToLookup(form => stem(Bare(form.Text)), StringComparer.Ordinal);
-            _formsOf = folded => byStem[stem(folded)];
-        }
-    }
-
-    public string Language { get; }
-
-    /// <summary>Whether this text's forms are gathered by a stem at all, or matched as spelled.</summary>
-    public bool Stems { get; }
-
-    /// <summary>
-    /// The forms of the word a reader typed, commonest first: every spelling sharing its stem, or
-    /// the spelling alone where <paramref name="exact"/> asks for it. Folded as the stored words
-    /// are, so a capital or an accent typed is a capital or an accent ignored.
-    ///
-    /// <para>
-    /// Russian and Ukrainian are not gathered by the aligner's stemmer, which lands a verb on the
-    /// noun it is made from and loses a noun's own cases: they are read by their endings,
-    /// <see cref="SlavicParadigm"/>, so <em>завіт</em> answers <em>завіту</em> and
-    /// <em>завіти</em> and not <em>завітати</em>.
-    /// </para>
-    /// </summary>
-    public IReadOnlyList<WordForm> Matching(string typed, bool exact)
-    {
-        var folded = Bare(WordFolding.Fold(typed, Language));
-
-        var forms = _formsOf(folded);
-
-        if (exact)
-        {
-            forms = forms.Where(form => Bare(form.Text) == folded);
-        }
-
-        return [.. forms.OrderByDescending(form => form.Count).ThenBy(form => form.Text, StringComparer.Ordinal)];
-    }
-
-    private static string Bare(string spelling) =>
-        (spelling.IndexOfAny(Apostrophes) < 0 ? spelling : string.Concat(spelling.Where(c => !Apostrophes.Contains(c))))
-        .Replace('ё', 'е');
-
-    /// <summary>
-    /// The stemmer the alignment uses for the language, without the switches it keeps for names and
-    /// for the closed classes: a reader typing a common word wants its endings stripped and nothing
-    /// cleverer.
-    /// </summary>
-    private static Func<string, string>? Stemmer(string language) => language switch
-    {
-        "eng" or "en" => EnglishStemmer.Stem,
-        "deu" or "de" => GermanStemmer.Stem,
-        "spa" or "es" => SpanishStemmer.Stem,
-        _ => null,
-    };
 }

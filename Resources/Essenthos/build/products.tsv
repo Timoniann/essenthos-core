@@ -30,6 +30,8 @@ texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Es
 texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
 texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text
 texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/projected/* Essenthos/names/rules Essenthos/records/derived/kinds Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
+texts/{text}/index/renderings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/books Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/tables/word_strong Essenthos/texts/word-id-collisions	word_rendering word_rendering_place	text
+texts/{text}/index/rendered	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/books Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/tables/word_strong Essenthos/texts/word-id-collisions	word_rendering_witness word_rendering_source	text
 versification/*	hand	by hand	-	-	none
 evidentia/**	hand	by hand (the ledger; forge evidentia-export writes it)	-	-	none
 page-readings/**	hand	by hand	-	-	none

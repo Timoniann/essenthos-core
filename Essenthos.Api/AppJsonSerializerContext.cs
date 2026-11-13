@@ -322,6 +322,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(WordWitnessResponse))]
 [JsonSerializable(typeof(WordOriginalResponse))]
 [JsonSerializable(typeof(WordPlaceResponse))]
+[JsonSerializable(typeof(WordPlacesResponse))]
 [JsonSerializable(typeof(IList<WordFormResponse>))]
 [JsonSerializable(typeof(IList<WordWitnessResponse>))]
 [JsonSerializable(typeof(IList<WordOriginalResponse>))]

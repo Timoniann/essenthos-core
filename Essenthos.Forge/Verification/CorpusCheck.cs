@@ -54,6 +54,58 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// <summary>The name each integrity check is measured and logged under.</summary>
     public static IReadOnlyList<string> IntegrityChecks => [.. Integrity.Select(check => check.Breaks)];
 
+    /// <summary>The integrity check of the word renderings counted at build, against the links on a sample of spellings.</summary>
+    public const string RenderingsTheLinksDoNotGive = "word renderings counted at build that the links do not give";
+
+    /// <summary>
+    /// One spelling in about <see cref="RenderingSample"/> of every text whose words print it at most
+    /// <see cref="RenderingSampleWords"/> times: a sample that reads in seconds, and that a count made wrong
+    /// everywhere cannot miss.
+    /// </summary>
+    private const int RenderingSample = 997;
+
+    private const int RenderingSampleWords = 100;
+
+    private static readonly string RenderingsSql =
+        $"""
+         WITH sampled AS (
+             SELECT f.text_id, f.form FROM text_form f
+             WHERE f.occurrences <= {RenderingSampleWords} AND hashtext(f.text_id || ' ' || f.form) % {RenderingSample} = 0),
+         joined AS (
+             SELECT s.text_id, s.form, ow.text_id AS witness_id, h.id AS hit, l.id AS link,
+                    coalesce(ow.strong_number, (SELECT min(ws.number) FROM word_strong ws WHERE ws.word_id = ow.id)) AS number,
+                    ow.lemma
+             FROM sampled s
+             JOIN word h ON h.text_id = s.text_id AND h.normalised_text = s.form AND NOT h.elided
+             JOIN link_word sw ON sw.word_id = h.id
+             JOIN link l ON l.id = sw.link_id AND l.relation IN ('renders', 'equals')
+             JOIN link_word o ON o.link_id = l.id AND o.side <> sw.side
+             JOIN word ow ON ow.id = o.word_id
+             JOIN text w ON w.id = ow.text_id AND w.kind <> 'translation'),
+         reach AS (
+             SELECT text_id, form, witness_id, count(DISTINCT hit) AS reached, count(DISTINCT link) AS links
+             FROM joined GROUP BY 1, 2, 3),
+         behind AS (
+             SELECT text_id, form, witness_id, number, CASE WHEN number IS NULL THEN lemma END AS lemma,
+                    count(DISTINCT hit) AS occurrences, count(DISTINCT link) AS links
+             FROM joined GROUP BY 1, 2, 3, 4, 5),
+         counted AS (
+             SELECT r.text_id, r.form, r.witness_id, r.reached, r.links FROM word_rendering_witness r
+             JOIN sampled s ON s.text_id = r.text_id AND s.form = r.form
+             WHERE r.reached > 0),
+         kept AS (
+             SELECT r.text_id, r.form, r.witness_id, r.strong_number AS number, CASE WHEN r.strong_number IS NULL THEN r.lemma END AS lemma,
+                    r.occurrences, r.links
+             FROM word_rendering r
+             JOIN sampled s ON s.text_id = r.text_id AND s.form = r.form)
+         SELECT (SELECT count(*) FROM counted c FULL JOIN reach a USING (text_id, form, witness_id)
+                 WHERE c.reached IS DISTINCT FROM a.reached OR c.links IS DISTINCT FROM a.links)
+              + (SELECT count(*) FROM kept k FULL JOIN behind b
+                     ON b.text_id = k.text_id AND b.form = k.form AND b.witness_id = k.witness_id
+                    AND b.number IS NOT DISTINCT FROM k.number AND b.lemma IS NOT DISTINCT FROM k.lemma
+                 WHERE k.occurrences IS DISTINCT FROM b.occurrences OR k.links IS DISTINCT FROM b.links)
+         """;
+
     /// <summary>The integrity check of cross references and topic verses that name an address the frame does not place.</summary>
     public const string ReferencesNoTextPlaces = "cross references and topic verses naming a verse no text places";
 
@@ -958,6 +1010,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
         ("people with two fathers, neither the other's forebear, that nobody decided are both stated",
             TwoFathersSql),
+
+        // The renderings counted at build per spelling, held against the links they were counted from, on a sample of the
+        // spellings: every edition a spelling's words are linked to, how many words each reaches by how many links, and how
+        // many words each original stands behind.
+        (RenderingsTheLinksDoNotGive, RenderingsSql),
 
         ("verse links saying again what another link of the same pair says",
             $"""
