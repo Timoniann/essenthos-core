@@ -263,6 +263,10 @@ internal sealed class PageLoader(
         }
 
         var language = address.Language;
+        // The record as the reader's script asks for it in this language: the page carries it, and its
+        // names and what the person is known for are written from it.
+        var detail = await EncyclopediaEndpoints.Detail(
+            db, settings, places, entity.Slug, language.Corpus, language.Corpus, cancellationToken);
         var localDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken))
             .GetValueOrDefault(entity.Id);
         // The structured line where it is phrased in the page's language — every language on an English
@@ -288,6 +292,8 @@ internal sealed class PageLoader(
             .OrderBy(v => v.CanonicalBook).ThenBy(v => v.CanonicalChapter).ThenBy(v => v.CanonicalVerse)
             .Take(VersesNamed)
             .ToListAsync(cancellationToken);
+        var quoted = await TextsAt(
+            language, [.. first.Select(v => Address(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse))], cancellationToken);
         var mentions = new List<VerseMention>(first.Count);
         foreach (var verse in first)
         {
@@ -296,7 +302,10 @@ internal sealed class PageLoader(
                 wording.Reference(
                     await BookName(language, wording, verse.CanonicalBook, cancellationToken),
                     verse.CanonicalChapter,
-                    verse.CanonicalVerse)));
+                    verse.CanonicalVerse))
+            {
+                Text = quoted.GetValueOrDefault(Address(verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse)),
+            });
         }
 
         return PageViews.Record(language, wording, new RecordView(
@@ -315,7 +324,38 @@ internal sealed class PageLoader(
             Image = await Picture(entity.Slug, language.Corpus, cancellationToken),
             Coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null,
             SameAs = await SameAs(entity.Id, cancellationToken),
-        });
+            Names = detail is null ? [] : OriginalNames(detail, language),
+            KnownFor = detail?.KnownFor is { } known
+                ? [.. known.Select(clause => new KnownClause(clause.Text, StructuredData.LanguageTag(clause.Language)))]
+                : [],
+        }) with
+        {
+            Data = detail is null ? null : PageData.Of(PageData.EntityAddress(entity.Slug, language), detail),
+        };
+    }
+
+    /// <summary>
+    /// The record's names as the Hebrew or the Greek writes them, each once, with what it means in the
+    /// page's language where that is said; a name other than the page's heading is named first.
+    /// </summary>
+    private static IReadOnlyList<OriginalName> OriginalNames(EntityResponse detail, SiteLanguage language)
+    {
+        var heading = detail.LocalName ?? detail.Name;
+        return
+        [
+            .. detail.Names
+                .Where(name => name.Hebrew is not null || name.Greek is not null)
+                .Select(name =>
+                {
+                    var label = name.Printed ?? name.LocalLabel ?? (language.IsEnglish ? name.Label : null);
+                    return new OriginalName(
+                        label is null || string.Equals(label, heading, StringComparison.OrdinalIgnoreCase) ? null : label,
+                        name.Hebrew, name.HebrewTransliterated, [.. name.HebrewStrongNumbers],
+                        name.Greek, name.GreekTransliterated, [.. name.GreekStrongNumbers],
+                        name.LocalMeaning ?? (language.IsEnglish ? name.Meaning : null));
+                })
+                .DistinctBy(name => (name.Label, name.Hebrew, name.Greek)),
+        ];
     }
 
     private async Task<(double Latitude, double Longitude)?> Coordinates(int entityId, CancellationToken cancellationToken) =>

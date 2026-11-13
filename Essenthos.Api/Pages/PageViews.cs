@@ -42,7 +42,25 @@ internal sealed record ChapterView(
 /// <summary>A piece of a record's description, linked where it names another record.</summary>
 internal sealed record LinePart(string Text, string? Href = null);
 
-internal sealed record VerseMention(int Book, int Chapter, int Verse, string Label);
+internal sealed record VerseMention(int Book, int Chapter, int Verse, string Label)
+{
+    /// <summary>The verse's words in the text the page's language reads, where it holds them.</summary>
+    public string? Text { get; init; }
+}
+
+/// <summary>A name of the record as the Hebrew or the Greek writes it, with its Strong numbers and what it means.</summary>
+internal sealed record OriginalName(
+    string? Label,
+    string? Hebrew,
+    string? HebrewTransliterated,
+    IReadOnlyList<string> HebrewNumbers,
+    string? Greek,
+    string? GreekTransliterated,
+    IReadOnlyList<string> GreekNumbers,
+    string? Meaning);
+
+/// <summary>Something a person is known for, in the language its words are said in.</summary>
+internal sealed record KnownClause(string Text, string? Language);
 
 /// <param name="Line">What the record is known by: its own short description in the page's language, else the structured one, else the source's.</param>
 /// <param name="Descriptor">The structured description, with its links, where there is one.</param>
@@ -62,6 +80,10 @@ internal sealed record RecordView(
 
     /// <summary>The same thing elsewhere: its Wikidata item and its Wikipedia articles.</summary>
     public IReadOnlyList<string> SameAs { get; init; } = [];
+
+    public IReadOnlyList<OriginalName> Names { get; init; } = [];
+
+    public IReadOnlyList<KnownClause> KnownFor { get; init; } = [];
 }
 
 /// <param name="Outline">The lexicon's numbered senses, a line each, as the reader's page sets them out.</param>
@@ -320,18 +342,56 @@ internal static partial class PageViews
             body.Element("p", plain);
         }
 
-        if (verses is not null)
+        foreach (var name in record.Names)
         {
-            body.Open("p").Text(verses);
-            for (var i = 0; i < record.FirstVerses.Count; i++)
+            body.Open("p");
+            if (name.Label is { } label)
             {
-                var mention = record.FirstVerses[i];
-                body.Text(" ")
-                    .Link(language.Path(PageAddress.VersePath(mention.Book, mention.Chapter, mention.Verse)), mention.Label)
-                    .Text(i < record.FirstVerses.Count - 1 ? ";" : record.References > record.FirstVerses.Count ? "; …" : "");
+                body.Text(label + ": ");
             }
 
-            body.Close("p")
+            OriginalWord(body, language, name.Hebrew, "he", name.HebrewTransliterated, name.HebrewNumbers);
+            if (name.Hebrew is not null && name.Greek is not null)
+            {
+                body.Text("; ");
+            }
+
+            OriginalWord(body, language, name.Greek, "el", name.GreekTransliterated, name.GreekNumbers);
+            if (name.Meaning is { Length: > 0 } meaning)
+            {
+                body.Text(" — " + meaning);
+            }
+
+            body.Close("p");
+        }
+
+        if (record.KnownFor.Count > 0)
+        {
+            body.Open("ul");
+            foreach (var clause in record.KnownFor)
+            {
+                body.Open("li", lang: clause.Language).Text(clause.Text).Close("li");
+            }
+
+            body.Close("ul");
+        }
+
+        if (verses is not null)
+        {
+            body.Element("p", verses).Open("ul");
+            foreach (var mention in record.FirstVerses)
+            {
+                body.Open("li")
+                    .Link(language.Path(PageAddress.VersePath(mention.Book, mention.Chapter, mention.Verse)), mention.Label);
+                if (mention.Text is { Length: > 0 } said)
+                {
+                    body.Text(" " + said);
+                }
+
+                body.Close("li");
+            }
+
+            body.Close("ul")
                 .Open("p")
                 .Link(language.Path(PageAddress.VersesPath(PageAddress.RecordPath(record.Kind, record.Slug))),
                     t.Text("verses.all", ("count", record.References.ToString(CultureInfo.InvariantCulture))))
@@ -355,6 +415,33 @@ internal static partial class PageViews
             Trail = Trail(t, PageSections.Encyclopedia, record.Name, recordPath),
             About = (link, _) => RecordNode(link, record, line),
         };
+    }
+
+    /// <summary>A name's original letters, their transliteration and a link to each Strong entry.</summary>
+    private static void OriginalWord(
+        HtmlWriter body, SiteLanguage language, string? word, string lang, string? transliterated, IReadOnlyList<string> numbers)
+    {
+        if (word is null)
+        {
+            return;
+        }
+
+        body.Open("span", lang: lang).Text(word).Close("span");
+        if (transliterated is { Length: > 0 })
+        {
+            body.Text(" " + transliterated);
+        }
+
+        if (numbers.Count > 0)
+        {
+            body.Text(" (");
+            for (var i = 0; i < numbers.Count; i++)
+            {
+                body.Text(i > 0 ? ", " : "").Link(language.Path($"/strong/{numbers[i]}"), numbers[i]);
+            }
+
+            body.Text(")");
+        }
     }
 
     /// <summary>

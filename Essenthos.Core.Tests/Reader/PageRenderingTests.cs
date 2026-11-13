@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Pages;
 using FluentAssertions;
 using Xunit;
@@ -302,6 +303,42 @@ public sealed class PageRenderingTests
             new RecordView(EntityKind.Person, "david", "David", "king of Israel", [], 1023, [new VerseMention(8, 4, 17, "Ruth 4:17")]));
 
         page.Body.Should().Contain("<a href=\"/people/david/verses\">All verses (1023)</a>");
+    }
+
+    [Fact]
+    public void ARecordsPageSaysItsNameInTheOriginalWhatItIsKnownForAndQuotesItsFirstVerses()
+    {
+        var page = PageViews.Record(SiteLanguage.English, PageWording.Compiled("en"),
+            new RecordView(EntityKind.Person, "moses", "Moses", "prophet", [], 795,
+                [new VerseMention(2, 2, 10, "Exodus 2:10") { Text = "She named him Moses." }])
+            {
+                Names = [new OriginalName(null, "מֹשֶׁה", "mosheh", ["H4872"], "Μωϋσῆς", "Mōüsē͂s", ["G3475"], "draw out")],
+                KnownFor = [new KnownClause("was called by God from a burning bush", "en")],
+            });
+
+        page.Body.Should().Contain(
+            "<p><span lang=\"he\">מֹשֶׁה</span> mosheh (<a href=\"/strong/H4872\">H4872</a>); " +
+            "<span lang=\"el\">Μωϋσῆς</span> Mōüsē͂s (<a href=\"/strong/G3475\">G3475</a>) — draw out</p>");
+        page.Body.Should().Contain("<li lang=\"en\">was called by God from a burning bush</li>");
+        page.Body.Should().Contain("<li><a href=\"/read/exodus/2/10\">Exodus 2:10</a> She named him Moses.</li>");
+    }
+
+    [Fact]
+    public void TheAnswersAPageWasWrittenFromFollowTheRootAndCannotCloseTheirElement()
+    {
+        var answer = new KnownForResponse("</script><script>alert(1)</script> & ‘so’", "eng", []);
+        var page = PageViews.Record(SiteLanguage.English, PageWording.Compiled("en"),
+            new RecordView(EntityKind.Person, "moses", "Moses", "prophet", [], 0, [])) with
+        {
+            Data = PageData.Of(PageData.EntityAddress("moses", SiteLanguage.Ukrainian), answer),
+        };
+
+        var html = PageHtml.Render(Shell, page, SiteLanguage.English, Origin);
+
+        html.Should().MatchRegex(
+            """</article></div><script type="application/json" id="page-data">\{"/v1/entities/moses\?language=ukr\\u0026prose=ukr":.*</script>""");
+        html.Should().NotContain("</script><script>alert");
+        html.Should().Contain("‘so’");
     }
 
     [Fact]
