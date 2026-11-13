@@ -25,7 +25,7 @@ namespace Essenthos.Core.Build;
 /// </summary>
 internal sealed class PaneInputs
 {
-    public const int Version = 1;
+    public const int Version = 2;
 
     /// <summary>The record files a pane reads, and the one column each names its record by.</summary>
     internal static readonly (string Product, string Column)[] RecordFiles =

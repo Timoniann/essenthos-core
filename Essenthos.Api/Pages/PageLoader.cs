@@ -673,7 +673,13 @@ internal sealed class PageLoader(
     {
         var placed = await db.VerseReferences
             .Where(r => r.IsPrimary && r.CanonicalBook == book && r.CanonicalChapter == chapter && r.Verse!.TextId == textId)
-            .Select(r => new { r.CanonicalVerse, r.VerseId })
+            .Select(r => new
+            {
+                r.CanonicalVerse,
+                r.VerseId,
+                Place = new ChapterReading.EditionPlace(
+                    r.Verse!.Book!.Position, r.Verse.ChapterNumber, r.Verse.Sequence, r.Verse.Number, r.Verse.Label),
+            })
             .ToListAsync(cancellationToken);
         if (placed.Count == 0)
         {
@@ -684,7 +690,7 @@ internal sealed class PageLoader(
         return
         [
             .. placed
-                .OrderBy(p => p.CanonicalVerse)
+                .OrderBy(p => p.CanonicalVerse).ThenBy(p => p.Place)
                 .Where(p => said.ContainsKey(p.VerseId))
                 .Select(p => (p.CanonicalVerse, said[p.VerseId])),
         ];

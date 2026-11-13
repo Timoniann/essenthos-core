@@ -726,7 +726,9 @@ internal static class ChapterReading
                         && r.CanonicalBook == canonicalBook
                         && r.CanonicalChapter == canonicalChapter)
             .SelectMany(r => r.Verse!.Words.Select(w => new CanonicalWordRow(
-                r.CanonicalVerse, r.Verse.Sequence, r.Verse.Number, r.Verse.Label, w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
+                r.CanonicalVerse,
+                new EditionPlace(r.Verse.Book!.Position, r.Verse.ChapterNumber, r.Verse.Sequence, r.Verse.Number, r.Verse.Label),
+                w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
                 w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break, w.NormalisedText)))
             .ToListAsync(cancellationToken);
 
@@ -744,12 +746,11 @@ internal static class ChapterReading
             .GroupBy(r => r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
-                // Two verses of this text can sit at one canonical address — the Septuagint's 50 and
-                // 50a both answer to Genesis 31:50 — and ordering by word position alone shuffles
-                // their words together, so the verses go in the edition's own order first.
+                // Two verses of this text can sit at one canonical address, and ordering by word
+                // position alone shuffles their words together, so the verses go in the edition's
+                // own order first.
                 group => group
-                    .OrderBy(r => r.VerseSequence).ThenBy(r => r.VerseNumber).ThenBy(r => r.Label)
-                    .ThenBy(r => r.Position)
+                    .OrderBy(r => r.Place).ThenBy(r => r.Position)
                     .Select(r => Word(r.Id, r.Text, r.Trailer, r.Gloss, r.Lemma, r.StrongNumber, r.Morphology,
                         r.Elided, r.Break, counterparts))
                     .ToList());
@@ -876,7 +877,7 @@ internal static class ChapterReading
         string? Anchor);
 
     private sealed record CanonicalWordRow(
-        int CanonicalVerse, int VerseSequence, int VerseNumber, string Label, int Position, long Id, string Text, string Trailer,
+        int CanonicalVerse, EditionPlace Place, int Position, long Id, string Text, string Trailer,
         string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break,
         string? NormalisedText);
 
@@ -927,7 +928,11 @@ internal static class ChapterReading
                         && r.Verse!.TextId == textId
                         && r.CanonicalBook == canonicalBook
                         && r.CanonicalChapter == canonicalChapter)
-            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number, r.Verse.Label })
+            .Select(r => new
+            {
+                r.CanonicalVerse,
+                Place = new EditionPlace(r.Verse!.Book!.Position, r.Verse.ChapterNumber, r.Verse.Sequence, r.Verse.Number, r.Verse.Label),
+            })
             .ToListAsync(cancellationToken);
 
         return rows
@@ -935,8 +940,9 @@ internal static class ChapterReading
             .ToDictionary(
                 group => group.Key,
                 group => group
-                    .OrderBy(r => r.Number).ThenBy(r => r.Label, StringComparer.Ordinal)
-                    .Select(r => $"{r.ChapterNumber}:{r.Number}{r.Label}")
+                    .Select(r => r.Place)
+                    .Order()
+                    .Select(place => $"{place.Chapter}:{place.Number}{place.Label}")
                     .ToList());
     }
 
@@ -972,7 +978,7 @@ internal static class ChapterReading
             .Select(n => new
             {
                 Canonical = n.Verse!.References.First(r => r.IsPrimary).CanonicalVerse,
-                Holder = n.Verse.Number,
+                Holder = new EditionPlace(n.Verse.Book!.Position, n.Verse.ChapterNumber, n.Verse.Sequence, n.Verse.Number, n.Verse.Label),
                 n.Position,
                 Chapter = n.ChapterNumber,
                 n.ChapterLabel,
@@ -1010,8 +1016,8 @@ internal static class ChapterReading
             .Select(note => new
             {
                 Canonical = note.Verse!.References.First(reference => reference.IsPrimary).CanonicalVerse,
-                Holder = note.Verse.Number,
-                note.Verse.Label,
+                Holder = new EditionPlace(
+                    note.Verse.Book!.Position, note.Verse.ChapterNumber, note.Verse.Sequence, note.Verse.Number, note.Verse.Label),
                 note.Position,
                 note.Kind,
                 note.Content,
@@ -1025,8 +1031,7 @@ internal static class ChapterReading
             .ToDictionary(
                 group => group.Key,
                 group => group
-                    .OrderBy(row => row.Holder).ThenBy(row => row.Label, StringComparer.Ordinal)
-                    .ThenBy(row => row.Position)
+                    .OrderBy(row => row.Holder).ThenBy(row => row.Position)
                     .Select(row => new SourceNoteResponse(
                         EnumSpelling.Of(row.Kind), row.Content, row.AnchorWordId, row.Anchor))
                     .ToList());
@@ -1045,18 +1050,42 @@ internal static class ChapterReading
                         && r.Verse!.TextId == textId
                         && r.CanonicalBook == canonicalBook
                         && r.CanonicalChapter == canonicalChapter)
-            .Select(r => new { r.CanonicalVerse, r.Verse!.ChapterNumber, r.Verse.Number })
+            .Select(r => new
+            {
+                r.CanonicalVerse,
+                Place = new EditionPlace(r.Verse!.Book!.Position, r.Verse.ChapterNumber, r.Verse.Sequence, r.Verse.Number, r.Verse.Label),
+            })
             .ToListAsync(cancellationToken);
 
         return rows
             .GroupBy(r => r.CanonicalVerse)
             .ToDictionary(
                 group => group.Key,
-                group => new VerseRefResponse(
-                    canonicalBook,
-                    BookReferences.Name(canonicalBook),
-                    BookReferences.Slug(canonicalBook),
-                    group.Min(r => r.ChapterNumber),
-                    group.Min(r => r.Number)));
+                group =>
+                {
+                    var first = group.Min(r => r.Place);
+                    return new VerseRefResponse(
+                        canonicalBook,
+                        BookReferences.Name(canonicalBook),
+                        BookReferences.Slug(canonicalBook),
+                        first.Chapter,
+                        first.Number);
+                });
+    }
+
+    /// <summary>
+    /// Where a verse stands in its edition: its book in the edition's order of books, its chapter, where the edition
+    /// writes it in that chapter, then its number and letter. A text can put several of its verses at one canonical
+    /// address (Revelation 12:18 and 13:1 at 13:1, Brenton's Exodus 37:19 and 38:19 at 38:19), and everything that lists
+    /// them there lists them in this order, which is the edition's and is the same every time it is read.
+    /// </summary>
+    internal readonly record struct EditionPlace(int Book, int Chapter, int Sequence, int Number, string Label)
+        : IComparable<EditionPlace>
+    {
+        public int CompareTo(EditionPlace other)
+        {
+            var order = (Book, Chapter, Sequence, Number).CompareTo((other.Book, other.Chapter, other.Sequence, other.Number));
+            return order != 0 ? order : string.CompareOrdinal(Label, other.Label);
+        }
     }
 }
