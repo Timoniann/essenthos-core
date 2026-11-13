@@ -60,6 +60,21 @@ public sealed class RateLimitTests
     }
 
     [Fact]
+    public async Task APageTheServerWritesDrawsOnItsOwnAllowanceAndLeavesTheReadingOneToItsScript()
+    {
+        await using var server = await Server.Start(Limits(reading: new RateLimit(60, 2), pages: new RateLimit(60, 2)));
+
+        (await server.Http.GetAsync("/v1/pages/read/mark/3")).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await server.Http.GetAsync("/v1/pages/read/mark/4")).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await server.Http.GetAsync("/v1/pages/read/mark/5")).StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+
+        (await server.Http.GetAsync("/v1/text")).StatusCode.Should().Be(HttpStatusCode.OK,
+            "the pages a crawler read have not used up what their script asks of the API");
+        (await server.Http.GetAsync("/v1/text")).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await server.Http.GetAsync("/v1/text")).StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+    }
+
+    [Fact]
     public async Task AForwardedAddressIsBelievedFromTheProxyAndCountedAsItsOwnClient()
     {
         // The test client connects from 127.0.0.1, so here it is the proxy.
@@ -230,8 +245,11 @@ public sealed class RateLimitTests
 
     private static RateLimitSettings Limits(
         RateLimit? reading = null, RateLimit? expensive = null, RateLimit? signIn = null, RateLimit? writing = null,
-        RateLimit? reports = null) =>
-        new(true, reading ?? Plenty, expensive ?? Plenty, signIn ?? Plenty, writing ?? Plenty, reports ?? Plenty);
+        RateLimit? reports = null, RateLimit? pages = null) =>
+        new(true, reading ?? Plenty, expensive ?? Plenty, signIn ?? Plenty, writing ?? Plenty, reports ?? Plenty)
+        {
+            Pages = pages ?? Plenty,
+        };
 
     private static IConfiguration Configuration(Dictionary<string, string?> values) =>
         new ConfigurationBuilder().AddInMemoryCollection(values).Build();
@@ -274,6 +292,7 @@ public sealed class RateLimitTests
             app.UseRateLimits(limits);
             app.MapGet("/v1/text", (HttpContext context) => RateLimits.Client(context));
             app.MapGet("/v1/search", () => "found").RequireRateLimiting(RateLimits.Expensive);
+            app.MapGet("/v1/pages/{**path}", () => "page");
             app.MapGet("/v1/health/live", () => "live");
             app.MapGet("/v1/auth/providers", () => "google");
             app.MapGet("/v1/auth/google/login", () => "to google");

@@ -196,7 +196,7 @@ internal static class ReadEndpoints
                 .ToList();
 
             return Results.Ok(new CorpusListResponse(items));
-        });
+        }).KeptUntilRelease();
 
         // One text and everything the corpus can say about it. The counts are the expensive part
         // and are asked of TextFacts, which counts every text once and remembers.
@@ -253,7 +253,7 @@ internal static class ReadEndpoints
         // Answered without touching the database, because it is a statement about traditions and
         // not about what happens to be loaded.
         routes.MapGet("/canons", () => Results.Ok(new CanonListResponse(
-            [.. Canons.List.Select(Canon)])));
+            [.. Canons.List.Select(Canon)]))).KeptUntilRelease();
 
         routes.MapGet("/books", async (
             [FromQuery] string? canon,
@@ -297,7 +297,7 @@ internal static class ReadEndpoints
             }
 
             return Results.Ok(new BookListResponse(items) { Canon = Canon(wanted) });
-        });
+        }).KeptUntilRelease();
 
         routes.MapGet("/books/{book}", async (string book, ICanonIndex canon, CancellationToken cancellationToken) =>
         {

@@ -54,7 +54,7 @@ internal static class KingsEndpoints
             [FromQuery] string? language,
             AppDbContext db,
             CancellationToken cancellationToken) =>
-            Results.Ok(await Kings(db, language, cancellationToken)));
+            Results.Ok(await Kings(db, language, cancellationToken))).KeptUntilRelease();
     }
 
     internal static async Task<KingsTimelineResponse> Kings(

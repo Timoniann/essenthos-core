@@ -25,7 +25,16 @@ internal sealed record VerseView(int Book, string BookName, int Chapter, int Ver
 
     /// <summary>The language the text is written in, which the reader marks each verse with; the page's own where unknown.</summary>
     public string? TextLanguage { get; init; }
+
+    /// <summary>The verse in the original, word by word; null where no original holds it.</summary>
+    public OriginalVerseView? Original { get; init; }
 }
+
+/// <param name="Language">The original's language as a web page names it.</param>
+internal sealed record OriginalVerseView(string TextName, string? Language, string Text, IReadOnlyList<OriginalWordView> Words);
+
+/// <param name="Gloss">What the edition says the word means, on an English page; null elsewhere.</param>
+internal sealed record OriginalWordView(string Surface, IReadOnlyList<string> Numbers, string? Gloss);
 
 internal sealed record ChapterView(
     int Book,
@@ -93,7 +102,26 @@ internal sealed record StrongView(
     string? Transliteration,
     string? Definition,
     string? Derivation,
-    string? Outline = null);
+    string? Outline = null)
+{
+    /// <summary>How many words carry the number in the edition it is counted in.</summary>
+    public int? Uses { get; init; }
+
+    /// <summary>The edition of the original the number is counted in.</summary>
+    public string? CountedIn { get; init; }
+
+    /// <summary>The text whose renderings are listed: the one the page's language reads.</summary>
+    public string? RenderedIn { get; init; }
+
+    public IReadOnlyList<StrongRenderingCount> Renderings { get; init; } = [];
+
+    /// <summary>The books it stands in, in canon order, with how often.</summary>
+    public IReadOnlyList<StrongBookCount> Books { get; init; } = [];
+}
+
+internal sealed record StrongRenderingCount(string Text, int Count);
+
+internal sealed record StrongBookCount(string Book, int Count);
 
 internal sealed record BookLink(int Ordinal, string Name);
 
@@ -207,6 +235,10 @@ internal static partial class PageViews
         var verses = verse.Verses.Count > 0 ? verse.Verses : [(verse.Verse, verse.Text)];
         var body = Reading(language, new ChapterView(verse.Book, verse.BookName, verse.Chapter,
             Math.Max(verse.ChapterCount, verse.Chapter), verses, verse.TextName) { TextLanguage = verse.TextLanguage }, verse.Verse);
+        if (verse.Original is { } original)
+        {
+            OriginalWords(body, language, t, reference, original);
+        }
         var title = string.Join(Separator, reference, t.Quoted(Shortened(verse.Text, TitleQuoteLength)), verse.TextName);
         var beside = Beside(t, OriginalOf(verse.Book));
         var description = AroundQuote(t, verse.Text, quote => t.Text("verse.description",
@@ -417,6 +449,36 @@ internal static partial class PageViews
         };
     }
 
+    /// <summary>
+    /// A verse in the original under the chapter's copy, outside it, so the reader's lifting of that
+    /// copy is untouched: the verse as the edition prints it, then each word with its Strong entries.
+    /// </summary>
+    private static void OriginalWords(HtmlWriter body, SiteLanguage language, PageWording t, string reference, OriginalVerseView original)
+    {
+        var direction = original.Language is "hbo" or "arc" or "he" ? "rtl" : null;
+        body.Open("section", "prerendered", lang: language.Code)
+            .Element("h2", $"{reference} — {t.Text("verse.original", ("text", original.TextName))}")
+            .Open("p", lang: original.Language, attributes: ("dir", direction)).Text(original.Text).Close("p")
+            .Open("ol");
+        foreach (var word in original.Words)
+        {
+            body.Open("li").Open("span", lang: original.Language, attributes: ("dir", direction)).Text(word.Surface).Close("span");
+            foreach (var number in word.Numbers)
+            {
+                body.Text(" ").Link(language.Path($"/strong/{number}"), number);
+            }
+
+            if (word.Gloss is { } gloss)
+            {
+                body.Text(" — " + gloss);
+            }
+
+            body.Close("li");
+        }
+
+        body.Close("ol").Close("section");
+    }
+
     /// <summary>A name's original letters, their transliteration and a link to each Strong entry.</summary>
     private static void OriginalWord(
         HtmlWriter body, SiteLanguage language, string? word, string lang, string? transliterated, IReadOnlyList<string> numbers)
@@ -516,6 +578,34 @@ internal static partial class PageViews
         if (!string.IsNullOrWhiteSpace(entry.Derivation))
         {
             body.Element("p", entry.Derivation);
+        }
+
+        if (entry.Uses is { } uses)
+        {
+            body.Element("p", t.Counted("strong.uses", uses) +
+                              (entry.CountedIn is { } edition ? " " + t.Text("strong.countedIn", ("text", edition)) : ""));
+        }
+
+        if (entry.Renderings.Count > 0 && entry.RenderedIn is { } renderedIn)
+        {
+            body.Element("h2", t.Text("strong.renderedBy", ("text", renderedIn))).Open("ul");
+            foreach (var rendering in entry.Renderings.Take(StrongRenderingsShown))
+            {
+                body.Element("li", $"{rendering.Text} — {rendering.Count.ToString(CultureInfo.InvariantCulture)}");
+            }
+
+            body.Close("ul");
+        }
+
+        if (entry.Books.Count > 0)
+        {
+            body.Element("h2", t.Text("strong.books")).Open("p");
+            for (var i = 0; i < entry.Books.Count; i++)
+            {
+                body.Text((i > 0 ? "; " : "") + $"{entry.Books[i].Book} {entry.Books[i].Count.ToString(CultureInfo.InvariantCulture)}");
+            }
+
+            body.Close("p");
         }
 
         var strongPath = $"/strong/{entry.Number}";
@@ -793,6 +883,9 @@ internal static partial class PageViews
 
     private static PageContent Page(int status, string title, string heading, string description, HtmlWriter? body) =>
         new(status, title, heading, Shortened(description, DescriptionLength), body?.ToString() ?? "");
+
+    /// <summary>How many of a number's renderings the server's copy lists.</summary>
+    private const int StrongRenderingsShown = 12;
 
     private static HtmlWriter Open(SiteLanguage language) => new HtmlWriter().Open("article", "prerendered", lang: language.Code);
 

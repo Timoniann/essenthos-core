@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Essenthos.Core.Pages;
 
@@ -64,7 +65,7 @@ internal static class PageEndpoints
             var wording = reading.WordingFor(address.Language);
             var page = address.Indexed
                 ? await cache.Remember($"page:{address.Language.Code}:{address.Kind}:{address.English}", PageCache.Page,
-                    () => loader.Load(address, wording, cancellationToken), made => (made.Body.Length + (made.Data?.Length ?? 0)) * sizeof(char))
+                    () => loader.Load(address, wording, cancellationToken), made => made.Bytes, CacheItemPriority.Normal)
                 : await loader.Load(address, wording, cancellationToken);
             if (page.MovedTo is { } moved)
             {
