@@ -760,29 +760,6 @@
       "quiet": false
     },
     {
-      "name": "core-backup-rehearsal",
-      "command": "pwsh -NoProfile -File \"${root}/scripts/rehearse-backups.ps1\" -Output \"${output}\"",
-      "project": "essenthos-core",
-      "description": "Rehearse encrypted Accounts backup and recovery with synthetic isolated data and an ephemeral private key; no server deployment",
-      "env": {},
-      "params": [
-        {
-          "type": "text",
-          "name": "root",
-          "default": ".",
-          "raw": false
-        },
-        {
-          "type": "text",
-          "name": "output",
-          "default": "backup-rehearsal",
-          "raw": false
-        }
-      ],
-      "kind": "action",
-      "quiet": false
-    },
-    {
       "name": "fetch-codices",
       "command": "pwsh -NoProfile -File scripts/fetch-alexandrinus.ps1",
       "project": "essenthos-core",

@@ -66,6 +66,78 @@ public sealed class EncryptedBackupTests
 
     [BackupRehearsalFact]
     [Trait("Category", "Deployment")]
+    public async Task ThePullCopiesOnlyEncryptedBackupsCheckedAgainstTheServerAndKeepsWhatTheConsoleKeeps()
+    {
+        var root = Environment.GetEnvironmentVariable("ESSENTHOS_REHEARSAL_ROOT")!;
+        var folder = Path.Combine(Path.GetTempPath(), $"essenthos-backup-pull-{Guid.NewGuid():N}");
+        var server = Directory.CreateDirectory(Path.Combine(folder, "server")).FullName;
+        var copies = Path.Combine(folder, "copies");
+        try
+        {
+            string Name(string database, int daysAgo) => $"{database}-{DateTime.UtcNow.AddDays(-daysAgo):yyyyMMdd'T'HHmm'Z'}.dump.gpg";
+            string Serve(string name, byte[] bytes) { File.WriteAllBytes(Path.Combine(server, name), bytes); return name; }
+            byte[] Sealed(int seed) => [0x85, 0x02, 0x0c, 0x03, .. Enumerable.Range(0, 4096).Select(i => (byte)(i * seed))];
+            var daily = Enumerable.Range(0, 6).Select(day => Serve(Name("essenthos_app", day), Sealed(day + 1))).ToList();
+            var outOfWindow = Serve(Name("essenthos_app", 20), Sealed(40));
+            var onlyOld = Serve(Name("essenthos_umami", 20), Sealed(50));
+            Serve("essenthos_app-20260101T0300Z.dump", "PGDMP in the clear"u8.ToArray());
+            Serve("notes.txt", "not a backup"u8.ToArray());
+
+            var (code, said, error) = await Pull(root, server, copies, "-Keep", "3");
+            code.Should().Be(0, said + error);
+            Directory.GetFiles(copies).Select(Path.GetFileName).Should().BeEquivalentTo(
+                [daily[0], daily[1], daily[2], onlyOld],
+                "the newest three of a database inside the window, and the newest of each whatever its age; never a plain dump");
+            foreach (var name in Directory.GetFiles(copies).Select(Path.GetFileName))
+                File.ReadAllBytes(Path.Combine(copies, name!)).Should().Equal(File.ReadAllBytes(Path.Combine(server, name!)));
+            (said + error).Should().Contain("in the clear");
+
+            (await Pull(root, server, copies, "-Keep", "3")).Output.Should().Contain("0 copied", "a copy already here and equal to the server's is not fetched again");
+
+            // A copy damaged here, and one a stopped run left half written, are fetched whole again.
+            var damaged = Path.Combine(copies, daily[0]);
+            var bytes = File.ReadAllBytes(damaged);
+            bytes[^1] ^= 0xff;
+            File.WriteAllBytes(damaged, bytes);
+            File.Delete(Path.Combine(copies, daily[1]));
+            File.WriteAllBytes(Path.Combine(copies, daily[1] + ".partial"), Sealed(2)[..100]);
+            var abandoned = Path.Combine(copies, "essenthos_app-20260102T0300Z.dump.gpg.partial");
+            File.WriteAllBytes(abandoned, [1]);
+            File.SetLastWriteTimeUtc(abandoned, DateTime.UtcNow.AddHours(-2));
+            // And a copy the server has let go of, past the window, ages out here too.
+            File.WriteAllBytes(Path.Combine(copies, Name("essenthos_app", 30)), Sealed(60));
+            (code, said, error) = await Pull(root, server, copies, "-Keep", "3");
+            code.Should().Be(0, said + error);
+            said.Should().Contain("2 copied");
+            File.ReadAllBytes(damaged).Should().Equal(File.ReadAllBytes(Path.Combine(server, daily[0])));
+            Directory.GetFiles(copies).Select(Path.GetFileName).Should().BeEquivalentTo([daily[0], daily[1], daily[2], onlyOld]);
+            File.Exists(Path.Combine(copies, Name("essenthos_app", 30))).Should().BeFalse();
+            File.Exists(Path.Combine(copies, outOfWindow)).Should().BeFalse();
+
+            // A dump in the clear under the encrypted name is refused, and the run says it failed.
+            var impostor = Serve(Name("essenthos_stats", 0), "PGDMP pretending"u8.ToArray());
+            (code, _, error) = await Pull(root, server, copies, "-Keep", "3");
+            code.Should().NotBe(0);
+            error.Should().Contain(impostor);
+            File.Exists(Path.Combine(copies, impostor)).Should().BeFalse();
+            Directory.GetFiles(copies, "*.partial").Should().BeEmpty();
+
+            // A server that cannot be read changes nothing here.
+            var before = Directory.GetFiles(copies).Order().ToList();
+            (code, _, error) = await Pull(root, Path.Combine(folder, "missing"), copies, "-Keep", "1");
+            code.Should().NotBe(0);
+            error.Should().Contain("could not be listed");
+            Directory.GetFiles(copies).Order().Should().Equal(before);
+        }
+        finally
+        {
+            if (!Path.GetFullPath(folder).StartsWith(Path.GetTempPath(), StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("Invalid cleanup target.");
+            Directory.Delete(folder, recursive: true);
+        }
+    }
+
+    [BackupRehearsalFact]
+    [Trait("Category", "Deployment")]
     public async Task EncryptedBackupRestoresAccountsKeysAndSessionBehavior()
     {
         var root = Environment.GetEnvironmentVariable("ESSENTHOS_REHEARSAL_ROOT")
@@ -85,7 +157,6 @@ public sealed class EncryptedBackupTests
         var publicKeys = Directory.CreateDirectory(Path.Combine(folder, "public")).FullName;
         var privateKeys = Directory.CreateDirectory(Path.Combine(folder, "private")).FullName;
         var backups = Directory.CreateDirectory(Path.Combine(folder, "backups")).FullName;
-        var client = "essenthos-backup-client-" + Guid.NewGuid().ToString("N");
         var now = DateTimeOffset.UtcNow;
         var accountId = Guid.CreateVersion7();
         var sessionId = Guid.CreateVersion7();
@@ -143,9 +214,9 @@ public sealed class EncryptedBackupTests
             plainSaid.Should().Contain("NOT encrypted");
             var plain = Directory.GetFiles(backups, "*.dump").Should().ContainSingle().Subject;
 
-            await Docker(["run", "--name", client, "--network", "none", "--mount", $"type=bind,source={privateKeys},target=/private", "--mount", $"type=bind,source={publicKeys},target=/public", "--entrypoint", "sh", Image, "-c",
-                "set -eu; export GNUPGHOME=/private; chmod 700 /private; gpg --batch --pinentry-mode loopback --passphrase '' --quick-generate-key 'Recovery rehearsal <recovery@example.invalid>' default default 1d >/dev/null 2>&1; gpg --batch --armor --export > /public/rehearsal.asc"]);
-            await Docker(["rm", client]);
+            // A throwaway key in a keyring of its own, made by the same gpg the owner's restore uses.
+            await Gpg(privateKeys, "--batch", "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", "Recovery rehearsal <recovery@example.invalid>", "default", "default", "1d");
+            await File.WriteAllTextAsync(Path.Combine(publicKeys, "rehearsal.asc"), await Gpg(privateKeys, "--batch", "--armor", "--export"));
             var stale = Path.Combine(backups, source + "-stale.dump.gpg");
             await File.WriteAllTextAsync(stale, "stale");
             File.SetLastWriteTimeUtc(stale, DateTime.UtcNow.AddDays(-20));
@@ -191,10 +262,29 @@ public sealed class EncryptedBackupTests
             unconfigured.Should().NotBe(0, "a copy that went nowhere must not report success");
             unconfiguredSaid.Should().Contain("FAILED");
             (await File.ReadAllBytesAsync(Path.Combine(offsite, Path.GetFileName(encryptedFile)))).Should().Equal(encryptedBytes);
-            await Create(connection, restored);
-            await Restore(encryptedFile, privateKeys, restored, connection, password);
+            // The workstation's copy, fetched as the owner's machine fetches it, and restored from there.
+            var copies = Path.Combine(folder, "copies");
+            var (pulled, pullSaid, pullError) = await Pull(root, backups, copies);
+            pulled.Should().Be(0, pullSaid + pullError);
+            Directory.GetFiles(copies).Select(Path.GetFileName).Should().BeEquivalentTo([Path.GetFileName(encryptedFile)], "only the encrypted dump leaves the server");
+            var copy = Path.Combine(copies, Path.GetFileName(encryptedFile));
+            (await File.ReadAllBytesAsync(copy)).Should().Equal(encryptedBytes);
+            var container = await TestServerContainer(connection);
+            var (restoredCode, restoreSaid, restoreError) = await RestoreScript(root, copy, restored, container, privateKeys);
+            restoredCode.Should().Be(0, restoreSaid + restoreError);
+            restoreSaid.Should().Contain("data-protection key(s), all equal to the dump");
             (await Fingerprint(connection, restored)).Should().Equal(original);
             (await Fingerprint(connection, source)).Should().Equal(original);
+
+            // Nothing replaces a restored copy but a whole one: a torn file over it leaves it as it was,
+            // and the corpus databases are refused before anything is decrypted.
+            var torn = Path.Combine(folder, "torn.dump.gpg");
+            await File.WriteAllBytesAsync(torn, encryptedBytes[..(encryptedBytes.Length / 2)]);
+            (await RestoreScript(root, torn, restored, container, privateKeys, "-Replace")).Code.Should().NotBe(0);
+            (await Fingerprint(connection, restored)).Should().Equal(original);
+            (await RestoreScript(root, torn, restored, container, privateKeys)).Error.Should().Contain("already exists");
+            (await RestoreScript(root, copy, "essenthos_core_seed", container, privateKeys)).Code.Should().NotBe(0);
+            (await Exists(connection, restored + "_restoring")).Should().BeFalse("a failed candidate is dropped");
             using (var services = Services(Connection(connection, restored)))
             {
                 services.GetRequiredService<IDataProtectionProvider>().CreateProtector("recovery-cookie").Unprotect(protectedCookie).Should().Be("external-callback-state");
@@ -229,22 +319,24 @@ public sealed class EncryptedBackupTests
                 (await Status(token)).Should().Be(401);
                 await server.StopAsync();
             }
-            await Create(connection, failed);
-            var broken = Path.Combine(backups, "broken.dump.gpg");
-            await File.WriteAllBytesAsync(broken, encryptedBytes[..(encryptedBytes.Length / 2)]);
-            await Assert.ThrowsAnyAsync<Exception>(() => Restore(broken, privateKeys, failed, connection, password));
+            var (brokenCode, _, brokenSaid) = await RestoreScript(root, torn, failed, container, privateKeys);
+            brokenCode.Should().NotBe(0);
+            brokenSaid.Should().Contain("Nothing was restored");
+            (await Exists(connection, failed)).Should().BeFalse();
+            (await Exists(connection, failed + "_restoring")).Should().BeFalse();
             (await Fingerprint(connection, source)).Should().Equal(original);
-            Console.WriteLine("Recovery proof: encrypted stream, all table fingerprints, keys, cookie/bearer sessions, expiration/revocation, revision sequence, migration, retention and failed-candidate preservation passed.");
+            Console.WriteLine("Recovery proof: pulled copy, encrypted stream through the restore script, all table fingerprints, keys, cookie/bearer sessions, expiration/revocation, revision sequence, migration, retention and failed-candidate preservation passed.");
         }
         finally
         {
             NpgsqlConnection.ClearAllPools();
-            foreach (var name in new[] { source, restored, failed })
+            foreach (var name in new[] { source, restored, failed, restored + "_restoring", failed + "_restoring" })
             {
                 await using var db = Context(connection, name);
                 await db.Database.EnsureDeletedAsync();
             }
-            await Docker(["rm", "-f", client], requireSuccess: false);
+            if (File.Exists(GpgProgram))
+                await Run([Path.Combine(Path.GetDirectoryName(GpgProgram)!, "gpgconf.exe"), "--homedir", privateKeys, "--kill", "all"], program: true);
             if (!Path.GetFullPath(folder).StartsWith(Path.GetTempPath(), StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Cleanup must remain inside the owned temporary directory.");
             Directory.Delete(folder, recursive: true);
@@ -252,9 +344,9 @@ public sealed class EncryptedBackupTests
     }
 
     private static async Task<(int Code, string Output, string Error)> Run(
-        IEnumerable<string> args, Dictionary<string, string>? environment = null)
+        IEnumerable<string> args, Dictionary<string, string>? environment = null, bool program = false)
     {
-        using var process = Process.Start(Info(args, environment))!;
+        using var process = Process.Start(program ? Program(args) : Info(args, environment))!;
         var output = process.StandardOutput.ReadToEndAsync();
         var error = process.StandardError.ReadToEndAsync();
         await Task.WhenAll(process.WaitForExitAsync(), output, error);
@@ -287,14 +379,6 @@ public sealed class EncryptedBackupTests
         return app;
     }
 
-    private static async Task Create(NpgsqlConnectionStringBuilder connection, string name)
-    {
-        await using var db = new NpgsqlConnection(Connection(connection, "postgres"));
-        await db.OpenAsync();
-        await using var command = new NpgsqlCommand($"CREATE DATABASE {name}", db);
-        await command.ExecuteNonQueryAsync();
-    }
-
     private static async Task<List<string>> Fingerprint(NpgsqlConnectionStringBuilder connection, string name)
     {
         await using var db = new NpgsqlConnection(Connection(connection, name));
@@ -315,17 +399,48 @@ public sealed class EncryptedBackupTests
         return result;
     }
 
-    private static async Task Restore(string file, string keys, string database, NpgsqlConnectionStringBuilder connection, Dictionary<string, string> password)
+    private static readonly string GpgProgram = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "GnuPG", "bin", "gpg.exe");
+
+    private static readonly string GitSh = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Git", "usr", "bin", "sh.exe");
+
+    private static async Task<string> Gpg(string home, params string[] args)
     {
-        using var decrypt = Process.Start(Info(["run", "--rm", "--network", "none", "--mount", $"type=bind,source={keys},target=/private", "--mount", $"type=bind,source={file},target=/encrypted,readonly", "--entrypoint", "sh", Image, "-c", "GNUPGHOME=/private gpg --batch --quiet --decrypt /encrypted"], password))!;
-        using var restore = Process.Start(Info(["run", "--rm", "-i", "--entrypoint", "pg_restore", "-e", "PGPASSWORD", Image, "--exit-on-error", "-h", "host.docker.internal", "-p", connection.Port.ToString(), "-U", connection.Username!, "-d", database], password, input: true))!;
-        var decryptError = decrypt.StandardError.ReadToEndAsync();
-        var restoreError = restore.StandardError.ReadToEndAsync();
-        var restoreOutput = restore.StandardOutput.ReadToEndAsync();
-        await decrypt.StandardOutput.BaseStream.CopyToAsync(restore.StandardInput.BaseStream);
-        restore.StandardInput.Close();
-        await Task.WhenAll(decrypt.WaitForExitAsync(), restore.WaitForExitAsync(), decryptError, restoreError, restoreOutput);
-        if (decrypt.ExitCode != 0 || restore.ExitCode != 0) throw new InvalidOperationException($"Recovery candidate refused: decrypt exit {decrypt.ExitCode}, restore exit {restore.ExitCode}.");
+        if (!File.Exists(GpgProgram)) throw new InvalidOperationException($"The rehearsal decrypts with the gpg the owner's restore uses, {GpgProgram}; install Gpg4win.");
+        var (code, output, error) = await Run([GpgProgram, "--homedir", home, .. args], program: true);
+        if (code != 0) throw new InvalidOperationException($"gpg exited {code}: {error}");
+        return output;
+    }
+
+    /// <summary>The pull script against a folder standing in for the server: each ssh command run by Git's sh.</summary>
+    private static async Task<(int Code, string Output, string Error)> Pull(string root, string server, string copies, params string[] extra)
+    {
+        var shim = Path.Combine(Path.GetDirectoryName(copies)!, "stand-in-ssh.sh");
+        await File.WriteAllTextAsync(shim, "while [ \"$1\" = -o ]; do shift 2; done\nshift\nPATH=/usr/bin:$PATH exec sh -c \"$1\"\n");
+        static string Quoted(string value) => "'" + value.Replace("'", "''") + "'";
+        var command = $"& {Quoted(Path.Combine(root, "scripts", "pull-account-backups.ps1"))} -Server 'deploy@stand-in' -Remote {Quoted(Posix(server))} " +
+                      $"-Folder {Quoted(copies)} -Ssh {Quoted(GitSh)},{Quoted(shim.Replace('\\', '/'))} {string.Join(' ', extra)}; exit $LASTEXITCODE";
+        return await Run(["pwsh", "-NoProfile", "-NonInteractive", "-Command", command], program: true);
+    }
+
+    private static Task<(int Code, string Output, string Error)> RestoreScript(string root, string file, string into, string container, string keys, params string[] extra) =>
+        Run(["pwsh", "-NoProfile", "-NonInteractive", "-File", Path.Combine(root, "scripts", "restore-account-backup.ps1"), "-File", file, "-Into", into, "-Container", container, "-GnuPGHome", keys, .. extra], program: true);
+
+    /// <summary>A Windows path as Git's sh names it: C:\Users becomes /c/Users.</summary>
+    private static string Posix(string path) => "/" + char.ToLowerInvariant(path[0]) + path[2..].Replace('\\', '/');
+
+    private static async Task<string> TestServerContainer(NpgsqlConnectionStringBuilder connection)
+    {
+        var names = (await Docker(["ps", "--filter", $"publish={connection.Port}", "--format", "{{.Names}}"])).Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return names.Should().ContainSingle($"one container publishes the test database's port {connection.Port}").Subject;
+    }
+
+    private static async Task<bool> Exists(NpgsqlConnectionStringBuilder connection, string name)
+    {
+        await using var db = new NpgsqlConnection(Connection(connection, "postgres"));
+        await db.OpenAsync();
+        await using var command = new NpgsqlCommand("SELECT count(*) FROM pg_database WHERE datname = @name", db);
+        command.Parameters.AddWithValue("name", name);
+        return (long)(await command.ExecuteScalarAsync())! > 0;
     }
 
     private static ProcessStartInfo Info(IEnumerable<string> args, Dictionary<string, string>? environment = null, bool input = false)
@@ -333,6 +448,15 @@ public sealed class EncryptedBackupTests
         var info = new ProcessStartInfo("docker") { RedirectStandardOutput = true, RedirectStandardError = true, RedirectStandardInput = input, UseShellExecute = false, CreateNoWindow = true };
         foreach (var arg in args) info.ArgumentList.Add(arg);
         if (environment is not null) foreach (var (key, value) in environment) info.Environment[key] = value;
+        return info;
+    }
+
+    /// <summary>The program the first argument names, rather than docker.</summary>
+    private static ProcessStartInfo Program(IEnumerable<string> args)
+    {
+        var list = args.ToList();
+        var info = new ProcessStartInfo(list[0]) { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true };
+        foreach (var arg in list.Skip(1)) info.ArgumentList.Add(arg);
         return info;
     }
 
