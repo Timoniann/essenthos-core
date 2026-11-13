@@ -62,45 +62,57 @@ internal sealed record TextDefinition(
     public string? Script { get; init; }
 
 
+    /// <summary>Refuses a text that may not be written to the corpus, saying why: <see cref="Refusal"/>.</summary>
     public void Validate()
     {
         Require(Slug, nameof(Slug));
         Require(Name, nameof(Name));
         Require(Language, nameof(Language));
-
-        Require(SourceUrl, nameof(SourceUrl),
-            "where the text was obtained, so a reader can go back to what was loaded");
-        Require(Licence, nameof(Licence),
-            "the licence, checked before loading — an SPDX identifier where one applies, otherwise the " +
-            "name the licensor uses");
-
-        if (Redistribution == Redistribution.Unknown)
+        if (Refusal(Slug, SourceUrl, Licence, Redistribution) is { } why)
         {
-            throw new InvalidOperationException(
-                $"The text \"{Slug}\" does not say whether it may be served publicly. Set Redistribution to " +
-                $"what the licence actually permits; Unknown is not public domain, it is nobody having looked.");
+            throw new InvalidOperationException(why);
+        }
+    }
+
+    /// <summary>
+    /// Why a text may not be written to the corpus, or null: it does not say where it was obtained or under what licence, or
+    /// its licence does not let it be served. The build holds every text's declaration to the same, made before or after.
+    /// </summary>
+    public static string? Refusal(string slug, string? sourceUrl, string? licence, Redistribution redistribution)
+    {
+        if (string.IsNullOrWhiteSpace(sourceUrl))
+        {
+            return $"The text \"{slug}\" cannot be loaded without {nameof(SourceUrl)} — where the text was obtained, so a reader can go "
+                   + "back to what was loaded.";
+        }
+
+        if (string.IsNullOrWhiteSpace(licence))
+        {
+            return $"The text \"{slug}\" cannot be loaded without {nameof(Licence)} — the licence, checked before loading — an SPDX "
+                   + "identifier where one applies, otherwise the name the licensor uses.";
+        }
+
+        if (redistribution == Redistribution.Unknown)
+        {
+            return $"The text \"{slug}\" does not say whether it may be served publicly. Set Redistribution to what the licence actually "
+                   + "permits; Unknown is not public domain, it is nobody having looked.";
         }
 
         // Every text in the corpus can be served and travels in every corpus release, so the only
         // place a text that may not be redistributed can be kept safe is outside it.
-        if (Redistribution == Redistribution.Prohibited)
-        {
-            throw new InvalidOperationException(
-                $"The text \"{Slug}\" may not be redistributed, so it is never written to the corpus: whatever the " +
-                "corpus holds can be served and is copied into every release. Read it from its file in the " +
-                "process that needs it, as the EVIDENTIA benchmark does with --source-from-files.");
-        }
+        return redistribution == Redistribution.Prohibited
+            ? $"The text \"{slug}\" may not be redistributed, so it is never written to the corpus: whatever the corpus holds can be "
+              + "served and is copied into every release. Read it from its file in the process that needs it, as the EVIDENTIA "
+              + "benchmark does with --source-from-files."
+            : null;
     }
 
-    private static void Require(string value, string name, string? what = null)
+    private static void Require(string value, string name)
     {
-        if (!string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(value))
         {
-            return;
+            throw new InvalidOperationException($"A text cannot be loaded without {name}.");
         }
-
-        var explanation = what is null ? string.Empty : $" — {what}";
-        throw new InvalidOperationException($"A text cannot be loaded without {name}{explanation}.");
     }
 }
 

@@ -13,6 +13,7 @@
 # tables: the serving tables it feeds (@records: every table records-load writes); scope: what build --apply replaces when it moves.
 product	maker	producer	inputs	tables	scope
 build/products	hand	by hand	-	-	none
+build/licences	hand	by hand (the licence of every source the build reads)	-	-	none
 build/served/*	build	build	Essenthos/**	-	none
 build/report-*	build	build	-	-	none
 texts/strong-terms	hand	by hand	-	-	none
