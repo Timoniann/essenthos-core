@@ -295,13 +295,15 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         return rows;
     }
 
-    /// <summary>The per-text indexes: Strong and forms of the texts named (every text when null), spellings across all texts when asked.</summary>
+    /// <summary>The per-text indexes: Strong, renderings and forms of the texts named (every text when null), spellings across all texts when asked.</summary>
     public async Task Indexes(IReadOnlyCollection<string>? texts, bool forms, bool spellings, CancellationToken cancellationToken)
     {
         var context = new IndexContext(store);
         var named = texts ?? [.. context.Texts.Keys.Order(StringComparer.Ordinal)];
         named = [.. named.Where(context.Texts.ContainsKey)];
+        var renderings = Timed("load", "indexes: renderings", async () => (await IndexLoad.WordRenderings(connectionString, store, named, cancellationToken)).Rows);
         await Timed("load", "indexes: strong", async () => (await IndexLoad.Strong(connectionString, store, named, cancellationToken)).Rows);
+        await renderings;
         if (forms)
         {
             await Timed("load", "indexes: forms", async () => (await IndexLoad.Forms(connectionString, store, named, cancellationToken)).Rows);

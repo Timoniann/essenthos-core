@@ -1,4 +1,5 @@
 using System.Globalization;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Indexes;
@@ -11,8 +12,13 @@ internal static class IndexProducts
     public const string Forms = "forms";
     public const string Spellings = "spellings";
 
+    /// <summary>What stands behind each spelling of a text in each original: <c>renderings</c> and <c>rendered</c>, made together.</summary>
+    public const string Renderings = "renderings";
+
+    public const string Rendered = "rendered";
+
     /// <summary>The indexes every text has, in the order they are made.</summary>
-    public static readonly string[] All = [Strong, Occurrences, Forms, Spellings];
+    public static readonly string[] All = [Strong, Occurrences, Forms, Spellings, Renderings];
 
     public static string Of(string text, string index) => $"texts/{text}/index/{index}";
 }
@@ -129,4 +135,67 @@ internal static class IndexText
     public static string? Number(double? value) => value?.ToString("R", CultureInfo.InvariantCulture);
 
     public static double? Number(string? text) => text is null ? null : double.Parse(text, NumberStyles.Float, CultureInfo.InvariantCulture);
+}
+
+/// <summary>
+/// One original standing behind one spelling of a text in one edition: the row of <c>texts/&lt;SLUG&gt;/index/renderings</c>.
+/// The original is its Strong number, or its lemma where its word carries none. Every renders or equals link between a word
+/// of the text printing the spelling and a word of the edition carrying the original counts.
+/// </summary>
+/// <param name="Form">The spelling, as <c>normalised</c> holds it.</param>
+/// <param name="Witness">The edition.</param>
+/// <param name="Number">The Strong number the edition's words carry, their own or, where they state none, the least beside them.</param>
+/// <param name="Lemma">Where there is no number, the lemma that names the original; beside a number, the lemma of the word at its first place.</param>
+/// <param name="Occurrences">The words of the text printing the spelling that it stands behind.</param>
+/// <param name="Links">The links those are counted from.</param>
+/// <param name="Methods">Each method and how many of those links it made, <c>method count</c> pairs by method.</param>
+/// <param name="Shared">
+/// The links of these that hold another spelling of the text one request may gather with this one, <c>id method</c> pairs by
+/// id: a count over several spellings counts such a link once. Null where there are none.
+/// </param>
+/// <param name="Places">
+/// Every place it stands at in the shared frame, in order, each once: <see cref="RenderingPlaces"/> writes them, with the word
+/// printed there.
+/// </param>
+internal sealed record RenderingRow(string Form, string Witness, string? Number, string? Lemma, int Occurrences, int Links, string Methods, string? Shared, string Places)
+{
+    public static readonly ProductSchema<RenderingRow> Schema = new ProductSchema<RenderingRow>()
+        .Text("form", r => r.Form)
+        .Text("witness", r => r.Witness)
+        .OptionalText("number", r => r.Number)
+        .OptionalText("lemma", r => r.Lemma)
+        .Integer("occurrences", r => r.Occurrences)
+        .Integer("links", r => r.Links)
+        .Text("methods", r => r.Methods)
+        .OptionalText("shared", r => r.Shared)
+        .Text("places", r => r.Places)
+        .Reads(row => new RenderingRow(row.Text(0), row.Text(1), row.TextOrNull(2), row.TextOrNull(3), row.Int32(4), row.Int32(5), row.Text(6),
+            row.TextOrNull(7), row.Text(8)));
+}
+
+/// <summary>
+/// One spelling of a text as one edition is counted against it: the row of <c>texts/&lt;SLUG&gt;/index/rendered</c>, written
+/// for every edition the text is linked to whose books print the spelling or that a link of it reaches.
+/// </summary>
+/// <param name="Rank">The edition's place among the originals the text is linked to (<see cref="Corpus.LinkedOriginals.Ordered"/>), from 0.</param>
+/// <param name="Occurrences">The words printing the spelling in the books the edition holds.</param>
+/// <param name="Reached">How many of those words some link joins to a word of the edition.</param>
+/// <param name="Links">The links those are counted from.</param>
+/// <param name="Methods">As <see cref="RenderingRow.Methods"/>.</param>
+/// <param name="Shared">As <see cref="RenderingRow.Shared"/>.</param>
+/// <param name="Sources">Who states those links: the numbers the product's <c>source</c> notes give them, ascending.</param>
+internal sealed record RenderedRow(string Form, string Witness, int Rank, int Occurrences, int Reached, int Links, string Methods, string? Shared, string Sources)
+{
+    public static readonly ProductSchema<RenderedRow> Schema = new ProductSchema<RenderedRow>()
+        .Text("form", r => r.Form)
+        .Text("witness", r => r.Witness)
+        .Integer("rank", r => r.Rank)
+        .Integer("occurrences", r => r.Occurrences)
+        .Integer("reached", r => r.Reached)
+        .Integer("links", r => r.Links)
+        .Text("methods", r => r.Methods)
+        .OptionalText("shared", r => r.Shared)
+        .Text("sources", r => r.Sources)
+        .Reads(row => new RenderedRow(row.Text(0), row.Text(1), row.Int32(2), row.Int32(3), row.Int32(4), row.Int32(5), row.Text(6),
+            row.TextOrNull(7), row.Text(8)));
 }

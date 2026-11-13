@@ -39,7 +39,7 @@ internal static partial class ForgeVerbs
         return Task.FromResult(0);
     }
 
-    /// <summary>Puts the indexes into the database the Forge is pointed at (never live): <c>indexes-load [--texts A,B] [--only strong,forms,spellings]</c>.</summary>
+    /// <summary>Puts the indexes into the database the Forge is pointed at (never live): <c>indexes-load [--texts A,B] [--only strong,forms,renderings,spellings]</c>.</summary>
     private static async Task<int> IndexesLoadVerb(ForgeRun forge, string[] args)
     {
         var database = new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database;
@@ -61,6 +61,11 @@ internal static partial class ForgeVerbs
         if (only is null || only.Contains(IndexProducts.Forms))
         {
             Console.WriteLine(await IndexLoad.Forms(forge.DatabaseConnection, store, texts, CancellationToken.None));
+        }
+
+        if (only is null || only.Contains(IndexProducts.Renderings))
+        {
+            Console.WriteLine(await IndexLoad.WordRenderings(forge.DatabaseConnection, store, texts, CancellationToken.None));
         }
 
         if (only is null || only.Contains(IndexProducts.Spellings))

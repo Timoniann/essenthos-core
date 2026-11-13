@@ -76,6 +76,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var pairs = new SortedSet<string>(StringComparer.Ordinal);
         var strong = new SortedSet<string>(StringComparer.Ordinal);
         var forms = new SortedSet<string>(StringComparer.Ordinal);
+        var renderings = new SortedSet<string>(StringComparer.Ordinal);
         var frames = new SortedSet<string>(StringComparer.Ordinal);
         var verses = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
@@ -112,6 +113,9 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 case "texts/{text}/index/forms":
                     forms.Add(bound["text"]);
                     break;
+                case "texts/{text}/index/renderings" or "texts/{text}/index/rendered":
+                    renderings.Add(bound["text"]);
+                    break;
                 case "texts/{text}/index/spellings":
                     spellings = true;
                     break;
@@ -129,7 +133,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         }
 
         var serving = new ServingBuild(connectionString, store, services, logger);
-        await serving.Timed("apply", $"transaction: {pairs.Count} pairs, records {(records ? "yes" : "no")}, strong {strong.Count}, forms {forms.Count}", async () =>
+        await serving.Timed("apply", $"transaction: {pairs.Count} pairs, records {(records ? "yes" : "no")}, strong {strong.Count}, forms {forms.Count}, renderings {renderings.Count}", async () =>
         {
             await using var connection = new NpgsqlConnection(connectionString);
             await connection.OpenAsync(cancellationToken);
@@ -198,6 +202,12 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             {
                 rows += (await IndexLoad.Forms(connection, store, forms, cancellationToken)).Rows;
                 Done($"forms of {forms.Count} texts");
+            }
+
+            if (renderings.Count > 0)
+            {
+                rows += (await IndexLoad.WordRenderings(connection, store, renderings, cancellationToken)).Rows;
+                Done($"renderings of {renderings.Count} texts");
             }
 
             await transaction.CommitAsync(cancellationToken);

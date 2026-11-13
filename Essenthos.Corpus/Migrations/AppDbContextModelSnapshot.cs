@@ -6125,6 +6125,178 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRendering", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Form")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("form");
+
+                    b.Property<string>("Lemma")
+                        .HasColumnType("text")
+                        .HasColumnName("lemma");
+
+                    b.Property<int>("Links")
+                        .HasColumnType("integer")
+                        .HasColumnName("links");
+
+                    b.Property<string>("Methods")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("methods");
+
+                    b.Property<int>("Occurrences")
+                        .HasColumnType("integer")
+                        .HasColumnName("occurrences");
+
+                    b.Property<int>("Places")
+                        .HasColumnType("integer")
+                        .HasColumnName("places");
+
+                    b.Property<string>("Samples")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("samples");
+
+                    b.Property<string>("Shared")
+                        .HasColumnType("text")
+                        .HasColumnName("shared");
+
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("WitnessId")
+                        .HasColumnType("integer")
+                        .HasColumnName("witness_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_word_rendering");
+
+                    b.HasIndex("WitnessId")
+                        .HasDatabaseName("ix_word_rendering_witness_id");
+
+                    b.HasIndex("TextId", "Form", "WitnessId")
+                        .HasDatabaseName("ix_word_rendering_text_id_form_witness_id");
+
+                    b.ToTable("word_rendering", null, t =>
+                        {
+                            t.HasComment("One original standing behind one spelling of a text in one edition: the words it stands behind, the links, their methods and the first places. Counted at build from the links (texts/<SLUG>/index/renderings); it asserts nothing the links do not.");
+
+                            t.HasCheckConstraint("ck_word_rendering_counts", "occurrences > 0 AND links > 0 AND places > 0 AND places <= occurrences");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderingPlaces", b =>
+                {
+                    b.Property<long>("RenderingId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("rendering_id");
+
+                    b.Property<string>("Places")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("places");
+
+                    b.HasKey("RenderingId")
+                        .HasName("pk_word_rendering_place");
+
+                    b.ToTable("word_rendering_place", null, t =>
+                        {
+                            t.HasComment("Every place of a word_rendering row that has more than its samples, read when a reader asks for more.");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderingSource", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer")
+                        .HasColumnName("number");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("TextId", "Number")
+                        .HasName("pk_word_rendering_source");
+
+                    b.ToTable("word_rendering_source", null, t =>
+                        {
+                            t.HasComment("The sources a text's word_rendering_witness rows name by number.");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderingWitness", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<string>("Form")
+                        .HasColumnType("text")
+                        .HasColumnName("form");
+
+                    b.Property<int>("WitnessId")
+                        .HasColumnType("integer")
+                        .HasColumnName("witness_id");
+
+                    b.Property<int>("Links")
+                        .HasColumnType("integer")
+                        .HasColumnName("links");
+
+                    b.Property<string>("Methods")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("methods");
+
+                    b.Property<int>("Occurrences")
+                        .HasColumnType("integer")
+                        .HasColumnName("occurrences");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("integer")
+                        .HasColumnName("rank");
+
+                    b.Property<int>("Reached")
+                        .HasColumnType("integer")
+                        .HasColumnName("reached");
+
+                    b.Property<string>("Shared")
+                        .HasColumnType("text")
+                        .HasColumnName("shared");
+
+                    b.PrimitiveCollection<int[]>("Sources")
+                        .IsRequired()
+                        .HasColumnType("integer[]")
+                        .HasColumnName("sources");
+
+                    b.HasKey("TextId", "Form", "WitnessId")
+                        .HasName("pk_word_rendering_witness");
+
+                    b.HasIndex("WitnessId")
+                        .HasDatabaseName("ix_word_rendering_witness_witness_id");
+
+                    b.ToTable("word_rendering_witness", null, t =>
+                        {
+                            t.HasComment("One spelling of a text as one edition is counted against it: its words in the books the edition holds, how many some link reaches, the links, their methods and sources. Counted at build beside word_rendering (texts/<SLUG>/index/rendered).");
+
+                            t.HasCheckConstraint("ck_word_rendering_witness_counts", "occurrences >= 0 AND reached >= 0 AND links >= 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordStrong", b =>
                 {
                     b.Property<long>("Id")
@@ -7617,6 +7789,72 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Word");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRendering", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_rendering_text_text_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Witness")
+                        .WithMany()
+                        .HasForeignKey("WitnessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_rendering_text_witness_id");
+
+                    b.Navigation("Text");
+
+                    b.Navigation("Witness");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderingPlaces", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.WordRendering", "Rendering")
+                        .WithOne("AllPlaces")
+                        .HasForeignKey("Essenthos.Core.Database.Entities.WordRenderingPlaces", "RenderingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_rendering_place_word_rendering_rendering_id");
+
+                    b.Navigation("Rendering");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderingSource", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_rendering_source_text_text_id");
+
+                    b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderingWitness", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_rendering_witness_text_text_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Witness")
+                        .WithMany()
+                        .HasForeignKey("WitnessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_rendering_witness_text_witness_id");
+
+                    b.Navigation("Text");
+
+                    b.Navigation("Witness");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordStrong", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Word", "Word")
@@ -7785,6 +8023,11 @@ namespace Essenthos.Core.Migrations
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordGroup", b =>
                 {
                     b.Navigation("Words");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRendering", b =>
+                {
+                    b.Navigation("AllPlaces");
                 });
 #pragma warning restore 612, 618
         }

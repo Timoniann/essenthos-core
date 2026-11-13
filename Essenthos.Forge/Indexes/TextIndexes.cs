@@ -43,6 +43,8 @@ internal sealed class IndexContext
             .Select(slug => Declared(store, slug))
             .ToDictionary(text => text.Slug, StringComparer.Ordinal);
         Pairs = [.. MappingProducts.Pairs(store).Where(pair => store.Exists(MappingProducts.Of(pair, MappingProducts.Final)))];
+        _carried = new Lazy<IReadOnlyDictionary<long, string>>(Carried);
+        _ids = new Lazy<WordIdTable>(() => WordIdTable.For(store));
         _projection = new Lazy<Names.NamesProjection?>(() =>
             store.Exists(Names.NameProducts.Rules) && store.Exists(Names.NameProducts.Bases) ? new Names.NamesProjection(store) : null);
     }
@@ -113,6 +115,78 @@ internal sealed class IndexContext
 
             return names;
         })).Value;
+
+    private readonly ConcurrentDictionary<string, Lazy<IReadOnlyDictionary<string, (string? Number, string? Lemma)>>> _originals = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, Lazy<int[]>> _books = new(StringComparer.Ordinal);
+    private readonly Lazy<IReadOnlyDictionary<long, string>> _carried;
+    private readonly Lazy<WordIdTable> _ids;
+
+    /// <summary>
+    /// What names each word of an edition as an original: its Strong number where the words product may serve it, else the
+    /// least number <c>word_strong</c> carries beside it, and its lemma; a word with neither is not listed.
+    /// </summary>
+    public IReadOnlyDictionary<string, (string? Number, string? Lemma)> OriginalsOf(string slug) =>
+        _originals.GetOrAdd(slug, s => new Lazy<IReadOnlyDictionary<string, (string?, string?)>>(() =>
+        {
+            var carried = _carried.Value;
+            var ids = carried.Count == 0 ? null : _ids.Value;
+            var originals = new Dictionary<string, (string?, string?)>(StringComparer.Ordinal);
+            using var reader = Store.Open(TextWord.ProductOf(s), TextWord.Schema(s));
+            var served = StrongTerms.MayServe(reader.Header);
+            foreach (var word in reader.Rows())
+            {
+                var number = served ? word.Strong : null;
+                if (number is null && ids is not null && carried.TryGetValue(ids.Of(word.Key), out var beside))
+                {
+                    number = beside;
+                }
+
+                if (number is not null || word.Lemma is not null)
+                {
+                    originals[word.Key.Own] = (number, word.Lemma);
+                }
+            }
+
+            return originals;
+        })).Value;
+
+    /// <summary>The canonical ordinals of the books a text holds.</summary>
+    public int[] BooksOf(string slug) =>
+        _books.GetOrAdd(slug, s => new Lazy<int[]>(() =>
+        {
+            using var reader = Store.Open(TextBook.ProductOf(s), TextBook.Schema);
+            return [.. reader.Rows().Select(b => b.Book).Distinct()];
+        })).Value;
+
+    /// <summary>The least number <c>tables/word_strong</c> carries beside each word, by word id; empty where the store has none.</summary>
+    private IReadOnlyDictionary<long, string> Carried()
+    {
+        var carried = new Dictionary<long, string>();
+        var product = Build.TableProducts.Product("word_strong");
+        if (!Store.Exists(product))
+        {
+            return carried;
+        }
+
+        using var reader = Store.Open(product);
+        var names = reader.Columns.Select(c => c.Name).ToList();
+        var (word, number) = (names.IndexOf("word_id"), names.IndexOf("number"));
+        foreach (var row in reader.Rows())
+        {
+            if (row[word] is not { } id || row[number] is not { } value)
+            {
+                continue;
+            }
+
+            var key = long.Parse(id, System.Globalization.CultureInfo.InvariantCulture);
+            if (!carried.TryGetValue(key, out var least) || string.CompareOrdinal(value, least) < 0)
+            {
+                carried[key] = value;
+            }
+        }
+
+        return carried;
+    }
 
     /// <summary>Whether the product is missing, an input moved, or another version of the indexes made it.</summary>
     public bool NeedsBuild(string product, IReadOnlyList<ProductInput> inputs)
@@ -192,6 +266,7 @@ internal static class TextIndexes
                     IndexProducts.Occurrences => Occurrences(context, text, force),
                     IndexProducts.Forms => Forms(context, text, force),
                     IndexProducts.Spellings => Spellings(context, text, force),
+                    IndexProducts.Renderings => RenderingIndex.Make(context, text, force),
                     _ => throw new ArgumentOutOfRangeException(nameof(indexes), index, null),
                 };
                 if (outcome is not null)

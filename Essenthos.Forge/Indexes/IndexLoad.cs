@@ -415,6 +415,166 @@ internal static class IndexLoad
     }
 
     /// <summary>
+    /// <c>word_rendering</c>, <c>word_rendering_place</c>, <c>word_rendering_witness</c> and <c>word_rendering_source</c> from
+    /// the renderings indexes (<see cref="RenderingIndex"/>): each text's rows replaced. A rendering's first places are its
+    /// samples; the whole list goes beside it only where there are more.
+    /// </summary>
+    public static async Task<Outcome> WordRenderings(string connectionString, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        return await WordRenderings(connection, store, texts, cancellationToken, own: true);
+    }
+
+    /// <summary>The same on a connection whose transaction the caller holds and commits.</summary>
+    public static Task<Outcome> WordRenderings(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken) =>
+        WordRenderings(connection, store, texts, cancellationToken, own: false);
+
+    private static async Task<Outcome> WordRenderings(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken, bool own)
+    {
+        var clock = Stopwatch.StartNew();
+        var ids = await Texts(connection, cancellationToken);
+        var named = texts.Where(ids.ContainsKey).ToList();
+        var loaded = named
+            .Where(slug => store.Exists(IndexProducts.Of(slug, IndexProducts.Renderings)) && store.Exists(IndexProducts.Of(slug, IndexProducts.Rendered)))
+            .ToList();
+
+        await using var transaction = own ? await connection.BeginTransactionAsync(cancellationToken) : null;
+        long next;
+        await using (var delete = new NpgsqlCommand(
+                         """
+                         DELETE FROM word_rendering_place p USING word_rendering r WHERE p.rendering_id = r.id AND r.text_id = ANY(@texts);
+                         DELETE FROM word_rendering WHERE text_id = ANY(@texts);
+                         DELETE FROM word_rendering_witness WHERE text_id = ANY(@texts);
+                         DELETE FROM word_rendering_source WHERE text_id = ANY(@texts);
+                         SELECT coalesce(max(id), 0) FROM word_rendering;
+                         """, connection, transaction))
+        {
+            delete.Parameters.AddWithValue("texts", named.Select(slug => ids[slug].Id).ToArray());
+            next = (long)(await delete.ExecuteScalarAsync(cancellationToken))!;
+        }
+
+        long renderings = 0, places = 0, witnesses = 0, sources = 0;
+        var lists = new List<(long Id, string Places)>();
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY word_rendering (id, text_id, form, witness_id, strong_number, lemma, occurrences, links, methods, shared, places, samples) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
+        {
+            foreach (var slug in loaded)
+            {
+                using var reader = store.Open(IndexProducts.Of(slug, IndexProducts.Renderings), RenderingRow.Schema);
+                foreach (var row in reader.Rows())
+                {
+                    var id = ++next;
+                    var count = RenderingPlaces.Count(row.Places);
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(id, NpgsqlDbType.Bigint, cancellationToken);
+                    await writer.WriteAsync(ids[slug].Id, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Form, NpgsqlDbType.Text, cancellationToken);
+                    await writer.WriteAsync(ids[row.Witness].Id, NpgsqlDbType.Integer, cancellationToken);
+                    await Optional(writer, row.Number, cancellationToken);
+                    await Optional(writer, row.Lemma, cancellationToken);
+                    await writer.WriteAsync(row.Occurrences, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Links, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Methods, NpgsqlDbType.Text, cancellationToken);
+                    await Optional(writer, row.Shared, cancellationToken);
+                    await writer.WriteAsync(count, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(RenderingPlaces.First(row.Places, RenderingPlaces.Samples), NpgsqlDbType.Text, cancellationToken);
+                    renderings++;
+                    if (count > RenderingPlaces.Samples)
+                    {
+                        lists.Add((id, row.Places));
+                    }
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY word_rendering_place (rendering_id, places) FROM STDIN (FORMAT BINARY)", cancellationToken))
+        {
+            foreach (var (id, list) in lists)
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(id, NpgsqlDbType.Bigint, cancellationToken);
+                await writer.WriteAsync(list, NpgsqlDbType.Text, cancellationToken);
+                places++;
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY word_rendering_witness (text_id, form, witness_id, rank, occurrences, reached, links, methods, shared, sources) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
+        {
+            foreach (var slug in loaded)
+            {
+                using var reader = store.Open(IndexProducts.Of(slug, IndexProducts.Rendered), RenderedRow.Schema);
+                foreach (var row in reader.Rows())
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(ids[slug].Id, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Form, NpgsqlDbType.Text, cancellationToken);
+                    await writer.WriteAsync(ids[row.Witness].Id, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Rank, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Occurrences, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Reached, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Links, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Methods, NpgsqlDbType.Text, cancellationToken);
+                    await Optional(writer, row.Shared, cancellationToken);
+                    await writer.WriteAsync(
+                        row.Sources.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(n => int.Parse(n, System.Globalization.CultureInfo.InvariantCulture)).ToArray(),
+                        NpgsqlDbType.Array | NpgsqlDbType.Integer, cancellationToken);
+                    witnesses++;
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY word_rendering_source (text_id, number, source) FROM STDIN (FORMAT BINARY)", cancellationToken))
+        {
+            foreach (var slug in loaded)
+            {
+                using var reader = store.Open(IndexProducts.Of(slug, IndexProducts.Rendered), RenderedRow.Schema);
+                foreach (var (number, source) in RenderingIndex.Sources(reader.Header).OrderBy(s => s.Key))
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(ids[slug].Id, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(number, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(source, NpgsqlDbType.Text, cancellationToken);
+                    sources++;
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        if (transaction is not null)
+        {
+            await transaction.CommitAsync(cancellationToken);
+        }
+
+        return new Outcome("word_rendering*", renderings + places + witnesses + sources, loaded.Count, clock.Elapsed,
+            $"{renderings} renderings, {places} with more places than their samples, {witnesses} by edition, {sources} sources");
+    }
+
+    private static async Task Optional(NpgsqlBinaryImporter writer, string? value, CancellationToken cancellationToken)
+    {
+        if (value is null)
+        {
+            await writer.WriteNullAsync(cancellationToken);
+        }
+        else
+        {
+            await writer.WriteAsync(value, NpgsqlDbType.Text, cancellationToken);
+        }
+    }
+
+    /// <summary>
     /// <c>entity_rendering</c> and <c>entity_search_spelling</c> from the spellings indexes of every text, counted by
     /// <see cref="EntityRenderingLoader.Count"/> as the load counts them: both tables are replaced whole, since a spelling
     /// is chosen across texts. The names the texts print put back over a pass's are counted and not written.

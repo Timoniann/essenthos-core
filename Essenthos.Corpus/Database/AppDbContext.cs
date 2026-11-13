@@ -353,6 +353,14 @@ public class AppDbContext : DbContext
 
     public DbSet<TextForm> TextForms { get; set; } = null!;
 
+    public DbSet<WordRendering> WordRenderings { get; set; } = null!;
+
+    public DbSet<WordRenderingPlaces> WordRenderingPlaces { get; set; } = null!;
+
+    public DbSet<WordRenderingWitness> WordRenderingWitnesses { get; set; } = null!;
+
+    public DbSet<WordRenderingSource> WordRenderingSources { get; set; } = null!;
+
     /// <summary>Each text's side of the parallel view for one canonical chapter, written ahead of time.</summary>
     public DbSet<Pane> Panes { get; set; } = null!;
 
@@ -1671,6 +1679,52 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint("ck_strong_reach_method_links", "links > 0");
                 t.HasComment("The links a strong_reach row counts, by the method that made them.");
             });
+        });
+
+        modelBuilder.Entity<WordRendering>(entity =>
+        {
+            entity.HasOne(r => r.Text).WithMany().HasForeignKey(r => r.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(r => r.Witness).WithMany().HasForeignKey(r => r.WitnessId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(r => r.AllPlaces).WithOne(p => p.Rendering).HasForeignKey<WordRenderingPlaces>(p => p.RenderingId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.Property(r => r.Id).ValueGeneratedNever();
+            entity.HasIndex(r => new { r.TextId, r.Form, r.WitnessId });
+            entity.ToTable("word_rendering", t =>
+            {
+                t.HasCheckConstraint("ck_word_rendering_counts", "occurrences > 0 AND links > 0 AND places > 0 AND places <= occurrences");
+                t.HasComment(
+                    "One original standing behind one spelling of a text in one edition: the words it stands behind, the links, "
+                    + "their methods and the first places. Counted at build from the links (texts/<SLUG>/index/renderings); "
+                    + "it asserts nothing the links do not.");
+            });
+        });
+
+        modelBuilder.Entity<WordRenderingPlaces>(entity =>
+        {
+            entity.HasKey(p => p.RenderingId);
+            entity.ToTable("word_rendering_place", t => t.HasComment(
+                "Every place of a word_rendering row that has more than its samples, read when a reader asks for more."));
+        });
+
+        modelBuilder.Entity<WordRenderingWitness>(entity =>
+        {
+            entity.HasOne(r => r.Text).WithMany().HasForeignKey(r => r.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(r => r.Witness).WithMany().HasForeignKey(r => r.WitnessId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("word_rendering_witness", t =>
+            {
+                t.HasCheckConstraint("ck_word_rendering_witness_counts", "occurrences >= 0 AND reached >= 0 AND links >= 0");
+                t.HasComment(
+                    "One spelling of a text as one edition is counted against it: its words in the books the edition holds, "
+                    + "how many some link reaches, the links, their methods and sources. Counted at build beside word_rendering "
+                    + "(texts/<SLUG>/index/rendered).");
+            });
+        });
+
+        modelBuilder.Entity<WordRenderingSource>(entity =>
+        {
+            entity.HasOne(r => r.Text).WithMany().HasForeignKey(r => r.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("word_rendering_source", t => t.HasComment(
+                "The sources a text's word_rendering_witness rows name by number."));
         });
 
         modelBuilder.Entity<StrongBook>(entity =>
