@@ -1,0 +1,19 @@
+# producer   by hand: two gazetteer records of a town written twice, folded on the owner's word to put the Ramahs right (PRB-1425): the Ramah of NEH 11:33 into Ramah of Benjamin, the Ramah of 2KI 8:29 and 2CH 22:6 into Ramoth-gilead; applied by forge owner-rows
+# by         Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13 to check the Ramahs again and put them right (PRB-1425)
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1425	names/BHSA	remove	16.11:33.2	ramah-7	\N	\N	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
+PRB-1425	names/BHSA	add	16.11:33.2	ramah	\N	name	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
+PRB-1425	names/GEEZ81	remove	16.11:33.2	ramah-7	\N	\N	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
+PRB-1425	names/GEEZ81	add	16.11:33.2	ramah	\N	name	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
+PRB-1425	names/VULGCLEM	remove	16.11:33.2	ramah-7	\N	\N	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
+PRB-1425	names/VULGCLEM	add	16.11:33.2	ramah	\N	name	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
+PRB-1425	external/openbible/references	refile	16.11:33	ramah	ramah-7	\N	\N	\N	The Ramah of NEH 11:33 is Ramah of Benjamin: ramah-7 folded into ramah
+PRB-1425	names/BHSA	remove	12.8:29.18	ramah-5	\N	\N	\N	\N	12.8:29.18 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
+PRB-1425	names/BHSA	add	12.8:29.18	ramothgilead	\N	name	\N	\N	12.8:29.18 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
+PRB-1425	names/BHSA	remove	14.22:6.14	ramah-5	\N	\N	\N	\N	14.22:6.14 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
+PRB-1425	names/BHSA	add	14.22:6.14	ramothgilead	\N	name	\N	\N	14.22:6.14 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
+PRB-1425	names/GRCBRENT	remove	14.22:6.3	ramah-5	\N	\N	\N	\N	14.22:6.3 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
+PRB-1425	names/GRCBRENT	add	14.22:6.3	ramothgilead	\N	name	\N	\N	14.22:6.3 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
+PRB-1425	external/openbible/references	refile	12.8:29	ramothgilead	ramah-5	\N	\N	\N	The Ramah of 2KI 8:29 and 2CH 22:6 is Ramoth-gilead: ramah-5 folded into ramothgilead
+PRB-1425	external/openbible/references	refile	14.22:6	ramothgilead	ramah-5	\N	\N	\N	The Ramah of 2KI 8:29 and 2CH 22:6 is Ramoth-gilead: ramah-5 folded into ramothgilead

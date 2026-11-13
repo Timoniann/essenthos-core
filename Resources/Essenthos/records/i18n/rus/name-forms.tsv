@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	genitive	Аарона	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -8646,15 +8646,9 @@ ramah-3	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet
 ramah-4	genitive	Рамы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
 ramah-4	locative	Раме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
 ramah-4	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
-ramah-5	genitive	Рамы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0119.jsonl#db3a30ec54bc2d4c
-ramah-5	locative	Раме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0119.jsonl#db3a30ec54bc2d4c
-ramah-5	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0119.jsonl#db3a30ec54bc2d4c
 ramah-6	genitive	Рамы южной	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
 ramah-6	locative	Раме южной	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
 ramah-6	nominative	Рама южная	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
-ramah-7	genitive	Рамы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e
-ramah-7	locative	Раме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e
-ramah-7	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e
 ramah-8	genitive	Рамы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd
 ramah-8	locative	Раме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd
 ramah-8	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd

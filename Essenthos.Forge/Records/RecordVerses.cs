@@ -42,7 +42,7 @@ internal static class RecordVerses
 
     public const string Producer = "forge records-verses";
 
-    public const string Version = "3";
+    public const string Version = "4";
 
     public const string VersionNote = "verses-version";
 
@@ -183,7 +183,7 @@ internal static class RecordVerses
                 var id = ids[row.Record];
                 var record = records[id];
                 claimed.Add(new Annotations.Claimed(
-                    word, EnumSpelling.ToLinkMethod(row.Method), row.Confidence, row.Source, row.Carried ? "through another word" : null,
+                    word, EnumSpelling.ToLinkMethod(row.Method), row.Confidence, row.Source, row.Carried ? $"through {row.Through}" : null,
                     record.Kind, record.Slug, record.Slug)
                 {
                     EntityId = id,

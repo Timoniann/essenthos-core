@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # The names a record bears, in its order (n). Their meanings are in i18n/eng/names.
 slug	n	label	kind	hebrew	hebrew_transliterated	greek	greek_transliterated	hebrew_strong	greek_strong	aspect_of	by
 aaron	1	Aaron	proper name	אַהֲרֹ֤ן	aharon	Ααρων	Aarōn	H175	\N	\N	\N
@@ -5364,16 +5364,12 @@ ramah-4	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-4	5	Ramathaim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramah-4	6	Ramathaimzophim	name	\N	\N	\N	\N	H7436	\N	\N	\N
 ramah-4	7	Ramathaim Zophim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
-ramah-5	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
-ramah-5	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-6	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-6	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-6	5	Ramath	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramah-6	6	Ramath of the south	name	\N	\N	\N	\N	H7418	\N	\N	\N
 ramah-6	7	Ramoth	name	\N	\N	\N	\N	H7216	\N	\N	\N
 ramah-6	8	Ramoth-negev	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
-ramah-7	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
-ramah-7	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-8	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
 ramah-8	3	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 ramah-9	2	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
@@ -5393,6 +5389,8 @@ ramoth-3	1	Ramoth	name	\N	\N	\N	\N	H7216	\N	\N	\N
 ramothgilead	1	Ramoth-gilead	name	\N	\N	\N	\N	H7433	\N	\N	\N
 ramothgilead	2	Ramoth Gilead	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 ramothgilead	3	Ramoth in Gilead	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
+ramothgilead	4	Rama	name	\N	\N	Ῥαμᾶ	\N	\N	G4471	\N	\N
+ramothgilead	5	Ramah	name	\N	\N	\N	\N	H7414	\N	\N	\N
 raphah	1	Raphah	proper name	רָפָה	rafah	Ραφα	Rapha	H7498	\N	\N	\N
 raphah-2	1	Raphah	proper name	רָפָה	rafah	Ραφαια	Raphaia	H7498	\N	\N	\N
 raphah-2	2	Rephaiah	proper name	רְפָיָה	rəfayah	Ραφαια	Raphaia	H7509	\N	\N	\N

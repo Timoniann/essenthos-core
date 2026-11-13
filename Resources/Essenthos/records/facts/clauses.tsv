@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # What the text says a record is, clause by clause: the line, and the source of every relationship.
 subject	ordinal	relation	target	ref	citation	witness	original	method	confidence	by	run	note
 aaron	1	brother-of	moses	2.4:14	\N	\N	\N	model-reading	0.97	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe	\N
@@ -5583,9 +5583,9 @@ ram-2	2	father-of	maaz	13.2:27	\N	\N	\N	model-reading	0.85	read from Scripture b
 ram-2	3	father-of	jamin-2	13.2:27	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0427.jsonl#83b42bcb39473578	\N
 ram-3	1	ancestor-of	elihu-5	18.32:2	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0427.jsonl#0c2d7929cd9e803d	\N
 ramah	1	near	bethel	7.4:5	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#8606b76df75ac204	\N
+ramah	2	near	gittaim	16.11:33	\N	\N	\N	model-reading	0.3	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e	\N
 ramah-4	1	near	naioth	9.19:19	\N	\N	\N	model-reading	0.4	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d	\N
 ramah-6	1	city-in	negev	6.19:8	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#90279fc505e51a4b	\N
-ramah-7	1	near	gittaim	16.11:33	\N	\N	\N	model-reading	0.3	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#629567e0fd25267e	\N
 ramah-8	1	mountain-in	gibeah	9.22:6	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd	\N
 ramathites	1	from-place	ramah-9	13.27:27	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#9cb94a9e37146130	\N
 rameses	1	region-of	egypt	1.47:11	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b7f115b86084bd42	\N

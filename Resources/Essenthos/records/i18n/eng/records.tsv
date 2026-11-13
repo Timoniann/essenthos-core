@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # A record's line under the name, its notes and what the place is today, in English.
 slug	line	notes	modern
 aaron	brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)	\N	\N
@@ -3301,15 +3301,13 @@ rakkon	\N	\N	Tell er Reqqeit
 ram	son of Hezron in the lineage of King David (RUT 4:19)	\N	\N
 ram-2	firstborn son of Jerahmeel (1CH 2:25)	\N	\N
 ram-3	ancestor of Barachel (JOB 32:2)	\N	\N
-ramah	Al Ram	\N	Al Ram
+ramah	a town of Benjamin between Gibeah and Bethel	\N	Al Ram
 ramah-2	Ramyah	\N	Ramyah
 ramah-3	Khirbet Zeitun er Rameh	\N	Khirbet Zeitun er Rameh
-ramah-4	Al Ram	\N	Al Ram
-ramah-5	another name for Ramoth-gilead (Tall er Rumeith)	\N	\N
+ramah-4	Samuel's town, Ramathaim-zophim in the hill country of Ephraim	Where the town stood is not known for certain: er-Ram, Ramallah, Beit Rima, Nebi Samwil and Rantis have all been proposed.	\N
 ramah-6	Tel Ira	\N	Tel Ira
-ramah-7	Rameh	\N	Rameh
 ramah-8	within 1 km of Gibeah (Tel el Ful)	\N	within 1 km of Gibeah (Tel el Ful)
-ramah-9	the home of Shimei the Ramathite, over David's vineyards (1CH 27:27)	\N	\N
+ramah-9	the home of Shimei the Ramathite, keeper of David's vineyards	\N	\N
 ramathites	patronymic of H7414, as Strong's Dictionary derives it	\N	\N
 ramathmizpeh	\N	\N	Jel‘ad
 rameses	\N	First mention: GEN 47:11	Qantir (or possibly Tell el Daba)

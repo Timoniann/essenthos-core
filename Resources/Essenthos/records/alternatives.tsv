@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # Who else a record may be. The reason, in English, is in i18n/eng/alternatives.
 slug	n	alternative	describes	back	by
 abimelech	1	\N	one king of Gerar whose own name was Abimelech, who dealt with Abraham (GEN 20-21) and again with Isaac (GEN 26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
@@ -89,8 +89,12 @@ migdol-3	2	migdol-2	\N	t	Essenthos, places of one name read against their verses
 oholibamah-wife-of-esau	1	judith	\N	f	Essenthos, on the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own and that an identification the text does not settle is shown with every reading, applied to Esau's wives of Genesis 36:2-3 and to Anah by claude-opus-5-5, 2026-10-07
 phicol	1	\N	one man named Phicol, who commanded the army of Gerar under Abraham's Abimelech and again under Isaac's (GEN 21:22; 26:26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
 ramah	1	ramah-4	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+ramah	2	ramah-9	\N	t	Essenthos, the Ramahs read against their verses by claude-opus-5-5 on 2026-11-13, on the project owner's instruction to put them right (PRB-1425)
 ramah-4	1	ramah	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
+ramah-4	2	ramah-9	\N	t	Essenthos, the Ramahs read against their verses by claude-opus-5-5 on 2026-11-13, on the project owner's instruction to put them right (PRB-1425)
 ramah-6	1	baalathbeer	\N	f	Essenthos, Ramath of the south and Baalath-beer of JOS 19:8 read against their verse by claude-opus-5-5 on the project owner's word of 2026-11-12
+ramah-9	1	ramah	\N	f	Essenthos, the Ramahs read against their verses by claude-opus-5-5 on 2026-11-13, on the project owner's instruction to put them right (PRB-1425)
+ramah-9	2	ramah-4	\N	f	Essenthos, the Ramahs read against their verses by claude-opus-5-5 on 2026-11-13, on the project owner's instruction to put them right (PRB-1425)
 redsea	1	redsea-2	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 redsea	2	redsea-3	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 redsea-2	1	redsea	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01

@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # The ids the datasets give our records. The only place a dataset's id of a record lives; a dataset never makes a record.
 slug	dataset	external_id	relation	note
 aaron	bibledata	person:Aaron_1	same-as	\N
@@ -3409,14 +3409,13 @@ ram	bibledata	person:Ram_1	same-as	\N
 ram-2	bibledata	person:Ram_2	same-as	\N
 ram-3	bibledata	person:Ram_3	same-as	\N
 ramah	openbible	a6d57ed	same-as	\N
+ramah	openbible	a75be6f	folded	the id of ramah-7, folded into this record
 ramah-2	openbible	a664d03	same-as	\N
 ramah-3	openbible	a010244	same-as	\N
 ramah-4	openbible	a54ef72	folded	the id of ramathaimzophim, folded into this record
 ramah-4	openbible	a90f6e1	same-as	\N
-ramah-5	openbible	ad27541	same-as	\N
 ramah-6	openbible	aaa4c6e	same-as	\N
 ramah-6	openbible	ab049cf	folded	the id of ramoth-2, folded into this record
-ramah-7	openbible	a75be6f	same-as	\N
 ramah-8	openbible	a15bdfd	same-as	\N
 ramah-9	openbible	ad42cdc	same-as	\N
 ramathlehi	openbible	a601121	same-as	\N
@@ -3427,6 +3426,7 @@ ramiah	bibledata	person:Ramiah_1	same-as	\N
 ramoth	openbible	ada2a0b	same-as	\N
 ramoth-3	openbible	a95147f	same-as	\N
 ramothgilead	openbible	a2fe63c	same-as	\N
+ramothgilead	openbible	ad27541	folded	the id of ramah-5, folded into this record
 raphah	bibledata	person:Raphah_1	same-as	\N
 raphah-2	bibledata	person:Raphah_2	same-as	\N
 raphu	bibledata	person:Raphu_1	same-as	\N

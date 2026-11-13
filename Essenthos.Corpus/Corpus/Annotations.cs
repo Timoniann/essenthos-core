@@ -37,8 +37,11 @@ namespace Essenthos.Core.Corpus;
 /// anything from the other, so the word names both and the reader is shown both, the first answer
 /// first. That holds for three pairs — a title and a record <see cref="TitleBearer"/> joins to it, a
 /// person and a people, and a town and its people where a person ruled both on the word (<em>the
-/// father of Gibeon</em>) — and for nothing else: two men, or a man and a town, on one word are two
-/// answers to one question, and the second is the one the first outranked.
+/// father of Gibeon</em>) — and for one group: things one ruling names on the word together, as
+/// <em>the pillars</em> of 1 Kings 7:15-22 are Jachin and Boaz and <em>the altars</em> of Numbers
+/// 3:31 are both altars, each shown in turn. Nothing else: two men, or a man and a town, on one word
+/// are two answers to one question, and the second is the one the first outranked, even where one
+/// ruling names both.
 /// </para>
 /// </summary>
 internal static class Annotations
@@ -334,16 +337,30 @@ internal static class Annotations
 
     /// <summary>
     /// Whether one word names both records without either answering for the other: a title and a
-    /// record joined to it as its bearer, a person and a people, or a place and a people a person
-    /// ruled on the word together.
+    /// record joined to it as its bearer, a person and a people, a place and a people a person
+    /// ruled on the word together, or things one ruling names together (<see cref="Together"/>).
     /// </summary>
     private static bool Beside(Claimed one, Claimed other, IReadOnlySet<(int Title, int Bearer)> bearers) =>
         (one.Role is not null && other.Role is not null && one.Role != other.Role)
         || (one.Kind, other.Kind) is (EntityKind.Person, EntityKind.People) or (EntityKind.People, EntityKind.Person)
         || ((one.Kind, other.Kind) is (EntityKind.Place, EntityKind.People) or (EntityKind.People, EntityKind.Place)
             && one.Standing == Ruled && other.Standing == Ruled)
+        || Together(one, other)
         || (one.Kind == EntityKind.Title && bearers.Contains((one.EntityId, other.EntityId)))
         || (other.Kind == EntityKind.Title && bearers.Contains((other.EntityId, one.EntityId)));
+
+    /// <summary>
+    /// Whether two things are members of one group a person ruled on the word: both ruled, by the
+    /// same decision (its source), read of the same word (the same note: none for a word read
+    /// itself, the same <em>through</em> word for a carried one). A plural that names a pair or a set
+    /// names each of them; a translation word linked to two words, each ruled on its own, does not
+    /// make their records a group, and neither do two men, whoever ruled them.
+    /// </summary>
+    internal static bool Together(Claimed one, Claimed other) =>
+        one.Kind == EntityKind.Object && other.Kind == EntityKind.Object
+        && one.Standing == Ruled && other.Standing == Ruled
+        && string.Equals(one.Source, other.Source, StringComparison.Ordinal)
+        && string.Equals(one.Note, other.Note, StringComparison.Ordinal);
 
     private static EntityRefResponse Show(Claimed claimed) =>
         new(EnumSpelling.Of(claimed.Kind), claimed.Slug, claimed.Name)

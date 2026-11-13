@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 slug	n	reason
 abimelech	1	Both accounts name him alike, Abimelech king of Gerar with Phicol the commander of his army, and neither says a new king has come. Against it, Isaac's dealings with him fall after Abraham's death (GEN 26:18), most of a lifetime after Abraham's, and the same two names recurring is as well explained by titles as by one very long reign.
 abimelech	2	A king named after his father would give the text as it stands, the Abimelech of Genesis 26 another man than the Abimelech of Genesis 20-21. Nothing in the text tells a name repeated in a line of kings from a title.
@@ -88,8 +88,12 @@ migdol-3	2	Jeremiah's Migdol in Egypt (JER 44:1; 46:14) may be this one; the tex
 oholibamah-wife-of-esau	1	Genesis 26:34 names Esau's wife Judith the daughter of Beeri the Hittite; Aholibamah may be the same woman under another name, though her father and her people are named otherwise.
 phicol	1	The text gives the same name and the same office in both accounts and does not say they are two men; if Abimelech was one long-reigning king, one commander serving him throughout is possible.
 ramah	1	Samuel's Ramah (1SA 1:19; 7:17) may be this town; the text does not say.
+ramah	2	Shimei the Ramathite (1CH 27:27) may have come from this town; the text does not say which Ramah.
 ramah-4	1	The Ramah of Benjamin (JOS 18:25) may be Samuel's town; the text does not say.
+ramah-4	2	Shimei the Ramathite (1CH 27:27) may have come from this town; the text does not say which Ramah.
 ramah-6	1	Baalath-beer, named beside it in JOS 19:8, may be this same town; the text does not say.
+ramah-9	1	Shimei is called the Ramathite (1CH 27:27) without his Ramah being named: it may be Ramah of Benjamin.
+ramah-9	2	Shimei is called the Ramathite (1CH 27:27) without his Ramah being named: it may be Samuel's Ramah.
 redsea	1	The sea Israel crossed (EXO 15:4) may be this one; the text calls both the Red Sea.
 redsea	2	The Red Sea by Ezion-geber in Edom (1KI 9:26) may be this one; the text calls both the Red Sea.
 redsea-2	1	The Red Sea of the locusts and of the camp after Elim (EXO 10:19; NUM 33:10) may be this sea; the text calls both the Red Sea.

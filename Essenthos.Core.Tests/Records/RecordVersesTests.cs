@@ -200,12 +200,36 @@ public sealed class RecordVersesTests : IDisposable
             + "keeps its own address whatever it was carried from");
     }
 
+    [Fact]
+    public void ThingsOneRulingNamesTogetherAreEachListedWhereAWordNamesThemAll()
+    {
+        const string decision = "the owner's decision";
+        var store = Store(
+            Name("11.7:21.5", "jachin-pillar", "thing", "manual", source: decision),
+            Name("11.7:21.5", "boaz-pillar", "thing", "manual", source: decision),
+            Name("11.7:22.5", "jachin-pillar", "thing", "manual", source: decision),
+            Name("11.7:22.5", "boaz-pillar", "thing", "manual", source: "another decision"),
+            Name("11.7:23.1", "korah", "name", "manual", source: decision),
+            Name("11.7:23.1", "dathan", "name", "manual", source: decision));
+        WriteNames(store, "KJV",
+            Name("11.7:15.4", "jachin-pillar", "thing", "manual", source: decision, text: "KJV", through: "BHSA 11.7:15.6"),
+            Name("11.7:15.4", "boaz-pillar", "thing", "manual", source: decision, text: "KJV", through: "BHSA 11.7:15.6"),
+            Name("11.7:16.3", "jachin-pillar", "thing", "manual", source: decision, text: "KJV", through: "BHSA 11.7:16.10"),
+            Name("11.7:16.3", "boaz-pillar", "thing", "manual", source: decision, text: "KJV", through: "BHSA 11.7:17.14"));
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Select(r => (r[0], r[1])).Should().Equal(
+            [("boaz-pillar", "11.7:15"), ("boaz-pillar", "11.7:21"), ("jachin-pillar", "11.7:15"), ("jachin-pillar", "11.7:21")],
+            "both pillars are listed where one decision names them on one word, read there or carried through one word; two "
+            + "decisions, a word carrying each through another word, and two men are nobody");
+    }
+
     private ProductStore Store(params ProjectedName[] names)
     {
         var store = new ProductStore(_root);
         Write(store, "records/records",
             Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
-            Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
+            Record("jachin-pillar", "object"), Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
             Record("levi", "person"), Record("levites", "people", "Levites"), Record("mizraim", "person"), Record("moses", "person"),
             Record("absalom", "person"), Record("nathan", "person"), Record("yhvh", "person"));
         Write(store, "records/facts/titles", ["anointed", "david", "1.3:1", null, "test"]);

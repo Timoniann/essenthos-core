@@ -5,7 +5,7 @@
 # edited     by hand from here on: a row is a decision that this word names this record
 # filled     2026-11-04 (TSK-1448): 4,167 words that named nobody where DRA, which renders them, named a record another reference text names; the DRA overrides that carried them are gone
 # cleaned    2026-11-04 (TSK-1448, the owner's answer to Q3): 23 words carrying two persons or places from carries that disagree, each read against its verse: 22 keep one, 0 name neither (0 given the record the word does name), 0 name both, 1 unclear and left as they were; 22 rows taken out; the 22 rows kept were read too and are manual 0.98 now
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 own	record	role	method	confidence	source	note
 1.2:4.14	yhvh	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: dominus, domini, domino, printed in 5732 of its 5974 verses, 79 % of the verses printing it being its own
 1.2:5.17	yhvh	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: dominus, domini, domino, printed in 5732 of its 5974 verses, 79 % of the verses printing it being its own
@@ -24422,7 +24422,7 @@ own	record	role	method	confidence	source	note
 16.11:31.10	bethel	name	rule-based	0.9881892564923515	Essenthos, read from the verses that name it	the word its verses share in this text: bethel, printed in 56 of its 64 verses, 97 % of the verses printing it being its own
 16.11:32.1	anathoth-3	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: anathoth, printed in 13 of its 13 verses, 93 % of the verses printing it being its own
 16.11:32.2	nob	name	rule-based	0.9702	Essenthos, read from the verses that name it	frozen 2026-11: through DRA 16.11:32.3, linked by aligner
-16.11:33.2	ramah-7	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: rama, printed in 1 of its 1 verses, 50 % of the verses printing it being its own
+16.11:33.2	ramah	name	manual	\N	Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13 to check the Ramahs again and put them right (PRB-1425)	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
 16.11:33.3	gittaim	name	strong-number	0.76	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	frozen 2026-11: through BHSA 16.11:33.3, linked by rule-based
 16.11:34.1	hadid	name	strong-number	0.8	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	2026-11: the word DRA 16.11:34.1 renders, which BHSA 16.11:34.1 names; VULGCLEM named nobody there
 16.11:34.2	zeboim	name	strong-number	0.76	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	frozen 2026-11: through BHSA 16.11:34.2, linked by rule-based
