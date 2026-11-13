@@ -187,6 +187,34 @@ public sealed class PictureCopyTests : IAsyncLifetime
         Directory.Exists(_cache).Should().BeFalse();
     }
 
+    /// <summary>
+    /// A landscape photograph in a tall frame on a phone is drawn wider than a thousand pixels: it gets a copy that wide,
+    /// and only a picture no wider than the copy would be is its own copy.
+    /// </summary>
+    [Theory]
+    [InlineData(1200, 1280)]
+    [InlineData(1300, 1600)]
+    [InlineData(1700, 1920)]
+    public async Task AWidePictureIsCopiedWiderThanAThousandPixelsAndIsItsOwnCopyAtItsWidth(int asked, int copied)
+    {
+        var wide = Picture(1700, 300);
+        Write("commons/ark.jpg", wide);
+        var digest = Digest(wide);
+
+        var response = await _http.GetAsync($"/v1/images/commons/ark.jpg?v={digest}&w={asked}");
+
+        if (copied < 1700)
+        {
+            response.Content.Headers.ContentType!.MediaType.Should().Be("image/webp");
+            using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
+            copy.Width.Should().Be(copied);
+        }
+        else
+        {
+            (await response.Content.ReadAsByteArrayAsync()).Should().Equal(wide, "a picture no wider than the copy is its own copy");
+        }
+    }
+
     [Fact]
     public async Task ACopyIsNeverCopiedAgain()
     {

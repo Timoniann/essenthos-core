@@ -32,12 +32,15 @@ public sealed class PictureSizeTests : IDisposable
     [InlineData(129, 160)]
     [InlineData(200, 256)]
     [InlineData(1024, 1024)]
+    [InlineData(1025, 1280)]
+    [InlineData(1500, 1600)]
+    [InlineData(1920, 1920)]
     public void AWidthIsServedByTheNarrowestCopyAsWideAsIt(int asked, int served) =>
         ImageEndpoints.SizedWidth(asked).Should().Be(served);
 
     [Fact]
     public void AWidthPastTheWidestCopyIsThePictureItself() =>
-        ImageEndpoints.SizedWidth(1025).Should().BeNull();
+        ImageEndpoints.SizedWidth(1921).Should().BeNull();
 
     [Fact]
     public void ACopyIsNamedByThePictureItWasMadeFrom() =>
