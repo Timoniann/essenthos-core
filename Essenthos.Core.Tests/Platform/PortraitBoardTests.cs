@@ -64,7 +64,6 @@ public sealed class PortraitBoardTests : IDisposable
         });
         _db.EntityImages.Add(Image(david.Id, "public", "commons/david.jpg"));
         await _db.SaveChangesAsync();
-        await AsTheBuildLeavesIt();
 
         File.WriteAllText(Path.Combine(_paths.Generated, "david.webp"), "a portrait");
         File.WriteAllText(Path.Combine(_paths.Generated, "glory.webp"), "light");
@@ -325,7 +324,7 @@ public sealed class PortraitBoardTests : IDisposable
     public async Task EveryPicturedPersonAndPlaceIsListedWithTheOwnersChoicesAboutTheirPictures()
     {
         var david = Person("david", verses: 60);
-        var hebron = new Entity { Kind = EntityKind.Place, Slug = "hebron", Name = "Hebron", SourceId = "test:hebron", Source = "test" };
+        var hebron = new Entity { Kind = EntityKind.Place, Slug = "hebron", Name = "Hebron" };
         _db.Entities.Add(hebron);
         Person("nobody", verses: 1);
         await _db.SaveChangesAsync();
@@ -349,7 +348,7 @@ public sealed class PortraitBoardTests : IDisposable
     [Fact]
     public async Task EachPictureSaysWhereTheSitesFileShowsIt()
     {
-        var hebron = new Entity { Kind = EntityKind.Place, Slug = "hebron", Name = "Hebron", SourceId = "test:hebron", Source = "test" };
+        var hebron = new Entity { Kind = EntityKind.Place, Slug = "hebron", Name = "Hebron" };
         _db.Entities.Add(hebron);
         await _db.SaveChangesAsync();
         _db.EntityImages.Add(Image(hebron.Id, "public", "openbible/hebron.jpg"));
@@ -388,8 +387,6 @@ public sealed class PortraitBoardTests : IDisposable
             Slug = slug,
             Name = slug,
             Sex = sex,
-            SourceId = sourceId ?? $"test:{slug}",
-            Source = "test",
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();
@@ -415,13 +412,6 @@ public sealed class PortraitBoardTests : IDisposable
 
         return entity;
     }
-
-    /// <summary>
-    /// The record's dataset columns gone, as a database built from the record files has them: what a dataset
-    /// calls a record is read from <see cref="RecordExternalId"/> alone.
-    /// </summary>
-    private Task AsTheBuildLeavesIt() => _db.Database.ExecuteSqlRawAsync(
-        "ALTER TABLE entity DROP COLUMN source, DROP COLUMN source_id, DROP COLUMN open_bible_id");
 
     private static EntityImage Image(int entity, string kind, string file) => new()
     {

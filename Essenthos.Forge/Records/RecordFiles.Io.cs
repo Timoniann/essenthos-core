@@ -17,43 +17,12 @@ internal static partial class RecordFiles
     /// <summary>The databases the load refuses to write: live, and the shared snapshot everyone exports from.</summary>
     private static readonly string[] Untouchable = ["essenthos_core", "essenthos_core_rework_src"];
 
-    /// <summary>
-    /// What a database of today's schema shows of a record a dataset supplied and we have read for ourselves
-    /// (<see cref="OursOnlyRecords"/>): written into the record's own columns, so the file says what the
-    /// reader sees and the dataset's values go to its external records.
-    /// </summary>
-    public sealed record OwnValues(string? Sex, string? Tribe, string? Line);
-
-    /// <summary>Whether the database was filled by this loader rather than by the old load.</summary>
-    public static async Task<bool> Loaded(string connection, CancellationToken cancellationToken)
-    {
-        await using var db = new NpgsqlConnection(connection);
-        await db.OpenAsync(cancellationToken);
-        return await Loaded(db, cancellationToken);
-    }
-
     /// <summary>Writes every file from the database, and says how many rows each got.</summary>
     public static async Task<List<(string Product, long Rows)>> Export(
-        string connection, ProductStore store, IReadOnlyDictionary<string, OwnValues> oursOnly, CancellationToken cancellationToken)
+        string connection, ProductStore store, CancellationToken cancellationToken)
     {
         await using var db = new NpgsqlConnection(connection);
         await db.OpenAsync(cancellationToken);
-        var loaded = await Loaded(db, cancellationToken);
-        await using (var create = new NpgsqlCommand("CREATE TEMP TABLE ours_only (slug text PRIMARY KEY, sex text, tribe text, line text)", db))
-        {
-            await create.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await using (var import = await db.BeginBinaryImportAsync("COPY ours_only (slug, sex, tribe, line) FROM STDIN (FORMAT BINARY)", cancellationToken))
-        {
-            foreach (var (slug, own) in oursOnly)
-            {
-                await import.WriteRowAsync(cancellationToken, slug, (object?)own.Sex ?? DBNull.Value, (object?)own.Tribe ?? DBNull.Value, (object?)own.Line ?? DBNull.Value);
-            }
-
-            await import.CompleteAsync(cancellationToken);
-        }
-
         var database = db.Database;
         var written = new List<(string, long)>();
         foreach (var file in All)
@@ -61,7 +30,7 @@ internal static partial class RecordFiles
             var schema = file.Schema();
             List<string?[]> rows = file.Listed is { } listed
                 ? [.. listed()]
-                : await Rows(db, file, loaded ? file.ExportLoaded ?? file.Export : file.Export, cancellationToken);
+                : await Rows(db, file, file.Export, cancellationToken);
             using var writer = store.Create(file.Product, file.Kind, schema, ProductHeader.DescribeProducer(Producer), [],
                 header =>
                 {
@@ -275,15 +244,6 @@ internal static partial class RecordFiles
         }
 
         return counts;
-    }
-
-    /// <summary>Whether the database was filled by this loader: the dataset columns of a record are gone.</summary>
-    private static async Task<bool> Loaded(NpgsqlConnection db, CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'entity' AND column_name = 'source')",
-            db);
-        return (bool)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private static async Task<long> Scalar(NpgsqlConnection db, NpgsqlTransaction transaction, string sql, CancellationToken cancellationToken)

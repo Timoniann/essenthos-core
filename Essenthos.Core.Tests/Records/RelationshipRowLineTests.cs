@@ -113,7 +113,7 @@ public sealed class RelationshipRowLineTests : IDisposable
     {
         var entity = new Entity
         {
-            Kind = kind, Slug = slug, Name = char.ToUpperInvariant(slug[0]) + slug[1..], SourceId = slug, Source = "a test",
+            Kind = kind, Slug = slug, Name = char.ToUpperInvariant(slug[0]) + slug[1..],
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();

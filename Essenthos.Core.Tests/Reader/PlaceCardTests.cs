@@ -75,7 +75,7 @@ public sealed class PlaceCardTests : IDisposable
     [Fact]
     public async Task AnAnswerFromASourceThatScoresNothingHasNoConfidenceAndSaysWhoseItsPointIs()
     {
-        var place = new Entity { Kind = EntityKind.Place, Slug = "wilderness", Name = "Wilderness", SourceId = "test:w", Source = "test" };
+        var place = new Entity { Kind = EntityKind.Place, Slug = "wilderness", Name = "Wilderness" };
         _db.Entities.Add(place);
         await _db.SaveChangesAsync();
         _db.PlaceCandidates.Add(new PlaceCandidate

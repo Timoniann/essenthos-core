@@ -85,8 +85,6 @@ public sealed class EventPlaceTests : IDisposable
             Kind = EntityKind.Person,
             Slug = "canaan",
             Name = "Canaan",
-            SourceId = "test:canaan",
-            Source = "test",
         });
         await _db.SaveChangesAsync();
 
@@ -168,8 +166,6 @@ public sealed class EventPlaceTests : IDisposable
             Kind = EntityKind.Place,
             Slug = slug,
             Name = name,
-            SourceId = $"test:{slug}",
-            Source = "test",
         };
         _db.Entities.Add(place);
         return place;

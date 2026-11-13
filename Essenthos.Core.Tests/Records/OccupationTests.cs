@@ -56,7 +56,7 @@ public sealed class OccupationTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM occupation; DELETE FROM merged_record; DELETE FROM entity; DELETE FROM link; DELETE FROM provenance; DELETE FROM strong_rendering; DELETE FROM text");
         foreach (var (slug, name, sex) in new[] { ("luke", "Luke", "male"), ("lydia", "Lydia", "female"), ("other", "Luke", "male"), ("saul-2", "Paul", "male") })
         {
-            var entity = new Entity { Slug = slug, Name = name, Sex = sex, Kind = EntityKind.Person, Source = "test", SourceId = "test:" + slug };
+            var entity = new Entity { Slug = slug, Name = name, Sex = sex, Kind = EntityKind.Person };
             _db.Entities.Add(entity);
             _db.SaveChanges();
             _db.EntityNameForms.Add(new EntityNameForm { EntityId = entity.Id, Language = "rus", GrammaticalCase = "nominative",

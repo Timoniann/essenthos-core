@@ -166,10 +166,7 @@ public sealed class RegionOutlineTests : IDisposable
                 Kind = EntityKind.Place,
                 Slug = slug,
                 Name = slug,
-                OpenBibleId = $"a-{slug}",
-                SourceId = $"test:{slug}",
-                Source = "test",
-            });
+            }.WithOpenBibleId($"a-{slug}"));
         }
 
         await _db.SaveChangesAsync();

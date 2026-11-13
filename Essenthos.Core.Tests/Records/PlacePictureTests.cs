@@ -129,7 +129,7 @@ public sealed class PlacePictureTests : IDisposable
 
     private Entity Entity(EntityKind kind, string slug)
     {
-        var entity = new Entity { Kind = kind, Slug = slug, Name = slug, SourceId = $"test:{slug}", Source = "test" };
+        var entity = new Entity { Kind = kind, Slug = slug, Name = slug };
         _db.Entities.Add(entity);
         return entity;
     }

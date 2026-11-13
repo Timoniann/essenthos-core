@@ -1,10 +1,7 @@
 using Essenthos.Core.Build;
 using Essenthos.Core.Configuration;
-using Essenthos.Core.Corpus;
-using Essenthos.Core.Database;
 using Essenthos.Core.Products;
 using Essenthos.Core.Records;
-using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Essenthos.Core.Verbs;
@@ -28,25 +25,12 @@ internal static partial class ForgeVerbs
             return 1;
         }
 
-        var oursOnly = new Dictionary<string, RecordFiles.OwnValues>(StringComparer.Ordinal);
-        if (!await RecordFiles.Loaded(forge.DatabaseConnection, CancellationToken.None))
-        {
-            using var scope = forge.Scope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            var supplied = await db.Entities.Where(e => e.Source.StartsWith("BibleData")).Select(e => e.Slug).ToListAsync();
-            foreach (var (slug, own) in await OursOnlyRecords.Among(db, supplied, CancellationToken.None))
-            {
-                oursOnly[slug] = new RecordFiles.OwnValues(own.Sex, own.Tribe, own.Line);
-            }
-        }
-
         var store = new ProductStore(resources);
-        foreach (var (product, rows) in await RecordFiles.Export(forge.DatabaseConnection, store, oursOnly, CancellationToken.None))
+        foreach (var (product, rows) in await RecordFiles.Export(forge.DatabaseConnection, store, CancellationToken.None))
         {
             Console.WriteLine($"{rows,9}  {product}");
         }
 
-        Console.WriteLine($"{oursOnly.Count} records a dataset supplied written as the reader sees them.");
         return 0;
     }
 

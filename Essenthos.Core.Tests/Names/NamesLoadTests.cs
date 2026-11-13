@@ -46,7 +46,7 @@ public sealed class NamesLoadTests : IDisposable
         Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 11, ["יכניה", "ישראל"]));
         foreach (var slug in new[] { "eliakim-2", "jehoiachin", "israelites" })
         {
-            _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test" });
+            _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug });
         }
 
         await _db.SaveChangesAsync();

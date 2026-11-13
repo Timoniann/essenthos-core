@@ -83,6 +83,53 @@ public sealed class ParallelPairingTests : IDisposable
     }
 
     /// <summary>
+    /// Several verses of one text at one canonical address are read whole and in the edition's order: Brenton's Exodus
+    /// 37:19 and 38:19 tie on everything but their chapter, and Revelation 13:1 is written before 12:18 in its own chapter
+    /// but after it in the book. Words, own verses, notes and the reference all keep that order.
+    /// </summary>
+    [Fact]
+    public async Task VersesOfOneTextAtOneAddressAreReadWholeInTheEditionsOrder()
+    {
+        var text = Corpus.Add(_db, "BRENTON", TextKind.Translation, "eng",
+            (38, 19, ["and", "he", "made"]),
+            (37, 19, ["three", "cups"]),
+            (13, 1, ["And", "I", "saw"]),
+            (12, 18, ["And", "he", "stood"]));
+        _db.SaveChanges();
+
+        _db.VerseAt(text, 13, 1).Sequence = 1;
+        _db.VerseAt(text, 12, 18).Sequence = 18;
+        Place(text, 38, 19, canonicalChapter: 38, canonicalVerse: 19);
+        Place(text, 37, 19, canonicalChapter: 38, canonicalVerse: 19);
+        Place(text, 13, 1, canonicalChapter: 13, canonicalVerse: 1);
+        Place(text, 12, 18, canonicalChapter: 13, canonicalVerse: 1);
+        foreach (var (chapter, verse) in new[] { (38, 19), (37, 19) })
+        {
+            _db.VerseNotes.Add(new VerseNote
+            {
+                VerseId = _db.VerseAt(text, chapter, verse).Id,
+                Position = 1,
+                Kind = VerseNoteKind.Footnote,
+                Content = $"{chapter}:{verse}",
+            });
+        }
+
+        _db.SaveChanges();
+
+        var exodus = await ChapterReading.ReadByCanonicalVerse(_db, text.Id, 1, 38, default);
+        var revelation = await ChapterReading.ReadByCanonicalVerse(_db, text.Id, 1, 13, default);
+
+        exodus[19].Select(word => word.Text).Should().Equal("three", "cups", "and", "he", "made");
+        revelation[1].Select(word => word.Text).Should().Equal("And", "he", "stood", "And", "I", "saw");
+        (await ChapterReading.OwnVerses(_db, text.Id, 1, 38, default))[19].Should().Equal("37:19", "38:19");
+        (await ChapterReading.OwnVerses(_db, text.Id, 1, 13, default))[1].Should().Equal("12:18", "13:1");
+        (await ChapterReading.SourceNotes(_db, text.Id, 1, 38, default))[19].Select(note => note.Content)
+            .Should().Equal("37:19", "38:19");
+        var reference = (await ChapterReading.OwnReferences(_db, text.Id, 1, 13, default))[1];
+        (reference.Chapter, reference.Verse).Should().Be((12, 18));
+    }
+
+    /// <summary>
     /// A text that does not reach this address has no row at all, which is a different fact from a
     /// verse with no words in it.
     /// </summary>

@@ -51,9 +51,10 @@ internal static class ImageEndpoints
     /// <summary>
     /// The widths a picture is copied at, narrowest first; a request between two gets the wider. Each is
     /// about a quarter wider than the one before, so the copy a screen is given is never much wider
-    /// than the one it asked for.
+    /// than the one it asked for. The widest serve a landscape photograph cropped to a tall frame on a
+    /// phone, which draws it far wider than the frame.
     /// </summary>
-    public static readonly int[] SizedWidths = [64, 80, 96, 128, 160, 192, 256, 320, 384, 512, 640, 768, 1024];
+    public static readonly int[] SizedWidths = [64, 80, 96, 128, 160, 192, 256, 320, 384, 512, 640, 768, 1024, 1280, 1600, 1920];
 
     /// <summary>
     /// How a copy is made, in its name: Lanczos-3, WebP quality 85 up to 256 pixels wide and 80 past it

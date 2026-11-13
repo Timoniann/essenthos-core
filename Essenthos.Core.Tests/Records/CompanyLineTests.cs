@@ -176,10 +176,10 @@ public sealed class CompanyLineTests : IDisposable
         Person(slug, name, Male, forms);
 
     private void Person(string slug, string name, string sex, params (string Language, string Nominative, string? Genitive)[] forms) =>
-        Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex, SourceId = slug, Source = "a test" }, forms);
+        Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex }, forms);
 
     private void Company(string slug, string name, params (string Language, string Nominative, string? Genitive)[] forms) =>
-        Add(new Entity { Kind = EntityKind.People, Slug = slug, Name = name, SourceId = slug, Source = "a test" }, forms);
+        Add(new Entity { Kind = EntityKind.People, Slug = slug, Name = name }, forms);
 
     private void Add(Entity entity, (string Language, string Nominative, string? Genitive)[] forms)
     {

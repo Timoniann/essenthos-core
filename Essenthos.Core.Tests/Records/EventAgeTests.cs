@@ -111,7 +111,7 @@ public sealed class EventAgeTests : IDisposable
 
     private Entity Person(string slug)
     {
-        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test" };
+        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug };
         _db.Entities.Add(person);
         return person;
     }

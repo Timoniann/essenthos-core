@@ -76,10 +76,6 @@ internal sealed record RecordColumn(string Name, RecordColumnType Type, bool Nul
 /// <param name="Tables">The tables the load writes, emptied before it, in the order they are emptied.</param>
 /// <param name="After">Statements run after <paramref name="Load"/>, with <c>s</c> still there.</param>
 /// <param name="Requires">A condition on the database without which the file is not loaded (and the load says so).</param>
-/// <param name="ExportLoaded">
-/// The SELECT for a database this loader filled, where it differs from <paramref name="Export"/>
-/// (the dataset columns are gone there), so that a loaded database exports to the same file.
-/// </param>
 /// <param name="Listed">
 /// The rows of a file no table holds, which the Forge carries as a list of its own until the file
 /// replaces it: the export writes them, whatever the database.
@@ -96,7 +92,6 @@ internal sealed record RecordFile(
     string Load,
     string[] Tables,
     string? After = null,
-    string? ExportLoaded = null,
     string? About = null,
     string? Requires = null,
     Func<IEnumerable<string?[]>>? Listed = null,

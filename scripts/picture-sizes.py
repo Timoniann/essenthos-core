@@ -31,7 +31,7 @@ import argparse, hashlib, os, sys
 
 from PIL import Image, ImageOps
 
-WIDTHS = (64, 80, 96, 128, 160, 192, 256, 320, 384, 512, 640, 768, 1024)
+WIDTHS = (64, 80, 96, 128, 160, 192, 256, 320, 384, 512, 640, 768, 1024, 1280, 1600, 1920)
 
 RECIPE = 'l3q85-80'
 

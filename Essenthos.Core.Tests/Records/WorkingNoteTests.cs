@@ -239,7 +239,7 @@ public sealed class WorkingNoteTests : IDisposable
     {
         var entity = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = slug,
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();

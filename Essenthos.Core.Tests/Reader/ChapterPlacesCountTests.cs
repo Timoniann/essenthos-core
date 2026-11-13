@@ -89,7 +89,7 @@ public sealed class ChapterPlacesCountTests : IDisposable
 
     private Entity Place(string slug)
     {
-        var entity = new Entity { Kind = EntityKind.Place, Slug = slug, Name = slug, SourceId = $"test:{slug}", Source = "test" };
+        var entity = new Entity { Kind = EntityKind.Place, Slug = slug, Name = slug };
         _db.Entities.Add(entity);
         return entity;
     }

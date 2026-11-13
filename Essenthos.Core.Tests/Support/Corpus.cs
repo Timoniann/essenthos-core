@@ -13,6 +13,20 @@ namespace Essenthos.Core.Tests;
 /// </summary>
 internal static class Corpus
 {
+    /// <summary>The record with the gazetteer's id for it, as records/external-ids gives it; none where <paramref name="id"/> is null.</summary>
+    public static Entity WithOpenBibleId(this Entity entity, string? id)
+    {
+        if (id is not null)
+        {
+            entity.ExternalIds.Add(new RecordExternalId
+            {
+                Dataset = Essenthos.Core.Corpus.Datasets.OpenBibleId, ExternalId = id, Relation = RecordExternalRelations.SameAs,
+            });
+        }
+
+        return entity;
+    }
+
     public static Text Add(
         AppDbContext db,
         string slug,

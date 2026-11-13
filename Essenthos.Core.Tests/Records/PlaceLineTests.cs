@@ -117,10 +117,10 @@ public sealed class PlaceLineTests : IDisposable
         [.. Enumerable.Range(1, verses).Select(verse => (book, chapter, verse))];
 
     private void Place(string slug, string name, string kind, params (int Book, int Chapter, int Verse)[] verses) =>
-        Record(new Entity { Kind = EntityKind.Place, Slug = slug, Name = name, PlaceKind = kind, SourceId = slug, Source = "a test" }, verses);
+        Record(new Entity { Kind = EntityKind.Place, Slug = slug, Name = name, PlaceKind = kind }, verses);
 
     private void Person(string slug, string name, params (int Book, int Chapter, int Verse)[] verses) =>
-        Record(new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = "male", SourceId = slug, Source = "a test" }, verses);
+        Record(new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = "male" }, verses);
 
     private void Record(Entity entity, (int Book, int Chapter, int Verse)[] verses)
     {

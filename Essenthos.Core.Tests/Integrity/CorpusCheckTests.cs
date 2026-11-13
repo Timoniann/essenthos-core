@@ -456,7 +456,7 @@ public sealed class CorpusCheckTests : IDisposable
 
         Entity Zechariah(string slug) => new()
         {
-            Kind = EntityKind.Person, Slug = slug, Name = "Zechariah", SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = "Zechariah",
             Names = [new EntityName { Label = "Zechariah", GreekStrongNumber = "G2197" }],
         };
         var first = Zechariah("zechariah-1");
@@ -496,7 +496,7 @@ public sealed class CorpusCheckTests : IDisposable
     {
         Entity Person(string slug) => new()
         {
-            Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = slug,
         };
         var (lot, haran) = (Person("lot"), Person("haran"));
         _db.Entities.AddRange(lot, haran);
@@ -545,7 +545,7 @@ public sealed class CorpusCheckTests : IDisposable
     {
         const string check = "relationships read from Scripture that no clause states, or that say again what another says";
         const string source = Sources.DescriptorReadingPrefix + " a test, asked 2026-09-10";
-        Entity Person(string slug) => new() { Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test" };
+        Entity Person(string slug) => new() { Kind = EntityKind.Person, Slug = slug, Name = slug };
         var amorites = Person("amorites");
         var canaan = Person("canaan");
         var deborah = Person("deborah");
@@ -592,7 +592,7 @@ public sealed class CorpusCheckTests : IDisposable
         const string self = "relationships of a record with itself";
         Entity Record(string slug, EntityKind kind = EntityKind.Person, string? sex = "male") => new()
         {
-            Kind = kind, Slug = slug, Name = slug, SourceId = slug, Source = "a test", Sex = sex,
+            Kind = kind, Slug = slug, Name = slug, Sex = sex,
         };
         var hodiah = Record("hodiah");
         var keilah = Record("keilah");
@@ -664,7 +664,7 @@ public sealed class CorpusCheckTests : IDisposable
         const string fathers = "people with two fathers, neither the other's forebear, that nobody decided are both stated";
         Entity Record(string slug, string sex = "male") => new()
         {
-            Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test", Sex = sex,
+            Kind = EntityKind.Person, Slug = slug, Name = slug, Sex = sex,
         };
         var maacah = Record("maacah", "female");
         var abijam = Record("abijam");
@@ -1081,8 +1081,8 @@ public sealed class CorpusCheckTests : IDisposable
     {
         const string breaks = "places of one name a reader cannot tell apart";
         _db.Entities.AddRange(
-            new Entity { Kind = EntityKind.Place, Slug = "alike", Name = "Alike", ModernEquivalent = "Tell One", SourceId = "t:1", Source = "t" },
-            new Entity { Kind = EntityKind.Place, Slug = "alike-2", Name = "Alike", ModernEquivalent = "Tell Two", SourceId = "t:2", Source = "t" });
+            new Entity { Kind = EntityKind.Place, Slug = "alike", Name = "Alike", ModernEquivalent = "Tell One" },
+            new Entity { Kind = EntityKind.Place, Slug = "alike-2", Name = "Alike", ModernEquivalent = "Tell Two" });
         await _db.SaveChangesAsync();
 
         (await Integrity(breaks)).Should().Be(3, "the two read apart in English and alike, with no words, in the other three languages");

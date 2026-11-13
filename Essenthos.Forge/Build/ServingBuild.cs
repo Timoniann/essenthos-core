@@ -386,11 +386,10 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
     /// <summary>
     /// The dropped indexes made again, the largest tables first and <paramref name="parallel"/> at once; one that already
-    /// stands is left as it is. An index on a column a loader's schema step removed is reported, not failed.
+    /// stands is left as it is.
     /// </summary>
     private async Task<long> MakeIndexes(List<Definition> indexes, Dictionary<string, long> sizes, int parallel, CancellationToken cancellationToken)
     {
-        var gone = new ConcurrentBag<string>();
         await Parallel.ForEachAsync(indexes.OrderByDescending(i => sizes.GetValueOrDefault(i.Table)),
             new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken }, async (index, token) =>
             {
@@ -399,52 +398,26 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
                 await using var connection = new NpgsqlConnection(connectionString);
                 await connection.OpenAsync(token);
                 await Execute(connection, "SET maintenance_work_mem = '1GB'", token);
-                try
-                {
-                    await Execute(connection, sql, token);
-                }
-                catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
-                {
-                    // A loader's own schema step (the records files take entity.source out) removed what the index was on.
-                    gone.Add($"{index.Name}: {exception.MessageText}");
-                }
+                await Execute(connection, sql, token);
             });
-        if (!gone.IsEmpty)
-        {
-            logger.LogWarning("{Count} indexes stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
-        }
-
-        return indexes.Count - gone.Count;
+        return indexes.Count;
     }
 
     /// <summary>
     /// The dropped foreign keys added again unvalidated (<c>NOT VALID</c>): each holds for every row written after it, and
-    /// <see cref="ValidateKeys"/> checks the rows already in. A key on a column a loader's schema step removed is reported.
+    /// <see cref="ValidateKeys"/> checks the rows already in.
     /// </summary>
     private async Task<long> AddKeys(List<Definition> keys, CancellationToken cancellationToken)
     {
         var present = await PresentKeys(cancellationToken);
-        var gone = new List<string>();
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
         foreach (var key in keys.Where(k => !present.Contains(k.Name)))
         {
-            try
-            {
-                await Execute(connection, $"ALTER TABLE {key.Table} ADD CONSTRAINT \"{key.Name}\" {key.Sql} NOT VALID", cancellationToken);
-            }
-            catch (PostgresException exception) when (exception.SqlState is PostgresErrorCodes.UndefinedColumn or PostgresErrorCodes.UndefinedTable)
-            {
-                gone.Add($"{key.Name}: {exception.MessageText}");
-            }
+            await Execute(connection, $"ALTER TABLE {key.Table} ADD CONSTRAINT \"{key.Name}\" {key.Sql} NOT VALID", cancellationToken);
         }
 
-        if (gone.Count > 0)
-        {
-            logger.LogWarning("{Count} foreign keys stood on columns the loaders' schema steps removed: {Gone}", gone.Count, string.Join("; ", gone.Order()));
-        }
-
-        return keys.Count - gone.Count;
+        return keys.Count;
     }
 
     /// <summary>

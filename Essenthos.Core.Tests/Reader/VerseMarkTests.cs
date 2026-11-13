@@ -199,7 +199,7 @@ public sealed class VerseMarkTests : IDisposable
         var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "God", "created"]));
         _db.SaveChanges();
         _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
-        var elohim = new Entity { Kind = EntityKind.Term, Slug = "elohim", Name = "Elohim", SourceId = "elohim", Source = "a test" };
+        var elohim = new Entity { Kind = EntityKind.Term, Slug = "elohim", Name = "Elohim" };
         elohim.Names.Add(new EntityName { Label = "Elohim", HebrewStrongNumber = "H430" });
         _db.Entities.Add(elohim);
         var god = _db.WordAt(english, 1, 1, 3);
@@ -281,7 +281,7 @@ public sealed class VerseMarkTests : IDisposable
     {
         var entity = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = name, SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = name,
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();

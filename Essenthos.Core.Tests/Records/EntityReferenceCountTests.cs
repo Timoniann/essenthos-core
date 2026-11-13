@@ -38,8 +38,6 @@ public sealed class EntityReferenceCountTests : IDisposable
             Kind = EntityKind.Person,
             Slug = "jesus",
             Name = "Jesus",
-            SourceId = "essenthos:jesus",
-            Source = "test",
         };
         _db.Entities.Add(_entity);
         _db.SaveChanges();

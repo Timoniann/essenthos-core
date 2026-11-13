@@ -647,15 +647,15 @@ public sealed class EntityImageTests : IDisposable
 
     private Entity Entity(EntityKind kind, string slug, string? openBibleId = null, string? sourceId = null)
     {
-        var entity = new Entity
+        var entity = new Entity { Kind = kind, Slug = slug, Name = slug };
+        foreach (var (dataset, id) in new[] { (Essenthos.Core.Corpus.Datasets.OpenBibleId, openBibleId), ("bibledata", sourceId) })
         {
-            Kind = kind,
-            Slug = slug,
-            Name = slug,
-            SourceId = sourceId ?? $"test:{slug}",
-            Source = "test",
-            OpenBibleId = openBibleId,
-        };
+            if (id is not null)
+            {
+                entity.ExternalIds.Add(new RecordExternalId { Dataset = dataset, ExternalId = id, Relation = RecordExternalRelations.SameAs });
+            }
+        }
+
         _db.Entities.Add(entity);
         return entity;
     }

@@ -34,7 +34,7 @@ public sealed class NameClashLineTests : IDisposable
         Person("jerahmeel", "Jerahmeel");
         _db.Entities.Add(_records["jerusalem"] = new Entity
         {
-            Kind = EntityKind.Place, Slug = "jerusalem", Name = "Jerusalem", SourceId = "jerusalem", Source = "a test",
+            Kind = EntityKind.Place, Slug = "jerusalem", Name = "Jerusalem",
         });
         _db.SaveChanges();
 
@@ -92,7 +92,7 @@ public sealed class NameClashLineTests : IDisposable
 
     private void Person(string slug, string name)
     {
-        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = "male", SourceId = slug, Source = "a test" };
+        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = "male" };
         _db.Entities.Add(person);
         _records[slug] = person;
     }

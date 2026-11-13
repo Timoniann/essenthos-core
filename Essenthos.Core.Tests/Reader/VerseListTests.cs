@@ -38,7 +38,7 @@ public sealed class VerseListTests : IDisposable
             (49, 2, ["Both", "low", "and", "high"]));
         var hebrew = Corpus.Add(_db, "test-hebrew", TextKind.CriticalEdition, "hbo", (1, 1, ["בראשית", "ברא", "אלהים", "אלהים"]));
         _db.AddBook(hebrew, Psalms, "Psalms", (49, 1, ["שמעו", "זאת", "אלהים"]));
-        var gibbar = new Entity { Slug = "gibbar", Name = "Gibbar", Kind = EntityKind.Person, Source = "test", SourceId = "test:gibbar" };
+        var gibbar = new Entity { Slug = "gibbar", Name = "Gibbar", Kind = EntityKind.Person };
         _db.Entities.Add(gibbar);
         _db.StrongEntries.Add(new StrongEntry { StrongNumber = "H430", Lemma = "אֱלֹהִים", Transliteration = "ʼĕlôhîym" });
         _db.SaveChanges();

@@ -31,7 +31,7 @@ public sealed class HalfSiblingPhrasingTests : IDisposable
         {
             var person = new Entity
             {
-                Kind = EntityKind.Person, Slug = slug, Name = slug, Sex = sex, SourceId = slug, Source = "a test",
+                Kind = EntityKind.Person, Slug = slug, Name = slug, Sex = sex,
             };
             _db.Entities.Add(person);
             _people[slug] = person;

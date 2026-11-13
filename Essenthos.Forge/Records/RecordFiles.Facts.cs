@@ -25,7 +25,7 @@ internal static partial class RecordFiles
         $"""
         SELECT e.slug, {Ref("v")}, v.label, v.names, v.disputed, v.withheld, v.source
         FROM entity_verse v JOIN entity e ON e.id = v.entity_id WHERE {which} ORDER BY 1, 2, 7, 3, 4, 5, 6
-        """,
+        """.Replace(WitnessVerse, "false"),
         """
         INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse, label, names, disputed, withheld, source)
         SELECT e.id, s.ref[1], s.ref[2], s.ref[3], s.label, s.names, s.disputed, s.withheld, s.by
@@ -34,10 +34,6 @@ internal static partial class RecordFiles
         product.Contains("derived", StringComparison.Ordinal) ? [] : ["entity_verse"],
         After: Settled("entity_verse", WitnessVerse.Replace("v.", ""),
             "a verse row credits BibleData: its verses are its references, never the served verses of a record"),
-        ExportLoaded: $"""
-        SELECT e.slug, {Ref("v")}, v.label, v.names, v.disputed, v.withheld, v.source
-        FROM entity_verse v JOIN entity e ON e.id = v.entity_id WHERE {which} ORDER BY 1, 2, 7, 3, 4, 5, 6
-        """.Replace(WitnessVerse, "false"),
         About: about);
 
     private static RecordFile[] Facts =>

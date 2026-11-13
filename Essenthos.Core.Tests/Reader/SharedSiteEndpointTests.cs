@@ -23,8 +23,8 @@ public sealed class SharedSiteEndpointTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
-        _db.Entities.Add(new Entity { Kind = EntityKind.Place, Slug = "aphek-2", Name = "Aphek", SourceId = "test:aphek-2", Source = "test" });
-        _db.Entities.Add(new Entity { Kind = EntityKind.Place, Slug = "antipatris", Name = "Antipatris", SourceId = "test:antipatris", Source = "test" });
+        _db.Entities.Add(new Entity { Kind = EntityKind.Place, Slug = "aphek-2", Name = "Aphek" });
+        _db.Entities.Add(new Entity { Kind = EntityKind.Place, Slug = "antipatris", Name = "Antipatris" });
         _db.SaveChanges();
     }
 

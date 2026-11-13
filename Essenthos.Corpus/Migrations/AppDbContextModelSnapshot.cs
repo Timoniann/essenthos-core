@@ -541,10 +541,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("notes");
 
-                    b.Property<string>("OpenBibleId")
-                        .HasColumnType("text")
-                        .HasColumnName("open_bible_id");
-
                     b.Property<int?>("OriginEntityId")
                         .HasColumnType("integer")
                         .HasColumnName("origin_entity_id");
@@ -565,16 +561,6 @@ namespace Essenthos.Core.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("slug");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<string>("SourceId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source_id");
 
                     b.Property<string>("Subtype")
                         .HasColumnType("text")
@@ -599,9 +585,6 @@ namespace Essenthos.Core.Migrations
                     b.HasIndex("Slug")
                         .IsUnique()
                         .HasDatabaseName("ix_entity_slug");
-
-                    b.HasIndex("SourceId")
-                        .HasDatabaseName("ix_entity_source_id");
 
                     b.ToTable("entity", (string)null);
                 });
@@ -2855,16 +2838,6 @@ namespace Essenthos.Core.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("reason");
-
-                    b.Property<string>("RecordSource")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("record_source");
-
-                    b.Property<string>("RecordSourceId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("record_source_id");
 
                     b.Property<string>("Slug")
                         .IsRequired()

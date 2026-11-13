@@ -86,8 +86,7 @@ public sealed class PeopleAncestorLineTests : IDisposable
     {
         var entity = new Entity
         {
-            Kind = kind, Slug = slug, Name = name, SourceId = slug, Origin = origin,
-            Source = kind == EntityKind.People && slug == "gadites" ? Tribes : "a test",
+            Kind = kind, Slug = slug, Name = name, Origin = origin,
         };
         if (kind == EntityKind.People && slug == "gadites")
         {

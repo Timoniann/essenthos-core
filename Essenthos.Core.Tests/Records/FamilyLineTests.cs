@@ -376,7 +376,7 @@ public sealed class FamilyLineTests : IDisposable
     {
         var person = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex, SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex,
         };
         foreach (var (language, nominative, genitive) in forms)
         {
@@ -496,7 +496,7 @@ public sealed class RenamedInALineTests : IDisposable
 
     private Entity Person(string slug, string name, params (string Label, string Kind)[] labels)
     {
-        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, SourceId = slug, Source = "a test" };
+        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name };
         foreach (var (label, kind) in labels)
         {
             person.Names.Add(new EntityName { Label = label, Kind = kind });

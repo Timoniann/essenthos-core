@@ -138,7 +138,7 @@ public sealed class EntitySearchTests : IDisposable
         var entity = new Entity
         {
             Kind = slug == "cityofdavid" ? EntityKind.Place : EntityKind.Person,
-            Slug = slug, Name = name, SourceId = slug, Source = "a test",
+            Slug = slug, Name = name,
         };
         foreach (var (label, kind) in labels)
         {

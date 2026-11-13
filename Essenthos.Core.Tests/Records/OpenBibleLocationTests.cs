@@ -292,10 +292,7 @@ public sealed class OpenBibleLocationTests : IDisposable
             Kind = EntityKind.Place,
             Slug = name.ToLowerInvariant(),
             Name = name,
-            OpenBibleId = openBibleId,
-            SourceId = $"test:{openBibleId}",
-            Source = "test",
-        };
+        }.WithOpenBibleId(openBibleId);
         _db.Entities.Add(entity);
         return entity;
     }

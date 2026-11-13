@@ -156,7 +156,7 @@ public sealed class PossibleIdentityPageTests : IDisposable
     {
         var entity = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = "Mary", SourceId = slug, Source = "a test", Sex = "female",
+            Kind = EntityKind.Person, Slug = slug, Name = "Mary", Sex = "female",
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();

@@ -15,7 +15,6 @@ namespace Essenthos.Core.Database.Entities;
 /// </summary>
 [Index(nameof(Slug), IsUnique = true)]
 [Index(nameof(Kind))]
-[Index(nameof(SourceId))]
 public class Entity
 {
     [Key]
@@ -72,21 +71,6 @@ public class Entity
     /// that says it and the byname as each language's text prints it. Null for everyone else.
     /// </summary>
     public string? Byname { get; set; }
-
-    /// <summary>
-    /// Its identifier in the dataset it came from — <c>Moses_1</c>, <c>heaven_1</c>. Kept so a
-    /// correction upstream can be found again, and so two datasets can be reconciled later.
-    /// </summary>
-    public required string SourceId { get; set; }
-
-    /// <summary>Which dataset said so. This corpus will hold more than one.</summary>
-    public required string Source { get; set; }
-
-    /// <summary>
-    /// OpenBible's identifier for a place, which is how coordinates are reached without holding a
-    /// second gazetteer.
-    /// </summary>
-    public string? OpenBibleId { get; set; }
 
     /// <summary>
     /// Whom or where a people is named after — Moab for the Moabites, Judah for the Judahites.
