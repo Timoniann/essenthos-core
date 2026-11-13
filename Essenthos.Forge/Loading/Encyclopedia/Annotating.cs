@@ -88,6 +88,8 @@ internal static class Annotating
                     e.kind,
                     {Standing} AS standing,
                     coalesce(a.confidence, 1.0) AS confidence,
+                    a.source,
+                    coalesce(a.note, '') AS note,
                     coalesce(a.note, '') NOT LIKE '{CarriedNote}' AND a.source <> '{Essenthos.Core.Corpus.Annotations.Consensus}' AS own
              FROM word_entity a
              JOIN entity e ON e.id = a.entity_id
@@ -99,13 +101,17 @@ internal static class Annotating
                     s.standing,
                     s.confidence,
                     s.own,
+                    s.source,
+                    s.note,
                     row_number() OVER settling AS place,
                     count(*) OVER (PARTITION BY s.word_id) AS claims,
                     lead(s.entity_id) OVER settling AS next_entity,
                     lead(s.kind) OVER settling AS next_kind,
                     lead(s.standing) OVER settling AS next_standing,
                     lead(s.confidence) OVER settling AS next_confidence,
-                    lead(s.own) OVER settling AS next_own
+                    lead(s.own) OVER settling AS next_own,
+                    lead(s.source) OVER settling AS next_source,
+                    lead(s.note) OVER settling AS next_note
              FROM standing s
              WINDOW settling AS (
                  PARTITION BY s.word_id
@@ -133,7 +139,7 @@ internal static class Annotating
                             AND r.next_own = r.own
                             AND r.next_standing = r.standing
                             AND r.next_confidence = r.confidence)
-                    OR {Beside("r.kind", "r.entity_id", "r.standing", "r.next_kind", "r.next_entity", "r.next_standing")})
+                    OR {Beside("r", "r.next_")})
          )
          """;
 
@@ -145,12 +151,19 @@ internal static class Annotating
 
     /// <summary>
     /// Whether one word names both records without either answering for the other: a title and a
-    /// record joined to it as its bearer, a person and a people, or a place and a people a person
-    /// ruled on the word together. Two men on one word, or a man and a town, are two answers to one
-    /// question, and the lower is the one the higher outranked.
+    /// record joined to it as its bearer, a person and a people, a place and a people a person
+    /// ruled on the word together, or things one ruling names on the word together
+    /// (<c>Annotations.Together</c>). Two men on one word, or a man and a town, are two answers to one
+    /// question, and the lower is the one the higher outranked. <paramref name="one"/> and
+    /// <paramref name="other"/> are the column prefixes of the two answers (<c>r.</c> and <c>r.next_</c>).
     /// </summary>
+    private static string Beside(string one, string other) =>
+        Beside($"{one}.kind", $"{one}.entity_id", $"{one}.standing", $"{one}.source", $"{one}.note",
+            $"{other}kind", $"{other}entity", $"{other}standing", $"{other}source", $"{other}note");
+
     private static string Beside(
-        string kind, string entity, string standing, string otherKind, string otherEntity, string otherStanding) =>
+        string kind, string entity, string standing, string source, string note,
+        string otherKind, string otherEntity, string otherStanding, string otherSource, string otherNote) =>
         $"""
          (({kind} = '{EnumSpelling.Of(EntityKind.Person)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.People)}')
           OR ({kind} = '{EnumSpelling.Of(EntityKind.People)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.Person)}')
@@ -158,6 +171,9 @@ internal static class Annotating
               AND {otherKind} IN ('{EnumSpelling.Of(EntityKind.Place)}', '{EnumSpelling.Of(EntityKind.People)}')
               AND {kind} <> {otherKind}
               AND {standing} = {Ruled} AND {otherStanding} = {Ruled})
+          OR ({kind} = '{EnumSpelling.Of(EntityKind.Object)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.Object)}'
+              AND {standing} = {Ruled} AND {otherStanding} = {Ruled}
+              AND {source} = {otherSource} AND {note} = {otherNote})
           OR ({kind} = '{Title}' AND EXISTS (
                   SELECT 1 FROM title_bearer borne
                   WHERE borne.title_entity_id = {entity} AND borne.bearer_entity_id = {otherEntity}))

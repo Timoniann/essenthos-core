@@ -62,11 +62,12 @@ public sealed class WordNamesSeveralTests : IDisposable
     }
 
     private void Annotate(
-        Word word, Entity entity, LinkMethod method, double? confidence, string? role = null, string? origin = null, string? note = null)
+        Word word, Entity entity, LinkMethod method, double? confidence, string? role = null, string? origin = null, string? note = null,
+        string source = "a test")
     {
         _db.WordEntities.Add(new WordEntity
         {
-            Word = word, Entity = entity, Method = method, Confidence = confidence, Source = "a test",
+            Word = word, Entity = entity, Method = method, Confidence = confidence, Source = source,
             Role = role, Origin = origin, Note = note,
         });
         _db.SaveChanges();
@@ -257,6 +258,58 @@ public sealed class WordNamesSeveralTests : IDisposable
 
         (await Shown(Greek(4, 1))).Should().BeEmpty();
     }
+
+    private const string Decision = "the project owner's decision of 2026-11-05";
+
+    /// <summary>
+    /// The pillars of 1 Kings 7:21, which one decision names as Jachin and Boaz: both are shown, read of the word itself
+    /// and carried through it alike, and the verse lists read both.
+    /// </summary>
+    [Fact]
+    public async Task ThingsOneRulingNamesTogetherAreAllShown()
+    {
+        var jachin = Add("jachin-pillar", EntityKind.Object);
+        var boaz = Add("boaz-pillar", EntityKind.Object);
+        Annotate(Greek(4, 1), jachin, LinkMethod.Manual, null, WordEntityRoles.Thing, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(4, 1), boaz, LinkMethod.Manual, null, WordEntityRoles.Thing, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(3, 1), jachin, LinkMethod.Manual, 0.98, WordEntityRoles.Thing, WordEntityOrigins.Projected, "through BHSA word 7", Decision);
+        Annotate(Greek(3, 1), boaz, LinkMethod.Manual, 0.98, WordEntityRoles.Thing, WordEntityOrigins.Projected, "through BHSA word 7", Decision);
+
+        (await Shown(Greek(4, 1))).Should().BeEquivalentTo("jachin-pillar", "boaz-pillar");
+        (await Shown(Greek(3, 1))).Should().BeEquivalentTo("jachin-pillar", "boaz-pillar");
+        (await Settled(Greek(4, 1))).Should().ContainSingle("the verse lists' statement settles the word, which it read as nobody before");
+    }
+
+    /// <summary>
+    /// Two men one ruling names on one word are still two answers to one question, and two things are no group where
+    /// two decisions name them, or where a word carries each through another word.
+    /// </summary>
+    [Fact]
+    public async Task OnlyThingsOneRulingNamesOnOneWordStandTogether()
+    {
+        var barak = Add("barak", EntityKind.Person);
+        var sisera = Add("sisera", EntityKind.Person);
+        var jachin = Add("jachin-pillar", EntityKind.Object);
+        var boaz = Add("boaz-pillar", EntityKind.Object);
+        Annotate(Greek(4, 1), barak, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(4, 1), sisera, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(3, 1), jachin, LinkMethod.Manual, null, WordEntityRoles.Thing, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(3, 1), boaz, LinkMethod.Manual, null, WordEntityRoles.Thing, WordEntityOrigins.Settled, source: "another decision");
+        Annotate(Greek(2, 1), jachin, LinkMethod.Manual, 0.98, WordEntityRoles.Thing, WordEntityOrigins.Projected, "through BHSA word 7", Decision);
+        Annotate(Greek(2, 1), boaz, LinkMethod.Manual, 0.98, WordEntityRoles.Thing, WordEntityOrigins.Projected, "through BHSA word 8", Decision);
+
+        (await Shown(Greek(4, 1))).Should().BeEmpty();
+        (await Shown(Greek(3, 1))).Should().BeEmpty();
+        (await Shown(Greek(2, 1))).Should().BeEmpty();
+        (await Settled(Greek(4, 1))).Should().BeEmpty();
+        (await Settled(Greek(3, 1))).Should().BeEmpty();
+        (await Settled(Greek(2, 1))).Should().BeEmpty();
+    }
+
+    private Task<List<int>> Settled(Word word) =>
+        _db.Database
+            .SqlQueryRaw<int>($"WITH {Annotating.Settled} SELECT entity_id AS \"Value\" FROM settled WHERE word_id = {word.Id}")
+            .ToListAsync();
 
     /// <summary>A word that names nothing has an empty list and no first answer.</summary>
     [Fact]

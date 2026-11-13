@@ -4,7 +4,7 @@
 # exported   from localhost:5437/essenthos_core_rework_src
 # edited     by hand from here on: a row is a decision that this word names this record
 # cleaned    2026-11-04 (TSK-1448, the owner's answer to Q3): 125 words carrying two persons or places from carries that disagree, each read against its verse: 122 keep one, 2 name neither (1 given the record the word does name), 1 name both, 0 unclear and left as they were; 126 rows taken out; the 124 rows kept were read too and are manual 0.98 now
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 own	record	role	method	confidence	source	note
 1.2:4.13	yhvh	name	strong-number	0.818415828846	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:4.13, linked by aligner
 1.2:5.14	yhvh	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: እግዚአብሄር, እግዚአብሄርአ, ወእግዚአብሄርሰ, printed in 4062 of its 5847 verses, 58 % of the verses printing it being its own
@@ -24865,7 +24865,7 @@ own	record	role	method	confidence	source	note
 16.11:31.4	michmash	name	strong-number	0.7056	BHSA's proper-noun marking, and the Hebrew name read off the King James word that renders it in a verse the geocoding dataset says the place is named in	frozen 2026-11: through BHSA 16.11:31.6, linked by aligner
 16.11:32.1	anathoth-3	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: አናቶት, ወአናቶት, ዘአናቶት, printed in 12 of its 13 verses, 92 % of the verses printing it being its own
 16.11:33.1	hazor-4	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: በሀጸር, printed in 1 of its 1 verses, 100 % of the verses printing it being its own
-16.11:33.2	ramah-7	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: ወበራማ, printed in 1 of its 1 verses, 100 % of the verses printing it being its own
+16.11:33.2	ramah	name	manual	\N	Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13 to check the Ramahs again and put them right (PRB-1425)	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah
 16.11:33.3	gittaim	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: ወበጌታይም, printed in 1 of its 2 verses, 100 % of the verses printing it being its own
 16.11:34.2	zeboim	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: በጼቡኤም, printed in 1 of its 2 verses, 100 % of the verses printing it being its own
 16.11:34.3	neballat	name	rule-based	0.99	Essenthos, read from the verses that name it	the word its verses share in this text: በነብላት, printed in 1 of its 1 verses, 100 % of the verses printing it being its own

@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # Our records. No dataset source: where a record came from is its claims; a dataset's id for it is in records/external-ids.
 slug	kind	subtype	place_kind	name	sex	sex_source	name_gender	tribe	origin	another_name_for	byname
 aaron	person	\N	\N	Aaron	male	\N	\N	Levi	\N	\N	\N
@@ -3835,12 +3835,10 @@ ram-3	person	\N	\N	Ram	male	\N	\N	\N	\N	\N	\N
 ramah	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	\N	\N
 ramah-2	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	\N	\N
 ramah-3	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	\N	\N
-ramah-4	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	ramah	\N
-ramah-5	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	ramothgilead	\N
+ramah-4	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	\N	\N
 ramah-6	place	\N	settlement, special	Ramath of the south	\N	\N	\N	\N	\N	\N	\N
-ramah-7	place	\N	settlement	Ramah	\N	\N	\N	\N	\N	ramah	\N
 ramah-8	place	\N	hill	Ramah	\N	\N	\N	\N	\N	\N	\N
-ramah-9	place	\N	settlement, special	Ramah	\N	\N	\N	\N	\N	ramah	\N
+ramah-9	place	\N	settlement, special	Ramah	\N	\N	\N	\N	\N	\N	\N
 ramathites	people	\N	\N	Ramathites	\N	\N	\N	\N	\N	\N	\N
 ramathlehi	place	\N	settlement, special	Ramath-lehi	\N	\N	\N	\N	\N	lehi	\N
 ramathmizpeh	place	\N	settlement	Ramath-mizpeh	\N	\N	\N	\N	\N	\N	\N

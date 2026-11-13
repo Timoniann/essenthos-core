@@ -5,7 +5,7 @@
 # edited     by hand from here on: a row is a decision that this word names this record
 # cleaned    2026-11-04 (PRB-1467, TSK-1448): two rows read wrong taken out (Isa 23:1 tarshish-4, Num 1:13 deuel); 29 gaps filled where a translation of it named a record another reference text names
 # cleaned    2026-11-04 (TSK-1448, the owner's answer to Q3): 87 words carrying two persons or places from carries that disagree, each read against its verse: 82 keep one, 4 name neither (2 given the record the word does name), 0 name both, 1 unclear and left as they were; 91 rows taken out; the 82 rows kept were read too and are manual 0.98 now
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 own	record	role	method	confidence	source	note
 1.2:4.13	yhvh	name	strong-number	0.9702	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 1.2:4.13, linked by aligner
 1.2:5.22	yhvh	name	rule-based	0.5448831201000001	Essenthos, read from the verses that name it	frozen 2026-11: through GEEZ81 1.2:5.14, linked by aligner
@@ -25809,7 +25809,7 @@ own	record	role	method	confidence	source	note
 14.22:5.22	ramothgilead	name	lexical	0.864	Essenthos, reading a Hebrew name nothing else settled as the one record bearing it that the encyclopedia names in this verse, of a kind BHSA's marking allows	frozen 2026-11: through BHSA 14.22:5.21, linked by aligner
 14.22:5.23	ramothgilead	name	model-reading	0.9702	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 14.22:5.22, linked by aligner
 14.22:5.29	jehoram-2	name	model-reading	0.9702	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 14.22:5.28, linked by aligner
-14.22:6.3	ramah-5	name	lexical	0.6813131313131312	Essenthos, telling apart the places that share a name: the gazetteer states this verse names it, BHSA marks the word a name, and a reading of the verse made without seeing the gazetteer says the same	frozen 2026-11: through BHSA 14.22:6.14, linked by aligner
+14.22:6.3	ramothgilead	name	manual	\N	Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13 to check the Ramahs again and put them right (PRB-1425)	14.22:6.3 names Ramoth-gilead, called Ramah where Joram's wounds of Ramoth-gilead are told: ramah-5 folded into ramothgilead
 14.22:6.7	jezreel-4	name	model-reading	0.891	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 14.22:6.6, linked by aligner
 14.22:6.15	syria	name	model-reading	0.804	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	frozen 2026-11: through BHSA 14.22:6.20, linked by aligner
 14.22:6.23	hazael	name	strong-number	0.9702	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	frozen 2026-11: through BHSA 14.22:6.18, linked by aligner

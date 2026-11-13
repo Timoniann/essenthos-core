@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # Renderings of English the records and the datasets give (lines, places today, reasons, event names), keyed by the English's SHA-256.
 english_sha256	text	by
 27e60d95d12d5792d2de2c0008c651aa406f381b8d61767bf1291a9c30aaf7ca	Мешуллам, стерёгший ворота рядом с Талмоном и Аккувом во дни Иоакима (NEH 12:25-26), может быть этим привратником, названным в иной форме.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
@@ -13,3 +13,6 @@ english_sha256	text	by
 88e423166e0b16d9b39bf91620009eff7aad2e03854d07014ceb9935ddedbdae	1 Паралипоменон 15:20 называет Озиила на том месте, где 1 Паралипоменон 15:18 ставит Яазиила, между Захарией и Шемирамофом среди тех же левитов.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
 923a49aac6d99df4106da8a7a6d1b745cbc2d21ce07c020f1c7203fcccb47f77	Рама южная, названная рядом с ним в JOS 19:8, может быть тем же городом; текст этого не говорит.	Essenthos: translation by claude-opus-5-5, 2026-11-12
 b2f0ba82b9d68dcee876bbce0f7384da48e30ef2143dc662b0d0f62827b0516f	1 Паралипоменон 2:49 называет Ахсу, дочь Халева, брата Иерахмеила; это та же Ахса, если два Халева — один человек.	Essenthos: machine translation by claude-opus-5-5, 2026-11-09
+c3b39da987cc35f529e1fb44387294c7f9f9fa7ab43c386f8fba254abaa5b289	Шимей назван раматянином (1CH 27:27), но не сказано, какая это Рама: это может быть Рама, город Самуила.	Essenthos: translation by claude-opus-5-5, 2026-11-13
+c7a3b2d8fd77cd1df1f4220907a606963f1fb7fbee4439760e35789415b9094b	Шимей раматянин (1CH 27:27) мог быть родом из этого города; текст не говорит, из какой Рамы.	Essenthos: translation by claude-opus-5-5, 2026-11-13
+d98b72299bbf308534a13f36a62854fc58b794e955322a2b7d5cbcebdb0e1337	Шимей назван раматянином (1CH 27:27), но не сказано, какая это Рама: это может быть Рама Вениаминова.	Essenthos: translation by claude-opus-5-5, 2026-11-13

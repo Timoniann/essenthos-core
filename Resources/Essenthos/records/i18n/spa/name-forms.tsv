@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-12
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aarón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3820,9 +3820,7 @@ ramah	nominative	Rama	model-reading	1	declined by claude-sonnet-5, asked 2026-09
 ramah-2	nominative	Horma	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ramah-3	nominative	Rama	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ramah-4	nominative	Rama	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-ramah-5	nominative	Rama	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ramah-6	nominative	Ramat del mediodía	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
-ramah-7	nominative	Rama	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ramah-8	nominative	Rama	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ramah-9	nominative	Rama	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ramathites	nominative	Ramathita	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
