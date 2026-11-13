@@ -25,6 +25,40 @@ internal static class StrongEndpoints
     /// </summary>
     private const int MostPerPage = 200;
 
+    /// <summary>
+    /// One entry as <c>/v1/strong/{number}</c> answers it, for a number already in its canonical
+    /// spelling; null where the concordance has none. The server's copy of the entry's page is
+    /// written from the same answer.
+    /// </summary>
+    internal static async Task<StrongEntryResponse?> Detail(
+        AppDbContext db, string canonical, string? language, CancellationToken cancellationToken)
+    {
+        var entry = await db.StrongEntries
+            .Where(e => e.StrongNumber == canonical)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (entry is not null)
+        {
+            var (relations, kin) = await Relations(db, canonical, cancellationToken, language);
+            return Response(entry, await Gentilic(db, canonical, cancellationToken)) with
+            {
+                Relations = relations,
+                Kin = kin,
+                Profile = await Profile(db, canonical, cancellationToken),
+                Translation = await Translation(db, canonical, language, cancellationToken),
+            };
+        }
+
+        // A prefix morpheme is not a missing entry. ETCBC numbers the conjunction, the article
+        // and the inseparable prepositions in the H9000 range, and Strong never catalogued them
+        // because a concordance has nothing to say about a letter. Answering 404 would report
+        // 121,077 words of this corpus as broken.
+        return StrongMorphemeCodes.GetDescription(canonical) is { } morpheme
+            ? new StrongEntryResponse(canonical, null, null, null, morpheme, null, null,
+                null, null, null, null, null, true, null)
+            : null;
+    }
+
     public static void MapStrong(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/strong/{number}", async (
@@ -39,31 +73,9 @@ internal static class StrongEndpoints
                     $"\"{number}\" is not a Strong number. Write a language letter and digits, as H430 or G26."));
             }
 
-            var entry = await db.StrongEntries
-                .Where(e => e.StrongNumber == canonical)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (entry is not null)
-            {
-                var (relations, kin) = await Relations(db, canonical, cancellationToken, language);
-                return Results.Ok(Response(entry, await Gentilic(db, canonical, cancellationToken)) with
-                {
-                    Relations = relations,
-                    Kin = kin,
-                    Profile = await Profile(db, canonical, cancellationToken),
-                    Translation = await Translation(db, canonical, language, cancellationToken),
-                });
-            }
-
-            // A prefix morpheme is not a missing entry. ETCBC numbers the conjunction, the article
-            // and the inseparable prepositions in the H9000 range, and Strong never catalogued them
-            // because a concordance has nothing to say about a letter. Answering 404 would report
-            // 121,077 words of this corpus as broken.
-            return StrongMorphemeCodes.GetDescription(canonical) is { } morpheme
-                ? Results.Ok(new StrongEntryResponse(canonical, null, null, null, morpheme, null, null,
-                    null, null, null, null, null, true, null))
-                : Results.NotFound(new ProblemResponse(
-                    $"Strong's concordance has no entry {canonical}."));
+            return await Detail(db, canonical, language, cancellationToken) is { } entry
+                ? Results.Ok(entry)
+                : Results.NotFound(new ProblemResponse($"Strong's concordance has no entry {canonical}."));
         });
 
         routes.MapGet("/strong", async (

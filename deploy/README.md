@@ -315,8 +315,12 @@ inside `#root`. Caddy routes it (`(pages)` in the Caddyfile):
 | `/assets/*`, and anything with a file extension | the web container |
 | every other `GET` (a page) | the API, as `/v1/pages/<the address>` |
 
-A page the API answers with a server error or a refusal, or not within two seconds, is served by the
-web container as the plain application, so the API restarting costs the preview and never the page.
+A page the API answers with a server error or a refusal (429), or that it cannot be connected to for two
+seconds, is served by the web container as the plain application, so the API restarting costs the preview
+and never the page; it is answered as 503 with `Retry-After: 120`, so a search engine comes back for the page
+instead of indexing the bare application as it. A slow answer is waited for: the two seconds bound only the
+retries of a refused connection. `/v1/pages` draws on its own rate limit (`RateLimits:Pages`, 300 a minute,
+a burst of 100 per address), apart from the API calls the page's script makes.
 A new public page of the reader needs its address in `PageSections` (`Essenthos.Api/Pages/PageAddress.cs`).
 
 ### Search engines: once, by the owner

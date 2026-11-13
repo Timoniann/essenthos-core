@@ -111,7 +111,8 @@
     "plain": "{{reference}}. {{beside}}"
   },
   "verse": {
-    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}"
+    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
+    "original": "в оригіналі, {{text}}"
   },
   "entity": {
     "verses_one": "Згадується в {{count}} вірші Біблії.",
@@ -134,7 +135,10 @@
     "uses_one": "Вживається в Біблії {{count}} раз.",
     "uses_few": "Вживається в Біблії {{count}} рази.",
     "uses_many": "Вживається в Біблії {{count}} разів.",
-    "uses_other": "Вживається в Біблії {{count}} разу."
+    "uses_other": "Вживається в Біблії {{count}} разу.",
+    "countedIn": "Пораховано за {{text}}.",
+    "renderedBy": "Як це слово передає {{text}}",
+    "books": "Де воно стоїть, книга за книгою"
   },
   "verses": {
     "title": "{{name}}: усі вірші",

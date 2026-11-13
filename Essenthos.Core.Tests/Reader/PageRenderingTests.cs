@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Pages;
 using FluentAssertions;
 using Xunit;
@@ -302,6 +303,77 @@ public sealed class PageRenderingTests
             new RecordView(EntityKind.Person, "david", "David", "king of Israel", [], 1023, [new VerseMention(8, 4, 17, "Ruth 4:17")]));
 
         page.Body.Should().Contain("<a href=\"/people/david/verses\">All verses (1023)</a>");
+    }
+
+    [Fact]
+    public void ARecordsPageSaysItsNameInTheOriginalWhatItIsKnownForAndQuotesItsFirstVerses()
+    {
+        var page = PageViews.Record(SiteLanguage.English, PageWording.Compiled("en"),
+            new RecordView(EntityKind.Person, "moses", "Moses", "prophet", [], 795,
+                [new VerseMention(2, 2, 10, "Exodus 2:10") { Text = "She named him Moses." }])
+            {
+                Names = [new OriginalName(null, "מֹשֶׁה", "mosheh", ["H4872"], "Μωϋσῆς", "Mōüsē͂s", ["G3475"], "draw out")],
+                KnownFor = [new KnownClause("was called by God from a burning bush", "en")],
+            });
+
+        page.Body.Should().Contain(
+            "<p><span lang=\"he\">מֹשֶׁה</span> mosheh (<a href=\"/strong/H4872\">H4872</a>); " +
+            "<span lang=\"el\">Μωϋσῆς</span> Mōüsē͂s (<a href=\"/strong/G3475\">G3475</a>) — draw out</p>");
+        page.Body.Should().Contain("<li lang=\"en\">was called by God from a burning bush</li>");
+        page.Body.Should().Contain("<li><a href=\"/read/exodus/2/10\">Exodus 2:10</a> She named him Moses.</li>");
+    }
+
+    [Fact]
+    public void TheAnswersAPageWasWrittenFromFollowTheRootAndCannotCloseTheirElement()
+    {
+        var answer = new KnownForResponse("</script><script>alert(1)</script> & ‘so’", "eng", []);
+        var page = PageViews.Record(SiteLanguage.English, PageWording.Compiled("en"),
+            new RecordView(EntityKind.Person, "moses", "Moses", "prophet", [], 0, [])) with
+        {
+            Data = PageData.Of([(PageData.EntityAddress("moses", SiteLanguage.Ukrainian), PageData.Json(answer))]),
+        };
+
+        var html = PageHtml.Render(Shell, page, SiteLanguage.English, Origin);
+
+        html.Should().MatchRegex(
+            """</article></div><script type="application/json" id="page-data">\{"/v1/entities/moses\?language=ukr\\u0026prose=ukr":.*</script>""");
+        html.Should().NotContain("</script><script>alert");
+        html.Should().Contain("‘so’");
+    }
+
+    [Fact]
+    public void AStrongPageSaysHowOftenItStandsHowThePagesTextRendersItAndWhere()
+    {
+        var page = PageViews.Strong(SiteLanguage.Ukrainian, Ukrainian,
+            new StrongView("G2316", "θεός", "theós", "бог", null)
+            {
+                Uses = 1311,
+                CountedIn = "Nestle 1904",
+                RenderedIn = "Біблія Огієнка",
+                Renderings = [new StrongRenderingCount("Бог", 900), new StrongRenderingCount("Божий", 300)],
+                Books = [new StrongBookCount("Від Матвія", 50), new StrongBookCount("Від Марка", 49)],
+            });
+
+        page.Body.Should().Contain("<p>Вживається в Біблії 1311 разів. Пораховано за Nestle 1904.</p>");
+        page.Body.Should().Contain("<h2>Як це слово передає Біблія Огієнка</h2><ul><li>Бог — 900</li><li>Божий — 300</li></ul>");
+        page.Body.Should().Contain("<h2>Де воно стоїть, книга за книгою</h2><p>Від Матвія 50; Від Марка 49</p>");
+    }
+
+    [Fact]
+    public void AVersePageGivesTheVerseInTheOriginalWordByWordAfterTheChaptersCopy()
+    {
+        var verse = Mark33("Стань посередині!") with
+        {
+            Original = new OriginalVerseView("Hebrew Bible", "hbo", "בְּרֵאשִׁית בָּרָא",
+                [new OriginalWordView("בְּרֵאשִׁית", ["H7225"], null), new OriginalWordView("בָּרָא", ["H1254"], null)]),
+        };
+
+        var html = PageHtml.Render(Shell, PageViews.Verse(SiteLanguage.Ukrainian, Ukrainian, verse), SiteLanguage.Ukrainian, Origin);
+
+        html.Should().Contain(
+            "</article><section class=\"prerendered\" lang=\"uk\"><h2>Від Марка 3:3 — в оригіналі, Hebrew Bible</h2>" +
+            "<p lang=\"hbo\" dir=\"rtl\">בְּרֵאשִׁית בָּרָא</p><ol>" +
+            "<li><span lang=\"hbo\" dir=\"rtl\">בְּרֵאשִׁית</span> <a href=\"/uk/strong/H7225\">H7225</a></li>");
     }
 
     [Fact]

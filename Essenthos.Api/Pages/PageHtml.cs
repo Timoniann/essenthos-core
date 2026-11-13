@@ -42,6 +42,12 @@ internal sealed record PageContent(int Status, string Title, string Heading, str
     /// <summary>The English address this page has moved to, where the one asked for is a record's old address.</summary>
     public string? MovedTo { get; init; }
 
+    /// <summary>The API's answers the page was written from, as <see cref="PageData"/> writes them, in UTF-8; null where none.</summary>
+    public byte[]? Data { get; init; }
+
+    /// <summary>What the page takes in memory where it is kept, in bytes: its markup in UTF-16 and its answers in UTF-8.</summary>
+    public long Bytes => ((long)Body.Length * sizeof(char)) + (Data?.Length ?? 0);
+
     public static string Titled(string heading) => $"{heading} · {SiteName}";
 }
 
@@ -239,7 +245,8 @@ internal static partial class PageHtml
             html = html.Insert(headEnd, Head(page, language, origin));
         }
 
-        return Root().Replace(html, match => match.Groups[1].Value + page.Body + match.Groups[2].Value, 1);
+        var data = page.Data is { } answers ? PageData.Element(answers) : "";
+        return Root().Replace(html, match => match.Groups[1].Value + page.Body + match.Groups[2].Value + data, 1);
     }
 
     private static string Absolute(string origin, string url) =>

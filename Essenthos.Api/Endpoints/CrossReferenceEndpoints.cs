@@ -103,7 +103,7 @@ internal static class CrossReferenceEndpoints
                             set.Id == CrossReferenceSets.Default);
                     }),
             ]));
-        });
+        }).KeptUntilRelease();
 
         routes.MapGet("/cross-references/{book}/{chapter:int}", async (
             string book,

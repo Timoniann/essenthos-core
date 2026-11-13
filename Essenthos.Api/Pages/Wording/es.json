@@ -111,7 +111,8 @@
     "plain": "{{reference}}. {{beside}}"
   },
   "verse": {
-    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}"
+    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
+    "original": "en el original, {{text}}"
   },
   "entity": {
     "verses_one": "Aparece en {{count}} versículo de la Biblia.",
@@ -132,7 +133,10 @@
     "greek": "Palabra griega",
     "uses_one": "Aparece {{count}} vez en la Biblia.",
     "uses_many": "Aparece {{count}} veces en la Biblia.",
-    "uses_other": "Aparece {{count}} veces en la Biblia."
+    "uses_other": "Aparece {{count}} veces en la Biblia.",
+    "countedIn": "Contado en {{text}}.",
+    "renderedBy": "Cómo traduce la palabra {{text}}",
+    "books": "Dónde aparece, libro por libro"
   },
   "verses": {
     "title": "{{name}}: todos los versículos",

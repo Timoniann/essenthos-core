@@ -87,7 +87,7 @@ internal static partial class EncyclopediaEndpoints
         // reason to hold a chronology's worth of dates to do it.
         routes.MapGet("/chronologies", async (AppDbContext db, CancellationToken cancellationToken) =>
             Results.Ok(new ChronologyListResponse(
-                LastYearBeforeChrist, await Chronologies(db, cancellationToken))));
+                LastYearBeforeChrist, await Chronologies(db, cancellationToken)))).KeptUntilRelease();
 
         // Every period with its span in each reckoning: the timeline without its fifteen hundred
         // events, which is all a page placing one year or naming one era needs.

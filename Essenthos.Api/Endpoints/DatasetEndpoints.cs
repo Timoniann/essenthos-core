@@ -60,7 +60,7 @@ public static class DatasetEndpoints
             }).ToList();
 
             return Results.Ok(new DatasetListResponse(answers, [.. tally.Undeclared]));
-        });
+        }).KeptUntilRelease();
     }
 
     /// <summary>

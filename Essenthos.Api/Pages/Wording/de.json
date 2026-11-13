@@ -111,7 +111,8 @@
     "plain": "{{reference}}. {{beside}}"
   },
   "verse": {
-    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}"
+    "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
+    "original": "im Urtext, {{text}}"
   },
   "entity": {
     "verses_one": "Kommt in {{count}} Vers der Bibel vor.",
@@ -130,7 +131,10 @@
     "hebrew": "Hebräisches Wort",
     "greek": "Griechisches Wort",
     "uses_one": "Kommt {{count}}-mal in der Bibel vor.",
-    "uses_other": "Kommt {{count}}-mal in der Bibel vor."
+    "uses_other": "Kommt {{count}}-mal in der Bibel vor.",
+    "countedIn": "Gezählt in {{text}}.",
+    "renderedBy": "Wie {{text}} das Wort wiedergibt",
+    "books": "Wo es steht, Buch für Buch"
   },
   "verses": {
     "title": "{{name}}: alle Verse",

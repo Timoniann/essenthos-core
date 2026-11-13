@@ -128,7 +128,17 @@ internal sealed class PageLoader(
         foreach (var reference in references)
             labels[reference] = wording.Reference(await BookName(address.Language, wording, reference.BookOrdinal, cancellationToken),
                 reference.Chapter, reference.Verse);
-        return PageViews.Occupation(address.Language, wording, occupation, labels);
+        // The reader's page asks for the first people a page at a time; they are the first of these,
+        // so that answer is carried as it would be given rather than asked of the database again.
+        var first = occupation with
+        {
+            Take = PageData.OccupationPeople,
+            People = [.. occupation.People.Take(PageData.OccupationPeople)],
+        };
+        return PageViews.Occupation(address.Language, wording, occupation, labels) with
+        {
+            Data = PageData.Of([(PageData.OccupationAddress(occupation.Occupation.Slug, address.Language), PageData.Json(first))]),
+        };
     }
 
     /// <summary>
@@ -187,7 +197,12 @@ internal sealed class PageLoader(
                     address.Chapter,
                     chapterCount,
                     verses,
-                    TextName(wording, text)) { TextLanguage = StructuredData.LanguageTag(text.Language) });
+                    TextName(wording, text)) { TextLanguage = StructuredData.LanguageTag(text.Language) }) with
+                {
+                    Data = await Pane(text, address.Book, address.Chapter, cancellationToken) is { } pane
+                        ? PageData.Of([(PageData.PaneAddress(text.Slug, BookReferences.Slug(address.Book), address.Chapter), pane)])
+                        : null,
+                };
             }
         }
 
@@ -226,6 +241,7 @@ internal sealed class PageLoader(
                 Verses = verses,
                 ChapterCount = chapterCount,
                 TextLanguage = StructuredData.LanguageTag(text.Language),
+                Original = await OriginalVerse(address, wording, cancellationToken),
             });
         }
 
@@ -263,6 +279,10 @@ internal sealed class PageLoader(
         }
 
         var language = address.Language;
+        // The record as the reader's script asks for it in this language: the page carries it, and its
+        // names and what the person is known for are written from it.
+        var detail = await EncyclopediaEndpoints.Detail(
+            db, settings, places, entity.Slug, language.Corpus, language.Corpus, cancellationToken);
         var localDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken))
             .GetValueOrDefault(entity.Id);
         // The structured line where it is phrased in the page's language — every language on an English
@@ -288,6 +308,8 @@ internal sealed class PageLoader(
             .OrderBy(v => v.CanonicalBook).ThenBy(v => v.CanonicalChapter).ThenBy(v => v.CanonicalVerse)
             .Take(VersesNamed)
             .ToListAsync(cancellationToken);
+        var quoted = await TextsAt(
+            language, [.. first.Select(v => Address(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse))], cancellationToken);
         var mentions = new List<VerseMention>(first.Count);
         foreach (var verse in first)
         {
@@ -296,7 +318,10 @@ internal sealed class PageLoader(
                 wording.Reference(
                     await BookName(language, wording, verse.CanonicalBook, cancellationToken),
                     verse.CanonicalChapter,
-                    verse.CanonicalVerse)));
+                    verse.CanonicalVerse))
+            {
+                Text = quoted.GetValueOrDefault(Address(verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse)),
+            });
         }
 
         return PageViews.Record(language, wording, new RecordView(
@@ -315,7 +340,38 @@ internal sealed class PageLoader(
             Image = await Picture(entity.Slug, language.Corpus, cancellationToken),
             Coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null,
             SameAs = await SameAs(entity.Id, cancellationToken),
-        });
+            Names = detail is null ? [] : OriginalNames(detail, language),
+            KnownFor = detail?.KnownFor is { } known
+                ? [.. known.Select(clause => new KnownClause(clause.Text, StructuredData.LanguageTag(clause.Language)))]
+                : [],
+        }) with
+        {
+            Data = detail is null ? null : PageData.Of([(PageData.EntityAddress(entity.Slug, language), PageData.Json(detail))]),
+        };
+    }
+
+    /// <summary>
+    /// The record's names as the Hebrew or the Greek writes them, each once, with what it means in the
+    /// page's language where that is said; a name other than the page's heading is named first.
+    /// </summary>
+    private static IReadOnlyList<OriginalName> OriginalNames(EntityResponse detail, SiteLanguage language)
+    {
+        var heading = detail.LocalName ?? detail.Name;
+        return
+        [
+            .. detail.Names
+                .Where(name => name.Hebrew is not null || name.Greek is not null)
+                .Select(name =>
+                {
+                    var label = name.Printed ?? name.LocalLabel ?? (language.IsEnglish ? name.Label : null);
+                    return new OriginalName(
+                        label is null || string.Equals(label, heading, StringComparison.OrdinalIgnoreCase) ? null : label,
+                        name.Hebrew, name.HebrewTransliterated, [.. name.HebrewStrongNumbers],
+                        name.Greek, name.GreekTransliterated, [.. name.GreekStrongNumbers],
+                        name.LocalMeaning ?? (language.IsEnglish ? name.Meaning : null));
+                })
+                .DistinctBy(name => (name.Label, name.Hebrew, name.Greek)),
+        ];
     }
 
     private async Task<(double Latitude, double Longitude)?> Coordinates(int entityId, CancellationToken cancellationToken) =>
@@ -432,31 +488,56 @@ internal sealed class PageLoader(
     {
         var number = address.Slug!;
         var language = address.Language;
-        var entry = await db.StrongEntries
-            .Where(e => e.StrongNumber == number)
-            .Select(e => new { e.StrongNumber, e.Lemma, e.Transliteration, e.Definition, e.Derivation, e.DetailedDefinition })
-            .FirstOrDefaultAsync(cancellationToken);
-        if (entry is null)
+        if (await StrongEndpoints.Detail(db, number, language.Corpus, cancellationToken) is not { } entry)
         {
-            return StrongMorphemeCodes.GetDescription(number) is { } morpheme
-                ? PageViews.Strong(language, wording, new StrongView(number, null, null, morpheme, null))
-                : null;
+            return null;
         }
 
-        // The definition in the page's language where the corpus has it; the lexicon's English otherwise.
-        var translated = language.IsEnglish
-            ? null
-            : await db.StrongEntryTranslations
-                .Where(t => t.StrongNumber == number && t.Language == language.Corpus)
-                .Select(t => new { t.Definition, t.Derivation, t.DetailedDefinition })
-                .FirstOrDefaultAsync(cancellationToken);
-        return PageViews.Strong(language, wording, new StrongView(
+        var answers = new List<(string, string)> { (PageData.StrongAddress(number, language), PageData.Json(entry)) };
+        if (entry.Morpheme)
+        {
+            return PageViews.Strong(language, wording, new StrongView(number, null, null, entry.Definition, null)) with
+            {
+                Data = PageData.Of(answers),
+            };
+        }
+
+        // How the page's own text renders the number and where it stands, as the reader's page asks
+        // for them in that text: both are carried, and both are written out for whoever runs no script.
+        var view = new StrongView(
             entry.StrongNumber,
             entry.Lemma,
             entry.Transliteration,
-            translated?.Definition ?? entry.Definition,
-            translated?.Derivation ?? entry.Derivation,
-            translated?.DetailedDefinition ?? entry.DetailedDefinition));
+            entry.Translation?.Definition ?? entry.Definition,
+            entry.Translation?.Derivation ?? entry.Derivation,
+            entry.Translation?.DetailedDefinition ?? entry.DetailedDefinition);
+        if (await Chosen(language, cancellationToken) is { } chosen && await canon.Text(chosen.Slug, cancellationToken) is { } text)
+        {
+            var renderings = await StrongEndpoints.RenderingsOf(
+                db, number, text.Id, text.Slug, PageData.StrongRenderings, cancellationToken);
+            answers.Add((PageData.StrongRenderingsAddress(number, chosen.Slug), PageData.Json(renderings)));
+            var map = await StrongBookEndpoints.Map(db, number, [text], cancellationToken);
+            answers.Add((PageData.StrongBooksAddress(number, chosen.Slug), PageData.Json(map)));
+            var books = new List<StrongBookCount>();
+            foreach (var row in map.Books.Where(row => row.Occurrences > 0).OrderBy(row => row.BookOrdinal))
+            {
+                books.Add(new StrongBookCount(await BookName(language, wording, row.BookOrdinal, cancellationToken), row.Occurrences));
+            }
+
+            var witness = map.Edition is { } edition
+                ? (await Texts(cancellationToken)).FirstOrDefault(t => t.Slug == edition)
+                : null;
+            view = view with
+            {
+                Uses = map.Occurrences > 0 ? map.Occurrences : null,
+                CountedIn = witness is null ? map.Edition : TextName(wording, witness),
+                RenderedIn = TextName(wording, chosen),
+                Renderings = [.. renderings.Renderings.Select(r => new StrongRenderingCount(r.Text, r.Count))],
+                Books = books,
+            };
+        }
+
+        return PageViews.Strong(language, wording, view) with { Data = PageData.Of(answers) };
     }
 
     /// <summary>
@@ -699,6 +780,97 @@ internal sealed class PageLoader(
             .Select(r => (int?)r.VerseId)
             .FirstOrDefaultAsync(cancellationToken);
         return verseId is { } id ? (await Said([id], cancellationToken)).GetValueOrDefault(id) : null;
+    }
+
+    /// <summary>A chapter's pane in one text as <c>/v1/panes</c> sends it, ready to carry; null where the corpus keeps none.</summary>
+    private async Task<string?> Pane(ReaderText text, int book, int chapter, CancellationToken cancellationToken)
+    {
+        var body = await db.Panes.AsNoTracking()
+            .Where(p => p.TextId == text.Id && p.CanonicalBook == book && p.CanonicalChapter == chapter)
+            .Select(p => p.Body)
+            .FirstOrDefaultAsync(cancellationToken);
+        return body is null ? null : PageData.Written(Panes.Unpack(body));
+    }
+
+    /// <summary>The originals a verse's own words are quoted from, the first that holds the book, as the reader orders them.</summary>
+    private static readonly string[] Originals = ["BHSA", "NESTLE1904", "SWETE", "GRCBRENT"];
+
+    private static readonly char[] StrongSeparators = [' ', ',', ';', '/', '+', '|', '&'];
+
+    /// <summary>
+    /// The verse in the original, word by word, each with its Strong numbers and, on an English page,
+    /// the gloss the edition gives it; null where no original holds the verse.
+    /// </summary>
+    private async Task<OriginalVerseView?> OriginalVerse(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    {
+        var texts = await Texts(cancellationToken);
+        var original = Originals
+            .Select(slug => texts.FirstOrDefault(t => t.Slug == slug))
+            .FirstOrDefault(t => t is not null && t.Covers(address.Book));
+        if (original is null)
+        {
+            return null;
+        }
+
+        var verseIds = await db.VerseReferences
+            .Where(r => r.IsPrimary && r.CanonicalBook == address.Book && r.CanonicalChapter == address.Chapter
+                        && r.CanonicalVerse == address.Verse && r.Verse!.TextId == original.Id)
+            .Select(r => r.VerseId)
+            .ToListAsync(cancellationToken);
+        if (verseIds.Count == 0)
+        {
+            return null;
+        }
+
+        var words = await db.Words
+            .Where(w => verseIds.Contains(w.VerseId) && !w.Elided)
+            .OrderBy(w => w.VerseId).ThenBy(w => w.Position)
+            .Select(w => new { w.Surface, w.Trailer, w.StrongNumber, w.Gloss })
+            .ToListAsync(cancellationToken);
+        if (words.Count == 0)
+        {
+            return null;
+        }
+
+        // A Hebrew word is stored as its parts (the conjunction, the article, a preposition, the word),
+        // the parts joined with no space between; they are shown as the one word the verse prints.
+        var english = address.Language.IsEnglish;
+        var shown = new List<OriginalWordView>();
+        var surface = new System.Text.StringBuilder();
+        var numbers = new List<string>();
+        var glosses = new List<string>();
+        for (var i = 0; i < words.Count; i++)
+        {
+            var word = words[i];
+            surface.Append(word.Surface);
+            numbers.AddRange((word.StrongNumber ?? "").Split(StrongSeparators, StringSplitOptions.RemoveEmptyEntries)
+                .Select(StrongNumbers.Normalize).OfType<string>()
+                .Where(n => StrongMorphemeCodes.GetDescription(n) is null));
+            if (english && word.Gloss?.Trim() is { Length: > 0 } gloss && gloss.Any(char.IsLetterOrDigit))
+            {
+                glosses.Add(gloss);
+            }
+
+            if (word.Trailer.Length == 0 && i < words.Count - 1)
+            {
+                continue;
+            }
+
+            if (PageHtml.Plain(surface.ToString()) is { Length: > 0 } printed)
+            {
+                shown.Add(new OriginalWordView(printed, [.. numbers.Distinct()], glosses.Count > 0 ? string.Join(" ", glosses) : null));
+            }
+
+            surface.Clear();
+            numbers.Clear();
+            glosses.Clear();
+        }
+
+        return new OriginalVerseView(
+            TextName(wording, original),
+            StructuredData.LanguageTag(original.Language),
+            PageHtml.Plain(string.Concat(words.Select(w => w.Surface + w.Trailer))),
+            shown);
     }
 
     private async Task<Dictionary<int, string>> Said(List<int> verseIds, CancellationToken cancellationToken)

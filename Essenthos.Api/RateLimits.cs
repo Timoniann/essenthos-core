@@ -41,7 +41,15 @@ internal sealed record RateLimitSettings(
     RateLimit Expensive,
     RateLimit SignIn,
     RateLimit Writing,
-    RateLimit Reports);
+    RateLimit Reports)
+{
+    /// <summary>
+    /// The reader's pages as the server writes them (<c>/v1/pages</c>), counted apart from the API: a
+    /// crawler reading pages and running each page's script would otherwise spend the allowance its
+    /// script needs on the pages themselves, and be refused both.
+    /// </summary>
+    public RateLimit Pages { get; init; } = RateLimits.DefaultPages;
+}
 
 /// <summary>
 /// How much one client may ask of the API. Everything is counted per address — the reader's own, as
@@ -49,7 +57,8 @@ internal sealed record RateLimitSettings(
 /// instead, so readers sharing one address at a school or a church do not share one allowance for
 /// their bookmarks.
 ///
-/// Four allowances, and a request can draw on more than one: every request on <c>Reading</c>; a search,
+/// Four allowances, and a request can draw on more than one: every request on <c>Reading</c> (a page the
+/// server writes on <c>Pages</c> instead); a search,
 /// a concordance or a lexicon query on <c>Expensive</c> as well, because those are the queries that
 /// cost the database a second where a chapter costs it a tenth; sign-in on <c>SignIn</c>; and anything
 /// that changes an account on <c>Writing</c>. Suggestions keep their daily caps on top. A browser's
@@ -75,6 +84,10 @@ internal static class RateLimits
     public static readonly RateLimit DefaultWriting = new(60, 30);
 
     public static readonly RateLimit DefaultReports = new(60, 30);
+
+    public static readonly RateLimit DefaultPages = new(300, 100);
+
+    private const string PagesPrefix = "/v1/pages";
 
     private const string SignInPrefix = "/v1/auth/";
 
@@ -105,7 +118,10 @@ internal static class RateLimits
             Limit(section, "Expensive", DefaultExpensive),
             Limit(section, "SignIn", DefaultSignIn),
             Limit(section, "Writing", DefaultWriting),
-            Limit(section, "Reports", DefaultReports));
+            Limit(section, "Reports", DefaultReports))
+        {
+            Pages = Limit(section, "Pages", DefaultPages),
+        };
     }
 
     public static IServiceCollection AddRateLimits(this IServiceCollection services, RateLimitSettings settings)
@@ -124,7 +140,9 @@ internal static class RateLimits
                 PartitionedRateLimiter.Create<HttpContext, string>(context =>
                     context.Request.Path.StartsWithSegments(HealthPrefix.TrimEnd('/')) || IsCspReport(context.Request)
                         ? RateLimitPartition.GetNoLimiter("")
-                        : Bucket(Client(context), settings.Reading)),
+                        : context.Request.Path.StartsWithSegments(PagesPrefix)
+                            ? Bucket("pages:" + Client(context), settings.Pages)
+                            : Bucket(Client(context), settings.Reading)),
                 PartitionedRateLimiter.Create<HttpContext, string>(context =>
                     IsSignIn(context.Request)
                         ? Bucket(Client(context), settings.SignIn)
