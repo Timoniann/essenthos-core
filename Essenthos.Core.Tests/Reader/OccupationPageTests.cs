@@ -31,7 +31,7 @@ public sealed class OccupationPageTests : IDisposable
         _database = database;
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM occupation; DELETE FROM entity");
-        var person = new Entity { Slug = "luke", Name = "Luke", Kind = EntityKind.Person, Sex = "male", Source = "test", SourceId = "test:luke" };
+        var person = new Entity { Slug = "luke", Name = "Luke", Kind = EntityKind.Person, Sex = "male" };
         _db.Entities.Add(person);
         _db.SaveChanges();
         _db.EntityNameForms.Add(new EntityNameForm { EntityId = person.Id, Language = "ukr", Form = "Лука",

@@ -54,7 +54,7 @@ public sealed class ForeignNameTests : IDisposable
         _jesus = Person("jesus", "Jesus", "Ἰησοῦς", "G2424", "Ісус");
         _anointed = new Entity
         {
-            Kind = EntityKind.Title, Slug = "anointed", Name = "Anointed", SourceId = "anointed", Source = "a test",
+            Kind = EntityKind.Title, Slug = "anointed", Name = "Anointed",
             Names = [new EntityName { Label = "Christ", Greek = "Χριστός", GreekStrongNumber = "G5547", Kind = "title" }],
         };
         _db.Entities.Add(_anointed);
@@ -91,7 +91,7 @@ public sealed class ForeignNameTests : IDisposable
     {
         var person = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = label, SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = label,
             Names = [new EntityName { Label = label, Greek = greek, GreekStrongNumber = number, Kind = "proper name" }],
         };
         _db.Entities.Add(person);

@@ -127,7 +127,7 @@ public sealed class PlaceNameFromSourceTests : IDisposable
     {
         var place = new Entity
         {
-            Kind = EntityKind.Place, Slug = slug, Name = name, SourceId = $"test:{slug}", Source = "test",
+            Kind = EntityKind.Place, Slug = slug, Name = name,
         };
         _db.Entities.Add(place);
         return place;

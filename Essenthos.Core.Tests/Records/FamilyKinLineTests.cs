@@ -243,7 +243,7 @@ public sealed class FamilyKinLineTests : IDisposable
     {
         var person = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex, SourceId = slug, Source = "a test",
+            Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex,
         };
         if (nominative is not null)
         {

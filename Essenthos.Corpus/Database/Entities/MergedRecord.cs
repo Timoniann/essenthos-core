@@ -37,12 +37,6 @@ public class MergedRecord
 
     public string? Distinguisher { get; set; }
 
-    /// <summary>The dataset's own id for the folded record: <c>person:Hilkiah_6</c>.</summary>
-    public required string RecordSourceId { get; set; }
-
-    /// <summary>The dataset the folded record came from, as its <see cref="Entity.Source"/> said.</summary>
-    public required string RecordSource { get; set; }
-
     /// <summary>What established that the two are one, and how surely.</summary>
     public LinkMethod Method { get; set; }
 

@@ -118,7 +118,7 @@ public sealed class NamesFirstPassTests : IDisposable
 
     private Entity Person(string slug)
     {
-        var entity = new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test" };
+        var entity = new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug };
         _db.Entities.Add(entity);
         return entity;
     }

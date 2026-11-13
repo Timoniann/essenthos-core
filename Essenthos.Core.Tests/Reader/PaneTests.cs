@@ -62,8 +62,8 @@ public sealed class PaneTests : IDisposable
     public async Task AWordThatNamesARecordCarriesItsRoleAndOriginAndTheBaseTextsReadingAsASecondCard()
     {
         var (english, hebrew) = Pair();
-        var joshua = new Entity { Kind = EntityKind.Person, Slug = "joshua", Name = "Joshua", SourceId = "test:joshua", Source = "test" };
-        var hoshea = new Entity { Kind = EntityKind.Person, Slug = "hoshea", Name = "Hoshea", SourceId = "test:hoshea", Source = "test" };
+        var joshua = new Entity { Kind = EntityKind.Person, Slug = "joshua", Name = "Joshua" };
+        var hoshea = new Entity { Kind = EntityKind.Person, Slug = "hoshea", Name = "Hoshea" };
         var word = _db.WordAt(english, 1, 1, 3);
         _db.WordEntities.AddRange(
             new WordEntity

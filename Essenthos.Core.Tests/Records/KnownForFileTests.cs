@@ -25,7 +25,7 @@ public sealed class KnownForFileTests : IDisposable
     {
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
-        _noah = new Entity { Kind = EntityKind.Person, Slug = "noah", Name = "Noah", SourceId = "noah", Source = "a test" };
+        _noah = new Entity { Kind = EntityKind.Person, Slug = "noah", Name = "Noah" };
         _db.Entities.Add(_noah);
         _db.SaveChanges();
     }

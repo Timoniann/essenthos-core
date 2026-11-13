@@ -333,7 +333,7 @@ public sealed class StoryPlacesTests : IDisposable
 
     private Entity Record(EntityKind kind, string slug, string name)
     {
-        var record = new Entity { Kind = kind, Slug = slug, Name = name, SourceId = $"test:{slug}", Source = "test" };
+        var record = new Entity { Kind = kind, Slug = slug, Name = name };
         _db.Entities.Add(record);
         return record;
     }

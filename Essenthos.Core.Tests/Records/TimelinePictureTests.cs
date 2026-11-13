@@ -82,7 +82,7 @@ public sealed class TimelinePictureTests : IDisposable
 
     private Entity Entity(EntityKind kind, string slug, string name)
     {
-        var entity = new Entity { Kind = kind, Slug = slug, Name = name, SourceId = $"test:{slug}", Source = "test" };
+        var entity = new Entity { Kind = kind, Slug = slug, Name = name };
         _db.Entities.Add(entity);
         return entity;
     }

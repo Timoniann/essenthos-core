@@ -327,7 +327,7 @@ public sealed class EntityRenderingTests : IDisposable
 
     private Entity Record(string slug, string name)
     {
-        var entity = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, SourceId = slug, Source = "a test" };
+        var entity = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name };
         _db.Entities.Add(entity);
         return entity;
     }
@@ -393,7 +393,7 @@ public sealed class EntityRenderingTests : IDisposable
 
     private Entity Thing(string slug, string name)
     {
-        var entity = new Entity { Kind = EntityKind.Object, Slug = slug, Name = name, SourceId = slug, Source = "a test" };
+        var entity = new Entity { Kind = EntityKind.Object, Slug = slug, Name = name };
         _db.Entities.Add(entity);
         return entity;
     }
@@ -448,7 +448,7 @@ public sealed class EntityRenderingTests : IDisposable
         var open = Corpus.Add(_db, "NPU2022", TextKind.Translation, "ukr",
             (2, 1, ["Галілея"]), (2, 2, ["Галілеї"]), (2, 3, ["Галілеї"]), (2, 4, ["Галілеї"]),
             (2, 5, ["Галілеї"]), (2, 6, ["Галілею"]), (2, 7, ["Ґаліл"]));
-        var galilee = new Entity { Kind = EntityKind.Place, Slug = "galilee", Name = "Galilee", SourceId = "galilee", Source = "a test" };
+        var galilee = new Entity { Kind = EntityKind.Place, Slug = "galilee", Name = "Galilee" };
         _db.Entities.Add(galilee);
         _db.SaveChanges();
         for (var verse = 1; verse <= 7; verse++)
@@ -499,7 +499,7 @@ public sealed class EntityRenderingTests : IDisposable
         var open = Corpus.Add(_db, "NPU2022", TextKind.Translation, "ukr",
             (2, 1, ["Галілеї"]), (2, 2, ["Галілеї"]), (2, 3, ["Галілеї"]), (2, 4, ["Галілеї"]),
             (2, 5, ["Галілеї"]), (2, 6, ["Галілея"]), (2, 7, ["Ґаліл"]));
-        var galilee = new Entity { Kind = EntityKind.Place, Slug = "galilee", Name = "Galilee", SourceId = "galilee", Source = "a test" };
+        var galilee = new Entity { Kind = EntityKind.Place, Slug = "galilee", Name = "Galilee" };
         _db.Entities.Add(galilee);
         _db.SaveChanges();
         for (var verse = 1; verse <= 7; verse++)

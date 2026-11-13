@@ -41,7 +41,7 @@ public sealed class AnotherNameForEndpointTests : IDisposable
 
     private Entity Place(string slug, string name)
     {
-        var place = new Entity { Kind = EntityKind.Place, Slug = slug, Name = name, SourceId = $"test:{slug}", Source = "test" };
+        var place = new Entity { Kind = EntityKind.Place, Slug = slug, Name = name };
         _db.Entities.Add(place);
         return place;
     }

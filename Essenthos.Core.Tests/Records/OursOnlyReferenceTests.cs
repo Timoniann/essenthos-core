@@ -40,7 +40,7 @@ public sealed class OursOnlyReferenceTests : IDisposable
 
         _solomon = new Entity
         {
-            Kind = EntityKind.Person, Slug = "solomon", Name = "Solomon", SourceId = "test:solomon", Source = "test",
+            Kind = EntityKind.Person, Slug = "solomon", Name = "Solomon",
         };
         _db.Entities.Add(_solomon);
         _db.SaveChanges();
@@ -113,7 +113,7 @@ public sealed class OursOnlyReferenceTests : IDisposable
     {
         var shallum = new Entity
         {
-            Kind = EntityKind.Person, Slug = "shallum", Name = "Shallum", SourceId = "test:shallum", Source = "test",
+            Kind = EntityKind.Person, Slug = "shallum", Name = "Shallum",
         };
         _db.Entities.Add(shallum);
         await _db.SaveChangesAsync();

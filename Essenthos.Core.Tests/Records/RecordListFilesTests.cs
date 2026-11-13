@@ -25,10 +25,6 @@ public sealed class RecordListFilesTests : IDisposable
         foreach (var file in RecordFiles.All.Where(f => f.Listed is null))
         {
             file.Order(file.Export).Should().NotBeEmpty(file.Product);
-            if (file.ExportLoaded is { } loaded)
-            {
-                file.Order(loaded).Should().Equal(file.Order(file.Export), file.Product);
-            }
         }
     }
 

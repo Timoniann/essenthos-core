@@ -220,8 +220,6 @@ public sealed class BookAboutTests : IDisposable
             Kind = kind,
             Slug = slug,
             Name = char.ToUpperInvariant(slug[0]) + slug[1..],
-            SourceId = $"test:{slug}",
-            Source = "test",
         };
         _db.Entities.Add(entity);
         return entity;

@@ -173,7 +173,5 @@ public sealed class EntityLetterTests : IDisposable
             Kind = kind,
             Slug = slug,
             Name = name,
-            SourceId = $"test:{slug}",
-            Source = "test",
         });
 }

@@ -194,8 +194,6 @@ public sealed class FamilyEndpointTests : IDisposable
             Slug = slug,
             Name = char.ToUpperInvariant(slug[0]) + slug[1..],
             Sex = sex,
-            SourceId = $"test:{slug}",
-            Source = "test",
         };
         _db.Entities.Add(entity);
         return entity;

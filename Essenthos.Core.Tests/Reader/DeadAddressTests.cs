@@ -54,8 +54,8 @@ public sealed class DeadAddressTests : IDisposable
             (49, 1, ["שמעו", "זאת"]),
             (49, 2, ["גם", "בני", "אדם"]));
         _db.Entities.AddRange(
-            new Entity { Slug = "gibbar", Name = "Gibbar", Kind = EntityKind.Person, Source = "test", SourceId = "test:gibbar" },
-            new Entity { Slug = "bether", Name = "Bether", Kind = EntityKind.Place, Source = "test", SourceId = "test:bether" });
+            new Entity { Slug = "gibbar", Name = "Gibbar", Kind = EntityKind.Person },
+            new Entity { Slug = "bether", Name = "Bether", Kind = EntityKind.Place });
         _db.SaveChanges();
 
         _services = new ServiceCollection().AddScoped(_ => database.NewContext()).BuildServiceProvider();
@@ -125,7 +125,7 @@ public sealed class DeadAddressTests : IDisposable
         (await Load("/places/nowhere-at-all")).Status.Should().Be(StatusCodes.Status404NotFound);
 
         (await MergedAddresses.Current(_db, "gibbar-2", default)).Should().Be("gibbar");
-        _db.Entities.Add(new Entity { Slug = "river-2", Name = "River", Kind = EntityKind.Place, Source = "test", SourceId = "test:river" });
+        _db.Entities.Add(new Entity { Slug = "river-2", Name = "River", Kind = EntityKind.Place });
         await _db.SaveChangesAsync();
         (await MergedAddresses.Current(_db, "river-2", default)).Should().Be("river-2", "a record holding the address again keeps it");
     }

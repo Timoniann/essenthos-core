@@ -263,7 +263,15 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
     internal async Task<List<WikipediaRecord>> Records(CancellationToken cancellationToken)
     {
         var entities = await db.Entities.AsNoTracking()
-            .Select(e => new { e.Id, e.Slug, e.Kind, e.Name, e.Distinguisher, e.Sex, e.OpenBibleId })
+            .Select(e => new
+            {
+                e.Id, e.Slug, e.Kind, e.Name, e.Distinguisher, e.Sex,
+                OpenBibleId = e.ExternalIds
+                    .Where(x => x.Dataset == Datasets.OpenBibleId && x.Relation == RecordExternalRelations.SameAs)
+                    .OrderBy(x => x.ExternalId)
+                    .Select(x => x.ExternalId)
+                    .FirstOrDefault(),
+            })
             .ToListAsync(cancellationToken);
 
         var names = new Dictionary<int, HashSet<string>>();

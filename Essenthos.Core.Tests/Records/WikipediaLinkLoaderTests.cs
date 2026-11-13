@@ -111,7 +111,7 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
     {
         var entity = new Entity
         {
-            Kind = EntityKind.Person, Slug = slug, Name = name, Distinguisher = line, SourceId = $"test:{slug}", Source = "test",
+            Kind = EntityKind.Person, Slug = slug, Name = name, Distinguisher = line,
         };
         _db.Entities.Add(entity);
         _db.SaveChanges();

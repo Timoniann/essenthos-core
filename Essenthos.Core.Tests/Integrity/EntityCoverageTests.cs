@@ -110,8 +110,6 @@ public sealed class EntityCoverageTests : IDisposable
             Kind = kind,
             Slug = slug,
             Name = slug,
-            SourceId = $"test:{slug}",
-            Source = "test",
         };
         _db.Entities.Add(entity);
         return entity;

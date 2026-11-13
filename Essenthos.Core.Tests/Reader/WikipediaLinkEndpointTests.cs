@@ -24,7 +24,7 @@ public sealed class WikipediaLinkEndpointTests : IDisposable
     {
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
-        _moses = new Entity { Kind = EntityKind.Person, Slug = "moses", Name = "Moses", SourceId = "test:moses", Source = "test" };
+        _moses = new Entity { Kind = EntityKind.Person, Slug = "moses", Name = "Moses" };
         _db.Entities.Add(_moses);
         _db.SaveChanges();
         _db.EntityWikipedia.AddRange(
@@ -84,7 +84,7 @@ public sealed class WikipediaLinkEndpointTests : IDisposable
     [InlineData("eng")]
     public async Task ARecordWithOnlyAnEnglishArticleSendsEveryReaderToIt(string asked)
     {
-        var elishah = new Entity { Kind = EntityKind.Person, Slug = "elishah", Name = "Elishah", SourceId = "test:elishah", Source = "test" };
+        var elishah = new Entity { Kind = EntityKind.Person, Slug = "elishah", Name = "Elishah" };
         _db.Entities.Add(elishah);
         await _db.SaveChangesAsync();
         _db.EntityWikipedia.Add(new EntityWikipedia
@@ -103,7 +103,7 @@ public sealed class WikipediaLinkEndpointTests : IDisposable
     [Fact]
     public async Task ARecordWithNeitherTheReadersNorAnEnglishArticleGivesNone()
     {
-        var hiel = new Entity { Kind = EntityKind.Person, Slug = "hiel", Name = "Hiel", SourceId = "test:hiel", Source = "test" };
+        var hiel = new Entity { Kind = EntityKind.Person, Slug = "hiel", Name = "Hiel" };
         _db.Entities.Add(hiel);
         await _db.SaveChangesAsync();
         _db.EntityWikipedia.Add(new EntityWikipedia
@@ -119,7 +119,7 @@ public sealed class WikipediaLinkEndpointTests : IDisposable
     [Fact]
     public async Task ARecordWithNoLinkGivesNone()
     {
-        var other = new Entity { Kind = EntityKind.Person, Slug = "aaron", Name = "Aaron", SourceId = "test:aaron", Source = "test" };
+        var other = new Entity { Kind = EntityKind.Person, Slug = "aaron", Name = "Aaron" };
         _db.Entities.Add(other);
         await _db.SaveChangesAsync();
 

@@ -81,8 +81,7 @@ public sealed class PlaceReferenceReadingTests : IDisposable
 
     private static Entity Place(string slug, string openBibleId) => new()
     {
-        Kind = EntityKind.Place, Slug = slug, Name = slug, OpenBibleId = openBibleId,
-        SourceId = $"test:{slug}", Source = "test",
+        Kind = EntityKind.Place, Slug = slug, Name = slug,
         ExternalIds = { new RecordExternalId { Dataset = "openbible", ExternalId = openBibleId, Relation = RecordExternalRelations.SameAs } },
     };
 

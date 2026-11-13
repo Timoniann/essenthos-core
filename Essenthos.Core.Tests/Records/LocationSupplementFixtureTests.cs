@@ -52,11 +52,7 @@ public sealed class LocationSupplementFixtureTests : IDisposable
                      ("mountnebo", "aefaa2d"), ("susa", "a033b84"), ("shushan", (string?)null), ("wilderness-of-judah", null),
                  })
         {
-            _db.Entities.Add(new Entity
-            {
-                Slug = slug, Name = slug, Kind = EntityKind.Place, Source = "test", SourceId = "test:" + slug,
-                OpenBibleId = gazetteer,
-            });
+            _db.Entities.Add(new Entity { Slug = slug, Name = slug, Kind = EntityKind.Place }.WithOpenBibleId(gazetteer));
         }
 
         await _db.SaveChangesAsync();

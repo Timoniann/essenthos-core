@@ -31,7 +31,7 @@ public sealed class NameSpellingsTests : IDisposable
 
         _joseph = new Entity
         {
-            Kind = EntityKind.Person, Slug = "joseph-7", Name = "Joseph", SourceId = "Joseph_7", Source = "a test",
+            Kind = EntityKind.Person, Slug = "joseph-7", Name = "Joseph",
         };
         _joseph.Names.Add(new EntityName { Label = "Joseph", Kind = "proper name", GreekStrongNumber = "G2501" });
         _joseph.Names.Add(new EntityName { Label = "Joses", Kind = "proper name", GreekStrongNumber = "G2500" });

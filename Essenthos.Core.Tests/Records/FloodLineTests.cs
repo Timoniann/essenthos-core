@@ -131,7 +131,7 @@ public sealed class FloodLineTests : IDisposable
 
     private void Person(string slug, string name, string sex)
     {
-        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex, SourceId = slug, Source = "a test" };
+        var person = new Entity { Kind = EntityKind.Person, Slug = slug, Name = name, Sex = sex };
         _db.Entities.Add(person);
         _people[slug] = person;
     }

@@ -55,7 +55,7 @@ public sealed class WordNamesSeveralTests : IDisposable
 
     private Entity Add(string slug, EntityKind kind)
     {
-        var entity = new Entity { Kind = kind, Slug = slug, Name = slug, SourceId = slug, Source = "a test" };
+        var entity = new Entity { Kind = kind, Slug = slug, Name = slug };
         _db.Entities.Add(entity);
         _db.SaveChanges();
         return entity;

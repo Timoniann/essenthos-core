@@ -53,8 +53,6 @@ public sealed class WellKnownRelationshipTests(WitnessDatabase database) : IAsyn
                 Kind = EnumSpelling.ToEntityKind(kind.Value),
                 Slug = kind.Key,
                 Name = kind.Key,
-                SourceId = $"test:{kind.Key}",
-                Source = "test",
             });
         db.Entities.AddRange(entities.Values);
         await db.SaveChangesAsync();

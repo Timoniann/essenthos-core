@@ -104,7 +104,7 @@ public sealed class NameSearchTests : IDisposable
 
     private Entity Record(string slug, string name, EntityKind kind = EntityKind.Person)
     {
-        var entity = new Entity { Kind = kind, Slug = slug, Name = name, SourceId = slug, Source = "a test" };
+        var entity = new Entity { Kind = kind, Slug = slug, Name = name };
         _db.Entities.Add(entity);
         return entity;
     }

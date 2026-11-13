@@ -7,35 +7,21 @@ internal static partial class RecordFiles
     private static string NullableRef(string alias, string prefix = "canonical_") =>
         $"CASE WHEN {alias}.{prefix}book IS NULL THEN NULL ELSE ARRAY[{alias}.{prefix}book, {alias}.{prefix}chapter, {alias}.{prefix}verse] END";
 
-    /// <summary>The id a dataset gives the record a verse row hangs on: its own, else that of the one record folded into it.</summary>
-    private static string DatasetId(string dataset) => dataset == "bibledata"
-        ? """
-          coalesce(CASE WHEN e.source_id ~ '^(person|place):' THEN e.source_id END,
-                   (SELECT min(m.record_source_id) FROM merged_record m WHERE m.entity_id = e.id AND m.record_source_id ~ '^(person|place):'))
-          """
-        : "coalesce(e.open_bible_id, (SELECT min(substr(m.record_source_id, 11)) FROM merged_record m WHERE m.entity_id = e.id AND m.record_source_id LIKE 'openbible:%'))";
-
-    private static RecordFile DatasetRecords(string dataset, string credit) => new($"external/{dataset}/records", ProductKind.Hand,
+    private static RecordFile DatasetRecords(string dataset) => new($"external/{dataset}/records", ProductKind.Hand,
         "external_id kind name attributes:json",
-        $"""
-        SELECT {(dataset == "bibledata" ? "e.source_id" : "e.open_bible_id")}, e.kind, e.name,
-               jsonb_strip_nulls(jsonb_build_object('distinguisher', e.distinguisher, 'notes', CASE WHEN {OwnNotes} THEN NULL ELSE e.notes END, 'sex', e.sex, 'tribe', e.tribe,
-                   'modern_equivalent', e.modern_equivalent, 'place_kind', e.place_kind, 'record', e.slug))::text
-        FROM entity e WHERE e.source LIKE '{credit}%' ORDER BY 1
-        """,
+        $"SELECT external_id, kind, name, attributes::text FROM external_record WHERE dataset = '{dataset}' ORDER BY 1",
         $"""
         INSERT INTO external_record (dataset, external_id, kind, name, attributes)
         SELECT '{dataset}', external_id, kind, name, attributes FROM s ORDER BY external_id
         """,
         dataset == "bibledata" ? ["external_record", "external_reference"] : [],
-        ExportLoaded: $"SELECT external_id, kind, name, attributes::text FROM external_record WHERE dataset = '{dataset}' ORDER BY 1",
         About: "What the dataset states of the records it supplied, as the corpus held it at the export. Never a record of ours; reached through records/external-ids.");
 
-    private static RecordFile DatasetReferences(string dataset, string credit) => new($"external/{dataset}/references", ProductKind.Hand,
+    private static RecordFile DatasetReferences(string dataset) => new($"external/{dataset}/references", ProductKind.Hand,
         "external_id? record ref:ref label? names:bool disputed:bool withheld:bool",
         $"""
-        SELECT {DatasetId(dataset)}, e.slug, {Ref("v")}, v.label, v.names, v.disputed, v.withheld
-        FROM entity_verse v JOIN entity e ON e.id = v.entity_id WHERE v.source LIKE '{credit}%' ORDER BY 2, 3, 1, 4, 5, 6, 7
+        SELECT x.external_id, e.slug, {Ref("x")}, x.label, x.names, x.disputed, x.withheld
+        FROM external_reference x JOIN entity e ON e.id = x.entity_id WHERE x.dataset = '{dataset}' ORDER BY 2, 3, 1, 4, 5, 6, 7
         """,
         $"""
         INSERT INTO external_reference (dataset, external_id, entity_id, canonical_book, canonical_chapter, canonical_verse, label, names, disputed, withheld)
@@ -43,10 +29,6 @@ internal static partial class RecordFiles
         FROM s JOIN entity e ON e.slug = s.record ORDER BY s.record, s.ref, s.external_id, s.label
         """,
         [],
-        ExportLoaded: $"""
-        SELECT x.external_id, e.slug, {Ref("x")}, x.label, x.names, x.disputed, x.withheld
-        FROM external_reference x JOIN entity e ON e.id = x.entity_id WHERE x.dataset = '{dataset}' ORDER BY 2, 3, 1, 4, 5, 6, 7
-        """,
         About: "The verses the dataset lists for a record, and the record of ours the row was filed under (record), which the corpus moved some rows to.");
 
     private static RecordFile Events(string product, string where) => new(product, ProductKind.Hand,
@@ -132,10 +114,10 @@ internal static partial class RecordFiles
 
     private static RecordFile[] External =>
     [
-        DatasetRecords("bibledata", "BibleData"),
-        DatasetRecords("openbible", "OpenBible"),
-        DatasetReferences("bibledata", "BibleData"),
-        DatasetReferences("openbible", "OpenBible"),
+        DatasetRecords("bibledata"),
+        DatasetRecords("openbible"),
+        DatasetReferences("bibledata"),
+        DatasetReferences("openbible"),
 
         Chronologies("external/bibledata/chronologies", "slug = 'bibledata'"),
         Chronologies("external/ussher/chronologies", "slug = 'ussher'"),

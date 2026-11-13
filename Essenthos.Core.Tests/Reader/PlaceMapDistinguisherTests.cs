@@ -64,7 +64,6 @@ public sealed class PlaceMapDistinguisherTests : IDisposable
         var place = new Entity
         {
             Kind = EntityKind.Place, Slug = slug, Name = name, Distinguisher = distinguisher,
-            SourceId = slug, Source = "a test",
         };
         _db.Entities.Add(place);
         return place;

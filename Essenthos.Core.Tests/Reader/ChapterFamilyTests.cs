@@ -180,7 +180,7 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
         var japheth = Person("japheth");
         var gomer = Person("gomer");
         var wife = Person("wife-of-japheth");
-        var babel = new Entity { Kind = EntityKind.Place, Slug = "babel", Name = "Babel", SourceId = "test:babel", Source = "test" };
+        var babel = new Entity { Kind = EntityKind.Place, Slug = "babel", Name = "Babel" };
         _db.Entities.Add(babel);
         var loner = Person("loner");
         await _db.SaveChangesAsync();
@@ -243,8 +243,6 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
             Slug = slug,
             Name = char.ToUpperInvariant(slug[0]) + slug[1..],
             Sex = "male",
-            SourceId = $"test:{slug}",
-            Source = "test",
         };
         _db.Entities.Add(entity);
         return entity;

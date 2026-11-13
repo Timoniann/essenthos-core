@@ -29,7 +29,7 @@ public sealed class CanonModeTests : IDisposable
         _transaction = _db.Database.BeginTransaction();
         foreach (var slug in new[] { "adam", "peter", "tobias", "enoch", "mordecai", "nobody" })
         {
-            _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test" });
+            _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug });
         }
 
         _db.SaveChanges();

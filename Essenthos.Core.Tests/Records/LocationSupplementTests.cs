@@ -154,12 +154,11 @@ public sealed class LocationSupplementTests : IDisposable
         var answers = await _db.PlaceCandidates.AsNoTracking().OrderBy(c => c.Rank).ToListAsync();
         answers.Where(c => c.EntityId == places["antipatris"].Id).Select(c => c.ModernId)
             .Should().Equal(answers.Where(c => c.EntityId == places["aphek-2"].Id).Select(c => c.ModernId));
-        places["antipatris"].OpenBibleId.Should().BeNull("the town takes the site's point, not its gazetteer entry");
+        (await _db.RecordExternalIds.AnyAsync(x => x.EntityId == places["antipatris"].Id))
+            .Should().BeFalse("the town takes the site's point, not its gazetteer entry");
 
     }
 
-    private void Place(string slug,string? gazetteer) => _db.Entities.Add(new Entity
-    {
-        Slug=slug,Name=slug,Kind=EntityKind.Place,Source="test",SourceId="test:"+slug,OpenBibleId=gazetteer,
-    });
+    private void Place(string slug,string? gazetteer) =>
+        _db.Entities.Add(new Entity { Slug=slug,Name=slug,Kind=EntityKind.Place }.WithOpenBibleId(gazetteer));
 }
