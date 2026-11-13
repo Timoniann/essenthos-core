@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Essenthos.Core.Build;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
@@ -140,10 +141,16 @@ internal static class TextConverter
         var inputs = Inputs(store, declared);
         if (!force && IsCurrent(store, slug, inputs))
         {
+            if (SourceLicences.CheckTexts(store, [slug]) is [var refused, ..])
+            {
+                throw new InvalidOperationException(refused.Why);
+            }
+
             return new ConversionOutcome(slug, true, 0, 0, started.Elapsed);
         }
 
         var text = Read(store, declared);
+        text.Definition.Validate();
         Write(store, text, inputs);
         return new ConversionOutcome(slug, false, text.Verses.Count, text.Verses.Sum(v => (long)v.Words.Count), started.Elapsed);
     }

@@ -222,12 +222,13 @@ Resources/Essenthos/records/i18n/*/images.tsv
 Resources/Essenthos/external/
 
 # What the serving build counts, and the build's own state: the manifest, the hash memory, reports, what each
-# database was built from, the word id ceiling (kept). Carried: the declared graph.
+# database was built from, the word id ceiling (kept). Carried: the declared graph and the licences of what it reads.
 Resources/Essenthos/panes/
 Resources/Essenthos/record-spellings/
 Resources/Essenthos/record-positions/
 Resources/Essenthos/build/*
 !Resources/Essenthos/build/products.tsv
+!Resources/Essenthos/build/licences.tsv
 
 # Maimonides' count of the commandments as this project curated it from two public-domain works:
 # 613 rows, 59 KB. The downloads it is written from stay out, and scripts/maimonides.py puts them back.

@@ -1,0 +1,137 @@
+# product    Essenthos/build/licences.tsv
+# producer   by hand
+# The licence of every source the build may read, declared once (PRB-1545). forge build holds every source a product reads
+#   against it: before the producers run, every input build/products declares and every catalogued text's sources; after them,
+#   every input the manifest records, every kept product under external/, every text's declaration and every served picture.
+# source: a file or folder under Resources/; an input is held to the row whose source is its longest leading run of segments.
+#   Essenthos/external/<set> is a dataset's rows exported once into the store.
+# layer: what part of the source the row speaks for. A source read by a product must pass on every layer that is not never.
+# served: content (its words, numbers or rows are served), derived (only what the project derives from it, such as links, is
+#   served; its own content is not), never (no product may read it: kept for measurement, by hand or as a candidate, or a
+#   part the reader refuses, beside another layer of the same source).
+# licence: as the source states it. redistribution: public-domain, permitted, permitted-with-attribution, share-alike,
+#   non-commercial-only, prohibited, unknown (nobody grants anything, or it cannot be read), or own (this project's work,
+#   under the licence the owner sets for all of it).
+# credit: where the reader is told whose it is (RUL-0181): dataset:<id> of Datasets.All, text:<SLUG> (text:* for a part source
+#   every text that reads it credits), picture (each picture's own credit line), map (the map's credit line). - for never.
+# declared: where its licence was read, under Resources/, or - where nothing holds it. exception: the tickets under which the
+#   owner keeps a source whose redistribution is prohibited or unknown; the build reports it as an exception and does not fail.
+source	layer	served	licence	redistribution	credit	declared	exception	note
+Alexandrinus	text	content	CC-BY-SA-4.0	share-alike	text:ALEX	Alexandrinus/LICENCE.md	-	The INTF transcription (CC BY 4.0) with Swete's First1KGreek (CC BY-SA 4.0); cntr-02.txt is kept only to check verse labels.
+Alignments	alignment	derived	this project's own statistical alignment models	own	dataset:essenthos	-	-	Trained here on the texts; only the links they yield are served, each pair under its texts' terms.
+Almeida1911	text	content	Public Domain	public-domain	text:ALM1911	Almeida1911/LICENCE.md	-	-
+AmericanStandard1901	text	content	Public Domain	public-domain	text:ASV	AmericanStandard1901/LICENCE.md	-	-
+AmericanStandard1901	strong	never	No licence stated	unknown	-	AmericanStandard1901/LICENCE.md	-	The tags name no tagger and are not word level; the reader refuses them.
+BasicEnglish	text	content	Public Domain	public-domain	text:BBE	BasicEnglish/LICENCE.md	-	Public domain in the United States only; the owner chose to serve it on 2026-09-24.
+BasicEnglish	strong	never	No licence stated	unknown	-	BasicEnglish/LICENCE.md	-	The reader refuses the tags (StrongTagging.IsWordLevel).
+Berean	text	content	Public Domain	public-domain	text:BSB dataset:berean dataset:berean-interlinear	Berean/LICENCE.md	-	bsb.txt and bsb_tables.tsv, dedicated to the public domain on 2023-04-30.
+Berean/bhsa-words.tsv	data	never	not described	unknown	-	-	-	Lies in the Berean folder, which the BSB text is converted from; no code reads it and its LICENCE.md does not describe it.
+BetaMasaheft	text	content	CC-BY-SA-4.0	share-alike	text:GEEZ81	BetaMasaheft/LICENCE.md	-	-
+BetaMasaheft	older-editions	content	CC-BY-SA-4.0 with non-commercial transcription notices	non-commercial-only	text:GEEZ81	BetaMasaheft/LICENCE.md	-	15 books transcribed from older editions carry notices that their text may not be sold (RUL-0183).
+BibleData	data	never	CC-BY-4.0	permitted-with-attribution	-	BibleData/LICENCE.md	-	The 2024 release, kept as its only copy; nothing reads it.
+BibleData2026	data	content	CC-BY-4.0	permitted-with-attribution	dataset:bibledata dataset:naves dataset:ussher	BibleData2026/LICENCE.md	-	Fetched from GitHub, whose files say CC BY 4.0; the Kaggle and Zenodo copies still say CC BY-NC-SA.
+BibleData2026/AlamoPolyglot.csv	data	never	each of its texts under its own terms	unknown	-	BibleData2026/LICENCE.md	-	Its columns are to be read one by one before any is served.
+BiblicaUkrainian2022	text	content	CC-BY-SA-4.0	share-alike	text:NPU2022	BiblicaUkrainian2022/LICENCE.md	-	-
+BrentonEnglish	text	content	Public Domain	public-domain	text:BRENTON	BrentonEnglish/LICENCE.md	-	-
+Byzantine	text	content	Unlicense	public-domain	text:RP2018 dataset:byzantine-apparatus	Byzantine/LICENCE.md	-	-
+ChineseUnion1919	text	content	Public Domain	public-domain	text:CUV text:CUVS	ChineseUnion1919/LICENCE.md	-	-
+ChineseUnion1919	strong	derived	GFDL (version not named)	share-alike	dataset:fhl-cuv-strong	ChineseUnion1919/LICENCE.md	-	The numbers feed the mapping and are never served (texts/strong-terms); whether the links are a modified version is open (FTR-0731).
+ClearBible	alignment	derived	CC-BY-4.0	permitted-with-attribution	dataset:clearbible	ClearBible/LICENCE.md	-	Each set's own TOML states its terms.
+ClearBible/data/arb/alignments/ONAV	alignment	never	CC-BY-SA-4.0	share-alike	-	ClearBible/LICENCE.md	-	Kept on the owner's request, excluded from loading.
+ClearBible/data/hau	text	content	CC-BY-SA-4.0	share-alike	text:OHCB	ClearBible/LICENCE.md	-	Recorded by analogy with Biblica's other open texts (TSK-0911).
+ClearBible/data/hau	alignment	derived	CC-BY-4.0	permitted-with-attribution	dataset:clearbible	ClearBible/LICENCE.md	-	-
+DarbyFrench	text	content	Public Domain	public-domain	text:JND2024	DarbyFrench/LICENCE.md	-	-
+DarbyFrench	strong	derived	the module says Public Domain; concordance.bible reserves its data	unknown	dataset:concordance-darby-strong	DarbyFrench/LICENCE.md	TSK-1443 TSK-1331	The owner, 2026-11-04 (TSK-1443): numbers whose terms are unclear are used for the mapping only and never served; a replacement is sought (TSK-1331).
+Dillmann	lexicon	content	CC-BY-NC-SA-4.0	non-commercial-only	dataset:dillmann	Dillmann/LICENCE.md	-	ShareAlike accepted for the Ge'ez meaning layer (NOT-0197).
+Door43	text	content	CC-BY-SA-4.0	share-alike	text:IRVASM text:IRVBEN text:IRVGUJ text:IRVKAN text:IRVMAL text:IRVMAR text:IRVPAN text:IRVTAM text:IRVTEL text:IRVURD text:ULT text:UST text:VIGLT	Door43/LICENCE.md	-	-
+Door43	alignment	derived	CC-BY-SA-4.0	share-alike	dataset:unfoldingword dataset:unfoldingword-ult dataset:unfoldingword-ust dataset:door43-avd dataset:door43-vi dataset:door43-lsg dataset:door43-irv	Door43/LICENCE.md	-	The links are offered under CC BY-SA, without the unfoldingWord mark.
+Door43/ru_rsb	alignment	derived	CC0-1.0	public-domain	dataset:door43-rsb	Door43/LICENCE.md	-	-
+DouayRheims1899	text	content	Public Domain	public-domain	text:DRA	DouayRheims1899/LICENCE.md	-	-
+DouayRheims1899	strong	never	No licence stated	unknown	-	DouayRheims1899/LICENCE.md	-	The reader refuses the tags.
+Elberfelder1905	text	content	Public Domain	public-domain	text:ELB1905	Elberfelder1905/LICENCE.md	-	-
+ElizabethBible	text	content	Public Domain	public-domain	text:CSLELIZABETH	ElizabethBible/LICENCE.md	-	-
+Essenthos/external/bibledata	data	content	CC-BY-4.0	permitted-with-attribution	dataset:bibledata dataset:naves	BibleData2026/LICENCE.md	-	-
+Essenthos/external/maimonides	data	content	Public Domain; this project's numbering CC BY-NC 4.0	non-commercial-only	dataset:maimonides	Maimonides/LICENCE.md	-	-
+Essenthos/external/openbible	data	content	CC-BY-4.0	permitted-with-attribution	dataset:openbible dataset:openbible-cross-references	OpenBible/LICENCE.md	-	-
+Essenthos/external/periodo	data	content	CC0-1.0	public-domain	dataset:periodo	PeriodO/LICENCE.md	-	-
+Essenthos/external/shulman	data	content	CC-BY-4.0	permitted-with-attribution	dataset:bibledata	BibleData2026/LICENCE.md	-	Shulman's years as BibleData's event file carries them.
+Essenthos/external/tsk	data	content	Public Domain	public-domain	dataset:tsk	TreasuryOfScriptureKnowledge/LICENCE.md	-	-
+Essenthos/external/ussher	data	content	CC-BY-4.0	permitted-with-attribution	dataset:ussher	BibleData2026/LICENCE.md	-	-
+Essenthos/external/wikidata	data	content	CC0-1.0	public-domain	dataset:wikidata	WorldHistory/README.md	-	-
+Geneva1599	text	content	Public Domain	public-domain	text:GNV1599	Geneva1599/LICENCE.md	-	-
+Glaux	lemmas	content	CC-BY-SA-3.0	share-alike	dataset:glaux	Glaux/LICENCE.md	-	Read as a dictionary from form to lemma for GRCBRENT; ShareAlike accepted by the owner on 2026-09-03.
+Images	pictures	content	each picture under its own licence, stated beside it	permitted-with-attribution	picture	Images/LICENCE.md	-	The picture check holds every served picture to its own licence and credit.
+IrvHindi2019	text	content	CC-BY-SA-4.0	share-alike	text:IRV2019	IrvHindi2019/LICENCE.md	-	-
+Jps1917	text	content	Public Domain	public-domain	text:JPS1917	Jps1917/LICENCE.md	-	-
+KingJames2006	text	content	Public Domain	public-domain	text:KJV	KingJames2006/LICENCE.md	-	Psalm superscriptions, repair readings and the Old Testament's Strong numbers (CrossWire's KJV module, Public Domain).
+KingJamesApocrypha	text	content	Public Domain	public-domain	text:*	KingJamesApocrypha/LICENCE.md	-	-
+KoreanRevised1961	text	content	Public Domain	public-domain	text:KRV	KoreanRevised1961/LICENCE.md	-	The moral rights of attribution and integrity remain: served unaltered, under its own title.
+Kulish	text	content	Public Domain	public-domain	text:UKR1871	Kulish/LICENCE.md	-	-
+Luther1912	text	content	Public Domain	public-domain	text:LUTH1912	Luther1912/LICENCE.md	-	-
+Luther1912	strong	content	No licence stated	unknown	dataset:luther1912-strong	Luther1912/LICENCE.md	PRB-1332 TSK-1331	Served on LUTH1912's words. The owner, 2026-10-29 (TSK-1331): kept until a licensed numbering replaces it; what removing it costs is PRB-1332.
+Macula	parsing	content	CC-BY-4.0	permitted-with-attribution	dataset:macula	Macula/LICENCE.md	-	-
+Maimonides	data	content	Public Domain; this project's numbering CC BY-NC 4.0	non-commercial-only	dataset:maimonides	Maimonides/LICENCE.md	-	-
+Models	models	never	each model under its own terms (SOURCE.txt)	unknown	-	-	-	Downloaded 3D models; the site's models are its own, drawn in essenthos-web.
+MorphGnt	parsing	content	CC-BY-SA-3.0	share-alike	dataset:morphgnt	MorphGnt/LICENCE.md	-	Only the parsing is read.
+Nestle1904	text	content	CC0-1.0	public-domain	text:NESTLE1904 dataset:berean-interlinear	Nestle1904/LICENCE.md	-	The Berean interlinear glosses beside it are public domain since 2023-04-30.
+NewWorld2013	text	never	Copyrighted; (c) 2013 Watch Tower Bible and Tract Society	prohibited	-	NewWorld2013/LICENCE.md	-	Measurement only: the EVIDENTIA benchmark reads it from its file on the owner's machine; no product may.
+OhienkoWikisource	text	derived	CC-BY-SA-4.0	share-alike	text:UBIO	OhienkoWikisource/LICENCE.md	-	Psalm 7:2 and the ends of seven verses, taken into UBIO's corrections by hand (owner, 2026-09-24).
+OpenBible	data	content	CC-BY-4.0	permitted-with-attribution	dataset:openbible	OpenBible/LICENCE.md	-	-
+OpenBible	pictures	content	each picture under its own licence, stated beside it	permitted-with-attribution	picture	OpenBible/LICENCE.md	-	-
+OpenBible/geometry	outlines	content	CC-BY-4.0	permitted-with-attribution	dataset:openbible	OpenBible/LICENCE.md	-	The gazetteer's own drawings of lands and areas.
+OpenBible/geometry	osm-outlines	content	ODbL-1.0	share-alike	map	OpenBible/LICENCE.md	-	OpenStreetMap's outlines, kept in a product of their own and credited as OpenStreetMap's on the map (TSK-1258).
+OpenBibleCrossReferences	data	content	CC BY	permitted-with-attribution	dataset:openbible-cross-references	OpenBibleCrossReferences/LICENCE.md	-	-
+OpenHebrewBible	alignment	derived	CC-BY-NC-4.0	non-commercial-only	dataset:ohb-cuv	OpenHebrewBible/LICENCE.md	-	-
+PanLexSwadesh	data	never	CC0-1.0	public-domain	-	PanLexSwadesh/LICENCE.md	-	-
+PeriodO	data	content	CC0-1.0	public-domain	dataset:periodo	PeriodO/LICENCE.md	-	-
+PlaceLocationSources	data	derived	OGL-UK-3.0 and CC BY	permitted-with-attribution	dataset:pcgn dataset:drews-han-2010	PlaceLocationSources/LICENCE.md	-	The documents read; their coordinates are typed into records/facts/location-supplements.
+ReinaValera1909	text	content	Public Domain	public-domain	text:RV1909	ReinaValera1909/LICENCE.md	-	-
+ReinaValera1909	strong	derived	Copyrighted; given by its author to software publishers, locked	prohibited	dataset:gomez-rv1909-strong	ReinaValera1909/LICENCE.md	TSK-1443 TSK-1331	Rubén Gómez's tagging. The owner, 2026-09-20 (PRB-0375) and 2026-11-04 (TSK-1443): mapping only, never served; a replacement is sought (TSK-1331).
+RevisedLiteral	text	content	GPL	share-alike	text:RLT2018	RevisedLiteral/LICENCE.md	-	-
+RevisedLiteral	strong	derived	GPL	share-alike	dataset:rlt-strong dataset:rlt-positions	RevisedLiteral/LICENCE.md	-	-
+SBLGNT	text	content	CC-BY-4.0	permitted-with-attribution	text:SBLGNT	SBLGNT/LICENCE.md	-	-
+STEPBible	data	content	CC-BY-NC-3.0	non-commercial-only	dataset:tahot	STEPBible/LICENCE.md	-	Not passed on as files; readers are pointed to github.com/STEPBible.
+STEPBibleLexicons/TBESG.txt	lexicon	content	CC-BY-4.0	permitted-with-attribution	dataset:stepbible-tbesg	STEPBibleLexicons/LICENCE.md	-	-
+STEPBibleLexicons/TBESH.txt	lexicon	never	CC-BY-4.0; its BDB definitions need the Online Bible's permission	prohibited	-	STEPBibleLexicons/LICENCE.md	-	Quarantined until that permission is obtained and recorded.
+STEPBibleLexicons/TFLSJ-0-5624.txt	lexicon	never	CC-BY-4.0	permitted-with-attribution	-	STEPBibleLexicons/LICENCE.md	-	A candidate, not read.
+STEPBibleLexicons/TFLSJ-extra.txt	lexicon	never	CC-BY-4.0	permitted-with-attribution	-	STEPBibleLexicons/LICENCE.md	-	A candidate, not read.
+SamaritanPentateuch	text	content	CC-BY-NC-4.0	non-commercial-only	text:SP	SamaritanPentateuch/LICENCE.md	-	-
+Schlachter1951	text	content	Copyrighted; Free non-commercial distribution	non-commercial-only	text:SCH1951	Schlachter1951/LICENCE.md	-	-
+Schlachter1951	strong	derived	Copyrighted; Free non-commercial distribution	non-commercial-only	dataset:schlachter-strong	Schlachter1951/LICENCE.md	-	The numbers feed the mapping and are never served (texts/strong-terms).
+Segond1910	text	content	Public Domain	public-domain	text:LSG1910	Segond1910/LICENCE.md	-	-
+Segond1910	strong	never	No tagger named	unknown	-	Segond1910/LICENCE.md	-	The reader refuses the tags; a test pins it.
+Segond1910Strong	strong	derived	Copyrighted; Permission to distribute granted to CrossWire	prohibited	dataset:concordance-segond-strong	Segond1910Strong/LICENCE.md	TSK-1443 TSK-1331	The owner, 2026-11-04 (TSK-1443): mapping only, never served; a replacement is sought (TSK-1331).
+SenseReadings	readings	derived	this project's own model readings	own	dataset:essenthos	-	-	Read into the kept model-reading method files by hand; no product reads the folder.
+Septuagint	text	content	Public Domain	public-domain	text:GRCBRENT	Septuagint/LICENCE.md	-	-
+Sinaiticus	text	content	CC-BY-4.0	permitted-with-attribution	text:SIN	Sinaiticus/LICENCE.md	-	The INTF transcription; cntr-01.txt (CC BY-SA 4.0) is never read.
+Strong	lexicon	content	Public Domain	public-domain	dataset:strong	Strong/LICENCE.md	-	StrongHebrew.xml carries TWOT reference numbers (c) 1980 Moody Bible Institute, declared on the dataset as a work of its own.
+Swete	text	content	CC-BY-SA-4.0	share-alike	text:SWETE text:SWETEOG text:OTTLEY text:ALEX	Swete/LICENCE.md	-	The licence is on the transcription; the printed text is public domain.
+SweteScans	scans	never	Public Domain	public-domain	-	SweteScans/LICENCE.md	-	Read by hand to restore words.
+SynodalStrong	strong	derived	Copyright 1996 Bob Jones University: non-profit use of the work unmodified	prohibited	dataset:bju-synodal-strong	SynodalStrong/LICENCE.md	PRB-0264 TSK-1443	The owner, 2026-09-13 (PRB-0264) and 2026-11-04 (TSK-1443): mapping only, numbers never served; RUSV also takes 209 corrections of letters from it.
+SynodalWikisource	text	content	Public Domain	public-domain	text:*	SynodalWikisource/LICENCE.md	-	-
+TextusReceptus	text	content	Public Domain	public-domain	text:TR1550 text:TR1894 dataset:byztxt	TextusReceptus/LICENCE.md	-	The LICENCE.md describes parsed/; where scrivener/ came from is not recorded.
+TheographicBibleData	data	never	no licence file; reported as CC BY-SA 4.0	share-alike	-	OpenBible/LICENCE.md	-	-
+Tischendorf	text	content	Public Domain	public-domain	text:TISCH	Tischendorf/LICENCE.md	-	-
+TreasuryOfScriptureKnowledge	data	content	Public Domain	public-domain	dataset:tsk	TreasuryOfScriptureKnowledge/LICENCE.md	-	-
+Tyndale1534	text	content	Public Domain	public-domain	text:TYN1534	Tyndale1534/LICENCE.md	-	-
+UDPipe	tool	never	CC-BY-NC-SA-4.0 models; MPL-2.0 program	non-commercial-only	-	UDPipe/LICENCE.md	-	Run by EVIDENTIA's rules; what they read reaches the ledger only as reviewed verdicts (dataset evidentia).
+VanDyck1865	text	content	Public Domain	public-domain	text:AVD1865	VanDyck1865/LICENCE.md	-	-
+Vaticanus	text	content	CC-BY-4.0	permitted-with-attribution	text:VAT	Vaticanus/LICENCE.md	-	The INTF transcription; cntr-03.txt (CC BY-SA 4.0) is never read.
+Versification	frame	content	CC-BY-4.0	permitted-with-attribution	dataset:tvtms	Versification/LICENCE.md	-	Not passed on as a file, as its header asks; the changes are listed on the dataset.
+VulgataClementina	text	content	Public Domain	public-domain	text:VULGCLEM	VulgataClementina/LICENCE.md	-	-
+WestcottHort	text	content	Public Domain	public-domain	text:WH1881	WestcottHort/LICENCE.md	-	-
+Wikidata	data	content	CC0-1.0	public-domain	dataset:wikidata	Wikidata/LICENCE.md	-	-
+WikidataLexemes	data	never	CC0-1.0	public-domain	-	WikidataLexemes/LICENCE.md	-	A candidate source.
+WorldEnglish	text	content	Public Domain	public-domain	text:WEB	WorldEnglish/LICENCE.md	-	"World English Bible" is a trademark: a changed text may not carry the name.
+WorldEnglish	strong	never	No licence stated	unknown	-	WorldEnglish/LICENCE.md	-	The reader refuses the tags.
+WorldEnglishClassic	text	content	Public Domain	public-domain	text:*	WorldEnglishClassic/LICENCE.md	-	-
+WorldHistory	data	derived	CC0-1.0	public-domain	dataset:wikidata	WorldHistory/README.md	-	Exported once into Essenthos/external/wikidata.
+Young1898	text	content	Public Domain	public-domain	text:YLT	Young1898/LICENCE.md	-	-
+Zefania	strong	content	No licence stated	unknown	dataset:zefaniakjv	Zefania/LICENCE.md	PRB-1332 TSK-1331	The King James New Testament's Strong numbers and italics, served on KJV's words. The owner, 2026-10-29 (TSK-1331): kept until a licensed tagging replaces it; what removing it costs is PRB-1332.
+ZefaniaLuther1912	strong	never	the module says the text is public domain; toledot.info reserves its own work	prohibited	-	ZefaniaLuther1912/LICENCE.md	-	Read only to check LUTH1912's numbers by hand.
+bible4u/KJV.xml	text	content	Everyone is permitted to copy, modify and distribute copies of this document for free as long as it's Biblical content remains unchanged.	permitted	text:KJV	bible4u/LICENCE.md	-	-
+bible4u/RUSV.xml	text	content	Everyone is permitted to copy, modify and distribute copies of this document for free as long as it's Biblical content remains unchanged.	permitted	text:RUSV	bible4u/LICENCE.md	-	-
+bible4u/UKR.xml	text	content	CC-BY-SA-4.0	share-alike	text:UBIO	bible4u/LICENCE.md	-	The one grant there is, through Wikimedia VRT for printings before 1991; the owner kept the text under it (PRB-0325).
+etcbc	text	content	CC-BY-NC-4.0	non-commercial-only	text:BHSA	etcbc/LICENCE.md	-	-
+mapping/BHS-with-Strong-no-extended.csv	data	never	not described	unknown	-	mapping/LICENCE.md	-	The LICENCE.md covers only the King James mapping.
+mapping/KJV-OT-mapped-to-BHS-full-mapping.csv	alignment	content	CC-BY-NC-4.0	non-commercial-only	dataset:openhebrewbible	mapping/LICENCE.md	-	The stated links between the King James and the Hebrew, and the italics of the King James Old Testament.

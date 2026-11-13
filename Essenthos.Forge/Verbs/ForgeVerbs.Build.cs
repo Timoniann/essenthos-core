@@ -63,6 +63,13 @@ internal static partial class ForgeVerbs
             return 1;
         }
 
+        var licences = SourceLicences.Read(before);
+        if (!Licensed(forge, stages, "declared sources", () => licences.CheckDeclared(ProductGraph.Read(before))))
+        {
+            WriteReport(before, stages, into);
+            return 1;
+        }
+
         if (args.Contains("--owner-rows"))
         {
             var deciding = Stopwatch.StartNew();
@@ -89,6 +96,12 @@ internal static partial class ForgeVerbs
         var store = new ProductStore(forge.Resources);
         var graph = ProductGraph.Read(store);
         stages.AddRange(MappingGaps(store));
+        if (!Licensed(forge, stages, "what the products read", () => licences.CheckMade(store)))
+        {
+            WriteReport(store, stages, into);
+            return 1;
+        }
+
         var verified = true;
         if (level != BuildVerify.Skip)
         {
@@ -164,6 +177,32 @@ internal static partial class ForgeVerbs
 
         Console.WriteLine($"report: {report}");
         return verified ? 0 : 1;
+    }
+
+    /// <summary>
+    /// Logs what the licences refuse, as errors, and what the owner keeps although nothing grants it, as warnings, with a stage
+    /// of the report for each; false when anything was refused.
+    /// </summary>
+    private static bool Licensed(ForgeRun forge, List<BuildStage> stages, string what, Func<List<LicenceFinding>> check)
+    {
+        var clock = Stopwatch.StartNew();
+        var findings = check();
+        var refused = findings.Where(f => !f.Excepted).ToList();
+        var kept = findings.Where(f => f.Excepted).ToList();
+        foreach (var finding in refused)
+        {
+            forge.Logger.LogError("licence: {Finding}", finding);
+        }
+
+        foreach (var finding in kept)
+        {
+            forge.Logger.LogWarning("licence exception: {Finding}", finding);
+        }
+
+        stages.Add(new BuildStage("products", $"licences of {what}", clock.Elapsed, refused.Count,
+            (refused.Count == 0 ? "nothing refused" : $"REFUSED {refused.Count}: {string.Join("; ", refused.Take(5))}")
+            + (kept.Count == 0 ? "" : $"; kept by the owner: {string.Join(", ", kept.Select(k => k.Subject))}")));
+        return refused.Count == 0;
     }
 
     /// <summary>

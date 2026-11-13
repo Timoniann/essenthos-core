@@ -220,6 +220,16 @@ internal static partial class Licences
             + (port is null ? string.Empty : $"{port.ToLowerInvariant()}/"));
     }
 
+    /// <summary>What the manifests of the pictures this project made say in place of a licence: the owner sets one for all its work.</summary>
+    public const string OwnWork = "Essenthos's own work";
+
+    /// <summary>Whether a picture may be shown under a licence by the name a credit line prints: one <see cref="Of"/> gives.</summary>
+    public static bool Shown(string name) =>
+        Named.Values.Any(licence => licence.Name == name) || CreativeCommonsName().IsMatch(name);
+
     [GeneratedRegex("^CC-(?<terms>BY(?:-SA)?)-(?<version>[1-4]\\.[05])(?:-(?<port>[A-Z]{2,3}))?$")]
     private static partial Regex CreativeCommons();
+
+    [GeneratedRegex("^CC BY(?:-SA)? [1-4]\\.[05](?: [A-Z]{2,3})?$")]
+    private static partial Regex CreativeCommonsName();
 }
