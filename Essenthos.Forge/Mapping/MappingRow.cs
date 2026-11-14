@@ -257,7 +257,10 @@ internal static class MappingProducts
             : [];
     }
 
-    /// <summary>The method files of a pair folder, by product name.</summary>
+    /// <summary>
+    /// The method files of a pair folder, by product name. A file still being written (".tmp") is none: the merge of the
+    /// reverse pair lists this folder while this pair's own merge may be writing its final.
+    /// </summary>
     public static List<string> Methods(ProductStore store, string pair)
     {
         var folder = Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, Folder, pair);
@@ -269,7 +272,7 @@ internal static class MappingProducts
         return
         [
             .. Directory.GetFiles(folder)
-                .Where(path => !Path.GetFileName(path).StartsWith('.'))
+                .Where(path => !Path.GetFileName(path).StartsWith('.') && !path.EndsWith(".tmp", StringComparison.Ordinal))
                 .Select(Path.GetFileNameWithoutExtension).OfType<string>()
                 .Where(name => !NotMethods.Contains(name))
                 .Distinct().Order(StringComparer.Ordinal),

@@ -1,5 +1,6 @@
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
 using Essenthos.Core.Sword;
 using FluentAssertions;
 using Xunit;
@@ -71,10 +72,25 @@ public sealed class CrossWireKingJamesTests
     }
 
     [Theory]
+    [InlineData("T-NSM", true)]
+    [InlineData("CONJ", true)]
+    [InlineData("PRT-N", true)]
+    [InlineData("COND", true)]
+    [InlineData("PREP", false)]
+    [InlineData("N-DSF", false)]
+    [InlineData("A-NUI", false)]
+    [InlineData("P-ASM", false)]
+    [InlineData(null, false)]
+    public void OnlyAnEmptyElementOverAnArticleOrParticleSaysTheEnglishLeavesItOut(string? robinson, bool untranslated) =>
+        KingJamesGreekSource.GoesUntranslated(robinson).Should().Be(untranslated);
+
+    [Theory]
     [InlineData(new[] { "G3588", "G2889" }, "the", "G3588")]
     [InlineData(new[] { "G3588", "G2889" }, "world", "G2889")]
-    [InlineData(new[] { "G2889" }, "The", "G2889")]
-    public void TheEnglishArticleOfAPhraseShowsTheArticle(string[] numbers, string word, string number) =>
+    [InlineData(new[] { "G2889" }, "The", null)]
+    [InlineData(new[] { "G5207" }, "the", null)]
+    [InlineData(new[] { "G5207" }, "son", "G5207")]
+    public void TheEnglishArticleOfAPhraseShowsTheArticle(string[] numbers, string word, string? number) =>
         CrossWireKingJames.Own(numbers, word).Should().Be(number);
 
     [Theory]

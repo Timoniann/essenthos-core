@@ -3,7 +3,7 @@ namespace Essenthos.Core.Loading.Links;
 /// <param name="Numbers">The Strong numbers of the element the word came from, in the order the module writes them.</param>
 /// <param name="Unit">The element, so that the words of one element are one rendering and find its positions.</param>
 /// <param name="Supplied">The edition prints the word as one its translators supplied, and its element names no Greek word.</param>
-/// <param name="Number">The number the word carries as its own (<see cref="CrossWireKingJames.Own"/>), null in an element naming none.</param>
+/// <param name="Number">The number the word carries as its own (<see cref="CrossWireKingJames.Own"/>), null in an element naming none and for <em>the</em> over an element naming no article.</param>
 internal readonly record struct KingJamesTag(IReadOnlyList<string> Numbers, int Unit, bool Supplied, string? Number);
 
 /// <param name="Tags">What each corpus word of a laid verse was given, by word id. A word not here is in no element.</param>
@@ -44,9 +44,10 @@ internal sealed record LaidKingJames(
 /// <para>
 /// **A word takes its element's numbers whole.** <em>the world</em> is one element over τὸν κόσμον, so both words carry
 /// G3588 and G2889, and the element's link names both Greek words for both English ones. The number a word shows as its
-/// own is one of the element's: the article's for the English article, which renders nothing else, and otherwise the
-/// first that is not the article, since the element names the article beside the word it belongs to (<em>God</em> over
-/// ὁ θεός). Without the first, every <em>the</em> of a phrase would be counted among the renderings of its noun.
+/// own is one of the element's: the article's for the English article, which renders nothing else, none for an English
+/// article over an element that names no article (<em>the son</em> over υἱοῦ), and otherwise the first that is not the
+/// article, since the element names the article beside the word it belongs to (<em>God</em> over ὁ θεός). Without the
+/// first two, every <em>the</em> of a phrase would be counted among the renderings of its noun.
 /// </para>
 /// </summary>
 internal static class CrossWireKingJames
@@ -65,9 +66,14 @@ internal static class CrossWireKingJames
     /// <summary>The module's root under Resources.</summary>
     public static string Folder => SwordTextSource.Numberings[Module].Folder.Replace('\\', '/');
 
-    /// <summary>The number a word of an element carries as its own: the article's for <em>the</em>, else <see cref="Primary"/>.</summary>
+    /// <summary>
+    /// The number a word of an element carries as its own: for <em>the</em> the article's, or none where the element names
+    /// no article (the English adds it); for any other word <see cref="Primary"/>.
+    /// </summary>
     public static string? Own(IReadOnlyList<string> numbers, string word) =>
-        word.Equals("the", StringComparison.OrdinalIgnoreCase) && numbers.Contains(Article) ? Article : Primary(numbers);
+        word.Equals("the", StringComparison.OrdinalIgnoreCase)
+            ? numbers.Contains(Article) ? Article : null
+            : Primary(numbers);
 
     /// <summary>The element's first number that is not the article, or the article where it names nothing else.</summary>
     public static string? Primary(IReadOnlyList<string> numbers)

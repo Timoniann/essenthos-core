@@ -258,9 +258,11 @@ internal static partial class TableProducts
 
     /// <summary>
     /// Every number of a King James word whose CrossWire element names several (an English word over a Greek phrase,
-    /// <em>God</em> over ὁ θεός): the words product keeps the element's own number (<see cref="CrossWireKingJames.Primary"/>);
-    /// the rest are this table's. The words are the converted text's own, read again so that a word a correction added (an
-    /// epistle's subscription) stays out of the pairing, as at conversion.
+    /// <em>God</em> over ὁ θεός): the words product keeps the word's own number (<see cref="CrossWireKingJames.Own"/>); the
+    /// rest are this table's. A word with no number of its own (<em>the</em> over an element naming no article) gets none
+    /// here either: a reader takes a word's only number in this table as the number it renders. The words are
+    /// the converted text's own, read again so that a word a correction added (an epistle's subscription) stays out of the
+    /// pairing, as at conversion.
     /// </summary>
     private static List<string?[]> KingJamesPhrases(ProductStore store)
     {
@@ -288,7 +290,7 @@ internal static partial class TableProducts
         var rows = new List<string?[]>();
         foreach (var (word, tag) in CrossWireKingJames.Lay(store.FullPath(CrossWireKingJames.Folder), corpus).Tags.OrderBy(tag => tag.Key))
         {
-            if (tag.Numbers.Count < 2)
+            if (tag.Number is null)
             {
                 continue;
             }

@@ -20,8 +20,10 @@ namespace Essenthos.Core.Loading.Links;
 ///
 /// The pairing is by Strong number within a verse, which both editions state for themselves — no
 /// aligner, no statistics. Where a number stands once on each side the pairing is certain enough
-/// to say so; where it repeats, the repeats are handed out in order, which is right far more often
-/// than not and is recorded at a lower confidence because "far more often than not" is what it is.
+/// to say so; where it repeats, the occurrences written the same way are paired first, in order
+/// (<see cref="SameForms"/>), and the rest are handed out in order between them, which is recorded
+/// at a lower confidence. By order alone, an edition lacking one occurrence shifted every later one:
+/// at John 3:16 Scrivener's αὐτοῦ took Nestle's only αὐτόν and Scrivener's αὐτόν got nothing.
 ///
 /// The one thing done to a number before it is compared is <see cref="GreekLemmaNumbers"/>, which
 /// is not a heuristic: Strong gave ὑμεῖς an entry beside σύ and most digital editions tag the lemma
@@ -51,7 +53,7 @@ internal static class GreekWitnessLinks
     /// <summary>A number standing once on each side of the verse. There is nothing to choose between.</summary>
     private const double Unique = 0.95;
 
-    /// <summary>A number standing more than once, handed out in the order it occurs.</summary>
+    /// <summary>A number standing more than once, its occurrences paired by form, then in the order they occur.</summary>
     private const double Repeated = 0.85;
 
     /// <summary>
@@ -86,27 +88,97 @@ internal static class GreekWitnessLinks
         {
             var ours = mine.GetValueOrDefault(strong, []);
             var theirs = yours.GetValueOrDefault(strong, []);
-            var shared = Math.Min(ours.Count, theirs.Count);
             var certainty = ours.Count == 1 && theirs.Count == 1 ? Unique : Repeated;
-
-            for (var i = 0; i < shared; i++)
+            var paired = Occurrences(ours, theirs);
+            foreach (var (i, j) in paired)
             {
                 drafts.Add(new GreekDraft(
-                    GreekLetters.Same(ours[i].Surface, theirs[i].Surface)
+                    GreekLetters.Same(ours[i].Surface, theirs[j].Surface)
                         ? LinkRelation.Equals
                         : LinkRelation.Renders,
                     [ours[i].Id],
-                    [theirs[i].Id],
+                    [theirs[j].Id],
                     certainty,
                     LinkMethod.StrongNumber,
-                    ours[i].Strong == theirs[i].Strong ? Source : LemmatisedSource));
+                    ours[i].Strong == theirs[j].Strong ? Source : LemmatisedSource));
             }
 
-            hereOnly.AddRange(ours.Skip(shared).Select(word => new Leftover(word, certainty)));
-            thereOnly.AddRange(theirs.Skip(shared).Select(word => new Leftover(word, certainty)));
+            var oursPaired = paired.Select(pair => pair.Mine).ToHashSet();
+            var theirsPaired = paired.Select(pair => pair.Yours).ToHashSet();
+            hereOnly.AddRange(ours.Where((_, i) => !oursPaired.Contains(i)).Select(word => new Leftover(word, certainty)));
+            thereOnly.AddRange(theirs.Where((_, j) => !theirsPaired.Contains(j)).Select(word => new Leftover(word, certainty)));
         }
 
         Unpaired(hereOnly, thereOnly, drafts);
+    }
+
+    /// <summary>
+    /// The occurrences of one number in the two verses, paired: those written the same way first (<see cref="SameForms"/>),
+    /// then, between two such pairs, the rest in the order they occur. Each list is in verse order.
+    /// </summary>
+    internal static List<(int Mine, int Yours)> Occurrences(List<GreekWord> ours, List<GreekWord> theirs)
+    {
+        if (ours.Count == 1 && theirs.Count == 1)
+        {
+            return [(0, 0)];
+        }
+
+        var anchors = SameForms(ours, theirs);
+        var pairs = new List<(int Mine, int Yours)>(Math.Min(ours.Count, theirs.Count));
+        var (i, j) = (0, 0);
+        foreach (var (mine, yours) in anchors.Append((ours.Count, theirs.Count)))
+        {
+            for (; i < mine && j < yours; i++, j++)
+            {
+                pairs.Add((i, j));
+            }
+
+            if (mine < ours.Count)
+            {
+                pairs.Add((mine, yours));
+            }
+
+            (i, j) = (mine + 1, yours + 1);
+        }
+
+        return pairs;
+    }
+
+    /// <summary>
+    /// The longest run of occurrences written the same way on both sides that keeps both verses' order: the forms say which
+    /// occurrence is which where the order alone cannot, as a case or an occurrence one edition lacks.
+    /// </summary>
+    private static List<(int Mine, int Yours)> SameForms(List<GreekWord> ours, List<GreekWord> theirs)
+    {
+        var longest = new int[ours.Count + 1, theirs.Count + 1];
+        for (var i = ours.Count - 1; i >= 0; i--)
+        {
+            for (var j = theirs.Count - 1; j >= 0; j--)
+            {
+                longest[i, j] = GreekLetters.Same(ours[i].Surface, theirs[j].Surface)
+                    ? longest[i + 1, j + 1] + 1
+                    : Math.Max(longest[i + 1, j], longest[i, j + 1]);
+            }
+        }
+
+        var pairs = new List<(int Mine, int Yours)>();
+        for (int i = 0, j = 0; i < ours.Count && j < theirs.Count;)
+        {
+            if (GreekLetters.Same(ours[i].Surface, theirs[j].Surface) && longest[i, j] == longest[i + 1, j + 1] + 1)
+            {
+                pairs.Add((i++, j++));
+            }
+            else if (longest[i + 1, j] >= longest[i, j + 1])
+            {
+                i++;
+            }
+            else
+            {
+                j++;
+            }
+        }
+
+        return pairs;
     }
 
     /// <summary>

@@ -18,7 +18,9 @@ namespace Essenthos.Core.Mapping;
 /// <list type="bullet">
 /// <item><c>stated</c>, against Scrivener 1894 and Stephanus 1550: each element linked to the Greek words at the places
 /// it states, where the edition holds the word the module names there (<see cref="ReceivedTextPositions.Lay"/>), and each
-/// element that prints no word stated as the Greek word the English leaves untranslated (<c>omits</c>).</item>
+/// element that prints no word over an article, a conjunction or a particle stated as the Greek word the English leaves
+/// untranslated (<c>omits</c>). An empty element over any other word is not stated: it is mostly an idiom the next English
+/// word renders (κατ' ἰδίαν <em>privately</em>) or a gap in the module (ὀκτώ in <em>eighteen</em>, Luke 13:11).</item>
 /// <item><c>strong</c>, against Nestle 1904, the Byzantine Textform, Westcott-Hort and Tischendorf: each stated link to
 /// Scrivener carried to the edition over the pairing of the Strong numbers both Greek editions carry
 /// (<see cref="GreekWitnessSource"/>), at that pairing's confidence. It is not stated: the module counts its own Received
@@ -173,7 +175,10 @@ internal sealed class KingJamesGreekSource : IPairSource
             claimed.UnionWith(links.UnrenderedIn(own).Where(greekAt.ContainsKey).Select(id => greekAt[id]));
             var tags = ids.Select(id => laid.Laid.Tags.TryGetValue(id, out var tag) ? tag : default).ToList();
             var supplied = Enumerable.Range(0, ids.Count).Where(i => tags[i].Supplied || english.Words[ids[i]].Supplied is not null).ToHashSet();
-            foreach (var match in GreekFunctionWords.Match([.. ids.Select(id => english.Words[id].Surface)], [.. tags.Select(tag => tag.Number)],
+            // A word of a numbered element is the element's, never a function word to guess: "the" over an element naming no
+            // article carries no number of its own, yet its element states its Greek.
+            var named = tags.Select(tag => tag.Numbers is { } numbers ? CrossWireKingJames.Primary(numbers) : null).ToList();
+            foreach (var match in GreekFunctionWords.Match([.. ids.Select(id => english.Words[id].Surface)], named,
                          anchors, morphology, claimed, supplied))
             {
                 rows.Add(Row(english, greek, [ids[match.EnglishWord]], [at[match.GreekWord]], LinkRelation.Renders, MappingMethods.Lexical, match.Confidence, source));
@@ -191,6 +196,13 @@ internal sealed class KingJamesGreekSource : IPairSource
         string method, double? confidence, string source) =>
         new(MappingText.Keys(from.Select(english.Key)), MappingText.Keys(to.Select(greek.Key)), relation.ToString().ToLowerInvariant(),
             method, confidence, source, null, null, null);
+
+    /// <summary>
+    /// Whether an element that prints no word over this Greek word says the English leaves it untranslated: an article, a
+    /// conjunction or a particle (Robinson's T, CONJ, COND, PRT), which the English so often has no word for.
+    /// </summary>
+    internal static bool GoesUntranslated(string? robinson) =>
+        robinson?.Split('-')[0] is "T" or "CONJ" or "COND" or "PRT";
 
     /// <summary>The Robinson code the edition's morphology states (<see cref="GreekMorphology.Of(System.Text.Json.JsonDocument?)"/>).</summary>
     private static string? Morphology(string? json)
@@ -344,7 +356,7 @@ internal sealed class KingJamesGreekSource : IPairSource
 
             var unrendered = new List<IReadOnlyList<long>>(6_000);
             var byVerse = new Dictionary<VerseKey, List<long>>();
-            int disagreed = 0;
+            int disagreed = 0, idioms = 0;
             foreach (var (address, elements) in laying.Laid.Unrendered)
             {
                 if (!verses.TryGetValue(address, out var words))
@@ -364,6 +376,13 @@ internal sealed class KingJamesGreekSource : IPairSource
                         continue;
                     }
 
+                    named = [.. named.Where(id => GoesUntranslated(Morphology(greek.Words[(int)id].Morphology)))];
+                    if (named.Count == 0)
+                    {
+                        idioms++;
+                        continue;
+                    }
+
                     unrendered.Add(named);
                     var list = byVerse.TryGetValue(own[address], out var held) ? held : byVerse[own[address]] = [];
                     list.AddRange(named);
@@ -377,7 +396,8 @@ internal sealed class KingJamesGreekSource : IPairSource
                 _byVerse = all.GroupBy(link => link.Verse).ToDictionary(group => group.Key, group => group.ToList()),
                 _unrendered = byVerse,
                 _summary = $"{laid}; {unrendered.Count} elements printing no word stand for a word of {witness} no element names, "
-                           + $"{disagreed} name another word or one an element names",
+                           + $"{disagreed} name another word or one an element names, {idioms} over a word that is not an article, "
+                           + "conjunction or particle left unstated",
             };
         }
 
