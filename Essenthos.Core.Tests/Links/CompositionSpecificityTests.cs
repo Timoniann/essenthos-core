@@ -1,4 +1,5 @@
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Mapping;
 using FluentAssertions;
 using Xunit;
 
@@ -47,4 +48,27 @@ public class CompositionSpecificityTests
         CompositionPipeline.SpecificityOf(9).Should().Be(CompositionPipeline.SpecificityOf(5));
         CompositionPipeline.SpecificityOf(9).Should().BeGreaterThan(0);
     }
+
+    private static readonly Dictionary<long, string> Strong = new() { [1] = "G3588", [2] = "G4151", [3] = "G1325" };
+
+    /// <summary>
+    /// The King James's <em>the Spirit</em> is one link over τοῦ Πνεύματος. Carried to both, <em>Spirit</em> reached the
+    /// article as surely as the noun, and a text composed through it took the article for <em>Spirit</em> as often as not.
+    /// </summary>
+    [Theory]
+    [InlineData("G4151", new long[] { 2 })]
+    [InlineData("G3588", new long[] { 1 })]
+    [InlineData(null, new long[] { 2 })]
+    [InlineData("G9999", new long[] { 2 })]
+    public void AMiddleWordOfAPhraseReachesTheTargetItsOwnNumberNames(string? own, long[] reached) =>
+        MappingLinks.Targets(own, [1, 2], t => Strong[t]).Should().Equal(reached);
+
+    /// <summary><em>he</em> of <em>he gave</em> has no number of its own and still reaches ἔδωκεν, which the phrase renders.</summary>
+    [Fact]
+    public void AMiddleWordWithoutANumberReachesWhatItsPhraseRenders() =>
+        MappingLinks.Targets(null, [3], t => Strong[t]).Should().Equal(3);
+
+    [Fact]
+    public void AMiddleWordOverArticlesAloneReachesThemAll() =>
+        MappingLinks.Targets(null, [1, 1], t => Strong[t]).Should().HaveCount(2);
 }

@@ -31,18 +31,51 @@ internal sealed class MappingLinks(ProductTexts texts)
     public List<FinalLink> Links(string fromSlug, string toSlug) =>
         _finals.GetOrAdd(MappingProducts.Pair(fromSlug, toSlug), pair => new Lazy<List<FinalLink>>(() => Read(pair, fromSlug, toSlug))).Value;
 
-    /// <summary>What a composition reads as the middle text's links to the target, each at its confidence and its specificity.</summary>
+    /// <summary>
+    /// What a composition reads as the middle text's links to the target, each at its confidence and its specificity. Every
+    /// word of a phrase is carried, since the phrase renders the target words together: <em>he</em> of the King James's
+    /// <em>he gave</em> reaches ἔδωκεν as <em>gave</em> does (<see cref="Targets"/>).
+    /// </summary>
     /// <param name="aligned">
     /// Whether the middle text's own aligner links count, at their confidence, and EVIDENTIA's rule-based ones with them: for a
     /// daughter version they are the only way its mother reaches the target. Otherwise neither is walked, so one inference is
     /// never the next one's bridge.
     /// </param>
-    public ILookup<long, (long To, double Confidence)> Carried(string viaSlug, string toSlug, bool aligned) =>
-        Links(viaSlug, toSlug)
+    public ILookup<long, (long To, double Confidence)> Carried(string viaSlug, string toSlug, bool aligned)
+    {
+        var (via, to) = (texts[viaSlug], texts[toSlug]);
+        return Links(viaSlug, toSlug)
             .Where(l => l.To.Length > 0 && (aligned || l.Method is not (LinkMethod.Aligner or LinkMethod.RuleBased)))
-            .SelectMany(l => l.From.SelectMany(f => l.To.Select(t => (Bridge: f, To: t,
+            .SelectMany(l => l.From.SelectMany(f => Targets(via.Words[(int)f].Strong, l.To, t => to.Words[(int)t].Strong).Select(t => (Bridge: f, To: t,
                 Confidence: (l.Confidence ?? 1) * CompositionPipeline.SpecificityOf(l.From.Length)))))
             .ToLookup(r => r.Bridge, r => (r.To, r.Confidence));
+    }
+
+    /// <summary>
+    /// The target words of a link one of its middle words is carried to. A link naming one target word carries every word
+    /// to it. One naming several says that the phrase renders them together, and a middle word's own Strong number says
+    /// which of them it renders where it names one: <em>Spirit</em> of <em>the Spirit</em> over τοῦ Πνεύματος reaches
+    /// Πνεύματος and <em>the</em> reaches τοῦ, where carrying both to both made the article as likely an answer for
+    /// <em>Spirit</em> as the noun. A word with no number of its own, or one the target words do not carry (<em>of</em> in
+    /// <em>of the Spirit</em>, which renders the case), reaches the words that are not the article, since the case and the
+    /// person a function word renders are the content word's; and every target word where all are articles.
+    /// </summary>
+    internal static IEnumerable<long> Targets(string? own, long[] targets, Func<long, string?> strong)
+    {
+        if (targets.Length == 1)
+        {
+            return targets;
+        }
+
+        if (own is not null && targets.Where(t => strong(t) == own).ToList() is { Count: > 0 } named)
+        {
+            return named;
+        }
+
+        return targets.Where(t => strong(t) != Article).ToList() is { Count: > 0 } content ? content : targets;
+    }
+
+    private const string Article = "G3588";
 
     /// <summary>
     /// The target words each source word is joined to by a link that is not the aligner's: the words that already have an

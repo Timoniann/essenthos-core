@@ -26,6 +26,7 @@ public sealed class CrossWireKingJamesTests
 
         words.Where(word => word.Added).Select(word => word.Surface).Should().Equal("be");
         words.Single(word => word.Surface == "be").Numbers.Should().BeEmpty();
+        words.Single(word => word.Surface == "glory").Morphology.Should().Equal("T-NSF", "N-NSF");
     }
 
     [Fact]
@@ -40,7 +41,7 @@ public sealed class CrossWireKingJamesTests
     /// <summary>
     /// A word the module prints whole and the corpus divides (as bible4u's <em>to day</em> against <em>today</em>; here
     /// <em>ever</em>) is laid on its letters, and both parts take the element's numbers and its unit; the number each word
-    /// shows is the element's first that is not the article.
+    /// shows is the element's first that is not the article, and a function word shows one only of a Greek word of its class.
     /// </summary>
     [Fact]
     public void EachWordTakesItsElementsNumbersWholeAndShowsTheOneThatIsNotTheArticle()
@@ -50,7 +51,14 @@ public sealed class CrossWireKingJamesTests
         var laid = Lay(corpus);
 
         laid.Verses.Should().Be(1);
+        laid.Tags[0].Numbers.Should().Equal("G2316");
+        laid.Tags[0].Number.Should().BeNull("'To' renders the dative of θεῷ, not the noun");
+        laid.Tags[0].Closed.Should().BeTrue();
         laid.Tags[1].Numbers.Should().Equal("G2316");
+        laid.Tags[1].Number.Should().Be("G2316");
+        laid.Tags[1].Closed.Should().BeFalse();
+        laid.Tags[6].Number.Should().Be("G1223", "'through' renders διά");
+        laid.Tags[9].Number.Should().Be("G1519");
         laid.Tags[5].Numbers.Should().Equal("G3588", "G1391");
         laid.Tags[5].Number.Should().Be("G1391");
         laid.Tags[4].Supplied.Should().BeTrue();
@@ -84,14 +92,64 @@ public sealed class CrossWireKingJamesTests
     public void OnlyAnEmptyElementOverAnArticleOrParticleSaysTheEnglishLeavesItOut(string? robinson, bool untranslated) =>
         KingJamesGreekSource.GoesUntranslated(robinson).Should().Be(untranslated);
 
+    /// <summary>
+    /// A function word of an element shows the number of a Greek word of its own class, and none where the element names
+    /// none (the owner's decision on PRB-1645): the element's link still names the Greek word for it.
+    /// </summary>
     [Theory]
-    [InlineData(new[] { "G3588", "G2889" }, "the", "G3588")]
-    [InlineData(new[] { "G3588", "G2889" }, "world", "G2889")]
-    [InlineData(new[] { "G2889" }, "The", null)]
-    [InlineData(new[] { "G5207" }, "the", null)]
-    [InlineData(new[] { "G5207" }, "son", "G5207")]
-    public void TheEnglishArticleOfAPhraseShowsTheArticle(string[] numbers, string word, string? number) =>
-        CrossWireKingJames.Own(numbers, word).Should().Be(number);
+    [InlineData("G3588 G2889", "T-ASM N-ASM", "the", "the world", "G3588")]
+    [InlineData("G3588 G2889", "T-ASM N-ASM", "world", "the world", "G2889")]
+    [InlineData("G2889", "N-ASM", "The", "The world", null)]
+    [InlineData("G5207", "N-GSM", "the", "the son", null)]
+    [InlineData("G5207", "N-GSM", "son", "the son", "G5207")]
+    [InlineData("G1325", "V-AAI-3S", "he", "he gave", null)]
+    [InlineData("G1325", "V-AAI-3S", "gave", "he gave", "G1325")]
+    [InlineData("G3588 G3004", "T-NSM V-2AAI-3S", "he", "he said", "G3588")]
+    [InlineData("G2316", "N-GSM", "of", "of God", null)]
+    [InlineData("G1537 G846", "PREP P-GSM", "of", "of him", "G1537")]
+    [InlineData("G1537 G846", "PREP P-GSM", "him", "of him", "G846")]
+    [InlineData("G846", "P-DPM", "unto", "unto them", null)]
+    [InlineData("G1577", "N-DPF", "to", "to the churches", null)]
+    [InlineData("G5315", "V-2AAN", "to", "to eat", null)]
+    [InlineData("G2064", "V-FDI-3S", "shall", "shall come", null)]
+    [InlineData("G1510", "V-FDI-3S", "shall", "shall be", null)]
+    [InlineData("G1510", "V-FDI-3S", "be", "shall be", "G1510")]
+    [InlineData("G1096", "V-2ADI-3S", "was", "it was", "G1096")]
+    [InlineData("G1096", "V-2ADI-3S", "it", "it was", null)]
+    [InlineData("G1096", "V-2ADI-3S", "was", "was made", null)]
+    [InlineData("G622", "V-2AMS-3S", "should", "should perish", null)]
+    [InlineData("G3754 G568", "CONJ V-PAI-3P", "have", "They have", "G568")]
+    [InlineData("G3754 G568", "CONJ V-PAI-3P", "They", "They have", null)]
+    [InlineData("G1401", "N-NSM", "a", "a servant", null)]
+    [InlineData("G5100", "X-NSM", "a", "a certain", null)]
+    [InlineData("G5100", "X-NSM", "certain", "a certain", "G5100")]
+    [InlineData("G3756 G1410", "PRT-N V-PNI-2P", "cannot", "Ye cannot", "G1410")]
+    [InlineData("G3756 G1410", "PRT-N V-PNI-2P", "Ye", "Ye cannot", null)]
+    [InlineData("G3756 G3361", "PRT-N PRT-N", "not", "shall not", "G3756")]
+    [InlineData("G571", "A-GPM", "not", "believe not", "G571")]
+    [InlineData("G1715", "ADV", "before", "before", "G1715")]
+    [InlineData("G1500", "ADV", "in", "in vain", null)]
+    [InlineData("G1563", "ADV", "there", "there", "G1563")]
+    [InlineData("G2521", "V-INI-3S", "there", "there sat", null)]
+    [InlineData("G2532", "CONJ", "and", "and", "G2532")]
+    [InlineData("G3004", "V-2AAI-3S", "and", "and said", null)]
+    [InlineData("G1492", "V-2AAP-NSM", "when", "when he saw", null)]
+    [InlineData("G3754", "CONJ", "that", "that", "G3754")]
+    [InlineData("G3588 G191", "T-NSM V-PAP-NSM", "that", "He that heareth", "G3588")]
+    [InlineData("G3956", "A-NSM", "whosoever", "whosoever", "G3956")]
+    public void AFunctionWordShowsOnlyTheNumberOfAGreekWordOfItsClass(
+        string numbers, string morphology, string word, string element, string? number) =>
+        CrossWireKingJames.Own(numbers.Split(' '), morphology.Split(' '), word, element.Split(' ')).Should().Be(number);
+
+    [Theory]
+    [InlineData("the", true)]
+    [InlineData("unto", true)]
+    [InlineData("hath", true)]
+    [InlineData("He", true)]
+    [InlineData("world", false)]
+    [InlineData("whosoever", false)]
+    public void TheFunctionWordsAreTheClosedClassesOfEnglish(string word, bool closed) =>
+        CrossWireKingJames.Closed(word).Should().Be(closed);
 
     [Theory]
     [InlineData(new[] { "G3588", "G2316" }, "G2316")]
@@ -99,6 +157,13 @@ public sealed class CrossWireKingJamesTests
     [InlineData(new[] { "G2316", "G3588" }, "G2316")]
     public void AWordShowsTheArticleOnlyWhereItsElementNamesNothingElse(string[] numbers, string number) =>
         CrossWireKingJames.Primary(numbers).Should().Be(number);
+
+    [Theory]
+    [InlineData("G3754 G568", "CONJ V-PAI-3P", "G568")]
+    [InlineData("G302 G3739", "PRT R-NSM", "G3739")]
+    [InlineData("G3756 G3361", "PRT-N PRT-N", "G3756")]
+    public void AWordOfContentShowsTheGreekWordOfContentItsElementNames(string numbers, string morphology, string number) =>
+        CrossWireKingJames.Primary(numbers.Split(' '), morphology.Split(' ')).Should().Be(number);
 
     private static LaidKingJames Lay(string[] corpus)
     {

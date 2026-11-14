@@ -9,7 +9,7 @@ namespace Essenthos.Core.Conversion;
 /// The King James's Strong numbers and the words its translators supplied, from the editions that state them:
 /// <list type="bullet">
 /// <item>the New Testament from CrossWire's KJV 3.1, laid onto the words verse by verse by their letters
-/// (<see cref="CrossWireKingJames"/>): a word takes its element's number (<see cref="CrossWireKingJames.Primary"/>), and a
+/// (<see cref="CrossWireKingJames"/>): a word takes one of its element's numbers (<see cref="CrossWireKingJames.Own"/>), and a
 /// word the edition prints as supplied (<c>transChange type="added"</c>) in an element naming no number is supplied;</item>
 /// <item>the Old Testament's supplied words from the Open Hebrew Bible's mapping file, whose italic words are joined to
 /// the verse's words as the load's <c>old-testament-links</c> step joins them, a function word the mapping gives a

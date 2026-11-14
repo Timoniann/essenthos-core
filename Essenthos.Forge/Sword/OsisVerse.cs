@@ -27,8 +27,10 @@ internal enum OsisPieceKind
 /// The piece stands inside a <c>&lt;transChange type="added"&gt;</c>: the words the translators supplied, which the
 /// King James prints in italics.
 /// </param>
+/// <param name="Morph">The <c>morph</c> attribute of a <c>&lt;w&gt;</c>, as written; null elsewhere.</param>
 internal readonly record struct OsisPiece(
-    OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null, string? Source = null, bool Added = false);
+    OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null, string? Source = null, bool Added = false,
+    string? Morph = null);
 
 /// <summary>
 /// One verse of a SWORD module's OSIS, as the pieces a reader needs: the tagged words, the text
@@ -45,6 +47,7 @@ internal static class OsisVerse
     private const string LemmaAttribute = "lemma";
     private const string TypeAttribute = "type";
     private const string SourceAttribute = "src";
+    private const string MorphAttribute = "morph";
     private const string SplitType = "x-split";
 
     public static List<OsisPiece> Parse(string markup)
@@ -64,6 +67,7 @@ internal static class OsisVerse
         string? lemma = null;
         string? split = null;
         string? source = null;
+        string? morph = null;
         StringBuilder? note = null;
         var noteDepth = 0;
         var titles = 0;
@@ -112,9 +116,10 @@ internal static class OsisVerse
                         ? type
                         : null;
                     source = xml.GetAttribute(SourceAttribute);
+                    morph = xml.GetAttribute(MorphAttribute);
                     if (xml.IsEmptyElement)
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source, added > 0));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source, added > 0, morph));
                     }
                     else
                     {
@@ -124,7 +129,7 @@ internal static class OsisVerse
                     break;
 
                 case XmlNodeType.EndElement when xml.LocalName == WordElement && noteDepth == 0 && word is not null:
-                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source, added > 0));
+                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source, added > 0, morph));
                     word = null;
                     break;
 

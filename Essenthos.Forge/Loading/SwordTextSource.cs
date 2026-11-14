@@ -54,9 +54,13 @@ internal sealed record SwordText(
 /// states them; empty elsewhere. Never stored: <see cref="CrossWirePositions"/> reads them.
 /// </param>
 /// <param name="Added">The edition prints the word as one its translators supplied (<c>transChange type="added"</c>).</param>
+/// <param name="Morphology">
+/// The code the element's <c>morph</c> attribute writes for each of its <paramref name="Numbers"/>, in their order, where
+/// it writes any (CrossWire's King James writes Robinson's); null elsewhere.
+/// </param>
 internal sealed record SwordWord(
     string Surface, string Trailer, IReadOnlyList<string> Numbers, int Unit, bool Elided,
-    IReadOnlyList<StatedPosition>? Positions = null, bool Added = false);
+    IReadOnlyList<StatedPosition>? Positions = null, bool Added = false, IReadOnlyList<string?>? Morphology = null);
 
 /// <param name="Book">The canonical ordinal of the verse the element stands in.</param>
 /// <param name="Positions">The Greek words it renders, by their place in the Received Text.</param>
@@ -627,8 +631,14 @@ internal static class SwordTextSource
                 continue;
             }
 
-            IReadOnlyList<string> numbers =
-                piece.Kind == OsisPieceKind.Word ? UnionStrongNumbers.Read(piece.Lemma, fhlPrefixes) : [];
+            IReadOnlyList<string> numbers = [];
+            IReadOnlyList<string?>? morphology = null;
+            if (piece.Kind == OsisPieceKind.Word)
+            {
+                (numbers, var codes) = UnionStrongNumbers.Read(piece.Lemma, piece.Morph, fhlPrefixes);
+                morphology = piece.Morph is null ? null : codes;
+            }
+
             IReadOnlyList<StatedPosition> positions =
                 piece.Kind == OsisPieceKind.Word ? ReceivedTextPositions.Read(piece.Lemma, piece.Source) : [];
             var element = piece.Kind != OsisPieceKind.Word
@@ -669,7 +679,8 @@ internal static class SwordTextSource
                     continue;
                 }
 
-                words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false, positions, piece.Added));
+                words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false, positions, piece.Added,
+                    morphology));
                 joinable = !tagged;
             }
         }
