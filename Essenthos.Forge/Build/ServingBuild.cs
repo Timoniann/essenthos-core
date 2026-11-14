@@ -170,6 +170,8 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         await Task.WhenAll(
             Panes(null, false, parallel, cancellationToken),
             RecordWords(null, false, cancellationToken));
+        // After the panes and the record words, which save the store as each text is written.
+        await Strength(null, false, cancellationToken);
         await Count(cancellationToken);
     }
 
@@ -275,6 +277,29 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
             return rows;
         });
+
+    /// <summary>
+    /// How strongly each text's verses are linked to every text linked to it, per canonical chapter, counted from the tables as
+    /// they now stand for the texts named (every text when null) whose inputs moved, or all when <paramref name="force"/> is set;
+    /// the rest copied from their products where the table does not hold them, and those <paramref name="copy"/> names always.
+    /// </summary>
+    public Task<long> Strength(IReadOnlyCollection<string>? texts, bool force, CancellationToken cancellationToken, IReadOnlyCollection<string>? copy = null) =>
+        Timed("load", "strength", async () =>
+        {
+            var outcomes = await new StrengthBuild(connectionString, store, services, logger).Run(texts, force, StrengthParallelism, cancellationToken, copy);
+            var made = outcomes.Where(o => o.Made).ToList();
+            logger.LogInformation("Strength: {Made} texts counted or copied ({Rows} chapters), {Current} current",
+                made.Count, made.Sum(o => o.Rows), outcomes.Count - made.Count);
+            if (made.Count > 0)
+            {
+                await Execute(connectionString, "ANALYZE verse_strength", cancellationToken);
+            }
+
+            return (long)made.Sum(o => o.Rows);
+        });
+
+    /// <summary>Texts whose strength is counted at once: each reads all its link words in one statement.</summary>
+    private const int StrengthParallelism = 8;
 
     /// <summary>The frame of the texts named, or of every text with a frame file, each text replaced in a transaction of its own.</summary>
     public async Task<long> Frame(IReadOnlyCollection<string>? only, CancellationToken cancellationToken)

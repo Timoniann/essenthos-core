@@ -168,6 +168,74 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
          WHERE k.phrase IS DISTINCT FROM o.phrase OR k.at IS DISTINCT FROM o.at
          """;
 
+    /// <summary>The integrity check of the verse strength counted at build, against the links on a sample of chapters.</summary>
+    public const string StrengthTheLinksDoNotGive = "verse strength counted at build that the links do not give";
+
+    /// <summary>One chapter of a text in about this many, against every text linked to it.</summary>
+    private const int StrengthSample = 997;
+
+    /// <summary>
+    /// <c>verse_strength</c> held against the links and verse links it was counted from (<see cref="VerseStrengths"/>), on one
+    /// chapter of a text in about <paramref name="sample"/>: a verse whose links, stated links or mean confidence differ, one
+    /// listed that no link gives or one missing, and a chapter whose joining by reading differs, listed or missing, each count.
+    /// </summary>
+    internal static string StrengthSql(int sample) =>
+        $"""
+         WITH sampled AS (
+             SELECT DISTINCT v.text_id, r.canonical_book, r.canonical_chapter FROM verse v
+             JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+             WHERE hashtext(v.text_id || ' ' || r.canonical_book || ' ' || r.canonical_chapter) % {sample} = 0),
+         placed AS (
+             SELECT s.text_id, s.canonical_book, s.canonical_chapter, r.canonical_verse, v.id AS verse_id
+             FROM sampled s
+             JOIN verse v ON v.text_id = s.text_id
+             JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+                                   AND r.canonical_book = s.canonical_book AND r.canonical_chapter = s.canonical_chapter),
+         linked AS (
+             SELECT DISTINCT p.text_id, CASE WHEN lw.side = 'from' THEN l.to_text_id ELSE l.from_text_id END AS reference_id,
+                    p.canonical_book, p.canonical_chapter, p.canonical_verse AS verse, l.id, l.confidence
+             FROM placed p
+             JOIN word w ON w.verse_id = p.verse_id
+             JOIN link_word lw ON lw.word_id = w.id
+             JOIN link l ON l.id = lw.link_id
+                        AND ((lw.side = 'from' AND l.from_text_id = p.text_id AND l.to_text_id <> p.text_id)
+                             OR (lw.side = 'to' AND l.to_text_id = p.text_id AND l.from_text_id <> p.text_id))),
+         given AS (
+             SELECT text_id, reference_id, canonical_book, canonical_chapter, verse, count(*) AS links,
+                    count(*) FILTER (WHERE confidence IS NULL) AS stated, avg(confidence) AS confidence
+             FROM linked GROUP BY 1, 2, 3, 4, 5),
+         joined AS (
+             SELECT p.text_id, CASE WHEN vl.from_text_id = p.text_id THEN vl.to_text_id ELSE vl.from_text_id END AS reference_id,
+                    p.canonical_book, p.canonical_chapter, bool_and(vl.method = 'model-reading') AS by_reading
+             FROM placed p
+             JOIN verse_link_verse vs ON vs.verse_id = p.verse_id
+             JOIN verse_link vl ON vl.id = vs.verse_link_id AND (vl.from_text_id = p.text_id) <> (vl.to_text_id = p.text_id)
+             GROUP BY 1, 2, 3, 4),
+         chapters AS (
+             SELECT text_id, reference_id, canonical_book, canonical_chapter, bool_or(coalesce(by_reading, false)) AS by_reading
+             FROM (SELECT DISTINCT text_id, reference_id, canonical_book, canonical_chapter, NULL::boolean AS by_reading FROM given
+                   UNION ALL
+                   SELECT text_id, reference_id, canonical_book, canonical_chapter, by_reading FROM joined WHERE by_reading) c
+             GROUP BY 1, 2, 3, 4),
+         stored AS (
+             SELECT k.text_id, k.reference_id, k.canonical_book, k.canonical_chapter, k.by_reading, k.verses
+             FROM verse_strength k
+             JOIN sampled s USING (text_id, canonical_book, canonical_chapter)),
+         kept AS (
+             SELECT k.text_id, k.reference_id, k.canonical_book, k.canonical_chapter,
+                    split_part(e, ':', 1)::int AS verse, split_part(e, ':', 2)::bigint AS links, split_part(e, ':', 3)::bigint AS stated,
+                    nullif(split_part(e, ':', 4), '')::float8 AS confidence
+             FROM stored k
+             CROSS JOIN LATERAL unnest(string_to_array(nullif(k.verses, ''), ' ')) AS e)
+         SELECT (SELECT count(*) FROM kept k
+                 FULL JOIN given g USING (text_id, reference_id, canonical_book, canonical_chapter, verse)
+                 WHERE k.links IS DISTINCT FROM g.links OR k.stated IS DISTINCT FROM g.stated
+                    OR (k.confidence IS NULL) <> (g.confidence IS NULL) OR abs(k.confidence - g.confidence) > 1e-9)
+              + (SELECT count(*) FROM stored k
+                 FULL JOIN chapters c USING (text_id, reference_id, canonical_book, canonical_chapter)
+                 WHERE k.by_reading IS DISTINCT FROM c.by_reading)
+         """;
+
     /// <summary>The integrity check of cross references and topic verses that name an address the frame does not place.</summary>
     public const string ReferencesNoTextPlaces = "cross references and topic verses naming a verse no text places";
 
@@ -1080,6 +1148,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
         // The words the build listed behind each phrase of a Strong number, held against the links on a sample of numbers.
         (StrongPlacesTheLinksDoNotGive, StrongPlacesSql(StrongPlaceSample)),
+
+        // How strongly each text's verses are linked to every text linked to it, counted at build, held against the links on a
+        // sample of chapters.
+        (StrengthTheLinksDoNotGive, StrengthSql(StrengthSample)),
 
         ("verse links saying again what another link of the same pair says",
             $"""

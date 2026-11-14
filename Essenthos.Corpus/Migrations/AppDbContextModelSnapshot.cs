@@ -5823,6 +5823,47 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("verse_reference", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.VerseStrength", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("ReferenceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("reference_id");
+
+                    b.Property<int>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<bool>("ByReading")
+                        .HasColumnType("boolean")
+                        .HasColumnName("by_reading");
+
+                    b.Property<string>("Verses")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("verses");
+
+                    b.HasKey("TextId", "ReferenceId", "CanonicalBook", "CanonicalChapter")
+                        .HasName("pk_verse_strength");
+
+                    b.HasIndex("ReferenceId")
+                        .HasDatabaseName("ix_verse_strength_reference_id");
+
+                    b.ToTable("verse_strength", null, t =>
+                        {
+                            t.HasComment("How strongly a text's verses of a canonical chapter are linked to a reference text's: per verse the links of the pair naming its words, the stated ones and the mean confidence; and whether only verse links a reading drew join them there. Derived from the served tables by the build's strength producer (build/products, strength/{text}).");
+
+                            t.HasCheckConstraint("ck_verse_strength_listed", "verses <> '' OR by_reading");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Word", b =>
                 {
                     b.Property<long>("Id")
@@ -7733,6 +7774,27 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_verse_reference_verse_verse_id");
 
                     b.Navigation("Verse");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.VerseStrength", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Reference")
+                        .WithMany()
+                        .HasForeignKey("ReferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_verse_strength_text_reference_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_verse_strength_text_text_id");
+
+                    b.Navigation("Reference");
+
+                    b.Navigation("Text");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Word", b =>

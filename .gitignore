@@ -226,6 +226,7 @@ Resources/Essenthos/external/
 Resources/Essenthos/panes/
 Resources/Essenthos/record-spellings/
 Resources/Essenthos/record-positions/
+Resources/Essenthos/strength/
 Resources/Essenthos/build/*
 !Resources/Essenthos/build/products.tsv
 !Resources/Essenthos/build/licences.tsv

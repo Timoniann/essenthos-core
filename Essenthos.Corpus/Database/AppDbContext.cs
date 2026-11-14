@@ -373,6 +373,9 @@ public class AppDbContext : DbContext
     /// <summary>Where each record's name first stands in each verse of the text a record page orders by, counted ahead of time.</summary>
     public DbSet<RecordPosition> RecordPositions { get; set; } = null!;
 
+    /// <summary>How strongly each text's verses of a chapter are linked to another text's, counted ahead of time.</summary>
+    public DbSet<VerseStrength> VerseStrengths { get; set; } = null!;
+
     /// <summary>The transactions that wrote each table, so a kept sum is known to be stale.</summary>
     public DbSet<TableWrite> TableWrites { get; set; } = null!;
 
@@ -1818,6 +1821,21 @@ public class AppDbContext : DbContext
                 "Where a record's name first stands in a verse of a text (the least position of the words word_entity names it "
                 + "by there), for the text a record page orders a verse's names by. Derived from the served tables by the "
                 + "build's positions producer (build/products, record-positions/{text})."));
+        });
+
+        modelBuilder.Entity<VerseStrength>(entity =>
+        {
+            entity.HasOne(s => s.Text).WithMany().HasForeignKey(s => s.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(s => s.Reference).WithMany().HasForeignKey(s => s.ReferenceId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("verse_strength", t =>
+            {
+                t.HasCheckConstraint("ck_verse_strength_listed", "verses <> '' OR by_reading");
+                t.HasComment(
+                    "How strongly a text's verses of a canonical chapter are linked to a reference text's: per verse the links of "
+                    + "the pair naming its words, the stated ones and the mean confidence; and whether only verse links a reading "
+                    + "drew join them there. Derived from the served tables by the build's strength producer (build/products, "
+                    + "strength/{text}).");
+            });
         });
 
         modelBuilder.Entity<TextForm>(entity =>

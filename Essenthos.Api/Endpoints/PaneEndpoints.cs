@@ -91,7 +91,7 @@ internal static class PaneEndpoints
             int chapter,
             string? texts,
             ICanonIndex canon,
-            IServiceScopeFactory scopes,
+            AppDbContext db,
             CancellationToken cancellationToken) =>
         {
             if (BookReferences.ResolveOrdinal(book) is not { } ordinal)
@@ -119,18 +119,35 @@ internal static class PaneEndpoints
             }
 
             var reference = requested[0];
-            var measured = new ConcurrentDictionary<string, PaneStrengthResponse>();
-            // Each text against the reference on a context of its own, all at once: the reader waits for the slowest pair only.
-            await Task.WhenAll(requested.Skip(1).Select(async entry =>
-            {
-                using var scope = scopes.CreateScope();
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                measured[entry.Slug] = await ParallelEndpoints.Strength(db, entry.Id, reference.Id, ordinal, chapter, cancellationToken);
-            }));
+            var others = requested.Skip(1).Select(entry => entry.Id).ToList();
+            var held = ChapterReading.Held(ordinal, chapter).ToList();
+            var books = held.Select(h => h.Book).Distinct().ToList();
+            var chapters = held.Select(h => h.Chapter).Distinct().ToList();
+            var stored = (await db.VerseStrengths.AsNoTracking()
+                    .Where(s => s.ReferenceId == reference.Id && others.Contains(s.TextId)
+                                && books.Contains(s.CanonicalBook) && chapters.Contains(s.CanonicalChapter))
+                    .Select(s => new { s.TextId, s.CanonicalBook, s.CanonicalChapter, s.ByReading, s.Verses })
+                    .ToListAsync(cancellationToken))
+                .ToDictionary(s => (s.TextId, s.CanonicalBook, s.CanonicalChapter));
 
             return Results.Ok(new StrengthResponse(
                 reference.Slug,
-                requested.Skip(1).ToDictionary(entry => entry.Slug, entry => measured[entry.Slug])));
+                requested.Skip(1).ToDictionary(entry => entry.Slug, entry =>
+                {
+                    var verses = new Dictionary<int, LinkStrengthResponse>();
+                    var byReading = false;
+                    foreach (var (heldBook, heldChapter, first, last, shift) in held)
+                    {
+                        if (stored.GetValueOrDefault((entry.Id, heldBook, heldChapter)) is { } row)
+                        {
+                            ChapterReading.Merge(verses, VerseStrengths.Unpack(row.Verses).ToDictionary(
+                                v => v.Key, v => new LinkStrengthResponse(v.Value.Links, v.Value.Stated, v.Value.Confidence)), first, last, shift);
+                            byReading |= row.ByReading;
+                        }
+                    }
+
+                    return new PaneStrengthResponse(byReading ? ParallelEndpoints.PairedByItsOwnNumber : ParallelEndpoints.PairedThroughTheFrame, verses);
+                })));
         });
 
         routes.MapGet("/record-names", async (

@@ -63,7 +63,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             // them, or a product made since, is caught up.
             var catchUp = new ServingBuild(connectionString, store, services, logger);
             var caught = await catchUp.Panes(null, false, PaneParallelism, cancellationToken);
-            if (caught + await catchUp.RecordWords(null, false, cancellationToken) > 0)
+            caught += await catchUp.RecordWords(null, false, cancellationToken);
+            if (caught + await catchUp.Strength(null, false, cancellationToken) > 0)
             {
                 await catchUp.Count(cancellationToken);
                 await WriteServed(database, catchUp.Rows, cancellationToken);
@@ -80,6 +81,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var frames = new SortedSet<string>(StringComparer.Ordinal);
         var verses = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
+        var strength = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, names = false, spellings = false;
         foreach (var product in changed)
         {
@@ -125,6 +127,11 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 // and are matched to the table by hash whatever wrote them.
                 case "record-spellings/{text}" or "record-positions/{text}":
                     recordWords.Add(bound["text"]);
+                    break;
+                // A text's strength names its reference texts by slug and is a function of its inputs alone, so a list another
+                // database counted since this one was served is copied as it stands.
+                case "strength/{text}":
+                    strength.Add(bound["text"]);
                     break;
                 case var p when p.StartsWith("records/", StringComparison.Ordinal) || p.StartsWith("external/", StringComparison.Ordinal):
                     records = true;
@@ -257,6 +264,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         }
 
         await serving.RecordWords(null, false, cancellationToken);
+        await serving.Strength(null, false, cancellationToken, strength);
         await serving.Count(cancellationToken);
         await WriteServed(database, serving.Rows, cancellationToken);
         Stages.AddRange(serving.Stages);

@@ -42,6 +42,11 @@ internal static partial class ForgeVerbs
             + "King James verse (record_position, record-positions/KJV), for the texts named or every text whose inputs moved. Never "
             + "writes the live corpus or the snapshot.",
             RecordWordsVerb),
+        new("strength", "[<text,...>] [--force]",
+            "Count how strongly each text's verses are linked to every text linked to it, per canonical chapter, from the configured "
+            + "database (verse_strength, strength/<SLUG>), for the texts named or every text whose inputs moved; a current product is "
+            + "copied into a table that lacks it. Never writes the live corpus or the snapshot.",
+            StrengthVerb),
         new("tables", "[<table,...>] [--from <Resources>] [--force]",
             "Write the served tables made whole from files (the lexicon, text relations, ...) as tables/<table>, each only when its sources moved. Reads no database.",
             TablesVerb),
