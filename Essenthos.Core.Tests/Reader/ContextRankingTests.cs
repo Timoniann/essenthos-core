@@ -103,13 +103,13 @@ public sealed class ContextRankingTests : IDisposable
     }
 
     /// <summary>
-    /// Nave's NOAH is Noah's entry, and belongs on the row of the Noah the chapter names. His JESUS,
+    /// Nave's NOAH is Noah's entry, about the Noah the chapter names, and is not sent. His JESUS,
     /// THE CHRIST in a chapter that names no Jesus is his reading of it; his list of quotations is no
     /// subject at all; a place he files the whole chapter under and the chapter never names is his
     /// outline of the book. What is left is the chapter's themes.
     /// </summary>
     [Fact]
-    public async Task TopicsAreSplitIntoThemesPeopleAndReadings()
+    public async Task TopicsAreSplitIntoThemesAndReadingsAndAPersonsOwnEntryIsLeftOut()
     {
         var noah = Record("noah", EntityKind.Person);
         var jesus = Record("jesus", EntityKind.Person);
@@ -128,9 +128,9 @@ public sealed class ContextRankingTests : IDisposable
 
         var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
 
+        // Noah's own entry is told from the themes and then left out: the panel shows nothing of it.
         context.Topics.Select(t => (t.Name, t.Group, t.Record)).Should().Equal(
             ("Sons", ChapterTopics.Groups.Theme, null),
-            ("Noah", ChapterTopics.Groups.Person, "noah"),
             ("Jesus, the Christ", ChapterTopics.Groups.Reading, "jesus"),
             ("Rome", ChapterTopics.Groups.Reading, null));
     }

@@ -23,7 +23,8 @@ namespace Essenthos.Core.Endpoints;
 ///
 /// <para>
 /// Three kinds of topic are not themes. One named after a person the chapter names is that
-/// person's entry, and belongs on the person's row. One about a person the chapter names nowhere —
+/// person's entry, and is not sent: under the person's row it added nothing a reader could use
+/// (owner, 2026-11-14). One about a person the chapter names nowhere —
 /// <em>Jesus, the Christ</em> in Genesis 1, <em>Satan</em> in Genesis 3 — is how Nave read the
 /// chapter, not what it says, and is set apart as that. And Nave's own lists of passages, the
 /// quotations, the select readings and the Psalms, are the index's apparatus and not subjects at
@@ -131,6 +132,9 @@ internal static class ChapterTopics
                             t.Named, t.Whole, says, length, weights.TopicVerses.GetValueOrDefault(t.Topic.Slug)),
                     };
                 })
+                // A person's own entry is told apart so that it is not taken for a theme, and then left
+                // out, since the panel no longer shows it under the person's row.
+                .Where(t => t.Group != Groups.Person)
                 .OrderBy(t => GroupOrder(t.Group))
                 .ThenByDescending(t => t.Relevance)
                 .ThenByDescending(t => t.Verses.Count)
@@ -311,16 +315,16 @@ internal static class ChapterTopics
 internal record ContextTopicResponse(string Slug, string Name, IList<int> Verses, IList<ContextTopicEntryResponse> Entries)
 {
     /// <summary>
-    /// <c>theme</c> for a subject of the chapter; <c>person</c> for the entry of a person the chapter
-    /// names, which belongs on that person's row; <c>reading</c> for a topic about a person the
-    /// chapter never names, which is how the index reads the chapter.
+    /// <c>theme</c> for a subject of the chapter, or <c>reading</c> for a topic about a person the
+    /// chapter never names, which is how the index reads the chapter. A person's own entry, which
+    /// <see cref="ChapterTopics.Groups.Person"/> names, is not sent.
     /// </summary>
     public string Group { get; init; } = ChapterTopics.Groups.Theme;
 
     /// <summary>Whether the chapter's own English says the heading, in a verse the topic files.</summary>
     public bool Said { get; init; }
 
-    /// <summary>The record a person topic belongs to, or a reading is about where one record bears the name.</summary>
+    /// <summary>The record a reading is about, where one record bears the name.</summary>
     public string? Record { get; init; }
 
     /// <summary>What the topics are ordered by within their group; not a figure for a reader.</summary>
