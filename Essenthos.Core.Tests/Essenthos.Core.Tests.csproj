@@ -54,4 +54,9 @@
          exercised without a gigabyte of it, and so the refusals have something to refuse. -->
     <Content Include="Resources\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+    <ItemGroup>
+        <!-- Descriptors, family trees and record lines, composed in Essenthos.Corpus so the build can make them too (TSK-1666). -->
+        <Using Include="Essenthos.Core.Descriptions" />
+    </ItemGroup>
+
 </Project>

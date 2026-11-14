@@ -4,7 +4,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// How many children a person's verses count, by sex, and whether they say there were more than
@@ -143,8 +143,8 @@ internal static class KinFacts
 
         var rows = await db.EntityRelationships
             .Where(r => Down.Contains(r.Type)
-                        && !FamilyEndpoints.Deities.Contains(r.From!.Slug)
-                        && !FamilyEndpoints.Deities.Contains(r.To!.Slug))
+                        && !ChapterFamily.Deities.Contains(r.From!.Slug)
+                        && !ChapterFamily.Deities.Contains(r.To!.Slug))
             .Select(r => new
             {
                 From = r.FromEntityId,

@@ -2,7 +2,7 @@
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// How one relation reads in one language: what comes before the target's name, the case the name

@@ -1,6 +1,6 @@
 using Essenthos.Core.Corpus;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// The words a reader puts before a name to say who is meant: <em>цар Давид</em>, <em>пророк Ілля</em>,

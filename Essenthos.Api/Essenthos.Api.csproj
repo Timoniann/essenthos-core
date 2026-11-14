@@ -46,4 +46,9 @@
       <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.152.1" />
     </ItemGroup>
 
+    <ItemGroup>
+        <!-- Descriptors, family trees and record lines, composed in Essenthos.Corpus so the build can make them too (TSK-1666). -->
+        <Using Include="Essenthos.Core.Descriptions" />
+    </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// Which parent two half-siblings share, read from the parents the corpus records for them.
@@ -207,13 +207,13 @@ internal static class SharedParents
             .Where(asChild)
             .Where(d => (d.Relation == DescriptorRelations.SonOf || d.Relation == DescriptorRelations.DaughterOf)
                         && d.Entity!.Kind == EntityKind.Person && d.Target!.Kind == EntityKind.Person
-                        && !FamilyEndpoints.Deities.Contains(d.Target.Slug))
+                        && !ChapterFamily.Deities.Contains(d.Target.Slug))
             .Select(d => new { Child = d.EntityId, Parent = d.TargetEntityId, d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse, d.Confidence })
             .Concat(db.EntityDescriptors
                 .Where(asParent)
                 .Where(d => (d.Relation == DescriptorRelations.FatherOf || d.Relation == DescriptorRelations.MotherOf)
                             && d.Entity!.Kind == EntityKind.Person && d.Target!.Kind == EntityKind.Person
-                            && !FamilyEndpoints.Deities.Contains(d.Entity.Slug))
+                            && !ChapterFamily.Deities.Contains(d.Entity.Slug))
                 .Select(d => new { Child = d.TargetEntityId, Parent = d.EntityId, d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse, d.Confidence }))
             .ToListAsync(cancellationToken);
         return

@@ -4,7 +4,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// What this corpus says an entity is, in the language the reader asked for, as pieces rather than
@@ -131,8 +131,8 @@ internal static class Descriptors
             .Where(d => wanted.Contains(d.Target!.Slug)
                         && FamilyTies.Turnable.Contains(d.Relation)
                         && d.EntityId != d.TargetEntityId
-                        && !FamilyEndpoints.Deities.Contains(d.Entity!.Slug)
-                        && !FamilyEndpoints.Deities.Contains(d.Target.Slug))
+                        && !ChapterFamily.Deities.Contains(d.Entity!.Slug)
+                        && !ChapterFamily.Deities.Contains(d.Target.Slug))
             .OrderBy(d => d.CanonicalBook).ThenBy(d => d.CanonicalChapter).ThenBy(d => d.CanonicalVerse)
             .ThenBy(d => d.EntityId).ThenBy(d => d.Ordinal)
             .Select(d => new Clause(
@@ -165,7 +165,7 @@ internal static class Descriptors
             .Where(e => wanted.Contains(e.Slug))
             .Select(e => new { e.Id, e.Slug, e.Kind, e.Sex, e.Byname })
             .ToListAsync(cancellationToken);
-        var people = subjects.Where(e => e.Kind == EntityKind.Person && !FamilyEndpoints.Deities.Contains(e.Slug))
+        var people = subjects.Where(e => e.Kind == EntityKind.Person && !ChapterFamily.Deities.Contains(e.Slug))
             .Select(e => e.Id)
             .ToList();
         var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
@@ -1054,7 +1054,7 @@ internal static class Descriptors
             var lead = phrasings[relation].Before;
             var named = run.Count;
             var kin = named == 0 ? [] : Kin(run);
-            var daughters = kin.Count > 0 && kin.All(k => k.Kin == Endpoints.Kin.Daughter || k.Count == 0);
+            var daughters = kin.Count > 0 && kin.All(k => k.Kin == Descriptions.Kin.Daughter || k.Count == 0);
             var counts = stated is { Counts: true } ? Stated(stated, kin, named) : null;
             var from = parts.Count;
             var doubtful = run.Count > 0 && run.All(item => item.Doubtful);
@@ -1122,7 +1122,7 @@ internal static class Descriptors
                 var at = parts.Count;
                 Separate(parts);
                 parts.Add(new DescriptorPartResponse(phrasings[grand].Before
-                    + DescriptorPhrasings.Counted(language, [(Endpoints.Kin.Grandson, grandsons)])));
+                    + DescriptorPhrasings.Counted(language, [(Descriptions.Kin.Grandson, grandsons)])));
 
                 // It stands after the children's claims, which the run has not counted yet.
                 var before = claimed;
@@ -1272,24 +1272,24 @@ internal static class Descriptors
     private static List<(Kin Kin, int Count)> Stated(ChildrenCount stated, IReadOnlyList<(Kin Kin, int Count)> named, int total)
     {
         int Named(Kin kin) => named.Where(n => n.Kin == kin).Sum(n => n.Count);
-        if (Named(Endpoints.Kin.Child) > 0)
+        if (Named(Descriptions.Kin.Child) > 0)
         {
             var all = (stated.Sons ?? 0) + (stated.Daughters ?? 0) + (stated.Children ?? 0);
             return all >= total
-                ? [(Endpoints.Kin.Son, stated.Sons ?? 0), (Endpoints.Kin.Daughter, stated.Daughters ?? 0), (Endpoints.Kin.Child, stated.Children ?? 0)]
-                : [(Endpoints.Kin.Child, total)];
+                ? [(Descriptions.Kin.Son, stated.Sons ?? 0), (Descriptions.Kin.Daughter, stated.Daughters ?? 0), (Descriptions.Kin.Child, stated.Children ?? 0)]
+                : [(Descriptions.Kin.Child, total)];
         }
 
         if (stated.Sons is null && stated.Daughters is null)
         {
-            return [(Endpoints.Kin.Child, Math.Max(stated.Children ?? 0, total))];
+            return [(Descriptions.Kin.Child, Math.Max(stated.Children ?? 0, total))];
         }
 
         return
         [
-            (Endpoints.Kin.Son, Math.Max(stated.Sons ?? 0, Named(Endpoints.Kin.Son))),
-            (Endpoints.Kin.Daughter, Math.Max(stated.Daughters ?? 0, Named(Endpoints.Kin.Daughter))),
-            (Endpoints.Kin.Child, stated.Children ?? 0),
+            (Descriptions.Kin.Son, Math.Max(stated.Sons ?? 0, Named(Descriptions.Kin.Son))),
+            (Descriptions.Kin.Daughter, Math.Max(stated.Daughters ?? 0, Named(Descriptions.Kin.Daughter))),
+            (Descriptions.Kin.Child, stated.Children ?? 0),
         ];
     }
 
@@ -1344,14 +1344,14 @@ internal static class Descriptors
         var sexes = run.Select(item => item.Clauses.Select(c => c.TargetSex).FirstOrDefault(s => s is not null)).ToList();
         if (sexes.Any(sex => sex is not (SharedParents.Male or SharedParents.Female)))
         {
-            return [(children ? Endpoints.Kin.Child : Endpoints.Kin.Sibling, run.Count)];
+            return [(children ? Descriptions.Kin.Child : Descriptions.Kin.Sibling, run.Count)];
         }
 
         var male = sexes.Count(sex => sex == SharedParents.Male);
         return
         [
-            (children ? Endpoints.Kin.Son : Endpoints.Kin.Brother, male),
-            (children ? Endpoints.Kin.Daughter : Endpoints.Kin.Sister, run.Count - male),
+            (children ? Descriptions.Kin.Son : Descriptions.Kin.Brother, male),
+            (children ? Descriptions.Kin.Daughter : Descriptions.Kin.Sister, run.Count - male),
         ];
     }
 

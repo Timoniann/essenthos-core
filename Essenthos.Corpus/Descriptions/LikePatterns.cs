@@ -1,5 +1,5 @@
 using Essenthos.Core.Corpus;
-﻿namespace Essenthos.Core.Endpoints;
+﻿namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// A caller's text reaches ILIKE as a pattern, so its own <c>%</c> and <c>_</c> would be wildcards

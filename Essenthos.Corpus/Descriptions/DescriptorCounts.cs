@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>Whom a counted clause counts: children or siblings, by sex where every one of them has one.</summary>
 internal enum Kin

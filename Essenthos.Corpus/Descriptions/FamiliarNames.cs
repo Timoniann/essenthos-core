@@ -1,6 +1,6 @@
 using Essenthos.Core.Corpus;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// The names readers call a few records by that no text in the corpus prints: the form a school

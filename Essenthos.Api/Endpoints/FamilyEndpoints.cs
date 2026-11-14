@@ -21,12 +21,8 @@ internal static class FamilyEndpoints
     /// </summary>
     public const int MostPeople = 400;
 
-    /// <summary>
-    /// God, by address. He is nobody's kin on a family tree: "his Son" in 1 Corinthians 1:9 and
-    /// Luke's "Adam, which was the son of God" are not descent, and a tree that read them so would
-    /// stand God the Father beside Joseph as Jesus's other parent.
-    /// </summary>
-    internal static readonly string[] Deities = ["yhvh", "yhvh-2", "holy-spirit"];
+    /// <summary>God, by address: <see cref="ChapterFamily.Deities"/>.</summary>
+    internal static readonly string[] Deities = ChapterFamily.Deities;
 
     internal static async Task<EntityFamilyResponse> Family(
         AppDbContext db,

@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// What a line says of children beyond their names, in each language: the ones a verse counts and

@@ -2,7 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// The family clauses of a person's line: which are read from the other person's record as well,
