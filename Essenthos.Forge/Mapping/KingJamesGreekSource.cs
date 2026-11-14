@@ -404,7 +404,8 @@ internal sealed class KingJamesGreekSource : IPairSource
         /// <summary>
         /// The stated links to Scrivener carried to another edition: each Greek word over the edition's pairing with Scrivener
         /// (<see cref="GreekWitnessSource.Drafts"/>), the link as sure as its least sure word. A word the edition does not pair
-        /// is left out of the link; a link none of whose words it pairs is no link.
+        /// is left out of the link, and so is one the edition prints in another verse; a link none of whose words is left is
+        /// no link.
         /// </summary>
         private static Links Carried(ProductTexts texts, string witness, Action<string> log)
         {
@@ -419,11 +420,17 @@ internal sealed class KingJamesGreekSource : IPairSource
                 }
             }
 
+            var english = texts[KingJames];
+            var edition = texts[witness];
             var all = new List<Link>(hub.Count);
             int partial = 0, lost = 0;
             foreach (var link in hub.All)
             {
-                var carried = link.Greek.Where(over.ContainsKey).Select(word => over[word]).ToList();
+                // Where the edition divides the verses otherwise (Rom 1:3-4), Scrivener's word can pair with one the edition
+                // prints in the next verse; no verse link of the King James and the edition joins those two verses.
+                var address = english.Primary(link.Verse);
+                var carried = link.Greek.Where(over.ContainsKey).Select(word => over[word])
+                    .Where(word => edition.Primary(edition.Words[(int)word.Word].Key.Verse) == address).ToList();
                 if (carried.Count == 0)
                 {
                     lost++;
