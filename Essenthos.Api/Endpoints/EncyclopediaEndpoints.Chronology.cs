@@ -170,10 +170,10 @@ internal static partial class EncyclopediaEndpoints
                     }),
                 ],
                 [.. periods.Select(p => p with { Picture = pictures.ForPeriod(p.EntitySlug) })]));
-        });
+        }).KeptUntilRelease();
     }
 
-    private static async Task<IList<ChronologyResponse>> Chronologies(
+    internal static async Task<IList<ChronologyResponse>> Chronologies(
         AppDbContext db,
         CancellationToken cancellationToken) =>
     [

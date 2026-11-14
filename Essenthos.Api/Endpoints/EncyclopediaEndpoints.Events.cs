@@ -124,7 +124,7 @@ internal static partial class EncyclopediaEndpoints
     /// event no reckoning dates at all.
     /// </para>
     /// </summary>
-    private const int LastYearBeforeChrist = 3961;
+    internal const int LastYearBeforeChrist = 3961;
 
     /// <summary>
     /// Events in the order a timeline draws them: by the year, then by whatever order a source
