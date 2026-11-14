@@ -25,7 +25,6 @@ internal static class TestResources
     /// <summary>The Bibles, by the name each reader takes.</summary>
     public static string Nestle1904 => Path("Nestle1904", "Nestle1904.xml");
 
-    public static string ZefaniaKingJames => Path("Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml");
 
     public static string Bible4u(string translation) => Path("bible4u", $"{translation}.xml");
 

@@ -64,6 +64,11 @@
     "files": 102,
     "sha256": "6276b639803981e002b249c941943045061edf15a6b1e721a612a5bf161120a6"
   },
+  "CrossWireKJV": {
+    "bytes": 4370833,
+    "files": 8,
+    "sha256": "c54ff9d1729353604210ef870b44fd91cd51b8259a84965092ad421b0c0bd8b4"
+  },
   "DarbyFrench": {
     "bytes": 3431375,
     "files": 7,
@@ -368,11 +373,6 @@
     "bytes": 4435509,
     "files": 67,
     "sha256": "38ba1a20b4fc22f907ac438ef24a0de418ec40931cd529de1c0d1833ff47edcc"
-  },
-  "Zefania": {
-    "bytes": 17291524,
-    "files": 1,
-    "sha256": "26bdc54962a2243e6c71e60704c91c6cd5b334af4517ef80cc555c7aa7968cee"
   },
   "ZefaniaLuther1912": {
     "bytes": 14407796,

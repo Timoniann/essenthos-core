@@ -171,7 +171,7 @@ public sealed class SourceLicencesTests : IDisposable
 
         found.Where(f => !f.Excepted).Should().BeEmpty();
         found.Select(f => f.Subject).Should().BeEquivalentTo(
-            "Zefania (strong)", "Luther1912 (strong)", "ReinaValera1909 (strong)", "Segond1910Strong (strong)", "DarbyFrench (strong)",
+            "Luther1912 (strong)", "ReinaValera1909 (strong)", "Segond1910Strong (strong)", "DarbyFrench (strong)",
             "SynodalStrong (strong)");
     }
 

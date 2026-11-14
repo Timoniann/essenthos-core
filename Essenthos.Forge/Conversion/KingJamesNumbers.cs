@@ -8,9 +8,9 @@ namespace Essenthos.Core.Conversion;
 /// <summary>
 /// The King James's Strong numbers and the words its translators supplied, from the editions that state them:
 /// <list type="bullet">
-/// <item>the New Testament from Zefania's KJV+, whose tags are matched to the words verse by verse as the load's
-/// <c>new-testament-links</c> step matches them, both sides in one spelling (<see cref="AmericanSpelling"/>): a word
-/// takes the first number of its tag, and a word the edition prints in italics and numbers nothing is supplied;</item>
+/// <item>the New Testament from CrossWire's KJV 3.1, laid onto the words verse by verse by their letters
+/// (<see cref="CrossWireKingJames"/>): a word takes its element's number (<see cref="CrossWireKingJames.Primary"/>), and a
+/// word the edition prints as supplied (<c>transChange type="added"</c>) in an element naming no number is supplied;</item>
 /// <item>the Old Testament's supplied words from the Open Hebrew Bible's mapping file, whose italic words are joined to
 /// the verse's words as the load's <c>old-testament-links</c> step joins them, a function word the mapping gives a
 /// Hebrew prefix excepted;</item>
@@ -20,7 +20,6 @@ namespace Essenthos.Core.Conversion;
 /// </summary>
 internal sealed class KingJamesNumbers : ITextStage
 {
-    private const string Zefania = "Zefania/SF_2009-01-20_ENG_KJV_(KJV+).xml";
     private const string Mapping = "mapping/KJV-OT-mapped-to-BHS-full-mapping.csv";
     private const string Tahot = "STEPBible";
     private const string Ebible = "KingJames2006";
@@ -29,12 +28,12 @@ internal sealed class KingJamesNumbers : ITextStage
 
     public bool AppliesTo(string slug) => slug == Bible4uTextSource.KingJames;
 
-    public IReadOnlyList<string> Sources(string slug) => [Zefania, Mapping, Tahot, Ebible];
+    public IReadOnlyList<string> Sources(string slug) => [CrossWireKingJames.Folder, Mapping, Tahot, Ebible];
 
     public void Apply(ConvertedText text, string resources)
     {
         var verses = text.Verses.Where(v => v.Key.VerseLabel.Length == 0).ToDictionary(v => (v.Key.Book, v.Key.Chapter, v.Key.Verse));
-        var (newTestament, supplied) = NewTestament(verses, Path.Combine(resources, Zefania));
+        var (newTestament, supplied, laid) = NewTestament(text, Path.Combine(resources, CrossWireKingJames.Folder));
         var oldSupplied = OldTestamentSupplied(verses, resources);
         var oldTestament = OldTestament(verses, Path.Combine(resources, Ebible));
 
@@ -66,48 +65,48 @@ internal sealed class KingJamesNumbers : ITextStage
             }
         }
 
-        text.Provenance.Add(new("strong", $"New Testament: {Zefania} (Zefania KJV+), {newTestament} words; "
-                                          + $"Old Testament: {Ebible} (eBible eng-kjv2006, Public Domain), {oldTestament} words"));
-        text.Provenance.Add(new("supplied", $"the italics of {Zefania} (New Testament) and of {Mapping} (Old Testament)"));
+        text.Provenance.Add(new("strong", $"New Testament: {CrossWireKingJames.Folder} (CrossWire KJV v3.1, GPL), {newTestament} words "
+                                          + $"({laid}); Old Testament: {Ebible} (eBible eng-kjv2006, Public Domain), {oldTestament} words"));
+        text.Provenance.Add(new("supplied", $"the italics of {CrossWireKingJames.Folder} (New Testament) and of {Mapping} (Old Testament)"));
     }
 
-    private static (int Numbered, HashSet<ConvertedWord> Supplied) NewTestament(
-        Dictionary<(int, int, int), ConvertedVerse> verses, string zefania)
+    /// <summary>
+    /// The module laid onto the New Testament's verses as the source printed them: an epistle's subscription, added by a
+    /// correction, is not a verse word of the module and stays out of the pairing.
+    /// </summary>
+    private static (int Numbered, HashSet<ConvertedWord> Supplied, LaidKingJames Laid) NewTestament(ConvertedText text, string folder)
     {
+        var words = new List<ConvertedWord>(190_000);
+        var corpus = new List<CorpusVerse>(8_000);
+        foreach (var verse in text.Verses.Where(v => v.Key.VerseLabel.Length == 0 && CrossWireKingJames.InNewTestament(v.Key.Book)))
+        {
+            var printed = new List<CorpusWord>(verse.Words.Count);
+            foreach (var word in verse.Words.Where(word => !word.Added))
+            {
+                printed.Add(new CorpusWord(words.Count, word.Surface));
+                words.Add(word);
+            }
+
+            corpus.Add(new CorpusVerse(verse.Key.Book, verse.Key.Chapter, verse.Key.Verse, [], printed));
+        }
+
+        var laid = CrossWireKingJames.Lay(folder, corpus);
         var numbered = 0;
         var supplied = new HashSet<ConvertedWord>(ReferenceEqualityComparer.Instance);
-        foreach (var (address, tags) in NewTestamentLinks.Tagged(zefania))
+        foreach (var (id, tag) in laid.Tags)
         {
-            if (!verses.TryGetValue(address, out var verse))
+            if (tag.Number is { } number)
             {
-                continue;
+                words[(int)id].Strong = number;
+                numbered++;
             }
-
-            // The words the source printed: an epistle's subscription, added by a correction, is not in the tagged edition.
-            var words = verse.Words.Where(word => !word.Added).ToList();
-            // Zefania spells the American way (honorable, offense, heretic); the words are put in step on one spelling.
-            var spans = TaggedEdition.Align([.. tags.Select(tag => tag.Text)], [.. words.Select(word => word.Surface)], AmericanSpelling.Fold);
-            if (TaggedEdition.Agreement(spans, words.Count) < NewTestamentLinks.SameVerse)
+            else if (tag.Supplied)
             {
-                continue;
-            }
-
-            var projected = NewTestamentLinks.Project(tags, words.Count, spans);
-            for (var i = 0; i < projected.Count; i++)
-            {
-                if (projected[i].Numbers.Count > 0)
-                {
-                    words[i].Strong = projected[i].Numbers[0];
-                    numbered++;
-                }
-                else if (projected[i].Supplied)
-                {
-                    supplied.Add(words[i]);
-                }
+                supplied.Add(words[(int)id]);
             }
         }
 
-        return (numbered, supplied);
+        return (numbered, supplied, laid);
     }
 
     private static HashSet<ConvertedWord> OldTestamentSupplied(Dictionary<(int, int, int), ConvertedVerse> verses, string resources)

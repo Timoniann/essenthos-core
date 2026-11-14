@@ -23,8 +23,12 @@ internal enum OsisPieceKind
 /// rendering the edition printed in pieces — <em>afin</em> … <em>que</em> under one number. Null elsewhere.
 /// </param>
 /// <param name="Source">The <c>src</c> attribute of a <c>&lt;w&gt;</c>, as written; null elsewhere.</param>
+/// <param name="Added">
+/// The piece stands inside a <c>&lt;transChange type="added"&gt;</c>: the words the translators supplied, which the
+/// King James prints in italics.
+/// </param>
 internal readonly record struct OsisPiece(
-    OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null, string? Source = null);
+    OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null, string? Source = null, bool Added = false);
 
 /// <summary>
 /// One verse of a SWORD module's OSIS, as the pieces a reader needs: the tagged words, the text
@@ -36,6 +40,8 @@ internal static class OsisVerse
     private const string WordElement = "w";
     private const string NoteElement = "note";
     private const string TitleElement = "title";
+    private const string ChangeElement = "transChange";
+    private const string AddedType = "added";
     private const string LemmaAttribute = "lemma";
     private const string TypeAttribute = "type";
     private const string SourceAttribute = "src";
@@ -61,6 +67,8 @@ internal static class OsisVerse
         StringBuilder? note = null;
         var noteDepth = 0;
         var titles = 0;
+        var added = 0;
+        var changes = new Stack<bool>();
 
         while (xml.Read())
         {
@@ -88,6 +96,16 @@ internal static class OsisVerse
                     titles--;
                     break;
 
+                case XmlNodeType.Element when xml.LocalName == ChangeElement && !xml.IsEmptyElement:
+                    var supplied = xml.GetAttribute(TypeAttribute) == AddedType;
+                    changes.Push(supplied);
+                    added += supplied ? 1 : 0;
+                    break;
+
+                case XmlNodeType.EndElement when xml.LocalName == ChangeElement && changes.Count > 0:
+                    added -= changes.Pop() ? 1 : 0;
+                    break;
+
                 case XmlNodeType.Element when xml.LocalName == WordElement && noteDepth == 0:
                     lemma = xml.GetAttribute(LemmaAttribute);
                     split = xml.GetAttribute(TypeAttribute) is { } type && type.StartsWith(SplitType, StringComparison.Ordinal)
@@ -96,7 +114,7 @@ internal static class OsisVerse
                     source = xml.GetAttribute(SourceAttribute);
                     if (xml.IsEmptyElement)
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source, added > 0));
                     }
                     else
                     {
@@ -106,7 +124,7 @@ internal static class OsisVerse
                     break;
 
                 case XmlNodeType.EndElement when xml.LocalName == WordElement && noteDepth == 0 && word is not null:
-                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source));
+                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source, added > 0));
                     word = null;
                     break;
 
@@ -121,7 +139,7 @@ internal static class OsisVerse
                     }
                     else
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Text, xml.Value, null, titles > 0));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Text, xml.Value, null, titles > 0, Added: added > 0));
                     }
 
                     break;

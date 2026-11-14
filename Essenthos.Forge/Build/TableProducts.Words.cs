@@ -21,7 +21,7 @@ namespace Essenthos.Core.Build;
 /// <c>word_group_word</c>), the second parsings of Nestle 1904 (<c>word_parsing</c>) and the Strong numbers a source proposes
 /// beside a word's own (<c>word_strong</c>). A word is the one its text's words product names, by the id its key gives it
 /// (<see cref="WordIdTable"/>); the readings are <see cref="SyntaxGroups"/>, <see cref="MorphGntAnnotation"/>,
-/// <see cref="MaculaAnnotation"/>, <see cref="SeptuagintStrongs"/>, <see cref="BereanNumbers"/> and <see cref="NewTestamentLinks"/>.
+/// <see cref="MaculaAnnotation"/>, <see cref="SeptuagintStrongs"/>, <see cref="BereanNumbers"/> and <see cref="CrossWireKingJames"/>.
 /// </summary>
 internal static partial class TableProducts
 {
@@ -31,7 +31,6 @@ internal static partial class TableProducts
     private const string Berean = "BSB";
     private const string KingJames = "KJV";
     private const string BereanTables = "Berean/bsb_tables.tsv";
-    private const string Zefania = "Zefania/SF_2009-01-20_ENG_KJV_(KJV+).xml";
 
     private static readonly Table[] Words =
     [
@@ -258,46 +257,46 @@ internal static partial class TableProducts
     }
 
     /// <summary>
-    /// Every number of a King James word whose Zefania tag names several (one English word over a Greek phrase): the
-    /// words product keeps the first; the rest are this table's. The words are the converted text's own, read again so that
-    /// a word a correction added (an epistle's subscription) stays out of the alignment, as at conversion.
+    /// Every number of a King James word whose CrossWire element names several (an English word over a Greek phrase,
+    /// <em>God</em> over ὁ θεός): the words product keeps the element's own number (<see cref="CrossWireKingJames.Primary"/>);
+    /// the rest are this table's. The words are the converted text's own, read again so that a word a correction added (an
+    /// epistle's subscription) stays out of the pairing, as at conversion.
     /// </summary>
     private static List<string?[]> KingJamesPhrases(ProductStore store)
     {
         var table = Ids(store);
         var ids = WordsOf(store, KingJames).ToDictionary(w => w.Key, w => table.Of(w.Key));
         var text = TextConverter.Read(store, TextCatalogue.Find(KingJames));
-        var verses = text.Verses.Where(v => v.Key.VerseLabel.Length == 0).ToDictionary(v => (v.Key.Book, v.Key.Chapter, v.Key.Verse));
+        var keys = new List<WordKey>(190_000);
+        var corpus = new List<CorpusVerse>(8_000);
+        foreach (var verse in text.Verses.Where(v => v.Key.VerseLabel.Length == 0 && CrossWireKingJames.InNewTestament(v.Key.Book)))
+        {
+            var printed = new List<CorpusWord>(verse.Words.Count);
+            for (var at = 0; at < verse.Words.Count; at++)
+            {
+                if (!verse.Words[at].Added)
+                {
+                    printed.Add(new CorpusWord(keys.Count, verse.Words[at].Surface));
+                    keys.Add(new WordKey(KingJames, verse.Key, at + 1));
+                }
+            }
+
+            corpus.Add(new CorpusVerse(verse.Key.Book, verse.Key.Chapter, verse.Key.Verse, [], printed));
+        }
+
         var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
         var rows = new List<string?[]>();
-        var seen = new HashSet<(long, string)>();
-        foreach (var (address, tags) in NewTestamentLinks.Tagged(store.FullPath(Zefania)))
+        foreach (var (word, tag) in CrossWireKingJames.Lay(store.FullPath(CrossWireKingJames.Folder), corpus).Tags.OrderBy(tag => tag.Key))
         {
-            if (!verses.TryGetValue(address, out var verse))
+            if (tag.Numbers.Count < 2)
             {
                 continue;
             }
 
-            var printed = verse.Words.Select((word, at) => (Word: word, Position: at + 1)).Where(w => !w.Word.Added).ToList();
-            var spans = TaggedEdition.Align([.. tags.Select(tag => tag.Text)], [.. printed.Select(w => w.Word.Surface)], AmericanSpelling.Fold);
-            if (TaggedEdition.Agreement(spans, printed.Count) < NewTestamentLinks.SameVerse)
+            var id = ids[keys[(int)word]];
+            foreach (var number in tag.Numbers.Distinct(StringComparer.Ordinal).Where(number => number != tag.Number))
             {
-                continue;
-            }
-
-            var projected = NewTestamentLinks.Project(tags, printed.Count, spans);
-            for (var i = 0; i < projected.Count; i++)
-            {
-                if (projected[i].Numbers.Count < 2)
-                {
-                    continue;
-                }
-
-                var id = ids[new WordKey(KingJames, verse.Key, printed[i].Position)];
-                foreach (var number in projected[i].Numbers.Where(number => seen.Add((id, number))))
-                {
-                    rows.Add([Int(id), number, stated, null, NewTestamentLinks.PhraseSource, null]);
-                }
+                rows.Add([Int(id), number, stated, null, Sources.KingJamesPhraseCredit, null]);
             }
         }
 

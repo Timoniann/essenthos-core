@@ -162,7 +162,7 @@ internal sealed class ByzantineApparatusSource : IPairSource
 /// </summary>
 internal sealed class ReceivedTextPositionSource : IPairSource
 {
-    private static readonly SwordPositions Module = CrossWirePositions.All.Single();
+    private static readonly SwordPositions Module = CrossWirePositions.RevisedLiteral;
 
     public static string Folder => SwordTextSource.Texts[Module.Module].Folder.Replace('\\', '/');
 

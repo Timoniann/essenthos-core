@@ -529,22 +529,27 @@ public static class Datasets
             + "absences this corpus records rather than merely fails to fill.",
             "byztxt/greektext-textus-receptus", Links: true),
 
-        // The one source in this list that states no licence at all: the module's own <rights>
-        // element is present and empty, and the SourceForge project declares none either. What it
-        // carries is old enough to be out of copyright on its own — see the LICENCE.md kept beside
-        // the file — but that is our reading of the contents, not a grant by the packager, and the
-        // difference is exactly what this field must not blur.
-        new("zefaniakjv", "Zefania KJV+", "Theologische Initative Freiburg", "No licence stated",
-            "https://sourceforge.net/projects/zefania-sharp/files/Bibles/ENG/King%20James/KJV%2B/",
-            "https://sourceforge.net/projects/zefania-sharp/files/Bibles/ENG/King%20James/KJV%2B/",
-            "The Strong number on each King James word, which is what every New Testament link "
-            + "between the English and the Greek is matched on. The King James text itself is read "
-            + "from elsewhere and only the tagging is taken from here — and the tagging is all this "
-            + "supplies: which tagged word pairs with which Greek word is matched within the verse "
-            + "by this project, at a confidence, and no part of that pairing is stated by anyone.",
-            "Zefania KJV+", Links: true, Unlisted: true),
+        // The King James New Testament's numbers, italics and the places of the Greek words, laid onto the KJV words. The
+        // owner decided on 2026-11-13 to show the numbers under the module's GPL (PRB-1332); Resources/CrossWireKJV/LICENCE.md
+        // quotes the grant and the wiki's account of whose work each part is.
+        new("crosswire-kjv", "CrossWire KJV 3.1 (KJV2003 project)",
+            "the KJV2003 Project, CrossWire Bible Society, tagging Maurice A. Robinson's Received Text data (New Testament); "
+            + "the Old Testament's numbers are the Bible Foundation's",
+            "GPL",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/kjv.conf",
+            "https://wiki.crosswire.org/CrossWire_KJV",
+            "Which King James words of the New Testament render which Greek words: the module names, beside each English "
+            + "word, the Strong number, the place of the Greek word in its verse of the Received Text and the Greek word "
+            + "itself. The numbers and the translators' italics are shown on the King James words; a place is linked only "
+            + "where Scrivener's or Stephanus's printing holds that Greek word there, and is carried to the other Greek "
+            + "editions over their own pairing with Scrivener. The module's English is not loaded: the King James text is "
+            + "read from elsewhere.",
+            Sources.KingJamesCredit, Links: true,
+            Obliges: "GPL: CrossWire distributes the module under \"GPL\", naming no version, and grants \"a general public "
+                + "license to use this text for any purpose\". The numbers, italics and links taken from it, and any "
+                + "download that contains them, carry the GPL for that layer; the code that reads them is not bound."),
 
-        // The same footing as the entry above and the same words for it. eBible's Public Domain line
+        // The footing the Zefania KJV+ tagging stood on before CrossWire's replaced it. eBible's Public Domain line
         // is over the package; nobody names who tagged the words or on what terms. toledot.info,
         // which publishes a corrected copy of the same layer, traces it to the Zefania XML Strong
         // module of December 2005, and eBible's copy carries that module's uncorrected errors. The

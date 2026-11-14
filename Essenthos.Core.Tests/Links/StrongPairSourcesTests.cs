@@ -1,4 +1,5 @@
 using Essenthos.Core.Build;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
@@ -59,14 +60,27 @@ public sealed class StrongPairSourcesTests : IDisposable
     [Fact]
     public void The_King_James_sources_tell_their_rows_from_the_italics()
     {
-        var strong = Source(MappingMethods.Strong, "KJV-TR1894");
+        var stated = KingJamesGreekSource.All.Single(source => source.Method == MappingMethods.Stated);
+        var strong = Source(MappingMethods.Strong, "KJV-NESTLE1904");
         var lexical = Source(MappingMethods.Lexical, "KJV-TR1894");
 
-        strong.Makes("Zefania KJV+ Strong numbers, matched within the verse against scrivener1894").Should().BeTrue();
-        strong.Makes("Zefania KJV+ italics, the King James translators' own mark that they supplied the word").Should().BeFalse();
+        stated.Makes(Sources.KingJamesPositionCredit).Should().BeTrue();
+        stated.Makes(Sources.KingJamesUnrenderedCredit).Should().BeTrue();
+        stated.Makes(Sources.KingJamesSuppliedCredit).Should().BeFalse("the italics are the words product's, made by their own source");
+        strong.Makes(Sources.KingJamesCarriedCredit("NESTLE1904")).Should().BeTrue();
         lexical.Makes("the untagged English function words, matched to the morphology scrivener1894 states").Should().BeTrue();
-        lexical.Makes("Zefania KJV+ Strong numbers, matched within the verse against scrivener1894").Should().BeFalse();
+        lexical.Makes(Sources.KingJamesCarriedCredit("TR1894")).Should().BeFalse();
         strong.Makes("the untagged English function words, matched to the morphology scrivener1894 states").Should().BeFalse();
+    }
+
+    [Fact]
+    public void A_file_remade_gives_up_the_rows_the_withdrawn_Zefania_layer_wrote()
+    {
+        Source(MappingMethods.Strong, "KJV-TR1894").Makes("Zefania KJV+ Strong numbers, matched within the verse against scrivener1894")
+            .Should().BeTrue();
+        KingJamesGreekSource.All.Single(source => source.Method == MappingMethods.Stated)
+            .Makes("Zefania KJV+ italics, the King James translators' own mark that they supplied the word").Should().BeTrue();
+        KingJamesGreekSource.All.Should().Contain(source => source.States("KJV-TR1550") && source.Method == MappingMethods.Stated);
     }
 
     [Fact]
@@ -122,7 +136,7 @@ public sealed class StrongPairSourcesTests : IDisposable
         string[] lexical =
         [
             "Essenthos/texts/KJV/words.essx", "Essenthos/texts/KJV/frame.essx", "Essenthos/texts/KJV/corrections.tsv",
-            "Essenthos/texts/TR1894/words.essx", "Essenthos/texts/TR1894/frame.essx", KingJamesGreekSource.Zefania, StrongNumberSource.GreekDictionary,
+            "Essenthos/texts/TR1894/words.essx", "Essenthos/texts/TR1894/frame.essx", "CrossWireKJV/KJV/mods.d/kjv.conf",
         ];
         foreach (var file in strong.Concat(luther).Concat(laid).Concat(lexical))
         {
@@ -134,8 +148,9 @@ public sealed class StrongPairSourcesTests : IDisposable
         Make(store, "mapping/LUTH1912-RP2018/strong", [.. luther.Where(file => !file.StartsWith("Luther1912/", StringComparison.Ordinal)), "Luther1912"]);
         Make(store, "mapping/CUV-BHSA/strong", "ChineseUnion1919/ChiUn");
         Make(store, "mapping/LSG1910-BHSA/strong", "Segond1910Strong/FreSegond1910", "ReinaValera1909");
-        Make(store, "mapping/KJV-TR1894/strong", lexical);
-        Make(store, "mapping/KJV-TR1894/lexical", lexical);
+        string[] kingJames = [.. lexical.Where(file => !file.StartsWith("CrossWireKJV/", StringComparison.Ordinal)), "CrossWireKJV/KJV"];
+        Make(store, "mapping/KJV-TR1894/strong", kingJames);
+        Make(store, "mapping/KJV-TR1894/lexical", kingJames);
 
         graph.Check(store.Manifest, _ => []).Should().BeEmpty();
     }

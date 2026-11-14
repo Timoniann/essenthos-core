@@ -37,6 +37,12 @@ internal interface IPairSource
 
     /// <summary>Its rows for the pair; a link's id follows from its words when the merge numbers it.</summary>
     IEnumerable<MappingRow> Rows(ProductTexts texts, string pair, Action<string> log);
+
+    /// <summary>
+    /// The pairs it brings into the mapping: pairs it states that may have no folder yet, which its file then founds. Every
+    /// other pair is the mapping's only once a folder holds a method file.
+    /// </summary>
+    IEnumerable<string> Founds => [];
 }
 
 /// <summary>
@@ -90,16 +96,18 @@ internal static class PairSources
     /// when its folder holds a method file: a folder with only the verse links verse-pairs writes from two frames, after
     /// every producer, would bring a pair in on the build after the one that made it. A pair whose file the declared graph
     /// keeps (maker <c>kept</c>) is left out unless it is named: that file is authoritative and only a verb run by hand remakes it.
+    /// A pair a source of the file founds (<see cref="IPairSource.Founds"/>) is one before its folder exists.
     /// </summary>
     public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null)
     {
         var graph = texts.Store.Exists(ProductGraph.Product) ? ProductGraph.Read(texts.Store) : null;
+        var founded = All.Where(source => source.File == file).SelectMany(source => source.Founds).ToHashSet(StringComparer.Ordinal);
         return
         [
-            .. MappingProducts.Pairs(texts.Store)
+            .. MappingProducts.Pairs(texts.Store).Union(founded).Order(StringComparer.Ordinal)
                 .Where(pair => only is null || only.Contains(pair))
                 .Where(pair => only is not null || graph?.Find(MappingProducts.Of(pair, file))?.Declaration.Maker != ProductMaker.Kept)
-                .Where(pair => MappingProducts.Methods(texts.Store, pair).Count > 0)
+                .Where(pair => founded.Contains(pair) || MappingProducts.Methods(texts.Store, pair).Count > 0)
                 .Where(pair => All.Any(source => source.States(pair)
                 && (source.File == file || (source.Method == file && texts.Store.Exists(MappingProducts.Of(pair, file))))))
                 .Where(pair => MappingProducts.Split(pair) is var (from, to) && texts.Holds(from) && texts.Holds(to)),

@@ -53,9 +53,10 @@ internal sealed record SwordText(
 /// The places of the Greek words the element renders in the Received Text verse, where the module
 /// states them; empty elsewhere. Never stored: <see cref="CrossWirePositions"/> reads them.
 /// </param>
+/// <param name="Added">The edition prints the word as one its translators supplied (<c>transChange type="added"</c>).</param>
 internal sealed record SwordWord(
     string Surface, string Trailer, IReadOnlyList<string> Numbers, int Unit, bool Elided,
-    IReadOnlyList<StatedPosition>? Positions = null);
+    IReadOnlyList<StatedPosition>? Positions = null, bool Added = false);
 
 /// <param name="Book">The canonical ordinal of the verse the element stands in.</param>
 /// <param name="Positions">The Greek words it renders, by their place in the Received Text.</param>
@@ -379,6 +380,13 @@ internal static class SwordTextSource
             Path.Combine("Segond1910Strong", "FreSegond1910"),
             SwordSegmentation.Spaced,
             EbibleTextSource.Definitions["Segond1910"]),
+
+        // CrossWire's King James 3.1, read only for its New Testament: the KJV2003 project's numbers, the places of
+        // the Greek words each element renders, and the italics (CrossWireKingJames).
+        ["KJV"] = new(
+            Path.Combine("CrossWireKJV", "KJV"),
+            SwordSegmentation.Spaced,
+            Bible4uTextSource.Definitions[Bible4uTextSource.KingJames]),
     };
 
     /// <summary>Every text this reader knows, by the module it is read from.</summary>
@@ -448,6 +456,14 @@ internal static class SwordTextSource
             verse => verse.Value.Words.Select(word => new EditionWord(word.Surface, word.Numbers, word.Unit)).ToList());
 
     /// <summary>
+    /// Every verse of the module as its elements print it: each word with the numbers and the positions of its element and
+    /// whether the edition prints it as supplied, and the positions of the elements that print no word (a Greek word the
+    /// translation leaves untranslated), at the address the corpus stores the verse under.
+    /// </summary>
+    public static Dictionary<(int Book, int Chapter, int Verse), (List<SwordWord> Words, List<IReadOnlyList<StatedPosition>> Unrendered)> Elements(string folder) =>
+        Verses(folder).Verses.ToDictionary(verse => verse.Key, verse => (verse.Value.Words, verse.Value.Unrendered));
+
+    /// <summary>
     /// The Received Text positions the module states, by the element they stand on, numbered as
     /// <see cref="Numbers"/> numbers it — so a word the numbers were laid onto finds its positions by
     /// its unit.
@@ -481,7 +497,11 @@ internal static class SwordTextSource
         List<SwordWord> Words,
         List<VerseNoteDraft> Notes,
         bool Superscription,
-        List<StatedNumberDraft> Stated);
+        List<StatedNumberDraft> Stated)
+    {
+        /// <summary>The positions each element that prints no word states, in the order the module writes them.</summary>
+        public List<IReadOnlyList<StatedPosition>> Unrendered { get; init; } = [];
+    }
 
     private static (SwordText Text, Dictionary<(int Book, int Chapter, int Verse), ReadVerse> Verses) Verses(string folder)
     {
@@ -511,7 +531,15 @@ internal static class SwordTextSource
                                  || (text.Segmentation == SwordSegmentation.Tagged && address is (Psalms, _, 1)
                                      && words[0] is { Elided: true } opening
                                      && opening.Trailer.TrimStart().StartsWith(OpeningParenthesis));
-            verses[address] = new ReadVerse(words, notes, superscription, []);
+            verses[address] = new ReadVerse(words, notes, superscription, [])
+            {
+                Unrendered =
+                [
+                    .. pieces.Where(piece => piece is { Kind: OsisPieceKind.Word, Text.Length: 0 })
+                        .Select(piece => ReceivedTextPositions.Read(piece.Lemma, piece.Source))
+                        .Where(positions => positions.Count > 0),
+                ],
+            };
         }
 
         foreach (var (stored, english) in text.Renumbered ?? [])
@@ -641,7 +669,7 @@ internal static class SwordTextSource
                     continue;
                 }
 
-                words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false, positions));
+                words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false, positions, piece.Added));
                 joinable = !tagged;
             }
         }

@@ -34,7 +34,7 @@ words keep their rows and their links; only a word one edition has and the other
 written.
 
 **No text of its own is loaded.** The corpus holds one King James, under the slug `KJV`, with
-789,806 words, 2,348,651 links, 123,762 Strong tags and 33,184 entity annotations hanging off them.
+789,806 words and millions of links and entity annotations hanging off them.
 Loading this edition as a second King James would put two of them side by side; replacing the loaded
 one with it would cascade all of that away. The edition is fetched whole because the whole of it is
 the evidence for the paragraph below, not because the whole of it is wanted.
@@ -63,7 +63,7 @@ bible4u omits.
 
 **The remaining twenty-eight are errors in the file the corpus serves** — twenty-seven, once Psalm
 103:17 is set aside, where the two differ only in the apostrophe of *children's*. They were read one
-by one and in every one this edition carries the 1769 reading, which the Zefania `KJV+` copy reads too:
+by one and in every one this edition carries the 1769 reading, which the Zefania `KJV+` copy read too:
 
 > *Am I am not an apostle?* for *Am I not an apostle?* (1 Corinthians 9:1)
 > *Bezaleel the son Uri* for *the son of Uri* (Exodus 38:22)
@@ -117,14 +117,23 @@ on redistribution. Nothing this project does is printing in the UK.
 
 ## The Strong tagging, which is not the text
 
-349,308 of this edition's words carry a Strong number, and the terms over that layer are eBible's
-own sentence: *brought to you courtesy of the Crosswire Bible Society*. CrossWire publishes its
-`KJV` module — the same tagging, from the same lineage as the Zefania `KJV+` file this corpus
-already reads its 123,762 King James Strong numbers from — as Public Domain. The tags on the 1,034
-superscription words are loaded on that footing, and this paragraph is here so that a reader can see
-it was a footing rather than an assumption. It is the distinction `Resources/ReinaValera1909` is
-about, where eBible's public-domain line stood over a named third party's tagging and the tagging
-was refused.
+349,308 of this edition's words carry a Strong number. eBible's page says only that the whole edition
+is *Public Domain* and *brought to you courtesy of the Crosswire Bible Society*; it names no tagger.
+The Old Testament's tagging is the Bible Foundation's (CrossWire's wiki, read 2026-11-13: "The
+Strong's numbers in the OT are from The Bible Foundation"), and the Bible Foundation states no terms
+for it. CrossWire distributes the same tagging in its own `KJV` module under `DistributionLicense=GPL`
+(version 3.1; earlier versions said "General public license for distribution for any purpose"), not
+as Public Domain: `Resources/CrossWireKJV/LICENCE.md` quotes it. The statement attached to the bytes
+read here is eBible's Public Domain line, and the Old Testament's numbers and the tags on the 1,034
+superscription words are loaded on that footing.
+
+The New Testament's numbers are not read from this edition. They come from CrossWire's module itself,
+whose New Testament tagging is the KJV2003 project's own work, shown under the GPL as the owner decided
+on 2026-11-13 (PRB-1332). It is not "the same tagging" as the Zefania `KJV+` file the corpus used to
+read: compared verse by verse only 16% of the New Testament's verses had the same tag sequence
+(TSK-1331), and Zefania's tags name Strong's form numbers where CrossWire's name the lemma. It is the
+distinction `Resources/ReinaValera1909` is about, where eBible's public-domain line stood over a named
+third party's tagging and the tagging was refused.
 
 ## Attribution, which public domain does not require
 
