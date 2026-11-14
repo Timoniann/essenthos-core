@@ -45,17 +45,6 @@ internal static class DifferenceEndpoints
 
             return Results.Ok(await Chapter(db, pair!, ordinal, chapter, cancellationToken));
         });
-
-        routes.MapGet("/differences/{book}", async (
-            string book,
-            [FromQuery] string? texts,
-            AppDbContext db,
-            ICanonIndex canon,
-            CancellationToken cancellationToken) =>
-        {
-            var (pair, ordinal, refusal) = await Resolve(db, canon, book, texts, cancellationToken);
-            return refusal ?? Results.Ok(await Book(db, pair!, ordinal, cancellationToken));
-        });
     }
 
     internal sealed record ComparedText(int Id, string Slug, string Language, TextKind Kind);
@@ -129,33 +118,6 @@ internal static class DifferenceEndpoints
             Counts(compared.Verses.SelectMany(v => v.A)),
             Counts(compared.Verses.SelectMany(v => v.B)),
             verses);
-    }
-
-    internal static async Task<BookDifferencesResponse> Book(
-        AppDbContext db,
-        ComparedPair pair,
-        int book,
-        CancellationToken cancellationToken)
-    {
-        var compared = await Compare(db, pair, book, null, cancellationToken);
-        var chapters = compared.Verses
-            .GroupBy(v => v.Chapter)
-            .OrderBy(g => g.Key)
-            .Select(g => new ChapterDifferenceCountsResponse(
-                g.Key,
-                Counts(g.SelectMany(v => v.A)),
-                Counts(g.SelectMany(v => v.B))))
-            .ToList();
-
-        return new BookDifferencesResponse(
-            BookRef(book),
-            pair.A.Slug,
-            pair.B.Slug,
-            Spelling(compared.Basis),
-            compared.Through,
-            Counts(compared.Verses.SelectMany(v => v.A)),
-            Counts(compared.Verses.SelectMany(v => v.B)),
-            chapters);
     }
 
     private static BookRefResponse BookRef(int book) =>
@@ -682,18 +644,3 @@ internal record ChapterDifferencesResponse(
     DifferenceCountsResponse CountsA,
     DifferenceCountsResponse CountsB,
     IList<DifferenceVerseResponse> Verses);
-
-internal record ChapterDifferenceCountsResponse(
-    int Chapter,
-    DifferenceCountsResponse CountsA,
-    DifferenceCountsResponse CountsB);
-
-internal record BookDifferencesResponse(
-    BookRefResponse Book,
-    string A,
-    string B,
-    string Basis,
-    string? Through,
-    DifferenceCountsResponse CountsA,
-    DifferenceCountsResponse CountsB,
-    IList<ChapterDifferenceCountsResponse> Chapters);

@@ -226,9 +226,6 @@ public sealed class DifferenceEndpointTests : IDisposable
             ("form", "lexeme"), ("same", "letters"), ("lemma", "lexeme"), ("absent", "recorded"));
         chapter.CountsA.Should().BeEquivalentTo(new { Words = 6, Same = 3, Form = 1, Lemma = 1, Absent = 1 });
         chapter.CountsB.Words.Should().Be(5);
-
-        var book = await DifferenceEndpoints.Book(_db, pair, Genesis, default);
-        book.Chapters.Single().CountsA.Should().BeEquivalentTo(chapter.CountsA, "a chapter counts the same in its book");
     }
 
     /// <summary>
