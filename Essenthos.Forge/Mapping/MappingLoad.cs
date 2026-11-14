@@ -16,7 +16,8 @@ namespace Essenthos.Core.Mapping;
 /// <c>link_claim</c> and <c>provenance</c> replaced in one transaction, ids as the files keep them, every key
 /// resolved to the word the database holds at it. The four tables' indexes and keys are dropped first and built
 /// again after the rows are in, so the rows go in by COPY alone; a failure anywhere rolls all of it back and
-/// leaves the tables as they were.
+/// leaves the tables as they were. With the triggers off it writes what they would: each link's fingerprint and
+/// set of methods, and each source's count of claims.
 /// </summary>
 /// <remarks>
 /// Provenance carries the source alone: what a source's note said is evidence, and evidence stays in the method
@@ -107,9 +108,16 @@ internal static class MappingLoad
         logger.LogInformation("Tables emptied and unindexed at {Elapsed}", clock.Elapsed);
 
         long links = 0, words = 0, claims = 0, unresolved = 0;
+        var cited = new Dictionary<int, int>();
         await foreach (var rows in channel.Reader.ReadAllAsync(cancellationToken))
         {
-            await Copy(db, rows, Globalize(rows.Sources, provenance), cancellationToken, freeze: true);
+            var sources = Globalize(rows.Sources, provenance);
+            foreach (var claim in rows.Claims)
+            {
+                cited[sources[claim.Provenance]] = cited.GetValueOrDefault(sources[claim.Provenance]) + 1;
+            }
+
+            await Copy(db, rows, sources, cancellationToken, freeze: true);
             links += rows.Links.Count;
             words += rows.Words.Count;
             claims += rows.Claims.Count;
@@ -123,13 +131,14 @@ internal static class MappingLoad
         await reading;
         logger.LogInformation("{Links} links, {Words} link words, {Claims} claims copied at {Elapsed}", links, words, claims, clock.Elapsed);
 
-        using (var import = db.BeginBinaryImport("COPY provenance (id, source) FROM STDIN (FORMAT BINARY, FREEZE)"))
+        using (var import = db.BeginBinaryImport("COPY provenance (id, source, claims) FROM STDIN (FORMAT BINARY, FREEZE)"))
         {
             foreach (var (source, id) in provenance)
             {
                 import.StartRow();
                 import.Write(id, NpgsqlDbType.Integer);
                 import.Write(source, NpgsqlDbType.Text);
+                import.Write(cited.GetValueOrDefault(id), NpgsqlDbType.Integer);
             }
 
             import.Complete();
@@ -499,8 +508,14 @@ internal static class MappingLoad
     {
         // Into tables this transaction emptied, the rows go in frozen: nothing reads them again only to mark them committed.
         var options = freeze ? "FORMAT BINARY, FREEZE" : "FORMAT BINARY";
+        var methods = new Dictionary<long, short>();
+        foreach (var claim in rows.Claims)
+        {
+            methods[claim.Link] = (short)(methods.GetValueOrDefault(claim.Link) | LinkMethods.Of([claim.Method]));
+        }
+
         using (var import = db.BeginBinaryImport(
-                   $"COPY link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint) FROM STDIN ({options})"))
+                   $"COPY link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint, methods) FROM STDIN ({options})"))
         {
             foreach (var (id, from, to, relation, method, confidence, provenance, shape) in rows.Links)
             {
@@ -513,6 +528,7 @@ internal static class MappingLoad
                 Nullable(import, confidence);
                 import.Write(sources[provenance], NpgsqlDbType.Integer);
                 import.Write(shape, NpgsqlDbType.Uuid);
+                import.Write(methods.GetValueOrDefault(id), NpgsqlDbType.Smallint);
             }
 
             import.Complete();

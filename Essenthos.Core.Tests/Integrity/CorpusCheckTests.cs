@@ -339,6 +339,31 @@ public sealed class CorpusCheckTests : IDisposable
             ", ", measures.Integrity.Where(i => i.Found > 0).Select(i => $"{i.Found} {i.Breaks}")));
     }
 
+    /// <summary>
+    /// A served release carries no claims and not the build's constraint over a link's words, so its gate asks the link's
+    /// own columns: a link that keeps no method is found there as a link no claim stands on is found in the build.
+    /// </summary>
+    [Fact]
+    public async Task AServedCopyIsAskedWhatTheLinksThemselvesKeep()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Renders, english: 2, hebrew: 2, LinkMethod.Aligner);
+        var served = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance, served: true);
+
+        var measures = await served.Measure();
+
+        measures.Sound.Should().BeTrue(because: string.Join(
+            ", ", measures.Integrity.Where(i => i.Found > 0).Select(i => $"{i.Found} {i.Breaks}")));
+        measures.Integrity.Select(i => i.Breaks).Should().Contain([CorpusCheck.UnclaimedLinks, CorpusCheck.SameWordsTwice])
+            .And.NotContain(CorpusCheck.ClaimsKeptApart);
+        measures.Contention.Should().BeEmpty();
+        measures.Agreement.Should().BeEmpty();
+
+        await _db.Database.ExecuteSqlRawAsync("UPDATE link SET methods = 0");
+        (await served.Measure()).Integrity.Single(i => i.Breaks == CorpusCheck.UnclaimedLinks).Found.Should().Be(2);
+        (await Integrity(CorpusCheck.ClaimsKeptApart)).Should().Be(2, "the build holds the kept methods to the claims");
+    }
+
     /// <summary>A Strong number is a letter and digits; anything else reached the column by mistake.</summary>
     [Fact]
     public async Task AMalformedStrongNumberIsFound()

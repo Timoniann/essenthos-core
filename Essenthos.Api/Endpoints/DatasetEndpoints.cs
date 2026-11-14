@@ -203,23 +203,16 @@ public static class DatasetEndpoints
     }
 
     /// <summary>
-    /// The claims this dataset makes on links somebody else drew. The provenances it claims are few and
-    /// found first, so the claims are counted by the provenance they cite.
+    /// The claims this dataset makes on links somebody else drew: each source keeps how many claims cite it,
+    /// counted where the claims are written, because a served release does not carry the claims themselves.
     /// </summary>
-    private static async Task<int> Claims(AppDbContext db, Datasets.Dataset dataset, CancellationToken cancellationToken)
-    {
-        var provenances = (await db.Provenances
-                .Where(p => p.Source.StartsWith(dataset.Prefix))
-                .Select(p => new { p.Id, p.Source })
-                .ToListAsync(cancellationToken))
-            .Where(p => Datasets.Claims(dataset, p.Source))
-            .Select(p => p.Id)
-            .ToList();
-
-        return provenances.Count == 0
-            ? 0
-            : await db.LinkClaims.CountAsync(claim => provenances.Contains(claim.ProvenanceId), cancellationToken);
-    }
+    private static async Task<int> Claims(AppDbContext db, Datasets.Dataset dataset, CancellationToken cancellationToken) =>
+        (await db.Provenances
+            .Where(p => p.Source.StartsWith(dataset.Prefix))
+            .Select(p => new { p.Source, p.Claims })
+            .ToListAsync(cancellationToken))
+        .Where(p => Datasets.Claims(dataset, p.Source))
+        .Sum(p => p.Claims);
 
     /// <summary>The rows credited to this dataset: each row once, to the dataset with the longest claim on it.</summary>
     internal static int Of(IEnumerable<(string Source, int Rows)> counted, Datasets.Dataset dataset) =>

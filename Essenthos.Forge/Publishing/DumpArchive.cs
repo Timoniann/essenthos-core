@@ -45,6 +45,85 @@ internal sealed partial class DumpArchive
     public static DumpArchive Open(string path)
     {
         using var file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 1 << 16);
+        var (reader, compressed, _, toc) = ReadToc(file, path);
+        return new DumpArchive(path, reader.IntSize, reader.OffsetSize, compressed, [.. toc.Select(placed => placed.Entry)]);
+    }
+
+    /// <summary>
+    /// Writes the archive at <paramref name="path"/> again as <paramref name="destination"/> without the entries
+    /// <paramref name="omit"/> picks, which may hold no rows: the table of contents loses them, every data offset moves
+    /// back by as many bytes, no entry kept names one left out among its dependencies, and the data blocks are copied as
+    /// they are. pg_restore reads the result as it reads what pg_dump writes. The names of the entries left out.
+    /// </summary>
+    public static IReadOnlyList<string> Omit(string path, string destination, Func<Entry, bool> omit)
+    {
+        using var input = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 1 << 16);
+        var (reader, _, countAt, toc) = ReadToc(input, path);
+        var tocEnd = input.Position;
+        var left = toc.Where(placed => omit(placed.Entry)).ToList();
+        if (left.FirstOrDefault(placed => placed.Entry.DataAt is not null || placed.Entry.Kind is "TABLE DATA") is { } rows)
+        {
+            throw new InvalidOperationException($"{rows.Entry.Kind} {rows.Entry.Name} holds rows; an archive is written again only without entries that hold none.");
+        }
+
+        var gone = left.Select(placed => placed.Entry.DumpId.ToString(System.Globalization.CultureInfo.InvariantCulture)).ToHashSet(StringComparer.Ordinal);
+        var kept = toc.Where(placed => !omit(placed.Entry))
+            .Select(placed => (Placed: placed, Dependencies: placed.Dependencies.Where(dependency => !gone.Contains(dependency)).ToList()))
+            .ToList();
+        var writer = new Writer(reader.IntSize, reader.OffsetSize);
+        var size = countAt + writer.IntBytes + kept.Sum(entry =>
+            entry.Placed.DependenciesAt - entry.Placed.Start
+            + entry.Dependencies.Sum(dependency => writer.IntBytes + Encoding.UTF8.GetByteCount(dependency)) + writer.IntBytes
+            + 1 + reader.OffsetSize);
+        var moved = size - tocEnd;
+
+        using var output = new FileStream(destination, FileMode.Create, FileAccess.Write, FileShare.None, 1 << 20);
+        Copy(input, output, 0, countAt);
+        writer.Int(output, kept.Count);
+        foreach (var (placed, dependencies) in kept)
+        {
+            Copy(input, output, placed.Start, placed.DependenciesAt - placed.Start);
+            foreach (var dependency in dependencies)
+            {
+                writer.String(output, dependency);
+            }
+
+            writer.String(output, null);
+            output.WriteByte(placed.Flag);
+            writer.Offset(output, placed.Flag == OffsetSet ? placed.Offset + moved : placed.Offset);
+        }
+
+        if (output.Position != size)
+        {
+            throw new InvalidOperationException($"The table of contents of {destination} came out {output.Position} bytes long, not {size}.");
+        }
+
+        Copy(input, output, tocEnd, input.Length - tocEnd);
+        return [.. left.Select(placed => placed.Entry.Name)];
+    }
+
+    private static void Copy(FileStream input, Stream output, long from, long count)
+    {
+        input.Position = from;
+        var buffer = new byte[1 << 20];
+        while (count > 0)
+        {
+            var read = input.Read(buffer, 0, (int)Math.Min(buffer.Length, count));
+            if (read == 0)
+            {
+                throw new EndOfStreamException("The archive ended before the bytes it was to copy.");
+            }
+
+            output.Write(buffer, 0, read);
+            count -= read;
+        }
+    }
+
+    /// <summary>An entry of the table of contents and where its bytes lie: from its start to its dependencies, then the dependencies, then its data offset.</summary>
+    private sealed record Placed(Entry Entry, long Start, long DependenciesAt, IReadOnlyList<string> Dependencies, byte Flag, long Offset);
+
+    private static (Reader Reader, bool Compressed, long CountAt, List<Placed> Toc) ReadToc(FileStream file, string path)
+    {
         var reader = new Reader(file);
         if (Encoding.ASCII.GetString(reader.Bytes(5)) != "PGDMP")
         {
@@ -89,10 +168,12 @@ internal sealed partial class DumpArchive
         reader.String();
         reader.String();
 
+        var countAt = file.Position;
         var count = reader.Int();
-        var entries = new List<Entry>(count);
+        var entries = new List<Placed>(count);
         for (var i = 0; i < count; i++)
         {
+            var start = file.Position;
             var dumpId = reader.Int();
             reader.Int();
             reader.String();
@@ -113,16 +194,20 @@ internal sealed partial class DumpArchive
 
             reader.String();
             reader.String();
-            while (reader.String() is not null)
+            var dependenciesAt = file.Position;
+            var dependencies = new List<string>();
+            while (reader.String() is { } dependency)
             {
+                dependencies.Add(dependency);
             }
 
             var flag = reader.Byte();
             var offset = reader.Offset();
-            entries.Add(new Entry(dumpId, kind, schema, tag, definition, copy, flag == OffsetSet ? offset : null, section));
+            entries.Add(new Placed(new Entry(dumpId, kind, schema, tag, definition, copy, flag == OffsetSet ? offset : null, section),
+                start, dependenciesAt, dependencies, flag, offset));
         }
 
-        return new DumpArchive(path, reader.IntSize, reader.OffsetSize, compressed, entries);
+        return (reader, compressed, countAt, entries);
     }
 
     /// <summary>The tables of schema public whose rows the archive holds.</summary>
@@ -303,6 +388,43 @@ internal sealed partial class DumpArchive
         {
             var length = Int();
             return length < 0 ? null : length == 0 ? string.Empty : Encoding.UTF8.GetString(Bytes(length));
+        }
+    }
+
+    /// <summary>pg_dump's integers, offsets and strings, written as <see cref="Reader"/> reads them.</summary>
+    private sealed class Writer(int intSize, int offsetSize)
+    {
+        public int IntBytes => 1 + intSize;
+
+        public void Int(Stream stream, int value)
+        {
+            stream.WriteByte(value < 0 ? (byte)1 : (byte)0);
+            var magnitude = Math.Abs((long)value);
+            for (var i = 0; i < intSize; i++)
+            {
+                stream.WriteByte((byte)(magnitude >> (8 * i)));
+            }
+        }
+
+        public void Offset(Stream stream, long value)
+        {
+            for (var i = 0; i < offsetSize; i++)
+            {
+                stream.WriteByte((byte)(value >> (8 * i)));
+            }
+        }
+
+        public void String(Stream stream, string? value)
+        {
+            if (value is null)
+            {
+                Int(stream, -1);
+                return;
+            }
+
+            var bytes = Encoding.UTF8.GetBytes(value);
+            Int(stream, bytes.Length);
+            stream.Write(bytes);
         }
     }
 

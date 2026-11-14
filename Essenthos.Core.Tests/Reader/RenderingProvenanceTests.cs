@@ -105,7 +105,7 @@ public sealed class RenderingProvenanceTests : IDisposable
     }
 
     private async Task<IList<WordRenderingResponse>> RenderingsOf(long wordId) =>
-        await WordEndpoints.Renderings(_db, await WordEndpoints.Linked(_db, wordId, default), default);
+        WordEndpoints.Renderings(await WordEndpoints.Linked(_db, wordId, default));
 
     private void Link(int englishPosition, int hebrewPosition, params (LinkMethod Method, double? Confidence, string Source)[] claims)
     {

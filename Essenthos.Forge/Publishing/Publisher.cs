@@ -46,6 +46,15 @@ internal sealed class Publisher(
 {
     private static readonly JsonSerializerOptions RecordJson = new() { WriteIndented = true };
 
+    /// <summary>
+    /// What the build keeps and a release leaves out, because no reader asks it: <c>link_claim</c>, whose answers the
+    /// readers get from each link's set of methods and each source's count of claims, and the unique constraint that
+    /// refuses a second link over the same words, which guards the build's writes and is never read. A served copy is
+    /// checked without them (<see cref="CorpusCheck"/>, <c>served</c>).
+    /// </summary>
+    public static readonly (IReadOnlyList<string> Tables, IReadOnlyList<string> Constraints) LeftOut =
+        (["link_claim"], ["ix_link_from_text_id_to_text_id_fingerprint"]);
+
     private string Releases => configuration["Publish:ReleasesPath"] is { Length: > 0 } configured
         ? configured
         : Path.Combine(Repository, ".releases");
@@ -184,6 +193,7 @@ internal sealed class Publisher(
         };
 
         var dump = Path.Combine(Releases, $"{name}.dump");
+        var dumped = $"{dump}.whole";
         var inContainer = $"/tmp/{name}.dump";
         db.CorpusReleases.Add(release);
         await db.SaveChangesAsync(cancellationToken);
@@ -194,8 +204,9 @@ internal sealed class Publisher(
             // EVIDENTIA's ledger stays here, where the load replays it: the tables go, empty, and nothing served reads them.
             await Shell.Run("docker",
                 ["exec", SourceContainer, "pg_dump", "-U", connection.Username!, "-Fc", "-Z6",
-                 "--exclude-table-data=evidentia_*", "-f", inContainer, connection.Database!], cancellationToken);
-            await Shell.Run("docker", ["cp", $"{SourceContainer}:{inContainer}", dump], cancellationToken);
+                 "--exclude-table-data=evidentia_*", .. LeftOut.Tables.Select(table => $"--exclude-table=public.{table}"),
+                 "-f", inContainer, connection.Database!], cancellationToken);
+            await Shell.Run("docker", ["cp", $"{SourceContainer}:{inContainer}", dumped], cancellationToken);
             logger.LogInformation("Dumped in {Seconds:F0} s", (DateTimeOffset.UtcNow - started).TotalSeconds);
         }
         finally
@@ -203,6 +214,21 @@ internal sealed class Publisher(
             await db.CorpusReleases.Where(r => r.Id == release.Id).ExecuteDeleteAsync(CancellationToken.None);
             await Shell.Run("docker", ["exec", SourceContainer, "rm", "-f", inContainer], CancellationToken.None);
         }
+
+        // pg_dump can leave out a table but not one constraint of a table it dumps, so the archive is written again without it.
+        var omitted = DumpArchive.Omit(dumped, dump, entry => entry.Kind == "CONSTRAINT" && entry.Schema == "public"
+            && LeftOut.Constraints.Any(constraint => entry.Name.EndsWith($" {constraint}", StringComparison.Ordinal)));
+        File.Delete(dumped);
+        if (omitted.Count != LeftOut.Constraints.Count)
+        {
+            logger.LogError("Release {Name} was to leave out {Expected} but its dump held {Found}; nothing was released",
+                name, string.Join(", ", LeftOut.Constraints), omitted.Count == 0 ? "none of them" : string.Join(", ", omitted));
+            File.Delete(dump);
+            return 1;
+        }
+
+        logger.LogInformation("Left out of the release: the table {Tables} and the constraint {Constraints}",
+            string.Join(", ", LeftOut.Tables), string.Join(", ", omitted));
 
         var record = new ReleaseRecord(
             name, release.BuiltAt, release.ForgeVersion, release.ManifestSha, release.MigrationHead,
@@ -862,7 +888,7 @@ internal sealed class Publisher(
             {
                 await using var restoredDb = new AppDbContext(
                     new DbContextOptionsBuilder<AppDbContext>().UseNpgsql(connectionString).Options);
-                var measures = await new CorpusCheck(restoredDb, loggers.CreateLogger<CorpusCheck>()).Measure(cancellationToken);
+                var measures = await new CorpusCheck(restoredDb, loggers.CreateLogger<CorpusCheck>(), served: true).Measure(cancellationToken);
                 if (!CorpusGate.Pass(measures, CorpusCheck.RenderedFloor, logger))
                 {
                     logger.LogError("{Incoming} failed the gate on {Target}; it was not put in place", target.Incoming, target.Name);
