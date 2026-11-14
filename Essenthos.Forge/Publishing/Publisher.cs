@@ -336,7 +336,15 @@ internal sealed class Publisher(
 
         await RemoveOldUploads(host, record.Name, uploaded, cancellationToken);
 
-        if (target.KeepsPrevious)
+        if (target.ByDifference && !target.KeepsPrevious
+            && await ReleaseName(host, target.Previous, cancellationToken) is { } kept)
+        {
+            logger.LogInformation(
+                "{Target} serves release {Name}; {Previous} keeps {Kept} for the next difference, and publishing {Kept} again " +
+                "(`forge rollback --to {Target}`) is only a swap. {Seconds:F0} s in all",
+                target.Name, record.Name, target.Previous, kept, kept, target.Name, (DateTimeOffset.UtcNow - started).TotalSeconds);
+        }
+        else if (target.KeepsPrevious)
         {
             logger.LogInformation(
                 "{Target} serves release {Name}; the one before it is {Previous}, and `forge rollback --to {Target}` " +
