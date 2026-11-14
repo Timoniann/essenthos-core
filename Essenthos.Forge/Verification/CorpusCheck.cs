@@ -55,6 +55,42 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     public static IReadOnlyList<string> IntegrityChecks => [.. Integrity.Select(check => check.Breaks)];
 
     /// <summary>The integrity check of the word renderings counted at build, against the links on a sample of spellings.</summary>
+    public const string FamilyTiesBreak = "family ties the drawn families do not hold, hold twice or put in another family";
+
+    public const string FamilyDocumentsBreak = "families without their document in a pair of languages, or whose document is not the family";
+
+    private static readonly string FamilyRelationTypes = string.Join(", ", ChapterFamily.Types.Select(t => $"'{t}'"));
+
+    private static readonly string FamilyDeities = string.Join(", ", ChapterFamily.Deities.Select(t => $"'{t}'"));
+
+    private static readonly string FamilyTiesSql =
+        $"""
+         WITH stated AS (
+             SELECT DISTINCT r.from_entity_id, r.type, r.to_entity_id
+             FROM entity_relationship r JOIN entity f ON f.id = r.from_entity_id JOIN entity t ON t.id = r.to_entity_id
+             WHERE r.type IN ({FamilyRelationTypes}) AND r.from_entity_id <> r.to_entity_id
+               AND f.slug NOT IN ({FamilyDeities}) AND t.slug NOT IN ({FamilyDeities}))
+         SELECT (SELECT count(*) FROM stated s WHERE NOT EXISTS (
+                     SELECT 1 FROM family_tie y WHERE y.from_entity_id = s.from_entity_id AND y.type = s.type AND y.to_entity_id = s.to_entity_id))
+              + (SELECT count(*) FROM family_tie y WHERE NOT EXISTS (
+                     SELECT 1 FROM stated s WHERE y.from_entity_id = s.from_entity_id AND y.type = s.type AND y.to_entity_id = s.to_entity_id))
+              + (SELECT count(*) FROM family_tie y
+                 JOIN family_member a ON a.entity_id = y.from_entity_id JOIN family_member b ON b.entity_id = y.to_entity_id
+                 WHERE a.component <> y.component OR b.component <> y.component)
+              + (SELECT count(*) FROM entity e WHERE e.kind = 'person' AND NOT EXISTS (SELECT 1 FROM family_member m WHERE m.entity_id = e.id))
+         """;
+
+    private static readonly string FamilyDocumentsSql =
+        """
+        WITH pairs AS (SELECT DISTINCT prose, names FROM family_component)
+        SELECT (SELECT count(*) FROM (SELECT DISTINCT component FROM family_member) m CROSS JOIN pairs p
+                WHERE NOT EXISTS (SELECT 1 FROM family_component c WHERE c.component = m.component AND c.prose = p.prose AND c.names = p.names))
+             + (SELECT count(*) FROM family_component c
+                WHERE json_array_length(c.body::json -> 'ties') <> (SELECT count(*) FROM family_tie t WHERE t.component = c.component)
+                   OR json_array_length(c.body::json -> 'people') <> (SELECT count(*) FROM family_member m WHERE m.component = c.component))
+             + (SELECT count(*) FROM family_component c WHERE NOT EXISTS (SELECT 1 FROM family_member m WHERE m.component = c.component))
+        """;
+
     public const string RenderingsTheLinksDoNotGive = "word renderings counted at build that the links do not give";
 
     /// <summary>
@@ -733,6 +769,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// </summary>
     private static readonly (string Breaks, string Sql)[] Integrity =
     [
+        // The families a tree is drawn from are the family ties of entity_relationship, recounted here: every tie of the four
+        // ranks between two people, no deity, once per pair and relation, in the family both its people are in, and every
+        // person in exactly one family (TSK-1666).
+        (FamilyTiesBreak, FamilyTiesSql),
+        // Every family has its document in every pair of languages the build made, and a document's people and ties are its
+        // family's.
+        (FamilyDocumentsBreak, FamilyDocumentsSql),
         // Every relationship is read from the text by this project. A row a dataset states is one a
         // loader brought in from somebody's edge list, which none is meant to.
         ("relationships a dataset states, where every one is read from the text by this project",

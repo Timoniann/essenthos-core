@@ -1,4 +1,4 @@
-﻿using Essenthos.Core.Configuration;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -176,6 +176,32 @@ internal static partial class EncyclopediaEndpoints
                     db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages), prose))
                 : Results.BadRequest(new ProblemResponse(
                     $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
+
+        // A person's whole family as one document, which a tree walks to any depth without asking again.
+        routes.MapGet("/family/component", async (
+            [FromQuery] string? of,
+            [FromQuery] string? language,
+            [FromQuery] string? prose,
+            AppDbContext db,
+            HttpContext context,
+            CancellationToken cancellationToken) =>
+        {
+            if (string.IsNullOrWhiteSpace(of))
+            {
+                return Results.BadRequest(new ProblemResponse("Name the person whose family is asked for, as of=david."));
+            }
+
+            if (await FamilyEndpoints.Component(db, of.Trim(), language, prose, cancellationToken) is not { } family)
+            {
+                return Results.NotFound(new ProblemResponse($"No person is called '{of}'."));
+            }
+
+            var tag = '"' + family.Hash + '"';
+            context.Response.Headers.ETag = tag;
+            return context.Request.Headers.IfNoneMatch.Any(asked => asked == tag)
+                ? Results.StatusCode(StatusCodes.Status304NotModified)
+                : Results.Text(family.Body, "application/json; charset=utf-8");
+        }).KeptUntilRelease();
     }
 
     /// <summary>A read on a connection of its own, to run beside what the request's own connection reads.</summary>

@@ -169,7 +169,8 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         Validating = Timed("database", "foreign keys validated", () => ValidateKeys(keys, sizes, parallel, cancellationToken));
         await Task.WhenAll(
             Panes(null, false, parallel, cancellationToken),
-            RecordWords(null, false, cancellationToken));
+            RecordWords(null, false, cancellationToken),
+            Families(false, cancellationToken));
         await Count(cancellationToken);
     }
 
@@ -274,6 +275,22 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             }
 
             return rows;
+        });
+
+    /// <summary>
+    /// The records' cards and each family's document (<see cref="FamilyBuild"/>), composed from the tables as they now stand
+    /// where their inputs or their composers moved (always with <paramref name="force"/>), copied from the products where not.
+    /// Returns the rows the tables took.
+    /// </summary>
+    public Task<long> Families(bool force, CancellationToken cancellationToken) =>
+        Timed("load", "families", async () =>
+        {
+            var outcome = await new FamilyBuild(connectionString, store, services, logger).Run(force, cancellationToken);
+            logger.LogInformation("Families: {Made} products made, {Rows} rows written; the largest document: {Largest}",
+                outcome.Made, outcome.Rows, outcome.Largest);
+            Stages.Enqueue(new BuildStage("load", "largest family document", TimeSpan.Zero, outcome.LargestGzip,
+                outcome.LargestGzip > FamilyBuild.LargestGzipWarned ? $"{outcome.Largest}: over {FamilyBuild.LargestGzipWarned} bytes gzipped" : outcome.Largest));
+            return outcome.Rows;
         });
 
     /// <summary>The frame of the texts named, or of every text with a frame file, each text replaced in a transaction of its own.</summary>

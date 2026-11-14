@@ -63,7 +63,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             // them, or a product made since, is caught up.
             var catchUp = new ServingBuild(connectionString, store, services, logger);
             var caught = await catchUp.Panes(null, false, PaneParallelism, cancellationToken);
-            if (caught + await catchUp.RecordWords(null, false, cancellationToken) > 0)
+            if (caught + await catchUp.RecordWords(null, false, cancellationToken) + await catchUp.Families(false, cancellationToken) > 0)
             {
                 await catchUp.Count(cancellationToken);
                 await WriteServed(database, catchUp.Rows, cancellationToken);
@@ -257,6 +257,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         }
 
         await serving.RecordWords(null, false, cancellationToken);
+        await serving.Families(false, cancellationToken);
         await serving.Count(cancellationToken);
         await WriteServed(database, serving.Rows, cancellationToken);
         Stages.AddRange(serving.Stages);

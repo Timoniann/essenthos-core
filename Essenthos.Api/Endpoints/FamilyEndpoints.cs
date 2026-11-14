@@ -32,10 +32,17 @@ internal static class FamilyEndpoints
         bool generated = true,
         string? prose = null)
     {
-        var people = await db.Entities
-            .Where(e => slugs.Contains(e.Slug))
-            .Select(e => new { e.Id, e.Slug, e.Name, e.Distinguisher, e.Sex })
-            .ToListAsync(cancellationToken);
+        // The cards the build made for this pair of languages (record_name, record_line); a pair it did not make is composed
+        // here, the same way.
+        var words = ReaderLanguages.Prose(prose, language);
+        var people = language is { Length: > 0 } && words is { Length: > 0 }
+            ? await Stored(db, slugs, language, words, cancellationToken)
+            : [];
+        if (people.Count == 0)
+        {
+            people = await RecordCards.Of(db, slugs, language, prose, cancellationToken);
+        }
+
         var ids = people.Select(p => p.Id).ToList();
 
         // Both directions, as the entity page reads them: a father is recorded once, and reading
@@ -63,20 +70,6 @@ internal static class FamilyEndpoints
                 ? new VerseRefResponse(b, BookReferences.Name(b), BookReferences.Slug(b), c, v)
                 : null;
 
-        var local = await EntityNames.Of(db, ids, language, cancellationToken);
-        var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
-        var words = ReaderLanguages.Prose(prose, language);
-        var lines = await EntityDistinguishers.OfSlugs(db, [.. people.Select(p => p.Slug)], words, cancellationToken);
-        // Most people have no stored line in the language asked for; the line the index phrases from
-        // their descriptor tells their namesakes apart instead. Only its words travel: the descriptor
-        // whole, with every name's forms and every clause's verses, is some 18 KB a person.
-        var spoken = DescriptorPhrasings.Spoken(words);
-        var described = await Descriptors.Of(
-            db,
-            people.Where(p => !lines.ContainsKey(p.Slug)).Select(p => p.Slug),
-            words,
-            cancellationToken,
-            language);
         var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
         var order = slugs.Select((slug, index) => (slug, index)).ToDictionary(p => p.slug, p => p.index, StringComparer.Ordinal);
 
@@ -86,8 +79,8 @@ internal static class FamilyEndpoints
                 .OrderBy(p => order.GetValueOrDefault(p.Slug))
                 .Select(p => new FamilyMemberResponse(
                     p.Slug,
-                    renamed.GetValueOrDefault(p.Id)?.Name ?? p.Name,
-                    renamed.TryGetValue(p.Id, out var heads) ? heads.LocalName : local.GetValueOrDefault(p.Id),
+                    p.Name,
+                    p.LocalName,
                     p.Distinguisher,
                     p.Sex,
                     [
@@ -106,14 +99,46 @@ internal static class FamilyEndpoints
                             .DistinctBy(tie => (tie.Type, tie.Inward, tie.Slug)),
                     ])
                 {
-                    LocalDistinguisher = lines.GetValueOrDefault(p.Slug),
-                    DescriptorLine = described.TryGetValue(p.Slug, out var descriptor) && descriptor.Language == spoken
-                        ? string.Concat(descriptor.Parts.Select(part => part.Text)).Trim() is { Length: > 0 } said ? said : null
-                        : null,
+                    LocalDistinguisher = p.Local,
+                    DescriptorLine = p.Described,
                     Thumbnail = pictured.GetValueOrDefault(p.Slug),
-                    AlsoCalled = renamed.TryGetValue(p.Id, out var also) ? also.AlsoCalled : null,
+                    AlsoCalled = p.AlsoCalled,
                 }),
         ]);
+    }
+
+    /// <summary>The cards the build made of these records for this pair of languages, in one statement; empty where it made none.</summary>
+    private static async Task<List<RecordCard>> Stored(
+        AppDbContext db, IReadOnlyCollection<string> slugs, string names, string prose, CancellationToken cancellationToken) =>
+        await (
+                from n in db.RecordNames
+                join l in db.RecordLines on new { n.Names, n.Slug } equals new { l.Names, l.Slug }
+                join e in db.Entities on n.Slug equals e.Slug
+                where n.Names == names && l.Prose == prose && slugs.Contains(n.Slug)
+                select new RecordCard(e.Id, n.Slug, n.Kind, n.Name, n.LocalName, n.Distinguisher, n.Sex, n.AlsoCalled, l.LocalLine, l.DescriptorLine))
+            .ToListAsync(cancellationToken);
+
+    /// <summary>
+    /// The document of the family a person is in (<see cref="FamilyDocuments"/>), as the build stored it for this pair of
+    /// languages, in one statement; composed here for a pair it did not make. Null where the slug is no person's.
+    /// </summary>
+    internal static async Task<(string Body, string Hash)?> Component(
+        AppDbContext db, string slug, string? language, string? prose, CancellationToken cancellationToken)
+    {
+        var names = language is { Length: > 0 } ? language : RecordCards.English;
+        var words = ReaderLanguages.Prose(prose, names)!;
+        var stored = await (
+                from m in db.FamilyMembers
+                join c in db.FamilyComponents on m.Component equals c.Component
+                where m.Slug == slug && c.Prose == words && c.Names == names
+                select new { c.Body, c.Hash })
+            .FirstOrDefaultAsync(cancellationToken);
+        if (stored is not null)
+        {
+            return (stored.Body, stored.Hash);
+        }
+
+        return await FamilyDocuments.Read(db, slug, names, words, cancellationToken) is { } read ? (read.Body, read.Hash) : null;
     }
 
     /// <summary>

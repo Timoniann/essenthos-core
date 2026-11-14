@@ -2542,6 +2542,124 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.FamilyComponent", b =>
+                {
+                    b.Property<int>("Component")
+                        .HasColumnType("integer")
+                        .HasColumnName("component");
+
+                    b.Property<string>("Prose")
+                        .HasColumnType("text")
+                        .HasColumnName("prose");
+
+                    b.Property<string>("Names")
+                        .HasColumnType("text")
+                        .HasColumnName("names");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body")
+                        .HasAnnotation("Npgsql:Compression:", "lz4");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hash");
+
+                    b.Property<int>("People")
+                        .HasColumnType("integer")
+                        .HasColumnName("people");
+
+                    b.HasKey("Component", "Prose", "Names")
+                        .HasName("pk_family_component");
+
+                    b.ToTable("family_component", null, t =>
+                        {
+                            t.HasComment("Each connected family of family_member as the JSON document a tree is drawn from, per pair of languages, sent as it is. Made by the serving build (family-components/{prose}).");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.FamilyMember", b =>
+                {
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<int>("Component")
+                        .HasColumnType("integer")
+                        .HasColumnName("component");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("text")
+                        .HasColumnName("sex");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.HasKey("EntityId")
+                        .HasName("pk_family_member");
+
+                    b.HasIndex("Component")
+                        .HasDatabaseName("ix_family_member_component");
+
+                    b.HasIndex("Slug")
+                        .IsUnique()
+                        .HasDatabaseName("ix_family_member_slug");
+
+                    b.ToTable("family_member", null, t =>
+                        {
+                            t.HasComment("Every person and the connected family of family_tie they are in; somebody with no tie is a family of one. Loaded from records/derived/family-ties.");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.FamilyTie", b =>
+                {
+                    b.Property<int>("FromEntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("from_entity_id");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.Property<int>("ToEntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("to_entity_id");
+
+                    b.Property<int?>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int?>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<int?>("CanonicalVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_verse");
+
+                    b.Property<int>("Component")
+                        .HasColumnType("integer")
+                        .HasColumnName("component");
+
+                    b.HasKey("FromEntityId", "Type", "ToEntityId")
+                        .HasName("pk_family_tie");
+
+                    b.HasIndex("Component")
+                        .HasDatabaseName("ix_family_tie_component");
+
+                    b.HasIndex("ToEntityId")
+                        .HasDatabaseName("ix_family_tie_to_entity_id");
+
+                    b.ToTable("family_tie", null, t =>
+                        {
+                            t.HasComment("Every family tie a tree draws (parent, spouse, brother or sister, as entity_relationship holds it, no deity), with the connected family it is in. Loaded from records/derived/family-ties.");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.GeezLexiconEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -3872,6 +3990,90 @@ namespace Essenthos.Core.Migrations
                         .HasDatabaseName("ix_record_external_id_dataset_external_id");
 
                     b.ToTable("record_external_id", (string)null);
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordLine", b =>
+                {
+                    b.Property<string>("Prose")
+                        .HasColumnType("text")
+                        .HasColumnName("prose");
+
+                    b.Property<string>("Names")
+                        .HasColumnType("text")
+                        .HasColumnName("names");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.Property<string>("DescriptorLine")
+                        .HasColumnType("text")
+                        .HasColumnName("descriptor_line");
+
+                    b.Property<string>("Line")
+                        .HasColumnType("text")
+                        .HasColumnName("line");
+
+                    b.Property<string>("LocalLine")
+                        .HasColumnType("text")
+                        .HasColumnName("local_line");
+
+                    b.Property<bool>("Quoted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("quoted");
+
+                    b.HasKey("Prose", "Names", "Slug")
+                        .HasName("pk_record_line");
+
+                    b.ToTable("record_line", null, t =>
+                        {
+                            t.HasComment("The one plain line under a record's name for a language of words and a language of names, as the reader chooses it, with the two it was chosen from. Records by slug. Made by the serving build (record-cards/{prose}).");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordName", b =>
+                {
+                    b.Property<string>("Names")
+                        .HasColumnType("text")
+                        .HasColumnName("names");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.Property<string>("AlsoCalled")
+                        .HasColumnType("text")
+                        .HasColumnName("also_called");
+
+                    b.Property<string>("Distinguisher")
+                        .HasColumnType("text")
+                        .HasColumnName("distinguisher");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("kind");
+
+                    b.Property<string>("LocalName")
+                        .HasColumnType("text")
+                        .HasColumnName("local_name");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("text")
+                        .HasColumnName("sex");
+
+                    b.HasKey("Names", "Slug")
+                        .HasName("pk_record_name");
+
+                    b.ToTable("record_name", null, t =>
+                        {
+                            t.HasComment("What each record is called in one language of names, as a card shows it: the heading, the local name, the source's line, the sex, the name it is also called. Records by slug. Made by the serving build (record-cards/{prose}).");
+                        });
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.RecordPosition", b =>
@@ -6937,6 +7139,39 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Review");
 
                     b.Navigation("Word");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.FamilyMember", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_family_member_entity_entity_id");
+
+                    b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.FamilyTie", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "From")
+                        .WithMany()
+                        .HasForeignKey("FromEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_family_tie_entity_from_entity_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "To")
+                        .WithMany()
+                        .HasForeignKey("ToEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_family_tie_entity_to_entity_id");
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Link", b =>
