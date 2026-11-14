@@ -62,10 +62,10 @@ machine's default; `env.example` holds the 4 GB machine's, which this server run
 | `DB_SHM_SIZE` | 512mb | 1gb |
 | `API_MEM_LIMIT` | 768m | 1g |
 | `WEB_MEM_LIMIT` | 128m | 128m |
-| `UMAMI_MEM_LIMIT` | 384m | 512m |
-| `UMAMI_NODE_HEAP_MB` | 192 | 256 |
+| `UMAMI_MEM_LIMIT` | 512m | 512m |
+| `UMAMI_NODE_HEAP_MB` | 256 | 256 |
 
-The limits add up to 2.9 GiB (3.3 with Umami) of the machine's 3.7, which leaves about 430 MB for Ubuntu,
+The limits add up to 2.9 GiB (3.4 with Umami) of the machine's 3.7, which leaves about 430 MB for Ubuntu,
 Docker, Caddy and the backup container, with the swap file as the safety net. A limit is not use:
 Umami measured on the rehearsal (2026-11-01, Postgres 18.1, no corpus) holds 75 to 180 MiB at rest from
 cold, 125 to 265 MiB at rest after a burst, under 300 MiB during 5,000 events at 139 to 177 a second, and never
