@@ -196,6 +196,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<EntityImageResponse>))]
 [JsonSerializable(typeof(EntityThumbnailResponse))]
 [JsonSerializable(typeof(PictureBustResponse))]
+[JsonSerializable(typeof(PictureCoverResponse))]
 [JsonSerializable(typeof(EntityRenderingResponse))]
 [JsonSerializable(typeof(IList<EntityRenderingResponse>))]
 [JsonSerializable(typeof(List<EntityRenderingResponse>))]

@@ -38,6 +38,9 @@ public sealed class PictureCopyTests : IAsyncLifetime
     /// <summary>The one bust the corpus states for the picture: a square near its top left.</summary>
     private static readonly PictureCrop Bust = new(40, 40, 200);
 
+    /// <summary>The band a tall frame shows of the picture, which the corpus states too.</summary>
+    private static readonly PictureCrop Band = new(120, 0, 360, 400);
+
     private int _cropReads;
 
     public async Task InitializeAsync()
@@ -116,7 +119,7 @@ public sealed class PictureCopyTests : IAsyncLifetime
         using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
         (copy.Width, copy.Height).Should().Be((128, 128));
         using var picture = SKBitmap.Decode(_picture);
-        var middle = picture.GetPixel(Bust.Left + Bust.Side / 2, Bust.Top + Bust.Side / 2);
+        var middle = picture.GetPixel(Bust.Left + Bust.Width / 2, Bust.Top + Bust.Height / 2);
         copy.GetPixel(64, 64).Red.Should().BeCloseTo(middle.Red, 6, "the copy is the bust, not the whole picture");
         copy.GetPixel(64, 64).Green.Should().BeCloseTo(middle.Green, 6);
         File.Exists(Path.Combine(_cache, "128", "generated", $"aaron.{_digest}.c40-40-200.{ImageEndpoints.CopyRecipe}.webp"))
@@ -133,7 +136,25 @@ public sealed class PictureCopyTests : IAsyncLifetime
     }
 
     [Theory]
+    [InlineData(256, 256, 284)]
+    [InlineData(384, 360, 400)]
+    public async Task TheBandATallFrameShowsIsCutAndKeptNoWiderThanItself(int width, int across, int down)
+    {
+        var response = await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w={width}&crop={Band}");
+
+        response.Headers.CacheControl!.ToString().Should().Contain("immutable");
+        using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
+        (copy.Width, copy.Height).Should().Be((across, down));
+        using var picture = SKBitmap.Decode(_picture);
+        var middle = picture.GetPixel(Band.Left + Band.Width / 2, PictureHeight / 2);
+        copy.GetPixel(across / 2, down / 2).Red.Should().BeCloseTo(middle.Red, 6, "the copy is the band, not the whole picture");
+        File.Exists(Path.Combine(_cache, $"{ImageEndpoints.SizedWidth(width)}", "generated",
+            $"aaron.{_digest}.c120-0-360x400.{ImageEndpoints.CopyRecipe}.webp")).Should().BeTrue();
+    }
+
+    [Theory]
     [InlineData("0,0,200")]
+    [InlineData("120,0,360,399")]
     [InlineData("40,40,201")]
     [InlineData("1,2")]
     [InlineData("-1,0,200")]
@@ -178,18 +199,62 @@ public sealed class PictureCopyTests : IAsyncLifetime
     [Theory]
     [InlineData(1024)]
     [InlineData(5000)]
-    public async Task NoCopyIsMadeWiderThanThePictureOrPastTheWidestWidth(int width)
+    public async Task AWebPIsItsOwnCopyAtItsWidthOrPastTheWidestWidth(int width)
     {
-        var response = await _http.GetAsync($"/v1/images/generated/aaron.png?v={_digest}&w={width}");
+        var webp = PictureCopies.Resize(_picture, PictureWidth)!;
+        Write("generated/moses.webp", webp);
 
-        (await response.Content.ReadAsByteArrayAsync()).Should().Equal(_picture);
+        var response = await _http.GetAsync($"/v1/images/generated/moses.webp?v={Digest(webp)}&w={width}");
+
+        (await response.Content.ReadAsByteArrayAsync()).Should().Equal(webp);
         response.Headers.CacheControl!.ToString().Should().Contain("immutable", "the digest is the picture's, so it is its own copy");
+        Directory.Exists(_cache).Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(1024)]
+    [InlineData(5000)]
+    public async Task AJpegOrPngAskedForAtItsWidthOrWiderIsAWebPAtItsOwnWidthKept(int width)
+    {
+        var photograph = Photograph(PictureWidth, PictureHeight);
+        Write("commons/sea.png", photograph);
+        var digest = Digest(photograph);
+
+        var response = await _http.GetAsync($"/v1/images/commons/sea.png?v={digest}&w={width}");
+
+        response.Content.Headers.ContentType!.MediaType.Should().Be("image/webp");
+        response.Headers.CacheControl!.ToString().Should().Contain("immutable");
+        var bytes = await response.Content.ReadAsByteArrayAsync();
+        bytes.Length.Should().BeLessThan(photograph.Length);
+        using var copy = SKBitmap.Decode(bytes);
+        (copy.Width, copy.Height).Should().Be((PictureWidth, PictureHeight));
+        File.Exists(Path.Combine(_cache, $"{PictureWidth}", "commons", $"sea.{digest}.{ImageEndpoints.CopyRecipe}.webp"))
+            .Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task AJpegAWebPWouldNotMakeSmallerIsServedItselfAndNothingIsKept()
+    {
+        using var bitmap = SKBitmap.Decode(_picture);
+        using var encoded = bitmap.Encode(SKEncodedImageFormat.Jpeg, 1);
+        var tiny = encoded.ToArray();
+        Write("commons/tiny.jpg", tiny);
+        PictureCopies.Resize(tiny, PictureWidth)!.Length.Should().BeGreaterThan(tiny.Length, "the premise: a WebP of it is larger");
+
+        for (var i = 0; i < 2; i++)
+        {
+            var response = await _http.GetAsync($"/v1/images/commons/tiny.jpg?v={Digest(tiny)}&w=1024");
+
+            (await response.Content.ReadAsByteArrayAsync()).Should().Equal(tiny);
+            response.Headers.CacheControl!.ToString().Should().Contain("immutable");
+        }
+
         Directory.Exists(_cache).Should().BeFalse();
     }
 
     /// <summary>
     /// A landscape photograph in a tall frame on a phone is drawn wider than a thousand pixels: it gets a copy that wide,
-    /// and only a picture no wider than the copy would be is its own copy.
+    /// and a picture no wider than the copy would be gets a WebP at its own width.
     /// </summary>
     [Theory]
     [InlineData(1200, 1280)]
@@ -197,22 +262,15 @@ public sealed class PictureCopyTests : IAsyncLifetime
     [InlineData(1700, 1920)]
     public async Task AWidePictureIsCopiedWiderThanAThousandPixelsAndIsItsOwnCopyAtItsWidth(int asked, int copied)
     {
-        var wide = Picture(1700, 300);
+        var wide = Photograph(1700, 300);
         Write("commons/ark.jpg", wide);
         var digest = Digest(wide);
 
         var response = await _http.GetAsync($"/v1/images/commons/ark.jpg?v={digest}&w={asked}");
 
-        if (copied < 1700)
-        {
-            response.Content.Headers.ContentType!.MediaType.Should().Be("image/webp");
-            using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
-            copy.Width.Should().Be(copied);
-        }
-        else
-        {
-            (await response.Content.ReadAsByteArrayAsync()).Should().Equal(wide, "a picture no wider than the copy is its own copy");
-        }
+        response.Content.Headers.ContentType!.MediaType.Should().Be("image/webp");
+        using var copy = SKBitmap.Decode(await response.Content.ReadAsByteArrayAsync());
+        copy.Width.Should().Be(Math.Min(copied, 1700));
     }
 
     [Fact]
@@ -263,7 +321,7 @@ public sealed class PictureCopyTests : IAsyncLifetime
         {
             Interlocked.Increment(ref _cropReads);
             return Task.FromResult<IReadOnlySet<PictureCrop>>(
-                file == "generated/aaron.png" ? new HashSet<PictureCrop> { Bust } : new HashSet<PictureCrop>());
+                file == "generated/aaron.png" ? new HashSet<PictureCrop> { Bust, Band } : new HashSet<PictureCrop>());
         });
         var app = builder.Build();
         app.MapGroup("/v1").MapImages(app.Services.GetRequiredService<PictureCopies>(), crops);
@@ -287,6 +345,27 @@ public sealed class PictureCopyTests : IAsyncLifetime
             for (var y = 0; y < height; y++)
             {
                 bitmap.SetPixel(x, y, new SKColor((byte)(x * 255 / width), (byte)(y * 255 / height), (byte)((x ^ y) & 0xff)));
+            }
+        }
+
+        using var encoded = bitmap.Encode(SKEncodedImageFormat.Png, 100);
+        return encoded.ToArray();
+    }
+
+    /// <summary>A picture with noise in it, as a photograph has, which a lossless PNG keeps in far more bytes than a WebP.</summary>
+    private static byte[] Photograph(int width, int height)
+    {
+        var noise = new Random(7);
+        using var bitmap = new SKBitmap(width, height);
+        for (var x = 0; x < width; x++)
+        {
+            for (var y = 0; y < height; y++)
+            {
+                var grain = noise.Next(-24, 25);
+                bitmap.SetPixel(x, y, new SKColor(
+                    (byte)Math.Clamp(x * 255 / width + grain, 0, 255),
+                    (byte)Math.Clamp(y * 255 / height + grain, 0, 255),
+                    (byte)Math.Clamp(128 + grain, 0, 255)));
             }
         }
 

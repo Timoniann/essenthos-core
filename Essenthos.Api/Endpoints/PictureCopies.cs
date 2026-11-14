@@ -41,7 +41,13 @@ internal sealed class PictureCopies
     private readonly ConcurrentDictionary<string, Picture> _pictures = new();
 
     /// <summary>The copies being made now, so that a page asking for one twenty times makes it once.</summary>
-    private readonly ConcurrentDictionary<string, Lazy<Task<bool>>> _making = new();
+    private readonly ConcurrentDictionary<string, Lazy<Task<Making>>> _making = new();
+
+    /// <summary>
+    /// The WebPs at a picture's own width that came out no smaller than the picture, which is served
+    /// instead; bounded by the pictures, and keyed by digest, so a replaced picture is tried again.
+    /// </summary>
+    private readonly ConcurrentDictionary<string, bool> _noSmaller = new();
 
     /// <summary>Resizing is all processor; a cold page of fifty avatars queues here instead of taking every core.</summary>
     private readonly SemaphoreSlim _slots = new(Math.Max(1, Environment.ProcessorCount / 2));
@@ -66,8 +72,8 @@ internal sealed class PictureCopies
     /// <param name="file">The picture's path under the pictures' folder, as it was asked for.</param>
     /// <param name="path">The same, resolved, and already known to be a picture inside the folder.</param>
     /// <param name="crop">
-    /// The square to cut it to first, already known to be one the corpus states; the copy is then that
-    /// square, no wider than the square itself.
+    /// The part to cut it to first, already known to be one the corpus states; the copy is then that
+    /// part, no wider than the part itself.
     /// </param>
     public async Task<string?> Serve(
         string file, string path, string? digest, int width, PictureCrop? crop, CancellationToken cancellationToken)
@@ -103,29 +109,90 @@ internal sealed class PictureCopies
             return null;
         }
 
-        if (crop is { } square)
+        if (crop is { } part)
         {
             if (sized is null || target is null
-                || square.Left + square.Side > picture.Width || square.Top + square.Side > picture.Height)
+                || part.Left + part.Width > picture.Width || part.Top + part.Height > picture.Height)
             {
                 return null;
             }
         }
         else if (sized is not { } whole || target is null || picture.Width <= whole)
         {
-            return picture.Width > 0 ? path : null;
+            if (picture.Width <= 0)
+            {
+                return null;
+            }
+
+            return Reencoded(path) ? await Own(file, path, digest, picture.Width, cancellationToken) : path;
         }
 
-        var made = sized.Value;
-        var making = _making.GetOrAdd(target, key => new Lazy<Task<bool>>(() => Make(path, digest, made, crop, key)));
+        return await Made(path, digest, sized.Value, crop, false, target, cancellationToken) == Making.Made ? target : null;
+    }
+
+    /// <summary>
+    /// A photograph kept as JPEG or PNG, which a WebP of the same pixels holds in fewer bytes: one
+    /// asked for at its own width or wider is served that WebP instead of itself.
+    /// </summary>
+    private static bool Reencoded(string path) =>
+        Path.GetExtension(path).ToLowerInvariant() is ".jpg" or ".jpeg" or ".png";
+
+    /// <summary>
+    /// The WebP of a JPEG or PNG picture at its own width, kept with its copies under that width; the
+    /// picture itself where the WebP would be no smaller, null where it cannot be kept.
+    /// </summary>
+    private async Task<string?> Own(string file, string path, string digest, int width, CancellationToken cancellationToken)
+    {
+        var copy = ImageEndpoints.CopyPath(file, digest, width);
+        var premade = Path.GetFullPath(Path.Combine(_root, ImageEndpoints.SizedFolder, copy));
+        if (premade.StartsWith(_root, ImageEndpoints.PathComparison) && File.Exists(premade))
+        {
+            return premade;
+        }
+
+        var target = Path.GetFullPath(Path.Combine(_cache, copy));
+        if (!target.StartsWith(_cache, ImageEndpoints.PathComparison))
+        {
+            return null;
+        }
+
+        if (File.Exists(target))
+        {
+            return target;
+        }
+
+        return await Made(path, digest, width, null, true, target, cancellationToken) switch
+        {
+            Making.Made => target,
+            Making.NoSmaller => path,
+            _ => null,
+        };
+    }
+
+    private async Task<Making> Made(
+        string path, string digest, int width, PictureCrop? crop, bool own, string target, CancellationToken cancellationToken)
+    {
+        if (_noSmaller.ContainsKey(target))
+        {
+            return Making.NoSmaller;
+        }
+
+        var making = _making.GetOrAdd(target, key => new Lazy<Task<Making>>(() => Make(path, digest, width, crop, own, key)));
         try
         {
-            return await making.Value.WaitAsync(cancellationToken) ? target : null;
+            return await making.Value.WaitAsync(cancellationToken);
         }
         finally
         {
             _making.TryRemove(KeyValuePair.Create(target, making));
         }
+    }
+
+    private enum Making
+    {
+        Made,
+        NoSmaller,
+        Failed,
     }
 
     /// <summary>Whether a path is one of the copies, which are never copied again.</summary>
@@ -162,7 +229,10 @@ internal sealed class PictureCopies
     /// request never reads half a copy. The bytes are hashed again here, from the same read that is
     /// resized, so a picture replaced meanwhile is never kept under its old digest.
     /// </summary>
-    private async Task<bool> Make(string path, string digest, int width, PictureCrop? crop, string target)
+    /// <param name="own">
+    /// Whether it is the picture at its own width, which is not kept where it comes out no smaller.
+    /// </param>
+    private async Task<Making> Make(string path, string digest, int width, PictureCrop? crop, bool own, string target)
     {
         await _slots.WaitAsync();
         var partial = $"{target}.{Guid.NewGuid():N}.part";
@@ -170,19 +240,25 @@ internal sealed class PictureCopies
         {
             if (File.Exists(target))
             {
-                return true;
+                return Making.Made;
             }
 
             var bytes = await File.ReadAllBytesAsync(path);
             if (Digest(bytes) != digest || Resize(bytes, width, crop) is not { } copy)
             {
-                return false;
+                return Making.Failed;
+            }
+
+            if (own && copy.Length >= bytes.Length)
+            {
+                _noSmaller[target] = true;
+                return Making.NoSmaller;
             }
 
             Directory.CreateDirectory(Path.GetDirectoryName(target)!);
             await File.WriteAllBytesAsync(partial, copy);
             File.Move(partial, target, overwrite: true);
-            return true;
+            return Making.Made;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
@@ -195,7 +271,7 @@ internal sealed class PictureCopies
                 File.Delete(partial);
             }
 
-            return false;
+            return Making.Failed;
         }
         finally
         {
@@ -205,7 +281,8 @@ internal sealed class PictureCopies
 
     /// <summary>
     /// The picture turned as its camera recorded, cut to <paramref name="crop"/> if one is given, then
-    /// made smaller by <see cref="PictureResampler"/>; a square smaller than the width is kept as it is.
+    /// made smaller by <see cref="PictureResampler"/>; a part narrower than the width, and a picture
+    /// asked for at its own width, are kept at their own size.
     /// </summary>
     internal static byte[]? Resize(byte[] bytes, int width, PictureCrop? crop = null)
     {
@@ -224,29 +301,32 @@ internal sealed class PictureCopies
 
         using (upright)
         {
-            if (crop is { } square)
+            if (crop is not { } part)
             {
-                using var part = new SKBitmap();
-                if (!upright.ExtractSubset(part, SKRectI.Create(square.Left, square.Top, square.Side, square.Side))
-                    || part.Copy() is not { } cut)
-                {
-                    return null;
-                }
-
-                using (cut)
-                {
-                    var side = Math.Min(width, square.Side);
-                    using var smallerCut = side == square.Side ? cut.Copy() : PictureResampler.Resize(cut, side, side);
-                    using var encodedCut = smallerCut.Encode(SKEncodedImageFormat.Webp, Quality(side));
-                    return encodedCut?.ToArray();
-                }
+                return Encoded(upright, Math.Min(width, upright.Width));
             }
 
-            var height = Math.Max(1, (int)Math.Round((double)upright.Height * width / upright.Width, MidpointRounding.ToEven));
-            using var smaller = PictureResampler.Resize(upright, width, height);
-            using var encoded = smaller.Encode(SKEncodedImageFormat.Webp, Quality(width));
-            return encoded?.ToArray();
+            using var subset = new SKBitmap();
+            if (!upright.ExtractSubset(subset, SKRectI.Create(part.Left, part.Top, part.Width, part.Height))
+                || subset.Copy() is not { } cut)
+            {
+                return null;
+            }
+
+            using (cut)
+            {
+                return Encoded(cut, Math.Min(width, part.Width));
+            }
         }
+    }
+
+    /// <summary>A picture made <paramref name="width"/> wide, keeping its proportions, as a WebP.</summary>
+    private static byte[]? Encoded(SKBitmap picture, int width)
+    {
+        var height = Math.Max(1, (int)Math.Round((double)picture.Height * width / picture.Width, MidpointRounding.ToEven));
+        using var smaller = width == picture.Width ? null : PictureResampler.Resize(picture, width, height);
+        using var encoded = (smaller ?? picture).Encode(SKEncodedImageFormat.Webp, Quality(width));
+        return encoded?.ToArray();
     }
 
     private static SKSizeI Upright(SKCodec codec) =>

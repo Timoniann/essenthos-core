@@ -19,8 +19,9 @@ namespace Essenthos.Core.Endpoints;
 /// made on the first request for it and kept (<see cref="PictureCopies"/>), and named by the digest of
 /// the picture it was made from; the copy keeps the picture's proportions, so its focus and its bust
 /// hold on it as they do on the original. Where the picture is no wider than the copy would be, it is
-/// its own copy. Where the digest is not the picture's, or no copy could be made, the picture itself
-/// is served, and for an hour only.
+/// its own copy, or, kept as JPEG or PNG, a WebP of it at its own width where that is smaller. A
+/// <c>crop</c> the corpus states (<see cref="PictureCrops"/>) is cut first. Where the digest is not the
+/// picture's, or no copy could be made, the picture itself is served, and for an hour only.
 /// </para>
 /// </summary>
 internal static class ImageEndpoints
@@ -142,7 +143,7 @@ internal static class ImageEndpoints
 
     /// <summary>
     /// Where the copy of a picture at a width is kept, relative to the pictures' folder: under the
-    /// width's own folder, at the picture's path with its digest, the square it was cut to if any, and
+    /// width's own folder, at the picture's path with its digest, the part it was cut to if any, and
     /// <see cref="CopyRecipe"/> before a <c>.webp</c> of its own.
     /// </summary>
     public static string SizedPath(string file, string digest, int width, PictureCrop? crop = null) =>
@@ -152,7 +153,12 @@ internal static class ImageEndpoints
     public static string CopyPath(string file, string digest, int width, PictureCrop? crop = null)
     {
         var extension = Path.GetExtension(file);
-        var cut = crop is { } square ? $".c{square.Left}-{square.Top}-{square.Side}" : "";
+        var cut = crop switch
+        {
+            { IsSquare: true } square => $".c{square.Left}-{square.Top}-{square.Width}",
+            { } band => $".c{band.Left}-{band.Top}-{band.Width}x{band.Height}",
+            null => "",
+        };
         return $"{width}/{file[..^extension.Length]}.{digest}{cut}.{CopyRecipe}{SizedExtension}";
     }
 
@@ -226,6 +232,7 @@ internal static class ImageEndpoints
                     i.FocusX, i.FocusY)
                 {
                     Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight, i.Width, i.Height),
+                    Cover = PictureCoverResponse.Of(i.Width, i.Height, i.FocusX),
                 }
                 : new EntityImageResponse(
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, i.Local ?? i.Caption, i.Credit,
@@ -233,6 +240,7 @@ internal static class ImageEndpoints
                 {
                     CaptionLanguage = i.Local is null ? null : language,
                     Bust = PictureBustResponse.Of(i.BustX, i.BustY, i.BustWidth, i.BustHeight, i.Width, i.Height),
+                    Cover = PictureCoverResponse.Of(i.Width, i.Height, i.FocusX),
                 }),
         ];
         return map is null
@@ -337,6 +345,12 @@ internal sealed record EntityImageResponse(
 
     /// <summary>A person's head and shoulders, for any rendering smaller than the picture; null on a place or a thing.</summary>
     public PictureBustResponse? Bust { get; init; }
+
+    /// <summary>
+    /// The band of a broad picture that a tall frame shows of it; null on a picture no broader than
+    /// <see cref="PictureCrop.CoverAspect"/>.
+    /// </summary>
+    public PictureCoverResponse? Cover { get; init; }
 }
 
 /// <summary>The picture an entity leads with, as small as a list needs it: where it is and what kind.</summary>
@@ -377,5 +391,21 @@ internal sealed record PictureBustResponse(double X, double Y, double Width, dou
             {
                 Crop = PictureCrop.Of(pictureWidth, pictureHeight, left, top, across)?.ToString(),
             }
+            : null;
+}
+
+/// <summary>
+/// The band of a broad picture that a frame no broader than it shows when the picture covers the frame
+/// about its focus: the whole height, and as much of the width as <see cref="PictureCrop.CoverAspect"/>
+/// allows. Drawn in such a frame at the same position, it shows exactly what the whole picture shows.
+/// </summary>
+/// <param name="Crop">The band in the picture's pixels, as <c>left,top,width,height</c>: an address's <c>crop</c>.</param>
+/// <param name="Width">Its width in pixels.</param>
+/// <param name="Height">Its height in pixels, the picture's own.</param>
+internal sealed record PictureCoverResponse(string Crop, int Width, int Height)
+{
+    public static PictureCoverResponse? Of(int width, int height, double? focusX) =>
+        PictureCrop.Cover(width, height, focusX) is { } band
+            ? new PictureCoverResponse(band.ToString(), band.Width, band.Height)
             : null;
 }
