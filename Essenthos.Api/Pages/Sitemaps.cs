@@ -124,7 +124,7 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
             foreach (var language in SiteLanguage.All)
             {
                 await xml.WriteStartElementAsync(null, "url", Namespace);
-                await xml.WriteElementStringAsync(null, "loc", Namespace, origin + language.Path(address));
+                await xml.WriteElementStringAsync(null, "loc", Namespace, origin + PageAddress.Escaped(language.Path(address)));
                 foreach (var (code, href) in PageHtml.Alternates(origin, address))
                 {
                     await xml.WriteStartElementAsync("xhtml", "link", Alternates);

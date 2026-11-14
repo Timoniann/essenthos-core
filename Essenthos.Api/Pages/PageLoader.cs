@@ -258,7 +258,7 @@ internal sealed class PageLoader(
 
     private async Task<PageContent?> Record(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
-        if (await Entity(address.Slug!, address.Language, cancellationToken) is not { } entity)
+        if (await Entity(address.Slug!, address.Language, cancellationToken, address.RecordKind) is not { } entity)
         {
             // A record withdrawn with nothing in its place is gone, not missing, so a search engine
             // forgets the address rather than asking again.
@@ -555,7 +555,7 @@ internal sealed class PageLoader(
         IReadOnlyList<EntityReferenceBookResponse> books;
         if (address.RecordKind is not null)
         {
-            if (await Entity(address.Slug!, language, cancellationToken) is not { } entity)
+            if (await Entity(address.Slug!, language, cancellationToken, address.RecordKind) is not { } entity)
             {
                 return null;
             }
@@ -710,14 +710,20 @@ internal sealed class PageLoader(
                 ("url", link($"/texts/{text.Slug}"))));
     }
 
-    /// <summary>A record by any address it has had, with the name a page in this language gives it.</summary>
-    private async Task<ShownEntity?> Entity(string slug, SiteLanguage language, CancellationToken cancellationToken)
+    /// <summary>
+    /// A record by any address it has had, with the name a page in this language gives it; where a
+    /// kind is given, also by another of the names a record of that kind holds.
+    /// </summary>
+    private async Task<ShownEntity?> Entity(
+        string slug, SiteLanguage language, CancellationToken cancellationToken, EntityKind? kind = null)
     {
         var current = await MergedAddresses.Current(db, slug, cancellationToken);
-        var entity = await db.Entities
-            .Where(e => e.Slug == current)
-            .Select(e => new { e.Id, e.Slug, e.Kind, e.Name, e.Distinguisher })
-            .FirstOrDefaultAsync(cancellationToken);
+        var entity = await Shown(current);
+        if (entity is null && kind is { } named && await RecordAliases.Find(db, slug, named, cancellationToken) is { } alias)
+        {
+            entity = await Shown(alias);
+        }
+
         if (entity is null)
         {
             return null;
@@ -729,7 +735,14 @@ internal sealed class PageLoader(
             : renamed.LocalName;
         var name = renamed?.Name ?? entity.Name;
         return new ShownEntity(entity.Id, entity.Slug, entity.Kind, string.IsNullOrEmpty(local) ? name : local, entity.Distinguisher);
+
+        Task<StoredEntity?> Shown(string address) => db.Entities
+            .Where(e => e.Slug == address)
+            .Select(e => new StoredEntity(e.Id, e.Slug, e.Kind, e.Name, e.Distinguisher))
+            .FirstOrDefaultAsync(cancellationToken);
     }
+
+    private sealed record StoredEntity(int Id, string Slug, EntityKind Kind, string Name, string? Distinguisher);
 
     private async Task<string?> Picture(string slug, string language, CancellationToken cancellationToken) =>
         (await ImageEndpoints.Leading(db, [slug], cancellationToken, settings.Is(SiteSettings.GeneratedImages), places, language))

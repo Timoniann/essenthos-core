@@ -2,6 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
+using System.Text;
 using Essenthos.Core.Strong;
 
 namespace Essenthos.Core.Pages;
@@ -152,6 +153,43 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// An address as a header, a sitemap or a link to another site carries it: each letter outside
+    /// ASCII, a space and a control character percent-encoded as UTF-8 (<c>/events/león</c> is
+    /// <c>/events/le%C3%B3n</c>), and every other character, a query already formed included, as it is.
+    /// </summary>
+    public static string Escaped(string address)
+    {
+        if (!address.Any(Unsafe))
+        {
+            return address;
+        }
+
+        var escaped = new StringBuilder(address.Length + 16);
+        Span<byte> bytes = stackalloc byte[4];
+        for (var i = 0; i < address.Length; i++)
+        {
+            var c = address[i];
+            if (!Unsafe(c))
+            {
+                escaped.Append(c);
+                continue;
+            }
+
+            var length = char.IsHighSurrogate(c) && i + 1 < address.Length
+                ? Encoding.UTF8.GetBytes(address.AsSpan(i++, 2), bytes)
+                : Encoding.UTF8.GetBytes(address.AsSpan(i, 1), bytes);
+            foreach (var b in bytes[..length])
+            {
+                escaped.Append('%').Append(b.ToString("X2"));
+            }
+        }
+
+        return escaped.ToString();
+
+        static bool Unsafe(char c) => c <= ' ' || c >= '\u007f' || c is '"' or '<' or '>';
     }
 
     public static string ChapterPath(int book, int chapter) => $"/read/{BookReferences.Slug(book)}/{chapter}";

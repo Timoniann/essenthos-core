@@ -177,8 +177,8 @@ internal static partial class PageHtml
     /// <summary>Every language's address for one page, and the one a reader of no listed language is sent to.</summary>
     public static IEnumerable<(string Language, string Url)> Alternates(string origin, string english) =>
         SiteLanguage.All
-            .Select(language => (language.Code, origin + language.Path(english)))
-            .Append(("x-default", origin + english));
+            .Select(language => (language.Code, origin + PageAddress.Escaped(language.Path(english))))
+            .Append(("x-default", origin + PageAddress.Escaped(english)));
 
     public static string Head(PageContent page, SiteLanguage language, string origin)
     {
@@ -189,7 +189,7 @@ internal static partial class PageHtml
 
         if (page.Canonical is { } canonical)
         {
-            var url = origin + language.Path(canonical);
+            var url = origin + PageAddress.Escaped(language.Path(canonical));
             head.Append("<link rel=\"canonical\" href=\"").Append(Escape(url)).Append("\">\n");
             foreach (var (code, href) in Alternates(origin, canonical))
             {
