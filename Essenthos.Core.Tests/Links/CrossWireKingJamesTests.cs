@@ -137,6 +137,8 @@ public sealed class CrossWireKingJamesTests
     [InlineData("G3754", "CONJ", "that", "that", "G3754")]
     [InlineData("G3588 G191", "T-NSM V-PAP-NSM", "that", "He that heareth", "G3588")]
     [InlineData("G3956", "A-NSM", "whosoever", "whosoever", "G3956")]
+    [InlineData("G1909 G3739", "PREP R-DSN", "wherein", "wherein", "G1909")]
+    [InlineData("G1223", "PREP", "wherefore", "wherefore", "G1223")]
     public void AFunctionWordShowsOnlyTheNumberOfAGreekWordOfItsClass(
         string numbers, string morphology, string word, string element, string? number) =>
         CrossWireKingJames.Own(numbers.Split(' '), morphology.Split(' '), word, element.Split(' ')).Should().Be(number);

@@ -99,9 +99,10 @@ internal static class CrossWireKingJames
         (Kind.Pronoun, "i me my mine myself thou thee thy thine thyself he him his himself she her hers herself it its itself we us our "
                        + "ours ourselves ye you your yours yourselves they them their theirs themselves this these those who whom whose "
                        + "which what such"),
-        (Kind.Pronoun | Kind.Particle, "that why wherefore"),
+        (Kind.Pronoun | Kind.Particle, "that why"),
+        (Kind.Pronoun | Kind.Particle | Kind.Preposition, "wherefore wherein whereby whereof whereon whereunto whereupon whereto wherewith"),
         (Kind.Particle, "and but or either if when whenever as so then therefore because though although while whilst whether lest "
-                        + "yet also even how where wherein whereby whither whence thus now"),
+                        + "yet also even how where whither whence thus now"),
         (Kind.Particle | Kind.Negative, "neither nor"),
         (Kind.Negative, "not no never none nothing nay"),
         (Kind.Auxiliary, "shall shalt should shouldest will wilt would wouldest have hast hath has had hadst having be been being am art "
