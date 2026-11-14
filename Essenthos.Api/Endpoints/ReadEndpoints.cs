@@ -341,6 +341,7 @@ internal static class ReadEndpoints
             int chapter,
             AppDbContext db,
             ICanonIndex canon,
+            SparseJson sparse,
             CancellationToken cancellationToken) =>
         {
             var entry = await canon.Text(corpus, cancellationToken);
@@ -374,7 +375,7 @@ internal static class ReadEndpoints
             var verses = await ChapterReading.ReadChapter(db, entry.Id, ordinal.Value, chapter, cancellationToken);
             var text = await db.Texts.SingleAsync(t => t.Id == entry.Id, cancellationToken);
 
-            return Results.Ok(new ChapterTextResponse(
+            return sparse.Ok(new ChapterTextResponse(
                 entry.Slug,
                 BookReference(ordinal.Value),
                 chapter,
