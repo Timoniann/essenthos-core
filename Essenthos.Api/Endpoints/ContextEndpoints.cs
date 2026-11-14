@@ -159,7 +159,6 @@ internal static class ContextEndpoints
                 e.Name,
                 e.Distinguisher,
                 e.PlaceKind,
-                e.Subtype,
                 Location = e.Location == null
                     ? null
                     : new EntityLocationResponse(
@@ -173,7 +172,7 @@ internal static class ContextEndpoints
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
         var words = ReaderLanguages.Prose(prose, language);
         var lines = await EntityDistinguishers.OfSlugs(db, slugs, words, cancellationToken);
-        var described = await Descriptors.Of(db, slugs, words, cancellationToken, language);
+        var described = ContextDescriptors.Slim(await Descriptors.Of(db, slugs, words, cancellationToken, language));
         var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
         var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
         // A face for the people only: a place's or a thing's picture is its page's, and a row of the
@@ -194,10 +193,9 @@ internal static class ContextEndpoints
             {
                 LocalName = local.GetValueOrDefault(r.Id),
                 LocalDistinguisher = lines.GetValueOrDefault(r.Slug),
-                Descriptor = described.GetValueOrDefault(r.Slug),
+                Descriptor = described.Lines.GetValueOrDefault(r.Slug),
                 Meaning = meanings.GetValueOrDefault(r.Id),
                 PlaceKind = r.PlaceKind,
-                Subtype = r.Subtype,
                 Location = r.Location,
                 How = [.. how.GetValueOrDefault(r.Slug) ?? []],
                 SourceId = Datasets.Own,
@@ -225,7 +223,6 @@ internal static class ContextEndpoints
             .ThenBy(e => e.Slug)
             .Select(EncyclopediaEndpoints.Rows)
             .ToListAsync(cancellationToken);
-        events = await EncyclopediaEndpoints.Aged(db, events, cancellationToken);
 
         var (periods, dated) = await Periods(db, book, chapter, events, cancellationToken);
         var measures = await Measures(db, book, chapter, cancellationToken);
@@ -236,13 +233,17 @@ internal static class ContextEndpoints
             new BookRefResponse(book, BookReferences.Name(book), BookReferences.Slug(book)),
             chapter,
             entities,
-            await EncyclopediaEndpoints.InTheReadersLanguage(
-                db, [.. events.Select(row => EncyclopediaEndpoints.Event(row, NoPlaces))], language, prose, cancellationToken),
+            [
+                .. (await EncyclopediaEndpoints.InTheReadersLanguage(
+                    db, [.. events.Select(row => EncyclopediaEndpoints.Event(row, NoPlaces))], language, prose, cancellationToken))
+                .Select(ContextEventResponse.Of),
+            ],
             periods,
             dated,
             measures,
             commandments,
-            topics);
+            topics,
+            described.Records);
     }
 
     /// <summary>
@@ -700,22 +701,27 @@ internal static class ChapterPeriods
 /// </param>
 /// <param name="Topics">
 /// The subjects of Nave's Topical Bible filing verses of this chapter: its themes, the most particular
-/// to it first, then the entries of the people it names, then the index's readings of it.
+/// to it first, then the index's readings of it. A person's own entry is not among them.
 /// </param>
 /// <param name="PeriodsFrom">
 /// <c>events</c> where the chapter's own events placed it, <c>neighbours</c> where it has none and
 /// the dated events on either side of it in the book did, and null where nothing placed it.
 /// </param>
+/// <param name="Records">
+/// Every record a line under a name points at, by slug, said once for the whole answer: a claim names
+/// its target by slug, and David is the target of dozens of claims in Matthew 1.
+/// </param>
 internal record ChapterContextResponse(
     BookRefResponse Book,
     int Chapter,
     IList<ContextEntityResponse> Entities,
-    IList<EventResponse> Events,
+    IList<ContextEventResponse> Events,
     IList<ContextPeriodResponse> Periods,
     string? PeriodsFrom,
     IList<ContextMeasureResponse> Measures,
     IList<ContextCommandmentResponse> Commandments,
-    IList<ContextTopicResponse> Topics);
+    IList<ContextTopicResponse> Topics,
+    IDictionary<string, ContextRecordResponse> Records);
 
 /// <param name="StartYear">Its first year from creation in the base reckoning, which placed the chapter in it.</param>
 /// <param name="Years">
@@ -753,16 +759,14 @@ internal record ContextEntityResponse(
     /// </summary>
     public string? LocalDistinguisher { get; init; }
 
-    public EntityDescriptorResponse? Descriptor { get; init; }
+    /// <summary>The line under the name, as the claims that make it; see <see cref="ContextDescriptorResponse"/>.</summary>
+    public ContextDescriptorResponse? Descriptor { get; init; }
 
     /// <summary>What its name means, where the corpus holds a meaning for the name; in English, as the sources give it.</summary>
     public string? Meaning { get; init; }
 
     /// <summary>A place's kind as its source classifies it; null for everything else.</summary>
     public string? PlaceKind { get; init; }
-
-    /// <summary>What sort of object or observance it is; null for everything else.</summary>
-    public string? Subtype { get; init; }
 
     /// <summary>Where a place is, where the gazetteer identifies it; null for a place it cannot.</summary>
     public EntityLocationResponse? Location { get; init; }
