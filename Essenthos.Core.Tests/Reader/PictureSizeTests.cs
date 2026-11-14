@@ -52,6 +52,29 @@ public sealed class PictureSizeTests : IDisposable
             .Be($"sized/128/generated/aaron.{Digest}.c205-11-634.l3q85-80.webp");
 
     [Fact]
+    public void ACopyOfABandIsNamedByItsWidthAndHeight() =>
+        ImageEndpoints.SizedPath("commons/ark.jpg", Digest, 768, new PictureCrop(382, 0, 1156, 1285)).Should()
+            .Be($"sized/768/commons/ark.{Digest}.c382-0-1156x1285.l3q85-80.webp");
+
+    /// <summary>
+    /// The band a tall frame shows of a broad picture is placed as <c>object-position</c> places it: the focus's fraction
+    /// of what is left over, so that drawn at the same position the band shows what the whole picture did.
+    /// </summary>
+    [Theory]
+    [InlineData(1920, 1285, null, 382, 1156)]
+    [InlineData(1370, 1148, 0.4416, 149, 1033)]
+    [InlineData(1370, 1148, 1.0, 337, 1033)]
+    public void ABroadPictureIsCutToTheBandATallFrameShows(int width, int height, double? focus, int left, int across) =>
+        PictureCrop.Cover(width, height, focus).Should().Be(new PictureCrop(left, 0, across, height));
+
+    [Theory]
+    [InlineData(1024, 1536)]
+    [InlineData(900, 1000)]
+    [InlineData(0, 0)]
+    public void APictureNoBroaderThanATallFrameIsNotCut(int width, int height) =>
+        PictureCrop.Cover(width, height, 0.3).Should().BeNull();
+
+    [Fact]
     public void ABustIsCutInThePicturesOwnPixels() =>
         PictureCrop.Of(1024, 1536, 0.200375, 0.007425, 0.61875).Should().Be(new PictureCrop(205, 11, 634));
 
@@ -67,10 +90,12 @@ public sealed class PictureSizeTests : IDisposable
     [InlineData("205,11", false)]
     [InlineData("205,11,6", false)]
     [InlineData("205,11,634,1", false)]
+    [InlineData("382,0,1156,1285", true)]
+    [InlineData("382,0,1156,1285,1", false)]
     [InlineData("-5,11,634", false)]
     [InlineData("205,11,1e3", false)]
     [InlineData("999999,1,634", false)]
-    public void ACropIsThreeWholeNumbers(string text, bool read) =>
+    public void ACropIsThreeOrFourWholeNumbers(string text, bool read) =>
         (PictureCrop.Parse(text) is not null).Should().Be(read);
 
     [Fact]
