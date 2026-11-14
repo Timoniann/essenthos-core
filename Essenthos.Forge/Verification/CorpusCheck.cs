@@ -106,6 +106,68 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                  WHERE k.occurrences IS DISTINCT FROM b.occurrences OR k.links IS DISTINCT FROM b.links)
          """;
 
+    /// <summary>The integrity check of the words listed behind each phrase of a Strong number, against the links on a sample of numbers.</summary>
+    public const string StrongPlacesTheLinksDoNotGive = "words listed at build behind a Strong number's phrases that the links do not give";
+
+    /// <summary>
+    /// One number in about <see cref="StrongPlaceSample"/> of every text, among those its counted edition carries at most
+    /// <see cref="StrongPlaceSampleWords"/> times.
+    /// </summary>
+    private const int StrongPlaceSample = 997;
+
+    private const int StrongPlaceSampleWords = 100;
+
+    /// <summary>
+    /// The words of <c>strong_rendering_place</c> held against the phrase the links give each of them, as the entry page's
+    /// phrases are counted (<see cref="StrongRenderingCounts.Rendered"/>), and against the order the list of the number's
+    /// places shows them in: a word listed that no link renders, one a link renders that is missing, one under another
+    /// phrase, or one out of its place each count. One number in about <paramref name="sample"/> is held.
+    /// </summary>
+    internal static string StrongPlacesSql(int sample) =>
+        $"""
+         WITH sampled AS (
+             SELECT r.text_id, r.strong_number, r.witness_id FROM strong_reach r
+             WHERE r.reached > 0 AND r.occurrences <= {StrongPlaceSampleWords}
+               AND hashtext(r.text_id || ' ' || r.strong_number) % {sample} = 0),
+         kept AS (
+             SELECT s.text_id, s.strong_number, s.witness_id, u.word_id, p.phrases[u.phrase + 1] AS phrase, u.at
+             FROM sampled s
+             JOIN strong_rendering_place p USING (text_id, strong_number, witness_id)
+             CROSS JOIN LATERAL unnest(p.words, p.phrase_of) WITH ORDINALITY AS u(word_id, phrase, at)),
+         pairs AS (
+             SELECT DISTINCT s.text_id, s.strong_number, s.witness_id, lw.link_id, lw.side, ow.id AS original
+             FROM sampled s
+             JOIN word ow ON ow.text_id = s.witness_id AND ow.strong_number = s.strong_number
+             JOIN link_word lw ON lw.word_id = ow.id
+             JOIN link l ON l.id = lw.link_id AND l.relation IN ('renders', 'equals')
+                        AND ((l.from_text_id = s.text_id AND l.to_text_id = s.witness_id)
+                             OR (l.to_text_id = s.text_id AND l.from_text_id = s.witness_id))),
+         given AS (
+             SELECT text_id, strong_number, witness_id, original AS word_id,
+                    string_agg(lower(text), ' ' ORDER BY verse_number, position, book, chapter, label COLLATE "C") AS phrase
+             FROM (
+                 SELECT DISTINCT p.text_id, p.strong_number, p.witness_id, p.original, w.id, w.text, v.number AS verse_number,
+                        w.position, b.canonical_ordinal AS book, v.chapter_number AS chapter, v.label
+                 FROM pairs p
+                 JOIN link_word o ON o.link_id = p.link_id AND o.side <> p.side
+                 JOIN word w ON w.id = o.word_id AND w.text_id = p.text_id
+                 JOIN verse v ON v.id = w.verse_id
+                 JOIN book b ON b.id = v.book_id
+             ) rendering
+             GROUP BY 1, 2, 3, 4),
+         ordered AS (
+             SELECT g.text_id, g.strong_number, g.witness_id, g.word_id, g.phrase,
+                    row_number() OVER (PARTITION BY g.text_id, g.strong_number, g.witness_id
+                                       ORDER BY r.canonical_book, r.canonical_chapter, r.canonical_verse, w.position, w.id) AS at
+             FROM given g
+             JOIN word w ON w.id = g.word_id
+             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary)
+         SELECT count(*)
+         FROM kept k
+         FULL JOIN ordered o USING (text_id, strong_number, witness_id, word_id)
+         WHERE k.phrase IS DISTINCT FROM o.phrase OR k.at IS DISTINCT FROM o.at
+         """;
+
     /// <summary>The integrity check of cross references and topic verses that name an address the frame does not place.</summary>
     public const string ReferencesNoTextPlaces = "cross references and topic verses naming a verse no text places";
 
@@ -1015,6 +1077,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // spellings: every edition a spelling's words are linked to, how many words each reaches by how many links, and how
         // many words each original stands behind.
         (RenderingsTheLinksDoNotGive, RenderingsSql),
+
+        // The words the build listed behind each phrase of a Strong number, held against the links on a sample of numbers.
+        (StrongPlacesTheLinksDoNotGive, StrongPlacesSql(StrongPlaceSample)),
 
         ("verse links saying again what another link of the same pair says",
             $"""

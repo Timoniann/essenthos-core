@@ -274,54 +274,6 @@ internal static class StrongRenderingCounts
         return await Read(command, Phrase, cancellationToken);
     }
 
-    /// <summary>
-    /// Started from the pair's links as well as the number's words, both materialised and hashed: from
-    /// the words alone, every link word of a common number was looked up in the link table one at a
-    /// time — 88,000 for H430, most of them other texts' — which took 2–20 s with a cold cache.
-    /// </summary>
-    private const string OfPhrase =
-        $"""
-         WITH numbered AS MATERIALIZED (
-             SELECT id FROM word WHERE strong_number = @number AND text_id = @witness
-         ),
-         pair AS MATERIALIZED (
-             SELECT l.id
-             FROM link l
-             WHERE ((l.from_text_id = @text AND l.to_text_id = @witness)
-                    OR (l.to_text_id = @text AND l.from_text_id = @witness))
-               AND {Rendering}
-         ),
-         pairs AS (
-             SELECT DISTINCT s.link_id, s.side, @number AS number, s.word_id AS original
-             FROM pair p
-             JOIN link_word s ON s.link_id = p.id
-             WHERE s.word_id IN (SELECT id FROM numbered)
-         ),
-         {Rendered}
-         SELECT original FROM rendered WHERE phrase = lower(@phrase) ORDER BY original
-         """;
-
-    /// <summary>
-    /// The words of <paramref name="witnessId"/> carrying <paramref name="number"/> that the text renders
-    /// with exactly <paramref name="phrase"/>, as the phrases are counted: the places behind one row of
-    /// the entry page's renderings.
-    /// </summary>
-    public static async Task<List<long>> RenderedAs(
-        AppDbContext db,
-        string number,
-        int textId,
-        int witnessId,
-        string phrase,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(OfPhrase, await Open(db, cancellationToken));
-        command.Parameters.AddWithValue("number", number);
-        command.Parameters.AddWithValue("text", textId);
-        command.Parameters.AddWithValue("witness", witnessId);
-        command.Parameters.AddWithValue("phrase", phrase.Trim());
-        return await Read(command, reader => reader.GetInt64(0), cancellationToken);
-    }
-
     /// <summary>The words of the edition carrying the number that no link of the text reaches, read as the reach is.</summary>
     private const string OfNotRendered =
         $"""

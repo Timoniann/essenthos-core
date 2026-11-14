@@ -6,6 +6,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 
@@ -309,6 +310,10 @@ internal static class TextIndexes
         {
             inputs.Add(Product(context, TextField.ProductOf(other)));
             inputs.Add(Product(context, TextWord.ProductOf(other)));
+            if (context.Store.Exists(FrameFile.Product(other)))
+            {
+                inputs.Add(Product(context, FrameFile.Product(other)));
+            }
         }
 
         inputs.AddRange(others.Select(p => Product(context, MappingProducts.Of(p.Pair, MappingProducts.Final))));
@@ -383,6 +388,7 @@ internal static class TextIndexes
             }
         }
 
+        var placed = primary.ToDictionary(w => w.Slug, w => PrimaryPlaces(context.Store, w.Slug), StringComparer.Ordinal);
         var witnessOrder = primary.Select((w, i) => (w.Slug, i)).ToDictionary(w => w.Slug, w => w.i, StringComparer.Ordinal);
         var hebrew = LinkedOriginals.WitnessFor(primary, "H1")?.Slug;
         var greek = LinkedOriginals.WitnessFor(primary, "G1")?.Slug;
@@ -400,10 +406,12 @@ internal static class TextIndexes
                 var ordered = mine.Select(own => (Own: own, Word: words[own]))
                     .OrderBy(w => w.Word.Verse).ThenBy(w => w.Word.Position).ThenBy(w => w.Word.Key)
                     .ToList();
+                var verse = WordKey.Parse(original, witness).Verse;
                 writer.Write(new StrongIndexRow(
                     number,
                     witness,
                     original,
+                    placed[witness].TryGetValue(verse, out var moved) ? moved : FrameFile.AtOwn(verse),
                     string.Join(' ', ordered.Select(w => w.Own)),
                     ordered.Count == 0 ? null : string.Join(' ', ordered.Select(w => w.Word.Lower)),
                     string.Join(' ', links.Keys),
@@ -415,6 +423,22 @@ internal static class TextIndexes
         }
 
         return new IndexOutcome(text, IndexProducts.Strong, true, rows, clock.Elapsed, $"over {string.Join(", ", primary.Select(w => w.Slug))}");
+    }
+
+    /// <summary>The primary frame address of every verse of a text the frame moves; a verse not listed stands at its own.</summary>
+    internal static Dictionary<VerseKey, VerseKey> PrimaryPlaces(ProductStore store, string text)
+    {
+        var primary = new Dictionary<VerseKey, VerseKey>();
+        if (store.Exists(FrameFile.Product(text)))
+        {
+            using var frame = store.Open(FrameFile.Product(text), FrameRow.Schema);
+            foreach (var (own, canonical) in frame.Rows().SelectMany(row => row.Verses()))
+            {
+                primary[own] = canonical[0];
+            }
+        }
+
+        return primary;
     }
 
     /// <summary>

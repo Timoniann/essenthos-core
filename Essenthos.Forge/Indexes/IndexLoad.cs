@@ -11,8 +11,9 @@ using NpgsqlTypes;
 namespace Essenthos.Core.Indexes;
 
 /// <summary>
-/// The texts' indexes into the serving tables (never live): <c>strong_rendering</c>, <c>strong_reach</c>,
-/// <c>strong_reach_method</c>, <c>strong_book_reach</c> and <c>strong_book</c> from the strong and occurrences indexes,
+/// The texts' indexes into the serving tables (never live): <c>strong_rendering</c>, <c>strong_rendering_place</c>,
+/// <c>strong_reach</c>, <c>strong_reach_method</c>, <c>strong_book_reach</c> and <c>strong_book</c> from the strong and
+/// occurrences indexes,
 /// <c>text_form</c> from the forms, <c>entity_rendering</c> and <c>entity_search_spelling</c> from the spellings. Each
 /// table's rows of the texts loaded are replaced in one transaction. What is counted is what the database steps count
 /// (<see cref="StrongRenderingCounts"/>, <see cref="EntityRenderingLoader"/>): the
@@ -50,7 +51,39 @@ internal static class IndexLoad
         List<(string Number, string Phrase, int Uses)> Phrases,
         List<(string Number, int Witness, int Occurrences, int Reached, Variety Variety, bool? Lexical)> Reach,
         List<(string Number, string Method, int Links)> Methods,
-        List<(string Number, int Book, int Reached)> Books);
+        List<(string Number, int Book, int Reached)> Books)
+    {
+        public List<Placed> Places { get; init; } = [];
+    }
+
+    /// <summary>A row of <c>strong_rendering_place</c>: the words of one edition carrying a number that a text renders, in list order.</summary>
+    private sealed record Placed(string Number, int Witness, string[] Phrases, long[] Words, int[] PhraseOf, short[] BookOf);
+
+    /// <summary>A word of the database by its own address: text, book, chapter, verse, verse letter and position.</summary>
+    private readonly record struct Addressed(int Text, int Book, int Chapter, int Verse, string Label, int Position);
+
+    /// <summary>The id of every word of the editions, by its address: the ids the serving database gave the words it loaded.</summary>
+    private static async Task<Dictionary<Addressed, long>> WordIdsOf(NpgsqlConnection connection, int[] editions, CancellationToken cancellationToken)
+    {
+        var words = new Dictionary<Addressed, long>();
+        await using var command = new NpgsqlCommand(
+            """
+            SELECT w.id, w.text_id, b.canonical_ordinal, v.chapter_number, v.number, v.label, w.position
+            FROM word w
+            JOIN verse v ON v.id = w.verse_id
+            JOIN book b ON b.id = v.book_id
+            WHERE w.text_id = ANY(@editions)
+            """, connection);
+        command.Parameters.AddWithValue("editions", editions);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            words[new Addressed(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5), reader.GetInt32(6))] =
+                reader.GetInt64(0);
+        }
+
+        return words;
+    }
 
     private static async Task<Dictionary<string, (int Id, string Language)>> Texts(NpgsqlConnection connection, CancellationToken cancellationToken)
     {
@@ -101,20 +134,35 @@ internal static class IndexLoad
 
         // Each text is counted from its own index alone, so the texts are counted at once.
         var indexed = texts.Where(slug => ids.ContainsKey(slug) && store.Exists(IndexProducts.Of(slug, IndexProducts.Strong))).ToList();
+        var primaries = indexed.Select(text =>
+        {
+            using var reader = store.Open(IndexProducts.Of(text, IndexProducts.Strong));
+            return Note(reader.Header!.Notes, "primary") is { } listed ? listed.Split(' ', StringSplitOptions.RemoveEmptyEntries) : [];
+        }).ToArray();
+        var editions = primaries.SelectMany(p => p).ToHashSet(StringComparer.Ordinal);
+        var wordIds = await WordIdsOf(connection, [.. editions.Where(ids.ContainsKey).Select(e => ids[e].Id)], cancellationToken);
+
         var countedBy = new Counted[indexed.Count];
-        var primaries = new string[indexed.Count][];
+        var unknown = new string?[indexed.Count];
         Parallel.For(0, indexed.Count, new ParallelOptions { CancellationToken = cancellationToken }, i =>
         {
             var text = indexed[i];
             using var reader = store.Open(IndexProducts.Of(text, IndexProducts.Strong), StrongIndexRow.Schema);
             var notes = reader.Header!.Notes;
-            string? Note(string key) => notes.LastOrDefault(n => n.Key == key).Value is { } value && value != "-" ? value : null;
-            primaries[i] = Note("primary") is { } listed ? listed.Split(' ', StringSplitOptions.RemoveEmptyEntries) : [];
-            countedBy[i] = Count(ids[text].Id, ids[text].Language, [.. reader.Rows()], Note("hebrew"), Note("greek"), ids, occurrences, lexical);
+            List<StrongIndexRow> rows = [.. reader.Rows()];
+            countedBy[i] = Count(ids[text].Id, ids[text].Language, rows, Note(notes, "hebrew"), Note(notes, "greek"), ids, occurrences, lexical) with
+            {
+                Places = Places(rows, ids, wordIds, out unknown[i]),
+            };
         });
 
+        if (unknown.FirstOrDefault(u => u is not null) is { } missing)
+        {
+            throw new InvalidDataException(
+                $"A strong index names {missing}, which the database does not hold: load the editions' words before the indexes.");
+        }
+
         var counted = countedBy.ToList();
-        var editions = primaries.SelectMany(p => p).ToHashSet(StringComparer.Ordinal);
         var countedIn = clock.Elapsed;
 
         await using var transaction = own ? await connection.BeginTransactionAsync(cancellationToken) : null;
@@ -123,6 +171,7 @@ internal static class IndexLoad
         await using (var delete = new NpgsqlCommand(
                          """
                          DELETE FROM strong_rendering WHERE text_id = ANY(@texts);
+                         DELETE FROM strong_rendering_place WHERE text_id = ANY(@texts);
                          DELETE FROM strong_reach_method WHERE text_id = ANY(@texts);
                          DELETE FROM strong_reach WHERE text_id = ANY(@texts);
                          DELETE FROM strong_book_reach WHERE text_id = ANY(@texts);
@@ -166,6 +215,30 @@ internal static class IndexLoad
                           """, connection, transaction))
         {
             renderings = await rank.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        long places = 0;
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY strong_rendering_place (text_id, strong_number, witness_id, phrases, words, phrase_of, book_of) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
+        {
+            foreach (var text in counted)
+            {
+                foreach (var row in text.Places)
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(text.TextId, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Number, NpgsqlDbType.Text, cancellationToken);
+                    await writer.WriteAsync(row.Witness, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.Phrases, NpgsqlDbType.Array | NpgsqlDbType.Text, cancellationToken);
+                    await writer.WriteAsync(row.Words, NpgsqlDbType.Array | NpgsqlDbType.Bigint, cancellationToken);
+                    await writer.WriteAsync(row.PhraseOf, NpgsqlDbType.Array | NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(row.BookOf, NpgsqlDbType.Array | NpgsqlDbType.Smallint, cancellationToken);
+                    places += row.Words.Length;
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
         }
 
         await using (var writer = await connection.BeginBinaryImportAsync(
@@ -266,9 +339,76 @@ internal static class IndexLoad
             await transaction.CommitAsync(cancellationToken);
         }
 
-        return new Outcome("strong_*", renderings + counted.Sum(c => (long)c.Reach.Count + c.Methods.Count + c.Books.Count), counted.Count, clock.Elapsed,
-            $"{renderings} phrases kept, {counted.Sum(c => c.Reach.Count)} reach, {counted.Sum(c => c.Methods.Count)} methods, {counted.Sum(c => c.Books.Count)} by book, " +
+        return new Outcome("strong_*", renderings + counted.Sum(c => (long)c.Reach.Count + c.Methods.Count + c.Books.Count + c.Places.Count),
+            counted.Count, clock.Elapsed,
+            $"{renderings} phrases kept, {places} words behind every phrase, {counted.Sum(c => c.Reach.Count)} reach, {counted.Sum(c => c.Methods.Count)} methods, {counted.Sum(c => c.Books.Count)} by book, " +
             $"{editions.Count} editions by book; counted from the files in {countedIn.TotalSeconds:0.0} s");
+    }
+
+    private static string? Note(IEnumerable<KeyValuePair<string, string>> notes, string key) =>
+        notes.LastOrDefault(n => n.Key == key).Value is { } value && value != "-" ? value : null;
+
+    /// <summary>
+    /// The words behind every phrase of a text, per number and edition, in the order the list of a number's places shows them:
+    /// by the primary place of their verse in the shared frame, then position, then id. <paramref name="unknown"/> names the
+    /// first word the database does not hold, if any.
+    /// </summary>
+    private static List<Placed> Places(
+        List<StrongIndexRow> rows,
+        Dictionary<string, (int Id, string Language)> ids,
+        Dictionary<Addressed, long> words,
+        out string? unknown)
+    {
+        unknown = null;
+        var places = new List<Placed>();
+        foreach (var group in rows.Where(r => r.Phrase is not null).GroupBy(r => (r.Number, r.Witness)))
+        {
+            if (!ids.TryGetValue(group.Key.Witness, out var witness))
+            {
+                continue;
+            }
+
+            var phrases = new Dictionary<string, int>(StringComparer.Ordinal);
+            var standing = new List<(VerseKey At, int Position, long Id, int Phrase, short Book)>();
+            foreach (var row in group)
+            {
+                var key = WordKey.Parse(row.Original, row.Witness);
+                var verse = key.Verse;
+                if (!words.TryGetValue(new Addressed(witness.Id, verse.Book, verse.Chapter, verse.Verse, verse.VerseLabel, key.Position), out var id))
+                {
+                    unknown ??= key.ToString();
+                    continue;
+                }
+
+                if (!phrases.TryGetValue(row.Phrase!, out var phrase))
+                {
+                    phrases[row.Phrase!] = phrase = phrases.Count;
+                }
+
+                standing.Add((row.At, key.Position, id, phrase, (short)verse.Book));
+            }
+
+            if (standing.Count == 0)
+            {
+                continue;
+            }
+
+            standing.Sort((a, b) =>
+                a.At.Book != b.At.Book ? a.At.Book.CompareTo(b.At.Book)
+                : a.At.Chapter != b.At.Chapter ? a.At.Chapter.CompareTo(b.At.Chapter)
+                : a.At.Verse != b.At.Verse ? a.At.Verse.CompareTo(b.At.Verse)
+                : a.Position != b.Position ? a.Position.CompareTo(b.Position)
+                : a.Id.CompareTo(b.Id));
+            places.Add(new Placed(
+                group.Key.Number,
+                witness.Id,
+                [.. phrases.OrderBy(p => p.Value).Select(p => p.Key)],
+                [.. standing.Select(s => s.Id)],
+                [.. standing.Select(s => s.Phrase)],
+                [.. standing.Select(s => s.Book)]));
+        }
+
+        return places;
     }
 
     /// <summary>

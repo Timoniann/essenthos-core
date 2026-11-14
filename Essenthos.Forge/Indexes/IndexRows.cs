@@ -31,21 +31,24 @@ internal static class IndexProducts
 /// <param name="Number">The Strong number the edition's word carries.</param>
 /// <param name="Witness">The edition.</param>
 /// <param name="Original">The edition's word, its own key.</param>
+/// <param name="At">The original's verse at its primary place in the shared frame (<c>texts/&lt;SLUG&gt;/frame</c> of the edition), which its list orders by.</param>
 /// <param name="Keys">The text's words linked to it, own keys in the order the phrase prints them; empty where the links hold none.</param>
 /// <param name="Phrase">Those words lower-cased and joined by a space; null where there are none.</param>
 /// <param name="Links">The rendering links holding the edition's word, ids ascending, space-separated.</param>
 /// <param name="Methods">Each link's method as the database spells it, in the order of <paramref name="Links"/>.</param>
-internal sealed record StrongIndexRow(string Number, string Witness, string Original, string Keys, string? Phrase, string Links, string Methods)
+internal sealed record StrongIndexRow(string Number, string Witness, string Original, VerseKey At, string Keys, string? Phrase, string Links, string Methods)
 {
     public static readonly ProductSchema<StrongIndexRow> Schema = new ProductSchema<StrongIndexRow>()
         .Text("number", r => r.Number)
         .Text("witness", r => r.Witness)
         .Text("original", r => r.Original)
+        .VerseKey("at", r => r.At)
         .Text("keys", r => r.Keys)
         .OptionalText("phrase", r => r.Phrase)
         .Text("links", r => r.Links)
         .Text("methods", r => r.Methods)
-        .Reads(row => new StrongIndexRow(row.Text(0), row.Text(1), row.Text(2), row.Text(3), row.TextOrNull(4), row.Text(5), row.Text(6)));
+        .Reads(row => new StrongIndexRow(row.Text(0), row.Text(1), row.Text(2), row.VerseKey(3), row.Text(4), row.TextOrNull(5),
+            row.Text(6), row.Text(7)));
 }
 
 /// <summary>

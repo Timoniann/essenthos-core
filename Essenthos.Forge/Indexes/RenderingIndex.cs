@@ -290,16 +290,7 @@ internal static class RenderingIndex
     /// </summary>
     private static TextWords Words(ProductStore store, string text, out Dictionary<string, Dictionary<int, int>> perBook)
     {
-        var primary = new Dictionary<VerseKey, VerseKey>();
-        if (store.Exists(FrameFile.Product(text)))
-        {
-            using var frame = store.Open(FrameFile.Product(text), FrameRow.Schema);
-            foreach (var (own, canonical) in frame.Rows().SelectMany(row => row.Verses()))
-            {
-                primary[own] = canonical[0];
-            }
-        }
-
+        var primary = TextIndexes.PrimaryPlaces(store, text);
         perBook = new Dictionary<string, Dictionary<int, int>>(StringComparer.Ordinal);
         var keys = new Dictionary<string, int>(StringComparer.Ordinal);
         var rows = new List<Word?>();
