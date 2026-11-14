@@ -157,8 +157,8 @@ internal static class MappingCount
             ("BSOJ", "Door43"),
             ("Open Hebrew Bible", "OHB"),
             ("TAHOT", "TAHOT"),
+            ("CrossWire's KJV", "CrossWire KJV"),
             ("KJV2003", "KJV2003"),
-            ("Zefania", "Zefania KJV+"),
             ("byztxt", "byztxt"),
             ("EVIDENTIA", "EVIDENTIA"),
         ];

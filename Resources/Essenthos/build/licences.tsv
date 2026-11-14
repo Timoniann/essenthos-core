@@ -40,6 +40,7 @@ ClearBible	alignment	derived	CC-BY-4.0	permitted-with-attribution	dataset:clearb
 ClearBible/data/arb/alignments/ONAV	alignment	never	CC-BY-SA-4.0	share-alike	-	ClearBible/LICENCE.md	-	Kept on the owner's request, excluded from loading.
 ClearBible/data/hau	text	content	CC-BY-SA-4.0	share-alike	text:OHCB	ClearBible/LICENCE.md	-	Recorded by analogy with Biblica's other open texts (TSK-0911).
 ClearBible/data/hau	alignment	derived	CC-BY-4.0	permitted-with-attribution	dataset:clearbible	ClearBible/LICENCE.md	-	-
+CrossWireKJV	strong	content	GPL	share-alike	dataset:crosswire-kjv	CrossWireKJV/LICENCE.md	-	The King James New Testament's Strong numbers and italics, served on KJV's words, and the places of the Greek words, served as links (owner, 2026-11-13, PRB-1332). The module's own wording is not read: the text is bible4u's. GPL binds this layer and what is derived from it, not the code that reads it (NOT-0226).
 DarbyFrench	text	content	Public Domain	public-domain	text:JND2024	DarbyFrench/LICENCE.md	-	-
 DarbyFrench	strong	derived	the module says Public Domain; concordance.bible reserves its data	unknown	dataset:concordance-darby-strong	DarbyFrench/LICENCE.md	TSK-1443 TSK-1331	The owner, 2026-11-04 (TSK-1443): numbers whose terms are unclear are used for the mapping only and never served; a replacement is sought (TSK-1331).
 Dillmann	lexicon	content	CC-BY-NC-SA-4.0	non-commercial-only	dataset:dillmann	Dillmann/LICENCE.md	-	ShareAlike accepted for the Ge'ez meaning layer (NOT-0197).
@@ -63,7 +64,7 @@ Glaux	lemmas	content	CC-BY-SA-3.0	share-alike	dataset:glaux	Glaux/LICENCE.md	-	R
 Images	pictures	content	each picture under its own licence, stated beside it	permitted-with-attribution	picture	Images/LICENCE.md	-	The picture check holds every served picture to its own licence and credit.
 IrvHindi2019	text	content	CC-BY-SA-4.0	share-alike	text:IRV2019	IrvHindi2019/LICENCE.md	-	-
 Jps1917	text	content	Public Domain	public-domain	text:JPS1917	Jps1917/LICENCE.md	-	-
-KingJames2006	text	content	Public Domain	public-domain	text:KJV	KingJames2006/LICENCE.md	-	Psalm superscriptions, repair readings and the Old Testament's Strong numbers (CrossWire's KJV module, Public Domain).
+KingJames2006	text	content	Public Domain	public-domain	text:KJV	KingJames2006/LICENCE.md	-	Psalm superscriptions, repair readings and the Old Testament's Strong numbers. eBible states Public Domain for its files; the Old Testament tagging is the Bible Foundation's, which CrossWire distributes in its own KJV module under GPL (CrossWireKJV).
 KingJamesApocrypha	text	content	Public Domain	public-domain	text:*	KingJamesApocrypha/LICENCE.md	-	-
 KoreanRevised1961	text	content	Public Domain	public-domain	text:KRV	KoreanRevised1961/LICENCE.md	-	The moral rights of attribution and integrity remain: served unaltered, under its own title.
 Kulish	text	content	Public Domain	public-domain	text:UKR1871	Kulish/LICENCE.md	-	-
@@ -127,7 +128,6 @@ WorldEnglish	strong	never	No licence stated	unknown	-	WorldEnglish/LICENCE.md	-	
 WorldEnglishClassic	text	content	Public Domain	public-domain	text:*	WorldEnglishClassic/LICENCE.md	-	-
 WorldHistory	data	derived	CC0-1.0	public-domain	dataset:wikidata	WorldHistory/README.md	-	Exported once into Essenthos/external/wikidata.
 Young1898	text	content	Public Domain	public-domain	text:YLT	Young1898/LICENCE.md	-	-
-Zefania	strong	content	No licence stated	unknown	dataset:zefaniakjv	Zefania/LICENCE.md	PRB-1332 TSK-1331	The King James New Testament's Strong numbers and italics, served on KJV's words. The owner, 2026-10-29 (TSK-1331): kept until a licensed tagging replaces it; what removing it costs is PRB-1332.
 ZefaniaLuther1912	strong	never	the module says the text is public domain; toledot.info reserves its own work	prohibited	-	ZefaniaLuther1912/LICENCE.md	-	Read only to check LUTH1912's numbers by hand.
 bible4u/KJV.xml	text	content	Everyone is permitted to copy, modify and distribute copies of this document for free as long as it's Biblical content remains unchanged.	permitted	text:KJV	bible4u/LICENCE.md	-	-
 bible4u/RUSV.xml	text	content	Everyone is permitted to copy, modify and distribute copies of this document for free as long as it's Biblical content remains unchanged.	permitted	text:RUSV	bible4u/LICENCE.md	-	-

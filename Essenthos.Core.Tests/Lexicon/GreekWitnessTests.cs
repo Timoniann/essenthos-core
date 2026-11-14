@@ -1,3 +1,5 @@
+using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Utils;
 using Essenthos.Core.TextusReceptus;
 using FluentAssertions;
@@ -50,5 +52,36 @@ public class GreekWitnessTests
             "ὠὤὬὢὦὮᾠὡὩὥὭὧὯᾧώῴὼῶῷῳ";
 
         GreekLetters.Bare(everyAccentedLetter).Should().MatchRegex("^[αβγδεζηθικλμνξοπρστυφχψω]+$");
+    }
+
+    [Fact]
+    public void AnOccurrenceOneEditionLacksTakesNoOtherOccurrence()
+    {
+        // John 3:16: Nestle has no αὐτοῦ, so by order alone Scrivener's αὐτοῦ took Nestle's only αὐτόν.
+        var drafts = new List<GreekWitnessLinks.GreekDraft>();
+        GreekWitnessLinks.Pair(
+            [new(1, 19, "αὐτόν", "G846")],
+            [new(101, 11, "αυτου", "G846"), new(102, 20, "αυτον", "G846")],
+            drafts);
+
+        drafts.Should().ContainSingle(d => d.Relation == LinkRelation.Equals)
+            .Which.Should().Match<GreekWitnessLinks.GreekDraft>(d => d.From.Single() == 1 && d.To.Single() == 102);
+        drafts.Should().ContainSingle(d => d.Relation == LinkRelation.Omits)
+            .Which.To.Should().Equal(101);
+    }
+
+    [Fact]
+    public void OccurrencesWrittenDifferentlyPairInOrderBetweenThoseWrittenAlike()
+    {
+        // Rev 11:11-like: one occurrence differs in case, the other is written alike, and the alike one comes second.
+        var drafts = new List<GreekWitnessLinks.GreekDraft>();
+        GreekWitnessLinks.Pair(
+            [new(1, 3, "αὐτοῖς", "G846"), new(2, 7, "τοῦ", "G3588"), new(3, 9, "αὐτοῦ", "G846")],
+            [new(101, 3, "αυτους", "G846"), new(102, 5, "του", "G3588"), new(103, 6, "του", "G3588"), new(104, 9, "αυτου", "G846")],
+            drafts);
+
+        drafts.Where(d => d.From.Count == 1 && d.To.Count == 1).Select(d => (d.From[0], d.To[0])).Should()
+            .BeEquivalentTo([(1L, 101L), (3L, 104L), (2L, 102L)]);
+        drafts.Should().ContainSingle(d => d.Relation == LinkRelation.Omits).Which.To.Should().Equal(103);
     }
 }

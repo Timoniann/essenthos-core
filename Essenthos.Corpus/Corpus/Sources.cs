@@ -133,6 +133,29 @@ internal static class Sources
     public const string RevisedLiteralPositionCredit =
         "the places of the Greek words in the KJV2003 project's Received Text, stated on the Revised Literal Translation's New Testament in CrossWire's RLT";
 
+    /// <summary>What every row drawn from CrossWire's King James begins with, so that one dataset claims them all.</summary>
+    public const string KingJamesCredit = "CrossWire's KJV v3.1";
+
+    /// <summary>The King James New Testament's links to the Received Text the module states, by the places of the Greek words.</summary>
+    public const string KingJamesPositionCredit =
+        KingJamesCredit + ": the places of the Greek words in the KJV2003 project's Received Text it states on each King James word";
+
+    /// <summary>The Greek words the module states the King James leaves untranslated (an element that prints no word).</summary>
+    public const string KingJamesUnrenderedCredit =
+        KingJamesCredit + ": the Greek words it states the King James leaves untranslated";
+
+    /// <summary>The italics the module prints, the translators' own mark that they supplied a word.</summary>
+    public const string KingJamesSuppliedCredit =
+        KingJamesCredit + ": the italics (transChange added), the King James translators' own mark that they supplied the word";
+
+    /// <summary>The numbers of an element naming a Greek phrase beyond the one its words carry.</summary>
+    public const string KingJamesPhraseCredit =
+        KingJamesCredit + ": the whole list of Strong numbers an element naming a Greek phrase states";
+
+    /// <summary>A stated link to Scrivener carried to another Greek edition over the pairing of the two editions' numbers.</summary>
+    public static string KingJamesCarriedCredit(string witness) =>
+        $"{KingJamesCredit}: the Greek words it places in the Received Text, carried from Scrivener 1894 to {witness} over the Strong numbers both editions carry";
+
     /// <summary>
     /// How a translated lexicon row begins. The English of the lexicon is public domain and the
     /// rendering into a reader's language is this project's, so the row names the model, the prompt

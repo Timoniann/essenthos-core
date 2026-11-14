@@ -47,18 +47,35 @@ internal static class UnionStrongNumbers
     /// Whether numbers above the Hebrew dictionary are FHL's prefixes. In any other module they name
     /// no lexeme the corpus's Hebrew writes, and are read as nothing.
     /// </param>
-    public static IReadOnlyList<string> Read(string? lemma, bool fhlPrefixes = true)
+    public static IReadOnlyList<string> Read(string? lemma, bool fhlPrefixes = true) => Read(lemma, null, fhlPrefixes).Numbers;
+
+    /// <summary>
+    /// The lexemes a <c>lemma</c> attribute names, each once, with the code the <c>morph</c> attribute writes at the first
+    /// place each is named: CrossWire's King James writes one of Robinson's codes per number, in the same order
+    /// (<c>robinson:T-NSM robinson:N-NSM</c>). Null where it writes none.
+    /// </summary>
+    public static (IReadOnlyList<string> Numbers, IReadOnlyList<string?> Morphology) Read(string? lemma, string? morph, bool fhlPrefixes = true)
     {
         if (string.IsNullOrWhiteSpace(lemma))
         {
-            return [];
+            return ([], []);
         }
 
+        var codes = (morph ?? string.Empty).Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(code => code[(code.IndexOf(':') + 1)..])
+            .ToArray();
         var numbers = new List<string>(2);
+        var morphology = new List<string?>(2);
+        var at = -1;
         foreach (var part in lemma.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            if (!part.StartsWith(StrongPrefix, StringComparison.Ordinal)
-                || StrongNumbers.Normalize(part[StrongPrefix.Length..]) is not { } number)
+            if (!part.StartsWith(StrongPrefix, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            at++;
+            if (StrongNumbers.Normalize(part[StrongPrefix.Length..]) is not { } number)
             {
                 continue;
             }
@@ -75,9 +92,10 @@ internal static class UnionStrongNumbers
             if (read is not null && !numbers.Contains(read))
             {
                 numbers.Add(read);
+                morphology.Add(at < codes.Length ? codes[at] : null);
             }
         }
 
-        return numbers;
+        return (numbers, morphology);
     }
 }

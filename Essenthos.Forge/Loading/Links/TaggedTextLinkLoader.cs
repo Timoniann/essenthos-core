@@ -160,11 +160,9 @@ internal sealed record EditionNumbers(IReadOnlyDictionary<long, WordTag> Tags, s
 ///
 /// This is the route Luther 1912 reaches Hebrew and Greek by, and the only one it has that is not
 /// this project's own inference: 365,350 of its words arrive from eBible already tagged, and no
-/// German text under any licence carries a word alignment. The King James reaches the
-/// Greek the same way, through <see cref="NewTestamentLinks"/>, and the matching both use is
-/// <see cref="StrongNumberMatch"/>. The difference is only where the tags are: the King James's
-/// arrive in a separate edition that has to be laid onto the loaded words first, and Luther's are
-/// on the corpus's own words because they came in the file the text did.
+/// German text under any licence carries a word alignment. The matching is
+/// <see cref="StrongNumberMatch"/>, and Luther's tags are on the corpus's own words because they
+/// came in the file the text did.
 ///
 /// <para>
 /// **The Synodal's numbers are neither.** They are Bob Jones University's, in an edition whose terms

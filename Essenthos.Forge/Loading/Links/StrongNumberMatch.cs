@@ -57,13 +57,13 @@ internal sealed record StrongMatchDraft(
 /// </para>
 ///
 /// <para>
-/// It is one file because it is one method used twice. The King James reaches the Greek through the
-/// Zefania KJV+ tags, which arrive in a separate edition and have to be laid onto the loaded words
-/// first (<see cref="NewTestamentLinks"/>); Luther 1912 carries its tags in the file the text
-/// itself came from, so its numbers are already on the corpus's own words
-/// (<see cref="TaggedTextLinkLoader"/>). Everything between those two ends — grouping by the
-/// effective number, pairing repeated numbers in order, and what each shape is worth — is the same
-/// argument, and two copies of it would be two ladders to keep in step.
+/// It is one file because it is one method used by every text whose numbers are its own or laid onto
+/// it from a numbered edition: Luther 1912 carries its tags in the file the text itself came from,
+/// the Synodal, the Segond and the rest have theirs laid from another digitisation
+/// (<see cref="TaggedTextLinkLoader"/>, <see cref="SynodalStrongLayer"/>). Grouping by the
+/// effective number, pairing repeated numbers in order, and what each shape is worth is the same
+/// argument for all of them, and copies of it would be ladders to keep in step. The King James is
+/// not matched by number: CrossWire's module states which Greek word each element renders.
 /// </para>
 /// </summary>
 internal static class StrongNumberMatch

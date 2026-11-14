@@ -5,7 +5,6 @@ using Essenthos.Core.Bhsa.Attributes;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Nestle;
 using Essenthos.Core.XmlBible;
-using Essenthos.Core.Zefania;
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
@@ -47,8 +46,6 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
     private const int SynodalSuppliedWords = 5_054;
 
     private const int SynodalVersesWithSupplied = 3_708;
-
-    private const int ZefaniaVersesStillLosingAnOpening = 80;
 
     /// <summary>
     /// Every Greek word carries its own punctuation, so the round trip is per word and exact: the
@@ -168,70 +165,6 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
     private static bool IsBracket(char c) => c is '[' or ']';
 
     /// <summary>
-    /// The Zefania King James interleaves Strong-tagged elements and styled spans with plain text.
-    /// Every word survives — the sequence of words is the source's, verse for verse, and that is
-    /// what the Greek mapping reads this file for. Punctuation does not: see the test below.
-    /// </summary>
-    [Fact]
-    public void EveryZefaniaVerseRebuildsEveryWordOfItsSource()
-    {
-        var (parsed, sourceVerses) = ZefaniaKingJames();
-
-        parsed.Should().HaveCount(sourceVerses.Count);
-
-        var failures = new List<string>();
-        for (var i = 0; i < parsed.Count && failures.Count < FailuresToReport; i++)
-        {
-            var (book, chapter, verse) = parsed[i];
-            var failure = VerseRoundTrip.Check(
-                $"KJV+ {book.ShortName} {chapter.Number}:{verse.Number}",
-                LettersAndDigits(VerseRoundTrip.Rebuild(verse.Words, w => w.Text, w => w.Trailer)),
-                LettersAndDigits(sourceVerses[i]));
-            if (failure is not null)
-            {
-                failures.Add(failure.Describe());
-            }
-        }
-
-        output.WriteLine($"KJV+: {parsed.Count} verses");
-        failures.Should().BeEmpty(string.Join(Environment.NewLine, failures));
-    }
-
-    /// <summary>
-    /// Punctuation standing between a styled span — the italics, the red letters — and the next word
-    /// belongs to the span's last word, as it does after a Strong-tagged span, and none of it is lost.
-    /// Before the styled span handed it on, 1,906 marks in 1,755 verses were dropped. What is still
-    /// lost is one opening parenthesis in each of 80 verses, most of them at the head of the verse,
-    /// where there is no word before it to carry it and a word has no field for what precedes it.
-    ///
-    /// Nothing is ever gained, and 88 verses differ only in spaces the source itself puts inside its
-    /// markup — "is Zoar )" — which this reader collapses and which are not a loss.
-    /// </summary>
-    [Fact]
-    public void TheZefaniaReaderKeepsPunctuationAfterAStyledSpan()
-    {
-        var (parsed, sourceVerses) = ZefaniaKingJames();
-
-        var affected = 0;
-        var dropped = 0;
-        for (var i = 0; i < parsed.Count; i++)
-        {
-            var rebuilt = VerseRoundTrip.Rebuild(parsed[i].Verse.Words, w => w.Text, w => w.Trailer);
-            var lost = Punctuation(sourceVerses[i]).Count - Punctuation(rebuilt).Count;
-            if (lost <= 0)
-            {
-                continue;
-            }
-
-            affected++;
-            dropped += lost;
-        }
-
-        affected.Should().Be(ZefaniaVersesStillLosingAnOpening);
-        dropped.Should().Be(ZefaniaVersesStillLosingAnOpening);
-    }
-
-    /// <summary>
     /// BHSA has no verse text of its own — a verse is its words — so what the parse owes is that no
     /// word is lost between the flat word list and the verses. The comparison against a source
     /// string belongs to the load, where the database is the other side of it.
@@ -265,31 +198,6 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
         empty.Should().HaveCount(BhsaWordsWithoutSurfaceText);
         empty.Count(w => w.PartOfSpeech == PartOfSpeech.Article).Should().Be(BhsaElidedArticles);
     }
-
-    private (List<(ZefaniaBook Book, ZefaniaChapter Chapter, ZefaniaVerse Verse)> Parsed, List<string> Source)
-        ZefaniaKingJames()
-    {
-        var content = File.ReadAllText(TestResources.ZefaniaKingJames);
-        var bible = new ZefaniaParser().Parse(content);
-        var document = XDocument.Parse(content);
-
-        var source = document.Root!.Elements("BIBLEBOOK")
-            .SelectMany(b => b.Elements("CHAPTER").SelectMany(c => c.Elements("VERS")))
-            .Select(v => v.Value)
-            .ToList();
-
-        var parsed = bible.Books
-            .SelectMany(b => b.Chapters.SelectMany(c => c.Verses.Select(v => (b, c, v))))
-            .ToList();
-
-        return (parsed, source);
-    }
-
-    private static string LettersAndDigits(string value) =>
-        new([.. value.Where(char.IsLetterOrDigit)]);
-
-    private static List<char> Punctuation(string value) =>
-        [.. value.Where(c => !char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c))];
 
     private static string Nestle1904Path() => TestResources.Nestle1904;
 }

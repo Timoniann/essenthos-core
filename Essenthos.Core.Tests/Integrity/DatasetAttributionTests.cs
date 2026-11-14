@@ -96,7 +96,6 @@ public sealed class DatasetAttributionTests
     [InlineData("concordance-segond-strong", Sources.SegondStrongCredit)]
     [InlineData("concordance-darby-strong", Sources.DarbyFrenchStrongCredit)]
     [InlineData("schlachter-strong", Sources.SchlachterStrongCredit)]
-    [InlineData("zefaniakjv", "Zefania KJV+ Strong numbers, matched within the verse against NESTLE1904")]
     [InlineData("luther1912-strong", "the Strong numbers LUTH1912 carries, paired within the verse")]
     public void TheNumberingsTheOwnerRuledOnAreNamedToNoReader(string dataset, string source)
     {
@@ -109,7 +108,24 @@ public sealed class DatasetAttributionTests
     public void OnlyTheNumberingsTheOwnerRuledOnAreUnlisted() =>
         Datasets.All.Where(dataset => dataset.Unlisted).Select(dataset => dataset.Id).Should().BeEquivalentTo(
             "gomez-rv1909-strong", "concordance-segond-strong", "concordance-darby-strong", "schlachter-strong",
-            "zefaniakjv", "luther1912-strong");
+            "luther1912-strong");
+
+    /// <summary>
+    /// CrossWire's King James numbers, italics and positions are shown and credited (owner, 2026-11-13): every row the
+    /// module yields claims the one dataset, and its terms say what the GPL binds.
+    /// </summary>
+    [Theory]
+    [InlineData(Sources.KingJamesPositionCredit)]
+    [InlineData(Sources.KingJamesUnrenderedCredit)]
+    [InlineData(Sources.KingJamesSuppliedCredit)]
+    [InlineData(Sources.KingJamesPhraseCredit)]
+    public void CrossWiresKingJamesIsCreditedOnEveryRowItYields(string source)
+    {
+        Datasets.Of(source).Should().Be("crosswire-kjv");
+        Datasets.Of(Sources.KingJamesCarriedCredit("NESTLE1904")).Should().Be("crosswire-kjv");
+        Of("crosswire-kjv").Unlisted.Should().BeFalse();
+        Of("crosswire-kjv").Obliges.Should().Contain("GPL");
+    }
 
     /// <summary>
     /// Bob Jones University's numbering stays in use and is credited, and its terms are said as its

@@ -9,7 +9,7 @@ namespace Essenthos.Core.Loading.Links;
 internal sealed record SwordPositions(string Module, string Slug, string Credit);
 
 /// <summary>
-/// The Revised Literal Translation's New Testament linked to the Received Text by the positions
+/// The Revised Literal Translation's and the King James's New Testaments linked to the Received Text by the positions
 /// CrossWire's module states (<see cref="ReceivedTextPositions"/>): each tagged element names the
 /// places of the Greek words it renders, and where the witness holds the named word at the place the
 /// link is <c>stated-by-source</c>, with no confidence.
@@ -32,10 +32,15 @@ internal sealed record SwordPositions(string Module, string Slug, string Credit)
 /// </summary>
 internal static class CrossWirePositions
 {
-    public static readonly IReadOnlyList<SwordPositions> All =
-    [
-        new("RLT", SwordTextSource.RevisedLiteral, Sources.RevisedLiteralPositionCredit),
-    ];
+    public static readonly SwordPositions RevisedLiteral = new("RLT", SwordTextSource.RevisedLiteral, Sources.RevisedLiteralPositionCredit);
+
+    /// <summary>
+    /// CrossWire's King James, whose module states the same positions on another digitisation of the King James than the
+    /// corpus loads, so its elements are laid onto bible4u's words first (<see cref="CrossWireKingJames"/>).
+    /// </summary>
+    public static readonly SwordPositions KingJames = new(CrossWireKingJames.Module, Sources.KingJamesSlug, Sources.KingJamesPositionCredit);
+
+    public static readonly IReadOnlyList<SwordPositions> All = [RevisedLiteral, KingJames];
 
     /// <summary>The Received Text editions the positions are laid against.</summary>
     public static readonly IReadOnlyList<string> Witnesses = [Sources.ScrivenerSlug, Sources.StephanusSlug];

@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading;
@@ -24,9 +25,9 @@ internal static class TableSources
 
 /// <summary>
 /// The words the King James prints in italics in the New Testament, each stated absent from the Greek witness that has its
-/// verse (<see cref="NewTestamentLinks"/>): an <c>expands</c> row per word. The marks are the words product's
-/// <c>supplied</c> runs, which its converter reads off Zefania's KJV+ the way the loader did (an italic word the edition
-/// numbers nothing is supplied; <see cref="Conversion.KingJamesNumbers"/>).
+/// verse: an <c>expands</c> row per word. The marks are the words product's <c>supplied</c> runs, which its converter reads
+/// off CrossWire's KJV (a word in <c>transChange type="added"</c> whose element names no number is supplied;
+/// <see cref="Conversion.KingJamesNumbers"/>).
 /// </summary>
 internal sealed class KingJamesItalicsSource : IPairSource
 {
@@ -37,9 +38,9 @@ internal sealed class KingJamesItalicsSource : IPairSource
     public string Name => "kjv-italics";
 
     public bool States(string pair) =>
-        KingJamesGreekSource.Witnesses.Any(witness => pair == $"{Bible4uTextSource.KingJames}-{witness}");
+        KingJamesGreekSource.Witnesses.Concat(KingJamesGreekSource.Stated).Any(witness => pair == $"{Bible4uTextSource.KingJames}-{witness}");
 
-    public bool Makes(string source) => source == NewTestamentLinks.SuppliedSource;
+    public bool Makes(string source) => source == Sources.KingJamesSuppliedCredit;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair) => [];
 
@@ -59,7 +60,7 @@ internal sealed class KingJamesItalicsSource : IPairSource
             rows.AddRange(english.InVerse(verse)
                 .Where(id => english.Words[id].Supplied is not null)
                 .Select(id => new MappingRow(english.Key(id).Own.ToString(), string.Empty,
-                    LinkRelation.Expands.ToString().ToLowerInvariant(), Method, null, NewTestamentLinks.SuppliedSource, null, null, null)));
+                    LinkRelation.Expands.ToString().ToLowerInvariant(), Method, null, Sources.KingJamesSuppliedCredit, null, null, null)));
         }
 
         log($"{rows.Count} italic words absent from {toText}");
