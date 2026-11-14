@@ -162,19 +162,28 @@ internal static class StrongEndpoints
                     return Results.NotFound(new ProblemResponse($"There is no text \"{renderedIn}\"."));
                 }
 
+                if (rendering is { Length: > 0 })
+                {
+                    int? only = null;
+                    if (corpus is { Length: > 0 })
+                    {
+                        if (await canon.Text(corpus, cancellationToken) is not { } edition)
+                        {
+                            return Results.NotFound(new ProblemResponse(
+                                $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds."));
+                        }
+
+                        only = edition.Id;
+                    }
+
+                    return Results.Ok(await RenderedPlaces(
+                        db, canonical, translation.Id, rendering, only, book, skip, take, cancellationToken));
+                }
+
                 renderedBy = translation.Id;
                 var witness = LinkedOriginals.WitnessFor(
                     LinkedOriginals.Primary(await LinkedOriginals.Of(db, translation.Id, cancellationToken)), canonical);
-                if (rendering is { Length: > 0 })
-                {
-                    // The places behind one row of the renderings, counted as the renderings are.
-                    var rendered = witness is null
-                        ? []
-                        : await StrongRenderingCounts.RenderedAs(
-                            db, canonical, translation.Id, witness.Id, rendering, cancellationToken);
-                    words = words.Where(w => rendered.Contains(w.Id));
-                }
-                else if (unrendered == true)
+                if (unrendered == true)
                 {
                     var missed = witness is null
                         ? []
@@ -304,6 +313,59 @@ internal static class StrongEndpoints
                $"{DiacriticFolding.Expression("transliteration")} LIKE {DiacriticFolding.Expression(pattern)}";
     }
 
+    /// <summary>
+    /// The places behind one row of a text's renderings of a number: the words of the edition it is counted over that it
+    /// renders with exactly that phrase, as the build listed them beside its counts (<see cref="StrongRenderingPlace"/>), so
+    /// the list holds what the count counts. One row per edition is read, and only the page's words.
+    /// </summary>
+    internal static async Task<StrongOccurrenceListResponse> RenderedPlaces(
+        AppDbContext db,
+        string canonical,
+        int textId,
+        string rendering,
+        int? only,
+        int? book,
+        int? skip,
+        int? take,
+        CancellationToken cancellationToken)
+    {
+        var phrase = rendering.Trim().ToLowerInvariant();
+        var editions = await db.StrongRenderingPlaces
+            .AsNoTracking()
+            .Where(p => p.TextId == textId && p.StrongNumber == canonical && (only == null || p.WitnessId == only))
+            .Select(p => new { Corpus = p.Witness!.Slug, p.Phrases, p.Words, p.PhraseOf, p.BookOf })
+            .ToListAsync(cancellationToken);
+
+        var byText = new List<StrongTextCountResponse>();
+        var listed = new List<long>();
+        foreach (var edition in editions.OrderBy(e => e.Corpus, StringComparer.Ordinal))
+        {
+            var wanted = Array.IndexOf(edition.Phrases, phrase);
+            if (wanted < 0)
+            {
+                continue;
+            }
+
+            var before = listed.Count;
+            for (var i = 0; i < edition.Words.Length; i++)
+            {
+                if (edition.PhraseOf[i] == wanted && (book is not { } ordinal || edition.BookOf[i] == ordinal))
+                {
+                    listed.Add(edition.Words[i]);
+                }
+            }
+
+            if (listed.Count > before)
+            {
+                byText.Add(new StrongTextCountResponse(edition.Corpus, listed.Count - before));
+            }
+        }
+
+        var page = listed.Skip(Math.Max(0, skip ?? 0)).Take(Math.Clamp(take ?? 50, 1, MostPerPage)).ToList();
+        var placed = await Placed(db, canonical, byText, db.Words.Where(w => page.Contains(w.Id)), 0, page.Count, cancellationToken);
+        return placed with { Items = [.. placed.Items.Select(item => item with { Rendered = phrase })] };
+    }
+
     /// <summary>One page of the words carrying a number, with how many stand in each text.</summary>
     internal static async Task<StrongOccurrenceListResponse> OccurrencePage(
         AppDbContext db,
@@ -320,7 +382,28 @@ internal static class StrongEndpoints
             .GroupBy(w => w.Text!.Slug)
             .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
             .ToListAsync(cancellationToken);
+        return await Placed(db, canonical, byText, words, Math.Max(0, skip ?? 0), Math.Clamp(take ?? 50, 1, MostPerPage), cancellationToken);
+    }
+
+    /// <summary>A page of <paramref name="words"/> at their places, under the counts per text they were counted with.</summary>
+    private static async Task<StrongOccurrenceListResponse> Placed(
+        AppDbContext db,
+        string canonical,
+        List<StrongTextCountResponse> byText,
+        IQueryable<Word> words,
+        int skip,
+        int take,
+        CancellationToken cancellationToken)
+    {
         var total = byText.Sum(text => text.Count);
+        if (take == 0)
+        {
+            return new StrongOccurrenceListResponse(
+                canonical,
+                total,
+                [.. byText.OrderByDescending(text => text.Count).ThenBy(text => text.Corpus, StringComparer.Ordinal)],
+                []);
+        }
 
         // Each occurrence is answered at the place its verse stands in the shared frame, which
         // is what a link opens and what a quote in another text is looked up by. BHSA numbers
@@ -347,8 +430,8 @@ internal static class StrongEndpoints
                     w.Surface,
                     w.Gloss,
                 })
-            .Skip(Math.Max(0, skip ?? 0))
-            .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
+            .Skip(skip)
+            .Take(take)
             .ToListAsync(cancellationToken);
         var stated = await VerseEndpoints.StatedNumbers(
             db, [.. page.Select(w => w.VerseId).Distinct()], cancellationToken);

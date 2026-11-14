@@ -12,11 +12,17 @@ namespace Essenthos.Core.Tests;
 /// <summary>
 /// The renderings a build counts, counted for a test's database: its texts, words and links written out as the products the
 /// build reads (each text's declaration, words, books and frame, each pair's final), the renderings indexes made from them
-/// (<see cref="RenderingIndex"/>), and loaded back into the same database on its connection and transaction.
+/// (<see cref="RenderingIndex"/>), or the Strong and occurrences indexes (<see cref="TextIndexes.Strong"/>), and loaded back into the same
+/// database on its connection and transaction.
 /// </summary>
 internal static class CountedRenderings
 {
-    public static async Task Count(AppDbContext db)
+    public static Task Count(AppDbContext db) => Count(db, strong: false);
+
+    /// <summary>The Strong indexes of every text, loaded into <c>strong_rendering</c>, <c>strong_rendering_place</c> and the rest.</summary>
+    public static Task CountStrong(AppDbContext db) => Count(db, strong: true);
+
+    private static async Task Count(AppDbContext db, bool strong)
     {
         await db.SaveChangesAsync();
         var resources = Path.Combine(Path.GetTempPath(), "essenthos-products", Guid.NewGuid().ToString("N"));
@@ -105,7 +111,15 @@ internal static class CountedRenderings
             var context = new IndexContext(store);
             foreach (var text in texts)
             {
-                RenderingIndex.Make(context, text.Slug, force: true);
+                if (strong)
+                {
+                    TextIndexes.Strong(context, text.Slug, force: true);
+                    TextIndexes.Occurrences(context, text.Slug, force: true);
+                }
+                else
+                {
+                    RenderingIndex.Make(context, text.Slug, force: true);
+                }
             }
 
             var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -114,7 +128,14 @@ internal static class CountedRenderings
                 await connection.OpenAsync();
             }
 
-            await IndexLoad.WordRenderings(connection, store, [.. texts.Select(t => t.Slug)], CancellationToken.None);
+            if (strong)
+            {
+                await IndexLoad.Strong(connection, store, [.. texts.Select(t => t.Slug)], CancellationToken.None);
+            }
+            else
+            {
+                await IndexLoad.WordRenderings(connection, store, [.. texts.Select(t => t.Slug)], CancellationToken.None);
+            }
         }
         finally
         {

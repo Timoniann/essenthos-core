@@ -340,6 +340,9 @@ public class AppDbContext : DbContext
     /// <summary>How much of each Strong number each text reaches, counted from the links once per load.</summary>
     public DbSet<StrongReach> StrongReaches { get; set; } = null!;
 
+    /// <summary>The words behind each phrase of <see cref="StrongRenderings"/>, in the order their list shows them, counted once per load.</summary>
+    public DbSet<StrongRenderingPlace> StrongRenderingPlaces { get; set; } = null!;
+
     public DbSet<StrongReachMethod> StrongReachMethods { get; set; } = null!;
 
     /// <summary>How often each Strong number stands in each book of an edition, counted once per load.</summary>
@@ -1696,6 +1699,21 @@ public class AppDbContext : DbContext
                     "One original standing behind one spelling of a text in one edition: the words it stands behind, the links, "
                     + "their methods and the first places. Counted at build from the links (texts/<SLUG>/index/renderings); "
                     + "it asserts nothing the links do not.");
+            });
+        });
+
+        modelBuilder.Entity<StrongRenderingPlace>(entity =>
+        {
+            entity.HasOne(r => r.Text).WithMany().HasForeignKey(r => r.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(r => r.Witness).WithMany().HasForeignKey(r => r.WitnessId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("strong_rendering_place", t =>
+            {
+                t.HasCheckConstraint("ck_strong_rendering_place_lengths",
+                    "cardinality(words) > 0 AND cardinality(phrase_of) = cardinality(words) AND cardinality(book_of) = cardinality(words)");
+                t.HasComment(
+                    "Every word of one edition carrying a Strong number that a text renders, with the phrase it is rendered by, "
+                    + "in the order the number's places are listed: the places behind strong_rendering. Counted at build "
+                    + "(texts/<SLUG>/index/strong); it asserts nothing the links do not.");
             });
         });
 

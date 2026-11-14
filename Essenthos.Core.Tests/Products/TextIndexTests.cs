@@ -1,5 +1,6 @@
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Indexes;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 using FluentAssertions;
@@ -74,9 +75,38 @@ public sealed class TextIndexTests : IDisposable
         reader.Header!.Notes.Should().Contain(new KeyValuePair<string, string>("hebrew", "HEB"));
         reader.Rows().Should().BeEquivalentTo(
         [
-            new StrongIndexRow("H7225", "HEB", "1.1:1.1", "1.1:1.1 1.1:1.3", "in beginning", "1", "stated-by-source"),
-            new StrongIndexRow("H430", "HEB", "1.1:1.2", "1.1:1.4", "god", "2", "aligner"),
+            new StrongIndexRow("H7225", "HEB", "1.1:1.1", new VerseKey(1, 1, 1), "1.1:1.1 1.1:1.3", "in beginning", "1", "stated-by-source"),
+            new StrongIndexRow("H430", "HEB", "1.1:1.2", new VerseKey(1, 1, 1), "1.1:1.4", "god", "2", "aligner"),
         ], options => options.WithStrictOrdering());
+    }
+
+    /// <summary>Each original says where its verse stands in the shared frame, which its list orders by, and the edition's frame is an input.</summary>
+    [Fact]
+    public void AStrongIndexPlacesEachOriginalWhereTheEditionsFramePutsIt()
+    {
+        var store = Corpus();
+        using (var writer = store.Create(FrameFile.Product("HEB"), ProductKind.Machine, FrameRow.Schema, "test", []))
+        {
+            writer.WriteAll([new FrameRow(new VerseKey(1, 1, 1), null, [new VerseKey(1, 2, 5)], "moved")]);
+        }
+
+        store.Save();
+        TextIndexes.Strong(new IndexContext(store), "ENG", force: false).Made.Should().BeTrue();
+        store.Save();
+
+        using (var reader = store.Open(IndexProducts.Of("ENG", IndexProducts.Strong), StrongIndexRow.Schema))
+        {
+            reader.Rows().Select(r => r.At).Should().Equal(new VerseKey(1, 2, 5), new VerseKey(1, 2, 5));
+        }
+
+        var moved = new ProductStore(_resources);
+        using (var writer = moved.Create(FrameFile.Product("HEB"), ProductKind.Machine, FrameRow.Schema, "test", []))
+        {
+            writer.WriteAll([new FrameRow(new VerseKey(1, 1, 1), null, [new VerseKey(1, 3, 1)], "moved")]);
+        }
+
+        moved.Save();
+        TextIndexes.Strong(new IndexContext(new ProductStore(_resources)), "ENG", force: false).Made.Should().BeTrue("the edition's frame moved");
     }
 
     [Fact]

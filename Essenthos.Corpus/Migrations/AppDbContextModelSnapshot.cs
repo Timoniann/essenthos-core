@@ -5038,6 +5038,54 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongRenderingPlace", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.Property<int>("WitnessId")
+                        .HasColumnType("integer")
+                        .HasColumnName("witness_id");
+
+                    b.PrimitiveCollection<short[]>("BookOf")
+                        .IsRequired()
+                        .HasColumnType("smallint[]")
+                        .HasColumnName("book_of");
+
+                    b.PrimitiveCollection<int[]>("PhraseOf")
+                        .IsRequired()
+                        .HasColumnType("integer[]")
+                        .HasColumnName("phrase_of");
+
+                    b.PrimitiveCollection<string[]>("Phrases")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("phrases");
+
+                    b.PrimitiveCollection<long[]>("Words")
+                        .IsRequired()
+                        .HasColumnType("bigint[]")
+                        .HasColumnName("words");
+
+                    b.HasKey("TextId", "StrongNumber", "WitnessId")
+                        .HasName("pk_strong_rendering_place");
+
+                    b.HasIndex("WitnessId")
+                        .HasDatabaseName("ix_strong_rendering_place_witness_id");
+
+                    b.ToTable("strong_rendering_place", null, t =>
+                        {
+                            t.HasComment("Every word of one edition carrying a Strong number that a text renders, with the phrase it is rendered by, in the order the number's places are listed: the places behind strong_rendering. Counted at build (texts/<SLUG>/index/strong); it asserts nothing the links do not.");
+
+                            t.HasCheckConstraint("ck_strong_rendering_place_lengths", "cardinality(words) > 0 AND cardinality(phrase_of) = cardinality(words) AND cardinality(book_of) = cardinality(words)");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.TableWrite", b =>
                 {
                     b.Property<long>("Id")
@@ -7482,6 +7530,27 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_strong_rendering_texts_text_id");
 
                     b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongRenderingPlace", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_strong_rendering_place_texts_text_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Witness")
+                        .WithMany()
+                        .HasForeignKey("WitnessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_strong_rendering_place_texts_witness_id");
+
+                    b.Navigation("Text");
+
+                    b.Navigation("Witness");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.TextForm", b =>

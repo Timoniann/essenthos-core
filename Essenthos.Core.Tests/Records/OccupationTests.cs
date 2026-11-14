@@ -136,7 +136,7 @@ public sealed class OccupationTests : IDisposable
             using (var writer = _store.Create(IndexProducts.Of(slug, IndexProducts.Strong), ProductKind.Machine, StrongIndexRow.Schema, "test", []))
             {
                 writer.WriteAll(renderings.Where(r => r.Text == slug).SelectMany(r => Enumerable.Range(0, r.Uses)
-                    .Select(i => new StrongIndexRow(r.Number, "NESTLE1904", $"51.4:14.{i + 1}", "51.4:14.1", r.Phrase, "1", "stated"))));
+                    .Select(i => new StrongIndexRow(r.Number, "NESTLE1904", $"51.4:14.{i + 1}", new VerseKey(51, 4, 14), "51.4:14.1", r.Phrase, "1", "stated"))));
                 writer.Complete();
             }
         }

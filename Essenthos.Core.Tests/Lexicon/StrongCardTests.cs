@@ -3,8 +3,11 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Verification;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Lexicon;
@@ -159,6 +162,59 @@ public sealed class StrongCardTests : IDisposable
 
         var deeper = await StrongEndpoints.Renderings(_db, [God], _english.Id, StrongRenderingCounts.Kept + 1, default);
         deeper[God][0].Should().Be(new StrongRenderingResponse("god", 2));
+    }
+
+    /// <summary>
+    /// The places behind a phrase are the words its count counts, listed at build in the order of the number's places:
+    /// <em>god</em> at both places it renders H430 alone, <em>thy god</em> at the one where the pronoun goes with it, and a
+    /// book, a page or another phrase narrows them as asked.
+    /// </summary>
+    [Fact]
+    public async Task ThePlacesBehindAPhraseAreTheWordsItsCountCounts()
+    {
+        await CountedRenderings.CountStrong(_db);
+        var counted = await StrongEndpoints.Renderings(_db, [God], _english.Id, 3, default);
+        counted[God].Should().Equal(new StrongRenderingResponse("god", 2), new StrongRenderingResponse("thy god", 1));
+
+        var god = await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, null, null, null, default);
+        god.Total.Should().Be(2);
+        god.ByText.Should().Equal(new StrongTextCountResponse("BHSA", 2));
+        god.Items.Select(i => i.WordId).Should().Equal(_db.WordAt(_hebrew, 1, 1, 2).Id, _db.WordAt(_hebrew, 1, 2, 1).Id);
+        god.Items.Should().OnlyContain(i => i.Rendered == "god");
+
+        var thy = await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, " Thy God", null, null, null, null, default);
+        thy.Items.Select(i => i.WordId).Should().Equal(_db.WordAt(_hebrew, 1, 1, 3).Id);
+
+        var second = await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, null, 1, 1, default);
+        second.Total.Should().Be(2);
+        second.Items.Select(i => i.WordId).Should().Equal(_db.WordAt(_hebrew, 1, 2, 1).Id);
+
+        (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, 2, null, null, default)).Total.Should().Be(0);
+        (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", _greek.Id, null, null, null, default)).Total.Should().Be(0);
+        (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "lord", null, null, null, null, default)).Items.Should().BeEmpty();
+    }
+
+    /// <summary>Verify holds the words listed behind each phrase against the links, and finds one listed out of its place.</summary>
+    [Fact]
+    public async Task VerifyFindsAListedWordTheLinksDoNotPutThere()
+    {
+        await CountedRenderings.CountStrong(_db);
+        var connection = (NpgsqlConnection)_db.Database.GetDbConnection();
+        async Task<long> Broken()
+        {
+            await using var command = new NpgsqlCommand(CorpusCheck.StrongPlacesSql(1), connection);
+            return (long)(await command.ExecuteScalarAsync())!;
+        }
+
+        (await Broken()).Should().Be(0);
+
+        await using (var swap = new NpgsqlCommand(
+                         "UPDATE strong_rendering_place SET words = ARRAY[words[2], words[1]] || words[3:] WHERE strong_number = 'H430'", connection))
+        {
+            await swap.ExecuteNonQueryAsync();
+        }
+
+        (await Broken()).Should().BeGreaterThan(0);
     }
 
     [Fact]
