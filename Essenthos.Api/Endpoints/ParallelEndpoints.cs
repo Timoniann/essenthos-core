@@ -152,6 +152,7 @@ internal static class ParallelEndpoints
             string? corpora,
             AppDbContext db,
             ICanonIndex canon,
+            SparseJson sparse,
             CancellationToken cancellationToken) =>
         {
             var ordinal = BookReferences.ResolveOrdinal(book);
@@ -257,7 +258,7 @@ internal static class ParallelEndpoints
             var bookNotes = await ChapterReading.BookNotes(
                 db, [.. requested.Select(entry => entry.Id)], ordinal.Value, chapter, cancellationToken);
 
-            return Results.Ok(new ParallelTextResponse(
+            return sparse.Ok(new ParallelTextResponse(
                 new BookRefResponse(ordinal.Value, BookReferences.Name(ordinal.Value),
                     BookReferences.Slug(ordinal.Value)),
                 chapter,
