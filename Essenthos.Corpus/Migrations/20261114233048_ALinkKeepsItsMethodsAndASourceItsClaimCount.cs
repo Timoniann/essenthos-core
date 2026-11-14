@@ -30,7 +30,7 @@ namespace Essenthos.Core.Migrations
                 nullable: false,
                 defaultValue: (short)0);
 
-            migrationBuilder.Sql(LinkMethods.Function);
+            migrationBuilder.Sql(LinkMethods.Function + ";");
 
             // A claim added only adds its method; a claim taken away or changed has the link's set read again
             // from the claims left. The sources' counts move by the rows that came and went.
@@ -73,20 +73,20 @@ namespace Essenthos.Core.Migrations
                         WHERE p.id = d.provenance_id;
                     END IF;
                     RETURN NULL;
-                END $$
+                END $$;
                 """);
             migrationBuilder.Sql(
                 "CREATE OR REPLACE TRIGGER link_claim_added AFTER INSERT ON link_claim " +
-                "REFERENCING NEW TABLE AS added FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow()");
+                "REFERENCING NEW TABLE AS added FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow();");
             migrationBuilder.Sql(
                 "CREATE OR REPLACE TRIGGER link_claim_removed AFTER DELETE ON link_claim " +
-                "REFERENCING OLD TABLE AS removed FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow()");
+                "REFERENCING OLD TABLE AS removed FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow();");
             migrationBuilder.Sql(
                 "CREATE OR REPLACE TRIGGER link_claim_changed AFTER UPDATE ON link_claim " +
-                "REFERENCING OLD TABLE AS removed NEW TABLE AS added FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow()");
+                "REFERENCING OLD TABLE AS removed NEW TABLE AS added FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow();");
             migrationBuilder.Sql(
                 "CREATE OR REPLACE TRIGGER link_claim_emptied AFTER TRUNCATE ON link_claim " +
-                "FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow()");
+                "FOR EACH STATEMENT EXECUTE FUNCTION link_claims_follow();");
 
             migrationBuilder.Sql(
                 """
@@ -102,12 +102,12 @@ namespace Essenthos.Core.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_added ON link_claim");
-            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_removed ON link_claim");
-            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_changed ON link_claim");
-            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_emptied ON link_claim");
-            migrationBuilder.Sql("DROP FUNCTION IF EXISTS link_claims_follow()");
-            migrationBuilder.Sql("DROP FUNCTION IF EXISTS link_method_bit(text)");
+            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_added ON link_claim;");
+            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_removed ON link_claim;");
+            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_changed ON link_claim;");
+            migrationBuilder.Sql("DROP TRIGGER IF EXISTS link_claim_emptied ON link_claim;");
+            migrationBuilder.Sql("DROP FUNCTION IF EXISTS link_claims_follow();");
+            migrationBuilder.Sql("DROP FUNCTION IF EXISTS link_method_bit(text);");
 
             migrationBuilder.DropColumn(
                 name: "claims",
