@@ -66,7 +66,7 @@ internal static partial class ForgeVerbs
         new("texts", "compare <text,...|all> [--out <folder>] [--parallel <n>]",
             "compare: hold the converted products against the configured database by key and list every difference.",
             TextsVerb, Least: 2),
-        new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--every-table] [--dry-run]",
+        new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--every-table] [--copy-served] [--dry-run]",
             "Restore a release on a target, or apply its difference from the copy the target keeps, verify it there and swap it in.", Publish),
         new("difference", "--base <release> [--release <name>]",
             "Make the difference from one release to another (the newest by default) out of their dumps: the rows a database holding the base "

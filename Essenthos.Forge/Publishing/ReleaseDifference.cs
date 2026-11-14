@@ -15,8 +15,9 @@ namespace Essenthos.Core.Publishing;
 /// Made from the two release dumps alone, so what it is compared with is exactly what a whole restore
 /// would give. Every row of every table is read from both archives as COPY text and hashed as the server
 /// hashes it (<see cref="CopyRows"/>); the rows whose hash only the base has are deleted by primary key,
-/// the rows only the release has are copied in. Two archives whose schemas differ in any line have no
-/// difference: a schema change is published whole.
+/// the rows only the release has are copied in. Where the schemas differ, the tables a migration created
+/// or changed go whole and those it removed are dropped (<see cref="SchemaChange"/>); any other change to
+/// the schema has no difference, and the release is published whole.
 ///
 /// The script is one transaction. It refuses a database that does not say it is the base release, runs
 /// with <c>session_replication_role = replica</c> (foreign keys and the bookkeeping triggers stay quiet:
@@ -29,6 +30,14 @@ internal sealed class ReleaseDifference(ILogger logger)
 {
     /// <summary>A difference larger than this share of the release's dump is not used: restoring the dump costs less.</summary>
     public const double LargestShare = 0.5;
+
+    /// <summary>
+    /// A table of at least <see cref="ChurnRows"/> rows that loses more than half of them goes whole, like a table
+    /// whose schema changed, when no other table's foreign key points at it: copying every row into an empty
+    /// table and building its indexes afterwards is what a restore does, and on two CPUs it is many times
+    /// faster than deleting and inserting tens of millions of rows through the indexes one by one.
+    /// </summary>
+    public const long ChurnRows = 100_000;
 
     /// <summary>The line the script prints after it commits; a script cut short never prints it.</summary>
     public const string AppliedMark = "essenthos-difference-applied";
@@ -68,47 +77,51 @@ internal sealed class ReleaseDifference(ILogger logger)
         var clock = Stopwatch.StartNew();
         var before = DumpArchive.Open(Path.Combine(folder, $"{from}.dump"));
         var after = DumpArchive.Open(Path.Combine(folder, $"{release}.dump"));
-        if (FirstDifference(before.Schema, after.Schema) is { } line)
+        var (schema, refusal) = SchemaChange.Of(before.Definitions, after.Definitions);
+        if (schema is null)
         {
             logger.LogWarning(
-                "Releases {From} and {Release} differ in their schema ({Line}), so a database holding {From} cannot be patched into {Release}; it is published whole",
-                from, release, line, from, release);
+                "Releases {From} and {Release} differ in their schema in a way a difference does not patch ({Refusal}); {Release} is published whole",
+                from, release, refusal, release);
             return null;
         }
 
         var tables = after.Tables.Select(table => table.Name).ToList();
-        if (!before.Tables.Select(table => table.Name).Order(StringComparer.Ordinal).SequenceEqual(tables.Order(StringComparer.Ordinal), StringComparer.Ordinal))
+        var missing = tables.Where(table => !schema.Whole.Contains(table) && !before.Tables.Any(entry => entry.Name == table)).ToList();
+        if (missing.Count > 0)
         {
-            logger.LogWarning("Releases {From} and {Release} hold rows of different tables; it is published whole", from, release);
+            logger.LogWarning("{From} holds no rows of {Tables}, which {Release} holds in tables of the same definition; it is published whole",
+                from, string.Join(", ", missing), release);
             return null;
         }
 
+        if (!schema.IsNone)
+        {
+            logger.LogInformation("The schema changed: {Whole} go whole{Dropped}",
+                schema.Whole.Count == 0 ? "no tables" : string.Join(", ", schema.Whole.Order(StringComparer.Ordinal)),
+                schema.Dropped.Except(schema.Whole).ToList() is { Count: > 0 } gone ? $", and {string.Join(", ", gone)} are dropped" : "");
+        }
+
+        var referenced = SchemaChange.Referenced(after.Definitions);
         logger.LogInformation("Comparing {Count} tables of {From} and {Release}, {Parallel} at a time", tables.Count, from, release, parallel);
         var record = await Write(
             new ArchiveRows(new Dictionary<string, DumpArchive> { [from] = before, [release] = after }), folder, from, release, tables,
-            after.PrimaryKeys(), after.SequenceValues, parallel, cancellationToken);
+            after.PrimaryKeys(), after.SequenceValues, parallel, cancellationToken, schema,
+            table => !referenced.Contains(table),
+            churned => SchemaChange.Of(before.Definitions, after.Definitions, churned).Change
+                ?? throw new InvalidDataException("Sending more tables whole made the schema change unpatchable."));
         record = record with { Seconds = Math.Round(clock.Elapsed.TotalSeconds, 1) };
+        if (record.Changed.Where(table => table.Whole && !schema.Whole.Contains(table.Table)).Select(table => table.Table).ToList() is { Count: > 0 } churned)
+        {
+            logger.LogInformation("Most rows of {Tables} changed, so they go whole too", string.Join(", ", churned));
+        }
+
         await File.WriteAllTextAsync(Path.Combine(folder, RecordName(release, from)), JsonSerializer.Serialize(record, RecordJson), cancellationToken);
         logger.LogInformation(
             "The difference from {From} to {Release}: {Changed} of {Tables} tables changed, {Gone:N0} rows gone and {Added:N0} added, {Bytes:N0} bytes, made in {Seconds:F0} s",
             from, release, record.Changed.Count, record.Changed.Count + record.Unchanged,
             record.Changed.Sum(table => table.Gone), record.Changed.Sum(table => table.Added), record.Bytes, record.Seconds);
         return record;
-    }
-
-    private static string? FirstDifference(IReadOnlyList<string> a, IReadOnlyList<string> b)
-    {
-        for (var i = 0; i < Math.Max(a.Count, b.Count); i++)
-        {
-            var left = i < a.Count ? a[i] : null;
-            var right = i < b.Count ? b[i] : null;
-            if (left != right)
-            {
-                return $"line {i + 1}: \"{left ?? "(end)"}\" against \"{right ?? "(end)"}\"";
-            }
-        }
-
-        return null;
     }
 
     /// <summary>
@@ -118,8 +131,11 @@ internal sealed class ReleaseDifference(ILogger logger)
     public static async Task<DifferenceRecord> Write(
         IReleaseRows source, string folder, string from, string release, IReadOnlyList<string> tables,
         IReadOnlyDictionary<string, IReadOnlyList<string>> primaryKeys, IReadOnlyList<string> sequences, int parallel,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, SchemaChange? schema = null,
+        Func<string, bool>? mayGoWhole = null, Func<IReadOnlyCollection<string>, SchemaChange>? withWhole = null)
     {
+        schema ??= SchemaChange.None;
+        var whole = schema.Whole;
         var parts = Path.Combine(folder, $".{release}.from-{from}.parts");
         Directory.CreateDirectory(parts);
         try
@@ -131,13 +147,29 @@ internal sealed class ReleaseDifference(ILogger logger)
                 async (entry, token) =>
                 {
                     var key = primaryKeys.TryGetValue(entry.table, out var columns) ? columns : null;
-                    compared[entry.table] = await Compare(source, from, release, entry.table, key, Path.Combine(parts, $"{entry.index:D4}"), entry.index, token);
+                    var prefix = Path.Combine(parts, $"{entry.index:D4}");
+                    compared[entry.table] = whole.Contains(entry.table)
+                        ? await Whole(source, release, entry.table, prefix, token)
+                        : await Compare(source, from, release, entry.table, key, prefix, entry.index,
+                            withWhole is not null && (mayGoWhole?.Invoke(entry.table) ?? true), token);
                 });
+
+            if (withWhole is not null
+                && compared.Values.Where(table => table.Whole && !whole.Contains(table.Table)).Select(table => table.Table).ToList() is { Count: > 0 } churned)
+            {
+                schema = withWhole(churned);
+            }
 
             var file = Path.Combine(folder, FileName(release, from));
             await using (var output = File.Create(file))
             {
                 await WriteMember(output, Opening(from), cancellationToken);
+                if (!schema.IsNone)
+                {
+                    await WriteMember(output, "-- The tables the release holds otherwise, or not at all, go; those it holds otherwise come back empty.\n" +
+                        schema.Drop + schema.Create, cancellationToken);
+                }
+
                 foreach (var table in tables)
                 {
                     foreach (var part in compared[table].Parts)
@@ -147,16 +179,22 @@ internal sealed class ReleaseDifference(ILogger logger)
                     }
                 }
 
+                if (schema.Finish.Length > 0)
+                {
+                    await WriteMember(output, "-- The keys, indexes and triggers of the tables sent whole, and the foreign keys to them.\n" + schema.Finish, cancellationToken);
+                }
+
                 await WriteMember(output, Closing(release, tables.Select(table => compared[table]).ToList(), sequences), cancellationToken);
             }
 
             await using var stream = File.OpenRead(file);
             var sha = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, cancellationToken));
             var changed = tables.Select(table => compared[table]).Where(table => table.Changed)
-                .Select(table => new TableChange(table.Table, table.Gone, table.Added, table.Sum.Rows)).ToList();
+                .Select(table => new TableChange(table.Table, table.Gone, table.Added, table.Sum.Rows, table.Whole)).ToList();
             return new DifferenceRecord(
                 release, from, FileName(release, from), sha, new FileInfo(file).Length, DateTimeOffset.UtcNow, 0,
-                changed, tables.Count - changed.Count, tables.Sum(table => compared[table].Sum.Rows));
+                changed, tables.Count - changed.Count, tables.Sum(table => compared[table].Sum.Rows),
+                schema.Dropped.Where(table => !schema.Whole.Contains(table)).ToList());
         }
         finally
         {
@@ -164,10 +202,47 @@ internal sealed class ReleaseDifference(ILogger logger)
         }
     }
 
+    /// <summary>A table sent whole: every row of the release, copied into the table the script has just created.</summary>
+    private static async Task<TableComparison> Whole(IReleaseRows source, string release, string table, string partPrefix, CancellationToken cancellationToken)
+    {
+        var part = partPrefix + ".whole";
+        var sum = default(TableSum);
+        string? qualified = null, columns = null;
+        var rows = new CopyRows();
+        await using (var file = File.Create(part))
+        await using (var zip = new GZipStream(file, CompressionLevel.Optimal))
+        {
+            var opened = false;
+            await source.Rows(release, table, (name, list) => (qualified, columns) = (name, list), line =>
+            {
+                if (!opened)
+                {
+                    zip.Write(Encoding.UTF8.GetBytes($"-- {qualified}: sent whole\nCOPY {qualified} ({columns}) FROM stdin;\n"));
+                    opened = true;
+                }
+
+                sum = sum.Add(rows.Hash(line));
+                zip.Write(line);
+                zip.WriteByte((byte)'\n');
+            }, cancellationToken);
+            if (opened)
+            {
+                zip.Write("\\.\n"u8);
+            }
+        }
+
+        if (qualified is null || columns is null)
+        {
+            throw new InvalidDataException($"No rows header for table {table} in {release}.");
+        }
+
+        return new TableComparison(table, qualified, columns, sum, 0, sum.Rows, sum.Rows > 0 ? [part] : [], Whole: true);
+    }
+
     /// <summary>One table of both releases, and the parts of the script that change it, if any.</summary>
     private static async Task<TableComparison> Compare(
         IReleaseRows source, string from, string release, string table, IReadOnlyList<string>? key, string partPrefix, int index,
-        CancellationToken cancellationToken)
+        bool mayGoWhole, CancellationToken cancellationToken)
     {
         var before = new List<UInt128>();
         var after = new List<UInt128>();
@@ -196,6 +271,11 @@ internal sealed class ReleaseDifference(ILogger logger)
 
         var (gone, added) = Unmatched(before, after);
         var comparison = new TableComparison(table, qualified, afterColumns, sum, gone.Values.Sum(), added.Values.Sum(), []);
+        if (mayGoWhole && before.Count >= ChurnRows && comparison.Gone * 2 > before.Count)
+        {
+            return await Whole(source, release, table, partPrefix, cancellationToken) with { Gone = before.Count };
+        }
+
         if (comparison.Gone == 0 && comparison.Added == 0)
         {
             return comparison;
@@ -429,14 +509,16 @@ internal interface IReleaseRows
 /// <param name="Columns">The COPY header's column list.</param>
 /// <param name="Sum">The release's rows of the table, summed.</param>
 /// <param name="Parts">The gzip members of the script that change the table, in order.</param>
+/// <param name="Whole">Created by the script and every row copied in, its schema having changed or being new.</param>
 internal sealed record TableComparison(
-    string Table, string Qualified, string Columns, TableSum Sum, long Gone, long Added, IReadOnlyList<string> Parts)
+    string Table, string Qualified, string Columns, TableSum Sum, long Gone, long Added, IReadOnlyList<string> Parts, bool Whole = false)
 {
-    public bool Changed => Gone > 0 || Added > 0;
+    public bool Changed => Whole || Gone > 0 || Added > 0;
 }
 
 /// <summary>A table the difference changes: how many rows go, how many come, and how many it holds afterwards.</summary>
-internal sealed record TableChange(string Table, long Gone, long Added, long Rows);
+/// <param name="Whole">Created again from the release's schema with every row, rather than patched.</param>
+internal sealed record TableChange(string Table, long Gone, long Added, long Rows, bool Whole = false);
 
 /// <summary>What <c>forge difference</c> wrote beside the script.</summary>
 /// <param name="Release">The release a database holds once the script has run.</param>
@@ -451,4 +533,5 @@ internal sealed record DifferenceRecord(
     double Seconds,
     IReadOnlyList<TableChange> Changed,
     int Unchanged,
-    long Rows);
+    long Rows,
+    IReadOnlyList<string>? Dropped = null);

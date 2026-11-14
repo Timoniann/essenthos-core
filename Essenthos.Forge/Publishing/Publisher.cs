@@ -222,9 +222,13 @@ internal sealed class Publisher(
     /// would follow, and touch nothing — no ssh, no upload, no database.
     /// </param>
     /// <param name="everyTable">Applying a difference, sum every table against the release, not only the ones it changes.</param>
+    /// <param name="copyServed">
+    /// Publishing by difference to a target that keeps no copy beside its live corpus, make one from the live corpus
+    /// (a template copy, for which the API is stopped while it lasts) rather than restore the release whole.
+    /// </param>
     public async Task<int> Publish(
         string targetName, string? releaseName, bool withoutRehearsal, CancellationToken cancellationToken, bool dryRun = false,
-        bool everyTable = false)
+        bool everyTable = false, bool copyServed = false)
     {
         var target = ReleaseTarget.Read(configuration, targetName, Repository);
         var host = new TargetHost(target);
@@ -259,7 +263,7 @@ internal sealed class Publisher(
         var started = DateTimeOffset.UtcNow;
         var inContainer = $"/releases/{record.Name}.dump";
 
-        var difference = target.ByDifference ? await DifferenceFor(host, record, cancellationToken) : null;
+        var difference = target.ByDifference ? await DifferenceFor(host, record, copyServed, cancellationToken) : null;
         if (difference?.Record is { } patch)
         {
             if (!await Send(host, Path.Combine(Releases, patch.File), patch.Sha256, patch.Bytes, cancellationToken))
@@ -383,10 +387,25 @@ internal sealed class Publisher(
     /// this one, found among the releases here or made from their two dumps. A copy that already holds the
     /// release needs no difference at all, which is what a rollback finds.
     /// </summary>
-    private async Task<DifferencePlan?> DifferenceFor(TargetHost host, ReleaseRecord record, CancellationToken cancellationToken)
+    private async Task<DifferencePlan?> DifferenceFor(TargetHost host, ReleaseRecord record, bool copyServed, CancellationToken cancellationToken)
     {
         var target = host.Target;
-        if (!await host.DatabaseExists(target.Previous, cancellationToken))
+        var kept = await host.DatabaseExists(target.Previous, cancellationToken);
+        if (!kept && copyServed && await ReleaseName(host, target.Database, cancellationToken) is { } served && served != record.Name)
+        {
+            if (await Usable(served, record, cancellationToken) is not { } fromServed)
+            {
+                return null;
+            }
+
+            logger.LogInformation(
+                "{Target} keeps no copy beside its live corpus, so one is copied from it ({Served}) with the API stopped, and the difference to {Name} " +
+                "applied to the copy: {Bytes:N0} bytes ({Share:P1} of the dump), {Changed} tables changed",
+                target.Name, served, record.Name, fromServed.Bytes, (double)fromServed.Bytes / record.Bytes, fromServed.Changed.Count);
+            return new DifferencePlan(served, fromServed, CopyServed: true);
+        }
+
+        if (!kept)
         {
             logger.LogInformation(
                 "{Target} keeps no copy beside its live corpus ({Previous}) for a difference to be applied to, so {Name} is restored whole; " +
@@ -407,17 +426,8 @@ internal sealed class Publisher(
             return new DifferencePlan(held, null);
         }
 
-        var difference = await Difference(held, record.Name, cancellationToken);
-        if (difference is null)
+        if (await Usable(held, record, cancellationToken) is not { } difference)
         {
-            return null;
-        }
-
-        if (difference.Bytes > record.Bytes * ReleaseDifference.LargestShare)
-        {
-            logger.LogInformation(
-                "The difference from {Base} to {Name} is {Bytes:N0} bytes, {Share:P0} of the release's dump, so restoring the dump costs less",
-                held, record.Name, difference.Bytes, (double)difference.Bytes / record.Bytes);
             return null;
         }
 
@@ -425,6 +435,21 @@ internal sealed class Publisher(
             "{Previous} on {Target} holds {Base}: sending the difference to {Name}, {Bytes:N0} bytes ({Share:P1} of the dump), {Changed} tables changed",
             target.Previous, target.Name, held, record.Name, difference.Bytes, (double)difference.Bytes / record.Bytes, difference.Changed.Count);
         return new DifferencePlan(held, difference);
+    }
+
+    /// <summary>The difference from <paramref name="from"/> to the release, unless there is none or restoring the dump costs less.</summary>
+    private async Task<DifferenceRecord?> Usable(string from, ReleaseRecord record, CancellationToken cancellationToken)
+    {
+        var difference = await Difference(from, record.Name, cancellationToken);
+        if (difference is not null && difference.Bytes > record.Bytes * ReleaseDifference.LargestShare)
+        {
+            logger.LogInformation(
+                "The difference from {Base} to {Name} is {Bytes:N0} bytes, {Share:P0} of the release's dump, so restoring the dump costs less",
+                from, record.Name, difference.Bytes, (double)difference.Bytes / record.Bytes);
+            return null;
+        }
+
+        return difference;
     }
 
     /// <summary>
@@ -450,8 +475,16 @@ internal sealed class Publisher(
             }
         }
 
-        return await new ReleaseDifference(loggers.CreateLogger<ReleaseDifference>())
-            .Make(Releases, from, release, DifferenceParallelism, cancellationToken);
+        try
+        {
+            return await new ReleaseDifference(loggers.CreateLogger<ReleaseDifference>())
+                .Make(Releases, from, release, DifferenceParallelism, cancellationToken);
+        }
+        catch (InvalidDataException exception)
+        {
+            logger.LogWarning("No difference from {From} to {Release} could be made, so it is published whole: {Message}", from, release, exception.Message);
+            return null;
+        }
     }
 
     /// <summary>How many tables a difference compares at once; each runs two pg_restore and holds both sides' hashes.</summary>
@@ -487,8 +520,31 @@ internal sealed class Publisher(
     {
         var target = host.Target;
         await Drop(host, [target.Incoming, target.Retired], cancellationToken);
-        await Rename(host, target.Previous, target.Incoming, cancellationToken);
         var started = DateTimeOffset.UtcNow;
+        if (plan.CopyServed)
+        {
+            await WithApiStopped(host, async () =>
+            {
+                await Disconnect(host, target.Database, cancellationToken);
+                try
+                {
+                    await host.Sql("postgres",
+                        $"CREATE DATABASE {TargetHost.Identifier(target.Incoming)} TEMPLATE {TargetHost.Identifier(target.Database)} STRATEGY FILE_COPY",
+                        cancellationToken);
+                }
+                finally
+                {
+                    await host.Sql("postgres", $"ALTER DATABASE {TargetHost.Identifier(target.Database)} WITH ALLOW_CONNECTIONS true", CancellationToken.None);
+                }
+            }, cancellationToken);
+            logger.LogInformation("{Database} copied into {Incoming} in {Seconds:F0} s", target.Database, target.Incoming, (DateTimeOffset.UtcNow - started).TotalSeconds);
+            started = DateTimeOffset.UtcNow;
+        }
+        else
+        {
+            await Rename(host, target.Previous, target.Incoming, cancellationToken);
+        }
+
         if (plan.Record is { } difference)
         {
             logger.LogInformation("Applying the difference from {Base} to {Name} to {Incoming}, which nothing reads{Every}",
@@ -562,7 +618,8 @@ internal sealed class Publisher(
 
     /// <param name="Base">The release the copy beside the live corpus holds.</param>
     /// <param name="Record">The difference from it, or null when the copy holds the release already.</param>
-    private sealed record DifferencePlan(string Base, DifferenceRecord? Record);
+    /// <param name="CopyServed">There is no such copy yet: it is made from the live corpus, which holds <paramref name="Base"/>.</param>
+    private sealed record DifferencePlan(string Base, DifferenceRecord? Record, bool CopyServed = false);
 
     /// <summary>
     /// Once <paramref name="published"/> is live, the dumps in the target's releases folder that neither

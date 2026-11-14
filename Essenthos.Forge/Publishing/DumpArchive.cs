@@ -35,7 +35,10 @@ internal sealed partial class DumpArchive
     }
 
     /// <summary>An entry of the table of contents: what pg_restore -l lists, with its SQL and where its data is.</summary>
-    internal sealed record Entry(int DumpId, string Kind, string Schema, string Name, string Definition, string Copy, long? DataAt);
+    /// <param name="Section">pg_dump's section: 1 none (comments, ACLs), 2 pre-data, 3 data, 4 post-data.</param>
+    internal sealed record Entry(int DumpId, string Kind, string Schema, string Name, string Definition, string Copy, long? DataAt, int Section = 0);
+
+    public const int PostData = 4;
 
     public IReadOnlyList<Entry> Entries { get; }
 
@@ -96,7 +99,7 @@ internal sealed partial class DumpArchive
             reader.String();
             var tag = reader.String() ?? string.Empty;
             var kind = reader.String() ?? string.Empty;
-            reader.Int();
+            var section = reader.Int();
             var definition = reader.String() ?? string.Empty;
             reader.String();
             var copy = reader.String() ?? string.Empty;
@@ -116,7 +119,7 @@ internal sealed partial class DumpArchive
 
             var flag = reader.Byte();
             var offset = reader.Offset();
-            entries.Add(new Entry(dumpId, kind, schema, tag, definition, copy, flag == OffsetSet ? offset : null));
+            entries.Add(new Entry(dumpId, kind, schema, tag, definition, copy, flag == OffsetSet ? offset : null, section));
         }
 
         return new DumpArchive(path, reader.IntSize, reader.OffsetSize, compressed, entries);
@@ -126,14 +129,12 @@ internal sealed partial class DumpArchive
     public IReadOnlyList<Entry> Tables => Entries.Where(entry => entry.Kind == "TABLE DATA" && entry.Schema == "public").ToList();
 
     /// <summary>
-    /// Every entry that is not data, as kind, schema, name and SQL, one line of SQL each: two archives of
-    /// one schema list the same lines, whatever the oids or the moment of the dump. The database's own
-    /// entries name the database dumped and are restored only with <c>--create</c>, which no publication uses.
+    /// Every entry that is not data: the schema, which a restore creates before and after the rows. The
+    /// database's own entries name the database dumped and are restored only with <c>--create</c>, which
+    /// no publication uses.
     /// </summary>
-    public IReadOnlyList<string> Schema =>
-        Entries.Where(entry => entry.Kind is not ("TABLE DATA" or "SEQUENCE SET" or "DATABASE" or "DATABASE PROPERTIES"))
-            .SelectMany(entry => entry.Definition.Split('\n').Select(line => $"{entry.Kind} {entry.Schema} {entry.Name}: {line.TrimEnd()}"))
-            .ToList();
+    public IReadOnlyList<Entry> Definitions =>
+        Entries.Where(entry => entry.Kind is not ("TABLE DATA" or "SEQUENCE SET" or "DATABASE" or "DATABASE PROPERTIES")).ToList();
 
     /// <summary>Every sequence's value as the archive sets it: its <c>setval</c> statements.</summary>
     public IReadOnlyList<string> SequenceValues =>

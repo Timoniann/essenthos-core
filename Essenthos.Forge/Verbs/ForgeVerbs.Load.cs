@@ -51,7 +51,8 @@ internal static partial class ForgeVerbs
             args.Contains("--without-rehearsal"),
             CancellationToken.None,
             dryRun: args.Contains("--dry-run"),
-            everyTable: args.Contains("--every-table"));
+            everyTable: args.Contains("--every-table"),
+            copyServed: args.Contains("--copy-served"));
     }
 
     private static async Task<int> Difference(ForgeRun forge, string[] args)
