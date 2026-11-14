@@ -18,70 +18,9 @@ internal static partial class EncyclopediaEndpoints
             string slug,
             AppDbContext db,
             CancellationToken cancellationToken) =>
-        {
-            var period = await db.Periods
-                .Where(p => p.Slug == slug)
-                .Select(p => new
-                {
-                    p.Slug,
-                    p.Name,
-                    p.Kind,
-                    p.Level,
-                    p.Realm,
-                    p.Region,
-                    p.Uri,
-                    p.Notes,
-                    p.Source,
-                    Parent = p.Parent == null ? null : new { p.Parent.Slug, p.Parent.Name },
-                    Entity = p.Entity == null ? null : new { p.Entity.Slug, p.Entity.Name, p.Entity.Distinguisher },
-                    Opens = p.StartEvent == null ? null : new { p.StartEvent.Slug, p.StartEvent.Name },
-                    Closes = p.EndEvent == null ? null : new { p.EndEvent.Slug, p.EndEvent.Name },
-                    p.StartEventId,
-                    p.EndEventId,
-                    p.StartYear,
-                    p.EndYear,
-                })
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (period is null)
-            {
-                return Results.NotFound();
-            }
-
-            var years = await EventYears(
-                db,
-                db.EventDates.Where(d => d.EventId == period.StartEventId || d.EventId == period.EndEventId),
-                cancellationToken);
-
-            var children = await db.Periods
-                .Where(p => p.Parent!.Slug == slug)
-                .OrderBy(p => p.StartYear)
-                .Select(p => new PeriodRefResponse(p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear))
-                .Take(60)
-                .ToListAsync(cancellationToken);
-
-            return Results.Ok(new PeriodResponse(
-                period.Slug,
-                period.Name,
-                period.Kind,
-                period.Level,
-                period.Realm,
-                period.Region,
-                period.Uri,
-                period.Notes,
-                period.Source,
-                Datasets.Of(period.Source),
-                period.Parent is null ? null : new PeriodRefResponse(
-                    period.Parent.Slug, period.Parent.Name, null, null, null),
-                period.Entity is null ? null : new NamedEntityResponse(
-                    period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
-                period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, period.Opens.Name),
-                period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, period.Closes.Name),
-                children)
-            {
-                Years = Span(years, period.StartEventId, period.EndEventId, period.StartYear, period.EndYear),
-            });
-        });
+            await PeriodDetail(db, slug, cancellationToken) is { } found
+                ? Results.Ok(found)
+                : Results.NotFound());
 
         // The reckonings on their own, for a page that has to name or format one and has no
         // reason to hold a chronology's worth of dates to do it.
@@ -171,6 +110,76 @@ internal static partial class EncyclopediaEndpoints
                 ],
                 [.. periods.Select(p => p with { Picture = pictures.ForPeriod(p.EntitySlug) })]));
         }).KeptUntilRelease();
+    }
+
+    /// <summary>One period as <c>/v1/periods/{slug}</c> answers it; null where there is none.</summary>
+    internal static async Task<PeriodResponse?> PeriodDetail(
+        AppDbContext db,
+        string slug,
+        CancellationToken cancellationToken)
+    {
+        var period = await db.Periods
+            .Where(p => p.Slug == slug)
+            .Select(p => new
+            {
+                p.Slug,
+                p.Name,
+                p.Kind,
+                p.Level,
+                p.Realm,
+                p.Region,
+                p.Uri,
+                p.Notes,
+                p.Source,
+                Parent = p.Parent == null ? null : new { p.Parent.Slug, p.Parent.Name },
+                Entity = p.Entity == null ? null : new { p.Entity.Slug, p.Entity.Name, p.Entity.Distinguisher },
+                Opens = p.StartEvent == null ? null : new { p.StartEvent.Slug, p.StartEvent.Name },
+                Closes = p.EndEvent == null ? null : new { p.EndEvent.Slug, p.EndEvent.Name },
+                p.StartEventId,
+                p.EndEventId,
+                p.StartYear,
+                p.EndYear,
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (period is null)
+        {
+            return null;
+        }
+
+        var years = await EventYears(
+            db,
+            db.EventDates.Where(d => d.EventId == period.StartEventId || d.EventId == period.EndEventId),
+            cancellationToken);
+
+        var children = await db.Periods
+            .Where(p => p.Parent!.Slug == slug)
+            .OrderBy(p => p.StartYear)
+            .Select(p => new PeriodRefResponse(p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear))
+            .Take(60)
+            .ToListAsync(cancellationToken);
+
+        return new PeriodResponse(
+            period.Slug,
+            period.Name,
+            period.Kind,
+            period.Level,
+            period.Realm,
+            period.Region,
+            period.Uri,
+            period.Notes,
+            period.Source,
+            Datasets.Of(period.Source),
+            period.Parent is null ? null : new PeriodRefResponse(
+                period.Parent.Slug, period.Parent.Name, null, null, null),
+            period.Entity is null ? null : new NamedEntityResponse(
+                period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
+            period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, period.Opens.Name),
+            period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, period.Closes.Name),
+            children)
+        {
+            Years = Span(years, period.StartEventId, period.EndEventId, period.StartYear, period.EndYear),
+        };
     }
 
     internal static async Task<IList<ChronologyResponse>> Chronologies(

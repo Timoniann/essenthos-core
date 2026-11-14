@@ -13,16 +13,25 @@ internal sealed partial class PageWording
 {
     private readonly JsonNode _root;
 
-    private PageWording(string code, JsonNode root)
+    private readonly PageWording? _fallback;
+
+    private PageWording(string code, JsonNode root, PageWording? fallback = null)
     {
         Code = code;
         _root = root;
+        _fallback = fallback;
     }
 
     public string Code { get; }
 
     public static PageWording Parse(string code, string json) =>
         new(code, JsonNode.Parse(json) ?? throw new JsonException($"The wording for \"{code}\" is empty."));
+
+    /// <summary>
+    /// This wording, with another's text wherever this has none: the web build's wording over the
+    /// API's own, so a page the API learned to write before the web build caught up still has its words.
+    /// </summary>
+    public PageWording Over(PageWording fallback) => new(Code, _root, fallback);
 
     /// <summary>The copy compiled into the API, for when the web container publishes none.</summary>
     public static PageWording Compiled(string code)
@@ -77,7 +86,8 @@ internal sealed partial class PageWording
         _ => count == 1 ? "one" : "other",
     };
 
-    private string? Find(string key) => Node(key) is JsonValue value && value.TryGetValue<string>(out var text) ? text : null;
+    private string? Find(string key) =>
+        Node(key) is JsonValue value && value.TryGetValue<string>(out var text) ? text : _fallback?.Find(key);
 
     private JsonNode? Node(string key)
     {

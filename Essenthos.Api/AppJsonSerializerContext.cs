@@ -308,6 +308,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(ReignEventResponse))]
 [JsonSerializable(typeof(ReignEventDatingResponse))]
 [JsonSerializable(typeof(PeriodListResponse))]
+[JsonSerializable(typeof(PeriodResponse))]
 [JsonSerializable(typeof(ChronologyListResponse))]
 [JsonSerializable(typeof(TimelineEventResponse))]
 [JsonSerializable(typeof(IList<TimelineEventResponse>))]

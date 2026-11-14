@@ -153,11 +153,25 @@
     "every": "Todos los versículos donde aparece"
   },
   "event": {
-    "description": "{{name}}: cuándo ocurrió según cada cronología bíblica, y los versículos de los que se deduce."
+    "description": "{{name}}: cuándo ocurrió según cada cronología bíblica, y los versículos de los que se deduce.",
+    "when": "Cuándo sucedió",
+    "where": "Dónde está escrito",
+    "whom": "A quién le sucedió"
   },
   "period": {
-    "description": "{{name}}: sus años según cada cronología y los acontecimientos que caen dentro de él."
+    "description": "{{name}}: sus años según cada cronología y los acontecimientos que caen dentro de él.",
+    "spans": "Su intervalo, cómputo por cómputo",
+    "opens": "Se abre en",
+    "closes": "Se cierra en",
+    "inside": "Los acontecimientos que contiene",
+    "nested": "Los períodos anidados en él",
+    "within": "Dónde se sitúa"
   },
+  "year": {
+    "bce": "{{year}} a. e. c.",
+    "ce": "{{year}} e. c."
+  },
+  "takenFrom": "Tomado de {{source}}",
   "text": {
     "translation": "Lea la {{name}} en línea, capítulo por capítulo, junto al hebreo y el griego del que se tradujo.",
     "original": "Lea el texto {{name}} en línea, capítulo por capítulo, palabra por palabra con su gramática y su significado."

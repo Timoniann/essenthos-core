@@ -125,7 +125,7 @@ internal sealed class PageShell(IConfiguration configuration, IHostEnvironment e
             : Path.Combine(Path.GetDirectoryName(shell) ?? "", "meta", $"{code}.json");
         try
         {
-            return await Read(source, cancellationToken) is { } json ? (PageWording.Parse(code, json), json) : (Compiled[code], "");
+            return await Read(source, cancellationToken) is { } json ? (PageWording.Parse(code, json).Over(Compiled[code]), json) : (Compiled[code], "");
         }
         catch (JsonException exception)
         {

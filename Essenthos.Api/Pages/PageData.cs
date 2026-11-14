@@ -35,6 +35,11 @@ internal static class PageData
     public static string EntityAddress(string slug, SiteLanguage language) =>
         $"/v1/entities/{Uri.EscapeDataString(slug)}?language={language.Corpus}&prose={language.Corpus}";
 
+    public static string EventAddress(string slug, SiteLanguage language) =>
+        $"/v1/events/{Uri.EscapeDataString(slug)}?language={language.Corpus}&prose={language.Corpus}";
+
+    public static string PeriodAddress(string slug) => $"/v1/periods/{Uri.EscapeDataString(slug)}";
+
     public static string StrongAddress(string number, SiteLanguage language) =>
         $"/v1/strong/{Uri.EscapeDataString(number)}?language={language.Corpus}";
 

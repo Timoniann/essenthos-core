@@ -150,11 +150,25 @@
     "every": "Every verse where it stands"
   },
   "event": {
-    "description": "{{name}}: when it happened by each reckoning of the Bible's chronology, and the verses it is read from."
+    "description": "{{name}}: when it happened by each reckoning of the Bible's chronology, and the verses it is read from.",
+    "when": "When it happened",
+    "where": "Where it is written",
+    "whom": "Whom it happened to"
   },
   "period": {
-    "description": "{{name}}: its years by each reckoning, and the events that fall within it."
+    "description": "{{name}}: its years by each reckoning, and the events that fall within it.",
+    "spans": "Its span, reckoning by reckoning",
+    "opens": "Opens at",
+    "closes": "Closes at",
+    "inside": "The events inside it",
+    "nested": "The periods nested in it",
+    "within": "Where this sits"
   },
+  "year": {
+    "bce": "{{year}} BCE",
+    "ce": "{{year}} CE"
+  },
+  "takenFrom": "Taken from {{source}}",
   "text": {
     "translation": "Read the {{name}} online, chapter by chapter, beside the Hebrew and Greek it was translated from.",
     "original": "Read the {{name}} online, chapter by chapter, word by word with its grammar and meanings."
