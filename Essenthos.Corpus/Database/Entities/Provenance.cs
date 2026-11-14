@@ -27,5 +27,11 @@ public class Provenance
     /// <summary>For a manual link, why; for an inferred one, what the method weighed.</summary>
     public string? Note { get; set; }
 
+    /// <summary>
+    /// How many link claims cite this source: the datasets page counts a dataset's claims from it, because a
+    /// served release leaves the claims out. The database keeps it true whoever writes them.
+    /// </summary>
+    public int Claims { get; set; }
+
     public override string ToString() => Note is null ? Source : $"{Source} ({Note})";
 }

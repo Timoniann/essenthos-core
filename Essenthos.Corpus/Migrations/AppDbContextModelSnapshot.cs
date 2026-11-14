@@ -2805,6 +2805,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("method");
 
+                    b.Property<short>("Methods")
+                        .HasColumnType("smallint")
+                        .HasColumnName("methods");
+
                     b.Property<int>("ProvenanceId")
                         .HasColumnType("integer")
                         .HasColumnName("provenance_id");
@@ -3923,6 +3927,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Claims")
+                        .HasColumnType("integer")
+                        .HasColumnName("claims");
 
                     b.Property<string>("Note")
                         .HasColumnType("text")
