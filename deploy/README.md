@@ -177,6 +177,13 @@ a tag the server already has is refused unless `-Force`; both scripts take `-Wha
 refuses before touching anything when `.env` is missing or a tag was not sent. Images are built for
 `linux/amd64`. Measured 2026-10-29: about ten minutes for both, 110 MB sent per image at ~5 MB/s.
 
+**The previous builds' scripts stay.** A deploy with `-WebCommit` copies the `/assets` of the reader
+it replaces and of the one it starts into `/srv/essenthos/web-assets` (`keep-assets.sh`), and the web
+container serves that folder behind its own `/assets`, so a tab left open across the deploy, or a
+search engine rendering with an entry script it cached, still loads. A file no deploy has copied for
+21 days is deleted then (`KEEP_DAYS`); about 15 MB holds two builds. A file in neither is a plain 404.
+Check after a deploy: asset 404s in the Caddy log, Googlebot's (`66.249.*`) above all, should be about 0.
+
 **Rollback** is `deploy.ps1` with the previous hashes: sent images stay until removed by hand
 (`docker image rm essenthos-api:<old commit>`, never the two named in `.env`). Keep the last few and
 prune when `df -h /` asks for it.

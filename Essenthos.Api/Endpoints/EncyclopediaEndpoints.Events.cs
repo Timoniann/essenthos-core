@@ -74,17 +74,28 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? prose,
             AppDbContext db,
             CancellationToken cancellationToken) =>
-        {
-            var row = await db.Events.Where(e => e.Slug == slug).Select(Rows).FirstOrDefaultAsync(cancellationToken);
-            if (row is null)
-            {
-                return Results.NotFound();
-            }
+            await EventDetail(db, slug, language, prose, cancellationToken) is { } found
+                ? Results.Ok(found)
+                : Results.NotFound());
+    }
 
-            var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
-            var one = Event((await Aged(db, [row], cancellationToken))[0], places);
-            return Results.Ok((await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0]);
-        });
+    /// <summary>One event as <c>/v1/events/{slug}</c> answers it; null where there is none.</summary>
+    internal static async Task<EventResponse?> EventDetail(
+        AppDbContext db,
+        string slug,
+        string? language,
+        string? prose,
+        CancellationToken cancellationToken)
+    {
+        var row = await db.Events.Where(e => e.Slug == slug).Select(Rows).FirstOrDefaultAsync(cancellationToken);
+        if (row is null)
+        {
+            return null;
+        }
+
+        var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
+        var one = Event((await Aged(db, [row], cancellationToken))[0], places);
+        return (await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0];
     }
 
     /// <summary>
@@ -124,7 +135,7 @@ internal static partial class EncyclopediaEndpoints
     /// event no reckoning dates at all.
     /// </para>
     /// </summary>
-    private const int LastYearBeforeChrist = 3961;
+    internal const int LastYearBeforeChrist = 3961;
 
     /// <summary>
     /// Events in the order a timeline draws them: by the year, then by whatever order a source

@@ -150,11 +150,25 @@
     "every": "Alle Verse, in denen es steht"
   },
   "event": {
-    "description": "{{name}}: wann es nach jeder biblischen Chronologie geschah, und die Verse, aus denen es gelesen wird."
+    "description": "{{name}}: wann es nach jeder biblischen Chronologie geschah, und die Verse, aus denen es gelesen wird.",
+    "when": "Wann es geschah",
+    "where": "Wo es geschrieben steht",
+    "whom": "Wem es geschah"
   },
   "period": {
-    "description": "{{name}}: die Jahre nach jeder Chronologie und die Ereignisse, die in diese Zeit fallen."
+    "description": "{{name}}: die Jahre nach jeder Chronologie und die Ereignisse, die in diese Zeit fallen.",
+    "spans": "Seine Zeitspanne, Zeitrechnung für Zeitrechnung",
+    "opens": "Beginnt bei",
+    "closes": "Endet bei",
+    "inside": "Die Ereignisse darin",
+    "nested": "Die darin verschachtelten Zeiträume",
+    "within": "Wo dies steht"
   },
+  "year": {
+    "bce": "{{year}} v. u. Z.",
+    "ce": "{{year}} u. Z."
+  },
+  "takenFrom": "Entnommen aus {{source}}",
   "text": {
     "translation": "{{name}} online lesen, Kapitel für Kapitel, neben dem hebräischen und griechischen Urtext.",
     "original": "{{name}} online lesen, Kapitel für Kapitel, Wort für Wort mit Grammatik und Bedeutung."
