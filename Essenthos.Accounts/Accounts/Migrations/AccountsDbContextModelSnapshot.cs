@@ -657,6 +657,29 @@ namespace Essenthos.Core.Accounts.Migrations
                     b.ToTable("session", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Accounts.SitemapList", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("name");
+
+                    b.Property<DateTimeOffset>("ChangedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("changed_at");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("hash");
+
+                    b.HasKey("Name")
+                        .HasName("pk_sitemap_list");
+
+                    b.ToTable("sitemap_list", (string)null);
+                });
+
             modelBuilder.Entity("Essenthos.Core.Accounts.Suggestion", b =>
                 {
                     b.Property<Guid>("Id")

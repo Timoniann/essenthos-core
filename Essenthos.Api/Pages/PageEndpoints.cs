@@ -35,6 +35,7 @@ internal static class PageEndpoints
             PageLoader loader,
             PageShell shell,
             PageCache cache,
+            PageValidator validator,
             IConfiguration configuration,
             CancellationToken cancellationToken) =>
         {
@@ -60,6 +61,17 @@ internal static class PageEndpoints
                     statusCode: StatusCodes.Status503ServiceUnavailable);
             }
 
+            // A page is a function of the release, the build and the shell, so a client that holds it as it
+            // would be written now is told so before anything is read. Only an indexed page gives out a
+            // validator, and only with a 200, so a client can hold one only for an address that exists.
+            var validity = address.Indexed ? await validator.For(reading, cancellationToken) : null;
+            context.Response.Headers.CacheControl = "no-cache";
+            if (validity is not null && validity.HeldBy(request))
+            {
+                validity.WriteTo(context.Response);
+                return Results.StatusCode(StatusCodes.Status304NotModified);
+            }
+
             // Only what a search engine may index is kept: a reader's own pages and the lists a query
             // picked are as many as the queries people type, and each is cheap to write again.
             var wording = reading.WordingFor(address.Language);
@@ -73,33 +85,60 @@ internal static class PageEndpoints
             }
 
             var html = PageHtml.Render(reading.Html, page, address.Language, Origin(context, configuration));
+            if (validity is not null && page.Status == StatusCodes.Status200OK && page.Indexed)
+            {
+                validity.WriteTo(context.Response);
+            }
 
-            context.Response.Headers.CacheControl = "no-cache";
             context.Response.Headers["Server-Timing"] =
                 $"render;dur={Stopwatch.GetElapsedTime(started).TotalMilliseconds:0.0}";
             return Results.Content(html, Html, Encoding.UTF8, page.Status);
         });
 
+        // Each list is dated by when what it lists last changed, not by the release: no date is claimed for a
+        // single address, since nothing records when one page's words changed, and a search engine trusts a
+        // date only while every date it is given is true.
         routes.MapMethods("/sitemap.xml", reading, async (
             HttpContext context,
             Sitemaps sitemaps,
+            SitemapDates dates,
             IConfiguration configuration,
             CancellationToken cancellationToken) =>
         {
             context.Response.ContentType = Xml;
-            await sitemaps.WriteIndex(context.Response.Body, Origin(context, configuration), cancellationToken);
+            await sitemaps.WriteIndex(context.Response.Body, Origin(context, configuration), async name =>
+                await sitemaps.Addresses(name + ".xml", cancellationToken) is { } addresses
+                    ? await dates.ChangedAt(name, SitemapDates.Hash(addresses), cancellationToken)
+                    : null, cancellationToken);
         });
 
         routes.MapMethods("/sitemaps/{file}", reading, async (
             string file,
             HttpContext context,
             Sitemaps sitemaps,
+            SitemapDates dates,
             IConfiguration configuration,
             CancellationToken cancellationToken) =>
         {
             if (await sitemaps.Addresses(file, cancellationToken) is not { } addresses)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
+                return;
+            }
+
+            // A list is the same list while its addresses are, so a crawler that holds it is told so.
+            var hash = SitemapDates.Hash(addresses);
+            var validity = new PageValidity($"\"s{hash}\"",
+                await dates.ChangedAt(file[..^".xml".Length], hash, cancellationToken) ?? DateTimeOffset.MaxValue);
+            context.Response.Headers.ETag = validity.ETag;
+            if (validity.LastModified != DateTimeOffset.MaxValue)
+            {
+                validity.WriteTo(context.Response);
+            }
+
+            if (validity.HeldBy(context.Request))
+            {
+                context.Response.StatusCode = StatusCodes.Status304NotModified;
                 return;
             }
 

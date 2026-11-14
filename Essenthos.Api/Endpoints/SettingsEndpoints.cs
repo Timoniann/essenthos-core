@@ -44,6 +44,9 @@ internal sealed class SiteSettingsFile(string path, ILogger<SiteSettingsFile> lo
         }
     }
 
+    /// <summary>When the file was last written, in UTC; the earliest date where there is no file.</summary>
+    public DateTime WrittenAt => File.Exists(path) ? File.GetLastWriteTimeUtc(path) : DateTime.MinValue;
+
     public bool Is(string key) => Values.TryGetValue(key, out var on) ? on : SiteSettings.Defaults()[key];
 
     /// <summary>The licence the owner put Essenthos's own work under; null while he has not decided.</summary>

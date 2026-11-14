@@ -112,7 +112,9 @@
   },
   "verse": {
     "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
-    "original": "in the original, {{text}}"
+    "original": "in the original, {{text}}",
+    "otherTexts": "{{reference}} in other texts",
+    "wholeChapter": "Read the whole chapter: {{chapter}}"
   },
   "entity": {
     "verses_one": "Named in {{count}} verse of the Bible.",

@@ -112,7 +112,9 @@
   },
   "verse": {
     "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
-    "original": "en el original, {{text}}"
+    "original": "en el original, {{text}}",
+    "otherTexts": "{{reference}} en otros textos",
+    "wholeChapter": "Leer el capítulo entero: {{chapter}}"
   },
   "entity": {
     "verses_one": "Aparece en {{count}} versículo de la Biblia.",

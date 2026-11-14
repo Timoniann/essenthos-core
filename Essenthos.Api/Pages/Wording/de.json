@@ -112,7 +112,9 @@
   },
   "verse": {
     "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
-    "original": "im Urtext, {{text}}"
+    "original": "im Urtext, {{text}}",
+    "otherTexts": "{{reference}} in anderen Texten",
+    "wholeChapter": "Das ganze Kapitel lesen: {{chapter}}"
   },
   "entity": {
     "verses_one": "Kommt in {{count}} Vers der Bibel vor.",

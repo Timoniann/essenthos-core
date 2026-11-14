@@ -30,6 +30,12 @@ internal sealed class DownloadsCatalogue(string? folder, string? baseUrl, ILogge
             configuration[BaseUrlKey],
             logger);
 
+    /// <summary>When the manifest was last written, in UTC; the earliest date where there is none.</summary>
+    public DateTime WrittenAt =>
+        folder is not null && Path.Combine(folder, DownloadsManifest.FileName) is var path && File.Exists(path)
+            ? File.GetLastWriteTimeUtc(path)
+            : DateTime.MinValue;
+
     public DownloadsResponse Current()
     {
         if (folder is null)

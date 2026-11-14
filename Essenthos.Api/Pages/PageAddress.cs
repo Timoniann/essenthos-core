@@ -12,6 +12,7 @@ internal enum PageKind
     Home,
     Chapter,
     Verse,
+    SingleVerse,
     Record,
     OccupationCatalogue,
     Occupation,
@@ -202,7 +203,15 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
 
     public const int VersesPerPage = 20;
 
+    /// <summary>A verse as the reader opens it: its chapter, with the verse marked.</summary>
     public static string VersePath(int book, int chapter, int verse) => $"{ChapterPath(book, chapter)}/{verse}";
+
+    /// <summary>
+    /// A verse's own page: the verse alone, in several texts, with a way to its chapter. It is the address
+    /// search engines are given for a verse; the reader's address of the verse names it as its canonical.
+    /// </summary>
+    public static string SingleVersePath(int book, int chapter, int verse) =>
+        $"/verse/{BookReferences.Slug(book)}/{chapter}/{verse}";
 
     /// <param name="path">The path as the reader asked for it, without the query.</param>
     /// <param name="query">The address's query parameters, by name.</param>
@@ -244,6 +253,13 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
 
             case ["read", var book, var chapter, var verse]:
                 return AtVerse(language, book, chapter, verse) ?? notFound;
+
+            case ["verse", var book, var chapter, var verse]:
+                return AtVerse(language, book, chapter, verse) is { } at
+                    ? at.Kind == PageKind.Verse
+                        ? at with { Kind = PageKind.SingleVerse, English = SingleVersePath(at.Book, at.Chapter, at.Verse) }
+                        : at
+                    : notFound;
 
             case ["strong", var number]:
                 return StrongNumbers.Normalize(number) is { } strong

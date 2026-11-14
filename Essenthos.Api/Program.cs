@@ -82,6 +82,8 @@ builder.Services.AddSingleton(new PlacePictures(images));
 // Each page of the reader written out for a search engine or a link preview, which the proxy asks
 // for before it falls back to the plain application.
 builder.Services.AddSingleton<PageShell>();
+builder.Services.AddSingleton<PageValidator>();
+builder.Services.AddSingleton<SitemapDates>();
 builder.Services.AddSingleton<PageCache>();
 builder.Services.AddScoped<PageLoader>();
 builder.Services.AddScoped<Sitemaps>();
