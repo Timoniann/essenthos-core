@@ -17,6 +17,11 @@ two tags the server lacks (with -AnalyticsEndpoint passed on); without it, this 
 does not have and names that script. Images sent earlier stay on the server, so a rollback is running this again with
 the previous hashes. -Registry names a registry to pull from instead; nothing uses one today.
 
+A deploy of the reader keeps the scripts and styles of the build it replaces (deploy/keep-assets.sh):
+both images' /assets are copied into $Root/web-assets, which the web container serves behind its own,
+and whatever no deploy has copied for 21 days is deleted. A tab left open across the deploy, and a
+search engine rendering with the entry script it cached, still find the chunks that script asks for.
+
 Dev runs only on a machine whose .env turns it on (COMPOSE_PROFILES=dev, DEV_SITES=on). The production
 server has no dev, and -Environment dev is refused there.
 
@@ -64,7 +69,7 @@ catch {
 }
 
 # Only what the commit tracks goes: .env and the rehearsal's files stay where they are.
-$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/housekeeping.sh', 'deploy/umami-setup.sh', 'deploy/initdb')
+$shipped = @('deploy/compose.yaml', 'deploy/Caddyfile', 'deploy/backup.sh', 'deploy/backup-offsite.sh', 'deploy/housekeeping.sh', 'deploy/keep-assets.sh', 'deploy/umami-setup.sh', 'deploy/initdb')
 $files = @(git -C $repository ls-tree -r --name-only --full-tree $Commit -- @shipped |
     ForEach-Object { $_.Substring('deploy/'.Length) })
 
@@ -98,12 +103,18 @@ if (-not $Registry) {
 $preflight = $preflight -join "`n"
 
 # The dev tags are commented out in env.example; a line has to exist before sed can replace it.
+# The reader the server runs now is read before .env names the new one, so its files are kept too.
+$keep = if ($web -and $Environment -eq 'prod') {
+    "sh keep-assets.sh '$Root/web-assets' `"`$replaced`" '$web'"
+}
 $remote = @"
 set -eu
 cd '$Root/deploy'
 grep -q '^API${suffix}_IMAGE=' .env || echo 'API${suffix}_IMAGE=' >> .env
 grep -q '^WEB${suffix}_IMAGE=' .env || echo 'WEB${suffix}_IMAGE=' >> .env
+replaced=`$(sed -n 's/^WEB${suffix}_IMAGE=//p' .env)
 $(($edits | ForEach-Object { "sed -i '$_' .env" }) -join "`n")
+$keep
 $(if ($Registry) { 'docker compose pull --quiet' })
 docker compose up -d --remove-orphans
 # A bind-mounted Caddyfile that changed does not recreate the container, and a running Caddy keeps
@@ -150,7 +161,7 @@ try {
     Write-Host "Copying $($files.Count) files of $Commit to ${Server}:$Root/deploy"
     # The folders the deploy user writes into later (the updating page's switch, what `forge publish`
     # sends) are made here, as that user: a folder Docker makes for a mount is root's, and refuses it.
-    ssh @ssh $Server "mkdir -p '$Root/deploy/initdb' '$Root/maintenance' '$Root/releases' '$Root/downloads' '$Root/images/corpus' '$Root/logs/caddy'"
+    ssh @ssh $Server "mkdir -p '$Root/deploy/initdb' '$Root/maintenance' '$Root/releases' '$Root/downloads' '$Root/images/corpus' '$Root/logs/caddy' '$Root/web-assets'"
     foreach ($file in $files) {
         scp -q @ssh (Join-Path $staging 'deploy' $file) "${Server}:$Root/deploy/$file"
     }

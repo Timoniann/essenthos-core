@@ -181,6 +181,10 @@ services:
 
   web:
     <<: *web
+    volumes:
+      # The scripts and styles of the builds deploy.ps1 replaced, kept for some weeks (keep-assets.sh)
+      # and served behind the image's own /assets, so a page opened before a deploy still loads.
+      - ${HOST_DATA_ROOT}/web-assets:/usr/share/nginx/kept/assets:ro
 
   # Dev: started only where COMPOSE_PROFILES names "dev". Not on the production server.
   api-dev-migrate:
