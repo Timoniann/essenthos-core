@@ -50,7 +50,18 @@ internal static partial class ForgeVerbs
             Option(args, "--release"),
             args.Contains("--without-rehearsal"),
             CancellationToken.None,
-            dryRun: args.Contains("--dry-run"));
+            dryRun: args.Contains("--dry-run"),
+            everyTable: args.Contains("--every-table"),
+            copyServed: args.Contains("--copy-served"));
+    }
+
+    private static async Task<int> Difference(ForgeRun forge, string[] args)
+    {
+        using var differenceScope = forge.Scope();
+        return await differenceScope.ServiceProvider.GetRequiredService<Publisher>().MakeDifference(
+            Option(args, "--base") ?? throw new InvalidOperationException("forge difference --base <release> [--release <name>]"),
+            Option(args, "--release"),
+            CancellationToken.None);
     }
 
     private static async Task<int> PublishDownloads(ForgeRun forge, string[] args)

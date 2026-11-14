@@ -61,6 +61,22 @@ internal sealed class TargetHost(ReleaseTarget target)
         }
     }
 
+    /// <summary>
+    /// Runs a difference script from the releases folder into <paramref name="database"/>, unzipped in the
+    /// database container and fed to psql, which stops at the first error and so leaves the script's one
+    /// transaction uncommitted. True when the script reached its end: it prints
+    /// <see cref="ReleaseDifference.AppliedMark"/> only after its COMMIT, so a file cut short reads false.
+    /// </summary>
+    /// <param name="everyTable">Sum every table against the release, not only the ones the difference changes.</param>
+    public async Task<bool> ApplyDifference(string file, string database, bool everyTable, CancellationToken cancellationToken)
+    {
+        var script =
+            $"gunzip -c {Shell.QuoteForRemote($"/releases/{file}")} | psql -U {Shell.QuoteForRemote(target.Superuser)} -d {Shell.QuoteForRemote(database)} " +
+            $"-X -q -v ON_ERROR_STOP=1{(everyTable ? " -v verify_all=1" : string.Empty)} -f -";
+        var output = await Docker(["exec", target.Container, "sh", "-c", script], cancellationToken, quiet: true);
+        return output.Split('\n').Any(line => line.TrimEnd('\r').StartsWith(ReleaseDifference.AppliedMark, StringComparison.Ordinal));
+    }
+
     /// <summary>Where <see cref="Upload"/> puts a release, and the database container reads it at <c>/releases</c>.</summary>
     public string ReleasesFolder => target.IsRemote
         ? $"{target.DataRoot.TrimEnd('/')}/releases"
@@ -97,9 +113,9 @@ internal sealed class TargetHost(ReleaseTarget target)
             return;
         }
 
-        if (files.FirstOrDefault(file => ReleaseUploads.ReleaseOf(file) is null) is { } other)
+        if (files.FirstOrDefault(file => ReleaseUploads.ReleaseOf(file) is null && ReleaseUploads.DifferenceOf(file) is null) is { } other)
         {
-            throw new InvalidOperationException($"\"{other}\" is not a release dump; nothing was removed from {ReleasesFolder}.");
+            throw new InvalidOperationException($"\"{other}\" is not a release dump or difference; nothing was removed from {ReleasesFolder}.");
         }
 
         if (!target.IsRemote)
