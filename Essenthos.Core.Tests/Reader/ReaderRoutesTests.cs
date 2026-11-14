@@ -24,6 +24,7 @@ public sealed partial class ReaderRoutesTests
     {
         ["$book"] = "mark",
         ["$chapter"] = "3",
+        ["$verse"] = "16",
         ["$number"] = "H430",
         ["$slug"] = "abram",
         ["$id"] = "12",
