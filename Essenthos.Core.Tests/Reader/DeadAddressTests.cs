@@ -90,7 +90,7 @@ public sealed class DeadAddressTests : IDisposable
             .Should().Be("/read/psalms/49");
 
         var verses = await new Sitemaps(_db, Canon(), _cache).Addresses("verses-psalms.xml", default);
-        verses.Should().Equal("/read/psalms/49/1", "/read/psalms/49/2");
+        verses.Should().Equal("/verse/psalms/49/1", "/verse/psalms/49/2");
     }
 
     /// <summary>
@@ -141,7 +141,8 @@ public sealed class DeadAddressTests : IDisposable
             listed.AddRange(await sitemaps.Addresses(name + ".xml", default) ?? []);
         }
 
-        listed.Should().Contain(["/read/psalms/49/1", "/read/esther/5/14", "/people/gibbar"]).And.NotContain("/read/psalms/49/0");
+        listed.Should().Contain(["/verse/psalms/49/1", "/verse/esther/5/14", "/people/gibbar"])
+            .And.NotContain(["/verse/psalms/49/0", "/read/psalms/49/1"]);
         var failing = new List<string>();
         foreach (var address in listed)
         {
@@ -169,9 +170,11 @@ public sealed class DeadAddressTests : IDisposable
         builder.Services.AddSingleton<PageCache>();
         builder.Services.AddSingleton(new SiteSettingsFile(Path.Combine(_folder, "settings.json"), NullLogger<SiteSettingsFile>.Instance));
         builder.Services.AddSingleton<PageShell>();
+        builder.Services.AddSingleton<PageValidator>();
         builder.Services.AddSingleton(new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance));
         builder.Services.AddScoped<PageLoader>();
         builder.Services.AddScoped<Sitemaps>();
+        builder.Services.AddSingleton<SitemapDates>();
         await using var app = builder.Build();
         app.MapGroup("/v1").MapPages();
         await app.StartAsync();
@@ -193,6 +196,65 @@ public sealed class DeadAddressTests : IDisposable
         }
 
         (await client.GetAsync("/v1/pages/de/places/mahalab")).StatusCode.Should().Be(HttpStatusCode.Gone);
+
+        // A page answered once is answered 304 when asked again with its validator, and a page that is not
+        // there gives out none.
+        var verse = await client.GetAsync("/v1/pages/verse/psalms/49/1");
+        verse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var tag = verse.Headers.ETag!.Tag;
+        verse.Content.Headers.LastModified.Should().NotBeNull();
+        using var again = new HttpRequestMessage(HttpMethod.Get, "/v1/pages/es/read/psalms/49");
+        again.Headers.TryAddWithoutValidation("If-None-Match", "W/" + tag);
+        (await client.SendAsync(again)).StatusCode.Should().Be(HttpStatusCode.NotModified);
+        (await client.GetAsync("/v1/pages/people/nobody-at-all")).Headers.ETag.Should().BeNull();
+
+        // A sitemap list is the same list while its addresses are; with no store to date it, it carries no date.
+        var list = await client.GetAsync("/v1/sitemaps/verses-psalms.xml");
+        (await list.Content.ReadAsStringAsync()).Should().Contain("<loc>https://essenthos.org/verse/psalms/49/1</loc>");
+        list.Content.Headers.LastModified.Should().BeNull();
+        using var listAgain = new HttpRequestMessage(HttpMethod.Get, "/v1/sitemaps/verses-psalms.xml");
+        listAgain.Headers.TryAddWithoutValidation("If-None-Match", list.Headers.ETag!.Tag);
+        (await client.SendAsync(listAgain)).StatusCode.Should().Be(HttpStatusCode.NotModified);
+        (await client.GetStringAsync("/v1/sitemap.xml")).Should().Contain("verses-psalms.xml").And.NotContain("<lastmod>");
         await app.StopAsync();
+    }
+
+    /// <summary>
+    /// A chapter's text read from its stored pane is the word table's to the letter: the same pages, byte for
+    /// byte, before the panes exist and after (TSK-1662).
+    /// </summary>
+    [Fact]
+    public async Task APagesTextFromThePaneIsTheWordTables()
+    {
+        string[] addresses = ["/read/psalms/49", "/read/psalms/49/1", "/uk/verse/psalms/49/2", "/verse/esther/5/14", "/read/esther/5"];
+        var before = new List<string>();
+        foreach (var address in addresses)
+        {
+            before.Add((await Load(address)).Body);
+        }
+
+        foreach (var text in _db.Texts.ToList())
+        {
+            foreach (var (book, chapter) in new[] { (Psalms, 49), (Esther, 5), (1, 1) })
+            {
+                if (await Panes.Read(_db, text.Id, text.Slug, book, chapter, 150, default) is { } pane)
+                {
+                    _db.Panes.Add(new Pane { TextId = text.Id, CanonicalBook = book, CanonicalChapter = chapter, Body = pane.Gzip, Hash = pane.Hash });
+                }
+            }
+        }
+
+        await _db.SaveChangesAsync();
+        _db.Panes.Count().Should().BeGreaterThan(3);
+        using var fresh = new PageCache();
+        var loader = new PageLoader(_db, Canon(), new SiteSettingsFile(Path.Combine(_folder, "settings.json"),
+            NullLogger<SiteSettingsFile>.Instance), fresh, new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance));
+        var after = new List<string>();
+        foreach (var address in addresses)
+        {
+            after.Add((await loader.Load(PageAddress.Parse(address), PageWording.Compiled("en"), default)).Body);
+        }
+
+        after.Should().Equal(before);
     }
 }

@@ -1,4 +1,6 @@
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 
 namespace Essenthos.Core.Pages;
@@ -7,6 +9,12 @@ namespace Essenthos.Core.Pages;
 internal sealed record ShellReading(string Html, IReadOnlyDictionary<string, PageWording> Wording)
 {
     public PageWording WordingFor(SiteLanguage language) => Wording[language.Code];
+
+    /// <summary>A hash of the shell and its wording as read, which changes with every build of the reader that changes them.</summary>
+    public string Version { get; init; } = "";
+
+    /// <summary>When this process first read the shell as it is now, in UTC.</summary>
+    public DateTime ReadAt { get; init; } = DateTime.UtcNow;
 }
 
 /// <summary>
@@ -74,12 +82,19 @@ internal sealed class PageShell(IConfiguration configuration, IHostEnvironment e
                 var html = await Read(source, cancellationToken)
                            ?? throw new FileNotFoundException($"Nothing is served at {source}.");
                 var wording = new Dictionary<string, PageWording>();
+                var read = new StringBuilder(html);
                 foreach (var language in SiteLanguage.All)
                 {
-                    wording[language.Code] = await Wording(source, language.Code, cancellationToken);
+                    var (said, raw) = await Wording(source, language.Code, cancellationToken);
+                    wording[language.Code] = said;
+                    read.Append('\0').Append(raw);
                 }
 
-                _reading = new ShellReading(html, wording);
+                var version = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(read.ToString())))[..16];
+                // The same shell read again keeps the moment it was first read, so its pages keep their date.
+                _reading = _reading?.Version == version
+                    ? _reading with { Html = html, Wording = wording }
+                    : new ShellReading(html, wording) { Version = version, ReadAt = DateTime.UtcNow };
             }
             catch (Exception exception) when (exception is HttpRequestException or IOException or TaskCanceledException
                                                   or UnauthorizedAccessException && !cancellationToken.IsCancellationRequested)
@@ -102,19 +117,20 @@ internal sealed class PageShell(IConfiguration configuration, IHostEnvironment e
         }
     }
 
-    private async Task<PageWording> Wording(string shell, string code, CancellationToken cancellationToken)
+    /// <returns>The wording, and the text it was read from; empty where the API's own copy stands in.</returns>
+    private async Task<(PageWording Wording, string Raw)> Wording(string shell, string code, CancellationToken cancellationToken)
     {
         var source = IsAddress(shell)
             ? new Uri(new Uri(shell), $"meta/{code}.json").ToString()
             : Path.Combine(Path.GetDirectoryName(shell) ?? "", "meta", $"{code}.json");
         try
         {
-            return await Read(source, cancellationToken) is { } json ? PageWording.Parse(code, json) : Compiled[code];
+            return await Read(source, cancellationToken) is { } json ? (PageWording.Parse(code, json), json) : (Compiled[code], "");
         }
         catch (JsonException exception)
         {
             logger.LogWarning(exception, "The page wording at {Source} is not JSON; the API's own copy stands in", source);
-            return Compiled[code];
+            return (Compiled[code], "");
         }
     }
 

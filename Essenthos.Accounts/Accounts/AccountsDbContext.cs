@@ -42,6 +42,9 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     public DbSet<AdminAction> AdminActions => Set<AdminAction>();
 
+    /// <summary>When each sitemap list last changed, by a hash of what it lists.</summary>
+    public DbSet<SitemapList> SitemapLists => Set<SitemapList>();
+
     /// <summary>
     /// The keys that protect the sign-in flow's short-lived cookies. Here rather than on a disk so that
     /// every API process of one environment shares them, they survive a container being replaced, and
@@ -200,6 +203,14 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             message.HasIndex(m => new { m.AuthorId, m.At });
             message.HasOne<Suggestion>().WithMany().HasForeignKey(m => m.SuggestionId).OnDelete(DeleteBehavior.Cascade);
             message.HasOne<Account>().WithMany().HasForeignKey(m => m.AuthorId).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        model.Entity<SitemapList>(list =>
+        {
+            list.ToTable("sitemap_list");
+            list.HasKey(l => l.Name);
+            list.Property(l => l.Name).HasMaxLength(64);
+            list.Property(l => l.Hash).HasMaxLength(64);
         });
 
         // No foreign keys: the record of what was done outlives the account and the suggestion it was

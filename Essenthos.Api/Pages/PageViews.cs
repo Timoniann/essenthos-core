@@ -30,6 +30,30 @@ internal sealed record VerseView(int Book, string BookName, int Chapter, int Ver
     public OriginalVerseView? Original { get; init; }
 }
 
+/// <summary>A verse on its own page, in the text the page's language reads, with the same verse in others beside it.</summary>
+internal sealed record SingleVerseView(int Book, string BookName, int Chapter, int Verse, string Text, string TextName)
+{
+    /// <summary>The verse word by word, each name linked to its record; empty where only its plain text is known.</summary>
+    public IReadOnlyList<PaneWord> Words { get; init; } = [];
+
+    /// <summary>The language the text is written in; the page's own where unknown.</summary>
+    public string? TextLanguage { get; init; }
+
+    /// <summary>The same verse in the texts the reader offers first beside this one.</summary>
+    public IReadOnlyList<OtherVerse> Others { get; init; } = [];
+
+    /// <summary>The verse in the original, word by word; null where no original holds it.</summary>
+    public OriginalVerseView? Original { get; init; }
+
+    /// <summary>The verses either side in the same chapter, where there are any.</summary>
+    public int? Previous { get; init; }
+
+    public int? Next { get; init; }
+}
+
+/// <summary>A verse in another text than the page's own, named.</summary>
+internal sealed record OtherVerse(string TextName, string? Language, string Text);
+
 /// <param name="Language">The original's language as a web page names it.</param>
 internal sealed record OriginalVerseView(string TextName, string? Language, string Text, IReadOnlyList<OriginalWordView> Words);
 
@@ -243,7 +267,9 @@ internal static partial class PageViews
         var beside = Beside(t, OriginalOf(verse.Book));
         var description = AroundQuote(t, verse.Text, quote => t.Text("verse.description",
             ("reference", reference), ("text", verse.TextName), ("quote", quote), ("beside", beside)));
-        var versePath = PageAddress.VersePath(verse.Book, verse.Chapter, verse.Verse);
+        // The reader's address of a verse shows its whole chapter, as thirty others do; the verse's own page
+        // is the one a search engine is told to keep (PRB-1653).
+        var versePath = PageAddress.SingleVersePath(verse.Book, verse.Chapter, verse.Verse);
         return Page(StatusCodes.Status200OK, t.Titled(title), reference, description, body) with
         {
             Canonical = versePath,
@@ -257,6 +283,139 @@ internal static partial class PageViews
                 ("isPartOf", ChapterNode(link, verse.Book, verse.BookName, verse.Chapter, verse.TextName))),
         };
     }
+
+    /// <summary>
+    /// A verse's own page: the verse large, in the page language's text, each name in it linked to its
+    /// record as the reader marks it; the way to the whole chapter at the verse; the verses either side;
+    /// the same verse in the texts the reader offers first; and the verse in the original, word by word.
+    /// </summary>
+    public static PageContent SingleVerse(SiteLanguage language, PageWording t, SingleVerseView verse)
+    {
+        var reference = t.Reference(verse.BookName, verse.Chapter, verse.Verse);
+        var chapter = $"{verse.BookName} {verse.Chapter}";
+        var chapterPath = PageAddress.ChapterPath(verse.Book, verse.Chapter);
+        var versePath = PageAddress.SingleVersePath(verse.Book, verse.Chapter, verse.Verse);
+        var textLanguage = verse.TextLanguage ?? language.Code;
+        var body = Open(language)
+            .Open("nav").Link(language.Path("/"), PageContent.SiteName).Text(Crumb).Link(language.Path(chapterPath), chapter).Close("nav")
+            .Element("h1", reference)
+            .Open("blockquote", lang: textLanguage, attributes: ("dir", Direction(textLanguage))).Open("p");
+        Said(body, language, verse);
+        body.Close("p").Close("blockquote")
+            .Element("p", verse.TextName, "source")
+            .Open("p").Link(language.Path(PageAddress.VersePath(verse.Book, verse.Chapter, verse.Verse)),
+                t.Text("verse.wholeChapter", ("chapter", chapter)), className: "chapter-link").Close("p");
+        if (verse.Previous is not null || verse.Next is not null)
+        {
+            body.Open("nav");
+            if (verse.Previous is { } previous)
+            {
+                body.Link(language.Path(PageAddress.SingleVersePath(verse.Book, verse.Chapter, previous)),
+                    $"← {t.Reference(verse.BookName, verse.Chapter, previous)}", "prev");
+            }
+
+            if (verse.Next is { } next)
+            {
+                body.Text(verse.Previous is null ? "" : " · ").Link(language.Path(PageAddress.SingleVersePath(verse.Book, verse.Chapter, next)),
+                    $"{t.Reference(verse.BookName, verse.Chapter, next)} →", "next");
+            }
+
+            body.Close("nav");
+        }
+
+        if (verse.Others.Count > 0)
+        {
+            body.Open("section").Element("h2", t.Text("verse.otherTexts", ("reference", reference)));
+            foreach (var other in verse.Others)
+            {
+                var otherLanguage = other.Language ?? language.Code;
+                body.Element("h3", other.TextName)
+                    .Open("p", lang: otherLanguage, attributes: ("dir", Direction(otherLanguage))).Text(other.Text).Close("p");
+            }
+
+            body.Close("section");
+        }
+
+        body.Close("article");
+        if (verse.Original is { } original)
+        {
+            OriginalWords(body, language, t, reference, original);
+        }
+
+        var title = string.Join(Separator, reference, t.Quoted(Shortened(verse.Text, TitleQuoteLength)), verse.TextName);
+        var beside = Beside(t, OriginalOf(verse.Book));
+        var description = AroundQuote(t, verse.Text, quote => t.Text("verse.description",
+            ("reference", reference), ("text", verse.TextName), ("quote", quote), ("beside", beside)));
+        return Page(StatusCodes.Status200OK, t.Titled(title), reference, description, body) with
+        {
+            Canonical = versePath,
+            Type = "article",
+            PageType = "ItemPage",
+            Trail = [Start, new Crumb(chapter, chapterPath), new Crumb(reference, versePath)],
+            About = (link, _) => StructuredData.Node("CreativeWork",
+                ("name", reference),
+                ("text", verse.Text),
+                ("inLanguage", textLanguage),
+                ("url", link(versePath)),
+                ("isPartOf", ChapterNode(link, verse.Book, verse.BookName, verse.Chapter, verse.TextName))),
+        };
+    }
+
+    /// <summary>
+    /// The verse's words as the page prints them, the white space between them collapsed as the plain text
+    /// is, each name a link to its record where the site has a page for it.
+    /// </summary>
+    private static void Said(HtmlWriter body, SiteLanguage language, SingleVerseView verse)
+    {
+        if (verse.Words.Count == 0)
+        {
+            body.Text(verse.Text);
+            return;
+        }
+
+        var pieces = new List<(string Text, string? Href)>();
+        foreach (var word in verse.Words)
+        {
+            pieces.Add((word.Surface, word.Record is { } record ? PageAddress.TargetPath(record.Kind, record.Slug) : null));
+            pieces.Add((word.Trailer, null));
+        }
+
+        // Trimmed at both ends and collapsed between, as the verse's plain text is.
+        var last = pieces.FindLastIndex(piece => !string.IsNullOrWhiteSpace(piece.Text));
+        var space = true;
+        for (var i = 0; i <= last; i++)
+        {
+            var (text, href) = pieces[i];
+            var flat = Spaces().Replace(text, " ");
+            if (space)
+            {
+                flat = flat.TrimStart();
+            }
+
+            if (i == last)
+            {
+                flat = flat.TrimEnd();
+            }
+
+            if (flat.Length == 0)
+            {
+                continue;
+            }
+
+            space = flat.EndsWith(' ');
+            if (href is null)
+            {
+                body.Text(flat);
+            }
+            else
+            {
+                body.Link(language.Path(href), flat, className: "name");
+            }
+        }
+    }
+
+    /// <summary>Right to left for the scripts that run so; null, the page's own way, for the rest.</summary>
+    private static string? Direction(string language) => language is "he" or "hbo" or "arc" or "ar" or "arb" or "ur" ? "rtl" : null;
 
     /// <summary>A chapter as part of its book, and the book as part of the Bible it is read in.</summary>
     private static JsonObject ChapterNode(Func<string, string> link, int book, string bookName, int chapter, string textName) =>
@@ -891,6 +1050,9 @@ internal static partial class PageViews
 
     [GeneratedRegex(@"[\s,;:.!?—–-]+$")]
     private static partial Regex Trailing();
+
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex Spaces();
 
     [GeneratedRegex(@"[.!?…]$")]
     private static partial Regex Sentence();

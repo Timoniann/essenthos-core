@@ -72,17 +72,17 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         return names;
     }
 
-    public async Task WriteIndex(Stream output, string origin, CancellationToken cancellationToken)
+    /// <param name="dated">When each list last changed (<see cref="SitemapDates"/>); a list with no date is listed without one.</param>
+    public async Task WriteIndex(Stream output, string origin, Func<string, Task<DateTimeOffset?>> dated, CancellationToken cancellationToken)
     {
         await using var xml = XmlWriter.Create(output, Writing);
         await xml.WriteStartDocumentAsync();
         await xml.WriteStartElementAsync(null, "sitemapindex", Namespace);
-        var modified = await LastModified(cancellationToken);
         foreach (var name in await Names(cancellationToken))
         {
             await xml.WriteStartElementAsync(null, "sitemap", Namespace);
             await xml.WriteElementStringAsync(null, "loc", Namespace, $"{origin}/sitemaps/{name}{Extension}");
-            if (modified is { } at)
+            if (await dated(name) is { } at)
             {
                 await xml.WriteElementStringAsync(null, "lastmod", Namespace,
                     at.ToUniversalTime().ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", System.Globalization.CultureInfo.InvariantCulture));
@@ -180,7 +180,7 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
             [
                 .. verses
                     .OrderBy(v => v.CanonicalChapter).ThenBy(v => v.CanonicalVerse)
-                    .Select(v => PageAddress.VersePath(book, v.CanonicalChapter, v.CanonicalVerse)),
+                    .Select(v => PageAddress.SingleVersePath(book, v.CanonicalChapter, v.CanonicalVerse)),
             ];
         }
 
@@ -224,16 +224,6 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
                 .Select(number => $"/strong/{number}"),
         ];
     }
-
-    /// <summary>
-    /// When the lists last changed: every one of them is made from the corpus, so when the release being
-    /// served was built. No date is claimed for a single address, since nothing records when one page's
-    /// words last changed, and a search engine trusts a date only while every date it is given is true.
-    /// </summary>
-    private Task<DateTimeOffset?> LastModified(CancellationToken cancellationToken) =>
-        cache.Remember("sitemap:modified", PageCache.Corpus, () =>
-            db.CorpusReleases.OrderByDescending(r => r.BuiltAt).Select(r => (DateTimeOffset?)r.BuiltAt)
-                .FirstOrDefaultAsync(cancellationToken));
 
     private async Task<IReadOnlyList<int>> BooksWithText(CancellationToken cancellationToken)
     {

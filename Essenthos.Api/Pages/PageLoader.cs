@@ -64,6 +64,20 @@ internal static class ReaderTexts
             .Distinct();
     }
 
+    /// <summary>
+    /// The texts a verse is first shown in beside the one it is read in, as the reader's own list starts
+    /// for a reader who has chosen none (essenthos-web, defaultOtherTexts): up to three that hold the book,
+    /// those in the page's language first, then the originals, then the rest, each group by name.
+    /// </summary>
+    public static IReadOnlyList<ReaderText> Others(IReadOnlyList<ReaderText> texts, ReaderText shown, int book, SiteLanguage language, int count = 3) =>
+    [
+        .. texts
+            .Where(text => text.Id != shown.Id && text.Covers(book))
+            .OrderBy(text => text.Language == language.Corpus ? 0 : text.Kind != TextKind.Translation ? 1 : 2)
+            .ThenBy(text => text.Name, StringComparer.InvariantCultureIgnoreCase)
+            .Take(count),
+    ];
+
     private static ReaderText? Find(IEnumerable<ReaderText> texts, string slug) =>
         texts.FirstOrDefault(text => string.Equals(text.Slug, slug, StringComparison.OrdinalIgnoreCase));
 }
@@ -94,6 +108,7 @@ internal sealed class PageLoader(
             PageKind.Home => PageViews.Home(language, wording, await Books(language, wording, cancellationToken)),
             PageKind.Chapter => await Chapter(address, wording, cancellationToken),
             PageKind.Verse => await Verse(address, wording, cancellationToken),
+            PageKind.SingleVerse => await SingleVerse(address, wording, cancellationToken),
             PageKind.Record => await Record(address, wording, cancellationToken),
             PageKind.OccupationCatalogue => await OccupationCatalogue(address, wording, cancellationToken),
             PageKind.Occupation => await Occupation(address, wording, cancellationToken),
@@ -188,7 +203,11 @@ internal sealed class PageLoader(
         var language = address.Language;
         foreach (var text in ReaderTexts.ForBook(await Texts(cancellationToken), await Chosen(language, cancellationToken), address.Book))
         {
-            var verses = await ChapterVerses(text.Id, address.Book, address.Chapter, cancellationToken);
+            // The page carries the pane as the reader's script asks for it, and takes its verses from the
+            // same row: one read of the chapter, not three.
+            var pane = await ReadPane(text.Id, address.Book, address.Chapter, cancellationToken);
+            var taken = pane is null ? null : Taken(address.Book, address.Chapter, pane);
+            var verses = taken?.Plain ?? await WordTableVerses(text.Id, address.Book, address.Chapter, cancellationToken);
             if (verses.Count > 0)
             {
                 return PageViews.Chapter(language, wording, new ChapterView(
@@ -199,9 +218,9 @@ internal sealed class PageLoader(
                     verses,
                     TextName(wording, text)) { TextLanguage = StructuredData.LanguageTag(text.Language) }) with
                 {
-                    Data = await Pane(text, address.Book, address.Chapter, cancellationToken) is { } pane
-                        ? PageData.Of([(PageData.PaneAddress(text.Slug, BookReferences.Slug(address.Book), address.Chapter), pane)])
-                        : null,
+                    Data = pane is null
+                        ? null
+                        : PageData.Of([(PageData.PaneAddress(text.Slug, BookReferences.Slug(address.Book), address.Chapter), PageData.Written(pane))]),
                 };
             }
         }
@@ -247,6 +266,70 @@ internal sealed class PageLoader(
 
         // A number no text places in the chapter — one edition's own numbering, linked or listed as if it
         // were the shared frame's — is sent to the chapter it was asked in, rather than answered as nothing.
+        return chapterHeld
+            ? PageViews.NotFound(language, wording) with
+            {
+                Status = StatusCodes.Status301MovedPermanently,
+                MovedTo = PageAddress.ChapterPath(address.Book, address.Chapter),
+            }
+            : null;
+    }
+
+    /// <summary>
+    /// A verse's own page: the verse in the text the page's language reads, its names linked to their
+    /// records, then the same verse in the other texts the reader offers first, and in the original.
+    /// </summary>
+    private async Task<PageContent?> SingleVerse(PageAddress address, PageWording wording, CancellationToken cancellationToken)
+    {
+        var chapterCount = await canon.ChapterCount(address.Book, cancellationToken);
+        if (address.Chapter > chapterCount)
+        {
+            return null;
+        }
+
+        var language = address.Language;
+        var texts = await Texts(cancellationToken);
+        var chapterHeld = false;
+        foreach (var text in ReaderTexts.ForBook(texts, await Chosen(language, cancellationToken), address.Book))
+        {
+            var pane = await ChapterPane(text.Id, address.Book, address.Chapter, cancellationToken);
+            var verses = pane?.Plain ?? await WordTableVerses(text.Id, address.Book, address.Chapter, cancellationToken);
+            chapterHeld |= verses.Count > 0;
+            var said = verses.Where(verse => verse.Number == address.Verse).Select(verse => verse.Text).FirstOrDefault()
+                       ?? await SpannedVerse(text.Id, address, cancellationToken);
+            if (said is null)
+            {
+                continue;
+            }
+
+            var others = new List<OtherVerse>();
+            foreach (var other in ReaderTexts.Others(texts, text, address.Book, language))
+            {
+                var otherVerses = await ChapterVerses(other.Id, address.Book, address.Chapter, cancellationToken);
+                if (otherVerses.Where(verse => verse.Number == address.Verse).Select(verse => verse.Text).FirstOrDefault() is { } otherSaid)
+                {
+                    others.Add(new OtherVerse(TextName(wording, other), StructuredData.LanguageTag(other.Language), otherSaid));
+                }
+            }
+
+            var numbers = verses.Select(verse => verse.Number).Where(number => number > 0).ToList();
+            return PageViews.SingleVerse(language, wording, new SingleVerseView(
+                address.Book,
+                await BookName(language, wording, address.Book, cancellationToken),
+                address.Chapter,
+                address.Verse,
+                said,
+                TextName(wording, text))
+            {
+                Words = pane?.At(address.Verse) is { } verse && verse.Text == said ? verse.Words : [],
+                TextLanguage = StructuredData.LanguageTag(text.Language),
+                Others = others,
+                Original = await OriginalVerse(address, wording, cancellationToken),
+                Previous = numbers.Where(number => number < address.Verse).Select(number => (int?)number).Max(),
+                Next = numbers.Where(number => number > address.Verse).Select(number => (int?)number).Min(),
+            });
+        }
+
         return chapterHeld
             ? PageViews.NotFound(language, wording) with
             {
@@ -740,14 +823,56 @@ internal sealed class PageLoader(
 
     /// <summary>
     /// A chapter's verses in one text, numbered as the shared frame numbers them — the numbers the
-    /// addresses use — each as plain text. A verse the edition prints no words for is left out. Kept
-    /// a while, because a crawler asks for a chapter's verses one after another.
+    /// addresses use — each as plain text. A verse the edition prints no words for is left out. Read
+    /// from the chapter's stored pane where it says exactly what the word table says (<see cref="PaneText"/>),
+    /// otherwise from the word table. Kept a while, because a crawler asks for a chapter's verses one
+    /// after another.
     /// </summary>
-    private Task<IReadOnlyList<(int Number, string Text)>> ChapterVerses(
+    private async Task<IReadOnlyList<(int Number, string Text)>> ChapterVerses(
+        int textId, int book, int chapter, CancellationToken cancellationToken) =>
+        (await ChapterPane(textId, book, chapter, cancellationToken))?.Plain
+        ?? await WordTableVerses(textId, book, chapter, cancellationToken);
+
+    /// <summary>The same from the word table, where the pane cannot say it.</summary>
+    private Task<IReadOnlyList<(int Number, string Text)>> WordTableVerses(
         int textId, int book, int chapter, CancellationToken cancellationToken) =>
         cache.Remember($"chapter:{textId}:{book}:{chapter}", PageCache.Page,
             () => ReadChapter(textId, book, chapter, cancellationToken),
             verses => verses.Sum(verse => (long)verse.Text.Length) * sizeof(char));
+
+    /// <summary>
+    /// A chapter of one text from its stored pane, word by word; null where the corpus keeps no pane
+    /// for it, or where the pane cannot say exactly what the word table says.
+    /// </summary>
+    private async Task<PaneText?> ChapterPane(int textId, int book, int chapter, CancellationToken cancellationToken) =>
+        (await cache.Remember($"pane:{textId}:{book}:{chapter}", PageCache.Page,
+            async () => new KeptPane(await ReadPane(textId, book, chapter, cancellationToken) is { } json ? Taken(book, chapter, json) : null),
+            kept => kept.Text?.Bytes ?? 0)).Text;
+
+    /// <summary>A chapter's pane in one text as <c>/v1/panes</c> sends it uncompressed; null where the corpus keeps none.</summary>
+    private async Task<byte[]?> ReadPane(int textId, int book, int chapter, CancellationToken cancellationToken)
+    {
+        var body = await db.Panes.AsNoTracking()
+            .Where(p => p.TextId == textId && p.CanonicalBook == book && p.CanonicalChapter == chapter)
+            .Select(p => p.Body)
+            .FirstOrDefaultAsync(cancellationToken);
+        return body is null ? null : Panes.Unpack(body);
+    }
+
+    /// <summary>The pane's text where it is the word table's to the letter: one verse of the text at each address, and no passage read under another name.</summary>
+    private static PaneText? Taken(int book, int chapter, byte[] json)
+    {
+        if (TwinPassages.NamedElsewhere(book, chapter).Any())
+        {
+            return null;
+        }
+
+        var text = PaneText.Parse(json);
+        return text.Single ? text : null;
+    }
+
+    /// <summary>A pane as kept: its text, or that it has none a page can take.</summary>
+    private sealed record KeptPane(PaneText? Text);
 
     private async Task<IReadOnlyList<(int Number, string Text)>> ReadChapter(
         int textId, int book, int chapter, CancellationToken cancellationToken)
@@ -788,16 +913,6 @@ internal sealed class PageLoader(
         return verseId is { } id ? (await Said([id], cancellationToken)).GetValueOrDefault(id) : null;
     }
 
-    /// <summary>A chapter's pane in one text as <c>/v1/panes</c> sends it, ready to carry; null where the corpus keeps none.</summary>
-    private async Task<string?> Pane(ReaderText text, int book, int chapter, CancellationToken cancellationToken)
-    {
-        var body = await db.Panes.AsNoTracking()
-            .Where(p => p.TextId == text.Id && p.CanonicalBook == book && p.CanonicalChapter == chapter)
-            .Select(p => p.Body)
-            .FirstOrDefaultAsync(cancellationToken);
-        return body is null ? null : PageData.Written(Panes.Unpack(body));
-    }
-
     /// <summary>The originals a verse's own words are quoted from, the first that holds the book, as the reader orders them.</summary>
     private static readonly string[] Originals = ["BHSA", "NESTLE1904", "SWETE", "GRCBRENT"];
 
@@ -818,21 +933,29 @@ internal sealed class PageLoader(
             return null;
         }
 
-        var verseIds = await db.VerseReferences
-            .Where(r => r.IsPrimary && r.CanonicalBook == address.Book && r.CanonicalChapter == address.Chapter
-                        && r.CanonicalVerse == address.Verse && r.Verse!.TextId == original.Id)
-            .Select(r => r.VerseId)
-            .ToListAsync(cancellationToken);
-        if (verseIds.Count == 0)
+        IReadOnlyList<PaneWord> words;
+        if (await ChapterPane(original.Id, address.Book, address.Chapter, cancellationToken) is { } pane)
         {
-            return null;
+            words = pane.At(address.Verse)?.Words ?? [];
+        }
+        else
+        {
+            var verseIds = await db.VerseReferences
+                .Where(r => r.IsPrimary && r.CanonicalBook == address.Book && r.CanonicalChapter == address.Chapter
+                            && r.CanonicalVerse == address.Verse && r.Verse!.TextId == original.Id)
+                .Select(r => r.VerseId)
+                .ToListAsync(cancellationToken);
+            words = verseIds.Count == 0
+                ? []
+                : (await db.Words
+                    .Where(w => verseIds.Contains(w.VerseId) && !w.Elided)
+                    .OrderBy(w => w.VerseId).ThenBy(w => w.Position)
+                    .Select(w => new { w.Surface, w.Trailer, w.StrongNumber, w.Gloss })
+                    .ToListAsync(cancellationToken))
+                .Select(w => new PaneWord(w.Surface, w.Trailer, w.StrongNumber, w.Gloss, null))
+                .ToList();
         }
 
-        var words = await db.Words
-            .Where(w => verseIds.Contains(w.VerseId) && !w.Elided)
-            .OrderBy(w => w.VerseId).ThenBy(w => w.Position)
-            .Select(w => new { w.Surface, w.Trailer, w.StrongNumber, w.Gloss })
-            .ToListAsync(cancellationToken);
         if (words.Count == 0)
         {
             return null;
@@ -849,7 +972,7 @@ internal sealed class PageLoader(
         {
             var word = words[i];
             surface.Append(word.Surface);
-            numbers.AddRange((word.StrongNumber ?? "").Split(StrongSeparators, StringSplitOptions.RemoveEmptyEntries)
+            numbers.AddRange((word.Strong ?? "").Split(StrongSeparators, StringSplitOptions.RemoveEmptyEntries)
                 .Select(StrongNumbers.Normalize).OfType<string>()
                 .Where(n => StrongMorphemeCodes.GetDescription(n) is null));
             if (english && word.Gloss?.Trim() is { Length: > 0 } gloss && gloss.Any(char.IsLetterOrDigit))

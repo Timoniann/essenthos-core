@@ -121,20 +121,114 @@ public sealed class PageRenderingTests
         PageWording.Compiled("uk").CitedBook(70).Should().Be("Товит", "a book the Ohienko does not hold still has a Ukrainian name");
     }
 
+    /// <summary>
+    /// The reader's address of a verse shows the whole chapter, like thirty other addresses, so it names the
+    /// verse's own page as the one to keep, in every language (PRB-1653).
+    /// </summary>
     [Fact]
-    public void EveryLanguageOfTheVerseIsNamedAndEnglishIsTheDefault()
+    public void TheReadersAddressOfAVerseNamesTheVersesOwnPageInEveryLanguage()
     {
         var html = VersePage("Стань посередині!");
 
-        html.Should().Contain($"<link rel=\"canonical\" href=\"{Origin}/uk/read/mark/3/3\">");
+        html.Should().Contain($"<link rel=\"canonical\" href=\"{Origin}/uk/verse/mark/3/3\">");
         Regex.Matches(html, "<link rel=\"alternate\" hreflang=\"([^\"]+)\" href=\"([^\"]+)\">")
             .Select(match => (match.Groups[1].Value, match.Groups[2].Value))
             .Should().Equal(
-                ("en", $"{Origin}/read/mark/3/3"),
-                ("uk", $"{Origin}/uk/read/mark/3/3"),
-                ("de", $"{Origin}/de/read/mark/3/3"),
-                ("es", $"{Origin}/es/read/mark/3/3"),
-                ("x-default", $"{Origin}/read/mark/3/3"));
+                ("en", $"{Origin}/verse/mark/3/3"),
+                ("uk", $"{Origin}/uk/verse/mark/3/3"),
+                ("de", $"{Origin}/de/verse/mark/3/3"),
+                ("es", $"{Origin}/es/verse/mark/3/3"),
+                ("x-default", $"{Origin}/verse/mark/3/3"));
+    }
+
+    /// <summary>
+    /// A verse's own page leads with the verse alone, its names linked to their records, then the way to the
+    /// chapter at the verse, the verses either side and the same verse in other texts; it is its own canonical.
+    /// </summary>
+    [Fact]
+    public void AVersesOwnPageGivesTheVerseItsNamesTheChapterAndOtherTexts()
+    {
+        var verse = new SingleVerseView(43, "Від Івана", 3, 16, "Бо так полюбив Бог світ, що дав Сина", "Біблія Огієнка")
+        {
+            Words =
+            [
+                new PaneWord("Бо", " ", null, null, null),
+                new PaneWord("так", " ", null, null, null),
+                new PaneWord("полюбив", "  ", null, null, null),
+                new PaneWord("Бог", " ", null, null, ("god", "term")),
+                new PaneWord("світ", ", ", null, null, null),
+                new PaneWord("що", " ", null, null, null),
+                new PaneWord("дав", " ", null, null, null),
+                new PaneWord("Сина", "\n", null, null, ("jesus", "person")),
+            ],
+            TextLanguage = "uk",
+            Others = [new OtherVerse("Переклад Хоменка", "uk", "Бо так Бог полюбив світ"), new OtherVerse("Berean Standard Bible", "en", "For God so loved the world")],
+            Previous = 15,
+            Next = 17,
+        };
+
+        var page = PageViews.SingleVerse(SiteLanguage.Ukrainian, Ukrainian, verse);
+        var html = PageHtml.Render(Shell, page, SiteLanguage.Ukrainian, Origin);
+
+        html.Should().Contain($"<link rel=\"canonical\" href=\"{Origin}/uk/verse/john/3/16\">");
+        page.Heading.Should().Be("Від Івана 3:16");
+        page.Body.Should().StartWith("<article class=\"prerendered\" lang=\"uk\"><nav><a href=\"/uk/\">Essenthos</a> › <a href=\"/uk/read/john/3\">Від Івана 3</a></nav><h1>Від Івана 3:16</h1>")
+            .And.Contain("<blockquote lang=\"uk\"><p>Бо так полюбив <a href=\"/uk/terms/god\" class=\"name\">Бог</a> світ, що дав <a href=\"/uk/people/jesus\" class=\"name\">Сина</a></p></blockquote>")
+            .And.Contain("<p class=\"source\">Біблія Огієнка</p>")
+            .And.Contain("<a href=\"/uk/read/john/3/16\" class=\"chapter-link\">Читати весь розділ: Від Івана 3</a>")
+            .And.Contain("<a href=\"/uk/verse/john/3/15\" rel=\"prev\">← Від Івана 3:15</a> · <a href=\"/uk/verse/john/3/17\" rel=\"next\">Від Івана 3:17 →</a>")
+            .And.Contain("<h2>Від Івана 3:16 в інших текстах</h2><h3>Переклад Хоменка</h3><p lang=\"uk\">Бо так Бог полюбив світ</p><h3>Berean Standard Bible</h3><p lang=\"en\">For God so loved the world</p>");
+        Regex.Replace(Regex.Match(page.Body, "<blockquote[^>]*><p>(.*?)</p>").Groups[1].Value, "<[^>]+>", "")
+            .Should().Be(verse.Text, "the linked words read exactly as the verse's plain text");
+        Title(html).Should().StartWith("Від Івана 3:16 — «Бо так полюбив Бог світ");
+        html.Should().Contain("\"@type\":\"BreadcrumbList\"").And.Contain($"{Origin}/uk/verse/john/3/16");
+    }
+
+    /// <summary>
+    /// A chapter read from its stored pane is taken only where the pane says what the word table says: elided
+    /// words left out, and never where one address holds two verses of the text.
+    /// </summary>
+    [Fact]
+    public void APaneIsReadAsTheWordTableReadsItOrNotAtAll()
+    {
+        const string pane = """
+            {"format":1,"text":"T","book":43,"chapter":3,"chapters":21,"records":[["jesus","person"]],"provenance":[],"sources":[],
+             "verses":[{"n":16,"own":["3:16"],"words":[{"id":1,"s":"For","t":" "},{"id":2,"s":"God","t":"  ","n":"G2316","g":"God","e":[{"r":0}]},{"id":3,"s":"x","el":1},{"id":4,"s":"so."}]},
+                       {"n":17,"notes":[{"kind":"footnote","content":"a"}],"words":[]}]}
+            """;
+        var text = PaneText.Parse(System.Text.Encoding.UTF8.GetBytes(pane));
+
+        text.Single.Should().BeTrue();
+        text.Plain.Should().Equal((16, "For God so."));
+        text.At(16)!.Words.Select(word => word.Surface).Should().Equal("For", "God", "so.");
+        text.At(16)!.Words[1].Should().Be(new PaneWord("God", "  ", "G2316", "God", ("jesus", "person")));
+        PaneText.Parse(System.Text.Encoding.UTF8.GetBytes(pane.Replace("\"own\":[\"3:16\"]", "\"own\":[\"3:16\",\"3:16a\"]")))
+            .Single.Should().BeFalse();
+    }
+
+    /// <summary>
+    /// A page carries one validator for the state it is written from; a client holding it, by tag (weak, as a
+    /// compressing proxy marks it, or strong) or by date, is told it has the page.
+    /// </summary>
+    [Fact]
+    public void AClientHoldingThePagesValidatorIsToldItHasThePage()
+    {
+        var validity = new PageValidity("\"p123\"", new DateTimeOffset(2026, 11, 14, 12, 0, 0, TimeSpan.Zero));
+
+        bool Held(string header, string value)
+        {
+            var context = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+            context.Request.Headers[header] = value;
+            return validity.HeldBy(context.Request);
+        }
+
+        Held("If-None-Match", "\"p123\"").Should().BeTrue();
+        Held("If-None-Match", "W/\"p123\"").Should().BeTrue();
+        Held("If-None-Match", "\"other\", W/\"p123\"").Should().BeTrue();
+        Held("If-None-Match", "\"p124\"").Should().BeFalse();
+        Held("If-Modified-Since", "Sat, 14 Nov 2026 12:00:00 GMT").Should().BeTrue();
+        Held("If-Modified-Since", "Sat, 14 Nov 2026 11:59:59 GMT").Should().BeFalse();
+        Held("If-Range", "\"p123\"").Should().BeFalse();
     }
 
     [Fact]
@@ -209,6 +303,9 @@ public sealed class PageRenderingTests
     [InlineData("/read/MRK/3", "Chapter", "/read/mark/3")]
     [InlineData("/uk/read/mark/3", "Chapter", "/read/mark/3")]
     [InlineData("/de/read/mark/3/3", "Verse", "/read/mark/3/3")]
+    [InlineData("/uk/verse/JHN/3/16", "SingleVerse", "/verse/john/3/16")]
+    [InlineData("/verse/psalms/3/0", "Chapter", "/read/psalms/3")]
+    [InlineData("/verse/john/3", "NotFound", "/verse/john/3")]
     [InlineData("/uk/", "Home", "/")]
     [InlineData("/es/people/moses", "Record", "/people/moses")]
     [InlineData("/strong/h430", "Strong", "/strong/H430")]

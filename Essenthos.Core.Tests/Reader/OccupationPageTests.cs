@@ -174,9 +174,11 @@ public sealed class OccupationPageTests : IDisposable
         builder.Services.AddSingleton<PageCache>();
         builder.Services.AddSingleton(new SiteSettingsFile(Path.Combine(_folder, "settings.json"), NullLogger<SiteSettingsFile>.Instance));
         builder.Services.AddSingleton<PageShell>();
+        builder.Services.AddSingleton<PageValidator>();
         builder.Services.AddSingleton(new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance));
         builder.Services.AddScoped<PageLoader>();
         builder.Services.AddScoped<Sitemaps>();
+        builder.Services.AddSingleton<SitemapDates>();
         await using var app = builder.Build();
         app.MapGroup("/v1").MapPages();
         await app.StartAsync();

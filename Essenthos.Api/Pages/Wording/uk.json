@@ -112,7 +112,9 @@
   },
   "verse": {
     "description": "{{reference}}, {{text}}: {{quote}} {{beside}}",
-    "original": "в оригіналі, {{text}}"
+    "original": "в оригіналі, {{text}}",
+    "otherTexts": "{{reference}} в інших текстах",
+    "wholeChapter": "Читати весь розділ: {{chapter}}"
   },
   "entity": {
     "verses_one": "Згадується в {{count}} вірші Біблії.",
