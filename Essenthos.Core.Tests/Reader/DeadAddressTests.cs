@@ -55,7 +55,20 @@ public sealed class DeadAddressTests : IDisposable
             (49, 2, ["גם", "בני", "אדם"]));
         _db.Entities.AddRange(
             new Entity { Slug = "gibbar", Name = "Gibbar", Kind = EntityKind.Person },
-            new Entity { Slug = "bether", Name = "Bether", Kind = EntityKind.Place });
+            new Entity { Slug = "bether", Name = "Bether", Kind = EntityKind.Place },
+            new Entity
+            {
+                Slug = "abram", Name = "Abram", Kind = EntityKind.Person,
+                Names =
+                [
+                    new EntityName { Label = "Abram", Kind = "proper name" },
+                    new EntityName { Label = "Abraham", Kind = "proper name" },
+                    new EntityName { Label = "Abraham our father", Kind = "title" },
+                ],
+            },
+            new Entity { Slug = "towerofthehundred", Name = "Tower of the Hundred", Kind = EntityKind.Place },
+            new Entity { Slug = "hosea", Name = "Hosea", Kind = EntityKind.Person, Names = [new EntityName { Label = "Hoshea", Kind = "proper name" }] },
+            new Entity { Slug = "joshua", Name = "Joshua", Kind = EntityKind.Person, Names = [new EntityName { Label = "Hoshea", Kind = "proper name" }] });
         _db.SaveChanges();
 
         _services = new ServiceCollection().AddScoped(_ => database.NewContext()).BuildServiceProvider();
@@ -130,6 +143,47 @@ public sealed class DeadAddressTests : IDisposable
         (await MergedAddresses.Current(_db, "river-2", default)).Should().Be("river-2", "a record holding the address again keeps it");
     }
 
+    /// <summary>
+    /// An address guessed from another of a record's names opens the record: a proper name it holds,
+    /// its own name spelled with hyphens. A title is not a name, a name two records share leads
+    /// nowhere, and a name is looked for only among records of the address's kind.
+    /// </summary>
+    [Fact]
+    public async Task AnotherNameOfARecordLeadsToIt()
+    {
+        var abraham = await Load("/people/abraham");
+        abraham.Status.Should().Be(StatusCodes.Status301MovedPermanently);
+        abraham.MovedTo.Should().Be("/people/abram");
+        (await Load("/uk/places/tower-of-the-hundred")).MovedTo.Should().Be("/places/towerofthehundred");
+        (await Load("/people/abraham/verses")).MovedTo.Should().Be("/people/abram/verses");
+
+        (await Load("/people/abraham-our-father")).Status.Should().Be(StatusCodes.Status404NotFound, "a title is not a name");
+        (await Load("/people/hoshea")).Status.Should().Be(StatusCodes.Status404NotFound, "two records hold the name");
+        (await Load("/places/abraham")).Status.Should().Be(StatusCodes.Status404NotFound, "no place holds the name");
+        (await Load("/es/places/mahalab")).Status.Should().Be(StatusCodes.Status410Gone);
+    }
+
+    /// <summary>A letter outside ASCII is percent-encoded wherever an address leaves as one: a redirect, a sitemap, a canonical link.</summary>
+    [Fact]
+    public async Task AnAddressWithALetterOutsideAsciiLeavesEscaped()
+    {
+        PageAddress.Escaped("/de/events/león").Should().Be("/de/events/le%C3%B3n");
+        PageAddress.Escaped("/events/geʽezscript").Should().Be("/events/ge%CA%BDezscript");
+        PageAddress.Escaped("/read/mark/3?v=3").Should().Be("/read/mark/3?v=3");
+        PageEndpoints.Respelled(PageAddress.Parse("/de/events/león/"), "/de/events/león/", new Dictionary<string, string>())
+            .Should().Be("/de/events/le%C3%B3n");
+        PageEndpoints.Respelled(PageAddress.Parse("/de/events/león"), "/de/events/león", new Dictionary<string, string>())
+            .Should().BeNull();
+
+        using var output = new MemoryStream();
+        await Sitemaps.Write(output, "https://essenthos.org", ["/events/medellín"]);
+        var xml = System.Text.Encoding.UTF8.GetString(output.ToArray());
+        xml.Should().Contain("<loc>https://essenthos.org/uk/events/medell%C3%ADn</loc>")
+            .And.Contain("href=\"https://essenthos.org/events/medell%C3%ADn\"")
+            .And.NotContain("medellín");
+        PageHtml.Alternates("https://essenthos.org", "/events/león").Should().OnlyContain(link => link.Url.EndsWith("/events/le%C3%B3n"));
+    }
+
     /// <summary>Every address the sitemaps of verses and records list opens a page.</summary>
     [Fact]
     public async Task EveryAddressTheSitemapsListOpens()
@@ -184,6 +238,8 @@ public sealed class DeadAddressTests : IDisposable
                      ("/de/read/esther/5/32", "/de/read/esther/5"),
                      ("/es/places/gibbar-2", "/es/people/gibbar"),
                      ("/places/bether-2", "/places/bether"),
+                     ("/people/abraham", "/people/abram"),
+                     ("/de/people/abram/", "/de/people/abram"),
                  })
         {
             var answer = await client.GetAsync("/v1/pages" + asked);
@@ -193,6 +249,9 @@ public sealed class DeadAddressTests : IDisposable
         }
 
         (await client.GetAsync("/v1/pages/de/places/mahalab")).StatusCode.Should().Be(HttpStatusCode.Gone);
+        var slashed = await client.GetAsync("/v1/pages/de/events/le%C3%B3n/");
+        slashed.StatusCode.Should().Be(HttpStatusCode.PermanentRedirect);
+        slashed.Headers.Location!.OriginalString.Should().Be("/de/events/le%C3%B3n");
         await app.StopAsync();
     }
 }

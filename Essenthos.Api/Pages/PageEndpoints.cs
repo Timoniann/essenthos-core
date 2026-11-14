@@ -44,7 +44,7 @@ internal static class PageEndpoints
             var address = PageAddress.Parse("/" + path, query);
             if (address.RedirectTo is { } english)
             {
-                return Results.Redirect(english + request.QueryString, permanent: true, preserveMethod: true);
+                return Results.Redirect(PageAddress.Escaped(english) + request.QueryString, permanent: true, preserveMethod: true);
             }
 
             if (Respelled(address, "/" + path, query) is { } spelled)
@@ -69,7 +69,7 @@ internal static class PageEndpoints
                 : await loader.Load(address, wording, cancellationToken);
             if (page.MovedTo is { } moved)
             {
-                return Results.Redirect(address.Language.Path(moved) + request.QueryString, permanent: true, preserveMethod: true);
+                return Results.Redirect(PageAddress.Escaped(address.Language.Path(moved)) + request.QueryString, permanent: true, preserveMethod: true);
             }
 
             var html = PageHtml.Render(reading.Html, page, address.Language, Origin(context, configuration));
@@ -155,7 +155,8 @@ internal static class PageEndpoints
         var kept = query.Where(pair => pair.Key != "v" || address.Kind != PageKind.Verse)
             .Select(pair => $"{Uri.EscapeDataString(pair.Key)}={Uri.EscapeDataString(pair.Value)}")
             .ToList();
-        return kept.Count == 0 ? spelled : $"{spelled}?{string.Join('&', kept)}";
+        var location = PageAddress.Escaped(spelled);
+        return kept.Count == 0 ? location : $"{location}?{string.Join('&', kept)}";
     }
 
     private static string Origin(HttpContext context, IConfiguration configuration) =>

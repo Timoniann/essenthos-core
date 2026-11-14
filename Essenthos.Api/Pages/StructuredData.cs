@@ -53,7 +53,7 @@ internal static class StructuredData
             return null;
         }
 
-        string Link(string english) => origin + language.Path(english);
+        string Link(string english) => origin + PageAddress.Escaped(language.Path(english));
         var url = Link(canonical);
         var graph = new JsonArray();
         if (page.IsHome)
