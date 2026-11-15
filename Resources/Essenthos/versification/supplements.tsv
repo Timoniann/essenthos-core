@@ -51,8 +51,9 @@
 # ahead of the English (a chapter that opens one to three verses earlier, as the Hebrew and the Latin
 # do) but it is numbered to the English count: the verse the Spanish moved away is left empty, every
 # verse after it stands one to three places early, and the chapter's last verse holds what the count
-# had no room for. Its Job 39:30 carries the English 39:27 to 40:5. The data's own Spanish column for
-# Job says the same of the printed edition. Jon.1:17=NotExist is the verse eBible's Reina-Valera leaves
+# had no room for. Its Job 39:30 carried the English 39:27 to 40:5, nine verses the printed edition
+# numbers 39:30-38, as the data's own Spanish column for Job says; the text's corrections divide it at
+# those numbers. Jon.1:17=NotExist is the verse eBible's Reina-Valera leaves
 # empty at the start of Jonah's prayer, which no other edition in the corpus lacks: it tells the file
 # apart wherever a passage's own tests would also describe a Bible that simply follows the Hebrew.
 #
@@ -149,10 +150,10 @@ Jdg.14:19	ReinaValera1909	english	-	Jdg.14:20	Jdg.14:19-20	Jon.1:17=NotExist & J
 2Ch.33:10	ReinaValera1909	english	-	2Ch.33:10	2Ch.33:10-11	Jon.1:17=NotExist & 2Ch.33:25=NotExist & 2Ch.33:24=Last	2 Chronicles 33:10 holds the English 33:10-11, the verses after it stand one early, and 33:25 is empty
 2Ch.33:10	ReinaValera1909	english	-	2Ch.33:11-24	2Ch.33:12-25	Jon.1:17=NotExist & 2Ch.33:25=NotExist & 2Ch.33:24=Last	
 Job.35:15	ReinaValera1909	english	-	Job.35:15	Job.35:15-16	Jon.1:17=NotExist & Job.35:16=NotExist & Job.35:15=Last	Job 35:15 holds the English 35:15-16, and 35:16 is empty
-Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:1-3	Job.38:39-41	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	Job 39 opens three verses early, as the Hebrew does, numbered to the English count: its 39:30 carries the English 39:27 to 40:5; the data's own Spanish column for Job says the same of the printed edition
-Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:4-29	Job.39:1-26	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	
-Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:30	Job.39:27-30; 40:1-5	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	
-Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.40:1-19	Job.40:6-24	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:30=Last & Job.40:19=Last	
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:1-3	Job.38:39-41	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:38=Last & Job.40:19=Last	Job 39 opens three verses early, as the Hebrew does, and closes with the first five verses of the Lord's answer, as the printed edition numbers them and the data's own Spanish column for Job says: eBible's file, numbered to the English count, runs 39:30-38 into one verse, which the text's corrections divide at the edition's numbers
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:4-33	Job.39:1-30	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:38=Last & Job.40:19=Last	
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.39:34-38	Job.40:1-5	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:38=Last & Job.40:19=Last	
+Job.39:1-3	ReinaValera1909	english	Job.38:39	Job.40:1-19	Job.40:6-24	Jon.1:17=NotExist & Job.38:39=NotExist & Job.39:38=Last & Job.40:19=Last	
 Hos.12:1	ReinaValera1909	english	Hos.11:12	Hos.12:1	Hos.11:12	Jon.1:17=NotExist & Hos.11:12=NotExist & Hos.12:14=Last	Hosea 12 opens one verse early, numbered to the English count: 11:12 is empty and 12:14 holds the English 12:13-14
 Hos.12:1	ReinaValera1909	english	Hos.11:12	Hos.12:2-13	Hos.12:1-12	Jon.1:17=NotExist & Hos.11:12=NotExist & Hos.12:14=Last	
 Hos.12:1	ReinaValera1909	english	Hos.11:12	Hos.12:14	Hos.12:13-14	Jon.1:17=NotExist & Hos.11:12=NotExist & Hos.12:14=Last	

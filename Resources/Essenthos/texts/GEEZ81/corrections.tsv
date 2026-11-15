@@ -1,0 +1,26 @@
+# product    Essenthos/texts/GEEZ81/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes; divide: the word opens the verse after (the source prints no number there)
+own	kind	before	after	why
+11.2:35.19	divide	ወወህቦ	11.2:35a	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 2:35a ("and the Lord gave Solomon understanding": ወወህቦ፡ እግዚአብሔር፡ ለሰሎሞን፡)
+11.10:22.23	divide	ወዝንቱ	11.10:22a	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 10:22a ("this was the levy": ወዝንቱ፡ ተግባሩ፡), where the source marks the Hebrew's 9:15
+11.10:22.62	divide	ኵሉ	11.10:22b	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 10:22b ("all the people" after "so that they should not rule over him": ከመ፡ ኢይማእዎ፡ | ኵሉ፡ አሕዛብ፡), inside the source's 9:20
+11.10:22.96	divide	ወእምነ	11.10:22c	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 10:22c ("and of the children of Israel": ወእምነ፡ ደቂቀ፡ እስራኤልሰ፡), where the source marks the Hebrew's 9:22
+11.16:28.12	drop	2	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.20	drop	3	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.33	drop	4	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.45	drop	5	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.57	drop	6	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.78	drop	7	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.86	drop	8	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.91	drop	9	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.109	drop	10	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.120	drop	11	\N	Dillmann's number of the verse of the addition after 16:28, which the digitisation keeps among the words
+11.16:28.12	divide	አመ	11.16:28a	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28a, which is Dillmann's 2 and 3
+11.16:28.31	divide	ወሖረ	11.16:28b	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28b, which is Dillmann's 4 and 5
+11.16:28.53	divide	ወዘከመ	11.16:28c	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28c, which is Dillmann's 6
+11.16:28.73	divide	ወኵሎ	11.16:28d	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28d, which is Dillmann's 7
+11.16:28.80	divide	ወአልቦ	11.16:28e	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28e, which is Dillmann's 8
+11.16:28.84	divide	ወገብረ	11.16:28f	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28f, which is Dillmann's 9
+11.16:28.101	divide	ወይቤሎ	11.16:28g	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28g, which is Dillmann's 10
+11.16:28.111	divide	ወሰከበ	11.16:28h	the Ge'ez prints the Greek's addition in the verse without a number of its own; divided where Brenton's Greek begins 16:28h, which is Dillmann's 11
