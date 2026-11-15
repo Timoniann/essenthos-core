@@ -469,7 +469,8 @@ internal static partial class ForgeVerbs
         {
             var services = forge.Scope().ServiceProvider;
             var measures = await new CorpusCheck(services.GetRequiredService<Database.AppDbContext>(),
-                services.GetRequiredService<ILogger<CorpusCheck>>(), served: true).Measure();
+                services.GetRequiredService<ILogger<CorpusCheck>>(), served: true).Measure(Set(Option(args, "--only")) is { } only ? only.Contains : null);
+            forge.Logger.LogInformation("{Rendered:P6} of the words of every linked text reach a witness or are shown to have none", measures.Rendered);
             return CorpusGate.Pass(measures, floor, forge.Logger) ? 0 : 1;
         }
 
