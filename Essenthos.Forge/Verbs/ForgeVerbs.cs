@@ -96,9 +96,9 @@ internal static partial class ForgeVerbs
             FrameCheck),
 
         // Links between texts.
-        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--from <Resources>]",
+        new("align", "<from> <to> [--min <confidence>] [--model <model>] [--outside <text>] [--verses <range,...>] [--from <Resources>]",
             "Align two texts with SIL's statistical aligner from the store's files into the pair's aligner method file, training the answer "
-            + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise. Reads no database.",
+            + "where none stored was made from the words as they stand. A declared pair runs as declared unless an option says otherwise; --verses writes only the rows of FROM words in those verses and keeps every other row of the file. Reads no database.",
             Align, Least: 2),
         new("aligner-pairs", "[<FROM-TO> ...] [--from <Resources>] [--force] [--parallel <n>]",
             "Write each aligned pair's aligner method file from the answer stored in Resources/Alignments for both texts' words, where an input moved. "

@@ -27,6 +27,24 @@ internal static partial class ForgeVerbs
             Minimum = Option(args, "--min") is { } min ? double.Parse(min, CultureInfo.InvariantCulture) : declared.Minimum,
             Outside = Option(args, "--outside") is { } outside ? Identifier(outside) : declared.Outside,
         };
+
+        // --verses: only the rows of FROM words in these verses are written again, every other row of the file stays (PRB-1681).
+        if (Option(args, "--verses") is { } named)
+        {
+            var verses = named.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(range => Products.VerseRange.Parse(range)).ToList();
+            var store = new Products.ProductStore(Option(args, "--from") ?? forge.Resources);
+            var outcome = PairSources.WriteVerses(new ProductTexts(store), MappingMethods.Aligner, pair.Name, verses,
+                $"forge align {from} {to} --verses {string.Join(",", verses)}", line => forge.Logger.LogInformation("{Line}", line),
+                [new AlignerSource([pair]) { Trains = true }]);
+            store.Save();
+            var written = outcome.Written!;
+            forge.Logger.LogInformation(
+                "{Pair} aligner: {Rows} rows; {Made} made in the verses ({Kept} shapes the file held there, {New} new, {Gone} gone); {Carried} rows outside them as they were",
+                written.Pair, written.Rows, written.Rows - written.Carried, written.Kept, written.New, written.Gone, written.Carried);
+            return Task.FromResult(0);
+        }
+
         return WriteMethodFile(forge, args, MappingMethods.Aligner, pair.Name, new AlignerSource([pair]) { Trains = true });
     }
 
