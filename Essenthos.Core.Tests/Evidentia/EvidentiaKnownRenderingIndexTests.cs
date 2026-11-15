@@ -142,7 +142,7 @@ public class EvidentiaKnownRenderingIndexTests
     [Fact]
     public void AWordOfAPhraseLinkIsLearntOnTheOriginalWordItRenders()
     {
-        // CrossWire's King James: "to God" over τῷ Θεῷ, God numbered G2316 and to with no number; "the Spirit" over τοῦ
+        // CrossWire's King James: "to God" over τῷ Θεῷ, God numbered G2316 and to with none; "the Spirit" over τοῦ
         // Πνεύματος with the numbered G3588 (PRB-1692); and a word whose number neither Greek word carries.
         RenderingObservation Row(int position, string surface, string? own, string target, long link) =>
             new(1, surface, null, target, link, position, own);
@@ -157,11 +157,18 @@ public class EvidentiaKnownRenderingIndexTests
         ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
         [
             Row(5, "Lord", "G2962", "G3588", 22), Row(5, "Lord", "G2962", "G2316", 22),
-            Row(6, "said", "G2036", "G2036", 23),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            // "are come" over ἐληλύθασιν: the helper has no number of its own and renders the verb's grammar.
+            Row(6, "are", null, "G2064", 23), Row(7, "come", "G2064", "G2064", 23),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            // A link that numbers none of its words, as the Berean's: read whole.
+            Row(8, "it", null, "G3049", 24), Row(9, "credited", null, "G3049", 24),
         ]));
 
         learnt.Select(observation => $"{observation.SourceSurface} {observation.TargetStrongNumber}").Should().Equal(
-            "to G2316", "God G2316", "the G3588", "Spirit G4151", "Lord G2316", "said G2036");
+            "God G2316", "the G3588", "Spirit G4151", "Lord G2316", "come G2064", "it G3049", "credited G3049");
     }
 
     [Fact]

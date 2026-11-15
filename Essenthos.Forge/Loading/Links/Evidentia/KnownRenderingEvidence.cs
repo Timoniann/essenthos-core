@@ -360,15 +360,26 @@ internal sealed class EvidentiaKnownRenderingIndex(
     }
 
     /// <summary>
-    /// What each word of a link renders, where the link names several original words. CrossWire's King James states
-    /// phrases (<em>to God</em> over τῷ Θεῷ, <em>the Spirit</em> over τοῦ Πνεύματος), and read as every word to every
-    /// word they taught <em>God</em> the article as often as θεός: its share of G2316 fell from 98% to 56% (PRB-1692).
-    /// A word whose own Strong number one of the link's words carries renders that word; a word without one, or with
-    /// one none of them carries, renders the words that are not the article, and every word where all are articles.
-    /// The same reading as a composition's middle link (<see cref="Essenthos.Core.Mapping.MappingLinks.Targets"/>).
+    /// What each word of a link renders. CrossWire's King James states phrases (<em>to God</em> over τῷ Θεῷ, <em>the
+    /// Spirit</em> over τοῦ Πνεύματος, <em>are come</em> over ἐληλύθασιν, <em>I said</em> over εἶπον), and read as every
+    /// word to every word they taught <em>God</em> the article as often as θεός (its share of G2316 fell from 98% to 56%)
+    /// and <em>are</em> and <em>I</em> the verbs they stand beside (PRB-1692).
+    /// <list type="bullet">
+    /// <item>Where a link numbers some of its words and not others, the words it leaves without a number render the
+    /// grammar of the numbered ones (the laying gives a helper, a case preposition or a verb-ending pronoun no number,
+    /// PRB-1645), so they teach nothing. A link that numbers none of its words (the Berean's, the Reina-Valera's) is read
+    /// whole, as before.</item>
+    /// <item>Of a link naming several original words, a word whose own Strong number one of them carries renders that
+    /// one; any other word renders the words that are not the article, and every word where all are articles: the
+    /// reading of a composition's middle link (<see cref="Essenthos.Core.Mapping.MappingLinks.Targets"/>).</item>
+    /// </list>
     /// </summary>
-    internal static IEnumerable<RenderingObservation> OwnTargets(IEnumerable<RenderingObservation> link) =>
-        link.GroupBy(observation => (observation.VerseId, observation.SourcePosition))
+    internal static IEnumerable<RenderingObservation> OwnTargets(IEnumerable<RenderingObservation> link)
+    {
+        var words = link.GroupBy(observation => (observation.VerseId, observation.SourcePosition)).ToList();
+        var numbered = words.Count > 1 && words.Any(word => word.First().SourceStrongNumber is not null);
+        return words
+            .Where(word => !numbered || word.First().SourceStrongNumber is not null)
             .SelectMany(word =>
             {
                 var observations = word.ToList();
@@ -384,6 +395,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
                         ? content
                         : observations;
             });
+    }
 
     private const string GreekArticle = "G3588";
 
