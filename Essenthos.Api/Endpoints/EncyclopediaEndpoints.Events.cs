@@ -23,6 +23,9 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? kind,
             [FromQuery] string? notKind,
             [FromQuery] string? reckonings,
+            [FromQuery] string? q,
+            [FromQuery] string? worldRegions,
+            [FromQuery] string? around,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             [FromQuery] string? language,
@@ -30,7 +33,13 @@ internal static partial class EncyclopediaEndpoints
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
-            var events = Filtered(db, new EventFilter(entity, fromYear, toYear, realm, kind, notKind));
+            var events = await Searched(
+                db,
+                Filtered(db, new EventFilter(entity, fromYear, toYear, realm, kind, notKind) { WorldRegions = worldRegions }),
+                q,
+                language,
+                prose,
+                cancellationToken);
             var from = Math.Max(0, skip ?? 0);
             var count = Math.Clamp(take ?? 50, 1, MostPerPage);
             var preference = Preference(reckonings);
@@ -43,28 +52,46 @@ internal static partial class EncyclopediaEndpoints
             }
 
             var ordered = await InPreferredOrder(events, preference, cancellationToken);
+            if (around is { Length: > 0 } && ordered.FindIndex(one => one.Slug == around) is var at and >= 0)
+            {
+                from = Math.Max(0, Math.Min(at - (count / 2), ordered.Count - count));
+            }
+
             var shown = ordered.Skip(from).Take(count).ToList();
             return Results.Ok(new EventListResponse(
                 ordered.Count,
-                await Answered(db, await RowsOf(db, shown, cancellationToken), shown, language, prose, cancellationToken)));
+                await Answered(db, await RowsOf(db, shown, cancellationToken), shown, language, prose, cancellationToken))
+            {
+                Skip = from,
+                Centuries = Centuries(ordered),
+            });
         });
 
         // Where one event stands in a list narrowed and ordered as the list was, and the events either
         // side of it, so an event's page steps through the list the reader came from in one request.
         routes.MapGet("/events/{slug}/step", async (
             string slug,
+            [FromQuery] string? entity,
             [FromQuery] int? fromYear,
             [FromQuery] int? toYear,
             [FromQuery] string? realm,
             [FromQuery] string? kind,
             [FromQuery] string? notKind,
             [FromQuery] string? reckonings,
+            [FromQuery] string? q,
+            [FromQuery] string? worldRegions,
             [FromQuery] string? language,
             [FromQuery] string? prose,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
-            var events = Filtered(db, new EventFilter(null, fromYear, toYear, realm, kind, notKind));
+            var events = await Searched(
+                db,
+                Filtered(db, new EventFilter(entity, fromYear, toYear, realm, kind, notKind) { WorldRegions = worldRegions }),
+                q,
+                language,
+                prose,
+                cancellationToken);
             var preference = Preference(reckonings);
             var ordered = await InPreferredOrder(events, preference, cancellationToken);
             var at = ordered.FindIndex(one => one.Slug == slug);
@@ -117,8 +144,131 @@ internal static partial class EncyclopediaEndpoints
 
         var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
         var one = Event((await Aged(db, [row], cancellationToken))[0], places);
+
+        // A passage that runs on into the next chapter needs the end of the chapter it starts in.
+        var crossing = one.Passages.Where(p => p.LastChapter > p.Chapter).ToList();
+        if (crossing.Count > 0)
+        {
+            var books = crossing.Select(p => p.Book).Distinct().ToList();
+            var chapters = crossing.Select(p => p.Chapter).Distinct().ToList();
+            var ends = await db.VerseReferences
+                .Where(r => r.IsPrimary && books.Contains(r.CanonicalBook) && chapters.Contains(r.CanonicalChapter))
+                .GroupBy(r => new { r.CanonicalBook, r.CanonicalChapter })
+                .Select(g => new { g.Key.CanonicalBook, g.Key.CanonicalChapter, Last = g.Max(r => r.CanonicalVerse) })
+                .ToListAsync(cancellationToken);
+            one = one with
+            {
+                Quoted = QuotedVerses.Verses(
+                    one.Passages,
+                    (book, chapter) => ends.FirstOrDefault(e => e.CanonicalBook == book && e.CanonicalChapter == chapter)?.Last),
+            };
+        }
+
         return (await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0];
     }
+
+    /// <summary>
+    /// The events whose title, person or place holds the reader's words, in English or in the reader's
+    /// language: the title's machine translation, the person's name as the reader's text gives it. Case,
+    /// accents and the apostrophe's spellings do not matter, and every word typed must be found. In
+    /// memory, over the narrowed list's two thousand titles at most; the list untouched where nothing
+    /// was typed.
+    /// </summary>
+    internal static async Task<IQueryable<Database.Entities.Event>> Searched(
+        AppDbContext db,
+        IQueryable<Database.Entities.Event> events,
+        string? query,
+        string? language,
+        string? prose,
+        CancellationToken cancellationToken)
+    {
+        var words = Folded(query ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (words.Length == 0)
+        {
+            return events;
+        }
+
+        var rows = await events
+            .Select(e => new
+            {
+                e.Id,
+                e.Name,
+                e.Location,
+                e.EntityId,
+                Person = e.Entity == null ? null : e.Entity.Name,
+            })
+            .ToListAsync(cancellationToken);
+        var titles = await TextTranslations.Of(
+            db, rows.SelectMany(r => new[] { r.Name, r.Location }), ReaderLanguages.Prose(prose, language), cancellationToken);
+        var people = await EntityNames.Of(db, [.. rows.Select(r => r.EntityId).OfType<int>().Distinct()], language, cancellationToken);
+
+        var found = rows
+            .Where(r =>
+            {
+                var said = Folded(string.Join(' ', new[]
+                {
+                    r.Name,
+                    TextTranslations.In(titles, r.Name),
+                    r.Location,
+                    TextTranslations.In(titles, r.Location),
+                    r.Person,
+                    r.EntityId is { } person ? people.GetValueOrDefault(person) : null,
+                }.OfType<string>()));
+                return words.All(word => said.Contains(word, StringComparison.Ordinal));
+            })
+            .Select(r => r.Id)
+            .ToList();
+        return events.Where(e => found.Contains(e.Id));
+    }
+
+    /// <summary>Lower case, without accents, every apostrophe one apostrophe and every space a plain one.</summary>
+    internal static string Folded(string text)
+    {
+        var decomposed = text.ToLowerInvariant().Normalize(System.Text.NormalizationForm.FormD);
+        var folded = new System.Text.StringBuilder(decomposed.Length);
+        foreach (var c in decomposed)
+        {
+            if (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.NonSpacingMark)
+            {
+                continue;
+            }
+
+            folded.Append(c is '’' or 'ʼ' or '‘' or '`' ? '\'' : char.IsWhiteSpace(c) ? ' ' : c);
+        }
+
+        return folded.ToString().Normalize(System.Text.NormalizationForm.FormC);
+    }
+
+    /// <summary>
+    /// The centuries of a list in its order, each with its count and the position of its first event.
+    /// An event no asked reckoning dates stands in none; such events come last.
+    /// </summary>
+    internal static IList<EventCenturyResponse> Centuries(IReadOnlyList<InList> ordered)
+    {
+        var centuries = new List<EventCenturyResponse>();
+        for (var i = 0; i < ordered.Count; i++)
+        {
+            if (ordered[i].Axis is not { } axis)
+            {
+                continue;
+            }
+
+            var century = Century(axis);
+            if (centuries.Count > 0 && centuries[^1].Century == century)
+            {
+                centuries[^1] = centuries[^1] with { Count = centuries[^1].Count + 1 };
+            }
+            else
+            {
+                centuries.Add(new EventCenturyResponse(century, 1, i));
+            }
+        }
+
+        return centuries;
+    }
+
+    /// <summary>The century of an astronomical year: 1 BCE (0) to 100 BCE (-99) is <c>-1</c>, 1 to 100 CE is <c>1</c>.</summary>
+    internal static int Century(int axis) => axis <= 0 ? -((1 - axis + 99) / 100) : (axis + 99) / 100;
 
     /// <summary>What a list of events is narrowed to: each part absent where the reader did not narrow by it.</summary>
     internal sealed record EventFilter(
@@ -127,7 +277,15 @@ internal static partial class EncyclopediaEndpoints
         int? ToYear,
         string? Realm,
         string? Kinds,
-        string? NotKinds);
+        string? NotKinds)
+    {
+        /// <summary>
+        /// The countries a world event must be in to be listed, as Wikidata names them (today's country,
+        /// <see cref="Database.Entities.Event.Region"/>), comma separated; Scripture's events are not
+        /// narrowed by it. A world event with no country is left out while this is asked for.
+        /// </summary>
+        public string? WorldRegions { get; init; }
+    }
 
     /// <summary>The events a list holds, unordered. Kinds are comma separated, spelled as the source spells them.</summary>
     internal static IQueryable<Database.Entities.Event> Filtered(AppDbContext db, EventFilter filter)
@@ -162,6 +320,11 @@ internal static partial class EncyclopediaEndpoints
         if (Listed(filter.NotKinds) is { Count: > 0 } notKinds)
         {
             events = events.Where(e => e.Kind == null || !notKinds.Contains(e.Kind));
+        }
+
+        if (Listed(filter.WorldRegions) is { Count: > 0 } regions)
+        {
+            events = events.Where(e => e.Realm != Realms.World || (e.Region != null && regions.Contains(e.Region)));
         }
 
         return events;
@@ -550,7 +713,7 @@ internal static partial class EncyclopediaEndpoints
         var words = ReaderLanguages.Prose(prose, language);
         if (events.Count == 0 || (EntityNames.Local(words) is null && EntityNames.Local(language) is null))
         {
-            return [.. events];
+            return [.. events.Select(Unstarred)];
         }
 
         var rendered = await TextTranslations.Of(
@@ -594,9 +757,13 @@ internal static partial class EncyclopediaEndpoints
                         },
                     }),
                 ],
-            }),
+            }).Select(Unstarred),
         ];
     }
+
+    /// <summary>The titles without the source's asterisk, once their translations are found by the starred English.</summary>
+    private static EventResponse Unstarred(EventResponse e) =>
+        e with { Name = EventMarks.Unstarred(e.Name), LocalName = EventMarks.UnstarredOrNull(e.LocalName) };
 
     internal static EventResponse Event(EventRow row, IReadOnlyDictionary<EventLocation, string> places) =>
         Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates, places);
@@ -687,14 +854,21 @@ internal static partial class EncyclopediaEndpoints
         IList<EventDateResponse> dates,
         IReadOnlyDictionary<EventLocation, string> places)
     {
-        dates = [.. dates.Select(d => d.Parts is null ? d : d with { Working = Arithmetic.Read(d.Parts), Parts = null })];
+        dates =
+        [
+            .. dates.Select(d => (d.Parts is null ? d : d with { Working = Arithmetic.Read(d.Parts), Parts = null }) with
+            {
+                Notes = QuotedVerses.WithoutQuotations(e.Slug, e.Source, d.Notes),
+            }),
+        ];
         var reckoning = dates.FirstOrDefault(d => d.Chronology == defaultChronology);
+        var quoting = QuotedVerses.Read(e.Slug, e.Source, e.Description);
 
         return new EventResponse(
             e.Slug,
             e.Name,
             e.NameSource,
-            e.Description,
+            quoting.Remainder,
             e.Kind,
             entitySlug,
             entityName,
@@ -707,7 +881,7 @@ internal static partial class EncyclopediaEndpoints
             e.Realm,
             e.Region,
             e.Uri,
-            e.Notes,
+            QuotedVerses.WithoutQuotations(e.Slug, e.Source, e.Notes),
             e.Source,
             Datasets.Of(e.Source),
             dates)
@@ -719,6 +893,9 @@ internal static partial class EncyclopediaEndpoints
             // it is the same number the base reckoning holds.
             Era = reckoning?.Era
                   ?? (e.YearFromCreation > LastYearBeforeChrist ? CommonEra : BeforeTheCommonEra),
+            Passages = quoting.Passages,
+            Quoted = QuotedVerses.Verses(quoting.Passages),
+            Mark = EventMarks.Of(e.Notes),
         };
     }
 }

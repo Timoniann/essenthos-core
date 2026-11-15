@@ -23,19 +23,23 @@ public sealed class ChronologyPageTests
     private static readonly PageWording Ukrainian = PageWording.Compiled("uk");
 
     [Fact]
-    public void AnEventsPageGivesItsDatesItsVerseQuotedAndWhomItHappenedTo()
+    public void AnEventsPageQuotesItsVersesInThePageLanguageAndTablesItsDates()
     {
         var view = new EventView("birtheli1", "Народження Ілія", "1214 до н. е.")
         {
-            Description = "Now Eli was ninety-eight years old.",
+            Description = "[Eli was 98 when he died.]",
             DescriptionInEnglish = true,
+            Mark = "припущення укладача",
             Dates =
             [
                 new ReckonedDate("Ussher", PageViews.Year(Ukrainian, 1214, false), null),
                 new ReckonedDate("BibleData", PageViews.Year(Ukrainian, 1124, false), null),
             ],
-            Passage = new PageLink("/read/1-samuel/4/15", "1 Самуїлова 4:15"),
-            Quote = "А Ілій був віку дев'ятидесяти й восьми літ.",
+            Verses =
+            [
+                (new PageLink("/verse/1-samuel/4/15", "1 Самуїлова 4:15"), "А Ілій був віку дев'ятидесяти й восьми літ."),
+                (new PageLink("/verse/1-samuel/4/18", "1 Самуїлова 4:18"), null),
+            ],
             Person = new PageLink("/people/eli", "Ілій"),
             Source = "BibleData",
         };
@@ -44,12 +48,15 @@ public sealed class ChronologyPageTests
         var html = PageHtml.Render(Shell, page, SiteLanguage.Ukrainian, Origin);
 
         Title(html).Should().Be("Народження Ілія (1214 до н. е.) · Essenthos");
-        page.Description.Should().StartWith("Народження Ілія (1214 до н. е.): ",
-            "the source's English describes no page in another language");
-        page.Body.Should().Contain("<p lang=\"en\">Now Eli was ninety-eight years old.</p>")
+        page.Description.Should().StartWith("Народження Ілія (1214 до н. е.). А Ілій був віку",
+            "the first verse in the page's own text describes the page");
+        page.Body.Should().Contain("<h2>Що написано</h2>")
+            .And.Contain("<a href=\"/uk/verse/1-samuel/4/15\">1 Самуїлова 4:15</a> А Ілій")
+            .And.Contain("<a href=\"/uk/verse/1-samuel/4/18\">1 Самуїлова 4:18</a></p>")
+            .And.Contain("<p lang=\"en\">[Eli was 98 when he died.]</p>")
+            .And.Contain("1214 до н. е. (припущення укладача)")
             .And.Contain("<h2>Коли це сталося</h2>")
-            .And.Contain("<li>BibleData: 1124 до н. е.</li>")
-            .And.Contain("<a href=\"/uk/read/1-samuel/4/15\">1 Самуїлова 4:15</a> А Ілій")
+            .And.Contain("<tr><td>BibleData</td><td>1124 до н. е.</td></tr>")
             .And.Contain("<a href=\"/uk/people/eli\">Ілій</a>")
             .And.Contain("Узято з BibleData");
         page.Canonical.Should().Be("/events/birtheli1");

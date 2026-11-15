@@ -562,16 +562,21 @@ internal sealed class PageLoader(
                 : null;
         }
 
-        PageLink? passage = null;
-        string? quote = null;
-        if (detail.Reference is { } reference)
+        // The verses the source's description quotes, or the verse the event is read from, in the page
+        // language's own text: never the source's quotation, which is the NASB's (PRB-1678).
+        IReadOnlyList<VerseRefResponse> written = detail.Quoted.Count > 0
+            ? [.. detail.Quoted]
+            : detail.Reference is { } reference ? [reference] : [];
+        var texts = await TextsAt(
+            language, [.. written.Select(v => Address(v.BookOrdinal, v.Chapter, v.Verse))], cancellationToken);
+        var verses = new List<(PageLink, string?)>(written.Count);
+        foreach (var verse in written)
         {
-            passage = new PageLink(
-                PageAddress.VersePath(reference.BookOrdinal, reference.Chapter, reference.Verse),
-                wording.Reference(
-                    await BookName(language, wording, reference.BookOrdinal, cancellationToken), reference.Chapter, reference.Verse));
-            var at = Address(reference.BookOrdinal, reference.Chapter, reference.Verse);
-            quote = (await TextsAt(language, [at], cancellationToken)).GetValueOrDefault(at);
+            verses.Add((
+                new PageLink(
+                    PageAddress.VersePath(verse.BookOrdinal, verse.Chapter, verse.Verse),
+                    wording.Reference(await BookName(language, wording, verse.BookOrdinal, cancellationToken), verse.Chapter, verse.Verse)),
+                texts.GetValueOrDefault(Address(verse.BookOrdinal, verse.Chapter, verse.Verse))));
         }
 
         PageLink? person = null;
@@ -587,6 +592,12 @@ internal sealed class PageLoader(
             Kind = english ? detail.Kind : null,
             Description = detail.LocalDescription ?? detail.Description,
             DescriptionInEnglish = !english && detail.LocalDescription is null,
+            Mark = detail.Mark switch
+            {
+                EventMarks.Hypothesis => wording.Text("event.hypothesis"),
+                EventMarks.OutsideScripture => wording.Text("event.outsideScripture"),
+                _ => null,
+            },
             Place = place,
             Region = string.Join(", ", new[]
             {
@@ -600,8 +611,7 @@ internal sealed class PageLoader(
                     .Select(date => new ReckonedDate(
                         date.Name, DateYear(wording, date), english ? date.Calculation : null)),
             ],
-            Passage = passage,
-            Quote = quote,
+            Verses = verses,
             Person = person,
             Source = detail.Source,
             Image = image,
@@ -656,7 +666,7 @@ internal sealed class PageLoader(
                          .Select(e => new { e.Slug, e.Name, e.YearFromCreation })
                          .ToListAsync(cancellationToken))
             {
-                inside.Add((new PageLink($"/events/{one.Slug}", one.Name),
+                inside.Add((new PageLink($"/events/{one.Slug}", EventMarks.Unstarred(one.Name)),
                     one.YearFromCreation is { } year
                         ? PageViews.AxisYear(wording, year, EncyclopediaEndpoints.LastYearBeforeChrist)
                         : ""));
