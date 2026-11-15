@@ -742,6 +742,24 @@ public sealed class CorpusCheckTests : IDisposable
         _db.SaveChanges();
 
         (await Integrity(fathers)).Should().Be(0, "a son of Benjamin's descendant is a generation the other list skips");
+
+        // A father whose sex was read off his relationships counts like any other (PRB-1413).
+        var michaiah = Record("michaiah", "female");
+        var uriel = Record("uriel");
+        uriel.SexSource = SexSources.Relationship;
+        var abishalom = Record("abishalom");
+        _db.Entities.AddRange(michaiah, uriel, abishalom);
+        _db.SaveChanges();
+        Row(uriel, DescriptorRelations.FatherOf, michaiah);
+        var kings = Row(abishalom, DescriptorRelations.FatherOf, michaiah);
+        _db.SaveChanges();
+
+        (await Integrity(fathers)).Should().Be(1, "Uriel's sex comes from his relationships, and he is a father all the same");
+
+        kings.Type = DescriptorRelations.GrandfatherOf;
+        _db.SaveChanges();
+
+        (await Integrity(fathers)).Should().Be(0, "read as her grandfather, Abishalom is no second father");
     }
 
     private void VerseLink(string source) =>

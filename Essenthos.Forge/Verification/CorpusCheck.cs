@@ -797,7 +797,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     /// Arphaxad and Shelah, where the second father is the first's descendant — nor two statements
     /// somebody decided both stand, as Matthew's Jacob and Luke's Heli do for Joseph. What is left is
     /// one man held as two records, two men held as one, or a misreading: Iri as Muppim's father,
-    /// Assir as Elkanah's.
+    /// Assir as Elkanah's. A father counts whatever said he is a man, the relationships his sex was
+    /// read from included: the skip of those (PRB-1413) stood only for Maachah, whom Kings calls the
+    /// daughter of Abishalom and Chronicles of Uriel, until she was read as Absalom's granddaughter.
     /// </summary>
     private static readonly string TwoFathersSql =
         $"""
@@ -809,7 +811,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
              WHERE type IN ({Listed(KinRelations.ChildOf)})),
          fathers AS (
              SELECT s.child, s.parent, bool_or(s.method = '{EnumSpelling.Of(LinkMethod.Manual)}') decided
-             FROM stated s JOIN entity f ON f.id = s.parent AND f.sex = 'male' AND f.sex_source IS NULL
+             FROM stated s JOIN entity f ON f.id = s.parent AND f.sex = 'male'
              GROUP BY s.child, s.parent),
          pairs AS (
              SELECT a.child, a.parent one, b.parent other, a.decided AND b.decided decided
