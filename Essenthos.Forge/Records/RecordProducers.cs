@@ -417,6 +417,11 @@ internal static class RecordProducers
         }
 
         var (locations, candidates, _) = OpenBibleLocationLoader.Locate(read, supplement, places);
+        // A region the gazetteer stands on a town's point stands inside its own drawn extent instead.
+        RegionPoints.Move(locations, candidates, id =>
+            index is not null && index.TryGetValue(id, out var entry) && entry.Kind != "probable-area"
+                ? OpenBibleOutlines.Read(Path.Combine(openBible, OpenBibleOutlines.Folder, entry.File), entry)
+                : null);
         var inputs = from.Inputs([.. Paths(from, "records/records", "records/external-ids", "records/facts/location-supplements"),
             RelativeToResources(from, ancient), RelativeToResources(from, modern),
             .. index is null
