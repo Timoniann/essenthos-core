@@ -4,6 +4,7 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
+using Essenthos.Core.Verification;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -90,6 +91,9 @@ public sealed class MappingRoundTripTests : IDisposable
         Rows(store, "composed").Should().OnlyContain(r => r.Status == null);
         after.Should().BeEquivalentTo(before.Where(r => !r.Contains("aligned as stems")),
             "every link the merge kept is loaded with its words, roles and claims");
+        (await Scalar(CorpusCheck.ClaimsKeptApartSql)).Should().Be(0, "with the triggers off the load writes what they would");
+        (await Scalar("SELECT max(methods) FROM link")).Should().Be(LinkMethods.Bit(LinkMethod.StrongNumber) | LinkMethods.Bit(LinkMethod.Aligner),
+            "the link the Strong numbers drew and the aligner reached keeps both methods");
         using (var final = store.Open(MappingProducts.Of("KJV-BHSA", MappingProducts.Final), FinalRow.Schema))
         {
             (await Ids()).Should().BeEquivalentTo(final.ReadAll().Select(r => r.Id).Distinct(), "a link is loaded under the id its final derived");
@@ -150,6 +154,15 @@ public sealed class MappingRoundTripTests : IDisposable
         after.Where(c => c.Link != strong).Should().Equal(claims.Where(c => c.Link != strong), "a link the final holds as it was keeps its rows");
         after.Where(c => c.Link == strong).Select(c => c.Id).Should().NotIntersectWith(claims.Where(c => c.Link == strong).Select(c => c.Id));
         (await Stored()).Should().ContainSingle(row => row.Contains("0.95"));
+        (await Scalar(CorpusCheck.ClaimsKeptApartSql)).Should().Be(0);
+    }
+
+    private async Task<long> Scalar(string sql)
+    {
+        await using var connection = _database.NewConnection();
+        await connection.OpenAsync();
+        await using var command = new NpgsqlCommand(sql, connection);
+        return Convert.ToInt64(await command.ExecuteScalarAsync());
     }
 
     private async Task<List<(long Link, long Id)>> Claims()

@@ -2,6 +2,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Verification;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -159,6 +160,62 @@ public sealed class LinkWriterTests : IDisposable
 
         secondBlock.Should().BeGreaterThanOrEqualTo(firstBlock + 3, "the first block is taken although nothing of it is committed");
     }
+
+    [Fact]
+    public void EveryMethodHasABitOfItsOwnHereAndInTheDatabase()
+    {
+        var methods = Enum.GetValues<LinkMethod>();
+        foreach (var method in methods)
+        {
+            _db.Database.SqlQueryRaw<short?>("SELECT link_method_bit({0}) AS \"Value\"", EnumSpelling.Of(method)).Single()
+                .Should().Be(LinkMethods.Bit(method), $"{method} is spelt into the same bit by the database");
+        }
+
+        methods.Select(LinkMethods.Bit).Should().OnlyHaveUniqueItems();
+        LinkMethods.In(LinkMethods.Of(methods.Select(EnumSpelling.Of))).Should().Equal(methods);
+    }
+
+    [Fact]
+    public async Task ALinksMethodsAndASourcesClaimsFollowTheClaimsWhoeverWritesThem()
+    {
+        const string Second = "a second source on the same link";
+        var link = Link([English(1)], [Greek(1)], LinkMethod.Aligner, 0.8, Aligner);
+        (await Methods(link.Id)).Should().Be(LinkMethods.Bit(LinkMethod.Aligner));
+        (await Cited(Aligner)).Should().Be(1);
+
+        await _db.Database.ExecuteSqlRawAsync("INSERT INTO provenance (source) VALUES ({0})", Second);
+        await _db.Database.ExecuteSqlRawAsync(
+            "INSERT INTO link_claim (link_id, method, provenance_id) SELECT {0}, 'stated-by-source', id FROM provenance WHERE source = {1}", link.Id, Second);
+        (await Methods(link.Id)).Should().Be((short)(LinkMethods.Bit(LinkMethod.Aligner) | LinkMethods.Bit(LinkMethod.StatedBySource)));
+        (await Cited(Second)).Should().Be(1);
+
+        await Sql("UPDATE link_claim SET method = 'manual' WHERE method = 'stated-by-source'");
+        (await Methods(link.Id)).Should().Be((short)(LinkMethods.Bit(LinkMethod.Aligner) | LinkMethods.Bit(LinkMethod.Manual)));
+
+        await Sql("DELETE FROM link_claim WHERE method = 'manual'");
+        (await Methods(link.Id)).Should().Be(LinkMethods.Bit(LinkMethod.Aligner));
+        (await Cited(Second)).Should().Be(0);
+        (await KeptApart()).Should().Be(0);
+
+        await Sql($"DELETE FROM link WHERE id = {link.Id}");
+        (await Cited(Aligner)).Should().Be(0, "a link's claims go with it, and so does their count");
+
+        var other = Link([English(2)], [Greek(2)], LinkMethod.Lexical, 0.5, Aligner);
+        await Sql("TRUNCATE link_claim");
+        (await Methods(other.Id)).Should().Be(0);
+        (await KeptApart()).Should().Be(0);
+    }
+
+    private async Task<short> Methods(long id) =>
+        await _db.Links.AsNoTracking().Where(link => link.Id == id).Select(link => link.Methods).SingleAsync();
+
+    private async Task<int> Cited(string source) =>
+        await _db.Provenances.AsNoTracking().Where(p => p.Source == source).Select(p => p.Claims).SingleAsync();
+
+    private async Task<long> KeptApart() =>
+        await _db.Database.SqlQueryRaw<long>($"SELECT ({CorpusCheck.ClaimsKeptApartSql}) AS \"Value\"").SingleAsync();
+
+    private async Task Sql(string sql) => await _db.Database.ExecuteSqlRawAsync(sql);
 
     private Link Link(long[] english, long[] greek, LinkMethod method, double? confidence, string source)
     {

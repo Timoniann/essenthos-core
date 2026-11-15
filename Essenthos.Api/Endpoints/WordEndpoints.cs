@@ -72,7 +72,7 @@ internal static class WordEndpoints
             }
 
             var linked = await Linked(db, id, cancellationToken);
-            var renderings = await Renderings(db, linked, cancellationToken);
+            var renderings = Renderings(linked);
 
             // The same set the reader highlights on: the witness words this one reaches, plus its
             // own id where it is a witness itself. Texts.Counterparts explains why it is the
@@ -166,6 +166,7 @@ internal static class WordEndpoints
                     other.WordId,
                     other.LinkId,
                     side.Link!.Method,
+                    side.Link.Methods,
                     side.Link.Confidence,
                     side.Link.Provenance!.Source,
                     other.Word!.Text!.Slug,
@@ -187,19 +188,7 @@ internal static class WordEndpoints
     /// links reach the same word, the one a source stated speaks for it, and after that the surer
     /// inference: the same order the chapter's highlighting is described in.
     /// </summary>
-    internal static async Task<IList<WordRenderingResponse>> Renderings(
-        AppDbContext db,
-        IReadOnlyCollection<LinkedWord> linked,
-        CancellationToken cancellationToken)
-    {
-        var linkIds = linked.Select(row => row.LinkId).Distinct().ToList();
-        var claims = (await db.LinkClaims
-                .Where(claim => linkIds.Contains(claim.LinkId))
-                .Select(claim => new { claim.LinkId, claim.Method })
-                .ToListAsync(cancellationToken))
-            .ToLookup(claim => claim.LinkId, claim => claim.Method);
-
-        return
+    internal static IList<WordRenderingResponse> Renderings(IReadOnlyCollection<LinkedWord> linked) =>
         [
             .. linked
                 .OrderByDescending(row => row.Confidence is null)
@@ -221,9 +210,8 @@ internal static class WordEndpoints
                     EnumSpelling.Of(row.Method),
                     row.Confidence,
                     [
-                        .. claims[row.LinkId]
+                        .. LinkMethods.In(row.Methods)
                             .Where(method => method != row.Method)
-                            .Distinct()
                             .Select(method => EnumSpelling.Of(method))
                             .Order(StringComparer.Ordinal),
                     ],
@@ -232,13 +220,13 @@ internal static class WordEndpoints
                     StrongNumber = row.StrongNumber,
                 }),
         ];
-    }
 
     /// <param name="Position">Verse number and position folded into one key, for ordering only.</param>
     internal sealed record LinkedWord(
         long WordId,
         long LinkId,
         LinkMethod Method,
+        short Methods,
         double? Confidence,
         string Source,
         string Corpus,

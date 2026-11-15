@@ -58,6 +58,13 @@ public class Link
     public Guid? Fingerprint { get; set; }
 
     /// <summary>
+    /// Every method that made a claim on the link, the link's own included, as <see cref="LinkMethods"/> spells
+    /// it. It is what the claims say, kept on the link because a served release leaves the claims out; the
+    /// database keeps it true whoever writes them.
+    /// </summary>
+    public short Methods { get; set; }
+
+    /// <summary>
     /// Every method that says this link is true, including the one the link shows as its own. A
     /// link two methods that share no reasoning both arrived at is worth more than one only a model
     /// proposed, and this is where that difference is recorded.

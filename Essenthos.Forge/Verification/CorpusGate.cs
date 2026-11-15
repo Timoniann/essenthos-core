@@ -17,8 +17,8 @@ internal static class CorpusGate
         if (measures.Broken > 0)
         {
             logger.LogError(
-                "{Broken} integrity checks found something, and every one of them should find nothing",
-                measures.Broken);
+                "{Broken} integrity checks found something, and every one of them should find nothing: {Found}",
+                measures.Broken, string.Join("; ", measures.Integrity.Where(check => check.Found > 0).Select(check => $"{check.Found} {check.Breaks}")));
             return false;
         }
 

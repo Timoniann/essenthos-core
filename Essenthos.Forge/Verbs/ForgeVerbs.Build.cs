@@ -465,6 +465,15 @@ internal static partial class ForgeVerbs
             listed?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToHashSet(StringComparer.Ordinal);
 
         var floor = Option(args, "--floor") is { } given ? double.Parse(given, CultureInfo.InvariantCulture) : CorpusCheck.RenderedFloor;
+        if (args.Contains("--served"))
+        {
+            var services = forge.Scope().ServiceProvider;
+            var measures = await new CorpusCheck(services.GetRequiredService<Database.AppDbContext>(),
+                services.GetRequiredService<ILogger<CorpusCheck>>(), served: true).Measure(Set(Option(args, "--only")) is { } only ? only.Contains : null);
+            forge.Logger.LogInformation("{Rendered:P6} of the words of every linked text reach a witness or are shown to have none", measures.Rendered);
+            return CorpusGate.Pass(measures, floor, forge.Logger) ? 0 : 1;
+        }
+
         var store = string.IsNullOrEmpty(forge.Resources) ? null : new ProductStore(forge.Resources);
         var passed = await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store,
             Option(args, "--level") ?? BuildVerify.All, Set(Option(args, "--only")), Set(Option(args, "--texts")), null, floor, forge.Logger);

@@ -37,7 +37,12 @@ namespace Essenthos.Core.Verification;
 /// worst-covered text in this corpus is a printed edition and a headline share computed without it
 /// is a headline about a subset.
 /// </summary>
-internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, int parallel = 1)
+/// <param name="served">
+/// The database is a served release, restored or patched on a target: it holds no <c>link_claim</c> and not the build's
+/// unique constraint over a link's words (<see cref="Publishing.Publisher.LeftOut"/>), so the checks that read them ask
+/// the link's own columns instead (<see cref="OnServedCopy"/>) and the contention and agreement measures are left out.
+/// </param>
+internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, int parallel = 1, bool served = false)
 {
     /// <summary>
     /// Where the corpus already stands, less a margin. A floor is for catching a load that lost
@@ -828,6 +833,36 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
            AND NOT EXISTS (SELECT 1 FROM walk w WHERE w.start = p.other AND w.up = p.one)
          """;
 
+    public const string UnclaimedLinks = "links no claim stands on, so nothing says what asserted them";
+
+    public const string SameWordsTwice = "links naming the same words as another link, instead of one link with two claims";
+
+    public const string ClaimsKeptApart = "links or sources whose kept methods or claim count are not what their claims say";
+
+    internal const string ClaimsKeptApartSql =
+        """
+        SELECT (SELECT count(*) FROM link l
+                LEFT JOIN (SELECT link_id, bit_or(link_method_bit(method)) AS methods FROM link_claim GROUP BY link_id) c
+                  ON c.link_id = l.id
+                WHERE l.methods <> coalesce(c.methods, 0))
+             + (SELECT count(*) FROM provenance p
+                LEFT JOIN (SELECT provenance_id, count(*) AS claims FROM link_claim GROUP BY provenance_id) c
+                  ON c.provenance_id = p.id
+                WHERE p.claims <> coalesce(c.claims, 0))
+        """;
+
+    /// <summary>
+    /// What a served copy is asked in place of the checks that read <c>link_claim</c> or the build's unique constraint,
+    /// which a release leaves out; null where only the build can answer. The rows are the build's, which passed these
+    /// checks before it was released, so what is left to catch is a copy that lost something on the way.
+    /// </summary>
+    private static readonly Dictionary<string, string?> OnServedCopy = new(StringComparer.Ordinal)
+    {
+        [UnclaimedLinks] = "SELECT count(*) FROM link WHERE methods = 0",
+        [SameWordsTwice] = "SELECT count(*) FROM link WHERE fingerprint IS NULL",
+        [ClaimsKeptApart] = null,
+    };
+
     /// <summary>The integrity checks that read faster with merge joins off (the word table's id order is no order on disk): 35 s against 49 s.</summary>
     private static readonly HashSet<string> HashedChecks = new(StringComparer.Ordinal) { "word links crossing a verse pair no verse link joins" };
 
@@ -966,11 +1001,16 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // backfilled the links that existed and nothing kept it up, so 403,343 links written
         // afterwards had none and the agreement measure reported the migration instead of the
         // corpus. A number that looks like an answer is worse than a missing one.
-        ("links no claim stands on, so nothing says what asserted them",
+        (UnclaimedLinks,
             """
             SELECT count(*) FROM link l
             WHERE NOT EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id)
             """),
+
+        // What the readers are served of the claims: a link's set of methods and a source's count, kept beside the
+        // claims by a trigger and by the mapping load. A served release has only these, so they must say what the
+        // claims say.
+        (ClaimsKeptApart, ClaimsKeptApartSql),
 
         // The same question asked of the annotations, and here for the same reason: an annotation
         // with nothing saying what asserted it is one nobody can weigh, and a card that names a person
@@ -1041,7 +1081,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // trigger whoever writes them, and a unique constraint over the pair and the fingerprint. So
         // this reads the constraint rather than every word of every link: it breaks if the constraint
         // is gone, or if a link has no fingerprint for it to compare.
-        ("links naming the same words as another link, instead of one link with two claims",
+        (SameWordsTwice,
             """
             SELECT (SELECT count(*) FROM link WHERE fingerprint IS NULL)
                  + CASE WHEN EXISTS (SELECT 1 FROM pg_constraint
@@ -1357,9 +1397,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), reader.GetFieldValue<string[]>(6)));
 
-        var contention = sessions.Read("contention", ContentionSql, reader => new Contention(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-            (int)reader.GetInt64(4), (int)reader.GetInt64(5)), hashed: true);
+        var contention = served
+            ? Task.FromResult(new List<Contention>())
+            : sessions.Read("contention", ContentionSql, reader => new Contention(
+                reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+                (int)reader.GetInt64(4), (int)reader.GetInt64(5)), hashed: true);
 
         // Single-threaded, deliberately. These sweep every link in the corpus, and Postgres
         // parallelises them across workers that share their sort state through /dev/shm — which a
@@ -1368,7 +1410,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // segment nobody sized and a false one about the disk. Raising it belongs in the frozen
         // repository's compose file; not needing it belongs here.
         var integrity = Integrity
-            .Select(check => sessions.Read(check.Breaks, check.Sql,
+            .Select(check => served && OnServedCopy.TryGetValue(check.Breaks, out var asked) ? (check.Breaks, Sql: asked) : (check.Breaks, Sql: (string?)check.Sql))
+            .Where(check => check.Sql is not null)
+            .Select(check => sessions.Read(check.Breaks, check.Sql!,
                 reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true, integrity: true, hashed: HashedChecks.Contains(check.Breaks)))
             .ToList();
 
@@ -1385,8 +1429,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                        Ordinal: reader.GetInt32(2), Book: reader.GetString(3),
                        Omits: (int)reader.GetInt64(4), Expands: (int)reader.GetInt64(5)));
 
-        var agreement = sessions.Read("agreement", AgreementSql, reader =>
-            new Agreement((int)reader.GetInt64(0), (int)reader.GetInt64(1)));
+        var agreement = served
+            ? Task.FromResult(new List<Agreement>())
+            : sessions.Read("agreement", AgreementSql, reader => new Agreement((int)reader.GetInt64(0), (int)reader.GetInt64(1)));
 
         // Empty until both voters are loaded, which is silence rather than a claim that Nestle agrees
         // with nobody: a corpus without them would report every word of his as decided by an edition

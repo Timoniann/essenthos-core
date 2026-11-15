@@ -58,9 +58,10 @@ internal static partial class ForgeVerbs
         new("carried-export", "[--into <Resources>] [--all]",
             "Write the served tables no producer makes yet (every one with --all, for a comparison) from the configured database as carried/<table>.",
             CarriedExport),
-        new("verify", "[--level skip|essentials|all] [--only <measure,...>] [--texts <text,...>] [--floor <share>]",
+        new("verify", "[--level skip|essentials|all] [--only <measure,...>] [--texts <text,...>] [--floor <share>] [--served]",
             "Measure the corpus and fail on anything broken: all (the default) records what it finds for /v1/health; essentials holds the tables "
-            + "to the build's row counts and keys and coverage to the floor; --only measures those named, --texts keeps those texts.", VerifyVerb),
+            + "to the build's row counts and keys and coverage to the floor; --only measures those named, --texts keeps those texts; "
+            + "--served gates a restored release as a publication does, recording nothing.", VerifyVerb),
         new("release", "[--allow-dirty] [--allow-unrecorded] [--dry-run]",
             "Verify this machine's corpus and dump it into .releases/ as the next release.", Release),
         new("export", "[--to <folder>] [--dry-run] | <text> --as tsv|csv|jsonl [--to <file>]",
