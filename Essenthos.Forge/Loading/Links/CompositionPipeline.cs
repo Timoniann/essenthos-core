@@ -95,6 +95,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         bool unmeasured = false,
         bool daughter = false,
         int agreeing = 1,
+        bool refuseUnmeasured = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -106,7 +107,8 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
 
         var proposed = await Propose(fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
         var statements = Key(fromSlug, toSlug);
-        var (admission, _) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, threshold, precision, false, null, cancellationToken);
+        var (admission, _) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, threshold, precision, false, null,
+            refuseUnmeasured, cancellationToken);
         if (admission.Floors.Count == 0 && !unmeasured)
         {
             throw new InvalidOperationException(
@@ -157,6 +159,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         string? explain = null,
         bool daughter = false,
         int agreeing = 1,
+        bool refuseUnmeasured = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -166,7 +169,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         var scope = CompositionTrial.Scope(texts, fromSlug, toSlug, statements, books);
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
         var (admission, measured) = await Admit(fromSlug, viaSlugs, toSlug, proposed, statements, minimumConfidence, precision, true, books,
-            cancellationToken);
+            refuseUnmeasured, cancellationToken);
 
         if (explain is not null)
         {
@@ -274,8 +277,10 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     /// <summary>
     /// Which answers a run writes: measured on the pair's own statements where it has enough, and
     /// otherwise on the other texts in its language that state the target, each composed the same
-    /// way. Also returns what each combination scored from each confidence up, for a dry run to print.
+    /// way; a floor the pair sets by hand (<see cref="HandFloors"/>) comes before either. Also returns
+    /// what each combination scored from each confidence up, for a dry run to print.
     /// </summary>
+    /// <param name="refuseUnmeasured">See <see cref="Admission.RefusingUnmeasured"/>.</param>
     private async Task<(Admission Admission, string Measured)> Admit(
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
@@ -286,16 +291,21 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         double precision,
         bool trial,
         IReadOnlySet<int>? books,
+        bool refuseUnmeasured,
         CancellationToken cancellationToken)
     {
+        var pair = MappingProducts.Pair(fromSlug, toSlug);
+        var hand = HandFloors.AsRoutes(pair, HandFloors.Read(texts.Store, pair), viaSlugs);
+        Admission Bound(Admission measured) => measured.With(hand).RefusingUnmeasured(refuseUnmeasured);
+
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
         var own = Admission.Measures(statements)
             ? Admission.Measure(every, statements, minimumConfidence, precision)
             : Admission.Everything(minimumConfidence);
         if (own.Floors.Count > 0)
         {
-            return (own, $"  {fromSlug} to {toSlug}, on its own statements:{Environment.NewLine}" +
-                         Admission.Curves(every, statements, [.. viaSlugs]));
+            return (Bound(own), $"  {fromSlug} to {toSlug}, on its own statements:{Environment.NewLine}" +
+                                Admission.Curves(every, statements, [.. viaSlugs]));
         }
 
         var measured = new List<(string Text, Route Reads, IReadOnlyDictionary<Route, RouteFloor> Floors)>();
@@ -318,7 +328,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
                 .AppendLine(Admission.Curves(proxyEvery, proxyStatements, [.. vias]));
         }
 
-        return (Admission.Borrow(measured, [.. viaSlugs], minimumConfidence, precision), report.ToString());
+        return (Bound(Admission.Borrow(measured, [.. viaSlugs], minimumConfidence, precision)), report.ToString());
     }
     /// <summary>
     /// A route as another composition numbers it, renumbered for this one: its middle texts are

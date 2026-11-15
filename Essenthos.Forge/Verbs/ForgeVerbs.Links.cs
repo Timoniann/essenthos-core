@@ -58,11 +58,14 @@ internal static partial class ForgeVerbs
             forge.Logger.LogInformation("\n{Report}", await composer.Measure(
                 from, vias, to, minimum ?? AlignmentPipeline.DefaultMinimumConfidence,
                 Option(args, "--books") is { } books ? books.Split(',').Select(int.Parse).ToHashSet() : null,
-                precision, Option(args, "--explain"), args.Contains("--daughter"), Agreeing(args)));
+                precision, Option(args, "--explain"), args.Contains("--daughter"), Agreeing(args), args.Contains("--refuse-unmeasured")));
             return 0;
         }
 
-        var pair = new ComposedPair(from, vias, to, minimum, precision, args.Contains("--unmeasured"), args.Contains("--daughter"), Agreeing(args));
+        // --refuse-unmeasured: what one family of readings found is refused where nothing measured that combination (NOT-0228),
+        // instead of written from the threshold. Off by default until the owner has seen what it removes (PRB-1607).
+        var pair = new ComposedPair(from, vias, to, minimum, precision, args.Contains("--unmeasured"), args.Contains("--daughter"), Agreeing(args),
+            args.Contains("--refuse-unmeasured"));
         return await WriteMethodFile(forge, args, MappingMethods.Composed, pair.Name, new ComposedSource([pair]) { Trains = true });
     }
 

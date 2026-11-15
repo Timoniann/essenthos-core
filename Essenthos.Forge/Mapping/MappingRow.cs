@@ -191,6 +191,12 @@ internal static class MappingStatus
 
     public const string RefusedByRuling = "refused-by ruling";
 
+    /// <summary>
+    /// A composed row under the floor its pair sets by hand for its combination of readings (<see cref="HandFloors"/>); the status
+    /// goes on to say which combination, which floor, and the measurement (<see cref="HandFloor.Status"/>).
+    /// </summary>
+    public const string RefusedByFloor = "refused-by floor";
+
     public const string NarrowedByRuling = "narrowed-by ruling";
 
     public const string NarrowedByEvidentia = "narrowed-by evidentia";
@@ -231,7 +237,7 @@ internal static class MappingProducts
     public const string PairOrdinals = Folder + "/pairs";
 
     /// <summary>The products of a pair folder that are not a method's claims.</summary>
-    public static readonly string[] NotMethods = [Final, Report, Statuses, Hashes, Rulings, StrongYielded, VerseLinkFiles.Name];
+    public static readonly string[] NotMethods = [Final, Report, Statuses, Hashes, Rulings, HandFloors.Name, StrongYielded, VerseLinkFiles.Name];
 
     public static string Pair(string from, string to) => $"{from}-{to}";
 
