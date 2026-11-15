@@ -52,12 +52,12 @@ internal static partial class ForgeVerbs
             + "languages (context_line, context/lines/<prose>) from the configured database where their inputs moved (all with --force), "
             + "copying them from the products where not. Never writes the live corpus or the snapshot.",
             ContextVerb, Most: 1),
-        new("pages", "[--force]",
+        new("pages", "[--force] [--parallel <n>]",
             "Compose the document every record's and Strong number's page is written from, in each site language (page_document, "
             + "page-documents/<kind>/<language>), from the configured database where what it was built from, the site's switches or "
-            + "the API's code moved (all with --force), copying them from the products where not. Never writes the live corpus or "
-            + "the snapshot.",
-            PagesVerb, Most: 1),
+            + "the API's code moved (all with --force), copying them from the products where not; n pages at once (Pages:Parallel, "
+            + "else half the cores). Never writes the live corpus or the snapshot.",
+            PagesVerb, Most: 3),
         new("strength", "[<text,...>] [--force]",
             "Count how strongly each text's verses are linked to every text linked to it, per canonical chapter, from the configured "
             + "database (verse_strength, strength/<SLUG>), for the texts named or every text whose inputs moved; a current product is "

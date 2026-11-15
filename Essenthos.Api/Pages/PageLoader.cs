@@ -437,8 +437,11 @@ internal sealed class PageLoader(
         // names and what the person is known for are written from it.
         var detail = await EncyclopediaEndpoints.Detail(
             db, settings, places, entity.Slug, language.Corpus, language.Corpus, cancellationToken);
-        var localDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken))
-            .GetValueOrDefault(entity.Id);
+        // The record's own answer has read its line in this language and its tally already.
+        var own = detail is not null && detail.Slug == entity.Slug ? detail : null;
+        var localDistinguisher = own is not null
+            ? own.LocalDistinguisher
+            : (await EntityDistinguishers.Of(db, [entity.Id], language.Corpus, cancellationToken)).GetValueOrDefault(entity.Id);
         // The structured line where it is phrased in the page's language — every language on an English
         // page, Ukrainian, German and Spanish on theirs — and the source's English line on English pages only.
         var descriptor = await Descriptors.Of(db, entity.Slug, language.Corpus, cancellationToken);
@@ -451,10 +454,10 @@ internal sealed class PageLoader(
         var english = language.IsEnglish ? entity.Distinguisher : null;
         var line = new[] { localDistinguisher, described, english }
             .FirstOrDefault(said => !string.IsNullOrWhiteSpace(said));
-        var tally = await db.Entities
+        var references = own?.References ?? (await db.Entities
             .Where(e => e.Id == entity.Id)
             .Select(EncyclopediaEndpoints.Tally)
-            .SingleAsync(cancellationToken);
+            .SingleAsync(cancellationToken)).References;
         var first = await db.EntityVerses.Shown()
             .Where(v => v.EntityId == entity.Id)
             .Select(v => new { v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse })
@@ -476,7 +479,7 @@ internal sealed class PageLoader(
                 : [.. descriptor.Parts.Select(part => new LinePart(
                     part.Text,
                     part.Entity is { } target ? PageAddress.TargetPath(target.Kind, target.Slug) : null))],
-            tally.References,
+            references,
             [
                 .. first.Select(v => new QuotedVerse(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse,
                     quoted.GetValueOrDefault(Address(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse)))),
