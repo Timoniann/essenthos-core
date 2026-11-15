@@ -1,6 +1,7 @@
 using Essenthos.Core.Loading;
+using Essenthos.Core.Swete;
 
-namespace Essenthos.Core.Swete;
+namespace Essenthos.Core.Tests;
 
 /// <summary>
 /// What taking a verse's chapter number out does to its words, word by word: a numeral standing
