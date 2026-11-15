@@ -661,11 +661,14 @@ internal sealed class PageLoader(
         if (span is not null)
         {
             var within = db.Events.Where(e => e.YearFromCreation >= span[0] && e.YearFromCreation <= span[1]);
-            total = await within.CountAsync(cancellationToken);
-            foreach (var one in await EncyclopediaEndpoints.InOrder(within)
-                         .Take(PeriodEventsShown)
-                         .Select(e => new { e.Slug, e.Name, e.YearFromCreation })
-                         .ToListAsync(cancellationToken))
+            var order = await EncyclopediaEndpoints.InOrder(within, cancellationToken);
+            total = order.Count;
+            var listed = order.Take(PeriodEventsShown).ToList();
+            var titled = await db.Events
+                .Where(e => listed.Contains(e.Slug))
+                .Select(e => new { e.Slug, e.Name, e.YearFromCreation })
+                .ToListAsync(cancellationToken);
+            foreach (var one in EncyclopediaEndpoints.Ordered(titled, listed, e => e.Slug))
             {
                 inside.Add((new PageLink($"/events/{one.Slug}", EventMarks.Unstarred(one.Name)),
                     one.YearFromCreation is { } year
