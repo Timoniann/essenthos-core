@@ -140,6 +140,31 @@ public class EvidentiaKnownRenderingIndexTests
     }
 
     [Fact]
+    public void AWordOfAPhraseLinkIsLearntOnTheOriginalWordItRenders()
+    {
+        // CrossWire's King James: "to God" over τῷ Θεῷ, God numbered G2316 and to with no number; "the Spirit" over τοῦ
+        // Πνεύματος with the numbered G3588 (PRB-1692); and a word whose number neither Greek word carries.
+        RenderingObservation Row(int position, string surface, string? own, string target, long link) =>
+            new(1, surface, null, target, link, position, own);
+        var learnt = EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            Row(1, "to", null, "G3588", 20), Row(1, "to", null, "G2316", 20),
+            Row(2, "God", "G2316", "G3588", 20), Row(2, "God", "G2316", "G2316", 20),
+        ]).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            Row(3, "the", "G3588", "G3588", 21), Row(3, "the", "G3588", "G4151", 21),
+            Row(4, "Spirit", "G4151", "G3588", 21), Row(4, "Spirit", "G4151", "G4151", 21),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            Row(5, "Lord", "G2962", "G3588", 22), Row(5, "Lord", "G2962", "G2316", 22),
+            Row(6, "said", "G2036", "G2036", 23),
+        ]));
+
+        learnt.Select(observation => $"{observation.SourceSurface} {observation.TargetStrongNumber}").Should().Equal(
+            "to G2316", "God G2316", "the G3588", "Spirit G4151", "Lord G2316", "said G2036");
+    }
+
+    [Fact]
     public void AWitnessStatedLemmaIsAKeyOfItsOwn()
     {
         var evidence = Source(

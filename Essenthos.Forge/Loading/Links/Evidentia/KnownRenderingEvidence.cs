@@ -269,10 +269,11 @@ internal sealed class EvidentiaKnownRenderingIndex(
                     || (link.FromTextId == targetText.Id && link.ToTextId == sourceText.Id
                         && sourceMembership.Side == LinkSide.To && targetMembership.Side == LinkSide.From))
             select new RenderingObservation(
-                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!, link.Id, sourceWord.Position))
+                sourceWord.VerseId, sourceWord.Surface, sourceWord.Lemma, targetWord.StrongNumber!, link.Id, sourceWord.Position,
+                sourceWord.StrongNumber))
             .ToListAsync(cancellationToken))
             .GroupBy(observation => observation.LinkId)
-            .SelectMany(StemsOnly)
+            .SelectMany(link => OwnTargets(StemsOnly(link)))
             .OrderBy(observation => observation.VerseId)
             .ThenBy(observation => observation.SourceSurface, StringComparer.Ordinal)
             .ThenBy(observation => observation.TargetStrongNumber, StringComparer.Ordinal)
@@ -358,6 +359,34 @@ internal sealed class EvidentiaKnownRenderingIndex(
             : observations.Where(observation => !IsPrefix(observation.TargetStrongNumber));
     }
 
+    /// <summary>
+    /// What each word of a link renders, where the link names several original words. CrossWire's King James states
+    /// phrases (<em>to God</em> over τῷ Θεῷ, <em>the Spirit</em> over τοῦ Πνεύματος), and read as every word to every
+    /// word they taught <em>God</em> the article as often as θεός: its share of G2316 fell from 98% to 56% (PRB-1692).
+    /// A word whose own Strong number one of the link's words carries renders that word; a word without one, or with
+    /// one none of them carries, renders the words that are not the article, and every word where all are articles.
+    /// The same reading as a composition's middle link (<see cref="Essenthos.Core.Mapping.MappingLinks.Targets"/>).
+    /// </summary>
+    internal static IEnumerable<RenderingObservation> OwnTargets(IEnumerable<RenderingObservation> link) =>
+        link.GroupBy(observation => (observation.VerseId, observation.SourcePosition))
+            .SelectMany(word =>
+            {
+                var observations = word.ToList();
+                if (observations.Count == 1)
+                {
+                    return observations;
+                }
+
+                var own = observations[0].SourceStrongNumber;
+                return own is not null && observations.Where(observation => observation.TargetStrongNumber == own).ToList() is { Count: > 0 } named
+                    ? named
+                    : observations.Where(observation => observation.TargetStrongNumber != GreekArticle).ToList() is { Count: > 0 } content
+                        ? content
+                        : observations;
+            });
+
+    private const string GreekArticle = "G3588";
+
     /// <summary>BHSA's numbers for the prefixes it writes as words: ו, ב, כ, ל, the article and its ה.</summary>
     private static bool IsPrefix(string strongNumber) =>
         strongNumber.Length == 5 && strongNumber.StartsWith("H900", StringComparison.Ordinal);
@@ -373,7 +402,8 @@ internal sealed record RenderingObservation(
     string? SourceLemma,
     string TargetStrongNumber,
     long LinkId = 0,
-    int SourcePosition = 0);
+    int SourcePosition = 0,
+    string? SourceStrongNumber = null);
 
 /// <summary>
 /// Turns rendering observations into a distribution per key. It is a pure function of what was
