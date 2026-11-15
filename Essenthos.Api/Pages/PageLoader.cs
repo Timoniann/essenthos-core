@@ -5,6 +5,8 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Essenthos.Core.Pages;
 
@@ -390,12 +392,19 @@ internal sealed class PageLoader(
 
     private async Task<PageContent?> Record(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
-        if (await Entity(address.Slug!, address.Language, cancellationToken, address.RecordKind) is not { } entity)
+        var language = address.Language;
+        if (await Stored(PageDocuments.RecordKind, language, address.Slug!, PageDocuments.Record, cancellationToken) is { } stored
+            && await Holds(stored.Conditions, stored.Slug, language, cancellationToken))
+        {
+            return await Written(stored, language, wording, cancellationToken);
+        }
+
+        if (await Entity(address.Slug!, language, cancellationToken, address.RecordKind) is not { } entity)
         {
             // A record withdrawn with nothing in its place is gone, not missing, so a search engine
             // forgets the address rather than asking again.
             return WithdrawnAddresses.IsWithdrawn(address.Slug!)
-                ? PageViews.NotFound(address.Language, wording) with { Status = StatusCodes.Status410Gone }
+                ? PageViews.NotFound(language, wording) with { Status = StatusCodes.Status410Gone }
                 : null;
         }
 
@@ -403,14 +412,27 @@ internal sealed class PageLoader(
         // so a search engine moves what it knew of the old page to the new rather than keeping both.
         if (entity.Slug != address.Slug)
         {
-            return PageViews.NotFound(address.Language, wording) with
+            return PageViews.NotFound(language, wording) with
             {
                 Status = StatusCodes.Status301MovedPermanently,
                 MovedTo = PageAddress.RecordPath(entity.Kind, entity.Slug),
             };
         }
 
-        var language = address.Language;
+        return await Written(await Composed(entity, language, cancellationToken), language, wording, cancellationToken);
+    }
+
+    /// <summary>
+    /// What a record's page in this language is written from, composed from the database as a page asked for composes it;
+    /// null where the slug is not a record's own address. The build stores it (TSK-1670).
+    /// </summary>
+    internal async Task<RecordDocument?> RecordDocument(string slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        await Entity(slug, language, cancellationToken) is { } entity && entity.Slug == slug
+            ? await Composed(entity, language, cancellationToken)
+            : null;
+
+    private async Task<RecordDocument> Composed(ShownEntity entity, SiteLanguage language, CancellationToken cancellationToken)
+    {
         // The record as the reader's script asks for it in this language: the page carries it, and its
         // names and what the person is known for are written from it.
         var detail = await EncyclopediaEndpoints.Detail(
@@ -442,21 +464,9 @@ internal sealed class PageLoader(
             .ToListAsync(cancellationToken);
         var quoted = await TextsAt(
             language, [.. first.Select(v => Address(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse))], cancellationToken);
-        var mentions = new List<VerseMention>(first.Count);
-        foreach (var verse in first)
-        {
-            mentions.Add(new VerseMention(
-                verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse,
-                wording.Reference(
-                    await BookName(language, wording, verse.CanonicalBook, cancellationToken),
-                    verse.CanonicalChapter,
-                    verse.CanonicalVerse))
-            {
-                Text = quoted.GetValueOrDefault(Address(verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse)),
-            });
-        }
-
-        return PageViews.Record(language, wording, new RecordView(
+        var coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null;
+        return new RecordDocument(
+            PageDocuments.Version,
             entity.Kind,
             entity.Slug,
             entity.Shown,
@@ -467,18 +477,101 @@ internal sealed class PageLoader(
                     part.Text,
                     part.Entity is { } target ? PageAddress.TargetPath(target.Kind, target.Slug) : null))],
             tally.References,
-            mentions)
-        {
-            Image = await Picture(entity.Slug, language.Corpus, cancellationToken),
-            Coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null,
-            SameAs = await SameAs(entity.Id, cancellationToken),
-            Names = detail is null ? [] : OriginalNames(detail, language),
-            KnownFor = detail?.KnownFor is { } known
+            [
+                .. first.Select(v => new QuotedVerse(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse,
+                    quoted.GetValueOrDefault(Address(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse)))),
+            ],
+            await Picture(entity.Slug, language.Corpus, cancellationToken),
+            coordinates?.Latitude,
+            coordinates?.Longitude,
+            await SameAs(entity.Id, cancellationToken),
+            detail is null ? [] : OriginalNames(detail, language),
+            detail?.KnownFor is { } known
                 ? [.. known.Select(clause => new KnownClause(clause.Text, StructuredData.LanguageTag(clause.Language)))]
                 : [],
-        }) with
+            await Conditions(entity.Slug, language, cancellationToken))
         {
             Data = detail is null ? null : PageData.Of([(PageData.EntityAddress(entity.Slug, language), PageData.Json(detail))]),
+        };
+    }
+
+    /// <summary>A record's page written from its document, in this build's wording.</summary>
+    private async Task<PageContent> Written(RecordDocument document, SiteLanguage language, PageWording wording, CancellationToken cancellationToken)
+    {
+        var mentions = new List<VerseMention>(document.Verses.Count);
+        foreach (var verse in document.Verses)
+        {
+            mentions.Add(new VerseMention(
+                verse.Book, verse.Chapter, verse.Verse,
+                wording.Reference(await BookName(language, wording, verse.Book, cancellationToken), verse.Chapter, verse.Verse))
+            {
+                Text = verse.Text,
+            });
+        }
+
+        return PageViews.Record(language, wording, new RecordView(
+            document.Kind,
+            document.Slug,
+            document.Name,
+            document.Line,
+            document.Descriptor,
+            document.References,
+            mentions)
+        {
+            Image = document.Image,
+            Coordinates = document.Latitude is { } latitude && document.Longitude is { } longitude ? (latitude, longitude) : null,
+            SameAs = document.SameAs,
+            Names = document.Names,
+            KnownFor = document.KnownFor,
+        }) with
+        {
+            Data = document.Data,
+        };
+    }
+
+    /// <summary>
+    /// What a page in this language is composed under that the corpus does not fix: the text it quotes, whether
+    /// generated pictures are shown, and, for a record, its place's map picture.
+    /// </summary>
+    private async Task<PageConditions> Conditions(string? slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        new((await Chosen(language, cancellationToken))?.Slug,
+            settings.Is(SiteSettings.GeneratedImages),
+            slug is not null && places?.For(slug, language.Corpus) is { } picture ? $"{picture.File}:{picture.Digest}" : null);
+
+    private async Task<bool> Holds(PageConditions conditions, string? slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        conditions == await Conditions(slug, language, cancellationToken);
+
+    /// <summary>
+    /// The stored document of a page, read in one statement; null where the build made none, made it with another version,
+    /// or the database predates the table.
+    /// </summary>
+    private async Task<T?> Stored<T>(string kind, SiteLanguage language, string address, JsonTypeInfo<T> info, CancellationToken cancellationToken)
+        where T : class
+    {
+        byte[]? body;
+        try
+        {
+            body = await db.PageDocuments
+                .Where(d => d.Kind == kind && d.Language == language.Code && d.Address == address)
+                .Select(d => d.Body)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+        catch (PostgresException missing) when (missing.SqlState == PostgresErrorCodes.UndefinedTable)
+        {
+            return null;
+        }
+
+        if (body is null)
+        {
+            return null;
+        }
+
+        var (document, data) = PageDocuments.Unpack(body, info);
+        return document switch
+        {
+            RecordDocument { Version: PageDocuments.Version } record => (T)(object)(record with { Data = data }),
+            StrongDocument { Version: PageDocuments.Version } strong => (T)(object)(strong with { Data = data }),
+            _ => null,
         };
     }
 
@@ -710,17 +803,30 @@ internal sealed class PageLoader(
 
     private async Task<PageContent?> Strong(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
-        var number = address.Slug!;
         var language = address.Language;
+        var document = await Stored(PageDocuments.StrongKind, language, address.Slug!, PageDocuments.Strong, cancellationToken) is { } stored
+                       && await Holds(stored.Conditions, null, language, cancellationToken)
+            ? stored
+            : await StrongDocument(address.Slug!, language, cancellationToken);
+        return document is null ? null : await Written(document, language, wording, cancellationToken);
+    }
+
+    /// <summary>
+    /// What a Strong number's page in this language is written from, composed from the database as a page asked for
+    /// composes it; null where there is no such entry. The build stores it (TSK-1670).
+    /// </summary>
+    internal async Task<StrongDocument?> StrongDocument(string number, SiteLanguage language, CancellationToken cancellationToken)
+    {
         if (await StrongEndpoints.Detail(db, number, language.Corpus, cancellationToken) is not { } entry)
         {
             return null;
         }
 
+        var conditions = await Conditions(null, language, cancellationToken);
         var answers = new List<(string, string)> { (PageData.StrongAddress(number, language), PageData.Json(entry)) };
         if (entry.Morpheme)
         {
-            return PageViews.Strong(language, wording, new StrongView(number, null, null, entry.Definition, null)) with
+            return new StrongDocument(PageDocuments.Version, number, null, null, entry.Definition, null, null, false, null, null, [], [], conditions)
             {
                 Data = PageData.Of(answers),
             };
@@ -728,13 +834,20 @@ internal sealed class PageLoader(
 
         // How the page's own text renders the number and where it stands, as the reader's page asks
         // for them in that text: both are carried, and both are written out for whoever runs no script.
-        var view = new StrongView(
+        var document = new StrongDocument(
+            PageDocuments.Version,
             entry.StrongNumber,
             entry.Lemma,
             entry.Transliteration,
             entry.Translation?.Definition ?? entry.Definition,
             entry.Translation?.Derivation ?? entry.Derivation,
-            entry.Translation?.DetailedDefinition ?? entry.DetailedDefinition);
+            entry.Translation?.DetailedDefinition ?? entry.DetailedDefinition,
+            false,
+            null,
+            null,
+            [],
+            [],
+            conditions);
         if (await Chosen(language, cancellationToken) is { } chosen && await canon.Text(chosen.Slug, cancellationToken) is { } text)
         {
             var renderings = await StrongEndpoints.RenderingsOf(
@@ -742,26 +855,50 @@ internal sealed class PageLoader(
             answers.Add((PageData.StrongRenderingsAddress(number, chosen.Slug), PageData.Json(renderings)));
             var map = await StrongBookEndpoints.Map(db, number, [text], cancellationToken);
             answers.Add((PageData.StrongBooksAddress(number, chosen.Slug), PageData.Json(map)));
-            var books = new List<StrongBookCount>();
-            foreach (var row in map.Books.Where(row => row.Occurrences > 0).OrderBy(row => row.BookOrdinal))
+            document = document with
             {
-                books.Add(new StrongBookCount(await BookName(language, wording, row.BookOrdinal, cancellationToken), row.Occurrences));
+                Rendered = true,
+                Uses = map.Occurrences > 0 ? map.Occurrences : null,
+                Edition = map.Edition,
+                Renderings = [.. renderings.Renderings.Select(r => new StrongRenderingCount(r.Text, r.Count))],
+                Books =
+                [
+                    .. map.Books.Where(row => row.Occurrences > 0).OrderBy(row => row.BookOrdinal)
+                        .Select(row => new StrongBookTally(row.BookOrdinal, row.Occurrences)),
+                ],
+            };
+        }
+
+        return document with { Data = PageData.Of(answers) };
+    }
+
+    /// <summary>A Strong number's page written from its document, in this build's wording.</summary>
+    private async Task<PageContent> Written(StrongDocument document, SiteLanguage language, PageWording wording, CancellationToken cancellationToken)
+    {
+        var view = new StrongView(
+            document.Number, document.Lemma, document.Transliteration, document.Definition, document.Derivation, document.Outline);
+        if (document.Rendered && await Chosen(language, cancellationToken) is { } chosen)
+        {
+            var books = new List<StrongBookCount>(document.Books.Count);
+            foreach (var row in document.Books)
+            {
+                books.Add(new StrongBookCount(await BookName(language, wording, row.Book, cancellationToken), row.Count));
             }
 
-            var witness = map.Edition is { } edition
+            var witness = document.Edition is { } edition
                 ? (await Texts(cancellationToken)).FirstOrDefault(t => t.Slug == edition)
                 : null;
             view = view with
             {
-                Uses = map.Occurrences > 0 ? map.Occurrences : null,
-                CountedIn = witness is null ? map.Edition : TextName(wording, witness),
+                Uses = document.Uses,
+                CountedIn = witness is null ? document.Edition : TextName(wording, witness),
                 RenderedIn = TextName(wording, chosen),
-                Renderings = [.. renderings.Renderings.Select(r => new StrongRenderingCount(r.Text, r.Count))],
+                Renderings = document.Renderings,
                 Books = books,
             };
         }
 
-        return PageViews.Strong(language, wording, view) with { Data = PageData.Of(answers) };
+        return PageViews.Strong(language, wording, view) with { Data = document.Data };
     }
 
     /// <summary>

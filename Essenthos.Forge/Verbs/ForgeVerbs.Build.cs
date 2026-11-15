@@ -374,6 +374,19 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary><c>pages [--force]</c>: the documents record and Strong pages are written from, for the configured database.</summary>
+    private static async Task<int> PagesVerb(ForgeRun forge, string[] args)
+    {
+        ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
+        var services = forge.Scope().ServiceProvider;
+        var outcome = await new PageDocumentBuild(forge.DatabaseConnection, new ProductStore(forge.Resources), services,
+                services.GetRequiredService<IConfiguration>(), forge.Logger)
+            .Run(args.Contains("--force"), CancellationToken.None);
+        Console.WriteLine($"{outcome.Made} products made, {outcome.Rows} rows written, {outcome.Documents} documents, {outcome.Bytes} bytes, "
+                          + $"{outcome.Compressed} compressed, in {outcome.Elapsed.TotalSeconds:0.0} s");
+        return 0;
+    }
+
     /// <summary>
     /// <c>record-words [&lt;text,...&gt;] [--force]</c>: what a record page reads of the words of the configured database (the
     /// spellings of every text, the positions in the King James), for the texts whose inputs moved (every text named with

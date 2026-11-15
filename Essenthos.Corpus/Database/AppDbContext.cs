@@ -382,6 +382,9 @@ public class AppDbContext : DbContext
     /// <summary>Each connected family as one document per pair of languages, made at build.</summary>
     public DbSet<FamilyComponent> FamilyComponents { get; set; } = null!;
 
+    /// <summary>What each record's and Strong number's page is written from, per site language, made at build.</summary>
+    public DbSet<PageDocument> PageDocuments { get; set; } = null!;
+
     /// <summary>How often each text prints each form for each record under each Strong number, counted ahead of time.</summary>
     public DbSet<RecordSpelling> RecordSpellings { get; set; } = null!;
 
@@ -1871,6 +1874,13 @@ public class AppDbContext : DbContext
             entity.ToTable("family_component", t => t.HasComment(
                 "Each connected family of family_member as the JSON document a tree is drawn from, per pair of languages, "
                 + "sent as it is. Made by the serving build (family-components/{prose})."));
+        });
+
+        modelBuilder.Entity<PageDocument>(entity =>
+        {
+            entity.ToTable("page_document", t => t.HasComment(
+                "What the server writes a record's or a Strong number's page from, per site language: the page's own facts and the "
+                + "API answers it carries, as gzip-compressed JSON. Pages by address. Made by the serving build (page-documents/{kind}/{language})."));
         });
 
         modelBuilder.Entity<RecordSpelling>(entity =>

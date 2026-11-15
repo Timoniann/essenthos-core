@@ -22,6 +22,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="Essenthos.Core.Tests" />
+        <InternalsVisibleTo Include="Essenthos.Forge" />
     </ItemGroup>
 
     <ItemGroup>

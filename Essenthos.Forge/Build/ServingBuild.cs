@@ -173,6 +173,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             Families(false, cancellationToken));
         // After the panes and the record words, which save the store as each text is written.
         await Strength(null, false, cancellationToken);
+        await Pages(false, cancellationToken);
         await Count(cancellationToken);
     }
 
@@ -313,6 +314,24 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             }
 
             return (long)made.Sum(o => o.Rows);
+        });
+
+    /// <summary>
+    /// The documents record and Strong pages are written from (<see cref="PageDocumentBuild"/>), composed from the tables as they
+    /// now stand where what the database was built from, the site's switches or the API's code moved (always with
+    /// <paramref name="force"/>), copied from the products where not. Last, since a page reads whatever the rest wrote.
+    /// Returns the rows the table took.
+    /// </summary>
+    public Task<long> Pages(bool force, CancellationToken cancellationToken) =>
+        Timed("load", "page documents", async () =>
+        {
+            var outcome = await new PageDocumentBuild(connectionString, store, services, services.GetRequiredService<IConfiguration>(), logger)
+                .Run(force, cancellationToken);
+            logger.LogInformation("Page documents: {Made} products made, {Rows} rows written; {Documents} documents, {Bytes} bytes, {Compressed} compressed",
+                outcome.Made, outcome.Rows, outcome.Documents, outcome.Bytes, outcome.Compressed);
+            Stages.Enqueue(new BuildStage("load", "page documents stored", TimeSpan.Zero, outcome.Documents,
+                $"{outcome.Bytes} bytes, {outcome.Compressed} compressed"));
+            return outcome.Rows;
         });
 
     /// <summary>Texts whose strength is counted at once: each reads all its link words in one statement.</summary>
