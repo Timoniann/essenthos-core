@@ -176,6 +176,24 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     }
 
     [Fact]
+    public void APoolTrainsOnEachOfItsTextsBesideTheSourceAsThatTextsOwnPairReadsIt()
+    {
+        static Dictionary<(int, int, int), List<AlignmentPipeline.Word>> Read(params ((int, int, int) At, string[] Words)[] verses) =>
+            verses.ToDictionary(verse => verse.At, verse => verse.Words.Select((word, i) => new AlignmentPipeline.Word(i + 1, word, null)).ToList());
+        var lettered = Read(((1, 1, 1), ["ወ", "ሰ", "ለ"]), ((40, 1, 1), ["መ"]));
+        var unlettered = Read(((1, 1, 1), ["ወ"]), ((40, 1, 1), ["መ"]));
+        var swete = Read(((1, 1, 1), ["και"]));
+        var nestle = Read(((40, 1, 1), ["βιβλος"]));
+
+        var inputs = AlignmentPipeline.PoolInputs("GEEZ81", ["SWETE", "NESTLE1904"],
+            text => text == "SWETE" ? new(lettered, swete) : new(unlettered, nestle));
+
+        inputs.Select(input => input.Name).Should().Equal("source.txt", "target.txt");
+        inputs[0].Lines.Should().Equal(["ወ ሰ ለ", "መ"], "the Old Testament verse is read as the pair numbered alike reads it, lettered words and all");
+        inputs[1].Lines.Should().Equal("και", "βιβλος");
+    }
+
+    [Fact]
     public void AModelCountsOnlyWithEachDirectionsConfigurationAndATableThatHoldsSomething()
     {
         var prefix = Path.Combine(_workspace, "model", "GEEZ81");
