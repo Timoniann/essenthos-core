@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/GEEZ81-SWETE/rulings.tsv
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	11.16:28b.22	11.16:28a.10	renders	SIL.Machine	አድባር / βασλεύει: Claude (r161), 2026-11-15: the high places of 16:28b, not "reigns" of 16:28a.
+refuse	11.16:28g.10	11.16:28c.3	renders	SIL.Machine	ኢዮላፍጥ / συνέθετο: Claude (r161), 2026-11-15: the name Jehoshaphat, not "made a covenant" of 16:28c.

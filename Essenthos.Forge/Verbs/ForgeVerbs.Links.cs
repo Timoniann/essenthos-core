@@ -80,6 +80,25 @@ internal static partial class ForgeVerbs
             return 0;
         }
 
+        // --verses: only the rows of FROM words in these verses are drawn again, every other row of the file stays; the pair
+        // is drawn as its declaration says, so the new rows are made the way the carried ones were.
+        if (Option(args, "--verses") is { } named)
+        {
+            var declared = ComposedSource.Pairs.FirstOrDefault(p => p.From == from && p.To == to && p.Vias.SequenceEqual(vias))
+                ?? throw new ArgumentException($"compose --verses draws a declared composition, and none goes from {from} through {string.Join(",", vias)} to {to}.");
+            var verses = named.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(range => Products.VerseRange.Parse(range)).ToList();
+            var outcome = PairSources.WriteVerses(texts, MappingMethods.Composed, declared.Name, verses,
+                $"forge compose {from} {string.Join(",", vias)} {to} --verses {string.Join(",", verses)}",
+                line => forge.Logger.LogInformation("{Line}", line), [new ComposedSource([declared]) { Trains = true }]);
+            store.Save();
+            var written = outcome.Written!;
+            forge.Logger.LogInformation(
+                "{Pair} composed: {Rows} rows; {Made} made in the verses ({Kept} shapes the file held there, {New} new, {Gone} gone); {Carried} rows outside them as they were",
+                written.Pair, written.Rows, written.Rows - written.Carried, written.Kept, written.New, written.Gone, written.Carried);
+            return 0;
+        }
+
         // --refuse-unmeasured: what one family of readings found is refused where nothing measured that combination (NOT-0228),
         // instead of written from the threshold. Off by default until the owner has seen what it removes (PRB-1607).
         var pair = new ComposedPair(from, vias, to, minimum, precision, args.Contains("--unmeasured"), args.Contains("--daughter"), Agreeing(args),
