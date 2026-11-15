@@ -16,7 +16,8 @@ internal static partial class RecordFiles
             INSERT INTO ruler_reign (entity_id, realm, position, period_id, drawn_under, shared, fallback, source)
             SELECT e.id, s.realm, s.position, p.id, s.drawn_under, s.shared, s.fallback, s.by
             FROM s JOIN entity e ON e.slug = s.ruler LEFT JOIN period p ON p.slug = s.period
-            WHERE s.period IS NULL OR p.id IS NOT NULL ORDER BY s.ruler, s.realm, s.position
+            WHERE s.period IS NULL OR p.id IS NOT NULL
+            ORDER BY s.ruler, s.realm, s.position, s.period, s.drawn_under, s.shared, s.fallback, s.by
             """,
             ["ruler_reign", "reign_statement", "reign_length", "reign_event", "prophet_field", "throne_name", "ruler_verdict", "stated_age"]),
         new("records/facts/reign-statements", ProductKind.Hand,
@@ -52,7 +53,8 @@ internal static partial class RecordFiles
             """
             INSERT INTO reign_event (slug, kind, realm, position, timeline_event_id, ruler_entity_id, year, canonical_book, canonical_chapter, canonical_verse, end_verse, source)
             SELECT s.slug, s.kind, s.realm, s.position, v.id, e.id, s.year, s.ref[1], s.ref[2], s.ref[3], s.end_verse, s.by
-            FROM s JOIN entity e ON e.slug = s.ruler LEFT JOIN event v ON v.slug = s.event WHERE s.event IS NULL OR v.id IS NOT NULL ORDER BY s.slug
+            FROM s JOIN entity e ON e.slug = s.ruler LEFT JOIN event v ON v.slug = s.event WHERE s.event IS NULL OR v.id IS NOT NULL
+            ORDER BY s.slug, s.ref, s.ruler, s.year, s.end_verse, s.kind, s.realm, s.position, s.event, s.by
             """,
             []),
         new("records/facts/prophet-fields", ProductKind.Hand,
