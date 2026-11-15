@@ -73,9 +73,10 @@ internal static class PageEndpoints
             }
 
             // Only what a search engine may index is kept: a reader's own pages and the lists a query
-            // picked are as many as the queries people type, and each is cheap to write again.
+            // picked are as many as the queries people type, and each is cheap to write again. The texts a
+            // reader opens a chapter in are theirs too: the page a search engine keeps names none.
             var wording = reading.WordingFor(address.Language);
-            var page = address.Indexed
+            var page = address.Indexed && address.Texts.Count == 0
                 ? await cache.Remember($"page:{address.Language.Code}:{address.Kind}:{address.English}", PageCache.Page,
                     () => loader.Load(address, wording, cancellationToken), made => made.Bytes, CacheItemPriority.Normal)
                 : await loader.Load(address, wording, cancellationToken);

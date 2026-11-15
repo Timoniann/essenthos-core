@@ -19,6 +19,8 @@ internal sealed record ReaderText(
     IReadOnlyList<int> Books)
 {
     public bool Covers(int book) => Books.Contains(book);
+
+    public bool RightToLeft { get; init; }
 }
 
 /// <summary>
@@ -204,7 +206,27 @@ internal sealed class PageLoader(
         }
 
         var language = address.Language;
-        foreach (var text in ReaderTexts.ForBook(await Texts(cancellationToken), await Chosen(language, cancellationToken), address.Book))
+        var named = await NamedTexts(address, cancellationToken);
+        if (await SideBySide(address, named, wording, cancellationToken) is { } sides)
+        {
+            return PageViews.Chapter(language, wording, new ChapterView(
+                address.Book,
+                await BookName(language, wording, address.Book, cancellationToken),
+                address.Chapter,
+                chapterCount,
+                sides[0].Verses,
+                sides[0].Column.Name)
+            {
+                TextLanguage = sides[0].Column.Language,
+                Columns = [.. sides.Select(side => side.Column)],
+            }) with
+            {
+                Data = Carried(address, sides),
+            };
+        }
+
+        var chosen = named is [var one] ? one : await Chosen(language, cancellationToken);
+        foreach (var text in ReaderTexts.ForBook(await Texts(cancellationToken), chosen, address.Book))
         {
             // The page carries the pane as the reader's script asks for it, and takes its verses from the
             // same row: one read of the chapter, not three.
@@ -240,8 +262,32 @@ internal sealed class PageLoader(
         }
 
         var language = address.Language;
+        var named = await NamedTexts(address, cancellationToken);
+        if (await SideBySide(address, named, wording, cancellationToken) is { } sides
+            && sides[0].Verses.Where(verse => verse.Number == address.Verse).Select(verse => verse.Text).FirstOrDefault() is { } first)
+        {
+            return PageViews.Verse(language, wording, new VerseView(
+                address.Book,
+                await BookName(language, wording, address.Book, cancellationToken),
+                address.Chapter,
+                address.Verse,
+                first,
+                sides[0].Column.Name)
+            {
+                Verses = sides[0].Verses,
+                ChapterCount = chapterCount,
+                TextLanguage = sides[0].Column.Language,
+                Original = await OriginalVerse(address, wording, cancellationToken),
+                Columns = [.. sides.Select(side => side.Column)],
+            }) with
+            {
+                Data = Carried(address, sides),
+            };
+        }
+
         var chapterHeld = false;
-        foreach (var text in ReaderTexts.ForBook(await Texts(cancellationToken), await Chosen(language, cancellationToken), address.Book))
+        var chosen = named is [var one] ? one : await Chosen(language, cancellationToken);
+        foreach (var text in ReaderTexts.ForBook(await Texts(cancellationToken), chosen, address.Book))
         {
             var verses = await ChapterVerses(text.Id, address.Book, address.Chapter, cancellationToken);
             chapterHeld |= verses.Count > 0;
@@ -912,6 +958,78 @@ internal sealed class PageLoader(
         (await ImageEndpoints.Leading(db, [slug], cancellationToken, settings.Is(SiteSettings.GeneratedImages), places, language))
         .GetValueOrDefault(slug)?.Url;
 
+    /// <summary>
+    /// The texts a chapter's address names, in its order, as the reader takes them: each that the corpus
+    /// holds under that name or another it answers to, once; the rest left out, as the reader leaves them.
+    /// </summary>
+    private async Task<IReadOnlyList<ReaderText>> NamedTexts(PageAddress address, CancellationToken cancellationToken)
+    {
+        if (address.Texts.Count == 0)
+        {
+            return [];
+        }
+
+        var texts = await Texts(cancellationToken);
+        var named = new List<ReaderText>();
+        foreach (var slug in address.Texts)
+        {
+            if (await canon.Text(slug, cancellationToken) is { } entry
+                && texts.FirstOrDefault(text => text.Id == entry.Id) is { } text && !named.Contains(text))
+            {
+                named.Add(text);
+            }
+        }
+
+        return named;
+    }
+
+    /// <summary>
+    /// The chapter in each of several named texts, from their stored panes, read in one statement; null where
+    /// fewer than two are named, more than the reader reads side by side at once, or any of them has no pane
+    /// for the chapter, and the page shows one text as it would without them.
+    /// </summary>
+    private async Task<IReadOnlyList<Side>?> SideBySide(
+        PageAddress address, IReadOnlyList<ReaderText> named, PageWording wording, CancellationToken cancellationToken)
+    {
+        if (named.Count < 2 || named.Count > ParallelEndpoints.MostCorporaAtOnce)
+        {
+            return null;
+        }
+
+        var ids = named.Select(text => text.Id).ToList();
+        var rows = await db.Panes.AsNoTracking()
+            .Where(p => ids.Contains(p.TextId) && p.CanonicalBook == address.Book && p.CanonicalChapter == address.Chapter)
+            .Select(p => new { p.TextId, p.Body })
+            .ToListAsync(cancellationToken);
+        if (rows.Count != named.Count)
+        {
+            return null;
+        }
+
+        var sides = new List<Side>(named.Count);
+        foreach (var text in named)
+        {
+            var pane = Panes.Unpack(rows.First(row => row.TextId == text.Id).Body);
+            var cells = ReadingColumn.CellsOf(pane, address.Chapter);
+            var face = text.Kind == TextKind.Translation ? "text-ltr" : text.RightToLeft ? "text-hebrew" : "text-greek";
+            sides.Add(new Side(
+                text,
+                pane,
+                new ReadingColumn(TextName(wording, text), StructuredData.LanguageTag(text.Language), text.RightToLeft, face, cells),
+                [.. cells.Where(cell => cell.Value.Text.Length > 0).OrderBy(cell => cell.Key).Select(cell => (cell.Key, cell.Value.Text))]));
+        }
+
+        return sides;
+    }
+
+    /// <summary>Every named text's pane, as the reader's script asks for each, so none is downloaded again.</summary>
+    private static byte[]? Carried(PageAddress address, IReadOnlyList<Side> sides) =>
+        PageData.Of(sides.Select(side =>
+            (PageData.PaneAddress(side.Text.Slug, BookReferences.Slug(address.Book), address.Chapter), PageData.Written(side.Pane))));
+
+    /// <summary>One named text's side of a chapter: its pane as stored, the column it draws, and its verses as plain text.</summary>
+    private sealed record Side(ReaderText Text, byte[] Pane, ReadingColumn Column, IReadOnlyList<(int Number, string Text)> Verses);
+
     private static string TextName(PageWording wording, ReaderText text) =>
         wording.Map("textName").GetValueOrDefault(text.Slug) ?? text.Name;
 
@@ -1122,12 +1240,15 @@ internal sealed class PageLoader(
             var entries = await canon.Texts(cancellationToken);
             var rows = await db.Texts
                 .OrderBy(t => t.Slug)
-                .Select(t => new { t.Id, t.Slug, t.Name, t.NameNative, t.Language, t.Kind })
+                .Select(t => new { t.Id, t.Slug, t.Name, t.NameNative, t.Language, t.Kind, t.Direction })
                 .ToListAsync(cancellationToken);
             return (IReadOnlyList<ReaderText>)
             [
                 .. rows.Join(entries, row => row.Id, entry => entry.Id, (row, entry) =>
-                    new ReaderText(row.Id, row.Slug, row.Name, row.NameNative, row.Language, row.Kind, entry.Books)),
+                    new ReaderText(row.Id, row.Slug, row.Name, row.NameNative, row.Language, row.Kind, entry.Books)
+                    {
+                        RightToLeft = row.Direction == TextDirection.RightToLeft,
+                    }),
             ];
         });
 

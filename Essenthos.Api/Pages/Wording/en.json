@@ -387,5 +387,11 @@
   },
   "dataset": {
     "description": "{{name}}: the whole text (verses: {{verses}}, books: {{books}}) as one JSON Lines file, with a second file beside it saying who made the text and on what terms it may be passed on."
+  },
+  "reading": {
+    "together": "Together",
+    "alignedTo": "Aligned to {{name}}",
+    "base": "base",
+    "notPresentAt": "Not present in {{corpus}} at verse {{verse}}"
   }
 }
