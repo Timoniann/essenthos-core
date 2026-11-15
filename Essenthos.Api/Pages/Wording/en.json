@@ -159,7 +159,9 @@
     "year": "Year",
     "working": "What it rests on",
     "hypothesis": "the compiler's inference",
-    "outsideScripture": "from outside Scripture"
+    "outsideScripture": "from outside Scripture",
+    "wikipedia": "Wikipedia",
+    "wikipediaInEnglish": "Wikipedia"
   },
   "period": {
     "description": "{{name}}: its years by each reckoning, and the events that fall within it.",

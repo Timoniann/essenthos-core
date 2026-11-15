@@ -150,6 +150,13 @@ internal record EventResponse(
     /// event with an asterisk after its title, which is taken off the title and said here instead.
     /// </summary>
     public string? Mark { get; init; }
+
+    /// <summary>
+    /// A world event's Wikipedia article in the reader's language, the English one standing in where that
+    /// Wikipedia has none, from the event's own Wikidata item. Null for Scripture's events and where no
+    /// Wikipedia kept here has an article on the item.
+    /// </summary>
+    public EntityWikipediaResponse? Wikipedia { get; init; }
 }
 
 /// <param name="Calculation">

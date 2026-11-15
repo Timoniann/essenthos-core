@@ -162,7 +162,9 @@
     "year": "Año",
     "working": "En qué se basa",
     "hypothesis": "suposición del compilador",
-    "outsideScripture": "fuera de la Escritura"
+    "outsideScripture": "fuera de la Escritura",
+    "wikipedia": "Wikipedia",
+    "wikipediaInEnglish": "Wikipedia (en inglés)"
   },
   "period": {
     "description": "{{name}}: sus años según cada cronología y los acontecimientos que caen dentro de él.",

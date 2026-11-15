@@ -615,6 +615,7 @@ internal sealed class PageLoader(
             Person = person,
             Source = detail.Source,
             Image = image,
+            Wikipedia = detail.Wikipedia is { } article ? new PageArticle(article.Url, article.Title, article.Language) : null,
         };
         return PageViews.Event(language, wording, view) with
         {

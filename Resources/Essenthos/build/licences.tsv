@@ -126,7 +126,7 @@ WikidataLexemes	data	never	CC0-1.0	public-domain	-	WikidataLexemes/LICENCE.md	-	
 WorldEnglish	text	content	Public Domain	public-domain	text:WEB	WorldEnglish/LICENCE.md	-	"World English Bible" is a trademark: a changed text may not carry the name.
 WorldEnglish	strong	never	No licence stated	unknown	-	WorldEnglish/LICENCE.md	-	The reader refuses the tags.
 WorldEnglishClassic	text	content	Public Domain	public-domain	text:*	WorldEnglishClassic/LICENCE.md	-	-
-WorldHistory	data	derived	CC0-1.0	public-domain	dataset:wikidata	WorldHistory/README.md	-	Exported once into Essenthos/external/wikidata.
+WorldHistory	data	content	CC0-1.0	public-domain	dataset:wikidata	WorldHistory/README.md	-	The query results were exported once into Essenthos/external/wikidata; records-derive reads wikidata-sitelinks.tsv for the world events' Wikipedia articles.
 Young1898	text	content	Public Domain	public-domain	text:YLT	Young1898/LICENCE.md	-	-
 ZefaniaLuther1912	strong	never	the module says the text is public domain; toledot.info reserves its own work	prohibited	-	ZefaniaLuther1912/LICENCE.md	-	Read only to check LUTH1912's numbers by hand.
 bible4u/KJV.xml	text	content	Everyone is permitted to copy, modify and distribute copies of this document for free as long as it's Biblical content remains unchanged.	permitted	text:KJV	bible4u/LICENCE.md	-	-

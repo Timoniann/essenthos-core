@@ -418,6 +418,9 @@ public class AppDbContext : DbContext
 
     public DbSet<EventDate> EventDates { get; set; } = null!;
 
+    /// <summary>The Wikipedia articles of the world events, from each event's own Wikidata item.</summary>
+    public DbSet<EventWikipedia> EventWikipedia { get; set; } = null!;
+
     /// <summary>
     /// The periods of the lands around the Bible as scholars define them, from PeriodO, each under
     /// the work that defines it.
@@ -806,6 +809,21 @@ public class AppDbContext : DbContext
         });
 
         modelBuilder.Entity<EventDate>().Property(d => d.CalculationParts).HasColumnType("jsonb");
+
+        modelBuilder.Entity<EventWikipedia>(entity =>
+        {
+            entity.HasOne(w => w.Event)
+                .WithMany()
+                .HasForeignKey(w => w.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("event_wikipedia", t =>
+            {
+                t.HasCheckConstraint("ck_event_wikipedia_language", "language IN ('en', 'uk', 'de', 'es')");
+                t.HasCheckConstraint("ck_event_wikipedia_title", "length(title) > 0");
+                t.HasCheckConstraint("ck_event_wikipedia_qid", "qid ~ '^Q[0-9]+$'");
+            });
+        });
 
         modelBuilder.Entity<EntityAlternative>(entity =>
         {

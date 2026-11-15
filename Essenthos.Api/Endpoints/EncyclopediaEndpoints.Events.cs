@@ -711,6 +711,9 @@ internal static partial class EncyclopediaEndpoints
         CancellationToken cancellationToken)
     {
         var words = ReaderLanguages.Prose(prose, language);
+        var articles = await WikipediaLinks.OfEvents(
+            db, [.. events.Where(e => e.Realm == Realms.World).Select(e => e.Slug)], words, cancellationToken);
+        events = [.. events.Select(e => articles.TryGetValue(e.Slug, out var article) ? e with { Wikipedia = article } : e)];
         if (events.Count == 0 || (EntityNames.Local(words) is null && EntityNames.Local(language) is null))
         {
             return [.. events.Select(Unstarred)];

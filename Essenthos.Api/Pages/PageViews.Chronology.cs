@@ -48,7 +48,13 @@ internal sealed record EventView(string Slug, string Name, string? Year)
     public string? Source { get; init; }
 
     public string? Image { get; init; }
+
+    /// <summary>A world event's Wikipedia article, the reader's language's or the English one standing in for it.</summary>
+    public PageArticle? Wikipedia { get; init; }
 }
+
+/// <summary>An article elsewhere: its address, its title and the language it is written in.</summary>
+internal sealed record PageArticle(string Href, string Title, string Language);
 
 /// <summary>A period as its page shows it.</summary>
 /// <param name="Years">Its years in the default reckoning, or its own where it carries them.</param>
@@ -97,6 +103,13 @@ internal static partial class PageViews
             .Link(language.Path(PageSections.Named("events").Path), t.Text("page.events.title")).Close("nav")
             .Element("h1", view.Name);
         Facts(body, language, view.Mark is null ? view.Year : $"{view.Year} ({view.Mark})", view.Kind, view.Place, view.Region);
+        if (view.Wikipedia is { } article)
+        {
+            body.Open("p")
+                .Text(t.Text(article.Language == language.Code ? "event.wikipedia" : "event.wikipediaInEnglish") + ": ")
+                .Link(article.Href, article.Title, rel: "noreferrer")
+                .Close("p");
+        }
 
         if (view.Verses.Count > 0)
         {

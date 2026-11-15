@@ -159,7 +159,9 @@
     "year": "Jahr",
     "working": "Worauf es beruht",
     "hypothesis": "Annahme des Bearbeiters",
-    "outsideScripture": "außerhalb der Schrift"
+    "outsideScripture": "außerhalb der Schrift",
+    "wikipedia": "Wikipedia",
+    "wikipediaInEnglish": "Wikipedia (auf Englisch)"
   },
   "period": {
     "description": "{{name}}: die Jahre nach jeder Chronologie und die Ereignisse, die in diese Zeit fallen.",

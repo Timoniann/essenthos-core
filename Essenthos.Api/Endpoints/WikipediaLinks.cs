@@ -48,6 +48,33 @@ internal static class WikipediaLinks
             : new EntityWikipediaResponse(article.Language, article.Title, Address(article.Language, article.Title));
     }
 
+    /// <summary>
+    /// The article of each of these events that has one, keyed by the event's slug, chosen as a record's is: the
+    /// reader's Wikipedia, else the English one. One query, whatever the number of events.
+    /// </summary>
+    public static async Task<Dictionary<string, EntityWikipediaResponse>> OfEvents(
+        AppDbContext db, IReadOnlyCollection<string> slugs, string? language, CancellationToken cancellationToken)
+    {
+        if (slugs.Count == 0)
+        {
+            return [];
+        }
+
+        var wikipedia = WikipediaOf(language) ?? Fallback;
+        var articles = await db.EventWikipedia
+            .Where(w => slugs.Contains(w.Event!.Slug) && (w.Language == wikipedia || w.Language == Fallback))
+            .Select(w => new { w.Event!.Slug, w.Language, w.Title })
+            .ToListAsync(cancellationToken);
+        var found = new Dictionary<string, EntityWikipediaResponse>(StringComparer.Ordinal);
+        foreach (var one in articles.GroupBy(a => a.Slug))
+        {
+            var article = one.FirstOrDefault(a => a.Language == wikipedia) ?? one.First();
+            found[one.Key] = new EntityWikipediaResponse(article.Language, article.Title, Address(article.Language, article.Title));
+        }
+
+        return found;
+    }
+
     /// <summary>The article's address: the title with its spaces as underscores, escaped as a path segment.</summary>
     public static string Address(string wikipedia, string title) =>
         $"https://{wikipedia}.wikipedia.org/wiki/{Uri.EscapeDataString(title.Replace(' ', '_'))}";

@@ -165,7 +165,9 @@
     "year": "Рік",
     "working": "На чому стоїть",
     "hypothesis": "припущення укладача",
-    "outsideScripture": "поза Писанням"
+    "outsideScripture": "поза Писанням",
+    "wikipedia": "Вікіпедія",
+    "wikipediaInEnglish": "Вікіпедія (англійською)"
   },
   "period": {
     "description": "{{name}}: роки за кожною хронологією і події, що припадають на цей час.",
