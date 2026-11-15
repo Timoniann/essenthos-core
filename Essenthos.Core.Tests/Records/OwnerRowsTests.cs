@@ -272,6 +272,43 @@ public sealed class OwnerRowsTests : IDisposable
         Rows("records/i18n/ukr/texts").Should().ContainEquivalentOf(new[] { "0a0b", "причина", "a rendering" });
     }
 
+    /// <summary>
+    /// An amended row changes only the columns it names on the row of that key, so a dataset's kept event is moved to
+    /// another verse while its description and credit stay; an event's slug names no record, and a key no row holds is
+    /// refused.
+    /// </summary>
+    [Fact]
+    public void AnAmendedEventKeepsEveryColumnItDoesNotNameAndAMissingRowIsRefused()
+    {
+        var store = Files();
+        const string header = "slug\tname\tdescription\tkind\trecord\tyear_from_creation\tbce_year\tage_at_event\tcalculation\tref\t" +
+                              "location\tlocation_ref\turi\tnotes\trealm\tregion\tregion_at_the_time\tname_source\tsequence_in_year\tby";
+        const string credit = "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
+        Write(store, "external/bibledata/events", header,
+            $"walk\tJudah walked\tA quotation. (2CH 11:7)\tBegin\t\\N\t3031\t931\t\\N\t\\N\t14.11:7\t\\N\t\\N\t\\N\t\\N\tscripture\t\\N\t\\N\tsource\t\\N\t{credit}");
+        store.Save();
+        var decided = new OwnerRows.Decided([],
+        [
+            new("PRB-1682", "external/bibledata/events", OwnerRows.Amend, "walk", """{"ref":"14.11:17"}""", "quotes 11:17"),
+        ]);
+
+        var refused = OwnerRows.Apply(new ProductStore(_resources), new OwnerRows.Decided([],
+        [
+            new("PRB-1682", "external/bibledata/events", OwnerRows.Amend, "nowhere", """{"ref":"14.11:17"}""", "x"),
+            new("PRB-1682", "external/bibledata/events", OwnerRows.Amend, "walk", """{"ref":"not a verse"}""", "x"),
+        ]), dryRun: true, Now);
+        refused.Refused.Should().HaveCount(2);
+        refused.Refused[0].Should().Contain("no row with that key to amend");
+
+        var outcome = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
+
+        (outcome.Applied, outcome.Refused.Count).Should().Be((1, 0));
+        Rows("external/bibledata/events").Single().Should().Equal(
+            "walk", "Judah walked", "A quotation. (2CH 11:7)", "Begin", null, "3031", "931", null, null, "14.11:17",
+            null, null, null, null, "scripture", null, null, "source", null, credit);
+        OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now).Already.Should().Be(1);
+    }
+
     private ProductStore Files()
     {
         var store = new ProductStore(_resources);
