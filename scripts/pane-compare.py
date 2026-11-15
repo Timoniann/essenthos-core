@@ -1,7 +1,12 @@
 """Compare the panes (/v1/panes) with /v1/parallel field by field, for the (text, book, chapter) triples of a
-tab-separated file. usage: pane-compare.py <api base url> <triples.tsv> <report.txt>  (TSK-1502)"""
+tab-separated file. usage: pane-compare.py <api base url> <triples.tsv> <report.txt>  (TSK-1502)
+
+/v1/parallel's cards carry a differs word's base-reading card inline, after the word's own; a pane writes it
+apart, in "eb" (c8523a7f). So the old reading's base-reading cards are held against "eb" and the rest against
+"e", and every card compares role, origin and the base text, as the reader decodes a pane (PRB-1512)."""
 import gzip
 import json
+import re
 import sys
 import urllib.request
 import urllib.error
@@ -22,39 +27,72 @@ def get(url, gz=False):
 
 
 def old_word(w):
-    m = w['morphology']
+    m = w.get('morphology')
+    sc, lx, tg, gz, at = (w.get(k) for k in ('strongCandidate', 'lexiconGloss', 'throughGreek', 'geezEntry', 'attached'))
+    entity = w.get('entity')
     return {
-        'id': w['id'], 's': w['text'], 't': w['trailer'], 'g': w['gloss'], 'l': w['lexeme'], 'n': w['strongNo'],
-        'w': sorted(w['originalWordIds']), 'p': w['mappingProvenance'], 'a': w['absence'], 'm': w['mark'], 'supplied': w['supplied'],
-        'e': [card(e) for e in w['entities']], 'entity': card(w['entity']) if w['entity'] else None,
+        'id': w['id'], 's': w['text'], 't': w.get('trailer', ''), 'g': w.get('gloss'), 'l': w.get('lexeme'), 'n': w.get('strongNo'),
+        'w': sorted(w.get('originalWordIds', [])), 'p': w.get('mappingProvenance'), 'a': w.get('absence'), 'm': w.get('mark'),
+        'supplied': w.get('supplied', False),
+        'e': [card(e) for e in w.get('entities', []) if e.get('origin') != BASE_READING],
+        'eb': [card(e) for e in w.get('entities', []) if e.get('origin') == BASE_READING],
+        'entity': card(entity) if entity else None,
         'mo': None if m is None else {
-            'pos': m['partOfSpeech'], 'case': m['case'], 'gender': m['gender'], 'number': m['number'], 'person': m['person'],
-            'state': m['state'], 'stem': m['stem'], 'tense': m['tense'], 'lexicalSet': m['lexicalSet'],
-            'phrasePos': m['phraseDependentPartOfSpeech'], 'suffixGender': m['pronominalGender'],
-            'suffixNumber': m['pronominalNumber'], 'suffixPerson': m['pronominalPerson'], 'nameType': m['nametypes']},
-        'ph': w['phono'], 'pt': w['phonoTrailer'], 'lg': w['language'], 'el': w['elided'], 'br': w['break'],
-        'sc': w['strongCandidate'] and [w['strongCandidate']['number'], w['strongCandidate']['method'], w['strongCandidate']['confidence']],
-        'lx': w['lexiconGloss'] and [w['lexiconGloss']['glosses'], w['lexiconGloss']['via']],
-        'tg': w['throughGreek'] and [w['throughGreek'][k] for k in ('corpus', 'word', 'lemma', 'glosses', 'method', 'confidence')],
-        'gz': w['geezEntry'] and [w['geezEntry'][k] for k in ('headword', 'latin', 'greek', 'via')],
-        'at': w['attached'] and [w['attached']['kind'], w['attached']['headId'], w['attached']['head']],
-        'ro': w['roles'] and [[r['occupation'], r['category'], r['person']] for r in w['roles']],
+            'pos': m.get('partOfSpeech'), 'case': m.get('case'), 'gender': m.get('gender'), 'number': m.get('number'),
+            'person': m.get('person'), 'state': m.get('state'), 'stem': m.get('stem'), 'tense': m.get('tense'),
+            'lexicalSet': m.get('lexicalSet'), 'phrasePos': m.get('phraseDependentPartOfSpeech'),
+            'suffixGender': m.get('pronominalGender'), 'suffixNumber': m.get('pronominalNumber'),
+            'suffixPerson': m.get('pronominalPerson'), 'nameType': m.get('nametypes')},
+        'ph': w.get('phono'), 'pt': w.get('phonoTrailer'), 'lg': w.get('language'), 'el': w.get('elided', False), 'br': w.get('break'),
+        'sc': sc and [sc.get('number'), sc.get('method'), sc.get('confidence')],
+        'lx': lx and [lx.get('glosses'), lx.get('via')],
+        'tg': tg and [tg.get(k) for k in ('corpus', 'word', 'lemma', 'glosses', 'method', 'confidence')],
+        'gz': gz and [gz.get(k) for k in ('headword', 'latin', 'greek', 'via')],
+        'at': at and [at.get('kind'), at.get('headId'), at.get('head')],
+        'ro': w.get('roles') and [[r.get('occupation'), r.get('category'), r.get('person')] for r in w['roles']],
     }
 
 
+def empty(value):
+    """Both answers leave out a null, false, empty string and empty list (TSK-1661), so each of them counts as absent."""
+    if isinstance(value, dict):
+        return {k: empty(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return None if not value else [empty(v) for v in value]
+    return None if value is False or value == '' else value
+
+
+BASE_READING = 'base-reading'
+THROUGH = re.compile(r'^through (\S+) word \d+')
+
+
 def card(e):
-    return [e['type'], e['slug'], e.get('method'), e.get('confidence'), e.get('source'), e.get('note'), e.get('namedAs')]
+    return [e['type'], e['slug'], e.get('method'), e.get('confidence'), e.get('source'), e.get('note'), e.get('namedAs'),
+            e.get('role'), e.get('origin'), e.get('baseText')]
+
+
+def carried_through(route):
+    """The text a base-reading card came through, read from its route as the reader does (panes.ts carriedThrough)."""
+    match = THROUGH.match(route) if route else None
+    return match.group(1) if match else None
+
+
+def pane_card(c, rec, src, base=False):
+    origin = c.get('origin') or (BASE_READING if base else None)
+    route = c.get('via')
+    return [rec[c['r']][1], rec[c['r']][0], c.get('m'), c.get('c'), src[c['src']] if 'src' in c else None, route, c.get('as'),
+            c.get('role'), origin, carried_through(route) if origin == BASE_READING else None]
 
 
 def new_word(w, pane):
     rec, prov, src = pane['records'], pane['provenance'], pane['sources']
     m = w.get('mo')
-    cards = [[rec[c['r']][1], rec[c['r']][0], c.get('m'), c.get('c'), src[c['src']] if 'src' in c else None, c.get('via'), c.get('as')]
-             for c in w.get('e', [])]
+    cards = [pane_card(c, rec, src) for c in w.get('e', [])]
+    base = [pane_card(c, rec, src, base=True) for c in w.get('eb', [])]
     return {
         'id': w['id'], 's': w['s'], 't': w.get('t', ''), 'g': w.get('g'), 'l': w.get('l'), 'n': w.get('n'),
         'w': sorted(w.get('w', [])), 'p': prov[w['p']] if 'p' in w else None, 'a': w.get('a'), 'm': w.get('m'),
-        'supplied': w.get('m') == 'supplied', 'e': cards, 'entity': cards[0] if cards else None,
+        'supplied': w.get('m') == 'supplied', 'e': cards, 'eb': base, 'entity': cards[0] if cards else None,
         'mo': None if m is None else {k: m.get(k) for k in ('pos', 'case', 'gender', 'number', 'person', 'state', 'stem', 'tense',
                                                             'lexicalSet', 'phrasePos', 'suffixGender', 'suffixNumber', 'suffixPerson', 'nameType')},
         'ph': w.get('ph'), 'pt': w.get('pt'), 'lg': w.get('lg'), 'el': w.get('el') == 1, 'br': w.get('br'),
@@ -68,7 +106,7 @@ def new_word(w, pane):
 
 
 def note(n):
-    return [n['kind'], n['content'], n.get('anchorWordId'), n.get('anchor')]
+    return [n.get('kind'), n.get('content'), n.get('anchorWordId'), n.get('anchor')]
 
 
 out = open(report, 'w', encoding='utf-8')
@@ -94,17 +132,17 @@ for line in open(triples, encoding='utf-8'):
             problems.append(f"chapters {old['chapterCount']} vs {pane['chapters']}")
         for n in sorted(set(rows_old) & set(rows_new)):
             o, p = rows_old[n], rows_new[n]
-            ref = o['reference']
+            ref = o.get('reference')
             if (ref and [ref['bookOrdinal'], ref['chapter'], ref['verse']]) != p.get('ref'):
                 problems.append(f'{n} ref {ref} vs {p.get("ref")}')
-            if o['verses'] != p.get('own', []):
-                problems.append(f'{n} own {o["verses"]} vs {p.get("own")}')
-            if o['statedVerses'] != p.get('stated', []):
+            if o.get('verses', []) != p.get('own', []):
+                problems.append(f'{n} own {o.get("verses")} vs {p.get("own")}')
+            if o.get('statedVerses', []) != p.get('stated', []):
                 problems.append(f'{n} stated')
-            if [note(x) for x in o['notes']] != [note(x) for x in p.get('notes', [])]:
+            if [note(x) for x in o.get('notes', [])] != [note(x) for x in p.get('notes', [])]:
                 problems.append(f'{n} notes')
-            ow = [old_word(w) for w in o['words']]
-            nw = [new_word(w, pane) for w in p['words']]
+            ow = [empty(old_word(w)) for w in o.get('words', [])]
+            nw = [empty(new_word(w, pane)) for w in p.get('words', [])]
             words += len(ow)
             if len(ow) != len(nw):
                 problems.append(f'{n} {len(ow)} words vs {len(nw)}')
@@ -112,13 +150,13 @@ for line in open(triples, encoding='utf-8'):
                 if a != b:
                     keys = [k for k in a if a[k] != b.get(k)]
                     problems.append(f'{n} word {a["id"]} {keys}: {[a[k] for k in keys]} vs {[b.get(k) for k in keys]}'[:600])
-        heads_old = [[h['verse'], h['heading'], [note(x) for x in h['notes']]] for h in old.get('chapterNotes', {}).get(text, [])]
-        heads_new = [[h['verse'], h['heading'], [note(x) for x in h['notes']]] for h in pane.get('headings', [])]
+        heads_old = [[h.get('verse'), h.get('heading'), [note(x) for x in h.get('notes', [])]] for h in old.get('chapterNotes', {}).get(text, [])]
+        heads_new = [[h.get('verse'), h.get('heading'), [note(x) for x in h.get('notes', [])]] for h in pane.get('headings', [])]
         if heads_old != heads_new:
             problems.append('headings differ')
         bo = old.get('bookNotes', {}).get(text)
         bn = pane.get('bookNotes')
-        if (bo and [bo['title'], [note(x) for x in bo['notes']]]) != (bn and [bn.get('title'), [note(x) for x in bn['notes']]]):
+        if (bo and [bo.get('title'), [note(x) for x in bo.get('notes', [])]]) != (bn and [bn.get('title'), [note(x) for x in bn.get('notes', [])]]):
             problems.append('book notes differ')
     checked += 1
     if problems:

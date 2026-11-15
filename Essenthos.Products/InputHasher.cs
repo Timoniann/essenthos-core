@@ -16,6 +16,9 @@ public sealed class InputHasher
 {
     public const string CacheProduct = "Essenthos/build/hashes.tsv";
 
+    /// <summary>Held across processes while the memory is merged with the file and written (PRB-1486).</summary>
+    public const string LockFile = "Essenthos/build/hashes.lock";
+
     /// <summary>The header note naming the <see cref="ProductDigest.Rule"/> the remembered products were hashed under.</summary>
     private const string DigestNote = "digest";
 
@@ -35,16 +38,24 @@ public sealed class InputHasher
     public InputHasher(string root)
     {
         _root = Path.GetFullPath(root);
-        var cache = Path.Combine(_root, CacheProduct);
-        if (File.Exists(cache))
+        foreach (var entry in ReadFile())
         {
-            using var reader = TsvFormat.Instance.Open(cache, Schema);
-            var sameRule = reader.Header?.Notes.Any(note => note.Key == DigestNote && note.Value == ProductDigest.Rule) == true;
-            foreach (var entry in reader.Rows().Where(entry => sameRule || !ProductDigest.IsProduct(entry.Path)))
-            {
-                _entries[entry.Path] = entry;
-            }
+            _entries[entry.Path] = entry;
         }
+    }
+
+    /// <summary>What the file remembers, without the products hashed under another digest rule.</summary>
+    private List<Entry> ReadFile()
+    {
+        var cache = Path.Combine(_root, CacheProduct);
+        if (!File.Exists(cache))
+        {
+            return [];
+        }
+
+        using var reader = TsvFormat.Instance.Open(cache, Schema);
+        var sameRule = reader.Header?.Notes.Any(note => note.Key == DigestNote && note.Value == ProductDigest.Rule) == true;
+        return [.. reader.Rows().Where(entry => sameRule || !ProductDigest.IsProduct(entry.Path))];
     }
 
     /// <summary>Hash every file again this run, whatever the memory says.</summary>
@@ -128,11 +139,23 @@ public sealed class InputHasher
         return Convert.ToHexStringLower(SHA256.HashData(stream));
     }
 
-    /// <summary>Writes the memory out. Called once at the end of a build; safe to call from several threads.</summary>
+    /// <summary>
+    /// Writes the memory out. Called once at the end of a build; safe to call from several threads and
+    /// several processes: under the cross-process lock it first takes in what another process
+    /// remembered since this one started, for paths this one has no hash of. Either hash of a path is
+    /// safe to keep, since each is trusted only while the file's size and write time are the ones
+    /// remembered with it.
+    /// </summary>
     public void Save()
     {
         lock (_save)
         {
+            using var held = FileLock.Acquire(Path.Combine(_root, LockFile));
+            foreach (var entry in ReadFile())
+            {
+                _entries.TryAdd(entry.Path, entry);
+            }
+
             var header = new ProductHeader(CacheProduct, [], "input hashes by path, size and last write time; delete to hash everything again");
             header.Notes.Add(new(DigestNote, ProductDigest.Rule));
             using var writer = TsvFormat.Instance.Create(Path.Combine(_root, CacheProduct), header, Schema);

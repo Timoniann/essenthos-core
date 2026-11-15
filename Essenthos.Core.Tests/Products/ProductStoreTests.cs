@@ -219,5 +219,57 @@ public sealed class ProductStoreTests : IDisposable
         BuildManifest.Load(_root).Entries.Should().BeEmpty();
     }
 
+    [Fact]
+    public async Task TwoManifestsOnOneFolderSavingAtOnceKeepEachOthersEntries()
+    {
+        // Two processes on one Resources folder, as two loads of the manifest that share no memory (PRB-1486).
+        var first = BuildManifest.Load(_root);
+        var second = BuildManifest.Load(_root);
+        var built = new DateTimeOffset(2026, 11, 15, 12, 0, 0, TimeSpan.Zero);
+        void RecordMany(BuildManifest manifest, string prefix)
+        {
+            for (var i = 0; i < 60; i++)
+            {
+                manifest.Record(new ProductHeader($"Essenthos/p/{prefix}-{i:D2}.tsv", [], "proof") { Rows = i }, new string('a', 64), built);
+            }
+        }
+
+        await Task.WhenAll(Task.Run(() => RecordMany(first, "a")), Task.Run(() => RecordMany(second, "b")));
+
+        BuildManifest.Load(_root).Entries.Should().HaveCount(120, "each save merges what the other wrote since");
+
+        first.Forget("Essenthos/p/b-00.tsv");
+        second.Record(new ProductHeader("Essenthos/p/c.tsv", [], "proof"), new string('c', 64), built);
+        var after = BuildManifest.Load(_root);
+        after.Get("Essenthos/p/b-00.tsv").Should().BeNull("the other's later save does not bring back what one forgot");
+        after.Get("Essenthos/p/c.tsv").Should().NotBeNull();
+        after.Entries.Should().HaveCount(120);
+        second.Get("Essenthos/p/a-59.tsv").Should().NotBeNull("a save takes in the other's entries");
+    }
+
+    [Fact]
+    public void ACommitThatFailsThrowsItsOwnErrorAndNotAClosedFile()
+    {
+        // The final name taken by a folder: the move into place fails, as a locked file does on Windows (PRB-1493).
+        var path = Path.Combine(_root, "Essenthos", "taken.tsv");
+        Directory.CreateDirectory(path);
+        var writer = TsvFormat.Instance.Create(path, new ProductHeader("Essenthos/taken.tsv", [], "proof"), Schema);
+        Exception? thrown = null;
+        try
+        {
+            writer.Write(Words[0]);
+            writer.Complete();
+        }
+        catch (Exception e)
+        {
+            thrown = e;
+        }
+
+        thrown.Should().NotBeNull().And.Match(e => e is IOException || e is UnauthorizedAccessException);
+        thrown.Should().NotBeOfType<ObjectDisposedException>();
+        writer.Invoking(w => w.Dispose()).Should().NotThrow();
+        Directory.GetFiles(Path.Combine(_root, "Essenthos")).Should().BeEmpty("the temporary file goes with the failed write");
+    }
+
     public void Dispose() => Directory.Delete(_root, recursive: true);
 }

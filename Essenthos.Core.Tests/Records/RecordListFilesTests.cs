@@ -28,6 +28,20 @@ public sealed class RecordListFilesTests : IDisposable
         }
     }
 
+    [Theory]
+    [InlineData("records/facts/reigns")]
+    [InlineData("records/facts/reign-events")]
+    public void AReignLoadOrdersByEveryColumnSoItsIdsFollowTheFile(string product)
+    {
+        // Rows that tie in a load's ORDER BY take ids in the plan's order, so an applied database
+        // numbered them unlike a fresh build (PRB-1598).
+        var file = RecordFiles.All.Single(f => f.Product == product);
+        var at = file.Load.LastIndexOf("ORDER BY", StringComparison.Ordinal);
+        var ordered = file.Load[(at + "ORDER BY".Length)..].Split(',').Select(term => term.Trim()).ToList();
+
+        ordered.Should().BeEquivalentTo(file.Parsed.Select(column => $"s.{column.Name}"));
+    }
+
     [Fact]
     public void AFileIsSortedByOrdinalWhateverTheServersCollation()
     {

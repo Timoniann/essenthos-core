@@ -49,9 +49,32 @@ public sealed class AtomicFile : IDisposable
 
         Stream.Flush(flushToDisk: true);
         Stream.Dispose();
-        File.Move(_temporary, Path, overwrite: true);
+        Replace(_temporary, Path);
         _committed = true;
     }
+
+    /// <summary>
+    /// Moves <paramref name="from"/> over <paramref name="to"/>. Windows refuses the move while another
+    /// handle holds the target open (a reader of the previous file, another process saving it, a virus
+    /// scanner or indexer), so a refusal is tried again for about two seconds before it is thrown.
+    /// </summary>
+    internal static void Replace(string from, string to)
+    {
+        for (var attempt = 0; ; attempt++)
+        {
+            try
+            {
+                File.Move(from, to, overwrite: true);
+                return;
+            }
+            catch (Exception e) when (attempt < RetryDelaysMs.Length && e is IOException or UnauthorizedAccessException && File.Exists(from))
+            {
+                Thread.Sleep(RetryDelaysMs[attempt]);
+            }
+        }
+    }
+
+    private static readonly int[] RetryDelaysMs = [10, 20, 40, 80, 160, 320, 640, 640];
 
     public void Dispose()
     {
