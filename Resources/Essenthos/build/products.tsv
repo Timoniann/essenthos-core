@@ -108,5 +108,6 @@ record-cards/{prose}	serve	families	Essenthos/records/** Essenthos/external/** E
 family-components/{prose}	serve	families	Essenthos/record-cards/{prose} Essenthos/records/derived/family-ties Essenthos/records/derived/family-members Essenthos/records/facts/relationships	family_component	all
 record-spellings/{text}	serve	record-words	Essenthos/texts/*/words Essenthos/names/projected/{text} Essenthos/records/derived/kinds	record_spelling	text
 record-positions/{text}	serve	record-words	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/books Essenthos/names/projected/{text} Essenthos/records/derived/kinds	record_position	text
+strength/{text}	serve	strength	Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/frame Essenthos/mapping/*/final Essenthos/mapping/*/verses	verse_strength	text
 texts/relations	hand	by hand (seeded once by tables from the Forge's list)	-	-	none
 carried/{table}	export	carried-export	-	{table}	all

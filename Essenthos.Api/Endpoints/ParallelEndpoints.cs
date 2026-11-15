@@ -107,42 +107,19 @@ internal record ParallelTextResponse(
 
 internal static class ParallelEndpoints
 {
-    private const string PairedThroughTheFrame = "original-verse";
+    internal const string PairedThroughTheFrame = "original-verse";
 
     /// <summary>
     /// A pane whose verses this chapter answers the reference pane's only by a reading of where each
     /// falls — the Ge'ez Psalter, Job, Song and Esther, which divide their verses as no versification
     /// scheme does: the frame lays them at the numbers they print, so a row pairs them by that number.
     /// </summary>
-    private const string PairedByItsOwnNumber = "verse-number";
+    internal const string PairedByItsOwnNumber = "verse-number";
 
     /// <summary>The contract's separator for the corpus list, and the cap it sets.</summary>
     private const char CorpusSeparator = ',';
 
     internal const int MostCorporaAtOnce = 6;
-
-    /// <summary>
-    /// How one text's verses of a canonical chapter meet the reference text's, as <c>/v1/parallel</c> tells it per pane:
-    /// the alignment and each row's strength, over the chapter and every chapter holding a passage of it under another name.
-    /// </summary>
-    internal static async Task<PaneStrengthResponse> Strength(
-        AppDbContext db,
-        int textId,
-        int againstId,
-        int canonicalBook,
-        int canonicalChapter,
-        CancellationToken cancellationToken)
-    {
-        var verses = new Dictionary<int, LinkStrengthResponse>();
-        var byNumber = false;
-        foreach (var (heldBook, heldChapter, first, last, shift) in ChapterReading.Held(canonicalBook, canonicalChapter))
-        {
-            ChapterReading.Merge(verses, await Strengths(db, textId, againstId, heldBook, heldChapter, cancellationToken), first, last, shift);
-            byNumber |= await JoinedOnlyByReading(db, textId, againstId, heldBook, heldChapter, cancellationToken);
-        }
-
-        return new PaneStrengthResponse(byNumber ? PairedByItsOwnNumber : PairedThroughTheFrame, verses);
-    }
 
     public static void MapParallel(this IEndpointRouteBuilder routes)
     {

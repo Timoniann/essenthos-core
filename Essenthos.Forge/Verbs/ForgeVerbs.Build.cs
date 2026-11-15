@@ -404,6 +404,28 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// <c>strength [&lt;text,...&gt;] [--force]</c>: how strongly each text's verses are linked to every text linked to it, counted
+    /// from the configured database for the texts whose inputs moved (every text named with <c>--force</c>), with their products
+    /// in the configured Resources.
+    /// </summary>
+    private static async Task<int> StrengthVerb(ForgeRun forge, string[] args)
+    {
+        ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
+        var clock = Stopwatch.StartNew();
+        var store = new ProductStore(forge.Resources);
+        var outcomes = await new StrengthBuild(forge.DatabaseConnection, store, forge.Scope().ServiceProvider, forge.Logger)
+            .Run(Slugs(args), args.Contains("--force"), 8, CancellationToken.None);
+        foreach (var outcome in outcomes)
+        {
+            Console.WriteLine($"{outcome.Text,-14} {outcome.Rows,8} chapters {(outcome.Made ? $"{outcome.Elapsed.TotalSeconds,7:0.0} s" : " current")}");
+        }
+
+        var made = outcomes.Where(o => o.Made).ToList();
+        Console.WriteLine($"{made.Count} texts counted or copied, {outcomes.Count - made.Count} current: {made.Sum(o => o.Rows)} chapters, in {clock.Elapsed.TotalSeconds:0.0} s");
+        return 0;
+    }
+
     /// <summary><c>tables [&lt;table,...&gt;] [--from &lt;Resources&gt;] [--force]</c>: the served tables made from files, each when its sources moved.</summary>
     private static Task<int> TablesVerb(ForgeRun forge, string[] args)
     {

@@ -189,6 +189,16 @@ public sealed class StrongCardTests : IDisposable
         second.Total.Should().Be(2);
         second.Items.Select(i => i.WordId).Should().Equal(_db.WordAt(_hebrew, 1, 2, 1).Id);
 
+        var first = await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, null, new OccurrencePaging(0, 1), default);
+        first.Previous.Should().BeNull();
+        OccurrenceCursor.TryParse(first.Next, out var after).Should().BeTrue();
+        var next = await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, null, new OccurrencePaging(0, 1, After: after), default);
+        next.Items.Select(i => i.WordId).Should().Equal(second.Items.Select(i => i.WordId));
+        next.Next.Should().BeNull("it is the last place");
+        OccurrenceCursor.TryParse(next.Previous, out var before).Should().BeTrue();
+        (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, null, new OccurrencePaging(0, 1, Before: before), default))
+            .Items.Select(i => i.WordId).Should().Equal(first.Items.Select(i => i.WordId));
+
         (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", null, 2, null, null, default)).Total.Should().Be(0);
         (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "god", _greek.Id, null, null, null, default)).Total.Should().Be(0);
         (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "lord", null, null, null, null, default)).Items.Should().BeEmpty();
