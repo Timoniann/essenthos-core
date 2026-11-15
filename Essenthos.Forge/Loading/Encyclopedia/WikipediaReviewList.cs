@@ -88,6 +88,14 @@ internal static class WikipediaReviewList
         return answers;
     }
 
+    /// <summary>Every record the list holds an entry for, answered, tied or open.</summary>
+    public static HashSet<string> Records(string path) =>
+        Entries(Read(path))
+            .Select(entry => entry["record"]?.GetValue<string>())
+            .OfType<string>()
+            .Where(slug => slug.Length > 0)
+            .ToHashSet(StringComparer.Ordinal);
+
     /// <summary>
     /// The item each record of the list is linked to, and what linked it: the owner's answer where he gave one
     /// (<c>owner</c>; an answer of none links nothing), else the tie the matching made on its own. The load writes

@@ -120,7 +120,8 @@ internal static class RecordProducers
     /// Each record's Wikipedia articles: the item the owner chose for it in his console, else the item the matching
     /// tied it to on its own, both as <c>review/wikipedia-matches.json</c> holds them
     /// (<see cref="WikipediaReviewList.Links"/>), and that item's articles as the Wikidata items give them, linked as
-    /// the load links them (<see cref="WikipediaLinkLoader.Links"/>).
+    /// the load links them (<see cref="WikipediaLinkLoader.Links"/>). A record folded into another
+    /// (<c>records/folds</c>) passes its link to the record it went into when the list says nothing of that record.
     /// </summary>
     public static (string Product, long Rows) Wikipedia(ProductStore from, ProductStore into)
     {
@@ -135,7 +136,7 @@ internal static class RecordProducers
 
         var file = File(WikipediaProduct);
         var inputs = from.Inputs([
-            .. Paths(from, "records/records"),
+            .. Paths(from, "records/records", "records/folds"),
             RelativeToResources(from, list),
             .. new[] { WikidataItems.ItemsFile, WikidataItems.ReferencedFile }
                 .Select(name => $"{WikidataItems.Folder}/{name}")
@@ -143,9 +144,11 @@ internal static class RecordProducers
         ]);
         var wikidata = WikidataItems.Read(resources);
         var slugs = Slugs(from);
+        var links = WikipediaReviewList.Links(list);
+        var carried = Carried(links, WikipediaReviewList.Records(list), slugs, Read(from, "records/folds"));
         var rows = new List<string?[]>();
         int owner = 0, tied = 0, gone = 0, unknown = 0;
-        foreach (var (slug, (qid, by)) in WikipediaReviewList.Links(list))
+        foreach (var (slug, (qid, by)) in links.Where(l => !carried.ContainsKey(l.Key)).Concat(carried))
         {
             if (!slugs.Contains(slug))
             {
@@ -178,10 +181,23 @@ internal static class RecordProducers
         }
 
         var written = Write(into, file, rows, Producer + " wikipedia", inputs, header => header.Notes.Add(new("linked",
-            $"{owner} records by the owner's answer, {tied} by the matching; {gone} listed records no longer held, " +
-            $"{unknown} items the Wikidata items do not hold")));
+            $"{owner} records by the owner's answer, {tied} by the matching ({carried.Count} through a record folded into them); " +
+            $"{gone} listed records no longer held, {unknown} items the Wikidata items do not hold")));
         return (file.Product, written);
     }
+
+    /// <summary>
+    /// The links of folded records, each under the record it was folded into, where the list holds no entry of that
+    /// record (an answer of none or an open question there stands) and only one folded record brings it a link.
+    /// </summary>
+    internal static Dictionary<string, (string Qid, string By)> Carried(
+        IReadOnlyDictionary<string, (string Qid, string By)> links, IReadOnlySet<string> listed, IReadOnlySet<string> held,
+        IEnumerable<string?[]> folds) =>
+        folds
+            .Where(f => !held.Contains(f[0]!) && held.Contains(f[1]!) && !listed.Contains(f[1]!) && links.ContainsKey(f[0]!))
+            .GroupBy(f => f[1]!, StringComparer.Ordinal)
+            .Where(g => g.Select(f => links[f[0]!].Qid).Distinct(StringComparer.Ordinal).Count() == 1)
+            .ToDictionary(g => g.Key, g => links[g.First()[0]!], StringComparer.Ordinal);
 
     private const string ImagesProduct = "records/facts/images";
 

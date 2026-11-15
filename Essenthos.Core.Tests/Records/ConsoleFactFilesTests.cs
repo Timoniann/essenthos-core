@@ -81,12 +81,20 @@ public sealed class ConsoleFactFilesTests : IDisposable
         Graph().Check(store.Manifest).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A record folded into another passes its link on only where the list says nothing of the record it went into:
+    /// nahum takes the tie of the folded nahum-old, zechariah keeps the owner's own answer over folded-since's.
+    /// </summary>
     [Fact]
     public void WikipediaLinksAreTheOwnersAnswersElseTheMatchingsTies()
     {
         var store = new ProductStore(_root);
         Write(store, "records/records",
-            Record("habakkuk", "person"), Record("micah", "person"), Record("zechariah", "person"), Record("zechariah-2", "person"));
+            Record("habakkuk", "person"), Record("micah", "person"), Record("zechariah", "person"), Record("zechariah-2", "person"),
+            Record("nahum", "person"));
+        Write(store, "records/folds",
+            ["nahum-old", "nahum", "Nahum", null, "manual", null, "test", "the same man"],
+            ["folded-since", "zechariah", "Zechariah", null, "manual", null, "test", "the same man"]);
         Directory.CreateDirectory(Path.Combine(_root, WikidataItems.Folder));
         File.WriteAllLines(Path.Combine(_root, WikidataItems.Folder, WikidataItems.ItemsFile),
         [
@@ -94,6 +102,7 @@ public sealed class ConsoleFactFilesTests : IDisposable
             Item("Q2", "Zechariah", """{"enwiki":"Zechariah of Israel"}"""),
             Item("Q3", "Zechariah", """{"enwiki":"Zechariah (prophet)","eswiki":"Zacarías"}"""),
             Item("Q4", "Micah", "{}"),
+            Item("Q5", "Nahum", """{"enwiki":"Nahum"}"""),
         ]);
         Json($"Essenthos/review/{WikipediaReviewList.FileName}", """
             { "entries": [
@@ -102,18 +111,20 @@ public sealed class ConsoleFactFilesTests : IDisposable
                 { "record": "zechariah", "candidates": [], "decision": { "answer": "Q3", "note": null, "at": "2026-11-05T00:00:00Z" } },
                 { "record": "zechariah-2", "candidates": [], "tied": { "qid": "Q2", "by": "kin" },
                   "decision": { "answer": "none", "note": "not him", "at": "2026-11-05T00:00:00Z" } },
-                { "record": "folded-since", "candidates": [], "decision": { "answer": "Q1", "note": null, "at": "2026-11-05T00:00:00Z" } }
+                { "record": "folded-since", "candidates": [], "decision": { "answer": "Q1", "note": null, "at": "2026-11-05T00:00:00Z" } },
+                { "record": "nahum-old", "candidates": [], "tied": { "qid": "Q5", "by": "verse" } }
             ] }
             """);
 
         var (product, rows) = RecordProducers.Wikipedia(store, store);
 
         product.Should().Be("records/facts/wikipedia");
-        rows.Should().Be(5);
+        rows.Should().Be(6);
         Rows(store, product).Select(r => string.Join(' ', r)).Should().Equal(
             "habakkuk de Habakuk Q1 verse 0.95",
             "habakkuk en Habakkuk Q1 verse 0.95",
             "habakkuk uk Авакум Q1 verse 0.95",
+            "nahum en Nahum Q5 verse 0.95",
             "zechariah en Zechariah (prophet) Q3 owner 1",
             "zechariah es Zacarías Q3 owner 1");
         Graph().Check(store.Manifest).Should().BeEmpty();
