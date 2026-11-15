@@ -382,6 +382,12 @@ public class AppDbContext : DbContext
     /// <summary>Each connected family as one document per pair of languages, made at build.</summary>
     public DbSet<FamilyComponent> FamilyComponents { get; set; } = null!;
 
+    /// <summary>What each chapter's context is made of whatever the reader's languages, made at build.</summary>
+    public DbSet<ContextChapter> ContextChapters { get; set; } = null!;
+
+    /// <summary>Each record as a chapter's context shows it in each pair of languages, made at build.</summary>
+    public DbSet<ContextLine> ContextLines { get; set; } = null!;
+
     /// <summary>How often each text prints each form for each record under each Strong number, counted ahead of time.</summary>
     public DbSet<RecordSpelling> RecordSpellings { get; set; } = null!;
 
@@ -1871,6 +1877,24 @@ public class AppDbContext : DbContext
             entity.ToTable("family_component", t => t.HasComment(
                 "Each connected family of family_member as the JSON document a tree is drawn from, per pair of languages, "
                 + "sent as it is. Made by the serving build (family-components/{prose})."));
+        });
+
+        modelBuilder.Entity<ContextChapter>(entity =>
+        {
+            entity.Property(c => c.Body).UseCompressionMethod("lz4");
+            entity.ToTable("context_chapter", t => t.HasComment(
+                "What a canonical chapter's context is made of whatever the reader's languages: the records it names and how "
+                + "they reach it, its events, periods, measures, commandments, topics and family trees, as one JSON document. "
+                + "Made by the serving build (context/chapters)."));
+        });
+
+        modelBuilder.Entity<ContextLine>(entity =>
+        {
+            entity.Property(l => l.Body).UseCompressionMethod("lz4");
+            entity.ToTable("context_line", t => t.HasComment(
+                "One record as a chapter's context shows it in a language of words and a language of names: its local name, "
+                + "our own line, and the line's claims with the names they point at, as one JSON document. Records by slug. "
+                + "Made by the serving build (context/lines/{prose})."));
         });
 
         modelBuilder.Entity<RecordSpelling>(entity =>

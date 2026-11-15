@@ -216,18 +216,8 @@ internal sealed class ContextWeights
 
     private const string PlainName = "name";
 
-    private const string Article = "the ";
-
-    /// <summary>
-    /// A heading or a name as the two are compared: up to the first comma or bracket, lower case,
-    /// without an article. <em>REBEKAH (REBECCA)</em> is Rebekah.
-    /// </summary>
-    internal static string Head(string name)
-    {
-        var end = name.IndexOfAny([',', '(']);
-        var head = (end < 0 ? name : name[..end]).Trim().ToLowerInvariant();
-        return head.StartsWith(Article, StringComparison.Ordinal) ? head[Article.Length..] : head;
-    }
+    /// <inheritdoc cref="ChapterSalience.Head"/>
+    internal static string Head(string name) => ChapterSalience.Head(name);
 
     private static int Key(int book, int chapter, int verse) => (book * 1000 + chapter) * 1000 + verse;
 }

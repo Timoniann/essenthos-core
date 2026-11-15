@@ -2,7 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Context;
 
 /// <summary>The labels a chapter's verses give one record, and the names the record is known by.</summary>
 internal sealed record NamesUsedHere(IReadOnlyList<(string Label, int Verses, int First)> Labels, IReadOnlySet<string> ProperNames);
@@ -28,7 +28,7 @@ internal static class ChapterSalience
     /// <summary>What a verse only a source's list gives counts for, against one the words name.</summary>
     public const double ListedOnly = 0.5;
 
-    /// <summary>The group the words for God are shown in, as <see cref="ContextEntityResponse.Group"/> spells it.</summary>
+    /// <summary>The group the words for God are shown in, as <c>ContextEntityResponse.Group</c> spells it.</summary>
     public const string GodGroup = "god";
 
     /// <summary>
@@ -141,8 +141,8 @@ internal static class ChapterSalience
     /// </summary>
     public static string? NameUsed(string headword, NamesUsedHere? used)
     {
-        var head = ContextWeights.Head(headword);
-        if (used is null || used.Labels.Any(l => ContextWeights.Head(l.Label) == head))
+        var head = Head(headword);
+        if (used is null || used.Labels.Any(l => Head(l.Label) == head))
         {
             return null;
         }
@@ -153,5 +153,18 @@ internal static class ChapterSalience
             .ThenBy(l => l.First)
             .Select(l => l.Label)
             .FirstOrDefault();
+    }
+
+    private const string Article = "the ";
+
+    /// <summary>
+    /// A heading or a name as the two are compared: up to the first comma or bracket, lower case,
+    /// without an article. <em>REBEKAH (REBECCA)</em> is Rebekah.
+    /// </summary>
+    internal static string Head(string name)
+    {
+        var end = name.IndexOfAny([',', '(']);
+        var head = (end < 0 ? name : name[..end]).Trim().ToLowerInvariant();
+        return head.StartsWith(Article, StringComparison.Ordinal) ? head[Article.Length..] : head;
     }
 }

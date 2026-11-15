@@ -1,7 +1,8 @@
 using System.Text.Json.Serialization;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Descriptions;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Context;
 
 /// <summary>
 /// The lines under the names of a chapter's context, cut to what its panel draws.
@@ -81,7 +82,7 @@ internal record ContextDescriptorResponse(string Language, IList<ContextClaimRes
 }
 
 /// <param name="Relation">What the subject is to the target: <c>son-of</c>.</param>
-/// <param name="Target">The target's slug, a key of <see cref="ChapterContextResponse.Records"/>.</param>
+/// <param name="Target">The target's slug, a key of <c>ChapterContextResponse.Records</c>.</param>
 internal record ContextClaimResponse(string Relation, string Target)
 {
     /// <summary>What tells the target from another the same line names by its name, as <see cref="DescriptorTargetResponse.Distinction"/>.</summary>
@@ -113,7 +114,7 @@ internal record ContextCountResponse(string Relation, string Text)
 /// <param name="Text">The piece as it is printed.</param>
 internal record ContextCountPartResponse(string Text)
 {
-    /// <summary>The record the piece names, a key of <see cref="ChapterContextResponse.Records"/>.</summary>
+    /// <summary>The record the piece names, a key of <c>ChapterContextResponse.Records</c>.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Entity { get; init; }
 
@@ -134,29 +135,3 @@ internal record ContextRecordResponse(string Kind, string Name)
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Dictionary<string, string>? Forms { get; init; }
 }
-
-/// <summary>
-/// One event the sources set in the chapter, as the panel lists it: its name, its verse, and its
-/// year in each reckoning that dates it. The description, the notes and the working are the event's
-/// own page's.
-/// </summary>
-internal record ContextEventResponse(
-    string Slug,
-    string Name,
-    VerseRefResponse? Reference,
-    IList<ContextEventDateResponse> Dates)
-{
-    /// <summary>The title in the reader's language, a machine translation; null for an English reader and where none is held.</summary>
-    public string? LocalName { get; init; }
-
-    internal static ContextEventResponse Of(EventResponse e) =>
-        new(e.Slug, e.Name, e.Reference, [.. e.Dates.Select(d => new ContextEventDateResponse(d.Chronology, d.Year, d.BceYear, d.Era))])
-        {
-            LocalName = e.LocalName,
-        };
-}
-
-/// <param name="Chronology">The reckoning, by slug.</param>
-/// <param name="Year">Years from the reckoning's own creation, which orders the chapter's events.</param>
-/// <param name="BceYear">The year as a reader writes it, <paramref name="Era"/> saying which side of the turn.</param>
-internal record ContextEventDateResponse(string Chronology, int? Year, int? BceYear, string Era);

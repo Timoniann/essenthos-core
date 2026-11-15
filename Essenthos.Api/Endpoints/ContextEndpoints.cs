@@ -1,8 +1,6 @@
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
-using System.Linq.Expressions;
 using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +17,16 @@ namespace Essenthos.Core.Endpoints;
 /// the corpus aligns, so a man the English calls <em>he</em> and the Hebrew names is still found,
 /// and the verse lists reach the places the word layer has not resolved. Both are addressed in the
 /// shared canonical frame, which is the numbering the reader's rows already use.
+///
+/// <para>
+/// None of that changes while a release is served, so the serving build stores it (TSK-1669): each chapter's skeleton
+/// (<see cref="ChapterSkeleton"/>) and each record's line in each pair of languages (<see cref="ContextLineBody"/>). A
+/// request reads the two, the names its open texts add and the pictures, and puts them together here; a chapter or a pair
+/// of languages the build did not store is composed from the served tables the same way.
+/// </para>
 /// </summary>
 internal static class ContextEndpoints
 {
-    /// <summary>
-    /// The one kind of period a chapter is never placed in. Eras, reigns, judgeships and the spans
-    /// below them say where a chapter stands; a lifetime does not, because every chapter falls inside
-    /// the lives of dozens of people it never mentions.
-    /// </summary>
-    private const string LifeKind = "life";
-
     public static void MapContext(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/context/{book}/{chapter:int}", async (
@@ -72,7 +70,7 @@ internal static class ContextEndpoints
 
             return Results.Ok(await Context(
                 db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken,
-                settings.Is(SiteSettings.GeneratedImages), prose, open, shown));
+                settings.Is(SiteSettings.GeneratedImages), prose, open, shown, stored: true));
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -87,7 +85,7 @@ internal static class ContextEndpoints
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
-            return refusal ?? Results.Ok(await ChapterFamilies.Of(db, ordinal, chapter, language, cancellationToken, prose));
+            return refusal ?? Results.Ok(await ChapterFamilies.Of(db, ordinal, chapter, language, cancellationToken, prose, stored: true));
         });
     }
 
@@ -121,6 +119,11 @@ internal static class ContextEndpoints
         CancellationToken cancellationToken) =>
         await Context(db, book, chapter, language, await ContextWeights.Count(db, cancellationToken), cancellationToken);
 
+    /// <param name="stored">
+    /// Whether the chapter and the lines the build stored are read where it stored them. The context is composed from the
+    /// served tables otherwise, and also where the build stored no such chapter or pair of languages, or where an open text
+    /// brings a record the chapter itself does not name.
+    /// </param>
     internal static async Task<ChapterContextResponse> Context(
         AppDbContext db,
         int book,
@@ -131,10 +134,93 @@ internal static class ContextEndpoints
         bool generated = true,
         string? prose = null,
         IReadOnlyList<TextEntry>? open = null,
-        CanonDefinition? mode = null)
+        CanonDefinition? mode = null,
+        bool stored = false)
     {
-        var (verses, how, spoken) = await NamedAndHow(db, book, chapter, cancellationToken);
-        var exceptions = await Exceptions(db, book, chapter, open ?? [], cancellationToken);
+        var exceptions = await ChapterSkeletons.Exceptions(db, book, chapter, open ?? [], cancellationToken);
+        ChapterSkeleton? skeleton = null;
+        IReadOnlyDictionary<string, ContextLineBody>? lines = null;
+        if (stored && await Stored(db, book, chapter, cancellationToken) is { } held)
+        {
+            var named = held.Records.Select(r => r.Slug).ToHashSet(StringComparer.Ordinal);
+            if (exceptions.All(x => named.Contains(x.Slug)))
+            {
+                skeleton = held;
+                lines = await StoredLines(db, held, language, prose, cancellationToken);
+            }
+        }
+
+        if (skeleton is null || lines is null)
+        {
+            skeleton = await ChapterSkeletons.Gather(db, book, chapter, cancellationToken, [.. exceptions.Select(x => x.Slug)]);
+            lines = await ContextLines.Gather(db, [.. skeleton.Records.Select(r => r.Slug)], language, prose, cancellationToken);
+        }
+
+        return await Assemble(db, skeleton, lines, exceptions, weights, cancellationToken, generated, language, prose, open is not null, mode);
+    }
+
+    /// <summary>The chapter's skeleton as the build stored it, in one statement; null where it stored none.</summary>
+    internal static async Task<ChapterSkeleton?> Stored(AppDbContext db, int book, int chapter, CancellationToken cancellationToken) =>
+        await db.ContextChapters
+                .Where(c => c.CanonicalBook == book && c.CanonicalChapter == chapter)
+                .Select(c => c.Body)
+                .FirstOrDefaultAsync(cancellationToken) is { } body
+            ? ChapterSkeletons.Read(body)
+            : null;
+
+    /// <summary>
+    /// The lines of every record of the skeleton as the build stored them for this pair of languages, in one statement;
+    /// null where it did not store this pair, so the request composes them.
+    /// </summary>
+    private static async Task<IReadOnlyDictionary<string, ContextLineBody>?> StoredLines(
+        AppDbContext db,
+        ChapterSkeleton skeleton,
+        string? language,
+        string? prose,
+        CancellationToken cancellationToken)
+    {
+        var words = ReaderLanguages.Prose(prose, language);
+        if (language is not { Length: > 0 } || words is not { Length: > 0 })
+        {
+            return null;
+        }
+
+        var slugs = skeleton.Records.Select(r => r.Slug).ToList();
+        if (slugs.Count == 0)
+        {
+            return new Dictionary<string, ContextLineBody>();
+        }
+
+        var rows = await db.ContextLines
+            .Where(l => l.Prose == words && l.Names == language && slugs.Contains(l.Slug))
+            .Select(l => new { l.Slug, l.Body })
+            .ToListAsync(cancellationToken);
+        return rows.Count == slugs.Count
+            ? rows.ToDictionary(r => r.Slug, r => ContextLines.Read(r.Body), StringComparer.Ordinal)
+            : null;
+    }
+
+    /// <summary>
+    /// The answer put together from what the chapter is made of and the records' lines: the names the open texts add, the
+    /// words for God settled, the records of the canon mode, their pictures, the order of the rows, and the topics weighed
+    /// against the rows shown.
+    /// </summary>
+    private static async Task<ChapterContextResponse> Assemble(
+        AppDbContext db,
+        ChapterSkeleton skeleton,
+        IReadOnlyDictionary<string, ContextLineBody> lines,
+        IReadOnlyList<ContextException> exceptions,
+        ContextWeights weights,
+        CancellationToken cancellationToken,
+        bool generated,
+        string? language,
+        string? prose,
+        bool asked,
+        CanonDefinition? mode)
+    {
+        var verses = skeleton.Verses.ToDictionary(v => v.Key, v => new SortedSet<int>(v.Value), StringComparer.Ordinal);
+        var how = skeleton.How.ToDictionary(h => h.Key, h => new SortedSet<string>(h.Value, StringComparer.Ordinal), StringComparer.Ordinal);
+        var spoken = skeleton.Spoken.ToDictionary(s => s.Key, s => new SortedSet<int>(s.Value), StringComparer.Ordinal);
         foreach (var exception in exceptions)
         {
             if (!verses.TryGetValue(exception.Slug, out var at))
@@ -143,70 +229,53 @@ internal static class ContextEndpoints
             }
 
             at.UnionWith(exception.Verses);
-            Route(how, exception.Slug, Excepted);
+            ChapterSkeletons.Route(how, exception.Slug, ChapterSkeletons.Excepted);
         }
 
         ChapterSalience.SettleWordsForGod(verses, how, spoken);
-        var slugs = verses.Keys.ToList();
-        var records = await db.Entities
-            .Where(e => slugs.Contains(e.Slug))
-            .InCanon(mode)
-            .Select(e => new
-            {
-                e.Id,
-                e.Slug,
-                e.Kind,
-                e.Name,
-                e.Distinguisher,
-                e.PlaceKind,
-                Location = e.Location == null
-                    ? null
-                    : new EntityLocationResponse(
-                        e.Location.Longitude,
-                        e.Location.Latitude,
-                        e.Location.Kind,
-                        e.Location.Score / EncyclopediaEndpoints.ScoreScale),
-            })
-            .ToListAsync(cancellationToken);
+        var received = mode is null ? null : CanonAttestation.Received(mode).ToHashSet(StringComparer.Ordinal);
+        var named = skeleton.Records.Where(r => verses.ContainsKey(r.Slug)).ToList();
+        var records = named
+            .Where(r => received is null || r.Canons.Length == 0 || r.Canons.Any(received.Contains))
+            .ToList();
+        ContextLineBody Line(string slug) => lines.GetValueOrDefault(slug) ?? ContextLineBody.Empty;
 
-        var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
-        var words = ReaderLanguages.Prose(prose, language);
-        var lines = await EntityDistinguishers.OfSlugs(db, slugs, words, cancellationToken);
-        var described = ContextDescriptors.Slim(await Descriptors.Of(db, slugs, words, cancellationToken, language));
-        var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
-        var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
+        // Every record a line under any of the chapter's names points at, those the canon mode hides included.
+        var targets = new SortedDictionary<string, ContextRecordResponse>(StringComparer.Ordinal);
+        foreach (var record in named)
+        {
+            foreach (var (slug, target) in Line(record.Slug).Records ?? [])
+            {
+                targets.TryAdd(slug, target);
+            }
+        }
+
         // A face for the people only: a place's or a thing's picture is its page's, and a row of the
         // words for God carries the one picture God's record leads with, which is light and not a face.
+        var person = EnumSpelling.Of(EntityKind.Person);
         var pictured = await ImageEndpoints.Leading(
             db,
-            [.. records.Where(r => r.Kind == EntityKind.Person).Select(r => r.Slug)],
+            [.. records.Where(r => r.Kind == person).Select(r => r.Slug)],
             cancellationToken,
             generated);
 
         var entities = records
-            .Select(r => new ContextEntityResponse(
-                r.Slug,
-                EnumSpelling.Of(r.Kind),
-                r.Name,
-                r.Distinguisher,
-                [.. verses[r.Slug]])
+            .Select(r => new ContextEntityResponse(r.Slug, r.Kind, r.Name, r.Distinguisher, [.. verses[r.Slug]])
             {
-                LocalName = local.GetValueOrDefault(r.Id),
-                LocalDistinguisher = lines.GetValueOrDefault(r.Slug),
-                Descriptor = described.Lines.GetValueOrDefault(r.Slug),
-                Meaning = meanings.GetValueOrDefault(r.Id),
+                LocalName = Line(r.Slug).LocalName,
+                LocalDistinguisher = Line(r.Slug).LocalDistinguisher,
+                Descriptor = Line(r.Slug).Descriptor,
+                Meaning = r.Meaning,
                 PlaceKind = r.PlaceKind,
-                Location = r.Location,
+                Location = r.Location is { } at ? new EntityLocationResponse(at.Lon, at.Lat, at.Kind, at.Confidence) : null,
                 How = [.. how.GetValueOrDefault(r.Slug) ?? []],
                 SourceId = Datasets.Own,
                 Group = ChapterSalience.WordsForGod.Contains(r.Slug) ? ChapterSalience.GodGroup : null,
-                ChapterName = ChapterSalience.WordsForGod.Contains(r.Slug)
-                    ? null
-                    : ChapterSalience.NameUsed(r.Name, namesUsed.GetValueOrDefault(r.Slug)),
+                ChapterName = r.ChapterName,
                 Thumbnail = pictured.GetValueOrDefault(r.Slug),
-                Exceptions = open is null
-                    ? null
-                    : [.. exceptions.Where(x => x.Slug == r.Slug).Select(x => new ContextExceptionResponse(x.Text, x.Origin, [.. x.Verses]))],
+                Exceptions = asked
+                    ? [.. exceptions.Where(x => x.Slug == r.Slug).Select(x => new ContextExceptionResponse(x.Text, x.Origin, [.. x.Verses]))]
+                    : null,
             })
             .OrderByDescending(e => ChapterSalience.Of(e.Slug, verses, how, spoken))
             .ThenBy(e => weights.EntityChapters.GetValueOrDefault(e.Slug, int.MaxValue))
@@ -214,474 +283,40 @@ internal static class ContextEndpoints
             .ThenBy(e => e.Slug, StringComparer.Ordinal)
             .ToList();
 
-        var events = await db.Events
-            .Where(e => e.CanonicalBook == book && e.CanonicalChapter == chapter)
-            .OrderBy(e => e.CanonicalVerse)
-            .ThenBy(e => e.YearFromCreation)
-            .ThenBy(e => e.SequenceInYear == null)
-            .ThenBy(e => e.SequenceInYear)
-            .ThenBy(e => e.Slug)
-            .Select(EncyclopediaEndpoints.Rows)
-            .ToListAsync(cancellationToken);
-
-        var (periods, dated) = await Periods(db, book, chapter, events, cancellationToken);
-        var measures = await Measures(db, book, chapter, cancellationToken);
-        var commandments = await CommandmentEndpoints.InChapter(db, book, chapter, cancellationToken);
-        var topics = await ChapterTopics.InChapter(db, book, chapter, weights, entities, cancellationToken);
-
+        // An event's title in the reader's language is a machine translation into the language of words, where one is held.
+        var local = EntityNames.Local(ReaderLanguages.Prose(prose, language));
         return new ChapterContextResponse(
-            new BookRefResponse(book, BookReferences.Name(book), BookReferences.Slug(book)),
-            chapter,
+            new BookRefResponse(skeleton.Book, BookReferences.Name(skeleton.Book), BookReferences.Slug(skeleton.Book)),
+            skeleton.Chapter,
             entities,
             [
-                .. (await EncyclopediaEndpoints.InTheReadersLanguage(
-                    db, [.. events.Select(row => EncyclopediaEndpoints.Event(row, NoPlaces))], language, prose, cancellationToken))
-                .Select(ContextEventResponse.Of),
-            ],
-            periods,
-            dated,
-            measures,
-            commandments,
-            topics,
-            described.Records);
-    }
-
-    /// <summary>
-    /// Every record the chapter names, with the verses naming it: the words of any text that name
-    /// it, the record's own list of verses, and the passages of objects and observances running
-    /// through the chapter.
-    /// </summary>
-    internal static async Task<Dictionary<string, SortedSet<int>>> Named(
-        AppDbContext db,
-        int book,
-        int chapter,
-        CancellationToken cancellationToken) =>
-        (await NamedAndHow(db, book, chapter, cancellationToken)).Verses;
-
-    /// <summary>
-    /// The three routes a record reaches the chapter by, which are three different claims: a word
-    /// of some text names it (<c>words</c>), the record's source lists a verse of the chapter
-    /// (<c>listed</c>), or a passage about it runs through the chapter (<c>passage</c>). A record
-    /// can arrive by more than one, and the reader is told which.
-    ///
-    /// <para>
-    /// <c>Spoken</c> holds the verses where the words themselves name each record: the annotated
-    /// words, and the verses this corpus lists for a record because of the words it numbers or
-    /// annotates. The rest of a record's verses are a source's list alone.
-    /// </para>
-    /// </summary>
-    internal static async Task<(Dictionary<string, SortedSet<int>> Verses, Dictionary<string, SortedSet<string>> How,
-            Dictionary<string, SortedSet<int>> Spoken)>
-        NamedAndHow(
-            AppDbContext db,
-            int book,
-            int chapter,
-            CancellationToken cancellationToken)
-    {
-        // Disputed rows are left out: they are the references the source itself would not assign
-        // to the record, and listing them here would assign them.
-        var stated = await db.EntityVerses.Shown()
-            .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter && !v.Disputed)
-            .Select(v => new { v.Entity!.Slug, v.CanonicalVerse, v.Source, v.Names, v.Withheld })
-            .Distinct()
-            .ToListAsync(cancellationToken);
-
-        var verses = new Dictionary<string, SortedSet<int>>(StringComparer.Ordinal);
-        var withheld = new HashSet<(string Slug, int Verse)>();
-        foreach (var row in stated.Where(row => ShownVerses.ReadOffTheWords(row.Source, row.Names)))
-        {
-            if (row.Withheld)
-            {
-                withheld.Add((row.Slug, row.CanonicalVerse));
-                continue;
-            }
-
-            if (!verses.TryGetValue(row.Slug, out var named))
-            {
-                verses[row.Slug] = named = [];
-            }
-
-            named.Add(row.CanonicalVerse);
-        }
-
-        // The settled names of the reference texts are the passage's own: what the base texts name, whatever a
-        // translation adds or names otherwise (those are exceptions, flagged with the text that carries them).
-        foreach (var settled in await Settled(db, book, chapter, cancellationToken))
-        {
-            if (withheld.Contains((settled.Slug, settled.CanonicalVerse)))
-            {
-                continue;
-            }
-
-            if (!verses.TryGetValue(settled.Slug, out var named))
-            {
-                verses[settled.Slug] = named = [];
-            }
-
-            named.Add(settled.CanonicalVerse);
-        }
-
-        var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
-        var spoken = verses.ToDictionary(pair => pair.Key, pair => new SortedSet<int>(pair.Value), StringComparer.Ordinal);
-
-        foreach (var row in stated)
-        {
-            // The verse the ranking leaves to the people, on this record's row and on any other list
-            // read off the same words.
-            if (ChapterSalience.FromTheWords(row.Source) && withheld.Contains((row.Slug, row.CanonicalVerse)))
-            {
-                continue;
-            }
-
-            if (!verses.TryGetValue(row.Slug, out var at))
-            {
-                verses[row.Slug] = at = [];
-            }
-
-            at.Add(row.CanonicalVerse);
-            Route(how, row.Slug, "listed");
-            if (ChapterSalience.FromTheWords(row.Source))
-            {
-                if (!spoken.TryGetValue(row.Slug, out var said))
+                .. skeleton.Events.Select(e => new ContextEventResponse(e.Slug, e.Name, e.Reference, e.Dates)
                 {
-                    spoken[row.Slug] = said = [];
-                }
-
-                said.Add(row.CanonicalVerse);
-            }
-        }
-
-        var before = verses.Keys.ToHashSet(StringComparer.Ordinal);
-        await AddPassages(db, book, chapter, verses, cancellationToken);
-        foreach (var slug in verses.Keys.Where(slug => !before.Contains(slug)))
-        {
-            Route(how, slug, "passage");
-        }
-
-        return (verses, how, spoken);
-    }
-
-    /// <summary>The route of a record a text the reader has open names in the chapter against its base.</summary>
-    private const string Excepted = "exception";
-
-    private sealed record NamedAt(string Slug, int CanonicalVerse);
-
-    /// <summary>
-    /// Where a reference text's settled names fall in the chapter, by the verse of the shared numbering. Only the reference
-    /// texts' words are read: a chapter holds the words of some forty texts, and only these seven can carry a settled name.
-    /// </summary>
-    private static async Task<List<NamedAt>> Settled(AppDbContext db, int book, int chapter, CancellationToken cancellationToken) =>
-        await (
-                from reference in db.VerseReferences
-                where reference.IsPrimary && reference.CanonicalBook == book && reference.CanonicalChapter == chapter
-                      && WordEntityOrigins.SettledTexts.Contains(reference.Verse!.Text!.Slug)
-                join word in db.Words on reference.VerseId equals word.VerseId
-                join named in db.WordEntities on word.Id equals named.WordId
-                where named.Origin == WordEntityOrigins.Settled
-                select new NamedAt(named.Entity!.Slug, reference.CanonicalVerse))
-            .Distinct()
-            .ToListAsync(cancellationToken);
-
-    private sealed record ExceptionAt(string Slug, string Text, string Origin, SortedSet<int> Verses);
-
-    /// <summary>
-    /// The names the open texts carry against their base in the chapter: a record a text adds (<c>added</c>) or names in
-    /// place of its base's (<c>differs</c>), each with the text that carries it. A suppression takes nothing away: the
-    /// context is about the passage, and the base still names the record.
-    /// </summary>
-    private static async Task<List<ExceptionAt>> Exceptions(
-        AppDbContext db,
-        int book,
-        int chapter,
-        IReadOnlyList<TextEntry> open,
-        CancellationToken cancellationToken)
-    {
-        if (open.Count == 0)
-        {
-            return [];
-        }
-
-        // The exceptions are a few hundred words in the whole corpus, held apart by a partial index on word_entity; only the
-        // open texts' verses of the chapter are joined to them.
-        var ids = open.Select(t => t.Id).ToList();
-        var rows = await (
-                from reference in db.VerseReferences
-                where reference.IsPrimary && reference.CanonicalBook == book && reference.CanonicalChapter == chapter
-                      && ids.Contains(reference.Verse!.TextId)
-                join word in db.Words on reference.VerseId equals word.VerseId
-                join named in db.WordEntities on word.Id equals named.WordId
-                where named.Origin == WordEntityOrigins.Added || named.Origin == WordEntityOrigins.Differs
-                select new { named.Entity!.Slug, word.TextId, Origin = named.Origin!, reference.CanonicalVerse })
-            .Distinct()
-            .ToListAsync(cancellationToken);
-        var order = open.Select((text, at) => (text.Id, at)).ToDictionary(pair => pair.Id, pair => pair.at);
-        var slugs = open.ToDictionary(t => t.Id, t => t.Slug);
-        return
-        [
-            .. rows.GroupBy(row => (row.Slug, row.TextId, row.Origin))
-                .OrderBy(group => group.Key.Slug, StringComparer.Ordinal)
-                .ThenBy(group => order[group.Key.TextId])
-                .ThenBy(group => group.Key.Origin, StringComparer.Ordinal)
-                .Select(group => new ExceptionAt(
-                    group.Key.Slug, slugs[group.Key.TextId], group.Key.Origin, [.. group.Select(row => row.CanonicalVerse)])),
-        ];
-    }
-
-    private static void Route(Dictionary<string, SortedSet<string>> how, string slug, string route)
-    {
-        if (!how.TryGetValue(slug, out var routes))
-        {
-            how[slug] = routes = new SortedSet<string>(StringComparer.Ordinal);
-        }
-
-        routes.Add(route);
-    }
-
-    private static readonly IReadOnlyDictionary<EventLocation, string> NoPlaces = new Dictionary<EventLocation, string>();
-
-    /// <summary>
-    /// The objects and observances whose passages run through the chapter, where no word of it names
-    /// them: Exodus 25 describes the ark in verses that say <em>it</em> and <em>thereof</em>, and a
-    /// panel that listed the ark only at the verses spelling its name would miss what the chapter is
-    /// about. A record a word already names keeps the verses the words give it — the passage is what
-    /// the chapter is about, and the words are where the text says it.
-    /// </summary>
-    private static async Task AddPassages(
-        AppDbContext db,
-        int book,
-        int chapter,
-        Dictionary<string, SortedSet<int>> verses,
-        CancellationToken cancellationToken)
-    {
-        var passages = await db.EntityPassages
-            .Where(p => p.CanonicalBook == book && p.CanonicalChapter <= chapter && p.EndChapter >= chapter)
-            .Select(p => new { p.Entity!.Slug, p.CanonicalChapter, p.CanonicalVerse, p.EndChapter, p.EndVerse })
-            .ToListAsync(cancellationToken);
-        passages = [.. passages.Where(p => !verses.ContainsKey(p.Slug))];
-        if (passages.Count == 0)
-        {
-            return;
-        }
-
-        var last = await db.VerseReferences
-            .Where(r => r.IsPrimary && r.CanonicalBook == book && r.CanonicalChapter == chapter)
-            .MaxAsync(r => (int?)r.CanonicalVerse, cancellationToken) ?? 0;
-        foreach (var passage in passages)
-        {
-            var from = passage.CanonicalChapter == chapter ? passage.CanonicalVerse ?? 1 : 1;
-            var to = passage.EndChapter == chapter ? passage.EndVerse ?? last : last;
-            if (!verses.TryGetValue(passage.Slug, out var at))
-            {
-                verses[passage.Slug] = at = [];
-            }
-
-            for (var verse = from; verse <= to; verse++)
-            {
-                at.Add(verse);
-            }
-        }
-    }
-
-    /// <summary>
-    /// The periods a chapter falls in, and what placed it there.
-    ///
-    /// <para>
-    /// A chapter carries no year of its own; the events set in it do. So a period holds the chapter
-    /// where it opens or closes on one of them, or where one of their years falls inside it. The
-    /// test is half-open, because the event that ends an era usually begins the next: Jeroboam's
-    /// reign begins in the year Solomon's ends, and 1 Kings 12 is the first chapter of the
-    /// divided kingdom, not the last of the united one.
-    /// </para>
-    ///
-    /// <para>
-    /// A chapter no event is set in is placed by the dated events on either side of it in the same
-    /// book, and only in a period that holds both: Exodus 25 lies between the covenant at Sinai and the
-    /// building of the tabernacle, so it is in the wilderness whichever year between them it describes.
-    /// Where only one side has an event the chapter is not placed at all, because one neighbour
-    /// says where the book was, not where this chapter is.
-    /// </para>
-    /// </summary>
-    private static async Task<(IList<ContextPeriodResponse> Periods, string? Dated)> Periods(
-        AppDbContext db,
-        int book,
-        int chapter,
-        IReadOnlyList<EncyclopediaEndpoints.EventRow> events,
-        CancellationToken cancellationToken)
-    {
-        var candidates = db.Periods.Where(p =>
-            p.Realm == Realms.Scripture && p.Kind != LifeKind
-            && p.StartYear != null && p.EndYear != null);
-
-        var years = events
-            .Select(row => row.Event.YearFromCreation)
-            .OfType<int>()
-            .Distinct()
-            .ToList();
-
-        if (years.Count > 0)
-        {
-            var eventIds = events.Select(row => row.Event.Id).ToList();
-            var holding = await candidates
-                .Where(p => (p.StartEventId != null && eventIds.Contains(p.StartEventId.Value))
-                            || (p.EndEventId != null && eventIds.Contains(p.EndEventId.Value))
-                            || years.Any(y => p.StartYear <= y && (y < p.EndYear || y == p.StartYear)))
-                .OrderBy(p => p.Level).ThenBy(p => p.StartYear).ThenBy(p => p.Slug)
-                .Select(Row)
-                .ToListAsync(cancellationToken);
-            return (await WithYears(db, holding, cancellationToken),
-                holding.Count > 0 ? ChapterPeriods.FromItsEvents : null);
-        }
-
-        var dated = db.Events.Where(e =>
-            e.CanonicalBook == book && e.CanonicalChapter != null && e.YearFromCreation != null);
-        var before = await dated
-            .Where(e => e.CanonicalChapter < chapter)
-            .OrderByDescending(e => e.CanonicalChapter).ThenByDescending(e => e.CanonicalVerse)
-            .ThenByDescending(e => e.YearFromCreation)
-            .Select(e => e.YearFromCreation)
-            .FirstOrDefaultAsync(cancellationToken);
-        var after = await dated
-            .Where(e => e.CanonicalChapter > chapter)
-            .OrderBy(e => e.CanonicalChapter).ThenBy(e => e.CanonicalVerse).ThenBy(e => e.YearFromCreation)
-            .Select(e => e.YearFromCreation)
-            .FirstOrDefaultAsync(cancellationToken);
-        if (before is not { } one || after is not { } other)
-        {
-            return ([], null);
-        }
-
-        var (from, to) = (Math.Min(one, other), Math.Max(one, other));
-        var around = await candidates
-            .Where(p => p.StartYear <= from && to <= p.EndYear)
-            .OrderBy(p => p.Level).ThenBy(p => p.StartYear).ThenBy(p => p.Slug)
-            .Select(Row)
-            .ToListAsync(cancellationToken);
-        return (await WithYears(db, around, cancellationToken),
-            around.Count > 0 ? ChapterPeriods.FromTheEventsAround : null);
-    }
-
-    private sealed record PeriodRow(
-        string Slug, string Name, string? Kind, int? StartYear, int? EndYear, int? StartEventId, int? EndEventId);
-
-    private static readonly Expression<Func<Period, PeriodRow>> Row =
-        p => new PeriodRow(p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear, p.StartEventId, p.EndEventId);
-
-    /// <summary>
-    /// Each period's span in every reckoning that dates both the events bounding it, exactly as the
-    /// timeline reads it, so the panel can follow the reckoning the reader picks.
-    /// </summary>
-    private static async Task<IList<ContextPeriodResponse>> WithYears(
-        AppDbContext db,
-        IReadOnlyList<PeriodRow> periods,
-        CancellationToken cancellationToken)
-    {
-        if (periods.Count == 0)
-        {
-            return [];
-        }
-
-        var anchors = periods
-            .SelectMany(p => new[] { p.StartEventId, p.EndEventId })
-            .OfType<int>()
-            .Distinct()
-            .ToList();
-        var years = await EncyclopediaEndpoints.EventYears(
-            db, db.EventDates.Where(d => anchors.Contains(d.EventId)), cancellationToken);
-
-        return
-        [
-            .. periods.Select(p => new ContextPeriodResponse(
-                p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear,
-                EncyclopediaEndpoints.Span(years, p.StartEventId, p.EndEventId, p.StartYear, p.EndYear))),
-        ];
-    }
-
-    /// <summary>
-    /// The units of length, weight, volume and money this panel speaks of, by the lexicon entry that
-    /// is the unit. Only entries whose every sense is the unit: <em>kikkar</em> is a talent and also
-    /// the plain of the Jordan and a loaf, <em>chomer</em> a homer and also clay, <em>omer</em> also a
-    /// sheaf, <em>tephach</em> also a coping, <em>stadion</em> also a race, and counting any of those by
-    /// its number would set a weight beside a verse about a plain. The cubit's entry also covers a
-    /// door post once, in Isaiah 6:4, which is the one place this list says something the text does not.
-    /// </summary>
-    internal static readonly string[] Units =
-    [
-        "H520", "H2239", "H2948", "H1626", "H1235", "H8255", "H4488", "H3849", "H6894", "H1969", "H5429",
-        "H374", "H1324", "H3734",
-        "G4083", "G3712", "G3400", "G3046", "G5518", "G4568", "G943", "G3355", "G2884",
-        "G1220", "G1406", "G1323", "G4715", "G3414", "G5007", "G787", "G2835", "G3016",
-    ];
-
-    /// <summary>The verses of the chapter where a word in any text carries each unit's number, once each.</summary>
-    private static async Task<IList<ContextMeasureResponse>> Measures(
-        AppDbContext db,
-        int book,
-        int chapter,
-        CancellationToken cancellationToken)
-    {
-        var rows = await (
-                from reference in db.VerseReferences
-                where reference.IsPrimary
-                      && reference.CanonicalBook == book
-                      && reference.CanonicalChapter == chapter
-                join word in db.Words on reference.VerseId equals word.VerseId
-                where word.StrongNumber != null && Units.Contains(word.StrongNumber)
-                select new { Number = word.StrongNumber!, reference.CanonicalVerse })
-            .Distinct()
-            .ToListAsync(cancellationToken);
-
-        return
-        [
-            .. rows.GroupBy(row => row.Number)
-                .Select(unit => new ContextMeasureResponse(
-                    unit.Key, [.. unit.Select(row => row.CanonicalVerse).Order()]))
-                .OrderBy(unit => unit.Verses[0])
-                .ThenBy(unit => Array.IndexOf(Units, unit.Number)),
-        ];
-    }
-
-    private const string ProperName = "proper name";
-
-    private const string TitleName = "title";
-
-    /// <summary>
-    /// What a record's own name means, where the corpus holds a meaning for it: the entry its headword
-    /// is filed under, or failing that its one proper name. A title's meaning is not a name's meaning,
-    /// and a record with several proper names and none of them its headword says nothing rather than
-    /// picking one.
-    /// </summary>
-    private static async Task<Dictionary<int, string>> Meanings(
-        AppDbContext db,
-        IReadOnlyCollection<int> ids,
-        CancellationToken cancellationToken)
-    {
-        var names = await db.EntityNames
-            .Where(n => ids.Contains(n.EntityId) && n.Meaning != null && n.Meaning != "")
-            .Select(n => new { n.EntityId, n.Label, n.Kind, Meaning = n.Meaning!, Headword = n.Entity!.Name })
-            .ToListAsync(cancellationToken);
-
-        var meanings = new Dictionary<int, string>();
-        foreach (var entity in names.GroupBy(n => n.EntityId))
-        {
-            var headword = entity.FirstOrDefault(n => n.Label == n.Headword && n.Kind != TitleName);
-            var proper = entity.Where(n => n.Kind == ProperName).ToList();
-            var meaning = headword?.Meaning ?? (proper.Count == 1 ? proper[0].Meaning : null);
-            if (meaning is not null)
-            {
-                meanings[entity.Key] = meaning;
-            }
-        }
-
-        return meanings;
+                    LocalName = local is null ? null : e.LocalNames?.GetValueOrDefault(local),
+                }),
+            ],
+            skeleton.Periods,
+            skeleton.PeriodsFrom,
+            skeleton.Measures,
+            skeleton.Commandments,
+            ChapterTopics.Ranked(skeleton, weights, entities),
+            targets);
     }
 }
 
-/// <summary>How a chapter was placed in its periods, as <see cref="ChapterContextResponse.PeriodsFrom"/> spells it.</summary>
-internal static class ChapterPeriods
+/// <summary>
+/// One event the sources set in the chapter, as the panel lists it: its name, its verse, and its
+/// year in each reckoning that dates it. The description, the notes and the working are the event's
+/// own page's.
+/// </summary>
+internal record ContextEventResponse(
+    string Slug,
+    string Name,
+    VerseRefResponse? Reference,
+    IList<ContextEventDateResponse> Dates)
 {
-    public const string FromItsEvents = "events";
-
-    public const string FromTheEventsAround = "neighbours";
+    /// <summary>The title in the reader's language, a machine translation; null for an English reader and where none is held.</summary>
+    public string? LocalName { get; init; }
 }
 
 /// <param name="Entities">
@@ -723,23 +358,6 @@ internal record ChapterContextResponse(
     IList<ContextTopicResponse> Topics,
     IDictionary<string, ContextRecordResponse> Records);
 
-/// <param name="StartYear">Its first year from creation in the base reckoning, which placed the chapter in it.</param>
-/// <param name="Years">
-/// Its span in each reckoning that dates both its bounding events, keyed by the reckoning's slug, as
-/// the timeline carries it; under the empty key for a period with no anchors, whose years belong to
-/// no reckoning.
-/// </param>
-internal record ContextPeriodResponse(
-    string Slug,
-    string Name,
-    string? Kind,
-    int? StartYear,
-    int? EndYear,
-    Dictionary<string, int[]> Years);
-
-/// <param name="Number">The lexicon entry that is the unit: <c>H520</c> for the cubit.</param>
-/// <param name="Verses">The verses of the chapter where a word carries it.</param>
-internal record ContextMeasureResponse(string Number, IList<int> Verses);
 
 /// <param name="Kind">person, place, people, title or term.</param>
 /// <param name="Verses">The verses of this chapter that name it, in the shared numbering.</param>

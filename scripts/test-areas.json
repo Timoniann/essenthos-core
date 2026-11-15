@@ -61,6 +61,7 @@
     { "path": "Essenthos.Corpus/Descriptions/Descriptors.cs", "areas": ["Records", "Names", "Reader", "Links", "Witnesses", "Evidentia"] },
     { "path": "Essenthos.Corpus/Descriptions/TitleWords.cs", "areas": ["Reader", "Witnesses", "Records", "Names"] },
     { "path": "Essenthos.Corpus/Descriptions/**", "areas": ["Records", "Names", "Reader"] },
+    { "path": "Essenthos.Corpus/Context/**", "areas": ["Reader", "Records"] },
     { "path": "Essenthos.Corpus/Strong/**", "areas": ["Lexicon", "Links", "Reader", "Witnesses"] },
     { "path": "Essenthos.Corpus/Utils/UnicodeNormalization*.cs", "areas": ["Lexicon", "Links", "Names", "Reader", "Witnesses"] },
     { "path": "Essenthos.Corpus/Utils/**", "areas": ["Lexicon", "Links", "Witnesses"] },

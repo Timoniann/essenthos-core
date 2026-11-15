@@ -528,28 +528,12 @@ internal static partial class EncyclopediaEndpoints
             : [.. answered.Select((one, index) => one with { ShownBy = placed[index].ShownBy })];
     }
 
-    /// <summary>
-    /// The event with the two fields that need a join, read in the query rather than off a
-    /// navigation property. Projecting <c>e.Entity.Slug</c> through a method EF cannot translate
-    /// left every one of the 572 events without a person on it, while the filter that uses the
-    /// same navigation worked — so the timeline could select by a person and never name one.
-    /// </summary>
-    internal sealed record EventRow(
-        Database.Entities.Event Event,
-        string? EntitySlug,
-        string? EntityName,
-        string? DefaultChronology,
-        IList<EventDateResponse> Dates);
+    private const string CommonEra = EventRows.CommonEra;
 
-    /// <summary>
-    /// One vocabulary for the two sides of the turn, in the response and in the dates alike. Named
-    /// rather than written twice, because they were written twice and disagreed: an event past the
-    /// turn said <c>AD</c> at the top and <c>CE</c> in its dates, so a client switching on the
-    /// field had three values to handle for two eras.
-    /// </summary>
-    private const string CommonEra = "CE";
+    private const string BeforeTheCommonEra = EventRows.BeforeTheCommonEra;
 
-    private const string BeforeTheCommonEra = "BCE";
+    /// <inheritdoc cref="EventRows.Rows"/>
+    internal static readonly System.Linq.Expressions.Expression<Func<Database.Entities.Event, EventRow>> Rows = EventRows.Rows;
 
     /// <summary>
     /// Which side of the turn a year from creation falls. The source counts forward without a
@@ -566,48 +550,6 @@ internal static partial class EncyclopediaEndpoints
     /// </para>
     /// </summary>
     internal const int LastYearBeforeChrist = 3961;
-
-    /// <summary>
-    /// An event with the people and the dates it needs, projected in the query.
-    ///
-    /// One expression, used by both places that return events, because reading a navigation
-    /// property outside the projection is what left all 572 events without a person once already
-    /// while the filter over the same navigation went on working.
-    /// </summary>
-    internal static readonly System.Linq.Expressions.Expression<Func<Database.Entities.Event, EventRow>> Rows =
-        e => new EventRow(
-            e,
-            e.Entity == null ? null : e.Entity.Slug,
-            e.Entity == null ? null : e.Entity.Name,
-            e.Dates.Where(d => d.Chronology!.IsDefault).Select(d => d.Chronology!.Slug).FirstOrDefault(),
-            e.Dates
-                .OrderBy(d => d.Chronology!.Position)
-                .Select(d => new EventDateResponse(
-                    d.Chronology!.Slug,
-                    d.Chronology.Name,
-                    d.Year,
-                    d.StatedYear != null
-                        ? d.StatedYear < 0 ? -d.StatedYear.Value : d.StatedYear.Value
-                        : d.Year == null
-                            ? null
-                            : d.Year <= d.Chronology.LastYearBeforeTheCommonEra
-                                ? d.Chronology.LastYearBeforeTheCommonEra - d.Year.Value + 1
-                                : d.Year.Value - d.Chronology.LastYearBeforeTheCommonEra,
-                    d.StatedYear != null
-                        ? d.StatedYear > 0 ? CommonEra : BeforeTheCommonEra
-                        : d.Year != null && d.Year > d.Chronology.LastYearBeforeTheCommonEra
-                            ? CommonEra
-                            : BeforeTheCommonEra,
-                    d.EarliestYear,
-                    d.LatestYear,
-                    d.Calculation,
-                    d.Citation,
-                    d.Notes)
-                {
-                    Stated = d.StatedYear != null,
-                    Parts = d.CalculationParts,
-                })
-                .ToList());
 
     /// <summary>The reckoning whose years the source's own age at the event belongs to.</summary>
     private const string BibleDataReckoning = "bibledata";
