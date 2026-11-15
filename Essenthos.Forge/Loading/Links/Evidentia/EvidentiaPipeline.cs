@@ -34,6 +34,11 @@ internal sealed class EvidentiaPipeline(
         var source = Analyse(request.Source, unsupported);
         var target = Analyse(request.Target, unsupported);
         var candidates = Candidates(source, target, request.NeighbourVerseDistance, allEvidence);
+        if (request.GateTranslatedDictionary)
+        {
+            candidates = WithoutRedundantTranslatedSenses(candidates);
+        }
+
         var content = source.Where(analysis => analysis.IsContentWord).ToList();
         var measurable = content.Count > 0 ? content : source;
         var covered = candidates
@@ -141,13 +146,62 @@ internal sealed class EvidentiaPipeline(
             }
         }
 
-        return candidates
-            .OrderByDescending(candidate => candidate.Score)
-            .ThenBy(candidate => candidate.Source.Token.Address.DistanceTo(candidate.Target.Token.Address))
-            .ThenBy(candidate => candidate.Source.Token.Position)
-            .ThenBy(candidate => candidate.Target.Token.Position)
-            .ToList();
+        return Ranked(candidates);
     }
+
+    private static List<EvidentiaCandidate> Ranked(IEnumerable<EvidentiaCandidate> candidates) => candidates
+        .OrderByDescending(candidate => candidate.Score)
+        .ThenBy(candidate => candidate.Source.Token.Address.DistanceTo(candidate.Target.Token.Address))
+        .ThenBy(candidate => candidate.Source.Token.Position)
+        .ThenBy(candidate => candidate.Target.Token.Position)
+        .ToList();
+
+    /// <summary>
+    /// A translated Strong lexicon's sense taken off every edge of a word that already has a learned rendering in its own
+    /// verse, and an edge it alone made dropped, as though the lexicon had not been read for that word (PRB-1705).
+    ///
+    /// The combiner was fitted on English, where the dictionary is the English Strong lexicon. Read for German and Spanish, a
+    /// translated sense on the word's right edge, and the other senses its definitions give it in the verse, moved about a
+    /// fifth of their learned placements out of the safe band on Romans (the indicator of a dictionary sense alone, about one
+    /// point of log odds), while the key read those placements 99% right. Where the word has no learned rendering in the
+    /// verse the sense is the only lexical evidence it has, and it is kept: that is where it places words nothing else does.
+    /// The English lexicon is never gated, so English runs are unchanged.
+    /// </summary>
+    private static List<EvidentiaCandidate> WithoutRedundantTranslatedSenses(List<EvidentiaCandidate> candidates)
+    {
+        var learned = candidates
+            .Where(candidate => candidate.Source.Token.Address == candidate.Target.Token.Address
+                && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.KnownRendering))
+            .Select(candidate => candidate.Source.Token.Id)
+            .ToHashSet();
+        if (learned.Count == 0)
+        {
+            return candidates;
+        }
+
+        var kept = new List<EvidentiaCandidate>(candidates.Count);
+        foreach (var candidate in candidates)
+        {
+            if (!learned.Contains(candidate.Source.Token.Id) || !candidate.Evidence.Any(IsTranslatedSense))
+            {
+                kept.Add(candidate);
+                continue;
+            }
+
+            var evidence = candidate.Evidence.Where(evidence => !IsTranslatedSense(evidence)).ToList();
+            // Morphology was added because the sense made the edge lexical; without it the edge has no signal of its own.
+            if (evidence.Any(item => IsMeaningfulSignal(item) && item.Kind != EvidentiaEvidenceKind.Morphology))
+            {
+                kept.Add(candidate with { Evidence = evidence });
+            }
+        }
+
+        return Ranked(kept);
+    }
+
+    private static bool IsTranslatedSense(EvidentiaEvidence evidence) =>
+        evidence.Kind == EvidentiaEvidenceKind.DictionarySense
+        && evidence.Source.StartsWith(EvidentiaDictionarySenseIndex.TranslatedSource, StringComparison.Ordinal);
 
     private static bool IsMeaningfulSignal(EvidentiaEvidence evidence) => evidence.Kind is not
         EvidentiaEvidenceKind.ExactCanonicalAddress and not EvidentiaEvidenceKind.NeighbouringCanonicalAddress;

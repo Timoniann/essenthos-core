@@ -383,7 +383,9 @@ internal static partial class ForgeVerbs
         DefiniteNouns: arguments.Contains("--definite-nouns"),
         VerseMap: arguments.Contains("--verse-map"),
         RenderingFamilies: arguments.Contains("--rendering-families"),
-        FunctionWords: arguments.Contains("--function-words"));
+        FunctionWords: arguments.Contains("--function-words"),
+        WithoutDictionary: arguments.Contains("--without-dictionary"),
+        GateTranslatedDictionary: arguments.Contains("--gate-translated-dictionary"));
 
     private static string[]? AlignerPairFiles(string[] arguments) =>
         OptionalText(arguments, "--aligner-pairs")?.Split(',', StringSplitOptions.RemoveEmptyEntries);

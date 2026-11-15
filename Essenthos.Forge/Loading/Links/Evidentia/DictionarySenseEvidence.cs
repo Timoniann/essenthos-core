@@ -24,6 +24,9 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
     /// for the life of this scope. It used to be read from the database and regex-tokenised again
     /// for every chapter - fifty times over a book run - to answer a question about one passage.
     /// </summary>
+    /// <summary>How the evidence of a translated Strong lexicon names its source, before the language.</summary>
+    public const string TranslatedSource = "strong-entry-translation:";
+
     private readonly Dictionary<string, ReverseSenseIndex> byLanguage = new(StringComparer.OrdinalIgnoreCase);
 
     public async Task<EvidentiaDictionarySenseEvidenceSource?> For(
@@ -121,7 +124,7 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
                 entry.KjvDefinition,
                 entry.DetailedDefinition))
             .ToListAsync(cancellationToken);
-        return (translated, $"strong-entry-translation:{language}");
+        return (translated, $"{TranslatedSource}{language}");
     }
 
     private EvidentiaAnalysis? Analyse(EvidentiaToken token) =>
