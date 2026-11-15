@@ -2,7 +2,7 @@
 # inputs     bible4u/RUSV.xml@f99f206be151f30d521c57e9de1b0c4723d76a70bf44e5965482ce03609b5cd9
 # producer   forge texts corrections RUSV   (Essenthos.Forge 1.0.0+8aa731d0dc56-dirty)
 # rows                131
-# kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes
+# kinds      verse: the source's verse (markup and all) is read as after; letters: the word's letters before become after; prepend/append: the words of after open/close the verse; drop: the word reading before goes; divide: the word opens the verse after (the source prints no number there)
 # note       written once from the repairs the load computed in code; edit this file, not the code
 own	kind	before	after	why
 1.10:7.13	letters	дедан	Дедан	bible4u's file against the Strong-tagged digitisation swmail/RST: case
@@ -72,6 +72,57 @@ own	kind	before	after	why
 11.7:49	verse	и светильники г пять по правую сторону и пять по левуюсторону, пред задним отделением храма, из чистого золота, ицветы, и лампадки, и щипцы из золота;	и светильники – пять по правую сторону и пять по левую сторону, пред задним отделением храма, из чистого золота, и цветы, и лампадки, и щипцы из золота;	bible4u's file against the Strong-tagged digitisation swmail/RST: dash, glued
 11.7:50	verse	и блюда, и ножи, и чаши, и лотки, и кадильницы из чистогозолота, и петли у дверей внутреннего храма во Святом Святых и удверей в храме из золота же.	и блюда, и ножи, и чаши, и лотки, и кадильницы из чистого золота, и петли у дверей внутреннего храма во Святом Святых и у дверей в храме из золота же.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
 11.7:51	verse	Так совершена вся работа, которую производил царь Соломондля храма Господа. И принес Соломон посвященное Давидом, отцомего; серебро и золото и вещи отдал в сокровищницы храма Господня.	Так совершена вся работа, которую производил царь Соломон для храма Господа. И принес Соломон посвященное Давидом, отцом его; серебро и золото и вещи отдал в сокровищницы храма Господня.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
+17.1:1a.22	divide	Иудеянин	17.1:1b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1b
+17.1:1a.33	divide	Он	17.1:1c	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1c
+17.1:1a.50	divide	Сон	17.1:1d	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1d
+17.1:1a.64	divide	и	17.1:1e	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1e
+17.1:1a.80	divide	и	17.1:1f	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1f
+17.1:1a.93	divide	и	17.1:1g	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1g
+17.1:1a.108	divide	и	17.1:1h	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1h
+17.1:1a.125	divide	от	17.1:1i	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1i
+17.1:1a.139	divide	и	17.1:1k	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1k
+17.1:1a.150	divide	Мардохей	17.1:1l	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1l
+17.1:1a.175	divide	И	17.1:1m	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1m
+17.1:1a.190	divide	и	17.1:1n	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1n
+17.1:1a.213	divide	а	17.1:1o	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1o
+17.1:1a.225	divide	Царь	17.1:1p	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1p
+17.1:1a.237	divide	И	17.1:1q	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1q
+17.1:1a.250	divide	При	17.1:1r	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 1:1r
+17.3:13a.23	divide	Царствуя	17.3:13b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 3:13b
+17.3:13a.65	divide	Когда	17.3:13c	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 3:13c
+17.3:13a.97	divide	объяснил	17.3:13d	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 3:13d
+17.3:13a.125	divide	Итак	17.3:13e	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 3:13e
+17.3:13a.154	divide	мы	17.3:13f	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 3:13f
+17.3:13a.190	divide	чтобы	17.3:13g	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 3:13g
+17.4:17a.11	divide	Господи	17.4:17b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17b
+17.4:17a.28	divide	Ты	17.4:17c	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17c
+17.4:17a.49	divide	Ты	17.4:17d	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17d
+17.4:17a.87	divide	но	17.4:17e	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17e
+17.4:17a.117	divide	И	17.4:17f	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17f
+17.4:17a.137	divide	не	17.4:17g	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17g
+17.4:17a.149	divide	услышь	17.4:17h	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17h
+17.4:17a.177	divide	И	17.4:17i	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17i
+17.4:17a.192	divide	И	17.4:17k	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17k
+17.4:17a.244	divide	Господи	17.4:17l	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17l
+17.4:17a.264	divide	Я	17.4:17m	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17m
+17.4:17a.302	divide	И	17.4:17n	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17n
+17.4:17a.326	divide	А	17.4:17o	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17o
+17.4:17a.364	divide	и	17.4:17p	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17p
+17.4:17a.377	divide	Не	17.4:17q	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17q
+17.4:17a.403	divide	Помяни	17.4:17r	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17r
+17.4:17a.422	divide	даруй	17.4:17s	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17s
+17.4:17a.444	divide	нас	17.4:17t	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17t
+17.4:17a.460	divide	Ты	17.4:17u	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17u
+17.4:17a.478	divide	Ты	17.4:17w	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17w
+17.4:17a.511	divide	И	17.4:17x	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17x
+17.4:17a.529	divide	и	17.4:17y	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17y
+17.4:17a.547	divide	Боже	17.4:17z	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 4:17z
+17.5:1a.34	divide	Она	17.5:1b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 5:1b
+17.5:1a.56	divide	облеченный	17.5:1c	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 5:1c
+17.5:1a.72	divide	Обратив	17.5:1d	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 5:1d
+17.5:1a.101	divide	И	17.5:1e	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 5:1e
+17.5:1a.135	divide	что	17.5:1f	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 5:1f
+17.5:2a.45	divide	Но	17.5:2b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 5:2b
 17.6:2	verse	и найдено записанным [там], как донес Мардохей на Гавафу Ифарру, двух евнухов царских, оберегавших порог, которые замышлялиналожить руку на царя Артаксеркса.	и найдено записанным [там], как донес Мардохей на Гавафу Ифарру, двух евнухов царских, оберегавших порог, которые замышляли наложить руку на царя Артаксеркса.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
 17.6:4	verse	И сказал царь: кто на дворе? Аман же пришел [тогда] навнешний двор царского дома поговорить с царем, чтобы Повесилимардохея на дереве, которое он приготовил для него.	И сказал царь: кто на дворе? Аман же пришел [тогда] на внешний двор царского дома поговорить с царем, чтобы повесили Мардохея на дереве, которое он приготовил для него.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
 17.6:5	verse	И сказали отроки царю: вот, Аман стоит на дворе. И сказалцарь: пусть войдет.	И сказали отроки царю: вот, Аман стоит на дворе. И сказал царь: пусть войдет.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
@@ -84,6 +135,36 @@ own	kind	before	after	why
 17.6:12	verse	И возвратился Мардохей к царским воротам. Аман же поспешилв дом свой, печальный и закрыв голову.	И возвратился Мардохей к царским воротам. Аман же поспешил в дом свой, печальный и закрыв голову.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
 17.6:13	verse	И пересказал Аман Зереши, жене своей, и всем друзьям своимвсе, что случилось с ним. И сказали ему мудрецы его и Зерешь, жена его: если из племени Иудеев Мардохей, изгза которого тыначал падать, то не пересилишь его, а наверно падешь пред ним.	И пересказал Аман Зереши, жене своей, и всем друзьям своим все, что случилось с ним. И сказали ему мудрецы его и Зерешь, жена его: если из племени Иудеев Мардохей, из-за которого ты начал падать, то не пересилишь его, а наверно падешь пред ним.	bible4u's file against the Strong-tagged digitisation swmail/RST: dash, glued
 17.6:14	verse	Они еще разговаривали с ним, [как] пришли евнухи царя и сталиторопить Амана идти на пир, который приготовила Есфирь.	Они еще разговаривали с ним, [как] пришли евнухи царя и стали торопить Амана идти на пир, который приготовила Есфирь.	bible4u's file against the Strong-tagged digitisation swmail/RST: glued
+17.8:12a.6	divide	великий	17.8:12b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12b
+17.8:12a.24	divide	Многие	17.8:12c	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12c
+17.8:12a.53	divide	не	17.8:12d	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12d
+17.8:12a.72	divide	Но	17.8:12e	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12e
+17.8:12a.97	divide	хитросплетением	17.8:12f	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12f
+17.8:12a.104	divide	Это	17.8:12g	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12g
+17.8:12a.125	divide	Посему	17.8:12h	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12h
+17.8:12a.141	divide	не	17.8:12i	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12i
+17.8:12a.151	divide	Так	17.8:12k	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12k
+17.8:12a.170	divide	удостоился	17.8:12l	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12l
+17.8:12a.193	divide	но	17.8:12m	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12m
+17.8:12a.203	divide	а	17.8:12n	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12n
+17.8:12a.224	divide	Таким	17.8:12o	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12o
+17.8:12a.236	divide	Мы	17.8:12p	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12p
+17.8:12a.252	divide	сынами	17.8:12q	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12q
+17.8:12a.267	divide	Посему	17.8:12r	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12r
+17.8:12a.300	divide	Список	17.8:12s	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12s
+17.8:12a.338	divide	Ибо	17.8:12t	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12t
+17.8:12a.351	divide	И	17.8:12u	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12u
+17.8:12a.386	divide	Всякий	17.8:12x	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 8:12x
+17.10:3a.8	divide	ибо	17.10:3b	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3b
+17.10:3a.24	divide	Малый	17.10:3c	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3c
+17.10:3a.49	divide	А	17.10:3d	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3d
+17.10:3a.56	divide	народы	17.10:3e	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3e
+17.10:3a.62	divide	а	17.10:3f	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3f
+17.10:3a.97	divide	Так	17.10:3g	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3g
+17.10:3a.111	divide	и	17.10:3h	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3h
+17.10:3a.129	divide	И	17.10:3i	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3i
+17.10:3a.139	divide	И	17.10:3k	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3k
+17.10:3a.168	divide	В	17.10:3l	the Synodal prints the addition without verse numbers; divided where Brenton's Greek and English begin 10:3l
 19.15:3.17	letters	своего4	своего	bible4u's file against the Strong-tagged digitisation swmail/RST: letters
 19.59:10.1	letters	Бой	Бог	bible4u's file against the Strong-tagged digitisation swmail/RST: letters
 23.7:1.16	letters	факей	Факей	bible4u's file against the Strong-tagged digitisation swmail/RST: case

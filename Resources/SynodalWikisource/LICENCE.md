@@ -67,8 +67,12 @@ chapters and 167 verses). They are taken from those books' own pages, and nothin
 | 17-ESG | Книга Есфири | 3679964 | the bracketed words of 1:1 (a verse of its own before the Hebrew's 1:1), 3:13, 4:17, 5:1, 5:2, 8:12 and 10:3, each written as the verse's piece `a` |
 | 79-MAN | Вторая книга Паралипоменон | 4588701 | the Prayer of Manasseh after 36:23, twelve verses the page letters а to м, numbered 1 to 12 |
 
-The song is one bracketed passage and every word of it is marked as the Greek's, as the brackets
-are elsewhere; so are the additions to Esther. The short bracketed phrases the Synodal adds inside
+The song is one bracketed passage and the file marks every word of it with `\add`; so are the
+additions to Esther. The brackets say that the passage is the Greek's, not that its translators
+supplied the words, so the corpus reads these passages as the edition's text and marks none of their
+words as supplied; the italics inside them do not survive the fetch. The page prints the additions
+to Esther without verse numbers, and the corpus divides each where Brenton's Greek divides it, by the
+`divide` rows of `Essenthos/texts/RUSV/corrections.tsv`. The short bracketed phrases the Synodal adds inside
 other verses of Esther are not taken, as bible4u does not print them. Susanna and Bel are Daniel 13
 and 14 in the Synodal and books of their own in the corpus, each verse keeping the address it is
 printed under as its stated one; the song is held as a book of its own the same way, numbered as the

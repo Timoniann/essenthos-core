@@ -165,13 +165,21 @@ public class DeuterocanonReaderTests(Deuterocanon read) : IClassFixture<Deuteroc
         esther.Chapters.SelectMany(chapter => chapter.Verses.Where(verse => verse.Label == "a")
                 .Select(verse => $"{chapter.Number}:{verse.Number}"))
             .Should().BeEquivalentTo(["1:1", "3:13", "4:17", "5:1", "5:2", "8:12", "10:3"]);
-        esther.Chapters.Single(chapter => chapter.Number == 1).Verses.Single(verse => verse.Label == "a")
-            .Words.Should().OnlyContain(word => word.SuppliedSpan != null);
+        esther.Chapters.SelectMany(chapter => chapter.Verses.Where(verse => verse.Label == "a")).SelectMany(verse => verse.Words)
+            .Should().OnlyContain(word => word.SuppliedSpan == null, "the brackets mark the Greek's text, not words the translators supplied");
+        song.SelectMany(verse => verse.Words).Should().OnlyContain(word => word.SuppliedSpan == null);
+        Deuterocanon.Book(read.Synodal, 77).Chapters.SelectMany(chapter => chapter.Verses).SelectMany(verse => verse.Words)
+            .Should().Contain(word => word.SuppliedSpan != null, "Susanna keeps the translators' italics");
+        string Order(int chapter) => string.Join(" ", esther.Chapters.Single(one => one.Number == chapter).Verses
+            .Take(chapter == 1 ? 2 : 20).Select(verse => $"{verse.Number}{verse.Label}"));
+        Order(1).Should().Be("1a 1", "the Synodal prints Mordecai's dream before the book's first verse");
+        Order(3).Should().EndWith("12 13 13a 14 15", "each other addition follows the verse it stands in");
 
         var rules = TestResources.Rules;
         var extended = Deuterocanon.Frame(read.Synodal, rules);
         extended.Resolve(17, 1, 1, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 11, 2));
-        extended.Resolve(17, 5, 2, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 15, 12));
+        extended.Resolve(17, 5, 2, lettered: true, "a")[0].Should().Be(new CanonicalReference(17, 15, 13),
+            "the corrections divide the audience as Brenton does, and the first piece of 5:2 is mostly D:13-14");
         extended.Resolve(79, 1, 11, lettered: false, string.Empty)[0].Should().Be(new CanonicalReference(79, 1, 13));
         extended.Resolve(93, 1, 29, lettered: false, string.Empty).Should()
             .Equal(new CanonicalReference(93, 1, 29), new CanonicalReference(93, 1, 30));
