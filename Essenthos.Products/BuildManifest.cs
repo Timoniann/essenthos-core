@@ -150,11 +150,15 @@ public sealed class BuildManifest
         }
     }
 
+    /// <summary>
+    /// Takes a product out of the manifest. Saved also when this process never held the entry but another process wrote the
+    /// file since this one last saw it: the entry may be there, and forgetting only the memory would leave it on disk.
+    /// </summary>
     public void Forget(string product)
     {
         lock (_lock)
         {
-            if (_entries.Remove(product))
+            if (_entries.Remove(product) || Stat() != _seen)
             {
                 _changed.Add(product);
                 Save();
