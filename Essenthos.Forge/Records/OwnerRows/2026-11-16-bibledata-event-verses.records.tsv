@@ -1,0 +1,7 @@
+# producer   by hand: three BibleData events placed at the verse they quote, not the miscited one their description repeats (PRB-1682), applied by forge owner-rows
+# by         Essenthos: each event's quotation read against the verse it cites and the verse it quotes (ASV word overlap over every cited BibleData event, then read by hand), by claude-opus-5-5 on 2026-11-16, on the project owner's instruction of 2026-11-16 to fix PRB-1682
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	record	values	why
+PRB-1682	external/bibledata/events	amend	judahwalkswaydavidsolomonbegin	{"ref": "14.11:17"}	the description quotes 2 Chronicles 11:17 (Judah walked three years in the way of David and Solomon) and cites 2CH 11:7, a verse of Rehoboam's fortified cities; the event's ref repeated the miscitation
+PRB-1682	external/bibledata/events	amend	judahwalkswaydavidsolomonend	{"ref": "14.11:17"}	the description quotes 2 Chronicles 11:17 (Judah walked three years in the way of David and Solomon) and cites 2CH 11:7, a verse of Rehoboam's fortified cities; the event's ref repeated the miscitation
+PRB-1682	external/bibledata/events	amend	azariahsprophecy	{"ref": "14.15:1"}	the description quotes 2 Chronicles 15:1-2 (the Spirit of God on Azariah son of Oded, who goes out to meet Asa) and cites 1CH 15:1-2, David's tents for the ark; the event's ref repeated the miscitation

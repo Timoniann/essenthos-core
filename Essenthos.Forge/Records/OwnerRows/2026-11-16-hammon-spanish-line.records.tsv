@@ -1,0 +1,5 @@
+# producer   by hand: a Spanish line for Hammon of Naphtali, which the Reina-Valera spells Ammón like the land of Ammon, so the map's list can tell them apart (PRB-1638), applied by forge owner-rows
+# by         Essenthos: the line under the name written from the record's verse and its English line, by claude-opus-5-5 on 2026-11-16, on the project owner's instruction of 2026-11-16 to put the quick places and map problems right (PRB-1638)
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
+entry	product	op	record	values	why
+PRB-1638	records/i18n/spa/lines	put	hammon-2	{"line": "otro nombre de Hamath (Hamat Tiberias)"}	the Reina-Valera 1909 prints the Levites' town of Naphtali in 1CH 6:76 as Ammón (H2540), the Spanish name of the land of Ammon too, and hammon-2 had no Spanish line, so the map list read the two alike; the English line is another name for Hammath (Hamat Tiberias), and Hammath is Hamath in the Spanish names

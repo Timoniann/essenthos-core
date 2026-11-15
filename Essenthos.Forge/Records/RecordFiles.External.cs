@@ -31,6 +31,11 @@ internal static partial class RecordFiles
         [],
         About: "The verses the dataset lists for a record, and the record of ours the row was filed under (record), which the corpus moved some rows to.");
 
+    /// <summary>Whether a file holds events, periods or reckonings, whose slug is their own and names no record.</summary>
+    public static bool OfChronology(string product) =>
+        product.EndsWith("/events", StringComparison.Ordinal) || product.EndsWith("/periods", StringComparison.Ordinal)
+        || product.EndsWith("/chronologies", StringComparison.Ordinal);
+
     private static RecordFile Events(string product, string where) => new(product, ProductKind.Hand,
         "slug name description? kind? record? year_from_creation:int? bce_year:int? age_at_event:int? calculation? ref:ref? location? location_ref:ref? uri? notes? realm region? region_at_the_time? name_source sequence_in_year:int? by",
         $"""

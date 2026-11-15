@@ -43,6 +43,12 @@ internal static class OwnerRows
     /// <summary>A record file's rows taken out: every row of the record whose columns equal the values given.</summary>
     public const string Drop = "drop";
 
+    /// <summary>
+    /// A record file's row changed in the columns named, the others left as they are: the row with the same key must be
+    /// there. A dataset's kept row is corrected this way without carrying its other columns (a quotation, say) into the rows.
+    /// </summary>
+    public const string Amend = "amend";
+
     private const string References = "external/bibledata/references";
 
     /// <summary>The gazetteer's verse rows, refiled when the place they are filed under is folded into another.</summary>
@@ -106,7 +112,7 @@ internal static class OwnerRows
 
     /// <param name="Entry">The question the row settles (<c>objects:37</c>), or the record and what of it (<c>altar-of-incense:known-for</c>).</param>
     /// <param name="Product">The record file the row edits (<c>records/names</c>, <c>records/i18n/ukr/lines</c>, ...).</param>
-    /// <param name="Op">put or drop.</param>
+    /// <param name="Op">put, amend or drop.</param>
     /// <param name="Record">The record's slug, the file's first column.</param>
     /// <param name="Values">
     /// A JSON object of the row's other columns by name. For put, a column not named is empty, except <c>by</c>, which
@@ -310,7 +316,8 @@ internal static class OwnerRows
     }
 
     private static bool KeyedByRecord(string product) =>
-        product != Folds && RecordFiles.All.FirstOrDefault(f => f.Product == product)?.Parsed is [{ Name: "slug" or "subject" }, ..];
+        product != Folds && !RecordFiles.OfChronology(product)
+                         && RecordFiles.All.FirstOrDefault(f => f.Product == product)?.Parsed is [{ Name: "slug" or "subject" }, ..];
 
     private static string? FoldedInto(string values)
     {
@@ -368,9 +375,9 @@ internal static class OwnerRows
         /// <returns>Empty when the row changed the file, null when the file already showed it, else why it cannot.</returns>
         public string? Apply(RecordRow row)
         {
-            if (row.Op is not (Put or Drop))
+            if (row.Op is not (Put or Drop or Amend))
             {
-                return $"a record file's row is put or dropped, not '{row.Op}'";
+                return $"a record file's row is put, amended or dropped, not '{row.Op}'";
             }
 
             JsonObject values;
@@ -409,6 +416,29 @@ internal static class OwnerRows
             if (row.Op == Drop)
             {
                 return edit.Drop(given, named);
+            }
+
+            if (row.Op == Amend)
+            {
+                for (var i = 1; i < given.Length; i++)
+                {
+                    if (!named[i])
+                    {
+                        continue;
+                    }
+
+                    if (given[i] is null && !file.Parsed[i].Nullable)
+                    {
+                        return $"'{file.Parsed[i].Name}' is required in {row.Product}";
+                    }
+
+                    if (given[i] is { } text && !Fits(file.Parsed[i].Type, text))
+                    {
+                        return $"'{text}' is no {file.Parsed[i].Type} for '{file.Parsed[i].Name}'";
+                    }
+                }
+
+                return edit.Amend(given, named);
             }
 
             for (var i = 1; i < given.Length; i++)
@@ -510,6 +540,37 @@ internal static class OwnerRows
             else
             {
                 Rows.Add(row);
+            }
+
+            Changed = true;
+            return string.Empty;
+        }
+
+        public string? Amend(string?[] given, bool[] named)
+        {
+            if (_key.FirstOrDefault(i => !named[i], -1) is var unnamed and >= 0)
+            {
+                return $"an amended row names its key, and '{File.Parsed[unnamed].Name}' is not named";
+            }
+
+            var at = Rows.FindIndex(r => _key.All(i => r[i] == given[i]));
+            if (at < 0)
+            {
+                return "no row with that key to amend";
+            }
+
+            var row = Rows[at];
+            if (Enumerable.Range(0, named.Length).All(i => !named[i] || row[i] == given[i]))
+            {
+                return null;
+            }
+
+            for (var i = 0; i < named.Length; i++)
+            {
+                if (named[i])
+                {
+                    row[i] = given[i];
+                }
             }
 
             Changed = true;
