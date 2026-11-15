@@ -1,0 +1,12 @@
+# product    Essenthos/texts/RV1909/corrections.tsv
+# producer   by hand
+# kinds      divide: the word opens the verse after (the source prints no number there)
+own	kind	before	after	why
+18.39:30.14	divide	Ella	18.39:31	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:31 (the English 39:28) begins here, where the King James's 39:28 begins and the Strong numbers turn to it
+18.39:30.30	divide	Desde	18.39:32	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:32 (the English 39:29) begins here, where the King James's 39:29 begins and the Strong numbers turn to it
+18.39:30.41	divide	Sus	18.39:33	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:33 (the English 39:30) begins here, where the King James's 39:30 begins and the Strong numbers turn to it
+18.39:30.52	divide	A	18.39:34	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:34 (the English 40:1) begins here, where the King James's 40:1 begins and the Strong numbers turn to it
+18.39:30.62	divide	¿Es	18.39:35	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:35 (the English 40:2) begins here, where the King James's 40:2 begins and the Strong numbers turn to it
+18.39:30.76	divide	Y	18.39:36	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:36 (the English 40:3) begins here, where the King James's 40:3 begins and the Strong numbers turn to it
+18.39:30.83	divide	He	18.39:37	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:37 (the English 40:4) begins here, where the King James's 40:4 begins and the Strong numbers turn to it
+18.39:30.98	divide	Una	18.39:38	eBible's file, numbered to the English count, runs the Reina-Valera's Job 39:30-38 into 39:30; the edition's 39:38 (the English 40:5) begins here, where the King James's 40:5 begins and the Strong numbers turn to it

@@ -193,6 +193,12 @@ Swete	Sir.36:9-12	Sir.36:7-10	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Ex
 Swete	Sir.36:13a	Sir.36:11	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
 Swete	Sir.36:16b	Sir.36:11	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
 Swete	Sir.36:17-31	Sir.36:12-26	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	Est.3:13	Est.3:13	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	Swete prints addition B apart, as 3:1a-7a, so his 3:13 is the Hebrew's verse alone; the versification data's rule for the Greek that runs the addition into 3:13 had laid it over B as well
+Swete	1Ki.10:22	1Ki.10:22	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	Swete prints Vaticanus's 3 Kingdoms 10: the levy, which Brenton's Greek prints as 10:22a-c and the Hebrew as 9:15-22, follows 10:22 numbered on as 10:23-25, so the Hebrew's 10:23-26 are his 10:26-29, the rule from the river to Egypt (Brenton's 10:26a) his 10:30 and the Hebrew's 10:27-29 his 10:31-33; each stands where Brenton's Greek stands the same verse, and 10:22 holds 10:22 alone
+Swete	1Ki.10:23-25	1Ki.10:22	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	1Ki.10:26-29	1Ki.10:23-26	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	1Ki.10:30	1Ki.10:26	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
+Swete	1Ki.10:31-33	1Ki.10:27-29	Est.4:1.4=Exist & Est.5:1=NotExist & Est.1:17.2=Exist	
 Ge'ez	Dan.3:54-55	S3Y.1:32-33	Dan.3:100=Last & Dan.13:1=Exist	the church's Ge'ez has the Latin's six lines of weather in the Song of the Three but in an order of its own, and the depths and the heavens first as Vaticanus has them; the line it prints as 3:71 is placed by elimination, the others naming night and day, dew, cold and frost, light and darkness, and hail. Its Daniel keeps Susanna and Bel as chapters 13 and 14, which tells it apart from the Latin texts that also end Daniel 3 at verse 100
 Ge'ez	Dan.3:58-59	S3Y.1:36-37	Dan.3:100=Last & Dan.13:1=Exist	
 Ge'ez	Dan.3:67	S3Y.1:47	Dan.3:100=Last & Dan.13:1=Exist	
@@ -224,6 +230,22 @@ Ge'ez	Sir.34:1-31	Sir.31:1-31	Dan.3:100=Last & Dan.13:1=Exist
 Ge'ez	Sir.35:1-24	Sir.32:1-24	Dan.3:100=Last & Dan.13:1=Exist	
 Ge'ez	Sir.36:1-16	Sir.33:1-16	Dan.3:100=Last & Dan.13:1=Exist	
 Ge'ez	Sir.36:17-31	Sir.36:12-26	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.2:35	1Ki.2:35	Dan.3:100=Last & Dan.13:1=Exist	the Ge'ez prints, without numbers of their own, the Greek's additions to 3 Kingdoms inside the verses they follow: 2:35a in 2:35 (none of 2:35b-o), 10:22a-c in 10:22 and 16:28a-h in 16:28, which its corrections divide as Brenton's Greek letters them; its 12:24 is the verse alone, none of the Greek's 12:24a-z. Each stands where Brenton's Greek stands the same verse, not over the Hebrew verses the versification data's rule for the Greek runs into one verse
+Ge'ez	1Ki.2:35a	1Ki.2:35	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.10:22	1Ki.10:22	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.10:22a	1Ki.10:22	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.10:22b	1Ki.10:22	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.10:22c	1Ki.10:22	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.12:24	1Ki.12:24	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28a	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28b	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28c	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28d	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28e	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28f	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28g	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
+Ge'ez	1Ki.16:28h	1Ki.16:28	Dan.3:100=Last & Dan.13:1=Exist	
 Synodal	Est.1:1a	Est.A:1	LJe.1:72=Last & Est.5:1=Exist	Russian Wikisource's Synodal sets the additions to Esther in brackets inside six verses and prints them without verse numbers: each addition is taken as the lettered pieces of the verse it stands in, divided where Brenton's Greek and English divide it (the rows that divide them are in the Synodal's corrections) and lettered as he letters them, but for Mordecai's dream, which is 1:1a to 1:1r because its 1:1 is the Hebrew's. The page interleaves the audience with the Hebrew's 5:1 and 5:2, so the first piece of each also holds the words of the verse Brenton prints in them, D:1 and D:12; its Esther prints 5:1, which tells it from Swete's. Lettered as Brenton's, its Esther answers his tests on Esther, so his rows also ask for the Letter of Jeremiah's 73rd verse, which the Synodal, ending the Letter at 72, does not print
 Synodal	Est.1:1b	Est.A:2	LJe.1:72=Last & Est.5:1=Exist	
 Synodal	Est.1:1c	Est.A:3	LJe.1:72=Last & Est.5:1=Exist	

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Products;
 using Essenthos.Core.XmlBible;
@@ -30,7 +31,10 @@ namespace Essenthos.Core.Conversion;
 /// <see cref="Before"/>, opens the verse <see cref="After"/> (a key of the same chapter), which runs to the next row's word or
 /// the end of the passage and is printed right after it; a row at the passage's first word names the piece that opens it,
 /// which leaves the verse's own key to a later row, where the source prints what the verse's number belongs to last. The
-/// division is ours, made by reading the passage against an edition that numbers it.
+/// division is ours, made by reading the passage against an edition that numbers it;
+/// <c>unsupplied</c>: the source marks words of the verse as supplied that are the edition's own text (a passage the
+/// translator took from another manuscript, which the source sets in the same markup), so none of them is supplied;
+/// <see cref="Before"/> is how many of its words the source marks so.
 /// </param>
 internal sealed record TextCorrection(string Own, string Kind, string? Before, string? After, string Why)
 {
@@ -42,6 +46,7 @@ internal sealed record TextCorrection(string Own, string Kind, string? Before, s
     public const string Block = "block";
     public const string Strong = "strong";
     public const string Divide = "divide";
+    public const string Unsupplied = "unsupplied";
 
     public static readonly ProductSchema<TextCorrection> Schema = new ProductSchema<TextCorrection>()
         .Text("own", c => c.Own)
@@ -89,7 +94,8 @@ internal sealed class TextCorrections
         foreach (var row in rows)
         {
             if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append
-                or TextCorrection.Drop or TextCorrection.Block or TextCorrection.Strong or TextCorrection.Divide))
+                or TextCorrection.Drop or TextCorrection.Block or TextCorrection.Strong or TextCorrection.Divide
+                or TextCorrection.Unsupplied))
             {
                 throw new FormatException($"{slug} corrections: \"{row.Kind}\" at {row.Own} is not a kind of correction.");
             }
@@ -445,6 +451,20 @@ internal sealed class TextCorrections
     {
         var words = read.ToList();
         var origin = Enumerable.Range(1, read.Count).ToList();
+
+        foreach (var row in rows.Where(row => row.Kind == TextCorrection.Unsupplied))
+        {
+            var supplied = words.Count(word => word.SuppliedSpan is not null);
+            if (row.Before != supplied.ToString(CultureInfo.InvariantCulture))
+            {
+                throw Unmatched(row, $"the source marks {supplied} of its words supplied");
+            }
+
+            for (var at = 0; at < words.Count; at++)
+            {
+                words[at] = words[at] with { SuppliedSpan = null };
+            }
+        }
 
         // Word rows first, by the positions the reader gave, from the last so a drop moves nothing still to come.
         foreach (var row in rows

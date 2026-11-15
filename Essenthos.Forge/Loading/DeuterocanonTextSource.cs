@@ -411,14 +411,14 @@ internal static class DeuterocanonTextSource
             + "the Vatican text in Valpy's reprint of the Sixtine edition of 1587, and this is that translation, "
             + "divided verse for verse as the Greek is but in five chapters: four of Nehemiah, which the English "
             + "numbers as the English Bibles do and the Greek as the Hebrew, and 1 Samuel 17, into which eBible "
-            + "sets, as supplied words, the twenty verses the Vatican text lacks and Brenton translated from the "
-            + "Alexandrian codex in an appendix. It is the first "
+            + "sets the twenty verses the Vatican text lacks and Brenton translated from the Alexandrian codex in an "
+            + "appendix. It is the first "
             + "English of the Septuagint and for a century and a half the only one, and it translates the "
             + "Greek where the Greek differs from the Hebrew: Jeremiah in the Greek order, Esther and Daniel "
             + "with their additions, Kingdoms for Samuel and Kings. The Apocrypha was added in 1851, and there "
             + "Brenton adapted the Authorized Version rather than translating afresh; its preface says the third "
             + "and fourth books of Maccabees were translated for that edition. The words printed in italics "
-            + "as supplied — 9,070 spans — are marked as supplied here. The Psalms of Solomon are not in it.",
+            + "as supplied — 9,042 spans — are marked as supplied here. The Psalms of Solomon are not in it.",
         RightsNote =
             "Public domain: Brenton died in 1862, and eBible states it in its catalogue, on its copyright page "
             + "and in the copy of that page inside the archive (\"Published in 1851, and now in the Public "

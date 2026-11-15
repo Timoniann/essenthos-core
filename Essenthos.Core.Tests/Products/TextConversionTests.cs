@@ -184,6 +184,40 @@ public sealed class TextConversionTests : IDisposable
         convert.Should().Throw<InvalidOperationException>().WithMessage(why);
     }
 
+    /// <summary>Genesis 1:1-2 with "the" supplied in the first verse and the whole of the second set as supplied.</summary>
+    private static CataloguedText Marked() => new(Slug, ["Test/source.txt"], (_, _) => new TextSource(Definition,
+    [
+        new BookDraft(1, 1, "Genesis", "gen",
+        [
+            new ChapterDraft(1,
+            [
+                new VerseDraft(1, [new WordDraft("In", " "), new WordDraft("the", " ", SuppliedSpan: 1), new WordDraft("beginning.", string.Empty)]),
+                new VerseDraft(2, [new WordDraft("And", " ", SuppliedSpan: 1), new WordDraft("the", " ", SuppliedSpan: 1), new WordDraft("earth.", string.Empty, SuppliedSpan: 2)]),
+            ]),
+        ]),
+    ]));
+
+    [Fact]
+    public void AVerseTheSourceSetsAsSuppliedIsTheEditionsTextAndTheOthersKeepTheirMarks()
+    {
+        Corrections(new TextCorrection("1.1:2", TextCorrection.Unsupplied, "3", null, "translated from another manuscript"));
+        var store = new ProductStore(_resources);
+        TextConverter.Convert(store, Marked());
+
+        Words(store).Select(w => (w.Key.Own, w.Supplied)).Should()
+            .Equal(("1.1:1.1", null), ("1.1:1.2", 1), ("1.1:1.3", null), ("1.1:2.1", null), ("1.1:2.2", null), ("1.1:2.3", null));
+    }
+
+    [Fact]
+    public void AnUnsuppliedRowCountingOtherwiseThanTheSourceStopsTheConversion()
+    {
+        Corrections(new TextCorrection("1.1:2", TextCorrection.Unsupplied, "2", null, "test"));
+
+        var convert = () => TextConverter.Convert(new ProductStore(_resources), Marked());
+
+        convert.Should().Throw<InvalidOperationException>().WithMessage("*the source marks 3 of its words supplied*");
+    }
+
     /// <summary>1 Kings 17:19-23 as a module stores a block under three numbers: 17:20, 17:21 and 17:22 read alike.</summary>
     private static CataloguedText Stored(string third) => new(Slug, ["Test/source.txt"], (_, _) =>
     {
