@@ -3,7 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// The families among the people a chapter names, for trees drawn beside it.
@@ -55,97 +55,21 @@ internal static class ChapterFamily
     ], StringComparer.Ordinal);
 
     /// <summary>Descent over many generations, which a tree draws as the generations themselves.</summary>
-    private static readonly HashSet<string> LineageTypes = new(
+    internal static readonly HashSet<string> LineageTypes = new(
         ["ancestor-of", "descendant-of", "descendants-of"], StringComparer.Ordinal);
+
+    /// <summary>
+    /// God, by address. He is nobody's kin on a family tree: "his Son" in 1 Corinthians 1:9 and
+    /// Luke's "Adam, which was the son of God" are not descent, and a tree that read them so would
+    /// stand God the Father beside Joseph as Jesus's other parent.
+    /// </summary>
+    internal static readonly string[] Deities = ["yhvh", "yhvh-2", "holy-spirit"];
 
     /// <summary>Every tie a family tree draws: the reader's family section's four ranks, and nothing else.</summary>
     internal static readonly string[] Types = [.. ParentTypes, .. ChildTypes, .. SideTypes];
 
-    internal static async Task<ChapterFamilyResponse> Of(
-        AppDbContext db,
-        int book,
-        int chapter,
-        string? language,
-        CancellationToken cancellationToken,
-        string? prose = null)
-    {
-        var named = (await ContextEndpoints.Named(db, book, chapter, cancellationToken)).Keys.ToList();
-        var people = await db.Entities
-            .Where(e => named.Contains(e.Slug) && e.Kind == EntityKind.Person)
-            .Select(e => new { e.Id, e.Slug })
-            .ToListAsync(cancellationToken);
-        var chapterIds = people.Select(p => p.Id).ToHashSet();
-
-        var ties = new List<Tie>();
-        var reached = new HashSet<int>(chapterIds);
-        var ring = chapterIds.ToList();
-        for (var step = 0; step < 2 && ring.Count > 0; step++)
-        {
-            var rows = await db.EntityRelationships
-                .Where(r => Types.Contains(r.Type)
-                            && (ring.Contains(r.FromEntityId) || ring.Contains(r.ToEntityId))
-                            && r.FromEntityId != r.ToEntityId
-                            && !FamilyEndpoints.Deities.Contains(r.From!.Slug)
-                            && !FamilyEndpoints.Deities.Contains(r.To!.Slug))
-                .Select(r => new { r.FromEntityId, r.ToEntityId, r.Type })
-                .ToListAsync(cancellationToken);
-            var next = new List<int>();
-            foreach (var row in rows)
-            {
-                ties.Add(new Tie(row.FromEntityId, row.ToEntityId, Descent(row.Type)));
-                foreach (var id in (int[])[row.FromEntityId, row.ToEntityId])
-                {
-                    if (reached.Add(id))
-                    {
-                        next.Add(id);
-                    }
-                }
-            }
-
-            ring = next;
-        }
-
-        var trees = Trees(chapterIds, ties);
-        if (trees.Count == 0)
-        {
-            return new ChapterFamilyResponse([], []);
-        }
-
-        var members = trees.SelectMany(t => t.Named.Concat(t.Between)).Distinct().ToList();
-        var slugOf = await db.Entities
-            .Where(e => members.Contains(e.Id))
-            .Select(e => new { e.Id, e.Slug })
-            .ToDictionaryAsync(e => e.Id, e => e.Slug, cancellationToken);
-        var memberSlugs = slugOf.Values.ToHashSet(StringComparer.Ordinal);
-
-        // A member's family ties reach only the tree, so the tree draws exactly who is in it. Their
-        // other ties stay, because a king's crown on his card is read from them — all but the
-        // ancestors and descendants, which a tree never draws and a genealogy has hundreds of.
-        var family = await FamilyEndpoints.Family(db, [.. memberSlugs], language, cancellationToken, prose: prose);
-        var familyTypes = Types.ToHashSet(StringComparer.Ordinal);
-        var shown = family.People
-            .Select(p => p with
-            {
-                Ties =
-                [
-                    .. p.Ties.Where(t => familyTypes.Contains(t.Type)
-                        ? memberSlugs.Contains(t.Slug)
-                        : !LineageTypes.Contains(t.Type)),
-                ],
-            })
-            .ToList();
-
-        return new ChapterFamilyResponse(
-            shown,
-            [
-                .. trees.Select(t => new ChapterTreeResponse(
-                    [.. t.Named.Select(id => slugOf[id]).Order(StringComparer.Ordinal)],
-                    [.. t.Between.Select(id => slugOf[id]).Order(StringComparer.Ordinal)])),
-            ]);
-    }
-
     /// <summary>Which way a tie runs down the generations: 1 where the first person is the parent, −1 the child, 0 neither.</summary>
-    private static int Descent(string type) =>
+    internal static int Descent(string type) =>
         ChildTypes.Contains(type) ? 1 : ParentTypes.Contains(type) ? -1 : 0;
 
     /// <param name="Descent">1 where <paramref name="A"/> is the parent of <paramref name="B"/>, −1 where the child, 0 for a spouse or a sibling.</param>
@@ -363,11 +287,3 @@ internal static class ChapterFamily
         }
     }
 }
-
-/// <param name="People">Everyone in any of the trees, as the family tree page draws them; their family ties reach only the trees.</param>
-/// <param name="Trees">The trees, the largest first.</param>
-internal sealed record ChapterFamilyResponse(IList<FamilyMemberResponse> People, IList<ChapterTreeResponse> Trees);
-
-/// <param name="Named">The people of the chapter in this tree, by slug.</param>
-/// <param name="Between">The people the tree needs to join them whom the chapter does not name.</param>
-internal sealed record ChapterTreeResponse(IList<string> Named, IList<string> Between);

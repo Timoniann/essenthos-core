@@ -1,6 +1,6 @@
 using Essenthos.Core.Database.Entities;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// What a clause says of a woman, where the language says it of her in the feminine: Sarah is

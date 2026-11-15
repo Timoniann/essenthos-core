@@ -187,6 +187,34 @@ internal static partial class RecordFiles
             ["entity_relationship"],
             About: "Derived from records/facts/clauses and the things' relations; edit the clause, never this file."),
 
+        new(FamilyGraph.TiesProduct, ProductKind.Machine,
+            "from_slug relation to_slug ref:ref? component:int",
+            """
+            SELECT f.slug, t.type, o.slug, CASE WHEN t.canonical_book IS NULL THEN NULL ELSE ARRAY[t.canonical_book, t.canonical_chapter, t.canonical_verse] END,
+                   t.component
+            FROM family_tie t JOIN entity f ON f.id = t.from_entity_id JOIN entity o ON o.id = t.to_entity_id
+            ORDER BY 1, 2, 3
+            """,
+            """
+            INSERT INTO family_tie (from_entity_id, type, to_entity_id, canonical_book, canonical_chapter, canonical_verse, component)
+            SELECT f.id, s.relation, t.id, s.ref[1], s.ref[2], s.ref[3], s.component
+            FROM s JOIN entity f ON f.slug = s.from_slug JOIN entity t ON t.slug = s.to_slug ORDER BY s.from_slug, s.relation, s.to_slug
+            """,
+            ["family_tie"],
+            About: "Derived from records/facts/relationships: every family tie a tree draws and the connected family it is in; never edited."),
+
+        new(FamilyGraph.MembersProduct, ProductKind.Machine,
+            "slug component:int",
+            """
+            SELECT e.slug, m.component FROM family_member m JOIN entity e ON e.id = m.entity_id ORDER BY 1
+            """,
+            """
+            INSERT INTO family_member (entity_id, slug, component, sex)
+            SELECT e.id, s.slug, s.component, e.sex FROM s JOIN entity e ON e.slug = s.slug ORDER BY s.slug
+            """,
+            ["family_member"],
+            About: "Derived from records/facts/relationships and records/records: every person and the connected family they are in; never edited."),
+
         new("records/facts/kin-statements", ProductKind.Hand,
             "slug kind ref:ref ordinal:int? family? sons:int? daughters:int? children:int? grandsons:int? more_sons:bool more_daughters:bool parent? citation? witness? original? method confidence? by note?",
             $"""

@@ -4,7 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>An entity beside its name in the language asked for, so the database can order and file by it.</summary>
 internal sealed class LocalisedEntity

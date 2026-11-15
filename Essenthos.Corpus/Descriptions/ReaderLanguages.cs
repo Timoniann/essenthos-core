@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// The two languages a reader's page is in. The text the reader chose names the people and places —

@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
 using System.Security.Cryptography;
 using Essenthos.Core.Configuration;
@@ -30,6 +30,7 @@ internal static class RecordProducers
     [
         RecordKinds.Write(from, into),
         Relationships(from, into),
+        .. Families(from, into),
         .. Locations(from, into, openBible),
         .. Images(from, into),
         Wikipedia(from, into),
@@ -264,6 +265,26 @@ internal static class RecordProducers
                 header.Notes.Add(new("held", readHeld.ToString(CultureInfo.InvariantCulture)));
             });
         return (file.Product, written);
+    }
+
+    /// <summary>
+    /// The family ties a tree draws and the connected families they make (<see cref="FamilyGraph"/>), from the relationships
+    /// this run has just written and the records' kinds: <c>records/derived/family-ties</c> and <c>records/derived/family-members</c>.
+    /// </summary>
+    public static IEnumerable<(string Product, long Rows)> Families(ProductStore from, ProductStore into)
+    {
+        var relationships = Read(into, "records/facts/relationships")
+            .Select(r => new FamilyGraph.Relationship(r[0]!, r[1]!, r[2]!, r[3] is { } key && VerseKey.Parse(key) is var verse ? (verse.Book, verse.Chapter, verse.Verse) : null));
+        var persons = Read(from, "records/records").Where(r => r[1] == "person").Select(r => r[0]!);
+        var graph = FamilyGraph.Of(relationships, persons);
+        var inputs = from.Inputs([.. Paths(into, "records/facts/relationships"), .. Paths(from, "records/records")]);
+        var ties = Write(into, File(FamilyGraph.TiesProduct),
+            graph.Ties.Select(t => new string?[] { t.From, t.Relation, t.To, t.Verse is { } verse ? new VerseKey(verse.Book, verse.Chapter, verse.Verse).ToString() : null, Integer(t.Component) }),
+            Producer + " families", inputs);
+        var members = Write(into, File(FamilyGraph.MembersProduct),
+            graph.Members.Select(m => new string?[] { m.Slug, Integer(m.Component) }),
+            Producer + " families", inputs);
+        return [(FamilyGraph.TiesProduct, ties), (FamilyGraph.MembersProduct, members)];
     }
 
     /// <summary>

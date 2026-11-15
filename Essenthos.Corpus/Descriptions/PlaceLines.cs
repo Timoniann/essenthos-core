@@ -4,7 +4,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// Where a place is, as its own line says it: by the land it lies in, or by a neighbour better known

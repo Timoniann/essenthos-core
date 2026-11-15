@@ -2,7 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// The line under a record's name in a reader's language, where this corpus wrote the line and has

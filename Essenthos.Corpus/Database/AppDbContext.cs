@@ -367,6 +367,21 @@ public class AppDbContext : DbContext
     /// <summary>Each text's side of the parallel view for one canonical chapter, written ahead of time.</summary>
     public DbSet<Pane> Panes { get; set; } = null!;
 
+    /// <summary>Every family tie a tree draws, with the connected family it is in.</summary>
+    public DbSet<FamilyTie> FamilyTies { get; set; } = null!;
+
+    /// <summary>Every person and the connected family they are in.</summary>
+    public DbSet<FamilyMember> FamilyMembers { get; set; } = null!;
+
+    /// <summary>What each record is called in each language of names, made at build.</summary>
+    public DbSet<RecordName> RecordNames { get; set; } = null!;
+
+    /// <summary>The line under each record's name in each pair of languages, chosen at build.</summary>
+    public DbSet<RecordLine> RecordLines { get; set; } = null!;
+
+    /// <summary>Each connected family as one document per pair of languages, made at build.</summary>
+    public DbSet<FamilyComponent> FamilyComponents { get; set; } = null!;
+
     /// <summary>How often each text prints each form for each record under each Strong number, counted ahead of time.</summary>
     public DbSet<RecordSpelling> RecordSpellings { get; set; } = null!;
 
@@ -1792,6 +1807,49 @@ public class AppDbContext : DbContext
                 "Each text's side of the parallel view for one canonical chapter: the words with what the reader shows on "
                 + "them, the verses and notes, the records named, as gzip-compressed JSON the API sends as it is. Derived "
                 + "from the served tables by the build's pane producer (build/products, panes/{text})."));
+        });
+
+        modelBuilder.Entity<FamilyTie>(entity =>
+        {
+            entity.HasOne(t => t.From).WithMany().HasForeignKey(t => t.FromEntityId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(t => t.To).WithMany().HasForeignKey(t => t.ToEntityId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(t => t.ToEntityId);
+            entity.HasIndex(t => t.Component);
+            entity.ToTable("family_tie", t => t.HasComment(
+                "Every family tie a tree draws (parent, spouse, brother or sister, as entity_relationship holds it, no deity), "
+                + "with the connected family it is in. Loaded from records/derived/family-ties."));
+        });
+
+        modelBuilder.Entity<FamilyMember>(entity =>
+        {
+            entity.HasOne(m => m.Entity).WithMany().HasForeignKey(m => m.EntityId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(m => m.Slug).IsUnique();
+            entity.HasIndex(m => m.Component);
+            entity.ToTable("family_member", t => t.HasComment(
+                "Every person and the connected family of family_tie they are in; somebody with no tie is a family of one. "
+                + "Loaded from records/derived/family-ties."));
+        });
+
+        modelBuilder.Entity<RecordName>(entity =>
+        {
+            entity.ToTable("record_name", t => t.HasComment(
+                "What each record is called in one language of names, as a card shows it: the heading, the local name, the "
+                + "source's line, the sex, the name it is also called. Records by slug. Made by the serving build (record-cards/{prose})."));
+        });
+
+        modelBuilder.Entity<RecordLine>(entity =>
+        {
+            entity.ToTable("record_line", t => t.HasComment(
+                "The one plain line under a record's name for a language of words and a language of names, as the reader "
+                + "chooses it, with the two it was chosen from. Records by slug. Made by the serving build (record-cards/{prose})."));
+        });
+
+        modelBuilder.Entity<FamilyComponent>(entity =>
+        {
+            entity.Property(c => c.Body).UseCompressionMethod("lz4");
+            entity.ToTable("family_component", t => t.HasComment(
+                "Each connected family of family_member as the JSON document a tree is drawn from, per pair of languages, "
+                + "sent as it is. Made by the serving build (family-components/{prose})."));
         });
 
         modelBuilder.Entity<RecordSpelling>(entity =>

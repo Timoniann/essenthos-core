@@ -2,7 +2,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// Which marriage a brother- or sister-in-law is one through, where the line can tell.

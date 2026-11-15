@@ -2,7 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>
 /// What a person's line says of their work and of what the text calls them: <em>physician</em> for

@@ -196,7 +196,7 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
 
         await _db.SaveChangesAsync();
 
-        var family = await ChapterFamily.Of(_db, Genesis, 10, null, default);
+        var family = await ChapterFamilies.Of(_db, Genesis, 10, null, default);
 
         family.Trees.Should().ContainSingle();
         family.Trees[0].Named.Should().Equal("gomer", "noah");
@@ -229,7 +229,7 @@ public sealed class ChapterFamilyEndpointTests : IDisposable
         NamedAt(simon, 13, 55);
         await _db.SaveChangesAsync();
 
-        var family = await ChapterFamily.Of(_db, Genesis, 13, null, default);
+        var family = await ChapterFamilies.Of(_db, Genesis, 13, null, default);
 
         family.Trees.Should().ContainSingle();
         family.Trees[0].Between.Should().Equal("mary");

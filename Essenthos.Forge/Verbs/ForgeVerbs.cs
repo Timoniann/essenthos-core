@@ -42,6 +42,11 @@ internal static partial class ForgeVerbs
             + "King James verse (record_position, record-positions/KJV), for the texts named or every text whose inputs moved. Never "
             + "writes the live corpus or the snapshot.",
             RecordWordsVerb),
+        new("families", "[--force]",
+            "Compose every record's card (record_name, record_line, record-cards/<prose>) and every family's document (family_component, "
+            + "family-components/<prose>) from the configured database where their inputs moved (all with --force), copying them from the "
+            + "products where not. Never writes the live corpus or the snapshot.",
+            FamiliesVerb, Most: 1),
         new("tables", "[<table,...>] [--from <Resources>] [--force]",
             "Write the served tables made whole from files (the lexicon, text relations, ...) as tables/<table>, each only when its sources moved. Reads no database.",
             TablesVerb),

@@ -5,7 +5,7 @@ using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Descriptions;
 
 /// <summary>The name a renamed person is headed with, and the name the record was headed with before.</summary>
 /// <param name="Name">The name most verses call the person by, as the dataset labels it: <em>Paul</em>.</param>

@@ -364,6 +364,16 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary><c>families [--force]</c>: the records' cards and the families' documents of the configured database.</summary>
+    private static async Task<int> FamiliesVerb(ForgeRun forge, string[] args)
+    {
+        ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
+        var outcome = await new FamilyBuild(forge.DatabaseConnection, new ProductStore(forge.Resources), forge.Scope().ServiceProvider, forge.Logger)
+            .Run(args.Contains("--force"), CancellationToken.None);
+        Console.WriteLine($"{outcome.Made} products made, {outcome.Rows} rows written, largest document {outcome.Largest}, in {outcome.Elapsed.TotalSeconds:0.0} s");
+        return 0;
+    }
+
     /// <summary>
     /// <c>record-words [&lt;text,...&gt;] [--force]</c>: what a record page reads of the words of the configured database (the
     /// spellings of every text, the positions in the King James), for the texts whose inputs moved (every text named with
