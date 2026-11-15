@@ -139,6 +139,14 @@ internal sealed class EvidentiaRunner(
             throw new InvalidOperationException($"Run {parentRunId} was asked to repeat no verses; name at least one.");
         }
 
+        if (!StatesItsRules(parent.Configuration))
+        {
+            throw new InvalidOperationException(
+                $"Run {parentRunId} was stored before a run recorded its rule flags (--verse-map, --rendering-families, " +
+                "--function-words, --definite-nouns), so repeating it from what it stored could leave out rules it ran with. " +
+                "Draw the verses again with evidentia-run, naming the flags it was run with.");
+        }
+
         var books = verses
             .GroupBy(verse => (verse.Book, verse.Chapter))
             .OrderBy(group => group.Key)
@@ -518,7 +526,7 @@ internal sealed class EvidentiaRunner(
     /// behind each signal. The thresholds are copied out of <see cref="EvidentiaDefaults"/> rather
     /// than named by version, because a version names a build and a build can be dirty.
     /// </summary>
-    private static JsonDocument Configuration(
+    internal static JsonDocument Configuration(
         EvidentiaMeasurementOptions options,
         SortedDictionary<string, SortedSet<string>> evidenceSources) =>
         JsonSerializer.SerializeToDocument(new Dictionary<string, object?>
@@ -536,6 +544,16 @@ internal sealed class EvidentiaRunner(
             ["pivotTexts"] = options.PivotTexts,
             ["pivotPolicy"] = options.PivotPolicy.ToString(),
             ["combiner"] = options.Combiner?.Description,
+            // The rules behind flags and the inputs read from files decide words as much as the evidence does, so a run
+            // that does not name them cannot be drawn again from what it stored (PRB-1684).
+            ["definiteNouns"] = options.DefiniteNouns,
+            ["verseMap"] = options.VerseMap,
+            ["renderingFamilies"] = options.RenderingFamilies,
+            ["functionWords"] = options.FunctionWords,
+            ["learnAcrossLanguages"] = options.LearnAcrossLanguages,
+            ["sourceFromFiles"] = options.SourceFromFiles,
+            ["entityNamesFrom"] = options.EntityNamesFrom,
+            ["alignerPairFiles"] = options.AlignerPairFiles,
             ["defaults"] = typeof(EvidentiaDefaults)
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(field => field.IsLiteral)
@@ -550,6 +568,9 @@ internal sealed class EvidentiaRunner(
         var methods = root.TryGetProperty("learnedRenderingMethods", out var stored)
                       && stored.ValueKind == JsonValueKind.Array
             ? stored.EnumerateArray().Select(method => EnumSpelling.ToLinkMethod(method.GetString()!)).ToList()
+            : null;
+        var alignerPairFiles = root.TryGetProperty("alignerPairFiles", out var pairFiles) && pairFiles.ValueKind == JsonValueKind.Array
+            ? pairFiles.EnumerateArray().Select(file => file.GetString()!).ToList()
             : null;
         return new EvidentiaMeasurementOptions(
             AllowSourceStrongEvidence: root.GetProperty("allowSourceStrongEvidence").GetBoolean(),
@@ -575,8 +596,30 @@ internal sealed class EvidentiaRunner(
             PivotPolicy: root.TryGetProperty("pivotPolicy", out var pivotPolicy) && pivotPolicy.ValueKind == JsonValueKind.String
                 ? Enum.Parse<EvidentiaPivotPolicy>(pivotPolicy.GetString()!)
                 : EvidentiaPivotPolicy.None,
-            Combiner: Combiner(root));
+            Combiner: Combiner(root),
+            DefiniteNouns: Flag(root, "definiteNouns"),
+            VerseMap: Flag(root, "verseMap"),
+            RenderingFamilies: Flag(root, "renderingFamilies"),
+            FunctionWords: Flag(root, "functionWords"),
+            LearnAcrossLanguages: Flag(root, "learnAcrossLanguages"),
+            SourceFromFiles: Flag(root, "sourceFromFiles"),
+            EntityNamesFrom: root.TryGetProperty("entityNamesFrom", out var entityNames) && entityNames.ValueKind == JsonValueKind.String
+                ? entityNames.GetString()
+                : null,
+            AlignerPairs: alignerPairFiles is null ? null : EvidentiaAlignerPairs.Read(alignerPairFiles),
+            AlignerPairFiles: alignerPairFiles);
     }
+
+    /// <summary>Whether a stored configuration names its rule flags, as every run stored since PRB-1684 does.</summary>
+    internal static bool StatesItsRules(JsonDocument configuration) =>
+        configuration.RootElement.TryGetProperty("functionWords", out _);
+
+    /// <summary>
+    /// A rule flag of a stored run. A run stored before PRB-1684 names none of them and reads as if each were off, which
+    /// is not always what it ran with: runs 27-34 ran with --verse-map, --rendering-families and --function-words.
+    /// </summary>
+    private static bool Flag(JsonElement root, string name) =>
+        root.TryGetProperty(name, out var flag) && flag.ValueKind == JsonValueKind.True;
 
     /// <summary>
     /// The combiner a stored run decided by. Only the weights this build carries can repeat it, so a run fitted
