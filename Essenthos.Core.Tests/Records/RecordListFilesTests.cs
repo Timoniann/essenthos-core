@@ -72,7 +72,7 @@ public sealed class RecordListFilesTests : IDisposable
 
         rows.Select(r => new WithdrawnRecord(r[0]!, RecordFiles.SourceIdFrom(r[1]!, r[2]!), r[3]!, r[4], r[5], r[6]))
             .Should().BeEquivalentTo(WithdrawnRecordLoader.Read());
-        rows.Should().Contain(r => r[1] == "openbible" && r[2] == "af0ee3a" && r[6] == "gibbar").And.Contain(r => r[1] == "essenthos");
+        rows.Should().Contain(r => r[1] == "openbible" && r[2] == "af0ee3a" && r[6] == "gibeon").And.Contain(r => r[1] == "essenthos");
     }
 
     [Fact]
