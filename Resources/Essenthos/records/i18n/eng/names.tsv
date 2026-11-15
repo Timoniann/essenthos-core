@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-10
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 slug	n	meaning
 aarons-rod	1	NUM 17:10
 aarons-rod	2	HEB 9:4
@@ -651,8 +651,8 @@ darius	1	he who upholds the good
 darius	2	king [of] Persia
 darius	3	Darius King
 darius	4	king [of] Assyria
-darius	5	Darius the Persian
 darius-2	1	he who upholds the good
+darius-3	2	Darius the Persian
 darkon	1	[perhaps] rough or stern
 dathan	1	strong
 daughter	1	my daughter
