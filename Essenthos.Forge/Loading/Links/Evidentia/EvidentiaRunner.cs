@@ -550,6 +550,8 @@ internal sealed class EvidentiaRunner(
             ["verseMap"] = options.VerseMap,
             ["renderingFamilies"] = options.RenderingFamilies,
             ["functionWords"] = options.FunctionWords,
+            ["withoutDictionary"] = options.WithoutDictionary,
+            ["gateTranslatedDictionary"] = options.GateTranslatedDictionary,
             ["learnAcrossLanguages"] = options.LearnAcrossLanguages,
             ["sourceFromFiles"] = options.SourceFromFiles,
             ["entityNamesFrom"] = options.EntityNamesFrom,
@@ -601,6 +603,8 @@ internal sealed class EvidentiaRunner(
             VerseMap: Flag(root, "verseMap"),
             RenderingFamilies: Flag(root, "renderingFamilies"),
             FunctionWords: Flag(root, "functionWords"),
+            WithoutDictionary: Flag(root, "withoutDictionary"),
+            GateTranslatedDictionary: Flag(root, "gateTranslatedDictionary"),
             LearnAcrossLanguages: Flag(root, "learnAcrossLanguages"),
             SourceFromFiles: Flag(root, "sourceFromFiles"),
             EntityNamesFrom: root.TryGetProperty("entityNamesFrom", out var entityNames) && entityNames.ValueKind == JsonValueKind.String

@@ -182,7 +182,8 @@ public class EvidentiaPipelineTests
         var options = new EvidentiaMeasurementOptions(
             AllowSourceStrongEvidence: false, LearnRenderingsFrom: "KJV,BSB",
             VerseMap: true, RenderingFamilies: true, FunctionWords: true, DefiniteNouns: true,
-            LearnAcrossLanguages: true, SourceFromFiles: true, EntityNamesFrom: "names/words.tsv");
+            LearnAcrossLanguages: true, SourceFromFiles: true, EntityNamesFrom: "names/words.tsv",
+            GateTranslatedDictionary: true);
         var configuration = EvidentiaRunner.Configuration(options, new SortedDictionary<string, SortedSet<string>>());
 
         var read = EvidentiaRunner.Options(configuration);
@@ -192,7 +193,7 @@ public class EvidentiaPipelineTests
         {
             VerseMap = true, RenderingFamilies = true, FunctionWords = true, DefiniteNouns = true,
             LearnAcrossLanguages = true, SourceFromFiles = true, EntityNamesFrom = "names/words.tsv",
-            AlignerPairFiles = (IReadOnlyList<string>?)null,
+            AlignerPairFiles = (IReadOnlyList<string>?)null, GateTranslatedDictionary = true, WithoutDictionary = false,
         });
         EvidentiaRunner.StatesItsRules(JsonDocument.Parse("""{ "allowSourceStrongEvidence": false, "allowKnownRenderingEvidence": true }"""))
             .Should().BeFalse("a run stored before PRB-1684 does not say which rules it ran with");
@@ -307,6 +308,59 @@ public class EvidentiaPipelineTests
         preview.Candidates.Should().ContainSingle();
         preview.Candidates.Single().Evidence.Should().Contain(evidence =>
             evidence.Kind == EvidentiaEvidenceKind.TargetGloss);
+    }
+
+    [Theory]
+    [InlineData("strong-entry-translation:deu", true)]
+    [InlineData("strong-entry:eng", false)]
+    public void ATranslatedSenseIsReadOnlyForAWordWithNoLearnedRenderingInItsVerse(string lexicon, bool gated)
+    {
+        // PRB-1705: Gott has a learned rendering on θεός, so the German lexicon's senses (θεός, κύριος) are not read for it;
+        // Wort has none, so its sense stays. The English lexicon is never gated.
+        var senses = new Senses(lexicon, ("Gott", "G2316"), ("Gott", "G2962"), ("Wort", "G3056"));
+        var language = lexicon.EndsWith("deu", StringComparison.Ordinal) ? "deu" : "eng";
+        var request = new EvidentiaRequest(
+            [Noun(1, "Gott", language, 1), Noun(2, "Wort", language, 2)],
+            [Greek(11, "θεός", "G2316", 1), Greek(12, "κύριος", "G2962", 2), Greek(13, "λόγος", "G3056", 3)]);
+
+        var plain = Pipeline(senses).Preview(request).Candidates;
+        var read = Pipeline(senses).Preview(request with { GateTranslatedDictionary = true }).Candidates;
+
+        plain.Should().HaveCount(3);
+        if (!gated)
+        {
+            read.Should().BeEquivalentTo(plain, options => options.WithStrictOrdering());
+            return;
+        }
+
+        read.Select(candidate => (candidate.Source.Token.Id, candidate.Target.Token.Id)).Should().BeEquivalentTo([(1L, 11L), (2L, 13L)]);
+        read.Single(candidate => candidate.Source.Token.Id == 1).Evidence.Select(evidence => evidence.Kind)
+            .Should().Contain(EvidentiaEvidenceKind.KnownRendering).And.NotContain(EvidentiaEvidenceKind.DictionarySense);
+        read.Single(candidate => candidate.Source.Token.Id == 2).Evidence.Select(evidence => evidence.Kind)
+            .Should().Contain(EvidentiaEvidenceKind.DictionarySense);
+    }
+
+    private static EvidentiaToken Noun(long id, string text, string language, int position) =>
+        new(id, new EvidentiaAddress(45, 1, 1), position, text, language, Lemma: text.ToLowerInvariant(), PartOfSpeech: "NOUN");
+
+    private static EvidentiaToken Greek(long id, string text, string strong, int position) =>
+        new(id, new EvidentiaAddress(45, 1, 1), position, text, "grc", StrongNumber: strong, PartOfSpeech: "noun");
+
+    /// <summary>A learned rendering of Gott on G2316, and a lexicon whose definitions name the given words under the given numbers.</summary>
+    private sealed class Senses(string lexicon, params (string Word, string Strong)[] senses) : IEvidentiaEvidenceSource
+    {
+        public IEnumerable<EvidentiaEvidence> Find(EvidentiaAnalysis source, EvidentiaAnalysis target)
+        {
+            if (source.Token.Surface == "Gott" && target.Token.StrongNumber == "G2316")
+            {
+                yield return new EvidentiaEvidence(EvidentiaEvidenceKind.KnownRendering, 0.6, "learned");
+            }
+
+            if (senses.Contains((source.Token.Surface, target.Token.StrongNumber!)))
+            {
+                yield return new EvidentiaEvidence(EvidentiaEvidenceKind.DictionarySense, 0.34, $"{lexicon}; key={source.Token.Surface}");
+            }
+        }
     }
 
     /// <summary>The pipeline with every language pack the Forge registers.</summary>

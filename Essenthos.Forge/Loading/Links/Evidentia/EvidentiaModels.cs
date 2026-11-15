@@ -329,7 +329,8 @@ internal sealed record EvidentiaRequest(
     IReadOnlyList<EvidentiaToken> Target,
     int NeighbourVerseDistance = EvidentiaDefaults.NeighbourVerseDistance,
     double MinimumContentCoverage = EvidentiaDefaults.MinimumContentCoverage,
-    bool AllowSourceStrongEvidence = true);
+    bool AllowSourceStrongEvidence = true,
+    bool GateTranslatedDictionary = false);
 
 internal sealed record EvidentiaPreview(
     EvidentiaPreviewStatus Status,

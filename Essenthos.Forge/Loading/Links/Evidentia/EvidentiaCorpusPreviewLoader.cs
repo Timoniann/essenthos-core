@@ -97,7 +97,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             window = [.. window.Select(Mapped)];
         }
 
-        var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
+        var dictionaryEvidence = options.WithoutDictionary ? null : await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(window);
         var knownRenderingEvidence = options.AllowKnownRenderingEvidence
             ? await knownRenderingIndex.For(
@@ -114,7 +114,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     group.ToList(),
                     Near(window, group, options.NeighbourVerseDistance),
                     options.NeighbourVerseDistance,
-                    AllowSourceStrongEvidence: options.AllowSourceStrongEvidence),
+                    AllowSourceStrongEvidence: options.AllowSourceStrongEvidence,
+                    GateTranslatedDictionary: options.GateTranslatedDictionary),
                 Evidence(dictionaryEvidence, knownRenderingEvidence, targetGlossEvidence)))
             .ToList();
 
@@ -1845,6 +1846,10 @@ internal sealed record EvidentiaChapterMeasurement(
 /// The score --pairs files <paramref name="AlignerPairs"/> was read from, kept so a stored run names them and a rerun reads
 /// them again.
 /// </param>
+/// <param name="WithoutDictionary">Read no Strong lexicon at all, English or translated: an ablation, for measuring.</param>
+/// <param name="GateTranslatedDictionary">
+/// Read a translated Strong lexicon only for the words that have no learned rendering in their own verse (PRB-1705).
+/// </param>
 /// <param name="Decisions">
 /// Handed each chapter's candidates and proposals as the measurement made them, so a stored run
 /// keeps exactly what was scored rather than a second selection that could drift from it.
@@ -1882,7 +1887,9 @@ internal sealed record EvidentiaMeasurementOptions(
     bool VerseMap = false,
     bool RenderingFamilies = false,
     bool FunctionWords = false,
-    IReadOnlyList<string>? AlignerPairFiles = null);
+    IReadOnlyList<string>? AlignerPairFiles = null,
+    bool WithoutDictionary = false,
+    bool GateTranslatedDictionary = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.
