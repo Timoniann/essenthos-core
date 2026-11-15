@@ -26632,6 +26632,25 @@
    ]
   },
   {
+   "person": "aaron",
+   "occupation": "prophet",
+   "source": "read from BHSA 2021 and the Berean Standard Bible by an agent (claude-opus-5-5) on the project owner's word of 2026-11-16 (TSK-1419) that Aaron is called a prophet at Exodus 7:1",
+   "witnesses": [
+    {
+     "kind": "profession",
+     "text": "BHSA",
+     "reference": "EXO 7:1",
+     "quote": "וְאַהֲרֹ֥ן אָחִ֖יךָ יִהְיֶ֥ה נְבִיאֶֽךָ"
+    },
+    {
+     "kind": "profession",
+     "text": "BSB",
+     "reference": "EXO 7:1",
+     "quote": "your brother Aaron will be your prophet"
+    }
+   ]
+  },
+  {
    "person": "abram",
    "occupation": "prophet",
    "source": "read from Scripture by Claude Sonnet 5.5 and checked by it (TSK-1250), each reading reviewed against the Hebrew, Greek and English by Codex (TSK-1251, TSK-1254), 2026-10-27",
