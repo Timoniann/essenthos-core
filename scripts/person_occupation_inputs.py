@@ -41,7 +41,10 @@ BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;
 SELECT json_build_object('type','snapshot','at',transaction_timestamp(),'database',current_database());
 SET statement_timeout = '90s';
 SELECT json_build_object('type','entity','slug',e.slug,'kind',e.kind,'name',e.name,
- 'distinguisher',e.distinguisher,'sex',e.sex,'sourceId',e.source_id,'source',e.source,
+ 'distinguisher',e.distinguisher,'sex',e.sex,'sourceId',(SELECT x.external_id FROM record_external_id x WHERE x.entity_id=e.id AND x.dataset='bibledata'
+  AND x.relation='same-as' ORDER BY x.external_id LIMIT 1),
+ 'source',(SELECT string_agg(DISTINCT x.dataset,',' ORDER BY x.dataset) FROM record_external_id x
+  WHERE x.entity_id=e.id AND x.relation='same-as'),
  'subtype',e.subtype,'aliasOf',a.slug)
  FROM entity e LEFT JOIN entity a ON a.id=e.another_name_for_entity_id
  WHERE e.kind IN ('person','title') ORDER BY e.slug;
