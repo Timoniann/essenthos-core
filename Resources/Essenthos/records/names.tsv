@@ -99,9 +99,6 @@ abishag	1	Abishag	proper name	אֲבִישַׁג	aviyshag	Αβισακ	Abisak	H49
 abishai	1	Abishai	proper name	אֲבִישַׁ֨י	aviyshay	Αβεσσα	Abessa	H52	\N	\N	\N
 abishai	2	Abshai	proper name	אַבְשַׁ֛י	abəshai	Αβεσσα	Abessa	H52	\N	\N	\N
 abishai	3	Ishmaiah	proper name	יִשְׁמַעְיָה	yishəmaəyah	Σαμαιας	Samaias	H3460	\N	\N	\N
-abishalom	1	Abishalom	proper name	אֲבִישָׁלוֹם	aviyshalom	Αβεσσαλωμ	Abessalōm	H53	\N	\N	\N
-abishalom	2	Absalom	proper name	אַבְשָׁלוֹם	avəsalom	Αβεσσαλωμ	Abessalōm	H53	\N	\N	\N
-abishalom	3	Uriel	proper name	אוּרִיאֵל	uriyel	Ουριηλ	Ouriēl	H222	\N	\N	\N
 abishua	1	Abishua	proper name	אֲבִישׁוּעַ	aviyshua	Αβισου	Abisou	H50	\N	\N	\N
 abishua-2	1	Abishua	proper name	אֲבִישׁוּעַ	aviyshua	Αβισουε	Abisoue	H50	\N	\N	\N
 abishur	1	Abishur	proper name	אֲבִישׁוּר	aviyshur	Αβισουρ	Abisour	H51	\N	\N	\N
@@ -116,6 +113,7 @@ abram	5	Abraham our father	title	אַבְרָהָם אָבִינוּ	avəraham a
 abram	6	friend of G-d	title	אוֹהֵב אֱלֹהִים	ohev elohiym	φίλος θεοῦ	phílos theou͂	H430	G5384,G2316	\N	\N
 abronah	1	Ebronah	name	\N	\N	\N	\N	H5684	\N	\N	\N
 absalom	1	Absalom	proper name	אַבְשָׁלוֹם	avəsalom	Αβεσσαλωμ	Abessalōm	H53	\N	\N	\N
+absalom	2	Abishalom	proper name	אֲבִישָׁלוֹם	aviyshalom	Αβεσσαλωμ	Abessalōm	H53	\N	\N	\N
 accad	1	Accad	proper name	אַכַּד	akad	Αρχαδ	Arxad	H390	\N	\N	\N
 accad	2	Akkad	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 acco	1	Akko	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
@@ -2066,7 +2064,6 @@ eshtemoa-2	1	Eshtemoa	proper name	אֶשְׁתְּמֹעַ	eshətəmoa	Εσθεμ�
 eshtemoa-3	1	Eshtemoa	name	\N	\N	\N	\N	H851	\N	\N	\N
 eshtemoa-3	2	Eshtemoh	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 eshton	1	Eshton	proper name	אֶשְׁתּוֹן	eshəton	Ασσαθων	Assathōn	H850	\N	\N	\N
-etam	1	Etam	proper name	עֵיטָם	eytam	Αιταμ	Aitam	H5862	\N	\N	\N
 etam-2	1	Etam	name	\N	\N	\N	\N	H5862	\N	\N	\N
 etam-3	1	Etam	name	\N	\N	\N	\N	H5862	\N	\N	\N
 etam-4	1	Etam	name	\N	\N	\N	\N	H5862	\N	\N	\N
@@ -2337,8 +2334,6 @@ gezer	2	Gazer	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, gith
 gezrites	1	Gezrites	gentilic	\N	\N	\N	\N	H1511	\N	\N	\N
 giah	1	Giah	name	\N	\N	\N	\N	H1520	\N	\N	\N
 giant	1	Giant	title	\N	\N	\N	\N	\N	\N	\N	\N
-gibbar	1	Gibbar	proper name	גִּבָּר	gibar	Γαβερ	Gaber	H1402	\N	\N	\N
-gibbar	2	Gibeon	proper name	גִבְעוֹן	givəon	Γαβαων	Gabaōn	H1391	\N	\N	\N
 gibbethon	1	Gibbethon	name	\N	\N	\N	\N	H1405	\N	\N	\N
 gibea	1	Gibea	proper name	גִּבְעָא	givəa	Γαιβαα	Gaibaa	H1388	\N	\N	\N
 gibeah	1	Geba	name	\N	\N	\N	\N	H1387	\N	\N	\N
@@ -2361,6 +2356,7 @@ gibeathhaaraloth	2	Hill of the Foreskins	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible
 gibeathites	1	Gibeathites	gentilic	\N	\N	\N	\N	H1395	\N	\N	\N
 gibeon	1	Gibeon	name	\N	\N	\N	\N	H1391	\N	\N	\N
 gibeon	2	Wilderness of Gibeon	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
+gibeon	3	Gibbar	name	גִּבָּר	gibar	Γαβερ	Gaber	H1402	\N	\N	\N
 gibeonites	1	Gibeonites	gentilic	\N	\N	\N	\N	H1393	\N	\N	\N
 giblites	1	Giblites	gentilic	\N	\N	\N	\N	H1382	\N	\N	\N
 giddalti	1	Giddalti	proper name	גִּדַּלְתִּי	gidalətiy	Γοδολλαθι	Godollathi	H1437	\N	\N	\N
@@ -4272,7 +4268,6 @@ madmannah-2	1	Madmannah	name	\N	\N	\N	\N	H4089	\N	\N	\N
 madmen	1	Madmen	name	\N	\N	\N	\N	H4086	\N	\N	\N
 madmenah	1	Madmenah	name	\N	\N	\N	\N	H4088	\N	\N	\N
 madon	1	Madon	name	\N	\N	\N	\N	H4068	\N	\N	\N
-magbish	1	Magbish	proper name	מַגְבִּישׁ	magəbiysh	Μαγεβως	Magebōs	H4019	\N	\N	\N
 magbish-2	1	Magbish	name	\N	\N	\N	\N	H4019	\N	\N	\N
 magdala	1	Magdala	name	\N	\N	Μαγδαλά	\N	\N	G3093	\N	\N
 magdiel	1	Magdiel	proper name	מַגְדִּיאֵ֖ל	magədiyel	Μεγεδιηλ	Megediēl	H4025	\N	\N	\N
@@ -4441,6 +4436,7 @@ mehir	1	Mehir	proper name	מְחִיר	məchir	Μαχιρ	Maxir	H4243	\N	\N	\N
 mehujael	1	Mehujael	proper name	מְחוּיָאֵל	mehuyael	Μαιηλ	Maiēl	H4232	\N	\N	\N
 mehuman	1	Mehuman	proper name	מְהוּמָן	məhuman	Αμαν	Aman	H4104	\N	\N	\N
 mehunim	1	Mehunim	gentilic	\N	\N	\N	\N	H4586	\N	\N	\N
+mehunim	2	Meunim	name	מְעוּנִים	məuniym	Μαωνιμ	Maōnim	H4586	\N	\N	\N
 mejarkon	1	Me-jarkon	name	\N	\N	\N	\N	H4313	\N	\N	\N
 mejarkon	2	Me Jarkon	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 mejarkon	3	waters of Jarkon	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
@@ -4547,7 +4543,6 @@ mesopotamia	4	Armon Haraim	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Ge
 methegammah	1	Metheg Ammah	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 methuselah	1	Methuselah	proper name	מְתוּשֶׁ֔לַח	mətuselah	Μαθουσαλα	Mathousala	H4968	G3103	\N	\N
 methushael	1	Methushael	proper name	מְתוּשָׁאֵל	methushael	Μαθουσαλα	Mathousala	H4967	\N	\N	\N
-meunim	1	Meunim	proper name	מְעוּנִים	məuniym	Μαωνιμ	Maōnim	H4586	\N	\N	\N
 mezahab	1	Mezahab	proper name	מֵ֥י זָהָֽב	mey zahav	Μαιζοοβ	Maizoob	H4314	\N	\N	\N
 mibsam	1	Mibsam	proper name	מִבְשָׂם	mibəsam	Μασσαμ	Massam	H4017	\N	\N	\N
 mibsam-2	1	Mibsam	proper name	מִבְשָׂם	mivəsam	Μαβασαμ	Mabasam	H4017	\N	\N	\N
@@ -4892,7 +4887,6 @@ nebaioth	1	Nebaioth	proper name	נְבָיֹ֔ת	Nəvayot	Ναβαιωθ	Nabaiō
 nebaioth-2	1	Nebaioth	name	\N	\N	\N	\N	H5032	\N	\N	\N
 neballat	1	Neballat	name	\N	\N	\N	\N	H5041	\N	\N	\N
 nebat	1	Nebat	proper name	נְבָט	nəvat	Ναβατ	Nabat	H5028	\N	\N	\N
-nebo	1	Nebo	proper name	נְבוֹ	nəvo	Ναβου	Nabou	H5015	\N	\N	\N
 nebo-2	1	Nebo	name	\N	\N	\N	\N	H5015	\N	\N	\N
 nebo-3	1	Nebo	name	\N	\N	\N	\N	H5015	\N	\N	\N
 nebuchadnezzar	1	Nebuchadnezzar	proper name	נְבוּכַדְרֶאצּוֹר	nəbukhadəretsor	Ναβουχοδονοσορ	Nabouxodonosor	H5019	\N	\N	\N
@@ -5650,9 +5644,8 @@ seled	1	Seled	proper name	סֶלֶד	seled	Σαλαδ	Salad	H5540	\N	\N	\N
 seleucia	1	Seleucia	name	\N	\N	Σελεύκεια	\N	\N	G4581	\N	\N
 semachiah	1	Semachiah	proper name	סְמַכְיָהוּ	səmakhəyahu	Σαβχια	Sabxia	H5565	\N	\N	\N
 semein	1	Semein	proper name	שִׁמְעִי	shiməiy	Σεμεῒν	Semeï̀n	H8096	G4584	\N	\N
-senaah	1	Senaah	proper name	סְנָאָה	sənaah	Σαναα	Sanaa	H5570	\N	\N	\N
-senaah	2	Hassenaah	proper name	הַסְנָאָה	hasənaa	Ασανα	Asana	H5570	\N	\N	\N
 senaah-2	1	Senaah	name	\N	\N	\N	\N	H5570	\N	\N	\N
+senaah-2	2	Hassenaah	name	הַסְנָאָה	hasənaa	Ασανα	Asana	H5570	\N	\N	\N
 seneh	1	Seneh	name	\N	\N	\N	\N	H5573	\N	\N	\N
 senir	1	Senir	name	\N	\N	\N	\N	H8149	\N	\N	\N
 senir	2	Shenir	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0

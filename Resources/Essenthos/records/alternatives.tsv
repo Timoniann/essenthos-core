@@ -2,13 +2,12 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # Who else a record may be. The reason, in English, is in i18n/eng/alternatives.
 slug	n	alternative	describes	back	by
 abimelech	1	\N	one king of Gerar whose own name was Abimelech, who dealt with Abraham (GEN 20-21) and again with Isaac (GEN 26)	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
 abimelech	2	\N	two kings of Gerar, Abraham's and Isaac's, who both bore Abimelech as a personal name	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
 abimelech	3	achish	\N	f	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
-abishalom	1	uriel-of-gibeah	\N	t	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
 achish	1	abimelech	\N	t	Essenthos, on the project owner's decision of 2026-09-13 that Abimelech of Gerar, Phicol and Ahuzzath are not established as single persons and are held as titles
 achsah	1	achsah-2	\N	t	Essenthos, the project owner's ruling of 2026-11-02 that the Achsah of 1CH 2:49 is a record of her own, applied by claude-opus-5-5 reading 1CH 2:42-49, JOS 15:16-19 and JDG 1:12-15 on his instruction of 2026-11-09
 achsah-2	1	achsah	\N	f	Essenthos, the project owner's ruling of 2026-11-02 that the Achsah of 1CH 2:49 is a record of her own, applied by claude-opus-5-5 reading 1CH 2:42-49, JOS 15:16-19 and JDG 1:12-15 on his instruction of 2026-11-09
@@ -113,7 +112,6 @@ tamar-4	1	tamar-5	\N	t	Essenthos, places of one name read against their verses b
 tamar-4	2	tadmor	\N	t	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 tamar-5	1	tamar-4	\N	f	Essenthos, places of one name read against their verses by claude-opus-5-5 on the project owner's word of 2026-11-01
 tormah	1	arumah	\N	f	Essenthos, the place names the Hebrew marks and the translations read as common words, each read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12
-uriel-of-gibeah	1	abishalom	\N	f	Essenthos, on the review of the sense readings, 2026-09-06 — the adjudication of the readings the encyclopedia contradicts and the audit of the ones it agrees with, both by claude-opus-5, with every adjudicated case escalated to claude-fable-5-1
 uzziah	1	azariah-son-of-zephaniah	\N	t	Essenthos, Hebrew names read against their verses by claude-opus-5-5 on the project owner's instruction, 2026-10-14
 zacharias-son-of-barachias	1	zechariah-12	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27
 zacharias-son-of-barachias	2	zechariah-13	\N	f	Essenthos, on the report of records holding several people, the rest of it, each occurrence read against its verse by claude-opus-5-5, 2026-09-27

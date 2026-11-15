@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # The ids the datasets give our records. The only place a dataset's id of a record lives; a dataset never makes a record.
 slug	dataset	external_id	relation	note
 aaron	bibledata	person:Aaron_1	same-as	\N
@@ -66,7 +66,6 @@ abiram	bibledata	person:Abiram_1	same-as	\N
 abiram-2	bibledata	person:Abiram_2	same-as	\N
 abishag	bibledata	person:Abishag_1	same-as	\N
 abishai	bibledata	person:Abishai_1	same-as	\N
-abishalom	bibledata	person:Abishalom_1	same-as	\N
 abishua	bibledata	person:Abishua_1	same-as	\N
 abishua-2	bibledata	person:Abishua_2	same-as	\N
 abishur	bibledata	person:Abishur_1	same-as	\N
@@ -75,6 +74,7 @@ abitub	bibledata	person:Abitub_1	same-as	\N
 abner	bibledata	person:Abner_1	same-as	\N
 abram	bibledata	person:Abram_1	same-as	\N
 abronah	openbible	a7560c2	same-as	\N
+absalom	bibledata	person:Abishalom_1	folded	the id of abishalom, folded into this record
 absalom	bibledata	person:Absalom_1	same-as	\N
 accad	bibledata	place:Accad_1	same-as	\N
 accad	openbible	a8b7a6b	same-as	\N
@@ -1315,9 +1315,9 @@ eshtemoa	bibledata	person:Eshtemoa_1	same-as	\N
 eshtemoa-2	bibledata	person:Eshtemoa_2	same-as	\N
 eshtemoa-3	openbible	ad68510	same-as	\N
 eshton	bibledata	person:Eshton_1	same-as	\N
-etam	bibledata	person:Etam_1	same-as	\N
 etam-2	openbible	ae05348	same-as	\N
 etam-3	openbible	a47f86c	same-as	\N
+etam-4	bibledata	person:Etam_1	folded	the id of etam, folded into this record
 etam-4	openbible	aa21f26	same-as	\N
 etham	bibledata	place:Etham_1	same-as	\N
 etham	openbible	a27d0e0	same-as	\N
@@ -1459,7 +1459,6 @@ gethsemane	openbible	a42418f	same-as	\N
 geuel	bibledata	person:Geuel_1	same-as	\N
 gezer	openbible	aed6538	same-as	\N
 giah	openbible	ac66d7a	same-as	\N
-gibbar	bibledata	person:Gibbar_1	same-as	\N
 gibbethon	openbible	a6f048c	same-as	\N
 gibea	bibledata	person:Gibea_1	same-as	\N
 gibeah	openbible	ac24f5f	same-as	\N
@@ -1468,6 +1467,7 @@ gibeah-3	openbible	a3bba31	same-as	\N
 gibeah-4	openbible	ac25f34	same-as	\N
 gibeathelohim	openbible	a45b692	same-as	\N
 gibeathhaaraloth	openbible	a97126d	same-as	\N
+gibeon	bibledata	person:Gibbar_1	folded	the id of gibbar, folded into this record
 gibeon	openbible	aede336	same-as	\N
 giddalti	bibledata	person:Giddalti_1	same-as	\N
 giddel	bibledata	person:Giddel_1	same-as	\N
@@ -2685,7 +2685,7 @@ madmen	openbible	a73a74f	same-as	\N
 madmenah	openbible	a67297a	same-as	\N
 madon	openbible	a6c2936	same-as	\N
 magadan	openbible	ad14067	same-as	\N
-magbish	bibledata	person:Magbish_1	same-as	\N
+magbish-2	bibledata	person:Magbish_1	folded	the id of magbish, folded into this record
 magbish-2	openbible	ac041e2	same-as	\N
 magdala	openbible	af75e9e	same-as	\N
 magdalsenna	openbible	a0d1a62	same-as	\N
@@ -2816,6 +2816,7 @@ mehida	bibledata	person:Mehida_1	same-as	\N
 mehir	bibledata	person:Mehir_1	same-as	\N
 mehujael	bibledata	person:Mehujael_1	same-as	\N
 mehuman	bibledata	person:Mehuman_1	same-as	\N
+mehunim	bibledata	person:Meunim_1	folded	the id of meunim, folded into this record
 mejarkon	openbible	a7d1972	same-as	\N
 melatiah	bibledata	person:Melatiah_1	same-as	\N
 melchi	bibledata	person:Melchi_1	same-as	\N
@@ -2881,7 +2882,6 @@ mesopotamia	openbible	a43f60f	same-as	\N
 methegammah	openbible	a0a52ec	same-as	\N
 methuselah	bibledata	person:Methuselah_1	same-as	\N
 methushael	bibledata	person:Methushael_1	same-as	\N
-meunim	bibledata	person:Meunim_1	same-as	\N
 mezahab	bibledata	person:Mezahab_1	same-as	\N
 mibsam	bibledata	person:Mibsam_1	same-as	\N
 mibsam-2	bibledata	person:Mibsam_2	same-as	\N
@@ -3092,8 +3092,8 @@ nebai	bibledata	person:Nebai_1	same-as	\N
 nebaioth	bibledata	person:Nebaioth_1	same-as	\N
 neballat	openbible	acd682e	same-as	\N
 nebat	bibledata	person:Nebat_1	same-as	\N
-nebo	bibledata	person:Nebo_1	same-as	\N
 nebo-2	openbible	ab5bd29	same-as	\N
+nebo-3	bibledata	person:Nebo_1	folded	the id of nebo, folded into this record
 nebo-3	openbible	accdd09	same-as	\N
 nebuchadnezzar	bibledata	person:Nebuchadnezzar_1	same-as	\N
 nebushazban	bibledata	person:Nebushazban_1	same-as	\N
@@ -3587,8 +3587,8 @@ seled	bibledata	person:Seled_1	same-as	\N
 seleucia	openbible	a6d306d	same-as	\N
 semachiah	bibledata	person:Semachiah_1	same-as	\N
 semein	bibledata	person:Semein_1	same-as	\N
-senaah	bibledata	person:Hassenaah_1	folded	the id of hassenaah, folded into this record
-senaah	bibledata	person:Senaah_1	same-as	\N
+senaah-2	bibledata	person:Hassenaah_1	folded	the id of hassenaah, folded into this record
+senaah-2	bibledata	person:Senaah_1	folded	the id of senaah, folded into this record
 senaah-2	openbible	ac5ba1a	same-as	\N
 seneh	openbible	a311f80	same-as	\N
 senir	openbible	ad27e17	same-as	\N

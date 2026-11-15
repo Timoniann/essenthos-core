@@ -2,12 +2,11 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 slug	n	reason
 abimelech	1	Both accounts name him alike, Abimelech king of Gerar with Phicol the commander of his army, and neither says a new king has come. Against it, Isaac's dealings with him fall after Abraham's death (GEN 26:18), most of a lifetime after Abraham's, and the same two names recurring is as well explained by titles as by one very long reign.
 abimelech	2	A king named after his father would give the text as it stands, the Abimelech of Genesis 26 another man than the Abimelech of Genesis 20-21. Nothing in the text tells a name repeated in a line of kings from a title.
 abimelech	3	The title of Psalm 34 says David changed his behaviour before Abimelech, and 1 Samuel 21:10-15 tells the same flight before Achish king of Gath. If Abimelech is a title of the Philistine kings, the king of the psalm is Achish bearing it; if it is a name, the psalm's title and the history name the king differently.
-abishalom	1	Chronicles names Abijah's mother Michaiah the daughter of Uriel of Gibeah (2CH 13:2), where Kings names her Maachah the daughter of Abishalom (1KI 15:2). Nobody has shown that Uriel and Abishalom are not one man.
 achish	1	The title of Psalm 34 says David changed his behaviour before Abimelech, where 1 Samuel 21:10-15 tells the same flight before him. If Abimelech is a title of the Philistine kings, he bore it there; if it is a name, the psalm's title and the history name the king differently.
 achsah	1	1 Chronicles 2:49 names an Achsah, daughter of Caleb the brother of Jerahmeel, who is this Achsah if the two Calebs are one man.
 achsah-2	1	Joshua 15:16 and Judges 1:12 name Achsah the daughter of Caleb son of Jephunneh; 1 Chronicles 2:49 names Achsah the daughter of Caleb the brother of Jerahmeel. If the two Calebs are one man, the two Achsahs are one woman.
@@ -112,7 +111,6 @@ tamar-4	1	The Tamar of Ezekiel's southern border (EZK 47:19) may be this one; th
 tamar-4	2	The Tadmor of 2CH 8:4, which the King James prints at 1KI 9:18 too, may be this town; the text does not say.
 tamar-5	1	The Tamar the Hebrew writes at 1KI 9:18, among the towns Solomon built, may be this one; the text does not say.
 tormah	1	Arumah, where Abimelech dwelt (JDG 9:41), is a name of the same letters but one, and the two may be one town.
-uriel-of-gibeah	1	Uriel of Gibeah may be another man than Abishalom, whose daughter Kings names as Abijam's mother (1KI 15:2). Nobody has shown that the two are not one man, only that he does not fit this verse.
 uzziah	1	Azariah son of Zephaniah stands where he stands, in Heman's line (1CH 6:36), if the two lines are one line under other names.
 zacharias-son-of-barachias	1	Zechariah the son of Jehoiada the priest was stoned 'in the court of the house of the LORD' (2 Chronicles 24:20-21), which is where Matthew and Luke place this death; the verses name a different father.
 zacharias-son-of-barachias	2	The prophet Zechariah is 'the son of Berechiah' (Zechariah 1:1), the father Matthew names; the Old Testament does not say how he died.

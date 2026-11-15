@@ -69,7 +69,6 @@ abiram	person	\N	\N	Abiram	male	\N	\N	Reuben	\N	\N	\N
 abiram-2	person	\N	\N	Abiram	male	\N	\N	\N	\N	\N	\N
 abishag	person	\N	\N	Abishag	female	\N	\N	\N	\N	\N	\N
 abishai	person	\N	\N	Abishai	male	\N	\N	Judah	\N	\N	\N
-abishalom	person	\N	\N	Abishalom	male	\N	\N	\N	\N	\N	\N
 abishua	person	\N	\N	Abishua	male	\N	\N	Levi	\N	\N	\N
 abishua-2	person	\N	\N	Abishua	male	\N	\N	Benjamin	\N	\N	\N
 abishur	person	\N	\N	Abishur	male	\N	\N	Judah	\N	\N	\N
@@ -1455,7 +1454,6 @@ eshtemoa	person	\N	\N	Eshtemoa	male	\N	\N	Judah	\N	\N	\N
 eshtemoa-2	person	\N	\N	Eshtemoa	male	\N	\N	Judah	\N	\N	\N
 eshtemoa-3	place	\N	settlement	Eshtemoa	\N	\N	\N	\N	\N	\N	\N
 eshton	person	\N	\N	Eshton	male	\N	\N	Judah	\N	\N	\N
-etam	person	\N	\N	Etam	\N	\N	\N	\N	\N	\N	\N
 etam-2	place	\N	settlement	Etam	\N	\N	\N	\N	\N	\N	\N
 etam-3	place	\N	settlement	Etam	\N	\N	\N	\N	\N	etam-4	\N
 etam-4	place	\N	settlement	Etam	\N	\N	\N	\N	\N	\N	\N
@@ -1624,7 +1622,6 @@ gezer	place	\N	settlement	Gezer	\N	\N	\N	\N	\N	\N	\N
 gezrites	people	\N	\N	Gezrites	\N	\N	\N	\N	\N	\N	\N
 giah	place	\N	natural area, special, valley	Giah	\N	\N	\N	\N	\N	\N	\N
 giant	title	\N	\N	Giant	\N	\N	\N	\N	\N	\N	\N
-gibbar	person	\N	\N	Gibbar	\N	\N	\N	\N	\N	\N	\N
 gibbethon	place	\N	settlement	Gibbethon	\N	\N	\N	\N	\N	\N	\N
 gibea	person	\N	\N	Gibea	male	\N	\N	Judah	\N	\N	\N
 gibeah	place	\N	settlement	Gibeah	\N	\N	\N	\N	\N	\N	\N
@@ -3029,7 +3026,6 @@ madmen	place	\N	settlement	Madmen	\N	\N	\N	\N	\N	\N	\N
 madmenah	place	\N	settlement	Madmenah	\N	\N	\N	\N	\N	\N	\N
 madon	place	\N	settlement	Madon	\N	\N	\N	\N	\N	merom	\N
 magadan	place	\N	settlement	Magadan	\N	\N	\N	\N	\N	magdala	\N
-magbish	person	\N	\N	Magbish	\N	\N	\N	\N	\N	\N	\N
 magbish-2	place	\N	settlement, special	Magbish	\N	\N	\N	\N	\N	\N	\N
 magdala	place	\N	settlement	Magdala	\N	\N	\N	\N	\N	\N	\N
 magdalsenna	place	\N	settlement	Magdalsenna	\N	\N	\N	\N	\N	\N	\N
@@ -3248,7 +3244,6 @@ mesopotamia	place	\N	region	Mesopotamia	\N	\N	\N	\N	\N	\N	\N
 methegammah	place	\N	settlement, special	Metheg-ammah	\N	\N	\N	\N	\N	gath	\N
 methuselah	person	\N	\N	Methuselah	male	\N	\N	\N	\N	\N	\N
 methushael	person	\N	\N	Methushael	male	\N	\N	\N	\N	\N	\N
-meunim	person	\N	\N	Meunim	\N	\N	\N	\N	\N	\N	\N
 mezahab	person	\N	\N	Mezahab	female	\N	\N	\N	\N	\N	\N
 mibsam	person	\N	\N	Mibsam	male	\N	\N	Mibsam	\N	\N	\N
 mibsam-2	person	\N	\N	Mibsam	male	\N	\N	Simeon	\N	\N	\N
@@ -3476,7 +3471,6 @@ nebaioth	person	\N	\N	Nebaioth	male	\N	\N	\N	\N	\N	\N
 nebaioth-2	place	\N	\N	Nebaioth	\N	\N	\N	\N	\N	\N	\N
 neballat	place	\N	settlement	Neballat	\N	\N	\N	\N	\N	\N	\N
 nebat	person	\N	\N	Nebat	male	\N	\N	Ephraim	\N	\N	\N
-nebo	person	\N	\N	Nebo	\N	\N	\N	\N	\N	\N	\N
 nebo-2	place	\N	settlement	Nebo	\N	\N	\N	\N	\N	\N	\N
 nebo-3	place	\N	settlement	Nebo	\N	\N	\N	\N	\N	\N	\N
 nebuchadnezzar	person	\N	\N	Nebuchadnezzar	male	\N	\N	\N	\N	\N	\N
@@ -4020,7 +4014,6 @@ seled	person	\N	\N	Seled	male	\N	\N	Judah	\N	\N	\N
 seleucia	place	\N	settlement	Seleucia	\N	\N	\N	\N	\N	\N	\N
 semachiah	person	\N	\N	Semachiah	male	\N	\N	Levi	\N	\N	\N
 semein	person	\N	\N	Semein	male	\N	\N	\N	\N	\N	\N
-senaah	person	\N	\N	Senaah	\N	\N	\N	\N	\N	\N	\N
 senaah-2	place	\N	settlement, special	Senaah	\N	\N	\N	\N	\N	\N	\N
 seneh	place	\N	cliff	Seneh	\N	\N	\N	\N	\N	\N	\N
 senir	place	\N	mountain	Senir	\N	\N	\N	\N	\N	mounthermon	\N

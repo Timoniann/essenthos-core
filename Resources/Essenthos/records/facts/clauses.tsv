@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # What the text says a record is, clause by clause: the line, and the source of every relationship.
 subject	ordinal	relation	target	ref	citation	witness	original	method	confidence	by	run	note
 aaron	1	brother-of	moses	2.4:14	\N	\N	\N	model-reading	0.97	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe	\N
@@ -140,7 +140,6 @@ abishai	1	son-of	zeruiah	9.26:6	\N	\N	\N	model-reading	0.95	read from Scripture 
 abishai	2	brother-of	joab	9.26:6	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0001.jsonl#dd10237238d6b69f	\N
 abishai	3	brother-of	asahel	10.2:18	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0001.jsonl#dd10237238d6b69f	\N
 abishai	4	killer-of	abner	10.3:30	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0001.jsonl#dd10237238d6b69f	\N
-abishalom	1	father-of	maacah-3	11.15:2	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0001.jsonl#4a52dbd7091f5120	\N
 abishua	1	son-of	phinehas	13.6:4	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0007.jsonl#cae50beab632d5bc	\N
 abishua	2	father-of	bukki-2	13.6:5	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0007.jsonl#cae50beab632d5bc	\N
 abishua-2	1	son-of	bela-2	13.8:4	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#ab2bd244999c7863	V.4 'And Abishua' continues the list headed by 'the sons of Bela were' in v.3, stating Abishua is Bela's son.
@@ -174,6 +173,7 @@ absalom	3	brother-of	tamar-2	10.13:1	\N	\N	\N	model-reading	0.9	read from Script
 absalom	4	brother-of	amnon	10.13:4	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-zz-zz-zz-zz-kin3-0000.jsonl#9af603cc7b691ea1	\N
 absalom	5	killed-by	joab	10.18:14	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-13	zz-zz-zz-zz-zz-kin3-0000.jsonl#9af603cc7b691ea1	the verse states it, decided on the review page
 absalom	6	brother-of	solomon	11.2:7	\N	\N	\N	manual	\N	read from Scripture by an agent reading 1KI 2:7 on the project owner's instruction, decided 2026-10-08	zz-zz-zz-zz-zz-kin3-0000.jsonl#9af603cc7b691ea1	1KI 2:7: David to Solomon, 'Absalom thy brother' (אַבְשָׁלוֹם אָחִיךָ).
+absalom	7	grandfather-of	maacah-3	11.15:2	1KI 15:2; 2SA 14:27	\N	\N	manual	0.95	read from Scripture by an agent reading 1KI 15:2; 2SA 14:27; 2CH 13:2 on the project owner's instruction, decided 2026-11-16	reask-0001.jsonl#4a52dbd7091f5120	1KI 15:2 and 2CH 11:20 call her the daughter of Abishalom, that is Absalom, and 2CH 13:2 the daughter of Uriel of Gibeah. Absalom's only daughter was Tamar (2SA 14:27), and the Hebrew בַּת is also said of a granddaughter, so she is read as Absalom's granddaughter through Tamar, as Josephus has it (Antiquities 8.10.1); decided on the project owner's word of 2026-11-16 (PRB-1413): granddaughter of Absalom through Tamar, daughter of Uriel
 accad	1	city-in	shinar	1.10:10	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0008.jsonl#59a38a0bfe40c468	\N
 acco	1	city-in	asher-2	7.1:31	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#98e2970eb508964c	\N
 achaia	1	near	macedonia	44.19:21	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0001.jsonl#dcba19f49b5e8a84	\N
@@ -525,7 +525,6 @@ amon-2	1	son-of	manasseh-3	12.21:18	\N	\N	\N	model-reading	0.95	read from Script
 amon-2	2	king-of	jerusalem	12.21:19	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0035.jsonl#922f0b3d51a4bcae	\N
 amon-2	3	father-of	josiah	13.3:14	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0035.jsonl#922f0b3d51a4bcae	\N
 amon-2	4	son-of	meshullemeth	12.21:19	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0035.jsonl#922f0b3d51a4bcae	\N
-amon-3	1	lived-in	thebes	24.46:25	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0035.jsonl#f8232aaffc0e5c20	\N
 amorite-son-of-canaan	1	son-of	canaan	1.10:16	\N	\N	\N	manual	\N	read from Scripture by an agent reading GEN 10:16 on the project owner's instruction of 2026-10-12, decided 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#77f25afab72a53b3	Canaan begat Sidon his firstborn, and Heth, and the Jebusite, and the Amorite, and the Girgasite (10:15-16)
 amorites	1	descendants-of	amorite-son-of-canaan	1.10:16	\N	\N	\N	manual	\N	read from Scripture by an agent reading GEN 10:16 on the project owner's instruction of 2026-10-12, decided 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#d7d97aa3544c9a05	Canaan begat Sidon his firstborn, and Heth, and the Jebusite, and the Amorite, and the Girgasite (10:15-16): the people descends from the son the text names
 amorites	2	lived-in	hazazontamar	1.14:7	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#d7d97aa3544c9a05	\N
@@ -1103,7 +1102,7 @@ benaiah	4	killer-of	ariel	10.23:20	\N	\N	\N	model-reading	0.5	read from Scriptur
 benaiah	5	killer-of	adonijah	11.2:25	\N	\N	\N	model-reading	0.92	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#bb4fbbbf438f0728	'king Solomon sent by the hand of Benaiah... and he fell upon him that he died,' with 'him' being Adonijah per v24's sentence.
 benaiah	6	killer-of	joab	11.2:34	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#bb4fbbbf438f0728	'Benaiah the son of Jehoiada went up, and fell upon him, and slew him,' referring to Joab as established in vv28-33.
 benaiah	7	killer-of	shimei-2	11.2:46	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#bb4fbbbf438f0728	'the king commanded Benaiah... which went out, and fell upon him, that he died,' referring to Shimei per the preceding verses.
-benaiah-10	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0083.jsonl#91bcac5de4394d8e	\N
+benaiah-10	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0083.jsonl#91bcac5de4394d8e	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 benaiah-11	1	father-of	pelatiah-4	26.11:1	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0019.jsonl#f630db75be090363	\N
 benaiah-2	1	of-people	pirathonites	10.23:30	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0001.jsonl#4e3aa20f3a24644c	\N
 benaiah-2	2	of-tribe	ephraim	13.27:14	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0001.jsonl#4e3aa20f3a24644c	\N
@@ -2263,7 +2262,6 @@ geuel	1	son-of	machi	4.13:15	\N	\N	\N	model-reading	0.95	read from Scripture by 
 geuel	2	of-tribe	gad	4.13:15	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0181.jsonl#c0464d272b43f98b	\N
 gezer	1	near	geba-2	10.5:25	\N	\N	\N	model-reading	0.4	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0043.jsonl#4fb9c73f9eba67c1	\N
 giah	1	near	ammah	10.2:24	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0182.jsonl#6f9b033558392a7e	\N
-gibbar	1	descendant-of	jacob	15.2:20	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-28	zz-words-0003.jsonl#f439a133cc1fb9b7	the verse states it, decided on the review page
 gibea	1	son-of	sheva-2	13.2:49	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0182.jsonl#cc66cf327a63a762	\N
 gibeah-2	1	city-in	kain	6.15:57	\N	\N	\N	model-reading	0.3	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0043.jsonl#976c4f00d27c8216	\N
 gibeah-3	1	city-in	mountephraim	6.24:33	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0183.jsonl#cc8bfa70be781b0f	\N
@@ -3160,7 +3158,7 @@ jada	1	son-of	onam-2	13.2:28	\N	\N	\N	model-reading	0.9	read from Scripture by c
 jada	2	brother-of	shammai	13.2:32	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0251.jsonl#e609335dde3b32e5	\N
 jada	3	father-of	jether-2	13.2:32	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0251.jsonl#e609335dde3b32e5	\N
 jada	4	father-of	jonathan-6	13.2:32	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0251.jsonl#e609335dde3b32e5	\N
-jaddai	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0252.jsonl#805ce26d2cc40f4d	\N
+jaddai	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0252.jsonl#805ce26d2cc40f4d	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 jaddua	1	descendant-of	jacob	16.10:21	\N	\N	\N	manual	\N	read from Scripture by an agent reading NEH 10:21 on the project owner's instruction, decided 2026-09-26	zz-words-0004.jsonl#156dfd02e49f4847	agent: NEH 10:21 names Jaddua among 'the chief of the people' (NEH 10:14) who sealed the covenant - 'the seed of Israel' who 'separated themselves from all strangers' (NEH 9:2).
 jaddua-2	1	son-of	jonathan-10	16.12:11	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0252.jsonl#df00ab03dc27be13	\N
 jaddua-2	2	descendant-of	joiada-2	16.12:11	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0252.jsonl#df00ab03dc27be13	\N
@@ -3491,7 +3489,7 @@ jeiel-5	1	father-of	benaiah-5	14.20:14	\N	\N	\N	model-reading	0.9	read from Scri
 jeiel-5	2	ancestor-of	jahaziel-3	14.20:14	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0271.jsonl#023e4f9c2438ace9	\N
 jeiel-6	1	scribe-of	azariah-3	14.26:11	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0271.jsonl#cab35b17b71a257d	\N
 jeiel-7	1	descendant-of	elzaphan	14.29:13	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0271.jsonl#0054847e0e336f0b	\N
-jeiel-8	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0272.jsonl#eba92e6fc586c997	\N
+jeiel-8	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0272.jsonl#eba92e6fc586c997	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 jeiel-chief-of-the-levites	1	of-tribe	levites	14.35:9	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0271.jsonl#0054847e0e336f0b	\N
 jeiel-the-alamoth-psaltery-player	1	companion-of	asaph-2	13.16:5	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0055.jsonl#5ff7026f36645ea8	\N
 jekameam	1	son-of	hebron	13.23:19	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0272.jsonl#f99a142d3d878ac3	\N
@@ -3767,7 +3765,7 @@ joel-7	2	of-tribe	manasseh	13.27:20	\N	\N	\N	model-reading	0.6	read from Scriptu
 joel-8	1	son-of	azariah-13	14.29:12	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-zz-zz-zz-zz-kin3-0000.jsonl#48b15347c355b805	\N
 joel-8	2	of-people	kohathites	14.29:12	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-zz-zz-zz-zz-kin3-0000.jsonl#48b15347c355b805	\N
 joel-8	3	descendant-of	kohath	14.29:12	\N	\N	\N	manual	\N	read from Scripture by an agent reading 2CH 29:12 on the project owner's instruction, decided 2026-10-08	zz-zz-zz-zz-zz-kin3-0000.jsonl#48b15347c355b805	2CH 29:12: 'Joel the son of Azariah, of the sons of the Kohathites' (מִן־בְּנֵי הַקְּהָתִי).
-joel-9	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0290.jsonl#b4e694afbc6b9adc	\N
+joel-9	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0290.jsonl#b4e694afbc6b9adc	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 joelah	1	son-of	jeroham-4	13.12:7	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0290.jsonl#66c66d5e0ffab065	\N
 joelah	2	from-place	gedor-7	13.12:7	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0290.jsonl#66c66d5e0ffab065	\N
 joezer	1	of-people	korahites	13.12:6	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#cae51759d9ad41ff	\N
@@ -4337,9 +4335,10 @@ maacah-2	1	daughter-of	talmai-2	10.3:3	\N	\N	\N	model-reading	0.9	read from Scri
 maacah-2	2	mother-of	absalom	10.3:3	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0007.jsonl#906d1bf898b4445d	\N
 maacah-2	3	wife-of	david	10.3:3	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-13	zz-words-0007.jsonl#906d1bf898b4445d	Правильне замічання. Але наврядчи вона була б наложницею, тому думаю шо вона була йому жінкою. Ставимо жінка
 maacah-3	1	mother-of	abijam	11.15:2	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0074.jsonl#914f69e1f63bf102	\N
-maacah-3	2	daughter-of	abishalom	11.15:2	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0074.jsonl#914f69e1f63bf102	\N
+maacah-3	2	granddaughter-of	absalom	11.15:2	1KI 15:2; 2SA 14:27	\N	\N	manual	0.95	read from Scripture by an agent reading 1KI 15:2; 2SA 14:27; 2CH 13:2 on the project owner's instruction, decided 2026-11-16	reask-0074.jsonl#914f69e1f63bf102	1KI 15:2 and 2CH 11:20 call her the daughter of Abishalom, that is Absalom, and 2CH 13:2 the daughter of Uriel of Gibeah. Absalom's only daughter was Tamar (2SA 14:27), and the Hebrew בַּת is also said of a granddaughter, so she is read as Absalom's granddaughter through Tamar, as Josephus has it (Antiquities 8.10.1); decided on the project owner's word of 2026-11-16 (PRB-1413): granddaughter of Absalom through Tamar, daughter of Uriel
 maacah-3	3	wife-of	rehoboam	14.11:21	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0074.jsonl#914f69e1f63bf102	\N
 maacah-3	4	grandmother-of	asa	11.15:2	1KI 15:2; 1KI 15:10	\N	\N	manual	0.95	read from Scripture by an agent reading 1KI 15:2-13 on the project owner's instruction, decided 2026-10-12	reask-0074.jsonl#914f69e1f63bf102	1KI 15:2 makes Maachah the daughter of Abishalom Abijam's mother, and 15:8 Asa Abijam's son; 15:10 calls the same Maachah daughter of Abishalom Asa's mother, and 15:13 says Asa removed her from being queen: she was his grandmother and the queen mother. The clause first read 2CH 15:16 as 'mother of Asa' and was corrected on the project owner's word of 2026-10-12.
+maacah-3	5	daughter-of	uriel-of-gibeah	14.13:2	\N	\N	\N	manual	\N	read from Scripture by an agent reading 1KI 15:2; 2SA 14:27; 2CH 13:2 on the project owner's instruction, decided 2026-11-16	\N	2CH 13:2 names Abijah's mother Michaiah the daughter of Uriel of Gibeah; with Kings' 'daughter of Abishalom' read as Absalom's granddaughter (1KI 15:2; 2SA 14:27), Uriel is her father and both statements stand; decided on the project owner's word of 2026-11-16 (PRB-1413): granddaughter of Absalom through Tamar, daughter of Uriel
 maacah-4	1	mother-of	sheber	13.2:48	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0007.jsonl#58881670056b23d6	\N
 maacah-4	2	mother-of	tirhanah	13.2:48	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0007.jsonl#58881670056b23d6	\N
 maacah-4	3	concubine-of	chelubai	13.2:48	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-11	zz-words-0007.jsonl#58881670056b23d6	the verse states it, decided on the review page
@@ -4610,7 +4609,7 @@ mattithiah	1	of-people	levites	13.9:31	\N	\N	\N	model-reading	0.9	read from Scri
 mattithiah	2	son-of	shallum-7	13.9:31	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0352.jsonl#e43896e5bb03a030	\N
 mattithiah-2	1	descendant-of	levi	13.15:18	\N	\N	\N	manual	\N	read from Scripture by an agent reading 1CH 15:18 on the project owner's instruction, decided 2026-09-26	zz-words-0007.jsonl#24aef094130ef73f	agent: 1CH 15:16-18 'the Levites appointed... and with them their brethren of the second degree', naming Mattithiah.
 mattithiah-3	1	son-of	jeduthun	13.25:3	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0352.jsonl#c44df9746b92ff5f	\N
-mattithiah-4	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0352.jsonl#bedc5ef3f61c99ee	\N
+mattithiah-4	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0352.jsonl#bedc5ef3f61c99ee	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 mattithiah-5	1	companion-of	ezra	16.8:4	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#42c2d2a69c4f2dde	\N
 meah	1	near	towerofhananel	16.3:1	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0098.jsonl#88dac8231d2f1297	\N
 meah	2	near	sheepgate	16.12:39	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0098.jsonl#88dac8231d2f1297	\N
@@ -4634,7 +4633,6 @@ mehir	2	father-of	eshton	13.4:11	\N	\N	\N	model-reading	0.9	read from Scripture 
 mehujael	1	son-of	irad	1.4:18	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#42d067daf8a65a49	\N
 mehujael	2	father-of	methushael	1.4:18	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#42d067daf8a65a49	\N
 mehuman	1	servant-of	ahasuerus	17.1:10	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#4e173e1868a201cd	\N
-mehunim	1	descendants-of	meunim	15.2:50	\N	BHSA	בְנֵי מעינים	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0005.jsonl#566a1682a201b5dd	\N
 mejarkon	1	near	joppa	6.19:46	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0354.jsonl#77c11e57090411ee	\N
 melatiah	1	of-people	gibeonites	16.3:7	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1d411950900972a7	\N
 melchi	1	son-of	jannai	42.3:24	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0355.jsonl#0a0567381daf9edc	\N
@@ -5117,9 +5115,6 @@ nebaioth	1	son-of	ishmael	1.25:13	\N	\N	\N	model-reading	0.95	read from Scriptur
 nebaioth	2	brother-of	mahalath	1.28:9	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0388.jsonl#bb960a2da1db06ae	\N
 nebaioth	3	brother-of	kedar	1.25:13	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0388.jsonl#bb960a2da1db06ae	\N
 nebat	1	father-of	jeroboam	11.11:26	\N	\N	\N	model-reading	0.98	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0388.jsonl#aa0475539c4b7dd4	\N
-nebo	1	ancestor-of	jeiel-8	15.10:43	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0389.jsonl#e25ada6567f77372	\N
-nebo	2	ancestor-of	mattithiah-4	15.10:43	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0389.jsonl#e25ada6567f77372	\N
-nebo	3	ancestor-of	zabad-6	15.10:43	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0389.jsonl#e25ada6567f77372	\N
 nebo-2	1	city-in	moab-2	24.48:1	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0389.jsonl#0905f0b7148fa5f5	\N
 nebo-2	2	near	abarim	4.33:47	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0389.jsonl#0905f0b7148fa5f5	\N
 nebuchadnezzar	1	king-of	babylon	12.24:1	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#e8d11c5cbf47af15	\N
@@ -5838,7 +5833,6 @@ semachiah	1	son-of	shemaiah-9	13.26:7	\N	\N	\N	model-reading	0.78	read from Scri
 semachiah	2	brother-of	elzabad-2	13.26:7	\N	\N	\N	model-reading	0.88	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#442b21602943e59e	\N
 semein	1	son-of	josech	42.3:26	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#405f825c345f3993	\N
 semein	2	father-of	mattathias-2	42.3:26	\N	\N	\N	model-reading	0.93	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#405f825c345f3993	\N
-senaah	1	descendant-of	jacob	15.2:35	\N	\N	\N	manual	\N	read from Scripture by the project owner, decided 2026-09-28	zz-words-0009.jsonl#7fd8d2dece30ab7e	the verse states it, decided on the review page
 seneh	1	near	bozez	9.14:4	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#e116f94699df63c2	\N
 senir	1	near	mounthermon	22.4:8	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0450.jsonl#f705a01301698fe4	\N
 senir	2	near	amana	22.4:8	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0450.jsonl#f705a01301698fe4	\N
@@ -6748,7 +6742,7 @@ uriel-2	2	father-of	uzziah	13.6:24	\N	\N	\N	model-reading	0.9	read from Scriptur
 uriel-2	3	son-of	tahath	13.6:24	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0519.jsonl#0180f5dedc12bee5	\N
 uriel-2	4	father-of	uzziah	13.6:24	\N	\N	\N	model-reading	0.8	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0519.jsonl#0180f5dedc12bee5	\N
 uriel-of-gibeah	1	from-place	gibeah-2	14.13:2	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0519.jsonl#656693fc42f9da05	\N
-uriel-of-gibeah	2	father-of	maacah-3	14.13:2	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0519.jsonl#656693fc42f9da05	\N
+uriel-of-gibeah	2	father-of	maacah-3	14.13:2	\N	\N	\N	manual	\N	read from Scripture by an agent reading 1KI 15:2; 2SA 14:27; 2CH 13:2 on the project owner's instruction, decided 2026-11-16	batch-0519.jsonl#656693fc42f9da05	2CH 13:2 names Abijah's mother Michaiah the daughter of Uriel of Gibeah; with Kings' 'daughter of Abishalom' read as Absalom's granddaughter (1KI 15:2; 2SA 14:27), Uriel is her father and both statements stand; decided on the project owner's word of 2026-11-16 (PRB-1413): granddaughter of Absalom through Tamar, daughter of Uriel
 urijah	1	servant-of	ahaz	12.16:16	\N	\N	\N	model-reading	0.4	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#3d569cb70a3f1ac1	\N
 urijah	2	priest-of	yhvh	12.16:10	\N	\N	\N	model-reading	0.97	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#3d569cb70a3f1ac1	The verse calls him Urijah the priest.
 uthai	1	son-of	ammihud-5	13.9:4	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0519.jsonl#f137596fe76888f0	\N
@@ -6873,7 +6867,7 @@ zabad-2	2	son-of	tahath-3	13.7:21	\N	\N	\N	manual	\N	read from Scripture by an a
 zabad-3	1	son-of	ahlai-2	13.11:41	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#80733cb4d585f6a6	\N
 zabad-4	1	descendant-of	zattu	15.10:27	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#5c681f238760d83a	\N
 zabad-5	1	descendant-of	hashum	15.10:33	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#9c71c8a8c7cf1b90	\N
-zabad-6	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#525dac075d690746	\N
+zabad-6	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0531.jsonl#525dac075d690746	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 zabbai	1	descendant-of	bebai	15.10:28	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#c2c6a9813539af88	\N
 zabbai-2	1	father-of	baruch	16.3:20	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#0ca41a47293dfb27	\N
 zabbud	1	descendant-of	bigvai	15.8:14	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0531.jsonl#e82546d60d129a84	\N
@@ -6965,7 +6959,7 @@ zebedee	1	father-of	james	40.4:21	\N	\N	\N	model-reading	0.97	read from Scriptur
 zebedee	2	father-of	john-2	40.4:21	\N	\N	\N	model-reading	0.97	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#6094b0ec7562c104	\N
 zebidah	1	mother-of	eliakim-2	12.23:36	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#cc5b4e8a626248cf	\N
 zebidah	2	daughter-of	pedaiah	12.23:36	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#cc5b4e8a626248cf	\N
-zebina	1	descendant-of	nebo	15.10:43	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#5516e48d72b9cdbe	\N
+zebina	1	from-place	nebo-3	15.10:43	\N	\N	\N	manual	\N	read from Scripture by an agent reading EZR 10:43 on the project owner's instruction, decided 2026-11-16	batch-0538.jsonl#5516e48d72b9cdbe	'Of the sons of Nebo' (EZR 10:43): of the families of the town Nebo of the return (EZR 2:29; NEH 7:33); the clause said descendant of a man Nebo, whom the text never names
 zeboiim	1	city-in	canaan-2	1.10:19	\N	\N	\N	model-reading	0.7	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#6b9efcde0486503f	\N
 zebul	1	servant-of	abimelech-2	7.9:28	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#892fb3f863ee7a4a	\N
 zebul	2	lived-in	shechem-4	7.9:41	\N	\N	\N	model-reading	0.55	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0538.jsonl#892fb3f863ee7a4a	\N

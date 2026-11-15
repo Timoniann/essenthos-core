@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aarón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -69,7 +69,6 @@ abiram	nominative	Abiram	model-reading	1	declined by claude-opus-5-5, asked 2026
 abiram-2	nominative	Abiram	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 abishag	nominative	Abisag	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 abishai	nominative	Abisai	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-abishalom	nominative	Abisalom	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 abishua	nominative	Abisua	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 abishua-2	nominative	Abisua	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 abishur	nominative	Abisur	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1451,7 +1450,6 @@ eshtemoa	nominative	Esthemoa	model-reading	1	declined by claude-opus-5-5, asked 
 eshtemoa-2	nominative	Esthemoa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eshtemoa-3	nominative	Estemo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eshton	nominative	Esthón	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
-etam	nominative	Etham	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 etam-2	nominative	Etam	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 etam-3	nominative	Etam	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 etam-4	nominative	Etham	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1620,7 +1618,6 @@ gezer	nominative	Gezer	model-reading	1	declined by claude-opus-5-5, asked 2026-1
 gezrites	nominative	Gerzeos	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 giah	nominative	Gía	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 giant	nominative	Gigante	manual	\N	Essenthos, on the project owner's decision of 2026-10-25 that the giants the text names are said to be giants on their records	\N
-gibbar	nominative	Gibbar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 gibbethon	nominative	Gibbethón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 gibea	nominative	Ghiba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 gibeah	nominative	Gabaa	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -3020,7 +3017,6 @@ madmen	nominative	Madmén	model-reading	1	declined by claude-opus-5-5, asked 202
 madmenah	nominative	Madmena	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 madon	nominative	Madón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 magadan	nominative	Magdalá	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-magbish	nominative	Magbis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 magbish-2	nominative	Magbis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 magdala	nominative	Magdalá	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 magdalsenna	nominative	Magdalsenna	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3238,7 +3234,6 @@ mesopotamia	nominative	Mesopotamia	model-reading	1	declined by claude-sonnet-5, 
 methegammah	nominative	Methegamma	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 methuselah	nominative	Mathusalam	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 methushael	nominative	Methusael	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-meunim	nominative	Meunim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mezahab	nominative	Mezaab	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mibsam	nominative	Mibsam	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mibsam-2	nominative	Mibsam	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3465,7 +3460,6 @@ nebaioth	nominative	Nabaioth	model-reading	1	declined by claude-opus-5-5, asked 
 nebaioth-2	nominative	Nebayoth	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 prints it, where it was «Nabaioth», checked 2026-10-31	\N
 neballat	nominative	Neballath	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nebat	nominative	Nabat	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-nebo	nominative	Nebo	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 nebo-2	nominative	Nebo	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 nebo-3	nominative	Nebo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nebuchadnezzar	nominative	Nabucodonosor	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -4004,7 +3998,6 @@ seled	nominative	Seled	model-reading	1	declined by claude-opus-5-5, asked 2026-1
 seleucia	nominative	Seleucia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 semachiah	nominative	Samachîas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 semein	nominative	Semei	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-senaah	nominative	Senaa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 senaah-2	nominative	Senaa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 seneh	nominative	Sene	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 senir	nominative	Senir	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N

@@ -2,5 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # A record's notes in this language; english_sha256 is the English they render, so a changed English shows them stale.
 slug	notes	english_sha256	by
+maacah-3	Книги Царств и Паралипоменон называют её Маахой, дочерью Авессалома (1KI 15:2; 2CH 11:20-21), а Паралипоменон называет мать Авии также Михаией, дочерью Уриила из Гивы (2CH 13:2). Здесь она прочитана как дочь Уриила и внучка Авессалома: еврейское слово «дочь» (בַּת) говорится и о внучке или более поздней потомице, единственной дочерью Авессалома была Фамарь (2SA 14:27), а Иосиф Флавий («Иудейские древности» 8.10.1) делает Мааху ребёнком Фамари, дочери Авессалома, так что Уриил из Гивы был бы мужем Фамари. Другие прочтения: Мааха и Михаия — две разные женщины, или одна из двух книг передаёт имя иначе. Там, где Мааха названа «матерью» Асы (1KI 15:10, 13), она его бабушка, царица-мать, которую он лишил этого звания, а не та, что его родила.	2dd0b651ed93182d9524573e74c1aa1fdb86e44f85f9cb9a4ece45669d471127	Essenthos, its own notes rendered from the English by claude-opus-5-5 on 2026-11-16, on the project owner's word of 2026-11-16 (PRB-1413)

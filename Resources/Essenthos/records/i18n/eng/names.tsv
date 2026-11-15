@@ -60,9 +60,6 @@ abishag	1	[my] father strays
 abishai	1	[my] father is Jesse or father exists
 abishai	2	[my] father is Jesse or father exists
 abishai	3	y-h-v-h heard
-abishalom	1	[my] father is peace
-abishalom	2	father is peace
-abishalom	3	G-d [El] is [my] flame, light
 abishua	1	[my] father is salvation
 abishua-2	1	[my] father is salvation
 abishur	1	[my] father is a wall
@@ -76,6 +73,7 @@ abram	4	Abraham [my] friend [literally, "my love"]
 abram	5	Abraham our father
 abram	6	friend [of] G-d
 absalom	1	father is peace
+absalom	2	[my] father is peace
 achan	1	troubler
 achan	2	trouble
 achbor	1	mouse or jerboa
@@ -925,7 +923,6 @@ eshek	1	oppressor
 eshtemoa	1	[place where oracle is] heard
 eshtemoa-2	1	[place where oracle is] heard
 eshton	1	[poss.] hen-pecked [husband] or effeminate
-etam	1	[perhaps] birds of prey
 etham	1	[poss.] fort
 ethan	1	long lived, ever-flowing [streams]
 ethan-3	1	long lived, ever-flowing [streams]
@@ -1026,8 +1023,8 @@ geshem	1	rain shower
 geshem	2	rain shower
 geuel	1	splendor of G-d [El]
 giant	1	a man of great stature
-gibbar	1	[young vigorous] man, hero
 gibea	1	mound, hill
+gibeon	3	[young vigorous] man, hero
 giddalti	1	I pronounce [G-d as] Great; I reared up
 giddel	1	big
 giddel-2	1	big
@@ -2074,7 +2071,6 @@ machir-2	1	bought
 machnadebai	1	[poss.] possession of Nebo
 machpelah	1	double cave
 madmannah	1	dung place
-magbish	1	[perhaps] thick
 magdiel	1	choice gift of G-d [El]
 magpiash	1	moth killer
 mahalalel	1	praise of G-d [El]
@@ -2180,6 +2176,7 @@ mehetabel-2	1	G-d [El] does good
 mehida	1	[poss.] bought as slave
 mehir	1	hired hand
 mehujael	1	smitten by G-d
+mehunim	2	people of Maon
 melatiah	1	y-h-v-h sets free
 melchi	1	y-h-v-h is my king
 melchi-2	1	y-h-v-h is my king
@@ -2234,7 +2231,6 @@ meshullemeth	1	restitution
 mesopotamia	1	label for the country lying between the rivers Tigris and Euphrates
 methuselah	1	man of the javelin
 methushael	1	man of G-d
-meunim	1	people of Maon
 mezahab	1	what gold
 mibsam	1	sweet odor
 mibsam-2	1	sweet odor
@@ -2356,7 +2352,6 @@ neariah	1	[young] man of y-h-v-h
 neariah-2	1	[young] man of y-h-v-h
 nebai	1	thrive
 nebat	1	look to, regard [approvingly]
-nebo	1	height or Mount of Nabu [Nebo]
 nebuchadnezzar	1	Nebo protect my boundary stone; Nebo protect my son!
 nebuchadnezzar	2	king of Babel
 nebuchadnezzar	3	king Nebuchadnezzar
@@ -2709,8 +2704,7 @@ seir	1	hairy, shaggy
 seled	1	jump for joy
 semachiah	1	y-h-v-h sustains, consecrates
 semein	1	y-h-v-h has heard or famous
-senaah	1	hated one
-senaah	2	hated one
+senaah-2	2	hated one
 sennacherib	1	Sin has increased the brothers; Sin replace the [lost] brothers!
 sennacherib	2	king of Assyria
 seorim	1	one born at the time of the barley [harvest]
