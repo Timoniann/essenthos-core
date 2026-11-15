@@ -20,8 +20,8 @@ internal sealed record Applied(IReadOnlyList<string> Changed, IReadOnlyCollectio
 /// <c>forge build --apply</c>, the daily path (DOC-0224 §13, NOT-0216 D13): the configured database takes only what moved
 /// since <c>build/served/&lt;db&gt;</c> says it was built. The pairs whose final moved, the records, and the Strong and
 /// forms indexes of the texts whose index moved are replaced in one transaction; the names on words and the spellings,
-/// which a records load empties, are kept across it by record slug. The spellings are then counted again and the names
-/// loaded again each in a transaction of its own, so every commit leaves a whole database. A text whose words moved, or
+/// which a records load empties, are kept across it by record slug. The spellings are then counted again and the names of
+/// the texts whose projection moved replaced each in a transaction of its own, so every commit leaves a whole database. A text whose words moved, or
 /// a carried table or one made whole from files (<c>tables/</c>), needs <c>build --into</c>.
 /// </summary>
 internal sealed class BuildApply(string connectionString, ProductStore store, ProductGraph graph, IServiceProvider services, ILogger logger)
@@ -83,7 +83,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var verses = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         var strength = new SortedSet<string>(StringComparer.Ordinal);
-        bool records = false, names = false, spellings = false;
+        var names = new SortedSet<string>(StringComparer.Ordinal);
+        bool records = false, spellings = false;
         foreach (var product in changed)
         {
             if (graph.Find(product) is not { } line)
@@ -108,7 +109,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                     frames.Add(bound["text"]);
                     break;
                 case "names/projected/{text}":
-                    names = true;
+                    names.Add(bound["text"]);
                     break;
                 case "texts/{text}/index/strong" or "texts/{text}/index/occurrences":
                     strong.Add(bound["text"]);
@@ -232,14 +233,16 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             });
         }
 
-        if (names)
+        // Only the texts whose projection moved are replaced, by their words; when most moved, the whole table is loaded again
+        // without its indexes, which is then the faster way (PRB-1484).
+        if (names.Count > 0)
         {
-            await serving.Timed("apply", "names", async () =>
-            {
-                var projection = new NamesProjection(store);
-                var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
-                return (await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken, readBack: false)).Rows;
-            });
+            var projection = new NamesProjection(store);
+            var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
+            var whole = names.Count * 2 > texts.Count;
+            await serving.Timed("apply", whole ? "names of every text" : $"names of {string.Join(",", names)}", async () => whole
+                ? (await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken, readBack: false)).Rows
+                : (await NamesLoad.Replace(connectionString, projection.Store, [.. names], cancellationToken)).Rows);
         }
 
         if (frames.Count > 0)

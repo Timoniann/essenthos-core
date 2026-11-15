@@ -29,6 +29,44 @@ internal static class NamesLoad
         CREATE INDEX IF NOT EXISTS ix_word_entity_entity_id ON word_entity (entity_id);
         """;
 
+    /// <summary>
+    /// Replaces the rows of these texts' words only, keeping every other text's and the table's indexes: what an apply does
+    /// when some texts' projections moved (PRB-1484). A text named here with no projection left loses its rows. The rows
+    /// come out as <see cref="Run"/> makes them, so the table matches a whole load row for row, ids left out.
+    /// </summary>
+    public static async Task<Outcome> Replace(string connectionString, ProductStore store, IReadOnlyList<string> texts, CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        var records = await Records(connection, cancellationToken);
+        var clock = Stopwatch.StartNew();
+        var ids = new WordIdCache(store, WordIdTable.For(store));
+        var projected = texts.Where(text => store.Exists(NameProducts.Projected(text))).ToList();
+        var lines = new (List<string> Lines, long UnknownRecords, long UnknownWords)[projected.Count];
+        Parallel.For(0, projected.Count, new ParallelOptions { CancellationToken = cancellationToken },
+            i => lines[i] = Lines(store, projected[i], records, ids));
+
+        await using (var transaction = await connection.BeginTransactionAsync(cancellationToken))
+        {
+            await using (var delete = new NpgsqlCommand(
+                             "DELETE FROM word_entity a USING word w JOIN text t ON t.id = w.text_id WHERE w.id = a.word_id AND t.slug = ANY(@texts)",
+                             connection) { CommandTimeout = 0 })
+            {
+                delete.Parameters.AddWithValue("texts", texts.ToArray());
+                await delete.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            await Copy(connection, lines, cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+        }
+
+        var load = clock.Elapsed;
+        clock.Restart();
+        await Execute(connection, "ANALYZE word_entity;", cancellationToken);
+        return new Outcome(lines.Sum(l => (long)l.Lines.Count), projected.Count, lines.Sum(l => l.UnknownRecords), lines.Sum(l => l.UnknownWords),
+            load, clock.Elapsed, null);
+    }
+
     /// <param name="readBack">Read the table back and compare it with the products (the names-load verb's proof); a build
     /// discards the comparison, so it leaves it out.</param>
     public static async Task<Outcome> Run(string connectionString, ProductStore store, IReadOnlyList<string> texts, CancellationToken cancellationToken,
@@ -36,16 +74,7 @@ internal static class NamesLoad
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
-        var records = new Dictionary<string, int>(StringComparer.Ordinal);
-        await using (var command = new NpgsqlCommand("SELECT id, slug FROM entity", connection))
-        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
-        {
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                records[reader.GetString(1)] = reader.GetInt32(0);
-            }
-        }
-
+        var records = await Records(connection, cancellationToken);
         var clock = Stopwatch.StartNew();
         var ids = new WordIdCache(store, WordIdTable.For(store));
 
@@ -58,16 +87,7 @@ internal static class NamesLoad
         await using (var transaction = await connection.BeginTransactionAsync(cancellationToken))
         {
             await Execute(connection, "DROP INDEX IF EXISTS ix_word_entity_word_id_entity_id; DROP INDEX IF EXISTS ix_word_entity_entity_id; TRUNCATE word_entity CASCADE;", cancellationToken);
-            foreach (var text in lines)
-            {
-                await using var writer = await connection.BeginTextImportAsync(
-                    "COPY word_entity (word_id, entity_id, method, confidence, source, note, role, origin) FROM STDIN", cancellationToken);
-                foreach (var line in text.Lines)
-                {
-                    writer.Write(line);
-                }
-            }
-
+            await Copy(connection, lines, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         }
 
@@ -77,6 +97,34 @@ internal static class NamesLoad
         var indexes = clock.Elapsed;
         var comparison = readBack ? await ReadBack(connection, store, texts, records, cancellationToken) : null;
         return new Outcome(rows, texts.Count, unknownRecords, unknownWords, load, indexes, comparison);
+    }
+
+    private static async Task<Dictionary<string, int>> Records(NpgsqlConnection connection, CancellationToken cancellationToken)
+    {
+        var records = new Dictionary<string, int>(StringComparer.Ordinal);
+        await using var command = new NpgsqlCommand("SELECT id, slug FROM entity", connection);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            records[reader.GetString(1)] = reader.GetInt32(0);
+        }
+
+        return records;
+    }
+
+    /// <summary>One COPY per text, in the texts' order.</summary>
+    private static async Task Copy(NpgsqlConnection connection, (List<string> Lines, long UnknownRecords, long UnknownWords)[] lines,
+        CancellationToken cancellationToken)
+    {
+        foreach (var text in lines)
+        {
+            await using var writer = await connection.BeginTextImportAsync(
+                "COPY word_entity (word_id, entity_id, method, confidence, source, note, role, origin) FROM STDIN", cancellationToken);
+            foreach (var line in text.Lines)
+            {
+                writer.Write(line);
+            }
+        }
     }
 
     /// <summary>One text's names as COPY lines, with the names on a record or a word the database lacks counted and left out.</summary>

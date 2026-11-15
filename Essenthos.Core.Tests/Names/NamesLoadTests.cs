@@ -78,6 +78,40 @@ public sealed class NamesLoadTests : IDisposable
         (await _db.WordEntities.IgnoreQueryFilters().CountAsync()).Should().Be(3);
     }
 
+    [Fact]
+    public async Task ReplacingOneTextsNamesKeepsEveryOtherTexts()
+    {
+        Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (1, 11, ["Иоакима", "Израиля"]));
+        Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 11, ["יכניה", "ישראל"]));
+        foreach (var slug in new[] { "jehoiachin", "israelites" })
+        {
+            _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = slug, Name = slug });
+        }
+
+        await _db.SaveChangesAsync();
+        var store = new ProductStore(_resources);
+        var russian = await Words(store, "RUSV");
+        var hebrew = await Words(store, "BHSA");
+        void Project(string text, params ProjectedName[] names)
+        {
+            using var writer = store.Create(NameProducts.Projected(text), ProductKind.Machine, ProjectedName.Schema(text), "test", []);
+            writer.WriteAll(names);
+        }
+
+        WordKey Key(string text, int position) => new(text, new VerseKey(1, 1, 11), position);
+        Project("BHSA", new ProjectedName(Key("BHSA", 1), "jehoiachin", NameRoles.Name, NameOrigins.Settled, null, "manual", null, "a test"));
+        Project("RUSV", new ProjectedName(Key("RUSV", 1), "jehoiachin", NameRoles.Name, NameOrigins.Projected, null, "manual", null, "a test"));
+        var connection = _database.NewConnection().ConnectionString;
+        await NamesLoad.Run(connection, store, ["BHSA", "RUSV"], CancellationToken.None);
+
+        Project("RUSV", new ProjectedName(Key("RUSV", 2), "israelites", NameRoles.People, NameOrigins.Projected, null, "manual", null, "a test"));
+        var outcome = await NamesLoad.Replace(connection, store, ["RUSV"], CancellationToken.None);
+
+        outcome.Rows.Should().Be(1);
+        (await Rows()).Select(r => (r.Word, r.Record)).Should().BeEquivalentTo([(hebrew[0], "jehoiachin"), (russian[1], "israelites")],
+            "only the moved text's rows are replaced (PRB-1484)");
+    }
+
     /// <summary>The text's words as its words product, each word renumbered in the database with the id its key gives it, as a build does.</summary>
     private async Task<long[]> Words(ProductStore store, string slug)
     {
