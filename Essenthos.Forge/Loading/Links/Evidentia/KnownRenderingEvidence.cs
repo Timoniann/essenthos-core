@@ -368,7 +368,8 @@ internal sealed class EvidentiaKnownRenderingIndex(
     /// <item>Where a link numbers some of its words and not others, the words it leaves without a number render the
     /// grammar of the numbered ones (the laying gives a helper, a case preposition or a verb-ending pronoun no number,
     /// PRB-1645), so they teach nothing. A link that numbers none of its words (the Berean's, the Reina-Valera's) is read
-    /// whole, as before.</item>
+    /// whole, as before, and so is a link to the Hebrew: the King James's Old Testament is not CrossWire's laying, and
+    /// skipping its unnumbered words there cost the benchmark's Genesis, Ruth and Jonah 0.5-1.5 points.</item>
     /// <item>Of a link naming several original words, a word whose own Strong number one of them carries renders that
     /// one; any other word renders the words that are not the article, and every word where all are articles: the
     /// reading of a composition's middle link (<see cref="Essenthos.Core.Mapping.MappingLinks.Targets"/>).</item>
@@ -377,7 +378,9 @@ internal sealed class EvidentiaKnownRenderingIndex(
     internal static IEnumerable<RenderingObservation> OwnTargets(IEnumerable<RenderingObservation> link)
     {
         var words = link.GroupBy(observation => (observation.VerseId, observation.SourcePosition)).ToList();
-        var numbered = words.Count > 1 && words.Any(word => word.First().SourceStrongNumber is not null);
+        var numbered = words.Count > 1
+            && words.Any(word => word.First().SourceStrongNumber is not null)
+            && words.All(word => word.All(observation => observation.TargetStrongNumber.StartsWith('G')));
         return words
             .Where(word => !numbered || word.First().SourceStrongNumber is not null)
             .SelectMany(word =>

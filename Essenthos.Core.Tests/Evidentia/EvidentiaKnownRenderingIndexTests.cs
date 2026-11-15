@@ -165,10 +165,15 @@ public class EvidentiaKnownRenderingIndexTests
         [
             // A link that numbers none of its words, as the Berean's: read whole.
             Row(8, "it", null, "G3049", 24), Row(9, "credited", null, "G3049", 24),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            // A link to the Hebrew is read whole: the King James's Old Testament is not CrossWire's laying.
+            Row(10, "beginning", null, "H7225", 25), Row(11, "created", "H1254", "H7225", 25),
         ]));
 
         learnt.Select(observation => $"{observation.SourceSurface} {observation.TargetStrongNumber}").Should().Equal(
-            "God G2316", "the G3588", "Spirit G4151", "Lord G2316", "come G2064", "it G3049", "credited G3049");
+            "God G2316", "the G3588", "Spirit G4151", "Lord G2316", "come G2064", "it G3049", "credited G3049",
+            "beginning H7225", "created H7225");
     }
 
     [Fact]
