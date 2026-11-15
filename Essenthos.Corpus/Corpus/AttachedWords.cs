@@ -1,6 +1,3 @@
-using Essenthos.Core.Database;
-using Essenthos.Core.Database.Entities.Enums;
-
 namespace Essenthos.Core.Corpus;
 
 /// <summary>
@@ -17,10 +14,8 @@ namespace Essenthos.Core.Corpus;
 /// </para>
 ///
 /// <para>
-/// A decision recorded before the head pair was kept, or written again from the ledger, which keeps
-/// words by their address, names its head only by the surface in its rationale. There the head is
-/// the word of that surface in the same verse, nearest first, that the run placed on the same
-/// counterpart or that a link joins to it.
+/// The build marks the role and the head from the ledger (<c>evidentia-pairs</c>), where the run kept the head's pair or
+/// names the head by the surface in its rationale.
 /// </para>
 /// </summary>
 internal static class AttachedWords
@@ -30,46 +25,4 @@ internal static class AttachedWords
 
     /// <summary>The attachments by which a word renders one word together with its head, rather than writing its inflection.</summary>
     public static readonly IReadOnlyList<string> PhraseAttachments = ["PhrasalParticle", "VerbOfItsParticle"];
-
-    /// <summary>
-    /// Marks every link word an approved attached-word verdict wrote with its role and head, of one run
-    /// or of all of them. Idempotent: a word already marked is left as it is.
-    /// </summary>
-    public static FormattableString Mark(int? runId) =>
-        $"""
-         WITH attached AS (
-             SELECT r.link_id, d.source_word_id AS word_id, d.target_word_id, d.run_id, d.rationale,
-                    d.anchor_source_word_id, d.anchor_target_word_id, w.verse_id, w.position
-             FROM evidentia_review r
-             JOIN evidentia_decision d ON d.id = r.decision_id
-             JOIN word w ON w.id = d.source_word_id
-             WHERE d.kind = {DecisionKind} AND r.verdict = {EnumSpelling.Of(EvidentiaVerdict.Approved)} AND r.link_id IS NOT NULL
-               AND ({runId}::integer IS NULL OR d.run_id = {runId}::integer)
-         ),
-         headed AS (
-             SELECT a.link_id, a.word_id, a.anchor_source_word_id AS head_word_id, a.rationale
-             FROM attached a
-             WHERE a.anchor_source_word_id IS NOT NULL AND a.anchor_target_word_id = a.target_word_id
-             UNION ALL
-             (SELECT DISTINCT ON (a.link_id, a.word_id) a.link_id, a.word_id, h.id, a.rationale
-              FROM attached a
-              JOIN word h ON h.verse_id = a.verse_id AND h.id <> a.word_id
-              WHERE a.anchor_source_word_id IS NULL
-                AND starts_with(a.rationale, split_part(a.rationale, ' ', 1) || ' of ''' || h.text || '''')
-                AND (EXISTS (SELECT 1 FROM evidentia_decision hd
-                             WHERE hd.run_id = a.run_id AND hd.source_word_id = h.id
-                               AND hd.target_word_id = a.target_word_id)
-                     OR EXISTS (SELECT 1 FROM link_word hl
-                                JOIN link_word ht ON ht.link_id = hl.link_id AND ht.side <> hl.side
-                                WHERE hl.word_id = h.id AND ht.word_id = a.target_word_id))
-              ORDER BY a.link_id, a.word_id, abs(h.position - a.position))
-         )
-         UPDATE link_word lw
-         SET role = CASE WHEN split_part(headed.rationale, ' ', 1) = ANY ({PhraseAttachments.ToArray()})
-                         THEN {EnumSpelling.Of(LinkWordRole.PhraseMember)}
-                         ELSE {EnumSpelling.Of(LinkWordRole.Attached)} END,
-             head_word_id = headed.head_word_id
-         FROM headed
-         WHERE lw.link_id = headed.link_id AND lw.word_id = headed.word_id AND lw.role IS NULL
-         """;
 }

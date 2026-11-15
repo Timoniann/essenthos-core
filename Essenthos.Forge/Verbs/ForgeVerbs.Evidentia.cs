@@ -143,7 +143,7 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary>A verdict is recorded and goes no further; evidentia-apply is the only thing that writes a link.</summary>
+    /// <summary>A verdict is recorded in the run and the ledger; the build makes its links from the ledger (evidentia-pairs).</summary>
     private static async Task<int> EvidentiaVerdict(ForgeRun forge, string[] args)
     {
         using var verdictScope = forge.Scope();
@@ -155,7 +155,7 @@ internal static partial class ForgeVerbs
             ? await queue.Approve(ids, reviewer, OptionalText(args, "--note"))
             : await queue.Reject(ids, reviewer, OptionalText(args, "--note"));
         forge.Logger.LogInformation(
-            "{Settled} decisions {Verdict}; nothing reaches the corpus until evidentia-apply --write",
+            "{Settled} decisions {Verdict}; they reach the corpus through the ledger at the next forge build",
             settled, approving ? "approved" : "rejected");
         await forge.Record(verdictScope, await queue.RunOf(ids.First()));
         return 0;
@@ -169,7 +169,7 @@ internal static partial class ForgeVerbs
             long.Parse(correctDecision), long.Parse(correctTarget),
             OptionalText(args, "--reviewer") ?? string.Empty, OptionalText(args, "--note"));
         forge.Logger.LogInformation(
-            "Decision {Decision} corrected to word {Target}; nothing reaches the corpus until evidentia-apply --write",
+            "Decision {Decision} corrected to word {Target}; it reaches the corpus through the ledger at the next forge build",
             correctDecision, correctTarget);
         await forge.Record(correctScope,
             await correctScope.ServiceProvider.GetRequiredService<EvidentiaReviewQueue>().RunOf(long.Parse(correctDecision)));
@@ -185,7 +185,7 @@ internal static partial class ForgeVerbs
             OptionalText(args, "--note"));
         forge.Logger.LogInformation(
             "{Accepted} proposals accepted with their tier, unread. They will be written as rule-based claims, never as a " +
-            "person's, and only by evidentia-apply --write", accepted);
+            "person's, by the next forge build from the ledger", accepted);
         await forge.Record(acceptScope, int.Parse(acceptRun));
         return 0;
     }

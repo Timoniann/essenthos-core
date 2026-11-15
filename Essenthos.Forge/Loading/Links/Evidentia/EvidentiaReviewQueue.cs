@@ -25,8 +25,8 @@ internal sealed record EvidentiaQueueFilter(
 ///
 /// <para>
 /// A proposal is waiting exactly when it has no review, so nothing has to be enqueued and nothing
-/// can fall out of the queue. A verdict is recorded here and goes no further — writing it into the
-/// corpus is <see cref="EvidentiaLinkWriter"/>'s, and only on an explicit command.
+/// can fall out of the queue. A verdict is recorded here and in the ledger (<see cref="EvidentiaLedger"/>), and
+/// reaches the corpus only through the build, which reads the ledger (<c>evidentia-pairs</c>).
 /// </para>
 /// </summary>
 internal sealed class EvidentiaReviewQueue(AppDbContext db)

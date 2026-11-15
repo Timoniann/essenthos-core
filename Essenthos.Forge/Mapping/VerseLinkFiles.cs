@@ -28,7 +28,7 @@ internal static class VerseLinkFiles
     public static List<string> Pairs(ProductStore store) =>
     [
         .. MappingProducts.Pairs(store).Where(pair => store.Exists(MappingProducts.Of(pair, MappingProducts.Final)))
-            .Concat(Loading.Links.VerseLinkLoader.DeclaredPairs
+            .Concat(Loading.Links.VerseLinkRule.DeclaredPairs
                 .Where(d => store.Exists(VerseManifestRow.ProductOf(d.From)) && store.Exists(VerseManifestRow.ProductOf(d.To)))
                 .Select(d => MappingProducts.Pair(d.From, d.To)))
             .Distinct().Order(StringComparer.Ordinal),

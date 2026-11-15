@@ -87,7 +87,7 @@ internal sealed record PairFrames(TextFrame From, TextFrame To, bool ReverseLink
 
 /// <summary>
 /// The verse links of a pair from the two texts' frames and the pair's final, reading no database: the rule
-/// <see cref="VerseLinkLoader"/> applies to a corpus, as a function of files (DOC-0224 §5).
+/// <see cref="VerseLinkRule"/> applies, as a function of files (DOC-0224 §5).
 /// <list type="number">
 /// <item>Verses standing at one primary address (under the name <see cref="TwinPassages"/> joins it at) are one
 /// link, taken as connected components; a declared pair leaves out the books its declaration names and, where it
@@ -109,7 +109,7 @@ internal static class VerseLinks
     private const string ByHandNote = "the verse a word link made by hand puts against that one";
 
     public static DeclaredVersePair? Declaration(string from, string to) =>
-        VerseLinkLoader.DeclaredPairs.FirstOrDefault(pair => pair.From == from && pair.To == to);
+        VerseLinkRule.DeclaredPairs.FirstOrDefault(pair => pair.From == from && pair.To == to);
 
     /// <summary>A link while it is drawn: each text's verses by their place in it, counted from 1.</summary>
     private sealed class Draft(HashSet<int> from, HashSet<int> to, string relation, string method, double? confidence, string source, string? note)
@@ -202,7 +202,7 @@ internal static class VerseLinks
     }
 
     /// <summary>
-    /// The links the frame draws (<see cref="VerseLinkLoader"/>'s join on a corpus with none yet): components of the
+    /// The links the frame draws (<see cref="VerseLinkRule"/>): components of the
     /// primary addresses, the Ge'ez's reading and verse map. Nothing for a pair neither linked nor declared.
     /// </summary>
     private static List<Draft> Structure(TextFrame from, TextFrame to, bool linked, DeclaredVersePair? declaration)
@@ -217,11 +217,11 @@ internal static class VerseLinks
         var there = Addressed(to);
         if (declaration is not null)
         {
-            var left = VerseLinkLoader.Outside(declaration, linked);
+            var left = VerseLinkRule.Outside(declaration, linked);
             here = here.Where(address => !left.Contains(address.Key.Item1)).ToDictionary(address => address.Key, address => address.Value);
             if (declaration.AgreeingChaptersOnly)
             {
-                (here, there) = VerseLinkLoader.Agreeing(here, there, Covered(from), Covered(to), declaration.Without);
+                (here, there) = VerseLinkRule.Agreeing(here, there, Covered(from), Covered(to), declaration.Without);
             }
         }
 
@@ -238,11 +238,11 @@ internal static class VerseLinks
         var alone = 0;
         var frameMethod = EnumSpelling.Of(LinkMethod.StatedBySource);
         var equals = EnumSpelling.Of(LinkRelation.Equals);
-        foreach (var component in VerseLinkLoader.Components(here, there, ref alone))
+        foreach (var component in VerseLinkRule.Components(here, there, ref alone))
         {
             var reading = component.From.Where(read.ContainsKey).ToList();
             drafts.Add(reading.Count == 0
-                ? new Draft([.. component.From], [.. component.To], equals, frameMethod, null, VerseLinkLoader.Source, null)
+                ? new Draft([.. component.From], [.. component.To], equals, frameMethod, null, VerseLinkRule.Source, null)
                 : new Draft([.. component.From], [.. component.To], equals, EnumSpelling.Of(LinkMethod.Aligner),
                     GeezVersification.Confidence(reading.Select(v => read[v])), GeezVersification.Source, null));
         }
@@ -383,7 +383,7 @@ internal static class VerseLinks
     /// The verse pairs a stated source's word links cross, or a transposition's, or a link made by hand (a person's, or a
     /// ruling's accepted shape), where nothing joins them yet: a source or a person saying this word renders that one says
     /// the two verses answer each other. Where a source and a hand link cross the same two verses, the source's stands. A
-    /// model's link testifies to nothing and is never one of them (<see cref="VerseLinkLoader"/>'s StatedVerseImport).
+    /// model's link testifies to nothing and is never one of them.
     /// </summary>
     private static IEnumerable<Draft> Stated(PairFrames frames, IReadOnlyList<FinalRow> final, Func<int, int, bool> joined)
     {

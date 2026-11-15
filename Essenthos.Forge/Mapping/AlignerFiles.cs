@@ -307,11 +307,11 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
 
     /// <summary>
     /// The chapters of the first text its verse links to the second leave out, under the name <see cref="TwinPassages"/> joins
-    /// them at (<see cref="VerseLinkLoader"/>'s rule over the two frames): empty for a pair joined wherever the two share an address.
+    /// them at (<see cref="VerseLinkRule"/> over the two frames): empty for a pair joined wherever the two share an address.
     /// </summary>
     public IReadOnlySet<(int Book, int Chapter)> Refused(string fromSlug, string toSlug)
     {
-        var declaration = VerseLinkLoader.DeclaredPairs.FirstOrDefault(pair => pair.From == fromSlug && pair.To == toSlug);
+        var declaration = VerseLinkRule.DeclaredPairs.FirstOrDefault(pair => pair.From == fromSlug && pair.To == toSlug);
         if (declaration is not { AgreeingChaptersOnly: true })
         {
             return new HashSet<(int, int)>();
@@ -321,7 +321,7 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             text.Verses.SelectMany(text.Addresses).Select(address => (address.Book, address.Chapter, address.Verse)).Distinct()
                 .Select(TwinPassages.Joined);
 
-        return VerseLinkLoader.Differing(Reached(texts[fromSlug]), Reached(texts[toSlug]), declaration.Without);
+        return VerseLinkRule.Differing(Reached(texts[fromSlug]), Reached(texts[toSlug]), declaration.Without);
     }
 
     /// <summary>

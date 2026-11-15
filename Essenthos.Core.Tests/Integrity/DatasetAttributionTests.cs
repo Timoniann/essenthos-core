@@ -244,7 +244,7 @@ public sealed class DatasetAttributionTests
     [InlineData(6, "1.0.0+f357c04dbe1f", "supplied-article")]
     public void NoEvidentiaRunIsUndeclared(int run, string rules, string kind)
     {
-        Datasets.Of(EvidentiaLinkWriter.RuleSource(run, rules, kind)).Should().Be("evidentia");
+        Datasets.Of(EvidentiaClaims.RuleSource(run, rules, kind)).Should().Be("evidentia");
         var evidentia = Of("evidentia");
         evidentia.Links.Should().BeTrue();
         evidentia.Covers.Should().Contain("UDPipe").And.Contain("http://hdl.handle.net/11234/1-3131");
