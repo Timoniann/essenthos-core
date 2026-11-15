@@ -20,7 +20,7 @@ internal static class ResourcePaths
 
     /// <summary>
     /// What makes a <c>Resources</c> folder the corpus rather than a namesake. The build copies
-    /// <c>Resources/WorldHistory</c> beside the assembly, so an output folder has a <c>Resources</c> of
+    /// <c>Resources/Maimonides</c> beside the assembly, so an output folder has a <c>Resources</c> of
     /// its own holding one source out of twenty, and a search that took the first folder of that name
     /// stopped there and loaded from it. The manifest is committed with the real one and nowhere else.
     /// </summary>

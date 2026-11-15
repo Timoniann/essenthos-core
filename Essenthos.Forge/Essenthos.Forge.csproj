@@ -38,103 +38,19 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- The one part of Resources/ small enough to be committed, so it travels with the
-             assembly and is read from the output folder rather than through Dataset:ResourcesPath.
-             That is why a clean checkout can load the world layer with no fetch step at all. -->
-        <Content Include="..\Resources\WorldHistory\**" LinkBase="Resources\WorldHistory" CopyToOutputDirectory="PreserveNewest" />
-
         <!-- The commandments as this project curated them from two public-domain works, committed
              for the same reason and read the same way. -->
         <Content Include="..\Resources\Maimonides\commandments.tsv" Link="Resources\Maimonides\commandments.tsv" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
-        <!-- The record of what a second pass found wrong, what it named instead, which answers a
-             later run replaced, and the owner's rulings on what none of them could settle. Inside
-             the assembly rather than beside it: a copy of the corpus that had the model's answers
-             and not these would load the readings somebody has already established are false and
-             the answers a later run superseded, and a file that can go missing is one that
-             eventually does. -->
-        <Content Remove="Loading\Encyclopedia\RefusedReadings.json" />
-        <Content Remove="Loading\Encyclopedia\SupersededReadings.json" />
-        <Content Remove="Loading\Encyclopedia\OwnRecords.json" />
-        <Content Remove="Loading\Encyclopedia\ReviewRecords.json" />
-        <Content Remove="Loading\Encyclopedia\Peoples.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\RefusedReadings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SupersededReadings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
+        <!-- The lists the Forge still carries embedded: what a person is known for, the clauses held back, the records
+             the owner holds apart, the things and observances the owner's console edits, the coordinates read
+             from other sources and the folds declined. -->
         <EmbeddedResource Include="Loading\Encyclopedia\KnownFor.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
         <Content Remove="Loading\Encyclopedia\WithheldClauses.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\WithheldClauses.json" />
-        <Content Remove="Loading\Encyclopedia\TitleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\TitleRecords.json" />
-        <Content Remove="Loading\Encyclopedia\TitleReadings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\TitleReadings.json" />
-        <Content Remove="Loading\Encyclopedia\UnsettledRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecords.json" />
-        <Content Remove="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
-        <Content Remove="Loading\Encyclopedia\UnsettledRecordsThird.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecordsThird.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\GenealogyRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsSecond.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsThird.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsFourth.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\AddressedRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecordsSecond.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\DatasetRecordRulings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PhilipRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SynodalJehoiakimRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\RevelationTribeRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristTitleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\OhienkoAdamRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\OhienkoGentilicRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristBearerRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsFifth.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\ReviewNoteRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NoNameRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SecondBearerRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\KinshipRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PeoplesNamedRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\FamilyTailsRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeReadingRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeTiebreakRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeTiebreakSecondRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PatriarchJacobRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\EsauWivesRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NationEponymRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\UnreadNameRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\UnreadHebrewNameRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PsalmTitleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesReadAgainRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\AncientWordRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SeptuagintNameListRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\SynodalPsalmTitleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\KulishTwoWordNameRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NamesReadPerVerseRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\FatherOfTownRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\FatherOfTownPeopleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\AdamEveRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\OwnerMarkRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\AngelRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\EshtemoaRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\LukeLordRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PaulsCircleRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\AntipatrisRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\TwoSidedIdentityRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\JuniaRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PlacesOfOneNameRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\NestleNameRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\HeldApartRecords.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\TwelveRecords.json" />
-        <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
-        <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />
-        <EmbeddedResource Include="Loading\Encyclopedia\CaesarReadings.json" />
         <Content Remove="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ObjectRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\LocationSupplements.json" />
@@ -144,12 +60,6 @@
         <EmbeddedResource Include="Loading\Encyclopedia\NarrativeRecords.json" />
         <Content Remove="Loading\Encyclopedia\DuplicateRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\DuplicateRecords.json" />
-
-        <!-- The peoples this corpus names, and the two things about them nothing else can supply:
-             what to call the nine gentilics whose entry yields no usable English word, and the
-             tribes of Israel, which no lexicon names because Hebrew names a tribe with the
-             ancestor's own word. -->
-        <EmbeddedResource Include="Loading\Encyclopedia\Peoples.json" />
 
         <!-- The public works chosen to picture people and places, each with its author, licence and
              source page. The pictures themselves are under Resources/Images, outside git. -->

@@ -120,26 +120,6 @@ public sealed class RejectedRenderingTests : IDisposable
         found.Should().BeEquivalentTo(genesis.Select(r => (words[r.From].Id, words[r.To].Id)));
     }
 
-    /// <summary>
-    /// And the words themselves are named as their verse names them: the Ommaeans and the Ge'ez Ammyos
-    /// are the Emim, Save and Sewi are Shaveh Kiriathaim.
-    /// </summary>
-    [Fact]
-    public void TheSeptuagintsAndTheGeezGenesisFourteenFiveAreRuledTheEmimAndShaveh()
-    {
-        var rulings = SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)
-            .Where(r => r.Reference == "GEN 14:5" && r.Text is "GRCBRENT" or "GEEZ81")
-            .ToDictionary(r => (r.Text, r.Position), r => r.Existing);
-
-        rulings.Should().BeEquivalentTo(new Dictionary<(string, int), string?>
-        {
-            [("GRCBRENT", 29)] = "emims",
-            [("GRCBRENT", 32)] = "shavehkiriathaim",
-            [("GEEZ81", 14)] = "emims",
-            [("GEEZ81", 16)] = "shavehkiriathaim",
-        });
-    }
-
     private static NewLink Draft(Word from, Word to) => new(from.TextId, to.TextId, LinkRelation.Renders,
         LinkMethod.Aligner, 0.98, Source, null, [from.Id], [to.Id]);
 }

@@ -148,7 +148,6 @@
     { "path": "Resources/Essenthos/evidentia/**", "areas": ["Evidentia"] },
     { "path": "Resources/Essenthos/lexicon/**", "areas": ["Lexicon"] },
     { "path": "Resources/Essenthos/page-readings/**", "areas": ["Witnesses"] },
-    { "path": "Resources/Essenthos/sites/**", "areas": ["Platform"] },
     { "path": "Resources/Essenthos/visitors/**", "areas": ["Platform"] },
     { "path": "Resources/Essenthos/**", "areas": ["Records", "Names"] },
     { "path": "Resources/**", "areas": ["Witnesses", "Integrity"] }

@@ -65,7 +65,7 @@ public sealed class RecordListFilesTests : IDisposable
     public void TheHeldApartFileHoldsEveryEmbeddedPair()
     {
         WrittenAndRead("records/held-apart").Select(r => new HeldApartPair(r[0]!, r[1]!, r[2]!, r[3]!))
-            .Should().BeEquivalentTo(SenseReadingFiles.HeldApart().Pairs);
+            .Should().BeEquivalentTo(HeldApartRecords.Read().Pairs);
     }
 
     [Fact]

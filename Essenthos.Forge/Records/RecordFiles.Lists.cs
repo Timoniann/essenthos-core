@@ -33,8 +33,8 @@ internal static partial class RecordFiles
         new("records/held-apart", ProductKind.Hand,
             "one other why by",
             "", "", [],
-            About: SenseReadingFiles.HeldApart().Policy,
-            Listed: () => SenseReadingFiles.HeldApart().Pairs
+            About: HeldApartRecords.Read().Policy,
+            Listed: () => HeldApartRecords.Read().Pairs
                 .Select(p => new string?[] { p.One, p.Other, p.Why, p.DecidedBy })
                 .OrderBy(r => r[0], StringComparer.Ordinal).ThenBy(r => r[1], StringComparer.Ordinal),
             Check: "SELECT count(*) FROM s JOIN entity a ON a.slug = s.one JOIN entity b ON b.slug = s.other WHERE a.id <> b.id"),

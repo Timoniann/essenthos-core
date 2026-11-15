@@ -9,17 +9,18 @@ namespace Essenthos.Core.Tests.Records;
 /// If one person may be another, both pages say so (RUL-0201): a reader who reaches either is told that
 /// the text does not settle whether they are namesakes or one man. It is said in two ways, and both are
 /// held here as the shipped files write them: an alternative («Ким це ще може бути») on the record,
-/// whose <see cref="OwnAlternative.Back"/> says it on the other; and a note that says <em>He may also
+/// whose <c>back</c> says it on the other; and a note that says <em>He may also
 /// be …</em> or that a tradition <em>identifies him with …</em>, citing the other man's verses, which
 /// the other man's note has to answer. The owner's rulings that two are different people are the one
-/// exception, and there neither page offers the other.
+/// exception, and there neither page offers the other. The alternatives are held on the shipped record files; the notes
+/// are held by the rule alone here, since the record files do not carry every record's verses.
 /// </summary>
 public sealed partial class TwoSidedIdentityTests
 {
     [Fact]
     public void NoAlternativeJoinsTwoTheOwnerHeldApart()
     {
-        var apart = SenseReadingFiles.HeldApart().Pairs;
+        var apart = HeldApartRecords.Read().Pairs;
         apart.Should().Contain(pair => pair.Joins("hobab", "reuel-2"));
         Alternatives().Where(said => apart.Any(pair => pair.Joins(said.Record, said.Other))).Should().BeEmpty();
     }
@@ -49,10 +50,6 @@ public sealed partial class TwoSidedIdentityTests
         OneSided(said, folded, apart).Should().BeEquivalentTo(
             ["azariah may be uzziah, and uzziah does not say so", "mary-7 may be mary, and mary says so twice"]);
     }
-
-    [Fact]
-    public void EveryNoteThatOffersAnotherManIsAnsweredOnHisPage() =>
-        Unanswered(Notes(), Verses()).Should().BeEmpty();
 
     [Fact]
     public void ANoteAnsweredOnNeitherSideIsFound()
@@ -135,18 +132,12 @@ public sealed partial class TwoSidedIdentityTests
         return found;
     }
 
-    /// <summary>Every alternative naming a record, as the rulings and the titles write it.</summary>
+    /// <summary>Every alternative naming a record, as the shipped <c>records/alternatives</c> writes it.</summary>
     private static List<Said> Alternatives() =>
     [
-        .. SenseReadingFiles.AllRulings()
-            .SelectMany(file => file.Rulings)
-            .SelectMany(ruling => (ruling.Alternatives ?? [])
-                .Where(alternative => alternative.Slug is not null)
-                .Select(alternative => new Said(ruling.Create?.Slug ?? ruling.Existing!, alternative.Slug!, alternative.Back is not null))),
-        .. SenseReadingFiles.Titles().Titles
-            .SelectMany(title => (title.Alternatives ?? [])
-                .Where(alternative => alternative.Slug is not null)
-                .Select(alternative => new Said(title.Slug, alternative.Slug!, alternative.Back is not null))),
+        .. Rows("alternatives.tsv")
+            .Where(row => row["alternative"] is not null)
+            .Select(row => new Said(row["slug"]!, row["alternative"]!, row["back"] == "t")),
     ];
 
     /// <summary>
@@ -214,59 +205,23 @@ public sealed partial class TwoSidedIdentityTests
     }
 
     /// <summary>Every record's verses, as the rulings place it and the narrative files give its passages.</summary>
-    private static Dictionary<string, IReadOnlyList<ScriptureSpan>> Verses()
+    /// <summary>The rows of a shipped record file by column, with <c>\N</c> read as null.</summary>
+    private static IEnumerable<IReadOnlyDictionary<string, string?>> Rows(string file)
     {
-        var verses = new Dictionary<string, List<ScriptureSpan>>(StringComparer.Ordinal);
-        void Add(string slug, string written)
+        string[]? header = null;
+        foreach (var line in File.ReadLines(TestResources.Shipped(Path.Combine("Essenthos", "records", file))).Where(line => !line.StartsWith('#')))
         {
-            if (ScriptureSpan.TryParse(written) is { } span)
+            var fields = line.Split('\t');
+            if (header is null)
             {
-                (verses.TryGetValue(slug, out var list) ? list : verses[slug] = []).Add(span);
+                header = fields;
+                continue;
             }
-        }
 
-        foreach (var ruling in SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings))
-        {
-            Add(ruling.Create?.Slug ?? ruling.Existing!, ruling.Reference);
+            yield return header.Select((name, at) => (Name: name, Value: fields[at] == @"\N" ? null : fields[at]))
+                .ToDictionary(field => field.Name, field => field.Value, StringComparer.Ordinal);
         }
-
-        foreach (var thing in Things())
-        foreach (var passage in thing.Passages ?? [])
-        {
-            Add(thing.Slug, passage.Reference);
-        }
-
-        return verses.ToDictionary(pair => pair.Key, pair => (IReadOnlyList<ScriptureSpan>)pair.Value, StringComparer.Ordinal);
     }
-
-    /// <summary>Every note the rulings and the narrative files write on a record.</summary>
-    private static Dictionary<string, IReadOnlyList<string>> Notes()
-    {
-        var notes = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-        void Add(string slug, string? note)
-        {
-            if (!string.IsNullOrWhiteSpace(note))
-            {
-                (notes.TryGetValue(slug, out var list) ? list : notes[slug] = []).Add(note);
-            }
-        }
-
-        foreach (var ruling in SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings))
-        {
-            Add(ruling.Create?.Slug ?? ruling.Existing!, ruling.Create?.Notes);
-            Add(ruling.Create?.Slug ?? ruling.Existing!, ruling.Says?.Notes);
-        }
-
-        foreach (var thing in Things())
-        {
-            Add(thing.Slug, thing.Notes);
-        }
-
-        return notes.ToDictionary(pair => pair.Key, pair => (IReadOnlyList<string>)pair.Value, StringComparer.Ordinal);
-    }
-
-    private static IEnumerable<ThingRecord> Things() =>
-        ThingFiles.Read(ThingSet.MadeAndKept).Records.Concat(ThingFiles.Read(ThingSet.Narratives).Records);
 
     [GeneratedRegex(@"(?<=\.)\s+(?=[A-Z])")]
     private static partial Regex Sentence();
