@@ -19,11 +19,37 @@ internal static class EventMarks
 
     public const string OutsideScripture = "outside-scripture";
 
-    /// <summary>The title without the source's trailing asterisk.</summary>
-    public static string Unstarred(string name) => name.TrimEnd().TrimEnd('*').TrimEnd();
+    /// <summary>
+    /// The title as a heading: without the source's trailing asterisk, and opening with a capital, since
+    /// Wikidata labels its items in lower case (<em>general anaesthesia</em>) and a quoted title may open
+    /// mid-sentence.
+    /// </summary>
+    public static string Unstarred(string name) => Capitalised(name.TrimEnd().TrimEnd('*').TrimEnd());
 
     /// <summary>The same for a title that may be missing, such as a translation not held.</summary>
     public static string? UnstarredOrNull(string? name) => name is null ? null : Unstarred(name);
+
+    /// <summary>The first letter in upper case, past any opening quotation mark or bracket; a title opening with a digit is left.</summary>
+    private static string Capitalised(string title)
+    {
+        for (var i = 0; i < title.Length; i++)
+        {
+            var letter = title[i];
+            if (char.IsLetter(letter))
+            {
+                return char.IsLower(letter)
+                    ? title[..i] + char.ToUpperInvariant(letter) + title[(i + 1)..]
+                    : title;
+            }
+
+            if (char.IsLetterOrDigit(letter))
+            {
+                return title;
+            }
+        }
+
+        return title;
+    }
 
     /// <summary>What the notes say the year rests on, where they flag it with a starred heading.</summary>
     public static string? Of(string? notes) =>
