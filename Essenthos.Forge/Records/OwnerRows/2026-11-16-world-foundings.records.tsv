@@ -1,0 +1,28 @@
+# producer   by hand: the world events dated by a city's founding given the founding kind, so the badge beside 'Founding of …' does not say Building (PRB-1690), applied by forge owner-rows
+# by         Essenthos: the project owner's word of 2026-11-16 on PRB-1690 (the badge must not contradict the title); every world event the reader titles by a city's founding (Заснування, Gründung, Fundación) and kinded otherwise, read against its Wikidata types (WorldHistory/wikidata-inception.csv) by claude-opus-5-5 on 2026-11-16
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on. The kind came from the first Wikidata type of the item (a tell, an archaeological site, ruins, an urban area), which the deleted world-history loader mapped to Construction or Inception.
+entry	product	op	record	values	why
+PRB-1690	external/wikidata/events	amend	amarna	{"kind": "Founding"}	Amarna is Akhetaten, the city Akhenaten founded; Wikidata types it ancient city, archaeological site and tell
+PRB-1690	external/wikidata/events	amend	apollonia	{"kind": "Founding"}	Apollonia is a Greek city, a polis; Wikidata types it ancient city, polis and ruins
+PRB-1690	external/wikidata/events	amend	augsburg	{"kind": "Founding"}	Augsburg is a city, founded as Augusta Vindelicorum; Wikidata types it big city and district capital
+PRB-1690	external/wikidata/events	amend	augustaraurica	{"kind": "Founding"}	Augusta Raurica is a Roman city, a colonia; Wikidata types it Roman city and archaeological site
+PRB-1690	external/wikidata/events	amend	bath	{"kind": "Founding"}	Bath is a city, founded as Aquae Sulis; Wikidata types it city of the United Kingdom and urban area
+PRB-1690	external/wikidata/events	amend	carchemish	{"kind": "Founding"}	Carchemish is an ancient city on the Euphrates; Wikidata types it historical country and archaeological site
+PRB-1690	external/wikidata/events	amend	ebla	{"kind": "Founding"}	Ebla is an ancient city of Syria; Wikidata types it ancient city, historical country and tell
+PRB-1690	external/wikidata/events	amend	foundingofrome	{"kind": "Founding"}	the founding of Rome is a city's founding by its own title; Wikidata types it city founding and myth of origins
+PRB-1690	external/wikidata/events	amend	homs	{"kind": "Founding"}	Homs is a city, Emesa of old; Wikidata types it big city, populated place and tell
+PRB-1690	external/wikidata/events	amend	italica	{"kind": "Founding"}	Italica is the Roman city Scipio founded in Hispania; Wikidata types it archaeological site
+PRB-1690	external/wikidata/events	amend	lothal	{"kind": "Founding"}	Lothal is a city of the Indus Valley civilisation; Wikidata types it ancient city and archaeological site
+PRB-1690	external/wikidata/events	amend	nicomedia	{"kind": "Founding"}	Nicomedia is the city Nicomedes I founded; Wikidata types it ancient city and archaeological site
+PRB-1690	external/wikidata/events	amend	nicopolis	{"kind": "Founding"}	Nicopolis is the city Augustus founded after Actium; Wikidata types it ancient city and archaeological site
+PRB-1690	external/wikidata/events	amend	phanagoria	{"kind": "Founding"}	Phanagoria is a Greek colony, a city on the Taman peninsula; Wikidata types it archaeological site
+PRB-1690	external/wikidata/events	amend	piramesses	{"kind": "Founding"}	Pi-Ramesses is the city Ramesses II founded in the Delta; Wikidata types it ancient city and archaeological site
+PRB-1690	external/wikidata/events	amend	qatna	{"kind": "Founding"}	Qatna is an ancient city of Syria; Wikidata types it archaeological site and tell
+PRB-1690	external/wikidata/events	amend	qumran	{"kind": "Founding"}	Qumran is a settlement by the Dead Sea; Wikidata types it Jewish settlement and archaeological site
+PRB-1690	external/wikidata/events	amend	seleucia	{"kind": "Founding"}	Seleucia is the city Seleucus I founded on the Tigris; Wikidata types it ancient city and archaeological site
+PRB-1690	external/wikidata/events	amend	skarabrae	{"kind": "Founding"}	Skara Brae is a Neolithic settlement; Wikidata types it Neolithic settlement and archaeological site
+PRB-1690	external/wikidata/events	amend	thebes	{"kind": "Founding"}	Thebes is the ancient city of Upper Egypt; Wikidata types it ancient city, archaeological site and emporium
+PRB-1690	external/wikidata/events	amend	tigranocerta	{"kind": "Founding"}	Tigranocerta is the city Tigranes the Great founded; Wikidata types it ancient city and archaeological site
+PRB-1711	external/wikidata/events	amend	catholicchurch	{"kind": "Founding"}	The Catholic Church is a body of believers, not a building; Wikidata types it Christian Church, dated by its inception; the deleted rule read church as a building
+PRB-1711	external/wikidata/events	amend	copticorthodoxchurch	{"kind": "Founding"}	The Coptic Orthodox Church is a church as a body, not a building; Wikidata types it Oriental Orthodox churches, dated by its inception
+PRB-1711	external/wikidata/events	amend	syromalabarchurch	{"kind": "Founding"}	The Syro-Malabar Church is a church as a body, not a building; Wikidata types it Eastern Catholic Churches, dated by its inception

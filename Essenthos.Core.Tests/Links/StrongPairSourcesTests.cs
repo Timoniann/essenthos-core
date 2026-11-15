@@ -57,6 +57,16 @@ public sealed class StrongPairSourcesTests : IDisposable
             .Should().BeTrue();
     }
 
+    /// <summary>The declaration reaches the rows by the words their source begins with, so none is published unattributed.</summary>
+    [Fact]
+    public void The_Synodal_numbering_is_declared_and_its_rows_are_claimed()
+    {
+        var source = $"{SynodalStrongLinks.Credit}, matched within the verse against BHSA";
+
+        Datasets.Match(source)!.Obliges.Should().Contain("not for profit");
+        Datasets.Of(source).Should().Be("bju-synodal-strong");
+    }
+
     [Fact]
     public void The_King_James_sources_tell_their_rows_from_the_italics()
     {

@@ -1,131 +1,9 @@
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Diagnostics;
-using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using NpgsqlTypes;
 
 namespace Essenthos.Core.Loading.Links;
-
-/// <param name="Tagged">
-/// Words of the translation carrying a Strong number of the witness's series, which is everything
-/// this method has to work with. Luther 1912 tags 365,350 of its 696,963 words and the untagged
-/// half is the function words, which no source says anything about.
-/// </param>
-/// <param name="Unmatched">
-/// Tagged words whose number no witness word in the verse carries, and that the dictionary could not
-/// send anywhere either. Counted and never written: the translation may be rendering a longer text
-/// than this corpus holds, or the match may simply have failed, and nothing here tells those apart.
-/// </param>
-/// <param name="Resolved">
-/// Words matched through the lemma the dictionary names for their form rather than through a number
-/// both sides write. Greek only — the derivations are the Greek concordance's.
-/// </param>
-/// <param name="Unplaced">
-/// Verses of the translation holding a tagged word that the witness has no verse for at all. It is
-/// the shape of the two canons against each other rather than a failure of the matching, so it is
-/// counted apart from <paramref name="Unmatched"/>.
-/// </param>
-/// <param name="Confirmed">
-/// Aligner links naming words a match names too, folded into the match as a second claim.
-/// <paramref name="Exact"/> of them name exactly the same words.
-/// </param>
-/// <param name="Contradicted">
-/// Aligner links whose translated word the numbers give to other witness words and whose witness
-/// word they give to other translated words — removed, because a printed number outranks a guess.
-/// </param>
-/// <param name="Beside">
-/// Aligner links from a tagged word to a witness word no number reaches, kept: the numbers are
-/// silent about the witness word rather than contrary.
-/// </param>
-/// <param name="Testified">
-/// Matches not written because a source already states what their translated words render.
-/// <paramref name="Corroborated"/> of them named the same words, and became a claim on that link.
-/// </param>
-internal sealed record TaggedTextLinkOutcome(
-    bool AlreadyLoaded,
-    int Verses,
-    int Unplaced,
-    int Links,
-    int Unambiguous,
-    int Paired,
-    int Contended,
-    int Tagged,
-    int Matched,
-    int Unmatched,
-    int Resolved,
-    int Redirects,
-    int Confirmed,
-    int Exact,
-    int Contradicted,
-    int Beside,
-    int Testified,
-    int Corroborated,
-    TimeSpan Elapsed)
-{
-    /// <summary>The share of the translation's tagged words that reached a word of the witness.</summary>
-    public double Reached => Tagged == 0 ? 0 : (double)Matched / Tagged;
-
-    public override string ToString() =>
-        AlreadyLoaded
-            ? "this pair is already linked by these Strong numbers"
-            : $"{Links} links over {Verses} verses in {Elapsed}: {Matched} of {Tagged} tagged words " +
-              $"reached the witness ({Reached:P1}), {Unambiguous} where the number was written once " +
-              $"on each side, {Paired} where it stood the same number of times on both and they were " +
-              $"paired in order, {Contended} where more than one word carried it, {Resolved} matched " +
-              $"through the lemma the dictionary names for their form over {Redirects} numbers it " +
-              $"resolved, {Unmatched} whose number no witness word in the verse carries, {Unplaced} " +
-              $"in a verse the witness does not have. Aligner links: {Confirmed} confirmed and folded " +
-              $"in as a claim ({Exact} naming exactly the same words), {Contradicted} contradicted and " +
-              $"removed, {Beside} beside a number and kept. {Testified} matches left to a source that " +
-              $"states the words already, {Corroborated} of them agreeing with it";
-}
-
-/// <param name="Named">This loader's links of the pair naming an object marker, which is where the rematch starts.</param>
-/// <param name="Considered">
-/// Those links and every other link of the pair whose translated words a rematched link shares — a
-/// verb that no longer carries the marker joins the links of its other number.
-/// </param>
-/// <param name="Changed">Links whose translated words are matched as before, to fewer or other witness words.</param>
-/// <param name="Removed">Links whose translated words the numbers no longer send anywhere, or send elsewhere.</param>
-/// <param name="Added">Matches the rematch draws that no link of the pair names yet.</param>
-/// <param name="Dropped">Witness words taken off the links that stay.</param>
-/// <param name="ClaimsLost">
-/// Claims by another method on the links removed, which go with them. The aligner's claims folded in
-/// when the pair was first matched are the ones that could be here.
-/// </param>
-/// <param name="Before">The links considered, by confidence.</param>
-/// <param name="After">What stands in their place, by confidence.</param>
-internal sealed record MarkerRematchOutcome(
-    int Named,
-    int Considered,
-    int Changed,
-    int Removed,
-    int Added,
-    int Joined,
-    int Dropped,
-    int ClaimsLost,
-    int Confirmed,
-    int Contradicted,
-    IReadOnlyDictionary<double, int> Before,
-    IReadOnlyDictionary<double, int> After,
-    TimeSpan Elapsed)
-{
-    public override string ToString() =>
-        $"{Named} links naming the object marker, {Considered} links considered with them; {Changed} changed " +
-        $"({Dropped} witness words taken off them), {Joined} joined to the link already on their new words, " +
-        $"{Removed} removed ({ClaimsLost} claims of another method " +
-        $"with them), {Added} added ({Confirmed} aligner links confirmed and folded in, {Contradicted} " +
-        $"contradicted and removed). By confidence, before {Tiers(Before)}; after {Tiers(After)}. {Elapsed}";
-
-    private static string Tiers(IReadOnlyDictionary<double, int> tiers) =>
-        tiers.Count == 0
-            ? "none"
-            : string.Join(", ", tiers.OrderByDescending(tier => tier.Key).Select(tier => $"{tier.Key:0.0#} ×{tier.Value}"));
-}
 
 /// <summary>
 /// What the numbers would draw for a pair, scored against the links a source already states for it,
@@ -156,40 +34,14 @@ internal sealed record TaggedTextScore(string From, string To, int Drafts, int W
 internal sealed record EditionNumbers(IReadOnlyDictionary<long, WordTag> Tags, string Credit);
 
 /// <summary>
-/// A translation that carries its own Strong numbers, matched to a witness that carries them too.
-///
-/// This is the route Luther 1912 reaches Hebrew and Greek by, and the only one it has that is not
-/// this project's own inference: 365,350 of its words arrive from eBible already tagged, and no
-/// German text under any licence carries a word alignment. The matching is
-/// <see cref="StrongNumberMatch"/>, and Luther's tags are on the corpus's own words because they
-/// came in the file the text did.
+/// A translation's Strong numbers matched to a witness's in the configured database, verse by verse, by
+/// <see cref="StrongNumberMatch"/>, and scored against the links a source states for the pair; nothing is written.
+/// It is the measure behind the verb <c>reina-valera-strong-score</c>.
 ///
 /// <para>
-/// **The Synodal's numbers are neither.** They are Bob Jones University's, in an edition whose terms
-/// allow it to be used only unmodified, so they are laid onto the Synodal's words for the length of
-/// one run (<see cref="SynodalStrongLinks"/>) and never written to them. The links are the only
-/// thing that reaches the database, and they are drawn by exactly the matching Luther's are.
-/// </para>
-///
-/// <para>
-/// **Nothing here is <c>stated-by-source</c>, and the distinction is the point.** The edition states
-/// the number; the correspondence is this loader's, drawn by matching that number inside a verse. A
-/// Strong number is a lemma and not a token, so a verse using one lexeme twice does not say which
-/// occurrence a word renders — every link therefore carries <c>strong-number</c> and a confidence,
-/// and the ladder those sit on is in <see cref="StrongNumberMatch"/>.
-/// </para>
-///
-/// <para>
-/// **The tagging is known imperfect by its own lineage's account.** It descends from the Zefania
-/// Strong module of 12/2005; toledot.info, which corrected the same layer, calls the family
-/// <em>unvollständig und mit Fehlern behaftet</em>, and eBible holds the version before those
-/// corrections. So a link built from it is a good prior and not a reading, which is what
-/// the confidence column is for.
-/// </para>
-///
-/// <para>
-/// Where the pair already has links, the standing decides between them — a source's statement is
-/// not overwritten, and the aligner's guess is folded in or removed (<see cref="NumberedLinkSettlement"/>).
+/// The links themselves are the build's: <see cref="Mapping.StrongNumberSource"/> draws the same matches from the
+/// store's files into <c>mapping/&lt;pair&gt;/strong</c>, and the merge settles them against the other methods. The
+/// sources and the corroboration note here are the ones those rows carry.
 /// </para>
 /// </summary>
 internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLinkLoader> logger)
@@ -209,212 +61,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     internal const string CorroborationNote = "the Strong numbers name the same words";
 
     /// <summary>
-    /// The note on an aligner claim folded into a match naming more words than the aligner did —
-    /// the aligner reached one pair of them, and saying so keeps the claim from reading as more.
-    /// </summary>
-    private const string WithinNote = "the aligner proposed one word pair of this link";
-
-    private const string FoldTable =
-        "CREATE TEMP TABLE settled_fold (guess bigint, kept bigint, exact boolean) ON COMMIT DROP";
-
-    private const string FoldImport =
-        "COPY settled_fold (guess, kept, exact) FROM STDIN (FORMAT BINARY)";
-
-    /// <summary>
-    /// Every claim the folded link carried, and its own columns for a link written before claims
-    /// were kept, moved onto the match that names its words.
-    /// </summary>
-    private const string FoldClaims =
-        """
-        CREATE TEMP TABLE settled_claim ON COMMIT DROP AS
-        SELECT f.kept, c.method, c.confidence, p.source,
-               CASE WHEN f.exact THEN p.note ELSE coalesce(p.note, @within) END AS note
-        FROM settled_fold f
-        JOIN LATERAL (
-            SELECT method, confidence, provenance_id FROM link_claim WHERE link_id = f.guess
-            UNION
-            SELECT method, confidence, provenance_id FROM link WHERE id = f.guess
-        ) c ON true
-        JOIN provenance p ON p.id = c.provenance_id;
-
-        INSERT INTO provenance (source, note) SELECT DISTINCT source, note FROM settled_claim
-        ON CONFLICT (source, note) DO NOTHING;
-
-        INSERT INTO link_claim (link_id, method, confidence, provenance_id)
-        SELECT s.kept, s.method, s.confidence, p.id
-        FROM settled_claim s
-        JOIN provenance p ON p.source = s.source AND p.note IS NOT DISTINCT FROM s.note
-        ON CONFLICT DO NOTHING;
-        """;
-
-    private const string RemoveSettled = "DELETE FROM link WHERE id = ANY(@ids)";
-
-    private const string TakeWitnessWords =
-        """
-        DELETE FROM link_word lw
-        USING unnest(@links, @words) AS taken (link_id, word_id)
-        WHERE lw.link_id = taken.link_id AND lw.word_id = taken.word_id AND lw.side = @side
-        """;
-
-    private const string GiveWitnessWords =
-        """
-        INSERT INTO link_word (link_id, word_id, side)
-        SELECT link_id, word_id, @side FROM unnest(@links, @words) AS given (link_id, word_id)
-        """;
-
-    /// <summary>A link's confidence, and its own claim's with it: the claim is the link's own statement of it.</summary>
-    private const string Restate =
-        """
-        WITH restated AS (
-            UPDATE link l SET confidence = r.confidence
-            FROM unnest(@links, @confidences) AS r (id, confidence)
-            WHERE l.id = r.id
-            RETURNING l.id, l.method, l.provenance_id, l.confidence
-        )
-        UPDATE link_claim c SET confidence = restated.confidence
-        FROM restated
-        WHERE c.link_id = restated.id AND c.method = restated.method
-          AND c.provenance_id = restated.provenance_id
-        """;
-
-    /// <summary>
-    /// A changed link joined to the link already on its new words: every claim it carries moves onto
-    /// that link, with the standing link's own statement kept as a claim beside them, and the stronger
-    /// claim becomes its answer, as <see cref="LinkWriter"/> joins a draft to a link already there.
-    /// </summary>
-    private static readonly string JoinStanding =
-        $"""
-        WITH joined AS (
-            SELECT * FROM unnest(@links, @into) AS j (link_id, into_id)
-        ), claimed AS (
-            INSERT INTO link_claim (link_id, method, confidence, provenance_id)
-            SELECT j.into_id, c.method, c.confidence, c.provenance_id
-            FROM joined j JOIN link_claim c ON c.link_id = j.link_id
-            UNION
-            SELECT l.id, l.method, l.confidence, l.provenance_id
-            FROM joined j JOIN link l ON l.id = j.into_id
-            ON CONFLICT DO NOTHING
-        )
-        UPDATE link l
-        SET method = s.method, confidence = s.confidence, provenance_id = s.provenance_id
-        FROM joined j JOIN link s ON s.id = j.link_id
-        WHERE l.id = j.into_id AND {LinkWriter.Standing("l.method")} < {LinkWriter.Standing("s.method")}
-        """;
-
-    public Task<TaggedTextLinkOutcome> Load(
-        string fromSlug,
-        string toSlug,
-        CancellationToken cancellationToken = default) =>
-        Load(fromSlug, toSlug, null, cancellationToken);
-
-    /// <param name="edition">
-    /// Numbers a separate edition puts on the translation's words, held for this run and never
-    /// written to them; null reads the numbers the words carry themselves.
-    /// </param>
-    /// <param name="only">
-    /// Translation words written after the pair was linked, and the only ones whose matches are
-    /// written: every verse is matched as it always is, so a word is matched against the same
-    /// neighbours as before, and a link of these numbers already naming another word of such a
-    /// match gives way to it. Null matches the whole pair, once.
-    /// </param>
-    public async Task<TaggedTextLinkOutcome> Load(
-        string fromSlug,
-        string toSlug,
-        EditionNumbers? edition,
-        CancellationToken cancellationToken = default,
-        IReadOnlySet<long>? only = null)
-    {
-        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
-        var source = edition is null ? Source(fromSlug, toSlug) : Source(edition, toSlug);
-        var written = Written(fromSlug, toSlug, edition);
-
-        // Only this loader's own links, from these numbers: a pair the aligner already reached is
-        // not a pair the numbers have spoken about.
-        if (only is null && await db.Links.AnyAsync(
-                l => l.FromTextId == from.Id && l.ToTextId == to.Id
-                     && l.Method == LinkMethod.StrongNumber && written.Contains(l.Provenance!.Source),
-                cancellationToken))
-        {
-            logger.LogInformation("{From} and {To} are already linked by these numbers; nothing to do", fromSlug, toSlug);
-            return new TaggedTextLinkOutcome(
-                true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
-        }
-
-        var started = Stopwatch.StartNew();
-        var (drafts, verses, unplaced, tagged, matched, resolved, redirects) =
-            await Match(from, to, edition, cancellationToken);
-
-        if (only is not null)
-        {
-            drafts = [.. drafts.Where(draft => draft.From.Any(only.Contains))];
-        }
-
-        drafts = await Present(from.Id, to.Id, drafts, cancellationToken);
-
-        var testimony = await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken);
-        testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken));
-        var (kept, corroborations) = YieldToTestimony(drafts, testimony, source);
-
-        var guesses = await Drawn(from.Id, to.Id, LinkMethod.Aligner, cancellationToken);
-        var settled = NumberedLinkSettlement.Settle(
-            [.. kept.Select(d => ((IReadOnlyList<long>)d.From, (IReadOnlyList<long>)d.To))],
-            guesses);
-
-        long[] superseded = only is null ? [] : await Superseded(from.Id, to.Id, written, kept, cancellationToken);
-        await Write(from.Id, to.Id, source, kept, corroborations, settled, cancellationToken, superseded);
-
-        var outcome = new TaggedTextLinkOutcome(
-            false,
-            verses,
-            unplaced,
-            kept.Count,
-            kept.Count(d => d.Kind == StrongMatchKind.Unambiguous),
-            kept.Count(d => d.Kind == StrongMatchKind.Paired),
-            kept.Count(d => d.Kind == StrongMatchKind.Contended),
-            tagged,
-            matched,
-            tagged - unplaced - matched,
-            resolved,
-            redirects,
-            settled.Count(s => s.Verdict == SettledVerdict.Confirmed),
-            settled.Count(s => s.Verdict == SettledVerdict.Confirmed && s.Exact),
-            settled.Count(s => s.Verdict == SettledVerdict.Contradicted),
-            settled.Count(s => s.Verdict == SettledVerdict.Beside),
-            drafts.Count - kept.Count,
-            corroborations.Count,
-            started.Elapsed);
-        logger.LogInformation("{From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
-        return outcome;
-    }
-
-    /// <summary>
-    /// The words of the translation's verses no link of these numbers reaches the witness from, to be
-    /// matched as <c>only</c> after the witness gained numbers it lacked when the pair was linked —
-    /// BHSA's 512 verses that had none. A verse a link already reaches is left as its first run drew
-    /// it, links, settled guesses and all; a verse none reaches has nothing of these numbers to undo,
-    /// so matching it now only adds, and the aligner's guesses about its words are settled the way the
-    /// first run settled the rest. A verse that still matches nothing writes nothing again.
-    /// </summary>
-    public async Task<IReadOnlySet<long>> Unreached(
-        string fromSlug,
-        string toSlug,
-        EditionNumbers? edition,
-        CancellationToken cancellationToken = default)
-    {
-        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
-        var written = Written(fromSlug, toSlug, edition);
-        var reached = db.LinkWords
-            .Where(lw => lw.Side == LinkSide.From && lw.Link!.FromTextId == from.Id && lw.Link.ToTextId == to.Id
-                         && lw.Link.Method == LinkMethod.StrongNumber && written.Contains(lw.Link.Provenance!.Source))
-            .Select(lw => lw.Word!.VerseId);
-        return (await db.Words
-                .Where(w => w.TextId == from.Id && !reached.Contains(w.VerseId))
-                .Select(w => w.Id)
-                .ToListAsync(cancellationToken))
-            .ToHashSet();
-    }
-
-    /// <summary>
     /// What the numbers would draw for the pair, scored against the links a source states for it
     /// (<see cref="LinkMethod.StatedBySource"/>), writing nothing: how far a number-matched link
     /// agrees with a hand-made alignment of the same text, before it is believed.
@@ -428,18 +74,19 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
         var (drafts, _, _, _, _, _, _) = await Match(from, to, edition, cancellationToken);
         var stated = new Dictionary<long, HashSet<long>>();
-        foreach (var link in await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken))
+        foreach (var (named, targets) in await Stated(from.Id, to.Id, cancellationToken))
         {
-            foreach (var word in link.From)
+            foreach (var word in named)
             {
-                if (!stated.TryGetValue(word, out var targets))
+                if (!stated.TryGetValue(word, out var reached))
                 {
-                    stated[word] = targets = [];
+                    stated[word] = reached = [];
                 }
 
-                targets.UnionWith(link.To);
+                reached.UnionWith(targets);
             }
         }
+
 
         int words = 0, statedWords = 0, agreedWords = 0, pairs = 0, agreedPairs = 0;
         foreach (var draft in drafts)
@@ -464,450 +111,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         return score;
     }
 
-    /// <summary>
-    /// The pair's links matched again where the object marker made them, after the rule for it changed
-    /// (<see cref="ObjectMarker"/>), and changed in place to what a load would draw now.
-    ///
-    /// <para>
-    /// **Not a delete and a reload.** A pair's first load folded the aligner's confirmed guesses into
-    /// its links as claims and removed the ones it refuted, and neither can be had back by running it
-    /// again. So the whole pair is matched as a load would match it and compared, and only the links a
-    /// marker touched are acted on: every link naming a marker, and every link sharing a translated
-    /// word with what the rematch draws for those. Nothing else moves — a verse whose witness words
-    /// gained numbers after the load is not redrawn by this.
-    /// </para>
-    ///
-    /// <para>
-    /// A link whose translated words the rematch still draws together keeps its id and its claims;
-    /// its witness words and confidence become the rematch's, and so does its own claim's
-    /// confidence. A link whose words it draws otherwise, or not at all, is removed with its claims;
-    /// what it draws instead is written as a load writes it, settling the aligner's links about those
-    /// words. Run twice, the second finds every link already what it would draw.
-    /// </para>
-    /// </summary>
-    public async Task<MarkerRematchOutcome> Rematch(
-        string fromSlug,
-        string toSlug,
-        EditionNumbers? edition,
-        bool apply,
-        CancellationToken cancellationToken = default)
-    {
-        var started = Stopwatch.StartNew();
-        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
-        var source = edition is null ? Source(fromSlug, toSlug) : Source(edition, toSlug);
-        var written = Written(fromSlug, toSlug, edition);
-
-        var markers = (await db.Words
-                .Where(w => w.TextId == to.Id && w.StrongNumber == ObjectMarker.Number)
-                .Select(w => w.Id)
-                .ToListAsync(cancellationToken))
-            .ToHashSet();
-        var existing = await Drawn(from.Id, to.Id, LinkMethod.StrongNumber, cancellationToken, written);
-        var seeds = existing.Where(link => link.To.Any(markers.Contains)).ToList();
-        if (seeds.Count == 0)
-        {
-            return new MarkerRematchOutcome(
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed);
-        }
-
-        var (drafts, _, _, _, _, _, _) = await Match(from, to, edition, cancellationToken);
-        var testimony = await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken);
-        testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken));
-        var (kept, _) = YieldToTestimony(drafts, testimony, source);
-
-        var guesses = await Drawn(from.Id, to.Id, LinkMethod.Aligner, cancellationToken);
-        var (outcome, _) = await Reconcile(
-            from.Id, to.Id, source, seeds, existing, kept, [], guesses, apply, started, cancellationToken);
-        logger.LogInformation("{From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
-        return outcome;
-    }
-
-    /// <summary>
-    /// The pair's links matched again at the addresses named, where the witness's numbers no longer
-    /// bear them out, and changed in place to what a load would draw now.
-    ///
-    /// <para>
-    /// For a witness whose words were numbered again after the pair was linked: BHSA read the titles
-    /// of Psalms 51, 52 and 60 a word out of step, and every numbering matched the Synodal's
-    /// <em>Доик</em> against the word that then carried Doeg's number. A link is stale where a witness
-    /// word it names carries no number the translated words carry; a pair at these addresses with no
-    /// stale link is left exactly as it is, so a second run, and every load after the repair, does
-    /// nothing. Where there is one, the stale links are the seeds, with the matches of translated words
-    /// no link of these numbers names yet, and what they reach is settled as <see cref="Rematch"/>
-    /// settles it.
-    /// </para>
-    ///
-    /// <para>
-    /// Only the verses at those addresses are read, so it costs what those verses cost. The Greek is
-    /// matched with redirects admitted over every verse at once, so it is not matched this way.
-    /// </para>
-    /// </summary>
-    /// <returns>The outcome, and every word on either side of a link that changed.</returns>
-    public async Task<(MarkerRematchOutcome Outcome, int Stale, IReadOnlySet<long> Touched)> RematchAt(
-        string fromSlug,
-        string toSlug,
-        EditionNumbers? edition,
-        IReadOnlySet<(int, int, int)> addresses,
-        bool apply,
-        CancellationToken cancellationToken = default)
-    {
-        var started = Stopwatch.StartNew();
-        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
-        if (to.Language == Greek)
-        {
-            throw new InvalidOperationException(
-                $"{toSlug} is Greek, and a Greek witness is matched with redirects admitted over every verse at " +
-                "once; match the whole pair again rather than some of its verses.");
-        }
-
-        var source = edition is null ? Source(fromSlug, toSlug) : Source(edition, toSlug);
-        var written = Written(fromSlug, toSlug, edition);
-
-        var translation = await TranslationVerses(from.Id, edition, StrongNumbers.Hebrew, cancellationToken, addresses);
-        var witness = await WitnessVerses(
-            to.Id, cancellationToken, translation.SelectMany(verse => verse.Addresses).ToHashSet());
-        var numbers = translation.SelectMany(verse => verse.Words).ToDictionary(word => word.Id, word => word.Numbers);
-        var strong = witness.ByVerse.Values.SelectMany(words => words).ToDictionary(word => word.Id, word => word.Strong);
-        var scope = witness.ByAddress
-            .Where(address => addresses.Contains(address.Key))
-            .SelectMany(address => address.Value)
-            .Where(witness.ByVerse.ContainsKey)
-            .SelectMany(verse => witness.ByVerse[verse].Select(word => word.Id))
-            .ToHashSet();
-        List<long> near = [.. numbers.Keys, .. scope];
-
-        var existing = await Drawn(from.Id, to.Id, LinkMethod.StrongNumber, cancellationToken, written, near);
-        var stale = existing
-            .Where(link => link.To.Any(scope.Contains))
-            .Where(link => link.To.Any(word =>
-                strong.GetValueOrDefault(word) is not { } number
-                || !link.From.Any(said => numbers.GetValueOrDefault(said)?.Contains(number) == true)))
-            .ToList();
-        if (stale.Count == 0)
-        {
-            return (new MarkerRematchOutcome(
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed),
-                0, new HashSet<long>());
-        }
-
-        var (pairs, _, _) = Paired(translation, witness);
-        var (drafts, _, _) = Drafted(pairs, []);
-        drafts = await Present(from.Id, to.Id, drafts, cancellationToken);
-        var testimony = await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken, touching: near);
-        testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken, touching: near));
-        var (kept, _) = YieldToTestimony(drafts, testimony, source);
-
-        var linked = existing.SelectMany(link => link.From).ToHashSet();
-        var unlinked = kept.Where(draft => draft.To.Any(scope.Contains) && !draft.From.Any(linked.Contains)).ToList();
-        var guesses = await Drawn(from.Id, to.Id, LinkMethod.Aligner, cancellationToken, touching: near);
-        var (outcome, touched) = await Reconcile(
-            from.Id, to.Id, source, stale, existing, kept, unlinked, guesses, apply, started, cancellationToken);
-        logger.LogInformation("{From} to {To}, {Stale} links the renumbered witness no longer bears out: {Outcome}",
-            fromSlug, toSlug, stale.Count, outcome);
-        return (outcome, stale.Count, touched);
-    }
-
-    /// <summary>
-    /// The links a rematch acts on compared with what the numbers draw now, and the difference
-    /// written when asked: a link whose translated words are still drawn together keeps its id and
-    /// takes the witness words and confidence of the match, one whose words are drawn otherwise or
-    /// not at all is removed, and what stands in their place is written as a load writes it.
-    /// Returns, with the outcome, every word on either side of what changed.
-    /// </summary>
-    private async Task<(MarkerRematchOutcome Outcome, IReadOnlySet<long> Touched)> Reconcile(
-        int fromTextId,
-        int toTextId,
-        string source,
-        List<DrawnLink> seeds,
-        List<DrawnLink> existing,
-        List<Draft> kept,
-        List<Draft> initial,
-        List<DrawnLink> guesses,
-        bool apply,
-        Stopwatch started,
-        CancellationToken cancellationToken)
-    {
-        var (links, matches) = Considered(seeds, existing, kept, initial);
-        var confidence = await Confidences([.. links.Select(link => link.Link)], cancellationToken);
-
-        var changed = new List<(DrawnLink Link, Draft Draft)>();
-        var removed = new List<DrawnLink>();
-        var claimed = new HashSet<Draft>();
-        var byWord = matches
-            .SelectMany(draft => draft.From, (draft, word) => (Draft: draft, Word: word))
-            .ToDictionary(entry => entry.Word, entry => entry.Draft);
-        foreach (var link in links)
-        {
-            if (byWord.GetValueOrDefault(link.From[0]) is { } draft && SameWords(draft.From, link.From)
-                && claimed.Add(draft))
-            {
-                if (!SameWords(draft.To, link.To) || Math.Abs(draft.Confidence - confidence[link.Link]) > 1e-9)
-                {
-                    changed.Add((link, draft));
-                }
-            }
-            else
-            {
-                removed.Add(link);
-            }
-        }
-
-        long[] removedIds = [.. removed.Select(link => link.Link)];
-        var standing = await AlreadyStanding(fromTextId, toTextId, changed, removedIds, cancellationToken);
-        var joined = changed
-            .Where(change => standing.ContainsKey(change.Link.Link))
-            .Select(change => (change.Link, change.Draft, Into: standing[change.Link.Link]))
-            .ToList();
-        changed.RemoveAll(change => standing.ContainsKey(change.Link.Link));
-
-        var added = matches.Where(draft => !claimed.Contains(draft)).ToList();
-        var settled = NumberedLinkSettlement.Settle(
-            [.. added.Select(d => ((IReadOnlyList<long>)d.From, (IReadOnlyList<long>)d.To))],
-            guesses);
-
-        var claimsLost = removedIds.Length == 0
-            ? 0
-            : await db.LinkClaims.CountAsync(
-                c => removedIds.Contains(c.LinkId) && c.Method != LinkMethod.StrongNumber, cancellationToken);
-
-        if (apply)
-        {
-            await Rewrite(fromTextId, toTextId, source, changed, joined, removedIds, added, settled, cancellationToken);
-        }
-
-        var outcome = new MarkerRematchOutcome(
-            seeds.Count,
-            links.Count,
-            changed.Count,
-            removed.Count,
-            added.Count,
-            joined.Count,
-            changed.Sum(change => change.Link.To.Count(word => !change.Draft.To.Contains(word))),
-            claimsLost,
-            settled.Count(s => s.Verdict == SettledVerdict.Confirmed),
-            settled.Count(s => s.Verdict == SettledVerdict.Contradicted),
-            Tiers(links.Select(link => confidence[link.Link])),
-            Tiers(matches.Select(draft => draft.Confidence)),
-            started.Elapsed);
-        var touched = changed.SelectMany(c => c.Link.From.Concat(c.Link.To).Concat(c.Draft.To))
-            .Concat(joined.SelectMany(j => j.Link.From.Concat(j.Link.To).Concat(j.Draft.To)))
-            .Concat(removed.SelectMany(link => link.From.Concat(link.To)))
-            .Concat(added.SelectMany(draft => draft.From.Concat(draft.To)))
-            .ToHashSet();
-        return (outcome, touched);
-    }
-
-    private static Dictionary<double, int> Tiers(IEnumerable<double> confidences) =>
-        confidences.GroupBy(confidence => Math.Round(confidence, 2)).ToDictionary(tier => tier.Key, tier => tier.Count());
-
-    /// <summary>
-    /// For each changed link whose new words another link of the pair already names — one of another
-    /// method, such as the aligner's, or one outside the links the rematch reads — that link. The pair
-    /// cannot hold two links over one set of words, so the changed link joins it as a claim rather
-    /// than moving onto it.
-    /// </summary>
-    private async Task<Dictionary<long, long>> AlreadyStanding(
-        int fromTextId,
-        int toTextId,
-        List<(DrawnLink Link, Draft Draft)> changed,
-        long[] removed,
-        CancellationToken cancellationToken)
-    {
-        var moving = changed.Where(change => !SameWords(change.Draft.To, change.Link.To)).ToList();
-        if (moving.Count == 0)
-        {
-            return [];
-        }
-
-        var byShape = moving.ToDictionary(change => LinkShape.Of(change.Link.From, change.Draft.To), change => change.Link.Link);
-        var shapes = byShape.Keys.ToList();
-        long[] leaving = [.. removed, .. changed.Select(change => change.Link.Link)];
-        var standing = await db.Links
-            .Where(l => l.FromTextId == fromTextId && l.ToTextId == toTextId && l.Fingerprint != null
-                        && shapes.Contains(l.Fingerprint.Value) && !leaving.Contains(l.Id))
-            .Select(l => new { l.Id, Shape = l.Fingerprint!.Value, l.Relation })
-            .ToListAsync(cancellationToken);
-        if (standing.FirstOrDefault(l => l.Relation != LinkRelation.Renders) is { } other)
-        {
-            throw new InvalidOperationException(
-                $"Link {other.Id} names the words link {byShape[other.Shape]} is matched to now, but says they " +
-                $"{EnumSpelling.Of(other.Relation)} where the numbers say {EnumSpelling.Of(LinkRelation.Renders)}. " +
-                "One set of words cannot be both; withdraw the link that is wrong before matching the pair again.");
-        }
-
-        return standing.ToDictionary(l => byShape[l.Shape], l => l.Id);
-    }
-
-    /// <summary>
-    /// The links a rematch acts on and the matches that stand in their place: the links naming a
-    /// marker, then everything reachable from them by a shared translated word, alternating between
-    /// what is in the corpus and what the numbers draw now, until neither side adds a link.
-    /// </summary>
-    private static (List<DrawnLink> Links, List<Draft> Matches) Considered(
-        List<DrawnLink> seeds,
-        List<DrawnLink> existing,
-        List<Draft> drafts,
-        List<Draft> initial)
-    {
-        var linksOf = new Dictionary<long, List<DrawnLink>>(existing.Count * 2);
-        foreach (var link in existing)
-        {
-            foreach (var word in link.From)
-            {
-                if (!linksOf.TryGetValue(word, out var naming))
-                {
-                    naming = [];
-                    linksOf[word] = naming;
-                }
-
-                naming.Add(link);
-            }
-        }
-
-        var draftOf = new Dictionary<long, Draft>(drafts.Count * 2);
-        foreach (var draft in drafts)
-        {
-            foreach (var word in draft.From)
-            {
-                draftOf[word] = draft;
-            }
-        }
-
-        var links = new List<DrawnLink>(seeds.Count * 2);
-        var matches = new List<Draft>(seeds.Count * 2);
-        var seenLinks = new HashSet<long>();
-        var seenDrafts = new HashSet<Draft>(ReferenceEqualityComparer.Instance);
-        var pending = new Queue<DrawnLink>(seeds);
-        foreach (var draft in initial.Where(seenDrafts.Add))
-        {
-            matches.Add(draft);
-            foreach (var other in draft.From.SelectMany(w => linksOf.GetValueOrDefault(w) ?? []))
-            {
-                pending.Enqueue(other);
-            }
-        }
-
-        while (pending.TryDequeue(out var link))
-        {
-            if (!seenLinks.Add(link.Link))
-            {
-                continue;
-            }
-
-            links.Add(link);
-            foreach (var word in link.From)
-            {
-                if (!draftOf.TryGetValue(word, out var draft) || !seenDrafts.Add(draft))
-                {
-                    continue;
-                }
-
-                matches.Add(draft);
-                foreach (var other in draft.From.SelectMany(w => linksOf.GetValueOrDefault(w) ?? []))
-                {
-                    pending.Enqueue(other);
-                }
-            }
-        }
-
-        return (links, matches);
-    }
-
-    private async Task<Dictionary<long, double>> Confidences(long[] ids, CancellationToken cancellationToken) =>
-        await db.Links
-            .Where(l => ids.Contains(l.Id))
-            .ToDictionaryAsync(l => l.Id, l => l.Confidence ?? 0, cancellationToken);
-
-    /// <summary>
-    /// The rematch written in one transaction, so the pair is never read with a link gone and its
-    /// replacement not yet there.
-    /// </summary>
-    private async Task Rewrite(
-        int fromTextId,
-        int toTextId,
-        string source,
-        List<(DrawnLink Link, Draft Draft)> changed,
-        List<(DrawnLink Link, Draft Draft, long Into)> joined,
-        long[] removed,
-        List<Draft> added,
-        List<Settled> settled,
-        CancellationToken cancellationToken)
-    {
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        if (removed.Length > 0)
-        {
-            await using var remove = new NpgsqlCommand(RemoveSettled, connection);
-            remove.Parameters.AddWithValue("ids", removed);
-            await remove.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        if (changed.Count > 0)
-        {
-            var taken = changed
-                .SelectMany(c => c.Link.To.Where(word => !c.Draft.To.Contains(word)), (c, word) => (c.Link.Link, Word: word))
-                .ToList();
-            var given = changed
-                .SelectMany(c => c.Draft.To.Where(word => !c.Link.To.Contains(word)), (c, word) => (c.Link.Link, Word: word))
-                .ToList();
-
-            await using (var take = new NpgsqlCommand(TakeWitnessWords, connection))
-            {
-                take.Parameters.AddWithValue("links", taken.Select(t => t.Link).ToArray());
-                take.Parameters.AddWithValue("words", taken.Select(t => t.Word).ToArray());
-                take.Parameters.AddWithValue("side", toSide);
-                await take.ExecuteNonQueryAsync(cancellationToken);
-            }
-
-            await using (var give = new NpgsqlCommand(GiveWitnessWords, connection))
-            {
-                give.Parameters.AddWithValue("links", given.Select(g => g.Link).ToArray());
-                give.Parameters.AddWithValue("words", given.Select(g => g.Word).ToArray());
-                give.Parameters.AddWithValue("side", toSide);
-                await give.ExecuteNonQueryAsync(cancellationToken);
-            }
-
-            await using var restate = new NpgsqlCommand(Restate, connection);
-            restate.Parameters.AddWithValue("links", changed.Select(c => c.Link.Link).ToArray());
-            restate.Parameters.AddWithValue("confidences", changed.Select(c => c.Draft.Confidence).ToArray());
-            await restate.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        if (joined.Count > 0)
-        {
-            long[] leaving = [.. joined.Select(j => j.Link.Link)];
-            await using (var restate = new NpgsqlCommand(Restate, connection))
-            {
-                restate.Parameters.AddWithValue("links", leaving);
-                restate.Parameters.AddWithValue("confidences", joined.Select(j => j.Draft.Confidence).ToArray());
-                await restate.ExecuteNonQueryAsync(cancellationToken);
-            }
-
-            await using (var join = new NpgsqlCommand(JoinStanding, connection))
-            {
-                join.Parameters.AddWithValue("links", leaving);
-                join.Parameters.AddWithValue("into", joined.Select(j => j.Into).ToArray());
-                await join.ExecuteNonQueryAsync(cancellationToken);
-            }
-
-            await using var remove = new NpgsqlCommand(RemoveSettled, connection);
-            remove.Parameters.AddWithValue("ids", leaving);
-            await remove.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        if (added.Count > 0)
-        {
-            var written = await WriteLinks(
-                connection, transaction, fromTextId, toTextId, source, added, settled, cancellationToken);
-            await Fold(connection, settled, written.Ids, cancellationToken);
-        }
-
-        await transaction.CommitAsync(cancellationToken);
-    }
-
     private async Task<(Database.Entities.Text From, Database.Entities.Text To)> Pair(
         string fromSlug,
         string toSlug,
@@ -924,19 +127,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         return (from, to);
     }
-
-    /// <summary>
-    /// Every source this loader's links of the pair can carry. The source names both texts, so links
-    /// written before either was renamed carry the names they had then; those are this loader's own
-    /// links all the same.
-    /// </summary>
-    internal static List<string> Written(string fromSlug, string toSlug, EditionNumbers? edition) =>
-        TextAliases.Of(fromSlug).Append(fromSlug)
-            .SelectMany(
-                _ => TextAliases.Of(toSlug).Append(toSlug),
-                (translation, witness) => edition is null ? Source(translation, witness) : Source(edition, witness))
-            .Distinct(StringComparer.Ordinal)
-            .ToList();
 
     /// <summary>
     /// Every match the numbers draw between the two texts, verse by verse, before anything already in
@@ -1026,58 +216,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     }
 
     /// <summary>
-    /// The matches a source has not already spoken about. A match touching a word some source's
-    /// link already names is not written — testimony is not overwritten by an inference — and where
-    /// it names exactly that link's words, it is kept as a claim on the source's link instead.
-    /// </summary>
-    private static (List<Draft> Kept, List<(long Link, double Confidence, string Source)> Corroborations)
-        YieldToTestimony(List<Draft> drafts, List<DrawnLink> testimony, string source)
-    {
-        if (testimony.Count == 0)
-        {
-            return (drafts, []);
-        }
-
-        var stated = new Dictionary<long, List<DrawnLink>>(testimony.Count);
-        foreach (var link in testimony)
-        {
-            foreach (var word in link.From)
-            {
-                if (!stated.TryGetValue(word, out var naming))
-                {
-                    naming = [];
-                    stated[word] = naming;
-                }
-
-                naming.Add(link);
-            }
-        }
-
-        var kept = new List<Draft>(drafts.Count);
-        var corroborations = new List<(long, double, string)>();
-        foreach (var draft in drafts)
-        {
-            var naming = draft.From.Where(stated.ContainsKey).SelectMany(word => stated[word]).Distinct().ToList();
-            if (naming.Count == 0)
-            {
-                kept.Add(draft);
-                continue;
-            }
-
-            if (naming.FirstOrDefault(link => SameWords(link.From, draft.From) && SameWords(link.To, draft.To))
-                is { } same)
-            {
-                corroborations.Add((same.Link, draft.Confidence, source));
-            }
-        }
-
-        return (kept, corroborations);
-    }
-
-    private static bool SameWords(IReadOnlyList<long> one, IReadOnlyList<long> other) =>
-        one.Count == other.Count && one.ToHashSet().SetEquals(other);
-
-    /// <summary>
     /// The numbers the dictionary can join to the ones this Greek witness writes, kept only where
     /// the verses bear the join out. It runs over every verse before a single link is written,
     /// because a redirect is admitted on how often it explains a failure and one verse cannot say.
@@ -1125,16 +263,14 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     /// verse and a verse of its own in the Hebrew, so a verse is offered every witness verse at any
     /// of its addresses, not the one at its primary address alone.
     /// </summary>
-    /// <param name="at">Only the verses standing at one of these addresses; null reads every verse.</param>
     private async Task<List<TranslationVerse>> TranslationVerses(
         int textId,
         EditionNumbers? edition,
         char series,
-        CancellationToken cancellationToken,
-        IReadOnlySet<(int, int, int)>? at = null)
+        CancellationToken cancellationToken)
     {
-        var addresses = Standing(await Addresses(textId, cancellationToken), at);
-        var words = await Words(textId, addresses, at is not null)
+        var addresses = await Addresses(textId, cancellationToken);
+        var words = await db.Words.Where(w => w.TextId == textId)
             .Select(w => new { w.VerseId, w.Position, w.Id, w.StrongNumber })
             .ToListAsync(cancellationToken);
 
@@ -1166,14 +302,10 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         return numbers.Count == 0 ? null : new TaggedWord(id, numbers, tag.Unit);
     }
 
-    /// <param name="at">Only the verses standing at one of these addresses; null reads every verse.</param>
-    private async Task<Witness> WitnessVerses(
-        int textId,
-        CancellationToken cancellationToken,
-        IReadOnlySet<(int, int, int)>? at = null)
+    private async Task<Witness> WitnessVerses(int textId, CancellationToken cancellationToken)
     {
-        var addresses = Standing(await Addresses(textId, cancellationToken), at);
-        var words = await Words(textId, addresses, at is not null)
+        var addresses = await Addresses(textId, cancellationToken);
+        var words = await db.Words.Where(w => w.TextId == textId)
             .Select(w => new
             {
                 w.VerseId,
@@ -1212,27 +344,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         return new Witness(byVerse, byAddress, addresses);
     }
 
-    /// <summary>The verses standing at any of the addresses, or every verse where none are named.</summary>
-    private static Dictionary<int, List<(int, int, int)>> Standing(
-        Dictionary<int, List<(int, int, int)>> addresses,
-        IReadOnlySet<(int, int, int)>? at) =>
-        at is null
-            ? addresses
-            : addresses.Where(verse => verse.Value.Any(at.Contains)).ToDictionary(verse => verse.Key, verse => verse.Value);
-
-    /// <summary>A text's words, or only those of the verses named where the verses are a selection.</summary>
-    private IQueryable<Database.Entities.Word> Words(int textId, Dictionary<int, List<(int, int, int)>> verses, bool selected)
-    {
-        var words = db.Words.Where(w => w.TextId == textId);
-        if (!selected)
-        {
-            return words;
-        }
-
-        var ids = verses.Keys.ToList();
-        return words.Where(w => ids.Contains(w.VerseId));
-    }
-
     /// <summary>Every address each verse of a text stands at, its primary address first.</summary>
     private async Task<Dictionary<int, List<(int, int, int)>>> Addresses(
         int textId,
@@ -1255,210 +366,20 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
                     .ToList());
     }
 
-    /// <summary>The links one method already drew between the two texts, with the words on each side.</summary>
-    /// <summary>
-    /// The matches without the words the pair already says have no counterpart: an edition's supplied
-    /// word, an absence a verdict stated. A number the edition puts on a phrase reaches every word of it,
-    /// <em>EN el principio</em> for רֵאשִׁית, and the article a verdict found supplied is not rendered by
-    /// the number its phrase carries; a word shown absent and rendered at once is a contradiction.
-    /// </summary>
-    private async Task<List<Draft>> Present(int fromTextId, int toTextId, List<Draft> drafts, CancellationToken cancellationToken)
+    /// <summary>The links a source states between the two texts, with the words on each side.</summary>
+    private async Task<List<(List<long> From, List<long> To)>> Stated(int fromTextId, int toTextId, CancellationToken cancellationToken)
     {
-        var absent = (await db.LinkWords
-                .Where(lw => lw.Side == LinkSide.From && lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId
-                             && lw.Link.Relation == LinkRelation.Expands)
-                .Select(lw => lw.WordId)
-                .ToListAsync(cancellationToken))
-            .ToHashSet();
-        if (absent.Count == 0)
-        {
-            return drafts;
-        }
-
-        return
-        [
-            .. drafts
-                .Select(draft => draft.From.Any(absent.Contains) ? draft with { From = [.. draft.From.Where(word => !absent.Contains(word))] } : draft)
-                .Where(draft => draft.From.Count > 0),
-        ];
-    }
-
-    /// <param name="sources">Only the links carrying one of these sources; null takes every one.</param>
-    /// <param name="touching">Only the links naming one of these words, on either side; null takes every one.</param>
-    private async Task<List<DrawnLink>> Drawn(
-        int fromTextId,
-        int toTextId,
-        LinkMethod method,
-        CancellationToken cancellationToken,
-        List<string>? sources = null,
-        IReadOnlyCollection<long>? touching = null)
-    {
-        var drawn = db.LinkWords
-            .Where(lw => lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId && lw.Link.Method == method);
-        if (sources is not null)
-        {
-            drawn = drawn.Where(lw => sources.Contains(lw.Link!.Provenance!.Source));
-        }
-
-        if (touching is not null)
-        {
-            var words = touching.ToList();
-            drawn = drawn.Where(lw => db.LinkWords.Any(named => named.LinkId == lw.LinkId && words.Contains(named.WordId)));
-        }
-
-        var rows = await drawn
+        var rows = await db.LinkWords
+            .Where(lw => lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId && lw.Link.Method == LinkMethod.StatedBySource)
             .Select(lw => new { lw.LinkId, lw.WordId, lw.Side })
             .ToListAsync(cancellationToken);
 
         return
         [
-            .. rows.GroupBy(row => row.LinkId).Select(link => new DrawnLink(
-                link.Key,
-                [.. link.Where(row => row.Side == LinkSide.From).Select(row => row.WordId)],
-                [.. link.Where(row => row.Side == LinkSide.To).Select(row => row.WordId)])),
+            .. rows.GroupBy(row => row.LinkId).Select(link => (
+                (List<long>)[.. link.Where(row => row.Side == LinkSide.From).Select(row => row.WordId)],
+                (List<long>)[.. link.Where(row => row.Side == LinkSide.To).Select(row => row.WordId)])),
         ];
-    }
-
-    /// <summary>
-    /// This loader's own links from these numbers that already name a translation word a new match
-    /// names: the match is drawn over the same unit of the edition, and two links saying one word
-    /// renders something would be the word named twice.
-    /// </summary>
-    private async Task<long[]> Superseded(
-        int fromTextId,
-        int toTextId,
-        List<string> written,
-        List<Draft> drafts,
-        CancellationToken cancellationToken)
-    {
-        var words = drafts.SelectMany(draft => draft.From).Distinct().ToList();
-        return
-        [
-            .. await db.LinkWords
-                .Where(lw => lw.Side == LinkSide.From && words.Contains(lw.WordId)
-                             && lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId
-                             && lw.Link.Method == LinkMethod.StrongNumber && written.Contains(lw.Link.Provenance!.Source))
-                .Select(lw => lw.LinkId)
-                .Distinct()
-                .ToListAsync(cancellationToken),
-        ];
-    }
-
-    private async Task Write(
-        int fromTextId,
-        int toTextId,
-        string source,
-        List<Draft> drafts,
-        List<(long Link, double Confidence, string Source)> corroborations,
-        List<Settled> settled,
-        CancellationToken cancellationToken,
-        long[]? superseded = null)
-    {
-        if (drafts.Count == 0 && corroborations.Count == 0)
-        {
-            return;
-        }
-
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-
-        if (superseded is { Length: > 0 })
-        {
-            await using var give = new NpgsqlCommand(RemoveSettled, connection);
-            give.Parameters.AddWithValue("ids", superseded);
-            await give.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        var written = await WriteLinks(
-            connection, transaction, fromTextId, toTextId, source, drafts, settled, cancellationToken);
-
-        await LinkClaims.Corroborate(
-            connection, transaction, corroborations, LinkMethod.StrongNumber, CorroborationNote, cancellationToken);
-
-        await Fold(connection, settled, written.Ids, cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-    }
-
-    /// <summary>
-    /// The matches as links. The aligner's links they settle are left out of the shapes a match may
-    /// be folded into, because <see cref="Fold"/> removes them in the same transaction once their
-    /// claims have moved onto the match.
-    /// </summary>
-    private static async Task<LinkWrite> WriteLinks(
-        NpgsqlConnection connection,
-        IDbContextTransaction transaction,
-        int fromTextId,
-        int toTextId,
-        string source,
-        List<Draft> drafts,
-        List<Settled> settled,
-        CancellationToken cancellationToken) =>
-        await LinkWriter.Write(
-            connection,
-            (NpgsqlTransaction)transaction.GetDbTransaction(),
-            [
-                .. drafts.Select(draft => new NewLink(
-                    fromTextId, toTextId, LinkRelation.Renders, LinkMethod.StrongNumber, draft.Confidence, source, null,
-                    draft.From, draft.To)),
-            ],
-            cancellationToken,
-            leaving:
-            [
-                .. settled
-                    .Where(s => s.Verdict is SettledVerdict.Confirmed or SettledVerdict.Contradicted)
-                    .Select(s => s.Link),
-            ]);
-
-    /// <summary>
-    /// The aligner's links the matches settled: a confirmed one becomes a claim on its match, a
-    /// contradicted one is removed, and both are removed as links. In the same transaction as the
-    /// matches, so the corpus never holds a guess and its refutation as two answers at once.
-    /// </summary>
-    private static async Task Fold(
-        NpgsqlConnection connection,
-        List<Settled> settled,
-        long[] ids,
-        CancellationToken cancellationToken)
-    {
-        var confirmed = settled.Where(s => s.Verdict == SettledVerdict.Confirmed).ToList();
-        var removed = settled
-            .Where(s => s.Verdict is SettledVerdict.Confirmed or SettledVerdict.Contradicted)
-            .Select(s => s.Link)
-            .ToArray();
-        if (removed.Length == 0)
-        {
-            return;
-        }
-
-        if (confirmed.Count > 0)
-        {
-            await using (var create = new NpgsqlCommand(FoldTable, connection))
-            {
-                await create.ExecuteNonQueryAsync(cancellationToken);
-            }
-
-            await using (var writer = await connection.BeginBinaryImportAsync(FoldImport, cancellationToken))
-            {
-                foreach (var fold in confirmed)
-                {
-                    await writer.StartRowAsync(cancellationToken);
-                    await writer.WriteAsync(fold.Link, NpgsqlDbType.Bigint, cancellationToken);
-                    await writer.WriteAsync(ids[fold.Draft], NpgsqlDbType.Bigint, cancellationToken);
-                    await writer.WriteAsync(fold.Exact, NpgsqlDbType.Boolean, cancellationToken);
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-
-            await using var claims = new NpgsqlCommand(FoldClaims, connection);
-            claims.Parameters.AddWithValue("within", WithinNote);
-            await claims.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        await using var remove = new NpgsqlCommand(RemoveSettled, connection);
-        remove.Parameters.AddWithValue("ids", removed);
-        await remove.ExecuteNonQueryAsync(cancellationToken);
     }
 
     /// <param name="Unit">

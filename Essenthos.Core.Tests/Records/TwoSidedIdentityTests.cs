@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 using FluentAssertions;
 using Xunit;
 
@@ -12,8 +14,9 @@ namespace Essenthos.Core.Tests.Records;
 /// whose <c>back</c> says it on the other; and a note that says <em>He may also
 /// be …</em> or that a tradition <em>identifies him with …</em>, citing the other man's verses, which
 /// the other man's note has to answer. The owner's rulings that two are different people are the one
-/// exception, and there neither page offers the other. The alternatives are held on the shipped record files; the notes
-/// are held by the rule alone here, since the record files do not carry every record's verses.
+/// exception, and there neither page offers the other. The alternatives are held on the shipped record files. The notes
+/// are held on the store's: a page's verses are <c>records/facts/verses</c> and the build's <c>records/derived/verses</c>,
+/// which only a built store has (PRB-1699), so that check reads the corpus.
 /// </summary>
 public sealed partial class TwoSidedIdentityTests
 {
@@ -49,6 +52,20 @@ public sealed partial class TwoSidedIdentityTests
 
         OneSided(said, folded, apart).Should().BeEquivalentTo(
             ["azariah may be uzziah, and uzziah does not say so", "mary-7 may be mary, and mary says so twice"]);
+    }
+
+    /// <summary>
+    /// Every English note offering another man, answered on that man's page: his note offers this one back, citing a verse
+    /// of this one's page. The verses are the ones a page shows, our own readings and the build's derived verses.
+    /// </summary>
+    [Fact]
+    [Trait(TestCategory.Name, TestCategory.Corpus)]
+    public void EveryNoteThatOffersAnotherManIsAnsweredOnHisPage()
+    {
+        var notes = Notes();
+        notes.Where(note => note.Value.SelectMany(Offers).Any()).Should().HaveCountGreaterThan(10, "the shipped notes offer another man on a dozen pages");
+
+        Unanswered(notes, Verses(new ProductStore(TestResources.Folder(".")))).Should().BeEmpty();
     }
 
     [Fact]
@@ -204,7 +221,35 @@ public sealed partial class TwoSidedIdentityTests
         return cited;
     }
 
-    /// <summary>Every record's verses, as the rulings place it and the narrative files give its passages.</summary>
+    /// <summary>The English notes of every record, as the shipped <c>records/i18n/eng/records</c> writes them.</summary>
+    private static Dictionary<string, IReadOnlyList<string>> Notes() =>
+        Rows(Path.Combine("i18n", "eng", "records.tsv"))
+            .Where(row => !string.IsNullOrWhiteSpace(row["notes"]))
+            .GroupBy(row => row["slug"]!, StringComparer.Ordinal)
+            .ToDictionary(record => record.Key, record => (IReadOnlyList<string>)[.. record.Select(row => row["notes"]!)], StringComparer.Ordinal);
+
+    /// <summary>
+    /// The verses each record's page shows, from a built store: our own readings (<c>records/facts/verses</c>) and the
+    /// verses the build derives from our words and relationships (<c>records/derived/verses</c>).
+    /// </summary>
+    private static Dictionary<string, IReadOnlyList<ScriptureSpan>> Verses(ProductStore store)
+    {
+        var verses = new Dictionary<string, List<ScriptureSpan>>(StringComparer.Ordinal);
+        foreach (var product in (string[])["records/facts/verses", RecordVerses.Product])
+        {
+            store.Exists(product).Should().BeTrue($"{product} is a page's verses; build the store first");
+            using var reader = store.Open(product, RecordFiles.All.Single(file => file.Product == product).Schema());
+            foreach (var row in reader.Rows())
+            {
+                var key = VerseKey.Parse(row[1]!);
+                (verses.TryGetValue(row[0]!, out var list) ? list : verses[row[0]!] = [])
+                    .Add(new ScriptureSpan(key.Book, key.Chapter, key.Verse, key.Chapter, key.Verse, null));
+            }
+        }
+
+        return verses.ToDictionary(pair => pair.Key, pair => (IReadOnlyList<ScriptureSpan>)pair.Value, StringComparer.Ordinal);
+    }
+
     /// <summary>The rows of a shipped record file by column, with <c>\N</c> read as null.</summary>
     private static IEnumerable<IReadOnlyDictionary<string, string?>> Rows(string file)
     {
