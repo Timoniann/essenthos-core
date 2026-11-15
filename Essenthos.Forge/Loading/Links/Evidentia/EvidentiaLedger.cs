@@ -124,6 +124,17 @@ internal sealed class EvidentiaLedger(AppDbContext db)
 
     public static string Folder(string resources) => Path.Combine(resources, DefaultFolder);
 
+    /// <summary>The highest run number a run folder under <paramref name="folder"/> records; 0 when there is none.</summary>
+    public static int HighestRun(string? folder) =>
+        folder is not null && Directory.Exists(folder)
+            ? Directory.EnumerateDirectories(folder)
+                .Select(run => Path.Combine(run, RunFile))
+                .Where(File.Exists)
+                .Select(file => LedgerRun.Read(file).Run ?? 0)
+                .DefaultIfEmpty(0)
+                .Max()
+            : 0;
+
     /// <summary>The folder a run's verdicts are kept in, named by what identifies the run and nothing renumbered.</summary>
     public static string RunFolder(string from, string to, DateTimeOffset startedAt) =>
         $"{from}-{to}-{startedAt.UtcDateTime.ToString("yyyyMMdd'T'HHmmss'.'ffffff", CultureInfo.InvariantCulture)}";

@@ -83,8 +83,12 @@ internal sealed record EvidentiaRunOutcome(
 /// Where a worker beyond the first gets a loader of its own: a loader and its context serve one book at
 /// a time. Not needed when the run computes one book at a time.
 /// </param>
+/// <param name="ledger">
+/// The ledger's folder (<see cref="EvidentiaLedger.Folder"/>). A new run is numbered above every run it holds, because
+/// the merge lets the higher run number win and a database built from files starts its runs at 1.
+/// </param>
 internal sealed class EvidentiaRunner(
-    AppDbContext db, EvidentiaCorpusPreviewLoader loader, IServiceScopeFactory? scopes = null)
+    AppDbContext db, EvidentiaCorpusPreviewLoader loader, IServiceScopeFactory? scopes = null, string? ledger = null)
 {
     /// <summary>
     /// Books computed at once when the command does not say. Each worker runs one UDPipe process at a
@@ -116,6 +120,35 @@ internal sealed class EvidentiaRunner(
         int parallel = DefaultParallel,
         CancellationToken cancellationToken = default) =>
         await Run(fromSlug, toSlug, books, options, parentRunId: null, verses: null, parallel, cancellationToken);
+
+    private const string AdvanceRunNumbers =
+        """
+        SELECT setval(sequence, next.value)
+        FROM (SELECT pg_get_serial_sequence('evidentia_run', 'id')::regclass AS sequence) s
+        CROSS JOIN LATERAL (
+            SELECT GREATEST(@floor, COALESCE(pg_sequence_last_value(s.sequence), 0),
+                            COALESCE((SELECT max(id) FROM evidentia_run), 0)) AS value) next
+        WHERE next.value >= 1
+        """;
+
+    /// <summary>
+    /// Moves the run id sequence past <paramref name="floor"/> and past every run the table holds, never back, so
+    /// the next run stored is numbered above both.
+    /// </summary>
+    internal static async Task NumberAbove(AppDbContext db, int floor, CancellationToken cancellationToken = default)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            await using var command = new NpgsqlCommand(AdvanceRunNumbers, (NpgsqlConnection)db.Database.GetDbConnection());
+            command.Parameters.AddWithValue("floor", (long)floor);
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
+        }
+    }
 
     /// <summary>
     /// Repeats a run over some of its verses, with the configuration it was run with, as a new run
@@ -228,6 +261,7 @@ internal sealed class EvidentiaRunner(
                 verses = verses?.OrderBy(verse => (verse.Book, verse.Chapter, verse.Verse)).Select(Address).ToArray(),
             }),
         };
+        await NumberAbove(db, EvidentiaLedger.HighestRun(ledger), cancellationToken);
         db.EvidentiaRuns.Add(run);
         await db.SaveChangesAsync(cancellationToken);
 
