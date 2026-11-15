@@ -78,6 +78,8 @@ public sealed class TribeMembersTests : IDisposable
         tribes.GetProperty("items").EnumerateArray()
             .Select(t => (t.GetProperty("slug").GetString(), t.GetProperty("members").GetInt32()))
             .Should().BeEquivalentTo([("judahites", 2), ("levites", 2)], "Edom is no tribe of Israel");
+        tribes.GetProperty("items").EnumerateArray().Select(t => t.GetProperty("patriarch").GetProperty("slug").GetString())
+            .Should().Equal("judah", "levi");
 
         (await Get(client, "/v1/entities/aaron")).GetProperty("tribeRecord").GetProperty("slug").GetString().Should().Be("levi");
         (await client.GetAsync("/v1/entities?tribe=nobody")).StatusCode.Should().Be(HttpStatusCode.NotFound);

@@ -162,19 +162,24 @@ internal static partial class EncyclopediaEndpoints
             }
 
             var tribes = await Tribes.Israel(db, cancellationToken);
-            var ids = tribes.Select(t => t.Id).ToList();
+            var ids = tribes.SelectMany(t => t.Membership.Targets).Distinct().ToList();
             var heads = await db.Entities.Where(e => ids.Contains(e.Id))
-                .Select(e => new { e.Id, e.Kind, e.Name }).ToDictionaryAsync(e => e.Id, cancellationToken);
+                .Select(e => new { e.Id, e.Slug, e.Kind, e.Name }).ToDictionaryAsync(e => e.Id, cancellationToken);
             var names = await EntityNames.Of(db, ids, language, cancellationToken);
             var items = new List<TribeResponse>();
             foreach (var (id, slug, membership) in tribes)
             {
                 var count = await Tribes.Members(db, everyone, membership).CountAsync(cancellationToken);
-                items.Add(new TribeResponse(slug, EnumSpelling.Of(heads[id].Kind), heads[id].Name, names.GetValueOrDefault(id), count));
+                var father = membership.Targets.Single(target => target != id);
+                items.Add(new TribeResponse(slug, EnumSpelling.Of(heads[id].Kind), heads[id].Name, names.GetValueOrDefault(id), count)
+                {
+                    Patriarch = new EntityTribeResponse(
+                        heads[father].Slug, EnumSpelling.Of(heads[father].Kind), heads[father].Name, names.GetValueOrDefault(father)),
+                });
             }
 
             return Results.Ok(new TribeListResponse(
-                [.. items.Where(i => i.Members > 0).OrderBy(i => i.LocalName ?? i.Name, StringComparer.CurrentCulture)]));
+                [.. items.Where(i => i.Members > 0).OrderBy(i => i.Patriarch?.LocalName ?? i.Patriarch?.Name, StringComparer.Ordinal)]));
         });
 
         // How far each layer of the encyclopedia actually reaches, measured rather than declared.

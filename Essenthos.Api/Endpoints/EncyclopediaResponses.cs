@@ -627,7 +627,11 @@ internal record EntityMembersResponse(int Count, bool Tribe);
 
 /// <summary>A tribe of Israel as the people list offers it: its people's page and how many belong to it.</summary>
 /// <param name="Members">How many persons belong to it in the books the canon asked for.</param>
-internal record TribeResponse(string Slug, string Kind, string Name, string? LocalName, int Members);
+internal record TribeResponse(string Slug, string Kind, string Name, string? LocalName, int Members)
+{
+    /// <summary>The father the tribe is named after, as a reader names the tribe: Judah, Levi.</summary>
+    public EntityTribeResponse? Patriarch { get; init; }
+}
 
 internal record TribeListResponse(IList<TribeResponse> Items);
 
