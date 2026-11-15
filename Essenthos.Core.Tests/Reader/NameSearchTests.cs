@@ -170,6 +170,16 @@ public sealed class NameSearchTests : IDisposable
         FamiliarNames.Opening(" ").Should().BeEmpty();
     }
 
+    [Theory]
+    [InlineData("живі істоти")]
+    [InlineData("Living creatures")]
+    [InlineData("living")]
+    [InlineData("істоти")]
+    [InlineData("seres vivientes")]
+    [InlineData("lebendige Wesen")]
+    public void TheLivingCreaturesOfEzekielFindTheCherubim(string typed) =>
+        FamiliarNames.Opening(typed).Should().Contain("cherubim");
+
     [Fact]
     public async Task ANearSpellingIsLookedForOnlyWhereNothingIsCalledThat()
     {

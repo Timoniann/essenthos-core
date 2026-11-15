@@ -22,6 +22,14 @@ internal static class FamiliarNames
         ["Раамсес"] = ["rameses"],
         ["Сокхот"] = ["succoth-2"],
 
+        // What Ezekiel calls them before he knows them for cherubim (Ezekiel 1:5; 10:15, 20): the
+        // translations print it of the creatures, not as the record's name, and readers look for it.
+        ["Living creatures"] = ["cherubim"],
+        ["Живі істоти"] = ["cherubim"],
+        ["Живые существа"] = ["cherubim"],
+        ["Lebendige Wesen"] = ["cherubim"],
+        ["Seres vivientes"] = ["cherubim"],
+
         // The modern spellings a Spanish or German name form had before it followed the spelling
         // its main text prints: nothing else holds them any more, and a reader still types them.
         ["Aditajim"] = ["adithaim"],
