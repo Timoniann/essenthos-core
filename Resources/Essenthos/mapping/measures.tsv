@@ -49,3 +49,5 @@ RV1909	NESTLE1904	NT	evidentia	all	precision	97.6	41280	Clear Bible's hand align
 ALM1911	BHSA	OT	composed	all	precision	94.8	154	a hand-scored sample drawn in proportion to the readings	PRB-0757	2026-09-25	\N
 UBIO	*	*	aligner	all	precision	92.8	4401	unfoldingWord's Ukrainian interlinear (uk_ubio)	DOC-0184	2026-09-04	the aligner run alone, one target per word at 0.25; the compositions that carry the text now are not measured on their own
 BSB	BHSA	OT	names	all	precision	100.0	297	the held-out part of the Berean's key	TSK-1086	2026-10-15	names placed first; 99.6% on the development part
+UBIO	BHSA	OT	composed	all	precision	79.3	300	a hand-scored stratified sample, 7 combinations x 4 bands (r128, seed 1607)	PRB-1607	2026-11-15	before the floors: 238 of 300 right, Esther left out; 91.6% weighted by the rows of each stratum
+UBIO	BHSA	OT	composed	all	precision	92.0	50	a hand re-read of kept links in the formerly mixed bands (r130, seed 1630)	PRB-1607	2026-11-15	after the floors; drawn from the weaker bands (direct-only from 0.90, two-route under 0.70), not in proportion: 46 right, 2 partly, 2 wrong
