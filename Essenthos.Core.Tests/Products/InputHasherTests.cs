@@ -65,6 +65,23 @@ public sealed class InputHasherTests : IDisposable
     }
 
     [Fact]
+    public void TwoHashersOnOneFolderKeepWhatEachRemembered()
+    {
+        var first = new InputHasher(_root);
+        var second = new InputHasher(_root);
+        first.Hash("bible4u/kjv.xml");
+        second.Hash("Nestle1904/a.txt");
+
+        first.Save();
+        second.Save();
+
+        var third = new InputHasher(_root);
+        third.Hash("bible4u/kjv.xml");
+        third.Hash("Nestle1904/a.txt");
+        third.Hashed.Should().Be(0, "the second save keeps what the first remembered (PRB-1486)");
+    }
+
+    [Fact]
     public void TheMemoryIsAProductFileUnderBuild()
     {
         var hasher = new InputHasher(_root);

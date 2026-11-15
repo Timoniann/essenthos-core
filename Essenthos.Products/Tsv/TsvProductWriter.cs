@@ -66,11 +66,23 @@ public sealed class TsvProductWriter<T> : IProductWriter<T>, IRowSink
         _completed = true;
     }
 
+    /// <summary>
+    /// Throws the writing away when <see cref="Complete"/> did not finish. It never throws over the
+    /// exception that stopped <see cref="Complete"/>: when the commit failed, the stream under the
+    /// writer is already closed, and a flush of it would hide the real error (PRB-1493).
+    /// </summary>
     public void Dispose()
     {
         if (!_completed)
         {
-            _writer.Dispose();
+            try
+            {
+                _writer.Dispose();
+            }
+            catch (Exception e) when (e is ObjectDisposedException or IOException)
+            {
+                // The rows are being thrown away; the error that matters is the one already on its way up.
+            }
         }
 
         _file.Dispose();

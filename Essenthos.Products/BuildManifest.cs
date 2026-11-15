@@ -32,10 +32,18 @@ public sealed record ManifestEntry(
 /// count, when and by what, and the inputs it was made from. The rule of the build reads from here:
 /// a product is made when it has no entry, its file is missing or differs from the entry, or any
 /// input's hash now differs from the one the entry records.
+/// <para>
+/// Several processes may build into one <c>Resources/</c> (PRB-1486). Each save takes
+/// <see cref="LockFile"/>, reads the file again when another process wrote it since, keeps every
+/// entry it did not change itself, and writes the merge in place whole.
+/// </para>
 /// </summary>
 public sealed class BuildManifest
 {
     public const string Product = "Essenthos/build/manifest.tsv";
+
+    /// <summary>Held across processes around each read-merge-write of the manifest; beside it in <c>build/</c>, which git ignores.</summary>
+    public const string LockFile = "Essenthos/build/manifest.lock";
 
     private const string InputsJoin = " ";
 
@@ -55,25 +63,30 @@ public sealed class BuildManifest
             [.. row.Text(5).Split(InputsJoin, StringSplitOptions.RemoveEmptyEntries).Select(part => ProductInput.Parse(part))]));
 
     private readonly string _path;
+    private readonly string _lockPath;
     private readonly Dictionary<string, ManifestEntry> _entries = new(StringComparer.Ordinal);
+
+    /// <summary>Products this process recorded, rehashed or forgot since its last save: its own word on them wins the merge.</summary>
+    private readonly HashSet<string> _changed = new(StringComparer.Ordinal);
+
     private readonly object _lock = new();
 
-    private BuildManifest(string path)
+    /// <summary>The file as this process last read or wrote it, so a save reads it again only when another process wrote it since.</summary>
+    private (long Bytes, DateTime Written)? _seen;
+
+    private BuildManifest(string root)
     {
-        _path = path;
+        _path = Path.Combine(root, Product);
+        _lockPath = Path.Combine(root, LockFile);
     }
 
     /// <param name="root">The <c>Resources/</c> folder.</param>
     public static BuildManifest Load(string root)
     {
-        var manifest = new BuildManifest(Path.Combine(Path.GetFullPath(root), Product));
-        if (File.Exists(manifest._path))
+        var manifest = new BuildManifest(Path.GetFullPath(root));
+        foreach (var entry in manifest.ReadFile())
         {
-            using var reader = TsvFormat.Instance.Open(manifest._path, Schema);
-            foreach (var entry in reader.Rows())
-            {
-                manifest._entries[entry.Product] = entry;
-            }
+            manifest._entries[entry.Product] = entry;
         }
 
         return manifest;
@@ -107,6 +120,7 @@ public sealed class BuildManifest
         lock (_lock)
         {
             _entries[entry.Product] = entry;
+            _changed.Add(entry.Product);
             Save();
         }
 
@@ -124,6 +138,7 @@ public sealed class BuildManifest
                 if (_entries.TryGetValue(product, out var entry))
                 {
                     _entries[product] = entry with { Sha256 = sha256 };
+                    _changed.Add(product);
                     any = true;
                 }
             }
@@ -141,6 +156,7 @@ public sealed class BuildManifest
         {
             if (_entries.Remove(product))
             {
+                _changed.Add(product);
                 Save();
             }
         }
@@ -162,10 +178,56 @@ public sealed class BuildManifest
         return currentInputs.All(input => recorded.TryGetValue(input.Path, out var sha256) && sha256 == input.Sha256);
     }
 
+    /// <summary>
+    /// Under the cross-process lock: takes in what other processes wrote since this one last saw the
+    /// file, keeps this process's own changes over it, and writes the whole through a temporary file
+    /// moved into place. Called under <see cref="_lock"/>.
+    /// </summary>
     private void Save()
     {
+        using var held = FileLock.Acquire(_lockPath);
+        if (Stat() != _seen)
+        {
+            var onDisk = ReadFile().ToDictionary(entry => entry.Product, StringComparer.Ordinal);
+            foreach (var product in _entries.Keys.Where(product => !_changed.Contains(product) && !onDisk.ContainsKey(product)).ToList())
+            {
+                _entries.Remove(product);
+            }
+
+            foreach (var (product, entry) in onDisk.Where(pair => !_changed.Contains(pair.Key)))
+            {
+                _entries[product] = entry;
+            }
+        }
+
         var header = new ProductHeader(Product, [], "the build: every product, its hash, its inputs as they stood");
-        using var writer = TsvFormat.Instance.Create(_path, header, Schema);
-        writer.WriteAll(_entries.Values.OrderBy(entry => entry.Product, StringComparer.Ordinal));
+        using (var writer = TsvFormat.Instance.Create(_path, header, Schema))
+        {
+            writer.WriteAll(_entries.Values.OrderBy(entry => entry.Product, StringComparer.Ordinal));
+        }
+
+        _seen = Stat();
+        _changed.Clear();
+    }
+
+    private List<ManifestEntry> ReadFile()
+    {
+        var seen = Stat();
+        if (seen is null)
+        {
+            _seen = null;
+            return [];
+        }
+
+        using var reader = TsvFormat.Instance.Open(_path, Schema);
+        var entries = reader.Rows().ToList();
+        _seen = seen;
+        return entries;
+    }
+
+    private (long Bytes, DateTime Written)? Stat()
+    {
+        var file = new FileInfo(_path);
+        return file.Exists ? (file.Length, file.LastWriteTimeUtc) : null;
     }
 }
