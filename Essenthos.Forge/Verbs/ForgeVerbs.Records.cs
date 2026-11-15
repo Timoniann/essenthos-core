@@ -1,5 +1,6 @@
 using Essenthos.Core.Build;
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Products;
 using Essenthos.Core.Records;
 using Npgsql;
@@ -55,19 +56,26 @@ internal static partial class ForgeVerbs
     /// <summary>
     /// Makes the derived record files whose inputs are all files, reading the hand files of
     /// <c>--from &lt;Resources&gt;</c> and writing into <c>--into &lt;Resources&gt;</c> (both default to the
-    /// Forge's own); the gazetteer is read from OpenBible/ beside the hand files. Reads no database.
+    /// Forge's own); the gazetteer is read from OpenBible/ beside the hand files. Reads no database. The things whose
+    /// 3D model moved are drawn first (<see cref="ModelPictures"/>), so the pictures' file lists each under the digest
+    /// of the bytes it now has.
     /// </summary>
-    private static Task<int> RecordsDerive(ForgeRun forge, string[] args)
+    private static async Task<int> RecordsDerive(ForgeRun forge, string[] args)
     {
         var from = new ProductStore(Option(args, "--from") ?? forge.Resources);
         var into = Option(args, "--into") is { } path ? new ProductStore(path) : from;
+        using (var drawing = forge.Scope())
+        {
+            Console.WriteLine(await drawing.ServiceProvider.GetRequiredService<ModelPictures>().Draw(from.ResourcesPath, from));
+        }
+
         foreach (var (product, rows) in RecordProducers.Derive(from, into, Path.Combine(from.ResourcesPath, "OpenBible")))
         {
             Console.WriteLine($"{rows,9}  {product}");
         }
 
         into.Save();
-        return Task.FromResult(0);
+        return 0;
     }
 
     /// <summary>Writes <c>records/canon</c> from the names projection and the frames of <c>--from &lt;Resources&gt;</c>; reads no database.</summary>
