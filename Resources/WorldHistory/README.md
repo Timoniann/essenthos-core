@@ -18,6 +18,13 @@ Fetched **25 September 2026** from (first fetched 2 September 2026) `https://que
 | `wikidata-inception.csv` | `wd_inception.rq` | 2,708 | Things with an *inception* — cities founded, dynasties begun, works written |
 | `wikidata-spans.csv` | `wd_spans.rq` | 440 | Things with a *start* and an *end* — wars, empires, dynasties, archaeological ages |
 
+`wikidata-sitelinks.tsv` is not a query result: `scripts/fetch-wikidata-sitelinks.ps1` reads every item the
+three files name (2,063 on 15 November 2026) from the Wikibase API and writes each item's article title on
+enwiki, ukwiki, dewiki and eswiki (empty where that Wikipedia has none) with the revision read
+(`lastrevid`). `forge records-derive` joins it to each world event's item to make
+`records/facts/event-wikipedia`, the link an event's page and row give to its article. Of the 726 world
+events all have an English article, 617 a Ukrainian, 648 a German and 715 a Spanish one.
+
 Rows outnumber items: an item with three `instance of` values and two countries comes back six
 times. The loader keeps the first of each and counts the rest as nothing.
 

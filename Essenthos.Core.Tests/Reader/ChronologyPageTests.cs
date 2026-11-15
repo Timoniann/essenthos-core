@@ -62,6 +62,21 @@ public sealed class ChronologyPageTests
         page.Canonical.Should().Be("/events/birtheli1");
     }
 
+    [Theory]
+    [InlineData("uk", "Бру-на-Бойн", "Вікіпедія: ")]
+    [InlineData("en", "Brú na Bóinne", "Вікіпедія (англійською): ")]
+    public void AWorldEventsPageLinksToItsArticleAndSaysWhenItIsInEnglish(string wikipedia, string title, string label)
+    {
+        var view = new EventView("brunaboinne", "Бру-на-Бойн", "3200 до н. е.")
+        {
+            Wikipedia = new PageArticle($"https://{wikipedia}.wikipedia.org/wiki/x", title, wikipedia),
+        };
+
+        var page = PageViews.Event(SiteLanguage.Ukrainian, Ukrainian, view);
+
+        page.Body.Should().Contain($"<p>{label}<a href=\"https://{wikipedia}.wikipedia.org/wiki/x\" rel=\"noreferrer\">{title}</a></p>");
+    }
+
     [Fact]
     public void APeriodsPageGivesItsSpanInEachReckoningAndTheEventsInsideIt()
     {

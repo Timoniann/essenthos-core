@@ -201,6 +201,30 @@ internal static partial class QuotedVerses
         return new Reading(passages, compilers.Count == 0 ? null : string.Join('\n', compilers));
     }
 
+    /// <summary>
+    /// The first verse a description cites, whether it quotes it or says it in the compiler's own sentence
+    /// (<em>All of Creation was formed by G-d's spoken word. (GEN 1:1-31)</em>), with a miscitation read as
+    /// the verse meant; null where it cites none.
+    /// </summary>
+    public static (int Book, int Chapter, int Verse)? FirstCited(string slug, string? description)
+    {
+        if (Uncited.TryGetValue(slug, out var own) && Passages(own) is [var given, ..])
+        {
+            return (given.Book, given.Chapter, given.Verse);
+        }
+
+        foreach (Match match in Citation().Matches(description ?? ""))
+        {
+            var cited = match.Groups["cite"].Value.Trim();
+            if (Passages(Miscited.GetValueOrDefault((slug, cited), cited)) is [var first, ..])
+            {
+                return (first.Book, first.Chapter, first.Verse);
+            }
+        }
+
+        return null;
+    }
+
     /// <summary>A citation such as <c>1KI 19:15-16, 19</c> or <c>1KI 14:31-15:1</c> as runs of verses.</summary>
     internal static List<Passage> Passages(string citation)
     {

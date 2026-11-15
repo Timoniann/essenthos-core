@@ -131,6 +131,46 @@ public sealed class ConsoleFactFilesTests : IDisposable
         store.Exists("records/facts/wikipedia").Should().BeFalse();
     }
 
+    [Fact]
+    public void AWorldEventLinksToTheArticlesOfItsOwnItem()
+    {
+        var store = new ProductStore(_root);
+        Write(store, "external/wikidata/events",
+            WorldEvent("brunaboinne", "http://www.wikidata.org/entity/Q339489", "world"),
+            WorldEvent("noarticle", "http://www.wikidata.org/entity/Q5", "world"),
+            WorldEvent("unfetched", "http://www.wikidata.org/entity/Q7", "world"),
+            WorldEvent("scripture", "http://www.wikidata.org/entity/Q339489", "scripture"));
+        Json("WorldHistory/wikidata-sitelinks.tsv",
+            "item\tlastrevid\tenwiki\tukwiki\tdewiki\teswiki\n" +
+            "Q5\t1\t\t\t\t\n" +
+            "Q339489\t2\tBrú na Bóinne\tБру-на-Бойн\t\tBrú na Bóinne\n");
+
+        var (product, rows) = RecordProducers.EventWikipedia(store, store);
+
+        product.Should().Be("records/facts/event-wikipedia");
+        rows.Should().Be(3);
+        Rows(store, product).Select(r => string.Join('|', r)).Should().Equal(
+            "brunaboinne|en|Brú na Bóinne|Q339489",
+            "brunaboinne|es|Brú na Bóinne|Q339489",
+            "brunaboinne|uk|Бру-на-Бойн|Q339489");
+        Graph().Check(store.Manifest).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void WithoutTheSitelinksNoEventLinkIsWritten()
+    {
+        var store = new ProductStore(_root);
+        Write(store, "external/wikidata/events", WorldEvent("brunaboinne", "http://www.wikidata.org/entity/Q339489", "world"));
+
+        var make = () => RecordProducers.EventWikipedia(store, store);
+
+        make.Should().Throw<FileNotFoundException>().WithMessage("*wikidata-sitelinks.tsv*");
+        store.Exists("records/facts/event-wikipedia").Should().BeFalse();
+    }
+
+    private static string?[] WorldEvent(string slug, string uri, string realm) =>
+        [slug, slug, null, "Founding", null, "1", null, null, null, null, null, null, uri, null, realm, null, null, "source", null, "Wikidata"];
+
     private static ProductGraph Graph() => ProductGraph.Read(new ProductStore(TestResources.Shipped(".")));
 
     private static string?[] Record(string slug, string kind) => [slug, kind, null, null, slug, null, null, null, null, null, null, null];

@@ -34,6 +34,7 @@ internal static class RecordProducers
         .. Locations(from, into, openBible),
         .. Images(from, into),
         Wikipedia(from, into),
+        EventWikipedia(from, into),
     ];
 
     /// <summary>
@@ -182,6 +183,88 @@ internal static class RecordProducers
             $"{unknown} items the Wikidata items do not hold")));
         return (file.Product, written);
     }
+
+    /// <summary>
+    /// Each world event's Wikipedia articles: the event's own Wikidata item (its <c>uri</c> in
+    /// <c>external/wikidata/events</c>) and the titles <c>WorldHistory/wikidata-sitelinks.tsv</c> gives that item on
+    /// enwiki, ukwiki, dewiki and eswiki. Nothing is matched: the event was drawn from the item. A language the item
+    /// has no article in has no row.
+    /// </summary>
+    public static (string Product, long Rows) EventWikipedia(ProductStore from, ProductStore into)
+    {
+        var sitelinks = Path.Combine(from.ResourcesPath, SitelinksFile);
+        if (!System.IO.File.Exists(sitelinks))
+        {
+            throw new FileNotFoundException(
+                $"The world events' Wikipedia articles are not at {sitelinks}: without them every world event would lose its " +
+                "link. Restore it from git, or run scripts/fetch-wikidata-sitelinks.ps1.", sitelinks);
+        }
+
+        var file = File(EventWikipediaProduct);
+        var inputs = from.Inputs([.. Paths(from, WorldEventsProduct), SitelinksFile]);
+        var articles = Sitelinks(sitelinks);
+        var rows = new List<string?[]>();
+        int linked = 0, unknown = 0;
+        foreach (var e in Read(from, WorldEventsProduct))
+        {
+            if (e[14] != Realms.World || e[12] is not { } uri || !uri.StartsWith(WikidataEntity, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            var qid = uri[WikidataEntity.Length..];
+            if (!articles.TryGetValue(qid, out var titles))
+            {
+                unknown++;
+                continue;
+            }
+
+            if (titles.Count > 0)
+            {
+                linked++;
+            }
+
+            rows.AddRange(titles.Select(t => new string?[] { e[0], t.Language, t.Title, qid }));
+        }
+
+        var written = Write(into, file, rows, Producer + " event-wikipedia", inputs, header => header.Notes.Add(new("linked",
+            $"{linked} world events with an article; {unknown} whose item the sitelinks file does not hold")));
+        return (file.Product, written);
+    }
+
+    /// <summary>The articles of each item the sitelinks file holds, keyed by its id, in the order of <see cref="EntityWikipedia.Languages"/>.</summary>
+    private static Dictionary<string, List<(string Language, string Title)>> Sitelinks(string path)
+    {
+        var lines = System.IO.File.ReadAllLines(path);
+        var header = lines[0].Split('\t');
+        var wikis = EntityWikipedia.Languages.Select(language => (Language: language, At: Array.IndexOf(header, language + "wiki"))).ToList();
+        if (header[0] != "item" || wikis.Any(w => w.At < 0))
+        {
+            throw new InvalidDataException(
+                $"{path} does not start with the columns item, lastrevid and one per Wikipedia ({string.Join(", ", wikis.Select(w => w.Language + "wiki"))}).");
+        }
+
+        var articles = new Dictionary<string, List<(string, string)>>(StringComparer.Ordinal);
+        foreach (var line in lines.Skip(1).Where(line => line.Length > 0))
+        {
+            var cells = line.Split('\t');
+            articles[cells[0]] =
+            [
+                .. wikis.Where(w => w.At < cells.Length && cells[w.At].Length > 0).Select(w => (w.Language, cells[w.At])),
+            ];
+        }
+
+        return articles;
+    }
+
+    private const string EventWikipediaProduct = "records/facts/event-wikipedia";
+
+    private const string WorldEventsProduct = "external/wikidata/events";
+
+    /// <summary>The articles of the world history's items, fetched by <c>scripts/fetch-wikidata-sitelinks.ps1</c>.</summary>
+    private const string SitelinksFile = "WorldHistory/wikidata-sitelinks.tsv";
+
+    private const string WikidataEntity = "http://www.wikidata.org/entity/";
 
     private const string ImagesProduct = "records/facts/images";
 

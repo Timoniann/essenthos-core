@@ -46,9 +46,9 @@ internal static partial class EncyclopediaEndpoints
 
             if (preference.Count == 0)
             {
-                var total = await events.CountAsync(cancellationToken);
-                var page = await InOrder(events).Skip(from).Take(count).Select(Rows).ToListAsync(cancellationToken);
-                return Results.Ok(new EventListResponse(total, await Answered(db, page, null, language, prose, cancellationToken)));
+                var all = await InPreferredOrder(events, preference, cancellationToken);
+                var page = await RowsOf(db, [.. all.Skip(from).Take(count)], cancellationToken);
+                return Results.Ok(new EventListResponse(all.Count, await Answered(db, page, null, language, prose, cancellationToken)));
             }
 
             var ordered = await InPreferredOrder(events, preference, cancellationToken);
@@ -350,8 +350,8 @@ internal static partial class EncyclopediaEndpoints
     /// <summary>
     /// The events in order of the year a reader is shown: each by the first reckoning in the reader's
     /// preference that dates it. An event none of them dates comes after the rest. With no preference
-    /// this is the base order of <see cref="InOrder"/>. Ties fall to the base year from creation, then
-    /// to the slug read with its numbers as numbers, so Ussher's paragraph 999 comes before his 1000.
+    /// this is the base order of <see cref="InOrder"/>. The events of one year are in the order the text
+    /// tells them (<see cref="EventOrder"/>).
     ///
     /// <para>
     /// In memory, because the order rests on a choice among each event's dates that no index serves;
@@ -387,15 +387,47 @@ internal static partial class EncyclopediaEndpoints
             return new InList(row.Id, row.Slug, null, null, row.YearFromCreation);
         });
 
+        var inYear = EventOrder.Of(await events.Select(EventOrder.Read).ToListAsync(cancellationToken));
         return
         [
             .. placed
                 .OrderBy(p => preference.Count > 0 && p.Axis is null)
-                .ThenBy(p => p.Axis)
-                .ThenBy(p => p.YearFromCreation is null)
-                .ThenBy(p => p.YearFromCreation)
-                .ThenBy(p => p.Slug, NumberAwareOrder.Instance),
+                .ThenBy(p => (p.Axis ?? p.YearFromCreation) is null)
+                .ThenBy(p => p.Axis ?? p.YearFromCreation)
+                .ThenBy(p => inYear[p.Slug], EventOrder.InYear),
         ];
+    }
+
+    /// <summary>
+    /// The slugs of these events in the base order: by the year from creation, the events of one year in the
+    /// order the text tells them (<see cref="EventOrder"/>), and those with no year last.
+    /// </summary>
+    internal static async Task<List<string>> InOrder(
+        IQueryable<Database.Entities.Event> events,
+        CancellationToken cancellationToken)
+    {
+        var facts = await events.Select(EventOrder.Read).ToListAsync(cancellationToken);
+        var inYear = EventOrder.Of(facts);
+        return
+        [
+            .. facts
+                .OrderBy(e => e.YearFromCreation is null)
+                .ThenBy(e => e.YearFromCreation)
+                .ThenBy(e => inYear[e.Slug], EventOrder.InYear)
+                .Select(e => e.Slug),
+        ];
+    }
+
+    /// <summary>These items in the order of <paramref name="slugs"/>.</summary>
+    internal static List<T> Ordered<T>(IEnumerable<T> items, IReadOnlyList<string> slugs, Func<T, string> slug)
+    {
+        var at = new Dictionary<string, int>(slugs.Count, StringComparer.Ordinal);
+        for (var i = 0; i < slugs.Count; i++)
+        {
+            at[slugs[i]] = i;
+        }
+
+        return [.. items.OrderBy(item => at.GetValueOrDefault(slug(item), int.MaxValue))];
     }
 
     /// <summary>
@@ -534,35 +566,6 @@ internal static partial class EncyclopediaEndpoints
     /// </para>
     /// </summary>
     internal const int LastYearBeforeChrist = 3961;
-
-    /// <summary>
-    /// Events in the order a timeline draws them: by the year, then by whatever order a source
-    /// stated inside that year, then by the slug so that what nobody ordered is at least stable.
-    ///
-    /// <para>
-    /// The year alone does not order them. Ussher dates dozens of paragraphs to AD 33, and writes
-    /// <em>the next day</em> and <em>on the third day</em> across them, so the year is a tie and his
-    /// paragraphs are the tiebreak he himself stated. The tiebreak before this was the slug, which
-    /// is a name and not a position: it sorts <c>ussher-{paragraph}</c> as text, so it agrees with
-    /// him only while every loaded paragraph number has the same number of digits, and it says
-    /// nothing at all about the order of two rows from different sources in one year.
-    /// </para>
-    ///
-    /// <para>
-    /// **Nothing invents a position for a row that has none.** The null check is written out rather
-    /// than left to the database's own idea of where nulls sort, because it is the whole claim this
-    /// ordering makes: what a source ordered comes in that order, and what nobody ordered follows
-    /// it. <see cref="EventResponse.Sequenced"/> says which of the two a row is, so a client is
-    /// never left reading an arbitrary order as a chronology.
-    /// </para>
-    /// </summary>
-    internal static IOrderedQueryable<Database.Entities.Event> InOrder(
-        IQueryable<Database.Entities.Event> events) =>
-        events
-            .OrderBy(e => e.YearFromCreation)
-            .ThenBy(e => e.SequenceInYear == null)
-            .ThenBy(e => e.SequenceInYear)
-            .ThenBy(e => e.Slug);
 
     /// <summary>
     /// An event with the people and the dates it needs, projected in the query.
@@ -711,6 +714,9 @@ internal static partial class EncyclopediaEndpoints
         CancellationToken cancellationToken)
     {
         var words = ReaderLanguages.Prose(prose, language);
+        var articles = await WikipediaLinks.OfEvents(
+            db, [.. events.Where(e => e.Realm == Realms.World).Select(e => e.Slug)], words, cancellationToken);
+        events = [.. events.Select(e => articles.TryGetValue(e.Slug, out var article) ? e with { Wikipedia = article } : e)];
         if (events.Count == 0 || (EntityNames.Local(words) is null && EntityNames.Local(language) is null))
         {
             return [.. events.Select(Unstarred)];

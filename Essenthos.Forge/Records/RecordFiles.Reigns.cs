@@ -171,6 +171,16 @@ internal static partial class RecordFiles
             ["entity_wikipedia"],
             About: "Derived from Wikidata, the gazetteer's identifications and the owner's answers in review/wikipedia-matches.json; never edited."),
 
+        new("records/facts/event-wikipedia", ProductKind.Machine,
+            "event language title qid",
+            "SELECT x.slug, w.language, w.title, w.qid FROM event_wikipedia w JOIN event x ON x.id = w.event_id ORDER BY 1, 2",
+            """
+            INSERT INTO event_wikipedia (event_id, language, title, qid)
+            SELECT x.id, s.language, s.title, s.qid FROM s JOIN event x ON x.slug = s.event ORDER BY s.event, s.language
+            """,
+            ["event_wikipedia"],
+            About: "Derived from each world event's Wikidata item and that item's articles in WorldHistory/wikidata-sitelinks.tsv; never edited."),
+
         Outlines("records/facts/region-outlines", "openbible", ["place_outline"],
             "Derived: the gazetteer's own drawings of the lands and areas its sites stand for, CC BY 4.0 as the rest of " +
             "OpenBible.info's Bible Geocoding; never edited. coarse and fine are the shape at two levels of detail."),

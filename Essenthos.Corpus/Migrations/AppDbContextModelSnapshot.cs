@@ -2129,6 +2129,51 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("event_date", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EventWikipedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer")
+                        .HasColumnName("event_id");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.Property<string>("Qid")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("qid");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id")
+                        .HasName("pk_event_wikipedia");
+
+                    b.HasIndex("EventId", "Language")
+                        .IsUnique()
+                        .HasDatabaseName("ix_event_wikipedia_event_id_language");
+
+                    b.ToTable("event_wikipedia", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_event_wikipedia_language", "language IN ('en', 'uk', 'de', 'es')");
+
+                            t.HasCheckConstraint("ck_event_wikipedia_qid", "qid ~ '^Q[0-9]+$'");
+
+                            t.HasCheckConstraint("ck_event_wikipedia_title", "length(title) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EvidentiaDecision", b =>
                 {
                     b.Property<long>("Id")
@@ -7072,6 +7117,18 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_event_date_event_event_id");
 
                     b.Navigation("Chronology");
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EventWikipedia", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_event_wikipedia_events_event_id");
 
                     b.Navigation("Event");
                 });

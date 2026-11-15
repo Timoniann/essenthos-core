@@ -105,9 +105,11 @@ public sealed class EventAgeTests : IDisposable
 
     private async Task<List<EventResponse>> Events(Entity person)
     {
-        var rows = await EncyclopediaEndpoints.InOrder(_db.Events.Where(e => e.EntityId == person.Id))
-            .Select(EncyclopediaEndpoints.Rows)
-            .ToListAsync();
+        var theirs = _db.Events.Where(e => e.EntityId == person.Id);
+        var rows = EncyclopediaEndpoints.Ordered(
+            await theirs.Select(EncyclopediaEndpoints.Rows).ToListAsync(),
+            await EncyclopediaEndpoints.InOrder(theirs, default),
+            row => row.Event.Slug);
         var aged = await EncyclopediaEndpoints.Aged(_db, rows, default);
         return [.. aged.Select(row => EncyclopediaEndpoints.Event(row, new Dictionary<EventLocation, string>()))];
     }

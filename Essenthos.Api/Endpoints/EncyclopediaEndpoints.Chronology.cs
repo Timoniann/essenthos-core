@@ -61,7 +61,8 @@ internal static partial class EncyclopediaEndpoints
             SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
-            var events = await InOrder(db.Events)
+            var order = await InOrder(db.Events, cancellationToken);
+            var unordered = await db.Events
                 .Select(e => new
                 {
                     e.Id,
@@ -77,6 +78,7 @@ internal static partial class EncyclopediaEndpoints
                     EntitySlug = e.Entity == null ? null : e.Entity.Slug,
                 })
                 .ToListAsync(cancellationToken);
+            var events = Ordered(unordered, order, e => e.Slug);
 
             var titles = await TextTranslations.Of(
                 db, events.SelectMany(e => new[] { e.Name, e.Region }), ReaderLanguages.Prose(prose, language),
