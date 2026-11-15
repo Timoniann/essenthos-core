@@ -248,6 +248,19 @@ public sealed class ProductStoreTests : IDisposable
     }
 
     [Fact]
+    public void AProductForgottenByOneProcessBeforeItSawTheOthersEntryLeavesTheFile()
+    {
+        // The first loads before the second records the entry, so its memory never held it (PRB-1486).
+        var first = BuildManifest.Load(_root);
+        var second = BuildManifest.Load(_root);
+        second.Record(new ProductHeader("Essenthos/p/b.tsv", [], "proof"), new string('b', 64), new DateTimeOffset(2026, 11, 15, 12, 0, 0, TimeSpan.Zero));
+
+        first.Forget("Essenthos/p/b.tsv");
+
+        BuildManifest.Load(_root).Get("Essenthos/p/b.tsv").Should().BeNull();
+    }
+
+    [Fact]
     public void ACommitThatFailsThrowsItsOwnErrorAndNotAClosedFile()
     {
         // The final name taken by a folder: the move into place fails, as a locked file does on Windows (PRB-1493).
