@@ -427,6 +427,8 @@ internal static partial class EncyclopediaEndpoints
                 db, [entity.Id], language, localNames, cancellationToken)).Contains(entity.Id),
             LocalDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], words, cancellationToken))
                 .GetValueOrDefault(entity.Id),
+            OwnLine = entity.Distinguisher is not null
+                && await EntityDistinguishers.IsOwn(db, entity.Id, cancellationToken),
             Renderings = await Renderings(db, entity.Id, cancellationToken),
             Images = await ImageEndpoints.Of(
                 db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language,
