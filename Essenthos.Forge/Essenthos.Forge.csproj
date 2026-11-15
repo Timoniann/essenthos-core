@@ -17,6 +17,9 @@
         <ProjectReference Include="..\Essenthos.Corpus\Essenthos.Corpus.csproj" />
         <ProjectReference Include="..\Essenthos.Products\Essenthos.Products.csproj" />
         <ProjectReference Include="..\Essenthos.Products.Postgres\Essenthos.Products.Postgres.csproj" />
+        <!-- The documents record and Strong pages are written from are composed at build by the API's own page code
+             (TSK-1670), so a stored page is the page the API would compose. The API holds no reference back. -->
+        <ProjectReference Include="..\Essenthos.Api\Essenthos.Api.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -141,5 +144,24 @@
         <Using Include="Essenthos.Core.Descriptions" />
         <Using Include="Essenthos.Core.Context" />
     </ItemGroup>
+
+    <!-- The API's own settings files (appsettings*.json, site-settings.json) stay out of the Forge's output: the Forge
+         reads its own appsettings.json, and the site's switches from the API's folder (PageDocumentBuild). -->
+    <PropertyGroup>
+        <ApiProjectFolder>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../Essenthos.Api/'))</ApiProjectFolder>
+    </PropertyGroup>
+
+    <Target Name="LeaveOutTheApisSettings" AfterTargets="GetCopyToOutputDirectoryItems">
+        <ItemGroup>
+            <_SourceItemsToCopyToOutputDirectory Remove="@(_SourceItemsToCopyToOutputDirectory)" Condition="'%(Extension)' == '.json' and '%(RootDir)%(Directory)' == '$(ApiProjectFolder)'" />
+            <_SourceItemsToCopyToOutputDirectoryAlways Remove="@(_SourceItemsToCopyToOutputDirectoryAlways)" Condition="'%(Extension)' == '.json' and '%(RootDir)%(Directory)' == '$(ApiProjectFolder)'" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="LeaveOutTheApisSettingsFromPublish" AfterTargets="ComputeResolvedFilesToPublishList" BeforeTargets="_HandleFileConflictsForPublish">
+        <ItemGroup>
+            <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Extension)' == '.json' and '%(RootDir)%(Directory)' == '$(ApiProjectFolder)'" />
+        </ItemGroup>
+    </Target>
 
 </Project>

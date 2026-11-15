@@ -388,6 +388,9 @@ public class AppDbContext : DbContext
     /// <summary>Each record as a chapter's context shows it in each pair of languages, made at build.</summary>
     public DbSet<ContextLine> ContextLines { get; set; } = null!;
 
+    /// <summary>What each record's and Strong number's page is written from, per site language, made at build.</summary>
+    public DbSet<PageDocument> PageDocuments { get; set; } = null!;
+
     /// <summary>How often each text prints each form for each record under each Strong number, counted ahead of time.</summary>
     public DbSet<RecordSpelling> RecordSpellings { get; set; } = null!;
 
@@ -1895,6 +1898,13 @@ public class AppDbContext : DbContext
                 "One record as a chapter's context shows it in a language of words and a language of names: its local name, "
                 + "our own line, and the line's claims with the names they point at, as one JSON document. Records by slug. "
                 + "Made by the serving build (context/lines/{prose})."));
+        });
+
+        modelBuilder.Entity<PageDocument>(entity =>
+        {
+            entity.ToTable("page_document", t => t.HasComment(
+                "What the server writes a record's or a Strong number's page from, per site language: the page's own facts and the "
+                + "API answers it carries, as gzip-compressed JSON. Pages by address. Made by the serving build (page-documents/{kind}/{language})."));
         });
 
         modelBuilder.Entity<RecordSpelling>(entity =>

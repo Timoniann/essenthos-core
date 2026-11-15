@@ -41,6 +41,28 @@ internal static class LinkedOriginals
         int textId,
         CancellationToken cancellationToken)
     {
+        if (Kept.Value is { } kept)
+        {
+            if (!kept.TryGetValue(textId, out var counted))
+            {
+                counted = await Counted(db, textId, cancellationToken);
+                kept.TryAdd(textId, counted);
+            }
+
+            return [.. counted];
+        }
+
+        return await Counted(db, textId, cancellationToken);
+    }
+
+    /// <summary>
+    /// Where set, the counts <see cref="Of"/> makes are kept for the flow that set it and read again from there. The build
+    /// sets it while it composes every page of a corpus that cannot change under it (TSK-1670); a request never does.
+    /// </summary>
+    public static readonly AsyncLocal<System.Collections.Concurrent.ConcurrentDictionary<int, List<LinkedOriginal>>?> Kept = new();
+
+    private static async Task<List<LinkedOriginal>> Counted(AppDbContext db, int textId, CancellationToken cancellationToken)
+    {
         var neighbours = await Neighbours(db, textId, cancellationToken);
         var originals = await db.Texts
             .Where(t => neighbours.Contains(t.Id) && t.Kind != TextKind.Translation)

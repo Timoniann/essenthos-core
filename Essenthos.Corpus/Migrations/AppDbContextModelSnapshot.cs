@@ -3347,6 +3347,39 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("occupation_word", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.PageDocument", b =>
+                {
+                    b.Property<string>("Kind")
+                        .HasColumnType("text")
+                        .HasColumnName("kind");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text")
+                        .HasColumnName("address");
+
+                    b.Property<byte[]>("Body")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("body");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hash");
+
+                    b.HasKey("Kind", "Language", "Address")
+                        .HasName("pk_page_document");
+
+                    b.ToTable("page_document", null, t =>
+                        {
+                            t.HasComment("What the server writes a record's or a Strong number's page from, per site language: the page's own facts and the API answers it carries, as gzip-compressed JSON. Pages by address. Made by the serving build (page-documents/{kind}/{language}).");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Pane", b =>
                 {
                     b.Property<int>("TextId")
