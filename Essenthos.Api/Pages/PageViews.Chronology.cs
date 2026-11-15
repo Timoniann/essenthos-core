@@ -17,11 +17,18 @@ internal sealed record EventView(string Slug, string Name, string? Year)
     /// <summary>What kind of event the source calls it, in its English; null on other pages.</summary>
     public string? Kind { get; init; }
 
-    /// <summary>What the source says of it, in the page's language where it is held in it.</summary>
+    /// <summary>
+    /// What the compiler wrote of it himself, in the page's language where it is held in it. Never a
+    /// quotation of the Bible: the source's quotations are the NASB's, and their verses are quoted from
+    /// the page language's own text instead (<see cref="Verses"/>).
+    /// </summary>
     public string? Description { get; init; }
 
     /// <summary>The description is the source's English on a page in another language.</summary>
     public bool DescriptionInEnglish { get; init; }
+
+    /// <summary>What the source's notes say the year rests on, in the page's words; null where they flag nothing.</summary>
+    public string? Mark { get; init; }
 
     public PageLink? Place { get; init; }
 
@@ -30,10 +37,11 @@ internal sealed record EventView(string Slug, string Name, string? Year)
 
     public IReadOnlyList<ReckonedDate> Dates { get; init; } = [];
 
-    /// <summary>The verse it is read from, and its words in the text the page's language reads.</summary>
-    public PageLink? Passage { get; init; }
-
-    public string? Quote { get; init; }
+    /// <summary>
+    /// The verses written of it, each with its words in the text the page's language reads: those the
+    /// source's description quotes, or else the verse the event is read from.
+    /// </summary>
+    public IReadOnlyList<(PageLink Verse, string? Text)> Verses { get; init; } = [];
 
     public PageLink? Person { get; init; }
 
@@ -76,8 +84,9 @@ internal sealed record PeriodView(string Slug, string Name, string? Years)
 internal static partial class PageViews
 {
     /// <summary>
-    /// An event's page: its name and year, what the source says of it, its date in each reckoning, the
-    /// verse it is read from quoted in the page language's text, whom it happened to and where.
+    /// An event's page, in the order the reader's page shows it: its name and year, the verses written of
+    /// it quoted in the page language's text, what the compiler adds of his own, its year in each
+    /// reckoning as a table, and whom it happened to.
     /// </summary>
     public static PageContent Event(SiteLanguage language, PageWording t, EventView view)
     {
@@ -87,38 +96,51 @@ internal static partial class PageViews
             .Open("nav").Link(language.Path("/"), PageContent.SiteName).Text(Crumb)
             .Link(language.Path(PageSections.Named("events").Path), t.Text("page.events.title")).Close("nav")
             .Element("h1", view.Name);
-        Facts(body, language, view.Year, view.Kind, view.Place, view.Region);
-        if (view.Description is { Length: > 0 } sourceSays)
+        Facts(body, language, view.Mark is null ? view.Year : $"{view.Year} ({view.Mark})", view.Kind, view.Place, view.Region);
+
+        if (view.Verses.Count > 0)
         {
-            body.Element("p", sourceSays, lang: view.DescriptionInEnglish ? "en" : null);
+            body.Element("h2", t.Text("event.written"));
+            foreach (var (verse, text) in view.Verses)
+            {
+                body.Open("p").Link(language.Path(verse.Href), verse.Text);
+                if (text is { Length: > 0 })
+                {
+                    body.Text(" " + text);
+                }
+
+                body.Close("p");
+            }
+        }
+
+        if (view.Description is { Length: > 0 } compilerSays)
+        {
+            body.Element("p", compilerSays, lang: view.DescriptionInEnglish ? "en" : null);
         }
 
         if (view.Dates.Count > 0)
         {
-            body.Element("h2", t.Text("event.when")).Open("ul");
+            body.Element("h2", t.Text("event.when")).Open("table").Open("thead").Open("tr")
+                .Element("th", t.Text("event.reckoning")).Element("th", t.Text("event.year"));
+            var worked = view.Dates.Any(date => date.Working is { Length: > 0 });
+            if (worked)
+            {
+                body.Element("th", t.Text("event.working"));
+            }
+
+            body.Close("tr").Close("thead").Open("tbody");
             foreach (var date in view.Dates)
             {
-                body.Open("li").Text($"{date.Reckoning}: {date.Year}");
-                if (date.Working is { Length: > 0 } working)
+                body.Open("tr").Element("td", date.Reckoning).Element("td", date.Year);
+                if (worked)
                 {
-                    body.Text(Separator + working);
+                    body.Element("td", date.Working ?? "", lang: language.IsEnglish ? null : "en");
                 }
 
-                body.Close("li");
+                body.Close("tr");
             }
 
-            body.Close("ul");
-        }
-
-        if (view.Passage is { } passage)
-        {
-            body.Element("h2", t.Text("event.where")).Open("p").Link(language.Path(passage.Href), passage.Text);
-            if (view.Quote is { Length: > 0 } quote)
-            {
-                body.Text(" " + quote);
-            }
-
-            body.Close("p");
+            body.Close("tbody").Close("table");
         }
 
         if (view.Person is { } person)
@@ -129,7 +151,8 @@ internal static partial class PageViews
         Credit(body, t, view.Source);
         body.Close("article");
 
-        var said = view.DescriptionInEnglish ? null : view.Description;
+        var said = view.Verses.FirstOrDefault(verse => verse.Text is { Length: > 0 }).Text
+                   ?? (view.DescriptionInEnglish ? null : view.Description);
         var description = said is { Length: > 0 }
             ? Fitted(said, fit => Closed(named) + " " + fit)
             : t.Text("event.description", ("name", named));

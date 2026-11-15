@@ -153,7 +153,13 @@
     "description": "{{name}}: when it happened by each reckoning of the Bible's chronology, and the verses it is read from.",
     "when": "When it happened",
     "where": "Where it is written",
-    "whom": "Whom it happened to"
+    "whom": "Whom it happened to",
+    "written": "What is written",
+    "reckoning": "Reckoning",
+    "year": "Year",
+    "working": "What it rests on",
+    "hypothesis": "the compiler's inference",
+    "outsideScripture": "from outside Scripture"
   },
   "period": {
     "description": "{{name}}: its years by each reckoning, and the events that fall within it.",
@@ -275,6 +281,10 @@
     "events": {
       "title": "Events of the Bible",
       "description": "Every event the Bible's chronology dates, in order, each showing the arithmetic behind its year."
+    },
+    "reckonings": {
+      "title": "How each reckoning counts",
+      "description": "The five Bible chronologies — Ussher's, BibleData's, Seder Olam's and the two Septuagint ones: what each rests on and how it counts the years."
     },
     "timeline": {
       "title": "Timeline of the Bible and world history",

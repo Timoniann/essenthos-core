@@ -156,7 +156,13 @@
     "description": "{{name}}: cuándo ocurrió según cada cronología bíblica, y los versículos de los que se deduce.",
     "when": "Cuándo sucedió",
     "where": "Dónde está escrito",
-    "whom": "A quién le sucedió"
+    "whom": "A quién le sucedió",
+    "written": "Lo que está escrito",
+    "reckoning": "Cómputo",
+    "year": "Año",
+    "working": "En qué se basa",
+    "hypothesis": "suposición del compilador",
+    "outsideScripture": "fuera de la Escritura"
   },
   "period": {
     "description": "{{name}}: sus años según cada cronología y los acontecimientos que caen dentro de él.",
@@ -278,6 +284,10 @@
     "events": {
       "title": "Acontecimientos de la Biblia",
       "description": "Cada acontecimiento que fecha la cronología bíblica, en orden, con el cálculo que da su año."
+    },
+    "reckonings": {
+      "title": "Cómo cuenta cada cómputo",
+      "description": "Los cinco cómputos bíblicos — el de Ussher, BibleData, Seder Olam y los dos de la Septuaginta: en qué se basa cada uno y cómo cuenta los años."
     },
     "timeline": {
       "title": "Cronología de la Biblia y de la historia universal",

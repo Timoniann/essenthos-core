@@ -153,7 +153,13 @@
     "description": "{{name}}: wann es nach jeder biblischen Chronologie geschah, und die Verse, aus denen es gelesen wird.",
     "when": "Wann es geschah",
     "where": "Wo es geschrieben steht",
-    "whom": "Wem es geschah"
+    "whom": "Wem es geschah",
+    "written": "Was geschrieben steht",
+    "reckoning": "Zeitrechnung",
+    "year": "Jahr",
+    "working": "Worauf es beruht",
+    "hypothesis": "Annahme des Bearbeiters",
+    "outsideScripture": "außerhalb der Schrift"
   },
   "period": {
     "description": "{{name}}: die Jahre nach jeder Chronologie und die Ereignisse, die in diese Zeit fallen.",
@@ -275,6 +281,10 @@
     "events": {
       "title": "Ereignisse der Bibel",
       "description": "Jedes Ereignis, das die biblische Chronologie datiert, der Reihe nach — mit der Rechnung hinter seinem Jahr."
+    },
+    "reckonings": {
+      "title": "Wie jede Zeitrechnung zählt",
+      "description": "Die fünf biblischen Zeitrechnungen — Ussher, BibleData, Seder Olam und die beiden der Septuaginta: worauf jede beruht und wie sie die Jahre zählt."
     },
     "timeline": {
       "title": "Zeitleiste der Bibel und der Weltgeschichte",

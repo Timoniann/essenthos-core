@@ -30,15 +30,19 @@ internal static partial class EncyclopediaEndpoints
 
         // Every period with its span in each reckoning: the timeline without its fifteen hundred
         // events, which is all a page placing one year or naming one era needs.
-        routes.MapGet("/periods", async (AppDbContext db, CancellationToken cancellationToken) =>
+        // With a language, each period carries its name in it where its record can say it.
+        routes.MapGet("/periods", async ([FromQuery] string? language, AppDbContext db, CancellationToken cancellationToken) =>
         {
             var anchoring = db.EventDates.Where(d => db.Periods.Any(
                 p => p.StartEventId == d.EventId || p.EndEventId == d.EventId));
             var years = await EventYears(db, anchoring, cancellationToken);
+            var periods = await Periods(db, years, cancellationToken);
+            var named = await PeriodNames.Of(
+                db, [.. periods.Select(p => (p.Slug, p.Name, p.Kind, p.EntitySlug))], language, cancellationToken);
 
             return Results.Ok(new PeriodListResponse(
                 LastYearBeforeChrist,
-                await Periods(db, years, cancellationToken)));
+                [.. periods.Select(p => named.TryGetValue(p.Slug, out var local) ? p with { LocalName = local } : p)]));
         });
 
         // Every event at once, trimmed to what a timeline draws with.
@@ -93,7 +97,7 @@ internal static partial class EncyclopediaEndpoints
                 [
                     .. events.Select(e => new TimelineEventResponse(
                         e.Slug,
-                        e.Name,
+                        EventMarks.Unstarred(e.Name),
                         e.Kind,
                         e.Realm,
                         e.Region,
@@ -104,7 +108,7 @@ internal static partial class EncyclopediaEndpoints
                     {
                         Picture = pictures.ForEvent(e.EntitySlug, e.Location),
                         RegionAtTheTime = e.RegionAtTheTime,
-                        LocalName = TextTranslations.In(titles, e.Name),
+                        LocalName = EventMarks.UnstarredOrNull(TextTranslations.In(titles, e.Name)),
                         LocalRegion = TextTranslations.In(titles, e.Region),
                     }),
                 ],
@@ -174,8 +178,8 @@ internal static partial class EncyclopediaEndpoints
                 period.Parent.Slug, period.Parent.Name, null, null, null),
             period.Entity is null ? null : new NamedEntityResponse(
                 period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
-            period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, period.Opens.Name),
-            period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, period.Closes.Name),
+            period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, EventMarks.Unstarred(period.Opens.Name)),
+            period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, EventMarks.Unstarred(period.Closes.Name)),
             children)
         {
             Years = Span(years, period.StartEventId, period.EndEventId, period.StartYear, period.EndYear),

@@ -130,6 +130,26 @@ internal record EventResponse(
     /// where none of them dates it.
     /// </summary>
     public string? ShownBy { get; init; }
+
+    /// <summary>
+    /// The verses the source's description quotes, one apiece in the order it cites them, for a page to
+    /// quote from its own texts in the reader's language. The source's quotation itself is never sent:
+    /// it is the New American Standard Bible's words (PRB-1678), and <see cref="Description"/> keeps
+    /// only what the compiler wrote himself. Empty where the description quotes nothing.
+    /// </summary>
+    public IList<VerseRefResponse> Quoted { get; init; } = [];
+
+    /// <summary>The passages <see cref="Quoted"/> was read from, kept until a chapter's end is known.</summary>
+    [JsonIgnore]
+    public IReadOnlyList<QuotedVerses.Passage> Passages { get; init; } = [];
+
+    /// <summary>
+    /// What the source's notes say the year rests on, where they flag it: <c>hypothesis</c> where they
+    /// open the compiler's inference (<c>*HYPOTHESIS:</c>), <c>outside-scripture</c> where the year comes
+    /// from outside the Bible (<c>*EXTRA-BIBLICAL SOURCE(S)/HISTORY:</c>). The source marks such an
+    /// event with an asterisk after its title, which is taken off the title and said here instead.
+    /// </summary>
+    public string? Mark { get; init; }
 }
 
 /// <param name="Calculation">
@@ -206,7 +226,25 @@ internal readonly record struct EventLocation(string Name, int? Book, int? Chapt
         Of(e.Location, e.LocationBook, e.LocationChapter, e.LocationVerse);
 }
 
-internal record EventListResponse(int Total, IList<EventResponse> Items);
+/// <param name="Total">How many events the narrowing holds.</param>
+/// <param name="Items">The page of them asked for.</param>
+internal record EventListResponse(int Total, IList<EventResponse> Items)
+{
+    /// <summary>Where the page starts in the whole list: the skip asked for, or where <c>around</c> put it.</summary>
+    public int Skip { get; init; }
+
+    /// <summary>
+    /// The centuries the whole narrowed list runs through, in its order, each with how many of its events
+    /// fall in it and where the first of them stands, so a list can head its rows by century and go to
+    /// one. Empty where the list was not ordered by a reader's reckonings.
+    /// </summary>
+    public IList<EventCenturyResponse> Centuries { get; init; } = [];
+}
+
+/// <param name="Century">The century: negative before the common era (<c>-10</c> is the tenth century BCE), positive after.</param>
+/// <param name="Count">How many of the list's events fall in it.</param>
+/// <param name="First">Where the first of them stands in the list, counting from zero.</param>
+internal record EventCenturyResponse(int Century, int Count, int First);
 
 /// <summary>
 /// Where an event stands in a narrowed and ordered list, counting from one, and its neighbours there.
@@ -416,4 +454,11 @@ internal record TimelinePeriodResponse(
 {
     /// <summary>The picture its person's page leads with; null where there is none, and on the period list.</summary>
     public EntityThumbnailResponse? Picture { get; init; }
+
+    /// <summary>
+    /// The name in the reader's language where it can be said from the period's record: a life by the
+    /// person's name, a reign, a prophet's or a judge's time by the person's name in a set phrase. Null
+    /// where the reader reads English and where the name says more than that (PRB-1400).
+    /// </summary>
+    public string? LocalName { get; init; }
 }

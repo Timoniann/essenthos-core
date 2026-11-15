@@ -42,6 +42,13 @@ internal static class PageSections
     public const string FamilyTree = "familyTree";
     public const string NotFound = "notFound";
 
+    /// <summary>
+    /// How each reckoning counts, the page every event links to (TSK-1675). Not in <see cref="All"/> until
+    /// the reader that serves it is released: the route test reads the released reader's routes, and the
+    /// sitemap lists only what is there. Once both are merged it belongs in the list.
+    /// </summary>
+    public static readonly PageSection Reckonings = new("reckonings", "/events/reckonings", Listed: false);
+
     /// <summary>Every such page the reader has, by its English address, as the reader's own route table has them.</summary>
     public static readonly IReadOnlyList<PageSection> All =
     [
@@ -275,6 +282,9 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
                 return Listing(
                     new PageAddress(language, PageKind.Verses, VersesPath($"/{route}/{slug}")) { Slug = slug, RecordKind = kind },
                     query);
+
+            case ["events", "reckonings"]:
+                return InSection(language, rest, PageSections.Reckonings);
 
             case ["events", var slug]:
                 return new PageAddress(language, PageKind.Event, $"/events/{slug}") { Slug = slug };
