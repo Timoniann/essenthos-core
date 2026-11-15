@@ -12,10 +12,9 @@ using Xunit;
 namespace Essenthos.Core.Tests.Evidentia;
 
 /// <summary>
-/// The verdicts given on EVIDENTIA's proposals, kept in files so that the corpus can be rebuilt
-/// without them. What these guard is that a rebuild gives back exactly what was decided, on the
-/// words it was decided about although every id has changed, that a replay over a corpus already
-/// holding them changes nothing, and that what cannot be replayed is said rather than guessed.
+/// The verdicts given on EVIDENTIA's proposals, kept in files so that the build reads them without a database
+/// (evidentia-pairs). What these guard is that the ledger names a word by its address and surface, never by its
+/// id, and that a verdict the ledger lacks is what a refused release names.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EvidentiaLedgerTests : IDisposable
@@ -56,171 +55,6 @@ public sealed class EvidentiaLedgerTests : IDisposable
     }
 
     [Fact]
-    public async Task AColdRebuildGivesBackEveryVerdictOnTheWordsItNamed()
-    {
-        await Decide();
-        var before = await Snapshot();
-        var godBefore = English(4);
-
-        await Rebuild();
-        var outcome = await Ledger().Replay(_resources);
-
-        English(4).Should().NotBe(godBefore, "a rebuild renumbers every word, which is why the ledger never names one by id");
-        outcome.Conflicts.Should().BeEmpty();
-        outcome.Reconstituted.Should().Be(1);
-        outcome.Restored.Should().Be(4);
-        (await Snapshot()).Should().Equal(before);
-
-        var reviews = await _db.EvidentiaReviews.AsNoTracking().Include(review => review.Decision).ToListAsync();
-        reviews.Select(review => (EnumSpelling.Of(review.Verdict), review.Examined, review.Reviewer)).Should().BeEquivalentTo(
-        [
-            ("approved", true, Owner),
-            ("approved", false, Owner),
-            ("approved", false, Owner),
-            ("rejected", true, Owner),
-        ]);
-        var person = await _db.LinkClaims.AsNoTracking().Include(claim => claim.Provenance)
-            .SingleAsync(claim => claim.Method == LinkMethod.Manual);
-        person.Provenance!.Source.Should().StartWith(Owner + ", reviewing EVIDENTIA run");
-        person.Provenance!.Note.Should().Be("read against the verse");
-    }
-
-    [Fact]
-    public async Task AReplayOverACorpusThatHoldsTheVerdictsChangesNothing()
-    {
-        await Decide();
-        var before = await Snapshot();
-
-        var outcome = await Ledger().Replay(_resources);
-
-        outcome.AlreadyThere.Should().Be(4);
-        outcome.Restored.Should().Be(0);
-        outcome.Applied.Should().BeEmpty("nothing was missing, so nothing is written");
-        (await Snapshot()).Should().Equal(before);
-    }
-
-    [Fact]
-    public async Task AVerdictWhoseLinkSomethingDeletedIsWrittenAgain()
-    {
-        await Decide();
-        var before = await Snapshot();
-        var god = English(4);
-        await _db.Links.Where(link => link.Words.Any(word => word.WordId == god)).ExecuteDeleteAsync();
-
-        var outcome = await Ledger().Replay(_resources);
-
-        outcome.Restored.Should().Be(1, "a redraw took the link and the person's claim on it with it");
-        (await Snapshot()).Should().Equal(before);
-    }
-
-    [Fact]
-    public async Task AColdRebuildLetsTheLaterRunsRenderingWinOverAnEarlierAbsence()
-    {
-        await Decide();
-        var later = new EvidentiaRun
-        {
-            FromTextId = _english.Id,
-            ToTextId = _hebrew.Id,
-            StartedAt = _run.StartedAt.AddDays(1),
-            FinishedAt = _run.StartedAt.AddDays(1),
-            RuleVersion = "1.0.1+test",
-            Configuration = JsonDocument.Parse("{}"),
-            Scope = JsonDocument.Parse(_run.Scope.RootElement.GetRawText()),
-        };
-        _db.EvidentiaRuns.Add(later);
-        _db.SaveChanges();
-        Stored(new EvidentiaDecision
-        {
-            RunId = later.Id, SourceWordId = English(2), TargetWordId = Hebrew(1), CanonicalBook = 1, CanonicalChapter = 1,
-            CanonicalVerse = 1, Content = false, Kind = "attached-word", Tier = EvidentiaDecisionRecorder.SafeTier,
-            Rationale = "the article of 'beginning'", Confidence = RuleConfidence, Candidates = 1,
-        });
-        await Queue().AcceptTier(later.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Owner, null);
-        (await Writer().Apply(later.Id, write: true)).Superseded.Should().Be(1);
-        await Ledger().ExportAll(_resources);
-        var before = await Snapshot();
-
-        await Rebuild();
-        var outcome = await Ledger().Replay(_resources);
-
-        outcome.Conflicts.Should().BeEmpty();
-        outcome.Reconstituted.Should().Be(2);
-        (await Snapshot()).Should().Equal(before);
-        before.Should().NotContain(link => link.StartsWith("expands"), "the later run renders 'the', so its absence is not given back");
-
-        var again = await Ledger().Replay(_resources);
-
-        again.Restored.Should().Be(0, "the absence the later run took back is not a verdict the corpus lost");
-        (await Snapshot()).Should().Equal(before);
-    }
-
-    /// <summary>
-    /// The shape a Reina-Valera run left: one verse of it spans Job 39:27 to 40:5, it was read with
-    /// both chapters, and the run holds two decisions about each of its words, most of them abstentions
-    /// nobody reviewed. Replaying such a run stopped every load.
-    /// </summary>
-    [Fact]
-    public async Task ARunThatDecidedTwiceAboutAWordReplaysEachVerdictOnTheDecisionItWasGivenOn()
-    {
-        Abstained(English(1), chapter: 1);
-        Abstained(English(1), chapter: 2);
-        var created = Abstained(English(5), chapter: 1);
-        await Decide();
-        var before = await Snapshot();
-
-        var settled = await Ledger().Replay(_resources);
-
-        settled.Conflicts.Should().BeEmpty();
-        settled.AlreadyThere.Should().Be(4);
-        settled.Applied.Should().BeEmpty();
-        (await Snapshot()).Should().Equal(before);
-
-        await _db.EvidentiaReviews.ExecuteDeleteAsync();
-        var restored = await Ledger().Replay(_resources);
-
-        restored.Restored.Should().Be(4);
-        (await _db.EvidentiaReviews.AsNoTracking().Include(review => review.Decision)
-                .SingleAsync(review => review.Decision!.SourceWordId == English(5)))
-            .Decision!.Should().Match<EvidentiaDecision>(decision => decision.Id != created.Id && decision.TargetWordId == Hebrew(2),
-                "the verdict was given on the proposal, not on the abstention stored before it");
-        (await Snapshot()).Should().Equal(before);
-
-        await Rebuild();
-        var rebuilt = await Ledger().Replay(_resources);
-
-        rebuilt.Conflicts.Should().BeEmpty();
-        rebuilt.Restored.Should().Be(4);
-        (await Snapshot()).Should().Equal(before);
-    }
-
-    [Fact]
-    public async Task AWordThatNoLongerReadsTheSameIsReportedAndNotGuessedAt()
-    {
-        await Decide();
-
-        await Rebuild(god: "Lord");
-        var outcome = await Ledger().Replay(_resources);
-
-        outcome.Conflicts.Should().ContainSingle().Which.Should().Contain("read 'God' and reads 'Lord' now");
-        (await _db.EvidentiaReviews.CountAsync()).Should().Be(3, "the other verdicts are about words that read as they did");
-        (await _db.Links.AnyAsync(link => link.Words.Any(word => word.WordId == English(4)))).Should().BeFalse();
-    }
-
-    [Fact]
-    public async Task AVerdictTheCorpusHoldsDifferentlyIsReportedAndTheCorpusKept()
-    {
-        var god = Proposal(English(4), Hebrew(3));
-        await Queue().Approve([god.Id], Owner, null);
-        await Ledger().Export(_run.Id, _resources);
-        await _db.EvidentiaReviews.ExecuteUpdateAsync(set => set.SetProperty(review => review.Verdict, EvidentiaVerdict.Rejected));
-
-        var outcome = await Ledger().Replay(_resources);
-
-        outcome.Conflicts.Should().ContainSingle().Which.Should().Contain("the corpus holds rejected and the ledger approved");
-        (await _db.EvidentiaReviews.AsNoTracking().SingleAsync()).Verdict.Should().Be(EvidentiaVerdict.Rejected);
-    }
-
-    [Fact]
     public async Task AVerdictNotInTheLedgerIsWhatARefusedReleaseNames()
     {
         var god = Proposal(English(4), Hebrew(3));
@@ -252,7 +86,7 @@ public sealed class EvidentiaLedgerTests : IDisposable
 
     /// <summary>
     /// One verdict of each kind: a proposal read and approved, a tier accepted unread with a proposal
-    /// and an absence in it, and a proposal rejected. Applied and written to the ledger, as the verbs do.
+    /// and an absence in it, and a proposal rejected, written to the ledger as the verbs do.
     /// </summary>
     private async Task Decide()
     {
@@ -263,42 +97,16 @@ public sealed class EvidentiaLedgerTests : IDisposable
         await Queue().Approve([god.Id], Owner, "read against the verse");
         await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Owner, null);
         await Queue().Reject([beginning.Id], Owner, "the verb is not the beginning");
-        await Writer().Apply(_run.Id, write: true);
         await Ledger().Export(_run.Id, _resources);
         _db.ChangeTracker.Clear();
     }
 
-    /// <summary>The corpus as a rebuild leaves it: the same texts, every row written again under new ids, no run.</summary>
-    private async Task Rebuild(string god = "God")
+    private void Seed()
     {
-        await _db.Database.ExecuteSqlRawAsync("TRUNCATE text CASCADE");
-        _db.ChangeTracker.Clear();
-        Seed(god);
-    }
-
-    private void Seed(string god = "God")
-    {
-        _english = Corpus.Add(_db, "ENGT", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning", god, "created"]));
+        _english = Corpus.Add(_db, "ENGT", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning", "God", "created"]));
         _hebrew = Corpus.Add(_db, "HEBT", TextKind.CriticalEdition, "hbo", (1, 1, ["בראשית", "ברא", "אלהים"]));
         _db.SaveChanges();
     }
-
-    /// <summary>Every link by the words it names and what claims it, so two corpora with different ids compare.</summary>
-    private async Task<List<string>> Snapshot() =>
-        (await _db.Links.AsNoTracking()
-            .Include(link => link.Words).ThenInclude(word => word.Word)
-            .Include(link => link.Provenance).Include(link => link.Claims).ThenInclude(claim => claim.Provenance)
-            .ToListAsync())
-        .Select(link =>
-            $"{EnumSpelling.Of(link.Relation)} "
-            + string.Join(",", link.Words.Where(word => word.Side == LinkSide.From).Select(word => word.Word!.Surface).Order())
-            + " > "
-            + string.Join(",", link.Words.Where(word => word.Side == LinkSide.To).Select(word => word.Word!.Surface).Order())
-            + $" {EnumSpelling.Of(link.Method)} {link.Confidence} ["
-            + string.Join(",", link.Claims.Select(claim => $"{EnumSpelling.Of(claim.Method)} {claim.Confidence}").Order())
-            + "]")
-        .Order(StringComparer.Ordinal)
-        .ToList();
 
     private EvidentiaDecision Proposal(long source, long target, string tier = "review") =>
         Stored(new EvidentiaDecision
@@ -332,19 +140,6 @@ public sealed class EvidentiaLedgerTests : IDisposable
             Confidence = RuleConfidence,
         });
 
-    private EvidentiaDecision Abstained(long word, int chapter) =>
-        Stored(new EvidentiaDecision
-        {
-            RunId = _run.Id,
-            SourceWordId = word,
-            CanonicalBook = 1,
-            CanonicalChapter = (short)chapter,
-            CanonicalVerse = 1,
-            Content = true,
-            Abstention = EvidentiaAbstention.Declined,
-            Candidates = 1,
-        });
-
     private EvidentiaDecision Stored(EvidentiaDecision decision)
     {
         _db.EvidentiaDecisions.Add(decision);
@@ -359,7 +154,5 @@ public sealed class EvidentiaLedgerTests : IDisposable
 
     private EvidentiaReviewQueue Queue() => new(_db);
 
-    private EvidentiaLinkWriter Writer() => new(_db, new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance));
-
-    private EvidentiaLedger Ledger() => new(_db, Writer());
+    private EvidentiaLedger Ledger() => new(_db);
 }

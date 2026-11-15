@@ -198,13 +198,13 @@ internal static class EvidentiaFiles
                 var fromKeys = MappingText.Keys(from);
                 var toKeys = MappingText.Keys(to);
                 var within = others.Within(relation, fromKeys, toKeys, from, to);
-                var note = within is null ? null : relation == "renders" ? EvidentiaLinkWriter.WithinNote : EvidentiaLinkWriter.WithinAbsenceNote;
+                var note = within is null ? null : relation == "renders" ? EvidentiaClaims.WithinNote : EvidentiaClaims.WithinAbsenceNote;
                 var shape = within ?? (fromKeys, toKeys);
 
                 var claims = new List<(string Method, double? Confidence, string Source, string? Evidence)>();
                 if (correcting || session.Examined)
                 {
-                    claims.Add((MappingMethods.Manual, null, EvidentiaLinkWriter.PersonSource(session.Reviewer, number, correcting),
+                    claims.Add((MappingMethods.Manual, null, EvidentiaClaims.PersonSource(session.Reviewer, number, correcting),
                         Joined(note, session.Note)));
                 }
 
@@ -212,8 +212,8 @@ internal static class EvidentiaFiles
                 {
                     claims.Add((MappingMethods.Evidentia,
                         line.Confidence is { } confidence ? Math.Round((double)confidence, 4) : null,
-                        EvidentiaLinkWriter.RuleSource(number, run.RuleVersion, line.Rule ?? string.Empty),
-                        Joined(note, EvidentiaLinkWriter.RuleEvidence(line.Tier, line.Rationale, session.Examined, session.Reviewer))));
+                        EvidentiaClaims.RuleSource(number, run.RuleVersion, line.Rule ?? string.Empty),
+                        Joined(note, EvidentiaClaims.RuleEvidence(line.Tier, line.Rationale, session.Examined, session.Reviewer))));
                 }
 
                 foreach (var claim in claims)

@@ -509,7 +509,9 @@ def entities():
     return psql("""
         SELECT coalesce(json_agg(json_build_object(
                    'id', e.id, 'slug', e.slug, 'kind', e.kind, 'name', e.name,
-                   'sex', e.sex, 'place_kind', e.place_kind, 'source', e.source,
+                   'sex', e.sex, 'place_kind', e.place_kind,
+                   'source', (SELECT string_agg(DISTINCT x.dataset, ',' ORDER BY x.dataset)
+                              FROM record_external_id x WHERE x.entity_id = e.id AND x.relation = 'same-as'),
                    'origin', (SELECT o.slug FROM entity o WHERE o.id = e.origin_entity_id),
                    'names', (SELECT coalesce(json_agg(json_build_object(
                                  'label', n.label, 'hebrew', n.hebrew,
@@ -781,11 +783,12 @@ def answer_key():
                          'the main checkout when this is a worktree.')
     held = psql("""
         SELECT json_build_object(
-            'folded', (SELECT coalesce(json_object_agg(m.record_source_id, e.slug), '{}')
-                       FROM merged_record m JOIN entity e ON e.id = m.entity_id
-                       WHERE m.record_source_id LIKE 'person:%'),
-            'held', (SELECT coalesce(json_object_agg(e.source_id, e.slug), '{}')
-                     FROM entity e WHERE e.source_id LIKE 'person:%'))
+            'folded', (SELECT coalesce(json_object_agg(x.external_id, e.slug), '{}')
+                       FROM record_external_id x JOIN entity e ON e.id = x.entity_id
+                       WHERE x.dataset = 'bibledata' AND x.relation = 'folded' AND x.external_id LIKE 'person:%'),
+            'held', (SELECT coalesce(json_object_agg(x.external_id, e.slug), '{}')
+                     FROM record_external_id x JOIN entity e ON e.id = x.entity_id
+                     WHERE x.dataset = 'bibledata' AND x.relation = 'same-as' AND x.external_id LIKE 'person:%'))
     """)
     record = {**held['folded'], **held['held']}
     rows = []

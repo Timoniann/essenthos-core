@@ -107,16 +107,14 @@ internal static partial class ForgeVerbs
     /// </summary>
     private static async Task<int> Score(ForgeRun forge, string[] args)
     {
-        using var scoreScope = forge.Scope();
-        var scorer = scoreScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+        var scorer = Measures(forge, args);
         var scoreOne = Identifier(args[1]);
         var scoreTwo = Identifier(args[2]);
         forge.Logger.LogInformation("\n{Report}", await scorer.Measure(
             scoreOne,
             scoreTwo,
-            AlignmentStore.Workspace(
-                $"{scoreOne}-{scoreTwo}{(args.Contains("--surface") ? "-surface" : string.Empty)}" +
-                $"{(args.Contains("--suppletion") ? "-suppletion" : string.Empty)}"),
+            $"{scoreOne}-{scoreTwo}{(args.Contains("--surface") ? "-surface" : string.Empty)}" +
+            $"{(args.Contains("--suppletion") ? "-suppletion" : string.Empty)}",
             args.Contains("--min")
                 ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
                     .Select(t => double.Parse(t, CultureInfo.InvariantCulture))]
@@ -137,8 +135,7 @@ internal static partial class ForgeVerbs
     /// </summary>
     private static async Task<int> ScoreAnchors(ForgeRun forge, string[] args)
     {
-        using var anchorScope = forge.Scope();
-        var scorer = anchorScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+        var scorer = Measures(forge, args);
         var anchorOne = Identifier(args[1]);
         var anchorTwo = Identifier(args[2]);
         var anchorModel = args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4";
@@ -146,8 +143,7 @@ internal static partial class ForgeVerbs
         forge.Logger.LogInformation("\n{Report}", await scorer.MeasureAnchors(
             anchorOne,
             anchorTwo,
-            AlignmentStore.Workspace(
-                $"{anchorOne}-{anchorTwo}-held-out-strong-anchors-{anchorModel}-fold-{anchorFold}"),
+            $"{anchorOne}-{anchorTwo}-held-out-strong-anchors-{anchorModel}-fold-{anchorFold}",
             args.Contains("--min")
                 ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
                     .Select(t => double.Parse(t, CultureInfo.InvariantCulture))]
@@ -164,18 +160,25 @@ internal static partial class ForgeVerbs
     /// </summary>
     private static async Task<int> Syntax(ForgeRun forge, string[] args)
     {
-        using var syntaxScope = forge.Scope();
-        var prior = syntaxScope.ServiceProvider.GetRequiredService<AlignmentPipeline>();
+        var prior = Measures(forge, args);
         var syntaxOne = Identifier(args[1]);
         var syntaxTwo = Identifier(args[2]);
         forge.Logger.LogInformation("\n{Report}", await prior.Diagnose(
             syntaxOne,
             syntaxTwo,
-            AlignmentStore.Workspace($"{syntaxOne}-{syntaxTwo}"),
+            $"{syntaxOne}-{syntaxTwo}",
             args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
             args.Contains("--stated")));
         return 0;
     }
+
+    /// <summary>
+    /// The measures of the aligner over the store's files (<c>--from</c>, or the configured Resources), training the answers they
+    /// lack: <c>score</c>, <c>score-anchors</c> and <c>syntax</c> read no database (PRB-1589).
+    /// </summary>
+    private static AlignerMeasures Measures(ForgeRun forge, string[] args) =>
+        new(new AlignerFiles(new ProductTexts(new Products.ProductStore(Option(args, "--from") ?? forge.Resources)),
+            new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(line => forge.Logger.LogInformation("{Line}", line)))));
 
     private static async Task<int> ReinaValeraStrongScore(ForgeRun forge, string[] args)
     {

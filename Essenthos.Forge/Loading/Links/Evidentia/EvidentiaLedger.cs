@@ -23,43 +23,6 @@ internal sealed record EvidentiaExportOutcome(int RunId, string Folder, int Verd
         $"EVIDENTIA run {RunId}: {Verdicts:N0} verdicts written to the ledger at {Folder}, in {Books} book files";
 }
 
-/// <param name="Runs">Runs the ledger holds that were read.</param>
-/// <param name="Verdicts">Verdicts those runs hold.</param>
-/// <param name="Reconstituted">Runs the database did not hold, written again from the ledger with their verdicts.</param>
-/// <param name="AlreadyThere">Verdicts the database already holds exactly as the ledger does.</param>
-/// <param name="Restored">
-/// Verdicts the database had lost: a review missing, or a verdict written to a link that something
-/// has since deleted, which is written again.
-/// </param>
-/// <param name="Conflicts">
-/// What could not be replayed and why: a word whose address no longer reads as it did, a text not in
-/// the corpus, a verdict the database holds differently. Each is left as the database has it.
-/// </param>
-internal sealed record EvidentiaReplayOutcome(
-    int Runs,
-    int Verdicts,
-    int Reconstituted,
-    int AlreadyThere,
-    int Restored,
-    IReadOnlyList<string> Conflicts,
-    IReadOnlyList<EvidentiaApplyOutcome> Applied,
-    TimeSpan Elapsed,
-    string? VerseLinks = null)
-{
-    /// <summary>How many conflicts a report names one by one before it only counts the rest.</summary>
-    private const int Named = 20;
-
-    public override string ToString() =>
-        Runs == 0
-            ? "The EVIDENTIA ledger holds no verdicts, so there is nothing to replay"
-            : $"The EVIDENTIA ledger: {Runs} runs, {Verdicts:N0} verdicts — {Reconstituted} runs written again from the ledger, "
-              + $"{AlreadyThere:N0} verdicts already in the corpus as recorded, {Restored:N0} restored, {Conflicts.Count:N0} not replayed; in {Elapsed}"
-              + string.Concat(Applied.Select(applied => "\n" + applied))
-              + (VerseLinks is null ? string.Empty : "\n" + VerseLinks)
-              + string.Concat(Conflicts.Take(Named).Select(conflict => "\n  not replayed: " + conflict))
-              + (Conflicts.Count > Named ? $"\n  … and {Conflicts.Count - Named:N0} more" : string.Empty);
-}
-
 /// <summary>
 /// The verdicts given on EVIDENTIA's proposals, kept as files beside the other decisions of this
 /// project so that a rebuild of the corpus gives them back.
@@ -75,22 +38,13 @@ internal sealed record EvidentiaReplayOutcome(
 /// </para>
 ///
 /// <para>
-/// **Replaying is idempotent and settles, it does not overwrite.** A run the database already holds
-/// — the same texts, start and rule version — is compared verdict by verdict: a review it lacks is
-/// added, and a verdict whose link something deleted since is written again. A run it does not hold
-/// is written again with the decisions its verdicts are about, and the verdicts are then applied by
-/// <see cref="EvidentiaLinkWriter"/> exactly as they were the first time, against the corpus as it
-/// now stands. A verdict the database holds differently from the ledger is reported and left alone.
-/// Runs are replayed in the order they were started, whatever their texts, so where a later run
-/// renders a word an earlier one marked absent, the later verdict wins again as it did the first time.
+/// **The build reads the ledger, not the database.** <c>evidentia-pairs</c> makes each pair's <c>evidentia</c> method file from
+/// these folders and the texts' words and frames (<see cref="Mapping.EvidentiaFiles"/>); nothing writes a verdict into a corpus
+/// database any more (PRB-1597).
 /// </para>
 ///
-/// <para>
-/// Only what the verdicts need is kept. A run written again from the ledger holds the decisions its
-/// verdicts are about and not the rest of what it measured; its evidence columns are empty.
-/// </para>
 /// </summary>
-internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter writer)
+internal sealed class EvidentiaLedger(AppDbContext db)
 {
     /// <summary>Under the corpus sources, in this project's own folder.</summary>
     public static readonly string DefaultFolder = Path.Combine("Essenthos", "evidentia");
@@ -118,7 +72,7 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
 
     private const char NewLine = '\n';
 
-    /// <summary>The digits a confidence is written with, which is all of it the link writer keeps.</summary>
+    /// <summary>The digits a confidence is written with, which is all of it a link keeps.</summary>
     private const int ConfidenceDigits = 4;
 
     private const string About =
@@ -399,293 +353,6 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         return problems;
     }
 
-    /// <param name="pair">Which runs to replay, by their texts; null for every run the ledger holds.</param>
-    public async Task<EvidentiaReplayOutcome> Replay(
-        string resources,
-        Func<string, string, bool>? pair = null,
-        CancellationToken cancellationToken = default)
-    {
-        var elapsed = Stopwatch.StartNew();
-        var root = Folder(resources);
-        var runs = Directory.Exists(root)
-            ? Directory.EnumerateDirectories(root).Where(folder => File.Exists(Path.Combine(folder, RunFile)))
-                .Select(folder => (Folder: folder, Run: LedgerRun.Read(Path.Combine(folder, RunFile))))
-                .Where(held => pair is null || pair(held.Run.From, held.Run.To))
-                .OrderBy(held => held.Run.StartedAt)
-                .ThenBy(held => held.Folder, StringComparer.Ordinal)
-                .ToList()
-            : [];
-
-        var tally = new ReplayTally();
-        foreach (var (folder, run) in runs)
-        {
-            await ReplayRun(folder, run, tally, cancellationToken);
-        }
-
-        var verseLinks = tally.Applied.Any(applied => applied.NewLinks > 0)
-            ? await writer.JoinVerses(cancellationToken)
-            : null;
-        return new EvidentiaReplayOutcome(tally.Runs, tally.Verdicts, tally.Reconstituted, tally.AlreadyThere, tally.Restored,
-            tally.Conflicts, tally.Applied, elapsed.Elapsed, verseLinks);
-    }
-
-    private async Task ReplayRun(string folder, LedgerRun recorded, ReplayTally tally, CancellationToken cancellationToken)
-    {
-        var name = Path.GetFileName(folder);
-        var lines = BookFiles(folder)
-            .SelectMany(file => LedgerLine.ReadAll(file))
-            .ToList();
-        tally.Runs++;
-        tally.Verdicts += lines.Count;
-
-        var texts = await db.Texts.AsNoTracking()
-            .Where(text => text.Slug == recorded.From || text.Slug == recorded.To)
-            .ToDictionaryAsync(text => text.Slug, text => text.Id, StringComparer.Ordinal, cancellationToken);
-        if (!texts.TryGetValue(recorded.From, out var fromId) || !texts.TryGetValue(recorded.To, out var toId))
-        {
-            tally.Conflicts.Add($"{name}: {(texts.ContainsKey(recorded.From) ? recorded.To : recorded.From)} is not in the corpus, "
-                                + $"so its {lines.Count:N0} verdicts wait for it");
-            return;
-        }
-
-        var books = lines.SelectMany(line => new[] { line.At.Book, line.TargetAt.Book, line.CorrectedAt.Book }).ToHashSet();
-        var fromWords = Reverse(await Addresses(fromId, books, cancellationToken));
-        var toWords = Reverse(await Addresses(toId, books, cancellationToken));
-
-        var resolved = new List<(LedgerLine Line, long? Source, long? Target, long? Corrected)>(lines.Count);
-        foreach (var line in lines)
-        {
-            var source = line.Word is { } word ? Resolve(fromWords, line.At, word, line.Surface, recorded.From, name, tally) : null;
-            var target = line.Target is { } counterpart ? Resolve(toWords, line.TargetAt, counterpart, line.TargetSurface, recorded.To, name, tally) : null;
-            var corrected = line.Corrected is { } named ? Resolve(toWords, line.CorrectedAt, named, line.CorrectedSurface, recorded.To, name, tally) : null;
-            if ((line.Word is null || source is not null) && (line.Target is null || target is not null)
-                && (line.Corrected is null || corrected is not null))
-            {
-                resolved.Add((line, source?.Id, target?.Id, corrected?.Id));
-            }
-        }
-
-        var run = await db.EvidentiaRuns
-            .SingleOrDefaultAsync(row => row.FromTextId == fromId && row.ToTextId == toId
-                && row.StartedAt == recorded.StartedAt && row.RuleVersion == recorded.RuleVersion, cancellationToken);
-        var toApply = run is null
-            ? await Reconstitute(recorded, fromId, toId, resolved, tally, cancellationToken)
-            : await Settle(run, recorded, name, resolved, tally, cancellationToken);
-
-        if (toApply is { } runId)
-        {
-            tally.Applied.Add(await writer.Apply(runId, write: true, cancellationToken, joinVerses: false));
-        }
-    }
-
-    /// <summary>Writes a run the database does not hold, its decisions and its verdicts, and says which run to apply.</summary>
-    private async Task<int?> Reconstitute(
-        LedgerRun recorded,
-        int fromId,
-        int toId,
-        IReadOnlyList<(LedgerLine Line, long? Source, long? Target, long? Corrected)> resolved,
-        ReplayTally tally,
-        CancellationToken cancellationToken)
-    {
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var run = new EvidentiaRun
-        {
-            FromTextId = fromId,
-            ToTextId = toId,
-            StartedAt = recorded.StartedAt,
-            FinishedAt = recorded.FinishedAt,
-            RuleVersion = recorded.RuleVersion,
-            Configuration = recorded.Configuration,
-            Scope = recorded.Scope,
-        };
-        db.EvidentiaRuns.Add(run);
-        await db.SaveChangesAsync(cancellationToken);
-
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        await using (var import = await connection.BeginBinaryImportAsync(DecisionImport, cancellationToken))
-        {
-            foreach (var (line, source, target, _) in resolved)
-            {
-                await import.StartRowAsync(cancellationToken);
-                await import.WriteAsync(run.Id, NpgsqlDbType.Integer, cancellationToken);
-                await Optional(import, source, NpgsqlDbType.Bigint, cancellationToken);
-                await import.WriteAsync((short)line.At.Book, NpgsqlDbType.Smallint, cancellationToken);
-                await import.WriteAsync((short)line.At.Chapter, NpgsqlDbType.Smallint, cancellationToken);
-                await import.WriteAsync((short)line.At.Verse, NpgsqlDbType.Smallint, cancellationToken);
-                await import.WriteAsync(false, NpgsqlDbType.Boolean, cancellationToken);
-                await Optional(import, target, NpgsqlDbType.Bigint, cancellationToken);
-                await Text(import, line.Rule, cancellationToken);
-                await Text(import, line.Tier, cancellationToken);
-                await Text(import, line.Rationale, cancellationToken);
-                await Optional(import, line.Confidence, NpgsqlDbType.Real, cancellationToken);
-                await import.WriteAsync((short)0, NpgsqlDbType.Smallint, cancellationToken);
-                await Text(import, line.Absence is { } absence ? EnumSpelling.Of(absence) : null, cancellationToken);
-            }
-
-            await import.CompleteAsync(cancellationToken);
-        }
-
-        var decisions = await Decisions(run.Id, cancellationToken);
-        var taken = new HashSet<long>();
-        await using (var import = await connection.BeginBinaryImportAsync(ReviewImport, cancellationToken))
-        {
-            foreach (var (line, source, target, corrected) in resolved)
-            {
-                var session = recorded.Reviews[line.Review];
-                await import.StartRowAsync(cancellationToken);
-                await import.WriteAsync(Pick(decisions, line, source, target, taken)!.Id, NpgsqlDbType.Bigint, cancellationToken);
-                await import.WriteAsync(EnumSpelling.Of(line.Verdict), NpgsqlDbType.Text, cancellationToken);
-                await import.WriteAsync(session.Examined, NpgsqlDbType.Boolean, cancellationToken);
-                await Optional(import, corrected, NpgsqlDbType.Bigint, cancellationToken);
-                await import.WriteAsync(session.Reviewer, NpgsqlDbType.Text, cancellationToken);
-                await import.WriteAsync(session.ReviewedAt, NpgsqlDbType.TimestampTz, cancellationToken);
-                await Text(import, session.Note, cancellationToken);
-            }
-
-            await import.CompleteAsync(cancellationToken);
-        }
-
-        await transaction.CommitAsync(cancellationToken);
-        tally.Reconstituted++;
-        tally.Restored += resolved.Count;
-        return run.Id;
-    }
-
-    /// <summary>
-    /// Compares a run the database holds with the ledger, verdict by verdict, and puts back what it
-    /// lost; says which run to apply, or null where nothing changed.
-    /// </summary>
-    private async Task<int?> Settle(
-        EvidentiaRun run,
-        LedgerRun recorded,
-        string name,
-        IReadOnlyList<(LedgerLine Line, long? Source, long? Target, long? Corrected)> resolved,
-        ReplayTally tally,
-        CancellationToken cancellationToken)
-    {
-        var decisions = await Decisions(run.Id, cancellationToken);
-        var taken = new HashSet<long>();
-        var added = new List<EvidentiaReview>();
-        var lost = new List<long>();
-        foreach (var (line, source, target, corrected) in resolved)
-        {
-            if (Pick(decisions, line, source, target, taken) is not { } decision)
-            {
-                tally.Conflicts.Add($"{name}: {line.Where} — run {run.Id} holds no decision about this word, so the verdict has nothing to stand on");
-                continue;
-            }
-
-            if (decision.ReviewId is null)
-            {
-                var session = recorded.Reviews[line.Review];
-                added.Add(new EvidentiaReview
-                {
-                    DecisionId = decision.Id,
-                    Verdict = line.Verdict,
-                    Examined = session.Examined,
-                    CorrectedTargetWordId = corrected,
-                    Reviewer = session.Reviewer,
-                    ReviewedAt = session.ReviewedAt,
-                    Note = session.Note,
-                });
-                continue;
-            }
-
-            if (decision.Verdict != line.Verdict || decision.Corrected != corrected)
-            {
-                tally.Conflicts.Add($"{name}: {line.Where} — the corpus holds {EnumSpelling.Of(decision.Verdict!.Value)} "
-                                    + $"and the ledger {EnumSpelling.Of(line.Verdict)}; the corpus's is kept, and evidentia-export {run.Id} records it");
-                continue;
-            }
-
-            if (decision.AppliedAt is not null && decision.LinkId is null && decision.Withheld is null
-                && line.Verdict != EvidentiaVerdict.Rejected)
-            {
-                lost.Add(decision.ReviewId.Value);
-                continue;
-            }
-
-            tally.AlreadyThere++;
-        }
-
-        if (added.Count == 0 && lost.Count == 0)
-        {
-            return null;
-        }
-
-        db.EvidentiaReviews.AddRange(added);
-        await db.SaveChangesAsync(cancellationToken);
-        foreach (var chunk in lost.Chunk(10_000))
-        {
-            await db.EvidentiaReviews.Where(review => chunk.Contains(review.Id))
-                .ExecuteUpdateAsync(set => set.SetProperty(review => review.AppliedAt, (DateTimeOffset?)null), cancellationToken);
-        }
-
-        db.ChangeTracker.Clear();
-        tally.Restored += added.Count + lost.Count;
-        return run.Id;
-    }
-
-    private sealed record Held(
-        long Id,
-        long? Target,
-        string? Kind,
-        LinkRelation? Absence,
-        long? ReviewId,
-        EvidentiaVerdict? Verdict,
-        long? Corrected,
-        DateTimeOffset? AppliedAt,
-        long? LinkId,
-        string? Withheld);
-
-    private async Task<ILookup<(long?, long?), Held>> Decisions(int runId, CancellationToken cancellationToken) =>
-        (await db.EvidentiaDecisions.AsNoTracking()
-            .Where(decision => decision.RunId == runId)
-            .OrderBy(decision => decision.Id)
-            .Select(decision => new
-            {
-                decision.Id,
-                decision.SourceWordId,
-                decision.TargetWordId,
-                decision.Kind,
-                decision.Absence,
-                Review = decision.Review == null
-                    ? null
-                    : new { decision.Review.Id, decision.Review.Verdict, decision.Review.CorrectedTargetWordId, decision.Review.AppliedAt, decision.Review.LinkId, decision.Review.Withheld },
-            })
-            .ToListAsync(cancellationToken))
-        .ToLookup(
-            decision => Key(decision.SourceWordId, decision.TargetWordId),
-            decision => new Held(decision.Id, decision.TargetWordId, decision.Kind, decision.Absence, decision.Review?.Id,
-                decision.Review?.Verdict, decision.Review?.CorrectedTargetWordId, decision.Review?.AppliedAt, decision.Review?.LinkId,
-                decision.Review?.Withheld));
-
-    /// <summary>A run decides about each word of its source, and about each word of its target only where it has no source word.</summary>
-    private static (long?, long?) Key(long? source, long? target) => source is null ? (null, target) : (source, null);
-
-    /// <summary>
-    /// The decision a line of the ledger is about, which no earlier line of the run took. A run should
-    /// decide once about a word, but one that read a verse spanning two chapters once with each holds
-    /// two decisions about each of its words, and the ledger names a word and not a decision. So the
-    /// line's own proposal picks: the decision with its target, rule and absence, a reviewed one before
-    /// one that is not, then the earliest stored, which gives every replay the same answer.
-    /// </summary>
-    private static Held? Pick(ILookup<(long?, long?), Held> decisions, LedgerLine line, long? source, long? target, HashSet<long> taken)
-    {
-        var picked = decisions[Key(source, target)]
-            .Where(decision => !taken.Contains(decision.Id))
-            .OrderByDescending(decision => decision.Target == target && decision.Kind == line.Rule && decision.Absence == line.Absence)
-            .ThenByDescending(decision => decision.ReviewId is not null)
-            .ThenBy(decision => decision.Id)
-            .FirstOrDefault();
-        if (picked is not null)
-        {
-            taken.Add(picked.Id);
-        }
-
-        return picked;
-    }
-
     /// <summary>
     /// Every word of one text in these canonical books, with its address. The ordinal counts the
     /// words standing at one canonical address, in the text's own order, so an address two of the
@@ -734,39 +401,12 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         return await Addresses(textId, books.Distinct().ToList(), cancellationToken);
     }
 
-    private static Dictionary<(Address, int), (long Id, string Surface)> Reverse(Dictionary<long, WordAddress> addresses) =>
-        addresses.ToDictionary(pair => (pair.Value.At, pair.Value.Nth), pair => (pair.Key, pair.Value.Surface));
-
     private static WordAddress Of(Dictionary<long, WordAddress> addresses, long word, string text) =>
         addresses.TryGetValue(word, out var address)
             ? address
             : throw new InvalidDataException(
                 $"Word {word} of {text} has no canonical address, so a verdict about it cannot be kept outside the corpus. " +
                 "Place its verse in the frame before recording a verdict on it.");
-
-    private static (long Id, string Surface)? Resolve(
-        Dictionary<(Address, int), (long Id, string Surface)> words,
-        Address at,
-        int nth,
-        string surface,
-        string text,
-        string run,
-        ReplayTally tally)
-    {
-        if (!words.TryGetValue((at, nth), out var word))
-        {
-            tally.Conflicts.Add($"{run}: {text} {at} has no word {nth} any more");
-            return null;
-        }
-
-        if (!string.Equals(word.Surface, surface, StringComparison.Ordinal))
-        {
-            tally.Conflicts.Add($"{run}: {text} {at} word {nth} read '{surface}' and reads '{word.Surface}' now");
-            return null;
-        }
-
-        return word;
-    }
 
     private static string Checked(string field) =>
         field.Contains(Tab) || field.Contains('\n') || field.Contains('\r')
@@ -792,31 +432,6 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         var temporary = path + ".writing";
         await File.WriteAllTextAsync(temporary, text, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false), cancellationToken);
         File.Move(temporary, path, overwrite: true);
-    }
-
-    private static async Task Optional<T>(NpgsqlBinaryImporter import, T? value, NpgsqlDbType type, CancellationToken cancellationToken)
-        where T : struct
-    {
-        if (value is { } present)
-        {
-            await import.WriteAsync(present, type, cancellationToken);
-        }
-        else
-        {
-            await import.WriteNullAsync(cancellationToken);
-        }
-    }
-
-    private static async Task Text(NpgsqlBinaryImporter import, string? value, CancellationToken cancellationToken)
-    {
-        if (value is null)
-        {
-            await import.WriteNullAsync(cancellationToken);
-        }
-        else
-        {
-            await import.WriteAsync(value, NpgsqlDbType.Text, cancellationToken);
-        }
     }
 
     internal sealed record Address(int Book, int Chapter, int Verse)
@@ -860,7 +475,7 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
 
     /// <summary>What <see cref="RunFile"/> says about a run.</summary>
     /// <param name="Run">
-    /// The run's number, which a rule's claim names (<see cref="EvidentiaLinkWriter.RuleSource"/>) and by which a
+    /// The run's number, which a rule's claim names (<see cref="EvidentiaClaims.RuleSource"/>) and by which a
     /// newer run supersedes an older; null in a file written before it was recorded.
     /// </param>
     internal sealed record LedgerRun(
@@ -993,14 +608,4 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         }
     }
 
-    private sealed class ReplayTally
-    {
-        public int Runs;
-        public int Verdicts;
-        public int Reconstituted;
-        public int AlreadyThere;
-        public int Restored;
-        public List<string> Conflicts { get; } = [];
-        public List<EvidentiaApplyOutcome> Applied { get; } = [];
-    }
 }

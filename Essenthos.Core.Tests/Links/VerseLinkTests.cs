@@ -21,7 +21,7 @@ public class VerseLinkTests
     public void PairsAVerseWithTheVerseAtItsAddress()
     {
         var alone = 0;
-        var links = VerseLinkLoader.Components(
+        var links = VerseLinkRule.Components(
             At((1, [11]), (2, [12])), At((1, [21]), (2, [22])), ref alone);
 
         links.Should().HaveCount(2);
@@ -37,7 +37,7 @@ public class VerseLinkTests
     public void JoinsAPassageTheTwoTextsDivideDifferently()
     {
         var alone = 0;
-        var links = VerseLinkLoader.Components(
+        var links = VerseLinkRule.Components(
             At((1, [11, 12])), At((1, [21])), ref alone);
 
         links.Should().ContainSingle();
@@ -56,7 +56,7 @@ public class VerseLinkTests
     public void FollowsTheCorrespondenceWhereItIsTransitive()
     {
         var alone = 0;
-        var links = VerseLinkLoader.Components(
+        var links = VerseLinkRule.Components(
             new Dictionary<(int, int, int), List<int>>
             {
                 [(1, 1, 1)] = [11],
@@ -79,7 +79,7 @@ public class VerseLinkTests
     public void CountsAVerseWithNoCounterpartRatherThanClaimingAnAbsence()
     {
         var alone = 0;
-        var links = VerseLinkLoader.Components(
+        var links = VerseLinkRule.Components(
             At((1, [11]), (2, [12])), At((1, [21])), ref alone);
 
         links.Should().ContainSingle();
@@ -91,7 +91,7 @@ public class VerseLinkTests
     public void CountsAnUnansweredVerseOnEitherSide()
     {
         var alone = 0;
-        VerseLinkLoader.Components(At((1, [11])), At((1, [21]), (9, [29])), ref alone);
+        VerseLinkRule.Components(At((1, [11])), At((1, [21]), (9, [29])), ref alone);
         alone.Should().Be(1);
     }
 
@@ -104,7 +104,7 @@ public class VerseLinkTests
     public void HoldsATranspositionAsOneStatement()
     {
         var alone = 0;
-        var links = VerseLinkLoader.Components(
+        var links = VerseLinkRule.Components(
             At((16, [116]), (17, [117])),
             new Dictionary<(int, int, int), List<int>>
             {

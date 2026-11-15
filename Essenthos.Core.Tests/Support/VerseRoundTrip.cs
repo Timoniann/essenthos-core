@@ -1,7 +1,8 @@
 using System.Text;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Utils;
 
-namespace Essenthos.Core.Loading;
+namespace Essenthos.Core.Tests;
 
 /// <summary>
 /// How closely a rebuilt verse has to match its source.

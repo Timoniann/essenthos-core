@@ -75,8 +75,8 @@ internal sealed record EvidentiaRunOutcome(
 /// <para>
 /// It measures exactly as the measurement commands do and keeps what the measurement scored, so a
 /// stored run and a published figure cannot describe two different selections. It writes the run
-/// and its decisions and nothing else: the corpus is reached through an approved review and
-/// <see cref="EvidentiaLinkWriter"/>, never from here.
+/// and its decisions and nothing else: the corpus is reached through an approved review, the ledger and
+/// the build (<c>evidentia-pairs</c>), never from here.
 /// </para>
 /// </summary>
 /// <param name="scopes">

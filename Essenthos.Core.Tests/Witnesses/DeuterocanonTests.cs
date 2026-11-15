@@ -471,7 +471,7 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
             [(Wisdom, 5, 23)] = [11], [(Wisdom, 6, 1)] = [13], [(1, 1, 1)] = [14], [(1, 1, 2)] = [15],
         };
 
-        var (mine, theirs) = VerseLinkLoader.Agreeing(here, there);
+        var (mine, theirs) = VerseLinkRule.Agreeing(here, there);
 
         mine.Keys.Should().BeEquivalentTo([(Wisdom, 6, 1), (1, 1, 1)]);
         theirs.Keys.Should().BeEquivalentTo([(Wisdom, 6, 1), (1, 1, 1), (1, 1, 2)],
@@ -495,9 +495,9 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
             [(manasseh, 1, 1)] = [11], [(manasseh, 1, 2)] = [12], [(manasseh, 1, 3)] = [13],
         };
 
-        VerseLinkLoader.Agreeing(here, there).Here.Should().BeEmpty();
+        VerseLinkRule.Agreeing(here, there).Here.Should().BeEmpty();
 
-        var (mine, theirs) = VerseLinkLoader.Agreeing(here, there, new HashSet<(int, int, int)> { (manasseh, 1, 2) });
+        var (mine, theirs) = VerseLinkRule.Agreeing(here, there, new HashSet<(int, int, int)> { (manasseh, 1, 2) });
 
         mine.Keys.Should().BeEquivalentTo([(manasseh, 1, 1), (manasseh, 1, 3)]);
         theirs.Keys.Should().BeEquivalentTo([(manasseh, 1, 1), (manasseh, 1, 2), (manasseh, 1, 3)]);

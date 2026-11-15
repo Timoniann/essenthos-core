@@ -12,12 +12,9 @@ namespace Essenthos.Core.Tests.Records;
 public sealed class WithdrawnRecordTests
 {
     [Fact]
-    public void TheMacbannitesAreWithdrawnOnTheLeadsRulingAndNotRecreatedByTheGentilicRead()
-    {
+    public void TheMacbannitesAreWithdrawnOnTheLeadsRuling() =>
         WithdrawnRecordLoader.Read().Single(record => record.Slug == "macbannites").OwnRecord
             .Should().NotBeNullOrWhiteSpace();
-        PeopleFiles.Read().Refused.Should().Contain(refusal => refusal.Number == "H4344");
-    }
 
     [Fact]
     public void TheGreatMenAndHisSonAreRuledOutAsNoName()

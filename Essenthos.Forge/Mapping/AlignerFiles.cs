@@ -151,6 +151,9 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
 
     public ProductTexts Texts => texts;
 
+    /// <summary>The aligner itself, which trains and reads the stored answers.</summary>
+    public AlignmentPipeline Pipeline => pipeline;
+
     /// <summary>The store's alignments: one workspace per pair, under <c>Resources/Alignments</c>.</summary>
     public string Root => Path.Combine(texts.Store.ResourcesPath, AlignmentStore.FolderName);
 
@@ -294,6 +297,20 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         return new Stored(file, addresses, source, target);
     }
 
+    /// <summary>
+    /// The two texts' words in the forms given, with no pool, and the addresses both hold, as <see cref="Answer"/> reads a
+    /// pair: what the measuring verbs align (<see cref="AlignerMeasures"/>).
+    /// </summary>
+    public (List<(int, int, int)> Addresses, Dictionary<(int, int, int), List<Word>> Source, Dictionary<(int, int, int), List<Word>> Target)
+        Words(string fromSlug, string toSlug, Func<WordForms, string> sourceForm, Func<WordForms, string> targetForm)
+    {
+        var lettered = SameVersification(fromSlug, toSlug);
+        var refused = Refused(fromSlug, toSlug);
+        var source = AlignmentPipeline.Unmet(AlignedWords.Read(texts[fromSlug], sourceForm, lettered, strong: Served(fromSlug)), refused);
+        var target = AlignmentPipeline.Unmet(AlignedWords.Read(texts[toSlug], targetForm, lettered, strong: Served(toSlug)), refused);
+        return (AlignmentPipeline.Shared(fromSlug, toSlug, source, target), source, target);
+    }
+
     /// <summary>Whether two texts number their verses in one tradition, so that the verses each prints with a letter meet.</summary>
     public bool SameVersification(string one, string other) => Versification(one) == Versification(other);
 
@@ -307,11 +324,11 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
 
     /// <summary>
     /// The chapters of the first text its verse links to the second leave out, under the name <see cref="TwinPassages"/> joins
-    /// them at (<see cref="VerseLinkLoader"/>'s rule over the two frames): empty for a pair joined wherever the two share an address.
+    /// them at (<see cref="VerseLinkRule"/> over the two frames): empty for a pair joined wherever the two share an address.
     /// </summary>
     public IReadOnlySet<(int Book, int Chapter)> Refused(string fromSlug, string toSlug)
     {
-        var declaration = VerseLinkLoader.DeclaredPairs.FirstOrDefault(pair => pair.From == fromSlug && pair.To == toSlug);
+        var declaration = VerseLinkRule.DeclaredPairs.FirstOrDefault(pair => pair.From == fromSlug && pair.To == toSlug);
         if (declaration is not { AgreeingChaptersOnly: true })
         {
             return new HashSet<(int, int)>();
@@ -321,7 +338,7 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
             text.Verses.SelectMany(text.Addresses).Select(address => (address.Book, address.Chapter, address.Verse)).Distinct()
                 .Select(TwinPassages.Joined);
 
-        return VerseLinkLoader.Differing(Reached(texts[fromSlug]), Reached(texts[toSlug]), declaration.Without);
+        return VerseLinkRule.Differing(Reached(texts[fromSlug]), Reached(texts[toSlug]), declaration.Without);
     }
 
     /// <summary>

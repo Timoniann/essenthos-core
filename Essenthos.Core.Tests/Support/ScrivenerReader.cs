@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
+using Essenthos.Core.TextusReceptus;
 
-namespace Essenthos.Core.TextusReceptus;
+namespace Essenthos.Core.Tests;
 
 /// <summary>
 /// The plain Scrivener 1894 text, which carries no Strong numbers and no morphology and is

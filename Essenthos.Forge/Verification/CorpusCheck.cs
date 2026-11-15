@@ -1240,7 +1240,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             $"""
              SELECT count(*) - count(DISTINCT (s.from_text_id, s.to_text_id, s.relation, s.method, s.confidence,
                                                s.source, s.note, s.verses))
-             FROM ({VerseLinkLoader.Shapes}) s
+             FROM ({VerseLinkRule.Shapes}) s
              """),
     ];
 
