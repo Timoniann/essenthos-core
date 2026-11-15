@@ -1,0 +1,62 @@
+# producer   by hand: the dataset's male stored for 58 of the 72 persons PRB-1412 listed, where the verses naming them do not contradict it, applied by forge owner-rows
+# by         Essenthos: the project owner's ruling of 2026-11-16 on PRB-1412 (take the dataset's sex where the text does not contradict it, review the rest), each person read against the verses that name him by claude-opus-5-5 on 2026-11-16
+# One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on. Left for review: death, legion, antichrist, theangelofthelord, thecaptainofthehostofthelord, princeofgreece, princeofthekingdomofpersia, amon-3, etam, meunim, nebo, gibbar, magbish, senaah.
+entry	product	op	record	values	why
+PRB-1412	records/records	amend	adin	{"sex": "male"}	BibleData says male and the text agrees: Ezra 8:6 the sons of Adin, a forefather's house of the return
+PRB-1412	records/records	amend	agag	{"sex": "male"}	BibleData says male and the text agrees: Numbers 24:7 Agag the king
+PRB-1412	records/records	amend	ahiah	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 10:26 among the chiefs who sealed
+PRB-1412	records/records	amend	arba	{"sex": "male"}	BibleData says male and the text agrees: Joshua 14:15 Arba a great man among the Anakims; 15:13 Arba the father of Anak
+PRB-1412	records/records	amend	argob	{"sex": "male"}	BibleData says male and the text agrees: 2 Kings 15:25 with Argob and Arieh, and with him fifty men
+PRB-1412	records/records	amend	ariel	{"sex": "male"}	BibleData says male and the text agrees: 2 Samuel 23:20 two lionlike men of Moab
+PRB-1412	records/records	amend	azgad	{"sex": "male"}	BibleData says male and the text agrees: Ezra 8:12 the sons of Azgad, a forefather's house
+PRB-1412	records/records	amend	bani-4	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:29, 34 the sons of Bani
+PRB-1412	records/records	amend	bani-5	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:38 among the sons who put away foreign wives
+PRB-1412	records/records	amend	bani-8	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 9:4 a Levite on the stairs
+PRB-1412	records/records	amend	benhail	{"sex": "male"}	BibleData says male and the text agrees: 2 Chronicles 17:7 one of Jehoshaphat's princes
+PRB-1412	records/records	amend	chenaniah	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 15:22 chief of the Levites; 26:29 Chenaniah and his sons
+PRB-1412	records/records	amend	cush-2	{"sex": "male"}	BibleData says male and the text agrees: Psalm 7 title, Cush the Benjamite
+PRB-1412	records/records	amend	elioenai-6	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 12:41 among the priests with trumpets
+PRB-1412	records/records	amend	elishah-2	{"sex": "male"}	BibleData says male and the text agrees: Genesis 10:2 among the sons of Japheth (the Greek list)
+PRB-1412	records/records	amend	elnathan-3	{"sex": "male"}	BibleData says male and the text agrees: Ezra 8:16 among the chief men
+PRB-1412	records/records	amend	elnathan-4	{"sex": "male"}	BibleData says male and the text agrees: Ezra 8:16 among the chief men
+PRB-1412	records/records	amend	ezra-2	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 7:7 among the men who came with Zerubbabel (the Greek list)
+PRB-1412	records/records	amend	gareb	{"sex": "male"}	BibleData says male and the text agrees: 2 Samuel 23:38 among David's mighty men
+PRB-1412	records/records	amend	hashabiah-5	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 3:17 the ruler of half of Keilah
+PRB-1412	records/records	amend	hattush-3	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 10:4, 12:2 among the priests
+PRB-1412	records/records	amend	hodiah-3	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 10:13 among the Levites who sealed
+PRB-1412	records/records	amend	hodiah-4	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 10:18 among the chiefs who sealed
+PRB-1412	records/records	amend	isshijah	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:31 among the sons of Harim
+PRB-1412	records/records	amend	ittai	{"sex": "male"}	BibleData says male and the text agrees: 2 Samuel 15:21 thy servant; 18:2 over a third of the people
+PRB-1412	records/records	amend	jabez	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 4:9 his mother bare him
+PRB-1412	records/records	amend	jaddai	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:43 among the sons of Nebo
+PRB-1412	records/records	amend	jehezkel	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 24:16 the twentieth priestly course
+PRB-1412	records/records	amend	jeshua-5	{"sex": "male"}	BibleData says male and the text agrees: Ezra 3:9 Jeshua with his sons; 8:33 Jozabad the son of Jeshua
+PRB-1412	records/records	amend	jeuel-2	{"sex": "male"}	BibleData says male and the text agrees: Ezra 8:13 among the sons of Adonikam
+PRB-1412	records/records	amend	jezrahiah	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 12:42 the singers' overseer
+PRB-1412	records/records	amend	jozabad	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 12:4 among the mighty men
+PRB-1412	records/records	amend	jozabad-3	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 12:20 a captain of thousands
+PRB-1412	records/records	amend	jozabad-7	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:23 among the Levites
+PRB-1412	records/records	amend	jozabad-8	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 8:7 among the Levites who taught the law
+PRB-1412	records/records	amend	kadmiel-2	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 9:4-5 among the Levites
+PRB-1412	records/records	amend	kelaiah	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:23 among the Levites
+PRB-1412	records/records	amend	malchijah-5	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:25 among the sons of Parosh
+PRB-1412	records/records	amend	miniamin-3	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 12:41 among the priests with trumpets
+PRB-1412	records/records	amend	nekoda	{"sex": "male"}	BibleData says male and the text agrees: Ezra 2:48, 60 a forefather of the Nethinims and of a house of the return
+PRB-1412	records/records	amend	nergalsarezer	{"sex": "male"}	BibleData says male and the text agrees: Jeremiah 39:3 among the princes of the king of Babylon
+PRB-1412	records/records	amend	netanel	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:22 among the sons of Pashur
+PRB-1412	records/records	amend	nobah	{"sex": "male"}	BibleData says male and the text agrees: Numbers 32:42 called it Nobah after his own name
+PRB-1412	records/records	amend	oreb	{"sex": "male"}	BibleData says male and the text agrees: Judges 7:25 one of the two princes of Midian
+PRB-1412	records/records	amend	pethahiah-2	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:23 among the Levites
+PRB-1412	records/records	amend	raphah	{"sex": "male"}	BibleData says male and the text agrees: 2 Samuel 21:20, 22 sons born to the giant in Gath
+PRB-1412	records/records	amend	shamir	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 24:24 of the sons of Michah
+PRB-1412	records/records	amend	shebaniah-4	{"sex": "male"}	BibleData says male and the text agrees: Nehemiah 10:10 among the Levites, their brethren
+PRB-1412	records/records	amend	shimeon	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:31 among the sons of Harim
+PRB-1412	records/records	amend	tappuah	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 2:43 among the sons of Hebron
+PRB-1412	records/records	amend	telem	{"sex": "male"}	BibleData says male and the text agrees: Ezra 10:24 among the porters
+PRB-1412	records/records	amend	theethiopianeunuch	{"sex": "male"}	BibleData says male and the text agrees: Acts 8:27 a man of Ethiopia
+PRB-1412	records/records	amend	timna-2	{"sex": "male"}	BibleData says male and the text agrees: Genesis 36:40 duke Timnah
+PRB-1412	records/records	amend	tobadonijah	{"sex": "male"}	BibleData says male and the text agrees: 2 Chronicles 17:8 among the Levites
+PRB-1412	records/records	amend	uzza	{"sex": "male"}	BibleData says male and the text agrees: 2 Kings 21:18 the garden of Uzza; the name nowhere said of a woman
+PRB-1412	records/records	amend	zaboud	{"sex": "male"}	BibleData says male and the text agrees: 1 Chronicles 4:26 his son (the Greek list)
+PRB-1412	records/records	amend	zalmon	{"sex": "male"}	BibleData says male and the text agrees: 2 Samuel 23:28 among David's mighty men
+PRB-1412	records/records	amend	ziha	{"sex": "male"}	BibleData says male and the text agrees: Ezra 2:43 a forefather of the Nethinims
