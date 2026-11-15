@@ -54,40 +54,6 @@ internal static class CommandmentEndpoints
                     r.LastVerse)),
             ])).ToList();
     }
-
-    /// <summary>
-    /// The commandments resting on a verse of this chapter, in the order the chapter gives them:
-    /// by the first of its verses they rest on, then positive before negative, then by number.
-    /// </summary>
-    internal static async Task<IList<ContextCommandmentResponse>> InChapter(
-        AppDbContext db,
-        int book,
-        int chapter,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.CommandmentReferences
-            .Where(r => r.CanonicalBook == book && r.CanonicalChapter == chapter)
-            .Select(r => new { r.Commandment!.Kind, r.Commandment.Number, r.Commandment.Title, r.FirstVerse, r.LastVerse })
-            .ToListAsync(cancellationToken);
-
-        return
-        [
-            .. rows.GroupBy(r => (r.Kind, r.Number, r.Title))
-                .Select(commandment => new ContextCommandmentResponse(
-                    commandment.Key.Kind,
-                    commandment.Key.Number,
-                    commandment.Key.Title,
-                    [
-                        .. commandment
-                            .SelectMany(r => Enumerable.Range(r.FirstVerse, r.LastVerse - r.FirstVerse + 1))
-                            .Distinct()
-                            .Order(),
-                    ]))
-                .OrderBy(c => c.Verses[0])
-                .ThenBy(c => c.Kind == CommandmentKinds.Negative)
-                .ThenBy(c => c.Number),
-        ];
-    }
 }
 
 /// <param name="Kind"><c>positive</c> or <c>negative</c>.</param>
@@ -108,9 +74,3 @@ internal record CommandmentResponse(
     IList<CommandmentReferenceResponse> References);
 
 internal record CommandmentReferenceResponse(BookRefResponse Book, int Chapter, int FirstVerse, int LastVerse);
-
-/// <param name="Kind"><c>positive</c> or <c>negative</c>.</param>
-/// <param name="Number">Its number in Maimonides' count.</param>
-/// <param name="Title">What it commands, in Moses Hyamson's English; English only.</param>
-/// <param name="Verses">The verses of this chapter it rests on.</param>
-internal record ContextCommandmentResponse(string Kind, int Number, string Title, IList<int> Verses);

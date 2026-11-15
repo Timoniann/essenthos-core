@@ -339,6 +339,65 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("commandment_reference", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.ContextChapter", b =>
+                {
+                    b.Property<int>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body")
+                        .HasAnnotation("Npgsql:Compression:", "lz4");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("hash");
+
+                    b.HasKey("CanonicalBook", "CanonicalChapter")
+                        .HasName("pk_context_chapter");
+
+                    b.ToTable("context_chapter", null, t =>
+                        {
+                            t.HasComment("What a canonical chapter's context is made of whatever the reader's languages: the records it names and how they reach it, its events, periods, measures, commandments, topics and family trees, as one JSON document. Made by the serving build (context/chapters).");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.ContextLine", b =>
+                {
+                    b.Property<string>("Prose")
+                        .HasColumnType("text")
+                        .HasColumnName("prose");
+
+                    b.Property<string>("Names")
+                        .HasColumnType("text")
+                        .HasColumnName("names");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text")
+                        .HasColumnName("slug");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body")
+                        .HasAnnotation("Npgsql:Compression:", "lz4");
+
+                    b.HasKey("Prose", "Names", "Slug")
+                        .HasName("pk_context_line");
+
+                    b.ToTable("context_line", null, t =>
+                        {
+                            t.HasComment("One record as a chapter's context shows it in a language of words and a language of names: its local name, our own line, and the line's claims with the names they point at, as one JSON document. Records by slug. Made by the serving build (context/lines/{prose}).");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.CorpusRelease", b =>
                 {
                     b.Property<int>("Id")

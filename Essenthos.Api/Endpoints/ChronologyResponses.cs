@@ -159,65 +159,6 @@ internal record EventResponse(
     public EntityWikipediaResponse? Wikipedia { get; init; }
 }
 
-/// <param name="Calculation">
-/// The arithmetic that produced this reckoning's year, where the reckoning shows its working.
-/// </param>
-/// <param name="BceYear">
-/// The year as a reader writes it, with <paramref name="Era"/> saying which side of the turn: the
-/// reckoning's own figure where it states one, and otherwise worked out from
-/// <paramref name="Year"/> and the reckoning's zero. <see cref="EventDateResponse.Stated"/> says
-/// which. Null where the reckoning gives neither.
-/// </param>
-/// <param name="Year">
-/// Years from the reckoning's own creation. Null where the reckoning states only its year of the
-/// common era, which Ussher's Annals do for the paragraphs whose anno mundi column contradicts
-/// their other two.
-/// </param>
-internal record EventDateResponse(
-    string Chronology,
-    string Name,
-    int? Year,
-    int? BceYear,
-    string Era,
-    int? EarliestYear,
-    int? LatestYear,
-    string? Calculation,
-    string? Citation,
-    string? Notes)
-{
-    /// <summary>
-    /// Whether <see cref="BceYear"/> is the figure the reckoning's source printed, rather than one
-    /// worked out from the year from creation. They differ by a year wherever the reckoning's year
-    /// opens in the autumn — Ussher's creation is 4004 BC in his words and 4003 by the subtraction —
-    /// and a reader is owed which one is in front of them.
-    /// </summary>
-    public bool Stated { get; init; }
-
-    /// <summary>
-    /// The person's age at the event by this reckoning's own years: the reckoning's year of the
-    /// event less its year of the person's birth, and for BibleData the age its own row states.
-    /// Null where the reckoning dates no birth of the person, or the event is not one the source
-    /// gives an age for — so a year and an age shown together are always one reckoning's.
-    /// </summary>
-    public int? AgeAtEvent { get; init; }
-
-    /// <summary>The arithmetic in the reader's language, a machine translation; null where none is held.</summary>
-    public string? LocalCalculation { get; init; }
-
-    /// <summary>
-    /// The arithmetic in its parts, where this corpus worked it out itself, so a page can say it in the
-    /// reader's language: the events' names are the reader's language's where a rendering is held.
-    /// </summary>
-    public Arithmetic? Working { get; init; }
-
-    /// <summary>The parts as stored, read into <see cref="Working"/> once the row is in memory.</summary>
-    [JsonIgnore]
-    public string? Parts { get; init; }
-
-    /// <summary>The notes on this reckoning's date in the reader's language, a machine translation.</summary>
-    public string? LocalNotes { get; init; }
-}
-
 /// <summary>
 /// Where the source says an event happened: its words, lower-cased to be matched on, and the verse
 /// at which it names them, where it names one.

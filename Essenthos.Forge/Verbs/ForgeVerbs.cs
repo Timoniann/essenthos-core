@@ -47,6 +47,11 @@ internal static partial class ForgeVerbs
             + "family-components/<prose>) from the configured database where their inputs moved (all with --force), copying them from the "
             + "products where not. Never writes the live corpus or the snapshot.",
             FamiliesVerb, Most: 1),
+        new("context", "[--force]",
+            "Compose every chapter's context skeleton (context_chapter, context/chapters) and every record's line in every pair of "
+            + "languages (context_line, context/lines/<prose>) from the configured database where their inputs moved (all with --force), "
+            + "copying them from the products where not. Never writes the live corpus or the snapshot.",
+            ContextVerb, Most: 1),
         new("strength", "[<text,...>] [--force]",
             "Count how strongly each text's verses are linked to every text linked to it, per canonical chapter, from the configured "
             + "database (verse_strength, strength/<SLUG>), for the texts named or every text whose inputs moved; a current product is "

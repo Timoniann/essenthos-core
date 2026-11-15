@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Context;
 
 /// <summary>
 /// The asterisk BibleData puts after some events' titles (<em>Abram departed Ur*</em>), and what it

@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Endpoints;
+namespace Essenthos.Core.Context;
 
 /// <summary>
 /// The words of a topic's heading that carry its meaning, and the words of a verse, brought to one

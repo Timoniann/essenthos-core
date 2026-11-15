@@ -170,7 +170,8 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         await Task.WhenAll(
             Panes(null, false, parallel, cancellationToken),
             RecordWords(null, false, cancellationToken),
-            Families(false, cancellationToken));
+            Families(false, cancellationToken),
+            Context(false, cancellationToken));
         // After the panes and the record words, which save the store as each text is written.
         await Strength(null, false, cancellationToken);
         await Count(cancellationToken);
@@ -292,6 +293,21 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
                 outcome.Made, outcome.Rows, outcome.Largest);
             Stages.Enqueue(new BuildStage("load", "largest family document", TimeSpan.Zero, outcome.LargestGzip,
                 outcome.LargestGzip > FamilyBuild.LargestGzipWarned ? $"{outcome.Largest}: over {FamilyBuild.LargestGzipWarned} bytes gzipped" : outcome.Largest));
+            return outcome.Rows;
+        });
+
+    /// <summary>
+    /// The chapter context (<see cref="ContextBuild"/>): every chapter's skeleton and every record's line in every pair of
+    /// languages, composed from the tables as they now stand where their inputs or their composers moved (always with
+    /// <paramref name="force"/>), copied from the products where not. Returns the rows the tables took.
+    /// </summary>
+    public Task<long> Context(bool force, CancellationToken cancellationToken) =>
+        Timed("load", "context", async () =>
+        {
+            var outcome = await new ContextBuild(connectionString, store, services, logger).Run(force, cancellationToken);
+            logger.LogInformation("Context: {Made} products made, {Rows} rows written, {Chapters} chapters, {Lines} lines; the largest chapter: {Largest}",
+                outcome.Made, outcome.Rows, outcome.Chapters, outcome.Lines, outcome.Largest);
+            Stages.Enqueue(new BuildStage("load", "largest context chapter", TimeSpan.Zero, outcome.LargestGzip, outcome.Largest));
             return outcome.Rows;
         });
 
