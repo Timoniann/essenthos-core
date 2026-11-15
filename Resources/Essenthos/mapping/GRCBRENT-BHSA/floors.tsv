@@ -1,0 +1,12 @@
+# product    Essenthos/mapping/GRCBRENT-BHSA/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, PRB-1685, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right (for a refused combination, all of them read), bands weighted by rows.
+# Measured by hand by r133 on 2026-11-15: 300 settled composed links of GRCBRENT-BHSA (Brenton's Septuagint to BHSA, books 1-39), 7 combinations x 4 confidence bands, seed 1685, from the store of 2026-11-15; right = the Greek word renders that Hebrew word (article, pronoun and preposition rules as for UBIO-BHSA). Bar 90% (the composed bar); a floor needs at least 10 links read at or above it and at most 1 wrong in its lowest band.
+readings	from	right	scored	basis
+as written and as stems and through kjv	0.25	0.997	64	hand sample r133 2026-11-15: 63 of 64 right, 1 partly
+as written and through kjv	0.25	0.921	32	hand sample r133 2026-11-15: 29 of 32 right, 2 partly, 1 wrong
+as stems and through kjv	0.5	1	27	hand sample r133 2026-11-15: from 0.50 27 of 27 right, under it 7 of 9
+as written and as stems	refused	0.829	56	hand sample r133 2026-11-15: 47 of 56 right (83%), 5 partly (mostly a Greek article on the object marker), 4 wrong; under the 90% bar from every floor (from 0.90 11 of 14)
+through kjv	refused	0.371	52	hand sample r133 2026-11-15: 22 of 52 right (37%); pronouns, articles and the wrong occurrence of a repeated καί
+as written	refused	0.64	30	hand sample r133 2026-11-15: 17 of 30 right (64%); from 0.90 6 of 7, too few to stand a floor on
+as stems	refused	0.491	30	hand sample r133 2026-11-15: 17 of 30 right (49%)
