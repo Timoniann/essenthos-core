@@ -1,0 +1,12 @@
+# product    Essenthos/mapping/UBIO-BHSA/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right (for a refused combination, all of them read), bands weighted by rows.
+# Measured by hand by r128 on 2026-11-15: 300 settled composed links of UBIO-BHSA in books 1-39 outside Esther, 7 combinations x 4 confidence bands, seed 1607, from the store of the 2026-11-15 03:06 live build; right = the Ukrainian word renders that Hebrew word. Bar 90% (the composed bar). Owner, 2026-11-15: refuse the weak combinations, correctness before coverage.
+readings	from	right	scored	basis
+as written and as stems and through kjv	0.25	0.992	64	hand sample r128 2026-11-15: 62 of 64 right
+as written and through kjv	0.25	0.947	32	hand sample r128 2026-11-15: 30 of 32 right
+as stems and through kjv	0.25	0.921	36	hand sample r128 2026-11-15: 33 of 36 right
+as written and as stems	0.9	1	14	hand sample r128 2026-11-15: from 0.90 14 of 14 right, under it 32 of 42 (76%)
+as stems	refused	0.831	30	hand sample r128 2026-11-15: 24 of 30 right (83%), under the 90% bar
+through kjv	refused	0.563	52	hand sample r128 2026-11-15: 33 of 52 right (56%), under 0.70 11 of 26
+as written	refused	0.4	30	hand sample r128 2026-11-15: 10 of 30 right (40%)

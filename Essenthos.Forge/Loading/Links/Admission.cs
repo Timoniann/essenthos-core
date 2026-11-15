@@ -58,7 +58,8 @@ internal sealed class Admission
     /// <summary>Fewer stated answers than this, and a precision read off them is noise.</summary>
     public const int FewestToMeasure = 200;
 
-    private const double Unreachable = 1.01;
+    /// <summary>A floor no confidence reaches: the combination is refused.</summary>
+    internal const double Unreachable = 1.01;
 
     private static readonly double[] Bands = [0.25, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 
@@ -66,14 +67,17 @@ internal sealed class Admission
     private readonly double _threshold;
     private readonly double _precision;
     private readonly string? _measuredOn;
+    private readonly bool _refusesUnmeasured;
 
     private Admission(
-        IReadOnlyDictionary<Route, RouteFloor> floors, double threshold, double precision, string? measuredOn = null)
+        IReadOnlyDictionary<Route, RouteFloor> floors, double threshold, double precision, string? measuredOn = null,
+        bool refusesUnmeasured = false)
     {
         _floors = floors;
         _threshold = threshold;
         _precision = precision;
         _measuredOn = measuredOn;
+        _refusesUnmeasured = refusesUnmeasured;
     }
 
     /// <summary>Every answer from the ordinary threshold, which is what a measurement starts from.</summary>
@@ -83,7 +87,45 @@ internal sealed class Admission
     public IReadOnlyDictionary<Route, RouteFloor> Floors => _floors;
 
     public bool Admits(RoutedLink link) =>
-        link.Confidence >= (_floors.TryGetValue(link.Route, out var floor) ? floor.Confidence : _threshold);
+        _floors.TryGetValue(link.Route, out var floor)
+            ? link.Confidence >= floor.Confidence
+            : !Unmeasured(link.Route) && link.Confidence >= _threshold;
+
+    /// <summary>
+    /// Whether a combination nothing measured is refused rather than written from the ordinary threshold: only when asked
+    /// (<see cref="RefusingUnmeasured"/>), only for a combination one family of readings found (<see cref="Routes.Families"/>),
+    /// and only in a pair where something was measured at all.
+    /// </summary>
+    private bool Unmeasured(Route route) => _refusesUnmeasured && _floors.Count > 0 && Routes.Families(route) == 1;
+
+    /// <summary>
+    /// The same, with floors measured by hand put before what was measured or borrowed (<c>mapping/&lt;pair&gt;/floors</c>,
+    /// PRB-1607). A hand sample reads the words a source states and the words it does not, the pronouns and function words
+    /// where composed answers go wrong most, so where one was made it is the better measure of the combination.
+    /// </summary>
+    public Admission With(IReadOnlyDictionary<Route, RouteFloor> hand)
+    {
+        if (hand.Count == 0)
+        {
+            return this;
+        }
+
+        var floors = new Dictionary<Route, RouteFloor>(_floors);
+        foreach (var (route, floor) in hand)
+        {
+            floors[route] = floor;
+        }
+
+        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured);
+    }
+
+    /// <summary>
+    /// The same, refusing what one family of readings found where nothing measured that combination, instead of writing it
+    /// from the ordinary threshold (NOT-0228: an unmeasured combination is not admitted on a default floor). Off unless a
+    /// composition asks for it: the owner sees what it removes, text by text, before it is turned on (PRB-1607).
+    /// </summary>
+    public Admission RefusingUnmeasured(bool refuse = true) =>
+        refuse == _refusesUnmeasured ? this : new Admission(_floors, _threshold, _precision, _measuredOn, refuse);
 
     /// <summary>
     /// Whether a source's statements can measure answers at all: enough of its words have a word they
@@ -270,7 +312,8 @@ internal sealed class Admission
         return $"each combination of readings measured against {_precision:P0}{where}; " +
                $"written: {string.Join(", ", written)}; refused: {string.Join(", ", refused)}; " +
                (unmeasured.Count == 0 ? string.Empty : $"refused as measured on neither: {string.Join(", ", unmeasured)}; ") +
-               $"anything else from {Number(_threshold)}";
+               (_refusesUnmeasured ? "anything else one family of readings found is refused as measured by nothing, the rest " : "anything else ") +
+               $"from {Number(_threshold)}";
     }
 
     public static string Name(Route route, params string[] vias) =>

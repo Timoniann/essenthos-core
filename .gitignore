@@ -214,6 +214,7 @@ Resources/Essenthos/mapping/*
 !Resources/Essenthos/mapping/*/
 Resources/Essenthos/mapping/*/*
 !Resources/Essenthos/mapping/*/rulings.tsv
+!Resources/Essenthos/mapping/*/floors.tsv
 
 # Record files the build makes (binary products, and the pictures' captions per language), and the external
 # datasets' rows (kept; each dataset's own licence, not ours to carry).

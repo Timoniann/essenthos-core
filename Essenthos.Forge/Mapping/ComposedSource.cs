@@ -7,6 +7,11 @@ namespace Essenthos.Core.Mapping;
 /// A pair composed through its middle texts, as the corpus's runs of <c>compose</c> last ran it (<see cref="CompositionPipeline"/>).
 /// </summary>
 /// <param name="Vias">The middle texts, one or two, in the order their routes are numbered.</param>
+/// <param name="RefuseUnmeasured">
+/// Refuse what one family of readings found where nothing measured that combination, instead of writing it from the
+/// threshold (<see cref="Admission.RefusingUnmeasured"/>, NOT-0228). Off for every pair until the owner has seen what it
+/// removes per text (PRB-1607).
+/// </param>
 internal sealed record ComposedPair(
     string From,
     IReadOnlyList<string> Vias,
@@ -15,7 +20,8 @@ internal sealed record ComposedPair(
     double Precision = Admission.DefaultPrecision,
     bool Unmeasured = false,
     bool Daughter = false,
-    int Agreeing = 1)
+    int Agreeing = 1,
+    bool RefuseUnmeasured = false)
 {
     public string Name => MappingProducts.Pair(From, To);
 }
@@ -88,6 +94,7 @@ internal sealed class ComposedSource : IPairSource
     {
         var composed = Declared(pair);
         var proxies = MappingLinks.Inputs(store, composed.From, composed.Vias, composed.To).ToList();
+        var floors = store.Find(MappingProducts.Of(pair, HandFloors.Name));
         var readers = proxies.Select(final => MappingProducts.Split(final.Split('/')[2]).From).Append(composed.From).Distinct().ToList();
         var hops = readers.SelectMany(reader => new[]
         {
@@ -101,6 +108,7 @@ internal sealed class ComposedSource : IPairSource
             .. readers.SelectMany(reader => VerseJoins.Inputs(store, reader, composed.To)),
             .. hops.Distinct().SelectMany(workspace => AlignerFiles.StoredAnswers(store, workspace)),
             .. composed.To == AlignerFiles.Analysed ? AlignerFiles.SyntaxInputs(store) : [],
+            .. floors is null ? [] : new[] { floors },
         ];
     }
 
@@ -110,7 +118,7 @@ internal sealed class ComposedSource : IPairSource
         var aligner = new AlignerFiles(texts, new AlignmentPipeline(null, new LineLogger<AlignmentPipeline>(log)) { Trains = Trains });
         var composer = new CompositionPipeline(texts, aligner, new LineLogger<CompositionPipeline>(log));
         var (_, rows) = composer.Run(composed.From, composed.Vias, composed.To, composed.Minimum, composed.Precision, composed.Unmeasured,
-            composed.Daughter, composed.Agreeing).GetAwaiter().GetResult();
+            composed.Daughter, composed.Agreeing, composed.RefuseUnmeasured).GetAwaiter().GetResult();
         return rows;
     }
 

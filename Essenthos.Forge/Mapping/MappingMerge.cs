@@ -8,6 +8,7 @@ namespace Essenthos.Core.Mapping;
 /// <item>rows citing a verse whose text moved since they were made are stale and stand aside; a model's rows
 /// stay out until the pair is aligned again (the owner's D1);</item>
 /// <item>a pair's rulings refuse shapes or words and pin shapes;</item>
+/// <item>a composed row under the floor the pair sets by hand for its combination of readings is refused (<see cref="HandFloors"/>);</item>
 /// <item>an approved EVIDENTIA verdict that a word has no counterpart takes that word out of a Strong pairing laid from
 /// another edition (<see cref="NarrowLaidStrong"/>);</item>
 /// <item>rows naming the same words are one link: the top-ranked row is its settled claim, the others its claims;</item>
@@ -40,6 +41,7 @@ internal static class MappingMerge
     /// <param name="Verses">The two texts' frames, for <see cref="CrossingRule"/>; null leaves the rule out.</param>
     /// <param name="Yielded">The laid Strong rows the producer left to a stated link (<see cref="MappingProducts.StrongYielded"/>).</param>
     /// <param name="Reverse">The same two texts' pair the other way round, where the corpus has one (<see cref="WithdrawAgainstReverse"/>).</param>
+    /// <param name="Floors">The floors the pair sets by hand for its composed rows (<see cref="HandFloors"/>).</param>
     public sealed record Input(
         string Pair,
         string FromText,
@@ -55,7 +57,8 @@ internal static class MappingMerge
         IReadOnlyDictionary<string, IReadOnlySet<string>>? Remade = null,
         IReadOnlyDictionary<string, string>? Producers = null,
         IReadOnlyList<MappingRow>? Yielded = null,
-        Input? Reverse = null);
+        Input? Reverse = null,
+        IReadOnlyList<HandFloor>? Floors = null);
 
     /// <param name="Methods">Every method file's rows with the status the merge gave them.</param>
     public sealed record Output(List<FinalRow> Final, Dictionary<string, List<MappingRow>> Methods, List<ReportRow> Report);
@@ -153,6 +156,7 @@ internal static class MappingMerge
         var report = new List<ReportRow>();
         var (stale, lost) = Stale(input, entries, report);
         var pinned = Rule(input, entries);
+        Floor(input, entries);
         Supersede(entries);
         if (laid)
         {
@@ -648,6 +652,27 @@ internal static class MappingMerge
         }
 
         return pinned;
+    }
+
+    /// <summary>
+    /// Refuses the composed rows under the floor the pair sets by hand for their combination of readings, before the competition.
+    /// Nothing is made for the words they leave: a link of another method that the composed one would have withdrawn stands in
+    /// the competition as it would have without it, and a word nothing else claims stays bare until EVIDENTIA reads it.
+    /// </summary>
+    private static void Floor(Input input, List<Entry> entries)
+    {
+        if (input.Floors is not { Count: > 0 } floors)
+        {
+            return;
+        }
+
+        foreach (var entry in entries.Where(e => e.Status is null && e.Row.Method == MappingMethods.Composed))
+        {
+            if (HandFloors.For(floors, entry.Row.Source) is { } floor && floor.Refuses(entry.Row.Confidence))
+            {
+                entry.Status = floor.Status;
+            }
+        }
     }
 
     private static string Normal(string keys, string text) =>

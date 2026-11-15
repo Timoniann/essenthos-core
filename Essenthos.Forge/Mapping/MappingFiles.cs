@@ -123,7 +123,7 @@ internal static class MappingFiles
 
         return new MappingMerge.Input(
             pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers,
-            yielded);
+            yielded, Floors: HandFloors.Read(store, pair));
     }
 
     /// <summary>
@@ -248,6 +248,7 @@ internal static class MappingFiles
     {
         static IEnumerable<string> Own(string pair, List<string> methods) => methods.Select(m => MappingProducts.Of(pair, m))
             .Append(MappingProducts.Of(pair, MappingProducts.Rulings))
+            .Append(MappingProducts.Of(pair, HandFloors.Name))
             .Append(MappingProducts.Of(pair, MappingProducts.Hashes))
             .Append(MappingProducts.Of(pair, MappingProducts.StrongYielded));
 
