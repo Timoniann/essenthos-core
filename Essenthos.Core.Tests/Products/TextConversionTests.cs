@@ -136,6 +136,54 @@ public sealed class TextConversionTests : IDisposable
         Verse("1.1:2").Should().Be("A title. And the earth was without form. Amen.");
     }
 
+    [Fact]
+    public void APassageTheSourceDoesNotNumberIsDividedIntoTheVersesItsRowsOpen()
+    {
+        Corrections(
+            new TextCorrection("1.1:1.4", TextCorrection.Divide, "God", "1.1:1b", "where the Greek begins 1:1b"),
+            new TextCorrection("1.1:1.7", TextCorrection.Divide, "heaven", "1.1:1c", "where the Greek begins 1:1c"),
+            new TextCorrection("1.1:1.2", TextCorrection.Letters, "the", "a", "a letter put right before the division"));
+        var store = new ProductStore(_resources);
+        TextConverter.Convert(store, Text());
+
+        Manifest(store).Select(v => (v.Own.ToString(), v.Sequence, v.Words)).Should()
+            .Equal(("1.1:1", 1, 3), ("1.1:1b", 2, 3), ("1.1:1c", 3, 4), ("1.1:2", 4, 6));
+        var words = Words(store);
+        string Verse(string verse) => string.Concat(words.Where(w => w.Key.Verse.ToString() == verse).Select(w => w.Surface + w.Trailer));
+        Verse("1.1:1").Should().Be("In a beginning ");
+        Verse("1.1:1b").Should().Be("God created the ");
+        Verse("1.1:1c").Should().Be("heaven and the earth.");
+        words.Single(w => w.Key.Own == "1.1:1c.1").Surface.Should().Be("heaven");
+    }
+
+    [Fact]
+    public void APassagePrintedBeforeTheWordsItsNumberBelongsToGivesTheNumberToItsLastPiece()
+    {
+        Corrections(
+            new TextCorrection("1.1:2.1", TextCorrection.Divide, "And", "1.1:1a", "the addition the source prints first"),
+            new TextCorrection("1.1:2.4", TextCorrection.Divide, "was", "1.1:2", "the verse's own words"));
+        var store = new ProductStore(_resources);
+        TextConverter.Convert(store, Text());
+
+        Manifest(store).Select(v => (v.Own.ToString(), v.Sequence, v.Words)).Should()
+            .Equal(("1.1:1", 1, 10), ("1.1:1a", 2, 3), ("1.1:2", 3, 3));
+        Words(store).Single(w => w.Key.Own == "1.1:2.1").Surface.Should().Be("was");
+    }
+
+    [Theory]
+    [InlineData("1.1:1.4", "god", "1.1:1b", "*the word reads \"God\"*")]
+    [InlineData("1.1:1.4", "God", "1.1:2", "*the text already has a verse 1.1:2*")]
+    [InlineData("1.1:1.4", "God", "1.2:1a", "*not of the chapter the word stands in*")]
+    [InlineData("1.1:1.11", "earth.", "1.1:1b", "*the verse has no such word*")]
+    public void ADivisionThatDoesNotMeetItsWordOrOpensAVerseTheTextHasStopsTheConversion(string own, string before, string after, string why)
+    {
+        Corrections(new TextCorrection(own, TextCorrection.Divide, before, after, "test"));
+
+        var convert = () => TextConverter.Convert(new ProductStore(_resources), Text());
+
+        convert.Should().Throw<InvalidOperationException>().WithMessage(why);
+    }
+
     /// <summary>1 Kings 17:19-23 as a module stores a block under three numbers: 17:20, 17:21 and 17:22 read alike.</summary>
     private static CataloguedText Stored(string third) => new(Slug, ["Test/source.txt"], (_, _) =>
     {

@@ -23,7 +23,8 @@ namespace Essenthos.Core.Loading;
 /// prints them inside: the Song of the Three and Susanna and Bel from Daniel, each a book of its own
 /// here with the verse number it is printed under as its stated address, as the Vulgate's Susanna and
 /// Bel are; the additions it sets in brackets inside six verses of Esther, each as the lettered piece
-/// of the verse it stands in; and the Prayer of Manasseh after 2 Chronicles 36. The World English
+/// of the verse it stands in, which it prints without numbers and the text's corrections divide into
+/// the verses Brenton's Greek numbers; and the Prayer of Manasseh after 2 Chronicles 36. The World English
 /// Bible's Greek Esther and Daniel, whole books in a numbering of their own, are not taken.
 ///
 /// Which Ezra is which is the trap in all of them, and it is settled by content, not by name. The
@@ -209,7 +210,9 @@ internal static class DeuterocanonTextSource
             code => Ordinals[code],
             code => UsfmReader.Read(File.ReadAllText(files[code].File), editorialHeadings: true).Chapters);
         var books = source.Books
-            .Select(book => longer.TryGetValue(book.CanonicalOrdinal, out var more) ? Continue(book, more) : book)
+            .Select(book => longer.TryGetValue(book.CanonicalOrdinal, out var more)
+                ? Continue(book, more, bracketed: slug == Sources.SynodalSlug)
+                : book)
             .Concat(gained)
             .OrderBy(book => order.IndexOf(book.CanonicalOrdinal))
             .Select((book, index) => book with { Position = index + 1 })
@@ -231,7 +234,7 @@ internal static class DeuterocanonTextSource
     /// under as its stated one. Susanna and Bel are numbered as they are printed; the song is numbered as
     /// the King James's book of it is, which is the standard's, read against it verse by verse: the
     /// Synodal's 3:52 holds the song's 29 and 30, it prints the angels before the heavens, and every other
-    /// verse is the next in order.
+    /// verse is the next in order. The song is the passage the page sets in brackets.
     /// </summary>
     private static IEnumerable<BookDraft> SynodalDaniel(UsfmBook daniel)
     {
@@ -239,7 +242,8 @@ internal static class DeuterocanonTextSource
         {
             var printed = ordinal switch { SongOfTheThree => 3, 77 => 13, _ => 14 };
             var names = BibleBookAbbreviation.GetByOrdinal(ordinal)!;
-            var verses = Chapter(daniel.Chapters.Single(chapter => chapter.Number == printed), notes: true).Verses
+            var verses = Chapter(daniel.Chapters.Single(chapter => chapter.Number == printed), notes: true,
+                    bracketed: ordinal == SongOfTheThree).Verses
                 .Select(verse => Moved(verse, printed, ordinal == SongOfTheThree ? SongVerse(verse.Number) : verse.Number));
             yield return new BookDraft(ordinal, 0, names.FullName.Full, Slugs.Of(names.StandardAbbreviation.Full),
                 [new ChapterDraft(1, [.. verses])], SynodalNames[ordinal], names.StandardAbbreviation.Full);
@@ -260,11 +264,15 @@ internal static class DeuterocanonTextSource
 
     /// <summary>
     /// A book with the verses another file of its edition prints after it: into the chapter of the
-    /// same number after the verses it has, and as chapters of their own after that.
+    /// same number, and as chapters of their own after that. A verse of the chapter's own numbers goes
+    /// after the verses it has; a lettered piece goes after the verse whose number it carries, except
+    /// the Synodal's Mordecai's dream, the piece of 1:1, which the edition prints before the book's
+    /// first verse.
     /// </summary>
-    private static BookDraft Continue(BookDraft book, IReadOnlyList<UsfmChapter> more)
+    /// <param name="bracketed">Whether the file is passages the edition sets in brackets (<see cref="Chapter"/>).</param>
+    private static BookDraft Continue(BookDraft book, IReadOnlyList<UsfmChapter> more, bool bracketed)
     {
-        var added = more.Select(chapter => Chapter(chapter, notes: true)).ToDictionary(chapter => chapter.Number);
+        var added = more.Select(chapter => Chapter(chapter, notes: true, bracketed)).ToDictionary(chapter => chapter.Number);
         var clash = book.Chapters
             .Where(chapter => added.ContainsKey(chapter.Number))
             .SelectMany(chapter => chapter.Verses.Select(verse => (chapter.Number, verse.Number, verse.Label)))
@@ -284,11 +292,30 @@ internal static class DeuterocanonTextSource
             Chapters =
             [
                 .. book.Chapters.Select(chapter => added.TryGetValue(chapter.Number, out var tail)
-                    ? chapter with { Verses = [.. chapter.Verses, .. tail.Verses] }
+                    ? chapter with { Verses = Placed(chapter, tail.Verses) }
                     : chapter),
                 .. added.Values.Where(chapter => book.Chapters.All(own => own.Number != chapter.Number)),
             ],
         };
+    }
+
+    private static List<VerseDraft> Placed(ChapterDraft chapter, IReadOnlyList<VerseDraft> tail)
+    {
+        var verses = chapter.Verses.ToList();
+        foreach (var verse in tail)
+        {
+            var at = verse.Label.Length == 0 ? -1 : verses.FindLastIndex(own => own.Number == verse.Number);
+            if (at < 0)
+            {
+                verses.Add(verse);
+            }
+            else
+            {
+                verses.Insert(chapter.Number == 1 && verse.Number == 1 ? at : at + 1, verse);
+            }
+        }
+
+        return verses;
     }
 
     /// <summary>
@@ -675,14 +702,19 @@ internal static class DeuterocanonTextSource
     /// Whether the edition's notes are its own. The Clementine's are the Glossa Ordinaria, a commentary
     /// Migne printed round the text, and they stay out.
     /// </param>
-    private static ChapterDraft Chapter(UsfmChapter chapter, bool notes) => new(
+    /// <param name="bracketed">
+    /// Whether the chapter is a passage the Synodal prints from the Greek and sets in brackets: the song in Daniel
+    /// and the additions to Esther, which the fetch writes as one supplied span each. They are the edition's text,
+    /// translated from the Greek, not words its translators supplied for the sense, so no word of them is supplied.
+    /// </param>
+    private static ChapterDraft Chapter(UsfmChapter chapter, bool notes, bool bracketed = false) => new(
         chapter.Number,
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,
             [.. verse.Words.Select(word => new WordDraft(
                 word.Surface,
                 word.Trailer,
-                SuppliedSpan: word.SuppliedSpan,
+                SuppliedSpan: bracketed ? null : word.SuppliedSpan,
                 Break: word.Break))],
             verse.Label)
         {

@@ -10,8 +10,9 @@ namespace Essenthos.Core.Conversion;
 /// taking a repair somewhere it was never meant.
 /// </summary>
 /// <param name="Own">
-/// A word key (<c>1.1:1.3</c>) for <c>letters</c>, <c>drop</c> and <c>strong</c>; a verse key (<c>1.1:1</c>) for the others.
-/// A <c>strong</c> row's key is the word's as the words product writes it, after every other row and stage.
+/// A word key (<c>1.1:1.3</c>) for <c>letters</c>, <c>drop</c>, <c>divide</c> and <c>strong</c>; a verse key (<c>1.1:1</c>) for the others.
+/// A <c>strong</c> row's key is the word's as the words product writes it, after every other row and stage; a <c>divide</c>
+/// row's is the word's position once the verse's other rows have applied.
 /// </param>
 /// <param name="Before">For <c>block</c>, the further verses of the chapter the source stores the block under, space-separated.</param>
 /// <param name="Kind">
@@ -24,7 +25,12 @@ namespace Essenthos.Core.Conversion;
 /// <c>strong</c>: the word's Strong number becomes <see cref="After"/>, or none where it is empty. <see cref="Before"/> is the word
 /// as it reads and, after a space, the number it carries until the row applies (none written where it carries none), so a row
 /// stops the conversion once the word or its number is no longer what the row was written against. It applies after the
-/// converter's stages, so a person's number stands over every number a stage lays, moves or clears.
+/// converter's stages, so a person's number stands over every number a stage lays, moves or clears;
+/// <c>divide</c>: the source prints no number where a verse of the passage begins, and this word, which reads
+/// <see cref="Before"/>, opens the verse <see cref="After"/> (a key of the same chapter), which runs to the next row's word or
+/// the end of the passage and is printed right after it; a row at the passage's first word names the piece that opens it,
+/// which leaves the verse's own key to a later row, where the source prints what the verse's number belongs to last. The
+/// division is ours, made by reading the passage against an edition that numbers it.
 /// </param>
 internal sealed record TextCorrection(string Own, string Kind, string? Before, string? After, string Why)
 {
@@ -35,6 +41,7 @@ internal sealed record TextCorrection(string Own, string Kind, string? Before, s
     public const string Drop = "drop";
     public const string Block = "block";
     public const string Strong = "strong";
+    public const string Divide = "divide";
 
     public static readonly ProductSchema<TextCorrection> Schema = new ProductSchema<TextCorrection>()
         .Text("own", c => c.Own)
@@ -82,7 +89,7 @@ internal sealed class TextCorrections
         foreach (var row in rows)
         {
             if (row.Kind is not (TextCorrection.Verse or TextCorrection.Letters or TextCorrection.Prepend or TextCorrection.Append
-                or TextCorrection.Drop or TextCorrection.Block or TextCorrection.Strong))
+                or TextCorrection.Drop or TextCorrection.Block or TextCorrection.Strong or TextCorrection.Divide))
             {
                 throw new FormatException($"{slug} corrections: \"{row.Kind}\" at {row.Own} is not a kind of correction.");
             }
@@ -131,7 +138,7 @@ internal sealed class TextCorrections
 
         var byVerse = _rows
             .Where(row => row.Kind is not (TextCorrection.Verse or TextCorrection.Block or TextCorrection.Strong))
-            .GroupBy(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop
+            .GroupBy(row => row.Kind is TextCorrection.Letters or TextCorrection.Drop or TextCorrection.Divide
                 ? WordKey.Parse(row.Own, _slug).Verse
                 : VerseKey.Parse(row.Own))
             .ToDictionary(group => group.Key, group => group.ToList());
@@ -148,21 +155,21 @@ internal sealed class TextCorrections
         {
             Chapters =
             [
-                .. book.Chapters.Select(chapter => chapter with
+                .. book.Chapters.Select(chapter => Unique(book.CanonicalOrdinal, chapter with
                 {
                     Verses =
                     [
-                        .. Blocks(book.CanonicalOrdinal, chapter, blocks, met).Select(verse =>
+                        .. Blocks(book.CanonicalOrdinal, chapter, blocks, met).SelectMany(verse =>
                         {
                             var key = new VerseKey(book.CanonicalOrdinal, chapter.Number, verse.Number, verse.Label);
                             if (!byVerse.TryGetValue(key, out var rows))
                             {
-                                return verse;
+                                return [verse];
                             }
 
                             met.Add(key);
                             var (words, read) = Corrected(verse.Words, rows);
-                            return verse with
+                            return Divided(key, verse with
                             {
                                 Words = words,
                                 Notes =
@@ -172,10 +179,10 @@ internal sealed class TextCorrections
                                         AnchorWordPosition = note.AnchorWordPosition is { } anchor && read.IndexOf(anchor) is var at and >= 0 ? at + 1 : null,
                                     }),
                                 ],
-                            };
+                            }, rows);
                         }),
                     ],
-                }),
+                }, byVerse)),
             ],
         }).ToList();
 
@@ -196,6 +203,89 @@ internal sealed class TextCorrections
         }
 
         return source with { Books = books };
+    }
+
+    /// <summary>
+    /// The verse as its <c>divide</c> rows part it: the words before the first row's word keep its key, its stated numbers,
+    /// its marks and the notes anchored before that word; each row's word opens a verse of its own, printed after the piece
+    /// before it, with the notes anchored in it.
+    /// </summary>
+    private IEnumerable<VerseDraft> Divided(VerseKey key, VerseDraft verse, List<TextCorrection> rows)
+    {
+        var divisions = rows
+            .Where(row => row.Kind == TextCorrection.Divide)
+            .Select(row => (Row: row, At: WordKey.Parse(row.Own, _slug).Position, Opens: VerseKey.Parse(row.After ?? string.Empty)))
+            .OrderBy(division => division.At)
+            .ToList();
+        if (divisions.Count == 0)
+        {
+            return [verse];
+        }
+
+        foreach (var (row, at, opens) in divisions)
+        {
+            if (at < 1 || at > verse.Words.Count)
+            {
+                throw Unmatched(row, "the verse has no such word");
+            }
+
+            if (verse.Words[at - 1].Surface != row.Before)
+            {
+                throw Unmatched(row, $"the word reads \"{verse.Words[at - 1].Surface}\"");
+            }
+
+            if (opens.Book != key.Book || opens.Chapter != key.Chapter || opens.ChapterLabel != key.ChapterLabel)
+            {
+                throw Unmatched(row, "the verse it opens is not of the chapter the word stands in");
+            }
+        }
+
+        if (divisions.DistinctBy(division => division.At).Count() != divisions.Count)
+        {
+            throw Unmatched(divisions[0].Row, "two rows open a verse at one word");
+        }
+
+        // A row at the first word names the first piece, which then leaves the verse's own key to a later row.
+        List<(int At, VerseKey? Opens)> starts = divisions[0].At == 1
+            ? [.. divisions.Select(division => (division.At, (VerseKey?)division.Opens))]
+            : [(1, null), .. divisions.Select(division => (division.At, (VerseKey?)division.Opens))];
+        var pieces = new List<VerseDraft>(starts.Count);
+        for (var piece = 0; piece < starts.Count; piece++)
+        {
+            var (from, opens) = starts[piece];
+            var to = piece == starts.Count - 1 ? verse.Words.Count + 1 : starts[piece + 1].At;
+            var words = verse.Words.Skip(from - 1).Take(to - from).ToList();
+            var notes = verse.Notes
+                .Where(note => note.AnchorWordPosition is { } anchor ? anchor >= (piece == 0 ? 0 : from) && anchor < to : piece == 0)
+                .Select(note => note with { AnchorWordPosition = note.AnchorWordPosition - (from - 1) })
+                .ToList();
+            pieces.Add(piece == 0
+                ? verse with { Number = opens?.Verse ?? verse.Number, Label = opens?.VerseLabel ?? verse.Label, Words = words, Notes = notes }
+                : new VerseDraft(opens!.Value.Verse, words, opens.Value.VerseLabel) { Notes = notes });
+        }
+
+        return pieces;
+    }
+
+    /// <summary>The chapter, once no two of its verses stand at one address; a <c>divide</c> row may not open a verse the source prints.</summary>
+    private ChapterDraft Unique(int book, ChapterDraft chapter, Dictionary<VerseKey, List<TextCorrection>> byVerse)
+    {
+        var divisions = byVerse
+            .Where(pair => pair.Key.Book == book && pair.Key.Chapter == chapter.Number)
+            .SelectMany(pair => pair.Value)
+            .Where(row => row.Kind == TextCorrection.Divide)
+            .ToList();
+        var twice = divisions.Count == 0
+            ? null
+            : chapter.Verses.GroupBy(verse => (verse.Number, verse.Label)).FirstOrDefault(group => group.Count() > 1);
+        if (twice is null)
+        {
+            return chapter;
+        }
+
+        var opens = new VerseKey(book, chapter.Number, twice.Key.Number, twice.Key.Label);
+        throw Unmatched(divisions.FirstOrDefault(row => VerseKey.Parse(row.After ?? string.Empty) == opens) ?? divisions[0],
+            $"the text already has a verse {opens}");
     }
 
     /// <summary>
