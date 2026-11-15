@@ -54,7 +54,7 @@ public sealed class DeadAddressTests : IDisposable
             (49, 1, ["שמעו", "זאת"]),
             (49, 2, ["גם", "בני", "אדם"]));
         _db.Entities.AddRange(
-            new Entity { Slug = "gibbar", Name = "Gibbar", Kind = EntityKind.Person },
+            new Entity { Slug = "gibeon", Name = "Gibeon", Kind = EntityKind.Place },
             new Entity { Slug = "bether", Name = "Bether", Kind = EntityKind.Place },
             new Entity
             {
@@ -132,12 +132,12 @@ public sealed class DeadAddressTests : IDisposable
     {
         var gibbar = await Load("/places/gibbar-2");
         gibbar.Status.Should().Be(StatusCodes.Status301MovedPermanently);
-        gibbar.MovedTo.Should().Be("/people/gibbar");
+        gibbar.MovedTo.Should().Be("/places/gibeon");
         (await Load("/uk/places/bether-2")).MovedTo.Should().Be("/places/bether");
         (await Load("/es/places/mahalab")).Status.Should().Be(StatusCodes.Status410Gone);
         (await Load("/places/nowhere-at-all")).Status.Should().Be(StatusCodes.Status404NotFound);
 
-        (await MergedAddresses.Current(_db, "gibbar-2", default)).Should().Be("gibbar");
+        (await MergedAddresses.Current(_db, "gibbar-2", default)).Should().Be("gibeon");
         _db.Entities.Add(new Entity { Slug = "river-2", Name = "River", Kind = EntityKind.Place });
         await _db.SaveChangesAsync();
         (await MergedAddresses.Current(_db, "river-2", default)).Should().Be("river-2", "a record holding the address again keeps it");
@@ -195,7 +195,7 @@ public sealed class DeadAddressTests : IDisposable
             listed.AddRange(await sitemaps.Addresses(name + ".xml", default) ?? []);
         }
 
-        listed.Should().Contain(["/verse/psalms/49/1", "/verse/esther/5/14", "/people/gibbar"])
+        listed.Should().Contain(["/verse/psalms/49/1", "/verse/esther/5/14", "/places/gibeon"])
             .And.NotContain(["/verse/psalms/49/0", "/read/psalms/49/1"]);
         var failing = new List<string>();
         foreach (var address in listed)
@@ -239,7 +239,7 @@ public sealed class DeadAddressTests : IDisposable
                      ("/uk/read/psalms/49/0", "/uk/read/psalms/49"),
                      ("/read/psalms/49/0", "/read/psalms/49"),
                      ("/de/read/esther/5/32", "/de/read/esther/5"),
-                     ("/es/places/gibbar-2", "/es/people/gibbar"),
+                     ("/es/places/gibbar-2", "/es/places/gibeon"),
                      ("/places/bether-2", "/places/bether"),
                      ("/people/abraham", "/people/abram"),
                      ("/de/people/abram/", "/de/people/abram"),

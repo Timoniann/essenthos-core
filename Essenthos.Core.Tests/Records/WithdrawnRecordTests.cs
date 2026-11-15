@@ -39,7 +39,7 @@ public sealed class WithdrawnRecordTests
             .Should().OnlyContain(record => record.LeadsTo != record.Slug && !slugs.Contains(record.LeadsTo!));
         listed.Should().OnlyContain(record =>
             WithdrawnAddresses.IsWithdrawn(record.Slug) && WithdrawnAddresses.LeadsTo(record.Slug) == record.LeadsTo);
-        WithdrawnAddresses.LeadsTo("gibbar-2").Should().Be("gibbar", "the children of Gibbar (EZR 2:20) are the man's");
+        WithdrawnAddresses.LeadsTo("gibbar-2").Should().Be("gibeon", "the children of Gibbar (EZR 2:20) are Nehemiah's children of Gibeon (NEH 7:25)");
         WithdrawnAddresses.LeadsTo("mahalab").Should().BeNull("JOS 19:29 names nothing there");
         WithdrawnAddresses.IsWithdrawn("gibbar").Should().BeFalse();
     }
