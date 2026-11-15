@@ -124,12 +124,12 @@ internal static partial class OccupationFiles
         foreach (var claim in file.Assertions)
         {
             if (!slugs.Contains(claim.Occupation) || !pairs.Add((claim.Person, claim.Occupation))
-                || claim.Witnesses.Any(w => w.Kind == Profession) == claim.Witnesses.Any(w => w.Kind == OwnBook)
+                || !claim.Witnesses.Any(w => w.Kind is Profession or OwnBook)
                 || claim.Witnesses.Any(w => w.Kind is not (Profession or Identity or OwnBook) || string.IsNullOrWhiteSpace(w.Quote)
                                             || Address(w.Reference) is null))
             {
                 throw new InvalidDataException(
-                    $"{claim.Person} as {claim.Occupation}: each person is said once per occupation, by a quotation saying it or else by their own book, never by both, each at a verse.");
+                    $"{claim.Person} as {claim.Occupation}: each person is said once per occupation, by a quotation saying it, by the book they wrote, or both, each at a verse.");
             }
         }
     }
@@ -221,7 +221,10 @@ internal static partial class OccupationFiles
     private const string Profession = "profession";
     private const string Identity = "identity";
 
-    /// <summary>A prophet whom no text calls one: the claim rests on the book that bears his name.</summary>
+    /// <summary>
+    /// The author of a prophetic book, by the verse of his book that names him: a mark of its own, beside a
+    /// quotation calling him a prophet where the text has one.
+    /// </summary>
     private const string OwnBook = "own-book";
 
     /// <summary>The people by the slug the file names them by, a folded record's slug reaching the kept one.</summary>

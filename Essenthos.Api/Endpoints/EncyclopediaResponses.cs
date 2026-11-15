@@ -254,6 +254,12 @@ internal record EntityResponse(
     public EntityTribeResponse? TribeRecord { get; init; }
 
     /// <summary>
+    /// On a people: how many persons belong to it, by the tribe on their record or a clause saying
+    /// so, listed by <c>/v1/entities?tribe=</c>. Null on everything else and where nobody does.
+    /// </summary>
+    public EntityMembersResponse? Members { get; init; }
+
+    /// <summary>
     /// The article the Wikipedia of the reader's own language has on this record, or the English one where
     /// that Wikipedia has none. Null when the record could not be tied to an article in either.
     /// <see cref="EntityWikipediaResponse.Language"/> says which, so a page can name the language of an
@@ -614,6 +620,16 @@ internal record EntityClaimResponse(
 internal record EntityOriginResponse(string Slug, string Kind, string Name, string? Distinguisher);
 
 internal record EntityTribeResponse(string Slug, string Kind, string Name, string? LocalName);
+
+/// <param name="Count">Every person belonging to it, in every book.</param>
+/// <param name="Tribe">True for a tribe of Israel, whose members' records name its patriarch.</param>
+internal record EntityMembersResponse(int Count, bool Tribe);
+
+/// <summary>A tribe of Israel as the people list offers it: its people's page and how many belong to it.</summary>
+/// <param name="Members">How many persons belong to it in the books the canon asked for.</param>
+internal record TribeResponse(string Slug, string Kind, string Name, string? LocalName, int Members);
+
+internal record TribeListResponse(IList<TribeResponse> Items);
 
 /// <summary>
 /// The article one language's Wikipedia has on a record: the reader's language's, or the English one standing in for it.

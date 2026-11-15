@@ -1,0 +1,92 @@
+{
+ "what": "TSK-1419: the authors of the prophetic books marked as such on the Prophet list, beside what the text calls them. Added witnesses are in ../person-occupations.json; this file says why. Requests and the loader never read it.",
+ "decidedBy": "an agent (claude-opus-5-5), 2026-11-16, on the project owner's word of 2026-11-16",
+ "ownerWord": "TSK-1419, owner 2026-11-16: count the authors of the prophetic books (the Latter Prophets, and Daniel where our canon lists him) as prophets, with a separate mark 'author of a prophetic book', apart from 'called a prophet in the text'.",
+ "rules": [
+  "Witness kind own-book is now the mark of the author of a prophetic book, held whether or not a text also calls him a prophet; a claim rests on a profession quotation, an own-book quotation, or both.",
+  "The books: Isaiah, Jeremiah, Ezekiel and the Twelve (the Latter Prophets), and Daniel, whom the Protestant, Catholic and Orthodox canons place among the prophets (after Ezekiel); the Tanakh keeps him among the Writings, and his claim stands on Matthew 24:15 as before.",
+  "The own-book quotation is the verse of his book that names him as the one the word came to, who saw it or who wrote it: the superscription (1:1; Ezekiel 1:3), and for Daniel 7:1, 'then he wrote the dream'.",
+  "Every quoted name was read in BHSA and checked to be annotated to the record that holds the claim (ISA 1:1 isaiah, JER 1:1 jeremiah-6, EZK 1:3 ezekiel, DAN 7:1 daniel-2, JOL 1:1 joel-11, AMO 1:1 amos, JON 1:1 jonah, MIC 1:1 micah-4, HAB 1:1 habakkuk, HAG 1:1 haggai, ZEC 1:1 zechariah-13; HOS 1:1 hosea, OBA 1:1 obadiah-12, NAM 1:1 nahum, ZEP 1:1 zephaniah-3, MAL 1:1 malachi already held it).",
+  "An own-book quotation marks no word: the word that names the occupation comes only from a quotation that says it.",
+  "Not counted: Lamentations (no author named in it) and Baruch (Catholic and Orthodox canons; Baruch 1:1 names him as the writer, but neither the owner's word nor the Latter Prophets reach him)."
+ ],
+ "added": [
+  {
+   "person": "isaiah",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "ISA 1:1",
+   "alsoCalledInTheText": "2KI 19:2"
+  },
+  {
+   "person": "jeremiah-6",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "JER 1:1",
+   "alsoCalledInTheText": "JER 20:2"
+  },
+  {
+   "person": "ezekiel",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "EZK 1:3",
+   "alsoCalledInTheText": "EZK 2:5"
+  },
+  {
+   "person": "daniel-2",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "DAN 7:1",
+   "alsoCalledInTheText": "MAT 24:15"
+  },
+  {
+   "person": "joel-11",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "JOL 1:1",
+   "alsoCalledInTheText": "ACT 2:16"
+  },
+  {
+   "person": "amos",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "AMO 1:1",
+   "alsoCalledInTheText": "AMO 7:15 (the LORD's 'Go, prophesy'; his own 'I was no prophet' at 7:14 is said in his record's notes)"
+  },
+  {
+   "person": "jonah",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "JON 1:1",
+   "alsoCalledInTheText": "2KI 14:25"
+  },
+  {
+   "person": "micah-4",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "MIC 1:1",
+   "alsoCalledInTheText": "JER 26:18"
+  },
+  {
+   "person": "habakkuk",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "HAB 1:1",
+   "alsoCalledInTheText": "HAB 1:1"
+  },
+  {
+   "person": "haggai",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "HAG 1:1",
+   "alsoCalledInTheText": "EZR 5:1"
+  },
+  {
+   "person": "zechariah-13",
+   "occupation": "prophet",
+   "witness": "own-book",
+   "reference": "ZEC 1:1",
+   "alsoCalledInTheText": "EZR 5:1"
+  }
+ ]
+}

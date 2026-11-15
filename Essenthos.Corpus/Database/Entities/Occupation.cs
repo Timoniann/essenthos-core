@@ -67,8 +67,9 @@ public class PersonOccupation
 
 /// <summary>
 /// One quotation a claim rests on: <c>profession</c> where it says the occupation, <c>identity</c>
-/// where it says who the person is (Acts 13:9 for Saul who is Paul), <c>own-book</c> where no text
-/// says the occupation and the claim rests on the person's own book (Hosea 1:1 for Hosea the prophet).
+/// where it says who the person is (Acts 13:9 for Saul who is Paul), <c>own-book</c> where the
+/// person wrote a prophetic book and its verse naming him is quoted (Hosea 1:1, Isaiah 1:1), whether
+/// or not a text also calls him a prophet.
 /// </summary>
 [Index(nameof(PersonOccupationId))]
 public class OccupationWitness
