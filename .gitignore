@@ -228,6 +228,10 @@ Resources/Essenthos/panes/
 Resources/Essenthos/record-spellings/
 Resources/Essenthos/record-positions/
 Resources/Essenthos/strength/
+Resources/Essenthos/context/
+Resources/Essenthos/page-documents/
+Resources/Essenthos/family-components/
+Resources/Essenthos/record-cards/
 Resources/Essenthos/build/*
 !Resources/Essenthos/build/products.tsv
 !Resources/Essenthos/build/licences.tsv

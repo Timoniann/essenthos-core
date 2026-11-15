@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # The names a record bears, in its order (n). Their meanings are in i18n/eng/names.
 slug	n	label	kind	hebrew	hebrew_transliterated	greek	greek_transliterated	hebrew_strong	greek_strong	aspect_of	by
 aaron	1	Aaron	proper name	אַהֲרֹ֤ן	aharon	Ααρων	Aarōn	H175	\N	\N	\N
@@ -1380,7 +1380,7 @@ casiphia	2	Kasiphia	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding
 casluhim	1	Casluh	proper name	כַּסְלֻח	kasluch	Χασλωνιιμ	Xasloniim	H3695	\N	\N	\N
 casluhim	2	Casluhim	gentilic	\N	\N	\N	\N	H3695	\N	\N	\N
 casluhim-son-of-mizraim	1	Casluhim	proper name	\N	\N	\N	\N	H3695	\N	\N	\N
-cauda	1	Clauda	name	\N	\N	Κλαύδη	\N	\N	G2802	\N	\N
+cauda	1	Clauda	name	\N	\N	Κλαύδη	\N	\N	G2802	\N	\N
 cenchreae	1	Cencrea	name	\N	\N	Κεγχρεαί	\N	\N	G2747	\N	\N
 cenchreae	2	Cenchrea	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 chaldea	1	Chaldea	proper name	כַּשְׂדִּים	kasədiym	Χαλδαῖος	Xaldai͂os	H3778	G5466	\N	\N

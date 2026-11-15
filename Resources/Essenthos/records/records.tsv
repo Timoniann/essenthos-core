@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-13
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
 # Our records. No dataset source: where a record came from is its claims; a dataset's id for it is in records/external-ids.
 slug	kind	subtype	place_kind	name	sex	sex_source	name_gender	tribe	origin	another_name_for	byname
 aaron	person	\N	\N	Aaron	male	\N	\N	Levi	\N	\N	\N
@@ -118,7 +118,7 @@ addon	place	\N	settlement, special	Addon	\N	\N	\N	\N	\N	\N	\N
 adiel	person	\N	\N	Adiel	male	\N	\N	Simeon	\N	\N	\N
 adiel-2	person	\N	\N	Adiel	male	\N	\N	Levi	\N	\N	\N
 adiel-3	person	\N	\N	Adiel	male	relationship	\N	\N	\N	\N	\N
-adin	person	\N	\N	Adin	\N	\N	\N	\N	\N	\N	\N
+adin	person	\N	\N	Adin	male	\N	\N	\N	\N	\N	\N
 adin-who-sealed-the-covenant	person	\N	\N	Adin	\N	\N	\N	\N	\N	\N	\N
 adina	person	\N	\N	Adina	male	\N	\N	Reuben	\N	\N	\N
 adithaim	place	\N	settlement	Adithaim	\N	\N	\N	\N	\N	\N	\N
@@ -149,7 +149,7 @@ adummim	place	\N	road	Adummim	\N	\N	\N	\N	\N	\N	\N
 aeneas	person	\N	\N	Aeneas	male	\N	male	\N	\N	\N	\N
 aenon	place	\N	settlement	Aenon	\N	\N	\N	\N	\N	\N	\N
 agabus	person	\N	\N	Agabus	male	\N	male	\N	\N	\N	\N
-agag	person	\N	\N	Agag	\N	\N	\N	\N	\N	\N	\N
+agag	person	\N	\N	Agag	male	\N	\N	\N	\N	\N	\N
 agag-2	person	\N	\N	Agag	male	\N	\N	\N	\N	\N	\N
 agagites	people	\N	\N	Agagites	\N	\N	\N	\N	\N	\N	\N
 agee	person	\N	\N	Agee	male	\N	\N	\N	\N	\N	\N
@@ -170,7 +170,7 @@ ahban	person	\N	\N	Ahban	male	\N	\N	Judah	\N	\N	\N
 ahi	person	\N	\N	Ahi	male	\N	\N	Gad	\N	\N	\N
 ahi-2	person	\N	\N	Ahi	male	\N	\N	Asher	\N	\N	\N
 ahi-3	person	\N	\N	Ahi	\N	\N	\N	\N	\N	\N	\N
-ahiah	person	\N	\N	Ahiah	\N	\N	\N	\N	\N	\N	\N
+ahiah	person	\N	\N	Ahiah	male	\N	\N	\N	\N	\N	\N
 ahiam	person	\N	\N	Ahiam	male	\N	\N	\N	\N	\N	\N
 ahian	person	\N	\N	Ahian	male	\N	\N	Manasseh	\N	\N	\N
 ahiezer	person	\N	\N	Ahiezer	male	\N	\N	Dan	\N	\N	\N
@@ -408,7 +408,7 @@ aramzobah	place	\N	\N	Aram-zobah	\N	\N	\N	\N	\N	\N	\N
 aran	person	\N	\N	Aran	male	\N	\N	Edomite	\N	\N	\N
 ararat	place	\N	geographic region	Ararat	\N	\N	\N	\N	\N	\N	\N
 araunah	person	\N	\N	Araunah	male	\N	\N	\N	\N	\N	\N
-arba	person	\N	\N	Arba	\N	\N	\N	\N	\N	\N	\N
+arba	person	\N	\N	Arba	male	\N	\N	\N	\N	\N	\N
 arbahites	people	\N	\N	Arbahites	\N	\N	\N	\N	\N	\N	\N
 arbela	place	\N	settlement	Arbela	\N	\N	\N	\N	\N	\N	\N
 arbites	people	\N	\N	Arbites	\N	\N	\N	\N	\N	\N	\N
@@ -424,12 +424,12 @@ areli	person	\N	\N	Areli	male	\N	\N	Gad	\N	\N	\N
 arelites	people	\N	\N	Arelites	\N	\N	\N	\N	\N	\N	\N
 areopagus	place	\N	hill	Areopagus	\N	\N	\N	\N	\N	\N	\N
 aretas	person	\N	\N	Aretas	male	\N	male	\N	\N	\N	\N
-argob	person	\N	\N	Argob	\N	\N	\N	\N	\N	\N	\N
+argob	person	\N	\N	Argob	male	\N	\N	\N	\N	\N	\N
 argob-2	place	\N	region	Argob	\N	\N	\N	\N	\N	\N	\N
 aridai	person	\N	\N	Aridai	male	\N	\N	\N	\N	\N	\N
 aridatha	person	\N	\N	Aridatha	male	\N	\N	\N	\N	\N	\N
 arieh	person	\N	\N	Arieh	male	\N	\N	\N	\N	\N	\N
-ariel	person	\N	\N	Ariel	\N	\N	\N	\N	\N	\N	\N
+ariel	person	\N	\N	Ariel	male	\N	\N	\N	\N	\N	\N
 ariel-2	person	\N	\N	Ariel	male	\N	\N	Levi	\N	\N	\N
 ariel-3	place	\N	settlement	Ariel	\N	\N	\N	\N	\N	jerusalem	\N
 ariel-4	person	\N	\N	Ariel	\N	\N	\N	\N	\N	\N	\N
@@ -594,7 +594,7 @@ azaziah-3	person	\N	\N	Azaziah	male	\N	\N	Levi	\N	\N	\N
 azbuk	person	\N	\N	Azbuk	male	\N	\N	\N	\N	\N	\N
 azekah	place	\N	settlement	Azekah	\N	\N	\N	\N	\N	\N	\N
 azel	person	\N	\N	Azel	male	\N	\N	Benjamin	\N	\N	\N
-azgad	person	\N	\N	Azgad	\N	\N	\N	\N	\N	\N	\N
+azgad	person	\N	\N	Azgad	male	\N	\N	\N	\N	\N	\N
 azgad-who-sealed-the-covenant	person	\N	\N	Azgad	\N	\N	\N	\N	\N	\N	\N
 aziel	person	\N	\N	Aziel	male	\N	\N	Levi	\N	\N	\N
 aziza	person	\N	\N	Aziza	male	\N	\N	\N	\N	\N	\N
@@ -675,11 +675,11 @@ bamothbaal	place	\N	settlement	Bamoth-baal	\N	\N	\N	\N	\N	bamoth	\N
 bani	person	\N	\N	Bani	male	\N	\N	\N	\N	\N	\N
 bani-2	person	\N	\N	Bani	male	\N	\N	Levi	\N	\N	\N
 bani-3	person	\N	\N	Bani	male	\N	\N	Judah	\N	\N	\N
-bani-4	person	\N	\N	Bani	\N	\N	\N	\N	\N	\N	\N
-bani-5	person	\N	\N	Bani	\N	\N	\N	\N	\N	\N	\N
+bani-4	person	\N	\N	Bani	male	\N	\N	\N	\N	\N	\N
+bani-5	person	\N	\N	Bani	male	\N	\N	\N	\N	\N	\N
 bani-6	person	\N	\N	Bani	male	\N	\N	\N	\N	\N	\N
 bani-7	person	\N	\N	Bani	male	\N	\N	Levi	\N	\N	\N
-bani-8	person	\N	\N	Bani	\N	\N	\N	Levi	\N	\N	\N
+bani-8	person	\N	\N	Bani	male	\N	\N	Levi	\N	\N	\N
 bani-9	person	\N	\N	Bani	male	\N	\N	Levi	\N	\N	\N
 barabbas	person	\N	\N	Barabbas	male	\N	male	\N	\N	\N	\N
 barachel	person	\N	\N	Barachel	male	\N	\N	\N	\N	\N	\N
@@ -758,7 +758,7 @@ benejaakan	place	\N	settlement	Bene-jaakan	\N	\N	\N	\N	\N	\N	\N
 bengeber	person	\N	\N	Ben-geber	male	\N	\N	\N	\N	\N	\N
 benhadad	person	\N	\N	Ben-hadad	male	\N	\N	\N	\N	\N	\N
 benhadad-2	person	\N	\N	Ben-hadad	male	\N	\N	\N	\N	\N	\N
-benhail	person	\N	\N	Ben-hail	\N	\N	\N	\N	\N	\N	\N
+benhail	person	\N	\N	Ben-hail	male	\N	\N	\N	\N	\N	\N
 benhanan	person	\N	\N	Benhanan	male	\N	\N	Judah	\N	\N	\N
 benhesed	person	\N	\N	Ben-hesed	male	\N	\N	\N	\N	\N	\N
 benhur	person	\N	\N	Ben-hur	male	\N	\N	\N	\N	\N	\N
@@ -1004,7 +1004,7 @@ cheluhi	person	\N	\N	Cheluhi	male	\N	\N	\N	\N	\N	\N
 chenaanah	person	\N	\N	Chenaanah	male	\N	\N	\N	\N	\N	\N
 chenaanah-2	person	\N	\N	Chenaanah	male	\N	\N	Benjamin	\N	\N	\N
 chenani	person	\N	\N	Chenani	male	\N	\N	Levi	\N	\N	\N
-chenaniah	person	\N	\N	Chenaniah	\N	\N	\N	Levi	\N	\N	\N
+chenaniah	person	\N	\N	Chenaniah	male	\N	\N	Levi	\N	\N	\N
 chepharammoni	place	\N	settlement, special	Chephar-ammoni	\N	\N	\N	\N	\N	\N	\N
 chephirah	place	\N	settlement	Chephirah	\N	\N	\N	\N	\N	\N	\N
 cheran	person	\N	\N	Cheran	male	\N	\N	Edomite	\N	\N	\N
@@ -1063,7 +1063,7 @@ cross-of-christ	object	implement	\N	Cross of Christ	\N	\N	\N	\N	\N	\N	\N
 crown-of-thorns	object	vestment	\N	Crown of Thorns	\N	\N	\N	\N	\N	\N	\N
 cun	place	\N	settlement, special	Cun	\N	\N	\N	\N	\N	\N	\N
 cush	person	\N	\N	Cush	male	\N	\N	\N	\N	\N	\N
-cush-2	person	\N	\N	Cush	\N	\N	\N	Benjamin	\N	\N	\N
+cush-2	person	\N	\N	Cush	male	\N	\N	Benjamin	\N	\N	\N
 cush-3	place	\N	geographic region	Cush	\N	\N	\N	\N	\N	babylonia	\N
 cush-4	place	\N	region	Cush	\N	\N	\N	\N	\N	\N	\N
 cushan	place	\N	region, special	Cushan	\N	\N	\N	\N	\N	midian-2	\N
@@ -1319,7 +1319,7 @@ elioenai-2	person	\N	\N	Elioenai	male	\N	\N	Simeon	\N	\N	\N
 elioenai-3	person	\N	\N	Elioenai	male	\N	\N	Benjamin	\N	\N	\N
 elioenai-4	person	\N	\N	Elioenai	male	\N	\N	Levi	\N	\N	\N
 elioenai-5	person	\N	\N	Elioenai	male	\N	\N	\N	\N	\N	\N
-elioenai-6	person	\N	\N	Elioenai	\N	\N	\N	\N	\N	\N	\N
+elioenai-6	person	\N	\N	Elioenai	male	\N	\N	\N	\N	\N	\N
 elioenai-7	person	\N	\N	Elioenai	\N	\N	\N	\N	\N	\N	\N
 eliphaz	person	\N	\N	Eliphaz	male	\N	\N	Edomite	\N	\N	\N
 eliphaz-2	person	\N	\N	Eliphaz	male	\N	\N	\N	\N	\N	\N
@@ -1332,7 +1332,7 @@ eliphelet-5	person	\N	\N	Eliphelet	male	\N	\N	\N	\N	\N	\N
 eliphelet-6	person	\N	\N	Eliphelet	male	\N	\N	\N	\N	\N	\N
 elisha	person	\N	\N	Elisha	male	\N	male	\N	\N	\N	\N
 elishah	person	\N	\N	Elishah	male	\N	\N	\N	\N	\N	\N
-elishah-2	person	\N	\N	Elishah	\N	\N	\N	\N	\N	\N	\N
+elishah-2	person	\N	\N	Elishah	male	\N	\N	\N	\N	\N	\N
 elishah-3	place	\N	island, region, settlement	Elishah	\N	\N	\N	\N	\N	cyprus	\N
 elishama	person	\N	\N	Elishama	male	\N	\N	Ephraim	\N	\N	\N
 elishama-2	person	\N	\N	Elishama	male	\N	\N	Judah	\N	\N	\N
@@ -1362,8 +1362,8 @@ elmadam	person	\N	\N	Elmadam	male	\N	\N	\N	\N	\N	\N
 elnaam	person	\N	\N	Elnaam	male	\N	\N	\N	\N	\N	\N
 elnathan	person	\N	\N	Elnathan	male	\N	\N	\N	\N	\N	\N
 elnathan-2	person	\N	\N	Elnathan	male	\N	\N	Levi	\N	\N	\N
-elnathan-3	person	\N	\N	Elnathan	\N	\N	\N	\N	\N	\N	\N
-elnathan-4	person	\N	\N	Elnathan	\N	\N	\N	\N	\N	\N	\N
+elnathan-3	person	\N	\N	Elnathan	male	\N	\N	\N	\N	\N	\N
+elnathan-4	person	\N	\N	Elnathan	male	\N	\N	\N	\N	\N	\N
 eloah	term	\N	\N	Eloah	\N	\N	\N	\N	\N	\N	\N
 elohim	term	\N	\N	Elohim	\N	\N	\N	\N	\N	\N	\N
 elon	person	\N	\N	Elon	male	\N	\N	Hittite	\N	\N	\N
@@ -1492,7 +1492,7 @@ ezer-5	person	\N	\N	Ezer	male	\N	\N	\N	\N	\N	\N
 ezer-at-the-dedication	person	\N	\N	Ezer	\N	\N	\N	\N	\N	\N	\N
 eziongeber	place	\N	island, settlement	Ezion-geber	\N	\N	\N	\N	\N	\N	\N
 ezra	person	\N	\N	Ezra	male	\N	\N	Levi	\N	\N	\N
-ezra-2	person	\N	\N	Ezra	\N	\N	\N	\N	\N	\N	\N
+ezra-2	person	\N	\N	Ezra	male	\N	\N	\N	\N	\N	\N
 ezra-3	person	\N	\N	Ezra	\N	\N	\N	\N	\N	\N	\N
 ezra-4	person	\N	\N	Ezra	\N	\N	\N	\N	\N	\N	\N
 ezrah	person	\N	\N	Ezrah	male	\N	\N	Judah	\N	\N	\N
@@ -1543,7 +1543,7 @@ gamaliel-2	person	\N	\N	Gamaliel	male	\N	\N	\N	\N	\N	\N
 gammadims	people	\N	\N	Gammadims	\N	\N	\N	\N	\N	\N	\N
 gamul	person	\N	\N	Gamul	male	\N	\N	Levi	\N	\N	\N
 garden-of-eden	place	\N	garden	Garden of Eden	\N	\N	\N	\N	\N	\N	\N
-gareb	person	\N	\N	Gareb	\N	\N	\N	\N	\N	\N	\N
+gareb	person	\N	\N	Gareb	male	\N	\N	\N	\N	\N	\N
 gareb-2	place	\N	hill	Gareb	\N	\N	\N	\N	\N	\N	\N
 garmites	people	\N	\N	Garmites	\N	\N	\N	\N	\N	\N	\N
 gatam	person	\N	\N	Gatam	male	\N	\N	Edomite	\N	\N	\N
@@ -1848,7 +1848,7 @@ hashabiah-11	person	\N	\N	Hashabiah	male	relationship	\N	\N	\N	\N	\N
 hashabiah-2	person	\N	\N	Hashabiah	male	\N	\N	Levi	\N	\N	\N
 hashabiah-3	person	\N	\N	Hashabiah	male	\N	\N	Levi	\N	\N	\N
 hashabiah-4	person	\N	\N	Hashabiah	male	\N	\N	Levi	\N	\N	\N
-hashabiah-5	person	\N	\N	Hashabiah	\N	\N	\N	Levi	\N	\N	\N
+hashabiah-5	person	\N	\N	Hashabiah	male	\N	\N	Levi	\N	\N	\N
 hashabiah-7	person	\N	\N	Hashabiah	male	\N	\N	Levi	\N	\N	\N
 hashabiah-8	person	\N	\N	Hashabiah	male	\N	\N	Levi	\N	\N	\N
 hashabiah-9	person	\N	\N	Hashabiah	\N	\N	\N	\N	\N	\N	\N
@@ -1876,7 +1876,7 @@ hatti	place	\N	region	Hatti	\N	\N	\N	\N	\N	\N	\N
 hattil	person	\N	\N	Hattil	male	\N	\N	\N	\N	\N	\N
 hattush	person	\N	\N	Hattush	male	\N	\N	Judah	\N	\N	\N
 hattush-2	person	\N	\N	Hattush	male	\N	\N	\N	\N	\N	\N
-hattush-3	person	\N	\N	Hattush	\N	\N	\N	\N	\N	\N	\N
+hattush-3	person	\N	\N	Hattush	male	\N	\N	\N	\N	\N	\N
 hauran	place	\N	region	Hauran	\N	\N	\N	\N	\N	\N	\N
 havilah	person	\N	\N	Havilah	male	\N	\N	\N	\N	\N	\N
 havilah-2	person	\N	\N	Havilah	male	\N	\N	\N	\N	\N	\N
@@ -2020,8 +2020,8 @@ hodaviah-5	person	\N	\N	Hodaviah	male	\N	\N	Levi	\N	\N	\N
 hodesh	person	\N	\N	Hodesh	female	\N	\N	Benjamin	\N	\N	\N
 hodiah	person	\N	\N	Hodiah	male	\N	\N	Judah	\N	\N	\N
 hodiah-2	person	\N	\N	Hodiah	male	\N	\N	Levi	\N	\N	\N
-hodiah-3	person	\N	\N	Hodiah	\N	\N	\N	\N	\N	\N	\N
-hodiah-4	person	\N	\N	Hodiah	\N	\N	\N	\N	\N	\N	\N
+hodiah-3	person	\N	\N	Hodiah	male	\N	\N	\N	\N	\N	\N
+hodiah-4	person	\N	\N	Hodiah	male	\N	\N	\N	\N	\N	\N
 hodiah-5	person	\N	\N	Hodiah	\N	\N	\N	\N	\N	\N	\N
 hodiah-6	person	\N	\N	Hodiah	\N	\N	\N	\N	\N	\N	\N
 hoglah	person	\N	\N	Hoglah	female	\N	\N	Manasseh	\N	\N	\N
@@ -2184,7 +2184,7 @@ isshiah-2	person	\N	\N	Isshiah	male	\N	\N	Levi	\N	\N	\N
 isshiah-3	person	\N	\N	Isshiah	male	\N	\N	Levi	\N	\N	\N
 isshiah-4	person	\N	\N	Isshiah	male	\N	\N	Levi	\N	\N	\N
 isshiah-5	person	\N	\N	Isshiah	\N	\N	\N	\N	\N	\N	\N
-isshijah	person	\N	\N	Isshijah	\N	\N	\N	\N	\N	\N	\N
+isshijah	person	\N	\N	Isshijah	male	\N	\N	\N	\N	\N	\N
 italy	place	\N	region	Italy	\N	\N	\N	\N	\N	\N	\N
 ithamar	person	\N	\N	Ithamar	male	\N	\N	Levi	\N	\N	\N
 ithiel	person	\N	\N	Ithiel	male	\N	\N	Benjamin	\N	\N	\N
@@ -2197,7 +2197,7 @@ ithran	person	\N	\N	Ithran	male	\N	\N	Edomite	\N	\N	\N
 ithran-2	person	\N	\N	Ithran	male	\N	\N	Asher	\N	\N	\N
 ithream	person	\N	\N	Ithream	male	\N	\N	Judah	\N	\N	\N
 ithrites	people	\N	\N	Ithrites	\N	\N	\N	\N	\N	\N	\N
-ittai	person	\N	\N	Ittai	\N	\N	\N	\N	\N	\N	\N
+ittai	person	\N	\N	Ittai	male	\N	\N	\N	\N	\N	\N
 ittai-son-of-ribai	person	\N	\N	Ittai	male	relationship	\N	\N	\N	\N	\N
 ituraea	place	\N	region	Ituraea	\N	\N	\N	\N	\N	\N	\N
 ivvah	place	\N	settlement, special	Ivvah	\N	\N	\N	\N	\N	\N	\N
@@ -2227,7 +2227,7 @@ jabal	person	\N	\N	Jabal	male	\N	\N	\N	\N	\N	\N
 jabbok	place	\N	river	Jabbok	\N	\N	\N	\N	\N	\N	\N
 jabesh	person	\N	\N	Jabesh	male	\N	\N	\N	\N	\N	\N
 jabeshgilead	place	\N	settlement	Jabesh-gilead	\N	\N	\N	\N	\N	\N	\N
-jabez	person	\N	\N	Jabez	\N	\N	\N	\N	\N	\N	\N
+jabez	person	\N	\N	Jabez	male	\N	\N	\N	\N	\N	\N
 jabez-2	place	\N	settlement	Jabez	\N	\N	\N	\N	\N	\N	\N
 jabin	person	\N	\N	Jabin	male	\N	\N	\N	\N	\N	\N
 jabin-king-of-canaan	person	\N	\N	Jabin	male	relationship	\N	\N	\N	\N	\N
@@ -2244,7 +2244,7 @@ jacob	person	\N	\N	Jacob	male	\N	\N	\N	\N	\N	{"book": 1, "names": {"deu": ["Isra
 jacob-2	person	\N	\N	Jacob	male	\N	\N	Judah	\N	\N	\N
 jacobs-pillar	object	monument	\N	Jacob's Pillar at Bethel	\N	\N	\N	\N	\N	\N	\N
 jada	person	\N	\N	Jada	male	\N	\N	Judah	\N	\N	\N
-jaddai	person	\N	\N	Jaddai	\N	\N	\N	\N	\N	\N	\N
+jaddai	person	\N	\N	Jaddai	male	\N	\N	\N	\N	\N	\N
 jaddua	person	\N	\N	Jaddua	male	\N	\N	\N	\N	\N	\N
 jaddua-2	person	\N	\N	Jaddua	male	\N	\N	Levi	\N	\N	\N
 jadon	person	\N	\N	Jadon	male	\N	\N	\N	\N	\N	\N
@@ -2350,7 +2350,7 @@ jehallelel	person	\N	\N	Jehallelel	male	\N	\N	Judah	\N	\N	\N
 jehallelel-2	person	\N	\N	Jehallelel	male	\N	\N	Levi	\N	\N	\N
 jehdeiah	person	\N	\N	Jehdeiah	male	\N	\N	Levi	\N	\N	\N
 jehdeiah-2	person	\N	\N	Jehdeiah	male	\N	\N	\N	\N	\N	\N
-jehezkel	person	\N	\N	Jehezkel	\N	\N	\N	\N	\N	\N	\N
+jehezkel	person	\N	\N	Jehezkel	male	\N	\N	\N	\N	\N	\N
 jehiah	person	\N	\N	Jehiah	male	\N	\N	Levi	\N	\N	\N
 jehiel	person	\N	\N	Jehiel	male	\N	\N	Levi	\N	\N	\N
 jehiel-10	person	\N	\N	Jehiel	\N	\N	\N	\N	\N	\N	\N
@@ -2523,7 +2523,7 @@ jeshohaiah	person	\N	\N	Jeshohaiah	male	\N	\N	Simeon	\N	\N	\N
 jeshua	person	\N	\N	Jeshua	male	\N	\N	Levi	\N	\N	\N
 jeshua-2	person	\N	\N	Jeshua	male	\N	\N	Levi	\N	\N	\N
 jeshua-4	person	\N	\N	Jeshua	male	\N	\N	\N	\N	\N	\N
-jeshua-5	person	\N	\N	Jeshua	\N	\N	\N	Levi	\N	\N	\N
+jeshua-5	person	\N	\N	Jeshua	male	\N	\N	Levi	\N	\N	\N
 jeshua-6	person	\N	\N	Jeshua	male	\N	\N	\N	\N	\N	\N
 jeshua-7	person	\N	\N	Jeshua	male	\N	\N	Levi	\N	\N	\N
 jeshua-9	place	\N	settlement	Jeshua	\N	\N	\N	\N	\N	\N	\N
@@ -2539,7 +2539,7 @@ jether-3	person	\N	\N	Jether	male	\N	\N	Judah	\N	\N	\N
 jetheth	person	\N	\N	Jetheth	male	\N	\N	Edomite	\N	\N	\N
 jetur	person	\N	\N	Jetur	male	\N	\N	Jetur	\N	\N	\N
 jeuel	person	\N	\N	Jeuel	male	\N	\N	Judah	\N	\N	\N
-jeuel-2	person	\N	\N	Jeuel	\N	\N	\N	\N	\N	\N	\N
+jeuel-2	person	\N	\N	Jeuel	male	\N	\N	\N	\N	\N	\N
 jeush	person	\N	\N	Jeush	male	\N	\N	Edomite	\N	\N	\N
 jeush-2	person	\N	\N	Jeush	male	\N	\N	Benjamin	\N	\N	\N
 jeush-3	person	\N	\N	Jeush	male	\N	\N	Benjamin	\N	\N	\N
@@ -2551,7 +2551,7 @@ jezebel-2	person	\N	\N	Jezebel	female	\N	\N	\N	\N	\N	\N
 jezer	person	\N	\N	Jezer	male	\N	\N	Naphtali	\N	\N	\N
 jezerites	people	\N	\N	Jezerites	\N	\N	\N	\N	jezer	\N	\N
 jeziel	person	\N	\N	Jeziel	male	\N	\N	Benjamin	\N	\N	\N
-jezrahiah	person	\N	\N	Jezrahiah	\N	\N	\N	\N	\N	\N	\N
+jezrahiah	person	\N	\N	Jezrahiah	male	\N	\N	\N	\N	\N	\N
 jezreel	person	\N	\N	Jezreel	male	\N	\N	Judah	\N	\N	\N
 jezreel-2	person	\N	\N	Jezreel	male	\N	\N	\N	\N	\N	\N
 jezreel-3	place	\N	settlement	Jezreel	\N	\N	\N	\N	\N	\N	\N
@@ -2707,16 +2707,16 @@ jotbathah	place	\N	settlement, spring	Jotbathah	\N	\N	\N	\N	\N	\N	\N
 jotham	person	\N	\N	Jotham	male	\N	\N	Manasseh	\N	\N	\N
 jotham-2	person	\N	\N	Jotham	male	\N	\N	Judah	\N	\N	\N
 jotham-3	person	\N	\N	Jotham	male	\N	\N	Judah	\N	\N	\N
-jozabad	person	\N	\N	Jozabad	\N	\N	\N	Benjamin	\N	\N	\N
+jozabad	person	\N	\N	Jozabad	male	\N	\N	Benjamin	\N	\N	\N
 jozabad-10	person	\N	\N	Jozabad	\N	\N	\N	\N	\N	\N	\N
 jozabad-11	person	\N	\N	Jozabad	\N	\N	\N	\N	\N	\N	\N
 jozabad-2	person	\N	\N	Jozabad	male	\N	\N	Manasseh	\N	\N	\N
-jozabad-3	person	\N	\N	Jozabad	\N	\N	\N	Manasseh	\N	\N	\N
+jozabad-3	person	\N	\N	Jozabad	male	\N	\N	Manasseh	\N	\N	\N
 jozabad-4	person	\N	\N	Jozabad	male	\N	\N	Levi	\N	\N	\N
 jozabad-5	person	\N	\N	Jozabad	male	\N	\N	Levi	\N	\N	\N
 jozabad-6	person	\N	\N	Jozabad	male	\N	\N	Levi	\N	\N	\N
-jozabad-7	person	\N	\N	Jozabad	\N	\N	\N	Levi	\N	\N	\N
-jozabad-8	person	\N	\N	Jozabad	\N	\N	\N	Levi	\N	\N	\N
+jozabad-7	person	\N	\N	Jozabad	male	\N	\N	Levi	\N	\N	\N
+jozabad-8	person	\N	\N	Jozabad	male	\N	\N	Levi	\N	\N	\N
 jozabad-9	person	\N	\N	Jozabad	\N	\N	\N	\N	\N	\N	\N
 jozacar	person	\N	\N	Jozacar	male	\N	\N	\N	\N	\N	\N
 jubal	person	\N	\N	Jubal	male	\N	\N	\N	\N	\N	\N
@@ -2746,7 +2746,7 @@ kabzeel	place	\N	settlement	Kabzeel	\N	\N	\N	\N	\N	\N	\N
 kadesh	place	\N	settlement	Kadesh	\N	\N	\N	\N	\N	\N	\N
 kadesh-2	place	\N	settlement	Kadesh	\N	\N	\N	\N	\N	\N	\N
 kadmiel	person	\N	\N	Kadmiel	male	\N	\N	Levi	\N	\N	\N
-kadmiel-2	person	\N	\N	Kadmiel	\N	\N	\N	Levi	\N	\N	\N
+kadmiel-2	person	\N	\N	Kadmiel	male	\N	\N	Levi	\N	\N	\N
 kadmonites	people	\N	\N	Kadmonites	\N	\N	\N	\N	\N	\N	\N
 kain	place	\N	settlement, special	Kain	\N	\N	\N	\N	\N	\N	\N
 kallai	person	\N	\N	Kallai	male	\N	\N	Levi	\N	\N	\N
@@ -2772,7 +2772,7 @@ kedeshnaphtali	place	\N	settlement	Kedesh-naphtali	\N	\N	\N	\N	\N	\N	\N
 kehelathah	place	\N	campsite, settlement	Kehelathah	\N	\N	\N	\N	\N	makheloth	\N
 keilah	person	\N	\N	Keilah	male	\N	\N	Judah	\N	\N	\N
 keilah-2	place	\N	settlement	Keilah	\N	\N	\N	\N	\N	\N	\N
-kelaiah	person	\N	\N	Kelaiah	\N	\N	\N	Levi	\N	\N	\N
+kelaiah	person	\N	\N	Kelaiah	male	\N	\N	Levi	\N	\N	\N
 kelita	person	\N	\N	Kelita	male	\N	\N	Levi	\N	\N	\N
 kemuel	person	\N	\N	Kemuel	male	\N	\N	\N	\N	\N	\N
 kemuel-2	person	\N	\N	Kemuel	male	\N	\N	Ephraim	\N	\N	\N
@@ -3071,7 +3071,7 @@ malchijah-12	person	\N	\N	Malchijah	\N	\N	\N	\N	\N	\N	\N
 malchijah-2	person	\N	\N	Malchijah	male	\N	\N	Levi	\N	\N	\N
 malchijah-3	person	\N	\N	Malchijah	male	\N	\N	Levi	\N	\N	\N
 malchijah-4	person	\N	\N	Malchijah	male	\N	\N	\N	\N	\N	\N
-malchijah-5	person	\N	\N	Malchijah	\N	\N	\N	\N	\N	\N	\N
+malchijah-5	person	\N	\N	Malchijah	male	\N	\N	\N	\N	\N	\N
 malchijah-6	person	\N	\N	Malchijah	male	\N	\N	\N	\N	\N	\N
 malchijah-8	person	\N	\N	Malchijah	male	\N	\N	\N	\N	\N	\N
 malchijah-9	person	\N	\N	Malchijah	male	\N	\N	\N	\N	\N	\N
@@ -3310,7 +3310,7 @@ miletus	place	\N	settlement	Miletus	\N	\N	\N	\N	\N	\N	\N
 millo	place	\N	fortification, settlement	Millo	\N	\N	\N	\N	\N	\N	\N
 miniamin	person	\N	\N	Miniamin	male	\N	\N	Levi	\N	\N	\N
 miniamin-2	person	\N	\N	Miniamin	male	\N	\N	Levi	\N	\N	\N
-miniamin-3	person	\N	\N	Miniamin	\N	\N	\N	\N	\N	\N	\N
+miniamin-3	person	\N	\N	Miniamin	male	\N	\N	\N	\N	\N	\N
 minni	place	\N	region	Minni	\N	\N	\N	\N	\N	\N	\N
 minnith	place	\N	settlement	Minnith	\N	\N	\N	\N	\N	\N	\N
 miphkad	place	\N	\N	Miphkad	\N	\N	\N	\N	\N	\N	\N
@@ -3494,7 +3494,7 @@ nehemiah-3	person	\N	\N	Nehemiah	\N	\N	\N	\N	\N	\N	\N
 nehushta	person	\N	\N	Nehushta	female	\N	\N	\N	\N	\N	\N
 nehushtan	object	image	\N	Bronze Serpent (Nehushtan)	\N	\N	\N	\N	\N	\N	\N
 neiel	place	\N	settlement, valley	Neiel	\N	\N	\N	\N	\N	\N	\N
-nekoda	person	\N	\N	Nekoda	\N	\N	\N	\N	\N	\N	\N
+nekoda	person	\N	\N	Nekoda	male	\N	\N	\N	\N	\N	\N
 nemuel	person	\N	\N	Nemuel	male	\N	\N	Reuben	\N	\N	\N
 nemuelites	people	\N	\N	Nemuelites	\N	\N	\N	\N	\N	\N	\N
 nepheg	person	\N	\N	Nepheg	male	\N	\N	Levi	\N	\N	\N
@@ -3504,12 +3504,12 @@ nephisim	person	\N	\N	Nephusim	male	\N	\N	Levi	\N	\N	\N
 nephtoah	place	\N	spring	Nephtoah	\N	\N	\N	\N	\N	\N	\N
 ner	person	\N	\N	Ner	male	\N	\N	Benjamin	\N	\N	\N
 nereus	person	\N	\N	Nereus	male	\N	male	\N	\N	\N	\N
-nergalsarezer	person	\N	\N	Nergal-sar-ezer	\N	\N	\N	\N	\N	\N	\N
+nergalsarezer	person	\N	\N	Nergal-sar-ezer	male	\N	\N	\N	\N	\N	\N
 nergalsarezer-2	person	\N	\N	Nergal-sar-ezer	male	\N	\N	\N	\N	\N	\N
 neri	person	\N	\N	Neri	male	\N	\N	\N	\N	\N	\N
 neriah	person	\N	\N	Neriah	male	\N	\N	\N	\N	\N	\N
 netaim	place	\N	settlement	Netaim	\N	\N	\N	\N	\N	\N	\N
-netanel	person	\N	\N	Netanel	\N	\N	\N	\N	\N	\N	\N
+netanel	person	\N	\N	Netanel	male	\N	\N	\N	\N	\N	\N
 nethanel	person	\N	\N	Nethanel	male	\N	\N	Issachar	\N	\N	\N
 nethanel-10	person	\N	\N	Nethanel	\N	\N	\N	\N	\N	\N	\N
 nethanel-2	person	\N	\N	Nethanel	male	\N	\N	Judah	\N	\N	\N
@@ -3550,7 +3550,7 @@ noah	person	\N	\N	Noah	male	\N	\N	\N	\N	\N	\N
 noah-2	person	\N	\N	Noah	female	\N	\N	Manasseh	\N	\N	\N
 noahs-ark	object	vessel	\N	Noah's Ark	\N	\N	\N	\N	\N	\N	\N
 nob	place	\N	settlement	Nob	\N	\N	\N	\N	\N	\N	\N
-nobah	person	\N	\N	Nobah	\N	\N	\N	\N	\N	\N	\N
+nobah	person	\N	\N	Nobah	male	\N	\N	\N	\N	\N	\N
 nobah-2	place	\N	settlement	Nobah	\N	\N	\N	\N	\N	kenath	\N
 nobah-3	place	\N	settlement	Nobah	\N	\N	\N	\N	\N	nobah-2	\N
 nod	place	\N	geographic region	Nod	\N	\N	\N	\N	\N	\N	\N
@@ -3620,7 +3620,7 @@ ophni	place	\N	settlement, special	Ophni	\N	\N	\N	\N	\N	\N	\N
 ophrah	person	\N	\N	Ophrah	male	\N	\N	\N	\N	\N	\N
 ophrah-2	place	\N	settlement	Ophrah	\N	\N	\N	\N	\N	\N	\N
 ophrah-3	place	\N	settlement	Ophrah	\N	\N	\N	\N	\N	\N	\N
-oreb	person	\N	\N	Oreb	\N	\N	\N	\N	\N	\N	\N
+oreb	person	\N	\N	Oreb	male	\N	\N	\N	\N	\N	\N
 oreb-2	place	\N	\N	Oreb	\N	\N	\N	\N	\N	\N	\N
 oren	person	\N	\N	Oren	male	\N	\N	Judah	\N	\N	\N
 ornans-threshingfloor	place	\N	named-site	Threshingfloor of Ornan / Araunah	\N	\N	\N	\N	\N	\N	\N
@@ -3718,7 +3718,7 @@ persis	person	\N	\N	Persis	female	\N	female	\N	\N	\N	\N
 peruda	person	\N	\N	Peruda	male	\N	\N	\N	\N	\N	\N
 peter-house	object	structure	\N	Peter's House in Matthew 8	\N	\N	\N	\N	\N	\N	\N
 pethahiah	person	\N	\N	Pethahiah	male	\N	\N	Levi	\N	\N	\N
-pethahiah-2	person	\N	\N	Pethahiah	\N	\N	\N	Levi	\N	\N	\N
+pethahiah-2	person	\N	\N	Pethahiah	male	\N	\N	Levi	\N	\N	\N
 pethahiah-3	person	\N	\N	Pethahiah	male	\N	\N	Levi	\N	\N	\N
 pethahiah-4	person	\N	\N	Pethahiah	male	\N	\N	Judah	\N	\N	\N
 pethor	place	\N	settlement	Pethor	\N	\N	\N	\N	\N	\N	\N
@@ -3847,7 +3847,7 @@ ramiah	person	\N	\N	Ramiah	male	\N	\N	\N	\N	\N	\N
 ramoth	place	\N	settlement	Ramoth	\N	\N	\N	\N	\N	\N	\N
 ramoth-3	place	\N	settlement	Ramoth	\N	\N	\N	\N	\N	ramothgilead	\N
 ramothgilead	place	\N	settlement	Ramoth-gilead	\N	\N	\N	\N	\N	\N	\N
-raphah	person	\N	\N	Raphah	\N	\N	\N	\N	\N	\N	\N
+raphah	person	\N	\N	Raphah	male	\N	\N	\N	\N	\N	\N
 raphah-2	person	\N	\N	Raphah	male	\N	\N	Benjamin	\N	\N	\N
 raphah-3	person	\N	\N	Raphah	\N	\N	\N	\N	\N	\N	\N
 raphu	person	\N	\N	Raphu	male	\N	\N	Benjamin	\N	\N	\N
@@ -4081,7 +4081,7 @@ shalmaneser	person	\N	\N	Shalmaneser	male	\N	\N	\N	\N	\N	\N
 shama	person	\N	\N	Shama	male	\N	\N	\N	\N	\N	\N
 shamgar	person	\N	\N	Shamgar	male	\N	\N	\N	\N	\N	\N
 shamhuth	person	\N	\N	Shamhuth	male	\N	\N	\N	\N	\N	\N
-shamir	person	\N	\N	Shamir	\N	\N	\N	\N	\N	\N	\N
+shamir	person	\N	\N	Shamir	male	\N	\N	\N	\N	\N	\N
 shamir-2	place	\N	settlement	Shamir	\N	\N	\N	\N	\N	\N	\N
 shamir-3	place	\N	settlement	Shamir	\N	\N	\N	\N	\N	samaria	\N
 shamma	person	\N	\N	Shamma	male	\N	\N	Asher	\N	\N	\N
@@ -4138,7 +4138,7 @@ sheba-7	place	\N	settlement	Sheba	\N	\N	\N	\N	\N	beersheba-2	\N
 shebaniah	person	\N	\N	Shebaniah	male	\N	\N	Levi	\N	\N	\N
 shebaniah-2	person	\N	\N	Shebaniah	male	\N	\N	Levi	\N	\N	\N
 shebaniah-3	person	\N	\N	Shebaniah	male	\N	\N	Levi	\N	\N	\N
-shebaniah-4	person	\N	\N	Shebaniah	\N	\N	\N	Levi	\N	\N	\N
+shebaniah-4	person	\N	\N	Shebaniah	male	\N	\N	Levi	\N	\N	\N
 shebaniah-5	person	\N	\N	Shebaniah	\N	\N	\N	\N	\N	\N	\N
 shebarim	place	\N	natural area, special	Shebarim	\N	\N	\N	\N	\N	\N	\N
 sheber	person	\N	\N	Sheber	male	\N	\N	Judah	\N	\N	\N
@@ -4289,7 +4289,7 @@ shimei-6	person	\N	\N	Shimei	male	\N	\N	Reuben	\N	\N	\N
 shimei-7	person	\N	\N	Shimei	male	\N	\N	Levi	\N	\N	\N
 shimei-8	person	\N	\N	Shimei	male	\N	\N	Levi	\N	\N	\N
 shimei-9	person	\N	\N	Shimei	male	\N	\N	\N	\N	\N	\N
-shimeon	person	\N	\N	Shimeon	\N	\N	\N	\N	\N	\N	\N
+shimeon	person	\N	\N	Shimeon	male	\N	\N	\N	\N	\N	\N
 shimites	people	\N	\N	Shimites	\N	\N	\N	\N	\N	\N	\N
 shimon	person	\N	\N	Shimon	male	\N	\N	Judah	\N	\N	\N
 shimrath	person	\N	\N	Shimrath	male	\N	\N	Benjamin	\N	\N	\N
@@ -4482,7 +4482,7 @@ tamar-4	place	\N	settlement	Tamar	\N	\N	\N	\N	\N	tamar-5	\N
 tamar-5	place	\N	settlement	Tamar	\N	\N	\N	\N	\N	\N	\N
 tanhumeth	person	\N	\N	Tanhumeth	male	\N	\N	\N	\N	\N	\N
 taphath	person	\N	\N	Taphath	female	\N	\N	Judah	\N	\N	\N
-tappuah	person	\N	\N	Tappuah	\N	\N	\N	Judah	\N	\N	\N
+tappuah	person	\N	\N	Tappuah	male	\N	\N	Judah	\N	\N	\N
 tappuah-2	place	\N	settlement	Tappuah	\N	\N	\N	\N	\N	\N	\N
 tappuah-3	place	\N	settlement	Tappuah	\N	\N	\N	\N	\N	\N	\N
 taralah	place	\N	settlement	Taralah	\N	\N	\N	\N	\N	\N	\N
@@ -4506,7 +4506,7 @@ tekoites	people	\N	\N	Tekoites	\N	\N	\N	\N	\N	\N	\N
 telabib	place	\N	settlement	Tel-abib	\N	\N	\N	\N	\N	\N	\N
 telah	person	\N	\N	Telah	male	\N	\N	Ephraim	\N	\N	\N
 telassar	place	\N	settlement	Telassar	\N	\N	\N	\N	\N	\N	\N
-telem	person	\N	\N	Telem	\N	\N	\N	\N	\N	\N	\N
+telem	person	\N	\N	Telem	male	\N	\N	\N	\N	\N	\N
 telem-2	place	\N	settlement	Telem	\N	\N	\N	\N	\N	\N	\N
 telharesha	place	\N	\N	Tel-haresha	\N	\N	\N	\N	\N	\N	\N
 telharsha	place	\N	settlement	Tel-harsha	\N	\N	\N	\N	\N	\N	\N
@@ -4534,7 +4534,7 @@ theangelofthelord	person	\N	\N	the angel of the LORD	\N	\N	\N	\N	\N	\N	\N
 thebes	place	\N	settlement	Thebes	\N	\N	\N	\N	\N	\N	\N
 thebez	place	\N	settlement	Thebez	\N	\N	\N	\N	\N	\N	\N
 thecaptainofthehostofthelord	person	\N	\N	the captain of the host of the LORD	\N	\N	\N	\N	\N	\N	\N
-theethiopianeunuch	person	\N	\N	the Ethiopian eunuch	\N	\N	\N	\N	\N	\N	\N
+theethiopianeunuch	person	\N	\N	the Ethiopian eunuch	male	\N	\N	\N	\N	\N	\N
 thelordisthere	place	\N	settlement	The Lord Is There	\N	\N	\N	\N	\N	jerusalem	\N
 thelordwillprovide	place	\N	unique	The LORD Will Provide	\N	\N	\N	\N	\N	mountmoriah	\N
 theophilus	person	\N	\N	Theophilus	male	\N	male	\N	\N	\N	\N
@@ -4556,7 +4556,7 @@ tikvah-2	person	\N	\N	Tikvah	male	\N	\N	\N	\N	\N	\N
 tilon	person	\N	\N	Tilon	male	\N	\N	Judah	\N	\N	\N
 timaeus	person	\N	\N	Timaeus	male	\N	male	\N	\N	\N	\N
 timna	person	\N	\N	Timna	female	\N	\N	Edomite	\N	\N	\N
-timna-2	person	\N	\N	Timna	\N	\N	\N	\N	\N	\N	\N
+timna-2	person	\N	\N	Timna	male	\N	\N	\N	\N	\N	\N
 timnah	place	\N	settlement	Timnah	\N	\N	\N	\N	\N	timnah-3	\N
 timnah-2	place	\N	settlement	Timnah	\N	\N	\N	\N	\N	\N	\N
 timnah-3	place	\N	settlement	Timnah	\N	\N	\N	\N	\N	\N	\N
@@ -4581,7 +4581,7 @@ titus	person	\N	\N	Titus	male	\N	male	\N	\N	\N	\N
 tizites	people	\N	\N	Tizites	\N	\N	\N	\N	\N	\N	\N
 tjaru	place	\N	settlement	Tjaru	\N	\N	\N	\N	\N	\N	\N
 tob	place	\N	settlement	Tob	\N	\N	\N	\N	\N	\N	\N
-tobadonijah	person	\N	\N	Tobadonijah	\N	\N	\N	Levi	\N	\N	\N
+tobadonijah	person	\N	\N	Tobadonijah	male	\N	\N	Levi	\N	\N	\N
 tobiah	person	\N	\N	Tobiah	male	\N	\N	\N	\N	\N	\N
 tobiah-2	person	\N	\N	Tobiah	male	\N	\N	Ammonite	\N	\N	\N
 tobiah-3	person	\N	\N	Tobiah	\N	\N	\N	\N	\N	\N	\N
@@ -4662,7 +4662,7 @@ uz-4	place	\N	region	Uz	\N	\N	\N	\N	\N	\N	\N
 uzai	person	\N	\N	Uzai	male	\N	\N	\N	\N	\N	\N
 uzal	person	\N	\N	Uzal	male	\N	\N	\N	\N	\N	\N
 uzal-2	place	\N	mountain, region, settlement, special	Uzal	\N	\N	\N	\N	\N	\N	\N
-uzza	person	\N	\N	Uzza	\N	\N	\N	\N	\N	\N	\N
+uzza	person	\N	\N	Uzza	male	\N	\N	\N	\N	\N	\N
 uzza-2	person	\N	\N	Uzza	male	\N	\N	Levi	\N	\N	\N
 uzza-3	place	\N	garden	Uzza	\N	\N	\N	\N	\N	\N	\N
 uzza-4	person	\N	\N	Uzza	\N	\N	\N	\N	\N	\N	\N
@@ -4762,7 +4762,7 @@ zabdi-2	person	\N	\N	Zabdi	male	\N	\N	Benjamin	\N	\N	\N
 zabdi-3	person	\N	\N	Zabdi	male	\N	\N	\N	\N	\N	\N
 zabdiel	person	\N	\N	Zabdiel	male	\N	\N	Judah	\N	\N	\N
 zabdiel-2	person	\N	\N	Zabdiel	male	\N	\N	Levi	\N	\N	\N
-zaboud	person	\N	\N	Zaboud	\N	\N	\N	\N	\N	\N	\N
+zaboud	person	\N	\N	Zaboud	male	\N	\N	\N	\N	\N	\N
 zabud	person	\N	\N	Zabud	male	\N	\N	\N	\N	\N	\N
 zabulon	place	\N	\N	Zabulon	\N	\N	\N	\N	\N	\N	\N
 zaccai	person	\N	\N	Zaccai	male	\N	\N	\N	\N	\N	\N
@@ -4788,7 +4788,7 @@ zaham	person	\N	\N	Zaham	male	\N	\N	Judah	\N	\N	\N
 zahar	place	\N	\N	Zahar	\N	\N	\N	\N	\N	\N	\N
 zair	place	\N	settlement	Zair	\N	\N	\N	\N	\N	zoar	\N
 zalaph	person	\N	\N	Zalaph	male	\N	\N	\N	\N	\N	\N
-zalmon	person	\N	\N	Zalmon	\N	\N	\N	\N	\N	\N	\N
+zalmon	person	\N	\N	Zalmon	male	\N	\N	\N	\N	\N	\N
 zalmon-2	place	\N	mountain	Zalmon	\N	\N	\N	\N	\N	\N	\N
 zalmonah	place	\N	campsite	Zalmonah	\N	\N	\N	\N	\N	\N	\N
 zalmunna	person	\N	\N	Zalmunna	male	\N	\N	\N	\N	\N	\N
@@ -4919,7 +4919,7 @@ zichri-7	person	\N	\N	Zichri	male	\N	\N	Reuben	\N	\N	\N
 zichri-8	person	\N	\N	Zichri	male	\N	\N	\N	\N	\N	\N
 zichri-9	person	\N	\N	Zichri	male	\N	\N	\N	\N	\N	\N
 ziddim	place	\N	settlement, special	Ziddim	\N	\N	\N	\N	\N	\N	\N
-ziha	person	\N	\N	Ziha	\N	\N	\N	\N	\N	\N	\N
+ziha	person	\N	\N	Ziha	male	\N	\N	\N	\N	\N	\N
 ziha-over-the-nethinims	person	\N	\N	Ziha	\N	\N	\N	\N	\N	\N	\N
 ziklag	place	\N	settlement	Ziklag	\N	\N	\N	\N	\N	\N	\N
 zillah	person	\N	\N	Zillah	female	\N	\N	\N	\N	\N	\N
