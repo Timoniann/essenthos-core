@@ -1,0 +1,12 @@
+# product    Essenthos/mapping/UBIO-TR1894/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, PRB-1685, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right (for a refused combination, all of them read), bands weighted by rows.
+# Measured by hand by r133 on 2026-11-15: 200 settled composed links of UBIO-TR1894 (Ohienko NT to Scrivener's TR), 7 combinations x 4 confidence bands, seed 1686, from the store of 2026-11-15; right = the Ukrainian word renders that Greek word (rules as for UBIO-BHSA). Bar 90% (the composed bar); a floor needs at least 10 links read at or above it and at most 1 wrong in its lowest band.
+readings	from	right	scored	basis
+as written and as stems and through kjv	0.25	1	40	hand sample r133 2026-11-15: 40 of 40 right
+as written and through kjv	0.25	1	24	hand sample r133 2026-11-15: 24 of 24 right
+as stems and through kjv	0.25	0.968	24	hand sample r133 2026-11-15: 23 of 24 right, 1 partly
+through kjv	0.25	0.905	36	hand sample r133 2026-11-15: 31 of 36 right (bands weighted 90.5%, at the bar), 5 wrong
+as written and as stems	refused	0.65	36	hand sample r133 2026-11-15: 24 of 36 right (65%); from 0.90 7 of 9
+as written	refused	0.167	20	hand sample r133 2026-11-15: 6 of 20 right (17%)
+as stems	refused	0.348	20	hand sample r133 2026-11-15: 9 of 20 right (35%); from 0.90 4 of 5

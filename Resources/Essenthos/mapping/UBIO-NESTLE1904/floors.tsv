@@ -1,0 +1,8 @@
+# product    Essenthos/mapping/UBIO-NESTLE1904/floors.tsv
+# producer   by hand
+# Floors this pair's composition is held to by hand (PRB-1607, PRB-1685, NOT-0228). compose takes them before anything it measures or borrows; the merge refuses the composed rows under them (status refused-by floor). readings: the combination as a composed source names it after "aligned". from: the confidence from which its links stand, or refused. right of scored: how often the links read at or above the floor were right (for a refused combination, all of them read), bands weighted by rows.
+# Measured by hand by r133 on 2026-11-15: 75 settled composed links of UBIO-NESTLE1904 in the three combinations its stated answers could not measure (fewer than 200), 4 confidence bands each, seed 1687, from the store of 2026-11-15; right = the Ukrainian word renders that Greek word. The other combinations keep the floors measured on the Door43 statements. Bar 90%.
+readings	from	right	scored	basis
+as written and through kjv	0.25	0.969	25	hand sample r133 2026-11-15: 24 of 25 right
+as written	refused	0.511	25	hand sample r133 2026-11-15: 12 of 25 right (51%); from 0.90 6 of 6, too few to stand a floor on (the same route against the TR: 1 of 5)
+as stems	refused	0.557	25	hand sample r133 2026-11-15: 14 of 25 right (56%)
