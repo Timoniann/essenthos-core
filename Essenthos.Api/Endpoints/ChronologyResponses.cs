@@ -123,6 +123,13 @@ internal record EventResponse(
     public string? LocalRegion { get; init; }
 
     public string? LocalRegionAtTheTime { get; init; }
+
+    /// <summary>
+    /// The reckoning whose year a list ordered by a reader's preference shows this event by: the
+    /// first of the reckonings asked for that dates it. Null where no preference was asked for, and
+    /// where none of them dates it.
+    /// </summary>
+    public string? ShownBy { get; init; }
 }
 
 /// <param name="Calculation">
@@ -200,6 +207,12 @@ internal readonly record struct EventLocation(string Name, int? Book, int? Chapt
 }
 
 internal record EventListResponse(int Total, IList<EventResponse> Items);
+
+/// <summary>
+/// Where an event stands in a narrowed and ordered list, counting from one, and its neighbours there.
+/// The position is null where the narrowing leaves the event out; a neighbour is null at an end.
+/// </summary>
+internal record EventStepResponse(int? Position, int Total, EventResponse? Previous, EventResponse? Next);
 
 internal record EventRefResponse(string Slug, string Name);
 
