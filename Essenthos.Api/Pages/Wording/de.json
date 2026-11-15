@@ -387,5 +387,11 @@
   },
   "dataset": {
     "description": "{{name}}: der vollständige Text (Verse: {{verses}}, Bücher: {{books}}) als eine JSON-Lines-Datei, dazu eine zweite Datei, die sagt, wer den Text geschaffen hat und unter welchen Bedingungen er weitergegeben werden darf."
+  },
+  "reading": {
+    "together": "Zusammen",
+    "alignedTo": "Ausgerichtet an {{name}}",
+    "base": "Basis",
+    "notPresentAt": "In {{corpus}} bei Vers {{verse}} nicht vorhanden"
   }
 }

@@ -390,5 +390,11 @@
   },
   "dataset": {
     "description": "{{name}}: el texto completo (versículos: {{verses}}, libros: {{books}}) en un archivo JSON Lines, con un segundo archivo que dice quién hizo el texto y en qué condiciones puede compartirse."
+  },
+  "reading": {
+    "together": "Juntos",
+    "alignedTo": "Alineado con {{name}}",
+    "base": "base",
+    "notPresentAt": "No está presente en {{corpus}} en el versículo {{verse}}"
   }
 }

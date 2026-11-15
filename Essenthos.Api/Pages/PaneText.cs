@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 
 namespace Essenthos.Core.Pages;
@@ -91,4 +92,61 @@ internal sealed record PaneText(IReadOnlyList<PaneVerse> Verses, bool Single)
 
     private static string? Optional(JsonElement element, string name) =>
         element.TryGetProperty(name, out var value) ? value.GetString() : null;
+}
+
+/// <summary>A verse of one text as a column of the reader shows it, before its words can be pointed at.</summary>
+/// <param name="Badge">
+/// The address the text itself gives the verse where it is not the row's: the one the edition prints, else
+/// where its own numbering puts it (<c>118:1</c> in the Synodal's Psalm 119); null where they agree.
+/// </param>
+internal sealed record ReadingCell(string Text, string? Badge);
+
+/// <summary>One of several texts a chapter is read in side by side, as the reader lays out its column.</summary>
+/// <param name="Language">The text's language as a web page names it.</param>
+/// <param name="Face">The reader's face for the text (essenthos-web <c>textClassFor</c>): <c>text-ltr</c>, <c>text-hebrew</c> or <c>text-greek</c>.</param>
+/// <param name="Cells">Every verse the text's pane holds, by the shared frame's number.</param>
+internal sealed record ReadingColumn(string Name, string? Language, bool RightToLeft, string Face, IReadOnlyDictionary<int, ReadingCell> Cells)
+{
+    /// <summary>
+    /// A text's side of a chapter read from its pane as the reader's own columns read it (essenthos-web
+    /// <c>composeParallel</c> and <c>VerseCell</c>): every verse of the pane, an elided word's letters left
+    /// out and what follows it kept.
+    /// </summary>
+    public static IReadOnlyDictionary<int, ReadingCell> CellsOf(ReadOnlyMemory<byte> json, int chapter)
+    {
+        using var document = JsonDocument.Parse(json);
+        var cells = new Dictionary<int, ReadingCell>();
+        foreach (var verse in document.RootElement.GetProperty("verses").EnumerateArray())
+        {
+            var number = verse.GetProperty("n").GetInt32();
+            var text = new StringBuilder();
+            if (verse.TryGetProperty("words", out var words))
+            {
+                foreach (var word in words.EnumerateArray())
+                {
+                    if (!word.TryGetProperty("el", out _))
+                    {
+                        text.Append(word.GetProperty("s").GetString());
+                    }
+
+                    text.Append(word.TryGetProperty("t", out var trailer) ? trailer.GetString() : "");
+                }
+            }
+
+            var row = $"{chapter}:{number}";
+            var stated = verse.TryGetProperty("stated", out var printed)
+                ? printed.EnumerateArray().Select(address => address.GetString()).Where(address => address is not null && address != row).ToList()
+                : [];
+            string? badge = stated.Count > 0 ? string.Join(", ", stated) : null;
+            if (badge is null && verse.TryGetProperty("ref", out var own) && own.GetArrayLength() == 3
+                && (own[1].GetInt32() != chapter || own[2].GetInt32() != number))
+            {
+                badge = $"{own[1].GetInt32()}:{own[2].GetInt32()}";
+            }
+
+            cells[number] = new ReadingCell(PageHtml.Plain(text.ToString()), badge);
+        }
+
+        return cells;
+    }
 }

@@ -111,6 +111,12 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
     /// <summary>How many verses a page of a list of verses holds, where the address asks for other than the usual.</summary>
     public int Take { get; init; }
 
+    /// <summary>
+    /// The texts a chapter's address names to be read side by side (<c>?c=KJV,BSB,UBIO</c>), as written and
+    /// each once; empty where it names none and the page's language decides.
+    /// </summary>
+    public IReadOnlyList<string> Texts { get; init; } = [];
+
     /// <summary>A reader's own page, or a list a query picked: a page to open and never one to index.</summary>
     public bool Private { get; init; }
 
@@ -234,6 +240,10 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
         var rest = "/" + string.Join('/', segments);
         var notFound = new PageAddress(language, PageKind.NotFound, rest);
         var verseParameter = query.TryGetValue("v", out var v) ? Number(v) : null;
+        IReadOnlyList<string> texts = query.TryGetValue("c", out var named)
+            ? [.. named.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Distinct(StringComparer.OrdinalIgnoreCase)]
+            : [];
+        PageAddress Reading(PageAddress? address) => address is null ? notFound : address with { Texts = texts };
 
         switch (segments)
         {
@@ -241,18 +251,18 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
                 return new PageAddress(language, PageKind.Home, "/");
 
             case ["read", var book, var chapter] when verseParameter is { } atVerse:
-                return AtVerse(language, book, chapter, atVerse.ToString()) ?? notFound;
+                return Reading(AtVerse(language, book, chapter, atVerse.ToString()));
 
             case ["read", var book, var chapter]:
-                return BookOf(book) is { } ordinal && Number(chapter) is { } inChapter
+                return Reading(BookOf(book) is { } ordinal && Number(chapter) is { } inChapter
                     ? new PageAddress(language, PageKind.Chapter, ChapterPath(ordinal, inChapter))
                     {
                         Book = ordinal, Chapter = inChapter,
                     }
-                    : notFound;
+                    : null);
 
             case ["read", var book, var chapter, var verse]:
-                return AtVerse(language, book, chapter, verse) ?? notFound;
+                return Reading(AtVerse(language, book, chapter, verse));
 
             case ["verse", var book, var chapter, var verse]:
                 return AtVerse(language, book, chapter, verse) is { } at

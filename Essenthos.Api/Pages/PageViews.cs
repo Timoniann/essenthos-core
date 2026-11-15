@@ -28,6 +28,9 @@ internal sealed record VerseView(int Book, string BookName, int Chapter, int Ver
 
     /// <summary>The verse in the original, word by word; null where no original holds it.</summary>
     public OriginalVerseView? Original { get; init; }
+
+    /// <summary>The texts the address names side by side, as the reader lays them out; empty for the one text alone.</summary>
+    public IReadOnlyList<ReadingColumn> Columns { get; init; } = [];
 }
 
 /// <summary>A verse on its own page, in the text the page's language reads, with the same verse in others beside it.</summary>
@@ -70,6 +73,12 @@ internal sealed record ChapterView(
 {
     /// <summary>The language the text is written in, which the reader marks each verse with; the page's own where unknown.</summary>
     public string? TextLanguage { get; init; }
+
+    /// <summary>
+    /// The texts the address names side by side, as the reader lays them out, in the order named; empty where
+    /// the chapter is shown in its one text (<see cref="Verses"/>, <see cref="TextName"/>).
+    /// </summary>
+    public IReadOnlyList<ReadingColumn> Columns { get; init; } = [];
 }
 
 /// <summary>A piece of a record's description, linked where it names another record.</summary>
@@ -257,8 +266,12 @@ internal static partial class PageViews
         var reference = t.Reference(verse.BookName, verse.Chapter, verse.Verse);
         var chapter = $"{verse.BookName} {verse.Chapter}";
         var verses = verse.Verses.Count > 0 ? verse.Verses : [(verse.Verse, verse.Text)];
-        var body = Reading(language, new ChapterView(verse.Book, verse.BookName, verse.Chapter,
-            Math.Max(verse.ChapterCount, verse.Chapter), verses, verse.TextName) { TextLanguage = verse.TextLanguage }, verse.Verse);
+        var body = Reading(language, t, new ChapterView(verse.Book, verse.BookName, verse.Chapter,
+            Math.Max(verse.ChapterCount, verse.Chapter), verses, verse.TextName)
+        {
+            TextLanguage = verse.TextLanguage,
+            Columns = verse.Columns,
+        }, verse.Verse);
         if (verse.Original is { } original)
         {
             OriginalWords(body, language, t, reference, original);
@@ -435,7 +448,7 @@ internal static partial class PageViews
     /// they are while its own copy of the chapter is still on its way (essenthos-web, src/features/reader/landing.tsx).
     /// The class names are that stylesheet's; nothing here is styled by the plain <c>.prerendered</c> rules.
     /// </summary>
-    private static HtmlWriter Reading(SiteLanguage language, ChapterView chapter, int? landed)
+    private static HtmlWriter Reading(SiteLanguage language, PageWording t, ChapterView chapter, int? landed)
     {
         var chapterPath = PageAddress.ChapterPath(chapter.Book, chapter.Chapter);
         var reference = $"{chapter.BookName} {chapter.Chapter}";
@@ -451,19 +464,17 @@ internal static partial class PageViews
         }
 
         body.Close("nav")
-            .Open("div", "reading-head").Element("h1", reference).Close("div")
-            .Open("div", "verse-grid reading-verses")
-            .Element("div", chapter.TextName, "reading-pane");
-        var textLanguage = chapter.TextLanguage ?? language.Code;
-        foreach (var (number, text) in chapter.Verses)
+            .Open("div", "reading-head").Element("h1", reference).Close("div");
+        if (chapter.Columns.Count > 1)
         {
-            body.Open("div", "verse-row", $"v{number}", attributes: ("data-landed", number == landed ? "" : null))
-                .Link(language.Path(PageAddress.VersePath(chapter.Book, chapter.Chapter, number)), number.ToString(), className: "verse-number")
-                .Open("div", "verse-cell").Element("p", text, "text-ltr", textLanguage).Close("div")
-                .Close("div");
+            Columns(body, language, t, chapter, landed);
+        }
+        else
+        {
+            Verses(body, language, chapter, landed);
         }
 
-        body.Close("div").Open("nav", "reading-turns");
+        body.Open("nav", "reading-turns");
         if (chapter.Chapter > 1)
         {
             body.Link(language.Path(PageAddress.ChapterPath(chapter.Book, chapter.Chapter - 1)),
@@ -479,10 +490,107 @@ internal static partial class PageViews
         return body.Close("nav").Close("div").Close("article");
     }
 
+    /// <summary>The chapter in its one text: a verse grid of one column, the text's name over it where the reader heads it.</summary>
+    private static void Verses(HtmlWriter body, SiteLanguage language, ChapterView chapter, int? landed)
+    {
+        body.Open("div", "verse-grid reading-verses")
+            .Element("div", chapter.TextName, "reading-pane");
+        var textLanguage = chapter.TextLanguage ?? language.Code;
+        foreach (var (number, text) in chapter.Verses)
+        {
+            body.Open("div", "verse-row", $"v{number}", attributes: ("data-landed", number == landed ? "" : null))
+                .Link(language.Path(PageAddress.VersePath(chapter.Book, chapter.Chapter, number)), number.ToString(), className: "verse-number")
+                .Open("div", "verse-cell").Element("p", text, "text-ltr", textLanguage).Close("div")
+                .Close("div");
+        }
+
+        body.Close("div");
+    }
+
+    /// <summary>
+    /// The chapter in the texts the address names, side by side as the reader lays them out (essenthos-web
+    /// ParallelReader): on a phone the line of the texts' names over the chapter, the text the others are set
+    /// against, and every verse's texts stacked under its number, each named; on a wide screen a column
+    /// each, named at its head. A row for every verse any of them holds, as the reader's rows are, and in
+    /// it a cell for each text, saying so where the text has no such verse.
+    /// </summary>
+    private static void Columns(HtmlWriter body, SiteLanguage language, PageWording t, ChapterView chapter, int? landed)
+    {
+        var columns = chapter.Columns;
+        var count = columns.Count.ToString(CultureInfo.InvariantCulture);
+        body.Open("div", "reading-texts", attributes: ("aria-hidden", "true"))
+            .Element("span", t.Text("reading.together"), "reading-text-on");
+        foreach (var column in columns)
+        {
+            body.Element("span", column.Name);
+        }
+
+        body.Close("div")
+            .Open("div", "reading-verses reading-columns")
+            .Element("p", t.Text("reading.alignedTo", ("name", columns[0].Name)), "reading-aligned")
+            .Open("div", "verse-grid", attributes: [("data-panes", count), ("style", $"--panes:{count}")])
+            .Open("div", "verse-number reading-corner").Close("div");
+        for (var at = 0; at < columns.Count; at++)
+        {
+            body.Open("div", "reading-pane", attributes: ("data-pane-last", at == columns.Count - 1 ? "" : null))
+                .Open("span", "reading-dot", attributes: ("data-script", Script(columns[at]))).Close("span")
+                .Element("span", columns[at].Name, "reading-pane-name");
+            if (at == 0)
+            {
+                body.Element("span", t.Text("reading.base"), "reading-base");
+            }
+
+            body.Close("div");
+        }
+
+        foreach (var number in columns.SelectMany(column => column.Cells.Keys).Distinct().Order())
+        {
+            var shown = number.ToString(CultureInfo.InvariantCulture);
+            body.Open("div", "verse-row", $"v{number}", attributes: [("data-verse", shown), ("data-landed", number == landed ? "" : null)])
+                .Link(language.Path(PageAddress.VersePath(chapter.Book, chapter.Chapter, number)), shown, className: "verse-number");
+            foreach (var column in columns)
+            {
+                body.Open("div", "verse-cell")
+                    .Open("span", "reading-label")
+                    .Open("span", "reading-dot", attributes: ("data-script", Script(column))).Close("span")
+                    .Element("span", column.Name)
+                    .Close("span");
+                if (column.Cells.GetValueOrDefault(number) is { } cell)
+                {
+                    if (cell.Badge is { } badge)
+                    {
+                        body.Element("span", badge, "reading-badge");
+                    }
+
+                    body.Open("p", column.Face, lang: column.Language, attributes: ("dir", column.RightToLeft ? "rtl" : "ltr"))
+                        .Text(cell.Text).Close("p");
+                }
+                else
+                {
+                    body.Element("p", t.Text("reading.notPresentAt", ("corpus", column.Name), ("verse", shown)), "reading-absent");
+                }
+
+                body.Close("div");
+            }
+
+            body.Close("div");
+        }
+
+        body.Close("div").Close("div");
+    }
+
+    /// <summary>Which original a text belongs to, for the dot beside its name, as the reader marks it (essenthos-web scriptDotOf).</summary>
+    private static string Script(ReadingColumn column) => column.Face switch
+    {
+        "text-hebrew" => "hebrew",
+        "text-greek" => "greek",
+        _ => "translation",
+    };
+
     public static PageContent Chapter(SiteLanguage language, PageWording t, ChapterView chapter)
     {
         var reference = $"{chapter.BookName} {chapter.Chapter}";
-        var body = Reading(language, chapter, landed: null);
+        var body = Reading(language, t, chapter, landed: null);
         var beside = Beside(t, OriginalOf(chapter.Book));
         var opening = string.Join(' ', chapter.Verses.Take(OpeningVerses).Select(verse => verse.Text));
         var description = opening.Length > 0

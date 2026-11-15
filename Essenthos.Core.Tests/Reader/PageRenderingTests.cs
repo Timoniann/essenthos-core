@@ -286,6 +286,60 @@ public sealed class PageRenderingTests
     }
 
     [Fact]
+    public void AChapterInSeveralTextsShowsThemSideBySideAsTheReaderLaysThemOut()
+    {
+        var synodal = new ReadingColumn("Синодальный перевод", "ru", false, "text-ltr", new Dictionary<int, ReadingCell>
+        {
+            [1] = new("Блаженны непорочные в пути.", "118:1"),
+        });
+        var hebrew = new ReadingColumn("BHSA", "hbo", true, "text-hebrew", new Dictionary<int, ReadingCell>
+        {
+            [1] = new("אַשְׁרֵ֥י תְמִֽימֵי", null),
+            [2] = new("אַ֭שְׁרֵי נֹצְרֵ֣י", null),
+        });
+        var page = PageViews.Chapter(SiteLanguage.English, PageWording.Compiled("en"),
+            new ChapterView(19, "Psalms", 119, 150, [(1, "Блаженны непорочные в пути.")], "Синодальный перевод")
+            {
+                Columns = [synodal, hebrew],
+            });
+
+        page.Body.Should().Contain("<div class=\"reading-texts\" aria-hidden=\"true\"><span class=\"reading-text-on\">Together</span><span>Синодальный перевод</span><span>BHSA</span></div>")
+            .And.Contain("<p class=\"reading-aligned\">Aligned to Синодальный перевод</p>")
+            .And.Contain("<div class=\"verse-grid\" data-panes=\"2\" style=\"--panes:2\">")
+            .And.Contain("<span class=\"reading-base\">base</span>")
+            .And.Contain("<span class=\"reading-badge\">118:1</span><p class=\"text-ltr\" lang=\"ru\" dir=\"ltr\">Блаженны непорочные в пути.</p>")
+            .And.Contain("<p class=\"text-hebrew\" lang=\"hbo\" dir=\"rtl\">אַ֭שְׁרֵי נֹצְרֵ֣י</p>")
+            .And.Contain("<p class=\"reading-absent\">Not present in Синодальный перевод at verse 2</p>");
+        Regex.Matches(page.Body, "class=\"verse-row\"").Should().HaveCount(2, "a row for every verse either text holds");
+    }
+
+    [Fact]
+    public void AReadersAddressNamesItsTextsEachOnce()
+    {
+        PageAddress.Parse("/read/genesis/1", new Dictionary<string, string> { ["c"] = "KJV, bsb,,kjv,UBIO" }).Texts
+            .Should().Equal("KJV", "bsb", "UBIO");
+        PageAddress.Parse("/read/john/3/16", new Dictionary<string, string> { ["c"] = "KJV,BSB" }).Texts.Should().Equal("KJV", "BSB");
+        PageAddress.Parse("/read/genesis/1").Texts.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AColumnReadsEveryVerseOfItsPaneWithTheTextsOwnAddressWhereItDiffers()
+    {
+        var pane = """
+            {"format":1,"verses":[
+              {"n":1,"ref":[19,118,1],"words":[{"id":1,"s":"Блаженны","t":" "},{"id":2,"s":"непорочные","t":"."}]},
+              {"n":2,"ref":[19,119,2],"stated":["119:2"],"words":[{"id":3,"s":"","el":1,"t":" "},{"id":4,"s":"Блаженны"}]},
+              {"n":3,"ref":[19,118,3],"stated":["118:2-3"],"words":[]}]}
+            """u8.ToArray();
+
+        var cells = ReadingColumn.CellsOf(pane, 119);
+
+        cells[1].Should().Be(new ReadingCell("Блаженны непорочные.", "118:1"));
+        cells[2].Should().Be(new ReadingCell("Блаженны", null));
+        cells[3].Should().Be(new ReadingCell("", "118:2-3"));
+    }
+
+    [Fact]
     public void AnAddressThatNamesNothingIsANotFoundPageNobodyIndexes()
     {
         var address = PageAddress.Parse("/uk/nowhere/at/all");
