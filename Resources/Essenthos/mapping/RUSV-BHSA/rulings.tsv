@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/RUSV-BHSA/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	26.1:19.11	26.1:19.14			«когда» renders וּבְהִנָּשֵׂא, when they were lifted up, not הַחַיּוֹת, the living creatures, which «животные» beside it renders (EZK 1:19)
