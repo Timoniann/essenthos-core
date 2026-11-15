@@ -78,14 +78,17 @@ public sealed class EventAgeTests : IDisposable
     [InlineData("bibledata")]
     public async Task OnePersonsEventsAreInTheSameOrderByYearAndByAge(string reckoning)
     {
-        var dated = (await Events(_abram))
+        var events = await Events(_abram);
+        var born = events.Single(e => e.Kind == "Birth").Dates.Single(d => d.Chronology == reckoning);
+        var dated = events.Where(e => e.Kind != "Birth")
             .Select(e => e.Dates.Single(d => d.Chronology == reckoning))
             .ToList();
 
+        born.AgeAtEvent.Should().BeNull("an age at one's own birth says nothing");
         dated.Should().OnlyContain(d => d.AgeAtEvent != null);
         dated.OrderBy(d => d.Year).ThenBy(d => d.AgeAtEvent).Select(d => d.AgeAtEvent)
             .Should().BeInAscendingOrder();
-        dated.Should().OnlyContain(d => d.Year - d.AgeAtEvent == dated.Single(b => b.AgeAtEvent == 0).Year);
+        dated.Should().OnlyContain(d => d.Year - d.AgeAtEvent == born.Year);
     }
 
     [Fact]

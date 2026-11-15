@@ -20,6 +20,9 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] int? fromYear,
             [FromQuery] int? toYear,
             [FromQuery] string? realm,
+            [FromQuery] string? kind,
+            [FromQuery] string? notKind,
+            [FromQuery] string? reckonings,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             [FromQuery] string? language,
@@ -27,40 +30,59 @@ internal static partial class EncyclopediaEndpoints
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
-            var events = db.Events.AsQueryable();
+            var events = Filtered(db, new EventFilter(entity, fromYear, toYear, realm, kind, notKind));
+            var from = Math.Max(0, skip ?? 0);
+            var count = Math.Clamp(take ?? 50, 1, MostPerPage);
+            var preference = Preference(reckonings);
 
-            if (realm is { Length: > 0 })
+            if (preference.Count == 0)
             {
-                events = events.Where(e => e.Realm == realm);
+                var total = await events.CountAsync(cancellationToken);
+                var page = await InOrder(events).Skip(from).Take(count).Select(Rows).ToListAsync(cancellationToken);
+                return Results.Ok(new EventListResponse(total, await Answered(db, page, null, language, prose, cancellationToken)));
             }
 
-            if (entity is { Length: > 0 })
+            var ordered = await InPreferredOrder(events, preference, cancellationToken);
+            var shown = ordered.Skip(from).Take(count).ToList();
+            return Results.Ok(new EventListResponse(
+                ordered.Count,
+                await Answered(db, await RowsOf(db, shown, cancellationToken), shown, language, prose, cancellationToken)));
+        });
+
+        // Where one event stands in a list narrowed and ordered as the list was, and the events either
+        // side of it, so an event's page steps through the list the reader came from in one request.
+        routes.MapGet("/events/{slug}/step", async (
+            string slug,
+            [FromQuery] int? fromYear,
+            [FromQuery] int? toYear,
+            [FromQuery] string? realm,
+            [FromQuery] string? kind,
+            [FromQuery] string? notKind,
+            [FromQuery] string? reckonings,
+            [FromQuery] string? language,
+            [FromQuery] string? prose,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+        {
+            var events = Filtered(db, new EventFilter(null, fromYear, toYear, realm, kind, notKind));
+            var preference = Preference(reckonings);
+            var ordered = await InPreferredOrder(events, preference, cancellationToken);
+            var at = ordered.FindIndex(one => one.Slug == slug);
+            if (at < 0)
             {
-                events = events.Where(e => e.Entity!.Slug == entity);
+                return await db.Events.AnyAsync(e => e.Slug == slug, cancellationToken)
+                    ? Results.Ok(new EventStepResponse(null, ordered.Count, null, null))
+                    : Results.NotFound();
             }
 
-            if (fromYear is { } from)
-            {
-                events = events.Where(e => e.YearFromCreation >= from);
-            }
-
-            if (toYear is { } to)
-            {
-                events = events.Where(e => e.YearFromCreation <= to);
-            }
-
-            var total = await events.CountAsync(cancellationToken);
-            var page = await InOrder(events)
-                .Skip(Math.Max(0, skip ?? 0))
-                .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
-                .Select(Rows)
-                .ToListAsync(cancellationToken);
-
-            var places = await PlacesNamed(db, page.Select(row => EventLocation.Of(row.Event)), cancellationToken);
-            var aged = await Aged(db, page, cancellationToken);
-
-            return Results.Ok(new EventListResponse(total, await InTheReadersLanguage(
-                db, [.. aged.Select(row => Event(row, places))], language, prose, cancellationToken)));
+            List<InList> either = [.. new[] { at - 1, at + 1 }.Where(i => i >= 0 && i < ordered.Count).Select(i => ordered[i])];
+            var answered = await Answered(
+                db, await RowsOf(db, either, cancellationToken), preference.Count > 0 ? either : null, language, prose, cancellationToken);
+            return Results.Ok(new EventStepResponse(
+                at + 1,
+                ordered.Count,
+                at > 0 ? answered[0] : null,
+                at < ordered.Count - 1 ? answered[^1] : null));
         });
 
         // One event, with everything the trimmed timeline payload leaves out.
@@ -96,6 +118,219 @@ internal static partial class EncyclopediaEndpoints
         var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
         var one = Event((await Aged(db, [row], cancellationToken))[0], places);
         return (await InTheReadersLanguage(db, [one], language, prose, cancellationToken))[0];
+    }
+
+    /// <summary>What a list of events is narrowed to: each part absent where the reader did not narrow by it.</summary>
+    internal sealed record EventFilter(
+        string? Entity,
+        int? FromYear,
+        int? ToYear,
+        string? Realm,
+        string? Kinds,
+        string? NotKinds);
+
+    /// <summary>The events a list holds, unordered. Kinds are comma separated, spelled as the source spells them.</summary>
+    internal static IQueryable<Database.Entities.Event> Filtered(AppDbContext db, EventFilter filter)
+    {
+        var events = db.Events.AsQueryable();
+
+        if (filter.Realm is { Length: > 0 } realm)
+        {
+            events = events.Where(e => e.Realm == realm);
+        }
+
+        if (filter.Entity is { Length: > 0 } entity)
+        {
+            events = events.Where(e => e.Entity!.Slug == entity);
+        }
+
+        if (filter.FromYear is { } from)
+        {
+            events = events.Where(e => e.YearFromCreation >= from);
+        }
+
+        if (filter.ToYear is { } to)
+        {
+            events = events.Where(e => e.YearFromCreation <= to);
+        }
+
+        if (Listed(filter.Kinds) is { Count: > 0 } kinds)
+        {
+            events = events.Where(e => e.Kind != null && kinds.Contains(e.Kind));
+        }
+
+        if (Listed(filter.NotKinds) is { Count: > 0 } notKinds)
+        {
+            events = events.Where(e => e.Kind == null || !notKinds.Contains(e.Kind));
+        }
+
+        return events;
+    }
+
+    private static List<string> Listed(string? commaSeparated) =>
+        commaSeparated is null
+            ? []
+            : [.. commaSeparated.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Distinct()];
+
+    /// <summary>The reckonings a reader asked for, the preferred first; empty where none was asked for.</summary>
+    internal static List<string> Preference(string? reckonings) => Listed(reckonings);
+
+    /// <summary>
+    /// One event's place in a list: the reckoning whose year it is shown by (null in the base order)
+    /// and that year on the astronomical axis, where 1 BCE is 0. Only there can the reckonings' years
+    /// be compared at all: their years from creation start centuries apart.
+    /// </summary>
+    internal sealed record InList(int Id, string Slug, string? ShownBy, int? Axis, int? YearFromCreation);
+
+    private sealed record DateKey(string Chronology, int? Year, int? StatedYear, int LastYearBeforeTheCommonEra);
+
+    /// <summary>
+    /// The events in order of the year a reader is shown: each by the first reckoning in the reader's
+    /// preference that dates it. An event none of them dates comes after the rest. With no preference
+    /// this is the base order of <see cref="InOrder"/>. Ties fall to the base year from creation, then
+    /// to the slug read with its numbers as numbers, so Ussher's paragraph 999 comes before his 1000.
+    ///
+    /// <para>
+    /// In memory, because the order rests on a choice among each event's dates that no index serves;
+    /// the table holds under two thousand events and nine thousand dates.
+    /// </para>
+    /// </summary>
+    internal static async Task<List<InList>> InPreferredOrder(
+        IQueryable<Database.Entities.Event> events,
+        IReadOnlyList<string> preference,
+        CancellationToken cancellationToken)
+    {
+        var rows = await events
+            .Select(e => new
+            {
+                e.Id,
+                e.Slug,
+                e.YearFromCreation,
+                Dates = e.Dates.Select(d => new DateKey(
+                    d.Chronology!.Slug, d.Year, d.StatedYear, d.Chronology.LastYearBeforeTheCommonEra)).ToList(),
+            })
+            .ToListAsync(cancellationToken);
+
+        var placed = rows.Select(row =>
+        {
+            foreach (var reckoning in preference)
+            {
+                if (row.Dates.FirstOrDefault(d => d.Chronology == reckoning) is { } date && OnTheAxis(date) is { } axis)
+                {
+                    return new InList(row.Id, row.Slug, reckoning, axis, row.YearFromCreation);
+                }
+            }
+
+            return new InList(row.Id, row.Slug, null, null, row.YearFromCreation);
+        });
+
+        return
+        [
+            .. placed
+                .OrderBy(p => preference.Count > 0 && p.Axis is null)
+                .ThenBy(p => p.Axis)
+                .ThenBy(p => p.YearFromCreation is null)
+                .ThenBy(p => p.YearFromCreation)
+                .ThenBy(p => p.Slug, NumberAwareOrder.Instance),
+        ];
+    }
+
+    /// <summary>
+    /// A reckoning's date as an astronomical year: the year its work printed where it printed one
+    /// (negative before the turn, with no year zero), and otherwise its year from creation less its
+    /// own zero.
+    /// </summary>
+    private static int? OnTheAxis(DateKey date) =>
+        date.StatedYear is { } stated ? stated < 0 ? stated + 1 : stated
+        : date.Year is { } year ? year - date.LastYearBeforeTheCommonEra
+        : null;
+
+    /// <summary>Text compared with each run of digits read as a number.</summary>
+    internal sealed class NumberAwareOrder : IComparer<string>
+    {
+        public static readonly NumberAwareOrder Instance = new();
+
+        public int Compare(string? x, string? y)
+        {
+            if (x is null || y is null)
+            {
+                return string.CompareOrdinal(x, y);
+            }
+
+            int i = 0, j = 0;
+            while (i < x.Length && j < y.Length)
+            {
+                if (char.IsAsciiDigit(x[i]) && char.IsAsciiDigit(y[j]))
+                {
+                    var a = i;
+                    var b = j;
+                    while (i < x.Length && char.IsAsciiDigit(x[i]))
+                    {
+                        i++;
+                    }
+
+                    while (j < y.Length && char.IsAsciiDigit(y[j]))
+                    {
+                        j++;
+                    }
+
+                    var left = x[a..i].TrimStart('0');
+                    var right = y[b..j].TrimStart('0');
+                    var byNumber = left.Length != right.Length
+                        ? left.Length.CompareTo(right.Length)
+                        : string.CompareOrdinal(left, right);
+                    if (byNumber != 0)
+                    {
+                        return byNumber;
+                    }
+                }
+                else
+                {
+                    var byChar = x[i].CompareTo(y[j]);
+                    if (byChar != 0)
+                    {
+                        return byChar;
+                    }
+
+                    i++;
+                    j++;
+                }
+            }
+
+            return (x.Length - i).CompareTo(y.Length - j);
+        }
+    }
+
+    /// <summary>The rows of these events, in the order given.</summary>
+    private static async Task<List<EventRow>> RowsOf(
+        AppDbContext db,
+        IReadOnlyList<InList> placed,
+        CancellationToken cancellationToken)
+    {
+        var ids = placed.Select(p => p.Id).ToList();
+        var rows = await db.Events.Where(e => ids.Contains(e.Id)).Select(Rows).ToListAsync(cancellationToken);
+        var at = ids.Select((id, index) => (id, index)).ToDictionary(p => p.id, p => p.index);
+        return [.. rows.OrderBy(row => at[row.Event.Id])];
+    }
+
+    /// <summary>
+    /// The rows as the API answers them, each with the reckoning it is shown by where the list was
+    /// ordered by a reader's preference.
+    /// </summary>
+    private static async Task<IList<EventResponse>> Answered(
+        AppDbContext db,
+        IReadOnlyList<EventRow> rows,
+        IReadOnlyList<InList>? placed,
+        string? language,
+        string? prose,
+        CancellationToken cancellationToken)
+    {
+        var places = await PlacesNamed(db, rows.Select(row => EventLocation.Of(row.Event)), cancellationToken);
+        var aged = await Aged(db, rows, cancellationToken);
+        var answered = await InTheReadersLanguage(db, [.. aged.Select(row => Event(row, places))], language, prose, cancellationToken);
+        return placed is null
+            ? answered
+            : [.. answered.Select((one, index) => one with { ShownBy = placed[index].ShownBy })];
     }
 
     /// <summary>
@@ -221,7 +456,8 @@ internal static partial class EncyclopediaEndpoints
     /// 2080 and Haran at 75 in 2085. Ussher puts both departures in his year 2083, so his years
     /// beside BibleData's ages had Abram 70 and 75 in one year. Each reckoning's age is therefore its
     /// own year of the event less its own year of the person's birth, and BibleData keeps the age its
-    /// row states. One query for the births of every person on the page.
+    /// row states. One query for the births of every person on the page. A birth itself carries no
+    /// age: the source's is always 0, which tells a reader nothing.
     /// </para>
     /// </summary>
     internal static async Task<List<EventRow>> Aged(
@@ -257,7 +493,9 @@ internal static partial class EncyclopediaEndpoints
 
         return
         [
-            .. rows.Select(row => row.Event.AgeAtEvent is null || row.Event.EntityId is not { } person
+            .. rows.Select(row => row.Event.Kind == Birth
+                ? row with { Dates = [.. row.Dates.Select(date => date with { AgeAtEvent = null })] }
+                : row.Event.AgeAtEvent is null || row.Event.EntityId is not { } person
                 ? row
                 : row with
                 {
@@ -462,7 +700,7 @@ internal static partial class EncyclopediaEndpoints
             entityName,
             e.YearFromCreation,
             reckoning?.BceYear,
-            e.AgeAtEvent,
+            e.Kind == Birth ? null : e.AgeAtEvent,
             e.Calculation,
             BookReferences.At(e.CanonicalBook, e.CanonicalChapter, e.CanonicalVerse),
             e.Location,
