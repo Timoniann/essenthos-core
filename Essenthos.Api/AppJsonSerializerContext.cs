@@ -24,6 +24,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(PersonOccupationResponse))]
 [JsonSerializable(typeof(PersonOccupationsResponse))]
 [JsonSerializable(typeof(EntityTribeResponse))]
+[JsonSerializable(typeof(EntityMembersResponse))]
+[JsonSerializable(typeof(TribeListResponse))]
 [JsonSerializable(typeof(EntityWikipediaResponse))]
 [JsonSerializable(typeof(ContextExceptionResponse))]
 [JsonSerializable(typeof(IList<ContextExceptionResponse>))]

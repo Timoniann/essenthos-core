@@ -319,13 +319,12 @@ public sealed class OccupationTests : IDisposable
     }
 
     [Fact]
-    public void AClaimRestsOnItsOwnBookOnlyWhereNoQuotationSaysIt()
+    public void AClaimRestsOnAQuotationOrTheBookTheyWroteOrBoth()
     {
         Make(File(new OccupationClaim("luke", "physician", [Quote(kind: "own-book")])));
 
         Rows(OccupationFiles.WitnessesProduct).Single()[3].Should().Be("own-book");
-        var both = () => OccupationFiles.Validate(File(new OccupationClaim("luke", "physician", [Quote(), Quote(kind: "own-book")])));
-        both.Should().Throw<InvalidDataException>();
+        OccupationFiles.Validate(File(new OccupationClaim("luke", "physician", [Quote(), Quote(kind: "own-book")])));
         var neither = () => OccupationFiles.Validate(File(new OccupationClaim("luke", "physician", [Quote(kind: "identity")])));
         neither.Should().Throw<InvalidDataException>();
     }

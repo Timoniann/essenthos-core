@@ -23,6 +23,7 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] int? skip,
             [FromQuery] int? take,
             [FromQuery] string? canon,
+            [FromQuery] string? tribe,
             AppDbContext db,
             IServiceScopeFactory scopes,
             SiteSettingsFile settings,
@@ -36,6 +37,19 @@ internal static partial class EncyclopediaEndpoints
             }
 
             var entities = Listed(db.Entities);
+
+            // The persons of a people, every one of them: a member no verse names is still of the tribe.
+            if (tribe is { Length: > 0 })
+            {
+                var people = await db.Entities.Where(e => e.Slug == tribe && e.Kind == EntityKind.People)
+                    .Select(e => new { e.Id, e.OriginEntityId }).FirstOrDefaultAsync(cancellationToken);
+                if (people is null)
+                {
+                    return ApiResults.NotFound($"There is no people \"{tribe}\".");
+                }
+
+                entities = Tribes.Members(db, db.Entities, await Tribes.Of(db, people.Id, people.OriginEntityId, cancellationToken));
+            }
 
             if (!OfKind(ref entities, kind, out var refusal) || !InCanon(ref entities, canon, out refusal))
             {
@@ -132,6 +146,40 @@ internal static partial class EncyclopediaEndpoints
             {
                 Near = found?.Near ?? false,
             });
+        });
+
+        // The tribes of Israel the people list can be narrowed to, each with how many belong to it.
+        routes.MapGet("/entities/tribes", async (
+            [FromQuery] string? language,
+            [FromQuery] string? canon,
+            AppDbContext db,
+            CancellationToken cancellationToken) =>
+        {
+            var everyone = db.Entities.AsQueryable();
+            if (!InCanon(ref everyone, canon, out var refusal))
+            {
+                return refusal!;
+            }
+
+            var tribes = await Tribes.Israel(db, cancellationToken);
+            var ids = tribes.SelectMany(t => t.Membership.Targets).Distinct().ToList();
+            var heads = await db.Entities.Where(e => ids.Contains(e.Id))
+                .Select(e => new { e.Id, e.Slug, e.Kind, e.Name }).ToDictionaryAsync(e => e.Id, cancellationToken);
+            var names = await EntityNames.Of(db, ids, language, cancellationToken);
+            var items = new List<TribeResponse>();
+            foreach (var (id, slug, membership) in tribes)
+            {
+                var count = await Tribes.Members(db, everyone, membership).CountAsync(cancellationToken);
+                var father = membership.Targets.Single(target => target != id);
+                items.Add(new TribeResponse(slug, EnumSpelling.Of(heads[id].Kind), heads[id].Name, names.GetValueOrDefault(id), count)
+                {
+                    Patriarch = new EntityTribeResponse(
+                        heads[father].Slug, EnumSpelling.Of(heads[father].Kind), heads[father].Name, names.GetValueOrDefault(father)),
+                });
+            }
+
+            return Results.Ok(new TribeListResponse(
+                [.. items.Where(i => i.Members > 0).OrderBy(i => i.Patriarch?.LocalName ?? i.Patriarch?.Name, StringComparer.Ordinal)]));
         });
 
         // How far each layer of the encyclopedia actually reaches, measured rather than declared.

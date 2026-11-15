@@ -21,27 +21,22 @@ internal static partial class EncyclopediaEndpoints
         AppDbContext db, string? tribe, string? language, CancellationToken cancellationToken, string? self = null)
     {
         if (string.IsNullOrWhiteSpace(tribe)) return null;
-        var tribalIds = db.EntityDescriptors.Where(d => d.Relation == "of-tribe").Select(d => d.TargetEntityId);
-        var patriarchIds = db.EntityDescriptors.Where(d => tribalIds.Contains(d.EntityId)
-            && d.Relation == "descendants-of" && d.Target!.Kind == EntityKind.Person).Select(d => d.TargetEntityId);
-        var candidates = await db.Entities.Where(e => e.Name == tribe && e.Kind == EntityKind.Person
-            && (tribalIds.Contains(e.Id) || patriarchIds.Contains(e.Id)))
-            .Select(e => new { e.Id, e.Slug, e.Kind, e.Name }).ToListAsync(cancellationToken);
-
-        if (candidates.Count == 0)
+        if (!(await Tribes.Resolve(db, [tribe], cancellationToken)).TryGetValue(tribe, out var found) || found.Slug == self)
         {
-            string[] spellings = [tribe, tribe + "s", tribe + "ites"];
-            candidates = await db.Entities
-                .Where(e => e.Kind == EntityKind.People
-                    && (spellings.Contains(e.Name) || e.Names.Any(n => spellings.Contains(n.Label))))
-                .Select(e => new { e.Id, e.Slug, e.Kind, e.Name })
-                .ToListAsync(cancellationToken);
+            return null;
         }
 
-        if (candidates.Count != 1 || candidates[0].Slug == self) return null;
-        var found = candidates[0];
         var names = await EntityNames.Of(db, [found.Id], language, cancellationToken);
         return new EntityTribeResponse(found.Slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(found.Id));
+    }
+
+    /// <summary>How many persons belong to a people, and whether it is a tribe of Israel; null where nobody does.</summary>
+    private static async Task<EntityMembersResponse?> Members(
+        AppDbContext db, int people, int? origin, CancellationToken cancellationToken)
+    {
+        var membership = await Tribes.Of(db, people, origin, cancellationToken);
+        var count = await Tribes.Members(db, db.Entities, membership).CountAsync(cancellationToken);
+        return count == 0 ? null : new EntityMembersResponse(count, membership.Tribe);
     }
 
     /// <summary>
@@ -141,6 +136,7 @@ internal static partial class EncyclopediaEndpoints
                     .Select(x => x.ExternalId)
                     .FirstOrDefault(),
                 e.AnotherNameForEntityId,
+                e.OriginEntityId,
                 Origin = e.Origin == null
                     ? null
                     : new EntityOriginResponse(
@@ -413,6 +409,9 @@ internal static partial class EncyclopediaEndpoints
                     : null,
             TribeRecord = await TribeRecord(
                 db, entity.Tribe, language, cancellationToken, entity.Slug),
+            Members = entity.Kind == EntityKind.People
+                ? await Members(db, entity.Id, entity.OriginEntityId, cancellationToken)
+                : null,
             Descriptor = described.GetValueOrDefault(entity.Slug),
             Location = entity.Location,
             Locations = locations,
