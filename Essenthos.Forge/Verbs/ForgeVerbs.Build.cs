@@ -385,14 +385,15 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary><c>pages [--force]</c>: the documents record and Strong pages are written from, for the configured database.</summary>
+    /// <summary><c>pages [--force] [--parallel n]</c>: the documents record and Strong pages are written from, for the configured database.</summary>
     private static async Task<int> PagesVerb(ForgeRun forge, string[] args)
     {
         ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");
         var services = forge.Scope().ServiceProvider;
         var outcome = await new PageDocumentBuild(forge.DatabaseConnection, new ProductStore(forge.Resources), services,
                 services.GetRequiredService<IConfiguration>(), forge.Logger)
-            .Run(args.Contains("--force"), CancellationToken.None);
+            .Run(args.Contains("--force"), CancellationToken.None,
+                Option(args, "--parallel") is { } n ? int.Parse(n, CultureInfo.InvariantCulture) : null);
         Console.WriteLine($"{outcome.Made} products made, {outcome.Rows} rows written, {outcome.Documents} documents, {outcome.Bytes} bytes, "
                           + $"{outcome.Compressed} compressed, in {outcome.Elapsed.TotalSeconds:0.0} s");
         return 0;

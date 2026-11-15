@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using System.Threading.Channels;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -36,6 +37,12 @@ internal sealed record PageDocumentOutcome(int Made, long Rows, long Documents, 
 /// as it now stands, loaded as <c>page_document</c>. A product is made again where any product the database was built from
 /// moved, where the owner's switches the pages are composed under moved, or where the API's code did (its module version);
 /// a table that does not hold the rows of a current product takes them from it, and nothing is composed.
+/// <para>
+/// Every page of every product that must be made, and every page the check composes again, goes through one set of workers,
+/// each with a database connection of its own, so the eight products are composed at once and the machine is held to the
+/// number of workers asked for (<see cref="ParallelKey"/>, half the cores where unset). A product is written, loaded and
+/// checked as soon as its last page is composed, beside the pages of the others.
+/// </para>
 /// </summary>
 internal sealed class PageDocumentBuild(
     string connectionString, ProductStore store, IServiceProvider services, IConfiguration configuration, ILogger logger)
@@ -49,13 +56,21 @@ internal sealed class PageDocumentBuild(
     /// <summary>How many pages of each kind and language the run composes again to hold the stored ones to.</summary>
     public const int Sample = 50;
 
-    /// <summary>How many pages are composed at once, each with a database connection of its own.</summary>
-    public const int Parallelism = 8;
+    /// <summary>How many pages are composed at once; half the machine's cores where unset.</summary>
+    public const string ParallelKey = "Pages:Parallel";
+
+    /// <summary>The workers a run takes where the caller does not say: <see cref="ParallelKey"/>, else half the cores.</summary>
+    public int Parallelism => configuration.GetValue(ParallelKey, 0) is > 0 and var configured
+        ? configured
+        : Math.Max(1, Environment.ProcessorCount / 2);
 
     /// <summary>The products a page document does not read: itself, and the panes and strength, which no record or Strong page reads.</summary>
     private static readonly string[] Unread = ["Essenthos/page-documents/", "Essenthos/panes/", "Essenthos/strength/"];
 
-    public async Task<PageDocumentOutcome> Run(bool force, CancellationToken cancellationToken)
+    /// <summary>The manifest and the hashes are one per store, so one product at a time is written and saved.</summary>
+    private readonly SemaphoreSlim _storeHeld = new(1, 1);
+
+    public async Task<PageDocumentOutcome> Run(bool force, CancellationToken cancellationToken, int? parallel = null)
     {
         var clock = Stopwatch.StartNew();
         var settings = new SiteSettingsFile(SettingsPath(), NullLogger<SiteSettingsFile>.Instance);
@@ -76,8 +91,13 @@ internal sealed class PageDocumentBuild(
             ["settings"] = $"{settings.Choices[SiteSettings.ReaderTranslation]}|{settings.Is(SiteSettings.GeneratedImages)}",
         };
 
-        // Every count of how a text renders an original is counted over the same links for every page of this corpus.
+        // Every count of how a text renders an original is counted over the same links for every page of this corpus, and every
+        // line that names descendants reads the same family tree.
         LinkedOriginals.Kept.Value = new ConcurrentDictionary<int, List<LinkedOriginal>>();
+        KinFacts.Kept.Value = new KinFacts.KeptDescents();
+        using var stopping = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var workers = parallel is > 0 ? parallel.Value : Parallelism;
+        var pool = new PageWorkers(services, settings, cache, downloads, places, workers, stopping.Token);
         try
         {
             List<string> slugs;
@@ -90,35 +110,33 @@ internal sealed class PageDocumentBuild(
                 numbers.Sort(StringComparer.Ordinal);
             }
 
-            var made = 0;
-            long rows = 0, documents = 0, bytes = 0, compressed = 0;
-            foreach (var kind in Kinds)
+            // Whether each product is current is asked of the store one after another, and the pages of those to be made are
+            // queued in this order, the record pages (the slowest) first.
+            var plans = (
+                from kind in Kinds
+                from language in SiteLanguage.All
+                let product = Product(kind, language)
+                let made = force || !IsCurrent(product, inputs, notes)
+                select (kind, language, product, Composed: made
+                    ? pool.Compose(kind, language, kind == PageDocuments.RecordKind ? slugs : numbers)
+                    : null)).ToList();
+            logger.LogInformation("Page documents: {Made} of {Products} products to compose, {Workers} pages at once",
+                plans.Count(p => p.Composed is not null), plans.Count, workers);
+            var outcomes = await Task.WhenAll(plans.Select(plan => Task.Run(async () =>
             {
-                var addresses = kind == PageDocuments.RecordKind ? slugs : numbers;
-                foreach (var language in SiteLanguage.All)
+                try
                 {
-                    var product = Product(kind, language);
-                    var stored = force ? null : Current(product, inputs, notes);
-                    if (stored is null)
-                    {
-                        var started = clock.Elapsed;
-                        stored = await Compose(kind, language, addresses, settings, cache, downloads, places, cancellationToken);
-                        Write(product, stored, inputs, notes);
-                        made++;
-                        logger.LogInformation("Page documents {Kind}/{Language}: {Rows} documents, {Bytes} bytes, {Compressed} compressed in {Seconds:0.0} s",
-                            kind, language.Code, stored.Count, stored.Sum(r => r.Bytes), stored.Sum(r => (long)r.Body.Length * 3 / 4),
-                            (clock.Elapsed - started).TotalSeconds);
-                    }
-
-                    documents += stored.Count;
-                    bytes += stored.Sum(r => r.Bytes);
-                    compressed += stored.Sum(r => (long)r.Body.Length * 3 / 4);
-                    rows += await Match(kind, language, stored, cancellationToken);
-                    await Check(kind, language, stored, settings, cache, downloads, places, cancellationToken);
-                    store.Save();
+                    return await Make(plan.kind, plan.language, plan.product, plan.Composed, inputs, notes, pool, clock, stopping.Token);
                 }
-            }
+                catch
+                {
+                    await stopping.CancelAsync();
+                    throw;
+                }
+            }, stopping.Token)));
+            await pool.Finish();
 
+            var rows = outcomes.Sum(o => o.Rows);
             if (rows > 0)
             {
                 await using var connection = new NpgsqlConnection(connectionString);
@@ -127,12 +145,61 @@ internal sealed class PageDocumentBuild(
                 await analyze.ExecuteNonQueryAsync(cancellationToken);
             }
 
-            return new PageDocumentOutcome(made, rows, documents, bytes, compressed, clock.Elapsed);
+            return new PageDocumentOutcome(
+                outcomes.Count(o => o.Made), rows, outcomes.Sum(o => o.Documents), outcomes.Sum(o => o.Bytes),
+                outcomes.Sum(o => o.Compressed), clock.Elapsed);
+        }
+        catch
+        {
+            await stopping.CancelAsync();
+            await pool.Abandon();
+            throw;
         }
         finally
         {
             LinkedOriginals.Kept.Value = null;
+            KinFacts.Kept.Value = null;
         }
+    }
+
+    private sealed record ProductOutcome(bool Made, long Rows, long Documents, long Bytes, long Compressed);
+
+    /// <summary>
+    /// One product: its pages as the workers composed them (read from the product where it is current), the product written,
+    /// the table made to hold its rows, and the check.
+    /// </summary>
+    private async Task<ProductOutcome> Make(
+        string kind, SiteLanguage language, string product, Task<PageDocumentRow?[]>? composed, IReadOnlyList<ProductInput> inputs,
+        IReadOnlyDictionary<string, string> notes, PageWorkers pool, Stopwatch clock, CancellationToken cancellationToken)
+    {
+        List<PageDocumentRow> stored;
+        if (composed is null)
+        {
+            using var reader = store.Open(product, PageDocumentRow.Schema);
+            stored = [.. reader.Rows()];
+        }
+        else
+        {
+            stored = [.. (await composed).OfType<PageDocumentRow>()];
+            await _storeHeld.WaitAsync(cancellationToken);
+            try
+            {
+                Write(product, stored, inputs, notes);
+                store.Save();
+            }
+            finally
+            {
+                _storeHeld.Release();
+            }
+
+            logger.LogInformation("Page documents {Kind}/{Language}: {Rows} documents, {Bytes} bytes, {Compressed} compressed, done at {Seconds:0.0} s",
+                kind, language.Code, stored.Count, stored.Sum(r => r.Bytes), stored.Sum(r => (long)r.Body.Length * 3 / 4),
+                clock.Elapsed.TotalSeconds);
+        }
+
+        var rows = await Match(kind, language, stored, cancellationToken);
+        await Check(kind, language, stored, pool);
+        return new ProductOutcome(composed is not null, rows, stored.Count, stored.Sum(r => r.Bytes), stored.Sum(r => (long)r.Body.Length * 3 / 4));
     }
 
     /// <summary>The owner's switches the API is published with: <c>Site:SettingsPath</c>, else the API project's own file beside Resources.</summary>
@@ -146,32 +213,6 @@ internal sealed class PageDocumentBuild(
         configuration[ImageEndpoints.ConfigurationKey] is { Length: > 0 } configured
             ? Path.GetFullPath(configured)
             : Path.Combine(store.ResourcesPath, "Images");
-
-    private async Task<List<PageDocumentRow>> Compose(
-        string kind, SiteLanguage language, IReadOnlyList<string> addresses, SiteSettingsFile settings, PageCache cache,
-        DownloadsCatalogue downloads, PlacePictures places, CancellationToken cancellationToken)
-    {
-        var queue = new ConcurrentQueue<string>(addresses);
-        var made = new ConcurrentBag<PageDocumentRow>();
-        var canon = services.GetRequiredService<ICanonIndex>();
-        await Task.WhenAll(Enumerable.Range(0, Parallelism).Select(_ => Task.Run(async () =>
-        {
-            using var scope = services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            var loader = new PageLoader(db, canon, settings, cache, downloads, places);
-            while (queue.TryDequeue(out var address))
-            {
-                if (await Packed(loader, kind, language, address, cancellationToken) is { } row)
-                {
-                    made.Add(row);
-                }
-
-                db.ChangeTracker.Clear();
-            }
-        }, cancellationToken)));
-        return [.. made.OrderBy(r => r.Address, StringComparer.Ordinal)];
-    }
 
     private static async Task<PageDocumentRow?> Packed(
         PageLoader loader, string kind, SiteLanguage language, string address, CancellationToken cancellationToken)
@@ -192,17 +233,17 @@ internal sealed class PageDocumentBuild(
         return (body, hash, length);
     }
 
-    /// <summary>A product's rows where it is current for these inputs and was made under these notes; null where it must be made.</summary>
-    private List<PageDocumentRow>? Current(string product, IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<string, string> notes)
+    /// <summary>Whether a product is current for these inputs and was made under these notes.</summary>
+    private bool IsCurrent(string product, IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<string, string> notes)
     {
         if (store.NeedsBuild(product, ProductKind.Machine, inputs))
         {
-            return null;
+            return false;
         }
 
         using var reader = store.Open(product, PageDocumentRow.Schema);
         var said = reader.Header?.Notes.ToDictionary(n => n.Key, n => n.Value, StringComparer.Ordinal) ?? [];
-        return notes.All(note => said.GetValueOrDefault(note.Key) == note.Value) ? [.. reader.Rows()] : null;
+        return notes.All(note => said.GetValueOrDefault(note.Key) == note.Value);
     }
 
     private void Write(string product, IEnumerable<PageDocumentRow> rows, IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<string, string> notes)
@@ -273,28 +314,25 @@ internal sealed class PageDocumentBuild(
     /// A sample of the stored documents held to the pages composed again from the tables as they stand, drawn from every part
     /// of the list: the same document, and one that reads back as itself. A difference fails the run, naming the pages.
     /// </summary>
-    private async Task Check(
-        string kind, SiteLanguage language, IReadOnlyList<PageDocumentRow> stored, SiteSettingsFile settings, PageCache cache,
-        DownloadsCatalogue downloads, PlacePictures places, CancellationToken cancellationToken)
+    private async Task Check(string kind, SiteLanguage language, IReadOnlyList<PageDocumentRow> stored, PageWorkers pool)
     {
         if (stored.Count == 0)
         {
             return;
         }
 
-        using var scope = services.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-        var loader = new PageLoader(db, services.GetRequiredService<ICanonIndex>(), settings, cache, downloads, places);
+        var count = Math.Min(Sample, stored.Count);
+        var sample = Enumerable.Range(0, count).Select(i => stored[(int)((long)i * stored.Count / count)]).ToList();
+        var again = await pool.Compose(kind, language, [.. sample.Select(row => row.Address)]);
         var differences = new List<string>();
-        foreach (var row in Enumerable.Range(0, Math.Min(Sample, stored.Count)).Select(i => stored[(int)((long)i * stored.Count / Math.Min(Sample, stored.Count))]))
+        for (var i = 0; i < sample.Count; i++)
         {
-            var again = await Packed(loader, kind, language, row.Address, cancellationToken);
+            var row = sample[i];
             var body = Convert.FromBase64String(row.Body);
             var reread = kind == PageDocuments.RecordKind
                 ? Reread(body, PageDocuments.Record)
                 : Reread(body, PageDocuments.Strong);
-            if (again?.Hash != row.Hash || reread != row.Hash)
+            if (again[i]?.Hash != row.Hash || reread != row.Hash)
             {
                 differences.Add(row.Address);
             }
@@ -307,13 +345,137 @@ internal sealed class PageDocumentBuild(
                 + "Raise PageDocuments.Version with a change to what a page is composed from, then build again.");
         }
 
-        logger.LogInformation("Page check {Kind}/{Language}: {Count} documents composed again equal the stored ones", kind, language.Code,
-            Math.Min(Sample, stored.Count));
+        logger.LogInformation("Page check {Kind}/{Language}: {Count} documents composed again equal the stored ones", kind, language.Code, count);
 
         static string Reread<T>(byte[] body, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> info)
         {
             var (document, answers) = PageDocuments.Unpack(body, info);
             return PageDocuments.Pack(document, answers, info).Hash;
+        }
+    }
+
+    /// <summary>
+    /// A fixed number of workers, each with a database context and a <see cref="PageLoader"/> of its own, composing the pages
+    /// queued to them in the order they were queued. Anything a worker fails on fails the pages still waiting.
+    /// </summary>
+    private sealed class PageWorkers
+    {
+        private readonly Channel<Func<PageLoader, Task>> _queue =
+            Channel.CreateUnbounded<Func<PageLoader, Task>>(new UnboundedChannelOptions { SingleReader = false, SingleWriter = false });
+
+        private readonly ConcurrentQueue<TaskCompletionSource<PageDocumentRow?[]>> _waiting = new();
+
+        private readonly Task[] _workers;
+
+        private readonly CancellationToken _token;
+
+        public PageWorkers(
+            IServiceProvider services, SiteSettingsFile settings, PageCache cache, DownloadsCatalogue downloads, PlacePictures places,
+            int count, CancellationToken token)
+        {
+            _token = token;
+            token.Register(() =>
+            {
+                foreach (var waiting in _waiting)
+                {
+                    waiting.TrySetCanceled(token);
+                }
+            });
+            var canon = services.GetRequiredService<ICanonIndex>();
+            _workers =
+            [
+                .. Enumerable.Range(0, Math.Max(1, count)).Select(_ => Task.Run(async () =>
+                {
+                    try
+                    {
+                        using var scope = services.CreateScope();
+                        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                        db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                        // One connection for the worker's whole run, rather than one taken from the pool and reset for each
+                        // of the sixty-odd statements a page reads.
+                        await db.Database.OpenConnectionAsync(token);
+                        var loader = new PageLoader(db, canon, settings, cache, downloads, places);
+                        await foreach (var page in _queue.Reader.ReadAllAsync(token))
+                        {
+                            await page(loader);
+                            db.ChangeTracker.Clear();
+                        }
+                    }
+                    catch (Exception failure) when (failure is not OperationCanceledException || !token.IsCancellationRequested)
+                    {
+                        foreach (var waiting in _waiting)
+                        {
+                            waiting.TrySetException(failure);
+                        }
+
+                        throw;
+                    }
+                }, token)),
+            ];
+        }
+
+        /// <summary>The documents of these pages, in their order; null for an address that is no page.</summary>
+        public Task<PageDocumentRow?[]> Compose(string kind, SiteLanguage language, IReadOnlyList<string> addresses)
+        {
+            var rows = new PageDocumentRow?[addresses.Count];
+            var done = new TaskCompletionSource<PageDocumentRow?[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            if (addresses.Count == 0)
+            {
+                done.SetResult(rows);
+                return done.Task;
+            }
+
+            _waiting.Enqueue(done);
+            var left = addresses.Count;
+            for (var i = 0; i < addresses.Count; i++)
+            {
+                var index = i;
+                _queue.Writer.TryWrite(async loader =>
+                {
+                    if (done.Task.IsCompleted)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        rows[index] = await Packed(loader, kind, language, addresses[index], _token);
+                    }
+                    catch (Exception failure)
+                    {
+                        done.TrySetException(failure);
+                        return;
+                    }
+
+                    if (Interlocked.Decrement(ref left) == 0)
+                    {
+                        done.TrySetResult(rows);
+                    }
+                });
+            }
+
+            return done.Task;
+        }
+
+        /// <summary>No more pages: the workers end once the queue is empty.</summary>
+        public async Task Finish()
+        {
+            _queue.Writer.Complete();
+            await Task.WhenAll(_workers);
+        }
+
+        /// <summary>The run failed: the workers are let go, whatever they end with.</summary>
+        public async Task Abandon()
+        {
+            _queue.Writer.TryComplete();
+            try
+            {
+                await Task.WhenAll(_workers);
+            }
+            catch (Exception)
+            {
+                // The failure that stopped the run is the one reported.
+            }
         }
     }
 }

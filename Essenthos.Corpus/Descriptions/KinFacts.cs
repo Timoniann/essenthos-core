@@ -141,25 +141,9 @@ internal static class KinFacts
             return FamilyReach.Nobody;
         }
 
-        var rows = await db.EntityRelationships
-            .Where(r => Down.Contains(r.Type)
-                        && !ChapterFamily.Deities.Contains(r.From!.Slug)
-                        && !ChapterFamily.Deities.Contains(r.To!.Slug))
-            .Select(r => new
-            {
-                From = r.FromEntityId,
-                To = r.ToEntityId,
-                r.Type,
-                FromKind = r.From!.Kind,
-                ToKind = r.To!.Kind,
-                FromSlug = r.From.Slug,
-                ToSlug = r.To.Slug,
-                r.CanonicalBook,
-                r.CanonicalChapter,
-                r.CanonicalVerse,
-                r.Confidence,
-            })
-            .ToListAsync(cancellationToken);
+        var rows = Kept.Value is { } kept
+            ? kept.Rows ??= await Descents(db, cancellationToken)
+            : await Descents(db, cancellationToken);
 
         var eponyms = rows
             .Where(r => r.Type == DescriptorRelations.DescendantsOf && r.FromKind == EntityKind.People && r.ToKind == EntityKind.Person)
@@ -311,6 +295,42 @@ internal static class KinFacts
 
         return new FamilyReach(found, beforeTheFlood, afterTheFlood);
     }
+
+    /// <summary>One step of descent the family tree is drawn from, as <see cref="Descendants"/> reads it.</summary>
+    internal sealed record Descent(
+        int From, int To, string Type, EntityKind FromKind, EntityKind ToKind, string FromSlug, string ToSlug,
+        int? CanonicalBook, int? CanonicalChapter, int? CanonicalVerse, double? Confidence);
+
+    /// <summary>The steps of descent read once for the flow that set it; never changed once read.</summary>
+    internal sealed class KeptDescents
+    {
+        public List<Descent>? Rows;
+    }
+
+    /// <summary>
+    /// Where set, the steps of descent <see cref="Descendants"/> reads are read once for the flow that set it and read again
+    /// from there. The build sets it while it composes every page of a corpus that cannot change under it; a request never does.
+    /// </summary>
+    public static readonly AsyncLocal<KeptDescents?> Kept = new();
+
+    private static Task<List<Descent>> Descents(AppDbContext db, CancellationToken cancellationToken) =>
+        db.EntityRelationships
+            .Where(r => Down.Contains(r.Type)
+                        && !ChapterFamily.Deities.Contains(r.From!.Slug)
+                        && !ChapterFamily.Deities.Contains(r.To!.Slug))
+            .Select(r => new Descent(
+                r.FromEntityId,
+                r.ToEntityId,
+                r.Type,
+                r.From!.Kind,
+                r.To!.Kind,
+                r.From.Slug,
+                r.To.Slug,
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+                r.Confidence))
+            .ToListAsync(cancellationToken);
 
     /// <summary>How many verses name each of these people: what the descendants on a line are chosen by.</summary>
     public static async Task<Dictionary<int, int>> VerseCounts(
