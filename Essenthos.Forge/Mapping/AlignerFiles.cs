@@ -151,6 +151,9 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
 
     public ProductTexts Texts => texts;
 
+    /// <summary>The aligner itself, which trains and reads the stored answers.</summary>
+    public AlignmentPipeline Pipeline => pipeline;
+
     /// <summary>The store's alignments: one workspace per pair, under <c>Resources/Alignments</c>.</summary>
     public string Root => Path.Combine(texts.Store.ResourcesPath, AlignmentStore.FolderName);
 
@@ -292,6 +295,20 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
                 partner => AlignedWords.Read(texts[partner], AlignmentPipeline.Pooled, lettered: true, primaryOnly: true, strong: Served(partner)),
                 cancellationToken);
         return new Stored(file, addresses, source, target);
+    }
+
+    /// <summary>
+    /// The two texts' words in the forms given, with no pool, and the addresses both hold, as <see cref="Answer"/> reads a
+    /// pair: what the measuring verbs align (<see cref="AlignerMeasures"/>).
+    /// </summary>
+    public (List<(int, int, int)> Addresses, Dictionary<(int, int, int), List<Word>> Source, Dictionary<(int, int, int), List<Word>> Target)
+        Words(string fromSlug, string toSlug, Func<WordForms, string> sourceForm, Func<WordForms, string> targetForm)
+    {
+        var lettered = SameVersification(fromSlug, toSlug);
+        var refused = Refused(fromSlug, toSlug);
+        var source = AlignmentPipeline.Unmet(AlignedWords.Read(texts[fromSlug], sourceForm, lettered, strong: Served(fromSlug)), refused);
+        var target = AlignmentPipeline.Unmet(AlignedWords.Read(texts[toSlug], targetForm, lettered, strong: Served(toSlug)), refused);
+        return (AlignmentPipeline.Shared(fromSlug, toSlug, source, target), source, target);
     }
 
     /// <summary>Whether two texts number their verses in one tradition, so that the verses each prints with a letter meet.</summary>
