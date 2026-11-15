@@ -229,6 +229,110 @@ internal static class MethodFiles
             previousMade.Count(shape => !madeShapes.Contains(shape)), carried.Count, carriedSources);
     }
 
+    /// <summary>A header note: the verses whose rows were made from the inputs as they are; every other row is the file before's.</summary>
+    public const string VersesNote = "verses";
+
+    /// <summary>
+    /// Writes a pair's method file again within some verses of its FROM text only: the rows of a FROM word in
+    /// <paramref name="verses"/> are replaced by <paramref name="made"/> (those of its rows that stand there), and every other
+    /// row of the file before is carried as it was. The Synodal's Greek additions to Esther were divided into verses after its
+    /// pairs were aligned (PRB-1681): an aligner trained again moves rows all over the pair, so only the divided verses are
+    /// taken from it.
+    ///
+    /// The header says which verses were made and carries no <see cref="RemadeNote"/>, so the merge holds every row to the
+    /// verse hashes as before; the hash of a verse every row citing it was made now is renewed, the others are only added
+    /// where missing.
+    /// </summary>
+    /// <returns>What was written, and the rows made in the verses that cite a verse the hashes still hold otherwise.</returns>
+    public static (Written Written, int HeldStale) WriteVerses(
+        ProductStore store,
+        string pair,
+        string method,
+        IReadOnlyCollection<MappingRow> made,
+        IReadOnlyList<VerseRange> verses,
+        string producer,
+        IEnumerable<ProductInput> inputs)
+    {
+        var (fromText, toText) = MappingProducts.Split(pair);
+        var product = MappingProducts.Of(pair, method);
+        if (!store.Exists(product))
+        {
+            throw new InvalidOperationException($"{product} does not exist: there is no file to keep the other verses of.");
+        }
+
+        List<MappingRow> previous;
+        using (var reader = store.Open(product, MappingRow.Schema))
+        {
+            previous = reader.ReadAll();
+        }
+
+        var within = made.Where(row => Within(row.From, verses)).Select(row => row with { Status = null }).ToList();
+        var replaced = previous.Where(row => Within(row.From, verses)).ToList();
+        var carried = previous.Where(row => !Within(row.From, verses)).ToList();
+        var rows = within.Concat(carried).ToList();
+
+        var sorted = rows.Select(r => (Sort: MappingText.SortKey(r.From, r.To, fromText, toText), Row: r)).ToList();
+        sorted.Sort((a, b) => MappingExport.Order(a.Sort.Side, a.Sort.Key, a.Row, b.Sort.Side, b.Sort.Key, b.Row));
+        var named = string.Join(",", verses);
+        using (var writer = store.Create(product, ProductKind.Machine, MappingRow.Schema, ProductHeader.DescribeProducer(producer),
+                   [.. inputs.DistinctBy(input => input.Path)], header => header.Notes.Add(new(VersesNote,
+                       $"rows of a {fromText} word in {named} made from the inputs as they are; every other row as the file before held it"))))
+        {
+            writer.WriteAll(sorted.Select(r => r.Row));
+        }
+
+        // A verse a carried row cites keeps its hash: renewing it would let a carried row of a moved verse stand.
+        var cited = new HashSet<(string Text, VerseKey Verse)>();
+        foreach (var row in carried)
+        {
+            foreach (var (text, keys) in new[] { (fromText, row.From), (toText, row.To) })
+            {
+                foreach (var key in MappingText.Split(keys))
+                {
+                    cited.Add((text, VerseKey.Parse(key[..key.LastIndexOf('.')])));
+                }
+            }
+        }
+
+        MappingFiles.RecordHashes(store, pair, within, (text, verse) => !cited.Contains((text, verse)));
+        var held = HeldStale(store, pair, fromText, toText, within);
+
+        var madeShapes = within.Select(row => row.Shape).ToHashSet(StringComparer.Ordinal);
+        var replacedShapes = replaced.Select(row => row.Shape).ToHashSet(StringComparer.Ordinal);
+        return (new Written(pair, method, rows.Count, madeShapes.Count(replacedShapes.Contains), madeShapes.Count(shape => !replacedShapes.Contains(shape)),
+            replacedShapes.Count(shape => !madeShapes.Contains(shape)), carried.Count, []), held);
+    }
+
+    /// <summary>Whether a FROM side names a word in one of the verses.</summary>
+    public static bool Within(string from, IReadOnlyList<VerseRange> verses) =>
+        MappingText.Split(from).Any(key => VerseKey.Parse(key[..key.LastIndexOf('.')]) is var verse && verses.Any(range => range.Contains(verse)));
+
+    /// <summary>
+    /// The rows citing a verse whose recorded hash differs from the verse as it stands (or a verse the text no longer
+    /// has), which the merge will hold stale unless the verse reads the same.
+    /// </summary>
+    private static int HeldStale(ProductStore store, string pair, string fromText, string toText, IEnumerable<MappingRow> rows)
+    {
+        var product = MappingProducts.Of(pair, MappingProducts.Hashes);
+        var hashes = store.Exists(product)
+            ? VerseHashRow.ReadAll(store, product).ToDictionary(row => (row.Text, row.Own), row => row.Hash)
+            : new Dictionary<(string Text, VerseKey Own), string>();
+        var now = new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(StringComparer.Ordinal)
+        {
+            [fromText] = MappingFiles.Manifest(store, fromText),
+            [toText] = MappingFiles.Manifest(store, toText),
+        };
+
+        bool Moved(string text, string key)
+        {
+            var verse = VerseKey.Parse(key[..key.LastIndexOf('.')]);
+            return now[text] is { } manifest
+                   && (!manifest.TryGetValue(verse, out var hash) || (hashes.TryGetValue((text, verse), out var then) && then != hash));
+        }
+
+        return rows.Count(row => MappingText.Split(row.From).Any(k => Moved(fromText, k)) || MappingText.Split(row.To).Any(k => Moved(toText, k)));
+    }
+
     /// <summary>
     /// The laid Strong rows a producer left to a stated link (<see cref="MappingProducts.StrongYielded"/>), sorted, from the
     /// same inputs as the method file; only the merge reads them, so no other producer sees them as links.

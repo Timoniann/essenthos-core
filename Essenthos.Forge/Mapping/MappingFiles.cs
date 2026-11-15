@@ -152,7 +152,12 @@ internal static class MappingFiles
     /// Adds to a pair's verse hashes the verses new rows cite that it does not list yet, from the texts' manifests
     /// where they exist, so that a later change to one of those verses finds the rows that cite it.
     /// </summary>
-    public static void RecordHashes(ProductStore store, string pair, IEnumerable<MappingRow> rows)
+    /// <param name="renew">
+    /// The verses whose hash is set to the verse as it stands now even where one is listed: verses every row citing them was
+    /// made now (<c>align --verses</c>). Null renews none.
+    /// </param>
+    /// <returns>How many verses were added or renewed.</returns>
+    public static int RecordHashes(ProductStore store, string pair, IEnumerable<MappingRow> rows, Func<string, VerseKey, bool>? renew = null)
     {
         var (fromText, toText) = MappingProducts.Split(pair);
         var product = MappingProducts.Of(pair, MappingProducts.Hashes);
@@ -185,7 +190,17 @@ internal static class MappingFiles
                 foreach (var key in MappingText.Split(keys))
                 {
                     var verse = VerseKey.Parse(key[..key.LastIndexOf('.')]);
-                    if (!hashes.ContainsKey((text, verse)) && manifest.TryGetValue(verse, out var hash))
+                    if (!manifest.TryGetValue(verse, out var hash))
+                    {
+                        continue;
+                    }
+
+                    if (!hashes.TryGetValue((text, verse), out var listed))
+                    {
+                        hashes[(text, verse)] = (hash, foldNow(text, verse));
+                        added++;
+                    }
+                    else if (renew?.Invoke(text, verse) == true && (listed.Hash != hash || listed.Fold != foldNow(text, verse)))
                     {
                         hashes[(text, verse)] = (hash, foldNow(text, verse));
                         added++;
@@ -196,12 +211,13 @@ internal static class MappingFiles
 
         if (added == 0)
         {
-            return;
+            return 0;
         }
 
         using var writer = store.Create(product, ProductKind.Machine, VerseHashRow.Schema, ProductHeader.DescribeProducer(MergeProducer), []);
         writer.WriteAll(hashes.Select(h => new VerseHashRow(h.Key.Text, h.Key.Own, h.Value.Hash, h.Value.Fold))
             .OrderBy(r => r.Text, StringComparer.Ordinal).ThenBy(r => r.Own));
+        return added;
     }
 
     /// <summary>
@@ -261,7 +277,7 @@ internal static class MappingFiles
         return [.. products.Select(store.Find).OfType<string>().Select(store.Input)];
     }
 
-    private static IReadOnlyDictionary<VerseKey, string>? Manifest(ProductStore store, string text)
+    internal static IReadOnlyDictionary<VerseKey, string>? Manifest(ProductStore store, string text)
     {
         var product = VerseManifestRow.ProductOf(text);
         if (!store.Exists(product))

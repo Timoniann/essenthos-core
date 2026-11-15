@@ -166,6 +166,32 @@ internal static class PairSources
     }
 
     /// <summary>
+    /// Writes the pair's method file again within some verses of its FROM text (<see cref="MethodFiles.WriteVerses"/>): the
+    /// sources' rows of a FROM word in those verses replace the file's rows there, and every other row stays as it was.
+    /// </summary>
+    /// <param name="producer">The verb as it was run, for the header.</param>
+    public static Outcome WriteVerses(
+        ProductTexts texts, string file, string pair, IReadOnlyList<VerseRange> verses, string producer, Action<string> log, IReadOnlyList<IPairSource> registry)
+    {
+        var store = texts.Store;
+        var sources = registry.Where(source => source.File == file && source.States(pair)).ToList();
+        var inputs = MethodFiles.TextInputs(store, pair)
+            .Concat(sources.SelectMany(source => source.Inputs(store, pair)).Select(store.Input))
+            .DistinctBy(input => input.Path)
+            .ToList();
+        var rows = new List<MappingRow>();
+        foreach (var source in sources)
+        {
+            rows.AddRange(source.Rows(texts, pair, line => log($"{pair} {source.Name}: {line}")));
+        }
+
+        var (written, held) = MethodFiles.WriteVerses(store, pair, file, rows, verses, producer, inputs);
+        log($"{pair}: {rows.Count(row => MethodFiles.Within(row.From, verses))} of the sources' {rows.Count} rows stand in {string.Join(",", verses)}"
+            + (held == 0 ? string.Empty : $"; {held} of them cite a verse the pair's hashes hold otherwise, and the merge will hold them stale"));
+        return new Outcome(pair, false, written, [.. sources.Select(s => s.Name)]);
+    }
+
+    /// <summary>
     /// The words of the pair's TO text that a ruling takes out of one source's rows (<c>mapping/&lt;pair&gt;/rulings</c>: a
     /// <c>refuse</c> with no FROM words and a source), as own keys.
     /// </summary>
