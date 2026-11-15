@@ -1084,10 +1084,9 @@ public sealed class CorpusCheckTests : IDisposable
             SeptuagintLinks.Pair(Greek(holmes, verse), Greek(nestle, verse), drafts);
         }
 
-        await LinkWriter.Write(
+        await SeedLinks.Write(
             (Npgsql.NpgsqlConnection)_db.Database.GetDbConnection(), (Npgsql.NpgsqlTransaction)_transaction.GetDbTransaction(),
-            [.. drafts.Select(d => new NewLink(holmes.Id, nestle.Id, d.Relation, LinkMethod.Lexical, d.Confidence, SeptuagintLinks.Source, null, d.From, d.To))],
-            default);
+            [.. drafts.Select(d => new SeedLink(holmes.Id, nestle.Id, d.Relation, LinkMethod.Lexical, d.Confidence, SeptuagintLinks.Source, null, d.From, d.To))]);
 
         (await _check.Measure()).Variation.Should().ContainSingle()
             .Which.Should().Be(new Variation("SBLGNT", "NESTLE1904", Units: 3, Addresses: 3, Shared: 4));

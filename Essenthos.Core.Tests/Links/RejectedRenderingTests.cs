@@ -34,34 +34,6 @@ public sealed class RejectedRenderingTests : IDisposable
         db.Dispose();
     }
 
-    [Fact]
-    public async Task ARejectedStatisticalChristToSatanPairCannotBeWrittenAgain()
-    {
-        await db.Database.OpenConnectionAsync();
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        await using var transaction = await connection.BeginTransactionAsync();
-        var draft = new NewLink(words[Christ].TextId, words[Satan].TextId, LinkRelation.Renders,
-            LinkMethod.Aligner, 0.98, Source, null, [words[Christ].Id], [words[Satan].Id]);
-        var write = () => LinkWriter.Write(connection, transaction, [draft], CancellationToken.None);
-        await write.Should().ThrowAsync<InvalidDataException>().WithMessage("*rejected rendering*");
-    }
-
-    [Fact]
-    public async Task AdmissionRejectsEveryListedPairingAndItsReverseButKeepsOtherCorrespondences()
-    {
-        await db.Database.OpenConnectionAsync();
-        var rejected = RejectedRenderings.All.Select(r => Draft(words[r.From], words[r.To])).ToArray();
-        var reverse = rejected.Select(d => d with { FromTextId = d.ToTextId, ToTextId = d.FromTextId,
-            From = d.To, To = d.From }).ToArray();
-        var correct = Draft(words[new("RUSV", "1CO 5:5", 2, "сатане")], words[Satan]);
-        var sourced = rejected[0] with { Method = LinkMethod.StatedBySource, Confidence = null, Source = "an independent source" };
-        var manual = rejected[0] with { Method = LinkMethod.Manual, Confidence = null, Source = "a person's reading" };
-        var phrase = rejected[0] with { From = [.. rejected[0].From, correct.From.Single()] };
-        var admitted = await RejectedRenderings.Admitted((NpgsqlConnection)db.Database.GetDbConnection(),
-            [.. rejected, .. reverse, correct, sourced, manual, phrase], CancellationToken.None);
-        admitted.Should().Equal(correct, sourced, manual, phrase);
-    }
-
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -119,7 +91,4 @@ public sealed class RejectedRenderingTests : IDisposable
 
         found.Should().BeEquivalentTo(genesis.Select(r => (words[r.From].Id, words[r.To].Id)));
     }
-
-    private static NewLink Draft(Word from, Word to) => new(from.TextId, to.TextId, LinkRelation.Renders,
-        LinkMethod.Aligner, 0.98, Source, null, [from.Id], [to.Id]);
 }

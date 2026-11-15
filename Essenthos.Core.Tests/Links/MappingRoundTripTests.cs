@@ -56,13 +56,13 @@ public sealed class MappingRoundTripTests : IDisposable
         await using (var connection = _database.NewConnection())
         {
             await connection.OpenAsync();
-            await LinkWriter.Write(connection, null,
+            await SeedLinks.Write(connection, null,
             [
-                new NewLink(from, to, LinkRelation.Renders, LinkMethod.StatedBySource, null, Berean, null, [kjv[0], kjv[1], kjv[2]], [bhsa[0], bhsa[1]]),
-                new NewLink(from, to, LinkRelation.Renders, LinkMethod.StrongNumber, 0.9, "Zefania KJV+ Strong numbers", null, [kjv[3]], [bhsa[2]]),
-                new NewLink(from, to, LinkRelation.Renders, LinkMethod.Aligner, 0.98, "SIL.Machine, aligned as written", "a note that stays in the file", [kjv[3]], [bhsa[2]]),
-                new NewLink(from, to, LinkRelation.Renders, LinkMethod.Aligner, 0.5, "SIL.Machine, aligned as stems", null, [kjv[3]], [bhsa[1]]),
-            ], CancellationToken.None);
+                new SeedLink(from, to, LinkRelation.Renders, LinkMethod.StatedBySource, null, Berean, null, [kjv[0], kjv[1], kjv[2]], [bhsa[0], bhsa[1]]),
+                new SeedLink(from, to, LinkRelation.Renders, LinkMethod.StrongNumber, 0.9, "Zefania KJV+ Strong numbers", null, [kjv[3]], [bhsa[2]]),
+                new SeedLink(from, to, LinkRelation.Renders, LinkMethod.Aligner, 0.98, "SIL.Machine, aligned as written", "a note that stays in the file", [kjv[3]], [bhsa[2]]),
+                new SeedLink(from, to, LinkRelation.Renders, LinkMethod.Aligner, 0.5, "SIL.Machine, aligned as stems", null, [kjv[3]], [bhsa[1]]),
+            ]);
             await using var role = new NpgsqlCommand(
                 "UPDATE link_word SET role = 'attached', head_word_id = @head WHERE word_id = @word AND side = 'from'", connection);
             role.Parameters.AddWithValue("head", kjv[2]);
@@ -115,11 +115,11 @@ public sealed class MappingRoundTripTests : IDisposable
         await using (var connection = _database.NewConnection())
         {
             await connection.OpenAsync();
-            await LinkWriter.Write(connection, null,
+            await SeedLinks.Write(connection, null,
             [
-                new NewLink(from, to, LinkRelation.Renders, LinkMethod.StatedBySource, null, Berean, null, [kjv[0], kjv[1], kjv[2]], [bhsa[0], bhsa[1]]),
-                new NewLink(from, to, LinkRelation.Renders, LinkMethod.StrongNumber, 0.9, "Zefania KJV+ Strong numbers", null, [kjv[3]], [bhsa[2]]),
-            ], CancellationToken.None);
+                new SeedLink(from, to, LinkRelation.Renders, LinkMethod.StatedBySource, null, Berean, null, [kjv[0], kjv[1], kjv[2]], [bhsa[0], bhsa[1]]),
+                new SeedLink(from, to, LinkRelation.Renders, LinkMethod.StrongNumber, 0.9, "Zefania KJV+ Strong numbers", null, [kjv[3]], [bhsa[2]]),
+            ]);
         }
 
         var connectionString = _database.NewConnection().ConnectionString;

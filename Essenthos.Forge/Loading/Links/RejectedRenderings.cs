@@ -100,17 +100,4 @@ internal static class RejectedRenderings
         }
         return found;
     }
-
-    private static bool Statistical(NewLink draft) => draft.Method == LinkMethod.Aligner
-        && draft.Relation == LinkRelation.Renders && draft.Source.StartsWith("SIL.Machine", StringComparison.Ordinal);
-
-    internal static async Task<IReadOnlyList<NewLink>> Admitted(
-        NpgsqlConnection connection, IReadOnlyList<NewLink> drafts, CancellationToken cancellationToken)
-    {
-        if (!drafts.Any(Statistical)) return drafts;
-        var rejected = await Locate(connection, cancellationToken);
-        return drafts.Where(draft => !Statistical(draft) || draft.From.Count != 1 || draft.To.Count != 1
-            || !(rejected.Contains((draft.From.Single(), draft.To.Single()))
-                 || rejected.Contains((draft.To.Single(), draft.From.Single())))).ToArray();
-    }
 }

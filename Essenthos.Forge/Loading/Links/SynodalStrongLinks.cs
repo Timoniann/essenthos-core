@@ -13,17 +13,9 @@ namespace Essenthos.Core.Loading.Links;
 /// **The numbering is an input and never a row.** Its only statement of terms permits use of the
 /// work unmodified, and the owner decided on 2026-09-13 to use it for the mapping alone
 /// (Resources/SynodalStrong/LICENCE.md). So the edition is read from the file, laid onto the
-/// Synodal words the corpus already holds (<see cref="SynodalStrongLayer"/>), and the numbers live
-/// in memory for the length of the
-/// run: <c>word.strong_number</c> and <c>word_strong</c> are not touched, the tagged edition is not
-/// a text, and nothing serves its numbers. What is written is the links, credited to the numbering
-/// (<see cref="Credit"/>).
-/// </para>
-///
-/// <para>
-/// The Synodal already has the aligner's links to every one of these witnesses, so each pair is
-/// settled as it is written: a guess the numbers confirm becomes a claim on the match, and a guess
-/// they refute is removed (<see cref="NumberedLinkSettlement"/>).
+/// Synodal's words (<see cref="SynodalStrongLayer"/>, <see cref="Conversion.SideStrongNumbers"/>): the tagged
+/// edition is not a text, and nothing serves its numbers. What the build draws from them is the pair's
+/// <c>strong</c> rows (<see cref="Mapping.StrongNumberSource"/>), credited to the numbering (<see cref="Credit"/>).
 /// </para>
 /// </summary>
 internal static class SynodalStrongLinks

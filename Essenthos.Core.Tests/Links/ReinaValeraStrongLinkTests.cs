@@ -13,8 +13,9 @@ namespace Essenthos.Core.Tests.Links;
 
 /// <summary>
 /// The Reina-Valera's Strong numbers are Rubén Gómez's, and the owner allowed them for the mapping
-/// alone: they are read from the edition's files for one run, and only the links drawn from them,
-/// credited to him, reach the corpus — never a number on a word.
+/// alone: they are read from the edition's files, a tag's words are one unit, and what they would draw
+/// is scored against Clear Bible's hand alignment before it is believed. The rows the build draws from
+/// them are <see cref="StrongNumberSourceTests"/>'.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class ReinaValeraStrongLinkTests : IDisposable
@@ -79,50 +80,7 @@ public sealed class ReinaValeraStrongLinkTests : IDisposable
     }
 
     [Fact]
-    public async Task TheNumbersReachTheLinksCreditedToGomezAndNeverTheWords()
-    {
-        await _loader.Load(_folder, [_hebrew.Slug]);
-
-        var links = await _db.Links.AsNoTracking().Include(l => l.Words).Include(l => l.Provenance)
-            .Where(l => l.FromTextId == _spanish.Id).ToListAsync();
-        links.Should().HaveCount(4).And.OnlyContain(link =>
-            link.Method == LinkMethod.StrongNumber
-            && link.Provenance!.Source.StartsWith(ReinaValeraStrongLinkLoader.Credit));
-        links.Single(link => link.Words.Any(w => w.WordId == Hebrew(2).Id)).Words
-            .Where(w => w.Side == LinkSide.From).Select(w => w.WordId)
-            .Should().BeEquivalentTo([Spanish(1).Id, Spanish(2).Id, Spanish(3).Id]);
-
-        (await _db.Words.Where(w => w.TextId == _spanish.Id).AnyAsync(w => w.StrongNumber != null)).Should().BeFalse();
-        (await _db.WordStrongs.AnyAsync(s => s.Word!.TextId == _spanish.Id)).Should().BeFalse();
-    }
-
-    /// <summary>
-    /// A word the pair already says has no counterpart is left out of the number its phrase carries:
-    /// the article a verdict found supplied is not rendered by the H7225 on <em>EN el principio</em>.
-    /// </summary>
-    [Fact]
-    public async Task AWordStatedAbsentIsLeftOutOfItsPhrasesMatch()
-    {
-        var absence = new Link
-        {
-            FromTextId = _spanish.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Expands,
-            Method = LinkMethod.RuleBased, Confidence = 0.95, Provenance = new() { Source = "a verdict under test" },
-        };
-        absence.Words.Add(new LinkWord { WordId = Spanish(2).Id, Side = LinkSide.From });
-        absence.Claims.Add(new LinkClaim { Method = LinkMethod.RuleBased, Confidence = 0.95, Provenance = absence.Provenance });
-        _db.Links.Add(absence);
-        _db.SaveChanges();
-
-        await _loader.Load(_folder, [_hebrew.Slug]);
-
-        var beginning = await _db.Links.Include(l => l.Words)
-            .SingleAsync(l => l.Method == LinkMethod.StrongNumber && l.Words.Any(w => w.WordId == Hebrew(2).Id));
-        beginning.Words.Where(w => w.Side == LinkSide.From).Select(w => w.WordId)
-            .Should().BeEquivalentTo([Spanish(1).Id, Spanish(3).Id]);
-    }
-
-    [Fact]
-    public async Task AWordTheHandAlignmentNamesIsScoredAgainstItAndNotWrittenOver()
+    public async Task TheNumbersAreScoredAgainstTheHandAlignment()
     {
         var stated = new Link
         {
@@ -143,11 +101,5 @@ public sealed class ReinaValeraStrongLinkTests : IDisposable
 
         var score = (await _loader.Score(_folder, [_hebrew.Slug])).Single(s => s.To == _hebrew.Slug);
         score.Should().BeEquivalentTo(new { StatedWords = 2, AgreedWords = 1, Pairs = 2, AgreedPairs = 1 });
-
-        await _loader.Load(_folder, [_hebrew.Slug]);
-        var numbered = await _db.Links.Include(l => l.Words)
-            .Where(l => l.FromTextId == _spanish.Id && l.Method == LinkMethod.StrongNumber).ToListAsync();
-        numbered.Should().HaveCount(2).And.NotContain(link =>
-            link.Words.Any(w => w.WordId == Spanish(4).Id || w.WordId == Spanish(5).Id));
     }
 }
