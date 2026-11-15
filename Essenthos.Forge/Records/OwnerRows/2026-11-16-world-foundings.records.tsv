@@ -23,3 +23,6 @@ PRB-1690	external/wikidata/events	amend	seleucia	{"kind": "Founding"}	Seleucia i
 PRB-1690	external/wikidata/events	amend	skarabrae	{"kind": "Founding"}	Skara Brae is a Neolithic settlement; Wikidata types it Neolithic settlement and archaeological site
 PRB-1690	external/wikidata/events	amend	thebes	{"kind": "Founding"}	Thebes is the ancient city of Upper Egypt; Wikidata types it ancient city, archaeological site and emporium
 PRB-1690	external/wikidata/events	amend	tigranocerta	{"kind": "Founding"}	Tigranocerta is the city Tigranes the Great founded; Wikidata types it ancient city and archaeological site
+PRB-1711	external/wikidata/events	amend	catholicchurch	{"kind": "Founding"}	The Catholic Church is a body of believers, not a building; Wikidata types it Christian Church, dated by its inception; the deleted rule read church as a building
+PRB-1711	external/wikidata/events	amend	copticorthodoxchurch	{"kind": "Founding"}	The Coptic Orthodox Church is a church as a body, not a building; Wikidata types it Oriental Orthodox churches, dated by its inception
+PRB-1711	external/wikidata/events	amend	syromalabarchurch	{"kind": "Founding"}	The Syro-Malabar Church is a church as a body, not a building; Wikidata types it Eastern Catholic Churches, dated by its inception
