@@ -176,6 +176,29 @@ public class EvidentiaPipelineTests
     }
 
     [Fact]
+    public void AStoredRunKeepsItsRuleFlagsForARerun()
+    {
+        // PRB-1684: a redraw from run 30's configuration alone lost every Greek of, auxiliary and dative to.
+        var options = new EvidentiaMeasurementOptions(
+            AllowSourceStrongEvidence: false, LearnRenderingsFrom: "KJV,BSB",
+            VerseMap: true, RenderingFamilies: true, FunctionWords: true, DefiniteNouns: true,
+            LearnAcrossLanguages: true, SourceFromFiles: true, EntityNamesFrom: "names/words.tsv");
+        var configuration = EvidentiaRunner.Configuration(options, new SortedDictionary<string, SortedSet<string>>());
+
+        var read = EvidentiaRunner.Options(configuration);
+
+        EvidentiaRunner.StatesItsRules(configuration).Should().BeTrue();
+        read.Should().BeEquivalentTo(new
+        {
+            VerseMap = true, RenderingFamilies = true, FunctionWords = true, DefiniteNouns = true,
+            LearnAcrossLanguages = true, SourceFromFiles = true, EntityNamesFrom = "names/words.tsv",
+            AlignerPairFiles = (IReadOnlyList<string>?)null,
+        });
+        EvidentiaRunner.StatesItsRules(JsonDocument.Parse("""{ "allowSourceStrongEvidence": false, "allowKnownRenderingEvidence": true }"""))
+            .Should().BeFalse("a run stored before PRB-1684 does not say which rules it ran with");
+    }
+
+    [Fact]
     public void AnUnsupportedLanguageRequestsAFallbackWithoutInventingCandidates()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(

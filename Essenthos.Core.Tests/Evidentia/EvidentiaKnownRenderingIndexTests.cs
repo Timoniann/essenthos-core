@@ -140,6 +140,43 @@ public class EvidentiaKnownRenderingIndexTests
     }
 
     [Fact]
+    public void AWordOfAPhraseLinkIsLearntOnTheOriginalWordItRenders()
+    {
+        // CrossWire's King James: "to God" over τῷ Θεῷ, God numbered G2316 and to with none; "the Spirit" over τοῦ
+        // Πνεύματος with the numbered G3588 (PRB-1692); and a word whose number neither Greek word carries.
+        RenderingObservation Row(int position, string surface, string? own, string target, long link) =>
+            new(1, surface, null, target, link, position, own);
+        var learnt = EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            Row(1, "to", null, "G3588", 20), Row(1, "to", null, "G2316", 20),
+            Row(2, "God", "G2316", "G3588", 20), Row(2, "God", "G2316", "G2316", 20),
+        ]).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            Row(3, "the", "G3588", "G3588", 21), Row(3, "the", "G3588", "G4151", 21),
+            Row(4, "Spirit", "G4151", "G3588", 21), Row(4, "Spirit", "G4151", "G4151", 21),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            Row(5, "Lord", "G2962", "G3588", 22), Row(5, "Lord", "G2962", "G2316", 22),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            // "are come" over ἐληλύθασιν: the helper has no number of its own and renders the verb's grammar.
+            Row(6, "are", null, "G2064", 23), Row(7, "come", "G2064", "G2064", 23),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            // A link that numbers none of its words, as the Berean's: read whole.
+            Row(8, "it", null, "G3049", 24), Row(9, "credited", null, "G3049", 24),
+        ])).Concat(EvidentiaKnownRenderingIndex.OwnTargets(
+        [
+            // A link to the Hebrew is read whole: the King James's Old Testament is not CrossWire's laying.
+            Row(10, "beginning", null, "H7225", 25), Row(11, "created", "H1254", "H7225", 25),
+        ]));
+
+        learnt.Select(observation => $"{observation.SourceSurface} {observation.TargetStrongNumber}").Should().Equal(
+            "God G2316", "the G3588", "Spirit G4151", "Lord G2316", "come G2064", "it G3049", "credited G3049",
+            "beginning H7225", "created H7225");
+    }
+
+    [Fact]
     public void AWitnessStatedLemmaIsAKeyOfItsOwn()
     {
         var evidence = Source(

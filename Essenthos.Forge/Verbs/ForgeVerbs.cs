@@ -369,9 +369,8 @@ internal static partial class ForgeVerbs
             : null,
         ConfirmedByFiles: OptionalText(arguments, "--confirmed")?.Split(',', StringSplitOptions.RemoveEmptyEntries),
         AlignerLinks: arguments.Contains("--aligner-links"),
-        AlignerPairs: OptionalText(arguments, "--aligner-pairs") is { } alignerPairs
-            ? EvidentiaAlignerPairs.Read(alignerPairs.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            : null,
+        AlignerPairs: AlignerPairFiles(arguments) is { } alignerPairs ? EvidentiaAlignerPairs.Read(alignerPairs) : null,
+        AlignerPairFiles: AlignerPairFiles(arguments),
         PivotTexts: CombinerPivots(arguments, OptionalText(arguments, "--pivot") is { } pivot
             ? [.. pivot.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier)]
             : null),
@@ -385,6 +384,9 @@ internal static partial class ForgeVerbs
         VerseMap: arguments.Contains("--verse-map"),
         RenderingFamilies: arguments.Contains("--rendering-families"),
         FunctionWords: arguments.Contains("--function-words"));
+
+    private static string[]? AlignerPairFiles(string[] arguments) =>
+        OptionalText(arguments, "--aligner-pairs")?.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
     /// <summary>
     /// The pivot texts a run reads: the combiner's weights were fitted with its pivots' readings as features, so it

@@ -1841,6 +1841,10 @@ internal sealed record EvidentiaChapterMeasurement(
 /// <param name="RecordKeyDoubts">
 /// Keep the cases the split key, the key as loaded and the placements do not settle, for a person to judge.
 /// </param>
+/// <param name="AlignerPairFiles">
+/// The score --pairs files <paramref name="AlignerPairs"/> was read from, kept so a stored run names them and a rerun reads
+/// them again.
+/// </param>
 /// <param name="Decisions">
 /// Handed each chapter's candidates and proposals as the measurement made them, so a stored run
 /// keeps exactly what was scored rather than a second selection that could drift from it.
@@ -1877,7 +1881,8 @@ internal sealed record EvidentiaMeasurementOptions(
     bool DefiniteNouns = false,
     bool VerseMap = false,
     bool RenderingFamilies = false,
-    bool FunctionWords = false);
+    bool FunctionWords = false,
+    IReadOnlyList<string>? AlignerPairFiles = null);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.
