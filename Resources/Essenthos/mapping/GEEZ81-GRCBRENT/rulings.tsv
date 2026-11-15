@@ -4,3 +4,6 @@
 # Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
 action	from	to	relation	source	reason
 refuse	17.9:9.17	17.8:9.30	renders	SIL.Machine	σατραπῶν / ወለመሳፍንቱ: Claude, 2026-11-01: σατραπῶν is the satraps' chiefs, and the Ge'ez word is its princes; neither is a name.
+refuse	11.2:35a.2	11.2:35i.10	renders	SIL.Machine	እግዚአብሔር / Γαζὲρ: Claude (r161), 2026-11-15: the Lord, not Gezer; the names of the verse were paired by order across the lettered pieces of 2:35.
+refuse	11.2:35a.3	11.2:35l.9	renders	SIL.Machine	ለሰሎሞን / Σαλωμὼν: Claude (r161), 2026-11-15: the Ge'ez 2:35a is the Greek 2:35a (God gave Solomon wisdom); this Solomon is the one of 2:35l, another verse.
+refuse	11.16:28b.11	11.16:28a.33	renders	SIL.Machine	እግዚአብሔር / Γαζουβὰ: Claude (r161), 2026-11-15: the Lord, not Azuba, Jehoshaphat's mother in 16:28a.
