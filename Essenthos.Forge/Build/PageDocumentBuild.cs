@@ -66,7 +66,8 @@ internal sealed class PageDocumentBuild(
         var inputs = store.Inputs(store.Manifest.Entries
             .Select(entry => entry.Product)
             .Where(product => !Unread.Any(product.StartsWith)
-                              && graph.Find(product) is { } found && found.Declaration.Tables.Count > 0)
+                              && graph.Find(product) is { } found && found.Declaration.Tables.Count > 0
+                              && File.Exists(store.FullPath(product)))
             .Order(StringComparer.Ordinal));
         var notes = new Dictionary<string, string>(StringComparer.Ordinal)
         {

@@ -39,7 +39,7 @@ var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
 // The database password is deliberately not in appsettings.json, so development reads it from user
 // secrets — whatever the environment, and beneath the environment and the command line, so either can
 // still override it. See UserSecrets.
-UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly);
+UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Essenthos.Core.Build.ServingBuild).Assembly);
 
 // Read here, once, rather than inside an options callback that runs later, so that a missing
 // password stops the process at startup with the message that says what to set.
