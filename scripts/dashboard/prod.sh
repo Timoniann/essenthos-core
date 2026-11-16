@@ -7,6 +7,8 @@ set -euo pipefail
 metric="${1:?name a metric}"
 case "$metric" in
   site)    curl -s -o /dev/null -m 15 -w '%{http_code}' https://essenthos.org/ ;;
-  page-ms) curl -s -o /dev/null -m 30 -w '%{time_total}' https://essenthos.org/read/genesis/1 | awk '{printf "%d", $1 * 1000}' ;;
+  # The median of five: one request from the workstation swings by a second with the line.
+  page-ms) for i in 1 2 3 4 5; do curl -s -o /dev/null -m 30 -w '%{time_total}
+' https://essenthos.org/read/genesis/1; done | sort -n | sed -n 3p | awk '{printf "%d", $1 * 1000}' ;;
   *)       ssh -o BatchMode=yes -o ConnectTimeout=15 deploy@2.29.125.205 'bash -s' -- "$metric" < "$(dirname "$0")/prod-remote.sh" ;;
 esac
