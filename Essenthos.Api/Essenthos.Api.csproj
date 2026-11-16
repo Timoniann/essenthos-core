@@ -39,6 +39,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!-- The passages that tell what happened where, which decide a record's story places (TSK-1235). -->
+        <None Remove="Endpoints\NarrativePassages.tsv" />
+        <EmbeddedResource Include="Endpoints\NarrativePassages.tsv" LogicalName="NarrativePassages.tsv" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="10.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.12" />
       <!-- The smaller copies of the pictures, made on request (MIT). The Linux build of its native

@@ -1,0 +1,177 @@
+# The passages that tell what happened where (TSK-1235, replacing TSK-1220's whole books).
+# A place named with a record in one of these verses is in the "story" group of the record's places;
+# a place named with it only elsewhere is folded under the letters and prophecy.
+#
+# Story is prose that tells what happened and where: the narrative books, and the narrative episodes
+# inside the prophets, Job and the letters. Not story: poems and songs, oracles, laws and commands for
+# what is to come, visions, and the greetings of letters, even inside a narrative book. A speech inside
+# a narrative book that retells what happened (Moses in Deuteronomy 1-3, Stephen in Acts 7) counts;
+# a retelling inside a psalm, an oracle or a letter's argument does not. A letter writer's own account
+# of where he was counts (Paul in Galatians 1-2).
+#
+# Source: the text itself, read for each range in the KJV's verse numbers, which the canonical frame
+# follows; where a poem or oracle starts inside a narrative, the range starts at its first verse.
+# Ranges sit on chapters wherever an edition numbers the verses differently (Numbers 30, Daniel 4-6,
+# Jonah 1-2). Psalm headings that tell an event (Psalm 60) are not counted, for the same reason.
+# Inside the prophets' narrative chapters, an oracle that names places away from the scene is taken
+# out verse by verse (Jeremiah 26:4-6, 43:10-13). Inside the narrative books, a prophet's word spoken
+# in the scene stays with it (2 Kings 20:17, and Isaiah 36-39, which is the same text) unless it is a
+# long oracle of its own (2 Kings 19:21-34); parables and teaching in the Gospels stay with the
+# narrative too.
+#
+# Columns: book (its slug), passage ("all", a chapter, chapters "36-39", verses "23:7-10" or
+# "36:1-37:21"), story or not, and why. Rows are read in order and the last row that holds a verse
+# decides; a book without a row tells no story.
+#
+# book	passage	story	why
+genesis	all	story	the patriarchs' narrative; the genealogies and the table of nations say where each people lived
+genesis	49:1-27	not	Jacob's blessing of his sons, a poem
+exodus	all	story	the narrative of the exodus and of Sinai
+exodus	15:1-18	not	the song of the sea, a poem
+exodus	20:1-17	not	the ten words, law
+exodus	20:22-23:33	not	the book of the covenant, law and the borders promised
+exodus	25:1-31:17	not	the commands for the tabernacle, before it was made
+exodus	34:10-26	not	the covenant's laws
+leviticus	8:1-10:20	story	the ordination of the priests and the death of Nadab and Abihu
+leviticus	24:10-23	story	the blasphemer stoned outside the camp
+numbers	all	story	the census, the journeys and the itinerary through the wilderness
+numbers	5:1-6:27	not	laws
+numbers	15:1-31	not	laws
+numbers	15:37-41	not	the law of the tassels
+numbers	18:1-19:22	not	laws
+numbers	21:14-15	not	a poem quoted from the book of the wars of the LORD
+numbers	21:17-18	not	the song of the well
+numbers	21:27-30	not	the song over Heshbon
+numbers	23:7-10	not	Balaam's first oracle
+numbers	23:18-24	not	Balaam's second oracle
+numbers	24:3-9	not	Balaam's third oracle
+numbers	24:15-24	not	Balaam's last oracles, over Edom, Amalek, the Kenites, Asshur and Kittim
+numbers	28-30	not	the offerings of the appointed times and the law of vows
+numbers	34-35	not	the borders and the cities commanded for the land to come
+deuteronomy	1-3	story	Moses tells the journey from Horeb to Beth-peor
+deuteronomy	4:41-49	story	the cities of refuge set apart east of the Jordan
+deuteronomy	9:7-10:11	story	Moses tells the calf at Horeb and the journey after it
+deuteronomy	31	story	Joshua commissioned and the law written down
+deuteronomy	32:44-52	story	Moses sent up Mount Nebo
+deuteronomy	34	story	Moses dies in Moab
+joshua	all	story	the conquest and the allotment of the land
+judges	all	story	narrative
+judges	5:2-31	not	the song of Deborah, a poem
+ruth	all	story	narrative
+1-samuel	all	story	narrative
+1-samuel	2:1-10	not	Hannah's song
+2-samuel	all	story	narrative
+2-samuel	1:19-27	not	David's lament over Saul and Jonathan
+2-samuel	22	not	David's song of deliverance
+2-samuel	23:1-7	not	David's last words, a poem
+1-kings	all	story	narrative
+2-kings	all	story	narrative
+2-kings	19:21-34	not	Isaiah's oracle against Sennacherib
+1-chronicles	all	story	narrative; the genealogies say where each clan lived
+1-chronicles	16:8-36	not	the psalm of thanksgiving
+2-chronicles	all	story	narrative
+ezra	all	story	narrative
+nehemiah	all	story	narrative
+esther	all	story	narrative
+job	1-2	story	the prose prologue in Uz
+job	42:7-17	story	the prose epilogue
+isaiah	6	story	Isaiah's call in the year King Uzziah died
+isaiah	7:1-6	story	Ahaz met at the conduit of the upper pool
+isaiah	8:1-3	story	the tablet and the birth of Maher-shalal-hash-baz
+isaiah	20:1-2	story	Ashdod taken; Isaiah walks barefoot
+isaiah	36:1-37:21	story	Sennacherib's siege of Jerusalem
+isaiah	37:36-38:8	story	Sennacherib's army struck; Hezekiah's illness
+isaiah	38:21-39:8	story	Hezekiah healed; the envoys from Babylon
+jeremiah	1:1-3	story	where and when Jeremiah prophesied
+jeremiah	13:1-7	story	the loincloth hidden at the Euphrates
+jeremiah	19:14-20:3	story	Jeremiah at Topheth and in the stocks at the Benjamin Gate
+jeremiah	24:1	story	Jeconiah carried from Jerusalem to Babylon
+jeremiah	26	story	Jeremiah's trial in the temple
+jeremiah	26:4-6	not	the oracle he was sent to speak: this house like Shiloh
+jeremiah	28	story	Hananiah breaks the yoke
+jeremiah	28:2-4	not	Hananiah's oracle of the return from Babylon
+jeremiah	28:6	not	Jeremiah's wish for the return from Babylon
+jeremiah	28:11	not	Hananiah's oracle over Babylon's yoke
+jeremiah	28:14	not	the oracle of the iron yoke on the nations
+jeremiah	29:1-3	story	the letter sent to the exiles in Babylon
+jeremiah	32:1-2	story	Jeremiah shut up in the court of the guard during the siege
+jeremiah	32:6-14	story	Jeremiah buys the field at Anathoth
+jeremiah	34:1	story	Nebuchadnezzar fights against Jerusalem
+jeremiah	34:6-11	story	Lachish and Azekah; the slaves freed and taken back
+jeremiah	35:1-11	story	the Rechabites in the temple
+jeremiah	36-44	story	the scroll burned, the siege and fall of Jerusalem, Gedaliah, the flight to Egypt
+jeremiah	37:7-10	not	the oracle that Pharaoh's army will go back to Egypt
+jeremiah	42:9-22	not	the oracle against going down to Egypt
+jeremiah	43:10-13	not	the oracle of Nebuchadnezzar striking Egypt and Beth-shemesh
+jeremiah	44:2-14	not	the oracle to the Jews in Egypt
+jeremiah	44:20-30	not	Jeremiah's answer and the oracle of Pharaoh Hophra
+jeremiah	51:59-64	story	Seraiah's scroll sunk in the Euphrates
+jeremiah	52	story	the fall of Jerusalem, as in Kings
+ezekiel	1:1-3	story	by the river Chebar in the land of the Chaldeans
+ezekiel	3:12-15	story	Ezekiel at Tel-abib by the Chebar
+ezekiel	3:22-23	story	Ezekiel goes out to the plain
+ezekiel	8:1	story	the elders of Judah in Ezekiel's house
+ezekiel	11:24-25	story	Ezekiel back among the exiles in Chaldea
+ezekiel	24:1-2	story	the day the king of Babylon besieged Jerusalem
+ezekiel	33:21-22	story	the fugitive from Jerusalem arrives
+ezekiel	40:1	story	the date after the city was struck
+daniel	1-6	story	the narrative of Daniel and his friends at Babylon
+daniel	7:1	story	the first year of Belshazzar
+daniel	10:1-4	story	Daniel by the Tigris
+hosea	1:2-3	story	Hosea marries Gomer
+hosea	3:1-3	story	Hosea buys back his wife
+amos	7:10-17	story	Amaziah sends Amos away from Bethel
+jonah	all	story	narrative
+haggai	1:1	story	the dated word to Zerubbabel, governor of Judah
+haggai	1:12-15	story	the people begin to build
+haggai	2:1-2	story	the dated word
+haggai	2:10	story	the dated word
+haggai	2:20	story	the dated word
+zechariah	1:1	story	the dated word
+zechariah	1:7	story	the dated word
+zechariah	7:1-3	story	Bethel sends to ask about the fast
+matthew	all	story	narrative
+matthew	11:20-24	not	the woes on Chorazin, Bethsaida and Capernaum
+matthew	24:4-25:46	not	the discourse on what is to come
+mark	all	story	narrative
+mark	13:5-37	not	the discourse on what is to come
+luke	all	story	narrative
+luke	1:46-55	not	Mary's song
+luke	1:68-79	not	Zechariah's song
+luke	2:29-32	not	Simeon's song
+luke	10:13-15	not	the woes on Chorazin, Bethsaida and Capernaum
+luke	21:8-36	not	the discourse on what is to come
+john	all	story	narrative
+acts	all	story	narrative
+romans	15:19	story	Paul's preaching from Jerusalem to Illyricum
+romans	15:25-26	story	Paul going to Jerusalem with the gift of Macedonia and Achaia
+1-corinthians	15:32	story	Paul fought with beasts at Ephesus
+2-corinthians	1:8	story	Paul's affliction in Asia
+2-corinthians	2:12-13	story	Paul at Troas, then Macedonia
+2-corinthians	7:5	story	Paul in Macedonia
+2-corinthians	11:9	story	the brothers from Macedonia supplied him
+2-corinthians	11:23-33	story	Paul's hardships and his escape from Damascus
+galatians	1:13-2:14	story	Paul's own account: Damascus, Arabia, Jerusalem, Syria, Cilicia, Antioch
+philippians	4:15-16	story	the gifts sent to Paul from Macedonia to Thessalonica
+1-thessalonians	2:1-2	story	Paul mistreated at Philippi, then at Thessalonica
+1-thessalonians	3:1-2	story	Paul left at Athens, Timothy sent
+1-timothy	1:3	story	Timothy left at Ephesus as Paul went to Macedonia
+2-timothy	1:15-18	story	those in Asia turned away; Onesiphorus at Rome and Ephesus
+2-timothy	3:11	story	Paul's persecutions at Antioch, Iconium and Lystra
+2-timothy	4:10-13	story	where his companions went; the cloak left at Troas
+2-timothy	4:20	story	Erastus at Corinth, Trophimus ill at Miletus
+titus	1:5	story	Titus left in Crete
+2-peter	1:16-18	story	Peter on the holy mountain
+revelation	1:9	story	John on the island called Patmos
+# The books past the 66 that tell a story.
+1-esdras	all	story	narrative
+tobit	all	story	narrative
+tobit	13	not	Tobit's prayer of rejoicing, a poem
+judith	all	story	narrative
+judith	16:1-17	not	Judith's song
+1-maccabees	all	story	narrative
+2-maccabees	all	story	narrative
+3-maccabees	all	story	narrative
+susanna	all	story	narrative
+bel-and-the-dragon	all	story	narrative
+baruch	1:1-14	story	the book read in Babylon by the river Sud and sent to Jerusalem

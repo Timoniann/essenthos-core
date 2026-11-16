@@ -155,20 +155,104 @@ public sealed class StoryPlacesTests : IDisposable
     }
 
     [Theory]
-    [InlineData(1, true)]
-    [InlineData(17, true)]
-    [InlineData(18, false)]
-    [InlineData(19, false)]
-    [InlineData(23, false)]
-    [InlineData(39, false)]
-    [InlineData(40, true)]
-    [InlineData(43, true)]
-    [InlineData(44, true)]
-    [InlineData(45, false)]
-    [InlineData(66, false)]
-    [InlineData(73, false)]
-    public void GenesisToEstherTheGospelsAndActsTellAStory(int book, bool tells) =>
-        EncyclopediaEndpoints.TellsAStory(book).Should().Be(tells);
+    [InlineData(1, 12, 1, true)]
+    [InlineData(1, 49, 10, false)]
+    [InlineData(1, 49, 29, true)]
+    [InlineData(2, 15, 14, false)]
+    [InlineData(2, 15, 22, true)]
+    [InlineData(2, 23, 31, false)]
+    [InlineData(3, 1, 1, false)]
+    [InlineData(3, 10, 1, true)]
+    [InlineData(4, 22, 36, true)]
+    [InlineData(4, 24, 17, false)]
+    [InlineData(4, 24, 25, true)]
+    [InlineData(4, 33, 5, true)]
+    [InlineData(4, 34, 3, false)]
+    [InlineData(5, 2, 8, true)]
+    [InlineData(5, 12, 5, false)]
+    [InlineData(5, 34, 1, true)]
+    [InlineData(7, 4, 13, true)]
+    [InlineData(7, 5, 19, false)]
+    [InlineData(12, 19, 21, false)]
+    [InlineData(12, 19, 35, true)]
+    [InlineData(18, 1, 1, true)]
+    [InlineData(18, 3, 1, false)]
+    [InlineData(18, 42, 6, false)]
+    [InlineData(18, 42, 7, true)]
+    [InlineData(19, 60, 1, false)]
+    [InlineData(23, 1, 1, false)]
+    [InlineData(23, 36, 2, true)]
+    [InlineData(23, 37, 22, false)]
+    [InlineData(23, 37, 36, true)]
+    [InlineData(23, 38, 10, false)]
+    [InlineData(24, 1, 1, true)]
+    [InlineData(24, 25, 1, false)]
+    [InlineData(24, 30, 1, false)]
+    [InlineData(24, 43, 7, true)]
+    [InlineData(24, 43, 12, false)]
+    [InlineData(24, 26, 5, false)]
+    [InlineData(24, 26, 20, true)]
+    [InlineData(24, 46, 2, false)]
+    [InlineData(24, 52, 1, true)]
+    [InlineData(26, 1, 1, true)]
+    [InlineData(26, 27, 1, false)]
+    [InlineData(27, 6, 28, true)]
+    [InlineData(27, 7, 2, false)]
+    [InlineData(27, 10, 4, true)]
+    [InlineData(30, 1, 3, false)]
+    [InlineData(30, 7, 13, true)]
+    [InlineData(32, 1, 3, true)]
+    [InlineData(40, 4, 13, true)]
+    [InlineData(40, 11, 21, false)]
+    [InlineData(40, 24, 15, false)]
+    [InlineData(42, 1, 47, false)]
+    [InlineData(42, 10, 30, true)]
+    [InlineData(44, 7, 4, true)]
+    [InlineData(45, 1, 7, false)]
+    [InlineData(45, 15, 19, true)]
+    [InlineData(48, 1, 2, false)]
+    [InlineData(48, 1, 17, true)]
+    [InlineData(57, 1, 1, false)]
+    [InlineData(60, 1, 1, false)]
+    [InlineData(66, 1, 9, true)]
+    [InlineData(66, 1, 11, false)]
+    [InlineData(70, 1, 1, true)]
+    [InlineData(75, 1, 1, false)]
+    public void OnlyThePassagesThatTellWhatHappenedWhereTellAStory(int book, int chapter, int verse, bool tells) =>
+        EncyclopediaEndpoints.TellsAStory(book, chapter, verse).Should().Be(tells);
+
+    [Theory]
+    [InlineData("genesis\tall\tstory\tnarrative", true)]
+    [InlineData("genesis\t36:1-37:21\tnot\ta span across chapters", true)]
+    [InlineData("genesis\t23:7-10\tnot\ta span in one chapter", true)]
+    [InlineData("genesis\t28-30\tnot\tchapters", true)]
+    [InlineData("nowhere\tall\tstory\tno such book", false)]
+    [InlineData("genesis\t10-3\tnot\tbackwards", false)]
+    [InlineData("genesis\t3:9-3\tnot\tbackwards in one chapter", false)]
+    [InlineData("genesis\t3-4:2\tnot\ta chapter to a verse", false)]
+    [InlineData("genesis\t1-2\tmaybe\tneither story nor not", false)]
+    [InlineData("genesis\t1-2\tnot\t ", false)]
+    [InlineData("genesis\t1-2\tnot", false)]
+    public void APassagesRowIsReadOrRefused(string row, bool read)
+    {
+        var parse = () => NarrativePassages.Parse("# a comment\n\n" + row);
+
+        if (read)
+        {
+            parse().Should().ContainSingle();
+        }
+        else
+        {
+            parse.Should().Throw<FormatException>();
+        }
+    }
+
+    [Fact]
+    public void TheCompiledPassagesAllRead()
+    {
+        NarrativePassages.All.Should().HaveCountGreaterThan(100)
+            .And.OnlyContain(row => row.Why.Length > 0 && row.From <= row.To);
+    }
 
     [Fact]
     public async Task EveryPlaceOfTheStoryIsInTheStoryGroup()
@@ -236,8 +320,8 @@ public sealed class StoryPlacesTests : IDisposable
     {
         var anathoth = Place("anathoth", "Anathoth");
         _db.SaveChanges();
-        Verse(_david, 24, 1, 1);
-        Verse(anathoth, 24, 1, 1);
+        Verse(_david, 24, 25, 1);
+        Verse(anathoth, 24, 25, 1);
         Tie(_david, anathoth, DescriptorRelations.FromPlace);
         _db.SaveChanges();
 
@@ -249,47 +333,29 @@ public sealed class StoryPlacesTests : IDisposable
         place.Roles.Should().Equal("lived");
     }
 
-    [Theory]
-    [InlineData("jeremiah-6", 24, true)]
-    [InlineData("jeremiah-6", 25, false)]
-    [InlineData("jeremiah-6", 26, false)]
-    [InlineData("ezekiel", 26, true)]
-    [InlineData("daniel-2", 27, true)]
-    [InlineData("jonah", 32, true)]
-    [InlineData("amos", 30, true)]
-    [InlineData("job", 18, true)]
-    [InlineData("saul-2", 45, true)]
-    [InlineData("saul-2", 57, true)]
-    [InlineData("saul-2", 58, false)]
-    [InlineData("simon", 60, true)]
-    [InlineData("simon", 45, false)]
-    [InlineData("david", 19, false)]
-    [InlineData("jeremiah-6", 1, true)]
-    public void ABookNamedAfterAPersonTellsTheirStory(string slug, int book, bool tells) =>
-        EncyclopediaEndpoints.TellsAStory(book, slug).Should().Be(tells);
-
     [Fact]
-    public async Task APlaceNamedWithAPersonInTheirOwnBookIsInTheStory()
+    public async Task APlaceNamedWithARecordInAProphetsNarrativeIsInTheStoryAndInHisOracleItIsNot()
     {
-        var jeremiah = Record(EntityKind.Person, "jeremiah-6", "Jeremiah");
-        var other = Record(EntityKind.Person, "baruch", "Baruch");
+        var judahites = Record(EntityKind.People, "judahites", "Judahites");
         var tahpanhes = Place("tahpanhes", "Tahpanhes");
         var babylon = Place("babylon", "Babylon");
+        var pontus = Place("pontus", "Pontus");
         _db.SaveChanges();
-        Verse(jeremiah, 24, 43, 8);
-        Verse(other, 24, 43, 8);
-        Verse(tahpanhes, 24, 43, 8);
-        Verse(jeremiah, 26, 1, 1);
-        Verse(babylon, 26, 1, 1);
+        Verse(judahites, 24, 43, 5);
+        Verse(tahpanhes, 24, 43, 7);
+        Verse(judahites, 24, 43, 7);
+        Verse(judahites, 24, 50, 4);
+        Verse(babylon, 24, 50, 4);
+        Verse(judahites, 60, 1, 1);
+        Verse(pontus, 60, 1, 1);
         _db.SaveChanges();
 
-        var his = (await EncyclopediaEndpoints.NamedPlaces(_db, jeremiah.Id, null, null, 20))
+        var places = (await EncyclopediaEndpoints.NamedPlaces(_db, judahites.Id, null, null, 20))
             .Items.ToDictionary(p => p.Slug);
-        var baruchs = await EncyclopediaEndpoints.NamedPlaces(_db, other.Id, null, null, 20);
 
-        (his["tahpanhes"].Group, his["tahpanhes"].StoryVerses).Should().Be(("story", 1));
-        his["babylon"].Group.Should().Be("other-books");
-        baruchs.Items.Single().Group.Should().Be("other-books");
+        (places["tahpanhes"].Group, places["tahpanhes"].StoryVerses).Should().Be(("story", 1));
+        (places["babylon"].Group, places["babylon"].StoryVerses).Should().Be(("other-books", 0));
+        places["pontus"].Group.Should().Be("other-books");
     }
 
     /// <summary>
