@@ -64,6 +64,24 @@ $G report   --run geez-dillmann-v1                # the ledger summary for the e
 
 PSA 22 is the shepherd psalm: GEEZ81 numbers the Psalms as the Septuagint does.
 
+The books Brenton's Greek does not hold are read beside what there is (`chapter_sources`):
+
+- **Messale and Tägsas** (91, 92) are Proverbs as the church divides it (Messale 1-24 with Proverbs 30 and
+  31:1-9 in the Greek order, Tägsas 25-29 and 31:10-31). Their Greek and English are Brenton's Proverbs set at
+  the Ge'ez verse each answers by `Resources/Essenthos/versification/geez-verse-map.tsv`, the hand-read map the
+  build places them by, read to the frame's rows; each Greek and English verse keeps its own address as its ref
+  (`24:22f`). The export stops if a loaded Ge'ez verse has no line in the map, and names in
+  `unanswered_by_the_verse_map` the verses whose rows hold no verse of Brenton's (Messale 11:4, 13:6, 15:33-34,
+  16:1, 16:3, 20:10-12 and Tägsas 1:20 on 2026-11-16: Brenton's Greek lacks those lines).
+- **2 Esdras** (69) is 4 Ezra, chapters 3-14, numbered as the King James numbers it; the packet carries the KJV's
+  2 Esdras as its English and no Greek. The Ge'ez 7:35 also holds the passage the 1611 translation lacks (7:36-105
+  of modern editions), which has no English beside it.
+- **1 Enoch and Jubilees** (85, 86) carry R. H. Charles's translation from the Ethiopic (text `CHARLES1913`), a
+  verse either side of the passage, since his verses divide a verse apart from the Ge'ez in places.
+- **1-3 Meqabyan and 4 Baruch** have neither and go with the Ge'ez alone.
+
+Those packets say where their English comes from in `english_from`.
+
 The full contextual run is `export-gloss --all-chapters` into a new run folder (every GEEZ81 chapter in
 GEEZ81's own book order, `book.position`: Jubilees and Enoch after Chronicles, Meqabyan after Esther; one
 read statement per book), `build` with the settings the pilot chose, then `submit --next N` in tranches

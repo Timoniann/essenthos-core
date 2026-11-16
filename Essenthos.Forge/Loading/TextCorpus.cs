@@ -37,6 +37,7 @@ internal static class TextCorpus
         BereanTextSource.Definition,
         .. Bible4uTextSource.Definitions.Values,
         KulishTextSource.Definition,
+        CharlesTextSource.Definition,
         .. EbibleTextSource.Definitions.Values,
         .. SwordTextSource.Definitions.Values,
         .. EnglishTextSource.Definitions.Values,

@@ -254,8 +254,97 @@ class ExportTests(unittest.TestCase):
     def test_only_matthew_to_revelation_read_nestle(self):
         self.assertEqual(gb.chapter_sources(40), ('NESTLE1904', 'KJV'))
         self.assertEqual(gb.chapter_sources(66), ('NESTLE1904', 'KJV'))
-        for ordinal in (1, 39, 67, 70, 85, 86):
+        for ordinal in (1, 39, 67, 70, 91, 92):
             self.assertEqual(gb.chapter_sources(ordinal), ('GRCBRENT', 'BRENTON'))
+
+    def test_books_with_no_greek_read_an_english_made_without_it(self):
+        self.assertEqual(gb.chapter_sources(69), (None, 'KJV'))
+        self.assertEqual(gb.chapter_sources(85), (None, gb.CHARLES))
+        self.assertEqual(gb.chapter_sources(86), (None, gb.CHARLES))
+        for ordinal in (87, 88, 89, 90):
+            self.assertEqual(gb.chapter_sources(ordinal), (None, None))
+
+    def test_a_book_with_no_greek_splits_its_english_by_its_own_chapters(self):
+        rows = {'geez': [{'id': '1', 'c': 4, 'v': 2}], 'links': [], 'greek': [],
+                'english': [{'c': 3, 'v': 9}, {'c': 4, 'v': 1}, {'c': 4, 'v': 14}, {'c': 5, 'v': 1}]}
+        self.assertEqual(gb.split_book(rows, 4)['english'], [{'c': 4, 'v': 1}, {'c': 4, 'v': 14}])
+
+    def test_charles_is_read_a_verse_either_side_and_said_to_be_from_the_ethiopic(self):
+        ch = chapter()
+        ch.update(greek=[], links=[], english_margin=1, english_from='from the Ethiopic',
+                  english=[{'c': 1, 'v': v, 'label': '', 't': f'e{v}'} for v in (1, 2, 3, 4)])
+        packet, _, gkeys = gb.gloss_packet(ch, gb.passages(ch, max_words=4)[1])
+        self.assertEqual(packet['greek'], [])
+        self.assertEqual(gkeys, {})
+        self.assertEqual([e['ref'] for e in packet['english']], ['1:1', '1:2', '1:3'])
+        self.assertEqual(packet['english_from'], 'from the Ethiopic')
+
+
+VERSE_MAP = """# head
+91	1:1	20	1:1	0.9
+91	1:2-3	20	1:2	0.9
+91	2:1	20	30:1;30:2	0.9
+92	1:1	20	25:1	0.9
+76	1:1	76	1:1	0.9
+"""
+
+
+def proverbs_rows():
+    geez = [{'id': str(i), 'c': c, 'v': v, 'label': '', 'p': 1, 't': 'ge'} for i, (c, v) in
+            enumerate([(1, 1), (1, 2), (1, 3), (2, 1)])]
+    def g(i, c, v, label, fc, fv):
+        return {'id': str(100 + i), 'c': c, 'v': v, 'label': label, 'p': 1, 't': f'gr{i}', 'lemma': '',
+                'fc': fc, 'fv': fv}
+    greek = [g(0, 1, 1, '', 1, 1), g(1, 1, 2, '', 1, 2), g(2, 24, 22, 'f', 30, 1), g(3, 24, 22, 'g', 30, 2),
+             g(4, 24, 23, '', 24, 23)]
+    english = [{'c': x['c'], 'v': x['v'], 'label': x['label'], 'fc': x['fc'], 'fv': x['fv'], 't': 'en'} for x in greek]
+    return {'geez': geez, 'links': [], 'greek': greek, 'english': english}
+
+
+class ProverbsTests(unittest.TestCase):
+    def setUp(self):
+        self.folder = tempfile.TemporaryDirectory()
+        self.path = Path(self.folder.name) / 'map.tsv'
+        self.path.write_text(VERSE_MAP, encoding='utf-8')
+
+    def tearDown(self):
+        self.folder.cleanup()
+
+    def test_the_map_reads_ranges_and_several_rows_for_messale_and_tagsas_only(self):
+        verse_map = gb.read_verse_map(self.path)
+        self.assertEqual(verse_map[(91, 1, 3)], [(1, 2)])
+        self.assertEqual(verse_map[(91, 2, 1)], [(30, 1), (30, 2)])
+        self.assertEqual(verse_map[(92, 1, 1)], [(25, 1)])
+        self.assertNotIn((76, 1, 1), verse_map)
+
+    def test_proverbs_stands_at_the_messale_verse_its_frame_row_answers_and_keeps_its_own_address(self):
+        placed = gb.place_proverbs(91, proverbs_rows(), gb.read_verse_map(self.path))
+        self.assertEqual([(g['c'], g['v'], g['ref']) for g in placed['greek']],
+                         [(1, 1, '1:1'), (1, 2, '1:2'), (2, 1, '24:22f'), (2, 1, '24:22g')])
+        self.assertEqual([e['ref'] for e in placed['english']], ['1:1', '1:2', '24:22f', '24:22g'])
+        self.assertNotIn('fc', placed['greek'][0])
+        packet, _, _ = gb.gloss_packet({**proverbs_rows(), **placed, 'book': 'Msl', 'dillmann': {}},
+                                       [((2, 1, ''), [placed['geez'][3]])])
+        self.assertEqual([v['ref'] for v in packet['greek']], ['24:22f', '24:22g'])
+
+    def test_a_messale_verse_the_map_lacks_stops_the_export(self):
+        rows = proverbs_rows()
+        rows['geez'].append({'id': '9', 'c': 3, 'v': 1, 'label': '', 'p': 1, 't': 'ge'})
+        with self.assertRaises(SystemExit):
+            gb.place_proverbs(91, rows, gb.read_verse_map(self.path))
+
+    def test_a_messale_verse_whose_rows_hold_no_loaded_verse_is_named_unanswered(self):
+        rows = proverbs_rows()
+        rows['greek'] = [g for g in rows['greek'] if g['fv'] != 2]
+        placed = gb.place_proverbs(91, rows, gb.read_verse_map(self.path))
+        # 1:2-3 both read 1:2, which this Greek lacks; 2:1 still has 30:1 when 30:2 is gone.
+        self.assertEqual(placed['unanswered'], [[1, 2], [1, 3]])
+
+    def test_the_checked_in_map_names_as_many_verses_as_geez81_loads_of_messale_and_tagsas(self):
+        # 766 and 161 verses, counted in the loaded GEEZ81 on 2026-11-16; the export checks the verses themselves.
+        verse_map = gb.read_verse_map()
+        self.assertEqual(len([k for k in verse_map if k[0] == 91]), 766)
+        self.assertEqual(len([k for k in verse_map if k[0] == 92]), 161)
 
 
 if __name__ == '__main__':
