@@ -180,6 +180,54 @@ public sealed class NameSearchTests : IDisposable
     public void TheLivingCreaturesOfEzekielFindTheCherubim(string typed) =>
         FamiliarNames.Opening(typed).Should().Contain("cherubim");
 
+    [Theory]
+    [InlineData("єдиноріг", "reem")]
+    [InlineData("Unicornio", "reem")]
+    [InlineData("онокентавр", "lilith")]
+    [InlineData("Lamia", "lilith")]
+    [InlineData("лешие", "seirim")]
+    [InlineData("демони", "seirim")]
+    [InlineData("морське", "rahab-sea-monster")]
+    [InlineData("василиск", "tsepha")]
+    [InlineData("летючий змій", "saraph-serpents")]
+    [InlineData("Drache", "tannin")]
+    public void WhatTheGreekAndLatinCallACreatureFindsItsRecord(string typed, string slug) =>
+        FamiliarNames.Opening(typed).Should().Contain(slug);
+
+    [Theory]
+    [InlineData("дракон", "ukr")]
+    [InlineData("Dragon", "eng")]
+    public async Task TheDragonIsTheTanninFirstThenTheOthersCalledSo(string typed, string language)
+    {
+        var ohienko = await _db.Texts.SingleAsync(t => t.Slug == "UBIO");
+        var satan = Record("satan", "Satan");
+        var tannin = Record("tannin", "Tannin");
+        var babylon = Record("dragon-of-babylon", "Dragon of Babylon");
+        await _db.SaveChangesAsync();
+        Printed(ohienko, satan, "Дракон");
+        Printed(ohienko, babylon, "Дракон");
+        foreach (var verse in Enumerable.Range(1, 5))
+        {
+            _db.EntityVerses.Add(new EntityVerse
+            {
+                EntityId = satan.Id, CanonicalBook = 66, CanonicalChapter = 12, CanonicalVerse = verse, Source = "a test",
+            });
+        }
+
+        await _db.SaveChangesAsync();
+
+        var found = await EntityNames.Find(_db, _db.Entities, typed, CancellationToken.None);
+        var ranked = await EntityNames.ByRelevance(
+                EntityNames.Localised(_db, _db.Entities.Where(e => found.Ids.Contains(e.Id)), language),
+                found,
+                language)
+            .Select(l => l.Entity.Slug)
+            .ToListAsync();
+
+        ranked.Should().StartWith("tannin").And.Contain("dragon-of-babylon");
+        found.Leading.Should().Equal(tannin.Id);
+    }
+
     [Fact]
     public async Task ANearSpellingIsLookedForOnlyWhereNothingIsCalledThat()
     {
