@@ -141,6 +141,31 @@ public sealed class PageDocumentTests : IDisposable
         composed.Values.Should().Contain(html => html.Contains("page-data"));
     }
 
+    /// <summary>
+    /// Where two verses of the text stand at one address, the page quotes the verse whose own address it is, whichever
+    /// the database would return first.
+    /// </summary>
+    [Fact]
+    public async Task APageQuotesTheVerseWhoseOwnAddressItIsWhereTwoVersesShareIt()
+    {
+        _db.Database.ExecuteSqlRaw(
+            "UPDATE verse SET label = 'a' WHERE number = 2 AND text_id = (SELECT id FROM text WHERE slug = 'test-english')");
+        var english = await _db.Texts.SingleAsync(t => t.Slug == "test-english");
+        var chapter = await _db.Chapters.SingleAsync(c => c.TextId == english.Id && c.Number == 1);
+        var own = new Verse { TextId = english.Id, BookId = chapter.BookId, ChapterId = chapter.Id, ChapterNumber = 1, Number = 2, Sequence = 3 };
+        _db.Verses.Add(own);
+        _db.VerseReferences.Add(new VerseReference { Verse = own, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 2, IsPrimary = true });
+        _db.Words.AddRange(
+            new Word { TextId = english.Id, Verse = own, Position = 1, Surface = "Gibbar", Trailer = " " },
+            new Word { TextId = english.Id, Verse = own, Position = 2, Surface = "stayed", Trailer = string.Empty });
+        await _db.SaveChangesAsync();
+
+        using var cache = new PageCache();
+        var document = (await Loader(cache).RecordDocument("gibbar", SiteLanguage.All.Single(l => l.Code == "en"), default))!;
+
+        document.Verses.Should().ContainSingle().Which.Text.Should().Be("Gibbar stayed");
+    }
+
     [Fact]
     public async Task ADocumentComposedUnderAnotherChoiceOfTextOrByAnotherVersionIsNotRead()
     {
