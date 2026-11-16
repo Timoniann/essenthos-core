@@ -22,8 +22,8 @@ internal static class FamiliarNames
         ["Раамсес"] = ["rameses"],
         ["Сокхот"] = ["succoth-2"],
 
-        // The animals whose Hebrew word the old translations render strangely (FTR-1756, the owner's
-        // word of 2026-11-16): what the Greek and Latin call them where no text of the reader's
+        // The animals whose Hebrew word the old translations render strangely (the owner's word of
+        // 2026-11-16): what the Greek and Latin call them where no text of the reader's
         // language prints it (the sirens of the ostrich and the jackal, the onocentaurs of the iyyim,
         // the griffin, the goat-stag, the camelopard), and what the lexicons take them for (the hyrax,
         // the dugong). Lilith keeps the singular onocentaur, which the Greek gives her at Isaiah 34:14.
