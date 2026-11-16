@@ -1,4 +1,6 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Products;
 using Essenthos.Core.Usfm;
 using FluentAssertions;
 using Xunit;
@@ -142,6 +144,20 @@ public sealed class Ebible
 
     internal TextSource ReinaValera { get; } =
         EbibleTextSource.Read(TestResources.EbibleFolder("ReinaValera1909"));
+
+    /// <summary>
+    /// The Reina-Valera as the converter makes it: eBible's file with this checkout's corrections, which divide the
+    /// verses the file runs together at the printed edition's numbers. The frame's supplements describe this text, so
+    /// it is what a frame test asks them about; the file as read stays for the tests of the file.
+    /// </summary>
+    internal TextSource ReinaValeraConverted => _reinaValeraConverted.Value;
+
+    private readonly Lazy<TextSource> _reinaValeraConverted;
+
+    public Ebible() =>
+        _reinaValeraConverted = new(() => TextCorrections
+            .Read(new ProductStore(TestResources.Shipped(".")), EbibleTextSource.ReinaValera)
+            .Apply(ReinaValera));
 
     internal IEnumerable<WordDraft> Words(TextSource source) => source.Books
         .SelectMany(book => book.Chapters)
