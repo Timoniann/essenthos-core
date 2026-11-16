@@ -259,9 +259,19 @@ internal static class ContextEndpoints
             cancellationToken,
             generated);
 
+        // The sort of each being, read here rather than stored with the chapter: few chapters name one, and those few slugs are one lookup.
+        var being = EnumSpelling.Of(EntityKind.Being);
+        var beings = records.Where(r => r.Kind == being).Select(r => r.Slug).ToList();
+        var sorts = beings.Count == 0
+            ? new Dictionary<string, string?>()
+            : await db.Entities.Where(e => beings.Contains(e.Slug))
+                .Select(e => new { e.Slug, e.Subtype })
+                .ToDictionaryAsync(e => e.Slug, e => e.Subtype, StringComparer.Ordinal, cancellationToken);
+
         var entities = records
             .Select(r => new ContextEntityResponse(r.Slug, r.Kind, r.Name, r.Distinguisher, [.. verses[r.Slug]])
             {
+                Subtype = sorts.GetValueOrDefault(r.Slug),
                 LocalName = Line(r.Slug).LocalName,
                 LocalDistinguisher = Line(r.Slug).LocalDistinguisher,
                 Descriptor = Line(r.Slug).Descriptor,
@@ -424,6 +434,12 @@ internal record ContextEntityResponse(
     /// which of them the chapter uses; null for everything else.
     /// </summary>
     public string? Group { get; init; }
+
+    /// <summary>
+    /// What sort of being it is, <c>god</c> or <c>creature</c>, which a reader is shown as groups apart;
+    /// null for every other kind.
+    /// </summary>
+    public string? Subtype { get; init; }
 
     /// <summary>
     /// The name the chapter calls it by where that is not its headword: John 1 calls the man his
