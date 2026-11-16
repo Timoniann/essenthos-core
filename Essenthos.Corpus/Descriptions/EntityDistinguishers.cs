@@ -31,6 +31,15 @@ internal static class EntityDistinguishers
             .ToDictionaryAsync(d => d.EntityId, d => d.Text, cancellationToken);
     }
 
+    /// <summary>
+    /// Whether an entity's English line is this corpus's own: a line it wrote is rendered into the
+    /// reader's languages, and a rendering of the line as it stands now says so. A dataset's line is
+    /// never rendered.
+    /// </summary>
+    public static Task<bool> IsOwn(AppDbContext db, int entity, CancellationToken cancellationToken) =>
+        db.EntityDistinguishers.AnyAsync(
+            d => d.EntityId == entity && d.English == d.Entity!.Distinguisher, cancellationToken);
+
     /// <summary>The same, keyed by slug, for rows that name their records by address.</summary>
     public static async Task<Dictionary<string, string>> OfSlugs(
         AppDbContext db,

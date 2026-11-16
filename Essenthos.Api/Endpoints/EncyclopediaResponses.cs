@@ -246,6 +246,14 @@ internal record EntityResponse(
     public bool LocalNotesMachine { get; init; }
 
     /// <summary>
+    /// True where <paramref name="Distinguisher"/> is this corpus's own line, written from the
+    /// record's verses and rendered into the reader's languages; false where it is a dataset's words.
+    /// An English reader's card shows the line only then, since a dataset's sentence is not what the
+    /// card puts under a name.
+    /// </summary>
+    public bool OwnLine { get; init; }
+
+    /// <summary>
     /// <paramref name="ModernEquivalent"/> in the reader's language, a machine translation of the
     /// gazetteer's words; null for an English reader and where none is held.
     /// </summary>

@@ -2,6 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Descriptions;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -318,6 +319,31 @@ public sealed class ContextEndpointTests : IDisposable
             _db, Genesis, 10, "rus", await ContextWeights.Count(_db, default), default, prose: "ukr");
         overTheSynodal.Entities.Single(e => e.Slug == "holy-spirit").LocalDistinguisher
             .Should().Be("той, кого текст називає Святим Духом (MAT 28:19; 1CO 3:16)");
+    }
+
+    /// <summary>
+    /// A record's English line is our own where it has been rendered from the English it still holds:
+    /// the reader's card on an English page shows it then, and a dataset's line, never rendered, and a
+    /// line changed since its rendering are not counted ours (PRB-1708).
+    /// </summary>
+    [Fact]
+    public async Task OnlyARenderedLineIsOurOwn()
+    {
+        var ours = Record("darius-the-persian", EntityKind.Person);
+        var dataset = Record("from-a-dataset", EntityKind.Person);
+        var altered = Record("altered-since", EntityKind.Person);
+        ours.Distinguisher = "king of Persia to whose reign the priests were recorded (NEH 12:22)";
+        dataset.Distinguisher = "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)";
+        altered.Distinguisher = "a line changed since it was rendered";
+        await _db.SaveChangesAsync();
+        Rendered(ours, ours.Distinguisher, "цар Персії, до царювання якого записано священиків (NEH 12:22)");
+        Rendered(altered, "the line as it was", "рядок, яким він був");
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        (await EntityDistinguishers.IsOwn(_db, ours.Id, default)).Should().BeTrue();
+        (await EntityDistinguishers.IsOwn(_db, dataset.Id, default)).Should().BeFalse();
+        (await EntityDistinguishers.IsOwn(_db, altered.Id, default)).Should().BeFalse();
     }
 
     /// <summary>
