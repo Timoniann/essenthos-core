@@ -69,7 +69,7 @@ public sealed class ProvenanceTieTests : IDisposable
         [
             MappingMethods.Manual, MappingMethods.Stated, MappingMethods.Strong, MappingMethods.Evidentia, MappingMethods.Names,
             MappingMethods.Possessive, MappingMethods.Rule, MappingMethods.ModelReading, MappingMethods.Composed,
-            MappingMethods.Aligner, MappingMethods.NameList, MappingMethods.Lexical,
+            MappingMethods.Aligner, MappingMethods.Lexical,
         ];
         var highest = files
             .GroupBy(MappingMethods.DatabaseMethod)

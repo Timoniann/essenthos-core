@@ -35,14 +35,24 @@ public sealed class MappingMergeTests
         Dictionary<(string, VerseKey), string>? hashes = null,
         Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>? manifests = null,
         string pair = "KJV-BHSA",
-        long ordinal = Ordinal) =>
+        long ordinal = Ordinal,
+        RenderingWords? words = null) =>
         MappingMerge.Merge(new MappingMerge.Input(
             pair, pair[..pair.IndexOf('-')], pair[(pair.IndexOf('-') + 1)..],
             rows.GroupBy(r => r.Method).ToDictionary(g => g.Key, g => g.ToList()),
             rulings ?? [],
             hashes ?? [],
             manifests ?? new Dictionary<string, IReadOnlyDictionary<VerseKey, string>?>(),
-            ordinal));
+            ordinal,
+            Words: words));
+
+    /// <summary>A verse of the first text, 1.1:1, its words separated by spaces and a full stop after the last.</summary>
+    private static RenderingWords Verse(string language, string text, string slug = "KJV")
+    {
+        var words = text.Split(' ');
+        return RenderingWords.Of(language, words.Select((surface, at) =>
+            (WordKey.Parse($"1.1:1.{at + 1}", slug), surface.TrimEnd(',', '.'), surface.EndsWith('.') ? "." : surface.EndsWith(',') ? ", " : " ")));
+    }
 
     private static string? Status(MappingMerge.Output output, string method, int index = 0) => output.Methods[method][index].Status;
 
@@ -574,5 +584,144 @@ public sealed class MappingMergeTests
         string[] laid = ["RUSV", "LSG1910", "JND2024", "SCH1951", "RLT2018", "CUV", "CUVS", "RV1909"];
         laid.Should().OnlyContain(slug => Essenthos.Core.Conversion.SideStrongNumbers.Layered(slug));
         ((string[])["KJV", "LUTH1912", "UBIO", "BHSA"]).Should().NotContain(slug => Essenthos.Core.Conversion.SideStrongNumbers.Layered(slug));
+    }
+
+    [Fact]
+    public void A_sure_link_holds_its_original_word_against_a_link_of_another_method_from_a_word_apart()
+    {
+        var output = Merge([
+            Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.1", source: Berean, link: 1),
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: Berean, link: 2),
+            Row(MappingMethods.Composed, "1.1:1.3", "1.1:1.1", confidence: 0.9, source: Machine, link: 3),
+        ]);
+
+        output.Final.Where(r => r.Settled).Select(Link).Should().Equal(1, 2);
+        Status(output, MappingMethods.Composed).Should().Be("withdrawn-by stated",
+            "the word between them renders another original word, and the composition's word is not put back as an orphan");
+        output.Report.Should().Contain(r => r.Kind == "held-originals" && r.Rows == 1);
+    }
+
+    [Fact]
+    public void Two_words_standing_together_are_one_rendering_of_an_original_word()
+    {
+        var output = Merge([
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.1", source: Berean, link: 1),
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.1", confidence: 0.9, source: Machine, link: 2),
+            Row(MappingMethods.Composed, "1.1:1.4", "1.1:1.1", confidence: 0.9, source: Machine, link: 3),
+        ]);
+
+        output.Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L, 3L],
+            "a word next to the stated one is part of its rendering, and nothing a surer link gives elsewhere stands between it and the third");
+        output.Report.Should().Contain(r => r.Kind == "held-originals" && r.Rows == 0);
+    }
+
+    [Fact]
+    public void A_link_under_the_floor_holds_no_original_word()
+    {
+        var output = Merge([
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.1", confidence: 0.5, source: Machine, link: 1),
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: Berean, link: 2),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.1", confidence: 0.7, link: 3),
+        ]);
+
+        output.Final.Where(r => r.Settled).Select(Link).Should().Equal([1L, 2L, 3L], "a composition at 0.5 doubts itself too much to withdraw a Strong pairing");
+    }
+
+    [Fact]
+    public void Words_a_language_writes_apart_from_their_verb_are_one_rendering_with_it_but_another_occurrence_is_not()
+    {
+        var words = Verse("deu", "ich will dir das Land geben, nicht nicht.", "LUTH1912");
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.6", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Strong, "1.1:1.5", "1.1:1.3", confidence: 0.9, link: 2),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.2", confidence: 0.9, link: 3),
+            Row(MappingMethods.Composed, "1.1:1.2", "1.1:1.1", confidence: 0.9, source: Machine, link: 4),
+            Row(MappingMethods.Composed, "1.1:1.1", "1.1:1.1", confidence: 0.9, source: Machine, link: 5),
+            Row(MappingMethods.Strong, "1.1:1.7", "1.1:1.4", confidence: 0.9, link: 6),
+            Row(MappingMethods.Strong, "1.1:1.5", "1.1:1.5", confidence: 0.9, link: 7),
+            Row(MappingMethods.Composed, "1.1:1.4", "1.1:1.4", confidence: 0.9, source: Machine, link: 8),
+        ];
+
+        var output = Merge(rows, pair: "LUTH1912-BHSA", words: words);
+
+        output.Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L, 3L, 4L, 5L, 6L, 7L],
+            "'ich' and 'will' render the verb 'geben' renders, across words a surer link gives elsewhere");
+        Status(output, MappingMethods.Composed, 2).Should().Be("withdrawn-by strong", "an article stands beside its noun, never apart from it");
+        Merge(rows, pair: "LUTH1912-BHSA").Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L, 3L, 6L, 7L],
+            "without the words, words apart with others between them are never one rendering");
+    }
+
+    [Fact]
+    public void The_same_word_twice_in_a_verse_is_not_one_rendering_of_one_original_word()
+    {
+        var words = Verse("deu", "nicht er kam und nicht sie.", "LUTH1912");
+        var output = Merge([
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Composed, "1.1:1.5", "1.1:1.1", confidence: 0.9, source: Machine, link: 2),
+        ], pair: "LUTH1912-BHSA", words: words);
+
+        output.Final.Where(r => r.Settled).Select(Link).Should().Equal(1);
+        Status(output, MappingMethods.Composed).Should().Be("withdrawn-by strong");
+    }
+
+    [Fact]
+    public void A_link_from_a_conjunction_holds_no_original_word()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.1", source: Berean, link: 1),
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: Berean, link: 2),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.1", confidence: 0.9, link: 3),
+        ];
+
+        Merge(rows, words: Verse("eng", "and he swore.")).Final.Where(r => r.Settled).Select(Link).Should().Equal([1L, 2L, 3L],
+            "'and' joins the words, it does not render the verb against the word that does");
+        Merge(rows, words: Verse("eng", "lo he swore.")).Final.Where(r => r.Settled).Select(Link).Should().Equal(1, 2);
+    }
+
+    [Fact]
+    public void A_link_holds_its_original_word_only_against_a_link_no_surer_than_itself_unless_that_one_is_an_article()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.2", confidence: 0.9, link: 2),
+            Row(MappingMethods.Composed, "1.1:1.3", "1.1:1.1", confidence: 0.95, source: Machine, link: 3),
+        ];
+
+        Merge(rows, words: Verse("eng", "lo he swore.")).Final.Where(r => r.Settled).Select(Link).Should().Equal([1L, 2L, 3L],
+            "the composition is surer of its word than the Strong pairing is of its own");
+        Merge(rows, words: Verse("eng", "lo he the.")).Final.Where(r => r.Settled).Select(Link).Should().Equal(1, 2);
+    }
+
+    [Fact]
+    public void The_two_halves_of_a_circumposition_are_one_rendering()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.2", confidence: 0.9, link: 2),
+            Row(MappingMethods.Composed, "1.1:1.4", "1.1:1.1", confidence: 0.9, source: Machine, link: 3),
+        ];
+
+        Merge(rows, pair: "LUTH1912-BHSA", words: Verse("deu", "um seines Knechtes willen.", "LUTH1912"))
+            .Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L, 3L], "'um ... willen' renders one word");
+        Merge(rows, pair: "LUTH1912-BHSA", words: Verse("deu", "um seines Knechtes Haus.", "LUTH1912"))
+            .Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L]);
+    }
+
+    [Fact]
+    public void In_LUTH1912_a_composition_ranks_above_an_evidentia_verdict_of_the_attached_tier()
+    {
+        const string Attached = "attached tier: AuxiliaryVerb of 'ausgeredet', by the parse of UDPipe's German-HDT model";
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Evidentia, "1.1:1.2", "1.1:1.3", confidence: 0.6, source: "EVIDENTIA run 18", evidence: Attached, link: 1),
+            Row(MappingMethods.Composed, "1.1:1.2", "1.1:1.1", confidence: 0.78, source: Machine, link: 2),
+        ];
+
+        Link(Merge(rows, pair: "LUTH1912-BHSA").Final.Should().ContainSingle().Which).Should().Be(2);
+        Link(Merge(rows, pair: "ELB1905-BHSA").Final.Should().ContainSingle().Which).Should().Be(1);
     }
 }

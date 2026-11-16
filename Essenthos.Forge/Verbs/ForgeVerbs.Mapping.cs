@@ -125,6 +125,25 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>A sample of a pair's rows the merge withdrew, every word with its key, to read by hand (<see cref="MergeSheet"/>).</summary>
+    private static async Task<int> MergeSheetVerb(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var before = Option(args, "--against") is { } against ? new ProductStore(against) : null;
+        var sheet = MergeSheet.Write(store, args[1], Option(args, "--status") ?? "withdrawn-by",
+            int.Parse(Option(args, "--count") ?? "20", CultureInfo.InvariantCulture), int.Parse(Option(args, "--seed") ?? "1", CultureInfo.InvariantCulture), before);
+        if (Option(args, "--out") is { } path)
+        {
+            await File.WriteAllTextAsync(path, sheet);
+        }
+        else
+        {
+            Console.Write(sheet);
+        }
+
+        return 0;
+    }
+
     /// <summary>Writes the verse links of the pairs named, or of every pair whose inputs moved.</summary>
     private static Task<int> VerseLinksVerb(ForgeRun forge, string[] args)
     {

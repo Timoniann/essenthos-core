@@ -92,7 +92,7 @@ internal sealed class SuppliedWordSource : IPairSource
     /// <summary>The pair's files whose renderings a marked word gives way to.</summary>
     public static readonly string[] Renderings =
     [
-        MappingMethods.Strong, MappingMethods.Aligner, MappingMethods.Composed, MappingMethods.Names, MappingMethods.NameList,
+        MappingMethods.Strong, MappingMethods.Aligner, MappingMethods.Composed, MappingMethods.Names,
         MappingMethods.Possessive, MappingMethods.Lexical, MappingMethods.Rule, MappingMethods.Manual, MappingMethods.Evidentia,
         MappingMethods.Stated,
     ];

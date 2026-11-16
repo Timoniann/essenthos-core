@@ -28,7 +28,7 @@ namespace Essenthos.Core.Mapping;
 ///
 /// <para>
 /// <strong>A name is placed only where neither word is linked yet</strong>, as the database's pass wrote it after every
-/// other step of the recipe: by the pair's stated, Strong, aligner, composed, lexical, name-list and possessive files.
+/// other step of the recipe: by the pair's stated, Strong, aligner, composed, lexical and possessive files.
 /// EVIDENTIA's file and the laid stated rows read this one, so they are not read here; the merge ranks EVIDENTIA above the
 /// names where both claim a word. A ruling's refused rendering is the merge's to suppress, as for every method.
 /// </para>
@@ -60,7 +60,7 @@ internal sealed class NamesFirstSource : IPairSource
     internal static readonly IReadOnlyList<string> Before =
     [
         MappingMethods.Stated, MappingMethods.Strong, MappingMethods.Aligner, MappingMethods.Composed, MappingMethods.Lexical,
-        MappingMethods.NameList, MappingMethods.Possessive,
+        MappingMethods.Possessive,
     ];
 
     public const string RecordsProduct = Essenthos.Core.Records.RecordKinds.Product;

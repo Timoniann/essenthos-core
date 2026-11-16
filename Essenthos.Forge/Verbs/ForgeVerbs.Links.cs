@@ -212,28 +212,6 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// What settling the names of each verse by spelling and order would change in the configured database's links,
-    /// measured; it writes nothing (name-list-pairs makes the links from files). --chapters 1:46,40:1 reports those
-    /// chapters apart, with examples; --books 1,13 reads those canonical books only.
-    /// </summary>
-    private static async Task<int> Names(ForgeRun forge, string[] args)
-    {
-        var (namesFrom, namesTo) = (args[1], args[2]);
-        using var namesScope = forge.Scope();
-        var chapters = (Option(args, "--chapters") ?? string.Empty)
-            .Split(',', StringSplitOptions.RemoveEmptyEntries)
-            .Select(chapter => chapter.Split(':'))
-            .Select(parts => (int.Parse(parts[0]), int.Parse(parts[1])))
-            .ToHashSet();
-        forge.Logger.LogInformation("\n{Report}", await namesScope.ServiceProvider.GetRequiredService<NameListPass>().Run(
-            Identifier(namesFrom),
-            Identifier(namesTo),
-            chapters,
-            Option(args, "--books") is { } namesBooks ? namesBooks.Split(',').Select(int.Parse).ToHashSet() : null));
-        return 0;
-    }
-
-    /// <summary>
     /// The names of a translation placed on the original's words naming the same person, place or
     /// people, measured against the configured database's links and scored against the pair's stated links where it
     /// has any; it writes no database (names-pairs makes the links from files).
