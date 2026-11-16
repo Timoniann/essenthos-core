@@ -268,7 +268,12 @@ internal sealed partial class NamesProjection
     }
 
     /// <summary>The names of one text, in memory.</summary>
-    public Projection Project(string text, bool diagnose = false)
+    /// <param name="over">
+    /// The method files of each pair the names are carried over instead of its final, every row of them a link: what the
+    /// earlier methods alone would name, for a producer the final reads (<see cref="Loading.Encyclopedia.NameConsensusPass"/>).
+    /// </param>
+    /// <param name="pairs">The pairs names are carried over, or every reference pair of the text.</param>
+    public Projection Project(string text, bool diagnose = false, IReadOnlyList<string>? over = null, Func<string, bool>? pairs = null)
     {
         var inputs = InputsOf(text);
         var linked = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
@@ -295,17 +300,11 @@ internal sealed partial class NamesProjection
             // A word a surer base links takes its names from that base alone; the next base speaks only for the words before it left unlinked.
             var linkedBefore = new HashSet<string>(linked.Keys, StringComparer.Ordinal);
             var used = bookBases.Values.Where(b => b.Count > priority).Select(b => b[priority]).ToHashSet(StringComparer.Ordinal);
-            foreach (var (pair, reference, first) in ReferencePairs(text).Where(p => used.Contains(p.Reference)))
+            foreach (var (pair, reference, first) in ReferencePairs(text).Where(p => used.Contains(p.Reference) && (pairs is null || pairs(p.Pair))))
             {
                 var settled = SettledOf(reference);
-                using var reader = Store.Open(MappingProducts.Of(pair, MappingProducts.Final), FinalRow.Schema);
-                foreach (var row in reader.Rows())
+                foreach (var row in Links(pair, over))
                 {
-                    if (!row.Settled)
-                    {
-                        continue;
-                    }
-
                     var mine = first ? row.From : row.To;
                     var theirs = first ? row.To : row.From;
                     if (mine.Length == 0 || theirs.Length == 0
@@ -447,6 +446,30 @@ internal sealed partial class NamesProjection
         Override(text, names, refused);
         names.Sort(Order);
         return new Projection(text, names, linked, refused, linkedTo, inputs);
+    }
+
+    /// <summary>The links of a pair names are carried over: its final's settled claims, or every row of the method files named.</summary>
+    private IEnumerable<(string From, string To, double? Confidence, string Method)> Links(string pair, IReadOnlyList<string>? methods)
+    {
+        if (methods is null)
+        {
+            using var final = Store.Open(MappingProducts.Of(pair, MappingProducts.Final), FinalRow.Schema);
+            foreach (var row in final.Rows().Where(row => row.Settled))
+            {
+                yield return (row.From, row.To, row.Confidence, row.Method);
+            }
+
+            yield break;
+        }
+
+        foreach (var method in methods.Where(method => Store.Exists(MappingProducts.Of(pair, method))))
+        {
+            using var reader = Store.Open(MappingProducts.Of(pair, method), MappingRow.Schema);
+            foreach (var row in reader.Rows())
+            {
+                yield return (row.From, row.To, row.Confidence, row.Method);
+            }
+        }
     }
 
     private static double Worth(double link, SettledName name) => link * (name.Confidence ?? 1.0);

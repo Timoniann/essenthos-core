@@ -1141,7 +1141,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     /// <summary>
     /// Which entity each word of the passage names. The original's are its annotations. The
     /// translation's are its own annotations, or, with <paramref name="consensusFile"/>, the words
-    /// file of a <c>name-consensus --out</c> reading, which addresses each word by its verse's first
+    /// file of a <c>names-consensus --out</c> reading, which addresses each word by its verse's first
     /// canonical address and its place in the verse, and knows nothing of the translation's links.
     /// </summary>
     private async Task<EvidentiaEntityNames> EntityNames(

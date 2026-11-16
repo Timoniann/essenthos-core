@@ -107,20 +107,6 @@ public sealed class NamesFirstSourceTests : IDisposable
             "what the pairs of a reference share is the original's side, never one translation's");
     }
 
-    [Fact]
-    public void Every_translation_names_first_places_has_its_consensus_file_in_the_checkout()
-    {
-        var folder = TestResources.Shipped(Path.Combine(ProductStore.EssenthosFolder, "names", "consensus"));
-        var missing = NamesFirstSource.Placed
-            .Select(pair => MappingProducts.Split(pair).From)
-            .Distinct()
-            .Where(text => !File.Exists(Path.Combine(folder, $"{text}.tsv")))
-            .Order(StringComparer.Ordinal)
-            .ToList();
-
-        missing.Should().BeEmpty("a build from an export of a database built from files would place these texts' names without the consensus");
-    }
-
     private ProductStore Store()
     {
         var store = new ProductStore(_root);

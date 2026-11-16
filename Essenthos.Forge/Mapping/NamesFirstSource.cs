@@ -18,12 +18,10 @@ namespace Essenthos.Core.Mapping;
 ///
 /// <para>
 /// <strong>Whom the translation's verses say a word names</strong> is the name-consensus pass's reading of the text
-/// (<see cref="Encyclopedia.NameConsensusPass"/>). It is read from <c>names/consensus/&lt;SLUG&gt;</c>, the rows of that
-/// pass's source as the step load's database held them (<see cref="ConsensusName"/>): the pass reads every text of a language
-/// at once and the names every other method gave the text, which the names projection makes from the finals this file goes
-/// into, so it cannot be made here without the graph reading itself. A database built from files holds each name under the
-/// source that placed it, so the file cannot be exported from one again, and a pair this source places refuses to run
-/// without it. A record folded into another since is read as the one it was folded into.
+/// (<see cref="Encyclopedia.NameConsensusPass"/>), read from <c>names/consensus/&lt;SLUG&gt;</c> (<see cref="ConsensusName"/>),
+/// which <c>names-consensus</c> makes before this file from every text's words and the names the pair's earlier method
+/// files carry, never from the finals this file goes into. A pair this source places refuses to run without it. A record
+/// folded into another is read as the one it was folded into.
 /// </para>
 ///
 /// <para>
@@ -101,8 +99,7 @@ internal sealed class NamesFirstSource : IPairSource
         {
             throw new InvalidOperationException(
                 $"names-pairs {pair}: {NameProducts.Consensus(fromText)} is missing, and without it the pair would lose most of its " +
-                "names with no error. It is tracked in git under Resources/Essenthos/names/consensus/: build from a checkout's " +
-                "Resources, or copy that folder into the scratch Resources; a database built from files cannot write it again.");
+                "names with no error. names-consensus makes it (forge build runs it before names-pairs).");
         }
 
         var from = texts[fromText];

@@ -124,26 +124,24 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// What naming the words of every text by what the verses naming each entity share would give, read from the configured
-    /// database and measured kind by kind against the texts whose annotations a stated link carried. <c>--texts</c> limits
-    /// the texts, <c>--precision</c> sets what each kind's bar must reach on the measured texts, <c>--bar verses,score,margin</c>
-    /// sets one bar for all, <c>--out</c> writes each text's findings. Writes no database: the names the pass once wrote are
-    /// the hand files <c>names/consensus/&lt;SLUG&gt;</c>.
+    /// <c>names-consensus [--from &lt;Resources&gt;] [--force] [--parallel n] [--out &lt;folder&gt;] [--precision p] [--bar v,s,m]</c>:
+    /// every text's <c>names/consensus/&lt;SLUG&gt;</c>, whom its verses say its words name, where an input moved, measured kind by
+    /// kind against the texts whose names a stated link carries (<see cref="NameConsensusPass"/>). <c>--precision</c> sets what
+    /// each kind's bar must reach and <c>--bar verses,score,margin</c> one bar for all; either measures only and writes no
+    /// product. <c>--out</c> writes each text's findings. Reads no database.
     /// </summary>
-    private static async Task<int> NameConsensus(ForgeRun forge, string[] args)
+    private static Task<int> NamesConsensus(ForgeRun forge, string[] args)
     {
-        using var consensusScope = forge.Scope();
-        var consensusBar = Option(args, "--bar")?.Split(',') is [var barVerses, var barScore, var barMargin]
-            ? new ConsensusBar(int.Parse(barVerses), double.Parse(barScore, CultureInfo.InvariantCulture),
+        var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
+        var bar = Option(args, "--bar")?.Split(',') is [var barVerses, var barScore, var barMargin]
+            ? new ConsensusBar(int.Parse(barVerses, CultureInfo.InvariantCulture), double.Parse(barScore, CultureInfo.InvariantCulture),
                 double.Parse(barMargin, CultureInfo.InvariantCulture))
             : null;
-        forge.Logger.LogInformation("\n{Report}", await consensusScope.ServiceProvider.GetRequiredService<NameConsensusPass>().Run(
-            Option(args, "--texts")?.Split(',').Select(Identifier).ToHashSet(),
-            Option(args, "--precision") is { } consensusPrecision
-                ? double.Parse(consensusPrecision, CultureInfo.InvariantCulture)
-                : NameConsensusPass.Precision,
-            Option(args, "--out"),
-            consensusBar));
-        return 0;
+        var precision = Option(args, "--precision") is { } asked ? double.Parse(asked, CultureInfo.InvariantCulture) : NameConsensusPass.Precision;
+        var outcome = NameConsensusPass.Write(store, args.Contains("--force"), precision, bar, Option(args, "--out"), Parallelism(args, 4),
+            line => forge.Logger.LogInformation("names-consensus: {Line}", line));
+        forge.Logger.LogInformation("{Report}", outcome.Report);
+        store.Save();
+        return Task.FromResult(0);
     }
 }

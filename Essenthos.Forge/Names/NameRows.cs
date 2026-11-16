@@ -26,10 +26,7 @@ internal static class NameProducts
 
     public static string Projected(string text) => $"names/projected/{text}";
 
-    /// <summary>
-    /// Whom a translation's verses say its words name (<see cref="ConsensusName"/>): the name-consensus pass's rows, kept as a
-    /// file because no build writes them back into a database.
-    /// </summary>
+    /// <summary>Whom a translation's verses say its words name (<see cref="ConsensusName"/>), made by names-consensus.</summary>
     public static string Consensus(string text) => $"names/consensus/{text}";
 
     public static bool IsReference(string text) => References.Contains(text, StringComparer.Ordinal);
@@ -95,9 +92,8 @@ internal sealed record SettledName(WordKey Own, string Record, string Role, stri
 }
 
 /// <summary>
-/// A word of a translation its verses say names a record, <c>names/consensus/&lt;SLUG&gt;</c> (Hand): the rows the step load's
-/// name-consensus pass wrote (<see cref="Loading.Encyclopedia.NameConsensusPass"/>), read by names-pairs. A database built from files holds
-/// a name under the source that placed it, not under that pass's, so a later export of one cannot write this file again.
+/// A word of a translation its verses say names a record, <c>names/consensus/&lt;SLUG&gt;</c> (Machine): what the name-consensus
+/// pass reads off the text (<see cref="Loading.Encyclopedia.NameConsensusPass"/>), read by names-pairs.
 /// </summary>
 internal sealed record ConsensusName(WordKey Own, string Record)
 {

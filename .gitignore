@@ -199,10 +199,12 @@ Resources/Essenthos/texts/*/*
 Resources/Essenthos/texts/word-id-collisions.essx
 !Resources/Essenthos/texts/*/corrections.tsv
 
-# The names layer's machine products (TSK-1448): the projection onto every text, and the database names earlier
-# proofs exported (nothing makes them now). Carried: the settled names, consensus, rules, bases and overrides.
+# The names layer's machine products (TSK-1448): the projection onto every text, whom each text's verses say its words
+# name (names-consensus), and the database names earlier proofs exported (nothing makes them now). Carried: the settled
+# names, rules, bases and overrides.
 Resources/Essenthos/names/projected/
 Resources/Essenthos/names/live/
+Resources/Essenthos/names/consensus/
 Resources/Essenthos/names/exported/
 
 # The served tables forge tables makes whole from files (TSK-1449): machine products, made again from their sources.

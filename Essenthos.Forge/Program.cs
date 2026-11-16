@@ -100,7 +100,6 @@ builder.Services.AddScoped<ModelPictures>();
 builder.Services.AddScoped<WikipediaLinkLoader>();
 builder.Services.AddSingleton(_ => ReviewLists.Read(builder.Configuration));
 builder.Services.AddScoped<EntityRenderingLoader>();
-builder.Services.AddScoped<NameConsensusPass>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddScoped<Publisher>();
 builder.Services.AddScoped<TextExporter>();
