@@ -49,6 +49,7 @@ internal sealed class NameListSource : IPairSource
         [
             .. PairLinkFiles.Inputs(store, pair, Method),
             .. new[] { fromText, toText }.Select(TextField.ProductOf).Select(store.Find).OfType<string>(),
+            .. GeezVerseMap.InputsFor([fromText, toText]),
         ];
     }
 

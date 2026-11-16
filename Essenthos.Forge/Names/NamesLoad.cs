@@ -25,7 +25,6 @@ internal static class NamesLoad
 
     private const string Indexes =
         """
-        CREATE UNIQUE INDEX IF NOT EXISTS ix_word_entity_word_id_entity_id ON word_entity (word_id, entity_id);
         CREATE INDEX IF NOT EXISTS ix_word_entity_entity_id ON word_entity (entity_id);
         """;
 
@@ -86,7 +85,7 @@ internal static class NamesLoad
 
         await using (var transaction = await connection.BeginTransactionAsync(cancellationToken))
         {
-            await Execute(connection, "DROP INDEX IF EXISTS ix_word_entity_word_id_entity_id; DROP INDEX IF EXISTS ix_word_entity_entity_id; TRUNCATE word_entity CASCADE;", cancellationToken);
+            await Execute(connection, "DROP INDEX IF EXISTS ix_word_entity_entity_id; TRUNCATE word_entity CASCADE;", cancellationToken);
             await Copy(connection, lines, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         }

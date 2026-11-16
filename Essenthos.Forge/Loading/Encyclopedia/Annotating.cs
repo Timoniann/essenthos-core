@@ -195,7 +195,7 @@ internal static class Annotating
         $"""
          greatest({StandingOf("a.method")}, coalesce(
              (SELECT max({StandingOf("held.method")}) FROM word_entity_claim held
-              WHERE held.word_entity_id = a.id AND held.method <> '{EnumSpelling.Of(LinkMethod.StatedBySource)}'), 0))
+              WHERE held.word_id = a.word_id AND held.entity_id = a.entity_id AND held.method <> '{EnumSpelling.Of(LinkMethod.StatedBySource)}'), 0))
          """;
 
     private static string StandingOf(string method) =>

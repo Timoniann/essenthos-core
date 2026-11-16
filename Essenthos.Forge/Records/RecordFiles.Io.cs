@@ -181,6 +181,11 @@ internal static partial class RecordFiles
                 await import.CompleteAsync(cancellationToken);
             }
 
+            if (file.Numbered is { } numbered)
+            {
+                await Number(db, transaction, numbered, cancellationToken);
+            }
+
             if (file.Check is { } check)
             {
                 var sound = await Scalar(db, transaction, check, cancellationToken);
@@ -215,6 +220,31 @@ internal static partial class RecordFiles
 
             loaded.Add((file.Product, rows.Count));
         }
+    }
+
+    /// <summary>The staged rows' values of one column numbered into <c>numbered (key, id)</c> in the column's order (<see cref="RowIds.Ordered"/>).</summary>
+    private static async Task Number(NpgsqlConnection db, NpgsqlTransaction transaction, string column, CancellationToken cancellationToken)
+    {
+        var keys = new List<string>();
+        await using (var command = new NpgsqlCommand($"SELECT {column} FROM s ORDER BY {column}", db, transaction))
+        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        {
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                keys.Add(reader.GetString(0));
+            }
+        }
+
+        var ids = RowIds.Ordered(keys);
+        await Execute(db, transaction, "DROP TABLE IF EXISTS numbered; CREATE TEMP TABLE numbered (key text PRIMARY KEY, id integer NOT NULL) ON COMMIT DROP",
+            cancellationToken);
+        await using var import = await db.BeginBinaryImportAsync("COPY numbered (key, id) FROM STDIN (FORMAT BINARY)", cancellationToken);
+        for (var i = 0; i < keys.Count; i++)
+        {
+            await import.WriteRowAsync(cancellationToken, keys[i], ids[i]);
+        }
+
+        await import.CompleteAsync(cancellationToken);
     }
 
     /// <summary>

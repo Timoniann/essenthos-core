@@ -93,6 +93,7 @@ internal static class FrameProducts
             store.Find(TitledPsalms) ?? throw new FileNotFoundException($"{TitledPsalms} is not under {store.ResourcesPath}."),
             store.Find(FirstVerseTitles) ?? throw new FileNotFoundException($"{FirstVerseTitles} is not under {store.ResourcesPath}."),
             .. slug == GeezTextSource.Slug ? ["Essenthos/versification/geez.tsv"] : Array.Empty<string>(),
+            .. BetaMasaheft.GeezVerseMap.InputsFor([slug]),
         ]);
 
     /// <summary>The hand file naming the psalms whose title the frame numbers apart, as verse 0.</summary>

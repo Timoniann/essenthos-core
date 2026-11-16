@@ -38,15 +38,14 @@ namespace Essenthos.Core.Database.Entities;
 /// methods of equal standing disagree. Refusing to answer is the correct answer for the twenty-three
 /// men called Zechariah, and it has to be expressible.
 /// </para>
+/// <para>
+/// The row is keyed by what it is, the word and the record, so it reads the same in every build that makes it.
+/// </para>
 /// </summary>
+[PrimaryKey(nameof(WordId), nameof(EntityId))]
 [Index(nameof(EntityId))]
-[Index(nameof(WordId), nameof(EntityId), IsUnique = true)]
 public class WordEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long Id { get; set; }
-
     public long WordId { get; set; }
 
     public Word? Word { get; set; }
@@ -99,14 +98,16 @@ public class WordEntity
 /// who checked. Flattened into one column they are indistinguishable; kept apart, a word two of them
 /// agree on is visibly better evidenced than a word only one proposed.
 /// </summary>
-[Index(nameof(WordEntityId), nameof(Method), nameof(Source), IsUnique = true)]
+[Index(nameof(WordId), nameof(EntityId), nameof(Method), nameof(Source), IsUnique = true)]
 public class WordEntityClaim
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
 
-    public long WordEntityId { get; set; }
+    public long WordId { get; set; }
+
+    public int EntityId { get; set; }
 
     public WordEntity? WordEntity { get; set; }
 
@@ -122,7 +123,7 @@ public class WordEntityClaim
 
     public string? Note { get; set; }
 
-    public override string ToString() => $"WordEntityClaim({Method} on annotation {WordEntityId})";
+    public override string ToString() => $"WordEntityClaim({Method} on word {WordId} naming {EntityId})";
 }
 
 /// <summary>The roles a word stands for a record in, as <c>word_entity.role</c> holds them.</summary>

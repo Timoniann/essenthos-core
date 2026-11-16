@@ -12,8 +12,9 @@ namespace Essenthos.Core.Build;
 /// <summary>
 /// The texts' products into an empty serving database: <c>text</c>, <c>book</c>, <c>chapter</c>, <c>verse</c>, <c>word</c>,
 /// the notes and stated verse numbers, and the four kinds of word group the converter keeps on the words (supplied,
-/// restored, doubtful, subscription). Book, chapter and verse ids are given here in catalogue and key order; a word's id is
-/// computed from its key (<see cref="WordIdTable"/>). Words go in over one connection per text, sixteen texts at a time.
+/// restored, doubtful, subscription). Book, chapter and verse ids are given from their text and their place in it
+/// (<see cref="RowIds"/>), so a verse added to one chapter renumbers no other; a word's id is computed from its key
+/// (<see cref="WordIdTable"/>). Words go in over one connection per text, sixteen texts at a time.
 /// </summary>
 internal static class TextLoad
 {
@@ -46,9 +47,6 @@ internal static class TextLoad
         await using (var connection = new NpgsqlConnection(connectionString))
         {
             await connection.OpenAsync(cancellationToken);
-            var nextBook = 0;
-            var nextChapter = 0;
-            var nextVerse = 0;
             await using (var textCopy = await connection.BeginBinaryImportAsync(
                              "COPY text (id, slug, name, name_native, kind, language, direction, versification, published_year, source_url, rights_holder, " +
                              "licence, licence_url, redistribution, textual_family, citation, about, edition, edition_year, editors, rights_note, translators, " +
@@ -73,13 +71,15 @@ internal static class TextLoad
                 {
                     foreach (var book in reader.Rows())
                     {
-                        loaded.Books[book.Book] = ++nextBook;
-                        books.Add((nextBook, textId, book));
+                        var id = RowIds.Book(textId, book.Book);
+                        loaded.Books[book.Book] = id;
+                        books.Add((id, textId, book));
                     }
                 }
 
                 using (var reader = store.Open(VerseManifestRow.ProductOf(slugs[i]), VerseManifestRow.Schema))
                 {
+                    var place = 0;
                     foreach (var row in reader.Rows().OrderBy(r => r.Own))
                     {
                         if (row.Own.ChapterLabel.Length > 0)
@@ -92,12 +92,14 @@ internal static class TextLoad
                             : throw new InvalidOperationException($"{slugs[i]} {row.Own}: its book is not in the text's books product.");
                         if (!loaded.Chapters.TryGetValue((row.Own.Book, row.Own.Chapter), out var chapter))
                         {
-                            loaded.Chapters[(row.Own.Book, row.Own.Chapter)] = chapter = ++nextChapter;
+                            loaded.Chapters[(row.Own.Book, row.Own.Chapter)] = chapter = RowIds.Chapter(textId, row.Own.Book, row.Own.Chapter);
                             chapters.Add((chapter, textId, book, row.Own.Chapter));
+                            place = 0;
                         }
 
-                        loaded.Verses[row.Own] = ++nextVerse;
-                        verses.Add((nextVerse, textId, book, chapter, row));
+                        var verse = RowIds.Verse(textId, row.Own.Book, row.Own.Chapter, place++);
+                        loaded.Verses[row.Own] = verse;
+                        verses.Add((verse, textId, book, chapter, row));
                     }
                 }
 
@@ -138,9 +140,9 @@ internal static class TextLoad
                 await copy.CompleteAsync(cancellationToken);
             }
 
-            await Restart(connection, "book", nextBook, cancellationToken);
-            await Restart(connection, "chapter", nextChapter, cancellationToken);
-            await Restart(connection, "verse", nextVerse, cancellationToken);
+            await Restart(connection, "book", books.Count == 0 ? 0 : books.Max(b => b.Id), cancellationToken);
+            await Restart(connection, "chapter", chapters.Count == 0 ? 0 : chapters.Max(c => c.Id), cancellationToken);
+            await Restart(connection, "verse", verses.Count == 0 ? 0 : verses.Max(v => v.Id), cancellationToken);
             await Restart(connection, "text", slugs.Count, cancellationToken);
         }
 

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Reflection;
+using Essenthos.Core.Loading;
 
 namespace Essenthos.Core.BetaMasaheft;
 
@@ -26,7 +27,7 @@ internal sealed record GeezVerseMapLine(
 /// the frame places them at their own numbers, which for Esther and Wisdom are the Greek's numbers
 /// for other passages. So the correspondence was worked out by reading the Ge'ez against the
 /// Greek, verse by verse, and it is written as what it is: a reading, with a confidence, by a
-/// language model. Every line of <c>GeezVerseMap.tsv</c> is one statement, and the file's head
+/// language model. Every line of <c>Resources/Essenthos/versification/geez-verse-map.tsv</c> is one statement, and the file's head
 /// says how it was made.
 /// </para>
 ///
@@ -40,6 +41,16 @@ internal sealed record GeezVerseMapLine(
 internal static class GeezVerseMap
 {
     public const string Resource = "Essenthos.Core.BetaMasaheft.GeezVerseMap.tsv";
+
+    /// <summary>
+    /// The map's file under Resources, built into the Forge from there: every product it shapes names it among its inputs
+    /// (<see cref="InputsFor"/>), so an edit of it remakes them.
+    /// </summary>
+    public const string Path = "Essenthos/versification/geez-verse-map.tsv";
+
+    /// <summary>The map's file, for a product reading any of these texts, or nothing.</summary>
+    public static string[] InputsFor(params IEnumerable<string>[] texts) =>
+        texts.Any(each => each.Contains(GeezTextSource.Slug, StringComparer.Ordinal)) ? [Path] : [];
 
     /// <summary>What a verse link drawn from the map says about where it came from.</summary>
     public const string Source =
@@ -105,7 +116,7 @@ internal static class GeezVerseMap
             if (fields.Length < 5)
             {
                 throw new FormatException(
-                    $"GeezVerseMap.tsv line {number} has {fields.Length} fields where five are expected: the Ge'ez " +
+                    $"{Path} line {number} has {fields.Length} fields where five are expected: the Ge'ez " +
                     "book, its verses, the frame's book, the Greek verses or -, and a confidence, separated by tabs.");
             }
 
@@ -130,7 +141,7 @@ internal static class GeezVerseMap
             if (colon < 0)
             {
                 throw new FormatException(
-                    $"GeezVerseMap.tsv line {line}: \"{part}\" is not chapter:verse or chapter:first-last.");
+                    $"{Path} line {line}: \"{part}\" is not chapter:verse or chapter:first-last.");
             }
 
             var chapter = int.Parse(part[..colon], CultureInfo.InvariantCulture);

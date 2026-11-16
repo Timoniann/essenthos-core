@@ -8,12 +8,16 @@ namespace Essenthos.Core.Comparison;
 /// Every word of one database by its key and back: <c>KJV 1.1:1.3</c> for a word id, and the id for a key.
 /// What turns rows that point at words into rows two databases can be compared on, and what a loader
 /// resolves the keys of a product file through. A word id is a hash of its key (<see cref="WordIds"/>), so the words
-/// are held in arrays sorted by id and found by binary search: all 29 M words take about 0.4 GB, a key 25 compares.
+/// are held in arrays sorted by id and found by binary search: all 29 M words take about 0.4 GB, a key 25 compares. Verse ids
+/// leave gaps (<see cref="RowIds.Verse"/>), so the verses are held densely in id order and a verse id is found through
+/// <see cref="_verseIndex"/>.
 /// </summary>
 internal sealed class WordKeys : Mapping.ILinkWords
 {
     private readonly Dictionary<int, string> _texts;
     private readonly Dictionary<string, int> _textIds;
+    private readonly int[] _verseId;
+    private readonly Dictionary<int, int> _verseIndex;
     private readonly int[] _verseText;
     private readonly VerseKey[] _verseKey;
     private readonly string?[] _verseOwn;
@@ -25,9 +29,17 @@ internal sealed class WordKeys : Mapping.ILinkWords
     private long[]? _ids;
     private short[]? _positions;
 
-    private WordKeys(Dictionary<int, string> texts, int[] verseText, VerseKey[] verseKey, long[] wordIds, int[] wordVerse, short[] wordPosition)
+    private WordKeys(Dictionary<int, string> texts, int[] verseId, int[] verseText, VerseKey[] verseKey, long[] wordIds, int[] wordVerse,
+        short[] wordPosition)
     {
         _texts = texts;
+        _verseId = verseId;
+        _verseIndex = new Dictionary<int, int>(verseId.Length);
+        for (var v = 0; v < verseId.Length; v++)
+        {
+            _verseIndex[verseId[v]] = v;
+        }
+
         _textIds = texts.ToDictionary(pair => pair.Value, pair => pair.Key, StringComparer.Ordinal);
         _verseText = verseText;
         _verseKey = verseKey;
@@ -58,19 +70,27 @@ internal sealed class WordKeys : Mapping.ILinkWords
             }
         }
 
-        var maxVerse = await Scalar(connection, "SELECT coalesce(max(id), 0) FROM verse", cancellationToken);
+        var verseCount = await Scalar(connection, "SELECT count(*) FROM verse", cancellationToken);
         var wordCount = await Scalar(connection, "SELECT count(*) FROM word", cancellationToken);
-        var verseText = new int[maxVerse + 1];
-        var verseKey = new VerseKey[maxVerse + 1];
+        var verseId = new int[verseCount];
+        var verseText = new int[verseCount];
+        var verseKey = new VerseKey[verseCount];
+        var verses = 0;
         using (var export = connection.BeginBinaryExport(
                          """
                          COPY (SELECT v.id, v.text_id, b.canonical_ordinal, v.chapter_number, v.number, v.label
-                               FROM verse v JOIN book b ON b.id = v.book_id) TO STDOUT (FORMAT BINARY)
+                               FROM verse v JOIN book b ON b.id = v.book_id ORDER BY v.id) TO STDOUT (FORMAT BINARY)
                          """))
         {
             while (export.StartRow() >= 0)
             {
-                var id = export.Read<int>(NpgsqlDbType.Integer);
+                if (verses == verseCount)
+                {
+                    throw new InvalidOperationException("The verse table grew while its keys were read.");
+                }
+
+                var id = verses++;
+                verseId[id] = export.Read<int>(NpgsqlDbType.Integer);
                 verseText[id] = export.Read<int>(NpgsqlDbType.Integer);
                 var book = export.Read<int>(NpgsqlDbType.Integer);
                 var chapter = export.Read<int>(NpgsqlDbType.Integer);
@@ -80,7 +100,13 @@ internal sealed class WordKeys : Mapping.ILinkWords
             }
         }
 
-        // Each word's verse and position packed beside its id, so that one sort orders all three.
+        var keysOfVerses = new Dictionary<int, int>(verses);
+        for (var v = 0; v < verses; v++)
+        {
+            keysOfVerses[verseId[v]] = v;
+        }
+
+        // Each word's verse (its place in id order) and position packed beside its id, so that one sort orders all three.
         var wordIds = new long[wordCount];
         var packed = new long[wordCount];
         var count = 0;
@@ -95,7 +121,7 @@ internal sealed class WordKeys : Mapping.ILinkWords
                 }
 
                 wordIds[count] = export.Read<long>(NpgsqlDbType.Bigint);
-                var verse = export.Read<int>(NpgsqlDbType.Integer);
+                var verse = keysOfVerses[export.Read<int>(NpgsqlDbType.Integer)];
                 var position = checked((short)export.Read<int>(NpgsqlDbType.Integer));
                 packed[count++] = ((long)verse << 16) | (ushort)position;
             }
@@ -116,7 +142,14 @@ internal sealed class WordKeys : Mapping.ILinkWords
             wordPosition[i] = (short)(ushort)packed[i];
         }
 
-        var keys = new WordKeys(texts, verseText, verseKey, wordIds, wordVerse, wordPosition) { Words = count };
+        if (verses < verseCount)
+        {
+            Array.Resize(ref verseId, verses);
+            Array.Resize(ref verseText, verses);
+            Array.Resize(ref verseKey, verses);
+        }
+
+        var keys = new WordKeys(texts, verseId, verseText, verseKey, wordIds, wordVerse, wordPosition) { Words = count };
         if (reverse)
         {
             keys.BuildReverse();
@@ -127,13 +160,14 @@ internal sealed class WordKeys : Mapping.ILinkWords
 
     public bool Has(long word) => Array.BinarySearch(_wordIds, word) >= 0;
 
-    public int VerseOf(long word) => Verse(word);
+    /// <summary>The id of the word's verse.</summary>
+    public int VerseOf(long word) => _verseId[Verse(word)];
 
     public int TextOf(long word) => _verseText[Verse(word)];
 
-    public VerseKey VerseKeyOf(int verse) => _verseKey[verse];
+    public VerseKey VerseKeyOf(int verse) => _verseKey[_verseIndex[verse]];
 
-    public int TextOfVerse(int verse) => _verseText[verse];
+    public int TextOfVerse(int verse) => _verseText[_verseIndex[verse]];
 
     public WordKey Key(long word)
     {
@@ -181,12 +215,9 @@ internal sealed class WordKeys : Mapping.ILinkWords
     {
         var verses = _verseKey.Length;
         _verses = new Dictionary<(int, VerseKey), int>(verses);
-        for (var v = 1; v < verses; v++)
+        for (var v = 0; v < verses; v++)
         {
-            if (_verseText[v] != 0)
-            {
-                _verses[(_verseText[v], _verseKey[v])] = v;
-            }
+            _verses[(_verseText[v], _verseKey[v])] = v;
         }
 
         var start = new int[verses + 1];
@@ -200,6 +231,7 @@ internal sealed class WordKeys : Mapping.ILinkWords
             start[v] += start[v - 1];
         }
 
+
         var fill = (int[])start.Clone();
         var ids = new long[Words];
         var positions = new short[Words];
@@ -210,7 +242,7 @@ internal sealed class WordKeys : Mapping.ILinkWords
             positions[at] = _wordPosition[w];
         }
 
-        for (var v = 1; v < verses; v++)
+        for (var v = 0; v < verses; v++)
         {
             var length = start[v + 1] - start[v];
             if (length > 1)

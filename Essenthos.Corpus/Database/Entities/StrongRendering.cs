@@ -16,14 +16,13 @@ namespace Essenthos.Core.Database.Entities;
 /// database whose cache is cold that took longer than a request is allowed. Counted once per load, it
 /// is forty rows read by one index.
 /// </para>
+/// <para>
+/// Keyed by what it is, the text, the number and the rank, so a load that counts the same phrases writes the same rows.
+/// </para>
 /// </summary>
-[Index(nameof(TextId), nameof(StrongNumber), nameof(Rank), IsUnique = true)]
+[PrimaryKey(nameof(TextId), nameof(StrongNumber), nameof(Rank))]
 public class StrongRendering
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-
     public required string StrongNumber { get; set; }
 
     public int TextId { get; set; }

@@ -57,9 +57,10 @@ internal static class MappingLoad
         var keys = resolved ?? await Words(store, db, Texts(pairs), cancellationToken);
         logger.LogInformation("The texts' word ids found in {Elapsed}", clock.Elapsed);
         var provenance = new Dictionary<string, int>(StringComparer.Ordinal);
+        var numbering = new RowIds.Hashed(ProvenanceBits);
 
-        // The pairs are read several at once and handed on in their order, so the provenance ids and every row's place in
-        // the COPY are the same as one reader's.
+        // The pairs are read several at once and handed on in their order, so every row's place in the COPY is the same as
+        // one reader's.
         var channel = Channel.CreateBounded<PairRows>(2);
         var reading = Task.Run(async () =>
         {
@@ -111,7 +112,7 @@ internal static class MappingLoad
         var cited = new Dictionary<int, int>();
         await foreach (var rows in channel.Reader.ReadAllAsync(cancellationToken))
         {
-            var sources = Globalize(rows.Sources, provenance);
+            var sources = Globalize(rows.Sources, provenance, numbering);
             foreach (var claim in rows.Claims)
             {
                 cited[sources[claim.Provenance]] = cited.GetValueOrDefault(sources[claim.Provenance]) + 1;
@@ -179,7 +180,7 @@ internal static class MappingLoad
             """
             SELECT setval(pg_get_serial_sequence('link', 'id'), greatest(coalesce((SELECT max(id) FROM link), 0), 1));
             SELECT setval(pg_get_serial_sequence('link_claim', 'id'), greatest(coalesce((SELECT max(id) FROM link_claim), 0), 1));
-            SELECT setval(pg_get_serial_sequence('provenance', 'id'), greatest(coalesce((SELECT max(id) FROM provenance), 0), 1));
+            SELECT setval(pg_get_serial_sequence('provenance', 'id'), greatest(coalesce((SELECT max(id) FROM provenance), 0), 1 << 30));
             """, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
         logger.LogInformation("Committed at {Elapsed}", clock.Elapsed);
@@ -191,7 +192,8 @@ internal static class MappingLoad
     /// The links of the pairs named made what their finals say inside the caller's transaction, every other pair's left as it
     /// is. A link's id is derived from its words, so a pair's links are matched by id: one the final no longer holds, or holds
     /// otherwise (relation, settled claim, words, roles or claims), is deleted with its words and claims, and one the database
-    /// lacks or held otherwise is copied in; the rest stand. A source the database has not seen takes the next provenance id.
+    /// lacks or held otherwise is copied in; the rest stand. A source the database has not seen takes its own provenance id
+    /// (<see cref="ProvenanceBits"/>), as a whole load would give it.
     /// Indexes and keys stay; this is for a few pairs.
     /// </summary>
     public static async Task<Outcome> ReplacePairs(NpgsqlConnection db, ProductStore store, IReadOnlyCollection<string> pairs, ILogger logger,
@@ -215,12 +217,9 @@ internal static class MappingLoad
             }
         }
 
-        if (provenance.Count > 0 && provenance.Values.Max() != provenance.Count)
-        {
-            throw new InvalidOperationException("provenance ids are not 1..n, so a new source cannot be numbered after them; build the database again.");
-        }
-
-        var known = provenance.Count;
+        var holding = provenance.Values.Select(id => (long)id).ToHashSet();
+        var numbering = new RowIds.Hashed(ProvenanceBits, holding.Contains);
+        var written = provenance.Keys.ToHashSet(StringComparer.Ordinal);
         long links = 0, words = 0, claims = 0, unresolved = 0;
         foreach (var pair in pairs)
         {
@@ -258,11 +257,11 @@ internal static class MappingLoad
                 Words = [.. all.Words.Where(w => fresh.Contains(w.Link))],
                 Claims = [.. all.Claims.Where(c => fresh.Contains(c.Link))],
             };
-            var sources = Globalize(rows.Sources, provenance);
-            if (provenance.Count > known)
+            var sources = Globalize(rows.Sources, provenance, numbering);
+            if (provenance.Count > written.Count)
             {
                 using var import = db.BeginBinaryImport("COPY provenance (id, source) FROM STDIN (FORMAT BINARY)");
-                foreach (var (source, id) in provenance.Where(p => p.Value > known).OrderBy(p => p.Value))
+                foreach (var (source, id) in provenance.Where(p => written.Add(p.Key)).OrderBy(p => p.Value))
                 {
                     import.StartRow();
                     import.Write(id, NpgsqlDbType.Integer);
@@ -270,7 +269,6 @@ internal static class MappingLoad
                 }
 
                 import.Complete();
-                known = provenance.Count;
             }
 
             await Copy(db, rows, sources, cancellationToken);
@@ -284,7 +282,7 @@ internal static class MappingLoad
             """
             SELECT setval(pg_get_serial_sequence('link', 'id'), greatest(coalesce((SELECT max(id) FROM link), 0), 1));
             SELECT setval(pg_get_serial_sequence('link_claim', 'id'), greatest(coalesce((SELECT max(id) FROM link_claim), 0), 1));
-            SELECT setval(pg_get_serial_sequence('provenance', 'id'), greatest(coalesce((SELECT max(id) FROM provenance), 0), 1));
+            SELECT setval(pg_get_serial_sequence('provenance', 'id'), greatest(coalesce((SELECT max(id) FROM provenance), 0), 1 << 30));
             """, cancellationToken);
         return new Outcome(pairs.Count, links, words, claims, provenance.Count, unresolved, clock.Elapsed);
     }
@@ -443,14 +441,21 @@ internal static class MappingLoad
     /// A pair's own source numbers turned into the database's: a source already numbered keeps its id, a new one takes the
     /// next, in the order the pair first names them. Index 0 is unused.
     /// </summary>
-    private static int[] Globalize(List<string> sources, Dictionary<string, int> provenance)
+    /// <summary>
+    /// A source's provenance id is a hash of the source (30 bits, positive), so a source keeps its id whatever other sources
+    /// come and go, and a link's row moves only when its own source does. The ids above 2^30 are left to the sequence, which a
+    /// load sets past them, for a source written by <see cref="ProvenanceIds"/>.
+    /// </summary>
+    internal const int ProvenanceBits = 30;
+
+    private static int[] Globalize(List<string> sources, Dictionary<string, int> provenance, RowIds.Hashed numbering)
     {
         var ids = new int[sources.Count + 1];
         for (var i = 0; i < sources.Count; i++)
         {
             if (!provenance.TryGetValue(sources[i], out var id))
             {
-                provenance[sources[i]] = id = provenance.Count + 1;
+                provenance[sources[i]] = id = checked((int)numbering.Of(sources[i]));
             }
 
             ids[i + 1] = id;

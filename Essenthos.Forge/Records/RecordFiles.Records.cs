@@ -45,11 +45,14 @@ internal static partial class RecordFiles
             ORDER BY e.slug
             """,
             """
-            INSERT INTO entity (slug, kind, subtype, place_kind, name, sex, sex_source, name_gender, tribe, byname)
-            SELECT slug, kind, subtype, place_kind, name, sex, sex_source, name_gender, tribe, byname FROM s ORDER BY slug
+            INSERT INTO entity (id, slug, kind, subtype, place_kind, name, sex, sex_source, name_gender, tribe, byname)
+            SELECT n.id, s.slug, s.kind, s.subtype, s.place_kind, s.name, s.sex, s.sex_source, s.name_gender, s.tribe, s.byname
+            FROM s JOIN numbered n ON n.key = s.slug ORDER BY s.slug
             """,
             ["entity"],
+            Numbered: "slug",
             After: """
+            SELECT setval(pg_get_serial_sequence('entity', 'id'), greatest(coalesce((SELECT max(id) FROM entity), 0), 1));
             UPDATE entity e SET origin_entity_id = o.id FROM s JOIN entity o ON o.slug = s.origin WHERE e.slug = s.slug;
             UPDATE entity e SET another_name_for_entity_id = a.id FROM s JOIN entity a ON a.slug = s.another_name_for WHERE e.slug = s.slug;
             DO $$ BEGIN
