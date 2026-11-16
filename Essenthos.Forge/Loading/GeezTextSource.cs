@@ -199,15 +199,12 @@ internal static class GeezTextSource
     /// Greek at a Ge'ez verse's row in Swete is some other passage: the Letter of Jeremiah is a row
     /// out.
     /// Found by comparing the two Septuagints row by row, where they share under a third of their
-    /// words. Esther is out whole: Swete letters its additions as verses of the chapter they stand
-    /// in, and the frame puts them at those verses' rows rather than at the verse they follow.
-    /// Brenton answers for these chapters alone until Swete is placed as the frame places it.
+    /// words. Brenton answers for these chapters alone until Swete is placed as the frame places it.
     /// </summary>
     private static readonly HashSet<(int Book, int Chapter)> SweteOffTheFrame =
     [
         (2, 39), (11, 6), (19, 92), (68, 1), (68, 2), (68, 6), (70, 6),
         (LetterOfJeremiah, 1), (81, 8),
-        .. Enumerable.Range(1, 10).Select(chapter => (Esther, chapter)),
     ];
 
     /// <summary>Whether a Ge'ez verse read at this row of the frame is aligned against this text.</summary>
