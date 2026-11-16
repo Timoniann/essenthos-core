@@ -20,7 +20,11 @@ internal record ContextPeriodResponse(
     string? Kind,
     int? StartYear,
     int? EndYear,
-    Dictionary<string, int[]> Years);
+    Dictionary<string, int[]> Years)
+{
+    /// <summary>The name in the reader's language, said when the context is asked for; null for an English reader and where none is held.</summary>
+    public string? LocalName { get; init; }
+}
 
 /// <param name="Number">The lexicon entry that is the unit: <c>H520</c> for the cubit.</param>
 /// <param name="Verses">The verses of the chapter where a word carries it.</param>

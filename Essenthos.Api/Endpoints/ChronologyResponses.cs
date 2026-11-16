@@ -205,7 +205,11 @@ internal record EventRefResponse(string Slug, string Name);
 /// <summary>A person or a place, named just enough to link to.</summary>
 internal record NamedEntityResponse(string Slug, string Name, string? Distinguisher);
 
-internal record PeriodRefResponse(string Slug, string Name, string? Kind, int? StartYear, int? EndYear);
+internal record PeriodRefResponse(string Slug, string Name, string? Kind, int? StartYear, int? EndYear)
+{
+    /// <summary>The name in the reader's language, as <see cref="TimelinePeriodResponse.LocalName"/>.</summary>
+    public string? LocalName { get; init; }
+}
 
 /// <param name="Opens">
 /// The two events that bound it. A period is anchored to them rather than to years, which is why
@@ -234,6 +238,9 @@ internal record PeriodResponse(
     /// string, because its years are its own and belong to no reckoning.
     /// </summary>
     public IDictionary<string, int[]> Years { get; init; } = new Dictionary<string, int[]>();
+
+    /// <summary>The name in the reader's language, as <see cref="TimelinePeriodResponse.LocalName"/>.</summary>
+    public string? LocalName { get; init; }
 }
 
 /// <param name="LastAnnoMundiBeforeTheCommonEra">The base reckoning's, as the timeline sends it.</param>
@@ -404,9 +411,9 @@ internal record TimelinePeriodResponse(
     public EntityThumbnailResponse? Picture { get; init; }
 
     /// <summary>
-    /// The name in the reader's language where it can be said from the period's record: a life by the
-    /// person's name, a reign, a prophet's or a judge's time by the person's name in a set phrase. Null
-    /// where the reader reads English and where the name says more than that (PRB-1400).
+    /// The name in the reader's language: a life by the person's name, a reign, a prophet's or a judge's
+    /// time by the person's name in a set phrase, any other period by the rendering held of its English
+    /// name. Null where the reader reads English and where no rendering is held.
     /// </summary>
     public string? LocalName { get; init; }
 }

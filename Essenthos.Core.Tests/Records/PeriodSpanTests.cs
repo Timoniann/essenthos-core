@@ -68,6 +68,50 @@ public sealed class PeriodSpanTests : IDisposable
         period.Years.Should().NotContainKey("ussher");
     }
 
+    [Fact]
+    public async Task APeriodTheRecordsCannotNameTakesTheRenderingHeldOfItsEnglishName()
+    {
+        var opens = Happening("beginsiege", "The siege began");
+        var closes = Happening("endsiege", "The siege ended");
+        var era = new Period { Slug = "era-test", Name = "The test era", Kind = "era", Level = 0, Source = "test" };
+        _db.Periods.AddRange(
+            era,
+            new Period
+            {
+                Slug = "world-trojanwar",
+                Name = "Trojan War",
+                Kind = "span",
+                Level = 1,
+                Parent = era,
+                StartEvent = opens,
+                EndEvent = closes,
+                Source = "test",
+            });
+        _db.TextTranslations.Add(new TextTranslation
+        {
+            Language = "ukr",
+            EnglishSha256 = Essenthos.Core.Corpus.EnglishNotes.Digest("Trojan War"),
+            Text = "Троянська війна",
+            Source = "a test rendering",
+        });
+        await _db.SaveChangesAsync();
+
+        var page = await EncyclopediaEndpoints.PeriodDetail(_db, "world-trojanwar", default, "ukr");
+        page!.LocalName.Should().Be("Троянська війна");
+        page.Parent!.LocalName.Should().BeNull("nothing renders the era's name");
+
+        var outer = await EncyclopediaEndpoints.PeriodDetail(_db, "era-test", default, "ukr");
+        outer!.Inside.Should().ContainSingle().Which.LocalName.Should().Be("Троянська війна");
+
+        (await EncyclopediaEndpoints.PeriodDetail(_db, "world-trojanwar", default, "eng"))!.LocalName
+            .Should().BeNull("the English is the name");
+        (await EncyclopediaEndpoints.PeriodDetail(_db, "world-trojanwar", default, "deu"))!.LocalName
+            .Should().BeNull("no German rendering is held");
+
+        var named = await PeriodNames.Of(_db, [("world-trojanwar", "Trojan War", "span", null)], "ukr", default);
+        named.Should().ContainKey("world-trojanwar").WhoseValue.Should().Be("Троянська війна");
+    }
+
     private Chronology Reckoning(string slug, int position)
     {
         var chronology = new Chronology

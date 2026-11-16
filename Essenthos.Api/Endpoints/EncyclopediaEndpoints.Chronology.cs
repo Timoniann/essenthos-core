@@ -16,9 +16,10 @@ internal static partial class EncyclopediaEndpoints
         // One period: what it is, what opens and closes it, and what each reckoning makes of those.
         routes.MapGet("/periods/{slug}", async (
             string slug,
+            [FromQuery] string? language,
             AppDbContext db,
             CancellationToken cancellationToken) =>
-            await PeriodDetail(db, slug, cancellationToken) is { } found
+            await PeriodDetail(db, slug, cancellationToken, language) is { } found
                 ? Results.Ok(found)
                 : Results.NotFound());
 
@@ -85,6 +86,8 @@ internal static partial class EncyclopediaEndpoints
                 cancellationToken);
             var years = await EventYears(db, db.EventDates, cancellationToken);
             var periods = await Periods(db, years, cancellationToken);
+            var periodNames = await PeriodNames.Of(
+                db, [.. periods.Select(p => (p.Slug, p.Name, p.Kind, p.EntitySlug))], language, cancellationToken);
 
             var pictures = await TimelinePictures.Of(
                 db,
@@ -114,7 +117,13 @@ internal static partial class EncyclopediaEndpoints
                         LocalRegion = TextTranslations.In(titles, e.Region),
                     }),
                 ],
-                [.. periods.Select(p => p with { Picture = pictures.ForPeriod(p.EntitySlug) })]));
+                [
+                    .. periods.Select(p => p with
+                    {
+                        Picture = pictures.ForPeriod(p.EntitySlug),
+                        LocalName = periodNames.GetValueOrDefault(p.Slug),
+                    }),
+                ]));
         }).KeptUntilRelease();
     }
 
@@ -122,7 +131,8 @@ internal static partial class EncyclopediaEndpoints
     internal static async Task<PeriodResponse?> PeriodDetail(
         AppDbContext db,
         string slug,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? language = null)
     {
         var period = await db.Periods
             .Where(p => p.Slug == slug)
@@ -137,7 +147,9 @@ internal static partial class EncyclopediaEndpoints
                 p.Uri,
                 p.Notes,
                 p.Source,
-                Parent = p.Parent == null ? null : new { p.Parent.Slug, p.Parent.Name },
+                Parent = p.Parent == null
+                    ? null
+                    : new { p.Parent.Slug, p.Parent.Name, p.Parent.Kind, Person = p.Parent.Entity == null ? null : p.Parent.Entity.Slug },
                 Entity = p.Entity == null ? null : new { p.Entity.Slug, p.Entity.Name, p.Entity.Distinguisher },
                 Opens = p.StartEvent == null ? null : new { p.StartEvent.Slug, p.StartEvent.Name },
                 Closes = p.EndEvent == null ? null : new { p.EndEvent.Slug, p.EndEvent.Name },
@@ -161,9 +173,25 @@ internal static partial class EncyclopediaEndpoints
         var children = await db.Periods
             .Where(p => p.Parent!.Slug == slug)
             .OrderBy(p => p.StartYear)
-            .Select(p => new PeriodRefResponse(p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear))
+            .Select(p => new
+            {
+                Ref = new PeriodRefResponse(p.Slug, p.Name, p.Kind, p.StartYear, p.EndYear),
+                Person = p.Entity == null ? null : p.Entity.Slug,
+            })
             .Take(60)
             .ToListAsync(cancellationToken);
+
+        List<(string Slug, string Name, string? Kind, string? Person)> named =
+        [
+            (period.Slug, period.Name, period.Kind, period.Entity?.Slug),
+            .. children.Select(c => (c.Ref.Slug, c.Ref.Name, c.Ref.Kind, c.Person)),
+        ];
+        if (period.Parent is { } outer)
+        {
+            named.Add((outer.Slug, outer.Name, outer.Kind, outer.Person));
+        }
+
+        var local = await PeriodNames.Of(db, named, language, cancellationToken);
 
         return new PeriodResponse(
             period.Slug,
@@ -177,14 +205,18 @@ internal static partial class EncyclopediaEndpoints
             period.Source,
             Datasets.Of(period.Source),
             period.Parent is null ? null : new PeriodRefResponse(
-                period.Parent.Slug, period.Parent.Name, null, null, null),
+                period.Parent.Slug, period.Parent.Name, null, null, null)
+            {
+                LocalName = local.GetValueOrDefault(period.Parent.Slug),
+            },
             period.Entity is null ? null : new NamedEntityResponse(
                 period.Entity.Slug, period.Entity.Name, period.Entity.Distinguisher),
             period.Opens is null ? null : new EventRefResponse(period.Opens.Slug, EventMarks.Unstarred(period.Opens.Name)),
             period.Closes is null ? null : new EventRefResponse(period.Closes.Slug, EventMarks.Unstarred(period.Closes.Name)),
-            children)
+            [.. children.Select(c => c.Ref with { LocalName = local.GetValueOrDefault(c.Ref.Slug) })])
         {
             Years = Span(years, period.StartEventId, period.EndEventId, period.StartYear, period.EndYear),
+            LocalName = local.GetValueOrDefault(period.Slug),
         };
     }
 
