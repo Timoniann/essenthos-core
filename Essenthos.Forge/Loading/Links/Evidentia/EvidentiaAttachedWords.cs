@@ -140,6 +140,12 @@ internal enum EvidentiaAttachment
     /// ὁ ἐρχόμενος, and Hebrew as the participle itself.
     /// </summary>
     RelativeOfTheParticiple,
+
+    /// <summary>
+    /// Spanish <em>no</em> of <em>no busca</em>, on the original's own negation written before its verb's rendering: לֹא, אַל,
+    /// אֵין, בַּל, בְּלִי, οὐ, μή.
+    /// </summary>
+    Negation,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -199,6 +205,15 @@ internal enum EvidentiaAttachmentPlacement
     /// a construct chain in which no article is written, or a name.
     /// </summary>
     DefiniteByGrammar,
+
+    /// <summary>
+    /// On the Greek genitive pronoun written after the rendering, or directly before it, whose person and number are
+    /// the owner's a German or Spanish possessive names: <em>su nombre</em> on αὐτοῦ of τὸ ὄνομα αὐτοῦ.
+    /// </summary>
+    GenitivePronounBeside,
+
+    /// <summary>The original's negation among the three words before the rendering, the nearest one.</summary>
+    NegationBefore,
 }
 
 /// <summary>
@@ -266,9 +281,12 @@ internal enum EvidentiaAttachmentPlacement
 /// <em>like</em> still unplaced goes on the prefix of its own kind written on the word of the first
 /// placed word after it (<see cref="AttachToPrefixes"/>).</para>
 ///
-/// <para>All of that is English. German and Spanish attach two kinds only, the two that write a verb's
-/// inflection as a word: the subject pronoun and the auxiliary of tense, by the German and Spanish
-/// UDPipe parses (<see cref="ClassifyInflection"/>). Every other source language is left alone.</para>
+/// <para>All of that is English. German and Spanish attach the words that write an original word's form as a
+/// word of their own (<see cref="ClassifyInflection"/>): the subject pronoun and the auxiliary of tense, by the
+/// German and Spanish UDPipe parses; the possessive, on the Hebrew suffix or the Greek genitive pronoun of the
+/// owner its form names (TSK-1083: Spanish 99% judged on the passages it was chosen on, German read by hand);
+/// and Spanish <em>no</em> and <em>ni</em> on the original's own negation before the verb. Every other source
+/// language is left alone.</para>
 /// </summary>
 internal static partial class EvidentiaAttachedWords
 {
@@ -1454,6 +1472,8 @@ internal static partial class EvidentiaAttachedWords
                 rendering.Token.StrongNumber is { } be && BeVerbs.Contains(be) ? rendering : null,
             EvidentiaAttachmentPlacement.InfinitiveAbsolute => InfinitiveAbsoluteBeside(rendering, verse, taken),
             EvidentiaAttachmentPlacement.DefiniteByGrammar => DefiniteByGrammar(rendering, verse) ? rendering : null,
+            EvidentiaAttachmentPlacement.GenitivePronounBeside => GenitivePronounBeside(word, rendering, verse, taken),
+            EvidentiaAttachmentPlacement.NegationBefore => NegationBefore(rendering, verse, taken),
             _ => null,
         };
     }
@@ -1723,11 +1743,26 @@ internal static partial class EvidentiaAttachedWords
     /// empty subject of <em>es geschah</em>; so is a pronoun after a preposition, which the parse takes
     /// for the subject of <em>envió á él</em>. An auxiliary belongs to a participle or an infinitive; one
     /// the parse hangs on a finite verb is the verb of another clause, or the <em>he</em> of <em>he aquí</em>.
+    /// A possessive (<em>sus hijos</em>, <em>seine Knechte</em>) belongs to the noun the parse hangs it on, and
+    /// Spanish <em>no</em> and <em>ni</em> to whatever word the parse hangs them on.
     /// </summary>
     private static (EvidentiaAttachment? Attachment, EvidentiaAnalysis? Head) ClassifyInflection(
         IReadOnlyList<EvidentiaAnalysis> words,
         EvidentiaAnalysis word)
     {
+        if (EvidentiaPersonAgreement.Owner(word) is not null && Class(word) is "det" or "pron" or "adj")
+        {
+            return Syntactic(words, word.Token.SyntacticHead) is { } owned && Class(owned) is "noun" or "propn" or "adj"
+                ? (EvidentiaAttachment.PossessivePronoun, owned)
+                : (null, null);
+        }
+
+        if (word.Token.Language.Equals(SpanishLanguage, StringComparison.OrdinalIgnoreCase)
+            && SpanishNegations.Contains(word.Token.Surface))
+        {
+            return Syntactic(words, word.Token.SyntacticHead) is { } negated ? (EvidentiaAttachment.Negation, negated) : (null, null);
+        }
+
         if (Syntactic(words, word.Token.SyntacticHead) is not { } verb || Class(verb) != "verb")
         {
             return (null, null);
@@ -1765,6 +1800,10 @@ internal static partial class EvidentiaAttachedWords
             {
                 EvidentiaAttachment.SubjectPronoun => EvidentiaAttachmentPlacement.AgreeingRendering,
                 EvidentiaAttachment.AuxiliaryVerb => EvidentiaAttachmentPlacement.Rendering,
+                EvidentiaAttachment.PossessivePronoun => witnessLanguage.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+                    ? EvidentiaAttachmentPlacement.AgreeingRendering
+                    : EvidentiaAttachmentPlacement.GenitivePronounBeside,
+                EvidentiaAttachment.Negation => EvidentiaAttachmentPlacement.NegationBefore,
                 _ => EvidentiaAttachmentPlacement.None,
             };
 
@@ -1783,10 +1822,80 @@ internal static partial class EvidentiaAttachedWords
                 && !WritesTheSubjectApart(pronoun, rendering, verse, taken) => rendering,
             // The object of a verb is written in the verb: on a noun the suffix is whose it is.
             EvidentiaAttachment.ObjectPronoun when Class(head) == "verb" && Class(rendering) != "verb" => null,
+            // A German or Spanish possessive agrees with the noun it stands before; only its person, and the number
+            // its form gives the owner, say whose suffix it is.
+            EvidentiaAttachment.PossessivePronoun when !IsEnglish(pronoun) =>
+                EvidentiaPersonAgreement.OwnerAgrees(pronoun, rendering, suffix: true) ? rendering : null,
             EvidentiaAttachment.PossessivePronoun or EvidentiaAttachment.ObjectPronoun
                 when EvidentiaPersonAgreement.Agrees(pronoun, rendering, suffix: true) => rendering,
             _ => null,
         };
+
+    /// <summary>
+    /// The Greek genitive pronoun a German or Spanish possessive writes: the first after the rendering or the second,
+    /// past an adjective or the article of one (τὸ ὄνομα αὐτοῦ, ὁ πατὴρ ὑμῶν), or the one directly before it
+    /// (σου τὰ τέκνα), whose person and number are the owner's. αὐτός and ἑαυτοῦ name the third person.
+    /// </summary>
+    private static EvidentiaAnalysis? GenitivePronounBeside(
+        EvidentiaAnalysis possessive,
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        foreach (var offset in GenitiveOffsets)
+        {
+            var index = at + offset;
+            if (at < 0 || index < 0 || index >= verse.Count)
+            {
+                continue;
+            }
+
+            var word = verse[index];
+            if (!taken.Contains(word.Token.Id) && Class(word) == "pron"
+                && string.Equals(Feature(word, "case"), GreekGenitive, StringComparison.OrdinalIgnoreCase)
+                && EvidentiaPersonAgreement.OwnerAgrees(possessive, word, suffix: false))
+            {
+                return word;
+            }
+        }
+
+        return null;
+    }
+
+    private static readonly int[] GenitiveOffsets = [1, 2, -1];
+
+    /// <summary>
+    /// The nearest of the original's negations among the three words before the rendering, if no other word took it:
+    /// <em>no busca</em> on בַּל of בַּל יִדְרֹשׁ, <em>ni es oída</em> on בְּלִי of בְּלִי נִשְׁמָע, <em>no conocí</em> on οὐκ.
+    /// </summary>
+    private static EvidentiaAnalysis? NegationBefore(
+        EvidentiaAnalysis rendering,
+        IReadOnlyList<EvidentiaAnalysis> verse,
+        IReadOnlySet<long> taken)
+    {
+        var at = IndexOf(verse, rendering);
+        for (var before = at - 1; at > 0 && before >= 0 && at - before <= NegationReach; before--)
+        {
+            if (verse[before].Token.StrongNumber is { } number && OriginalNegations.Contains(number))
+            {
+                return taken.Contains(verse[before].Token.Id) ? null : verse[before];
+            }
+        }
+
+        return null;
+    }
+
+    private const int NegationReach = 3;
+
+    /// <summary>The negations of the originals by Strong number: לֹא, אַל, אַיִן, בַּל, בְּלִי; οὐ, μή, οὐ μή, οὐδείς, μηδείς.</summary>
+    private static readonly HashSet<string> OriginalNegations = new(StringComparer.Ordinal)
+    {
+        "H3808", "H408", "H369", "H1077", "H1097", "G3756", "G3361", "G3364", "G3762", "G3367",
+    };
+
+    /// <summary>Spanish <em>no</em> and <em>ni</em>, which write the original's own negation.</summary>
+    private static readonly HashSet<string> SpanishNegations = new(StringComparer.OrdinalIgnoreCase) { "no", "ni" };
 
     /// <summary>
     /// Whether the verb the head was placed on could have the subject the parse gives the English verb. A

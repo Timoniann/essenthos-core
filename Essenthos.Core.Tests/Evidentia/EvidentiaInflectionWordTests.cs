@@ -187,6 +187,71 @@ public class EvidentiaInflectionWordTests
     }
 
     [Fact]
+    public void ASpanishPossessiveGoesOnTheSuffixOfItsOwnerWhateverTheNounsNumber()
+    {
+        var sus = Spanish(1, 1, "sus", "DET", head: 2, relation: "det", Possessive("3", "Plur"));
+        var hijos = Spanish(2, 2, "hijos", "NOUN");
+        var sons = Hebrew(11, 1, "בָּנָיו", "H1121", "subs", ("number", "pl"), ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([sus, hijos], [sons], (hijos, sons)).Should().BeEquivalentTo([(1L, 11L)]);
+    }
+
+    [Fact]
+    public void APossessiveIsLeftAloneWhereTheSuffixNamesAnotherOwner()
+    {
+        var mis = Spanish(1, 1, "mis", "DET", head: 2, relation: "det", Possessive("1", "Plur"));
+        var hijos = Spanish(2, 2, "hijos", "NOUN");
+        var nuestro = Spanish(3, 3, "nuestro", "DET", head: 4, relation: "det", Possessive("1", "Sing"));
+        var padre = Spanish(4, 4, "padre", "NOUN");
+        var hisSons = Hebrew(11, 1, "בָּנָיו", "H1121", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"));
+        var myFather = Hebrew(12, 2, "אָבִי", "H1", "subs", ("suffixPerson", "p1"), ("suffixNumber", "sg"));
+
+        Attach([mis, hijos, nuestro, padre], [hisSons, myFather], (hijos, hisSons), (padre, myFather)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ASpanishPossessiveGoesOnTheGreekGenitivePronounOfItsOwner()
+    {
+        var su = Spanish(1, 1, "su", "DET", head: 2, relation: "det", Possessive("3", "Sing"));
+        var nombre = Spanish(2, 2, "nombre", "NOUN");
+        var tu = Spanish(3, 3, "tu", "DET", head: 4, relation: "det", Possessive("2", "Sing"));
+        var mano = Spanish(4, 4, "mano", "NOUN");
+        var the = Greek(11, 1, "τὸ", "G3588", "det");
+        var name = Greek(12, 2, "ὄνομα", "G3686", "noun");
+        var his = Greek(13, 3, "αὐτοῦ", "G846", "pron", ("case", "genitive"), ("number", "singular"));
+        var hand = Greek(14, 4, "χεὶρ", "G5495", "noun");
+        var of = Greek(15, 5, "αὐτοῦ", "G846", "pron", ("case", "genitive"), ("number", "singular"));
+
+        Attach([su, nombre, tu, mano], [the, name, his, hand, of], (nombre, name), (mano, hand)).Should().BeEquivalentTo([(1L, 13L)]);
+    }
+
+    [Fact]
+    public void AGermanPossessiveGoesOnTheSuffixOfItsOwner()
+    {
+        var seine = German(1, 1, "seine", "DET", head: 2, relation: "det:poss", Possessive("3", "Plur"));
+        var knechte = German(2, 2, "Knechte", "NOUN");
+        var servants = Hebrew(11, 1, "עֲבָדָיו", "H5650", "subs", ("suffixPerson", "p3"), ("suffixNumber", "sg"), ("suffixGender", "m"));
+
+        Attach([seine, knechte], [servants], (knechte, servants)).Should().BeEquivalentTo([(1L, 11L)]);
+    }
+
+    [Fact]
+    public void ASpanishNoGoesOnTheNegationBeforeItsVerbAndNowhereWhenAnotherWordHoldsIt()
+    {
+        var no = Spanish(1, 1, "no", "ADV", head: 2, relation: "advmod", [("Polarity", "Neg")]);
+        var busca = Spanish(2, 2, "busca", "VERB");
+        var not = Hebrew(11, 1, "בַּל", "H1077", "nega");
+        var seek = Hebrew(12, 2, "יִדְרֹשׁ", "H1875", "verb", ("person", "p3"), ("number", "sg"));
+        var none = Hebrew(13, 3, "אֵין", "H369", "nega");
+
+        Attach([no, busca], [not, seek, none], (busca, seek)).Should().BeEquivalentTo([(1L, 11L)]);
+
+        var nunca = Spanish(3, 3, "nunca", "ADV");
+        var earlier = Hebrew(14, 0, "לֹא", "H3808", "nega");
+        Attach([no, busca, nunca], [earlier, not, seek, none], (busca, seek), (nunca, not)).Should().BeEmpty();
+    }
+
+    [Fact]
     public void TheClaimCreditsTheModelWhoseParseItRestsOn()
     {
         var sprach = German(1, 1, "sprach", "VERB");
@@ -224,6 +289,9 @@ public class EvidentiaInflectionWordTests
         Packs.TryAnalyse(token, out var analysis).Should().BeTrue();
         return analysis;
     }
+
+    private static (string, string)[] Possessive(string person, string number) =>
+        [("PronType", "Prs"), ("Poss", "Yes"), ("Person", person), ("Number", number)];
 
     private static (string, string)[] Personal(string person, string number, string? gender = null) =>
         gender is null

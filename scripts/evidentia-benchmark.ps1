@@ -20,6 +20,10 @@ param(
     # so nothing the King James states teaches it (the passages of ind, and of val and val2).
     # spa: the Reina-Valera 1909 against Clear Bible's hand alignment of it, over the passages of ind, val and val2;
     # spaheld: the same over the chapters of held, which no Spanish rule was chosen on.
+    # spaheld2: fourteen chapters of the Reina-Valera drawn for TSK-1083 (random.Random(202611161083), ten Old
+    # Testament and then four New Testament chapters from outside ind, val, val2, held and held2): Genesis 42,
+    # Deuteronomy 24, 1 Chronicles 4, Psalms 86, 136 and 139, Isaiah 16 and 33, Jeremiah 25, Hosea 1, Mark 7,
+    # 2 Corinthians 13, 1 John 1, Revelation 1. Sealed like held2: run once, with -Unseal, when a Spanish rule is fixed.
     # bbe, nwt: the Bible in Basic English and the New World Translation, read from their files, over
     # the passages of ind and val. Neither states a link, so there is no gold: what they report is
     # coverage and how far the links agree with the King James's and the Berean's own.
@@ -214,6 +218,21 @@ $passages = @{
         @('ntk-ruth', 'KJV', 'BHSA', 8, 0, 0, $noTeacher),
         @('ntk-jon', 'KJV', 'BHSA', 32, 0, 0, $noTeacher),
         @('ntk-mark', 'KJV', 'NESTLE1904', 41, 1, 4, $noTeacher))
+    spaheld2   = @(
+        @('spaheld2-gen', 'RV1909', 'BHSA', 1, 42, 42, $spanish),
+        @('spaheld2-deut', 'RV1909', 'BHSA', 5, 24, 24, $spanish),
+        @('spaheld2-1chr', 'RV1909', 'BHSA', 13, 4, 4, $spanish),
+        @('spaheld2-ps86', 'RV1909', 'BHSA', 19, 86, 86, $spanish),
+        @('spaheld2-ps136', 'RV1909', 'BHSA', 19, 136, 136, $spanish),
+        @('spaheld2-ps139', 'RV1909', 'BHSA', 19, 139, 139, $spanish),
+        @('spaheld2-isa16', 'RV1909', 'BHSA', 23, 16, 16, $spanish),
+        @('spaheld2-isa33', 'RV1909', 'BHSA', 23, 33, 33, $spanish),
+        @('spaheld2-jer', 'RV1909', 'BHSA', 24, 25, 25, $spanish),
+        @('spaheld2-hos', 'RV1909', 'BHSA', 28, 1, 1, $spanish),
+        @('spaheld2-mark', 'RV1909', 'NESTLE1904', 41, 7, 7, ($spanish + '--learn-from-strong-numbers')),
+        @('spaheld2-2cor', 'RV1909', 'NESTLE1904', 47, 13, 13, ($spanish + '--learn-from-strong-numbers')),
+        @('spaheld2-1jn', 'RV1909', 'NESTLE1904', 62, 1, 1, ($spanish + '--learn-from-strong-numbers')),
+        @('spaheld2-rev', 'RV1909', 'NESTLE1904', 66, 1, 1, ($spanish + '--learn-from-strong-numbers')))
     spanoteach = @(
         @('nts-gen', 'RV1909', 'BHSA', 1, 1, 10, $noTeacher),
         @('nts-ruth', 'RV1909', 'BHSA', 8, 0, 0, $noTeacher),
@@ -411,8 +430,8 @@ function MeasureSideBySide($set) {
 Push-Location $(if ($FromReports) { $directory } else { $snapshot })
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, spa, spaheld, bbe, nwt, noteach, kjvnoteach, spanoteach or keyless." }
-        if ($set -eq 'held2' -and -not $Unseal) { throw 'held2 is sealed: it is run once per step, with its rules fixed. Pass -Unseal when this is that run.' }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, spa, spaheld, spaheld2, bbe, nwt, noteach, kjvnoteach, spanoteach or keyless." }
+        if ($set -in 'held2', 'spaheld2' -and -not $Unseal) { throw "$set is sealed: it is run once per step, with its rules fixed. Pass -Unseal when this is that run." }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0; Seconds = 0.0 }
         $words = @{}
         $routes = [ordered]@{}
