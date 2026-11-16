@@ -35,6 +35,23 @@ public sealed class VerseLinkFilesTests
         rows.Should().OnlyContain(r => r.Relation == "equals" && r.Method == "stated-by-source" && r.Confidence == null);
     }
 
+    /// <summary>
+    /// The Septuagint has nothing for Jeremiah 33:14-26, and its 33:24, which is the Hebrew's 26:24, only parks on 33:24: the
+    /// Ge'ez's 33:24, which truly holds that verse, is not joined to it, and the Greek verse still joins the Ge'ez's 26:24.
+    /// </summary>
+    [Fact]
+    public void A_verse_that_only_parks_on_an_address_joins_nothing_standing_there()
+    {
+        var greek = new TextFrame("GRCBRENT", [VerseKey.Parse("24.33:24")],
+            new Dictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> { [VerseKey.Parse("24.33:24")] = [(24, 26, 24), (24, 33, 24)] },
+            new HashSet<(VerseKey, (int, int, int))> { (VerseKey.Parse("24.33:24"), (24, 33, 24)) });
+        var geez = Text("GEEZ81", ("24.26:24", [(24, 26, 24)]), ("24.33:24", [(24, 33, 24)]));
+
+        var rows = VerseLinks.Derive(new PairFrames(geez, greek, ReverseLinked: false), [Settled(MappingMethods.Aligner, "24.26:24.1", "24.33:24.1")]);
+
+        rows.Select(r => (r.From, r.To)).Should().Equal(("24.26:24", "24.33:24"));
+    }
+
     [Fact]
     public void A_pair_neither_linked_nor_declared_has_no_verse_links()
     {

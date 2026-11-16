@@ -16,6 +16,8 @@ internal static class FrameProducts
 {
     public const string Producer = "frame-files";
 
+    private const int Psalms = 19;
+
     /// <param name="Written">False when the file was current and left as it was.</param>
     public sealed record Outcome(string Slug, int Verses, int Lines, int Titles, bool Written);
 
@@ -47,6 +49,7 @@ internal static class FrameProducts
     public static List<Outcome> Write(ProductStore store, VersificationRules rules, IReadOnlySet<string>? only, bool force, int parallel)
     {
         var titled = TitledChapters(store);
+        var firstVerse = TitledInFirstVerse(store);
         var outcomes = new List<Outcome>();
         var texts = Texts(store).Where(slug => only is null || only.Contains(slug)).ToList();
         Parallel.ForEach(texts, new ParallelOptions { MaxDegreeOfParallelism = Math.Max(1, parallel) }, slug =>
@@ -68,7 +71,7 @@ internal static class FrameProducts
                 return;
             }
 
-            var framed = Framed(store, slug, tradition, rules, titled);
+            var framed = Framed(store, slug, tradition, rules, titled, firstVerse.Contains(slug));
             CanonicalFrameLoader.Write(new Text { Slug = slug, Name = slug, Language = string.Empty, Versification = tradition }, rules, store,
                 framed, "products", inputs);
             lock (outcomes)
@@ -88,6 +91,7 @@ internal static class FrameProducts
             .. VersificationData.Products.Select(product => store.Find(product)
                 ?? throw new FileNotFoundException($"{product} is not under {store.ResourcesPath}.")),
             store.Find(TitledPsalms) ?? throw new FileNotFoundException($"{TitledPsalms} is not under {store.ResourcesPath}."),
+            store.Find(FirstVerseTitles) ?? throw new FileNotFoundException($"{FirstVerseTitles} is not under {store.ResourcesPath}."),
             .. slug == GeezTextSource.Slug ? ["Essenthos/versification/geez.tsv"] : Array.Empty<string>(),
         ]);
 
@@ -99,6 +103,24 @@ internal static class FrameProducts
     {
         using var reader = store.Open(TitledPsalms, TitledRow.Schema);
         return [.. reader.Rows().Select(row => (row.Book, row.Chapter))];
+    }
+
+    /// <summary>The hand file naming the texts that print each psalm's title at the head of its first verse, unmarked.</summary>
+    public const string FirstVerseTitles = "versification/first-verse-titles";
+
+    /// <summary>The texts <see cref="FirstVerseTitles"/> names.</summary>
+    public static HashSet<string> TitledInFirstVerse(ProductStore store)
+    {
+        using var reader = store.Open(FirstVerseTitles, FirstVerseRow.Schema);
+        return [.. reader.Rows().Select(row => row.Text)];
+    }
+
+    private sealed record FirstVerseRow(string Text, string Why)
+    {
+        public static readonly ProductSchema<FirstVerseRow> Schema = new ProductSchema<FirstVerseRow>()
+            .Text("text", r => r.Text)
+            .Text("why", r => r.Why)
+            .Reads(row => new FirstVerseRow(row.Text(0), row.Text(1)));
     }
 
     private sealed record TitledRow(int Book, int Chapter)
@@ -137,12 +159,17 @@ internal static class FrameProducts
     /// for a verse its titles product lists where that verse stands first in a psalm whose title the frame numbers apart,
     /// unless a reading of the edition (<see cref="CanonicalFrameLoader.Read"/>) placed the verse.
     /// </summary>
+    /// <param name="titlesInFirstVerse">
+    /// Whether the text prints each psalm's title at the head of its first verse (<see cref="FirstVerseTitles"/>), so a
+    /// psalm's first verse holds it as if its titles product listed it.
+    /// </param>
     internal static CanonicalFrameLoader.FramedText Framed(
         ProductStore store,
         string slug,
         Versification tradition,
         VersificationRules rules,
-        IReadOnlySet<(int Book, int Chapter)> titled)
+        IReadOnlySet<(int Book, int Chapter)> titled,
+        bool titlesInFirstVerse = false)
     {
         var letters = TextConverter.Lengths(store, slug);
         var verses = new List<PlacedVerse>();
@@ -163,9 +190,11 @@ internal static class FrameProducts
         }
 
         var decisions = new List<(Versification, PassageDecision)>();
+        var parked = new Dictionary<int, List<CanonicalReference>>();
         var read = CanonicalFrameLoader.Read(slug);
         var expected = CanonicalFrameLoader.Expected(rules, tradition, verses, rules.Data.Books(slug), read,
-            (t, decision) => decisions.Add((t, decision)));
+            (t, decision) => decisions.Add((t, decision)),
+            (verse, address) => (parked.TryGetValue(verse, out var list) ? list : parked[verse] = []).Add(address));
         var placed = expected.GroupBy(reference => reference.VerseId)
             .ToDictionary(group => group.Key, group => group.Select(reference => new VerseKey(reference.Book, reference.Chapter, reference.Verse)).ToList());
 
@@ -178,7 +207,9 @@ internal static class FrameProducts
         {
             var addresses = placed[verse.Id];
             var first = addresses[0];
-            if (marked.Contains(new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label))
+            var holdsTitle = marked.Contains(new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label))
+                             || (titlesInFirstVerse && verse is { Book: Psalms, Number: 1, Label: "" });
+            if (holdsTitle
                 && read?.ContainsKey((verse.Book, verse.Chapter, verse.Number)) != true
                 && first.Verse == 1 && titled.Contains((first.Book, first.Chapter)) && covered.Add((first.Book, first.Chapter)))
             {
@@ -187,9 +218,9 @@ internal static class FrameProducts
             }
         }
 
-        var rows = FrameFile.Rows(verses.Select(verse => (
-            new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label),
-            (IReadOnlyList<VerseKey>)placed[verse.Id])));
+        var rows = FrameFile.Rows(
+            verses.Select(verse => (new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label), (IReadOnlyList<VerseKey>)placed[verse.Id])),
+            CanonicalFrameLoader.ByOwn(verses, parked));
         return new CanonicalFrameLoader.FramedText(verses, [], rows, decisions, titles, store.Find(TextWord.ProductOf(slug)))
         {
             Manifest = store.Find(VerseManifestRow.ProductOf(slug)),
