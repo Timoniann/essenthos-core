@@ -5,3 +5,5 @@
 own	record	action	base_record	role	source	note
 44.20:4.27	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
 13.12:18.3	david	suppress	\N	name	Essenthos, on the project owner's word of 2026-11-16	'ging': the word does not render the word the ruling names; the link carried the record onto a neighbour
+3.11:29.18	tsav	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'Maus': the word does not render the word the ruling names; the link carried the record onto a neighbour
+3.11:29.21	tsav	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'Eidechsenarten' renders the word the ruling names; the link did not carry it

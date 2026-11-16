@@ -4,3 +4,21 @@
 # edited     by hand from here on: add, suppress or differs on one word of this text
 own	record	action	base_record	role	source	note
 41.6:11.28	sodom	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
+3.11:16.2	yaanah	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'стровус' renders the word the ruling names; the link did not carry it
+5.14:15.2	yaanah	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'струся' renders the word the ruling names; the link did not carry it
+3.11:30.4	koach	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'коах' renders the word the ruling names; the link did not carry it
+3.11:30.6	letaah	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'летах' renders the word the ruling names; the link did not carry it
+3.11:30.8	chomet	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'хомет' renders the word the ruling names; the link did not carry it
+3.11:30.10	tinshemet	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'хамелон' renders the word the ruling names; the link did not carry it
+5.14:5.11	akko	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'дику': the word does not render the word the ruling names; the link carried the record onto a neighbour
+5.14:5.12	akko	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'козу': the word does not render the word the ruling names; the link carried the record onto a neighbour
+5.14:5.7	akko	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'сарню' renders the word the ruling names; the link did not carry it
+5.14:5.9	dishon-animal	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'зубра' renders the word the ruling names; the link did not carry it
+5.14:5.12	teo	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'козу' renders the word the ruling names; the link did not carry it
+5.14:5.15	zemer	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'вівцю' renders the word the ruling names; the link did not carry it
+5.14:5.5	yachmur	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'буйвола' renders the word the ruling names; the link did not carry it
+23.13:22.1	iyyim	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'Шакалі' renders the word the ruling names; the link did not carry it
+23.13:22.8	tan-jackal	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'гієни' renders the word the ruling names; the link did not carry it
+23.13:21.2	tsiyyim	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'звіррє' renders the word the ruling names; the link did not carry it
+23.13:21.10	ochim	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'пугачами' renders the word the ruling names; the link did not carry it
+23.13:21.14	yaanah	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'струсї' renders the word the ruling names; the link did not carry it

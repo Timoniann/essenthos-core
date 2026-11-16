@@ -8,3 +8,7 @@ own	record	action	base_record	role	source	note
 44.10:23.14	simon	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
 44.20:4.5	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
 44.20:4.25	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
+11.4:23.17	yachmur	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'cabras': the word does not render the word the ruling names; the link carried the record onto a neighbour
+11.4:23.18	yachmur	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'montezes': the word does not render the word the ruling names; the link carried the record onto a neighbour
+11.4:23.21	yachmur	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'corços' renders the word the ruling names; the link did not carry it
+23.23:13.16	tsiyyim	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'para': the word does not render the word the ruling names; the link carried the record onto a neighbour
