@@ -507,12 +507,13 @@ internal static class ChapterReading
             }
         }
 
-        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes))
+        var pronouns = answers.Count == 0 ? [] : await Pronouns(db, forms, cancellationToken);
+        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes, pronouns))
         {
             answers.Remove(word);
         }
 
-        foreach (var word in await Contradicting(db, answers, witnesses, direct, agreements, bySuffix, suffixes, forms, cancellationToken))
+        foreach (var word in await Contradicting(db, answers, witnesses, direct, agreements, bySuffix, suffixes, pronouns, cancellationToken))
         {
             answers.Remove(word);
         }
@@ -521,6 +522,33 @@ internal static class ChapterReading
     }
 
     private static readonly string PersonKind = EnumSpelling.Of(EntityKind.Person);
+
+    /// <summary>What each word of the reading that is one of its language's pronouns says of whom it stands for (<see cref="PronounForms"/>).</summary>
+    private static async Task<Dictionary<long, Agreement>> Pronouns(
+        AppDbContext db,
+        IReadOnlyDictionary<long, string> forms,
+        CancellationToken cancellationToken)
+    {
+        var listed = forms.Where(pair => PronounForms.Listed(pair.Value)).Select(pair => pair.Key).ToList();
+        if (listed.Count == 0)
+        {
+            return [];
+        }
+
+        var said = new Dictionary<long, Agreement>();
+        foreach (var row in await db.Words
+                     .Where(w => listed.Contains(w.Id))
+                     .Select(w => new { w.Id, w.Text!.Language })
+                     .ToListAsync(cancellationToken))
+        {
+            if (PronounForms.Of(row.Language, forms[row.Id]) is { } agreement)
+            {
+                said[row.Id] = agreement;
+            }
+        }
+
+        return said;
+    }
 
     /// <summary>
     /// The translation's words shown a person that their own form says cannot stand for the original's word they render:
@@ -538,29 +566,15 @@ internal static class ChapterReading
         Dictionary<long, Agreement> agreements,
         HashSet<long> bySuffix,
         Dictionary<long, (string Agreement, string? Lemma)> suffixes,
-        IReadOnlyDictionary<long, string> forms,
+        Dictionary<long, Agreement> pronouns,
         CancellationToken cancellationToken)
     {
-        var persons = answers
-            .Where(pair => forms.ContainsKey(pair.Key) && pair.Value.All(referent => referent.Type == PersonKind))
-            .Select(pair => pair.Key)
-            .ToList();
-        if (persons.Count == 0)
+        var said = answers
+            .Where(pair => pronouns.ContainsKey(pair.Key) && pair.Value.All(referent => referent.Type == PersonKind))
+            .ToDictionary(pair => pair.Key, pair => pronouns[pair.Key]);
+        if (said.Count == 0)
         {
             return [];
-        }
-
-        var languages = await db.Words
-            .Where(w => persons.Contains(w.Id))
-            .Select(w => new { w.Id, w.Text!.Language })
-            .ToDictionaryAsync(w => w.Id, w => w.Language, cancellationToken);
-        var said = new Dictionary<long, Agreement>();
-        foreach (var word in persons)
-        {
-            if (languages.TryGetValue(word, out var language) && PronounForms.Of(language, forms[word]) is { } agreement)
-            {
-                said[word] = agreement;
-            }
         }
 
         var rendered = said.Keys.ToDictionary(word => word, word => witnesses[word].Where(w => w != word && direct.ContainsKey(w)).Distinct().ToList());
@@ -635,7 +649,8 @@ internal static class ChapterReading
         IReadOnlyDictionary<long, string> forms,
         ILookup<long, long> heads,
         HashSet<long> bySuffix,
-        Dictionary<long, (string Agreement, string? Lemma)> suffixes)
+        Dictionary<long, (string Agreement, string? Lemma)> suffixes,
+        Dictionary<long, Agreement> pronouns)
     {
         var dropped = new HashSet<long>();
 
@@ -716,7 +731,7 @@ internal static class ChapterReading
             var referring = witnesses[word].Where(w => w != word && direct.ContainsKey(w)).Distinct().ToList();
             if (referring.Any(bySuffix.Contains))
             {
-                if (!SuffixWord(word, referring, witnesses, renderers, classes, forms, heads, suffixes))
+                if (!SuffixWord(word, referring, witnesses, renderers, classes, forms, heads, suffixes, pronouns))
                 {
                     dropped.Add(word);
                 }
@@ -785,6 +800,13 @@ internal static class ChapterReading
     /// word of the run does as often. A word the mapping attaches to another word of the run is not the suffix. Where the
     /// word renders more than one referring word of the original, nothing is shown.
     /// </para>
+    /// <para>
+    /// Where exactly one word of the run is one of its language's pronouns saying the suffix's person, number and gender
+    /// (<see cref="PronounForms"/>), that word renders the suffix and no other does, however seldom its form occurs: <em>мої</em>
+    /// of «дочки мої» for <c>בְנֹתַי</c>, whose form renders only that noun in the chapter, as a language that inflects its
+    /// possessives splits one pronoun into many forms. Where two words of the run say it (<em>він</em> and <em>його</em> for a
+    /// verb whose subject and suffix are of one person), the renderings decide as above.
+    /// </para>
     /// </summary>
     private static bool SuffixWord(
         long word,
@@ -794,7 +816,8 @@ internal static class ChapterReading
         Dictionary<long, string> classes,
         IReadOnlyDictionary<long, string> forms,
         ILookup<long, long> heads,
-        Dictionary<long, (string Agreement, string? Lemma)> suffixes)
+        Dictionary<long, (string Agreement, string? Lemma)> suffixes,
+        Dictionary<long, Agreement> pronouns)
     {
         if (referring.Count != 1 || !suffixes.TryGetValue(referring[0], out var host))
         {
@@ -812,6 +835,12 @@ internal static class ChapterReading
         }
 
         run.RemoveAll(other => other != word && heads[other].Any(run.Contains));
+        var suffix = Agreement.OfSuffix(host.Agreement);
+        var saying = run.Where(other => pronouns.TryGetValue(other, out var says) && says.Says(suffix)).ToList();
+        if (saying.Count == 1)
+        {
+            return saying[0] == word;
+        }
 
         double? Standing(long candidate)
         {

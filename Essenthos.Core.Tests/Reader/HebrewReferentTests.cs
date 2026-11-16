@@ -23,6 +23,7 @@ public sealed class HebrewReferentTests : IDisposable
     private readonly IDbContextTransaction _transaction;
     private readonly Text _hebrew;
     private readonly Text _english;
+    private readonly Text _ukrainian;
 
     public HebrewReferentTests(WitnessDatabase database)
     {
@@ -30,12 +31,15 @@ public sealed class HebrewReferentTests : IDisposable
         _transaction = _db.Database.BeginTransaction();
 
         // God ... his work ... his father ... his hand ... his work ... he (a pronoun as a whole) ... his seed, rendered "seed" alone
-        // ... the Philistine, him ... here am I, here am I.
+        // ... the Philistine, him ... here am I, here am I ... my daughters, rendered «дочки мої» ... and he saw him, rendered
+        // «він побачив його» ... his father, rendered «її батька».
         _hebrew = Corpus.Add(_db, "BHSA", TextKind.PrintedEdition, "hbo",
-            (2, 2, ["אֱלֹהִים", "מְלַאכְתּוֹ", "אָבִיו", "יָדוֹ", "מְלַאכְתּוֹ", "הוּא", "זַרְעוֹ", "לוֹ", "לוֹ", "הַפְּלִשְׁתִּי", "לוֹ", "הִנֵּנִי", "הִנֵּנִי"]));
+            (2, 2, ["אֱלֹהִים", "מְלַאכְתּוֹ", "אָבִיו", "יָדוֹ", "מְלַאכְתּוֹ", "הוּא", "זַרְעוֹ", "לוֹ", "לוֹ", "הַפְּלִשְׁתִּי", "לוֹ", "הִנֵּנִי", "הִנֵּנִי",
+                "בְנֹתַי", "וַיַּרְאֵהוּ", "אָבִיו"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (2, 2, ["God", "his", "work", "his", "father", "his", "hand", "his", "work", "he", "seed", "unto", "him", "him", "Philistine", "him",
                 "Here", "Here"]));
+        _ukrainian = Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (2, 2, ["дочки", "мої", "він", "побачив", "його", "її", "батька"]));
         _db.SaveChanges();
 
         var god = new Entity { Kind = EntityKind.Person, Slug = "god", Name = "God" };
@@ -69,7 +73,10 @@ public sealed class HebrewReferentTests : IDisposable
         Parsed(Hebrew(11), "prep", "לְ", "3ms", true);
         Parsed(Hebrew(12), "ij", "הִנֵּה", "1cs", true);
         Parsed(Hebrew(13), "ij", "הִנֵּה", "1cs", true);
-        foreach (var position in new[] { 2, 3, 4, 5, 6, 7, 8, 9, 12, 13 })
+        Parsed(Hebrew(14), "noun", "בַּת", "1cs", true);
+        Parsed(Hebrew(15), "verb", "רָאָה", "3ms", true);
+        Parsed(Hebrew(16), "noun", "אָב", "3ms", true);
+        foreach (var position in new[] { 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16 })
         {
             _db.WordReferents.Add(new WordReferent
             {
@@ -95,6 +102,9 @@ public sealed class HebrewReferentTests : IDisposable
         Align([English(16)], Hebrew(11));
         Align([English(17)], Hebrew(12));
         Align([English(18)], Hebrew(13));
+        Align([Ukrainian(1), Ukrainian(2)], Hebrew(14));
+        Align([Ukrainian(3), Ukrainian(4), Ukrainian(5)], Hebrew(15));
+        Align([Ukrainian(6), Ukrainian(7)], Hebrew(16));
         _db.SaveChanges();
     }
 
@@ -161,6 +171,27 @@ public sealed class HebrewReferentTests : IDisposable
         (await Read(_english, 17)).Referents.Should().BeNull("Here of 'Here am I' renders the particle, though it renders it again");
     }
 
+    [Fact]
+    public async Task TheOnlyPronounOfARunSayingTheSuffixsPersonIsTheSuffixHoweverRarelyItsFormOccurs()
+    {
+        (await Read(_ukrainian, 2)).Referents.Should().ContainSingle().Which.Slug.Should().Be("god", "мої says the 1cs suffix's person and number");
+        (await Read(_ukrainian, 1)).Referents.Should().BeNull("дочки renders the host");
+    }
+
+    [Fact]
+    public async Task TwoPronounsSayingTheSuffixAreLeftToTheRenderings()
+    {
+        (await Read(_ukrainian, 3)).Referents.Should().BeNull("він may be the verb's subject; neither form renders anything else");
+        (await Read(_ukrainian, 5)).Referents.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task APronounOfAnotherGenderThanTheSuffixIsNotTheSuffix()
+    {
+        (await Read(_ukrainian, 6)).Referents.Should().BeNull("її is feminine; the suffix is 3ms");
+        (await Read(_ukrainian, 7)).Referents.Should().BeNull();
+    }
+
     private async Task<TextWordResponse> Read(Text text, int position)
     {
         var chapter = await ChapterReading.ReadChapter(_db, text.Id, 1, 2, default);
@@ -170,6 +201,8 @@ public sealed class HebrewReferentTests : IDisposable
     private Word Hebrew(int position) => _db.WordAt(_hebrew, 2, 2, position);
 
     private Word English(int position) => _db.WordAt(_english, 2, 2, position);
+
+    private Word Ukrainian(int position) => _db.WordAt(_ukrainian, 2, 2, position);
 
     private void Parsed(Word word, string kind, string lemma, string? suffix, bool refersBySuffix)
     {
