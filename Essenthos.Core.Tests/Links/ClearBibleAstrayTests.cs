@@ -135,8 +135,8 @@ public class ClearBibleAstrayTests(Ebible ebible, ITestOutputHelper output) : IC
             }
         }
 
-        var spanish = EnglishEditions.Frame(ebible.ReinaValera);
-        var targetFrame = ebible.ReinaValera.Books
+        var spanish = EnglishEditions.Frame(ebible.ReinaValeraConverted);
+        var targetFrame = ebible.ReinaValeraConverted.Books
             .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses.Select(verse =>
                 (Book: book.CanonicalOrdinal, Chapter: chapter.Number, Verse: verse.Number))))
             .Distinct()

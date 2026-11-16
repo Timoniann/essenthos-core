@@ -651,7 +651,9 @@ public class SweteFrameTests(SweteEdition swete) : IClassFixture<SweteEdition>
 
 /// <summary>
 /// The Reina-Valera as eBible publishes it: the Spanish division, numbered to the English count, so
-/// the verse the Spanish moved to the next chapter is left empty and that chapter runs early.
+/// the verse the Spanish moved to the next chapter is left empty and that chapter runs early. The
+/// frame is asked about the text as converted, whose corrections divide the verses the file runs
+/// together at the printed edition's numbers (PRB-1687, PRB-1697): the supplements describe that text.
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ReinaValeraFrameTests(Ebible ebible) : IClassFixture<Ebible>
@@ -661,6 +663,8 @@ public class ReinaValeraFrameTests(Ebible ebible) : IClassFixture<Ebible>
     private const int FirstSamuel = 9;
 
     private const int FirstKings = 11;
+
+    private const int SecondChronicles = 14;
 
     private const int Job = 18;
 
@@ -682,26 +686,50 @@ public class ReinaValeraFrameTests(Ebible ebible) : IClassFixture<Ebible>
         int standardChapter,
         int standardVerse)
     {
-        EnglishEditions.Frame(ebible.ReinaValera).Resolve(book, chapter, verse)[0].Should()
+        EnglishEditions.Frame(ebible.ReinaValeraConverted).Resolve(book, chapter, verse)[0].Should()
             .Be(new CanonicalReference(book, standardChapter, standardVerse));
     }
 
     /// <summary>
-    /// The chapter's last verse holds what the English count had no room for, and stands at every
-    /// address it carries rather than being split by this project.
+    /// A chapter's last verse that the printed edition itself runs together holds what the English
+    /// count had no room for, and stands at every address it carries rather than being split by this
+    /// project: Job 35 has fifteen verses and 2 Chronicles 33 twenty-four in the 1909 prints too.
     /// </summary>
     [Fact]
     public void TheLastVerseOfTheChapterSpansWhatItHolds()
     {
-        var edition = EnglishEditions.Frame(ebible.ReinaValera);
+        var edition = EnglishEditions.Frame(ebible.ReinaValeraConverted);
 
-        edition.Resolve(Numbers, 30, 16).Should()
-            .Equal(new CanonicalReference(Numbers, 30, 15), new CanonicalReference(Numbers, 30, 16));
-        edition.Resolve(Job, 39, 30).Should().Equal(
-        [
-            .. Enumerable.Range(27, 4).Select(verse => new CanonicalReference(Job, 39, verse)),
-            .. Enumerable.Range(1, 5).Select(verse => new CanonicalReference(Job, 40, verse)),
-        ]);
+        edition.Resolve(Job, 35, 15).Should()
+            .Equal(new CanonicalReference(Job, 35, 15), new CanonicalReference(Job, 35, 16));
+        edition.Resolve(SecondChronicles, 33, 10).Should()
+            .Equal(new CanonicalReference(SecondChronicles, 33, 10), new CanonicalReference(SecondChronicles, 33, 11));
+    }
+
+    /// <summary>
+    /// The verses eBible's file runs together and the printed edition numbers apart stand one English
+    /// verse each once the corrections divide them, where the file's one verse stood at both or all.
+    /// </summary>
+    [Theory]
+    [InlineData(Numbers, 13, 33, 13, 32)]
+    [InlineData(Numbers, 13, 34, 13, 33)]
+    [InlineData(Numbers, 30, 16, 30, 15)]
+    [InlineData(Numbers, 30, 17, 30, 16)]
+    [InlineData(Jonah, 2, 10, 2, 9)]
+    [InlineData(Jonah, 2, 11, 2, 10)]
+    [InlineData(Job, 39, 30, 39, 27)]
+    [InlineData(Job, 39, 33, 39, 30)]
+    [InlineData(Job, 39, 34, 40, 1)]
+    [InlineData(Job, 39, 38, 40, 5)]
+    public void AVerseTheFileRunsTogetherStandsInPiecesAtTheEditionsNumbers(
+        int book,
+        int chapter,
+        int verse,
+        int standardChapter,
+        int standardVerse)
+    {
+        EnglishEditions.Frame(ebible.ReinaValeraConverted).Resolve(book, chapter, verse).Should()
+            .Equal(new CanonicalReference(book, standardChapter, standardVerse));
     }
 
     /// <summary>Luther comes from the same publisher in the English numbering, and nothing here moves it.</summary>

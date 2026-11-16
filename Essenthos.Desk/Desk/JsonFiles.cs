@@ -97,7 +97,29 @@ internal static partial class JsonFiles
 
         var temporary = path + ".writing";
         File.WriteAllText(temporary, trailing ? text + newLine : text, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
-        File.Move(temporary, path, overwrite: true);
+        MoveOver(temporary, path);
+    }
+
+    /// <summary>
+    /// Moves the written file over the old one. On Windows the move is refused while another handle
+    /// holds the target for a moment (an indexer, an antivirus scan, a reader), so a refused move is
+    /// tried again a few times, a little later each time, before the failure is let through.
+    /// </summary>
+    private static void MoveOver(string temporary, string path)
+    {
+        const int attempts = 6;
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                File.Move(temporary, path, overwrite: true);
+                return;
+            }
+            catch (Exception e) when (attempt < attempts && e is UnauthorizedAccessException or IOException)
+            {
+                Thread.Sleep(25 * attempt);
+            }
+        }
     }
 
     /// <summary>
