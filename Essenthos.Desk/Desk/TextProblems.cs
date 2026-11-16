@@ -45,6 +45,7 @@ internal sealed class TextProblems(Avioniq avioniq, ILogger<TextProblems> logger
         ["ALEX"] = ["Alexandrinus"],
         ["SIN"] = ["Sinaiticus"],
         ["GEEZ81"] = ["Ge'ez", "Ethiopic"],
+        ["CHARLES1913"] = ["Charles"],
         ["KJV"] = ["King James"],
         ["RUSV"] = ["Synodal"],
         ["UBIO"] = ["Ohienko", "Ogienko"],

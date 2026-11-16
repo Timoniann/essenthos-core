@@ -30,6 +30,11 @@ internal static class TextTaglines
                 "Біблія Ефіопської православної церкви мовою ґеез: вісімдесят одна книга, серед них 1 Єноха та Ювілеї.",
                 "Die Bibel der Äthiopisch-Orthodoxen Kirche in Ge'ez: einundachtzig Bücher, darunter 1 Henoch und die Jubiläen.",
                 "La Biblia de la Iglesia ortodoxa etíope en ge'ez: ochenta y un libros, entre ellos 1 Enoc y Jubileos."),
+            ["CHARLES1913"] = Say(
+                "Charles's 1 Enoch and Jubilees, translated from the Ethiopic (1913).",
+                "1 Єноха та Ювілеї в перекладі Чарльза з ефіопської (1913).",
+                "1 Henoch und die Jubiläen in Charles' Übersetzung aus dem Äthiopischen (1913).",
+                "1 Enoc y Jubileos en la traducción de Charles del etíope (1913)."),
             ["NESTLE1904"] = Say(
                 "Nestle's Greek New Testament of 1904, built from Tischendorf, Westcott–Hort and Weymouth, fully parsed.",
                 "Грецький Новий Заповіт Нестле 1904 року, складений із Тішендорфа, Весткотта–Горта й Веймута, з повним морфологічним розбором.",

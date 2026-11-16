@@ -73,6 +73,12 @@ public static partial class VerseWords
     }
 
     /// <summary>
+    /// Splits a verse that carries none of bible4u's markup the same way: every bracket, parenthesis
+    /// and mark in it is the edition's own and stays in the trailers as printed.
+    /// </summary>
+    public static List<VerseToken> Printed(string verseText) => Tokenize(verseText, []);
+
+    /// <summary>
     /// Removes the editorial markup, leaving the words of the verse and their punctuation. A
     /// parenthesised bare number is always a cross-reference to the other versification or a
     /// footnote marker — no verse of either translation reads a number in brackets as text.

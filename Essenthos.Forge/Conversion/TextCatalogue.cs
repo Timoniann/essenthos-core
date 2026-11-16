@@ -99,6 +99,8 @@ internal static class TextCatalogue
                 [$"bible4u/{identifier}.xml", .. Bible4uExtended],
                 (resources, corrections) => Bible4u(resources, identifier, corrections))),
             Text(KulishTextSource.Slug, resources => KulishTextSource.Read(Path.Combine(resources, "Kulish")), "Kulish"),
+            Text(CharlesTextSource.Slug, resources => CharlesTextSource.Read(Path.Combine(resources, CharlesTextSource.Folder)),
+                CharlesTextSource.Folder),
             .. EbibleTextSource.Definitions.Select(text => Text(text.Value.Slug,
                 resources => EbibleTextSource.Read(Path.Combine(resources, text.Key)), text.Key)),
             .. SwordTextSource.Texts.Values.Select(text => Text(text.Definition.Slug,

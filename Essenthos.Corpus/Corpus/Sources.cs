@@ -72,6 +72,9 @@ internal static class Sources
     /// <summary>The Kulish Bible, the first complete Ukrainian one.</summary>
     public const string KulishSlug = "UKR1871";
 
+    /// <summary>R. H. Charles's 1 Enoch and Jubilees, translated from the Ethiopic, as printed in 1913.</summary>
+    public const string CharlesSlug = "CHARLES1913";
+
     /// <summary>
     /// What every link drawn from the Synodal's Strong numbering begins with. It names whose
     /// numbering it is and where the copy came from, because the copy carries no credit of its own.
