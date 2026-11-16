@@ -114,4 +114,28 @@ public sealed class FrameFileTests
                 new ReferenceDraft(3, 1, 31, 51, true),
             ]);
     }
+
+    /// <summary>
+    /// The Septuagint's Jeremiah 33:14-15 are the Hebrew's 26:14-15 and only park on 33:14-15, which it leaves empty: read
+    /// back, the verses stand at 26:14-15 alone, so no pane, record or index stands them beside the Hebrew's 33:14-15.
+    /// </summary>
+    [Fact]
+    public void AVerseIsReadBackWithoutTheAddressesItOnlyParksOn()
+    {
+        var row = new FrameRow(VerseKey.Parse("24.33:14"), 15, [VerseKey.Parse("24.26:14"), VerseKey.Parse("24.33:14")], "parks 1");
+
+        row.Verses().Should().BeEquivalentTo([Verse("24.33:14", "24.26:14"), Verse("24.33:15", "24.26:15")], options => options.WithStrictOrdering());
+        new FrameRow(VerseKey.Parse("72.22:8"), null, [VerseKey.Parse("72.22:7"), VerseKey.Parse("72.22:9"), VerseKey.Parse("72.22:8")], "parks 1")
+            .Verses().Should().BeEquivalentTo([Verse("72.22:8", "72.22:7", "72.22:9")], options => options.WithStrictOrdering());
+    }
+
+    [Fact]
+    public void AParkedAddressGetsNoVerseReference()
+    {
+        PlacedVerse[] verses = [new(1, 24, 33, 14, string.Empty, 0)];
+        var parked = new Dictionary<VerseKey, HashSet<VerseKey>> { [VerseKey.Parse("24.33:14")] = [VerseKey.Parse("24.33:14")] };
+
+        CanonicalFrameLoader.Drafts(verses, FrameFile.Rows([Verse("24.33:14", "24.26:14", "24.33:14")], parked))
+            .Should().BeEquivalentTo([new ReferenceDraft(1, 24, 26, 14, true)]);
+    }
 }
