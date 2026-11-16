@@ -396,7 +396,7 @@ internal static class ChapterReading
             asked.UnionWith(frontier);
             var rows = await db.WordReferents
                 .Where(r => frontier.Contains(r.WordId))
-                .OrderBy(r => r.Id)
+                .OrderBy(r => r.Ordinal).ThenBy(r => r.Source).ThenBy(r => r.ReferentWordId)
                 .Select(r => new { r.WordId, r.ReferentWordId, r.Source })
                 .ToListAsync(cancellationToken);
             foreach (var row in rows)

@@ -19,15 +19,15 @@ namespace Essenthos.Core.Database.Entities;
 /// earlier verse, which the reference is allowed to cross. A word whose antecedent is itself a pronoun points at that
 /// pronoun, as the source writes it; following the chain is the reader's work.
 /// </para>
+/// <para>
+/// Keyed by what it is, the word, the word it refers to and who says so, so a build that reads the same source writes the
+/// same rows.
+/// </para>
 /// </summary>
-[Index(nameof(WordId), nameof(ReferentWordId), nameof(Source), IsUnique = true)]
+[PrimaryKey(nameof(WordId), nameof(ReferentWordId), nameof(Source))]
 [Index(nameof(ReferentWordId))]
 public class WordReferent
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long Id { get; set; }
-
     public long WordId { get; set; }
 
     public Word? Word { get; set; }
@@ -35,6 +35,12 @@ public class WordReferent
     public long ReferentWordId { get; set; }
 
     public Word? ReferentWord { get; set; }
+
+    /// <summary>
+    /// Where the source lists this word among the ones the word refers to, from 0: MACULA puts the nearest first, and a reader
+    /// is shown them in that order.
+    /// </summary>
+    public int Ordinal { get; set; }
 
     public LinkMethod Method { get; set; }
 

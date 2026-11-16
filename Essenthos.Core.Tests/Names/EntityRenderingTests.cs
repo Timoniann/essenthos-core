@@ -410,32 +410,30 @@ public sealed class EntityRenderingTests : IDisposable
         });
 
     /// <summary>
-    /// A second load leaves the same rows, ids and all, not twice as many; a spelling that changed is
-    /// the only row written again.
+    /// A second load leaves the same rows, not twice as many; a spelling whose count changed is written
+    /// again with the count the words give, under the same key.
     /// </summary>
     [Fact]
     public async Task LoadingAgainWritesOnlyWhatChanged()
     {
         await Load();
-        var first = await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync();
+        var first = await Renderings();
 
         await Load();
 
-        (await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync())
-            .Should().BeEquivalentTo(first, options => options.WithStrictOrdering());
+        (await Renderings()).Should().BeEquivalentTo(first, options => options.WithStrictOrdering());
 
         var changed = first[0];
-        await _db.EntityRenderings.Where(r => r.Id == changed.Id)
+        await _db.EntityRenderings.Where(r => r.EntityId == changed.EntityId && r.TextId == changed.TextId && r.Form == changed.Form)
             .ExecuteUpdateAsync(set => set.SetProperty(r => r.Occurrences, r => r.Occurrences + 1));
 
         await Load();
 
-        var after = await _db.EntityRenderings.AsNoTracking().ToListAsync();
-        after.Should().HaveCount(first.Count);
-        after.Select(r => r.Id).Should().BeEquivalentTo(first.Skip(1).Select(r => r.Id).Append(after.Max(r => r.Id)));
-        after.Should().ContainSingle(r => r.EntityId == changed.EntityId && r.TextId == changed.TextId
-                                          && r.Form == changed.Form && r.Occurrences == changed.Occurrences);
+        (await Renderings()).Should().BeEquivalentTo(first, options => options.WithStrictOrdering());
     }
+
+    private Task<List<EntityRendering>> Renderings() =>
+        _db.EntityRenderings.AsNoTracking().OrderBy(r => r.EntityId).ThenBy(r => r.TextId).ThenBy(r => r.Form).ToListAsync();
 
     /// <summary>
     /// A Ukrainian name the pass read off one verse gives way to the one the text prints where the
@@ -485,11 +483,11 @@ public sealed class EntityRenderingTests : IDisposable
         (await EntityNames.Of(_db, [galilee.Id], "ukr", CancellationToken.None))[galilee.Id].Should().Be("Галілея");
 
         var before = await _db.EntityNameForms.AsNoTracking().OrderBy(f => f.Id).ToListAsync();
-        var renderings = await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync();
+        var renderings = await Renderings();
         await Load();
 
         (await _db.EntityNameForms.AsNoTracking().OrderBy(f => f.Id).ToListAsync()).Should().BeEquivalentTo(before);
-        (await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync()).Should().BeEquivalentTo(renderings);
+        (await Renderings()).Should().BeEquivalentTo(renderings);
     }
 
     /// <summary>A form a person gave is theirs, however few verses print it.</summary>

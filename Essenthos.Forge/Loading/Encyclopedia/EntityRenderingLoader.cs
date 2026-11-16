@@ -98,23 +98,31 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             words, asked => PrintedWords(connection, asked, cancellationToken), cancellationToken);
 
         // Only what changed is written, so a load that counts the same spellings leaves the rows as
-        // they are, ids and all.
+        // they are.
         var standing = await db.EntityRenderings
             .AsNoTracking()
-            .Select(r => new { r.Id, Rendering = new Rendering(r.EntityId, r.TextId, r.Form, r.Folded, r.Occurrences, r.Heading) })
+            .Select(r => new Rendering(r.EntityId, r.TextId, r.Form, r.Folded, r.Occurrences, r.Heading))
             .ToListAsync(cancellationToken);
         var standingSpellings = await db.EntitySearchSpellings
             .AsNoTracking()
-            .Select(s => new { s.Id, Spelling = new SearchSpelling(s.EntityId, s.Form, s.Folded) })
+            .Select(s => new SearchSpelling(s.EntityId, s.Form, s.Folded))
             .ToListAsync(cancellationToken);
         var wantedSpellings = spellings.ToHashSet();
-        var goneSpellings = standingSpellings.Where(s => !wantedSpellings.Remove(s.Spelling)).Select(s => s.Id).ToList();
+        var goneSpellings = standingSpellings.Where(s => !wantedSpellings.Remove(s)).ToList();
 
         var wanted = renderings.ToHashSet();
-        var gone = standing.Where(r => !wanted.Remove(r.Rendering)).Select(r => r.Id).ToList();
+        var gone = standing.Where(r => !wanted.Remove(r)).ToList();
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        await db.EntityRenderings.Where(r => gone.Contains(r.Id)).ExecuteDeleteAsync(cancellationToken);
+        await db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM entity_rendering r USING unnest(@entities, @texts, @forms) AS g(entity_id, text_id, form) "
+            + "WHERE r.entity_id = g.entity_id AND r.text_id = g.text_id AND r.form = g.form",
+            [
+                new NpgsqlParameter("entities", gone.Select(r => r.EntityId).ToArray()),
+                new NpgsqlParameter("texts", gone.Select(r => r.TextId).ToArray()),
+                new NpgsqlParameter("forms", gone.Select(r => r.Form).ToArray()),
+            ],
+            cancellationToken);
 
         await using (var writer = await connection.BeginBinaryImportAsync(
                          "COPY entity_rendering (entity_id, text_id, form, folded, occurrences, heading) "
@@ -135,7 +143,14 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await db.EntitySearchSpellings.Where(s => goneSpellings.Contains(s.Id)).ExecuteDeleteAsync(cancellationToken);
+        await db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM entity_search_spelling s USING unnest(@entities, @folded) AS g(entity_id, folded) "
+            + "WHERE s.entity_id = g.entity_id AND s.folded = g.folded",
+            [
+                new NpgsqlParameter("entities", goneSpellings.Select(s => s.EntityId).ToArray()),
+                new NpgsqlParameter("folded", goneSpellings.Select(s => s.Folded).ToArray()),
+            ],
+            cancellationToken);
         await using (var writer = await connection.BeginBinaryImportAsync(
                          "COPY entity_search_spelling (entity_id, form, folded) FROM STDIN (FORMAT BINARY)",
                          cancellationToken))

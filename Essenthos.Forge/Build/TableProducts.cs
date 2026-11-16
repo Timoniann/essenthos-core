@@ -87,7 +87,7 @@ internal static partial class TableProducts
                 .. table.More?.Invoke(store) ?? [],
             ];
             inputs = [.. inputs.DistinctBy(input => input.Path)];
-            if (!force && !store.NeedsBuild(Product(table.Name), ProductKind.Machine, inputs))
+            if (!force && !store.NeedsBuild(Product(table.Name), ProductKind.Machine, inputs) && SameColumns(store, table))
             {
                 made.Add(new Made(table.Name, 0, true, clock.Elapsed));
                 continue;
@@ -119,6 +119,16 @@ internal static partial class TableProducts
         }
 
         return made;
+    }
+
+    /// <summary>
+    /// Whether the product holds the columns the code writes: the code is not an input, and the load reads the product by its
+    /// columns, so a table whose columns changed is made again rather than loaded in the old layout.
+    /// </summary>
+    private static bool SameColumns(ProductStore store, Table table)
+    {
+        using var file = Products.Essx.EssxReader.Open(store.FullPath(store.Find(Product(table.Name))!));
+        return file.Tables[0].Columns.Select(c => c.Name).SequenceEqual(table.Columns);
     }
 
     private static string? Int(long? value) => value?.ToString(CultureInfo.InvariantCulture);

@@ -23,15 +23,14 @@ namespace Essenthos.Core.Database.Entities;
 /// marks the one spelling a list should show, chosen by a stated rule, and every other spelling stays
 /// beside it because each of them is something a reader may type.
 /// </para>
+/// <para>
+/// Keyed by what it is, the record, the text and the spelling, so a build that counts the same words writes the same rows.
+/// </para>
 /// </summary>
-[Index(nameof(EntityId), nameof(TextId), nameof(Form), IsUnique = true)]
+[PrimaryKey(nameof(EntityId), nameof(TextId), nameof(Form))]
 [Index(nameof(TextId))]
 public class EntityRendering
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-
     public int EntityId { get; set; }
 
     public Entity? Entity { get; set; }

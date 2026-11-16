@@ -1775,26 +1775,22 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityRendering", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<int>("EntityId")
                         .HasColumnType("integer")
                         .HasColumnName("entity_id");
+
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<string>("Form")
+                        .HasColumnType("text")
+                        .HasColumnName("form");
 
                     b.Property<string>("Folded")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("folded");
-
-                    b.Property<string>("Form")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("form");
 
                     b.Property<bool>("Heading")
                         .HasColumnType("boolean")
@@ -1804,11 +1800,7 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("occurrences");
 
-                    b.Property<int>("TextId")
-                        .HasColumnType("integer")
-                        .HasColumnName("text_id");
-
-                    b.HasKey("Id")
+                    b.HasKey("EntityId", "TextId", "Form")
                         .HasName("pk_entity_rendering");
 
                     b.HasIndex("Folded")
@@ -1820,10 +1812,6 @@ namespace Essenthos.Core.Migrations
                     b.HasIndex("TextId")
                         .HasDatabaseName("ix_entity_rendering_text_id");
 
-                    b.HasIndex("EntityId", "TextId", "Form")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_rendering_entity_id_text_id_form");
-
                     b.ToTable("entity_rendering", null, t =>
                         {
                             t.HasComment("How one text spells an entity's name, counted from the words word_entity says name it there. Derived and rebuilt with those annotations; it asserts nothing they do not.");
@@ -1834,19 +1822,11 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntitySearchSpelling", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<int>("EntityId")
                         .HasColumnType("integer")
                         .HasColumnName("entity_id");
 
                     b.Property<string>("Folded")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("folded");
 
@@ -1855,7 +1835,7 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("form");
 
-                    b.HasKey("Id")
+                    b.HasKey("EntityId", "Folded")
                         .HasName("pk_entity_search_spelling");
 
                     b.HasIndex("Folded")
@@ -1863,10 +1843,6 @@ namespace Essenthos.Core.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Folded"), "gin");
                     NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Folded"), new[] { "gin_trgm_ops" });
-
-                    b.HasIndex("EntityId", "Folded")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_search_spelling_entity_id_folded");
 
                     b.ToTable("entity_search_spelling", null, t =>
                         {
@@ -1876,12 +1852,9 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityVerse", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("EntityId")
                         .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnName("entity_id");
 
                     b.Property<int>("CanonicalBook")
                         .HasColumnType("integer")
@@ -1895,13 +1868,13 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("canonical_verse");
 
+                    b.Property<string>("Source")
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
                     b.Property<bool>("Disputed")
                         .HasColumnType("boolean")
                         .HasColumnName("disputed");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("entity_id");
 
                     b.Property<string>("Label")
                         .HasColumnType("text")
@@ -1911,27 +1884,15 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("names");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
                     b.Property<bool>("Withheld")
                         .HasColumnType("boolean")
                         .HasColumnName("withheld");
 
-                    b.HasKey("Id")
+                    b.HasKey("EntityId", "CanonicalBook", "CanonicalChapter", "CanonicalVerse", "Source")
                         .HasName("pk_entity_verse");
-
-                    b.HasIndex("EntityId")
-                        .HasDatabaseName("ix_entity_verse_entity_id");
 
                     b.HasIndex("CanonicalBook", "CanonicalChapter", "CanonicalVerse")
                         .HasDatabaseName("ix_entity_verse_canonical_book_canonical_chapter_canonical_ver");
-
-                    b.HasIndex("EntityId", "CanonicalBook", "CanonicalChapter", "CanonicalVerse", "Source")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_verse_entity_id_canonical_book_canonical_chapter_can");
 
                     b.ToTable("entity_verse", (string)null);
                 });
@@ -6544,12 +6505,17 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordReferent", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("WordId")
                         .HasColumnType("bigint")
-                        .HasColumnName("id");
+                        .HasColumnName("word_id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    b.Property<long>("ReferentWordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("referent_word_id");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("text")
+                        .HasColumnName("source");
 
                     b.Property<double?>("Confidence")
                         .HasColumnType("double precision")
@@ -6560,28 +6526,15 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("method");
 
-                    b.Property<long>("ReferentWordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("referent_word_id");
+                    b.Property<int>("Ordinal")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordinal");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
-
-                    b.Property<long>("WordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("word_id");
-
-                    b.HasKey("Id")
+                    b.HasKey("WordId", "ReferentWordId", "Source")
                         .HasName("pk_word_referent");
 
                     b.HasIndex("ReferentWordId")
                         .HasDatabaseName("ix_word_referent_referent_word_id");
-
-                    b.HasIndex("WordId", "ReferentWordId", "Source")
-                        .IsUnique()
-                        .HasDatabaseName("ix_word_referent_word_id_referent_word_id_source");
 
                     b.ToTable("word_referent", null, t =>
                         {

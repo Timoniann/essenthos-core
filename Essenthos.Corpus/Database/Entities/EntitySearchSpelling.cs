@@ -14,14 +14,13 @@ namespace Essenthos.Core.Database.Entities;
 /// those is looking for the record, so it stands here, on the rule the Forge's <c>SearchSpellings</c>
 /// states. It is never shown as a name of the record except to say why a search found it.
 /// </para>
+/// <para>
+/// Keyed by what it is, the record and the folded spelling, so a build that reads the same words writes the same rows.
+/// </para>
 /// </summary>
-[Index(nameof(EntityId), nameof(Folded), IsUnique = true)]
+[PrimaryKey(nameof(EntityId), nameof(Folded))]
 public class EntitySearchSpelling
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-
     public int EntityId { get; set; }
 
     public Entity? Entity { get; set; }

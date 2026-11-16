@@ -662,19 +662,16 @@ public class EntityRelationship
 ///
 /// <para>
 /// A row is a verse, once per entity and per source: the list counts verses, and a verse named
-/// twice in it — once per word or once per label — is the over-count the unique key refuses.
+/// twice in it — once per word or once per label — is the over-count the key refuses.
+/// </para>
+/// <para>
+/// Keyed by what it is, the record, the verse and the source, so a build that reads the same files writes the same rows.
 /// </para>
 /// </remarks>
-[Index(nameof(EntityId))]
+[PrimaryKey(nameof(EntityId), nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse), nameof(Source))]
 [Index(nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse))]
-[Index(nameof(EntityId), nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse), nameof(Source),
-    IsUnique = true)]
 public class EntityVerse
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-
     public int EntityId { get; set; }
     public Entity? Entity { get; set; }
 
