@@ -62,6 +62,30 @@ public sealed class SuppliedWordSourceTests : IDisposable
     }
 
     [Fact]
+    public void Against_a_witness_other_than_the_base_a_run_is_absent_only_where_the_witness_has_no_word_the_base_lacks()
+    {
+        var store = new ProductStore(_root);
+        Text(store, "NPU2022", "translation", "ukr",
+            ("49.4:9", [("Він", null), ("зійшов", null), ("раніше", 1), ("у", null)]),
+            ("49.4:10", [("Син", null), ("Божий", null), ("сам", 1)]),
+            ("49.4:11", [("і", null), ("дав", 1)]));
+        Text(store, "SBLGNT", "critical-edition", "grc",
+            ("49.4:9", [("κατέβη", null), ("εἰς", null)]), ("49.4:10", [("ὁ", null), ("υἱὸς", null), ("θεοῦ", null)]),
+            ("49.4:11", [("καὶ", null), ("αὐτὸς", null)]));
+        Text(store, "VAT", "critical-edition", "grc",
+            ("49.4:9", [("κατεβη", null), ("πρωτον", null), ("εις", null)]), ("49.4:10", [("ο", null), ("υιος", null), ("θυ", null)]),
+            ("49.4:11", [("και", null), ("αυτοσ", null)]));
+        var texts = new ProductTexts(store);
+
+        var based = new SuppliedWordSource().Rows(texts, "NPU2022-SBLGNT", _ => { }).Select(row => row.From).ToList();
+        var variant = new SuppliedWordSource().Rows(texts, "NPU2022-VAT", _ => { }).Select(row => row.From).ToList();
+
+        based.Should().Equal("49.4:9.3", "49.4:10.3", "49.4:11.2");
+        variant.Should().Equal(["49.4:10.3", "49.4:11.2"],
+            "Vaticanus prints πρωτον in 4:9, which NA has not; its θυ is θεοῦ contracted and αυτοσ the base's word");
+    }
+
+    [Fact]
     public void The_king_james_italics_are_one_absence_a_word_in_the_new_testament()
     {
         var store = new ProductStore(_root);
@@ -95,6 +119,19 @@ public sealed class SuppliedWordSourceTests : IDisposable
 
         before.Should().NotContain("KJV-NESTLE1904", "verse-pairs writes its folder after every producer has run");
         after.Should().Contain("KJV-NESTLE1904");
+    }
+
+    [Fact]
+    public void An_editions_pairs_with_the_witnesses_in_the_language_of_a_book_both_hold_are_founded_before_their_folders()
+    {
+        var store = Store();
+        Text(store, "NESTLE1904", "critical-edition", "grc", ("40.1:1", [("Βίβλος", null)]));
+        Text(store, "OTTLEY", "critical-edition", "grc", ("1.1:1", [("ἐν", null)]));
+
+        var pairs = PairSources.Pairs(new ProductTexts(store), PairSources.Laid);
+
+        pairs.Should().Contain(["RUSV-BHSA", "RUSV-NESTLE1904"]);
+        pairs.Should().NotContain("RUSV-OTTLEY", "the Synodal's Old Testament is translated from the Hebrew, and Ottley prints no Gospel");
     }
 
     [Fact]
@@ -141,6 +178,12 @@ public sealed class SuppliedWordSourceTests : IDisposable
         using (var frame = store.Create(FrameFile.Product(text), ProductKind.Machine, FrameRow.Schema, "test", []))
         {
             frame.WriteAll([]);
+        }
+
+        using (var books = store.Create(TextBook.ProductOf(text), ProductKind.Machine, TextBook.Schema, "test", []))
+        {
+            books.WriteAll(verses.Select(verse => VerseKey.Parse(verse.Verse).Book).Distinct()
+                .Select((book, n) => new TextBook(book, n + 1, $"book {book}", null, null, $"b{book}")));
         }
 
         using var declaration = store.Create(TextField.ProductOf(text), ProductKind.Hand, TextField.Schema, "test", []);
