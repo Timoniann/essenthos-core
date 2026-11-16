@@ -204,5 +204,59 @@ class CollectTests(unittest.TestCase):
             self.assertEqual((first['word_id'], first['greek_word_ids']), ('100', ['200']))
 
 
+
+class ShortKeyTests(unittest.TestCase):
+    def test_the_long_prompt_is_v1_byte_for_byte_and_the_short_one_names_every_key(self):
+        # The pilot's runs (geez-gloss-pilot-*-v1) were built from this exact text.
+        self.assertEqual(gb.digest(gb.prompts.GLOSS_SYSTEM),
+                         '174fb4db519e40995213f7577560e8479cef77130f52d4a07698cf75815d743b')
+        short = gb.prompts.gloss_system('short')
+        for shown in ('"l" (lemma)', '"ls" (lemma source)', '"se" (sense en)', '"g" (greek)', '"c" (conf)',
+                      '"h" (high)', '"d" (dillmann)'):
+            self.assertIn(shown, short)
+        self.assertEqual(set(gb.prompts.gloss_schema('short')['properties']['words']['items']['properties']),
+                         {'w', 'l', 'ls', 'se', 'su', 'e', 'u', 'g', 'mo', 'c'})
+
+    def test_a_short_answer_is_checked_and_stored_under_the_long_names(self):
+        with tempfile.TemporaryDirectory() as folder:
+            run = Path(folder) / 'run'
+            gb.write_jsonl(run / 'inputs' / 'gloss-chapters.jsonl', [chapter()])
+            manifest = gb.build(run, 'gloss', claude_api, 'claude-opus-5-5', 'medium', keys='short', out_per_word=150,
+                                min_out=4000)
+            self.assertEqual((manifest['keys'], manifest['prompt_version']), ('short', 'geez-v1-short'))
+            params = gb.read_jsonl(run / 'requests.jsonl')[0]['params']
+            self.assertEqual((params['max_tokens'], params['output_config']['effort']), (4000, 'medium'))
+            cid = gb.read_jsonl(run / 'requests.jsonl')[0]['custom_id']
+            answer = {'words': [{'w': f'w{i}', 'l': 'ምድር', 'ls': 'd', 'se': 'earth', 'su': 'земля', 'e': 'the earth',
+                                 'u': 'землю', 'g': ['g1'] if i == 1 else [], 'mo': '', 'c': 'm'} for i in range(1, 7)]}
+            fake = Path(folder) / 'fake.jsonl'
+            gb.write_jsonl(fake, [{'custom_id': cid, 'type': 'succeeded', 'model': 'claude-opus-5-5',
+                                   'stop_reason': 'end_turn', 'text': json.dumps(answer)}])
+            report = gb.collect(run, fake=fake)
+            self.assertEqual((report['clean_items'], report['rejected_requests']), (6, 0))
+            first = gb.read_jsonl(run / 'clean.jsonl')[0]
+            self.assertEqual((first['lemma'], first['lemma_source'], first['conf'], first['greek_word_ids']),
+                             ('ምድር', 'dillmann', 'medium', ['200']))
+
+
+class ExportTests(unittest.TestCase):
+    def test_a_whole_book_split_by_chapter_equals_the_per_chapter_statement(self):
+        rows = {'geez': [{'id': '1', 'c': 1, 'v': 1}, {'id': '2', 'c': 2, 'v': 1}],
+                'links': [{'ge': '1', 'gr': '11'}, {'ge': '2', 'gr': '12'}],
+                'greek': [{'id': '10', 'c': 1, 'v': 1}, {'id': '11', 'c': 1, 'v': 2}, {'id': '12', 'c': 1, 'v': 3},
+                          {'id': '13', 'c': 2, 'v': 1}],
+                'english': [{'c': 1, 'v': 1}, {'c': 1, 'v': 2}, {'c': 1, 'v': 3}, {'c': 2, 'v': 1}]}
+        two = gb.split_book(rows, 2)
+        self.assertEqual([w['id'] for w in two['geez']], ['2'])
+        self.assertEqual([g['id'] for g in two['greek']], ['12', '13'])     # its chapter, and what its words link to
+        self.assertEqual(two['english'], [{'c': 1, 'v': 3}, {'c': 2, 'v': 1}])
+
+    def test_only_matthew_to_revelation_read_nestle(self):
+        self.assertEqual(gb.chapter_sources(40), ('NESTLE1904', 'KJV'))
+        self.assertEqual(gb.chapter_sources(66), ('NESTLE1904', 'KJV'))
+        for ordinal in (1, 39, 67, 70, 85, 86):
+            self.assertEqual(gb.chapter_sources(ordinal), ('GRCBRENT', 'BRENTON'))
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -94,7 +94,7 @@ DILLMANN_SCHEMA = {
 # ---------------------------------------------------------------------------------------------------
 # FTR-1141: each Ge'ez word's own meaning in its verse
 
-GLOSS_SYSTEM = """\
+_GLOSS_TEMPLATE = """\
 You gloss the Ethiopic (Ge'ez) Bible word by word for a Bible research site. Under each Ge'ez word \
 the reader sees its meaning in this verse; today that line is only the meaning of the Greek word an \
 automatic aligner set beside it, which is often wrong. Your answer replaces it, labelled as a \
@@ -103,8 +103,8 @@ model-made gloss.
 The Ge'ez Old Testament was translated from the Septuagint and the New Testament from the Greek, \
 so you are mostly recognising which Greek word each Ge'ez word renders and what it means here, not \
 translating cold. The Greek and an English translation of it are given beside the Ge'ez. Where the \
-Ge'ez adds or leaves out words, or follows a different Greek reading, say so through "greek" (empty) \
-and "conf", and gloss the Ge'ez as it stands, never the Greek.
+Ge'ez adds or leaves out words, or follows a different Greek reading, say so through <<greek>> (empty) \
+and <<conf>>, and gloss the Ge'ez as it stands, never the Greek.
 
 You receive a JSON object with:
 - "ge'ez": the passage, verse by verse; every word has a key ("w1", "w2" …), its text, and where \
@@ -120,53 +120,108 @@ the New Testament), for orientation only.
 
 Answer {"words": [...]} with every Ge'ez word key exactly once, in order. For each word:
 - "w": its key.
-- "lemma": its dictionary form in Ethiopic script, with clitics and suffixes taken off: verbs in the \
+- <<lemma>>: its dictionary form in Ethiopic script, with clitics and suffixes taken off: verbs in the \
 3rd person masculine singular perfect (ገብረ, not ይገብር), nouns and adjectives in the singular \
 unbound form (ምድር for ወምድረ). Use Dillmann's headword spelling when the candidate fits.
-- "lemma_source": "dillmann" when the lemma is the candidate's headword, or another headword you know \
-Dillmann prints in exactly that spelling; otherwise "model".
-- "sense_en", "sense_uk": what the lemma means in this verse, in English and Ukrainian, a word or \
+- <<lemma_source>>: <<dillmann>> when the lemma is the candidate's headword, or another headword you know \
+Dillmann prints in exactly that spelling; otherwise <<model>>.
+- <<sense_en>>, <<sense_uk>>: what the lemma means in this verse, in English and Ukrainian, a word or \
 three ("earth", "земля"); for a particle or preposition its function here ("and", "in").
-- "en", "uk": the whole Ge'ez word as it reads in this verse, clitics and suffixes included, as \
+- <<en>>, <<uk>>: the whole Ge'ez word as it reads in this verse, clitics and suffixes included, as \
 an interlinear line would show it ("and the earth", "і землю"; "he made"; "to me"). Short; no \
 brackets or alternatives.
-- "greek": the keys of the Greek words this Ge'ez word renders, from "greek" only, in Greek order. \
+- <<greek>>: the keys of the Greek words this Ge'ez word renders, from "greek" only, in Greek order. \
 Several when one Ge'ez word renders several Greek words (preposition + article + noun, conjunction \
 + verb, verb + pronoun object). Empty when the word renders nothing in the Greek given (a Ge'ez \
 plus, a different reading, or a Greek verse not supplied).
-- "morph": the clitics and suffixes, briefly, Ge'ez in Latin transliteration with their meaning: \
+- <<morph>>: the clitics and suffixes, briefly, Ge'ez in Latin transliteration with their meaning: \
 "wa- 'and' + acc. -a"; "ba- 'in'"; "la- object marker"; "za- relative 'who/which'"; "ʾǝm- 'from'"; \
 "suffix -ya 'my'"; "-hu 'his/him'"; "-ni 'me'"; "imperfect 3 m. sg."; "perfect 1 sg.". Empty string \
 for a bare word.
-- "conf": "high" when the Ge'ez, the Greek and the lemma agree plainly; "medium" when you chose \
-between readings; "low" when the word is rare, damaged or you are guessing.
+- <<conf>>: <<high>> when the Ge'ez, the Greek and the lemma agree plainly; <<medium>> when you chose \
+between readings; <<low>> when the word is rare, damaged or you are guessing.
 
 Ukrainian: modern literary Ukrainian, with Bible names as Ohienko spells them. Output only the JSON \
 the schema asks for.
 """
 
-GLOSS_SCHEMA = {
-    'type': 'object',
-    'properties': {
-        'words': {
-            'type': 'array',
-            'items': {
-                'type': 'object',
-                'properties': {
-                    'w': {'type': 'string'},
-                    'lemma': {'type': 'string'},
-                    'lemma_source': {'type': 'string', 'enum': ['dillmann', 'model']},
-                    **_strings('sense_en', 'sense_uk', 'en', 'uk'),
-                    'greek': {'type': 'array', 'items': {'type': 'string'}},
-                    'morph': {'type': 'string'},
-                    'conf': {'type': 'string', 'enum': ['high', 'medium', 'low']},
-                },
-                'required': ['w', 'lemma', 'lemma_source', 'sense_en', 'sense_uk', 'en', 'uk', 'greek', 'morph',
-                             'conf'],
-                'additionalProperties': False,
+
+# The answer's keys and enum values. "long" is the v1 wording, byte for byte (the pilot's system_sha256);
+# "short" (FTR-1141, owner 2026-11-16: «Коротші ключі») spends fewer output tokens a word on JSON keys.
+# collect expands a short answer back to the long names before checking it.
+GLOSS_KEYS = {
+    'long': {'lemma': 'lemma', 'lemma_source': 'lemma_source', 'sense_en': 'sense_en', 'sense_uk': 'sense_uk',
+             'en': 'en', 'uk': 'uk', 'greek': 'greek', 'morph': 'morph', 'conf': 'conf'},
+    'short': {'lemma': 'l', 'lemma_source': 'ls', 'sense_en': 'se', 'sense_uk': 'su', 'en': 'e', 'uk': 'u',
+              'greek': 'g', 'morph': 'mo', 'conf': 'c'},
+}
+GLOSS_VALUES = {
+    'long': {'lemma_source': {'dillmann': 'dillmann', 'model': 'model'},
+             'conf': {'high': 'high', 'medium': 'medium', 'low': 'low'}},
+    'short': {'lemma_source': {'dillmann': 'd', 'model': 'm'}, 'conf': {'high': 'h', 'medium': 'm', 'low': 'l'}},
+}
+
+
+def gloss_system(keys='long'):
+    """The gloss prompt with the answer's key names; a short name is shown once with its meaning."""
+    names, values = GLOSS_KEYS[keys], GLOSS_VALUES[keys]
+
+    def shown(short, name):
+        return f'"{short}"' if short == name else f'"{short}" ({name.replace("_", " ")})'
+
+    text = _GLOSS_TEMPLATE
+    for name, short in names.items():
+        text = text.replace(f'<<{name}>>', shown(short, name))
+    for members in values.values():
+        for name, short in members.items():
+            text = text.replace(f'<<{name}>>', shown(short, name))
+    assert '<<' not in text
+    return text
+
+
+GLOSS_SYSTEM = gloss_system('long')
+
+
+def gloss_schema(keys='long'):
+    k, values = GLOSS_KEYS[keys], GLOSS_VALUES[keys]
+    properties = {
+        'w': {'type': 'string'},
+        k['lemma']: {'type': 'string'},
+        k['lemma_source']: {'type': 'string', 'enum': list(values['lemma_source'].values())},
+        **_strings(k['sense_en'], k['sense_uk'], k['en'], k['uk']),
+        k['greek']: {'type': 'array', 'items': {'type': 'string'}},
+        k['morph']: {'type': 'string'},
+        k['conf']: {'type': 'string', 'enum': list(values['conf'].values())},
+    }
+    return {
+        'type': 'object',
+        'properties': {
+            'words': {
+                'type': 'array',
+                'items': {'type': 'object', 'properties': properties, 'required': list(properties),
+                          'additionalProperties': False},
             },
         },
-    },
-    'required': ['words'],
-    'additionalProperties': False,
-}
+        'required': ['words'],
+        'additionalProperties': False,
+    }
+
+
+GLOSS_SCHEMA = gloss_schema('long')
+
+
+def expand_gloss(answer, keys='long'):
+    """A short-key answer with the long names and values back, for the checks and the clean file."""
+    if keys == 'long' or not isinstance(answer, dict) or not isinstance(answer.get('words'), list):
+        return answer
+    back = {short: name for name, short in GLOSS_KEYS[keys].items()}
+    values = {field: {short: name for name, short in members.items()} for field, members in GLOSS_VALUES[keys].items()}
+    words = []
+    for word in answer['words']:
+        if isinstance(word, dict):
+            word = {back.get(key, key): value for key, value in word.items()}
+            for field, members in values.items():
+                if isinstance(word.get(field), str):
+                    word[field] = members.get(word[field], word[field])
+        words.append(word)
+    return {**answer, 'words': words}

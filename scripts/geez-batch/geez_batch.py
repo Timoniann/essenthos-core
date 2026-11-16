@@ -49,7 +49,7 @@ LABEL_PREFIX = 'geez-'
 MODELS = ('claude-sonnet-5-5', 'claude-opus-5-5')
 # Canonical ordinals of the pilot's books; the full run lists them from the database.
 BOOKS = {'GEN': 1, 'PSA': 19, 'JHN': 43}
-NT_FIRST_ORDINAL = 40
+NT_ORDINALS = range(40, 67)   # Matthew to Revelation; Baruch (67) and the books after it are not NT
 
 
 def now():
@@ -259,7 +259,7 @@ GLOSS_SQL = """
 with ge as (
   select w.id, v.chapter_number c, v.number v, v.label, w.position p, w.text t
   from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
-  where x.slug = 'GEEZ81' and b.canonical_ordinal = {ordinal} and v.chapter_number = {chapter}),
+  where x.slug = 'GEEZ81' and b.canonical_ordinal = {ordinal} {chapter_filter}),
 links as (
   select lf.word_id ge, lt.word_id gr, l.confidence conf
   from link l join text tt on tt.id = l.to_text_id
@@ -271,7 +271,7 @@ gr as (
   select w.id, v.chapter_number c, v.number v, v.label, w.position p, w.text t, w.lemma
   from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
   where x.slug = '{greek}' and b.canonical_ordinal = {ordinal}
-    and (v.chapter_number = {chapter} or w.id in (select gr from links))),
+    and ({greek_chapter} or w.id in (select gr from links))),
 en as (
   select v.chapter_number c, v.number v, v.label, string_agg(w.text || w.trailer, '' order by w.position) t
   from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
@@ -287,12 +287,36 @@ select json_build_object(
 
 
 def chapter_sources(ordinal):
-    return ('NESTLE1904', 'KJV') if ordinal >= NT_FIRST_ORDINAL else ('GRCBRENT', 'BRENTON')
+    # Books Brenton does not have (2 Esdras, Enoch, Jubilees, Meqabyan, 4 Baruch, Proverbs split as
+    # Messale/Tägsas) come with no Greek and no English: the packet then has the Ge'ez alone.
+    return ('NESTLE1904', 'KJV') if ordinal in NT_ORDINALS else ('GRCBRENT', 'BRENTON')
 
 
-def export_chapter(book, ordinal, chapter, api_base):
+def book_rows(ordinal, chapter=None):
+    """The Ge'ez words, their links, the Greek and the English of one book (or one chapter of it)."""
     greek, english = chapter_sources(ordinal)
-    data = psql_rows(GLOSS_SQL.format(ordinal=ordinal, chapter=chapter, greek=greek, english=english))[0]
+    chapter_filter = f'and v.chapter_number = {int(chapter)}' if chapter is not None else ''
+    greek_chapter = f'v.chapter_number = {int(chapter)}' if chapter is not None else 'true'
+    data = psql_rows(GLOSS_SQL.format(ordinal=ordinal, chapter_filter=chapter_filter, greek_chapter=greek_chapter,
+                                      greek=greek, english=english))[0]
+    return {key: data[key] or [] for key in ('geez', 'links', 'greek', 'english')}
+
+
+def split_book(rows, chapter):
+    """One chapter's share of a whole-book export, exactly what the per-chapter statement returns."""
+    geez = [w for w in rows['geez'] if w['c'] == chapter]
+    ids = {w['id'] for w in geez}
+    links = [link for link in rows['links'] if link['ge'] in ids]
+    linked = {link['gr'] for link in links}
+    greek = [g for g in rows['greek'] if g['c'] == chapter or g['id'] in linked]
+    verses = {(g['c'], g['v']) for g in greek}
+    english = [e for e in rows['english'] if (e['c'], e['v']) in verses]
+    return {'geez': geez, 'links': links, 'greek': greek, 'english': english}
+
+
+def export_chapter(book, ordinal, chapter, api_base, rows=None):
+    greek, english = chapter_sources(ordinal)
+    data = split_book(rows, chapter) if rows is not None else book_rows(ordinal, chapter)
     pane = api_json(api_base, f'/v1/panes/GEEZ81/{ordinal}/{chapter}')
     dillmann = {}
     for verse in pane.get('verses', []):
@@ -302,14 +326,17 @@ def export_chapter(book, ordinal, chapter, api_base):
                 dillmann[str(word['id'])] = {'headword': gz['headword'], 'latin': gz['latin'][:6],
                                              'greek': gz['greek'][:4], 'via': gz['via']}
     return {'book': book, 'ordinal': ordinal, 'chapter': chapter, 'greek_text': greek, 'english_text': english,
-            'geez': data['geez'] or [], 'links': data['links'] or [], 'greek': data['greek'] or [],
-            'english': data['english'] or [], 'dillmann': dillmann}
+            'geez': data['geez'], 'links': data['links'], 'greek': data['greek'],
+            'english': data['english'], 'dillmann': dillmann}
 
 
-def export_gloss(run, chapters, api_base):
-    out = []
+def export_gloss(run, chapters, api_base, whole_books=False):
+    out, rows, loaded = [], None, None
     for book, ordinal, chapter in chapters:
-        out.append(export_chapter(book, ordinal, chapter, api_base))
+        if whole_books and loaded != ordinal:
+            rows, loaded = book_rows(ordinal), ordinal
+            print(f'{book}: {len(rows["geez"])} Ge\'ez words', file=sys.stderr, flush=True)
+        out.append(export_chapter(book, ordinal, chapter, api_base, rows if whole_books else None))
     write_jsonl(Path(run) / 'inputs' / 'gloss-chapters.jsonl', out)
     # Every spelling of every loaded Dillmann headword, to check a lemma the model says is his.
     forms = psql_rows("select json_agg(distinct f order by f) from geez_lexicon_entry, unnest(forms) f")[0]
@@ -330,9 +357,10 @@ def parse_chapters(spec):
 
 
 def all_chapters():
+    """Every GEEZ81 chapter in GEEZ81's own book order (book.position of its own books), not the canonical ordinal."""
     rows = psql_rows("select json_build_object('book', b.abbreviation, 'ordinal', b.canonical_ordinal, 'chapter', c)"
                      " from (select distinct v.book_id, v.chapter_number c from verse v join text x on x.id = v.text_id"
-                     " where x.slug = 'GEEZ81') v join book b on b.id = v.book_id order by b.canonical_ordinal, c")
+                     " where x.slug = 'GEEZ81') v join book b on b.id = v.book_id order by b.position, c")
     return [(r['book'] or str(r['ordinal']), r['ordinal'], r['chapter']) for r in rows]
 
 
@@ -471,15 +499,16 @@ def gloss_packet(chapter, window):
     return packet, wkeys, {k: v for v, k in gkeys.items()}
 
 
-def build_gloss(run, client, model, effort, ttl='5m', max_words=90):
+def build_gloss(run, client, model, effort, ttl='5m', max_words=90, keys='long', out_per_word=400,
+                min_out=16000):
     requests, manifest_items = [], {}
+    system, schema = prompts.gloss_system(keys), prompts.gloss_schema(keys)
     for chapter in read_jsonl(Path(run) / 'inputs' / 'gloss-chapters.jsonl'):
         for i, window in enumerate(passages(chapter, max_words), 1):
             packet, wkeys, gkeys = gloss_packet(chapter, window)
             custom_id = f"gl-{chapter['ordinal']:02d}-{chapter['chapter']:03d}-{i:02d}"
-            params = client.build_params(packet, system=prompts.GLOSS_SYSTEM, model=model, effort=effort,
-                                         schema=prompts.GLOSS_SCHEMA, ttl=ttl,
-                                         max_tokens=max(16000, 400 * len(wkeys)))
+            params = client.build_params(packet, system=system, model=model, effort=effort, schema=schema, ttl=ttl,
+                                         max_tokens=max(min_out, out_per_word * len(wkeys)))
             requests.append({'custom_id': custom_id, 'params': params})
             manifest_items[custom_id] = {'book': chapter['book'], 'ordinal': chapter['ordinal'],
                                          'chapter': chapter['chapter'], 'words': wkeys, 'greek': gkeys,
@@ -488,7 +517,8 @@ def build_gloss(run, client, model, effort, ttl='5m', max_words=90):
     return requests, manifest_items
 
 
-def build(run, job, client, model, effort, ttl='5m', copy_inputs_from=None):
+def build(run, job, client, model, effort, ttl='5m', copy_inputs_from=None, keys='long', out_per_word=400,
+          min_out=16000):
     run = Path(run)
     if copy_inputs_from:
         source = Path(copy_inputs_from) / 'inputs'
@@ -502,12 +532,15 @@ def build(run, job, client, model, effort, ttl='5m', copy_inputs_from=None):
         requests, items = build_dillmann(run, client, model, effort, ttl)
         system, schema = prompts.DILLMANN_SYSTEM, prompts.DILLMANN_SCHEMA
     else:
-        requests, items = build_gloss(run, client, model, effort, ttl)
-        system, schema = prompts.GLOSS_SYSTEM, prompts.GLOSS_SCHEMA
+        requests, items = build_gloss(run, client, model, effort, ttl, keys=keys, out_per_word=out_per_word,
+                                      min_out=min_out)
+        system, schema = prompts.gloss_system(keys), prompts.gloss_schema(keys)
     write_jsonl(run / 'requests.jsonl', requests)
     inputs = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((run / 'inputs').glob('*'))}
+    short = job == 'gloss' and keys == 'short'
     manifest = {'at': now(), 'run': run.name, 'job': job, 'model': model, 'effort': effort, 'ttl': ttl,
-                'prompt_version': prompts.PROMPT_VERSION, 'system_sha256': digest(system),
+                'keys': keys if job == 'gloss' else 'long',
+                'prompt_version': prompts.PROMPT_VERSION + ('-short' if short else ''), 'system_sha256': digest(system),
                 'schema_sha256': digest(schema), 'inputs_sha256': inputs,
                 'requests_sha256': hashlib.sha256((run / 'requests.jsonl').read_bytes()).hexdigest(),
                 'requests': len(requests), 'items': items}
@@ -809,6 +842,7 @@ def judge(run, manifest, rows, headwords):
                                   'senses': entry['senses'], 'model': row['model'],
                                   'run': manifest['run'], 'prompt_version': manifest['prompt_version']})
         elif why is None:
+            answer = prompts.expand_gloss(answer, manifest.get('keys', 'long'))
             good, errors, warnings = validate_gloss(answer, items, headwords)
             if errors:
                 why = errors
@@ -947,6 +981,9 @@ def main(argv=None):
     parser.add_argument('--effort', choices=['low', 'medium', 'high', 'xhigh', 'max'], default='high')
     parser.add_argument('--ttl', choices=['5m', '1h'], default='5m')
     parser.add_argument('--from', dest='source', help='copy inputs/ from this run folder before building')
+    parser.add_argument('--keys', choices=['long', 'short'], default='long', help='build: the gloss answer\'s key names')
+    parser.add_argument('--out-per-word', type=int, default=400, help='build: max_tokens a Ge\'ez word (gloss)')
+    parser.add_argument('--min-out', type=int, default=16000, help='build: the smallest max_tokens of a request (gloss)')
     parser.add_argument('--thinking', type=float, default=1.0, help='estimate: thinking tokens per visible token')
     parser.add_argument('--budget', type=float, help='submit: USD every geez-* label together may spend')
     parser.add_argument('--since', help='submit: count the budget from this ISO time (first Ge\'ez batch)')
@@ -968,11 +1005,12 @@ def main(argv=None):
         print(json.dumps(export_dillmann(run, resources), indent=1))
     elif args.command == 'export-gloss':
         chapters = all_chapters() if args.all_chapters else parse_chapters(args.chapters)
-        print(json.dumps(export_gloss(run, chapters, args.api), indent=1))
+        print(json.dumps(export_gloss(run, chapters, args.api, whole_books=args.all_chapters), indent=1))
     elif args.command == 'build':
         if not args.job:
             raise SystemExit('build needs --job')
-        manifest = build(run, args.job, claude_api(args.repo), args.model, args.effort, args.ttl, args.source)
+        manifest = build(run, args.job, claude_api(args.repo), args.model, args.effort, args.ttl, args.source,
+                         args.keys, args.out_per_word, args.min_out)
         print(f"{run}: {manifest['requests']} requests, model {manifest['model']}, effort {manifest['effort']}")
     elif args.command == 'estimate':
         print(json.dumps(estimate(run, claude_api(args.repo), args.thinking), indent=1))

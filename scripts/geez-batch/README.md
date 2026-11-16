@@ -64,8 +64,17 @@ $G report   --run geez-dillmann-v1                # the ledger summary for the e
 
 PSA 22 is the shepherd psalm: GEEZ81 numbers the Psalms as the Septuagint does.
 
-The full contextual run is `export-gloss --all-chapters` into a new run folder, `build` with the model
-the pilot chose, then `submit --next N` in tranches (canonical order; requests are `gl-<ordinal>-<chapter>-<n>`).
+The full contextual run is `export-gloss --all-chapters` into a new run folder (every GEEZ81 chapter in
+GEEZ81's own book order, `book.position`: Jubilees and Enoch after Chronicles, Meqabyan after Esther; one
+read statement per book), `build` with the settings the pilot chose, then `submit --next N` in tranches
+(requests are `gl-<canonical ordinal>-<chapter>-<n>`, sent in the file's order).
+
+`build --keys short` asks for one- and two-letter answer keys (`l` lemma, `ls` lemma source, `se`/`su`
+sense, `e`/`u` line, `g` Greek, `mo` morph, `c` conf; `d`/`m` and `h`/`m`/`l` as values); the prompt names
+each short key with its meaning once, and `collect` stores the long names, so the clean file is the same
+either way. `--keys long` is v1's prompt byte for byte. `--out-per-word N` (default 400) and `--min-out`
+(default 16000) set `max_tokens` = max(min, N × words): the reserve each submit holds against the cap is
+that output in full, so a tighter allowance lets more requests into a tranche.
 A submit stops before sending when the batch's upper bound would pass the cap (`BudgetExceeded`, nothing
 sent); the next tranche resumes with the first request never sent.
 
