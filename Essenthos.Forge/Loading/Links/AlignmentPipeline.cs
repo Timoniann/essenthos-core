@@ -465,7 +465,10 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
     /// standing: the model's stamp is one of the pair's inputs.
     /// </summary>
     /// <param name="poolWorkspace">Where the pool's model is kept.</param>
-    /// <param name="partner">Every word of a text of the pool, as the pool reads it.</param>
+    /// <param name="partner">
+    /// For a text of the pool, the source's words as that text's own pair reads them and every word of the text as the
+    /// pool reads it: what the model trains on, the same whichever pair of the pool asks.
+    /// </param>
     internal async Task<string> AlignPooled(
         string fromSlug,
         IReadOnlyList<string> pool,
@@ -475,10 +478,10 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         List<(int, int, int)> addresses,
         Dictionary<(int, int, int), List<Word>> source,
         Dictionary<(int, int, int), List<Word>> target,
-        Func<string, Dictionary<(int, int, int), List<Word>>> partner,
+        Func<string, PoolPartner> partner,
         CancellationToken cancellationToken)
     {
-        var (modelPrefix, stamp) = await PoolModel(fromSlug, pool, poolWorkspace, modelType, source, partner, cancellationToken);
+        var (modelPrefix, stamp) = await PoolModel(fromSlug, pool, poolWorkspace, modelType, partner, cancellationToken);
 
         var inputs = new List<(string Name, string[] Lines)>
         {
@@ -499,6 +502,28 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         return Path.Combine(folder, AlignmentFile);
     }
 
+    /// <summary>A text of a pool: the source's words as the source's pair with it reads them, and the text's words as the pool reads them.</summary>
+    internal sealed record PoolPartner(Dictionary<(int, int, int), List<Word>> Source, Dictionary<(int, int, int), List<Word>> Target);
+
+    /// <summary>
+    /// The lines a pool's model trains on: for each of its texts in turn, every verse the source shares with it, the source
+    /// read as its pair with that text reads it. Nothing of the pair that asks enters, so every pair of the pool finds one model.
+    /// </summary>
+    internal static List<(string Name, string[] Lines)> PoolInputs(string fromSlug, IReadOnlyList<string> pool, Func<string, PoolPartner> partner)
+    {
+        var sourceLines = new List<string>();
+        var targetLines = new List<string>();
+        foreach (var text in pool)
+        {
+            var (source, target) = partner(text);
+            var addresses = Shared(fromSlug, text, source, target);
+            sourceLines.AddRange(Lines(addresses, source));
+            targetLines.AddRange(Lines(addresses, target));
+        }
+
+        return [(SourceFile, [.. sourceLines]), (TargetFile, [.. targetLines])];
+    }
+
     /// <summary>
     /// The model a pool trains over every verse its source shares with any text of it, and the
     /// stamp that names this training of it.
@@ -508,34 +533,21 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         IReadOnlyList<string> pool,
         string workspace,
         string modelType,
-        Dictionary<(int, int, int), List<Word>> source,
-        Func<string, Dictionary<(int, int, int), List<Word>>> partnerWords,
+        Func<string, PoolPartner> partner,
         CancellationToken cancellationToken)
     {
         const string stampFile = "trained.txt";
 
-        var sourceLines = new List<string>();
-        var targetLines = new List<string>();
-        foreach (var partner in pool)
-        {
-            var target = partnerWords(partner);
-            var addresses = Shared(fromSlug, partner, source, target);
-            sourceLines.AddRange(Lines(addresses, source));
-            targetLines.AddRange(Lines(addresses, target));
-        }
-
-        var inputs = new List<(string Name, string[] Lines)>
-        {
-            (SourceFile, [.. sourceLines]),
-            (TargetFile, [.. targetLines]),
-        };
+        var inputs = PoolInputs(fromSlug, pool, partner);
+        var sourceLines = inputs[0].Lines;
+        var targetLines = inputs[1].Lines;
 
         var folder = await Answer(workspace, modelType, inputs, stampFile, async training =>
         {
             var prefix = ModelPrefix(training, fromSlug);
             Directory.CreateDirectory(Path.GetDirectoryName(prefix)!);
             logger.LogInformation("Training {Model} over {Verses} verse pairs of {From} against {Pool}",
-                modelType, sourceLines.Count, fromSlug, string.Join(", ", pool));
+                modelType, sourceLines.Length, fromSlug, string.Join(", ", pool));
             await Machine(["train", "alignment-model", "-mt", modelType, prefix,
                     Path.Combine(training, SourceFile), Path.Combine(training, TargetFile)],
                 cancellationToken);

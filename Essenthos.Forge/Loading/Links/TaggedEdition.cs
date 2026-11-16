@@ -62,7 +62,12 @@ internal static class TaggedEdition
     /// The words of the two editions in step, as far as they can be put in step. Words neither side
     /// can be joined to appear in no span, and the caller sees them as untagged.
     /// </summary>
-    public static List<EditionSpan> Align(IReadOnlyList<string> tagged, IReadOnlyList<string> corpus)
+    /// <param name="spellings">
+    /// A run that fits none of the three shapes is put in step word by word where it divides into pieces whose letters are
+    /// the same or differ by one letter of a name's spelling: <em>Cesar s</em> against <em>Caesar's</em>, <em>wellbeloved
+    /// Epenetus</em> against <em>well-beloved Epaenetus</em> (<see cref="Spelled"/>).
+    /// </param>
+    public static List<EditionSpan> Align(IReadOnlyList<string> tagged, IReadOnlyList<string> corpus, bool spellings = false)
     {
         if (SameWordForWord(tagged, corpus))
         {
@@ -82,13 +87,13 @@ internal static class TaggedEdition
 
         foreach (var (i, j) in common)
         {
-            Divided(spans, tagged, corpus, at, i, to, j);
+            Divided(spans, tagged, corpus, at, i, to, j, spellings);
             spans.Add(new EditionSpan(i, i + 1, j, j + 1, EditionMatch.Identical));
             at = i + 1;
             to = j + 1;
         }
 
-        Divided(spans, tagged, corpus, at, tagged.Count, to, corpus.Count);
+        Divided(spans, tagged, corpus, at, tagged.Count, to, corpus.Count, spellings);
         return spans;
     }
 
@@ -120,7 +125,8 @@ internal static class TaggedEdition
         int taggedFrom,
         int taggedTo,
         int corpusFrom,
-        int corpusTo)
+        int corpusTo,
+        bool spellings)
     {
         if (taggedFrom >= taggedTo || corpusFrom >= corpusTo)
         {
@@ -136,7 +142,143 @@ internal static class TaggedEdition
         if (taggedTo - taggedFrom == 1 && corpusTo - corpusFrom == 1)
         {
             spans.Add(new EditionSpan(taggedFrom, taggedTo, corpusFrom, corpusTo, EditionMatch.Spelling));
+            return;
         }
+
+        if (spellings && Spelled(tagged, taggedFrom, taggedTo, corpus, corpusFrom, corpusTo) is { } pieces)
+        {
+            spans.AddRange(pieces);
+        }
+    }
+
+    /// <summary>
+    /// A run divided into pieces of one word against one or two, in order, each piece's two sides writing the same letters
+    /// (<see cref="EditionMatch.Divided"/>) or, from four letters on, letters one edit apart (<see cref="EditionMatch.Spelling"/>):
+    /// <em>Cesar s</em> against <em>Caesar's</em> is one piece. Null where the run divides no such way, or more than one way.
+    /// </summary>
+    private static List<EditionSpan>? Spelled(
+        IReadOnlyList<string> tagged, int taggedFrom, int taggedTo, IReadOnlyList<string> corpus, int corpusFrom, int corpusTo)
+    {
+        const int Widest = 2;
+        var ways = new int[taggedTo - taggedFrom + 1, corpusTo - corpusFrom + 1];
+        var next = new (int Tagged, int Corpus, EditionMatch Match)[taggedTo - taggedFrom + 1, corpusTo - corpusFrom + 1];
+        ways[taggedTo - taggedFrom, corpusTo - corpusFrom] = 1;
+        for (var i = taggedTo - taggedFrom; i >= 0; i--)
+        {
+            for (var j = corpusTo - corpusFrom; j >= 0; j--)
+            {
+                if (i == taggedTo - taggedFrom && j == corpusTo - corpusFrom)
+                {
+                    continue;
+                }
+
+                for (var a = 1; a <= Widest && i + a <= taggedTo - taggedFrom; a++)
+                {
+                    for (var b = 1; b <= Widest && j + b <= corpusTo - corpusFrom; b++)
+                    {
+                        if ((a > 1 && b > 1) || ways[i + a, j + b] == 0)
+                        {
+                            continue;
+                        }
+
+                        var left = Letters(tagged, taggedFrom + i, taggedFrom + i + a);
+                        var right = Letters(corpus, corpusFrom + j, corpusFrom + j + b);
+                        EditionMatch? match = left == right && left.Length > 0
+                            ? EditionMatch.Divided
+                            : Math.Min(left.Length, right.Length) >= 4 && OneEditApart(left, right) ? EditionMatch.Spelling : null;
+                        if (match is { } found)
+                        {
+                            ways[i, j] = Math.Min(2, ways[i, j] + ways[i + a, j + b]);
+                            next[i, j] = (i + a, j + b, found);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (ways[0, 0] != 1)
+        {
+            return null;
+        }
+
+        var pieces = new List<EditionSpan>();
+        for (var (x, y) = (0, 0); x < taggedTo - taggedFrom || y < corpusTo - corpusFrom;)
+        {
+            var (nx, ny, match) = next[x, y];
+            pieces.Add(new EditionSpan(taggedFrom + x, taggedFrom + nx, corpusFrom + y, corpusFrom + ny, match));
+            (x, y) = (nx, ny);
+        }
+
+        return pieces;
+    }
+
+    /// <summary>Whether one letter put in, taken out or changed makes one string the other.</summary>
+    private static bool OneEditApart(string left, string right)
+    {
+        if (Math.Abs(left.Length - right.Length) > 1 || left == right)
+        {
+            return false;
+        }
+
+        var (shorter, longer) = left.Length <= right.Length ? (left, right) : (right, left);
+        var at = 0;
+        while (at < shorter.Length && shorter[at] == longer[at])
+        {
+            at++;
+        }
+
+        return shorter.Length == longer.Length
+            ? shorter.AsSpan(at + 1).SequenceEqual(longer.AsSpan(at + 1))
+            : shorter.AsSpan(at).SequenceEqual(longer.AsSpan(at + 1));
+    }
+
+    /// <summary>
+    /// For each corpus word of a span, the tagged words whose letters it shares: in a run the two editions divide
+    /// differently (<em>Simon s wife s</em> against <em>Simon's wife's</em>), <em>wife's</em> is <em>wife</em> and the
+    /// <em>s</em> after it, not <em>Simon</em>. A word with no letters, and every word of another kind of span, has the whole span.
+    /// </summary>
+    public static (int From, int To)[] Covered(EditionSpan span, IReadOnlyList<string> tagged, IReadOnlyList<string> corpus)
+    {
+        var covered = new (int From, int To)[span.CorpusTo - span.CorpusFrom];
+        Array.Fill(covered, (span.TaggedFrom, span.TaggedTo));
+        if (span.Match != EditionMatch.Divided)
+        {
+            return covered;
+        }
+
+        var ends = new int[span.TaggedTo - span.TaggedFrom];
+        for (int i = span.TaggedFrom, end = 0; i < span.TaggedTo; i++)
+        {
+            end += Letters(tagged, i, i + 1).Length;
+            ends[i - span.TaggedFrom] = end;
+        }
+
+        for (int j = span.CorpusFrom, start = 0; j < span.CorpusTo; j++)
+        {
+            var end = start + Letters(corpus, j, j + 1).Length;
+            if (end > start)
+            {
+                int from = -1, to = -1;
+                for (var i = 0; i < ends.Length; i++)
+                {
+                    var tagStart = i == 0 ? 0 : ends[i - 1];
+                    if (tagStart < end && ends[i] > start)
+                    {
+                        from = from < 0 ? i : from;
+                        to = i + 1;
+                    }
+                }
+
+                if (from >= 0)
+                {
+                    covered[j - span.CorpusFrom] = (span.TaggedFrom + from, span.TaggedFrom + to);
+                }
+            }
+
+            start = end;
+        }
+
+        return covered;
     }
 
     private static string Letters(IReadOnlyList<string> words, int from, int to)

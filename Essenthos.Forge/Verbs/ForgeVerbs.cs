@@ -178,7 +178,7 @@ internal static partial class ForgeVerbs
             Occupations),
         new("dillmann-measure", "[--sample <file>]", "How many Ge'ez words reach Dillmann's lexicon. Reads only.",
             DillmannMeasure),
-        new("images", "[--from <Resources>]", "Draw the pictures of the things whose 3D model changed, for the records/records things. Writes picture files; reads no database.", Images),
+        new("images", "[--from <Resources>]", "Draw the pictures of the things whose 3D model changed, for the records/records things, and make the pictures' record files again. Writes picture files and records/facts/images; reads no database.", Images),
         new("wikipedia", "", "Match the records of the configured database to Wikidata and write the owner's list of the records the matching cannot tell from a namesake. Writes no database.", Wikipedia),
         new("commandments", "[--from <Resources>] [--force]", "Write the 613 commandments and the verses each rests on as the files the build loads, from Maimonides/commandments.tsv, where it moved. Reads no database.", Commandments),
         new("lands", "[--from <Resources>] [--force]", "Write the periods of the lands from PeriodO as the files the build loads, where the dataset moved. Reads no database.", Lands),

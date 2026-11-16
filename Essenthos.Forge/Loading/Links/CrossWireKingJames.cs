@@ -43,6 +43,9 @@ internal sealed record LaidKingJames(
 /// the verses as the King James does, so a verse is laid onto the verse of its own address, and one whose words the
 /// two do not write the same way gets nothing rather than a neighbour's. The words a correction adds to the loaded
 /// text (the epistles' subscriptions) are the caller's to leave out: the module does not print them as verse words.
+/// Where the two divide the same letters differently, each word takes the element of the letters it covers: in
+/// <em>Simon s wife s</em> against <em>Simon's wife's</em>, <em>wife's</em> renders πενθερά, not Σίμωνος. A name the module
+/// spells otherwise (<em>Cesar s</em> against <em>Caesar's</em>) is paired word by word.
 /// </para>
 ///
 /// <para>
@@ -259,7 +262,9 @@ internal static class CrossWireKingJames
             }
 
             var printed = element.Words.Where(word => word.Surface.Length > 0).ToList();
-            var spans = TaggedEdition.Align([.. printed.Select(word => word.Surface)], [.. verse.Words.Select(word => word.Text)]);
+            List<string> surfaces = [.. printed.Select(word => word.Surface)];
+            List<string> texts = [.. verse.Words.Select(word => word.Text)];
+            var spans = TaggedEdition.Align(surfaces, texts, spellings: true);
             if (TaggedEdition.Agreement(spans, verse.Words.Count) < SynodalStrongLayer.SameVerse)
             {
                 refused++;
@@ -270,22 +275,24 @@ internal static class CrossWireKingJames
             var units = printed.GroupBy(word => word.Unit).ToDictionary(unit => unit.Key, unit => unit.Select(word => word.Surface).ToList());
             foreach (var span in spans)
             {
-                SwordWord? numbered = null;
-                var supplied = true;
-                for (var i = span.TaggedFrom; i < span.TaggedTo; i++)
-                {
-                    if (numbered is null && printed[i].Numbers.Count > 0)
-                    {
-                        numbered = printed[i];
-                    }
-
-                    supplied &= printed[i].Added;
-                }
-
-                IReadOnlyList<string> numbers = numbered?.Numbers ?? [];
-                var unit = (numbered ?? printed[span.TaggedFrom]).Unit;
+                var covered = TaggedEdition.Covered(span, surfaces, texts);
                 for (var i = span.CorpusFrom; i < span.CorpusTo; i++)
                 {
+                    var (from, to) = covered[i - span.CorpusFrom];
+                    SwordWord? numbered = null;
+                    var supplied = true;
+                    for (var at = from; at < to; at++)
+                    {
+                        if (numbered is null && printed[at].Numbers.Count > 0)
+                        {
+                            numbered = printed[at];
+                        }
+
+                        supplied &= printed[at].Added;
+                    }
+
+                    IReadOnlyList<string> numbers = numbered?.Numbers ?? [];
+                    var unit = (numbered ?? printed[from]).Unit;
                     var text = verse.Words[i].Text;
                     tags[verse.Words[i].Id] = new KingJamesTag(numbers, unit, supplied && numbered is null,
                         Own(numbers, numbered?.Morphology, text, units[unit]), Closed(text));

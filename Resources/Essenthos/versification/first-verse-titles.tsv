@@ -1,0 +1,18 @@
+# product    Essenthos/versification/first-verse-titles.tsv
+# producer   by hand: Essenthos's versification rules, read by forge frame-files
+# Texts that print each psalm's superscription at the head of its first verse and say nothing about it in the file:
+# no superscription marker, no stated address, no correction adding the opening, so texts/<SLUG>/titles lists none of
+# those verses. Each was read psalm by psalm: the first verse of every psalm versification/titled-psalms.tsv names
+# opens with the title and goes on with the psalm's first line. The frame stands such a verse at the title too, in
+# those psalms only, as it does for a verse its titles product lists; a psalm whose title the text's frame already
+# places (Kulish's Psalm 60, versification/supplements.tsv) is left as placed.
+#
+# Columns, tab-separated:
+#   text   the text's slug
+#   why    what was read
+text	why
+YLT	Young's Literal Translation of 1898: all 64 psalms open verse 1 with the title ("A Psalm of David in his fleeing from the face of Absalom his son Jehovah how have my distresses multiplied", Ps 3:1), read 2026-11-16
+RV1909	the Reina-Valera of 1909 (eBible): all 64 psalms open verse 1 with the title ("Salmo de David cuando huía de delante de Absalom su hijo ¡OH Jehová", Ps 3:1), read 2026-11-16
+ELB1905	the Elberfelder of 1905 (eBible): all 64 psalms open verse 1 with the title ("Ein Psalm von David als er vor seinem Sohne Absalom floh Jehova", Ps 3:1), read 2026-11-16
+GNV1599	the Geneva Bible of 1599: all 64 psalms open verse 1 with the title ("A Psalme of Dauid when he fled from his sonne Absalom Lord", Ps 3:1), read 2026-11-16
+UKR1871	Kulish's Bible: 63 of the 64 psalms open verse 1 with the title ("Сю псальму зложив Давид як втїкав перед своїм сином Авесаломом Господи", Ps 3:1); in Psalm 60 the title fills verses 1-2, which its supplement places; read 2026-11-16

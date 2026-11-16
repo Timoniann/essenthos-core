@@ -196,10 +196,12 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         bool versesFromProducts = false)
     {
         var decisions = new List<(Versification, PassageDecision)>();
+        var parked = new Dictionary<int, List<CanonicalReference>>();
         var letters = store is not null && store.Find(Conversion.TextWord.ProductOf(text.Slug)) is { } words ? words : null;
         var manifest = versesFromProducts && letters is not null ? store!.Find(VerseManifestRow.ProductOf(text.Slug)) : null;
         var (verses, existing, expected) = await Compute(text, rules, cancellationToken,
-            (tradition, decision) => decisions.Add((tradition, decision)), letters is null ? null : store, manifest is not null);
+            (tradition, decision) => decisions.Add((tradition, decision)), letters is null ? null : store, manifest is not null,
+            (verse, address) => (parked.TryGetValue(verse, out var list) ? list : parked[verse] = []).Add(address));
 
         var placed = expected.GroupBy(reference => reference.VerseId)
             .ToDictionary(group => group.Key, group => group.Select(reference => new VerseKey(
@@ -218,11 +220,17 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             }
         }
 
-        var rows = FrameFile.Rows(verses.Select(verse => (
-            new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label),
-            (IReadOnlyList<VerseKey>)placed[verse.Id])));
+        var rows = FrameFile.Rows(
+            verses.Select(verse => (new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label), (IReadOnlyList<VerseKey>)placed[verse.Id])),
+            ByOwn(verses, parked));
         return new FramedText(verses, existing, rows, decisions, titles, letters) { Manifest = manifest };
     }
+
+    /// <summary>The addresses each verse parks on, by the verse's own address.</summary>
+    internal static Dictionary<VerseKey, HashSet<VerseKey>> ByOwn(IReadOnlyList<PlacedVerse> verses, Dictionary<int, List<CanonicalReference>> parked) =>
+        verses.Where(verse => parked.ContainsKey(verse.Id)).ToDictionary(
+            verse => new VerseKey(verse.Book, verse.Chapter, verse.Number, verse.Label),
+            verse => parked[verse.Id].Select(address => new VerseKey(address.Book, address.Chapter, address.Verse)).ToHashSet());
 
     /// <summary>Writes the text's frame file, its header naming what it was made from and what decided it.</summary>
     /// <param name="inputs">What the caller asked of the file to call it current; by default what <paramref name="framed"/> was read from.</param>
@@ -396,14 +404,15 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         CancellationToken cancellationToken = default,
         Action<Versification, PassageDecision>? decided = null,
         ProductStore? words = null,
-        bool manifest = false)
+        bool manifest = false,
+        Action<int, CanonicalReference>? parked = null)
     {
         // A corpus imported before a new layer can gain a verse afterwards: a source note can sit
         // on a printed \v marker with no words (ASV Matthew 17:21). Do not make an existing frame
         // an all-or-nothing gate, or that new anchor can never reach the parallel reader. The
         // edition's shape still comes from every verse, because that is what decides its scheme.
         var (verses, existing) = await Held(text, cancellationToken, words: words, manifest: manifest);
-        var expected = Expected(rules, text.Versification, verses, rules.Data.Books(text.Slug), Read(text.Slug), decided);
+        var expected = Expected(rules, text.Versification, verses, rules.Data.Books(text.Slug), Read(text.Slug), decided, parked);
         return (verses, existing, expected);
     }
 
@@ -444,13 +453,15 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     /// listed, or with the verse before it in its chapter where the list is empty, because the Greek has
     /// nothing for it and its own number is some other verse's row.
     /// </param>
+    /// <param name="parked">Told each address a verse only parks on (<see cref="VersificationFrame.Parks"/>), by the verse's id.</param>
     public static List<ReferenceDraft> Expected(
         VersificationRules rules,
         Versification tradition,
         IReadOnlyList<PlacedVerse> verses,
         IReadOnlyDictionary<int, Versification>? books = null,
         IReadOnlyDictionary<(int Book, int Chapter, int Verse), IReadOnlyList<CanonicalReference>>? read = null,
-        Action<Versification, PassageDecision>? decided = null)
+        Action<Versification, PassageDecision>? decided = null,
+        Action<int, CanonicalReference>? parked = null)
     {
         books ??= new Dictionary<int, Versification>();
         Versification TraditionOf(PlacedVerse verse) => books.GetValueOrDefault(verse.Book, tradition);
@@ -478,7 +489,18 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                     verse.Label)
                 : [new CanonicalReference(verse.Book, verse.Chapter, verse.Number)];
 
+        IReadOnlySet<CanonicalReference> Parks(PlacedVerse verse) =>
+            frames.TryGetValue(TraditionOf(verse), out var frame)
+                ? frame.Parks(
+                    verse.Book,
+                    verse.Chapter,
+                    verse.Number,
+                    lettered.Contains(new CanonicalReference(verse.Book, verse.Chapter, verse.Number)),
+                    verse.Label)
+                : new HashSet<CanonicalReference>();
+
         var placed = new Dictionary<int, IReadOnlyList<CanonicalReference>>(verses.Count);
+        var parks = new Dictionary<int, IReadOnlySet<CanonicalReference>>();
         PlacedVerse? before = null;
         foreach (var verse in verses
                      .OrderBy(v => v.Book).ThenBy(v => v.Chapter).ThenBy(v => v.Number)
@@ -496,7 +518,24 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
                 [] => Framed(verse),
                 _ => reading,
             };
+            if (parked is not null && reading is not { Count: > 0 })
+            {
+                parks[verse.Id] = Parks(verse);
+            }
+
             before = verse;
+        }
+
+        if (parked is not null)
+        {
+            foreach (var verse in verses)
+            {
+                foreach (var address in AtBothNames(verse.Book, placed[verse.Id]).Skip(1)
+                             .Where(address => parks.TryGetValue(verse.Id, out var parkedAt) && parkedAt.Contains(address)))
+                {
+                    parked(verse.Id, address);
+                }
+            }
         }
 
         return verses

@@ -1,0 +1,49 @@
+# product    Essenthos/texts/UST/corrections.tsv
+# producer   by hand
+# kinds      drop: the word reading before goes; a verse whose every word goes is not printed
+own	kind	before	after	why
+38.1:17.1	drop	Therefore	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.2	drop	this	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.3	drop	is	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.4	drop	what	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.5	drop	Yahweh	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.6	drop	says	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.7	drop	“I	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.8	drop	have	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.9	drop	once	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.10	drop	again	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.11	drop	chosen	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.12	drop	to	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.13	drop	show	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.14	drop	mercy	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.15	drop	to	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.16	drop	the	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.17	drop	people	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.18	drop	of	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.19	drop	Jerusalem	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.20	drop	They	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.21	drop	will	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.22	drop	rebuild	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.23	drop	my	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.24	drop	temple	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.25	drop	there	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.26	drop	solemnly	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.27	drop	declares	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.28	drop	Yahweh	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.29	drop	the	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.30	drop	commander	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.31	drop	of	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.32	drop	the	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.33	drop	heavenly	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.34	drop	armies	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.35	drop	“and	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.36	drop	workers	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.37	drop	will	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.38	drop	stretch	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.39	drop	out	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.40	drop	a	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.41	drop	measuring	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.42	drop	line	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.43	drop	to	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.44	drop	rebuild	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice
+38.1:17.45	drop	Jerusalem	\N	unfoldingWord's en_ust (38-ZEC.usfm) prints 1:16's sentence again as 1:17, word for word, and has no rendering of 1:17 of its own; the verse is left out rather than show 1:16 twice

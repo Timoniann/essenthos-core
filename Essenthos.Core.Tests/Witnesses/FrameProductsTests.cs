@@ -1,4 +1,5 @@
 using Essenthos.Core.Conversion;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Products;
 using FluentAssertions;
@@ -87,6 +88,50 @@ public sealed class FrameProductsTests : IDisposable
         File.AppendAllText(Path.Combine(_root, "Essenthos", "versification", "titled-psalms.tsv"), "19\t1\n");
 
         Build().Outcome.Written.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ATextThatPrintsItsPsalmTitlesInTheFirstVerseStandsThereAtTheTitle()
+    {
+        var store = new ProductStore(_root);
+        using (var titles = store.Create(TextTitle.ProductOf(Slug), ProductKind.Machine, TextTitle.Schema, "test", []))
+        {
+            titles.WriteAll([]);
+        }
+
+        store.Save();
+
+        Rows().Should().NotContain(row => row.Own == VerseKey.Parse("19.3:1"));
+
+        File.AppendAllText(Path.Combine(_root, "Essenthos", "versification", "first-verse-titles.tsv"), $"{Slug}\tread\n");
+
+        Rows().Should().ContainSingle(row => row.Own == VerseKey.Parse("19.3:1")).Which.Canonical
+            .Should().Equal(VerseKey.Parse("19.3:1"), VerseKey.Parse("19.3:0"));
+    }
+
+    /// <summary>
+    /// The data places the Septuagint's Jeremiah 33:14 at the Hebrew's 26:14, which it prints, and in the passage about the
+    /// Hebrew's 33:14-26, which the Septuagint leaves empty, at 33:14: the verse parks there.
+    /// </summary>
+    [Fact]
+    public void AVerseTheDataAlsoPlacesAtAnEmptyVerseParksThere()
+    {
+        var tvtms = Path.Combine(_root, "Versification", "parks.txt");
+        File.WriteAllText(tvtms, "#DataStart(Expanded)\nGreek\tJer.33:14\tJer.26:14\tRenumber verse*\n\n"
+                                 + "Greek\tJer.33:14\tJer.33:14\tIfEmpty verse\nGreek\tJer.33:15\tJer.33:15\tIfEmpty verse\n#DataEnd\n");
+
+        var frame = TvtmsReader.Read(tvtms, VersificationData.Of(_root)).Frame(Versification.Septuagint);
+
+        frame.Resolve(24, 33, 14).Should().Equal(new CanonicalReference(24, 26, 14), new CanonicalReference(24, 33, 14));
+        frame.Parks(24, 33, 14, lettered: false, string.Empty).Should().Equal(new CanonicalReference(24, 33, 14));
+        frame.Parks(24, 33, 15, lettered: false, string.Empty).Should().BeEmpty("an empty verse placed nowhere else is where it says it is");
+    }
+
+    private List<FrameRow> Rows()
+    {
+        var store = Build().Store;
+        using var reader = store.Open(FrameFile.Product(Slug), FrameRow.Schema);
+        return reader.ReadAll();
     }
 
     public void Dispose()

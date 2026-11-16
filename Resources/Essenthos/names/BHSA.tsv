@@ -4570,7 +4570,7 @@ own	record	role	method	confidence	source	note
 2.32:26.3	moses	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H4872, which BHSA marks pers
 2.32:26.12	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 2.32:26.18	levites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H1121, sons of H3878, so the people of that name
-2.32:26.19	levi	name	rule-based	0.8122499999999999	Essenthos, the name the same word carries in another edition of the text	frozen 2026-11: through SP 2.32:26.19, linked by lexical
+2.32:26.19	levi	name	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H3878, after sons of, so the man the tribe is named after
 2.32:27.6	yhvh	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H3068, which BHSA marks pers
 2.32:27.8	israelites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-09-16 that a name a tribe shares with its ancestor names the ancestor until the sentence is read, Israel standing alone outside Genesis being the nation	H3478, Israel standing alone outside Genesis, so the nation
 2.32:28.3	levites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H1121, sons of H3878, so the people of that name
@@ -6446,7 +6446,7 @@ own	record	role	method	confidence	source	note
 4.7:23.18	nethanel	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H5417, read as nethanel with high confidence: Same offering of Nethaneel son of Zuar recapped.
 4.7:23.20	zuar	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H6686, which BHSA marks pers
 4.7:24.8	zebulonites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H1121, sons of H2074, so the people of that name
-4.7:24.9	zebulun	name	rule-based	0.8122499999999999	Essenthos, the name the same word carries in another edition of the text	frozen 2026-11: through SP 4.7:24.8, linked by lexical
+4.7:24.9	zebulun	name	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H2074, after sons of, so the man the tribe is named after
 4.7:24.10	eliab	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H446, read as eliab with high confidence: Eliab son of Helon, prince of Zebulun, offering list.
 4.7:24.12	helon	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H2497, which BHSA marks pers
 4.7:29.18	eliab	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H446, read as eliab with high confidence: Eliab son of Helon, Zebulun's offering, same series.
@@ -7109,7 +7109,7 @@ own	record	role	method	confidence	source	note
 4.16:8.3	moses	name	strong-number	0.99	BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name	H4872, which BHSA marks pers
 4.16:8.5	korah-3	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H7141, read as korah-3 with high confidence: Moses addressing Korah the Levite rebel, same narrative.
 4.16:8.8	levites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H1121, sons of H3878, so the people of that name
-4.16:8.9	levi	name	model-reading	0.99	a reading of the verse by claude-sonnet-5, prompt sense-1, run to 2026-09-06	H3878, read as levi with high confidence: Sons of Levi, same Korah narrative context.
+4.16:8.9	levi	name	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the name is the man and 'sons' the people	H3878, after sons of, so the man the tribe is named after
 4.16:9.7	israelites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-09-16 that a name a tribe shares with its ancestor names the ancestor until the sentence is read, Israel standing alone outside Genesis being the nation	H3478, Israel standing alone outside Genesis, so the nation
 4.16:9.11	israelites	people	rule-based	0.9	Essenthos, on the project owner's ruling of 2026-09-16 that a name a tribe shares with its ancestor names the ancestor until the sentence is read, Israel standing alone outside Genesis being the nation	H3478, Israel standing alone outside Genesis, so the nation
 4.16:9.20	tabernacle	thing	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	H4908 at Numbers 16:9, which the record file reads as Tabernacle

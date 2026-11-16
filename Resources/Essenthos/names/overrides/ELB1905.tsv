@@ -6,3 +6,6 @@ own	record	action	base_record	role	source	note
 42.23:6.5	galilee	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
 44.20:4.32	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
 44.20:15.29	trogyllium	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
+11.4:12.15	zarethan	suppress	\N	name	Essenthos, on the project owner's word of 2026-11-16 (PRB-1149)	'liegt': the word does not render the word the ruling names; the link carried the record onto a neighbour
+15.2:30.4	magbish-2	suppress	\N	name	Essenthos, on the project owner's word of 2026-11-16 (PRB-1149)	'hundertsechsundfünfzig': the word does not render the word the ruling names; the link carried the record onto a neighbour
+44.27:16.11	cauda	suppress	\N	name	Essenthos, on the project owner's word of 2026-11-16 (PRB-1149)	'hinliefen': the word does not render the word the ruling names; the link carried the record onto a neighbour

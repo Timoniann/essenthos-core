@@ -23,6 +23,12 @@ internal sealed record TvtmsRow(
 {
     /// <summary>The tests as the data writes them, which a frame file names when they decided a passage.</summary>
     public string Written { get; init; } = string.Empty;
+
+    /// <summary>
+    /// The data says the verse holds no text in these schemes (its <c>IfEmpty</c> rows): the standard
+    /// address is there only to be accounted for, and its material is not in such an edition.
+    /// </summary>
+    public bool Empty { get; init; }
 }
 
 /// <summary>
@@ -62,6 +68,10 @@ internal static class TvtmsReader
     private const string HeadingRow = "SourceType";
 
     private const int TestsColumn = 8;
+
+    private const int ActionColumn = 3;
+
+    private const string EmptyAction = "IfEmpty";
 
     /// <summary>
     /// The rules of TVTMS at <paramref name="path"/>, with this project's own from the versification files
@@ -190,6 +200,7 @@ internal static class TvtmsReader
             VersificationTest.ParseAll(columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty))
         {
             Written = columns.Length > TestsColumn ? columns[TestsColumn].Trim() : string.Empty,
+            Empty = columns.Length > ActionColumn && columns[ActionColumn].Trim().StartsWith(EmptyAction, StringComparison.Ordinal),
         };
         return true;
     }
@@ -478,6 +489,8 @@ internal sealed class VersificationRules(
         Func<IReadOnlyList<TvtmsRow>, IEnumerable<TvtmsRow>> choose)
     {
         var rules = new Dictionary<CanonicalReference, IReadOnlyList<CanonicalReference>>(6_000);
+        var empty = new Dictionary<CanonicalReference, HashSet<CanonicalReference>>();
+        var held = new Dictionary<CanonicalReference, HashSet<CanonicalReference>>();
 
         foreach (var row in blocks.SelectMany(choose).Where(row => row.Sources.Count > 0 && row.Standards.Count > 0))
         {
@@ -485,6 +498,8 @@ internal sealed class VersificationRules(
             // The parts together are what the verse spans, so they accumulate rather than replace.
             foreach (var source in row.Sources.Where(source => BookCodes.Places(tradition, source.Book)))
             {
+                var kept = row.Empty ? empty : held;
+                (kept.TryGetValue(source, out var standards) ? standards : kept[source] = []).UnionWith(row.Standards);
                 if (!rules.TryGetValue(source, out var existing))
                 {
                     rules[source] = row.Standards;
@@ -497,6 +512,21 @@ internal sealed class VersificationRules(
             }
         }
 
-        return new VersificationFrame(tradition, rules, printed);
+        // A verse one passage places at what it prints, and an empty verse's passage at an address it only accounts for,
+        // holds none of that address's material: it parks there.
+        var parks = new Dictionary<CanonicalReference, IReadOnlySet<CanonicalReference>>();
+        foreach (var (source, standards) in empty)
+        {
+            if (held.TryGetValue(source, out var holds))
+            {
+                var parked = standards.Where(standard => !holds.Contains(standard) && standard != rules[source][0]).ToHashSet();
+                if (parked.Count > 0)
+                {
+                    parks[source] = parked;
+                }
+            }
+        }
+
+        return new VersificationFrame(tradition, rules, printed, parks);
     }
 }

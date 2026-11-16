@@ -66,7 +66,10 @@ builder.Services.AddSingleton<ILanguagePack, OriginalLanguagePack>();
 builder.Services.AddSingleton<LanguagePackRegistry>();
 builder.Services.AddScoped<EvidentiaPipeline>();
 builder.Services.AddScoped<EvidentiaCorpusPreviewLoader>();
-builder.Services.AddScoped<EvidentiaRunner>();
+builder.Services.AddScoped(services => new EvidentiaRunner(
+    services.GetRequiredService<AppDbContext>(), services.GetRequiredService<EvidentiaCorpusPreviewLoader>(),
+    services.GetRequiredService<IServiceScopeFactory>(),
+    EvidentiaLedger.Folder(ResourcePaths.Read(builder.Configuration, builder.Environment.ContentRootPath))));
 builder.Services.AddScoped<EvidentiaReviewQueue>();
 builder.Services.AddScoped<EvidentiaLedger>();
 builder.Services.AddScoped<EvidentiaProblemVerses>();
