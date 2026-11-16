@@ -1,5 +1,5 @@
 # producer   by hand: 22 places Strong's headwords wrote under the King James spelling beside the gazetteer's record of the same place, folded into the gazetteer's records (PRB-1418), applied by forge owner-rows
-# by         Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; each of these 22 is the gazetteer's record of a place whose word stood on a record Strong's headword made under the King James spelling, at the same verse
+# by         Essenthos: the places with verses and no word read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; each of these 22 is the gazetteer's record of a place whose word stood on a record Strong's headword made under the King James spelling, at the same verse
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1418	names/BHSA	remove	7.1:31.6	accho	\N	\N	\N	\N	7.1:31.6 names Accho, a city of Asher whose people Asher did not drive out (JDG 1:31), the gazetteer's Acco: accho folded into acco

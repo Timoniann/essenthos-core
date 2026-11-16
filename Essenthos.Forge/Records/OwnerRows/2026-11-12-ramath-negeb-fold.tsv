@@ -1,5 +1,5 @@
 # producer   by hand: Ramath of the south, written three times (the gazetteer's Ramah of JOS 19:8 and Ramoth of 1SA 30:27, and Strong's headword H7418), folded into one record on the owner's word (PRB-1623), applied by forge owner-rows
-# by         Essenthos: Ramath of the south (JOS 19:8) and south Ramoth (1SA 30:27) read as one town by claude-opus-5-5 on 2026-11-12, folded on the project owner's word of 2026-11-12 (PRB-1623)
+# by         Essenthos: Ramath of the south (JOS 19:8) and south Ramoth (1SA 30:27) read as one town by claude-opus-5-5 on 2026-11-12, folded on the project owner's word of 2026-11-12
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1623	names/BHSA	remove	9.30:27.9	ramoth-2	\N	\N	\N	\N	9.30:27.9 names Ramath of the south, the town of JOS 19:8 and 1SA 30:27: ramoth-2 folded into ramah-6

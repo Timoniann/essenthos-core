@@ -3,7 +3,7 @@
 # producer   by hand
 # edited     by hand: add, suppress or differs on one word of this text
 own	record	action	base_record	role	source	note
-11.15:1.5	jeroboam	differs	rehoboam	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-11-04 (TSK-1448)	Swete prints Ἀβιοὺ υἱὸς Ἰεροβοάμ in 1 Kgs 15:1 where Brenton's Greek reads Ῥοβοάμ: the text names Jeroboam, its base Rehoboam
+11.15:1.5	jeroboam	differs	rehoboam	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-11-04	Swete prints Ἀβιοὺ υἱὸς Ἰεροβοάμ in 1 Kgs 15:1 where Brenton's Greek reads Ῥοβοάμ: the text names Jeroboam, its base Rehoboam
 17.6:13.52	haman	add	\N	name	Essenthos, the names in the Greek Esther no word carried, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	Ἀμὰν, Haman; the verse's second mention, which Brenton's Greek does not print
 17.8:18a.9	susa	add	\N	name	Essenthos, the names in the Greek Esther no word carried, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	Σούσων, the gates of Susa
 17.10:1.3	mordecai-2	add	\N	name	Essenthos, the names in the Greek Esther no word carried, each read against its verse by claude-opus-5-5 on the project owner's instruction, 2026-11-11	Μαρδοχαῖς, Mordecai

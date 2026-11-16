@@ -1,5 +1,5 @@
 # producer   by hand: Zereda, a record Strong's headword H6868 made over two towns, split between the gazetteer's two Zeredahs and folded into Zeredah of Ephraim (PRB-1418), applied by forge owner-rows
-# by         Essenthos: Zereda, the record Strong's headword H6868 made, read against its two verses by claude-opus-5-5 on 2026-11-12 (PRB-1418): Jeroboam's home in Ephraim (1KI 11:26) is the gazetteer's Zeredah, and the Zeredathah of the Jordan valley (2CH 4:17) is the gazetteer's Zeredah held as another name for Zarethan
+# by         Essenthos: Zereda, the record Strong's headword H6868 made, read against its two verses by claude-opus-5-5 on 2026-11-12: Jeroboam's home in Ephraim (1KI 11:26) is the gazetteer's Zeredah, and the Zeredathah of the Jordan valley (2CH 4:17) is the gazetteer's Zeredah held as another name for Zarethan
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1418	names/BHSA	remove	14.4:17.16	zereda	\N	\N	\N	\N	14.4:17.16 is Zeredathah of the Jordan valley, where Solomon cast the bronze between Succoth and it (2CH 4:17, which 1KI 7:46 calls Zarthan), the gazetteer's Zeredah held as another name for Zarethan; not Zeredah of Ephraim, Jeroboam's home (1KI 11:26)

@@ -1,5 +1,5 @@
 # producer   by hand: two gazetteer records of a town written twice, folded on the owner's word to put the Ramahs right (PRB-1425): the Ramah of NEH 11:33 into Ramah of Benjamin, the Ramah of 2KI 8:29 and 2CH 22:6 into Ramoth-gilead; applied by forge owner-rows
-# by         Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13 to check the Ramahs again and put them right (PRB-1425)
+# by         Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1425	names/BHSA	remove	16.11:33.2	ramah-7	\N	\N	\N	\N	16.11:33.2 names Ramah of Benjamin, a town of the children of Benjamin in NEH 11:33: ramah-7 folded into ramah

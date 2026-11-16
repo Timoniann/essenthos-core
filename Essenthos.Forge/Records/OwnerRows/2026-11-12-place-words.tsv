@@ -1,5 +1,5 @@
 # producer   by hand: place words that stood on another record moved to the gazetteer's record the verse names: Laishah, Uzal, Avva, Rimmono, Magadan, Arimathea and Pelusium (PRB-1418), applied by forge owner-rows
-# by         Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
+# by         Essenthos: the places with verses and no word read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1418	names/BHSA	remove	23.10:30.6	laish-2	\N	\N	\N	\N	23.10:30.6 is Laishah, the village by Gallim and Anathoth on the Assyrian's road to Jerusalem (ISA 10:30), the gazetteer's Laishah; not Laish in the far north that the Danites took and called Dan (JDG 18)

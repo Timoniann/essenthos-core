@@ -28,7 +28,9 @@ namespace Essenthos.Core.Records;
 /// reads as the people beside a word naming the people in the same verse of the same text (<see cref="Annotations.SonsOf"/>),
 /// or, for a name carried from another text, of the verse of the word it was carried from: a translation whose word for
 /// <em>sons</em> the projection did not pair carries the man alone, and the ruling was read beside the people where it
-/// was stated;</item>
+/// was stated. A man the ruling names with no people beside him in his text's verse also stands apart where another
+/// text names his own people (the people whose origin he is) under the ruling at the same canonical verse: a settled
+/// Vulgate or Ge'ez row names the man on the name and nothing on its word for <em>sons</em>;</item>
 /// <item>for a record no other verse lists, the verses its relationships were read from (<see cref="RelationshipVerseLoader"/>),
 /// naming it where a word of the verse carries it in any text;</item>
 /// <item>every verse the gazetteer lists for the record its row is filed under (<c>external/openbible/references</c>), under
@@ -45,7 +47,7 @@ internal static class RecordVerses
 
     public const string Producer = "forge records-verses";
 
-    public const string Version = "5";
+    public const string Version = "6";
 
     public const string VersionNote = "verses-version";
 
@@ -119,6 +121,10 @@ internal static class RecordVerses
     {
         var records = Records(store);
         var ids = records.Select((r, i) => (r.Slug, i)).ToDictionary(p => p.Slug, p => p.i, StringComparer.Ordinal);
+        var peoplesOf = records.Select((r, i) => (r, i))
+            .Where(p => p.r.Kind == EntityKind.People && p.r.Origin is { } origin && ids.ContainsKey(origin))
+            .GroupBy(p => ids[p.r.Origin!], p => p.i)
+            .ToDictionary(g => g.Key, g => g.ToArray());
         var bearers = Read(store, "records/facts/titles")
             .Where(r => ids.ContainsKey(r[0]!) && ids.ContainsKey(r[1]!))
             .Select(r => (ids[r[0]!], ids[r[1]!]))
@@ -137,11 +143,13 @@ internal static class RecordVerses
         var apart = new ConcurrentDictionary<int, byte>();
         var spanning = new ConcurrentBag<(int Record, IReadOnlyList<VerseKey> Addresses, bool Apart)>();
 
-        // Each text's own verses where the ruling names a people, and the men carried under the ruling into a verse of
-        // another text where it names none, with the word they were carried from: they stand apart where that word's verse
-        // holds the people, settled once every text is read.
+        // Each text's own verses where the ruling names a people, every canonical verse where it names each people, and the
+        // men the ruling names in a verse of a text where it names no people, with the word they were carried from if
+        // they were: they stand apart where that word's verse holds a people, or where any text names their own people
+        // at their verse, settled once every text is read.
         var peopleVersesOf = new ConcurrentDictionary<string, HashSet<VerseKey>>(StringComparer.Ordinal);
-        var carriedAlone = new ConcurrentBag<(int Record, IReadOnlyList<VerseKey> Addresses, string Text, VerseKey Verse)>();
+        var peopleAt = new ConcurrentDictionary<(int People, VerseKey Verse), byte>();
+        var standingAlone = new ConcurrentBag<(int Record, IReadOnlyList<VerseKey> Addresses, (string Text, VerseKey Verse)? From)>();
         var frames = new ConcurrentDictionary<string, Dictionary<VerseKey, IReadOnlyList<VerseKey>>>(StringComparer.Ordinal);
         IReadOnlyList<VerseKey> AddressesIn(string text, VerseKey own) =>
             frames.GetOrAdd(text, t => Frame(store, t)).TryGetValue(own, out var addresses) ? addresses : [FrameFile.AtOwn(own)];
@@ -238,10 +246,17 @@ internal static class RecordVerses
                 .ToList();
             var peopleVerses = ruled.Where(r => r.Kind == EntityKind.People).Select(r => keys[(int)r.Word].Verse).ToHashSet();
             peopleVersesOf[text] = peopleVerses;
+            foreach (var people in ruled.Where(r => r.Kind == EntityKind.People))
+            {
+                foreach (var address in Addresses(keys[(int)people.Word].Verse))
+                {
+                    peopleAt.TryAdd((people.EntityId, address), 0);
+                }
+            }
+
             var standsApart = ruled.Where(r => r.Kind == EntityKind.Person && peopleVerses.Contains(keys[(int)r.Word].Verse))
                 .Select(r => (r.Word, r.EntityId)).ToHashSet();
-            var alone = ruled.Where(r => r.Kind == EntityKind.Person && !peopleVerses.Contains(keys[(int)r.Word].Verse)
-                    && carriedFrom.ContainsKey((r.Word, r.EntityId)))
+            var alone = ruled.Where(r => r.Kind == EntityKind.Person && !peopleVerses.Contains(keys[(int)r.Word].Verse))
                 .Select(r => (r.Word, r.EntityId)).ToHashSet();
             foreach (var (_, record) in standsApart)
             {
@@ -255,12 +270,12 @@ internal static class RecordVerses
                 {
                     IReadOnlyList<VerseKey> addresses =
                         titles.TryGetValue((word, answer.EntityId), out var title) ? [.. verseAddresses, title] : verseAddresses;
-                    // A man carried alone counts as apart until the verse he was carried from is read.
+                    // A man standing alone counts as apart until every text is read.
                     var isApart = standsApart.Contains((word, answer.EntityId));
                     if (alone.Contains((word, answer.EntityId)))
                     {
-                        var (fromText, fromVerse) = carriedFrom[(word, answer.EntityId)];
-                        carriedAlone.Add((answer.EntityId, addresses, fromText, fromVerse));
+                        standingAlone.Add((answer.EntityId, addresses,
+                            carriedFrom.TryGetValue((word, answer.EntityId), out var from) ? from : null));
                         isApart = true;
                     }
 
@@ -276,9 +291,14 @@ internal static class RecordVerses
             }
         });
 
-        foreach (var (id, addresses, fromText, fromVerse) in carriedAlone)
+        bool HisPeopleAt(int man, IReadOnlyList<VerseKey> addresses) =>
+            peoplesOf.TryGetValue(man, out var peoples)
+            && addresses.Any(address => peoples.Any(people => peopleAt.ContainsKey((people, address))));
+
+        foreach (var (id, addresses, from) in standingAlone)
         {
-            if (peopleVersesOf.TryGetValue(fromText, out var verses) && verses.Contains(fromVerse))
+            if ((from is { } carried && peopleVersesOf.TryGetValue(carried.Text, out var verses) && verses.Contains(carried.Verse))
+                || HisPeopleAt(id, addresses))
             {
                 apart.TryAdd(id, 0);
             }
@@ -409,10 +429,11 @@ internal static class RecordVerses
         return frame;
     }
 
-    private sealed record Record(string Slug, EntityKind Kind, string Name);
+    /// <param name="Origin">The man a people came from.</param>
+    private sealed record Record(string Slug, EntityKind Kind, string Name, string? Origin);
 
     private static List<Record> Records(ProductStore store) =>
-        [.. Read(store, "records/records").Select(r => new Record(r[0]!, EnumSpelling.ToEntityKind(r[1]!), r[4]!))];
+        [.. Read(store, "records/records").Select(r => new Record(r[0]!, EnumSpelling.ToEntityKind(r[1]!), r[4]!, r[9]))];
 
     private static List<string?[]> Read(ProductStore store, string product)
     {
