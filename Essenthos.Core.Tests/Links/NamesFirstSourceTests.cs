@@ -68,7 +68,7 @@ public sealed class NamesFirstSourceTests : IDisposable
 
     /// <summary>
     /// A creature or a god named by a proper noun is placed like a person (PRB-1769): the Ohienko Bible's «Рагава» of Psalm
-    /// 89:10 had no link to BHSA's רַהַב. A creature the original names by a common noun is weighed and never placed.
+    /// 89:10 had no link to BHSA's רַהַב. A creature the original names by a common noun is no name of the verse and is not placed.
     /// </summary>
     [Fact]
     public void A_being_named_by_a_proper_noun_is_placed_and_one_named_by_a_common_noun_is_not()
@@ -88,7 +88,7 @@ public sealed class NamesFirstSourceTests : IDisposable
         Settled(store, ("19.22:21.1", "reem"));
         Consensus(store, "DRA", ("19.22:21.2", "reem"));
 
-        Write(store).Should().BeEmpty("a common noun is weighed and never placed");
+        Write(store).Should().BeEmpty("a creature named by a common noun is no name of the verse");
     }
 
     [Fact]

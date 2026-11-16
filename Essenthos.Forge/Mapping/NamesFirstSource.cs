@@ -279,14 +279,15 @@ internal sealed class NamesFirstSource : IPairSource
                 Proper(to, (int)word), creatures.TryGetValue(word, out var creature) ? records.Families.Of(creature) : null);
         }
 
-        // A word that names a god or a creature and nobody else is placed like a person's name (PRB-1769): the Ohienko
-        // Bible's «Рагава» of Psalm 89:10 was linked to nothing, though BHSA's רַהַב there is a proper noun and names the
-        // creature. Only a proper noun is placed (NamePlacement leaves a common noun weighed and never placed), so a creature
-        // a text calls by a common noun, the eagle or the unicorn, is left to the other methods.
-        foreach (var (word, named) in creatures.Where(entry => !byWord.ContainsKey(entry.Key)))
+        // A word that names a god or a creature by a proper noun, and nobody else, is placed like a person's name (PRB-1769):
+        // the Ohienko Bible's «Рагава» of Psalm 89:10 was linked to nothing, though BHSA's רַהַב there is a proper noun and
+        // names the creature. A creature the original calls by a common noun (the eagle, the lion, the unicorn) is not a
+        // name of the verse at all: weighed as one, it would make a verse that names one person name two, and change how
+        // that person's name is learned and placed.
+        foreach (var (word, named) in creatures.Where(entry => !byWord.ContainsKey(entry.Key) && Proper(to, (int)entry.Key)))
         {
             named.Sort();
-            originals[word] = new Original(records.Families.Of(named), EntityKind.Being, Proper(to, (int)word));
+            originals[word] = new Original(records.Families.Of(named), EntityKind.Being, Proper: true);
         }
 
         return originals;
