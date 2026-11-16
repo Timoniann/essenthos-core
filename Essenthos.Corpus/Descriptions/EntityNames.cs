@@ -232,6 +232,7 @@ internal static class EntityNames
         AppDbContext db, IQueryable<Entity> entities, string q, CancellationToken cancellationToken)
     {
         var familiar = Familiar(q);
+        var leading = Leading(q);
         var opening = FamiliarOpening(q);
         var hits = Typed(q)
             .Select(one => Tagged(Named(db, one, titles: false), NameHit.Named)
@@ -239,6 +240,7 @@ internal static class EntityNames
                 .Concat(Tagged(CalledExactly(db, one), NameHit.Called)))
             .Aggregate((all, one) => all.Concat(one))
             .Concat(Tagged(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id), NameHit.Familiar))
+            .Concat(Tagged(db.Entities.Where(e => leading.Contains(e.Slug)).Select(e => e.Id), NameHit.Leading))
             .Concat(Tagged(db.Entities.Where(e => opening.Contains(e.Slug)).Select(e => e.Id), NameHit.Named));
 
         var found = await hits
@@ -256,9 +258,10 @@ internal static class EntityNames
         return new NameMatches(
             q,
             ids,
-            [.. found.Where(hit => hit.How is NameHit.Called or NameHit.Familiar).Select(hit => hit.Id).Distinct()],
+            [.. found.Where(hit => hit.How is NameHit.Called or NameHit.Familiar or NameHit.Leading).Select(hit => hit.Id).Distinct()],
             [.. found.Where(hit => hit.How == NameHit.Named).Select(hit => hit.Id).Distinct()],
-            false);
+            false,
+            [.. found.Where(hit => hit.How == NameHit.Leading).Select(hit => hit.Id).Distinct()]);
     }
 
     private static IQueryable<NameHit> Tagged(IQueryable<int> ids, int how) =>
@@ -330,6 +333,9 @@ internal static class EntityNames
 
     private static List<string> Familiar(string q) =>
         [.. FamiliarNames.Of(q).Concat(TitleWords.Without(q) is { } name ? FamiliarNames.Of(name) : [])];
+
+    private static List<string> Leading(string q) =>
+        [.. FamiliarNames.Leading(q).Concat(TitleWords.Without(q) is { } name ? FamiliarNames.Leading(name) : [])];
 
     private static List<string> FamiliarOpening(string q) =>
         [.. FamiliarNames.Opening(q).Concat(TitleWords.Without(q) is { } name ? FamiliarNames.Opening(name) : []).Distinct()];
@@ -449,17 +455,20 @@ internal static class EntityNames
         var openingName = LikePatterns.StartingWith(name);
         var calledThat = found.Called;
         var named = found.Named;
+        var leading = found.Leading ?? [];
 
         return entities.OrderBy(l =>
-            EF.Functions.ILike(l.Shown, exactly) || EF.Functions.ILike(l.Shown, exactName)
-            || calledThat.Contains(l.Entity.Id)
+            leading.Contains(l.Entity.Id)
                 ? 0
-                : EF.Functions.ILike(l.Shown, opening) || EF.Functions.ILike(l.Shown, openingName)
-                  || EF.Functions.ILike(l.Entity.Name, opening) || EF.Functions.ILike(l.Entity.Name, openingName)
+                : EF.Functions.ILike(l.Shown, exactly) || EF.Functions.ILike(l.Shown, exactName)
+                  || calledThat.Contains(l.Entity.Id)
                     ? 1
-                    : named.Contains(l.Entity.Id)
+                    : EF.Functions.ILike(l.Shown, opening) || EF.Functions.ILike(l.Shown, openingName)
+                      || EF.Functions.ILike(l.Entity.Name, opening) || EF.Functions.ILike(l.Entity.Name, openingName)
                         ? 2
-                        : 3);
+                        : named.Contains(l.Entity.Id)
+                            ? 3
+                            : 4);
     }
 
     /// <summary>The entities one of whose names is exactly what was typed, in any language or text.</summary>
@@ -616,7 +625,8 @@ internal static class EntityNames
 /// <param name="Called">Those among them called exactly what was typed, or known by it.</param>
 /// <param name="Named">Those among them a name of which, not only a title, holds it.</param>
 /// <param name="Near">Whether nothing is called that, and these are spelled near it.</param>
-internal sealed record NameMatches(string Query, List<int> Ids, int[] Called, int[] Named, bool Near);
+/// <param name="Leading">Those the name leads to before every other called so (<see cref="FamiliarNames.Leading"/>).</param>
+internal sealed record NameMatches(string Query, List<int> Ids, int[] Called, int[] Named, bool Near, int[]? Leading = null);
 
 /// <summary>One entity a search found, and by what.</summary>
 internal sealed class NameHit
@@ -625,6 +635,7 @@ internal sealed class NameHit
     public const int Titled = 1;
     public const int Called = 2;
     public const int Familiar = 3;
+    public const int Leading = 4;
 
     public int Id { get; init; }
 

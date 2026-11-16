@@ -30,6 +30,52 @@ internal static class FamiliarNames
         ["Lebendige Wesen"] = ["cherubim"],
         ["Seres vivientes"] = ["cherubim"],
 
+        // What the Greek translation (the Septuagint) and the Latin call the creatures the Hebrew
+        // names: the unicorn for the re'em, the onocentaur and the lamia for Lilith (Isaiah 34:14),
+        // demons for the se'irim (Isaiah 13:21; the Synodal's leshie, Isaiah 34:14), the sea monster for Rahab (Job 26:12), the basilisk
+        // for the tsepha (Isaiah 11:8), the flying serpents for the saraph (Isaiah 14:29). The dragon
+        // is the tannin's (Exodus 7:10), and leads the others called so (Leading).
+        ["Dragon"] = ["tannin"],
+        ["Dragón"] = ["tannin"],
+        ["Дракон"] = ["tannin"],
+        ["Drache"] = ["tannin"],
+        ["Unicorn"] = ["reem"],
+        ["Єдиноріг"] = ["reem"],
+        ["Единорог"] = ["reem"],
+        ["Unicornio"] = ["reem"],
+        ["Onocentaur"] = ["lilith"],
+        ["Онокентавр"] = ["lilith"],
+        ["Onokentaur"] = ["lilith"],
+        ["Onocentauro"] = ["lilith"],
+        ["Lamia"] = ["lilith"],
+        ["Ламія"] = ["lilith"],
+        ["Ламия"] = ["lilith"],
+        ["Demons"] = ["seirim"],
+        ["Демони"] = ["seirim"],
+        ["Демоны"] = ["seirim"],
+        ["Dämonen"] = ["seirim"],
+        ["Demonios"] = ["seirim"],
+        ["Леший"] = ["seirim"],
+        ["Лешие"] = ["seirim"],
+        ["Лісовик"] = ["seirim"],
+        ["Польовик"] = ["seirim"],
+        ["Satyr"] = ["seirim"],
+        ["Peludo"] = ["seirim"],
+        ["Sea monster"] = ["rahab-sea-monster"],
+        ["Морське чудовисько"] = ["rahab-sea-monster"],
+        ["Морское чудовище"] = ["rahab-sea-monster"],
+        ["Seeungeheuer"] = ["rahab-sea-monster"],
+        ["Monstruo marino"] = ["rahab-sea-monster"],
+        ["Basilisk"] = ["tsepha"],
+        ["Василіск"] = ["tsepha"],
+        ["Василиск"] = ["tsepha"],
+        ["Basilisco"] = ["tsepha"],
+        ["Flying serpent"] = ["saraph-serpents"],
+        ["Летючий змій"] = ["saraph-serpents"],
+        ["Летучий змей"] = ["saraph-serpents"],
+        ["Fliegende Schlange"] = ["saraph-serpents"],
+        ["Serpiente voladora"] = ["saraph-serpents"],
+
         // The modern spellings a Spanish or German name form had before it followed the spelling
         // its main text prints: nothing else holds them any more, and a reader still types them.
         ["Aditajim"] = ["adithaim"],
@@ -157,6 +203,14 @@ internal static class FamiliarNames
         ["Zurisadai"] = ["zurishaddai"],
     };
 
+    /// <summary>
+    /// The familiar names whose record comes before every other one called so: <em>дракон</em> is a
+    /// spelling of Satan in Revelation and of the dragon Daniel killed, but the reader typing it means
+    /// the tannin, the general word.
+    /// </summary>
+    private static readonly HashSet<string> Leads =
+        [.. new[] { "Dragon", "Dragón", "Дракон", "Drache" }.Select(NameFolding.Fold)];
+
     private static readonly IReadOnlyDictionary<string, string[]> ByFolded = Records
         .GroupBy(name => NameFolding.Fold(name.Key))
         .ToDictionary(same => same.Key, same => same.SelectMany(name => name.Value).Distinct().ToArray());
@@ -172,6 +226,10 @@ internal static class FamiliarNames
     /// <summary>The records this name is the familiar form of; empty where it is none.</summary>
     public static IReadOnlyList<string> Of(string typed) =>
         ByFolded.GetValueOrDefault(NameFolding.Fold(typed)) ?? [];
+
+    /// <summary>The records this name leads to before any other called so; empty where it leads nowhere.</summary>
+    public static IReadOnlyList<string> Leading(string typed) =>
+        Leads.Contains(NameFolding.Fold(typed)) ? Of(typed) : [];
 
     /// <summary>
     /// The records a word of whose familiar name opens with what was typed, the rule every other name
