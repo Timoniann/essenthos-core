@@ -221,13 +221,68 @@ public sealed class ReleaseDifferenceTests : IAsyncLifetime
         SchemaChange.Of(before, [.. after.Where(entry => entry != function), function with { Definition = "CREATE FUNCTION public.f() RETURNS void;" }])
             .Refusal.Should().Contain("FUNCTION f() changed");
         SchemaChange.Of(before, before).Change.Should().BeSameAs(SchemaChange.None);
-
-        var churned = SchemaChange.Of(before, after, ["t_a"]).Change!;
-        churned.Whole.Should().BeEquivalentTo(["rec", "t_new", "t_a"]);
-        churned.Dropped.Should().Equal("rec", "t_a", "t_old");
-        churned.Create.Should().Contain("CREATE TABLE public.t_a (");
-        SchemaChange.Referenced(after).Should().BeEquivalentTo(["t_new"]);
     }
+
+    [Fact]
+    public void ATableFilledAgainLosesItsKeysIndexesAndTheForeignKeysToItUntilItsRowsAreIn()
+    {
+        DumpArchive.Entry[] after =
+        [
+            Definition(1, "TABLE", "word", "CREATE TABLE public.word (\n    id bigint NOT NULL,\n    parent_id bigint\n);", 2),
+            Definition(2, "CONSTRAINT", "word pk_word", "ALTER TABLE ONLY public.word\n    ADD CONSTRAINT pk_word PRIMARY KEY (id);"),
+            Definition(3, "INDEX", "ix_word_parent_id", "CREATE INDEX ix_word_parent_id ON public.word USING btree (parent_id);"),
+            Definition(4, "FK CONSTRAINT", "word fk_word_parent", "ALTER TABLE ONLY public.word\n    ADD CONSTRAINT fk_word_parent FOREIGN KEY (parent_id) REFERENCES public.word(id);"),
+            Definition(5, "FK CONSTRAINT", "word fk_word_verse", "ALTER TABLE ONLY public.word\n    ADD CONSTRAINT fk_word_verse FOREIGN KEY (parent_id) REFERENCES public.verse(id);"),
+            Definition(6, "FK CONSTRAINT", "link_word fk_link_word_word", "ALTER TABLE ONLY public.link_word\n    ADD CONSTRAINT fk_link_word_word FOREIGN KEY (word_id) REFERENCES public.word(id);"),
+            Definition(7, "FK CONSTRAINT", "fresh fk_fresh_word", "ALTER TABLE ONLY public.fresh\n    ADD CONSTRAINT fk_fresh_word FOREIGN KEY (word_id) REFERENCES public.word(id);"),
+            Definition(8, "INDEX", "ix_link_word_word_id", "CREATE INDEX ix_link_word_word_id ON public.link_word USING btree (word_id);"),
+            Definition(9, "TRIGGER", "word table_written", "CREATE TRIGGER table_written AFTER INSERT ON public.word FOR EACH STATEMENT EXECUTE FUNCTION public.f();"),
+        ];
+
+        var replacement = SchemaChange.Replace(after, "word", new HashSet<string> { "fresh" });
+
+        replacement.Drop.Should().Be(
+            "ALTER TABLE ONLY public.\"word\" DROP CONSTRAINT fk_word_parent;\n" +
+            "ALTER TABLE ONLY public.\"link_word\" DROP CONSTRAINT fk_link_word_word;\n" +
+            "ALTER TABLE ONLY public.\"word\" DROP CONSTRAINT pk_word;\n" +
+            "DROP INDEX public.ix_word_parent_id;\n" +
+            "TRUNCATE ONLY public.\"word\";\n");
+        replacement.Build.Should().Contain("pk_word PRIMARY KEY").And.Contain("CREATE INDEX ix_word_parent_id")
+            .And.NotContain("ix_link_word_word_id").And.NotContain("TRIGGER").And.NotContain("fk_word_verse");
+        replacement.Foreign.Should().Contain("fk_word_parent").And.Contain("fk_link_word_word")
+            .And.NotContain("fk_fresh_word").And.NotContain("fk_word_verse");
+    }
+
+    [Fact]
+    public async Task ATableMostOfWhoseRowsChangedIsFilledAgainWithItsKeysIndexesAndTheForeignKeysToIt()
+    {
+        await Execute("CREATE INDEX ix_t_word_surface ON t_word (surface); " +
+                      "ALTER TABLE t_pair ADD CONSTRAINT fk_t_pair_t_word FOREIGN KEY (word_id) REFERENCES t_word(id) ON DELETE CASCADE");
+        DumpArchive.Entry[] definitions =
+        [
+            Definition(1, "CONSTRAINT", "t_word t_word_pkey", "ALTER TABLE ONLY public.t_word\n    ADD CONSTRAINT t_word_pkey PRIMARY KEY (id);"),
+            Definition(2, "INDEX", "ix_t_word_surface", "CREATE INDEX ix_t_word_surface ON public.t_word USING btree (surface);"),
+            Definition(3, "FK CONSTRAINT", "t_pair fk_t_pair_t_word",
+                "ALTER TABLE ONLY public.t_pair\n    ADD CONSTRAINT fk_t_pair_t_word FOREIGN KEY (word_id) REFERENCES public.t_word(id) ON DELETE CASCADE;"),
+        ];
+
+        var record = await Make(new Replacing(4, ReleaseDifference.ChurnShare, definitions));
+
+        record.Changed.Select(table => (table.Table, table.Replaced)).Should().BeEquivalentTo(
+            [("corpus_release", false), ("t_word", true), ("t_pair", false)]);
+        (await Apply(record, everyTable: true)).Should().Contain($"{ReleaseDifference.AppliedMark} n");
+        foreach (var table in Tables)
+        {
+            (await Scalar($"SELECT count(*) FROM ((TABLE public.{table} EXCEPT ALL TABLE r_n.{table}) UNION ALL (TABLE r_n.{table} EXCEPT ALL TABLE public.{table})) d"))
+                .Should().Be(0L, $"{table} holds what the release holds");
+        }
+
+        (await Scalar("SELECT count(*) FROM pg_constraint WHERE conname IN ('t_word_pkey', 'fk_t_pair_t_word') AND connamespace = 'public'::regnamespace AND convalidated")).Should().Be(2L);
+        (await Scalar("SELECT count(*) FROM pg_indexes WHERE indexname = 'ix_t_word_surface' AND schemaname = 'public'")).Should().Be(1L);
+    }
+
+    private static DumpArchive.Entry Definition(int id, string kind, string name, string definition, int section = DumpArchive.PostData) =>
+        new(id, kind, "public", name, definition, "", null, section);
 
     [Fact]
     public async Task DifferencesInTheFolderAreTakenAwayOnceTheReleaseIsLive()
@@ -262,14 +317,14 @@ public sealed class ReleaseDifferenceTests : IAsyncLifetime
         read.Should().Throw<InvalidOperationException>().WithMessage("*ByDifference*Copies*");
     }
 
-    private Task<DifferenceRecord> Make() =>
+    private Task<DifferenceRecord> Make(Replacing? replacing = null) =>
         ReleaseDifference.Write(
             new SchemaRows(this), _folder, "b", "n", Tables,
             new Dictionary<string, IReadOnlyList<string>>
             {
                 ["corpus_release"] = ["id"], ["t_word"] = ["id"], ["t_pair"] = ["link_id", "word_id", "side"], ["t_same"] = ["id"],
             },
-            ["SELECT pg_catalog.setval('public.t_word_seq', 42, true);"], parallel: 2, CancellationToken.None);
+            ["SELECT pg_catalog.setval('public.t_word_seq', 42, true);"], parallel: 2, CancellationToken.None, replacing: replacing);
 
     /// <summary>
     /// Runs the script as psql would, over one connection: statements to the line ending in a semicolon,
@@ -292,7 +347,8 @@ public sealed class ReleaseDifferenceTests : IAsyncLifetime
             {
                 skipping = false;
             }
-            else if (skipping || line.StartsWith("--", StringComparison.Ordinal) || line.StartsWith("\\set ", StringComparison.Ordinal))
+            else if (skipping || line.StartsWith("--", StringComparison.Ordinal) || line.StartsWith("\\set ", StringComparison.Ordinal)
+                     || line.StartsWith("\\pset ", StringComparison.Ordinal))
             {
             }
             else if (line == "\\if :{?verify_all}")

@@ -28,16 +28,23 @@ namespace Essenthos.Core.Publishing;
 /// </summary>
 internal sealed class ReleaseDifference(ILogger logger)
 {
-    /// <summary>A difference larger than this share of the release's dump is not used: restoring the dump costs less.</summary>
+    /// <summary>
+    /// A difference larger than this share of the release's dump is not used: restoring the dump costs less.
+    /// Measured on two CPUs and 2 GB, a difference of 49 % of its dump applied and vacuumed in 486 s where the
+    /// dump restored and vacuumed in 535 s, and was half the upload.
+    /// </summary>
     public const double LargestShare = 0.5;
 
     /// <summary>
-    /// A table of at least <see cref="ChurnRows"/> rows that loses more than half of them goes whole, like a table
-    /// whose schema changed, when no other table's foreign key points at it: copying every row into an empty
-    /// table and building its indexes afterwards is what a restore does, and on two CPUs it is many times
-    /// faster than deleting and inserting tens of millions of rows through the indexes one by one.
+    /// A table of at least <see cref="ChurnRows"/> rows that loses <see cref="ChurnShare"/> of them or more is
+    /// filled again rather than patched (<see cref="TableReplacement"/>): copying every row into an empty table
+    /// and building its indexes afterwards is what a restore does, and on two CPUs it is many times faster
+    /// than deleting and inserting millions of rows through the indexes one by one.
     /// </summary>
     public const long ChurnRows = 100_000;
+
+    /// <inheritdoc cref="ChurnRows"/>
+    public const double ChurnShare = 0.25;
 
     /// <summary>The line the script prints after it commits; a script cut short never prints it.</summary>
     public const string AppliedMark = "essenthos-difference-applied";
@@ -102,18 +109,15 @@ internal sealed class ReleaseDifference(ILogger logger)
                 schema.Dropped.Except(schema.Whole).ToList() is { Count: > 0 } gone ? $", and {string.Join(", ", gone)} are dropped" : "");
         }
 
-        var referenced = SchemaChange.Referenced(after.Definitions);
         logger.LogInformation("Comparing {Count} tables of {From} and {Release}, {Parallel} at a time", tables.Count, from, release, parallel);
         var record = await Write(
             new ArchiveRows(new Dictionary<string, DumpArchive> { [from] = before, [release] = after }), folder, from, release, tables,
             after.PrimaryKeys(), after.SequenceValues, parallel, cancellationToken, schema,
-            table => !referenced.Contains(table),
-            churned => SchemaChange.Of(before.Definitions, after.Definitions, churned).Change
-                ?? throw new InvalidDataException("Sending more tables whole made the schema change unpatchable."));
+            new Replacing(ChurnRows, ChurnShare, after.Definitions));
         record = record with { Seconds = Math.Round(clock.Elapsed.TotalSeconds, 1) };
-        if (record.Changed.Where(table => table.Whole && !schema.Whole.Contains(table.Table)).Select(table => table.Table).ToList() is { Count: > 0 } churned)
+        if (record.Changed.Where(table => table.Replaced).Select(table => table.Table).ToList() is { Count: > 0 } churned)
         {
-            logger.LogInformation("Most rows of {Tables} changed, so they go whole too", string.Join(", ", churned));
+            logger.LogInformation("So many rows of {Tables} changed that they are filled again rather than patched", string.Join(", ", churned));
         }
 
         await File.WriteAllTextAsync(Path.Combine(folder, RecordName(release, from)), JsonSerializer.Serialize(record, RecordJson), cancellationToken);
@@ -131,8 +135,7 @@ internal sealed class ReleaseDifference(ILogger logger)
     public static async Task<DifferenceRecord> Write(
         IReleaseRows source, string folder, string from, string release, IReadOnlyList<string> tables,
         IReadOnlyDictionary<string, IReadOnlyList<string>> primaryKeys, IReadOnlyList<string> sequences, int parallel,
-        CancellationToken cancellationToken, SchemaChange? schema = null,
-        Func<string, bool>? mayGoWhole = null, Func<IReadOnlyCollection<string>, SchemaChange>? withWhole = null)
+        CancellationToken cancellationToken, SchemaChange? schema = null, Replacing? replacing = null)
     {
         schema ??= SchemaChange.None;
         var whole = schema.Whole;
@@ -150,15 +153,8 @@ internal sealed class ReleaseDifference(ILogger logger)
                     var prefix = Path.Combine(parts, $"{entry.index:D4}");
                     compared[entry.table] = whole.Contains(entry.table)
                         ? await Whole(source, release, entry.table, prefix, token)
-                        : await Compare(source, from, release, entry.table, key, prefix, entry.index,
-                            withWhole is not null && (mayGoWhole?.Invoke(entry.table) ?? true), token);
+                        : await Compare(source, from, release, entry.table, key, prefix, entry.index, replacing, whole, token);
                 });
-
-            if (withWhole is not null
-                && compared.Values.Where(table => table.Whole && !whole.Contains(table.Table)).Select(table => table.Table).ToList() is { Count: > 0 } churned)
-            {
-                schema = withWhole(churned);
-            }
 
             var file = Path.Combine(folder, FileName(release, from));
             await using (var output = File.Create(file))
@@ -184,13 +180,18 @@ internal sealed class ReleaseDifference(ILogger logger)
                     await WriteMember(output, "-- The keys, indexes and triggers of the tables sent whole, and the foreign keys to them.\n" + schema.Finish, cancellationToken);
                 }
 
+                if (string.Concat(tables.Select(table => compared[table].Foreign)) is { Length: > 0 } foreign)
+                {
+                    await WriteMember(output, "-- The foreign keys to the tables filled again.\n" + foreign, cancellationToken);
+                }
+
                 await WriteMember(output, Closing(release, tables.Select(table => compared[table]).ToList(), sequences), cancellationToken);
             }
 
             await using var stream = File.OpenRead(file);
             var sha = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, cancellationToken));
             var changed = tables.Select(table => compared[table]).Where(table => table.Changed)
-                .Select(table => new TableChange(table.Table, table.Gone, table.Added, table.Sum.Rows, table.Whole)).ToList();
+                .Select(table => new TableChange(table.Table, table.Gone, table.Added, table.Sum.Rows, table.Whole, table.Replaced)).ToList();
             return new DifferenceRecord(
                 release, from, FileName(release, from), sha, new FileInfo(file).Length, DateTimeOffset.UtcNow, 0,
                 changed, tables.Count - changed.Count, tables.Sum(table => compared[table].Sum.Rows),
@@ -202,8 +203,12 @@ internal sealed class ReleaseDifference(ILogger logger)
         }
     }
 
-    /// <summary>A table sent whole: every row of the release, copied into the table the script has just created.</summary>
-    private static async Task<TableComparison> Whole(IReleaseRows source, string release, string table, string partPrefix, CancellationToken cancellationToken)
+    /// <summary>
+    /// A table sent whole: every row of the release, copied into the table the script has just created, or,
+    /// with <paramref name="replacement"/>, into the table it has just emptied, its keys and indexes built after.
+    /// </summary>
+    private static async Task<TableComparison> Whole(
+        IReleaseRows source, string release, string table, string partPrefix, CancellationToken cancellationToken, TableReplacement? replacement = null)
     {
         var part = partPrefix + ".whole";
         var sum = default(TableSum);
@@ -213,11 +218,18 @@ internal sealed class ReleaseDifference(ILogger logger)
         await using (var zip = new GZipStream(file, CompressionLevel.Optimal))
         {
             var opened = false;
-            await source.Rows(release, table, (name, list) => (qualified, columns) = (name, list), line =>
+            await source.Rows(release, table, (name, list) =>
+            {
+                (qualified, columns) = (name, list);
+                if (replacement is not null)
+                {
+                    zip.Write(Encoding.UTF8.GetBytes($"-- {qualified}: filled again\n{replacement.Drop}"));
+                }
+            }, line =>
             {
                 if (!opened)
                 {
-                    zip.Write(Encoding.UTF8.GetBytes($"-- {qualified}: sent whole\nCOPY {qualified} ({columns}) FROM stdin;\n"));
+                    zip.Write(Encoding.UTF8.GetBytes($"{(replacement is null ? $"-- {qualified}: sent whole\n" : "")}COPY {qualified} ({columns}) FROM stdin;\n"));
                     opened = true;
                 }
 
@@ -229,6 +241,11 @@ internal sealed class ReleaseDifference(ILogger logger)
             {
                 zip.Write("\\.\n"u8);
             }
+
+            if (replacement is not null)
+            {
+                zip.Write(Encoding.UTF8.GetBytes(replacement.Build));
+            }
         }
 
         if (qualified is null || columns is null)
@@ -236,13 +253,15 @@ internal sealed class ReleaseDifference(ILogger logger)
             throw new InvalidDataException($"No rows header for table {table} in {release}.");
         }
 
-        return new TableComparison(table, qualified, columns, sum, 0, sum.Rows, sum.Rows > 0 ? [part] : [], Whole: true);
+        return replacement is null
+            ? new TableComparison(table, qualified, columns, sum, 0, sum.Rows, sum.Rows > 0 ? [part] : [], Whole: true)
+            : new TableComparison(table, qualified, columns, sum, 0, sum.Rows, [part], Replaced: true, Foreign: replacement.Foreign);
     }
 
     /// <summary>One table of both releases, and the parts of the script that change it, if any.</summary>
     private static async Task<TableComparison> Compare(
         IReleaseRows source, string from, string release, string table, IReadOnlyList<string>? key, string partPrefix, int index,
-        bool mayGoWhole, CancellationToken cancellationToken)
+        Replacing? replacing, IReadOnlySet<string> whole, CancellationToken cancellationToken)
     {
         var before = new List<UInt128>();
         var after = new List<UInt128>();
@@ -271,9 +290,10 @@ internal sealed class ReleaseDifference(ILogger logger)
 
         var (gone, added) = Unmatched(before, after);
         var comparison = new TableComparison(table, qualified, afterColumns, sum, gone.Values.Sum(), added.Values.Sum(), []);
-        if (mayGoWhole && before.Count >= ChurnRows && comparison.Gone * 2 > before.Count)
+        if (replacing is not null && before.Count >= replacing.Rows && comparison.Gone >= replacing.Share * before.Count)
         {
-            return await Whole(source, release, table, partPrefix, cancellationToken) with { Gone = before.Count };
+            return await Whole(source, release, table, partPrefix, cancellationToken, SchemaChange.Replace(replacing.Definitions, table, whole))
+                with { Gone = comparison.Gone, Added = comparison.Added };
         }
 
         if (comparison.Gone == 0 && comparison.Added == 0)
@@ -438,12 +458,14 @@ internal sealed class ReleaseDifference(ILogger logger)
         $"-- The rows a database holding release {from} loses and gains to hold the release this file is named after.\n" +
         "-- One transaction: psql -X -v ON_ERROR_STOP=1 -f <this, unzipped>, with -v verify_all=1 to sum every table, not only the changed ones.\n" +
         "\\set ON_ERROR_STOP on\n" +
+        "\\pset tuples_only on\n" +
         "SET temp_buffers = '64MB';\n" +
         "BEGIN;\n" +
         "SET LOCAL session_replication_role = replica;\n" +
         "SET LOCAL statement_timeout = 0;\n" +
         "SET LOCAL lock_timeout = 0;\n" +
         string.Concat(Settings.Select(setting => setting + ";\n")) +
+        $"CREATE FUNCTION pg_temp.{Unequal}(message text) RETURNS boolean LANGUAGE plpgsql PARALLEL RESTRICTED AS $$BEGIN RAISE EXCEPTION '%', message; END $$;\n" +
         "DO $$BEGIN IF (SELECT string_agg(name, ',' ORDER BY name) FROM public.corpus_release) IS DISTINCT FROM " +
         $"'{Literal(from)}' THEN RAISE EXCEPTION 'This database holds release %, and the difference starts from release {Literal(from)}', " +
         "coalesce((SELECT string_agg(name, ',' ORDER BY name) FROM public.corpus_release), 'none'); END IF; END $$;\n";
@@ -474,13 +496,23 @@ internal sealed class ReleaseDifference(ILogger logger)
         return text.ToString();
     }
 
-    /// <summary>One table summed and held to the release's sum, on one line.</summary>
+    /// <summary>
+    /// One table summed and held to the release's sum, on one line. A plain query rather than a DO block,
+    /// which PL/pgSQL would run without parallel workers: on two CPUs a parallel scan sums twice as fast.
+    /// </summary>
     public static string Check(string release, TableComparison table) =>
-        "DO $$DECLARE essenthos_rows bigint; essenthos_high numeric; essenthos_low numeric; BEGIN " +
-        TableSum.Sql(table.Qualified, table.Columns, "essenthos_rows, essenthos_high, essenthos_low") + "; " +
-        $"IF essenthos_rows <> {table.Sum.Rows} OR essenthos_high <> {table.Sum.High} OR essenthos_low <> {table.Sum.Low} THEN " +
-        $"RAISE EXCEPTION '{Literal(table.Qualified)} holds % rows summing to % %, and release {Literal(release)} holds {table.Sum.Rows} summing to {table.Sum.High} {table.Sum.Low}', " +
-        "essenthos_rows, essenthos_high, essenthos_low; END IF; END $$;";
+        $"SELECT pg_temp.{Unequal}(format('{Literal(Format(table.Qualified))} holds %s rows summing to %s %s, and release {Literal(Format(release))} " +
+        $"holds {table.Sum.Rows} summing to {table.Sum.High} {table.Sum.Low}', sum.r, sum.h, sum.l)) " +
+        $"FROM ({TableSum.Sql(table.Qualified, table.Columns)}) AS sum(r, h, l) " +
+        $"WHERE sum.r <> {table.Sum.Rows} OR sum.h <> {table.Sum.High} OR sum.l <> {table.Sum.Low};";
+
+    /// <summary>
+    /// The function a check calls with what it found when a table is not as the release holds it. It raises,
+    /// and is parallel restricted so that the scan under it may still use workers.
+    /// </summary>
+    private const string Unequal = "essenthos_unequal";
+
+    private static string Format(string text) => text.Replace("%", "%%");
 
     private static string Literal(string text) => text.Replace("'", "''");
 
@@ -510,15 +542,24 @@ internal interface IReleaseRows
 /// <param name="Sum">The release's rows of the table, summed.</param>
 /// <param name="Parts">The gzip members of the script that change the table, in order.</param>
 /// <param name="Whole">Created by the script and every row copied in, its schema having changed or being new.</param>
+/// <param name="Replaced">Same definition in both, but so many of its rows changed that it is filled again (<see cref="TableReplacement"/>).</param>
+/// <param name="Foreign">For a table filled again, the foreign keys to it, created after every table's rows.</param>
 internal sealed record TableComparison(
-    string Table, string Qualified, string Columns, TableSum Sum, long Gone, long Added, IReadOnlyList<string> Parts, bool Whole = false)
+    string Table, string Qualified, string Columns, TableSum Sum, long Gone, long Added, IReadOnlyList<string> Parts, bool Whole = false,
+    bool Replaced = false, string Foreign = "")
 {
-    public bool Changed => Whole || Gone > 0 || Added > 0;
+    public bool Changed => Whole || Replaced || Gone > 0 || Added > 0;
 }
+
+/// <summary>Which tables a difference fills again rather than patches, and the release's definitions to do it with.</summary>
+/// <param name="Rows">The fewest rows a table has in the base to be filled again.</param>
+/// <param name="Share">The share of those rows it must lose.</param>
+internal sealed record Replacing(long Rows, double Share, IReadOnlyList<DumpArchive.Entry> Definitions);
 
 /// <summary>A table the difference changes: how many rows go, how many come, and how many it holds afterwards.</summary>
 /// <param name="Whole">Created again from the release's schema with every row, rather than patched.</param>
-internal sealed record TableChange(string Table, long Gone, long Added, long Rows, bool Whole = false);
+/// <param name="Replaced">Emptied and filled with every row of the release, its keys and indexes built again.</param>
+internal sealed record TableChange(string Table, long Gone, long Added, long Rows, bool Whole = false, bool Replaced = false);
 
 /// <summary>What <c>forge difference</c> wrote beside the script.</summary>
 /// <param name="Release">The release a database holds once the script has run.</param>
