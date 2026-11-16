@@ -431,9 +431,17 @@ internal static class ChapterReading
         var suffixes = new Dictionary<long, (string Agreement, string? Lemma)>();
         var bySuffix = new HashSet<long>();
         var languages = new Dictionary<long, string>();
+        var agreements = new Dictionary<long, Agreement>();
         foreach (var parsing in parsings)
         {
             var root = parsing.Morphology.RootElement;
+            // A pronoun MACULA Hebrew parses no further is asked of BHSA's parsing (Contradicting); any other word is as parsed here.
+            if (Agreement.Of(root) is var says
+                && (says != default || !(root.TryGetProperty(PartOfSpeech, out var part) && part.GetString() == "pronoun")))
+            {
+                agreements[parsing.WordId] = says;
+            }
+
             if (root.TryGetProperty("class", out var value) && value.GetString() is { } kind)
             {
                 // MACULA Hebrew's demonstratives are adjectives by class and pronouns by part of speech.
@@ -504,7 +512,81 @@ internal static class ChapterReading
             answers.Remove(word);
         }
 
+        foreach (var word in await Contradicting(db, answers, witnesses, direct, agreements, bySuffix, suffixes, forms, cancellationToken))
+        {
+            answers.Remove(word);
+        }
+
         return answers;
+    }
+
+    private static readonly string PersonKind = EnumSpelling.Of(EntityKind.Person);
+
+    /// <summary>
+    /// The translation's words shown a person that their own form says cannot stand for the original's word they render:
+    /// <em>them</em> or <em>ними</em> linked with <c>αὐτήν</c> (Tabitha), <em>her</em> with <c>αὐτοῦ</c> (Jesus), <em>thy</em>
+    /// with <c>μου</c>. An aligner that links a pronoun with the original's pronoun beside it gives it that pronoun's
+    /// person, and the forms are how it is told (<see cref="PronounForms"/>); a form its language's list lacks, or a language
+    /// without a list, is not judged. Only a word standing for persons is: a pronoun for a city follows its own language's
+    /// gender (<em>його</em> for Єрусалим, <c>αὐτῆς</c> in the Greek), and one for a people is plural as often as not.
+    /// </summary>
+    private static async Task<List<long>> Contradicting(
+        AppDbContext db,
+        Dictionary<long, IReadOnlyList<ReferentResponse>> answers,
+        ILookup<long, long> witnesses,
+        Dictionary<long, List<(long Referent, string Source)>> direct,
+        Dictionary<long, Agreement> agreements,
+        HashSet<long> bySuffix,
+        Dictionary<long, (string Agreement, string? Lemma)> suffixes,
+        IReadOnlyDictionary<long, string> forms,
+        CancellationToken cancellationToken)
+    {
+        var persons = answers
+            .Where(pair => forms.ContainsKey(pair.Key) && pair.Value.All(referent => referent.Type == PersonKind))
+            .Select(pair => pair.Key)
+            .ToList();
+        if (persons.Count == 0)
+        {
+            return [];
+        }
+
+        var languages = await db.Words
+            .Where(w => persons.Contains(w.Id))
+            .Select(w => new { w.Id, w.Text!.Language })
+            .ToDictionaryAsync(w => w.Id, w => w.Language, cancellationToken);
+        var said = new Dictionary<long, Agreement>();
+        foreach (var word in persons)
+        {
+            if (languages.TryGetValue(word, out var language) && PronounForms.Of(language, forms[word]) is { } agreement)
+            {
+                said[word] = agreement;
+            }
+        }
+
+        var rendered = said.Keys.ToDictionary(word => word, word => witnesses[word].Where(w => w != word && direct.ContainsKey(w)).Distinct().ToList());
+        var unparsed = rendered.Values.SelectMany(list => list).Where(w => !bySuffix.Contains(w) && !agreements.ContainsKey(w)).Distinct().ToList();
+        var parsed = new Dictionary<long, Agreement>(agreements);
+        if (unparsed.Count > 0)
+        {
+            // BHSA's own parsing says a pronoun's person, number and gender, where MACULA Hebrew's says only that it is one.
+            foreach (var row in await db.Words
+                         .Where(w => unparsed.Contains(w.Id) && w.Morphology != null)
+                         .Select(w => new { w.Id, w.Morphology })
+                         .ToListAsync(cancellationToken))
+            {
+                parsed[row.Id] = Agreement.Of(row.Morphology!.RootElement);
+            }
+        }
+
+        return
+        [
+            .. said.Where(pair => rendered[pair.Key].Any(original =>
+                (bySuffix.Contains(original)
+                    ? suffixes.TryGetValue(original, out var suffix) ? Agreement.OfSuffix(suffix.Agreement) : default
+                    : parsed.GetValueOrDefault(original)) is var theirs
+                && pair.Value.Contradicts(theirs)))
+                .Select(pair => pair.Key),
+        ];
     }
 
     /// <summary>
