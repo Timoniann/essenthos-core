@@ -227,6 +227,79 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
     }
 
     [Fact]
+    public async Task ATieTheListHoldsStaysWhenANewRecordOfTheSameNameWouldMakeTheMatchingDoubtIt()
+    {
+        Person("habakkuk", "Habakkuk");
+        await Loader().Load(_resources);
+        Person("habakkuk-2", "Habakkuk", "another man of the name");
+
+        var outcome = await Loader().Load(_resources);
+        var again = await Loader().Load(_resources);
+
+        (await Held()).Should().Equal(
+            "habakkuk de Habakuk Q1 name",
+            "habakkuk en Habakkuk Q1 name",
+            "habakkuk uk Авакум Q1 name");
+        outcome.Held.Should().Be(1);
+        again.Held.Should().Be(1, "the held tie is on the list again, so every later load holds it too");
+        var entries = Review()["entries"]!.AsArray().OfType<JsonObject>().ToList();
+        entries.Select(e => (string)e["record"]!).Should().Equal(["habakkuk"], "the item is taken, so the newcomer has nothing to be offered");
+        ((string)entries[0]["tied"]!["qid"]!).Should().Be("Q1");
+    }
+
+    [Fact]
+    public async Task AFoldedRecordsTiePassesToTheRecordItWentIntoUnderAnotherName()
+    {
+        ZechariahTiedByAVerse();
+        var zechariah = Person("zechariah", "Zechariah", "son of Jeroboam (2KI 14:29)");
+        await Loader().Load(_resources);
+        _db.Entities.Remove(zechariah);
+        await _db.SaveChangesAsync();
+        var zachariah = Person("zachariah", "Zachariah");
+        _db.MergedRecords.Add(new MergedRecord
+        {
+            Slug = "zechariah", EntityId = zachariah.Id, Name = "Zechariah", Reason = "one king", Source = "test",
+        });
+        await _db.SaveChangesAsync();
+
+        var outcome = await Loader().Load(_resources);
+
+        (await Held()).Should().Equal("zachariah en Zechariah of Israel Q5 verse");
+        outcome.Held.Should().Be(1);
+        Review()["entries"]!.AsArray().OfType<JsonObject>().Select(e => (string)e["record"]!).Should().Equal("zachariah");
+    }
+
+    [Fact]
+    public async Task AHeldTieIsLetGoOnlyWhenTheOwnerAnswersOrTheItemIsGone()
+    {
+        Person("habakkuk", "Habakkuk");
+        Person("zechariah", "Zechariah", "son of Jeroboam (2KI 14:29)");
+        File.WriteAllLines(Path.Combine(_resources, WikidataItems.Folder, WikidataItems.ItemsFile),
+        [
+            Item("Q1", "Habakkuk", "prophet", """{"enwiki":"Habakkuk"}"""),
+            Item("Q5", "Zechariah", "male human biblical figure in 2 Kings 14:29, King of Israel", """{"enwiki":"Zechariah of Israel"}"""),
+            Item("Q3", "Zechariah", "prophet", """{"enwiki":"Zechariah (prophet)","eswiki":"Zacarías"}"""),
+        ]);
+        await Loader().Load(_resources);
+        (await Held()).Should().Equal("habakkuk en Habakkuk Q1 name", "zechariah en Zechariah of Israel Q5 verse");
+        File.WriteAllLines(Path.Combine(_resources, WikidataItems.Folder, WikidataItems.ItemsFile),
+        [
+            Item("Q1", "Habakkuk", "prophet", """{"enwiki":"Habakkuk"}"""),
+            Item("Q6", "Habakkuk", "another man", "{}"),
+            Item("Q3", "Zechariah", "prophet", """{"enwiki":"Zechariah (prophet)","eswiki":"Zacarías"}"""),
+            Item("Q4", "Zechariah", "priest", "{}"),
+        ]);
+        await Loader().Load(_resources);
+        (await Held()).Should().Equal("habakkuk en Habakkuk Q1 name");
+
+        Answer("habakkuk", WikipediaReviewList.None, "owner in chat: not him");
+        var outcome = await Loader().Load(_resources);
+
+        (await Held()).Should().BeEmpty("the owner took the held tie back, and Wikidata no longer holds the king's item");
+        outcome.Held.Should().Be(0);
+    }
+
+    [Fact]
     public async Task TheOwnersChoiceLinksTheRecordToTheItemHeChose()
     {
         Person("zechariah", "Zechariah", "son of Jeroboam (2KI 14:29)");
