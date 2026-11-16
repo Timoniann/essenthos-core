@@ -32,6 +32,9 @@ internal sealed class ClearBibleSource : IPairSource
 
     private const string Renders = "renders";
 
+    /// <summary>What a row says of itself where its record named the word before the name (<see cref="ClearBibleLinks.Early"/>).</summary>
+    internal const string MovedNote = "the set's record names the preposition or article before this name and leaves the name unnamed; moved onto the name";
+
     private static readonly IReadOnlyList<ClearBibleSet> Sets = ClearBibleSet.All();
 
     public string Method => MappingMethods.Stated;
@@ -82,7 +85,8 @@ internal sealed class ClearBibleSource : IPairSource
             overruled);
 
         log($"{joined.Records} records, {joined.Drafts.Count} resolved; {joined.Unresolved} unresolved ({joined.WithoutCounterpart} "
-            + $"without a counterpart), {joined.Astray} astray, {joined.Shifted} shifted, {joined.Misnumbered} misnumbered, "
+            + $"without a counterpart), {joined.Astray} astray, {joined.Shifted} shifted, {joined.Moved} moved onto the name after them, "
+            + $"{joined.Misnumbered} misnumbered, "
             + $"{joined.Overruled} overruled ({joined.Trimmed} trimmed); {joined.Placed}");
 
         var rows = new Dictionary<string, MappingRow>(StringComparer.Ordinal);
@@ -90,7 +94,7 @@ internal sealed class ClearBibleSource : IPairSource
         {
             var row = new MappingRow(MappingText.Keys(draft.From.Select(translation.Key)),
                 MappingText.Keys(draft.To.Select(witness.Key)),
-                Renders, Method, null, set.Statement, null, null, null);
+                Renders, Method, null, set.Statement, draft.Moved ? MovedNote : null, null, null);
             rows.TryAdd(row.Shape, row);
         }
 
