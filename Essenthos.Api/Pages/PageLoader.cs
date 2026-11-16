@@ -126,6 +126,7 @@ internal sealed class PageLoader(
             PageKind.Verses => await Verses(address, wording, cancellationToken),
             PageKind.Text => await Text(address, wording, cancellationToken),
             PageKind.Search => PageViews.Search(wording, address.Query!),
+            PageKind.Help => PageViews.Help(language, wording, address),
             PageKind.Section when address.Section?.Key == "downloads" =>
                 PageViews.Downloads(language, wording, address, downloads.Current()),
             PageKind.Section => PageViews.Section(language, wording, address),

@@ -67,6 +67,10 @@ internal sealed partial class PageWording
     /// <summary>What a reader of this language calls a book when citing it, where the wording names it.</summary>
     public string? CitedBook(int ordinal) => Find($"books.{ordinal}");
 
+    /// <summary>The names under a dotted key, in the order the wording writes them; none where it has no such map.</summary>
+    public IReadOnlyList<string> Keys(string key) =>
+        Node(key) is JsonObject map ? [.. map.Select(pair => pair.Key)] : _fallback?.Keys(key) ?? [];
+
     /// <summary>The text at a dotted key, or null where the wording has none.</summary>
     public string? Optional(string key) => Find(key);
 
