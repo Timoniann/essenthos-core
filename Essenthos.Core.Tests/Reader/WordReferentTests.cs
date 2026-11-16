@@ -34,10 +34,12 @@ public sealed class WordReferentTests : IDisposable
         // ... Jesus ... Legion beside a pronoun ... them (Jesus and the man) ... the man's name (a noun the source refers back).
         _greek = Corpus.Add(_db, "NESTLE1904", TextKind.PrintedEdition, "grc",
             (5, 6, ["Ἰησοῦν", "αὐτόν", "αὐτός", "ἄνθρωπος", "αὐτῷ", "Ἰησοῦ", "αὐτῷ", "αὐτοῖς", "ὄνομα"]),
-            (5, 7, ["γὰρ", "μοι", "μοι", "σοι", "αὐτῷ"]));
+            (5, 7, ["γὰρ", "μοι", "μοι", "σοι", "αὐτῷ"]),
+            (5, 8, ["αὐτόν", "αὐτοῦ", "μου", "αὐτὸς", "Γαλιλαίας", "αὐτῆς", "ἰδίᾳ"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
             (5, 6, ["Jesus", "him", "he", "man", "him", "Jesus", "Legion", "them", "name", "answered"]),
-            (5, 7, ["for", "for", "me", "me", "unto", "thee", "to", "him"]));
+            (5, 7, ["for", "for", "me", "me", "unto", "thee", "to", "him"]),
+            (5, 8, ["them", "her", "thy", "He", "Galilee", "his", "his"]));
         _db.SaveChanges();
 
         var jesus = Record("jesus");
@@ -85,6 +87,34 @@ public sealed class WordReferentTests : IDisposable
         Align([English(4, 7)], Greek(3, 7));
         Align([English(5, 7), English(6, 7)], Greek(4, 7));
         Align([English(7, 7), English(8, 7)], Greek(5, 7), attached: English(7, 7), head: English(8, 7));
+
+        // Verse 8, each word linked alone with one Greek word: "them" with αὐτόν, "her" with αὐτοῦ, "thy" with μου, all three
+        // referring to Jesus; "He" with αὐτός, also Jesus; "his" with αὐτῆς, referring to Galilee; "his" with ἰδίᾳ ("his own
+        // wife"), feminine by the wife, referring to Jesus.
+        var galilee = Record("galilee", EntityKind.Place);
+        _db.SaveChanges();
+        Name(Greek(5, 8), galilee);
+        Classed(Greek(5, 8), "noun");
+        string[] parsings =
+        [
+            """{"class":"pron","morph":"P-ASM","number":"singular","gender":"masculine"}""",
+            """{"class":"pron","morph":"P-GSM","number":"singular","gender":"masculine"}""",
+            """{"class":"pron","morph":"P-1GS","number":"singular"}""",
+            """{"class":"pron","morph":"P-NSM","number":"singular","gender":"masculine"}""",
+            null!,
+            """{"class":"pron","morph":"P-GSF","number":"singular","gender":"feminine"}""",
+            """{"class":"adj","morph":"A-DSF","number":"singular","gender":"feminine"}""",
+        ];
+        for (var position = 1; position <= 7; position++)
+        {
+            Align(English(position, 8), Greek(position, 8));
+            if (position != 5)
+            {
+                Parsed(Greek(position, 8), parsings[position - 1]);
+                Refers(Greek(position, 8), position == 6 ? Greek(5, 8) : Greek(1));
+            }
+        }
+
         _db.SaveChanges();
     }
 
@@ -178,6 +208,23 @@ public sealed class WordReferentTests : IDisposable
         (await Read(_english, 8, 7)).Referents.Should().ContainSingle().Which.Slug.Should().Be("jesus");
     }
 
+    [Fact]
+    public async Task APronounOfAnotherNumberGenderOrPersonThanTheOriginalsIsGivenNothing()
+    {
+        (await Read(_english, 1, 8)).Referents.Should().BeNull("them cannot render αὐτόν, one man");
+        (await Read(_english, 2, 8)).Referents.Should().BeNull("her cannot render αὐτοῦ, a man");
+        (await Read(_english, 3, 8)).Referents.Should().BeNull("thy cannot render μου, the speaker");
+        (await Read(_english, 4, 8)).Referents.Should().ContainSingle().Which.Slug.Should().Be("jesus");
+    }
+
+    [Fact]
+    public async Task APronounStandingForAPlaceIsNotJudgedByItsGender() =>
+        (await Read(_english, 6, 8)).Referents.Should().ContainSingle().Which.Slug.Should().Be("galilee");
+
+    [Fact]
+    public async Task AnAdjectiveAgreeingWithItsNounIsNotJudgedByItsGender() =>
+        (await Read(_english, 7, 8)).Referents.Should().ContainSingle().Which.Slug.Should().Be("jesus");
+
     private async Task<TextWordResponse> Read(Text text, int position, int verse = 6)
     {
         var chapter = await ChapterReading.ReadChapter(_db, text.Id, 1, 5, default);
@@ -188,9 +235,9 @@ public sealed class WordReferentTests : IDisposable
 
     private Word English(int position, int verse = 6) => _db.WordAt(_english, 5, verse, position);
 
-    private Entity Record(string slug)
+    private Entity Record(string slug, EntityKind kind = EntityKind.Person)
     {
-        var entity = new Entity { Kind = EntityKind.Person, Slug = slug, Name = char.ToUpperInvariant(slug[0]) + slug[1..] };
+        var entity = new Entity { Kind = kind, Slug = slug, Name = char.ToUpperInvariant(slug[0]) + slug[1..] };
         _db.Entities.Add(entity);
         return entity;
     }
@@ -205,6 +252,12 @@ public sealed class WordReferentTests : IDisposable
         _db.WordParsings.Add(new WordParsing
         {
             WordId = word.Id, Morphology = JsonDocument.Parse($$"""{"class":"{{kind}}"}"""), Method = LinkMethod.StatedBySource, Source = Macula,
+        });
+
+    private void Parsed(Word word, string morphology) =>
+        _db.WordParsings.Add(new WordParsing
+        {
+            WordId = word.Id, Morphology = JsonDocument.Parse(morphology), Method = LinkMethod.StatedBySource, Source = Macula,
         });
 
     private void Refers(Word word, Word referent) =>
