@@ -126,8 +126,20 @@ public class RouteTests
         Routes.Describe(Route.Composed | Route.ComposedAgain, "KJV", "BSB")
             .Should().Be("SIL.Machine, aligned through KJV and through BSB");
 
+    /// <summary>A third middle text (the Elberfelder through Luther, PRB-0863) is a family of its own, named in the source.</summary>
     [Fact]
-    public void AThirdMiddleTextIsRefused() =>
-        FluentActions.Invoking(() => Routes.MergeFamilies([], [], [[], [], []]))
-            .Should().Throw<ArgumentException>().WithMessage("*at most 2*");
+    public void AThirdMiddleTextIsAFamilyOfItsOwn()
+    {
+        var merged = Routes.MergeFamilies([], [], [[(1, 10, 0.5)], [], [(1, 10, 0.5)]]).Single();
+
+        merged.Route.Should().Be(Route.Composed | Route.ComposedThird);
+        Routes.Families(merged.Route).Should().Be(2);
+        merged.Confidence.Should().BeApproximately(0.75, 0.001);
+        Routes.Describe(merged.Route, "KJV", "BSB", "LUTH1912").Should().Be("SIL.Machine, aligned through KJV and through LUTH1912");
+    }
+
+    [Fact]
+    public void AFourthMiddleTextIsRefused() =>
+        FluentActions.Invoking(() => Routes.MergeFamilies([], [], [[], [], [], []]))
+            .Should().Throw<ArgumentException>().WithMessage("*at most 3*");
 }

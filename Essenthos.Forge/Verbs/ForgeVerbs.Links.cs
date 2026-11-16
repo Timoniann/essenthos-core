@@ -57,7 +57,7 @@ internal static partial class ForgeVerbs
     private static async Task<int> Compose(ForgeRun forge, string[] args)
     {
         var (from, to) = (Identifier(args[1]), Identifier(args[3]));
-        // One middle text or two, named together: KJV,BSB.
+        // One middle text, two or three, named together: KJV,BSB or KJV,BSB,LUTH1912.
         var vias = args[2].Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier).ToList();
 
         // How often each combination of readings must have named the stated word to be written at all.

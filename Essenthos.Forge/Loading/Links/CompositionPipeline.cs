@@ -68,8 +68,9 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
 
     private readonly MappingLinks _links = new(texts);
     /// <param name="viaSlugs">
-    /// The middle texts, one or two. A second is a second route that shares no evidence with the
-    /// first, so the two agreeing is worth as much as either agreeing with the direct alignment.
+    /// The middle texts, one to three. A second is a second route that shares no evidence with the
+    /// first, so the two agreeing is worth as much as either agreeing with the direct alignment. A third is
+    /// added to a composition through the first two, whose floors stand for what it does not find.
     /// </param>
     /// <param name="unmeasured">
     /// Write every answer from the threshold where nothing, in this pair or in another text of its
@@ -296,15 +297,47 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     {
         var pair = MappingProducts.Pair(fromSlug, toSlug);
         var hand = HandFloors.AsRoutes(pair, HandFloors.Read(texts.Store, pair), viaSlugs);
-        Admission Bound(Admission measured) => measured.With(hand).RefusingUnmeasured(refuseUnmeasured);
+        var (admission, measured) = await Measured(fromSlug, viaSlugs, toSlug, proposed, statements, minimumConfidence, precision, trial, books,
+            cancellationToken);
 
+        // A third middle text is one added to a composition through the first two: what those find without it keeps the floors
+        // that composition sets (Admission.Keeping, PRB-0863).
+        if (viaSlugs.Count == Routes.Middles.Length)
+        {
+            var before = viaSlugs.Take(viaSlugs.Count - 1).ToList();
+            var proposedWithout = proposed with { Composed = proposed.Composed.Take(before.Count).ToList() };
+            var (without, measuredWithout) = await Measured(fromSlug, before, toSlug, proposedWithout, statements, minimumConfidence,
+                precision, trial, books, cancellationToken);
+            var standing = Routes.MergeFamilies(proposedWithout.Written, proposedWithout.Reduced, [.. proposedWithout.Composed])
+                .Where(without.Admits).Select(link => (link.From, link.To)).ToHashSet();
+            admission = admission.Keeping(without, Routes.Middles[^1], viaSlugs[^1], standing);
+            measured += $"{Environment.NewLine}  through {string.Join(" and ", before)} alone, whose floors stand for what " +
+                        $"{viaSlugs[^1]} does not find; {without.Describe([.. before])}{Environment.NewLine}{measuredWithout}";
+        }
+
+        return (admission.With(hand).RefusingUnmeasured(refuseUnmeasured), measured);
+    }
+
+    /// <summary>What <see cref="Admit"/> measures or borrows, before the pair's hand floors and the refusal of the unmeasured.</summary>
+    private async Task<(Admission Admission, string Measured)> Measured(
+        string fromSlug,
+        IReadOnlyList<string> viaSlugs,
+        string toSlug,
+        Proposed proposed,
+        IReadOnlyDictionary<long, HashSet<long>> statements,
+        double minimumConfidence,
+        double precision,
+        bool trial,
+        IReadOnlySet<int>? books,
+        CancellationToken cancellationToken)
+    {
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
         var own = Admission.Measures(statements)
             ? Admission.Measure(every, statements, minimumConfidence, precision)
             : Admission.Everything(minimumConfidence);
         if (own.Floors.Count > 0)
         {
-            return (Bound(own), $"  {fromSlug} to {toSlug}, on its own statements:{Environment.NewLine}" +
+            return (own, $"  {fromSlug} to {toSlug}, on its own statements:{Environment.NewLine}" +
                                 Admission.Curves(every, statements, [.. viaSlugs]));
         }
 
@@ -328,7 +361,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
                 .AppendLine(Admission.Curves(proxyEvery, proxyStatements, [.. vias]));
         }
 
-        return (Bound(Admission.Borrow(measured, [.. viaSlugs], minimumConfidence, precision)), report.ToString());
+        return (Admission.Borrow(measured, [.. viaSlugs], minimumConfidence, precision), report.ToString());
     }
     /// <summary>
     /// A route as another composition numbers it, renumbered for this one: its middle texts are

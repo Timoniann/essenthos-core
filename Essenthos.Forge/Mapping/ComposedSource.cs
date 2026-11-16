@@ -6,7 +6,10 @@ namespace Essenthos.Core.Mapping;
 /// <summary>
 /// A pair composed through its middle texts, as the corpus's runs of <c>compose</c> last ran it (<see cref="CompositionPipeline"/>).
 /// </summary>
-/// <param name="Vias">The middle texts, one or two, in the order their routes are numbered.</param>
+/// <param name="Vias">
+/// The middle texts, one to three, in the order their routes are numbered. A third is added to a composition through the first two
+/// (the Elberfelder's New Testament through Luther, PRB-0863), whose floors stand for what it does not find.
+/// </param>
 /// <param name="RefuseUnmeasured">
 /// Refuse what one family of readings found where nothing measured that combination, instead of writing it from the
 /// threshold (<see cref="Admission.RefusingUnmeasured"/>, NOT-0228). Off for every pair until the owner has seen what it
@@ -56,7 +59,7 @@ internal sealed class ComposedSource : IPairSource
         new("TYN1534", English, "NESTLE1904"),
         new("NPU2022", English, "NESTLE1904"),
         new("ELB1905", English, "BHSA"),
-        new("ELB1905", English, "NESTLE1904"),
+        new("ELB1905", ["KJV", "BSB", "LUTH1912"], "NESTLE1904"),
         new("BBE", English, "BHSA"),
         new("BBE", English, "NESTLE1904"),
         new("NPU2022", English, "BHSA"),

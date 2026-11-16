@@ -23,6 +23,13 @@ internal enum Route
     /// neither route shares.
     /// </summary>
     ComposedAgain = 8,
+
+    /// <summary>
+    /// Aligned through a third middle text, added to a composition through two (PRB-0863): the Elberfelder through Luther,
+    /// whose links to the Greek are his printed Strong numbers, beside the King James and the Berean. What the first two
+    /// find without it is written as the composition through those two wrote it (<see cref="CompositionPipeline"/>).
+    /// </summary>
+    ComposedThird = 16,
 }
 
 internal sealed record RoutedLink(long From, long To, double Confidence, Route Route);
@@ -111,7 +118,7 @@ internal static class Routes
     }
 
     /// <summary>The route each middle text's answers travel, in the order the texts are named.</summary>
-    public static readonly Route[] Middles = [Route.Composed, Route.ComposedAgain];
+    public static readonly Route[] Middles = [Route.Composed, Route.ComposedAgain, Route.ComposedThird];
 
     /// <summary>
     /// How many readings found a pair that share no evidence: the two direct ones are one model over
@@ -153,7 +160,7 @@ internal static class Routes
     /// <param name="vias">The middle texts, in the order <see cref="Middles"/> numbers them.</param>
     public static string Describe(Route route, params string[] vias)
     {
-        var found = new List<string>(3);
+        var found = new List<string>(2 + Middles.Length);
         if (route.HasFlag(Route.Written))
         {
             found.Add("as written");
