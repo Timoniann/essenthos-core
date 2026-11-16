@@ -387,10 +387,10 @@ internal static partial class EncyclopediaEndpoints
             return true;
         }
 
-        if (kind is not ("person" or "place" or "people" or "term" or "title" or "object" or "observance"))
+        if (kind is not ("person" or "place" or "people" or "term" or "title" or "object" or "observance" or "being"))
         {
             refusal = Results.BadRequest(new ProblemResponse(
-                $"\"{kind}\" is not a kind of entity. Try person, place, people, term, title, object or observance."));
+                $"\"{kind}\" is not a kind of entity. Try person, place, people, term, title, object, observance or being."));
             return false;
         }
 

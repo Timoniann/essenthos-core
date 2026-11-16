@@ -42,6 +42,7 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         ["titles"] = EntityKind.Title,
         ["objects"] = EntityKind.Object,
         ["observances"] = EntityKind.Observance,
+        ["beings"] = EntityKind.Being,
     };
 
     private static readonly IReadOnlyDictionary<string, char> Lexicons = new Dictionary<string, char>

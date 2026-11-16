@@ -75,4 +75,19 @@ public enum EntityKind
     /// would be a change of spelling rather than of shape.
     /// </summary>
     Observance,
+
+    /// <summary>
+    /// A god or idol the text names — Baal, Asherah, Dagon, Artemis — or a creature whose identity the
+    /// translations dispute — Leviathan, the tannin, the re'em — which <see cref="Entity.Subtype"/> says
+    /// (<c>god</c> or <c>creature</c>).
+    ///
+    /// It is not a person: a record of Baal that answered sex, tribe and family would tell a reader the
+    /// text vouches for somebody, when it names a god the nations served and says nothing of whether one
+    /// exists. It is not a term either, which is a word said of God, nor an object, which is made: the
+    /// golden calf and Micah's image stay objects, and the god they were made for is this. A creature is
+    /// here rather than among the animals because what it is, is the question: one Bible says unicorn
+    /// where another says wild ox, one dragon where another says jackal or whale, and the record holds
+    /// the word and what each witness calls it, not a verdict.
+    /// </summary>
+    Being,
 }
