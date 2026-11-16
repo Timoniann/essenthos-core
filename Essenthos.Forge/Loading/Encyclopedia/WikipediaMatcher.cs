@@ -340,7 +340,8 @@ internal sealed class WikipediaMatcher
 
     private static string Fold(string name) => Essenthos.Core.Corpus.NameFolding.Fold(name);
 
-    private static bool Compatible(WikipediaRecord record, WikidataItem item)
+    /// <summary>Whether the item could be the record at all: the same kind of thing, and for a person the same sex and nature.</summary>
+    internal static bool Compatible(WikipediaRecord record, WikidataItem item)
     {
         if (item.IsAWikimediaPage || (record.Kind == EntityKind.Place && item.IsOnlyAPeople))
         {

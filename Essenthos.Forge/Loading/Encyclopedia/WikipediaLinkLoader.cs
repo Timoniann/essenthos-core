@@ -18,6 +18,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Decided">Records settled by the owner's word.</param>
 /// <param name="Rows">Article links the ties give: one per record and language.</param>
 /// <param name="ByKind">For each kind of record: how many were tied, how many are ambiguous and how many no item goes by the name of.</param>
+/// <param name="Held">Of the tied records, those tied as the owner's list had them where this matching alone would not tie them so.</param>
 internal sealed record WikipediaOutcome(
     bool Skipped,
     IReadOnlyDictionary<string, int> Linked,
@@ -28,12 +29,14 @@ internal sealed record WikipediaOutcome(
     int Rows,
     TimeSpan Elapsed,
     IReadOnlyDictionary<string, (int Tied, int Ambiguous, int Unmatched)>? ByKind = null,
-    int Ties = 0)
+    int Ties = 0,
+    int Held = 0)
 {
     public override string ToString() =>
         Skipped
             ? "the owner's Wikipedia list is as it was, because the Wikidata items are not here"
-            : $"{Linked.Values.Sum()} records tied to a Wikidata item ({string.Join(", ", Linked.OrderByDescending(l => l.Value).Select(l => $"{l.Value} by {l.Key}"))}), " +
+            : $"{Linked.Values.Sum()} records tied to a Wikidata item ({string.Join(", ", Linked.OrderByDescending(l => l.Value).Select(l => $"{l.Value} by {l.Key}"))}; " +
+              $"{Held} of them held as the list had them, where this matching no longer ties them so), " +
               $"{Ambiguous} left because the evidence does not tell them from a namesake ({Questions} listed for the owner, and {Ties} ties of the matching beside them), " +
               $"{Unmatched} that no item goes by the name of, {Decided} settled by the owner; {Rows} article links " +
               $"in {Elapsed}" +
@@ -93,6 +96,32 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
 
         var owners = ReviewLists.Owners(resources, WikipediaReviewList.FileName);
         var answers = WikipediaReviewList.Answers(owners);
+
+        var folded = await db.MergedRecords.AsNoTracking()
+            .Select(m => new { m.Slug, m.EntityId })
+            .ToDictionaryAsync(m => m.Slug, m => m.EntityId, StringComparer.Ordinal, cancellationToken);
+        var kept = Hold(
+            records, matches, WikipediaReviewList.Ties(owners),
+            File.Exists(owners) ? WikipediaReviewList.Records(owners) : [], folded, answers, wikidata);
+        foreach (var hold in kept.Held)
+        {
+            logger.LogInformation(
+                "Held {Record} at {Qid} by {By}{From}, as the owner's list had it: the matching {Now}",
+                hold.Record, hold.Qid, hold.By, hold.From is null ? string.Empty : $" (carried from {hold.From}, folded into it)",
+                hold.Instead is null ? "no longer ties it" : $"would tie it to {hold.Instead}");
+        }
+
+        foreach (var (record, why) in kept.Lost)
+        {
+            logger.LogWarning("The tie the owner's list held for {Record} is not kept: {Why}", record, why);
+        }
+
+        foreach (var (record, qid, holder) in kept.Unseated)
+        {
+            logger.LogWarning(
+                "{Record} is left open for the owner: the matching ties it to {Qid}, which the list already gives {Holder}",
+                record, qid, holder);
+        }
 
         var chosen = new Dictionary<int, (WikidataItem Item, string By)>();
         var linked = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -171,9 +200,144 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
 
         var outcome = new WikipediaOutcome(
             false, linked, ambiguous, questions.Count(q => q.Tied is null), unmatched, decided, rows,
-            started.Elapsed, byKind, questions.Count(q => q.Tied is not null));
+            started.Elapsed, byKind, questions.Count(q => q.Tied is not null), kept.Held.Count);
         logger.LogInformation("Matched the records to Wikidata: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <param name="Held">The ties the list held that this matching would have lost, now tied again as the list had them.</param>
+    /// <param name="Lost">The ties the list held that are not kept, with why: the item is gone, has no article, no longer fits the record, or another record holds it.</param>
+    /// <param name="Unseated">Records the matching tied to an item the list gives another record, left open instead: the record, the item, the record that holds it.</param>
+    internal sealed record WikipediaHolds(
+        List<WikipediaHold> Held,
+        List<(string Record, string Why)> Lost,
+        List<(string Record, string Qid, string Holder)> Unseated);
+
+    /// <param name="From">The folded record whose tie this was, where the tie came through a fold.</param>
+    /// <param name="Instead">The item this matching would have tied the record to, where it tied one.</param>
+    internal sealed record WikipediaHold(string Record, string Qid, string By, string? From, string? Instead);
+
+    /// <summary>
+    /// Holds every tie the owner's list already holds, so that running the matching again never takes an
+    /// article off the site on its own. A tie on the list is on the site, and every one of them was accepted
+    /// on the owner's instructions, so it stands until he answers otherwise — not until the evidence of the
+    /// day happens to move: a verse given to another record, a new record of the same name with the same
+    /// kin, a record folded into another under a new name. A record folded into another
+    /// (<see cref="MergedRecord"/>) passes its tie to the record it went into where the list held nothing
+    /// for that record and the folded ties agree, as records-derive carries it. A tie is let go only where
+    /// the owner answered for the record, the record is gone, or the item is: no longer in the Wikidata items,
+    /// without an article, or no longer the kind of thing the record is. A record the matching now ties to
+    /// an item the list gives another record is left open for the owner instead of taking it.
+    /// </summary>
+    /// <param name="matches">This matching's conclusions, changed in place where a tie is held or a record left open.</param>
+    /// <param name="ties">The list's ties, by record: <see cref="WikipediaReviewList.Ties"/>.</param>
+    /// <param name="listed">Every record the list holds an entry for.</param>
+    /// <param name="folded">The record each folded record's address now arrives at, by that address.</param>
+    internal static WikipediaHolds Hold(
+        IReadOnlyList<WikipediaRecord> records,
+        Dictionary<int, WikipediaMatch> matches,
+        IReadOnlyDictionary<string, (string Qid, string By)> ties,
+        IReadOnlySet<string> listed,
+        IReadOnlyDictionary<string, int> folded,
+        IReadOnlyDictionary<string, WikipediaDecision> answers,
+        WikidataItems wikidata)
+    {
+        var holds = new WikipediaHolds([], [], []);
+        var bySlug = records.ToDictionary(r => r.Slug, StringComparer.Ordinal);
+        var byId = records.ToDictionary(r => r.Id);
+
+        var wanted = new List<(WikipediaRecord Record, string Qid, string By, string? From)>();
+        foreach (var (slug, (qid, by)) in ties.OrderBy(t => t.Key, StringComparer.Ordinal))
+        {
+            if (bySlug.TryGetValue(slug, out var record) && !answers.ContainsKey(slug))
+            {
+                wanted.Add((record, qid, by, null));
+            }
+        }
+
+        foreach (var into in ties
+                     .Where(t => !bySlug.ContainsKey(t.Key) && folded.TryGetValue(t.Key, out var id) && byId.ContainsKey(id))
+                     .GroupBy(t => folded[t.Key])
+                     .OrderBy(g => byId[g.Key].Slug, StringComparer.Ordinal))
+        {
+            var record = byId[into.Key];
+            if (listed.Contains(record.Slug) || answers.ContainsKey(record.Slug))
+            {
+                continue;
+            }
+
+            var from = into.OrderBy(t => t.Key, StringComparer.Ordinal).ToList();
+            if (from.Select(t => t.Value.Qid).Distinct(StringComparer.Ordinal).Count() != 1)
+            {
+                holds.Lost.Add((record.Slug, $"the records folded into it were tied to different items ({string.Join(", ", from.Select(t => $"{t.Key} {t.Value.Qid}"))})"));
+                continue;
+            }
+
+            wanted.Add((record, from[0].Value.Qid, from[0].Value.By, string.Join(", ", from.Select(t => t.Key))));
+        }
+
+        var holders = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var (record, qid, by, from) in wanted)
+        {
+            if (matches[record.Id] is WikipediaMatch.Linked same && same.Item.Id == qid)
+            {
+                holders.TryAdd(qid, record.Slug);
+                continue;
+            }
+
+            if (!wikidata.TryGet(qid, out var item))
+            {
+                holds.Lost.Add((record.Slug, $"the Wikidata items no longer hold {qid}"));
+                continue;
+            }
+
+            if (!item.HasArticle)
+            {
+                holds.Lost.Add((record.Slug, $"{qid} no longer has an article"));
+                continue;
+            }
+
+            if (!WikipediaMatcher.Compatible(record, item))
+            {
+                holds.Lost.Add((record.Slug, $"{qid} is no longer the kind of thing the record is"));
+                continue;
+            }
+
+            if (!holders.TryAdd(qid, record.Slug))
+            {
+                holds.Lost.Add((record.Slug, $"{qid} is held by {holders[qid]}"));
+                continue;
+            }
+
+            var candidates = matches[record.Id] switch
+            {
+                WikipediaMatch.Linked { Candidates: { } all } => all,
+                WikipediaMatch.Ambiguous ambiguous => ambiguous.Candidates,
+                _ => [],
+            };
+            if (candidates.All(c => c.Item.Id != qid))
+            {
+                candidates = [new WikipediaCandidate(item, default), .. candidates];
+            }
+
+            var instead = matches[record.Id] is WikipediaMatch.Linked other ? other.Item.Id : null;
+            matches[record.Id] = new WikipediaMatch.Linked(item, by, candidates);
+            holds.Held.Add(new WikipediaHold(record.Slug, qid, by, from, instead));
+        }
+
+        var held = holds.Held.Select(h => h.Record).ToHashSet(StringComparer.Ordinal);
+        foreach (var record in records)
+        {
+            if (!held.Contains(record.Slug) && !answers.ContainsKey(record.Slug)
+                && matches[record.Id] is WikipediaMatch.Linked tied
+                && holders.TryGetValue(tied.Item.Id, out var holder) && holder != record.Slug)
+            {
+                matches[record.Id] = new WikipediaMatch.Ambiguous(tied.Candidates ?? [new WikipediaCandidate(tied.Item, default)]);
+                holds.Unseated.Add((record.Slug, tied.Item.Id, holder));
+            }
+        }
+
+        return holds;
     }
 
     /// <summary>

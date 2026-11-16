@@ -41,8 +41,9 @@ internal sealed record WikipediaQuestion(
 /// <para>
 /// The file is the owner's: his console shows each entry and writes his answer into it, and every
 /// load reads the answers back. A load rewrites the open entries and the candidates of the answered
-/// ones, and keeps every answer — an answer taken back is the only thing that removes one. A record
-/// is named by its slug, as every file the owner decides in names one.
+/// ones, and keeps every answer — an answer taken back is the only thing that removes one. It keeps
+/// every tie too: a tie the list holds is on the site, so the load holds it where its own matching would
+/// no longer make it (<see cref="WikipediaLinkLoader.Hold"/>). A record is named by its slug, as every file the owner decides in names one.
 /// </para>
 /// </summary>
 internal static class WikipediaReviewList
@@ -95,6 +96,30 @@ internal static class WikipediaReviewList
             .OfType<string>()
             .Where(slug => slug.Length > 0)
             .ToHashSet(StringComparer.Ordinal);
+
+    /// <summary>
+    /// The ties the list holds that the owner has not answered: the item the matching tied each record to,
+    /// by what. Every one of them is on the site (<see cref="Links"/>), so the next load holds it even where
+    /// its own matching would no longer make it.
+    /// </summary>
+    public static Dictionary<string, (string Qid, string By)> Ties(string path)
+    {
+        var ties = new Dictionary<string, (string Qid, string By)>(StringComparer.Ordinal);
+        if (!File.Exists(path))
+        {
+            return ties;
+        }
+
+        foreach (var (slug, link) in Links(path))
+        {
+            if (link.By != Essenthos.Core.Database.Entities.EntityWikipedia.Evidence.Owner)
+            {
+                ties[slug] = link;
+            }
+        }
+
+        return ties;
+    }
 
     /// <summary>
     /// The item each record of the list is linked to, and what linked it: the owner's answer where he gave one
