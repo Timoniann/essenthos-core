@@ -11,19 +11,45 @@ namespace Essenthos.Core.Context;
 /// point at (<see cref="ContextDescriptors"/>). Stored per record and pair of languages (<c>context_line</c>).
 /// </summary>
 /// <param name="Records">The records the claims point at, by slug, as the answer's one map holds them.</param>
+/// <param name="Renamed">
+/// Where the record is filed under one name and headed by another (<see cref="RenamedHeadings"/>), both in the language of
+/// names, so a chapter is shown the one it uses: Genesis 22 says Авраам, Genesis 12 Аврам (PRB-1770). Null where the
+/// language of names is the headword's or the person is not renamed.
+/// </param>
 internal sealed record ContextLineBody(
     string? LocalName,
     string? LocalDistinguisher,
     ContextDescriptorResponse? Descriptor,
-    Dictionary<string, ContextRecordResponse>? Records)
+    Dictionary<string, ContextRecordResponse>? Records,
+    ContextRenamed? Renamed = null)
 {
     public static readonly ContextLineBody Empty = new(null, null, null, null);
+
+    /// <summary>
+    /// The record's name in the language of names as a chapter shows it, and the chapter's own name for it in the
+    /// headword's language where that is still to be said: the heading's name where the chapter calls the person by it
+    /// (<paramref name="chapterName"/>, or the headword where that is null), else <see cref="LocalName"/>.
+    /// </summary>
+    public (string? LocalName, string? ChapterName) InChapter(string headword, string? chapterName)
+    {
+        if (Renamed is not { } renamed
+            || ChapterSalience.Head(chapterName ?? headword) != ChapterSalience.Head(renamed.Name))
+        {
+            return (LocalName, chapterName);
+        }
+
+        return (renamed.LocalName, null);
+    }
 }
+
+/// <param name="Name">The name the record is headed by, in the headword's language: <em>Abraham</em>.</param>
+/// <param name="LocalName">That name in the language of names, as its texts print it: <em>Авраам</em>.</param>
+internal sealed record ContextRenamed(string Name, string LocalName);
 
 internal static class ContextLines
 {
     /// <summary>Raise with any change to what a line holds or how it is composed: a stored one is made again only when this moves.</summary>
-    public const int Version = 1;
+    public const int Version = 2;
 
     public static string Write(ContextLineBody line) => JsonSerializer.Serialize(line, ContextDocumentJson.Default.ContextLineBody);
 
@@ -48,6 +74,9 @@ internal static class ContextLines
             .Select(e => new { e.Id, e.Slug })
             .ToListAsync(cancellationToken);
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
+        var renamed = EntityNames.Local(language) is null
+            ? []
+            : await RenamedHeadings.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
         var words = ReaderLanguages.Prose(prose, language);
         var lines = await EntityDistinguishers.OfSlugs(db, [.. records.Select(r => r.Slug)], words, cancellationToken);
         var described = await Descriptors.Of(db, records.Select(r => r.Slug), words, cancellationToken, language);
@@ -62,7 +91,10 @@ internal static class ContextLines
                 local.GetValueOrDefault(record.Id),
                 lines.GetValueOrDefault(record.Slug),
                 slim?.Lines.GetValueOrDefault(record.Slug),
-                slim is null || slim.Records.Count == 0 ? null : new Dictionary<string, ContextRecordResponse>(slim.Records, StringComparer.Ordinal));
+                slim is null || slim.Records.Count == 0 ? null : new Dictionary<string, ContextRecordResponse>(slim.Records, StringComparer.Ordinal),
+                renamed.GetValueOrDefault(record.Id) is { LocalName: { } heading } named && heading != local.GetValueOrDefault(record.Id)
+                    ? new ContextRenamed(named.Name, heading)
+                    : null);
         }
 
         return composed;

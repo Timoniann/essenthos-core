@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -179,8 +180,8 @@ internal static class PaneEndpoints
 
 /// <summary>
 /// Every record's name in a language, by slug, made once per language and kept: the corpus does not change under a
-/// running API (a new corpus is a restart). The names are <see cref="EntityNames.Localised"/>'s, so a record is called
-/// what the encyclopedia calls it in that language.
+/// running API (a new corpus is a restart). The names are <see cref="EntityNames.Localised"/>'s with a renamed person's
+/// heading (<see cref="RenamedHeadings"/>), so a record is called what the encyclopedia calls it in that language.
 /// </summary>
 internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOptions> json)
 {
@@ -212,11 +213,19 @@ internal sealed class RecordNames(IServiceScopeFactory scopes, IOptions<JsonOpti
         using var scope = scopes.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var names = await EntityNames.Localised(db, db.Entities.AsNoTracking(), language)
-            .Select(e => new { e.Entity.Slug, e.Shown })
+            .Select(e => new { e.Entity.Id, e.Entity.Slug, e.Shown })
             .ToListAsync(cancellationToken);
+
+        // A person Scripture renames is called what his page heads him with (PRB-1770): Abraham's «Вказує на» line said
+        // Аврам in Genesis 22, which prints Авраам.
+        var persons = await db.Entities.AsNoTracking().Where(e => e.Kind == EntityKind.Person).Select(e => e.Id).ToListAsync(cancellationToken);
+        var renamed = await RenamedHeadings.Of(db, persons, language, cancellationToken);
         var response = new RecordNamesResponse(language, names
             .OrderBy(n => n.Slug, StringComparer.Ordinal)
-            .ToDictionary(n => n.Slug, n => n.Shown, StringComparer.Ordinal));
+            .ToDictionary(
+                n => n.Slug,
+                n => renamed.TryGetValue(n.Id, out var heading) ? heading.LocalName ?? heading.Name : n.Shown,
+                StringComparer.Ordinal));
         // With the options every other response is written with, so a name is sent as its letters and not escaped.
         var body = JsonSerializer.SerializeToUtf8Bytes(response, json.Value.SerializerOptions.GetTypeInfo(typeof(RecordNamesResponse)));
         return (body, $"\"{Convert.ToHexStringLower(SHA256.HashData(body))[..16]}\"");
