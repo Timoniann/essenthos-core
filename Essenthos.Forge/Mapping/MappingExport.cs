@@ -62,7 +62,7 @@ internal static class MappingExport
 
     private static Dictionary<string, long> Write(
         ProductStore store, string pair, string fromText, string toText, List<StoredLink> links, WordKeys keys,
-        Provenances provenances, (string?[] Text, string?[] Fold) hashes, string database, Func<string, string, bool> exports)
+        Provenances provenances, (Dictionary<int, string?> Text, Dictionary<int, string?> Fold) hashes, string database, Func<string, string, bool> exports)
     {
         var byMethod = new Dictionary<string, List<(int Side, WordKey First, MappingRow Row)>>(StringComparer.Ordinal);
         var verses = new HashSet<int>();
@@ -111,7 +111,7 @@ internal static class MappingExport
                    ProductHeader.DescribeProducer(Producer), [], header => header.Notes.Add(new("exported", $"from {database}"))))
         {
             foreach (var row in verses
-                         .Select(v => new VerseHashRow(keys.Slug(keys.TextOfVerse(v)), keys.VerseKeyOf(v), hashes.Text[v] ?? string.Empty, hashes.Fold[v]))
+                         .Select(v => new VerseHashRow(keys.Slug(keys.TextOfVerse(v)), keys.VerseKeyOf(v), hashes.Text.GetValueOrDefault(v) ?? string.Empty, hashes.Fold.GetValueOrDefault(v)))
                          .OrderBy(r => r.Text, StringComparer.Ordinal).ThenBy(r => r.Own))
             {
                 writer.Write(row);
@@ -172,7 +172,7 @@ internal static class MappingExport
     /// The text hash of every verse (<see cref="VerseHasher"/>), by verse id: what the texts' manifests say once P1 writes them;
     /// and the verse's fold (<see cref="VerseFold"/>), which tells a later correction of marks from one of words.
     /// </summary>
-    private static async Task<(string?[] Text, string?[] Fold)> VerseTextHashes(NpgsqlConnection db, WordKeys keys, CancellationToken cancellationToken)
+    private static async Task<(Dictionary<int, string?> Text, Dictionary<int, string?> Fold)> VerseTextHashes(NpgsqlConnection db, WordKeys keys, CancellationToken cancellationToken)
     {
         var languages = new Dictionary<int, string?>();
         await using (var command = new NpgsqlCommand("SELECT id, language FROM text", db))
@@ -184,9 +184,8 @@ internal static class MappingExport
             }
         }
 
-        await using var max = new NpgsqlCommand("SELECT coalesce(max(id), 0) FROM verse", db);
-        var hashes = new string?[Convert.ToInt32(await max.ExecuteScalarAsync(cancellationToken)) + 1];
-        var folds = new string?[hashes.Length];
+        var hashes = new Dictionary<int, string?>();
+        var folds = new Dictionary<int, string?>();
         var surfaces = new List<string>();
         void Fold(int verse)
         {

@@ -5339,41 +5339,29 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongRendering", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("TextId")
                         .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnName("text_id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("integer")
+                        .HasColumnName("rank");
 
                     b.Property<string>("Phrase")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("phrase");
 
-                    b.Property<int>("Rank")
-                        .HasColumnType("integer")
-                        .HasColumnName("rank");
-
-                    b.Property<string>("StrongNumber")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("strong_number");
-
-                    b.Property<int>("TextId")
-                        .HasColumnType("integer")
-                        .HasColumnName("text_id");
-
                     b.Property<int>("Uses")
                         .HasColumnType("integer")
                         .HasColumnName("uses");
 
-                    b.HasKey("Id")
+                    b.HasKey("TextId", "StrongNumber", "Rank")
                         .HasName("pk_strong_rendering");
-
-                    b.HasIndex("TextId", "StrongNumber", "Rank")
-                        .IsUnique()
-                        .HasDatabaseName("ix_strong_rendering_text_id_strong_number_rank");
 
                     b.ToTable("strong_rendering", null, t =>
                         {
@@ -6126,12 +6114,12 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.VerseReference", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<int>("CanonicalBook")
                         .HasColumnType("integer")
@@ -6302,20 +6290,17 @@ namespace Essenthos.Core.Migrations
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordEntity", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("WordId")
                         .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<double?>("Confidence")
-                        .HasColumnType("double precision")
-                        .HasColumnName("confidence");
+                        .HasColumnName("word_id");
 
                     b.Property<int>("EntityId")
                         .HasColumnType("integer")
                         .HasColumnName("entity_id");
+
+                    b.Property<double?>("Confidence")
+                        .HasColumnType("double precision")
+                        .HasColumnName("confidence");
 
                     b.Property<string>("Method")
                         .IsRequired()
@@ -6341,19 +6326,11 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("source");
 
-                    b.Property<long>("WordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("word_id");
-
-                    b.HasKey("Id")
+                    b.HasKey("WordId", "EntityId")
                         .HasName("pk_word_entity");
 
                     b.HasIndex("EntityId")
                         .HasDatabaseName("ix_word_entity_entity_id");
-
-                    b.HasIndex("WordId", "EntityId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_word_entity_word_id_entity_id");
 
                     b.HasIndex(new[] { "WordId" }, "ix_word_entity_word_id_exception")
                         .HasDatabaseName("ix_word_entity_word_id_exception")
@@ -6390,6 +6367,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("confidence");
 
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
                     b.Property<string>("Method")
                         .IsRequired()
                         .HasColumnType("text")
@@ -6404,16 +6385,16 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("source");
 
-                    b.Property<long>("WordEntityId")
+                    b.Property<long>("WordId")
                         .HasColumnType("bigint")
-                        .HasColumnName("word_entity_id");
+                        .HasColumnName("word_id");
 
                     b.HasKey("Id")
                         .HasName("pk_word_entity_claim");
 
-                    b.HasIndex("WordEntityId", "Method", "Source")
+                    b.HasIndex("WordId", "EntityId", "Method", "Source")
                         .IsUnique()
-                        .HasDatabaseName("ix_word_entity_claim_word_entity_id_method_source");
+                        .HasDatabaseName("ix_word_entity_claim_word_id_entity_id_method_source");
 
                     b.ToTable("word_entity_claim", null, t =>
                         {
@@ -8288,10 +8269,10 @@ namespace Essenthos.Core.Migrations
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.WordEntity", "WordEntity")
                         .WithMany("Claims")
-                        .HasForeignKey("WordEntityId")
+                        .HasForeignKey("WordId", "EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_word_entity_claim_word_entity_word_entity_id");
+                        .HasConstraintName("fk_word_entity_claim_word_entity_word_id_entity_id");
 
                     b.Navigation("WordEntity");
                 });

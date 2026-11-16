@@ -84,6 +84,11 @@ internal sealed record RecordColumn(string Name, RecordColumnType Type, bool Nul
 /// For a <paramref name="Listed"/> file, which the load writes to no table: a SELECT over the staged
 /// rows <c>s</c> counting the rows that are sound. The load fails unless it counts every row.
 /// </param>
+/// <param name="Numbered">
+/// A column of <c>s</c> whose values are numbered before <paramref name="Load"/> runs, into the temporary table
+/// <c>numbered (key, id)</c>: ids increasing in the column's order that depend on the value, not on how many come before
+/// it (<see cref="RowIds.Ordered"/>), for a table whose rows other tables point at by id.
+/// </param>
 internal sealed record RecordFile(
     string Product,
     ProductKind Kind,
@@ -95,7 +100,8 @@ internal sealed record RecordFile(
     string? About = null,
     string? Requires = null,
     Func<IEnumerable<string?[]>>? Listed = null,
-    string? Check = null)
+    string? Check = null,
+    string? Numbered = null)
 {
     public RecordColumn[] Parsed { get; } = RecordColumn.Parse(Columns);
 

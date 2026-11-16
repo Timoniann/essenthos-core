@@ -41,7 +41,7 @@
 # Books with no Greek counterpart in the corpus, so not mapped: 2 Esdras, 1 Enoch, Jubilees, 1 Meqabyan, 2 Meqabyan, 3 Meqabyan, 4 Baruch;
 # and the end of Daniel 14. The books the church divides in a way of its own (Esther, Job, the Psalter,
 # the Song, Wisdom, the Letter of Jeremiah, Messale and Tägsas) are read in
-# Essenthos.Forge/BetaMasaheft/GeezVerseMap.tsv, not here.
+# geez-verse-map.tsv beside this file, not here.
 #
 # Checked by reading: 1 Chronicles 7, the case that started this (Ge'ez 7:34 is 7:30, the sons of Asher;
 # 7:41 is 7:37; 7:2-3 are the Greek 7:2), Numbers 1 (Ge'ez 1:4 is the end of 1:3, so 1:5 is 1:4, Reuben's
@@ -50,7 +50,7 @@
 # verse on from 16:9), Tobit 11 (Ge'ez 11:1 is Raphael's word to Tobias, the Greek 11:2). Of 28 lines
 # drawn at random and read against the Greek, 27 were right. The bar leaves out some that are right:
 # 2 Chronicles 13:23 is the Greek 14:1, Abijah's burial, a single verse with too little to go on.
-# The same alignment run on the books GeezVerseMap.tsv reads verse by verse named a row that the
+# The same alignment run on the books geez-verse-map.tsv reads verse by verse named a row that the
 # reading also names for 90% of the verses of Job, 88% of the Song and 95% of Wisdom.
 #
 # book	geez	greek	relation	share	words

@@ -38,9 +38,30 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 {
     private const string ReferenceImport =
         """
-        COPY verse_reference (verse_id, canonical_book, canonical_chapter, canonical_verse, is_primary)
+        COPY verse_reference (id, verse_id, canonical_book, canonical_chapter, canonical_verse, is_primary)
         FROM STDIN (FORMAT BINARY)
         """;
+
+    /// <summary>The most references one verse may have: a reference's id is its verse's id times this, plus its place.</summary>
+    internal const int ReferencesPerVerse = 16;
+
+    /// <summary>
+    /// The ids of a text's references in the order <see cref="Drafts"/> gives them: the verse's id and the reference's place
+    /// among the verse's (the primary first), so a verse's references keep their ids while its placement does not change.
+    /// </summary>
+    internal static long[] Ids(IReadOnlyList<ReferenceDraft> drafts)
+    {
+        var ids = new long[drafts.Count];
+        for (var i = 0; i < drafts.Count; i++)
+        {
+            var place = i > 0 && drafts[i - 1].VerseId == drafts[i].VerseId ? (int)(ids[i - 1] % ReferencesPerVerse) + 1 : 0;
+            ids[i] = place < ReferencesPerVerse
+                ? (long)drafts[i].VerseId * ReferencesPerVerse + place
+                : throw new InvalidOperationException($"Verse {drafts[i].VerseId} has more than {ReferencesPerVerse} places in the frame.");
+        }
+
+        return ids;
+    }
 
     /// <summary>
     /// Places the text in the frame: computes where each verse stands, writes it as the text's frame file
@@ -132,11 +153,14 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             .Where(reference => reference.Verse!.TextId == text.Id)
             .ExecuteDeleteAsync(cancellationToken);
 
+        var ids = Ids(expected);
         await using (var writer = await connection.BeginBinaryImportAsync(ReferenceImport, cancellationToken))
         {
-            foreach (var reference in expected)
+            for (var i = 0; i < expected.Count; i++)
             {
+                var reference = expected[i];
                 await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(ids[i], NpgsqlDbType.Bigint, cancellationToken);
                 await writer.WriteAsync(reference.VerseId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(reference.Book, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(reference.Chapter, NpgsqlDbType.Integer, cancellationToken);
@@ -245,6 +269,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             .. VersificationData.Products.Select(product => store.Find(product)
                 ?? throw new FileNotFoundException($"{product} is not under {store.ResourcesPath}.")),
             .. text.Slug == GeezTextSource.Slug ? ["Essenthos/versification/geez.tsv"] : Array.Empty<string>(),
+            .. GeezVerseMap.InputsFor([text.Slug]),
         ]);
         var books = rules.Data.Books(text.Slug);
 

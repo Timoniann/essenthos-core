@@ -61,7 +61,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         WITH rendered AS (
             -- Gathered for every annotation at once: asked per word, the lookup ran a million and a
             -- half times one after another, beside a scan that had finished long before.
-            SELECT a.id, min(theirs_word.lemma) AS lemma
+            SELECT a.word_id, a.entity_id, min(theirs_word.lemma) AS lemma
             FROM word_entity a
             JOIN link_word mine ON mine.word_id = a.word_id
             JOIN link_word theirs ON theirs.link_id = mine.link_id AND theirs.side <> mine.side
@@ -69,7 +69,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             JOIN text theirs_text ON theirs_text.id = theirs_word.text_id
                  AND theirs_text.language = ANY(@originals)
             JOIN word_entity same ON same.word_id = theirs_word.id AND same.entity_id = a.entity_id
-            GROUP BY a.id
+            GROUP BY a.word_id, a.entity_id
         )
         SELECT a.entity_id, hw.text_id, hw.verse_id, hw.position, hw.text, hw.trailer, hw.lemma, ht.language,
                CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE rendered.lemma END AS renders,
@@ -83,7 +83,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         JOIN entity e ON e.id = a.entity_id
         JOIN word hw ON hw.id = a.word_id
         JOIN text ht ON ht.id = hw.text_id
-        LEFT JOIN rendered ON rendered.id = a.id
+        LEFT JOIN rendered ON rendered.word_id = a.word_id AND rendered.entity_id = a.entity_id
         WHERE NOT {Annotating.NeverAName} AND NOT {Pronouns.IsWord()}
         """;
 

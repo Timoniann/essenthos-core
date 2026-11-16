@@ -2256,7 +2256,7 @@ public class AppDbContext : DbContext
 
             entity.HasOne(c => c.WordEntity)
                 .WithMany(a => a.Claims)
-                .HasForeignKey(c => c.WordEntityId)
+                .HasForeignKey(c => new { c.WordId, c.EntityId })
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.ToTable("word_entity_claim", t => AddProvenanceConstraints(t, "word_entity_claim"));

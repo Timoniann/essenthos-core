@@ -8,13 +8,17 @@ namespace Essenthos.Core.Database.Entities;
 /// Where a verse sits in the shared address space, so that Joel 3 resolves in any text. This is not
 /// a link: a reference is a place, a link is a correspondence between words, and conflating the two
 /// is what paired Joel 3:1 with the wrong Hebrew.
+/// <para>
+/// The id is the verse's id and the reference's place among the verse's, the primary first (the frame load gives it), so a
+/// verse's references keep their ids from one build to the next.
+/// </para>
 /// </summary>
 [Index(nameof(CanonicalBook), nameof(CanonicalChapter), nameof(CanonicalVerse))]
 public class VerseReference
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     public int VerseId { get; set; }
     public Verse? Verse { get; set; }

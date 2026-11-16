@@ -24,6 +24,15 @@ internal static class VerseLinkFiles
 
     public static string Product(string pair) => MappingProducts.Of(pair, Name);
 
+    /// <summary>The bits of a verse link's id under its pair's two text ids (7 bits each).</summary>
+    internal const int LinkHashBits = 17;
+
+    /// <summary>A verse link's id: the from text's id, the to text's id, and a hash of its two sides unique within the pair.</summary>
+    internal static int LinkId(int from, int to, RowIds.Hashed numbering, VerseLinkRow row) =>
+        from is >= 1 and <= RowIds.Texts && to is >= 1 and <= RowIds.Texts
+            ? (from << (LinkHashBits + 7)) | (to << LinkHashBits) | (int)numbering.Of($"{row.From}|{row.To}")
+            : throw new InvalidOperationException($"Text ids {from} and {to} do not fit a verse link's id.");
+
     /// <summary>Every pair with a final, and every declared pair whose two texts the store holds, in ordinal order.</summary>
     public static List<string> Pairs(ProductStore store) =>
     [
@@ -55,6 +64,7 @@ internal static class VerseLinkFiles
         return store.Inputs([
             .. products.Select(store.Find).OfType<string>(),
             .. from == GeezTextSource.Slug || to == GeezTextSource.Slug ? ["Essenthos/versification/geez.tsv"] : Array.Empty<string>(),
+            .. BetaMasaheft.GeezVerseMap.InputsFor([from, to]),
         ]);
     }
 
@@ -93,6 +103,8 @@ internal static class VerseLinkFiles
     /// <summary>
     /// Loads the verse links of the pairs named, or of every pair with a file, replacing what the database holds of those
     /// pairs, in the caller's transaction if there is one. A verse the database does not hold leaves its link out, counted.
+    /// A link's id is its pair's two text ids over a hash of its verses (<see cref="LinkId"/>), so a pair's links keep their
+    /// ids while its file does not change them, and one pair's ids never meet another's.
     /// </summary>
     public static async Task<Loaded> Load(NpgsqlConnection connection, ProductStore store, IReadOnlyCollection<string>? pairs, CancellationToken cancellationToken)
     {
@@ -120,7 +132,7 @@ internal static class VerseLinkFiles
             }
         }
 
-        var links = new List<(int From, int To, VerseLinkRow Row, int[] FromVerses, int[] ToVerses)>();
+        var links = new List<(int Id, int From, int To, VerseLinkRow Row, int[] FromVerses, int[] ToVerses)>();
         long leftOut = 0;
         foreach (var pair in chosen)
         {
@@ -131,6 +143,7 @@ internal static class VerseLinkFiles
             }
 
             using var reader = store.Open(Product(pair), VerseLinkRow.Schema);
+            var numbering = new RowIds.Hashed(LinkHashBits);
             foreach (var row in reader.Rows())
             {
                 int[]? Resolve(int text, string keys)
@@ -151,7 +164,7 @@ internal static class VerseLinkFiles
 
                 if (Resolve(fromId, row.From) is { } fromVerses && Resolve(toId, row.To) is { } toVerses)
                 {
-                    links.Add((fromId, toId, row, fromVerses, toVerses));
+                    links.Add((LinkId(fromId, toId, numbering, row), fromId, toId, row, fromVerses, toVerses));
                 }
                 else
                 {
@@ -169,20 +182,14 @@ internal static class VerseLinkFiles
             await delete.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        int first;
-        await using (var command = new NpgsqlCommand("SELECT coalesce(max(id), 0) + 1 FROM verse_link", connection))
-        {
-            first = Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken));
-        }
-
         await using (var writer = await connection.BeginBinaryImportAsync(
                          "COPY verse_link (id, from_text_id, to_text_id, relation, method, confidence, source, note) FROM STDIN (FORMAT BINARY)", cancellationToken))
         {
             for (var i = 0; i < links.Count; i++)
             {
-                var (fromId, toId, row, _, _) = links[i];
+                var (id, fromId, toId, row, _, _) = links[i];
                 await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(first + i, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(id, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(fromId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(toId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(row.Relation, NpgsqlDbType.Text, cancellationToken);
@@ -206,7 +213,7 @@ internal static class VerseLinkFiles
                     foreach (var id in ids)
                     {
                         await writer.StartRowAsync(cancellationToken);
-                        await writer.WriteAsync(first + i, NpgsqlDbType.Integer, cancellationToken);
+                        await writer.WriteAsync(links[i].Id, NpgsqlDbType.Integer, cancellationToken);
                         await writer.WriteAsync(id, NpgsqlDbType.Integer, cancellationToken);
                         await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
                         members++;

@@ -530,6 +530,7 @@ internal sealed class AlignerSource : IPairSource
             .. AlignerFiles.StoredAnswers(store, pair),
             .. pool is null ? [] : AlignerFiles.StoredAnswers(store, $"{aligned.From}-{string.Join('-', pool)}").Concat(PoolStamps(store, aligned.From, pool)),
             .. aligned.To == AlignerFiles.Analysed ? AlignerFiles.SyntaxInputs(store) : [],
+            .. GeezVerseMap.InputsFor(read),
         ];
     }
 

@@ -1024,7 +1024,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             SELECT count(*) FROM word_entity a
             WHERE btrim(a.source) = ''
                OR (EXISTS (SELECT 1 FROM word_entity_claim)
-                   AND NOT EXISTS (SELECT 1 FROM word_entity_claim c WHERE c.word_entity_id = a.id))
+                   AND NOT EXISTS (SELECT 1 FROM word_entity_claim c WHERE c.word_id = a.word_id AND c.entity_id = a.entity_id))
             """),
 
         // Twenty-three men are called Zechariah, and no method that works from the name alone can

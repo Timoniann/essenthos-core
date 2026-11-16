@@ -344,8 +344,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
     }
 
     /// <summary>
-    /// After a records load: where every record kept its id (the records are numbered in slug order, so an edit that adds or
-    /// removes none moves none), the rows of <see cref="OnRecords"/> stand as they were. Otherwise the names and spellings are
+    /// After a records load: where every record kept its id (a record's id is where its slug falls among all slugs, so an edit
+    /// that adds or removes none moves none, and one that does moves at most the slugs beside it, <see cref="RowIds.Ordered"/>), the rows of <see cref="OnRecords"/> stand as they were. Otherwise the names and spellings are
     /// moved to the new id of their record's slug, those whose record is gone are dropped and counted, and the record words are
     /// emptied, to be counted again. The keys go back on, validated, either way.
     /// </summary>

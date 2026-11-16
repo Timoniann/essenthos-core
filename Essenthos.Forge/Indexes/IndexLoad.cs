@@ -554,10 +554,23 @@ internal static class IndexLoad
         return new Outcome("text_form", rows, loaded.Count, clock.Elapsed);
     }
 
+    /// <summary>The bits of a rendering's id under its text's id: 7 + 45 keep every id below 2^52, an exact JSON number.</summary>
+    internal const int RenderingHashBits = 45;
+
+    /// <summary>
+    /// A rendering's id: its text's id in the bits above <see cref="RenderingHashBits"/>, and below them a hash of its spelling,
+    /// edition, number and lemma, unique within the text (<see cref="RowIds.Hashed"/>).
+    /// </summary>
+    internal static long RenderingId(int text, RowIds.Hashed numbering, RenderingRow row) =>
+        text is >= 1 and <= RowIds.Texts
+            ? ((long)text << RenderingHashBits) | numbering.Of($"{row.Form}|{row.Witness}|{row.Number}|{row.Lemma}")
+            : throw new InvalidOperationException($"A text id of {text} does not fit a rendering's id.");
+
     /// <summary>
     /// <c>word_rendering</c>, <c>word_rendering_place</c>, <c>word_rendering_witness</c> and <c>word_rendering_source</c> from
     /// the renderings indexes (<see cref="RenderingIndex"/>): each text's rows replaced. A rendering's first places are its
-    /// samples; the whole list goes beside it only where there are more.
+    /// samples; the whole list goes beside it only where there are more. A rendering's id is its text's id over a hash of what it
+    /// is (<see cref="RenderingId"/>), so a text's rows keep their ids while its index does not change them.
     /// </summary>
     public static async Task<Outcome> WordRenderings(string connectionString, ProductStore store, IReadOnlyCollection<string> texts, CancellationToken cancellationToken)
     {
@@ -580,18 +593,16 @@ internal static class IndexLoad
             .ToList();
 
         await using var transaction = own ? await connection.BeginTransactionAsync(cancellationToken) : null;
-        long next;
         await using (var delete = new NpgsqlCommand(
                          """
                          DELETE FROM word_rendering_place p USING word_rendering r WHERE p.rendering_id = r.id AND r.text_id = ANY(@texts);
                          DELETE FROM word_rendering WHERE text_id = ANY(@texts);
                          DELETE FROM word_rendering_witness WHERE text_id = ANY(@texts);
                          DELETE FROM word_rendering_source WHERE text_id = ANY(@texts);
-                         SELECT coalesce(max(id), 0) FROM word_rendering;
                          """, connection, transaction))
         {
             delete.Parameters.AddWithValue("texts", named.Select(slug => ids[slug].Id).ToArray());
-            next = (long)(await delete.ExecuteScalarAsync(cancellationToken))!;
+            await delete.ExecuteNonQueryAsync(cancellationToken);
         }
 
         long renderings = 0, places = 0, witnesses = 0, sources = 0;
@@ -603,9 +614,10 @@ internal static class IndexLoad
             foreach (var slug in loaded)
             {
                 using var reader = store.Open(IndexProducts.Of(slug, IndexProducts.Renderings), RenderingRow.Schema);
+                var numbering = new RowIds.Hashed(RenderingHashBits);
                 foreach (var row in reader.Rows())
                 {
-                    var id = ++next;
+                    var id = RenderingId(ids[slug].Id, numbering, row);
                     var count = RenderingPlaces.Count(row.Places);
                     await writer.StartRowAsync(cancellationToken);
                     await writer.WriteAsync(id, NpgsqlDbType.Bigint, cancellationToken);
