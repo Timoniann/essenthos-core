@@ -115,7 +115,7 @@ internal static partial class ForgeVerbs
             "Write each aligned pair's aligner method file from the answer stored in Resources/Alignments for both texts' words, where an input moved. "
             + "Never trains: a pair with no answer for its words keeps its file and waits for align. Reads no database.",
             (forge, args) => SourcePairs(forge, args, Mapping.MappingMethods.Aligner)),
-        new("compose", "<from> <via[,via]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--dry-run] [--verses <range,...>] [--from <Resources>]",
+        new("compose", "<from> <via[,via[,via]]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--dry-run] [--verses <range,...>] [--from <Resources>]",
             "Compose a text's links to an original through aligned intermediates from the store's files into the pair's composed method file, training "
             + "the hops it lacks; --dry-run scores it and writes nothing; --verses draws a declared composition as declared and writes only the rows of "
             + "FROM words in those verses, keeping every other row of the file. Reads no database.", Compose, Least: 3),

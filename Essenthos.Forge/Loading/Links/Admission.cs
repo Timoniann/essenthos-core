@@ -51,7 +51,7 @@ internal sealed class Admission
     /// How often a combination's written answers must name the word a source states. At 0.9 a
     /// composition adds only answers that are right about as often as the stated links beside them
     /// were found to be by every check made on them; lowering it buys coverage with the words the
-    /// direct model and the two middle texts disagree about.
+    /// direct model and the middle texts disagree about.
     /// </summary>
     public const double DefaultPrecision = 0.9;
 
@@ -68,16 +68,24 @@ internal sealed class Admission
     private readonly double _precision;
     private readonly string? _measuredOn;
     private readonly bool _refusesUnmeasured;
+    private readonly Added? _added;
+
+    /// <summary>
+    /// A middle text added to a composition that stood without it (<see cref="Keeping"/>): its route, its name, and the
+    /// answers the composition without it writes.
+    /// </summary>
+    private sealed record Added(Route Route, string Via, IReadOnlySet<(long From, long To)> Standing);
 
     private Admission(
         IReadOnlyDictionary<Route, RouteFloor> floors, double threshold, double precision, string? measuredOn = null,
-        bool refusesUnmeasured = false)
+        bool refusesUnmeasured = false, Added? added = null)
     {
         _floors = floors;
         _threshold = threshold;
         _precision = precision;
         _measuredOn = measuredOn;
         _refusesUnmeasured = refusesUnmeasured;
+        _added = added;
     }
 
     /// <summary>Every answer from the ordinary threshold, which is what a measurement starts from.</summary>
@@ -87,9 +95,18 @@ internal sealed class Admission
     public IReadOnlyDictionary<Route, RouteFloor> Floors => _floors;
 
     public bool Admits(RoutedLink link) =>
-        _floors.TryGetValue(link.Route, out var floor)
+        !Seconded(link)
+        && (_floors.TryGetValue(link.Route, out var floor)
             ? link.Confidence >= floor.Confidence
-            : !Unmeasured(link.Route) && link.Confidence >= _threshold;
+            : !Unmeasured(link.Route) && link.Confidence >= _threshold);
+
+    /// <summary>
+    /// Whether an answer the added middle text's route found with only one other family of readings is one the composition
+    /// without it does not write, and so is refused (<see cref="Keeping"/>).
+    /// </summary>
+    private bool Seconded(RoutedLink link) =>
+        _added is { } added && link.Route.HasFlag(added.Route) && Routes.Families(link.Route) < 3
+        && !added.Standing.Contains((link.From, link.To));
 
     /// <summary>
     /// Whether a combination nothing measured is refused rather than written from the ordinary threshold: only when asked
@@ -116,7 +133,48 @@ internal sealed class Admission
             floors[route] = floor;
         }
 
-        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured);
+        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, _added);
+    }
+
+    /// <summary>
+    /// The same, with a middle text added to a composition that stood without it: every combination its route is not in is
+    /// written from the floor <paramref name="before"/> set for it, where that is the lower one (PRB-0863).
+    ///
+    /// <para>
+    /// Luther is the text the Elberfelder's composition through the King James and the Berean measured its floors on. Made a
+    /// middle text, he can no longer measure what the other readings find without him, since he has no route through himself,
+    /// and those answers would be refused although the composition without him writes them. An answer his route did not find
+    /// has the confidence it had without him, so written from the floor it had then it is an answer the composition without him
+    /// writes: nothing is admitted that was not, and nothing written before is taken away for his being added. What his route
+    /// does find with two other families of readings or more is measured as any combination is.
+    /// </para>
+    ///
+    /// <para>
+    /// What his route finds with only one other family is written only where the composition without him writes the same
+    /// answer: he may second it, never bring it in. Read by hand on 2026-11-16, the Elberfelder's New Testament words his
+    /// route brought in with one other family were right 75 of 84 times (89%: <em>unter sich</em> on ἀσύμφωνοι, <em>und</em>
+    /// on the verb after a participle, a pronoun on the wrong word), the ones it brought in with two or more 38 of 38.
+    /// </para>
+    /// </summary>
+    /// <param name="before">The admission of the same pair through the other middle texts, numbered as they are here.</param>
+    /// <param name="added">The route of the middle text added.</param>
+    /// <param name="via">Its name, for the floor's basis.</param>
+    /// <param name="standing">The answers the composition through the other middle texts admits.</param>
+    public Admission Keeping(Admission before, Route added, string via, IReadOnlySet<(long From, long To)> standing)
+    {
+        var floors = new Dictionary<Route, RouteFloor>(_floors);
+        foreach (var (route, floor) in before._floors)
+        {
+            if (route.HasFlag(added) || floor.Refused || !floors.TryGetValue(route, out var measured)
+                || measured.Confidence <= floor.Confidence)
+            {
+                continue;
+            }
+
+            floors[route] = floor with { Basis = $"as before {via} was a middle text{(floor.Basis is null ? string.Empty : $", {floor.Basis}")}" };
+        }
+
+        return new Admission(floors, _threshold, _precision, _measuredOn, _refusesUnmeasured, new Added(added, via, standing));
     }
 
     /// <summary>
@@ -125,7 +183,7 @@ internal sealed class Admission
     /// composition asks for it: the owner sees what it removes, text by text, before it is turned on (PRB-1607).
     /// </summary>
     public Admission RefusingUnmeasured(bool refuse = true) =>
-        refuse == _refusesUnmeasured ? this : new Admission(_floors, _threshold, _precision, _measuredOn, refuse);
+        refuse == _refusesUnmeasured ? this : new Admission(_floors, _threshold, _precision, _measuredOn, refuse, _added);
 
     /// <summary>
     /// Whether a source's statements can measure answers at all: enough of its words have a word they
@@ -311,6 +369,7 @@ internal sealed class Admission
             : $" on {_measuredOn}, which state the target where this pair states nothing";
         return $"each combination of readings measured against {_precision:P0}{where}; " +
                $"written: {string.Join(", ", written)}; refused: {string.Join(", ", refused)}; " +
+               (_added is null ? string.Empty : $"what {_added.Via} found with one other family of readings only where the composition without it writes it; ") +
                (unmeasured.Count == 0 ? string.Empty : $"refused as measured on neither: {string.Join(", ", unmeasured)}; ") +
                (_refusesUnmeasured ? "anything else one family of readings found is refused as measured by nothing, the rest " : "anything else ") +
                $"from {Number(_threshold)}";

@@ -122,6 +122,67 @@ public class BorrowedAdmissionTests
         CompositionPipeline.Translated(Route.Written, [ThroughBsb]).Should().Be(Route.Written);
     }
 
+    /// <summary>
+    /// The Elberfelder through the King James, the Berean and Luther (PRB-0863), measured on Luther through the first two and on
+    /// the Schlachter through all three. Luther cannot measure what the others find without him, so that is refused unless the
+    /// Schlachter measured it; the composition through the first two alone measured it on Luther, and its floor stands for those
+    /// answers, which keep the confidence they had without him. What Luther's route found keeps the floor measured for it.
+    /// </summary>
+    [Fact]
+    public void AnAddedMiddleTextLeavesWhatTheOthersFindWithoutItAtTheFloorsTheyHadWithoutIt()
+    {
+        string[] three = ["KJV", "BSB", "LUTH1912"];
+        const Route throughLuther = Route.ComposedThird;
+        var everyButLuther = Direct | ThroughKjv | ThroughBsb;
+        var luther = ("LUTH1912", everyButLuther, (IReadOnlyDictionary<Route, RouteFloor>)new Dictionary<Route, RouteFloor>
+        {
+            [Direct | ThroughKjv] = new(0.57, 8_702, 0.90),
+            [ThroughKjv] = new(0.82, 1_000, 0.92),
+        });
+        var schlachter = ("SCH1951", everyButLuther | throughLuther, (IReadOnlyDictionary<Route, RouteFloor>)new Dictionary<Route, RouteFloor>
+        {
+            [Direct | ThroughKjv] = new(0.70, 900, 0.91),
+            [throughLuther] = new(1.01, 400, 0.70),
+        });
+        var withLuther = Admission.Borrow([luther, schlachter], three, 0.25);
+        var before = Admission.Borrow(
+            [("LUTH1912", everyButLuther, new Dictionary<Route, RouteFloor> { [Direct | ThroughKjv] = new(0.57, 8_702, 0.90) })], Vias, 0.25);
+
+        var admission = withLuther.Keeping(before, throughLuther, "LUTH1912", new HashSet<(long, long)>());
+
+        admission.Floors[Direct | ThroughKjv].Confidence.Should().Be(0.57);
+        admission.Floors[Direct | ThroughKjv].Basis.Should().Be("as before LUTH1912 was a middle text, on LUTH1912");
+        admission.Floors[Direct | ThroughKjv | throughLuther].Confidence.Should().Be(0.57);
+        admission.Floors[Direct | ThroughKjv | throughLuther].Basis.Should().Be("as W+R+KJV on LUTH1912");
+        admission.Floors[ThroughKjv | throughLuther].Confidence.Should().Be(0.82);
+        admission.Admits(new RoutedLink(1, 1, 0.98, throughLuther)).Should().BeFalse();
+        admission.Admits(new RoutedLink(1, 1, 0.98, Direct)).Should().BeFalse();
+        withLuther.Floors[Direct | ThroughKjv].Confidence.Should().Be(0.70, "without the floors from before, only the Schlachter measured it");
+    }
+
+    /// <summary>
+    /// What Luther's route finds with one other family of readings is written only where the composition without him writes
+    /// the same answer; with two others or more it is written from its floor.
+    /// </summary>
+    [Fact]
+    public void AnAddedMiddleTextSecondsWhatOneOtherFamilyFoundButBringsNothingInWithIt()
+    {
+        string[] three = ["KJV", "BSB", "LUTH1912"];
+        const Route throughLuther = Route.ComposedThird;
+        var luther = ("LUTH1912", Direct | ThroughKjv | ThroughBsb, (IReadOnlyDictionary<Route, RouteFloor>)new Dictionary<Route, RouteFloor>
+        {
+            [Direct] = new(0.50, 3_893, 0.90),
+            [ThroughKjv | ThroughBsb] = new(0.40, 800, 0.91),
+        });
+        var admission = Admission.Borrow([luther], three, 0.25)
+            .Keeping(Admission.Borrow([], Vias, 0.25), throughLuther, "LUTH1912", new HashSet<(long, long)> { (1, 10) });
+
+        admission.Admits(new RoutedLink(1, 10, 0.60, Direct | throughLuther)).Should().BeTrue("the composition without Luther writes it");
+        admission.Admits(new RoutedLink(2, 20, 0.90, Direct | throughLuther)).Should().BeFalse("only Luther's route brings it in");
+        admission.Admits(new RoutedLink(3, 30, 0.45, ThroughKjv | ThroughBsb | throughLuther)).Should().BeTrue();
+        admission.Describe(three).Should().Contain("what LUTH1912 found with one other family of readings only where");
+    }
+
     private static Admission Borrow(
         (string, Route, IReadOnlyDictionary<Route, RouteFloor>) berean,
         (string, Route, IReadOnlyDictionary<Route, RouteFloor>) kingJames) =>
