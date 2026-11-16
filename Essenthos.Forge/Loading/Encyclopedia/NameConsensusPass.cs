@@ -1,28 +1,44 @@
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Indexes;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
+using Essenthos.Core.Mapping;
+using Essenthos.Core.Names;
+using Essenthos.Core.Products;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>
-/// <see cref="NameConsensus"/> over the corpus: every text read for the words naming each person,
-/// place, people, title, thing and appointed time the originals name, measured against the texts
-/// whose annotations came across a link the text's own edition states or numbers. It writes nothing
-/// to the database: the names it once wrote are the hand files names/consensus/&lt;SLUG&gt;.
+/// <see cref="NameConsensus"/> over the corpus, read from files: every text read for the words naming each person,
+/// place, people, title, thing and appointed time the originals name, measured against the texts whose names came across
+/// a link the text's own edition states or numbers, and written as <c>names/consensus/&lt;SLUG&gt;</c>, whom each
+/// translation's verses say its words name, which names-pairs reads (<see cref="NamesFirstSource"/>). Reads no database.
 ///
 /// <para>
 /// <strong>An entity's verses are the originals'.</strong> The verses on an encyclopedia page are
 /// read off every text's annotations, the one being measured included, so a text would be scored on
 /// verses its own annotations chose. Here they are the canonical addresses where BHSA or a Greek New
-/// Testament names the entity — the same claim with the translations left out of it — and a
+/// Testament names the entity in its settled names (<c>names/&lt;REF&gt;</c>, one record a word as
+/// <see cref="Annotating.Settled"/> settles it) — the same claim with the translations left out of it — and a
 /// namesake is an entity the originals call by one of the same words.
+/// </para>
+///
+/// <para>
+/// <strong>A text's own names are what the earlier methods carry.</strong> What a word is already named, which the
+/// consensus writes nothing over, is the names projection carried over the method files that come before the names
+/// (<see cref="NamesFirstSource.Before"/>: stated, Strong, aligner, composed, lexical, possessive) of the pairs names-pairs
+/// places, never over the final: the final holds the names this file places, so reading it would make the graph read
+/// itself. Such a word is linked in the pair already, so names-pairs never places it; a word named only over another pair
+/// (Brenton over his Greek) keeps the consensus, which names-pairs needs there. A name carried by EVIDENTIA's or the names'
+/// own links does not keep a word from the consensus. The measured texts are scored against what their stated and Strong
+/// files alone carry.
 /// </para>
 ///
 /// <para>
@@ -44,10 +60,16 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// </para>
 ///
 /// </summary>
-internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPass> logger)
+internal static class NameConsensusPass
 {
     /// <summary>The witnesses whose annotations say which verses name whom.</summary>
     private static readonly string[] Originals = ["BHSA", "NESTLE1904", "TR1894"];
+
+    /// <summary>
+    /// The originals whose own words are never read: no pair places a translation's names on theirs. The Textus Receptus
+    /// is read, as names-pairs places its names on the Nestle's.
+    /// </summary>
+    private static readonly string[] Unread = ["BHSA", "NESTLE1904"];
 
     /// <summary>
     /// The texts whose annotations came across a link their edition states or numbers: the King
@@ -65,14 +87,28 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
     /// <summary>What each kind's bar must reach on the measured texts, unless a run asks for another.</summary>
     public const double Precision = 0.97;
 
-    /// <summary>What the written annotations are credited to.</summary>
+    /// <summary>The method files a measured text's names are scored against: the ones its edition states or numbers.</summary>
+    private static readonly string[] StatedMethods = [MappingMethods.Stated, MappingMethods.Strong];
+
+    public const string Producer = "forge names-consensus";
+
+    /// <summary>
+    /// The source a name this pass once wrote is credited to. A settled or carried name of that source is the consensus's
+    /// own reading kept as a decision (31,177 of the Vulgate's settled names): it neither keeps a word from the consensus nor
+    /// scores it.
+    /// </summary>
     public const string Source = Essenthos.Core.Corpus.Annotations.Consensus;
 
-    private static readonly string[] StatedLinks =
-    [
-        $"{Annotating.CarriedNote}, linked by {EnumSpelling.Of(LinkMethod.StatedBySource)}",
-        $"{Annotating.CarriedNote}, linked by {EnumSpelling.Of(LinkMethod.StrongNumber)}",
-    ];
+    /// <summary>Raised with any change to what the consensus writes or how.</summary>
+    public const string Version = "1";
+
+    public const string VersionNote = "consensus-version";
+
+    /// <summary>The records the consensus reads: each one's kind.</summary>
+    private const string KindsProduct = Essenthos.Core.Records.RecordKinds.Product;
+
+    /// <summary>The titles and the records that bear them: a title settled on a word gives way to its bearer there.</summary>
+    private const string TitlesProduct = "records/facts/titles";
 
     /// <summary>
     /// Never fewer than <see cref="FewVerses"/>. The measured texts put the tail at 96–99%, but read
@@ -92,178 +128,245 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
     /// </summary>
     private const int FewVerses = 5;
 
-    /// <summary>
-    /// How many judged words a size band needs before its own precision is its confidence; below it,
-    /// the kind's precision over every size is.
-    /// </summary>
-    private const int ConfidentBand = 200;
-
-    /// <summary>
-    /// The most a written annotation is ever said to be worth: it was read off the text by a rule,
-    /// and a rule's reading stays below what a source states however well it measured.
-    /// </summary>
-    private const double MostConfident = 0.99;
-
-    /// <summary>What a written annotation is worth where no measured text could say: a run over a corpus without them.</summary>
-    internal const double Unmeasured = 0.9;
-
     private const int AddressBook = 1_000_000;
     private const int AddressChapter = 1_000;
 
     private const int ExamplesShown = 12;
 
-    /// <param name="texts">The texts to read, or every text.</param>
+    /// <param name="Written">Whether the files were written; false where they were current or the run only measured.</param>
+    public sealed record Outcome(bool Written, int Texts, long Rows, string Report);
+
+    /// <summary>The texts whose words the consensus names, in name order.</summary>
+    internal static IReadOnlyList<string> Texts(IndexContext context) =>
+        [.. context.Texts.Keys.Where(slug => !Unread.Contains(slug)).Order(StringComparer.Ordinal)];
+
+    /// <summary>
+    /// Writes every text's <c>names/consensus/&lt;SLUG&gt;</c> where an input moved, or measures only: a run at another
+    /// precision or bar than the build's reports and writes no product.
+    /// </summary>
     /// <param name="precision">The precision each kind's bar must reach on the measured texts.</param>
-    /// <param name="output">A folder to write each text's findings and words into, or none.</param>
     /// <param name="bar">One bar for every kind, or null to choose each on the measured texts.</param>
-    public async Task<string> Run(
-        IReadOnlyCollection<string>? texts,
+    /// <param name="output">A folder to write each text's findings and words into, or none.</param>
+    public static Outcome Write(
+        ProductStore store,
+        bool force,
         double precision,
-        string? output,
         ConsensusBar? bar,
-        CancellationToken cancellationToken = default)
+        string? output,
+        int parallel,
+        Action<string> log)
     {
         var started = Stopwatch.StartNew();
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        try
+        var writes = bar is null && precision == Precision;
+        var projection = new NamesProjection(store);
+        var context = projection.Context;
+        var texts = Texts(context);
+        var inputs = Inputs(store, projection, texts);
+        if (writes && !force && !NeedsBuild(store, texts, inputs))
         {
-            var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-            var question = await Question(connection, cancellationToken);
-            var slugs = await db.Entities.ToDictionaryAsync(entity => entity.Id, entity => entity.Slug, cancellationToken);
-            var every = await db.Texts
-                .Where(text => !Originals.Contains(text.Slug))
-                .OrderBy(text => text.Slug)
-                .Select(text => new { text.Id, text.Slug, text.Language })
-                .ToListAsync(cancellationToken);
-            var chosen = texts is null ? every : every.Where(text => texts.Contains(text.Slug)).ToList();
+            return new Outcome(false, texts.Count, 0, "names/consensus is current");
+        }
 
-            var report = new StringBuilder();
-            var table = new StringBuilder()
-                .AppendLine("| text | language | entities named | of them new to the text | words | agree | new | disagree | verses reached before | after | new by kind (person, place, people, title, object, observance) | written |")
-                .AppendLine("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|");
-            var examples = new StringBuilder();
-            var disagreements = new List<Disagreement>();
-            var done = new HashSet<string>(StringComparer.Ordinal);
+        var records = Records.Read(store);
+        var question = Question(store, records);
+        log($"question: {question.Entities.Count} entities the originals name, {question.Namesakes.Count} with namesakes ({started.Elapsed:mm\\:ss})");
+
+        var report = new StringBuilder();
+        var table = new StringBuilder()
+            .AppendLine("| text | language | entities named | of them new to the text | words | agree | new | disagree | verses reached before | after | new by kind (person, place, people, title, object, observance) | written |")
+            .AppendLine("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|");
+        var examples = new StringBuilder();
+        if (output is not null)
+        {
+            Directory.CreateDirectory(output);
+        }
+
+        var measured = texts.Where(Measured.Contains)
+            .AsParallel().AsOrdered().WithDegreeOfParallelism(Math.Max(1, parallel))
+            .Select(slug => Read(store, projection, slug, question, records, true, log))
+            .ToList();
+        log($"read the {measured.Count} measured texts ({started.Elapsed:mm\\:ss})");
+
+        var bars = Report(report, measured, precision, bar);
+
+        var results = new ConcurrentDictionary<string, (Reading Reading, IReadOnlyList<ConsensusWord> Words, string Row, string Example)>(StringComparer.Ordinal);
+        void Add(Reading reading)
+        {
+            var words = Written(reading, bars);
+            var (row, example) = Addition(reading, bars, records.Slugs, words.Count);
+            results[reading.Slug] = (reading, words, row, example);
             if (output is not null)
             {
-                Directory.CreateDirectory(output);
-            }
-
-            var measured = new List<Reading>();
-            foreach (var text in every.Where(text => Measured.Contains(text.Slug)))
-            {
-                measured.Add(await Read(connection, text.Id, text.Slug, text.Language, question, cancellationToken));
-                logger.LogInformation("Read {Text}", text.Slug);
-            }
-
-            var (bars, _) = Report(report, measured, precision, bar);
-
-            async Task Add(Reading reading)
-            {
-                Addition(reading, bars, slugs, table, examples, disagreements, null);
-                if (output is not null)
+                Write(output, reading, bars, records.Slugs);
+                Unnamed(output, reading, bars, records.Slugs, question);
+                if (Measured.Contains(reading.Slug))
                 {
-                    await Write(output, reading, bars, slugs, cancellationToken);
-                    await Unnamed(output, reading, bars, slugs, question, cancellationToken);
-                    if (Measured.Contains(reading.Slug))
-                    {
-                        await Audit(output, reading, bars, slugs, question, cancellationToken);
-                    }
+                    Audit(output, reading, bars, records.Slugs, question);
                 }
-
-                done.Add(reading.Slug);
             }
-
-            var attested = new Dictionary<string, Dictionary<int, HashSet<string>>>(StringComparer.Ordinal);
-            void Witness(Reading reading)
-            {
-                if (!attested.TryGetValue(reading.Language, out var language))
-                {
-                    attested[reading.Language] = language = [];
-                }
-
-                NameConsensus.Witness(language, reading.Findings, bars);
-            }
-
-            foreach (var reading in measured)
-            {
-                Witness(reading);
-            }
-
-            foreach (var reading in measured.Where(reading => chosen.Any(text => text.Slug == reading.Slug)))
-            {
-                await Add(reading);
-            }
-
-            var versesOf = await VersesOf(connection, cancellationToken);
-            var rest = chosen
-                .Where(text => !done.Contains(text.Slug))
-                .OrderByDescending(text => versesOf.GetValueOrDefault(text.Slug))
-                .ThenBy(text => text.Slug, StringComparer.Ordinal)
-                .ToList();
-            foreach (var partner in every
-                         .Where(text => !Measured.Contains(text.Slug) && !chosen.Contains(text)
-                                        && rest.Any(other => other.Language == text.Language
-                                                             && versesOf.GetValueOrDefault(text.Slug) > versesOf.GetValueOrDefault(other.Slug)))
-                         .OrderByDescending(text => versesOf.GetValueOrDefault(text.Slug)))
-            {
-                Witness(await Read(connection, partner.Id, partner.Slug, partner.Language, question, cancellationToken));
-                logger.LogInformation("Read {Text} for the texts of its language holding fewer verses", partner.Slug);
-            }
-
-            foreach (var text in rest)
-            {
-                var reading = await Read(
-                    connection, text.Id, text.Slug, text.Language,
-                    question with { Attested = attested.GetValueOrDefault(text.Language) }, cancellationToken);
-                await Add(reading);
-                Witness(reading);
-                logger.LogInformation("Read {Text}", text.Slug);
-            }
-
-            report.AppendLine()
-                .AppendLine("At those bars:")
-                .AppendLine()
-                .Append(table)
-                .AppendLine()
-                .AppendLine("The entities with the most words named where the text had none for them, or another:")
-                .Append(examples);
-            if (output is not null)
-            {
-                report.AppendLine().AppendLine($"Findings and words written to {output}.");
-            }
-
-            report.AppendLine().AppendLine($"Read {done.Count} texts in {started.Elapsed:hh\\:mm\\:ss}.");
-            return report.ToString();
         }
-        finally
+
+        var attested = new Dictionary<string, Dictionary<int, HashSet<string>>>(StringComparer.Ordinal);
+        foreach (var reading in measured)
         {
-            await db.Database.CloseConnectionAsync();
+            if (!attested.TryGetValue(reading.Language, out var language))
+            {
+                attested[reading.Language] = language = [];
+            }
+
+            NameConsensus.Witness(language, reading.Findings, bars);
         }
+
+        foreach (var reading in measured)
+        {
+            Add(reading);
+        }
+
+        // A text is read against the fuller texts of its language before it: each language's texts in turn, the one holding
+        // the most verses first, the languages at once.
+        var rest = texts.Where(slug => !Measured.Contains(slug))
+            .Select(slug => (Slug: slug, context.Texts[slug].Language, Verses: VerseCount(store, slug)))
+            .GroupBy(text => text.Language, StringComparer.Ordinal)
+            .ToList();
+        Parallel.ForEach(rest, new ParallelOptions { MaxDegreeOfParallelism = Math.Max(1, parallel) }, language =>
+        {
+            var witnessed = attested.GetValueOrDefault(language.Key) ?? [];
+            foreach (var text in language.OrderByDescending(text => text.Verses).ThenBy(text => text.Slug, StringComparer.Ordinal))
+            {
+                var reading = Read(store, projection, text.Slug, question with { Attested = witnessed }, records, false, log);
+                Add(reading);
+                NameConsensus.Witness(witnessed, reading.Findings, bars);
+                log($"read {text.Slug} ({started.Elapsed:mm\\:ss})");
+            }
+        });
+
+        foreach (var slug in texts)
+        {
+            table.AppendLine(results[slug].Row);
+            examples.AppendLine(results[slug].Example);
+        }
+
+        report.AppendLine()
+            .AppendLine("At those bars:")
+            .AppendLine()
+            .Append(table)
+            .AppendLine()
+            .AppendLine("The entities with the most words named where the text had none for them, or another:")
+            .Append(examples);
+        if (output is not null)
+        {
+            report.AppendLine().AppendLine($"Findings and words written to {output}.");
+        }
+
+        long rows = 0;
+        if (writes)
+        {
+            foreach (var slug in texts)
+            {
+                rows += WriteFile(store, slug, results[slug].Reading, results[slug].Words, records.Slugs, inputs);
+            }
+        }
+
+        report.AppendLine().AppendLine($"Read {texts.Count} texts in {started.Elapsed:hh\\:mm\\:ss}" +
+                                       (writes ? $"; {rows} words written to names/consensus." : "; measured only, nothing written."));
+        return new Outcome(writes, texts.Count, rows, report.ToString());
     }
 
-    private static async Task<Dictionary<string, int>> VersesOf(NpgsqlConnection connection, CancellationToken cancellationToken)
+    /// <summary>The words a text's file holds: what the bars settle, on the words nothing the earlier methods carry names.</summary>
+    private static IReadOnlyList<ConsensusWord> Written(Reading reading, ConsensusBars bars) =>
+        [.. NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts).Where(word => !reading.Annotated.ContainsKey(word.Word))];
+
+    private static long WriteFile(
+        ProductStore store,
+        string slug,
+        Reading reading,
+        IReadOnlyList<ConsensusWord> words,
+        IReadOnlyList<string> slugs,
+        IReadOnlyList<ProductInput> inputs)
     {
-        var verses = new Dictionary<string, int>(StringComparer.Ordinal);
-        await using var command = new NpgsqlCommand(
-            "SELECT t.slug, count(*) FROM verse v JOIN text t ON t.id = v.text_id GROUP BY t.slug", connection);
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
+        var rows = words
+            .Select(word => new ConsensusName(reading.Keys[(int)word.Word], slugs[word.Entity]))
+            .OrderBy(row => row.Own)
+            .ThenBy(row => row.Record, StringComparer.Ordinal)
+            .ToList();
+        using var writer = store.Create(NameProducts.Consensus(slug), ProductKind.Machine, ConsensusName.Schema(slug),
+            ProductHeader.DescribeProducer(Producer), inputs,
+            header =>
+            {
+                header.Notes.Add(new(VersionNote, Version));
+                header.Comments.Add("whom the text's verses say its words name: the word every verse naming a record prints and few others " +
+                                    "do, on the words the earlier methods carry no name to");
+            });
+        writer.WriteAll(rows);
+        writer.Complete();
+        return writer.Rows;
+    }
+
+    private static bool NeedsBuild(ProductStore store, IReadOnlyList<string> texts, IReadOnlyList<ProductInput> inputs)
+    {
+        foreach (var slug in texts)
         {
-            verses[reader.GetString(0)] = (int)reader.GetInt64(1);
+            var product = NameProducts.Consensus(slug);
+            if (store.NeedsBuild(product, ProductKind.Machine, inputs))
+            {
+                return true;
+            }
+
+            using var reader = store.Open(product);
+            if (reader.Header?.Notes.LastOrDefault(note => note.Key == VersionNote).Value != Version)
+            {
+                return true;
+            }
         }
 
-        return verses;
+        return false;
+    }
+
+    /// <summary>
+    /// What the run reads: every text's words, frame and declaration, the originals' settled names, the records' kinds and
+    /// titles, and what the names projection reads of each text: the earlier method files of the pairs names-pairs places,
+    /// and a measured text's stated and Strong files of every pair.
+    /// </summary>
+    private static IReadOnlyList<ProductInput> Inputs(ProductStore store, NamesProjection projection, IReadOnlyList<string> texts)
+    {
+        var read = new SortedSet<string>(StringComparer.Ordinal);
+        foreach (var slug in texts.Concat(Originals).Distinct(StringComparer.Ordinal)
+                     .Where(slug => projection.Context.Texts.ContainsKey(slug) && (!NameProducts.IsReference(slug) || store.Exists(NameProducts.Settled(slug)))))
+        {
+            read.UnionWith(ProductText.Products(slug).Append(VerseManifestRow.ProductOf(slug)).Select(store.Find).OfType<string>());
+            read.UnionWith(projection.InputsOf(slug).Select(input => input.Path)
+                .Where(path => Path.GetFileNameWithoutExtension(path) != MappingProducts.Final));
+            foreach (var (pair, _, _) in projection.ReferencePairs(slug))
+            {
+                IEnumerable<string> methods = NamesFirstSource.Placed.Contains(pair) ? NamesFirstSource.Before : Measured.Contains(slug) ? StatedMethods : [];
+                read.UnionWith(methods.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>());
+            }
+        }
+
+        read.UnionWith(Originals.Select(NameProducts.Settled).Append(KindsProduct).Append(TitlesProduct).Select(store.Find).OfType<string>());
+        return store.Inputs(read);
+    }
+
+    private static int VerseCount(ProductStore store, string slug)
+    {
+        if (!store.Exists(VerseManifestRow.ProductOf(slug)))
+        {
+            return 0;
+        }
+
+        using var reader = store.Open(VerseManifestRow.ProductOf(slug), VerseManifestRow.Schema);
+        return reader.Rows().Count();
     }
 
     /// <summary>One text read: what the consensus found, and what the text's annotations already say.</summary>
     /// <param name="Annotated">
-    /// Every annotated word of the text and the entities it is annotated to, by any method but this
-    /// pass's own, which is what it would write again.
+    /// Every word of the text the names projection carries a name to over the earlier method files, and the entities it
+    /// names, but for the names of the consensus's own source.
     /// </param>
-    /// <param name="Gold">The words a stated link annotates, with their entity.</param>
+    /// <param name="Gold">The words a stated or Strong link carries a name to, with their entity.</param>
     /// <param name="GoldForms">Each verse and entity a stated link names, and the folded forms it names it with there.</param>
     /// <param name="GoldNames">By kind, how many of <paramref name="Gold"/> recall is counted over.</param>
+    /// <param name="Keys">Each word's key, by its number in the text.</param>
     private sealed record Reading(
         string Slug,
         string Language,
@@ -275,7 +378,8 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         IReadOnlyDictionary<(int Verse, int Entity), HashSet<string>> GoldForms,
         IReadOnlySet<long> GoldWords,
         IReadOnlyDictionary<EntityKind, int> GoldNames,
-        IReadOnlyDictionary<int, EntityKind> KindOf);
+        IReadOnlyDictionary<int, EntityKind> KindOf,
+        IReadOnlyList<WordKey> Keys);
 
     /// <summary>How a word the consensus names is judged against the stated annotations.</summary>
     private enum Verdict
@@ -327,26 +431,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             one.Beside + other.Beside, one.Wrong + other.Wrong, one.Seconded + other.Seconded,
             one.Found + other.Found, one.Names + other.Names);
     }
-
-    /// <summary>What a written annotation is worth: the precision measured for its kind and the size of its entity.</summary>
-    private sealed class Confidence(IReadOnlyDictionary<(EntityKind Kind, int Band), double> measured)
-    {
-        public double Of(NameFinding finding) =>
-            measured.TryGetValue((finding.Kind, Band(finding.Verses)), out var banded) ? banded
-            : measured.TryGetValue((finding.Kind, -1), out var kind) ? kind
-            : Unmeasured;
-
-        public static int Band(int verses) => SizeBands.Count(least => verses >= least) - 1;
-    }
-
-    /// <summary>A word where the finding and an annotation already there name different entities.</summary>
-    private sealed record Disagreement(
-        string Text,
-        string Reference,
-        int Position,
-        string Word,
-        string Found,
-        IReadOnlyList<string> Annotated);
 
     /// <summary>How many letters a form may differ from the one the verse's annotation names to be the same name.</summary>
     private const int RepeatedWithin = 2;
@@ -468,10 +552,9 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
 
     /// <summary>
     /// The held-out measurement, overall and kind by kind, per text and per language; the bars chosen
-    /// on all measured texts, and what each kind and size measured at them, which is returned as the
-    /// confidence of what is written.
+    /// on all measured texts, which are returned, and what each kind and size measured at them.
     /// </summary>
-    private static (ConsensusBars Bars, Confidence Confidence) Report(
+    private static ConsensusBars Report(
         StringBuilder report,
         IReadOnlyList<Reading> measured,
         double precision,
@@ -575,18 +658,11 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             .AppendLine(Header)
             .AppendLine(Rule);
 
-        var confidence = new Dictionary<(EntityKind, int), double>();
         var settled = measured.ToDictionary(
             reading => reading.Slug,
             reading => NameConsensus.Settle(reading.Findings, reading.Claims, chosen.Accepts));
         foreach (var kind in Kinds)
         {
-            var ofKind = measured.Aggregate(default(Tally), (sum, reading) => sum + Score(reading, settled[reading.Slug], kind));
-            if (ofKind.Judged > 0)
-            {
-                confidence[(kind, -1)] = Math.Min(MostConfident, ofKind.Precision);
-            }
-
             for (var band = 0; band < SizeBands.Length; band++)
             {
                 var least = SizeBands[band];
@@ -600,11 +676,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                     return sum + Score(reading, settled[reading.Slug].Where(word => sized.Contains(word.Entity)).ToList(), kind)
                         with { Names = 0 };
                 });
-                if (tally.Judged >= ConfidentBand)
-                {
-                    confidence[(kind, band)] = Math.Min(MostConfident, tally.Precision);
-                }
-
                 report.AppendLine(Row(
                     most == int.MaxValue ? $"{EnumSpelling.Of(kind)} {least}+ verses" : $"{EnumSpelling.Of(kind)} {least}–{most} verses",
                     string.Empty,
@@ -613,20 +684,18 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             }
         }
 
-        return (chosen, new Confidence(confidence));
+        return chosen;
     }
 
     /// <summary>
     /// What the bars add to a text: words named that no annotation names, words it agrees with and
     /// words it names otherwise, and the entities the text had no word for at all.
     /// </summary>
-    private static void Addition(
+    /// <returns>The text's row of the table, and its line of examples.</returns>
+    private static (string Row, string Example) Addition(
         Reading reading,
         ConsensusBars bars,
-        IReadOnlyDictionary<int, string> slugs,
-        StringBuilder table,
-        StringBuilder examples,
-        List<Disagreement> disagreements,
+        IReadOnlyList<string> slugs,
         int? written)
     {
         var words = NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts);
@@ -648,22 +717,13 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             else
             {
                 disagree++;
-                var verse = reading.Verses[word.Verse];
-                var position = Position(verse.Words, word.Word);
-                disagreements.Add(new Disagreement(
-                    reading.Slug,
-                    Reference(verse.Addresses.Min()),
-                    position + 1,
-                    verse.Words[position].Surface,
-                    slugs[word.Entity],
-                    named.Select(entity => slugs[entity]).Order(StringComparer.Ordinal).ToList()));
             }
         }
 
         var already = reading.Annotated.SelectMany(entry => entry.Value.Select(entity => (entry.Key, entity))).ToList();
         var before = Reached(reading, already);
         var after = Reached(reading, already.Concat(words.Select(word => (word.Word, word.Entity))));
-        table.AppendLine($"| {reading.Slug} | {reading.Language} | {accepted.Count:N0} | {accepted.Count(entity => !annotatedEntities.Contains(entity)):N0} | " +
+        var row = ($"| {reading.Slug} | {reading.Language} | {accepted.Count:N0} | {accepted.Count(entity => !annotatedEntities.Contains(entity)):N0} | " +
             $"{words.Count:N0} | {agree:N0} | {added:N0} | {disagree:N0} | {before:N0} | {after:N0} | " +
             $"{string.Join(" / ", Kinds.Select(kind => newByKind[kind].ToString("N0", CultureInfo.InvariantCulture)))} | " +
             $"{(written is { } count ? count.ToString("N0", CultureInfo.InvariantCulture) : "–")} |");
@@ -681,7 +741,7 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 return $"{slugs[group.Key]} {string.Join("/", name.Forms.Take(3))} +{group.Count() - disagreeing}" +
                     (disagreeing > 0 ? $" ≠{disagreeing}" : string.Empty);
             });
-        examples.AppendLine($"  {reading.Slug}: {string.Join("; ", shown)}");
+        return (row, $"  {reading.Slug}: {string.Join("; ", shown)}");
     }
 
     private static string Reference(int address) =>
@@ -702,12 +762,11 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         return named.Where(pair => verseOf.ContainsKey(pair.Word)).Select(pair => (verseOf[pair.Word], pair.Entity)).Distinct().Count();
     }
 
-    private static async Task Write(
+    private static void Write(
         string output,
         Reading reading,
         ConsensusBars bars,
-        IReadOnlyDictionary<int, string> slugs,
-        CancellationToken cancellationToken)
+        IReadOnlyList<string> slugs)
     {
         var findings = new StringBuilder("entity\tkind\tverses\taccepted\tcore\tforms\tcoverage\tspecificity\tscore\tmargin\tlikeness\n");
         foreach (var finding in reading.Findings.Where(finding => finding.Name is not null)
@@ -719,10 +778,10 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 $"{name.Coverage:0.000}\t{name.Specificity:0.000}\t{name.Score:0.000}\t{finding.Margin:0.000}\t{finding.Likeness:0.00}\n");
         }
 
-        await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-findings.tsv"), findings.ToString(), cancellationToken);
+        File.WriteAllText(Path.Combine(output, $"{reading.Slug}-findings.tsv"), findings.ToString());
 
         var settled = NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts);
-        var words = new StringBuilder("address\tposition\tword\tentity\tkind\tannotated\tjudged\n");
+        var words = new StringBuilder("address\tposition\tword\tentity\tkind\tannotated\tjudged\town\n");
         foreach (var word in settled)
         {
             var verse = reading.Verses[word.Verse];
@@ -733,10 +792,19 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             words.Append(CultureInfo.InvariantCulture,
                 $"{Reference(verse.Addresses.Min())}\t{position + 1}\t" +
                 $"{verse.Words[position].Surface}\t{slugs[word.Entity]}\t{EnumSpelling.Of(reading.KindOf[word.Entity])}\t{annotated}\t" +
-                $"{(Measured.Contains(reading.Slug) ? Judge(reading, word) : Verdict.Unjudged)}\n");
+                $"{(Measured.Contains(reading.Slug) ? Judge(reading, word) : Verdict.Unjudged)}\t{reading.Keys[(int)word.Word].Own}\n");
         }
 
-        await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-words.tsv"), words.ToString(), cancellationToken);
+        File.WriteAllText(Path.Combine(output, $"{reading.Slug}-words.tsv"), words.ToString());
+
+        var carried = new StringBuilder("own\trecords\n");
+        foreach (var (word, named) in reading.Annotated.OrderBy(entry => entry.Key))
+        {
+            carried.Append(CultureInfo.InvariantCulture,
+                $"{reading.Keys[(int)word].Own}\t{string.Join(' ', named.Select(entity => slugs[entity]).Order(StringComparer.Ordinal))}\n");
+        }
+
+        File.WriteAllText(Path.Combine(output, $"{reading.Slug}-carried.tsv"), carried.ToString());
 
         if (!Measured.Contains(reading.Slug))
         {
@@ -776,7 +844,7 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             }
         }
 
-        await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-missed.tsv"), missed.ToString(), cancellationToken);
+        File.WriteAllText(Path.Combine(output, $"{reading.Slug}-missed.tsv"), missed.ToString());
     }
 
     /// <summary>The last book of the Old Testament in canonical order.</summary>
@@ -790,13 +858,12 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
     /// nobody. Beside the reason, the words of the verse the text's own annotations name the entity
     /// with elsewhere, and the capitalised words spelt like the original's lemma.
     /// </summary>
-    private static async Task Unnamed(
+    private static void Unnamed(
         string output,
         Reading reading,
         ConsensusBars bars,
-        IReadOnlyDictionary<int, string> slugs,
-        ConsensusQuestion question,
-        CancellationToken cancellationToken)
+        IReadOnlyList<string> slugs,
+        ConsensusQuestion question)
     {
         var settled = NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts);
         var named = reading.Annotated.Keys.Concat(settled.Select(word => word.Word)).ToHashSet();
@@ -900,7 +967,7 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             }
         }
 
-        await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-unnamed.tsv"), rows.ToString(), cancellationToken);
+        File.WriteAllText(Path.Combine(output, $"{reading.Slug}-unnamed.tsv"), rows.ToString());
     }
 
     /// <summary>
@@ -908,13 +975,12 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
     /// name the same way, with what a reader needs to say whose fault it is: what the annotations
     /// put on the word and on the rest of the verse, whom the originals name there, and the verse.
     /// </summary>
-    private static async Task Audit(
+    private static void Audit(
         string output,
         Reading reading,
         ConsensusBars bars,
-        IReadOnlyDictionary<int, string> slugs,
-        ConsensusQuestion question,
-        CancellationToken cancellationToken)
+        IReadOnlyList<string> slugs,
+        ConsensusQuestion question)
     {
         var goldOn = reading.Gold
             .GroupBy(pair => pair.Word)
@@ -967,48 +1033,172 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 $"{string.Join(' ', verse.Words.Select(printed => printed.Surface))}\n");
         }
 
-        await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-audit.tsv"), audit.ToString(), cancellationToken);
+        File.WriteAllText(Path.Combine(output, $"{reading.Slug}-audit.tsv"), audit.ToString());
     }
 
-    /// <summary>
-    /// Each entity's verses of every kind read, as the originals' settled annotations place them, and
-    /// its namesakes: the entities the originals name with a lemma it is also named with.
-    /// </summary>
-    private static async Task<ConsensusQuestion> Question(NpgsqlConnection connection, CancellationToken cancellationToken)
+    /// <summary>The records by slug, each a number in slug order, with its kind, and the titles each record bears.</summary>
+    internal sealed record Records(
+        IReadOnlyDictionary<string, int> Ids,
+        IReadOnlyList<string> Slugs,
+        IReadOnlyList<EntityKind?> Kinds,
+        IReadOnlySet<(int Title, int Bearer)> Bearers)
     {
-        var sql =
-            $"""
-             WITH {Annotating.Settled}
-             SELECT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
-                    coalesce(w.lemma, w.normalised_text, w.text), e.kind
-             FROM settled s
-             JOIN entity e ON e.id = s.entity_id AND e.kind = ANY(@kinds)
-             JOIN word w ON w.id = s.word_id
-             JOIN text t ON t.id = w.text_id AND t.slug = ANY(@originals)
-             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
-             """;
-        await using var command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("kinds", Kinds.Select(EnumSpelling.Of).ToArray());
-        command.Parameters.AddWithValue("originals", Originals);
+        public static Records Read(ProductStore store)
+        {
+            var ids = new Dictionary<string, int>(StringComparer.Ordinal);
+            var slugs = new List<string>();
+            var kinds = new List<EntityKind?>();
+            using (var reader = store.Open(KindsProduct, Essenthos.Core.Records.RecordKind.Schema))
+            {
+                foreach (var record in reader.Rows().OrderBy(record => record.Slug, StringComparer.Ordinal))
+                {
+                    ids[record.Slug] = slugs.Count;
+                    slugs.Add(record.Slug);
+                    kinds.Add(Kind(record.Kind));
+                }
+            }
 
-        var spelled = Kinds.ToDictionary(EnumSpelling.Of, kind => kind);
+            var bearers = new HashSet<(int, int)>();
+            if (store.Exists(TitlesProduct))
+            {
+                using var reader = store.Open(TitlesProduct);
+                var columns = reader.Columns.Select(column => column.Name).ToList();
+                var (title, bearer) = (columns.IndexOf("title"), columns.IndexOf("bearer"));
+                foreach (var row in reader.Rows())
+                {
+                    if (ids.TryGetValue(row[title]!, out var one) && ids.TryGetValue(row[bearer]!, out var other))
+                    {
+                        bearers.Add((one, other));
+                    }
+                }
+            }
+
+            return new Records(ids, slugs, kinds, bearers);
+        }
+
+        private static EntityKind? Kind(string spelled)
+        {
+            try
+            {
+                return EnumSpelling.ToEntityKind(spelled);
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
+        }
+    }
+
+    /// <summary>One name settled on a word, as the settling weighs it.</summary>
+    /// <param name="Own">Whether it is a reading of the word, and not the consensus's (<see cref="Source"/>).</param>
+    internal readonly record struct Settling(int Entity, EntityKind Kind, int Standing, double Confidence, string Source, string Note, bool Own = true);
+
+    /// <summary>
+    /// The one record a word of an original is named as, as <see cref="Annotating.Settled"/> settles a word's names: a reading
+    /// of the word before the consensus's, then the highest standing, then confidence, a title after the record it is not, then kind and record; none where the next
+    /// stands as high and names another record, unless the two stand beside each other; and a title gives way to its
+    /// bearer named on the same word.
+    /// </summary>
+    internal static int? Settle(IReadOnlyCollection<Settling> names, IReadOnlySet<(int Title, int Bearer)> bearers)
+    {
+        var ranked = names
+            .GroupBy(name => name.Entity)
+            .Select(group => group.OrderByDescending(name => name.Own).ThenByDescending(name => name.Standing)
+                .ThenByDescending(name => name.Confidence).First())
+            .OrderByDescending(name => name.Own)
+            .ThenByDescending(name => name.Standing)
+            .ThenByDescending(name => name.Confidence)
+            .ThenBy(name => name.Kind == EntityKind.Title)
+            .ThenBy(name => EnumSpelling.Of(name.Kind), StringComparer.Ordinal)
+            .ThenBy(name => name.Entity)
+            .ToList();
+        if (ranked.Count == 0)
+        {
+            return null;
+        }
+
+        var (top, next) = (ranked[0], ranked.Count > 1 ? ranked[1] : (Settling?)null);
+        if (next is { } rival && rival.Own == top.Own && rival.Standing == top.Standing && rival.Confidence == top.Confidence && !Beside(top, rival, bearers))
+        {
+            return null;
+        }
+
+        if (top.Kind == EntityKind.Title)
+        {
+            foreach (var other in ranked.Skip(1).Where(other => bearers.Contains((top.Entity, other.Entity))))
+            {
+                return other.Entity;
+            }
+        }
+
+        return top.Entity;
+    }
+
+    private static readonly int Ruled = ClaimStanding.Of(LinkMethod.Manual);
+
+    private static bool Beside(Settling one, Settling other, IReadOnlySet<(int Title, int Bearer)> bearers) =>
+        (one.Kind, other.Kind) is (EntityKind.Person, EntityKind.People) or (EntityKind.People, EntityKind.Person)
+        || ((one.Kind, other.Kind) is (EntityKind.Place, EntityKind.People) or (EntityKind.People, EntityKind.Place)
+            && one.Standing == Ruled && other.Standing == Ruled)
+        || (((one.Kind, other.Kind) is (EntityKind.Object, EntityKind.Object) || (one.Kind == EntityKind.Being) != (other.Kind == EntityKind.Being))
+            && one.Standing == Ruled && other.Standing == Ruled
+            && one.Source == other.Source && one.Note == other.Note)
+        || (one.Kind == EntityKind.Title && bearers.Contains((one.Entity, other.Entity)))
+        || (other.Kind == EntityKind.Title && bearers.Contains((other.Entity, one.Entity)));
+
+    /// <summary>
+    /// Each entity's verses of every kind read, as the originals' settled names place them at their verse's first frame
+    /// address, and its namesakes: the entities the originals name with a lemma it is also named with.
+    /// </summary>
+    private static ConsensusQuestion Question(ProductStore store, Records records)
+    {
         var entities = new Dictionary<int, HashSet<int>>();
         var kinds = new Dictionary<int, EntityKind>();
         var lemmas = new Dictionary<string, HashSet<int>>(StringComparer.Ordinal);
         var naming = new Dictionary<(string Lemma, int Entity), int>();
-        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        var originals = new List<ProductText>();
+        foreach (var slug in Originals.Where(slug => store.Exists(TextWord.ProductOf(slug)) && store.Exists(NameProducts.Settled(slug))))
         {
-            while (await reader.ReadAsync(cancellationToken))
+            var text = ProductText.Read(store, slug);
+            originals.Add(text);
+            var ids = PairLinkFiles.Ids(text);
+            var byWord = new Dictionary<int, List<Settling>>();
+            using (var reader = store.Open(NameProducts.Settled(slug), SettledName.Schema(slug)))
             {
-                var entity = reader.GetInt32(0);
+                foreach (var name in reader.Rows())
+                {
+                    if (!ids.TryGetValue(name.Own.Own, out var word) || !records.Ids.TryGetValue(name.Record, out var entity)
+                        || records.Kinds[entity] is not { } kind)
+                    {
+                        continue;
+                    }
+
+                    if (!byWord.TryGetValue(word, out var settling))
+                    {
+                        byWord[word] = settling = [];
+                    }
+
+                    settling.Add(new Settling(entity, kind, ClaimStanding.Of(EnumSpelling.ToLinkMethod(name.Method)), name.Confidence ?? 1.0,
+                        name.Source, name.Note ?? string.Empty, name.Source != Source));
+                }
+            }
+
+            foreach (var (word, names) in byWord)
+            {
+                if (Settle(names, records.Bearers) is not { } entity || records.Kinds[entity] is not { } kind || !Kinds.Contains(kind))
+                {
+                    continue;
+                }
+
                 if (!entities.TryGetValue(entity, out var addresses))
                 {
                     entities[entity] = addresses = [];
-                    kinds[entity] = spelled[reader.GetString(5)];
+                    kinds[entity] = kind;
                 }
 
-                addresses.Add(Address(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3)));
-                var lemma = reader.GetString(4);
+                var (book, chapter, verse) = text.Primary(text.Words[word].Key.Verse);
+                addresses.Add(Address(book, chapter, verse));
+                var lemma = Lemma(text.Words[word]);
                 if (!lemmas.TryGetValue(lemma, out var named))
                 {
                     lemmas[lemma] = named = [];
@@ -1019,130 +1209,98 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             }
         }
 
+        var shared = lemmas.Where(entry => entry.Value.Count > 1).Select(entry => entry.Key).ToHashSet(StringComparer.Ordinal);
         var printed = new Dictionary<string, int>(StringComparer.Ordinal);
-        await using (var count = new NpgsqlCommand(
-                         """
-                         SELECT coalesce(w.lemma, w.normalised_text, w.text), count(*)
-                         FROM word w JOIN text t ON t.id = w.text_id AND t.slug = ANY(@originals)
-                         WHERE coalesce(w.lemma, w.normalised_text, w.text) = ANY(@lemmas)
-                         GROUP BY 1
-                         """, connection))
+        foreach (var lemma in originals.SelectMany(text => text.Words).Select(Lemma).Where(shared.Contains))
         {
-            count.Parameters.AddWithValue("originals", Originals);
-            count.Parameters.AddWithValue("lemmas", lemmas.Where(entry => entry.Value.Count > 1).Select(entry => entry.Key).ToArray());
-            await using var reader = await count.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                printed[reader.GetString(0)] = (int)reader.GetInt64(1);
-            }
+            printed[lemma] = printed.GetValueOrDefault(lemma) + 1;
         }
-
-        var namesakes = NameConsensus.Namesakes(naming, printed);
 
         return new ConsensusQuestion(
             entities.ToDictionary(entry => entry.Key, entry => (IReadOnlySet<int>)entry.Value),
-            namesakes,
+            NameConsensus.Namesakes(naming, printed),
             NameConsensus.OwnNames(naming),
             kinds);
     }
 
+    private static string Lemma(TextWord word) => word.Lemma ?? word.Normalised ?? word.Surface;
+
     private static int Address(int book, int chapter, int verse) => book * AddressBook + chapter * AddressChapter + verse;
 
-    private static async Task<Reading> Read(
-        NpgsqlConnection connection,
-        int textId,
+    /// <summary>
+    /// One text read: its verses at every frame address they stand at, what the consensus finds in them, the names the
+    /// projection carries over the earlier method files, and for a measured text what its stated and Strong files carry.
+    /// </summary>
+    private static Reading Read(
+        ProductStore store,
+        NamesProjection projection,
         string slug,
-        string language,
         ConsensusQuestion question,
-        CancellationToken cancellationToken)
+        Records records,
+        bool measured,
+        Action<string> log)
     {
-        var addresses = new Dictionary<int, List<int>>();
-        await using (var command = new NpgsqlCommand(
-                         """
-                         SELECT r.verse_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
-                         FROM verse_reference r JOIN verse v ON v.id = r.verse_id
-                         WHERE v.text_id = @text
-                         """, connection))
+        var clock = Stopwatch.StartNew();
+        var text = ProductText.Read(store, slug);
+        var ids = PairLinkFiles.Ids(text);
+        var verses = new List<ConsensusVerse>(text.Verses.Count);
+        var verseOf = new Dictionary<int, int>(text.Words.Count);
+        foreach (var verse in text.Verses)
         {
-            command.Parameters.AddWithValue("text", textId);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
+            var words = text.InVerse(verse).ToList();
+            if (words.Count == 0)
             {
-                var verse = reader.GetInt32(0);
-                if (!addresses.TryGetValue(verse, out var at))
-                {
-                    addresses[verse] = at = [];
-                }
-
-                at.Add(Address(reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3)));
+                continue;
             }
+
+            foreach (var word in words)
+            {
+                verseOf[word] = verses.Count;
+            }
+
+            verses.Add(new ConsensusVerse(
+                [.. text.Addresses(verse).Select(address => Address(address.Book, address.Chapter, address.Verse)).Distinct()],
+                [.. words.Select(word => ((long)word, text.Words[word].Surface))]));
         }
 
-        var verses = new List<ConsensusVerse>();
-        var indexOf = new Dictionary<int, int>();
-        await using (var command = new NpgsqlCommand(
-                         "SELECT verse_id, id, text FROM word WHERE text_id = @text ORDER BY verse_id, position", connection))
-        {
-            command.Parameters.AddWithValue("text", textId);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            List<(long, string)>? words = null;
-            var current = -1;
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                var verse = reader.GetInt32(0);
-                if (verse != current)
-                {
-                    current = verse;
-                    words = [];
-                    indexOf[verse] = verses.Count;
-                    verses.Add(new ConsensusVerse(addresses.GetValueOrDefault(verse) ?? [], words));
-                }
-
-                words!.Add((reader.GetInt64(1), reader.GetString(2)));
-            }
-        }
-
+        var read = clock.Elapsed;
         var annotated = new Dictionary<long, HashSet<int>>();
-        var gold = new HashSet<(long, int)>();
-        var goldForms = new Dictionary<(int, int), HashSet<string>>();
-        var goldWords = new HashSet<long>();
-        var goldNames = new Dictionary<EntityKind, int>();
-        await using (var command = new NpgsqlCommand(
-                         """
-                         SELECT a.word_id, a.entity_id, w.verse_id, w.text, a.note LIKE ANY(@stated)
-                         FROM word_entity a JOIN word w ON w.id = a.word_id
-                         WHERE w.text_id = @text AND a.source <> @ours
-                         """, connection))
+        foreach (var name in projection.Project(slug, over: NamesFirstSource.Before, pairs: NamesFirstSource.Placed.Contains).Names.Where(name => name.Source != Source))
         {
-            command.Parameters.AddWithValue("text", textId);
-            command.Parameters.AddWithValue("ours", Source);
-            command.Parameters.AddWithValue("stated", StatedLinks);
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
+            if (ids.TryGetValue(name.Own.Own, out var word) && records.Ids.TryGetValue(name.Record, out var entity))
             {
-                var word = reader.GetInt64(0);
-                var entity = reader.GetInt32(1);
                 if (!annotated.TryGetValue(word, out var named))
                 {
                     annotated[word] = named = [];
                 }
 
                 named.Add(entity);
-                if (!Measured.Contains(slug) || reader.IsDBNull(4) || !reader.GetBoolean(4)
-                    || !question.Entities.ContainsKey(entity))
+            }
+        }
+
+        var carried = clock.Elapsed;
+        var gold = new HashSet<(long, int)>();
+        var goldForms = new Dictionary<(int, int), HashSet<string>>();
+        var goldWords = new HashSet<long>();
+        var goldNames = new Dictionary<EntityKind, int>();
+        if (measured)
+        {
+            foreach (var name in projection.Project(slug, over: StatedMethods).Names.Where(name => name.Source != Source))
+            {
+                if (!ids.TryGetValue(name.Own.Own, out var word) || !records.Ids.TryGetValue(name.Record, out var entity)
+                    || !question.Entities.ContainsKey(entity) || !gold.Add((word, entity)))
                 {
                     continue;
                 }
 
-                gold.Add((word, entity));
                 goldWords.Add(word);
-                var placed = (indexOf[reader.GetInt32(2)], entity);
+                var placed = (verseOf[word], entity);
                 if (!goldForms.TryGetValue(placed, out var forms))
                 {
                     goldForms[placed] = forms = [];
                 }
 
-                var surface = reader.GetString(3);
+                var surface = text.Words[word].Surface;
                 forms.Add(NameConsensus.Fold(surface));
                 var kind = question.KindOf(entity);
                 if (!ConsensusRules.For(kind).Capitalised || (surface.Length > 0 && !char.IsLower(surface[0])))
@@ -1152,9 +1310,12 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             }
         }
 
+        var scored = clock.Elapsed;
         var (findings, claims) = NameConsensus.Read(verses, question);
+        log($"{slug}: words {read.TotalSeconds:0.0} s, carried names {(carried - read).TotalSeconds:0.0} s, " +
+            $"stated names {(scored - carried).TotalSeconds:0.0} s, consensus {(clock.Elapsed - scored).TotalSeconds:0.0} s");
         return new Reading(
-            slug, language, verses, findings, claims, annotated, gold, goldForms, goldWords, goldNames,
-            question.Entities.Keys.ToDictionary(entity => entity, question.KindOf));
+            slug, text.Language, verses, findings, claims, annotated, gold, goldForms, goldWords, goldNames,
+            question.Entities.Keys.ToDictionary(entity => entity, question.KindOf), [.. text.Words.Select(word => word.Key)]);
     }
 }

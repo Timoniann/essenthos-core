@@ -109,7 +109,7 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
     }
 
     /// <param name="names">
-    /// A <c>name-consensus --out</c> folder whose <c>&lt;text&gt;-words.tsv</c> says whom the text's
+    /// A <c>names-consensus --out</c> folder whose <c>&lt;text&gt;-words.tsv</c> says whom the text's
     /// words name, read off its verses alone; or null for the text's own annotations of that source.
     /// A text whose annotations came across a link should be read from the folder, or it is scored
     /// on what the links it is measured against already gave it.
@@ -635,7 +635,7 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
     }
 
     /// <summary>
-    /// A <c>name-consensus --out</c> words file, whose words are addressed by their verse's first
+    /// A <c>names-consensus --out</c> words file, whose words are addressed by their verse's first
     /// canonical address and their place among the verse's words.
     /// </summary>
     private static async Task<Dictionary<long, IReadOnlySet<int>>> Read(
