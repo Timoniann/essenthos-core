@@ -129,6 +129,74 @@ public sealed class NamePlacementTests
         NamePlacement.Place([verse]).Should().BeEmpty("Ἰησοῦν is SN, and so is Son");
     }
 
+    private const int Rahab = 11;
+
+    private static readonly string Rhb = NameLists.Skeleton("רהב", "hbo");
+
+    /// <summary>
+    /// Isaiah 30:7 as BHSA names it since FTR-1752: מִצְרַיִם names Egypt, and רַהַב names the creature Rahab and, below it,
+    /// Egypt, in a verse of fourteen words; the translation's words stand where they are given.
+    /// </summary>
+    private static NameVerse Isaiah307(params NameSourceWord[] source) =>
+        Verse((23, 30, 7), source,
+            [
+                new NameTargetWord(20, 1, Mitsrayim, new HashSet<int> { Egypt }, EntityKind.Place, Mitsrayim),
+                new NameTargetWord(21, 10, Rhb, new HashSet<int> { Egypt }, EntityKind.Place, Rhb, Given: new HashSet<int> { Rahab }),
+            ], 14);
+
+    private static NameSourceWord At(long id, string surface, string language, params int[] entities) => Word(id, surface, language, entities);
+
+    private static IEnumerable<NameSourceWord> Filler(long first, int count) =>
+        Enumerable.Range(0, count).Select(at => new NameSourceWord(first + at, "x", [], "x", new HashSet<int>(), Marked: false));
+
+    [Theory]
+    [InlineData("eng")]
+    [InlineData("ben")]
+    public void A_word_giving_a_creatures_name_to_a_land_is_no_second_mention_of_the_land(string language)
+    {
+        // OHCB, OTTLEY and the IRV: the verses say the Egypt word names Egypt; the Rahab word is read by its letters.
+        var verse = Isaiah307([At(1, "Masar", "eng", Egypt), .. Filler(2, 8), new NameSourceWord(10, "Rahab", NameLetters.Of("Rahab", "eng"), "rahab", new HashSet<int>(), Marked: true, Named: true), At(11, "x", "eng")]);
+
+        var placed = NamePlacement.Place([verse]).Where(NamePolicy.Default.For(language).Places).ToList();
+
+        placed.Select(placing => (placing.Source, placing.Target)).Should().BeEquivalentTo([(1L, 20L), (10L, 21L)],
+            "Egypt is named once by name, and Rahab is the creature's name given to it");
+    }
+
+    [Fact]
+    public void A_translation_word_its_verses_say_names_the_land_goes_to_the_word_giving_it_the_creatures_name_where_it_stands()
+    {
+        // The Chinese Union: its 拉哈伯 is read as Rahab-2, folded into Egypt; nothing reads its letters.
+        var verse = Isaiah307([At(1, "埃及的", "zho"), .. Filler(2, 8), At(10, "拉哈伯", "zho", Egypt) with { Folded = true }, At(11, "x", "zho")]);
+
+        var placed = NamePlacement.Place([verse]).Where(NamePolicy.Default.Places).ToList();
+
+        placed.Select(placing => (placing.Source, placing.Target)).Should().Equal([(10L, 21L)]);
+    }
+
+    [Fact]
+    public void A_land_named_more_often_in_the_translation_still_leaves_only_its_own_mentions_unplaced()
+    {
+        // The Korean: 애굽 twice, and 라합 read as Egypt. Which 애굽 is מִצְרַיִם is not given; Rahab still is.
+        var verse = Isaiah307([At(1, "애굽의", "kor", Egypt), .. Filler(2, 5), At(7, "애굽을", "kor", Egypt), .. Filler(8, 2),
+            At(10, "라합이라", "kor", Egypt), At(11, "x", "kor")]);
+
+        var placed = NamePlacement.Place([verse]).Where(NamePolicy.Default.For("kor").Places).ToList();
+
+        placed.Select(placing => (placing.Source, placing.Target)).Should().Equal([(10L, 21L)]);
+    }
+
+    [Fact]
+    public void A_word_its_verses_say_names_the_land_by_the_lands_own_name_is_not_given_the_creatures()
+    {
+        // The Elberfelder: Ägypten twice, the second rendering "her", and the only one its verses say names Egypt; it prints
+        // Rahab as Großtuer.
+        var verse = Isaiah307([.. Filler(1, 6), At(7, "Ägypten", "deu"), .. Filler(8, 4), At(12, "Ägypten", "deu", Egypt), At(13, "großtuer", "deu")]);
+
+        NamePlacement.Place([verse]).Should().NotContain(placing => placing.Target == 21,
+            "the second Ägypten names Egypt by its own name, not by Rahab's");
+    }
+
     [Fact]
     public void Families_join_an_entity_and_its_other_name()
     {
