@@ -64,6 +64,11 @@
     "files": 102,
     "sha256": "6276b639803981e002b249c941943045061edf15a6b1e721a612a5bf161120a6"
   },
+  "Commentaries": {
+    "bytes": 18282911,
+    "files": 15,
+    "sha256": "8d3403d79fe82bf60975226ce62fd3f34ae59f48ab39ca90ae9c28e15cb79cda"
+  },
   "CrossWireKJV": {
     "bytes": 4370833,
     "files": 8,

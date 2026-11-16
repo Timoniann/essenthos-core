@@ -49,6 +49,12 @@ internal static class SwordModule
     /// Treasury of Scripture Knowledge is one.
     /// </summary>
     private const string CompressedCommentaryDriver = "zCom";
+
+    /// <summary>The same with four bytes for an entry's length, for comments longer than 64 KB (Matthew Henry's run to 58 KB and past).</summary>
+    private const string WideCompressedCommentaryDriver = "zCom4";
+
+    /// <summary>A commentary stored uncompressed: per testament the text, and where each slot's entry starts in it and how long it is.</summary>
+    private const string RawCommentaryDriver = "RawCom";
     private const string ZipCompression = "ZIP";
     private const string KingJames = "KJV";
     private const string Nrsv = "NRSV";
@@ -62,6 +68,11 @@ internal static class SwordModule
 
     private const int BlockEntrySize = 12;
     private const int VerseEntrySize = 10;
+    private const int WideVerseEntrySize = 12;
+    private const int RawVerseEntrySize = 6;
+
+    /// <summary>The one encoding a configuration names that is not SWORD's default Latin-1.</summary>
+    private const string Utf8 = "UTF-8";
 
     /// <summary>
     /// The verses of every chapter in the King James's numbering, book by book in canonical order.
@@ -378,6 +389,158 @@ internal static class SwordModule
     }
 
     /// <summary>
+    /// Every slot of a commentary that holds an entry, in the module's order, headings included: a book's heading
+    /// (chapter and verse 0), a chapter's heading (verse 0), then its verses. <see cref="SwordSlot.Stored"/> says where
+    /// the entry's bytes are, and is the same for every slot of a run of verses one comment was written on, because
+    /// SWORD points each verse of the run at the first one's entry rather than storing it again.
+    /// </summary>
+    public static List<SwordSlot> Slots(string folder)
+    {
+        var configuration = Configuration(folder);
+        var driver = configuration.Value("ModDrv");
+        if (driver is not (CompressedCommentaryDriver or WideCompressedCommentaryDriver or RawCommentaryDriver)
+            || driver != RawCommentaryDriver && configuration.Values.GetValueOrDefault("CompressType", ZipCompression) != ZipCompression)
+        {
+            throw new NotSupportedException(
+                $"{configuration.Name} is stored with the {driver} driver, and the commentary reader knows only " +
+                $"{CompressedCommentaryDriver} and {WideCompressedCommentaryDriver} with {ZipCompression} compression, and {RawCommentaryDriver}.");
+        }
+
+        var (oldTestament, newTestament) = Layout(
+            configuration.Values.GetValueOrDefault("Versification", KingJames), configuration.Name);
+        var data = Path.Combine(folder, configuration.Value("DataPath").TrimStart('.', '/'));
+        var utf8 = configuration.Values.GetValueOrDefault("Encoding") == Utf8;
+        var slots = new List<SwordSlot>(32_000);
+        foreach (var (testament, books) in new[] { ("ot", oldTestament), ("nt", newTestament) })
+        {
+            var (entries, bytesAt) = driver == RawCommentaryDriver
+                ? RawEntries(data, testament)
+                : CompressedEntries(data, testament, driver == WideCompressedCommentaryDriver ? WideVerseEntrySize : VerseEntrySize);
+            var count = TestamentHeadings + books.Sum(book => 1 + book.Verses.Length + book.Verses.Sum());
+            if (entries.Count != count)
+            {
+                throw new InvalidDataException(
+                    $"The {testament} index of {configuration.Name} holds {entries.Count} entries where the versification has " +
+                    $"{count} slots, so the module is not numbered the way its configuration says. Nothing was read: every entry " +
+                    "after the first disagreement would be at a wrong address.");
+            }
+
+            // The new testament's entries are told from the old one's by a bit no offset reaches.
+            var testamentBit = testament == "ot" ? 0L : 1L << 62;
+            var entry = TestamentHeadings;
+            foreach (var (book, counts) in books)
+            {
+                Add(book, 0, 0, entry++);
+                for (var chapter = 1; chapter <= counts.Length; chapter++)
+                {
+                    Add(book, chapter, 0, entry++);
+                    for (var verse = 1; verse <= counts[chapter - 1]; verse++)
+                    {
+                        Add(book, chapter, verse, entry++);
+                    }
+                }
+            }
+
+            void Add(int book, int chapter, int verse, int at)
+            {
+                var (where, size) = entries[at];
+                if (size == 0)
+                {
+                    return;
+                }
+
+                var bytes = bytesAt(where);
+                var start = (int)(where & uint.MaxValue);
+
+                // Rieger's last entry of each testament is indexed as longer than the file holds, and its text ends
+                // where the file does (Malachi's closing words, 1 Peter's closing blessing): the file is what there is.
+                size = Math.Min(size, bytes.Length - start);
+                var text = utf8 ? Encoding.UTF8.GetString(bytes, start, size) : Windows1252(bytes, start, size);
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    slots.Add(new SwordSlot(book, chapter, verse, where | testamentBit, text));
+                }
+            }
+        }
+
+        return slots;
+    }
+
+    /// <summary>A compressed testament's index, each slot as (its block in the upper half and its offset in the lower, its length), and a block's bytes on demand.</summary>
+    private static (List<(long Where, int Size)> Entries, Func<long, byte[]> Bytes) CompressedEntries(string data, string testament, int entrySize)
+    {
+        var blocks = File.ReadAllBytes(Path.Combine(data, $"{testament}.bzs"));
+        var index = File.ReadAllBytes(Path.Combine(data, $"{testament}.bzv"));
+        var compressed = File.ReadAllBytes(Path.Combine(data, $"{testament}.bzz"));
+        if (index.Length % entrySize != 0)
+        {
+            throw new InvalidDataException($"The {testament} index is {index.Length} bytes, which is no whole number of {entrySize}-byte entries.");
+        }
+
+        var entries = new List<(long, int)>(index.Length / entrySize);
+        for (var at = 0; at < index.Length; at += entrySize)
+        {
+            var block = BitConverter.ToUInt32(index, at);
+            var offset = BitConverter.ToUInt32(index, at + 4);
+            var size = entrySize == WideVerseEntrySize ? (int)BitConverter.ToUInt32(index, at + 8) : BitConverter.ToUInt16(index, at + 8);
+            entries.Add(((long)block << 32 | offset, size));
+        }
+
+        var decompressed = new Dictionary<uint, byte[]>();
+        return (entries, where =>
+        {
+            var block = (uint)(where >> 32);
+            if (!decompressed.TryGetValue(block, out var bytes))
+            {
+                bytes = Block(blocks, compressed, block);
+                decompressed[block] = bytes;
+            }
+
+            return bytes;
+        });
+    }
+
+    /// <summary>An uncompressed testament's index (<c>.vss</c>), each slot as (its offset into the text file, its length).</summary>
+    private static (List<(long Where, int Size)> Entries, Func<long, byte[]> Bytes) RawEntries(string data, string testament)
+    {
+        var index = File.ReadAllBytes(Path.Combine(data, $"{testament}.vss"));
+        var text = File.ReadAllBytes(Path.Combine(data, testament));
+        if (index.Length % RawVerseEntrySize != 0)
+        {
+            throw new InvalidDataException($"The {testament} index is {index.Length} bytes, which is no whole number of {RawVerseEntrySize}-byte entries.");
+        }
+
+        var entries = new List<(long, int)>(index.Length / RawVerseEntrySize);
+        for (var at = 0; at < index.Length; at += RawVerseEntrySize)
+        {
+            entries.Add((BitConverter.ToUInt32(index, at), BitConverter.ToUInt16(index, at + 4)));
+        }
+
+        return (entries, _ => text);
+    }
+
+    /// <summary>The characters Windows-1252 gives the bytes 0x80 to 0x9F; the rest of its upper half is Latin-1's, the code point itself.</summary>
+    private const string Windows1252High =
+        "€\u0081‚ƒ„…†‡ˆ‰Š‹Œ\u008DŽ\u008F" +
+        "\u0090‘’“”•–—˜™š›œ\u009DžŸ";
+
+    /// <summary>
+    /// Bytes as Windows-1252. A configuration naming no encoding means SWORD's Latin-1, and a module made on Windows
+    /// wrote that as Windows-1252: Rieger's dashes are 0x96, which Latin-1 has as a control character.
+    /// </summary>
+    internal static string Windows1252(byte[] bytes, int start, int length)
+    {
+        var characters = new char[length];
+        for (var i = 0; i < length; i++)
+        {
+            var b = bytes[start + i];
+            characters[i] = b is >= 0x80 and <= 0x9F ? Windows1252High[b - 0x80] : (char)b;
+        }
+
+        return new string(characters);
+    }
+
+    /// <summary>
     /// The books of each testament in the order the module stores them, each with the canonical
     /// ordinal it is held under and the verses of every chapter.
     /// </summary>
@@ -488,3 +651,10 @@ internal static class SwordModule
         return bytes;
     }
 }
+
+/// <param name="Book">The canonical ordinal.</param>
+/// <param name="Chapter">0 for the book's heading.</param>
+/// <param name="Verse">0 for a heading.</param>
+/// <param name="Stored">Where the entry's bytes are, the same for every slot linked to one entry.</param>
+/// <param name="Text">The entry as stored, in the module's markup.</param>
+internal sealed record SwordSlot(int Book, int Chapter, int Verse, long Stored, string Text);

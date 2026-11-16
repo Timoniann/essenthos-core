@@ -182,6 +182,9 @@ public class AppDbContext : DbContext
     public DbSet<LexiconGloss> LexiconGlosses { get; set; } = null!;
     public DbSet<GeezLexiconEntry> GeezLexiconEntries { get; set; } = null!;
 
+    /// <summary>What a commentary wrote, each comment over the span of the text it was written on.</summary>
+    public DbSet<CommentaryEntry> CommentaryEntries { get; set; } = null!;
+
     /// <summary>
     /// Strong numbers proposed for a word, with what proposed them. Separate from
     /// <c>word.strong_number</c>, which means a source stated it.
@@ -1133,6 +1136,25 @@ public class AppDbContext : DbContext
                     + "confidence where every other inference in this corpus must: there is no "
                     + "candidate set to be sure between, and what a reader checks it against is the "
                     + "English on strong_entry, not a number nobody measured.");
+            });
+        });
+
+        modelBuilder.Entity<CommentaryEntry>(entity =>
+        {
+            entity.ToTable("commentary_entry", table =>
+            {
+                table.HasCheckConstraint(
+                    "ck_commentary_entry_source_not_empty",
+                    "length(btrim(\"source\")) > 0");
+                table.HasCheckConstraint(
+                    "ck_commentary_entry_span",
+                    "(first_chapter IS NULL) = (last_chapter IS NULL) AND (first_verse IS NULL) = (last_verse IS NULL) "
+                    + "AND (first_verse IS NULL OR first_chapter IS NOT NULL)");
+
+                table.HasComment(
+                    "What a commentary wrote, one row per comment over the span it was written on, in the shared "
+                    + "frame: a comment on verses has all four ends, a chapter's introduction its chapter and no "
+                    + "verse, a book's introduction neither. The body is the comment as JSON blocks of marked text.");
             });
         });
 

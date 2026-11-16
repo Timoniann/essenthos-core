@@ -98,6 +98,7 @@ public static class DatasetEndpoints
         var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);
         var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
         var crossReferences = await Counted(db.CrossReferences.Select(r => r.Source), cancellationToken);
+        var comments = await Counted(db.CommentaryEntries.Select(c => c.Source), cancellationToken);
         var texts = await db.Texts.CountAsync(cancellationToken);
         var points = await db.PlaceCandidates
             .Where(c => c.CoordinatesDataset != null && c.Longitude != null)
@@ -158,13 +159,14 @@ public static class DatasetEndpoints
             {
                 Claims = dataset.LinkClaims ? await Claims(db, dataset, cancellationToken) : 0,
                 Texts = dataset.Frame ? texts : 0,
+                Comments = Of(comments, dataset),
                 Points = points.GetValueOrDefault(dataset.Id),
             };
 
             if (counts is
                 {
                     Entities: 0, Events: 0, Periods: 0, Lemmas: 0, Glosses: 0, Lexicon: 0, Links: 0, Parsings: 0,
-                    Commandments: 0, Topics: 0, CrossReferences: 0, Claims: 0, Texts: 0, Points: 0,
+                    Commandments: 0, Topics: 0, CrossReferences: 0, Claims: 0, Texts: 0, Points: 0, Comments: 0,
                 })
             {
                 continue;
@@ -182,6 +184,7 @@ public static class DatasetEndpoints
             .Concat(Undeclared(commandments))
             .Concat(Undeclared(topics))
             .Concat(Undeclared(crossReferences))
+            .Concat(Undeclared(comments))
             .GroupBy(row => row.Source, StringComparer.Ordinal)
             .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
             .OrderByDescending(row => row.Rows)
@@ -306,6 +309,9 @@ public record DatasetCounts(
 
     /// <summary>Texts placed in the shared verse numbering by this dataset.</summary>
     public int Texts { get; init; }
+
+    /// <summary>Comments of a commentary, each over the passage it was written on.</summary>
+    public int Comments { get; init; }
 
     /// <summary>
     /// Points on the map whose coordinates this dataset measured, where it is not the gazetteer that
