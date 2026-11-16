@@ -256,19 +256,10 @@ public class LetteredEditionFrameTests
 
     private const int Daniel = 27;
 
-    private const int FirstSamuel = 9;
-
     private static readonly VersificationRules Rules = TestResources.Rules;
 
-    private static readonly VersificationFrame Brenton = Rules.Frame(Versification.Septuagint, EditionShape.Of(
-    [
-        .. Pieces(1, 1, "bcdefghiklmnopqrs"),
-        .. Pieces(3, 13, "abcdefg"),
-        .. Pieces(4, 17, "abcdefghiklmnopqrstuwxyz"),
-        .. Pieces(5, 1, "abcdef"),
-        .. Pieces(5, 2, "ab"),
-        .. Pieces(10, 3, "abcdefghikl"),
-    ]));
+    /// <summary>Brenton's English as the corpus holds it, which answers the tests of Brenton's rows and not his Greek's.</summary>
+    private static readonly VersificationFrame Brenton = Rules.Frame(Versification.Septuagint, TestResources.Edition("BRENTON"));
 
     private static readonly VersificationFrame Swete = Rules.Frame(Versification.Septuagint, EditionShape.Of(
     [
@@ -431,13 +422,7 @@ public class LetteredEditionFrameTests
     [Fact]
     public void BrentonsGreekAndEnglishDivideSirach33Apart()
     {
-        var greek = Rules.Frame(Versification.Septuagint, EditionShape.Of(
-        [
-            .. Pieces(1, 1, "bcdefghiklmnopqrs"),
-            .. Pieces(4, 17, "abcdefghiklmnopqrstuwxyz"),
-            .. Pieces(10, 3, "abcdefghikl"),
-            (FirstSamuel, 17, 11, string.Empty, 40),
-        ]));
+        var greek = Rules.Frame(Versification.Septuagint, TestResources.Edition("GRCBRENT"));
 
         greek.Resolve(Sirach, 33, 7, lettered: false, string.Empty)
             .Should().Equal(new CanonicalReference(Sirach, 36, 7), new CanonicalReference(Sirach, 36, 6));

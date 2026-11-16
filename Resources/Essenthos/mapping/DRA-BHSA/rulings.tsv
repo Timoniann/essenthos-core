@@ -1,0 +1,6 @@
+# product    Essenthos/mapping/DRA-BHSA/rulings.tsv
+# inputs
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	1.49:32.8	1.49:32.7	renders	EVIDENTIA	«wherewith» is in Jacob's last charge to his sons, which the Douay numbers 49:32 and the Hebrew 49:33; אֲשֶׁר is in the Hebrew's 49:32, the field and the cave bought from the sons of Heth, a verse the Douay does not print (its 49:30 already says Abraham bought the field) (GEN 49:30-33)

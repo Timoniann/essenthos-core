@@ -15,8 +15,8 @@ namespace Essenthos.Core.Loading.Frame;
 /// <c>shares</c> (an address another verse of the edition also stands at), <c>spans</c> (several),
 /// <c>twin</c> (its own address and the same verse under the passage's other name), <c>title</c> (one of
 /// them is a psalm's title verse), <c>parks n</c> (the last n addresses are ones it only parks on: the edition leaves
-/// those verses empty, and the line's verse holds none of their material). The loader reads the addresses, not this;
-/// the verse links read <c>parks n</c>.</param>
+/// those verses empty, and the line's verse holds none of their material). Readers take the addresses from
+/// <see cref="Verses"/>, which leaves out the ones a verse only parks on.</param>
 internal sealed record FrameRow(VerseKey Own, int? Through, IReadOnlyList<VerseKey> Canonical, string Relation)
 {
     public static readonly ProductSchema<FrameRow> Schema = new ProductSchema<FrameRow>()
@@ -30,14 +30,18 @@ internal sealed record FrameRow(VerseKey Own, int? Through, IReadOnlyList<VerseK
             [.. row.Text(2).Split(',').Select(key => VerseKey.Parse(key))],
             row.Text(3)));
 
-    /// <summary>The verses the line stands for, each with its addresses.</summary>
+    /// <summary>
+    /// The verses the line stands for, each with the addresses it holds: the ones it only parks on (<c>parks n</c>) are
+    /// left out, since the verse holds none of their material and nothing may stand it there.
+    /// </summary>
     public IEnumerable<(VerseKey Own, IReadOnlyList<VerseKey> Canonical)> Verses()
     {
+        var held = Canonical.Count - FrameFile.Parked(Relation);
         var last = Through ?? Own.Verse;
         for (var step = 0; step <= last - Own.Verse; step++)
         {
             yield return (Own with { Verse = Own.Verse + step },
-                [.. Canonical.Select(address => address with { Verse = address.Verse + step })]);
+                [.. Canonical.Take(held).Select(address => address with { Verse = address.Verse + step })]);
         }
     }
 }

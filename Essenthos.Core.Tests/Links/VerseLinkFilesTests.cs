@@ -1,3 +1,4 @@
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 using FluentAssertions;
@@ -42,9 +43,9 @@ public sealed class VerseLinkFilesTests
     [Fact]
     public void A_verse_that_only_parks_on_an_address_joins_nothing_standing_there()
     {
+        var parked = new FrameRow(VerseKey.Parse("24.33:24"), null, [VerseKey.Parse("24.26:24"), VerseKey.Parse("24.33:24")], "parks 1");
         var greek = new TextFrame("GRCBRENT", [VerseKey.Parse("24.33:24")],
-            new Dictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> { [VerseKey.Parse("24.33:24")] = [(24, 26, 24), (24, 33, 24)] },
-            new HashSet<(VerseKey, (int, int, int))> { (VerseKey.Parse("24.33:24"), (24, 33, 24)) });
+            parked.Verses().ToDictionary(verse => verse.Own, verse => (IReadOnlyList<(int Book, int Chapter, int Verse)>)[.. verse.Canonical.Select(a => (a.Book, a.Chapter, a.Verse))]));
         var geez = Text("GEEZ81", ("24.26:24", [(24, 26, 24)]), ("24.33:24", [(24, 33, 24)]));
 
         var rows = VerseLinks.Derive(new PairFrames(geez, greek, ReverseLinked: false), [Settled(MappingMethods.Aligner, "24.26:24.1", "24.33:24.1")]);

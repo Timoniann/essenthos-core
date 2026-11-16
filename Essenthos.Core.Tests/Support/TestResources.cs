@@ -60,6 +60,19 @@ internal static class TestResources
     /// <summary>A folder of the corpus sources, which <see cref="Path"/> cannot name since it expects a file.</summary>
     public static string Folder(string relative) => System.IO.Path.Combine(ResolvedPath.Value, relative);
 
+    /// <summary>
+    /// A text of the corpus as frame-files asks the versification data's tests about it: every verse of its manifest in the
+    /// store, with the letters of its words.
+    /// </summary>
+    public static Essenthos.Core.Loading.Frame.EditionShape Edition(string slug)
+    {
+        var store = new Essenthos.Core.Products.ProductStore(ResolvedPath.Value);
+        var letters = Essenthos.Core.Conversion.TextConverter.Lengths(store, slug);
+        using var reader = store.Open(Essenthos.Core.Products.VerseManifestRow.ProductOf(slug), Essenthos.Core.Products.VerseManifestRow.Schema);
+        return Essenthos.Core.Loading.Frame.EditionShape.Of(
+            [.. reader.Rows().Select(row => (row.Own.Book, row.Own.Chapter, row.Own.Verse, row.Own.VerseLabel, letters.GetValueOrDefault(row.Own)))]);
+    }
+
     /// <summary>Brenton's Septuagint, one USFM file per book.</summary>
     public static string SeptuagintFolder => System.IO.Path.Combine(ResolvedPath.Value, "Septuagint");
 
