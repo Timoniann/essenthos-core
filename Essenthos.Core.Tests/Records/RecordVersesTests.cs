@@ -78,6 +78,26 @@ public sealed class RecordVersesTests : IDisposable
     }
 
     [Fact]
+    public void AManASettledTextNamesUnderTheRulingWithoutHisPeopleStandsApartWhereAnotherTextNamesThemAtHisVerse()
+    {
+        var store = Store(
+            Name("2.32:26.18", "levites", "people", "rule-based", 0.9, Annotations.SonsOf),
+            Name("2.32:26.19", "levi", "name", "rule-based", 0.9, Annotations.SonsOf),
+            Name("1.46:11.3", "levi", "name", "rule-based", 0.9, Annotations.SonsOf),
+            Name("4.7:24.5", "anamim", "people", "rule-based", 0.9, Annotations.SonsOf));
+        WriteNames(store, "VULGCLEM",
+            Name("2.32:26.20", "levi", "name", "rule-based", 0.9, Annotations.SonsOf, text: "VULGCLEM"),
+            Name("1.46:11.2", "levi", "name", "rule-based", 0.9, Annotations.SonsOf, text: "VULGCLEM"),
+            Name("4.7:24.6", "levi", "name", "rule-based", 0.9, Annotations.SonsOf, text: "VULGCLEM"));
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[0] == "levi").Select(r => (r[1], r[5])).Should().Equal(
+            [("1.46:11", "f"), ("2.32:26", "t"), ("4.7:24", "f")],
+            "the Vulgate's 'filii' carries no people, but the Hebrew names the Levites at the same verse; the literal sons of "
+            + "Genesis 46 name no people in any text, and a people that did not come from Levi does not take his verse");
+    }
+
+    [Fact]
     public void ARecordNoOtherVerseListsIsListedAtTheVersesItsRelationshipsWereReadFrom()
     {
         var store = Store(Name("1.10:6.1", "mizraim", "name", "manual"), Name("1.10:13.1", "mizraim", "name", "manual"));
@@ -258,7 +278,7 @@ public sealed class RecordVersesTests : IDisposable
         Write(store, "records/records",
             Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("baal-god", "being", "Baal"), Record("baal", "person", "Baal"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
             Record("jachin-pillar", "object"), Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
-            Record("levi", "person"), Record("levites", "people", "Levites"), Record("mizraim", "person"), Record("moses", "person"),
+            Record("levi", "person"), Record("levites", "people", "Levites", origin: "levi"), Record("mizraim", "person"), Record("moses", "person"),
             Record("absalom", "person"), Record("nathan", "person"), Record("yhvh", "person"));
         Write(store, "records/facts/titles", ["anointed", "david", "1.3:1", null, "test"]);
         Write(store, "records/facts/relationships");
@@ -294,8 +314,8 @@ public sealed class RecordVersesTests : IDisposable
     private static TextWord Word(string key, string strong) =>
         new(WordKey.Parse(key, "BHSA"), "w", " ", null, strong, null, null, null, null, false, null, null, null);
 
-    private static string?[] Record(string slug, string kind, string? name = null) =>
-        [slug, kind, null, null, name ?? slug, null, null, null, null, null, null, null];
+    private static string?[] Record(string slug, string kind, string? name = null, string? origin = null) =>
+        [slug, kind, null, null, name ?? slug, null, null, null, null, origin, null, null];
 
     private static string?[] Relationship(string from, string relation, string to, string? verse) =>
         [from, relation, to, verse, "read", null, "manual", null, "read from Scripture by test", null];
