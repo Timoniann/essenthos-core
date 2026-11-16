@@ -137,6 +137,18 @@ public sealed class TextConversionTests : IDisposable
     }
 
     [Fact]
+    public void AVerseWhoseEveryWordIsDroppedIsNotPrinted()
+    {
+        Corrections([.. "And the earth was without form.".Split(' ')
+            .Select((word, at) => new TextCorrection($"1.1:2.{at + 1}", TextCorrection.Drop, word, null, "another verse's words"))]);
+        var store = new ProductStore(_resources);
+        TextConverter.Convert(store, Text());
+
+        Manifest(store).Select(v => (v.Own.ToString(), v.Sequence)).Should().Equal(("1.1:1", 1));
+        Words(store).Should().NotContain(w => w.Key.Verse.ToString() == "1.1:2");
+    }
+
+    [Fact]
     public void APassageTheSourceDoesNotNumberIsDividedIntoTheVersesItsRowsOpen()
     {
         Corrections(
