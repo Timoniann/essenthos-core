@@ -188,13 +188,17 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         var measured = AlignmentPipeline.Measured.GetValueOrDefault(from.Language);
         var threshold = pair.Minimum ?? measured?.Minimum ?? AlignmentPipeline.DefaultMinimumConfidence;
         var pool = AlignmentPipeline.Pool(pair.From, pair.To);
+        double? agreedBelow = measured is { AgreedBelow: { } measuredBelow } && threshold == measured.Minimum ? measuredBelow : null;
         var answer = await Answer(pair.From, pair.To, $"{pair.From}-{pair.To}", pair.Model, asWritten: false, books: null,
-            lettered: pair.Outside is not null || SameVersification(pair.From, pair.To), cancellationToken);
+            lettered: pair.Outside is not null || SameVersification(pair.From, pair.To), cancellationToken, agreed: agreedBelow is not null);
         var prior = Syntax(pair.To);
+        var agreement = agreedBelow is { } agreedFrom
+            ? new AlignmentPipeline.Agreement(AlignmentPipeline.PairsOf(answer.Agreed!, answer.Addresses.Count), agreedFrom)
+            : null;
 
         var (drafts, proposed, collapsed, below) = AlignmentPipeline.Read(
             answer.File, answer.Addresses, answer.Source, answer.Target, threshold, Selection.BestPerSource, prior,
-            AlignmentPipeline.MarksNoNames(from.Language), AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language));
+            AlignmentPipeline.MarksNoNames(from.Language), AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language), agreement);
         if (pair.Outside is { } outside)
         {
             var beyond = Beyond(from, texts[outside]);
@@ -261,16 +265,18 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         string File,
         List<(int, int, int)> Addresses,
         Dictionary<(int, int, int), List<Word>> Source,
-        Dictionary<(int, int, int), List<Word>> Target);
+        Dictionary<(int, int, int), List<Word>> Target,
+        string? Agreed = null);
 
     /// <summary>
     /// The answer stored for the pair's lines as the words stand. Only the source is read as written: the target's own
     /// reduction is not a hedge — BHSA's consonantal text and Nestle's lemmas are the forms those texts themselves carry.
     /// A trial over a few books trains a model of its own rather than reading the pool's.
     /// </summary>
+    /// <param name="agreed">Whether the answer holding only the pairs both directions of the model name is read too: a pool's pair alone has one.</param>
     private async Task<Stored> Answer(
         string fromSlug, string toSlug, string workspace, string modelType, bool asWritten, IReadOnlySet<int>? books, bool lettered,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, bool agreed = false)
     {
         var pool = asWritten || books is not null ? null : AlignmentPipeline.Pool(fromSlug, toSlug);
         Func<WordForms, string> sourceForm = asWritten ? AlignmentPipeline.Written : word => AlignmentPipeline.Reduce(word);
@@ -288,11 +294,28 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         }
 
         Directory.CreateDirectory(Path.Combine(Root, workspace));
-        var file = pool is null
-            ? await pipeline.Align(fromSlug, toSlug, Path.Combine(Root, workspace), modelType, addresses, source, target, cancellationToken)
-            : await pipeline.AlignPooled(fromSlug, pool, Path.Combine(Root, workspace), Path.Combine(Root, $"{fromSlug}-{string.Join('-', pool)}"),
-                modelType, addresses, source, target, PoolPartners(fromSlug, sourceForm), cancellationToken);
-        return new Stored(file, addresses, source, target);
+        if (pool is null)
+        {
+            if (agreed)
+            {
+                throw new InvalidOperationException(
+                    $"{fromSlug}-{toSlug} is aligned by a model of its own, and only a pool's pairs keep the answer both directions agree on.");
+            }
+
+            return new Stored(
+                await pipeline.Align(fromSlug, toSlug, Path.Combine(Root, workspace), modelType, addresses, source, target, cancellationToken),
+                addresses, source, target);
+        }
+
+        var poolWorkspace = Path.Combine(Root, $"{fromSlug}-{string.Join('-', pool)}");
+        var partners = PoolPartners(fromSlug, sourceForm);
+        var file = await pipeline.AlignPooled(fromSlug, pool, Path.Combine(Root, workspace), poolWorkspace,
+            modelType, addresses, source, target, partners, cancellationToken);
+        var both = agreed
+            ? await pipeline.AlignPooled(fromSlug, pool, Path.Combine(Root, workspace), poolWorkspace,
+                modelType, addresses, source, target, partners, cancellationToken, AlignmentPipeline.BothDirections)
+            : null;
+        return new Stored(file, addresses, source, target, both);
     }
 
     /// <summary>
