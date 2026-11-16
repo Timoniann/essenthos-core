@@ -37,9 +37,15 @@ internal static class SamaritanLinks
     /// Verses the Masoretic numbers and the Samaritan does not, looked for among the words the
     /// Samaritan has and the Masoretic has not in the same book. Where one verse's surplus holds
     /// most of such a run, the surplus is aligned against the run instead of standing as a plus with
-    /// no matching minus: in place where it is the verse just before the run — Deuteronomy 34:1,
-    /// which the Samaritan writes with 34:2-3 inside it — and as <c>transposes</c> where it is
-    /// anywhere else, which is Exodus 26:35 holding the altar of incense.
+    /// no matching minus: in place where it is the verse just before the run, and as
+    /// <c>transposes</c> where it is anywhere else, which is Exodus 26:35 holding the altar of incense.
+    /// <para>
+    /// "Most" is counted in words of two letters or more. A one-letter word (the conjunction, the
+    /// article, a preposition) pairs with its like in any passage, so a long surplus elsewhere could
+    /// hold half a run on those alone: the Gerizim command the Samaritan writes in Deuteronomy 5:21
+    /// matched Deuteronomy 34:2-3 on <c>ו</c>, <c>ה</c> and <c>את</c>. The Samaritan's 34:1 does not
+    /// hold 34:2-3 either: it names other bounds, and shares only a word or two with them.
+    /// </para>
     /// </summary>
     internal static (int Placed, int Moved, List<(int Book, int Expanded, int Omitted)> Changed) Relocate(
         Dictionary<(int Book, int Chapter, int Verse), List<HebrewWord>> here,
@@ -55,6 +61,7 @@ internal static class SamaritanLinks
         foreach (var run in Runs(there.Keys.Where(address => !here.ContainsKey(address))))
         {
             var runWords = run.SelectMany(address => there[address]).ToList();
+            var content = runWords.Where(Counts).Select(w => w.Id).ToHashSet();
             ((int Book, int Chapter, int Verse) Host, List<HebrewDraft> Pairs, int Matched)? best = null;
 
             foreach (var (host, surplus) in expandedAt.Where(entry => entry.Key.Book == run[0].Book))
@@ -64,14 +71,14 @@ internal static class SamaritanLinks
                 Pair([.. here[host].Where(w => ids.Contains(w.Id))], runWords, trial);
                 var matched = trial
                     .Where(d => d.Relation is LinkRelation.Equals or LinkRelation.Renders)
-                    .Sum(d => d.To.Count);
+                    .Sum(d => d.To.Count(content.Contains));
                 if (best is null || matched > best.Value.Matched)
                 {
                     best = (host, trial, matched);
                 }
             }
 
-            if (best is not { } found || found.Matched * MostOfTheRun < runWords.Count)
+            if (best is not { } found || found.Matched * MostOfTheRun < content.Count)
             {
                 continue;
             }
@@ -101,6 +108,11 @@ internal static class SamaritanLinks
 
     /// <summary>A match on at least half the run's words, so a stray plus elsewhere never claims it.</summary>
     private const int MostOfTheRun = 2;
+
+    /// <summary>The shortest word a run is counted in.</summary>
+    private const int ShortestCounted = 2;
+
+    private static bool Counts(HebrewWord word) => word.Form.Letters.Length >= ShortestCounted;
 
     private static List<List<(int Book, int Chapter, int Verse)>> Runs(
         IEnumerable<(int Book, int Chapter, int Verse)> addresses)
