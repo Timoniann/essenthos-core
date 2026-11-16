@@ -60,6 +60,24 @@ public sealed class RecordVersesTests : IDisposable
     }
 
     [Fact]
+    public void AManTheRulingCarriesIntoATranslationWithoutHisPeopleStandsApartWhereTheVerseHeWasCarriedFromNamesThem()
+    {
+        var store = Store(
+            Name("2.32:26.18", "levites", "people", "rule-based", 0.9, Annotations.SonsOf),
+            Name("2.32:26.19", "levi", "name", "rule-based", 0.9, Annotations.SonsOf),
+            Name("4.16:8.9", "levi", "name", "rule-based", 0.9, Annotations.SonsOf));
+        WriteNames(store, "DRA",
+            Name("2.32:26.29", "levi", "name", "rule-based", 0.9, Annotations.SonsOf, NameOrigins.Projected, "DRA", "BHSA 2.32:26.19"),
+            Name("4.16:8.12", "levi", "name", "rule-based", 0.9, Annotations.SonsOf, NameOrigins.Projected, "DRA", "BHSA 4.16:8.9"));
+        RecordVerses.Write(store, force: true);
+
+        Rows(store).Where(r => r[0] == "levi").Select(r => (r[1], r[5])).Should().Equal(
+            [("2.32:26", "t"), ("4.16:8", "f")],
+            "the Douay's 'sons' carries no people, but the word its Levi was carried from stands beside the Levites; where the "
+            + "verse carried from names no people either, the man keeps the verse");
+    }
+
+    [Fact]
     public void ARecordNoOtherVerseListsIsListedAtTheVersesItsRelationshipsWereReadFrom()
     {
         var store = Store(Name("1.10:6.1", "mizraim", "name", "manual"), Name("1.10:13.1", "mizraim", "name", "manual"));

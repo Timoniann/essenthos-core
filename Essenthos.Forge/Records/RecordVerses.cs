@@ -25,7 +25,10 @@ namespace Essenthos.Core.Records;
 /// verse after it are not both listed for a name only one of them holds. A name carried from a word standing at a psalm's
 /// title stands at the title too, where the carrying text's frame does not know its verse holds the title;</item>
 /// <item>withheld where every word naming a man in the verse is the name after <em>the sons of</em> that the owner's ruling
-/// reads as the people beside a word naming the people in the same verse of the same text (<see cref="Annotations.SonsOf"/>);</item>
+/// reads as the people beside a word naming the people in the same verse of the same text (<see cref="Annotations.SonsOf"/>),
+/// or, for a name carried from another text, of the verse of the word it was carried from: a translation whose word for
+/// <em>sons</em> the projection did not pair carries the man alone, and the ruling was read beside the people where it
+/// was stated;</item>
 /// <item>for a record no other verse lists, the verses its relationships were read from (<see cref="RelationshipVerseLoader"/>),
 /// naming it where a word of the verse carries it in any text;</item>
 /// <item>every verse the gazetteer lists for the record its row is filed under (<c>external/openbible/references</c>), under
@@ -42,7 +45,7 @@ internal static class RecordVerses
 
     public const string Producer = "forge records-verses";
 
-    public const string Version = "4";
+    public const string Version = "5";
 
     public const string VersionNote = "verses-version";
 
@@ -133,6 +136,12 @@ internal static class RecordVerses
         var anyName = new ConcurrentDictionary<(int Record, VerseKey Verse), byte>();
         var apart = new ConcurrentDictionary<int, byte>();
         var spanning = new ConcurrentBag<(int Record, IReadOnlyList<VerseKey> Addresses, bool Apart)>();
+
+        // Each text's own verses where the ruling names a people, and the men carried under the ruling into a verse of
+        // another text where it names none, with the word they were carried from: they stand apart where that word's verse
+        // holds the people, settled once every text is read.
+        var peopleVersesOf = new ConcurrentDictionary<string, HashSet<VerseKey>>(StringComparer.Ordinal);
+        var carriedAlone = new ConcurrentBag<(int Record, IReadOnlyList<VerseKey> Addresses, string Text, VerseKey Verse)>();
         var frames = new ConcurrentDictionary<string, Dictionary<VerseKey, IReadOnlyList<VerseKey>>>(StringComparer.Ordinal);
         IReadOnlyList<VerseKey> AddressesIn(string text, VerseKey own) =>
             frames.GetOrAdd(text, t => Frame(store, t)).TryGetValue(own, out var addresses) ? addresses : [FrameFile.AtOwn(own)];
@@ -171,6 +180,7 @@ internal static class RecordVerses
             var keys = new List<WordKey>();
             var claimed = new List<Annotations.Claimed>(rows.Count);
             var sonsOf = new HashSet<(long Word, int Record)>();
+            var carriedFrom = new Dictionary<(long Word, int Record), (string Text, VerseKey Verse)>();
             var titles = new Dictionary<(long Word, int Record), VerseKey>();
             foreach (var row in rows)
             {
@@ -198,6 +208,11 @@ internal static class RecordVerses
                 if (row.Source == Annotations.SonsOf)
                 {
                     sonsOf.Add((word, id));
+                    if (row.Through is { } from && from.IndexOf(' ') is var gap and > 0)
+                    {
+                        var fromText = from[..gap];
+                        carriedFrom[(word, id)] = (fromText, WordKey.Parse(from[(gap + 1)..], fromText).Verse);
+                    }
                 }
             }
 
@@ -222,7 +237,11 @@ internal static class RecordVerses
             var ruled = settled.SelectMany(w => w.Value.Where(c => sonsOf.Contains((w.Key, c.EntityId))).Select(c => (Word: w.Key, c.EntityId, c.Kind)))
                 .ToList();
             var peopleVerses = ruled.Where(r => r.Kind == EntityKind.People).Select(r => keys[(int)r.Word].Verse).ToHashSet();
+            peopleVersesOf[text] = peopleVerses;
             var standsApart = ruled.Where(r => r.Kind == EntityKind.Person && peopleVerses.Contains(keys[(int)r.Word].Verse))
+                .Select(r => (r.Word, r.EntityId)).ToHashSet();
+            var alone = ruled.Where(r => r.Kind == EntityKind.Person && !peopleVerses.Contains(keys[(int)r.Word].Verse)
+                    && carriedFrom.ContainsKey((r.Word, r.EntityId)))
                 .Select(r => (r.Word, r.EntityId)).ToHashSet();
             foreach (var (_, record) in standsApart)
             {
@@ -236,7 +255,15 @@ internal static class RecordVerses
                 {
                     IReadOnlyList<VerseKey> addresses =
                         titles.TryGetValue((word, answer.EntityId), out var title) ? [.. verseAddresses, title] : verseAddresses;
+                    // A man carried alone counts as apart until the verse he was carried from is read.
                     var isApart = standsApart.Contains((word, answer.EntityId));
+                    if (alone.Contains((word, answer.EntityId)))
+                    {
+                        var (fromText, fromVerse) = carriedFrom[(word, answer.EntityId)];
+                        carriedAlone.Add((answer.EntityId, addresses, fromText, fromVerse));
+                        isApart = true;
+                    }
+
                     if (addresses.Count == 1)
                     {
                         named.AddOrUpdate((answer.EntityId, addresses[0]), isApart, (_, all) => all && isApart);
@@ -248,6 +275,22 @@ internal static class RecordVerses
                 }
             }
         });
+
+        foreach (var (id, addresses, fromText, fromVerse) in carriedAlone)
+        {
+            if (peopleVersesOf.TryGetValue(fromText, out var verses) && verses.Contains(fromVerse))
+            {
+                apart.TryAdd(id, 0);
+            }
+            else if (addresses.Count == 1)
+            {
+                named[(id, addresses[0])] = false;
+            }
+            else
+            {
+                spanning.Add((id, addresses, false));
+            }
+        }
 
         var single = named.Keys.ToHashSet();
         foreach (var (id, addresses, isApart) in spanning)
