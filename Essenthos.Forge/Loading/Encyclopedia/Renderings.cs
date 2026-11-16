@@ -118,6 +118,20 @@ internal static class Renderings
     private const string EnglishLanguage = "eng";
 
     /// <summary>
+    /// Whether a word naming a record of <paramref name="kind"/> is read as a thing's rendering (<see cref="NamedWord.Thing"/>):
+    /// an object, a feast or a title always; a being where the word is written in lower case (PRB-1767). A creature is
+    /// named by a common noun in most texts — the King James's <em>leviathan</em> and <em>unicorn</em>, the Ohienko Bible's
+    /// <em>однорожця</em>, the Septuagint's <em>δράκων</em> — and read as a person's name those words were no spelling at
+    /// all, so the record listed only the texts that capitalise it. A being a text writes with a capital (<em>Baal</em>,
+    /// <em>Dagon</em>) is read as a name, and still found by a search.
+    /// </summary>
+    /// <param name="kind">The record's kind as the record files write it.</param>
+    /// <param name="surface">The word as the text prints it.</param>
+    internal static bool IsThing(string kind, string surface) =>
+        kind is "object" or "observance" or "title"
+        || (kind == "being" && surface.FirstOrDefault(char.IsLetter) is var first && char.IsLower(first));
+
+    /// <summary>
     /// Every text's spellings of every entity in <paramref name="words"/>.
     /// </summary>
     /// <param name="words">The named words, in any order.</param>

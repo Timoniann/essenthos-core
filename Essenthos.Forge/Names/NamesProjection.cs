@@ -991,11 +991,12 @@ internal sealed partial class NamesProjection
         foreach (var name in reader.Rows().Where(n => NameOrigins.IsOwn(n.Origin)))
         {
             var guessed = name.Link is not null && MappingMethods.DatabaseMethod(name.Link) == Database.Entities.Enums.LinkMethod.Aligner;
-            var thing = Records.TryGetValue(name.Record, out var record) && record.Kind is "object" or "observance" or "title";
+            var spellable = words.TryGetValue(name.Own.Own, out var word) && !word.NeverAName && !word.Pronoun;
+            var thing = Records.TryGetValue(name.Record, out var record)
+                        && Loading.Encyclopedia.Renderings.IsThing(record.Kind, word?.Surface ?? string.Empty);
             var firm = guessed
                 ? name.Confidence >= Loading.Encyclopedia.SearchSpellings.HighConfidence
                 : name.Method is "manual" or "stated-by-source" || name.Confidence is null || name.Confidence >= Loading.Encyclopedia.SearchSpellings.HighConfidence;
-            var spellable = words.TryGetValue(name.Own.Own, out var word) && !word.NeverAName && !word.Pronoun;
             names.Add(new IndexedName(name.Own, name.Record, guessed ? name.Confidence : null, thing, firm, spellable));
         }
 
