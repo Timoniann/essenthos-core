@@ -1,0 +1,22 @@
+# The Wikidata item chosen by hand for a record that no query of scripts/fetch-wikidata-biblical.ps1 reaches, or whose item goes by none of its names.
+# The fetch reads each under the seed "records" (-Add reads only those items.jsonl lacks); the `wikipedia` step offers each only to the record named with it, never ties it, and lists it for the owner, whose answer links it.
+# Each item read by hand against the record's verses and line, and its articles against the record, by claude-opus-5-5 on 2026-11-16 (PRB-1744).
+record	qid	why
+asherah	Q83975	the Semitic goddess Asherah, whose prophets ate at Jezebel's table (1KI 18:19); the es article Astarot opens with Asera, Asherá
+chiun	Q3649968	Remphan, the god of the planet Saturn: the name Stephen gives (ACT 7:43) for the Kaiwan of AMO 5:26, as the record's line says
+hermes-god	Q41484	Hermes, the Greek god whose name the people of Lystra gave to Paul (ACT 14:12)
+heracles	Q122248	Heracles, the name 2MA 4:19 writes for the god of Tyre (Melqart, whom the Greeks called Heracles)
+lilith	Q180627	Lilith of Jewish tradition, the creature of the night of ISA 34:14, which her article cites
+milcom	Q1935282	Milcom, the god of the Ammonites (1KI 11:5; 2KI 23:13)
+molech	Q275010	Moloch, the god to whom children were made to pass through the fire (LEV 18:21; 2KI 23:10); not the lizard or the film
+nanea	Q1809764	Nanaya, the Mesopotamian goddess whose temple in Persia 2MA 1:13-15 names
+nebo-god	Q392239	Nabu, the god of Babylon carried away with Bel (ISA 46:1); not the mountain or the towns
+nibhaz	Q7024203	Nibhaz, the god of the Avites (2KI 17:31)
+queen-of-heaven	Q286491	the queen of heaven of antiquity, the goddess of JER 7:18 and 44:17-19; not the Christian title of Mary (Q1358870)
+reem	Q2918090	the re'em, the horned animal of the Hebrew Bible (NUM 23:22; JOB 39:9-10)
+seirim	Q60791107	the se'irim, the hairy beings of LEV 17:7 and ISA 13:21
+succoth-benoth	Q22121547	Succoth-benoth, the god the men of Babylon made in Samaria (2KI 17:30)
+dukhiphat	Q25247	the hoopoe (Upupa epops), as the lexicons, the Septuagint's ἔποψ and the Vulgate's upupa all read the dukhiphat (LEV 11:19)
+shaphan-animal	Q323847	the rock hyrax, as the lexicons read the shaphan of the rocks (LEV 11:5; PSA 104:18; PRO 30:26)
+tachash	Q2915535	the tachash, the article on the word itself and what it may have been (EXO 26:14)
+tan-jackal	Q125525	the jackal, as the lexicons and most translations read the tannim of the ruins (MIC 1:8)

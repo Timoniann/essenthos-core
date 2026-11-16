@@ -72,12 +72,18 @@ public sealed class WikipediaMatchTests : IDisposable
         _items.Add(item.ToJsonString());
     }
 
-    private WikipediaMatcher Matcher(Dictionary<string, string>? identified = null, IEnumerable<string>? referenced = null)
+    private WikipediaMatcher Matcher(
+        Dictionary<string, string>? identified = null, IEnumerable<string>? referenced = null, IEnumerable<string>? chosen = null)
     {
         var folder = Path.Combine(_resources, WikidataItems.Folder);
         Directory.CreateDirectory(folder);
         File.WriteAllLines(Path.Combine(folder, WikidataItems.ItemsFile), _items);
         File.WriteAllLines(Path.Combine(folder, WikidataItems.ReferencedFile), referenced ?? []);
+        if (chosen is not null)
+        {
+            File.WriteAllLines(Path.Combine(folder, WikidataItems.RecordItemsFile), ["# chosen by hand", "record	qid	why", .. chosen]);
+        }
+
         return new WikipediaMatcher(WikidataItems.Read(_resources), identified ?? []);
     }
 
@@ -382,6 +388,31 @@ public sealed class WikipediaMatchTests : IDisposable
             .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q3");
         matches[3].Should().BeOfType<WikipediaMatch.Ambiguous>()
             .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q4");
+    }
+
+    [Fact]
+    public void AnItemChosenByHandForACreatureIsOfferedToItAloneThoughItGoesByNoneOfItsNames()
+    {
+        Add("Q1", "hoopoe", kind: "other", seeds: ["records"], article: "Hoopoe");
+        Add("Q2", "Moloch", classes: ["Q178885"], seeds: ["records"], article: "Moloch");
+        Add("Q3", "Asherah", kind: "other", seeds: ["records", "class"], article: "Asherah");
+
+        var matches = Matcher(chosen: ["dukhiphat	Q1	the lexicons' hoopoe", "molech	Q2	", "asherah	Q3	"]).Match(
+        [
+            Record(1, "dukhiphat", "Dukhiphat", EntityKind.Being),
+            Record(2, "hoopoe-bird", "Hoopoe", EntityKind.Being),
+            Record(3, "molech", "Molech", EntityKind.Being),
+            Record(4, "moloch", "Moloch", EntityKind.Person, line: "a man named in the text"),
+            Record(5, "asherah-pole", "Asherah", EntityKind.Object),
+        ]);
+
+        matches[1].Should().BeOfType<WikipediaMatch.Ambiguous>("an item chosen by hand is offered, never tied")
+            .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q1");
+        matches[2].Should().BeOfType<WikipediaMatch.Unmatched>("an item read only for one record is not every namesake's");
+        matches[3].Should().BeOfType<WikipediaMatch.Ambiguous>().Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q2");
+        matches[4].Should().BeOfType<WikipediaMatch.Unmatched>();
+        matches[5].Should().BeOfType<WikipediaMatch.Ambiguous>("an item the queries found too is still found by its name")
+            .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q3");
     }
 
     [Fact]

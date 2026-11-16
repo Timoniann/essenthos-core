@@ -125,6 +125,16 @@ internal sealed partial class WikidataItems
 
     public const string ReferencedFile = "referenced.jsonl";
 
+    /// <summary>
+    /// The items chosen by hand for a record the queries cannot reach (a god of the nations, a creature named
+    /// by its Hebrew word), committed beside the queries: <c>record</c>, <c>qid</c>, <c>why</c>. The fetch reads
+    /// each such item under the seed <see cref="RecordsSeed"/>, and the matching offers it to that record.
+    /// </summary>
+    public const string RecordItemsFile = "record-items.tsv";
+
+    /// <summary>The seed of an item the fetch read only because <see cref="RecordItemsFile"/> names it.</summary>
+    public const string RecordsSeed = "records";
+
     /// <summary>The Wikipedias a link is kept for, by the site name Wikidata uses for each.</summary>
     private static readonly (string Site, string Language)[] Sites =
         [("enwiki", "en"), ("ukwiki", "uk"), ("dewiki", "de"), ("eswiki", "es")];
@@ -143,7 +153,13 @@ internal sealed partial class WikidataItems
 
     private readonly Dictionary<string, string> _englishLabels = new(StringComparer.Ordinal);
 
+    private readonly Dictionary<string, List<string>> _chosen = new(StringComparer.Ordinal);
+
     public IReadOnlyDictionary<string, WikidataItem> Items => _items;
+
+    /// <summary>The items <see cref="RecordItemsFile"/> chooses for the record, those the files hold; empty for most records.</summary>
+    public IEnumerable<WikidataItem> ChosenFor(string slug) =>
+        _chosen.TryGetValue(slug, out var ids) ? ids.Where(_items.ContainsKey).Select(id => _items[id]) : [];
 
     public bool TryGet(string id, out WikidataItem item) => _items.TryGetValue(id, out item!);
 
@@ -218,6 +234,26 @@ internal sealed partial class WikidataItems
             var item = read.Build(root);
             read._items[item.Id] = item;
             document.Dispose();
+        }
+
+        var chosenFile = Path.Combine(folder, RecordItemsFile);
+        if (File.Exists(chosenFile))
+        {
+            foreach (var line in File.ReadLines(chosenFile))
+            {
+                var fields = line.Split('	');
+                if (line.StartsWith('#') || fields.Length < 2 || fields[0] == "record" || fields[1].Length == 0)
+                {
+                    continue;
+                }
+
+                if (!read._chosen.TryGetValue(fields[0], out var ids))
+                {
+                    read._chosen[fields[0]] = ids = [];
+                }
+
+                ids.Add(fields[1]);
+            }
         }
 
         return read;

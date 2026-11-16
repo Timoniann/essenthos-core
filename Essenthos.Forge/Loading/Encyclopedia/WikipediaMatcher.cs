@@ -145,6 +145,13 @@ internal sealed class WikipediaMatcher
         _identified = identified;
         foreach (var item in wikidata.Items.Values)
         {
+            // An item read only because it was chosen by hand for a record is that record's, not a namesake of
+            // every record of its name: the Moloch of the Bible is not offered to a man who shares a letter of it.
+            if (item.Seeds.All(seed => seed == WikidataItems.RecordsSeed))
+            {
+                continue;
+            }
+
             foreach (var name in item.Names.Union(item.Aliases))
             {
                 if (!_byName.TryGetValue(name, out var list))
@@ -300,7 +307,7 @@ internal sealed class WikipediaMatcher
         return false;
     }
 
-    /// <summary>The items that go by one of the record's names and could be the same kind of thing.</summary>
+    /// <summary>The items that go by one of the record's names, or were chosen by hand for it, and could be the same kind of thing.</summary>
     private List<WikidataItem> Candidates(WikipediaRecord record)
     {
         var found = new Dictionary<string, WikidataItem>(StringComparer.Ordinal);
@@ -319,6 +326,13 @@ internal sealed class WikipediaMatcher
             && _identified.TryGetValue(place, out var identified) && _wikidata.TryGet(identified, out var gazetteers))
         {
             found[gazetteers.Id] = gazetteers;
+        }
+
+        // An item chosen by hand for the record, though it goes by none of its names: the hoopoe for the
+        // dukhiphat. It is offered, not tied; the owner answers for it.
+        foreach (var chosen in _wikidata.ChosenFor(record.Slug))
+        {
+            found[chosen.Id] = chosen;
         }
 
         return

@@ -19,6 +19,9 @@
       class                 an instance of human biblical figure, biblical character or biblical
                             place, or of anything below them
       openbible             every QID Resources/OpenBible/ancient.jsonl and modern.jsonl name
+      records               every QID Resources/Wikidata/record-items.tsv names: items chosen by hand
+                            for a record no query reaches (a god of the nations, a creature named by
+                            its Hebrew word); the matching offers each only to the record named with it
 
     The Jewish Encyclopedias are deliberately not sources: they describe every Jewish person of
     every century, and would bring in thousands of later persons no record here could match.
@@ -34,14 +37,25 @@
 
     Everything is written to a temporary folder and moved into place only when it is whole.
 
+    With -Add, nothing already fetched is read again: only the items record-items.tsv names that
+    items.jsonl does not hold yet are read, appended to items.jsonl (and the labels they point at to
+    referenced.jsonl), and listed under "added" in summary.json. Every other item stays exactly as it
+    was read, so no other record's match can move.
+
 .EXAMPLE
     ./scripts/fetch-wikidata-biblical.ps1
+
+.EXAMPLE
+    ./scripts/fetch-wikidata-biblical.ps1 -Add
 #>
 
 [CmdletBinding()]
 param(
     # The default matches Dataset:ResourcesPath: this project's own Resources folder.
-    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources')
+    [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources'),
+
+    # Read only the hand-chosen items record-items.tsv names that items.jsonl lacks, and append them.
+    [switch] $Add
 )
 
 $ErrorActionPreference = 'Stop'
@@ -113,6 +127,9 @@ SELECT DISTINCT ?item WHERE {
 
 # The classes that make an item a person or a place, for the kind written on each item. It is a
 # convenience for the matcher and no more; the item's own P31 is kept beside it.
+$RecordItemsFile = 'record-items.tsv'
+$RecordsSeed = 'records'
+
 $PersonClasses = @('Q5', 'Q20643955', 'Q12405827', 'Q15632617', 'Q21070568', 'Q3236487', 'Q621421', 'Q8031550')
 $PlaceClassRoot = 'Q12404340'
 
@@ -264,6 +281,152 @@ function Get-Kind {
     return 'other'
 }
 
+function Read-RecordItems {
+    param([string] $Folder)
+
+    # record, qid, why; a line starting with # is a comment.
+    $path = Join-Path $Folder $RecordItemsFile
+    if (-not (Test-Path $path)) { return @() }
+    return @(Get-Content $path -Encoding utf8 | Where-Object { $_ -and -not $_.StartsWith('#') } |
+        ForEach-Object { ($_ -split "`t")[1] } | Where-Object { $_ -match '^Q\d+$' } | Sort-Object -Unique)
+}
+
+function Group-Entities {
+    param([System.Collections.IDictionary] $Entities, [hashtable] $Seeds)
+
+    # One entry per item read, under the id it answers to now, with every seed of every id asked for it.
+    $read = [ordered]@{}
+    foreach ($asked in $Entities.Keys) {
+        $entity = $Entities[$asked]
+        if (-not $read.Contains($entity.id)) {
+            $read[$entity.id] = @{ entity = $entity; seeds = [System.Collections.Generic.List[string]]::new(); redirects = @() }
+        }
+        foreach ($seed in $Seeds[$asked]) { if (-not $read[$entity.id].seeds.Contains($seed)) { $read[$entity.id].seeds.Add($seed) } }
+        if ($asked -ne $entity.id) { $read[$entity.id].redirects += $asked }
+    }
+    return $read
+}
+
+function ConvertTo-Items {
+    param([System.Collections.IDictionary] $Read, [hashtable] $PlaceClasses)
+
+    $referenced = [System.Collections.Generic.HashSet[string]]::new()
+    $items = [System.Collections.Generic.List[object]]::new()
+    foreach ($id in $Read.Keys | Sort-Object { [long]$_.Substring(1) }) {
+        $entity = $Read[$id].entity
+        $claims, $identifiers = ConvertTo-Claims $entity.claims
+        $classes = @($claims.P31 | Where-Object { $_ } | ForEach-Object { $_.value } | Where-Object { $_ -is [string] })
+        $itemSeeds = @($Read[$id].seeds)
+        foreach ($property in $claims.Keys) {
+            foreach ($entry in $claims[$property]) {
+                if ($entry.value -is [string] -and $entry.value -match '^Q\d+$') { [void]$referenced.Add($entry.value) }
+            }
+        }
+        $item = [ordered]@{
+            id = $id
+            lastrevid = $entity.lastrevid
+            modified = $entity.modified
+            kind = Get-Kind $classes $claims $itemSeeds $PlaceClasses
+            seeds = $itemSeeds
+            labels = ConvertTo-Map $entity.labels { param($l) $l.value }
+            descriptions = ConvertTo-Map $entity.descriptions { param($d) $d.value }
+            aliases = ConvertTo-Map $entity.aliases { param($a) @($a | ForEach-Object { $_.value }) }
+            sitelinks = ConvertTo-Map $entity.sitelinks { param($s) $s.title }
+            claims = $claims
+            identifiers = $identifiers
+        }
+        if ($Read[$id].redirects) { $item.redirectedFrom = @($Read[$id].redirects) }
+        $items.Add($item)
+    }
+    return @{ Items = $items; Referenced = $referenced }
+}
+
+function Get-Labels {
+    param([string[]] $Ids)
+
+    if ($Ids.Count -eq 0) { return @() }
+    $pointedAt = Get-Entities $Ids 'labels|descriptions'
+    return @(foreach ($asked in $pointedAt.Keys) {
+        [ordered]@{
+            id = $asked
+            labels = ConvertTo-Map $pointedAt[$asked].labels { param($l) $l.value }
+            descriptions = ConvertTo-Map $pointedAt[$asked].descriptions { param($d) $d.value }
+        }
+    })
+}
+
+function Get-PlaceClasses {
+    Write-Host 'Reading the classes below biblical place'
+    $placeClasses = @{}
+    $placeQuery = "SELECT DISTINCT ?item WHERE { ?item wdt:P279* wd:$PlaceClassRoot . }"
+    foreach ($id in Get-SparqlItems $placeQuery) { $placeClasses[$id] = $true }
+    return $placeClasses
+}
+
+function Add-RecordItems {
+    param([string] $Root, [string] $Staging, [string] $Fetched)
+
+    # Only what record-items.tsv names and items.jsonl lacks is read; every line already there is kept as it is.
+    $itemsPath = Join-Path $Root 'items.jsonl'
+    $referencedPath = Join-Path $Root 'referenced.jsonl'
+    if (-not (Test-Path $itemsPath)) { throw "$itemsPath is missing; run the script without -Add first." }
+    $held = [System.Collections.Generic.HashSet[string]]::new()
+    $itemLines = [IO.File]::ReadAllLines($itemsPath)
+    foreach ($line in $itemLines) {
+        if (-not $line) { continue }
+        $item = $line | ConvertFrom-Json -AsHashtable
+        [void]$held.Add($item.id)
+        foreach ($old in @($item.redirectedFrom)) { if ($old) { [void]$held.Add($old) } }
+    }
+    $labelled = [System.Collections.Generic.HashSet[string]]::new()
+    $referencedLines = if (Test-Path $referencedPath) { [IO.File]::ReadAllLines($referencedPath) } else { @() }
+    foreach ($line in $referencedLines) { if ($line) { [void]$labelled.Add(($line | ConvertFrom-Json -AsHashtable).id) } }
+
+    $ids = @(Read-RecordItems $Root | Where-Object { -not $held.Contains($_) } | Sort-Object { [long]$_.Substring(1) })
+    Write-Host "$($ids.Count) items named in $RecordItemsFile are not in items.jsonl yet"
+    if ($ids.Count -eq 0) { return }
+
+    $seeds = @{}
+    foreach ($id in $ids) { $seeds[$id] = [System.Collections.Generic.List[string]]::new(); $seeds[$id].Add($RecordsSeed) }
+    $placeClasses = Get-PlaceClasses
+    $entities = Get-Entities $ids 'info|labels|aliases|descriptions|sitelinks|claims'
+    $read = Group-Entities $entities $seeds
+    foreach ($id in @($read.Keys)) { if ($held.Contains($id)) { $read.Remove($id) } }
+    $built = ConvertTo-Items $read $placeClasses
+    $items = $built.Items
+    $referenced = $built.Referenced
+    $missing = @($ids | Where-Object { -not $entities.Contains($_) })
+
+    $labelIds = @($referenced | Where-Object { -not $held.Contains($_) -and -not $read.Contains($_) -and -not $labelled.Contains($_) } |
+        Sort-Object { [long]$_.Substring(1) })
+    Write-Host "Reading the labels of $($labelIds.Count) items they point at"
+    $labels = Get-Labels $labelIds
+
+    # Appended in QID order after the lines already there: a reader keys every line by its id.
+    $utf8 = [Text.UTF8Encoding]::new($false)
+    [IO.File]::WriteAllLines((Join-Path $Staging 'items.jsonl'),
+        [string[]]@($itemLines + @($items | ForEach-Object { $_ | ConvertTo-Json -Depth 12 -Compress })), $utf8)
+    [IO.File]::WriteAllLines((Join-Path $Staging 'referenced.jsonl'),
+        [string[]]@($referencedLines + @($labels | ForEach-Object { $_ | ConvertTo-Json -Depth 6 -Compress })), $utf8)
+
+    $summary = Get-Content (Join-Path $Root 'summary.json') -Raw | ConvertFrom-Json -AsHashtable
+    $ordered = [ordered]@{}
+    foreach ($key in 'fetched', 'items', 'missing', 'redirected', 'referenced', 'kinds', 'seeds', 'sitelinks', 'added') {
+        if ($summary.Contains($key)) { $ordered[$key] = $summary[$key] }
+    }
+    $ordered.items = $itemLines.Where({ $_ }).Count + $items.Count
+    $ordered.referenced = $referencedLines.Where({ $_ }).Count + @($labels).Count
+    $ordered.added = @($ordered.added | Where-Object { $_ }) + [ordered]@{
+        fetched = $Fetched
+        seed = $RecordsSeed
+        items = @($items | ForEach-Object { $_.id })
+        missing = $missing
+        referenced = @($labels).Count
+    }
+    $ordered | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $Staging 'summary.json') -Encoding utf8
+    Write-Host "Added $($items.Count) items and $(@($labels).Count) referenced labels"
+}
+
 $resources = Resolve-Path $ResourcesPath
 $root = Join-Path $resources $FolderName
 $staging = Join-Path ([IO.Path]::GetTempPath()) "wikidata-biblical-$([guid]::NewGuid().ToString('n'))"
@@ -276,6 +439,10 @@ if ((Test-Path $Cache) -and (Get-Item $Cache).CreationTime -lt (Get-Date).AddDay
 New-Item -ItemType Directory -Force -Path $Cache | Out-Null
 
 try {
+  if ($Add) {
+    Add-RecordItems $root $staging $fetched
+  }
+  else {
     $seeds = @{}
     foreach ($name in $Queries.Keys) {
         Write-Host "Asking the Query Service: $name"
@@ -298,10 +465,12 @@ try {
         }
     }
 
-    Write-Host 'Reading the classes below biblical place'
-    $placeClasses = @{}
-    $placeQuery = "SELECT DISTINCT ?item WHERE { ?item wdt:P279* wd:$PlaceClassRoot . }"
-    foreach ($id in Get-SparqlItems $placeQuery) { $placeClasses[$id] = $true }
+    foreach ($id in Read-RecordItems $root) {
+        if (-not $seeds.ContainsKey($id)) { $seeds[$id] = [System.Collections.Generic.List[string]]::new() }
+        if (-not $seeds[$id].Contains($RecordsSeed)) { $seeds[$id].Add($RecordsSeed) }
+    }
+
+    $placeClasses = Get-PlaceClasses
 
     $ids = @($seeds.Keys | Sort-Object { [long]$_.Substring(1) })
     if ($ids.Count -lt $MinimumItems) {
@@ -310,57 +479,17 @@ try {
 
     Write-Host "Reading $($ids.Count) items"
     $entities = Get-Entities $ids 'info|labels|aliases|descriptions|sitelinks|claims'
-    $read = [ordered]@{}
-    foreach ($asked in $entities.Keys) {
-        $entity = $entities[$asked]
-        if (-not $read.Contains($entity.id)) {
-            $read[$entity.id] = @{ entity = $entity; seeds = [System.Collections.Generic.List[string]]::new(); redirects = @() }
-        }
-        foreach ($seed in $seeds[$asked]) { if (-not $read[$entity.id].seeds.Contains($seed)) { $read[$entity.id].seeds.Add($seed) } }
-        if ($asked -ne $entity.id) { $read[$entity.id].redirects += $asked }
-    }
+    $read = Group-Entities $entities $seeds
 
-    $referenced = [System.Collections.Generic.HashSet[string]]::new()
-    $items = [System.Collections.Generic.List[object]]::new()
-    foreach ($id in $read.Keys | Sort-Object { [long]$_.Substring(1) }) {
-        $entity = $read[$id].entity
-        $claims, $identifiers = ConvertTo-Claims $entity.claims
-        $classes = @($claims.P31 | Where-Object { $_ } | ForEach-Object { $_.value } | Where-Object { $_ -is [string] })
-        $itemSeeds = @($read[$id].seeds)
-        foreach ($property in $claims.Keys) {
-            foreach ($entry in $claims[$property]) {
-                if ($entry.value -is [string] -and $entry.value -match '^Q\d+$') { [void]$referenced.Add($entry.value) }
-            }
-        }
-        $item = [ordered]@{
-            id = $id
-            lastrevid = $entity.lastrevid
-            modified = $entity.modified
-            kind = Get-Kind $classes $claims $itemSeeds $placeClasses
-            seeds = $itemSeeds
-            labels = ConvertTo-Map $entity.labels { param($l) $l.value }
-            descriptions = ConvertTo-Map $entity.descriptions { param($d) $d.value }
-            aliases = ConvertTo-Map $entity.aliases { param($a) @($a | ForEach-Object { $_.value }) }
-            sitelinks = ConvertTo-Map $entity.sitelinks { param($s) $s.title }
-            claims = $claims
-            identifiers = $identifiers
-        }
-        if ($read[$id].redirects) { $item.redirectedFrom = @($read[$id].redirects) }
-        $items.Add($item)
-    }
+    $built = ConvertTo-Items $read $placeClasses
+    $items = $built.Items
+    $referenced = $built.Referenced
     $missing = @($ids | Where-Object { -not $entities.Contains($_) })
 
     foreach ($id in $read.Keys) { [void]$referenced.Remove($id) }
     $labelIds = @($referenced | Sort-Object { [long]$_.Substring(1) })
     Write-Host "Reading the labels of $($labelIds.Count) items they point at"
-    $pointedAt = Get-Entities $labelIds 'labels|descriptions'
-    $labels = foreach ($asked in $pointedAt.Keys) {
-        [ordered]@{
-            id = $asked
-            labels = ConvertTo-Map $pointedAt[$asked].labels { param($l) $l.value }
-            descriptions = ConvertTo-Map $pointedAt[$asked].descriptions { param($d) $d.value }
-        }
-    }
+    $labels = Get-Labels $labelIds
 
     $utf8 = [Text.UTF8Encoding]::new($false)
     [IO.File]::WriteAllLines((Join-Path $staging 'items.jsonl'),
@@ -386,7 +515,7 @@ try {
             $summary.sitelinks[$kind][$wiki] = @($ofKind | Where-Object { $_.sitelinks.Contains($wiki) }).Count
         }
     }
-    foreach ($name in @($Queries.Keys) + 'openbible') {
+    foreach ($name in @($Queries.Keys) + 'openbible' + $RecordsSeed) {
         $summary.seeds[$name] = @($items | Where-Object { $_.seeds -contains $name }).Count
     }
     $summary | ConvertTo-Json -Depth 4 | Set-Content -Path (Join-Path $staging 'summary.json') -Encoding utf8
@@ -413,6 +542,7 @@ Text in Wikidata's other namespaces, and the Wikipedia articles the sitelinks na
 4.0 and are **not** covered. None of it is in this folder: an article is only ever linked to.
 "@
     Set-Content -Path (Join-Path $staging 'LICENCE.md') -Value $licence -Encoding utf8
+  }
 
     New-Item -ItemType Directory -Force -Path $root | Out-Null
     foreach ($file in Get-ChildItem $staging -File) {
@@ -424,4 +554,4 @@ finally {
     Remove-Item -Recurse -Force -Path $staging -ErrorAction SilentlyContinue
 }
 
-Write-Host "Saved $($items.Count) items ($($summary.kinds.person) persons, $($summary.kinds.place) places, $($summary.kinds.other) other) and $($summary.referenced) referenced labels to $root"
+if (-not $Add) { Write-Host "Saved $($items.Count) items ($($summary.kinds.person) persons, $($summary.kinds.place) places, $($summary.kinds.other) other) and $($summary.referenced) referenced labels to $root" }
