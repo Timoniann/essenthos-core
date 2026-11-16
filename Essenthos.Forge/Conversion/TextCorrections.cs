@@ -20,7 +20,8 @@ namespace Essenthos.Core.Conversion;
 /// <c>verse</c>: the source's verse, markup and all, is read as <see cref="After"/> before it is divided into words;
 /// <c>letters</c>: the word's letters <see cref="Before"/> become <see cref="After"/>;
 /// <c>prepend</c> / <c>append</c>: the words of <see cref="After"/> open / close the verse;
-/// <c>drop</c>: the word, which reads <see cref="Before"/>, is not the edition's and goes;
+/// <c>drop</c>: the word, which reads <see cref="Before"/>, is not the edition's and goes; a verse whose every word goes is
+/// not printed (a source that prints another verse's words under its number, and none of its own);
 /// <c>block</c>: the source prints the verses <see cref="Own"/> and <see cref="Before"/> as one block and stores it under each
 /// of their numbers; it is one verse, at <see cref="Own"/>, stating all of them, and the copies, which must read the same, go;
 /// <c>strong</c>: the word's Strong number becomes <see cref="After"/>, or none where it is empty. <see cref="Before"/> is the word
@@ -175,6 +176,16 @@ internal sealed class TextCorrections
 
                             met.Add(key);
                             var (words, read) = Corrected(verse.Words, rows);
+                            if (words.Count == 0 && verse.Words.Count > 0)
+                            {
+                                if (verse.Notes.Count > 0)
+                                {
+                                    throw Unmatched(rows[0], "every word of the verse goes, but its notes have nowhere to stand");
+                                }
+
+                                return [];
+                            }
+
                             return Divided(key, verse with
                             {
                                 Words = words,

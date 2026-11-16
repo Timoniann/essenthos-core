@@ -167,6 +167,39 @@ public sealed class CrossWireKingJamesTests
     public void AWordOfContentShowsTheGreekWordOfContentItsElementNames(string numbers, string morphology, string number) =>
         CrossWireKingJames.Primary(numbers.Split(' '), morphology.Split(' ')).Should().Be(number);
 
+    /// <summary>
+    /// The module against bible4u's words: <em>wife's</em> and <em>sister's</em> take the element of their own letters, not
+    /// Simon's or Paul's, and <em>Caesar's</em>, <em>Sarah's</em> and <em>Epaenetus</em>, which the module spells otherwise,
+    /// take theirs.
+    /// </summary>
+    [Fact]
+    [Trait("Category", "Corpus")]
+    public void APossessiveTakesItsOwnElementAndANameSpelledOtherwiseIsPaired()
+    {
+        var elements = SwordTextSource.Elements(TestResources.Folder(CrossWireKingJames.Folder));
+        CorpusVerse Verse(int book, int chapter, int verse, int first, string words) =>
+            new(book, chapter, verse, [], [.. words.Split(' ').Select((word, at) => new CorpusWord(first + at, word))]);
+        var laid = CrossWireKingJames.Lay(elements,
+        [
+            Verse(41, 1, 30, 0, "But Simon's wife's mother lay sick of a fever and anon they tell him of her"),
+            Verse(44, 23, 16, 100, "And when Paul's sister's son heard of their lying in wait he went and entered into the castle and told Paul"),
+            Verse(40, 22, 21, 200, "They say unto him Caesar's Then saith he unto them Render therefore unto Caesar the things which are Caesar's and unto God the things that are God's"),
+            Verse(45, 4, 19, 300, "And being not weak in faith he considered not his own body now dead when he was about an hundred years old neither yet the deadness of Sarah's womb"),
+            Verse(45, 16, 5, 400, "Likewise greet the church that is in their house Salute my well-beloved Epaenetus who is the firstfruits of Achaia unto Christ"),
+        ]);
+
+        laid.Tags[1].Number.Should().Be("G4613");
+        laid.Tags[2].Number.Should().Be("G3994", "'wife's' is the 'wife s' of the module, over πενθερά");
+        laid.Tags[2].Unit.Should().Be(laid.Tags[3].Unit);
+        laid.Tags[102].Number.Should().Be("G3972");
+        laid.Tags[103].Number.Should().Be("G79", "'sister's' renders ἀδελφῆς");
+        laid.Tags[204].Number.Should().Be("G2541");
+        laid.Tags[218].Number.Should().Be("G2541");
+        laid.Tags[327].Number.Should().Be("G4564");
+        laid.Tags[411].Number.Should().Be("G27");
+        laid.Tags[412].Number.Should().Be("G1866");
+    }
+
     private static LaidKingJames Lay(string[] corpus)
     {
         var unit = 0;

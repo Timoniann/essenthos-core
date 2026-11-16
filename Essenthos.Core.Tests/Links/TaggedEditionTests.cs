@@ -93,6 +93,47 @@ public class TaggedEditionTests
         TaggedEdition.Agreement(spans, 6).Should().BeLessThan(0.8);
     }
 
+    /// <summary>Mark 1:30: in a run divided differently, each word covers the tagged words of its own letters.</summary>
+    [Fact]
+    public void EachWordOfARunDividedDifferentlyCoversTheTaggedWordsOfItsOwnLetters()
+    {
+        string[] tagged = ["But", "Simon", "s", "wife", "s", "mother", "lay"];
+        string[] corpus = ["But", "Simon's", "wife's", "mother", "lay"];
+        var spans = TaggedEdition.Align(tagged, corpus);
+        var run = spans.Single(span => span.CorpusFrom == 1);
+
+        (run.TaggedFrom, run.TaggedTo, run.CorpusTo, run.Match).Should().Be((1, 5, 3, EditionMatch.Divided));
+        TaggedEdition.Covered(run, tagged, corpus).Should().Equal((1, 3), (3, 5));
+    }
+
+    /// <summary>
+    /// Matthew 22:21 and Romans 16:5: a run that differs by a name's spelling as well as its division is paired piece by
+    /// piece when asked, and only then.
+    /// </summary>
+    [Fact]
+    public void ARunThatDiffersByANamesSpellingIsPairedPieceByPieceWhenAsked()
+    {
+        string[] tagged = ["are", "Cesar", "s", "and"];
+        string[] corpus = ["are", "Caesar's", "and"];
+
+        TaggedEdition.Align(tagged, corpus).Should().NotContain(span => span.CorpusFrom == 1);
+        TaggedEdition.Align(tagged, corpus, spellings: true).Single(span => span.CorpusFrom == 1).Should()
+            .Be(new EditionSpan(1, 3, 1, 2, EditionMatch.Spelling));
+
+        var salute = TaggedEdition.Align(["Salute", "my", "wellbeloved", "Epenetus", "who"], ["Salute", "my", "well-beloved", "Epaenetus", "who"], spellings: true);
+        salute.Should().Contain(new EditionSpan(2, 3, 2, 3, EditionMatch.Divided));
+        salute.Should().Contain(new EditionSpan(3, 4, 3, 4, EditionMatch.Spelling));
+    }
+
+    /// <summary>Different words, however near in letters, stay apart: a run is paired only where every piece is a spelling.</summary>
+    [Fact]
+    public void ARunOfDifferentWordsStaysUnpairedEvenWhenAsked()
+    {
+        var spans = TaggedEdition.Align(["he", "said", "unto", "them", "go"], ["he", "spake", "to", "him", "go"], spellings: true);
+
+        spans.Should().NotContain(span => span.CorpusFrom >= 1 && span.CorpusTo <= 4);
+    }
+
     private static (int, int, int, int) Covering(List<EditionSpan> spans, int taggedWord)
     {
         var span = spans.Single(s => s.TaggedFrom <= taggedWord && taggedWord < s.TaggedTo);

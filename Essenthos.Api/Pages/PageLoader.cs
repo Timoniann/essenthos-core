@@ -1024,14 +1024,34 @@ internal sealed class PageLoader(
                 var placed = await db.VerseReferences
                     .Where(r => r.IsPrimary && r.CanonicalBook == inBook.Key && chapters.Contains(r.CanonicalChapter)
                                 && r.Verse!.TextId == text.Id)
-                    .Select(r => new { r.CanonicalChapter, r.CanonicalVerse, r.VerseId })
+                    .Select(r => new
+                    {
+                        r.CanonicalChapter,
+                        r.CanonicalVerse,
+                        r.VerseId,
+                        r.Verse!.ChapterNumber,
+                        r.Verse.Number,
+                        r.Verse.Label,
+                        r.Verse.Sequence,
+                    })
                     .ToListAsync(cancellationToken);
+
+                // Where two verses of the text share an address, the one whose own address it is, then the first printed.
                 var verses = placed
-                    .Select(p => (At: Address(inBook.Key, p.CanonicalChapter, p.CanonicalVerse), p.VerseId))
+                    .Select(p => (At: Address(inBook.Key, p.CanonicalChapter, p.CanonicalVerse), p.VerseId,
+                        Own: p.ChapterNumber == p.CanonicalChapter && p.Number == p.CanonicalVerse && p.Label.Length == 0,
+                        p.ChapterNumber, p.Sequence, p.Number, p.Label))
                     .Where(p => missing.Contains(p.At))
+                    .OrderBy(p => p.At)
+                    .ThenByDescending(p => p.Own)
+                    .ThenBy(p => p.ChapterNumber)
+                    .ThenBy(p => p.Sequence)
+                    .ThenBy(p => p.Number)
+                    .ThenBy(p => p.Label, StringComparer.Ordinal)
+                    .ThenBy(p => p.VerseId)
                     .ToList();
                 var words = await Said([.. verses.Select(v => v.VerseId)], cancellationToken);
-                foreach (var (at, verseId) in verses)
+                foreach (var (at, verseId, _, _, _, _, _) in verses)
                 {
                     if (words.TryGetValue(verseId, out var plain))
                     {
