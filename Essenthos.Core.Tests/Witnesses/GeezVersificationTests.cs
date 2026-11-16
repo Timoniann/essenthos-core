@@ -127,6 +127,22 @@ public sealed class GeezPlacedByTheMapTests
         Rows(Psalms, 7, 9).Last().Should().Be((7, 8));
     }
 
+    /// <summary>
+    /// The verse links and the aligner read an addition of Esther verse by verse at the rows the frame stands it at,
+    /// not gathered at the one verse of the Hebrew it follows.
+    /// </summary>
+    [Fact]
+    public void TheMapReadsEachVerseOfEstherWhereTheFrameStandsIt()
+    {
+        GeezVerseMap.Addresses[(Esther, 1, 1)].Should().Equal((Esther, 11, 2));
+        GeezVerseMap.Addresses[(Esther, 2, 1)].Should().Equal((Esther, 1, 1));
+        GeezVerseMap.Addresses[(Esther, 10, 1)].Should().Equal((Esther, 16, 1));
+        GeezVerseMap.Addresses[(Esther, 6, 1)].Should().Equal((Esther, 15, 1), (Esther, 15, 2));
+        GeezVerseMap.Addresses.Where(entry => entry.Key.Book == Esther)
+            .Should().OnlyContain(entry => GeezVersification.Placements[entry.Key]
+                .All(row => entry.Value.Contains(new ValueTuple<int, int, int>(row.Book, row.Chapter, row.Verse))));
+    }
+
     [Fact]
     public void TheOtherBooksTheChurchDividesKeepTheirOwnNumbers() =>
         GeezVersification.Placements.Keys.Should().NotContain(key => key.Book == 18 || key.Book == 22 || key.Book == 75);
