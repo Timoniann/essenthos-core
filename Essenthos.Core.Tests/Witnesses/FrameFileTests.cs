@@ -42,6 +42,33 @@ public sealed class FrameFileTests
     }
 
     [Fact]
+    public void AVerseThatParksOnTheAddressesAfterItsFirstSaysSo()
+    {
+        var parked = new Dictionary<VerseKey, HashSet<VerseKey>>
+        {
+            [VerseKey.Parse("24.33:14")] = [VerseKey.Parse("24.33:14")],
+            [VerseKey.Parse("24.33:15")] = [VerseKey.Parse("24.33:15")],
+        };
+
+        var rows = FrameFile.Rows([Verse("24.33:14", "24.26:14", "24.33:14"), Verse("24.33:15", "24.26:15", "24.33:15")], parked);
+
+        rows.Should().ContainSingle().Which.Should().BeEquivalentTo(
+            new FrameRow(VerseKey.Parse("24.33:14"), 15, [VerseKey.Parse("24.26:14"), VerseKey.Parse("24.33:14")], "parks 1"));
+        FrameFile.Parked(rows[0].Relation).Should().Be(1);
+    }
+
+    [Fact]
+    public void AVerseThatAlsoSpansAVerseItHoldsListsTheAddressesItParksOnLast()
+    {
+        var parked = new Dictionary<VerseKey, HashSet<VerseKey>> { [VerseKey.Parse("72.22:8")] = [VerseKey.Parse("72.22:8")] };
+
+        var rows = FrameFile.Rows([Verse("72.22:8", "72.22:7", "72.22:8", "72.22:9")], parked);
+
+        rows.Should().ContainSingle().Which.Should().BeEquivalentTo(new FrameRow(VerseKey.Parse("72.22:8"), null,
+            [VerseKey.Parse("72.22:7"), VerseKey.Parse("72.22:9"), VerseKey.Parse("72.22:8")], "parks 1"), options => options.WithStrictOrdering());
+    }
+
+    [Fact]
     public void TwoVersesAtOneAddressShareIt()
     {
         var rows = FrameFile.Rows([Verse("76.1:42", "76.1:43"), Verse("76.1:43", "76.1:43")]);

@@ -14,7 +14,9 @@ namespace Essenthos.Core.Loading.Frame;
 /// <param name="Relation">What the line says, for the reader of the file: <c>moved</c> (one other address),
 /// <c>shares</c> (an address another verse of the edition also stands at), <c>spans</c> (several),
 /// <c>twin</c> (its own address and the same verse under the passage's other name), <c>title</c> (one of
-/// them is a psalm's title verse). The loader reads the addresses, not this.</param>
+/// them is a psalm's title verse), <c>parks n</c> (the last n addresses are ones it only parks on: the edition leaves
+/// those verses empty, and the line's verse holds none of their material). The loader reads the addresses, not this;
+/// the verse links read <c>parks n</c>.</param>
 internal sealed record FrameRow(VerseKey Own, int? Through, IReadOnlyList<VerseKey> Canonical, string Relation)
 {
     public static readonly ProductSchema<FrameRow> Schema = new ProductSchema<FrameRow>()
@@ -50,13 +52,25 @@ internal static class FrameFile
     public static string Product(string slug) => $"texts/{slug}/frame";
 
     public const string Relations =
-        "relation: moved | shares | spans | twin | title, for the reader of the file; the loader reads the addresses";
+        "relation: moved | shares | spans | twin | title | parks n, for the reader of the file; the loader reads the addresses, "
+        + "the verse links read parks n (the last n addresses are ones the verse only parks on)";
+
+    public const string Parks = "parks";
+
+    /// <summary>How many of a line's last addresses its verses only park on, from its relation (<c>parks n</c>).</summary>
+    public static int Parked(string relation) =>
+        relation.StartsWith(Parks + " ", StringComparison.Ordinal) && int.TryParse(relation.AsSpan(Parks.Length + 1), out var parked)
+            ? parked
+            : 0;
 
     /// <summary>
     /// The lines for a text, from each verse's own address and its frame addresses in order, the first
     /// the primary one. A verse standing only at its own address is left out.
     /// </summary>
-    public static List<FrameRow> Rows(IEnumerable<(VerseKey Own, IReadOnlyList<VerseKey> Canonical)> verses)
+    /// <param name="parked">The addresses each verse only parks on (<see cref="VersificationFrame.Parks"/>), by its own address.</param>
+    public static List<FrameRow> Rows(
+        IEnumerable<(VerseKey Own, IReadOnlyList<VerseKey> Canonical)> verses,
+        IReadOnlyDictionary<VerseKey, HashSet<VerseKey>>? parked = null)
     {
         var placed = verses
             .Where(verse => verse.Canonical is not [var only] || only != AtOwn(verse.Own))
@@ -65,9 +79,20 @@ internal static class FrameFile
         var primaries = verses.GroupBy(verse => verse.Canonical[0]).ToDictionary(group => group.Key, group => group.Count());
 
         var rows = new List<FrameRow>();
-        foreach (var (own, canonical) in placed)
+        foreach (var (own, placedAt) in placed)
         {
-            var relation = Relation(own, canonical, primaries);
+            var canonical = placedAt;
+            string relation;
+            if (parked is not null && parked.TryGetValue(own, out var parks))
+            {
+                canonical = [canonical[0], .. canonical.Skip(1).Where(address => !parks.Contains(address)), .. canonical.Skip(1).Where(parks.Contains)];
+                relation = $"{Parks} {canonical.Skip(1).Count(parks.Contains)}";
+            }
+            else
+            {
+                relation = Relation(own, canonical, primaries);
+            }
+
             if (rows.Count > 0 && Continues(rows[^1], own, canonical, relation))
             {
                 rows[^1] = rows[^1] with { Through = own.Verse };

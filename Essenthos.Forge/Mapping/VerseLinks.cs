@@ -30,11 +30,16 @@ internal sealed record VerseLinkRow(string From, string To, string Relation, str
 /// <summary>A text's verses in print order, each with the frame addresses it stands at, the first its primary one.</summary>
 internal sealed class TextFrame
 {
-    public TextFrame(string slug, IReadOnlyList<VerseKey> verses, IReadOnlyDictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> addresses)
+    public TextFrame(
+        string slug,
+        IReadOnlyList<VerseKey> verses,
+        IReadOnlyDictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> addresses,
+        IReadOnlySet<(VerseKey Verse, (int Book, int Chapter, int Verse) Address)>? parked = null)
     {
         Slug = slug;
         Verses = verses;
         Addresses = addresses;
+        Parked = parked ?? new HashSet<(VerseKey, (int, int, int))>();
         Index = verses.Select((verse, i) => (verse, i)).ToDictionary(v => v.verse, v => v.i);
     }
 
@@ -46,6 +51,18 @@ internal sealed class TextFrame
     public IReadOnlyDictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> Addresses { get; }
 
     public IReadOnlyDictionary<VerseKey, int> Index { get; }
+
+    /// <summary>
+    /// The addresses a verse only parks on (<see cref="FrameFile.Parks"/>): the edition has nothing for them, and the verse
+    /// holds other material.
+    /// </summary>
+    public IReadOnlySet<(VerseKey Verse, (int Book, int Chapter, int Verse) Address)> Parked { get; }
+
+    /// <summary>The further addresses a verse covers beyond its primary one, without those it only parks on.</summary>
+    public IEnumerable<(int Book, int Chapter, int Verse)> Covers(VerseKey verse) =>
+        Addresses.TryGetValue(verse, out var addresses)
+            ? addresses.Skip(1).Where(address => !Parked.Contains((verse, address)))
+            : [];
 
     public (int Book, int Chapter, int Verse)? Primary(VerseKey verse) =>
         Addresses.TryGetValue(verse, out var addresses) ? addresses[0] : null;
@@ -60,10 +77,20 @@ internal sealed class TextFrame
         }
 
         var addresses = new Dictionary<VerseKey, IReadOnlyList<(int, int, int)>>(verses.Count);
+        var parked = new HashSet<(VerseKey, (int, int, int))>();
         if (store.Exists(FrameFile.Product(slug)))
         {
             using var reader = store.Open(FrameFile.Product(slug), FrameRow.Schema);
-            var listed = reader.Rows().SelectMany(row => row.Verses()).ToDictionary(verse => verse.Own, verse => verse.Canonical);
+            var rows = reader.ReadAll();
+            var listed = rows.SelectMany(row => row.Verses()).ToDictionary(verse => verse.Own, verse => verse.Canonical);
+            foreach (var row in rows.Where(row => FrameFile.Parked(row.Relation) > 0))
+            {
+                foreach (var (own, canonical) in row.Verses())
+                {
+                    parked.UnionWith(canonical.TakeLast(FrameFile.Parked(row.Relation)).Select(address => (own, (address.Book, address.Chapter, address.Verse))));
+                }
+            }
+
             foreach (var verse in verses)
             {
                 addresses[verse] = listed.TryGetValue(verse, out var canonical)
@@ -72,7 +99,7 @@ internal sealed class TextFrame
             }
         }
 
-        return new TextFrame(slug, verses, addresses);
+        return new TextFrame(slug, verses, addresses, parked);
     }
 }
 
@@ -94,7 +121,8 @@ internal sealed record PairFrames(TextFrame From, TextFrame To, bool ReverseLink
 /// says so, the chapters the two print otherwise. A linked pair is joined wherever both texts stand.</item>
 /// <item>The Ge'ez's chapters placed by its reading of the Greek are that reading's links, and its books divided
 /// its own way are joined through the verse map, each with the line's confidence.</item>
-/// <item>A verse covering a further address joins what stands there primarily in the other text.</item>
+/// <item>A verse covering a further address joins what stands there primarily in the other text, unless it only parks
+/// there: the material of that address is not in its text.</item>
 /// <item>A verse pair a source's own word links cross, or a transposition, or a link made by hand (a ruling's accepted
 /// shape included), where no verse link joins it, is a link of its own; then the covering again, and a link stated twice
 /// is one.</item>
@@ -272,7 +300,7 @@ internal static class VerseLinks
     }
 
     private static HashSet<(int, int, int)> Covered(TextFrame text) =>
-        [.. text.Addresses.Values.SelectMany(addresses => addresses.Skip(1)).Select(TwinPassages.Joined)];
+        [.. text.Verses.SelectMany(text.Covers).Select(TwinPassages.Joined)];
 
     /// <summary>The Ge'ez verses its reading of the Greek places, by place (<see cref="GeezVersification"/>).</summary>
     private static Dictionary<int, GeezVersificationLine> Read(TextFrame geez)
@@ -320,7 +348,8 @@ internal static class VerseLinks
 
     /// <summary>
     /// Adds to each link, until nothing more is added, the verses of the other text standing primarily at an address a
-    /// member covers beyond its own: the frame's statement that one verse spans two rows.
+    /// member covers beyond its own: the frame's statement that one verse spans two rows. An address a member only parks
+    /// on joins nothing: its text has none of that verse, so the other text's verse there answers nothing in it.
     /// </summary>
     private static void Cover(List<Draft> drafts, TextFrame from, TextFrame to)
     {
@@ -343,12 +372,7 @@ internal static class VerseLinks
             var added = false;
             foreach (var member in members)
             {
-                if (!text.Addresses.TryGetValue(text.Verses[member - 1], out var addresses))
-                {
-                    continue;
-                }
-
-                foreach (var address in addresses.Skip(1))
+                foreach (var address in text.Covers(text.Verses[member - 1]))
                 {
                     if (other.TryGetValue(address, out var counterparts))
                     {

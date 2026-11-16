@@ -13,7 +13,8 @@ namespace Essenthos.Core.Loading.Frame;
 internal sealed class VersificationFrame(
     Versification tradition,
     IReadOnlyDictionary<CanonicalReference, IReadOnlyList<CanonicalReference>> rules,
-    IReadOnlyDictionary<PrintedAddress, IReadOnlyList<CanonicalReference>>? printed = null)
+    IReadOnlyDictionary<PrintedAddress, IReadOnlyList<CanonicalReference>>? printed = null,
+    IReadOnlyDictionary<CanonicalReference, IReadOnlySet<CanonicalReference>>? parks = null)
 {
     public Versification Tradition { get; } = tradition;
 
@@ -51,6 +52,24 @@ internal sealed class VersificationFrame(
         printed.TryGetValue(new PrintedAddress(new CanonicalReference(book, chapter, verse), label), out var read)
             ? read
             : Resolve(book, chapter, verse, lettered);
+
+    /// <summary>
+    /// The addresses of <see cref="Resolve(int, int, int, bool, string)"/> beyond the first that the verse only parks on: the
+    /// data accounts there for a verse this tradition leaves empty, and the verse, placed at the verse it prints, holds none
+    /// of its material. The Septuagint has nothing for Jeremiah 33:14-26, and its 33:14-24, which are the Hebrew's 26:14-24,
+    /// park on those addresses.
+    /// </summary>
+    public IReadOnlySet<CanonicalReference> Parks(int book, int chapter, int verse, bool lettered, string label)
+    {
+        var own = new CanonicalReference(book, chapter, verse);
+        return (printed is null || !printed.ContainsKey(new PrintedAddress(own, label)))
+               && parks is not null && parks.TryGetValue(own, out var parked)
+               && rules.TryGetValue(own, out var mapped) && (!lettered || mapped.Count == 1)
+            ? parked
+            : NoParks;
+    }
+
+    private static readonly HashSet<CanonicalReference> NoParks = [];
 }
 
 /// <summary>A verse as an edition prints it: its address and its letter, empty for none.</summary>
