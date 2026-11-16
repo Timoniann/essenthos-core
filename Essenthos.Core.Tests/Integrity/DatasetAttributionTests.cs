@@ -40,12 +40,23 @@ public sealed class DatasetAttributionTests
     /// <summary>
     /// A second work is the exception, not the shape. Every other dataset is one work under one
     /// licence, and a stray entry here would mean somebody had described a file they had not read.
+    /// The two that carry one: Strong's numbers with TWOT's, and MACULA Hebrew, whose morphology
+    /// column is the Open Scriptures Hebrew Bible's (PRB-1727).
     /// </summary>
     [Fact]
     public void NoOtherDatasetDeclaresASecondWork() =>
         Datasets.All
             .Where(dataset => dataset.Contains is not null)
-            .Should().ContainSingle().Which.Id.Should().Be("strong");
+            .Select(dataset => dataset.Id)
+            .Should().BeEquivalentTo(["strong", "macula-hebrew"]);
+
+    [Fact]
+    public void MaculaHebrewCreditsTheMorphologyItIsBuiltOn()
+    {
+        var oshb = Datasets.All.Single(dataset => dataset.Id == "macula-hebrew").Contains.Should().ContainSingle().Which;
+        oshb.Name.Should().Be("Open Scriptures Hebrew Bible");
+        oshb.Licence.Should().Be("CC BY 4.0");
+    }
 
     /// <summary>
     /// Share-alike is the one clause this project treats as a decision rather than a detail, and a

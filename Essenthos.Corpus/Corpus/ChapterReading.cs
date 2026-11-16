@@ -414,10 +414,12 @@ internal static class ChapterReading
 
         var referred = direct.Values.SelectMany(list => list.Select(r => r.Referent)).Distinct().ToList();
         var named = await Annotations.AllOf(db, referred, cancellationToken);
-        var surfaces = await db.Words
+        var referredWords = await db.Words
             .Where(w => referred.Contains(w.Id))
-            .Select(w => new { w.Id, w.Surface })
-            .ToDictionaryAsync(w => w.Id, w => w.Surface, cancellationToken);
+            .Select(w => new { w.Id, w.Surface, w.Morphology })
+            .ToListAsync(cancellationToken);
+        var surfaces = referredWords.ToDictionary(w => w.Id, w => w.Surface);
+        var members = referredWords.Where(w => OneOfAPeople(w.Morphology)).Select(w => w.Id).ToHashSet();
         var sources = direct.Values.SelectMany(list => list.Select(r => r.Source)).Distinct().ToList();
         var classed = direct.Keys.Concat(referred).Concat(witnesses.SelectMany(group => group)).Distinct().ToList();
         var parsings = await db.WordParsings
@@ -426,17 +428,41 @@ internal static class ChapterReading
             .ToListAsync(cancellationToken);
         var classes = new Dictionary<long, string>();
         var kinds = new Dictionary<long, string>();
+        var suffixes = new Dictionary<long, (string Agreement, string? Lemma)>();
+        var bySuffix = new HashSet<long>();
+        var languages = new Dictionary<long, string>();
         foreach (var parsing in parsings)
         {
-            if (parsing.Morphology.RootElement.TryGetProperty("class", out var value) && value.GetString() is { } kind)
+            var root = parsing.Morphology.RootElement;
+            if (root.TryGetProperty("class", out var value) && value.GetString() is { } kind)
             {
+                // MACULA Hebrew's demonstratives are adjectives by class and pronouns by part of speech.
+                kind = root.TryGetProperty(PartOfSpeech, out var pos) && pos.GetString() == "pronoun" ? Pronoun : kind;
                 classes[parsing.WordId] = kind;
                 kinds[parsing.WordId] = kind == Pronoun ? kind : $"{kind} {parsing.Lemma}";
             }
+
+            if (root.TryGetProperty(Suffix, out var suffix) && suffix.GetString() is { } agreement)
+            {
+                suffixes[parsing.WordId] = (agreement, parsing.Lemma);
+            }
+
+            if (root.TryGetProperty("refers", out var refers) && refers.GetString() == Suffix)
+            {
+                bySuffix.Add(parsing.WordId);
+            }
+
+            if (root.TryGetProperty(Language, out var language) && language.GetString() is { } code)
+            {
+                languages[parsing.WordId] = code;
+            }
         }
 
+        // "The Philistine" (הַפְּלִשְׁתִּי) referred to is one man, Goliath, not the Philistines: a singular gentilic stands for a
+        // person only by a name of its own, never by its people.
         var people = named
-            .Select(pair => (pair.Key, Card: pair.Value.FirstOrDefault(c => c.Role != WordEntityRoles.Title)))
+            .Select(pair => (pair.Key, Card: pair.Value.FirstOrDefault(c => c.Role != WordEntityRoles.Title
+                                                                            && !(c.Role == WordEntityRoles.People && members.Contains(pair.Key)))))
             .Where(pair => pair.Card is not null)
             .ToDictionary(pair => pair.Key, pair => pair.Card!);
         var answers = new Dictionary<long, IReadOnlyList<ReferentResponse>>();
@@ -447,7 +473,7 @@ internal static class ChapterReading
             var whole = group.All(witness => direct.ContainsKey(witness) || !classes.ContainsKey(witness));
             foreach (var witness in group.Distinct().Order().Where(direct.ContainsKey))
             {
-                if (!whole || ReferredTo(direct, people, classes, witness) is not { } reached)
+                if (!whole || ReferredTo(direct, people, classes, bySuffix, witness) is not { } reached)
                 {
                     whole = false;
                     break;
@@ -458,7 +484,11 @@ internal static class ChapterReading
                     var card = people[referent];
                     if (found.All(f => f.Slug != card.Slug))
                     {
-                        found.Add(new ReferentResponse(card.Type, card.Slug, surfaces.GetValueOrDefault(referent) ?? "", source));
+                        found.Add(new ReferentResponse(card.Type, card.Slug, surfaces.GetValueOrDefault(referent) ?? "", source)
+                        {
+                            Suffix = bySuffix.Contains(witness) ? true : null,
+                            Language = languages.GetValueOrDefault(witness),
+                        });
                     }
                 }
             }
@@ -469,13 +499,28 @@ internal static class ChapterReading
             }
         }
 
-        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads))
+        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads, bySuffix, suffixes))
         {
             answers.Remove(word);
         }
 
         return answers;
     }
+
+    /// <summary>
+    /// Whether the word is a singular gentilic (BHSA's <c>lexicalSet: gntl</c>, <c>number: sg</c>): <em>the Philistine</em>,
+    /// <em>the Hittite</em>, which the text uses for one man of that people as often as for the people.
+    /// </summary>
+    private static bool OneOfAPeople(JsonDocument? morphology) =>
+        morphology?.RootElement is { ValueKind: JsonValueKind.Object } root
+        && root.TryGetProperty("lexicalSet", out var set) && set.ValueKind == JsonValueKind.String && set.GetString() == "gntl"
+        && root.TryGetProperty("number", out var number) && number.ValueKind == JsonValueKind.String && number.GetString() == "sg";
+
+    /// <summary>
+    /// The parsing's key for the person, gender and number of a pronoun suffix on the word (<c>3ms</c>), and its value of
+    /// <c>refers</c> where the word refers by that suffix.
+    /// </summary>
+    private const string Suffix = "suffix";
 
     /// <summary>The source's class of a pronoun, by which a run of any pronoun is judged; any other kind of word by its lemma.</summary>
     private const string Pronoun = "pron";
@@ -506,7 +551,9 @@ internal static class ChapterReading
         Dictionary<long, string> classes,
         Dictionary<long, string> kinds,
         IReadOnlyDictionary<long, string> forms,
-        ILookup<long, long> heads)
+        ILookup<long, long> heads,
+        HashSet<long> bySuffix,
+        Dictionary<long, (string Agreement, string? Lemma)> suffixes)
     {
         var dropped = new HashSet<long>();
 
@@ -585,6 +632,16 @@ internal static class ChapterReading
         foreach (var word in given)
         {
             var referring = witnesses[word].Where(w => w != word && direct.ContainsKey(w)).Distinct().ToList();
+            if (referring.Any(bySuffix.Contains))
+            {
+                if (!SuffixWord(word, referring, witnesses, renderers, classes, forms, heads, suffixes))
+                {
+                    dropped.Add(word);
+                }
+
+                continue;
+            }
+
             var run = referring
                 .SelectMany(w => candidates.GetValueOrDefault(w) ?? [])
                 .Append(word)
@@ -628,6 +685,93 @@ internal static class ChapterReading
     }
 
     /// <summary>
+    /// The classes of word a translation renders by the pronoun alone (<em>him</em> for <c>אֹתוֹ</c>, <em>йому</em> for
+    /// <c>לוֹ</c>), so that the same lemma rendered again is a sign of the suffix; of any other class (a noun, a verb, the
+    /// interjection <c>הִנֵּה</c>, whose <em>Here</em> of "Here am I" renders the particle) it is not.
+    /// </summary>
+    private static readonly HashSet<string> PronounCarriers = new(StringComparer.Ordinal) { "prep", "om" };
+
+    /// <summary>
+    /// Whether a word rendering an original's word that refers by a pronoun suffix (<c>מְלַאכְתּוֹ</c> "his work", by its
+    /// <c>וֹ</c>) renders that suffix: <em>his</em>, not <em>work</em>; <em>him</em> of "saw him", not <em>saw</em>.
+    /// <para>
+    /// Every word of the reading rendering the original's word is weighed, and what decides is the text's own links in the
+    /// same reading: of all its form's other renderings of words the source parses, how many render a word carrying a suffix
+    /// of the same person, gender and number on another lemma (any lemma, where the host is a preposition or the object marker). <em>his</em> renders "his nostrils", "his father", "his
+    /// wife" in the chapter, each with that suffix and none of them work; <em>work</em> renders only work. The word whose
+    /// form does so most often keeps the referent, and only when it does so in at least half its renderings and no other
+    /// word of the run does as often. A word the mapping attaches to another word of the run is not the suffix. Where the
+    /// word renders more than one referring word of the original, nothing is shown.
+    /// </para>
+    /// </summary>
+    private static bool SuffixWord(
+        long word,
+        List<long> referring,
+        ILookup<long, long> witnesses,
+        Dictionary<long, HashSet<long>> renderers,
+        Dictionary<long, string> classes,
+        IReadOnlyDictionary<long, string> forms,
+        ILookup<long, long> heads,
+        Dictionary<long, (string Agreement, string? Lemma)> suffixes)
+    {
+        if (referring.Count != 1 || !suffixes.TryGetValue(referring[0], out var host))
+        {
+            return false;
+        }
+
+        // Of a noun's or a verb's renderings, one on the same lemma is no sign of the suffix: "work" of "his work" thrice. A
+        // preposition or the object marker carrying the suffix is rendered by the pronoun alone often enough (йому for לוֹ,
+        // him for אֹתוֹ) that its own lemma counts.
+        var content = !(classes.TryGetValue(referring[0], out var kind) && PronounCarriers.Contains(kind));
+        var run = (renderers.GetValueOrDefault(referring[0]) ?? []).Append(word).Distinct().ToList();
+        if (heads[word].Any(run.Contains))
+        {
+            return false;
+        }
+
+        run.RemoveAll(other => other != word && heads[other].Any(run.Contains));
+
+        double? Standing(long candidate)
+        {
+            if (!forms.TryGetValue(candidate, out var form))
+            {
+                return null;
+            }
+
+            var (renderings, agreeing) = (0, 0);
+            foreach (var group in witnesses)
+            {
+                if (group.Key == candidate || !forms.TryGetValue(group.Key, out var other) || other != form)
+                {
+                    continue;
+                }
+
+                var rendered = group.Where(w => w != group.Key).Distinct().ToList();
+                if (!rendered.Any(classes.ContainsKey))
+                {
+                    continue;
+                }
+
+                renderings++;
+                if (rendered.Any(w => suffixes.TryGetValue(w, out var suffix) && suffix.Agreement == host.Agreement
+                                      && (!content || suffix.Lemma != host.Lemma)))
+                {
+                    agreeing++;
+                }
+            }
+
+            return renderings == 0 ? null : (double)agreeing / renderings;
+        }
+
+        if (Standing(word) is not { } mine || mine < PlainlyAlone)
+        {
+            return false;
+        }
+
+        return run.Where(other => other != word).All(other => Standing(other) is not { } theirs || theirs < mine);
+    }
+
+    /// <summary>
     /// The words naming a person that one word refers to, nearest first, each with the source of the step that reached it; null
     /// where the word is a noun, or where any branch of its references ends at a word naming nobody that is no pronoun.
     /// </summary>
@@ -635,9 +779,10 @@ internal static class ChapterReading
         Dictionary<long, List<(long Referent, string Source)>> direct,
         Dictionary<long, EntityRefResponse> people,
         Dictionary<long, string> classes,
+        HashSet<long> bySuffix,
         long word)
     {
-        if (classes.GetValueOrDefault(word) == "noun")
+        if (classes.GetValueOrDefault(word) == "noun" && !bySuffix.Contains(word))
         {
             return null;
         }

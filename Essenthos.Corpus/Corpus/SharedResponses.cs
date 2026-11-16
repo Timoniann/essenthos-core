@@ -376,7 +376,18 @@ internal record TextWordResponse(
 /// <param name="Slug">The record.</param>
 /// <param name="Word">The word of the original referred to, as its edition prints it.</param>
 /// <param name="Source">Who says the word refers to it.</param>
-internal record ReferentResponse(string Type, string Slug, string Word, string Source);
+internal record ReferentResponse(string Type, string Slug, string Word, string Source)
+{
+    /// <summary>
+    /// True where the original's word refers by a pronoun suffix written on it (<c>מְלַאכְתּוֹ</c> "his work", by its
+    /// <c>וֹ</c>), not as a whole: on the original's word itself it is its suffix that refers, on a translation's word it is the
+    /// word rendering that suffix. Null otherwise.
+    /// </summary>
+    public bool? Suffix { get; init; }
+
+    /// <summary>The language of the original's word that refers, where its source says (<c>hbo</c>, <c>arc</c>); null for the Greek.</summary>
+    public string? Language { get; init; }
+}
 
 /// <param name="Occupation">The occupation's slug: <c>physician</c>.</param>
 /// <param name="Category"><c>trade</c>, <c>office</c>, <c>military_role</c>, <c>religious_role</c>, <c>heavenly_role</c> or <c>designation</c>.</param>

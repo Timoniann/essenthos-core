@@ -33,7 +33,8 @@ internal sealed record PaneBody(int Book, int Chapter, byte[] Gzip, string Hash,
 ///         "pt" phono trailer, "lg" language, "el" 1 when elided, "br" break, "sc" { "n", "m", "c" } Strong candidate,
 ///         "lx" { "g", "via" } lexicon gloss, "tg" { "corpus", "word", "lemma", "glosses", "method", "confidence" },
 ///         "gz" { "headword", "latin", "greek", "via" }, "at" { "kind", "headId", "head" }, "ro" [{ "occupation",
-///         "category", "person" }], "rf" [{ "r" record index, "w" the original's word referred to, "src" source index }]
+///         "category", "person" }], "rf" [{ "r" record index, "w" the original's word referred to, "src" source index, "sf" 1 when the
+///         original's word refers by its pronoun suffix, "lg" the referring original's language where not Greek }]
 ///         the records the word refers to without naming them }
 /// card: { "r" record index, "m" method, "c" confidence, "src" source index, "via" route, "as" named as, "role", "origin" }
 /// </code>
@@ -468,6 +469,12 @@ internal static class Panes
                 json.WriteNumber("r", records[referent.Slug]);
                 json.WriteString("w", referent.Word);
                 json.WriteNumber("src", sources[referent.Source]);
+                if (referent.Suffix == true)
+                {
+                    json.WriteNumber("sf", 1);
+                }
+
+                Optional(json, "lg", referent.Language);
                 json.WriteEndObject();
             }
 

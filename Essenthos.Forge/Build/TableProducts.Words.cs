@@ -39,9 +39,10 @@ internal static partial class TableProducts
         new("word_group_word", ["word_group_id", "word_id"], ["etcbc"], [TextWord.ProductOf(Bhsa), TextBook.ProductOf(Bhsa), WordIdCollision.Product],
             SyntaxMemberRows),
         new("word_parsing", ["id", "word_id", "lemma", "morphology", "method", "confidence", "source", "note"],
-            ["MorphGnt", "Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ParsingRows),
+            ["MorphGnt", "Macula", MaculaHebrewReader.Folder], [TextWord.ProductOf(Nestle), TextWord.ProductOf(Bhsa), WordIdCollision.Product],
+            ParsingRows),
         new("word_referent", ["word_id", "referent_word_id", "ordinal", "method", "confidence", "source"],
-            ["Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ReferentRows),
+            ["Macula", MaculaHebrewReader.Folder], [TextWord.ProductOf(Nestle), TextWord.ProductOf(Bhsa), WordIdCollision.Product], ReferentRows),
         new("word_strong", ["id", "word_id", "number", "method", "confidence", "source", "note"],
             [StrongHebrew, StrongGreek, BereanTables],
             [TextWord.ProductOf(Brenton), TextWord.ProductOf(Berean), FrameFile.Product(Berean), TextWord.ProductOf(KingJames), WordIdCollision.Product],
@@ -51,6 +52,8 @@ internal static partial class TableProducts
     private static (ProductStore Store, List<SyntaxGroups.GroupDraft> Drafts)? _syntax;
 
     private static (ProductStore Store, WordIdTable Ids)? _ids;
+
+    private static (ProductStore Store, (List<MaculaHebrewAnnotation.Parsing> Parsings, List<(long Word, long Referent)> Referents) Annotation)? _hebrew;
 
     private static List<TextWord> WordsOf(ProductStore store, string slug)
     {
@@ -148,7 +151,26 @@ internal static partial class TableProducts
             ]);
         }
 
-        return new(Numbered(lines));
+        var hebrew = Hebrew(store).Parsings;
+        lines.AddRange(hebrew.Select(p => new[] { Int(p.Word), p.Lemma, p.Morphology, stated, null, MaculaHebrewAnnotation.Source, p.Note }));
+        return new(Numbered(lines), $"{hebrew.Count} BHSA words parsed by MACULA Hebrew");
+    }
+
+    /// <summary>MACULA Hebrew's morphs placed on BHSA's words by their letters (<see cref="MaculaHebrewJoin"/>), read once per store.</summary>
+    private static (List<MaculaHebrewAnnotation.Parsing> Parsings, List<(long Word, long Referent)> Referents) Hebrew(ProductStore store)
+    {
+        if (_hebrew is { } held && ReferenceEquals(held.Store, store))
+        {
+            return held.Annotation;
+        }
+
+        var ids = Ids(store);
+        var words = WordsOf(store, Bhsa)
+            .Select(w => new MaculaHebrewJoin.Word(ids.Of(w.Key), w.Key.Verse.Book, w.Key.Verse.Chapter, w.Key.Verse.Verse, w.Key.Position, w.Surface))
+            .ToList();
+        var annotation = MaculaHebrewAnnotation.Of(MaculaHebrewReader.ReadFile(store.FullPath(MaculaHebrewReader.Folder)), words);
+        _hebrew = (store, annotation);
+        return annotation;
     }
 
     /// <summary>Nestle 1904's words beside MACULA's, checked to be the same words in the same order.</summary>
@@ -178,7 +200,16 @@ internal static partial class TableProducts
             lines.Add([Int(annotated[pair.Word].Id), Int(annotated[pair.Referent].Id), Int(ordinal), stated, null, MaculaAnnotation.Source]);
         }
 
-        return new(lines, $"{lines.Select(l => l[0]).Distinct().Count()} words refer to another");
+        var greek = lines.Select(l => l[0]).Distinct().Count();
+        var hebrew = Hebrew(store).Referents;
+        var (hebrewWord, hebrewOrdinal) = (-1L, 0);
+        foreach (var pair in hebrew)
+        {
+            (hebrewWord, hebrewOrdinal) = (pair.Word, pair.Word == hebrewWord ? hebrewOrdinal + 1 : 0);
+            lines.Add([Int(pair.Word), Int(pair.Referent), Int(hebrewOrdinal), stated, null, MaculaHebrewAnnotation.Source]);
+        }
+
+        return new(lines, $"{greek} Nestle words and {hebrew.Select(p => p.Word).Distinct().Count()} BHSA words refer to another");
     }
 
     private static Rows WordStrongRows(ProductStore store)

@@ -91,7 +91,7 @@ public sealed class PaneInputsTests : IDisposable
 
     private static void Nestle(ProductStore store, string? named)
     {
-        const string nestle = PaneInputs.ReferringText;
+        var nestle = PaneInputs.ReferringTexts[0];
         var keys = new[] { "1.1:1.1", "1.3:1.1", "1.3:1.2", "1.3:1.3" }.Select(k => WordKey.Parse(k, nestle)).ToList();
         if (!store.Exists(TextWord.ProductOf(nestle)))
         {

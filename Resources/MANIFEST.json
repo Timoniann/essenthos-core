@@ -149,6 +149,11 @@
     "files": 3,
     "sha256": "1af2faa0cd1407395f989cb7903536751c511c90dda3090d95a486d25cf20bd0"
   },
+  "MaculaHebrew": {
+    "bytes": 84389041,
+    "files": 3,
+    "sha256": "0784fe19296d87cee3dd4af962cf408d4e086abde25ac25a4da29976d63e0aa9"
+  },
   "Maimonides": {
     "bytes": 661934,
     "files": 4,

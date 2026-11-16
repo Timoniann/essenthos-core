@@ -756,6 +756,29 @@ public static class Datasets
             Citation: "MACULA Greek Linguistic Datasets, available at "
                 + "https://github.com/Clear-Bible/macula-greek/"),
 
+        // MACULA's Hebrew counterpart, published over the Westminster Leningrad Codex a row per morph and placed on BHSA's
+        // words by their letters: a parsing per BHSA word and the word a Hebrew pronoun or pronoun suffix refers back to.
+        new("macula-hebrew", "MACULA Hebrew Linguistic Datasets", "© 2022-2024 by Biblica, Inc., published by Clear Bible",
+            "CC BY 4.0",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://github.com/Clear-Bible/macula-hebrew",
+            "Which word a Hebrew pronoun refers back to, including the pronoun endings Hebrew writes on "
+            + "nouns, verbs and prepositions (\"his\" of \"his work\", \"him\" of \"to him\"), and a reading "
+            + "of each word's part of speech. It is made over the Westminster Leningrad Codex, the same "
+            + "manuscript BHSA prints, and placed on BHSA's words by their letters. The morphology under "
+            + "it is the Open Scriptures Hebrew Bible's. The word senses of the Semantic Dictionary of "
+            + "Biblical Hebrew and the glossing layers bound into the same repository are not taken.",
+            "MACULA Hebrew Linguistic Datasets", Parsings: true,
+            Citation: "MACULA Hebrew Linguistic Datasets, available at "
+                + "https://github.com/Clear-Bible/macula-hebrew/",
+            Contains:
+            [
+                new("Open Scriptures Hebrew Bible", "Open Scriptures", "CC BY 4.0",
+                    "https://creativecommons.org/licenses/by/4.0/",
+                    "The morphology the parts of speech and the person, gender and number of each pronoun ending are read from: "
+                    + "https://github.com/openscriptures/morphhb"),
+            ]),
+
         new("morphgnt", "MorphGNT: SBLGNT Edition", "James K. Tauber", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
             "https://github.com/morphgnt/sblgnt",

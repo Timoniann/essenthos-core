@@ -71,6 +71,7 @@ Kulish	text	content	Public Domain	public-domain	text:UKR1871	Kulish/LICENCE.md	-
 Luther1912	text	content	Public Domain	public-domain	text:LUTH1912	Luther1912/LICENCE.md	-	-
 Luther1912	strong	content	No licence stated	unknown	dataset:luther1912-strong	Luther1912/LICENCE.md	PRB-1332 TSK-1331	Served on LUTH1912's words. The owner, 2026-10-29 (TSK-1331): kept until a licensed numbering replaces it; what removing it costs is PRB-1332.
 Macula	parsing	content	CC-BY-4.0	permitted-with-attribution	dataset:macula	Macula/LICENCE.md	-	-
+MaculaHebrew	referent	content	CC-BY-4.0	permitted-with-attribution	dataset:macula-hebrew	MaculaHebrew/LICENCE.md	-	Only the participant referents and the parts of speech, person, gender and number (Open Scriptures Hebrew Bible morphology, CC BY 4.0) are read; the Semantic Dictionary of Biblical Hebrew columns (used with permission) and the glosses never.
 Maimonides	data	content	Public Domain; this project's numbering CC BY-NC 4.0	non-commercial-only	dataset:maimonides	Maimonides/LICENCE.md	-	-
 Models	models	never	each model under its own terms (SOURCE.txt)	unknown	-	-	-	Downloaded 3D models; the site's models are its own, drawn in essenthos-web.
 MorphGnt	parsing	content	CC-BY-SA-3.0	share-alike	dataset:morphgnt	MorphGnt/LICENCE.md	-	Only the parsing is read.

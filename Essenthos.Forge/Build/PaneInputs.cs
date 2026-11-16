@@ -26,7 +26,7 @@ namespace Essenthos.Core.Build;
 /// </summary>
 internal sealed class PaneInputs
 {
-    public const int Version = 4;
+    public const int Version = 6;
 
     /// <summary>The record files a pane reads, and the one column each names its record by.</summary>
     internal static readonly (string Product, string Column)[] RecordFiles =
@@ -40,8 +40,11 @@ internal sealed class PaneInputs
 
     internal const string OccupationWords = "records/derived/occupation-words";
 
-    /// <summary>The text whose words refer back to others (<c>tables/word_referent</c>), and whose names on the words referred to a pane reads.</summary>
-    internal const string ReferringText = "NESTLE1904";
+    /// <summary>
+    /// The texts whose words refer back to others (<c>tables/word_referent</c>: MACULA Greek's on Nestle, MACULA Hebrew's on
+    /// BHSA), and whose names on the words referred to a pane reads.
+    /// </summary>
+    internal static readonly string[] ReferringTexts = ["NESTLE1904", "BHSA"];
 
     internal static readonly string Referents = TableProducts.Product("word_referent");
 
@@ -500,7 +503,7 @@ internal sealed class PaneInputs
     }
 
     /// <summary>
-    /// Per canonical chapter, what the references back of <see cref="ReferringText"/>'s words standing there reach: each referring
+    /// Per canonical chapter, what the references back of <see cref="ReferringTexts"/>' words standing there reach: each referring
     /// word, every word its chain of references reaches (<see cref="ReferenceSteps"/>, whether or not the word names anybody,
     /// so a name newly given to a word on the way moves the key), and the projected names on those words, with the records they
     /// name. A chapter of a text paired with that text reads them, as <see cref="ChapterReading"/> does through its links.
@@ -513,14 +516,17 @@ internal sealed class PaneInputs
 
         public static ReferentSlices Read(ProductStore store)
         {
-            if (!store.Exists(Referents) || !store.Exists(NameProducts.Projected(ReferringText)))
+            var texts = ReferringTexts
+                .Where(text => store.Exists(NameProducts.Projected(text)) && store.Exists(TextWord.ProductOf(text)))
+                .ToList();
+            if (!store.Exists(Referents) || texts.Count == 0)
             {
                 return Empty;
             }
 
             var table = WordIdTable.For(store);
             var keys = new Dictionary<long, WordKey>();
-            foreach (var key in WordIdCollisions.Keys(store, ReferringText))
+            foreach (var key in texts.SelectMany(text => WordIdCollisions.Keys(store, text)))
             {
                 keys[table.Of(key)] = key;
             }
@@ -539,27 +545,30 @@ internal sealed class PaneInputs
                 }
             }
 
-            var names = new Dictionary<string, (List<byte[]> Rows, List<string> Records)>(StringComparer.Ordinal);
-            using (var reader = store.Open(NameProducts.Projected(ReferringText)))
-            {
-                var columns = reader.Columns.Select(c => c.Name).ToList();
-                var (own, record) = (Column(columns, "own", ReferringText), Column(columns, "record", ReferringText));
-                var bytes = new RowBytes();
-                foreach (var row in reader.Rows())
-                {
-                    var entry = names.TryGetValue(row[own]!, out var held) ? held : names[row[own]!] = ([], []);
-                    entry.Rows.Add(bytes.Copy(row));
-                    entry.Records.Add(row[record]!);
-                }
-            }
-
-            var frame = FrameChapters.Read(store, ReferringText);
+            var names = new Dictionary<(string Text, string Own), (List<byte[]> Rows, List<string> Records)>();
             var byChapter = new Dictionary<(int, int), List<WordKey>>();
-            foreach (var from in direct.Keys)
+            foreach (var text in texts)
             {
-                foreach (var chapter in frame.Of(from.Verse.ToString()))
+                using (var reader = store.Open(NameProducts.Projected(text)))
                 {
-                    (byChapter.TryGetValue(chapter, out var list) ? list : byChapter[chapter] = []).Add(from);
+                    var columns = reader.Columns.Select(c => c.Name).ToList();
+                    var (own, record) = (Column(columns, "own", text), Column(columns, "record", text));
+                    var bytes = new RowBytes();
+                    foreach (var row in reader.Rows())
+                    {
+                        var entry = names.TryGetValue((text, row[own]!), out var held) ? held : names[(text, row[own]!)] = ([], []);
+                        entry.Rows.Add(bytes.Copy(row));
+                        entry.Records.Add(row[record]!);
+                    }
+                }
+
+                var frame = FrameChapters.Read(store, text);
+                foreach (var from in direct.Keys.Where(key => key.Text == text))
+                {
+                    foreach (var chapter in frame.Of(from.Verse.ToString()))
+                    {
+                        (byChapter.TryGetValue(chapter, out var list) ? list : byChapter[chapter] = []).Add(from);
+                    }
                 }
             }
 
@@ -574,7 +583,7 @@ internal sealed class PaneInputs
                     foreach (var reached in Reached(direct, from))
                     {
                         hash.AppendData(Encoding.UTF8.GetBytes(reached.Own + "\t"));
-                        if (names.TryGetValue(reached.Own, out var named))
+                        if (names.TryGetValue((reached.Text, reached.Own), out var named))
                         {
                             named.Rows.ForEach(hash.AppendData);
                             records.UnionWith(named.Records);
