@@ -646,8 +646,12 @@ def _nonempty(value):
     return isinstance(value, str) and value.strip() != ''
 
 
-def validate_dillmann(answer, items):
-    """(clean rows by entry key, errors). Every entry and every sense answered exactly once."""
+def validate_dillmann(answer, items, entry_errors=None):
+    """
+    (clean rows by entry key, errors). Every entry and every sense answered exactly once. A fault of one
+    entry's wording (a Latin letter in a Ukrainian word) goes to `entry_errors` instead, when a list is
+    given: the request's other entries stay clean and only that entry is asked again.
+    """
     errors, rows = [], {}
     if not isinstance(answer, dict) or not isinstance(answer.get('entries'), list):
         return {}, ['answer is not {"entries": [...]}']
@@ -678,7 +682,8 @@ def validate_dillmann(answer, items):
         mixed = [s['n'] for s in entry['senses'] if mixed_script(s.get('uk', ''))]
         if mixed:
             # 33 of 17,868 Sonnet senses wrote Latin letters inside Ukrainian words ("panувати"): sent again.
-            errors.append(f'entry {key}: Ukrainian mixes Latin and Cyrillic letters in senses {mixed}')
+            message = f'entry {key}: Ukrainian mixes Latin and Cyrillic letters in senses {mixed}'
+            (entry_errors if entry_errors is not None else errors).append(message)
             continue
         if bad:
             errors.append(f'entry {key}: empty rendering in senses {bad}')
@@ -789,10 +794,15 @@ def judge(run, manifest, rows, headwords):
             except (TypeError, ValueError) as error:
                 answer, why = None, [f'not JSON: {error}']
         if why is None and manifest['job'] == 'dillmann':
-            good, errors = validate_dillmann(answer, items)
+            entry_errors = []
+            good, errors = validate_dillmann(answer, items, entry_errors)
             if errors:
                 why = errors
             else:
+                if entry_errors:
+                    keys = [e.split(':')[0].split()[1] for e in entry_errors]
+                    rejects.append({'custom_id': cid, 'why': entry_errors,
+                                    'entries': [items[k]['entry'] for k in keys]})
                 for key, entry in good.items():
                     info = items[key]
                     clean.append({'custom_id': cid, 'entry': info['entry'], 'headword': info['headword'],
@@ -852,7 +862,15 @@ def collect(run, client=None, wait=False, fake=None):
         if marker not in seen_clean:
             seen_clean.add(marker)
             final_clean.append(line)
-    final_rejects = [r for r in rejects if r['custom_id'] not in good]
+    answered = {line.get('entry') for line in final_clean}
+    merged = {}
+    for r in rejects:
+        # A whole-request reject stands until the request is answered well; an entry reject until its entries are.
+        open_ = (r['custom_id'] not in good) if 'entries' not in r else any(e not in answered for e in r['entries'])
+        if open_:
+            merged[r['custom_id']] = r
+    final_rejects = list(merged.values())
+    good = {cid for cid in good if cid not in merged}
     write_jsonl(run / 'clean.jsonl', final_clean)
     write_jsonl(run / 'rejects.jsonl', final_rejects)
     report = {'run': manifest['run'], 'requests': manifest['requests'], 'answered_requests': len(good),

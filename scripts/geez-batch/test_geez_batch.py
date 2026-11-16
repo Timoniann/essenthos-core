@@ -138,6 +138,10 @@ class ValidationTests(unittest.TestCase):
         self.assertTrue(any('empty rendering' in e for e in errors))
         rows, errors = gb.validate_dillmann({'entries': [{'id': 'e1', 'senses': [dict(sense, uk='pаnувати'), empty]}]}, items)
         self.assertTrue(any('mixes Latin and Cyrillic' in e for e in errors))
+        entry_errors = []
+        rows, errors = gb.validate_dillmann({'entries': [{'id': 'e1', 'senses': [dict(sense, uk='pаnувати'), empty]}]},
+                                            items, entry_errors)
+        self.assertEqual((rows, errors, len(entry_errors)), ({}, [], 1))   # only this entry is asked again
         rows, errors = gb.validate_dillmann({'entries': []}, items)
         self.assertTrue(any('not answered' in e for e in errors))
 
