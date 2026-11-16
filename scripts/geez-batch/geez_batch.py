@@ -628,6 +628,14 @@ def submit(run, client, budget, since, chosen, dry=False):
 # ---------------------------------------------------------------------------------------------------
 # Validating
 
+# A Ukrainian word with a Latin letter in it ("nахиляти", seen in the Dillmann pilot): a typo no reader would catch.
+MIXED_SCRIPT = re.compile(r'[A-Za-z][Ѐ-ӿ]|[Ѐ-ӿ][A-Za-z]')
+
+
+def mixed_script(text):
+    return bool(MIXED_SCRIPT.search(text or ''))
+
+
 def _nonempty(value):
     return isinstance(value, str) and value.strip() != ''
 
@@ -656,11 +664,11 @@ def validate_dillmann(answer, items):
         if sorted(got) != sorted(asked) or len(set(got)) != len(got):
             errors.append(f'entry {key}: senses {got} != asked {asked}')
             continue
-        free = set(items[key].get('free', []))
+        # All four empty is an answer: the sense states no meaning (a free sense with only grammar, or
+        # "glosses" that are the digitisation's abbreviations, ኤጶሚዳ's "Voc. Ae."). Some empty is not.
         langs = ('en', 'uk', 'de', 'es')
         bad = [s['n'] for s in entry['senses']
-               if not all(_nonempty(s.get(lang)) for lang in langs)
-               and not (s['n'] in free and not any(_nonempty(s.get(lang)) for lang in langs))]
+               if not all(_nonempty(s.get(lang)) for lang in langs) and any(_nonempty(s.get(lang)) for lang in langs)]
         if bad:
             errors.append(f'entry {key}: empty rendering in senses {bad}')
             continue
@@ -695,6 +703,9 @@ def validate_gloss(answer, item, headwords=frozenset()):
         for field in ('lemma', 'sense_en', 'sense_uk', 'en', 'uk'):
             if not _nonempty(word.get(field)):
                 errors.append(f'word {key}: empty {field}')
+        for field in ('sense_uk', 'uk'):
+            if mixed_script(word.get(field, '')):
+                warnings.append(f'word {key}: {field} mixes Latin and Cyrillic letters in a word')
         if word.get('lemma_source') == 'dillmann' and headwords and nfc(word.get('lemma', '')) not in headwords:
             warnings.append(f'word {key}: lemma {word.get("lemma")} is not a Dillmann headword or form')
         rows[key] = word
@@ -773,9 +784,11 @@ def judge(run, manifest, rows, headwords):
             else:
                 for key, entry in good.items():
                     info = items[key]
+                    mixed = [f"sense {sense['n']}: {lang} mixes Latin and Cyrillic letters in a word"
+                             for sense in entry['senses'] for lang in ('uk',) if mixed_script(sense.get(lang, ''))]
                     clean.append({'custom_id': cid, 'entry': info['entry'], 'headword': info['headword'],
-                                  'senses': entry['senses'], 'model': row['model'], 'run': manifest['run'],
-                                  'prompt_version': manifest['prompt_version']})
+                                  'senses': entry['senses'], 'warnings': mixed, 'model': row['model'],
+                                  'run': manifest['run'], 'prompt_version': manifest['prompt_version']})
         elif why is None:
             good, errors, warnings = validate_gloss(answer, items, headwords)
             if errors:
