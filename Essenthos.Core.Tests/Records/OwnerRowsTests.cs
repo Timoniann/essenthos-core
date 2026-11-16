@@ -62,33 +62,17 @@ public sealed class OwnerRowsTests : IDisposable
     }
 
     [Fact]
-    public void AGazetteerVerseRowFollowsTheFoldOfItsPlaceAndKeepsThePlacesId()
+    public void AGazetteerVerseRowIsPassedOverSinceTheGazetteersVersesAreNotLoaded()
     {
-        var store = Files();
-        Write(store, "external/openbible/references", "external_id\trecord\tref\tlabel\tnames\tdisputed\twithheld",
-            "a90f6e1\tsolomon\t9.1:19\t\\N\tt\tf\tf",
-            "a54ef72\tgod\t9.1:1\t\\N\tf\tf\tf",
-            "ab049cf\tsteps-of-ahaz\t9.30:27\t\\N\tt\tf\tf",
-            "aaa4c6e\tsolomon\t9.30:27\t\\N\tt\tf\tf");
-        store.Save();
+        Files();
         OwnerRows.Row[] decided =
         [
             new("PRB-1623", "external/openbible/references", OwnerRows.Refile, "9.1:1", "solomon", "god", null, null, null, "one town"),
-            new("PRB-1623", "external/openbible/references", OwnerRows.Refile, "9.30:27", "solomon", "steps-of-ahaz", null, null, null, "one town"),
         ];
 
         var outcome = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
 
-        (outcome.Applied, outcome.Refused.Count).Should().Be((2, 0));
-        Rows("external/openbible/references").Should().BeEquivalentTo(new[]
-        {
-            new[] { "a54ef72", "solomon", "9.1:1", null, "f", "f", "f" },
-            ["a90f6e1", "solomon", "9.1:19", null, "t", "f", "f"],
-            ["aaa4c6e", "solomon", "9.30:27", null, "t", "f", "f"],
-        }, options => options.WithStrictOrdering(), "the kept record already holds the gazetteer's row at 1SA 30:27");
-
-        var again = OwnerRows.Apply(new ProductStore(_resources), decided, dryRun: false, Now);
-        (again.Applied, again.Already, again.Written.Count).Should().Be((0, 2, 0));
+        (outcome.Applied, outcome.Already, outcome.Refused.Count, outcome.Written.Count).Should().Be((0, 0, 0, 0));
     }
 
     [Fact]

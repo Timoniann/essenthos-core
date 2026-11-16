@@ -113,24 +113,25 @@ public sealed class RecordVersesTests : IDisposable
     }
 
     [Fact]
-    public void TheGazetteersVersesAreServedUnderItsCreditAndListTheRecord()
+    public void AGazetteersVerseListIsNoRecordsVerseAndAPlaceNoWordNamesGetsItsRelationshipsVerses()
     {
+        // A store an older build left holds the gazetteer's verse rows; they are not read.
         var store = Store(Name("1.10:6.1", "mizraim", "name", "manual"));
-        Write(store, "records/facts/relationships", Relationship("mizraim", "son-of", "ham", "1.10:6"));
-        Write(store, "external/openbible/references",
-            ["a1", "mizraim", "1.10:6", null, "f", "f", "f"],
-            ["a1", "mizraim", "1.50:11", null, "t", "f", "f"],
-            [null, "ham", "19.78:51", null, "f", "t", "f"]);
+        Write(store, "records/facts/relationships", Relationship("ammonites", "lived-in", "ammon", "5.2:19"));
+        var gazetteer = Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, "external", "openbible", "references.tsv");
+        Directory.CreateDirectory(Path.GetDirectoryName(gazetteer)!);
+        File.WriteAllLines(gazetteer,
+            ["external_id\trecord\tref\tlabel\tnames\tdisputed\twithheld", "a1\tammon\t5.2:37\t\\N\tf\tf\tf", "a2\tmizraim\t1.50:11\t\\N\tf\tf\tf"]);
         RecordVerses.Write(store, force: true);
 
-        Rows(store).Where(r => r[6] != Own).Select(r => (r[0], r[1], r[3], r[4], r[6])).Should().Equal(
-            ("ham", "19.78:51", "f", "t", Credits.OpenBible),
-            ("mizraim", "1.10:6", "t", "f", Credits.OpenBible),
-            ("mizraim", "1.50:11", "f", "f", Credits.OpenBible));
+        Rows(store).Select(r => (r[0], r[1], r[6])).Should().Equal(
+            ("ammon", "5.2:19", RelationshipVerseLoader.Source),
+            ("ammonites", "5.2:19", RelationshipVerseLoader.Source),
+            ("mizraim", "1.10:6", Own));
     }
 
     [Fact]
-    public void AGazetteerVerseOfATermNamesItWhereAWordCarriesItsStrongNumber()
+    public void ARelationshipVerseOfATermNamesItWhereAWordCarriesItsStrongNumber()
     {
         var store = Store();
         Write(store, "records/names", ["azazel", "1", "Azazel", "term", null, null, null, null, "H5799", null, null, null]);
@@ -140,8 +141,8 @@ public sealed class RecordVersesTests : IDisposable
             words.Complete();
         }
 
-        Write(store, "external/openbible/references",
-            ["a2", "azazel", "3.16:8", null, "t", "f", "f"], ["a2", "azazel", "3.16:9", null, "t", "f", "f"]);
+        Write(store, "records/facts/relationships",
+            Relationship("azazel", "near", "wilderness", "3.16:8"), Relationship("azazel", "near", "wilderness", "3.16:9"));
         RecordVerses.Write(store, force: true);
 
         Rows(store).Where(r => r[0] == "azazel").Select(r => (r[1], r[3])).Should().Equal(("3.16:8", "t"), ("3.16:9", "f"));
@@ -279,7 +280,8 @@ public sealed class RecordVersesTests : IDisposable
             Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("baal-god", "being", "Baal"), Record("baal", "person", "Baal"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
             Record("jachin-pillar", "object"), Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
             Record("levi", "person"), Record("levites", "people", "Levites", origin: "levi"), Record("mizraim", "person"), Record("moses", "person"),
-            Record("absalom", "person"), Record("nathan", "person"), Record("yhvh", "person"));
+            Record("absalom", "person"), Record("nathan", "person"), Record("yhvh", "person"), Record("ammon", "place"),
+            Record("ammonites", "people", "Ammonites"), Record("wilderness", "place"));
         Write(store, "records/facts/titles", ["anointed", "david", "1.3:1", null, "test"]);
         Write(store, "records/facts/relationships");
         Write(store, "records/facts/verses");

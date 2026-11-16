@@ -12,7 +12,7 @@ namespace Essenthos.Core.Records;
 /// <summary>
 /// Questions the owner's review lists asked, settled from the texts on his word and written as edits of the files the
 /// build reads (NOT-0219): a name settled on a word of a reference text (<c>names/&lt;REF&gt;</c>), a dataset's verse
-/// row filed under another record of ours (<c>external/bibledata/references</c>, <c>external/openbible/references</c>), or a row of a record file
+/// row filed under another record of ours (<c>external/bibledata/references</c>), or a row of a record file
 /// (<c>records/**</c>: a record made, its names, lines and passages, a known-for clause moved to it). Each decided edit is
 /// a row of a file in <see cref="Folder"/>, the record files' rows in files ending <see cref="RecordRowsSuffix"/>;
 /// applying them again changes nothing, and a row the files cannot take (a word that is not there, a Strong number that
@@ -51,7 +51,10 @@ internal static class OwnerRows
 
     private const string References = "external/bibledata/references";
 
-    /// <summary>The gazetteer's verse rows, refiled when the place they are filed under is folded into another.</summary>
+    /// <summary>
+    /// The gazetteer's verse rows, which earlier rows refiled when a place was folded. Its verses are no longer a record's
+    /// verses nor loaded, so those rows are passed over.
+    /// </summary>
     private const string GazetteerReferences = "external/openbible/references";
 
     private const string Records = "records/records";
@@ -191,6 +194,7 @@ internal static class OwnerRows
         var refused = new List<string>();
         var count = decided.Count;
         decided = WithoutBuilt(store, decided, refused);
+        decided.Names.RemoveAll(r => r.Product == GazetteerReferences);
         var changed = new Dictionary<string, int>(StringComparer.Ordinal);
         var already = 0;
         var edits = new List<IFileEdit>();
@@ -236,12 +240,12 @@ internal static class OwnerRows
                     "are carried in git (the datasets' files are kept in the store): restore them before these rows.");
             }
 
-            IRowEdit edit = group.Key is References or GazetteerReferences
+            IRowEdit edit = group.Key is References
                 ? new ReferenceEdit(store, group.Key)
                 : group.Key.StartsWith(NameProducts.Folder + "/", StringComparison.Ordinal)
                   && NameProducts.IsReference(group.Key[(NameProducts.Folder.Length + 1)..])
                     ? new NameEdit(store, group.Key[(NameProducts.Folder.Length + 1)..], group.Select(r => r.At))
-                    : throw new InvalidDataException($"{group.Key}: owner rows edit a reference text's names, {References} or {GazetteerReferences}, not this file.");
+                    : throw new InvalidDataException($"{group.Key}: owner rows edit a reference text's names or {References}, not this file.");
             edits.Add(edit);
 
             foreach (var row in group)
@@ -730,7 +734,6 @@ internal static class OwnerRows
 
         private readonly ProductStore _store;
         private readonly RecordFile _file;
-        private readonly bool _keepsIds;
         private readonly List<string?[]> _rows;
         private readonly ProductHeader? _header;
 
@@ -738,7 +741,6 @@ internal static class OwnerRows
         {
             _store = store;
             _file = RecordFiles.All.Single(f => f.Product == product);
-            _keepsIds = product == GazetteerReferences;
             using var reader = store.Open(product);
             _header = reader.Header;
             _rows = [.. reader.Rows().Select(row => (string?[])row.Clone())];
@@ -766,7 +768,7 @@ internal static class OwnerRows
                     break;
                 case Refile:
                     _rows[at][Filed] = row.Record;
-                    _rows[at][Id] = _keepsIds ? _rows[at][Id] : null;
+                    _rows[at][Id] = null;
                     break;
                 default:
                     return $"a dataset row is refiled or withdrawn, not '{row.Op}'";
