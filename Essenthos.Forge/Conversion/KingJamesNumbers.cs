@@ -196,7 +196,7 @@ internal sealed class KingJamesNumbers : ITextStage
         return numbered;
     }
 
-    private static List<(int Mine, int Theirs)> Paired(List<ConvertedWord> mine, List<(string Surface, string? StrongNumber)> theirs)
+    internal static List<(int Mine, int Theirs)> Paired(List<ConvertedWord> mine, List<(string Surface, string? StrongNumber)> theirs)
     {
         static string Key(string word) => word.Trim('[', ']', '(', ')').ToLowerInvariant().Replace('’', '\'');
 

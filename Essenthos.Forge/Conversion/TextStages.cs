@@ -14,6 +14,7 @@ internal static class TextStages
         new BhsaStrongNumbers(),
         new SeptuagintLemmas(),
         new KingJamesNumbers(),
+        new KingJamesParagraphs(),
         new SideStrongNumbers(),
         new DerivedStrongNumbers(),
         new MisplacedNumbers(),
