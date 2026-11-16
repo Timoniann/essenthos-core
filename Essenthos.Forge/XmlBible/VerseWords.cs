@@ -11,7 +11,11 @@ namespace Essenthos.Core.XmlBible;
 /// side by side 79 times in the Synodal — "[для] [управления]" — and a flag would report one
 /// editorial mark where the edition made two.
 /// </param>
-public readonly record struct VerseToken(string Word, string Trailer, int? SuppliedSpan);
+/// <param name="Tags">
+/// The numbers the source prints after this word as its Strong tags, in the order it prints them,
+/// where the verse is read as tagged (<see cref="VerseWords.Parse"/>); null everywhere else.
+/// </param>
+public readonly record struct VerseToken(string Word, string Trailer, int? SuppliedSpan, int[]? Tags = null);
 
 /// <summary>
 /// An address the edition prints inside the verse, in the numbering the edition itself follows —
@@ -57,10 +61,15 @@ public static partial class VerseWords
     /// punctuation that follows a styled span is a defect of the Zefania parser, which is a
     /// different reader over a different file, and does not happen here.
     /// </summary>
-    public static List<VerseToken> Parse(string verseText)
+    /// <param name="strongTagged">
+    /// The file prints Strong numbers in its verses as bare numbers after the word they tag (see
+    /// <see cref="ReadStrongTags"/>). Only a file measured to print no numeral as text may say so.
+    /// </param>
+    public static List<VerseToken> Parse(string verseText, bool strongTagged = false)
     {
         var (text, supplied) = Separate(verseText);
-        return Tokenize(text, supplied);
+        var words = Tokenize(text, supplied);
+        return strongTagged ? ReadStrongTags(words) : words;
     }
 
     /// <summary>
@@ -68,7 +77,56 @@ public static partial class VerseWords
     /// parenthesised bare number is always a cross-reference to the other versification or a
     /// footnote marker — no verse of either translation reads a number in brackets as text.
     /// </summary>
-    public static string StripMarkup(string verseText) => Separate(verseText).Text;
+    public static string StripMarkup(string verseText, bool strongTagged = false) =>
+        strongTagged ? StrongTagRun().Replace(Separate(verseText).Text, string.Empty) : Separate(verseText).Text;
+
+    /// <summary>
+    /// The Strong numbers a tagged edition prints inside its text, taken off the words and onto the
+    /// word they follow.
+    ///
+    /// <para>
+    /// bible4u's Ukrainian prints sixteen verses from a Strong-tagged edition with the tags left in
+    /// the text as bare numbers: "Пророцтво 4853 про Бегемота 929 півдня 5045" (Isaiah 30:6), and
+    /// 1 Kings 14:10, 1 Chronicles 1:1-12, Isaiah 1:1 and 30:7 the same way. Read as words they put
+    /// 158 numbers into the reader and every quotation. Measured over the file: 131 runs, each
+    /// following a word after one space, each holding exactly one number in the lexicon's range and
+    /// up to two more that are not words' numbers at all, a tense-voice-mood code above it (8804,
+    /// Qal perfect) or 0 where the tagger had nothing. No verse of the file prints a numeral as text,
+    /// which is what lets a bare number be read as a tag there and nowhere else.
+    /// </para>
+    ///
+    /// <para>
+    /// A run belongs to the word before it when that word ends in a letter and one space stands
+    /// between them; the run's trailer becomes the word's, so the text reads as the edition prints
+    /// it without the numbers. Which number is the word's Strong number is the reader's to say,
+    /// since it knows the testament.
+    /// </para>
+    /// </summary>
+    private static List<VerseToken> ReadStrongTags(List<VerseToken> words)
+    {
+        var result = new List<VerseToken>(words.Count);
+        foreach (var word in words)
+        {
+            if (result.Count > 0
+                && result[^1] is { Trailer: " " } owner
+                && owner.Word.Length > 0
+                && char.IsLetter(owner.Word[^1])
+                && word.Word.Length > 0
+                && word.Word.All(char.IsAsciiDigit))
+            {
+                result[^1] = owner with
+                {
+                    Trailer = word.Trailer,
+                    Tags = [.. owner.Tags ?? [], int.Parse(word.Word, CultureInfo.InvariantCulture)],
+                };
+                continue;
+            }
+
+            result.Add(word);
+        }
+
+        return result;
+    }
 
     /// <summary>
     /// The addresses the edition prints for this verse in its own numbering, in the order it prints
@@ -401,6 +459,13 @@ public static partial class VerseWords
     /// </summary>
     [GeneratedRegex(@"(?<=[\p{L}\p{N}]) +([,.;:?!)])")]
     private static partial Regex SpaceBeforePunctuation();
+
+    /// <summary>
+    /// The text <see cref="ReadStrongTags"/> takes off a tagged verse: after a letter, one or more
+    /// runs of a space and digits, each ending where the word would.
+    /// </summary>
+    [GeneratedRegex(@"(?<=\p{L})(?: [0-9]+(?![\p{L}\p{N}]|['’-][\p{L}\p{N}]))+")]
+    private static partial Regex StrongTagRun();
 
     [GeneratedRegex(@"\(\d+(?:[-:]\d+)?\)")]
     private static partial Regex CrossNumbering();

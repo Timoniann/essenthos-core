@@ -84,10 +84,10 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
     /// three translations.
     /// </summary>
     [Theory]
-    [InlineData("KJV")]
-    [InlineData("RUSV")]
-    [InlineData("UKR")]
-    public void EveryBible4uVerseRebuildsItsStrippedSource(string translation)
+    [InlineData("KJV", false)]
+    [InlineData("RUSV", false)]
+    [InlineData("UKR", true)]
+    public void EveryBible4uVerseRebuildsItsStrippedSource(string translation, bool strongTagged)
     {
         var bible = new XmlBibleParser().Parse(File.ReadAllText(TestResources.Bible4u(translation)));
 
@@ -98,11 +98,11 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
         foreach (var verse in chapter.Verses)
         {
             verses++;
-            var words = VerseWords.Parse(verse.Text);
+            var words = VerseWords.Parse(verse.Text, strongTagged);
             var failure = VerseRoundTrip.Check(
                 $"{translation} {book.BsName} {chapter.CNumber}:{verse.VNumber}",
                 VerseRoundTrip.Rebuild(words, w => w.Word, w => w.Trailer),
-                VerseWords.StripMarkup(verse.Text));
+                VerseWords.StripMarkup(verse.Text, strongTagged));
             if (failure is not null && failures.Count < FailuresToReport)
             {
                 failures.Add(failure.Describe());
@@ -112,6 +112,40 @@ public class CorpusRoundTripTests(ITestOutputHelper output)
         output.WriteLine($"{translation}: {verses} verses");
         verses.Should().BeGreaterThan(30_000);
         failures.Should().BeEmpty(string.Join(Environment.NewLine, failures));
+    }
+
+    /// <summary>
+    /// Ohienko's file prints sixteen verses with the Strong tags of a tagged edition left in the text
+    /// as bare numbers, 158 of them in 131 runs (PRB-1789). Read as the text's words they showed in the
+    /// reader and every quotation: "Пророцтво 4853 про Бегемота 929". They are each run's one number
+    /// in Strong's range on the word before it, and no number is a word of any of the three files.
+    /// </summary>
+    [Theory]
+    [InlineData("KJV", 0, 0)]
+    [InlineData("RUSV", 0, 0)]
+    [InlineData("UKR", 131, 16)]
+    public void StrongTagsInTheTextAreNumbersOnTheWordsAndNotWords(string translation, int tagged, int verses)
+    {
+        var text = Bible4uTextSource.Read(TestResources.Bible4u(translation), translation);
+        var all = text.Books
+            .SelectMany(book => book.Chapters.SelectMany(chapter => chapter.Verses.Select(verse =>
+                (Address: $"{book.CanonicalOrdinal}.{chapter.Number}:{verse.Number}", verse.Words))))
+            .ToList();
+
+        all.SelectMany(verse => verse.Words).Where(word => word.Surface.Length > 0 && word.Surface.All(char.IsDigit))
+            .Should().BeEmpty();
+        all.SelectMany(verse => verse.Words).Count(word => word.StrongNumber is not null).Should().Be(tagged);
+        all.Where(verse => verse.Words.Any(word => word.StrongNumber is not null)).Select(verse => verse.Address)
+            .Should().HaveCount(verses);
+
+        if (translation == "UKR")
+        {
+            var isaiah306 = all.Single(verse => verse.Address == "23.30:6").Words;
+            isaiah306.Take(4).Select(word => $"{word.Surface} {word.StrongNumber}").Should().Equal(
+                "Пророцтво H4853", "про ", "Бегемота H929", "півдня H5045");
+            string.Concat(isaiah306.Select(word => word.Surface + word.Trailer)).Should().StartWith(
+                "Пророцтво про Бегемота півдня. В краю утиску та переслідування, звідки левиця та лев,");
+        }
     }
 
     /// <summary>
