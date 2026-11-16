@@ -2,6 +2,7 @@
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Products;
+using Essenthos.Core.Records;
 
 namespace Essenthos.Core.Verbs;
 
@@ -38,13 +39,21 @@ internal static partial class ForgeVerbs
 
     /// <summary>
     /// <c>images [--from &lt;Resources&gt;]</c>: the pictures of the things whose 3D model changed, drawn from the model into
-    /// <c>Images/</c>, for the things <c>records/records</c> holds. records-derive reads them into the pictures' record files.
+    /// <c>Images/</c>, for the things <c>records/records</c> holds, and the pictures' record files made again from the files
+    /// as they now are, so a picture drawn anew is listed under the digest of its new bytes. A database takes them, with
+    /// their new version tags, from the next <c>build --apply</c> or daily path; records-derive draws the same way in every build.
     /// </summary>
     private static async Task<int> Images(ForgeRun forge, string[] args)
     {
         var store = new ProductStore(Option(args, "--from") ?? forge.Resources);
         using var imagesScope = forge.Scope();
         Console.WriteLine(await imagesScope.ServiceProvider.GetRequiredService<ModelPictures>().Draw(store.ResourcesPath, store));
+        foreach (var (product, rows) in RecordProducers.Images(store, store))
+        {
+            Console.WriteLine($"{rows,9}  {product}");
+        }
+
+        store.Save();
         return 0;
     }
 

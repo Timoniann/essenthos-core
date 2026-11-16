@@ -84,6 +84,47 @@ public sealed class EvidentiaLedgerTests : IDisposable
         File.ReadAllText(Path.Combine(folder, EvidentiaLedger.RunFile)).Should().Contain("\"reviewer\": \"the project owner\"");
     }
 
+    [Fact]
+    public async Task ANewRunIsNumberedAboveEveryRunTheLedgerHoldsAndNeverBack()
+    {
+        var ledger = EvidentiaLedger.Folder(_resources);
+        var folder = Directory.CreateDirectory(Path.Combine(ledger, "ENGT-HEBT-20261016T131107.236365")).FullName;
+        File.WriteAllText(Path.Combine(folder, EvidentiaLedger.RunFile),
+            """{"run": 49, "from": "ENGT", "to": "HEBT", "startedAt": "2026-10-16T13:11:07.236365Z", "ruleVersion": "1.0.0+test"}""");
+        Directory.CreateDirectory(Path.Combine(ledger, "ENGT-HEBT-without-a-run-file"));
+        EvidentiaLedger.HighestRun(ledger).Should().Be(49);
+        EvidentiaLedger.HighestRun(Path.Combine(_resources, "no-ledger")).Should().Be(0);
+
+        await _db.EvidentiaRuns.ExecuteDeleteAsync();
+        await _db.Database.ExecuteSqlRawAsync("SELECT setval(pg_get_serial_sequence('evidentia_run', 'id'), 1, false)");
+
+        await EvidentiaRunner.NumberAbove(_db, EvidentiaLedger.HighestRun(ledger));
+        (await Stored()).Should().Be(50, "a database built from files starts its runs at 1, and the merge lets the higher number win");
+
+        await EvidentiaRunner.NumberAbove(_db, 3);
+        (await Stored()).Should().Be(51, "a ledger behind the table never moves the numbers back");
+
+        await _db.EvidentiaRuns.Where(run => run.Id == 51).ExecuteDeleteAsync();
+        await EvidentiaRunner.NumberAbove(_db, 49);
+        (await Stored()).Should().Be(52, "a run deleted from the table keeps its number");
+    }
+
+    private async Task<int> Stored()
+    {
+        var run = new EvidentiaRun
+        {
+            FromTextId = _english.Id,
+            ToTextId = _hebrew.Id,
+            StartedAt = DateTimeOffset.UtcNow,
+            RuleVersion = "1.0.0+test",
+            Configuration = JsonDocument.Parse("{}"),
+            Scope = JsonDocument.Parse("""{"books": ["1"]}"""),
+        };
+        _db.EvidentiaRuns.Add(run);
+        await _db.SaveChangesAsync();
+        return run.Id;
+    }
+
     /// <summary>
     /// One verdict of each kind: a proposal read and approved, a tier accepted unread with a proposal
     /// and an absence in it, and a proposal rejected, written to the ledger as the verbs do.
