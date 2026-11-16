@@ -194,6 +194,33 @@ public sealed class AlignmentKeyedAnswerTests : IDisposable
     }
 
     [Fact]
+    public void BelowTheAgreedConfidenceAPairStandsOnlyWhereBothDirectionsOfTheModelNameIt()
+    {
+        var source = new Dictionary<(int, int, int), List<AlignmentPipeline.Word>>
+        {
+            [(40, 1, 1)] = [new(1, "ወ", null), new(2, "ሰ", null), new(3, "ለ", null), new(4, "መ", null)],
+        };
+        var target = new Dictionary<(int, int, int), List<AlignmentPipeline.Word>>
+        {
+            [(40, 1, 1)] = [new(11, "και", null), new(12, "εν", null), new(13, "λογ", null), new(14, "θε", null)],
+        };
+        Directory.CreateDirectory(_workspace);
+        var och = Path.Combine(_workspace, "och.txt");
+        var both = Path.Combine(_workspace, "both.txt");
+        File.WriteAllLines(och, ["0-0:0.60:0.5 1-1:0.60:0.5 1-2:0.50:0.5 2-2:0.85:0.5 3-3:0.30:0.5"]);
+        File.WriteAllLines(both, ["0-0:0.60:0.5 1-2:0.50:0.5 3-3:0.30:0.5"]);
+
+        var agreement = new AlignmentPipeline.Agreement(AlignmentPipeline.PairsOf(both, 1), 0.8);
+        var (drafts, _, _, below) = AlignmentPipeline.Read(och, [(40, 1, 1)], source, target, 0.4, Selection.BestPerSource, agreement: agreement);
+
+        drafts.Select(draft => (draft.SourceWordId, draft.TargetWordId)).Should().Equal(
+            [(1L, 11L), (3L, 13L)],
+            "a pair under 0.80 stands where both directions name it, one from 0.80 stands either way, and a word whose best pair one direction alone names is not handed its second best");
+        below.Should().Be(2, "the pair under the threshold and the one only one direction names are both left out");
+        FluentActions.Invoking(() => AlignmentPipeline.PairsOf(both, 2)).Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
     public void AModelCountsOnlyWithEachDirectionsConfigurationAndATableThatHoldsSomething()
     {
         var prefix = Path.Combine(_workspace, "model", "GEEZ81");

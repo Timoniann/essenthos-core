@@ -406,12 +406,13 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         string sourceFile,
         string targetFile,
         string alignmentFile,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string symmetrisation = Och)
     {
         var partial = alignmentFile + ".partial";
         RefuseTooLong(modelPrefix);
         await Machine(
-            ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, partial],
+            ["align", "-mt", modelType, "-sh", symmetrisation, "-s", modelPrefix, sourceFile, targetFile, partial],
             cancellationToken);
         if (Stored(partial) != StoredAlignment.Whole)
         {
@@ -469,6 +470,11 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
     /// For a text of the pool, the source's words as that text's own pair reads them and every word of the text as the
     /// pool reads it: what the model trains on, the same whichever pair of the pool asks.
     /// </param>
+    /// <param name="symmetrisation">
+    /// How the model's two directions are joined: <see cref="Och"/>, the answer a pair's rows are read from, or
+    /// <see cref="BothDirections"/>, the pairs both directions name (<see cref="Agreement"/>). Any other than och is one more
+    /// input, so the och answer keeps the folder it was stored in.
+    /// </param>
     internal async Task<string> AlignPooled(
         string fromSlug,
         IReadOnlyList<string> pool,
@@ -479,7 +485,8 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         Dictionary<(int, int, int), List<Word>> source,
         Dictionary<(int, int, int), List<Word>> target,
         Func<string, PoolPartner> partner,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string symmetrisation = Och)
     {
         var (modelPrefix, stamp) = await PoolModel(fromSlug, pool, poolWorkspace, modelType, partner, cancellationToken);
 
@@ -489,17 +496,55 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
             (TargetFile, Lines(addresses, target)),
             ("model.txt", [stamp]),
         };
+        if (symmetrisation != Och)
+        {
+            inputs.Add(("symmetrisation.txt", [symmetrisation]));
+        }
 
         var folder = await Answer(workspace, modelType, inputs, AlignmentFile, async training =>
         {
             Directory.CreateDirectory(Path.Combine(training, "alignment"));
-            logger.LogInformation("Aligning {Verses} verse pairs with the model {Pool} trained", addresses.Count,
-                string.Join(", ", pool));
+            logger.LogInformation("Aligning {Verses} verse pairs with the model {Pool} trained ({Symmetrisation})", addresses.Count,
+                string.Join(", ", pool), symmetrisation);
             await AlignWhole(modelType, modelPrefix, Path.Combine(training, SourceFile),
-                Path.Combine(training, TargetFile), Path.Combine(training, AlignmentFile), cancellationToken);
+                Path.Combine(training, TargetFile), Path.Combine(training, AlignmentFile), cancellationToken, symmetrisation);
         });
 
         return Path.Combine(folder, AlignmentFile);
+    }
+
+    /// <summary>SIL's default join of a model's two directions: their intersection, grown into the union where a neighbour agrees.</summary>
+    internal const string Och = "och";
+
+    /// <summary>Only the word pairs the model aligned in each direction names alike.</summary>
+    internal const string BothDirections = "intersection";
+
+    /// <summary>
+    /// Below <see cref="Below"/> a proposal stands only where it is one of <see cref="Lines"/>' pairs for its verse: the source and
+    /// target word indices the model names in both directions, one set per line of the answer.
+    /// </summary>
+    internal sealed record Agreement(IReadOnlyList<HashSet<(int Source, int Target)>> Lines, double Below);
+
+    /// <summary>The word pairs of each line of an answer, without their scores.</summary>
+    internal static List<HashSet<(int Source, int Target)>> PairsOf(string path, int verses)
+    {
+        var lines = new List<HashSet<(int, int)>>(verses);
+        foreach (var text in File.ReadLines(path))
+        {
+            var pairs = new HashSet<(int, int)>();
+            foreach (var token in text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            {
+                var indices = token.Split(':')[0].Split('-');
+                if (indices.Length == 2 && int.TryParse(indices[0], out var s) && int.TryParse(indices[1], out var t))
+                {
+                    pairs.Add((s, t));
+                }
+            }
+
+            lines.Add(pairs);
+        }
+
+        return lines.Count == verses ? lines : throw Misaligned(path, verses);
     }
 
     /// <summary>A text of a pool: the source's words as the source's pair with it reads them, and the text's words as the pool reads them.</summary>
@@ -570,7 +615,8 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
     /// The threshold measured for a source language that has no stated correspondences to measure
     /// against, and what the link's source says about how it was measured.
     /// </summary>
-    internal sealed record MeasuredThreshold(double Minimum, string Note);
+    /// <param name="AgreedBelow">Below this confidence a pair stands only where the model's two directions both name it (<see cref="Agreement"/>).</param>
+    internal sealed record MeasuredThreshold(double Minimum, string Note, double? AgreedBelow = null);
 
     internal static readonly Dictionary<string, MeasuredThreshold> Measured = new()
     {
@@ -578,7 +624,14 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         // confidence, against Brenton and Nestle (2026-09-25), with the three books the Ge'ez divides
         // within chapters left out: right 66% from 0.10, 68% from 0.25, 89% from 0.40, 95% from 0.60
         // and 97% from 0.80. There is no stated Ge'ez-Greek correspondence to score against.
-        ["gez"] = new(0.4, "threshold 0.40 from a hand-scored sample, about 90% right above it"),
+        //
+        // Hand-scored again on the pooled model's rows (2026-11-16: 260 GEEZ81-NESTLE1904 rows and 45
+        // GEEZ81-GRCBRENT rows, seeded and stratified by band and by whether both directions name the pair):
+        // the pairs both directions name are right at every band (174 of 175 read, 40 of 40 from 0.40 to
+        // 0.50); the others are right 66% from 0.40 to 0.50, 86% from 0.50 to 0.60, 81% from 0.60 to 0.70,
+        // 85% from 0.70 to 0.80 and 14 of 14 from 0.80. Keeping those only from 0.80 takes the New Testament
+        // rows from about 96% to about 99% right, for 88% of them; a fresh read of 102 kept rows found 100 right.
+        ["gez"] = new(0.4, "threshold 0.40, and below 0.80 only where both directions of the model agree, from a hand-scored sample, about 99% right", 0.8),
     };
 
     /// <summary>A script with no capital letters, whose words never say that they are names.</summary>
@@ -675,8 +728,14 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         Selection selection = Selection.All,
         SyntaxPrior? prior = null,
         bool namesUnmarked = false,
-        bool refuseStrays = false)
+        bool refuseStrays = false,
+        Agreement? agreement = null)
     {
+        if (agreement is not null && agreement.Lines.Count != addresses.Count)
+        {
+            throw Misaligned(path, addresses.Count);
+        }
+
         var drafts = new List<AlignedDraft>(300_000);
 
         // Where a verse covers two canonical addresses on both sides at once, the same two words
@@ -689,9 +748,11 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
         var collapsed = 0;
         var below = 0;
         var unwritten = 0;
+        var line = -1;
 
         foreach (var (sourceWords, targetWords, raw) in Parse(path, addresses, source, target))
         {
+            line++;
             proposed += raw.Count;
             IReadOnlyList<string?> targetNames = [.. targetWords.Select(word => word.Name)];
             List<Candidate> verse = NameLists.Settle(
@@ -749,6 +810,14 @@ internal sealed class AlignmentPipeline(AppDbContext? db, ILogger<AlignmentPipel
             foreach (var (from, to, confidence, position) in Selections.Apply(
                          selection, standing, [.. targetWords.Select(word => word.Text)]))
             {
+                // Judged after the selection, so a word whose best counterpart only one direction names is left without
+                // one rather than handed its second best.
+                if (agreement is not null && confidence < agreement.Below && !agreement.Lines[line].Contains((from, to)))
+                {
+                    below++;
+                    continue;
+                }
+
                 var draft = new AlignedDraft(
                     sourceWords[from].Id, targetWords[to].Id, confidence, position);
                 var pair = (draft.SourceWordId, draft.TargetWordId);
