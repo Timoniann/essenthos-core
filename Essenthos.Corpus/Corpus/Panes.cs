@@ -33,7 +33,8 @@ internal sealed record PaneBody(int Book, int Chapter, byte[] Gzip, string Hash,
 ///         "pt" phono trailer, "lg" language, "el" 1 when elided, "br" break, "sc" { "n", "m", "c" } Strong candidate,
 ///         "lx" { "g", "via" } lexicon gloss, "tg" { "corpus", "word", "lemma", "glosses", "method", "confidence" },
 ///         "gz" { "headword", "latin", "greek", "via" }, "at" { "kind", "headId", "head" }, "ro" [{ "occupation",
-///         "category", "person" }] }
+///         "category", "person" }], "rf" [{ "r" record index, "w" the original's word referred to, "src" source index }]
+///         the records the word refers to without naming them }
 /// card: { "r" record index, "m" method, "c" confidence, "src" source index, "via" route, "as" named as, "role", "origin" }
 /// </code>
 /// A field that is null, false, empty or (for the trailer) the empty string is left out. A verse is there when the text
@@ -451,6 +452,22 @@ internal static class Panes
                 json.WriteString("occupation", role.Occupation);
                 json.WriteString("category", role.Category);
                 json.WriteString("person", role.Person);
+                json.WriteEndObject();
+            }
+
+            json.WriteEndArray();
+        }
+
+        if (word.Referents is { Count: > 0 } referents)
+        {
+            json.WriteStartArray("rf");
+            foreach (var referent in referents)
+            {
+                types[referent.Slug] = referent.Type;
+                json.WriteStartObject();
+                json.WriteNumber("r", records[referent.Slug]);
+                json.WriteString("w", referent.Word);
+                json.WriteNumber("src", sources[referent.Source]);
                 json.WriteEndObject();
             }
 

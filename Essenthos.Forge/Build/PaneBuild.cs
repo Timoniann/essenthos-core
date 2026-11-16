@@ -276,7 +276,8 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     /// The products the tables a text's panes read were loaded from, where this store holds them: the text's own
     /// products and names; every pair it is in, with the other text's words and text (whose kind decides a witness);
     /// the records; the Strong candidates; the word ids' collisions; for Greek, every Greek text's words (a gloss by
-    /// spelling) and the lexicon; for Ge'ez, the lexicons.
+    /// spelling) and the lexicon; for Ge'ez, the lexicons; for a text paired with the text whose words refer back to others, those
+    /// references, the same source's parsings and that text's names on the words referred to.
     /// </summary>
     internal List<ProductInput> Inputs(TextRow text, IReadOnlyList<TextRow> texts, IReadOnlyList<(string From, string To)> pairs)
     {
@@ -295,6 +296,14 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         products.AddRange(PaneInputs.RecordProducts);
         products.Add(TableProducts.Product("word_strong"));
+        if (text.Slug == PaneInputs.ReferringText || pairs.Any(p => (p.From, p.To) == (text.Slug, PaneInputs.ReferringText)
+                                                                   || (p.From, p.To) == (PaneInputs.ReferringText, text.Slug)))
+        {
+            products.Add(PaneInputs.Referents);
+            products.Add(TableProducts.Product("word_parsing"));
+            products.Add(NameProducts.Projected(PaneInputs.ReferringText));
+        }
+
         if (text.Language == "grc")
         {
             products.AddRange(texts.Where(t => t.Language == "grc").Select(t => $"texts/{t.Slug}/words"));

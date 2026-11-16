@@ -1,3 +1,4 @@
+using Essenthos.Core.Loading;
 using Essenthos.Core.Macula;
 using FluentAssertions;
 using Xunit;
@@ -110,6 +111,40 @@ public sealed class MaculaTests
         var thrown = () => MaculaReader.Read(elsewhere);
 
         thrown.Should().Throw<InvalidDataException>().WithMessage("*GEN*");
+    }
+
+    /// <summary>
+    /// Matthew 1:18-19 cut down: αὐτοὺς refers to Joseph and Mary at once, and αὐτῆς in the next verse to Mary.
+    /// </summary>
+    private const string Referring =
+        "xml:id\tref\tclass\ttype\tlemma\tmorph\tcase\ttext\treferent\n" +
+        "n40001018001\tMAT 1:18!1\tnoun\tproper\tΜαρία\tN-GSF\tgenitive\tΜαρίας\t\n" +
+        "n40001018002\tMAT 1:18!2\tnoun\tproper\tἸωσήφ\tN-PRI\tdative\tἸωσήφ\t\n" +
+        "n40001018003\tMAT 1:18!3\tpron\tpersonal\tαὐτός\tP-APM\taccusative\tαὐτοὺς\tn40001018002 n40001018001\n" +
+        "n40001019001\tMAT 1:19!1\tpron\tpersonal\tαὐτός\tP-GSF\tgenitive\tαὐτῆς\tn40001018001\n";
+
+    [Fact]
+    public void ReadsWhichWordsAWordRefersTo()
+    {
+        var words = MaculaReader.Read(Referring);
+
+        words[2].Id.Should().Be("n40001018003");
+        words[2].Referents.Should().Equal("n40001018002", "n40001018001");
+        words[0].Referents.Should().BeNull("a name refers to nobody, and its cell is empty");
+    }
+
+    [Fact]
+    public void AReferenceIsARowPerWordReferredToAcrossTheVerse() =>
+        MaculaAnnotation.Referents(MaculaReader.Read(Referring)).Should().Equal((2, 1), (2, 0), (3, 0));
+
+    [Fact]
+    public void StopsOnAReferenceToNoWordOfTheTable()
+    {
+        var dangling = Referring.Replace("\tn40001018001\n", "\tn40001099001\n");
+
+        var thrown = () => MaculaAnnotation.Referents(MaculaReader.Read(dangling)).ToList();
+
+        thrown.Should().Throw<InvalidDataException>().WithMessage("*n40001099001*");
     }
 
     [Fact]
