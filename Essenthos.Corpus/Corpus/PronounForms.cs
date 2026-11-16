@@ -67,6 +67,15 @@ internal readonly record struct Agreement(char? Person, char? Number, char? Gend
         (Number is { } number && original.Number is { } theirs && number != theirs)
         || (Person is { } person && original.Person is '1' or '2' && person != original.Person)
         || (original.Number == 's' && Gender is { } gender && original.Gender is 'm' or 'f' && gender != original.Gender);
+
+    /// <summary>
+    /// Whether a translation's pronoun saying this says what an original's pronoun suffix says: the same person, and neither
+    /// another number nor, of one person, masculine against feminine.
+    /// </summary>
+    public bool Says(Agreement original) =>
+        Person is { } person && person == original.Person
+        && !(Number is { } number && original.Number is { } theirs && number != theirs)
+        && !(original.Number == 's' && Gender is { } gender && original.Gender is 'm' or 'f' && gender != original.Gender);
 }
 
 /// <summary>
@@ -78,12 +87,18 @@ internal static class PronounForms
 {
     private static readonly Dictionary<(string Language, string Form), Agreement> Forms = Build();
 
+    private static readonly HashSet<string> Spellings = [.. Forms.Keys.Select(key => key.Form)];
+
+    /// <summary>Whether the form, its letters lower-cased, is a pronoun of any language here.</summary>
+    public static bool Listed(string form) => Spellings.Contains(Letters(form));
+
     /// <summary>What the form says, where its language is here and the form, its letters lower-cased, is one of its pronouns.</summary>
     public static Agreement? Of(string language, string form)
     {
-        var letters = string.Concat(form.Where(char.IsLetter)).ToLowerInvariant();
-        return Forms.TryGetValue((language, letters), out var agreement) ? agreement : null;
+        return Forms.TryGetValue((language, Letters(form)), out var agreement) ? agreement : null;
     }
+
+    private static string Letters(string form) => string.Concat(form.Where(char.IsLetter)).ToLowerInvariant();
 
     private static Dictionary<(string, string), Agreement> Build()
     {
