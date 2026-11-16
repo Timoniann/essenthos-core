@@ -18,7 +18,6 @@ internal static partial class MappingMethods
     public const string Composed = "composed";
     public const string Evidentia = "evidentia";
     public const string Names = "names";
-    public const string NameList = "name-list";
     public const string Possessive = "possessive";
     public const string Rule = "rule";
     public const string Lexical = "lexical";
@@ -62,7 +61,6 @@ internal static partial class MappingMethods
         "rule-based" when source == PossessivePass.Source => Possessive,
         "rule-based" => Rule,
         "aligner" when source.StartsWith(CompositionPipeline.Machine + ",", StringComparison.Ordinal) => Composed,
-        "aligner" when source == NameListPass.Source => NameList,
         "aligner" => Aligner,
         _ => throw new InvalidDataException($"No mapping method for the corpus method '{databaseMethod}'."),
     };
@@ -76,7 +74,7 @@ internal static partial class MappingMethods
         Manual or Ruling => LinkMethod.Manual,
         ModelReading => LinkMethod.ModelReading,
         Evidentia or Names or Possessive or Rule => LinkMethod.RuleBased,
-        Aligner or Composed or NameList => LinkMethod.Aligner,
+        Aligner or Composed => LinkMethod.Aligner,
         _ => throw new InvalidDataException($"No corpus method for the mapping method '{method}'."),
     };
 
@@ -87,9 +85,10 @@ internal static partial class MappingMethods
     /// names placed by whom both texts name; a composition admitted by its floor; a Strong pairing at 0.9 or more
     /// from numbers laid onto the text from another edition (<paramref name="laidStrong"/>); a Strong pairing at
     /// 0.7 to 0.9; the aligner; a Strong pairing under 0.7; form matching. The numbers are only compared with each
-    /// other.
+    /// other. In a pair where the composition reads attached words better than EVIDENTIA (<see cref="AttachedBelowComposed"/>),
+    /// a verdict of the attached tier ranks just below the composition.
     /// </summary>
-    public static int Rank(string method, double? confidence, string? evidence, bool laidStrong = false) => method switch
+    public static int Rank(string method, double? confidence, string? evidence, bool laidStrong = false, bool attachedBelowComposed = false) => method switch
     {
         Manual or Ruling => 100,
         Stated => 90,
@@ -97,6 +96,7 @@ internal static partial class MappingMethods
         Evidentia => Tier(evidence) switch
         {
             "safe" => 80,
+            "attached" when attachedBelowComposed => 59,
             "attached" => 79,
             _ => 78,
         },
@@ -106,7 +106,7 @@ internal static partial class MappingMethods
         Composed => 60,
         Strong when confidence >= 0.9 => 55,
         Strong when confidence >= 0.7 => 50,
-        Aligner or NameList => 40,
+        Aligner => 40,
         Strong => 30,
         Lexical => 20,
         _ => 0,
@@ -119,8 +119,25 @@ internal static partial class MappingMethods
     public static bool LaysStrong(string fromText, string toText) =>
         Conversion.SideStrongNumbers.Layered(fromText) || Conversion.SideStrongNumbers.Layered(toText);
 
+    /// <summary>
+    /// The pairs whose EVIDENTIA verdicts of the attached tier (a pronoun or an auxiliary joined to its verb's original word)
+    /// rank below the composition. Read on LUTH1912-BHSA: where run 18's attached verdicts and the composition put a German
+    /// word on different Hebrew words (20 words), the composition was right for 15 and the verdict for 3; the verdict tied
+    /// the auxiliary to the wrong verb of its verse ("hatte ausgeredet" to the verb of speaking, not of finishing).
+    /// </summary>
+    private static readonly HashSet<string> AttachedBelowComposedPairs = new(StringComparer.Ordinal) { "LUTH1912-BHSA" };
+
+    public static bool AttachedBelowComposed(string pair) => AttachedBelowComposedPairs.Contains(pair);
+
     /// <summary>A link restored to a word the competition would leave with none must be at least this sure.</summary>
     public const double OrphanFloor = 0.7;
+
+    /// <summary>
+    /// Whether a standing link is sure enough to hold the original words it renders against a lower link of another method
+    /// from other words of the translation: the same floor as an orphan's (<see cref="OrphanFloor"/>), since a link that
+    /// doubts itself is no ground for withdrawing another.
+    /// </summary>
+    public static bool HoldsOriginal(MappingRow settled, bool pinned) => KeepsOrphan(settled, pinned);
 
     /// <summary>Whether a link is sure enough to keep a word that would otherwise have none (<see cref="OrphanFloor"/>).</summary>
     public static bool KeepsOrphan(MappingRow settled, bool pinned) =>
@@ -192,7 +209,6 @@ internal static partial class MappingMethods
         Composed => "compose",
         Evidentia => "evidentia",
         Names => "names-first",
-        NameList => "names",
         Possessive => "possessives",
         Strong => "strong",
         Stated => "the pair's stated loader",

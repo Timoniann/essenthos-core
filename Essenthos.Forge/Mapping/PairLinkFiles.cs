@@ -16,11 +16,10 @@ internal static class PairLinkFiles
         MappingMethods.Stated, MappingMethods.Strong, MappingMethods.Aligner, MappingMethods.Composed, MappingMethods.Lexical,
     ];
 
-    /// <summary>The methods a rule's producer reads, in the order the database passes ran: the name lists, then the possessives.</summary>
+    /// <summary>The methods a rule's producer reads.</summary>
     public static IReadOnlyList<string> Read(string method) => method switch
     {
-        MappingMethods.NameList => Drawn,
-        MappingMethods.Possessive => [.. Drawn, MappingMethods.NameList],
+        MappingMethods.Possessive => Drawn,
         _ => throw new ArgumentException($"No rule over the pair's links writes '{method}'.", nameof(method)),
     };
 
