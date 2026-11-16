@@ -47,7 +47,7 @@ internal static class RecordVerses
 
     public const string Producer = "forge records-verses";
 
-    public const string Version = "6";
+    public const string Version = "7";
 
     public const string VersionNote = "verses-version";
 

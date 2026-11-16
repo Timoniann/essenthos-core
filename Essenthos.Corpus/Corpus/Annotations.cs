@@ -338,7 +338,7 @@ internal static class Annotations
     /// <summary>
     /// Whether one word names both records without either answering for the other: a title and a
     /// record joined to it as its bearer, a person and a people, a place and a people a person
-    /// ruled on the word together, or things one ruling names together (<see cref="Together"/>).
+    /// ruled on the word together, or records one ruling names together (<see cref="Together"/>).
     /// </summary>
     private static bool Beside(Claimed one, Claimed other, IReadOnlySet<(int Title, int Bearer)> bearers) =>
         (one.Role is not null && other.Role is not null && one.Role != other.Role)
@@ -350,17 +350,27 @@ internal static class Annotations
         || (other.Kind == EntityKind.Title && bearers.Contains((other.EntityId, one.EntityId)));
 
     /// <summary>
-    /// Whether two things are members of one group a person ruled on the word: both ruled, by the
+    /// Whether two records are named on the word together by one person's ruling: both ruled, by the
     /// same decision (its source), read of the same word (the same note: none for a word read
-    /// itself, the same <em>through</em> word for a carried one). A plural that names a pair or a set
-    /// names each of them; a translation word linked to two words, each ruled on its own, does not
-    /// make their records a group, and neither do two men, whoever ruled them.
+    /// itself, the same <em>through</em> word for a carried one), and of kinds that can be one word's
+    /// two meanings (<see cref="Grouped"/>). A translation word linked to two words, each ruled on its
+    /// own, does not make their records a group, and neither do two men, whoever ruled them.
     /// </summary>
     internal static bool Together(Claimed one, Claimed other) =>
-        one.Kind == EntityKind.Object && other.Kind == EntityKind.Object
+        Grouped(one.Kind, other.Kind)
         && one.Standing == Ruled && other.Standing == Ruled
         && string.Equals(one.Source, other.Source, StringComparison.Ordinal)
         && string.Equals(one.Note, other.Note, StringComparison.Ordinal);
+
+    /// <summary>
+    /// The kinds one ruling can name on one word together: two things, as a plural names a pair or a set (the pillars
+    /// Jachin and Boaz), or a creature and the nation or ruler the text calls by its name (Rahab for Egypt in PSA 87:4,
+    /// the great tannin for Pharaoh in EZK 29:3). The creature's kind spells first, so it is the first card. Two
+    /// creatures are two answers, as two men are.
+    /// </summary>
+    internal static bool Grouped(EntityKind one, EntityKind other) =>
+        (one, other) is (EntityKind.Object, EntityKind.Object)
+        || (one == EntityKind.Being) != (other == EntityKind.Being);
 
     private static EntityRefResponse Show(Claimed claimed) =>
         new(EnumSpelling.Of(claimed.Kind), claimed.Slug, claimed.Name)
