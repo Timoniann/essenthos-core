@@ -24,6 +24,7 @@ internal enum PageKind
     Text,
     Search,
     Section,
+    Help,
     NotFound,
 }
 
@@ -315,6 +316,12 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
 
             case ["periods", var slug]:
                 return new PageAddress(language, PageKind.Period, $"/periods/{slug}") { Slug = slug };
+
+            case ["help"]:
+                return new PageAddress(language, PageKind.Help, "/help");
+
+            case ["help", var topic]:
+                return new PageAddress(language, PageKind.Help, $"/help/{topic}") { Slug = topic };
 
             case ["texts", var id]:
                 return new PageAddress(language, PageKind.Text, $"/texts/{id}") { Slug = id };

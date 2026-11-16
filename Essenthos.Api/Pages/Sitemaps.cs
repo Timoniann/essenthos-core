@@ -19,7 +19,7 @@ namespace Essenthos.Core.Pages;
 /// The addresses are what is kept, not the XML: written out, the verses alone are tens of megabytes,
 /// and writing them again for a crawler that asks once a day costs less than holding them.
 /// </summary>
-internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cache)
+internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cache, PageShell? shell = null)
 {
     private const string Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9";
     private const string Alternates = "http://www.w3.org/1999/xhtml";
@@ -148,10 +148,15 @@ internal sealed class Sitemaps(AppDbContext db, ICanonIndex canon, PageCache cac
         if (name == Pages)
         {
             var texts = await db.Texts.OrderBy(t => t.Slug).Select(t => t.Slug).ToListAsync(cancellationToken);
+            // The help pages are the reader's own words, which come with its shell.
+            var help = shell is not null && await shell.Get(cancellationToken) is { } reading
+                ? reading.WordingFor(SiteLanguage.English).Keys("help.pages")
+                : [];
             return
             [
                 "/",
                 .. PageSections.All.Where(section => section.Listed).Select(section => section.Path),
+                .. help.Count > 0 ? [PageViews.HelpPath, .. help.Select(topic => $"{PageViews.HelpPath}/{topic}")] : (string[])[],
                 .. texts.Select(slug => $"/texts/{slug}"),
             ];
         }
