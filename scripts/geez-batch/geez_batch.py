@@ -48,8 +48,21 @@ DILLMANN_FOLDERS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'ne
 LABEL_PREFIX = 'geez-'
 MODELS = ('claude-sonnet-5-5', 'claude-opus-5-5')
 # Canonical ordinals of the pilot's books; the full run lists them from the database.
-BOOKS = {'GEN': 1, 'PSA': 19, 'JHN': 43}
+BOOKS = {'GEN': 1, 'PSA': 19, 'JHN': 43, '2ES': 69, '1EN': 85, 'JUB': 86, 'MSL': 91, 'TGS': 92}
 NT_ORDINALS = range(40, 67)   # Matthew to Revelation; Baruch (67) and the books after it are not NT
+ESDRAS_2, ENOCH, JUBILEES, MESSALE, TAGSAS = 69, 85, 86, 91, 92
+PROVERBS = 20
+# R. H. Charles's English of 1 Enoch and Jubilees, translated from the Ethiopic (Essenthos.Forge CharlesTextSource).
+CHARLES = 'CHARLES1913'
+VERSE_MAP = REPO / 'Resources' / 'Essenthos' / 'versification' / 'geez-verse-map.tsv'
+# What the packet says of an English made without the Greek, for the books no Greek stands beside.
+ENGLISH_FROM = {
+    ESDRAS_2: 'the King James Apocrypha, translated from the Latin 4 Ezra; no Greek survives',
+    ENOCH: "R. H. Charles's translation from the Ethiopic (1912, as reprinted in 1913); its verses may divide a "
+           "verse apart from the Ge'ez",
+    JUBILEES: "R. H. Charles's translation from the Ethiopic (1913); its verses may divide a verse apart from the "
+              "Ge'ez",
+}
 
 
 def now():
@@ -285,17 +298,145 @@ select json_build_object(
   'english', (select json_agg(json_build_object('c', c, 'v', v, 'label', label, 't', t) order by c, v, label) from en))
 """
 
+# A book with no Greek beside it: its Ge'ez words, and the English of the same book at its own chapters.
+ENGLISH_SQL = """
+with ge as (
+  select w.id, v.chapter_number c, v.number v, v.label, w.position p, w.text t
+  from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
+  where x.slug = 'GEEZ81' and b.canonical_ordinal = {ordinal} {chapter_filter}),
+en as (
+  select v.chapter_number c, v.number v, v.label, string_agg(w.text || w.trailer, '' order by w.position) t
+  from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
+  where x.slug = '{english}' and b.canonical_ordinal = {ordinal} {chapter_filter}
+  group by 1, 2, 3)
+select json_build_object(
+  'geez', (select json_agg(json_build_object('id', id::text, 'c', c, 'v', v, 'label', label, 'p', p, 't', t) order by c, v, label, p) from ge),
+  'english', (select json_agg(json_build_object('c', c, 'v', v, 'label', label, 't', t) order by c, v, label) from en))
+"""
+
+# Messale or Tägsas, and the whole of Brenton's Proverbs with the frame row each verse stands at (place_proverbs).
+PROVERBS_SQL = """
+with ge as (
+  select w.id, v.chapter_number c, v.number v, v.label, w.position p, w.text t
+  from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
+  where x.slug = 'GEEZ81' and b.canonical_ordinal = {ordinal} {chapter_filter}),
+gr as (
+  select w.id, v.chapter_number c, v.number v, v.label, w.position p, w.text t, w.lemma,
+         r.canonical_chapter fc, r.canonical_verse fv
+  from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
+  join verse_reference r on r.verse_id = v.id and r.is_primary
+  where x.slug = 'GRCBRENT' and b.canonical_ordinal = {proverbs}),
+en as (
+  select v.chapter_number c, v.number v, v.label, r.canonical_chapter fc, r.canonical_verse fv,
+         string_agg(w.text || w.trailer, '' order by w.position) t
+  from word w join verse v on v.id = w.verse_id join text x on x.id = w.text_id join book b on b.id = v.book_id
+  join verse_reference r on r.verse_id = v.id and r.is_primary
+  where x.slug = 'BRENTON' and b.canonical_ordinal = {proverbs}
+  group by 1, 2, 3, 4, 5)
+select json_build_object(
+  'geez', (select json_agg(json_build_object('id', id::text, 'c', c, 'v', v, 'label', label, 'p', p, 't', t) order by c, v, label, p) from ge),
+  'greek', (select json_agg(json_build_object('id', id::text, 'c', c, 'v', v, 'label', label, 'p', p, 't', t, 'lemma', lemma, 'fc', fc, 'fv', fv) order by c, v, label, p) from gr),
+  'english', (select json_agg(json_build_object('c', c, 'v', v, 'label', label, 'fc', fc, 'fv', fv, 't', t) order by c, v, label) from en))
+"""
+
 
 def chapter_sources(ordinal):
-    # Books Brenton does not have (2 Esdras, Enoch, Jubilees, Meqabyan, 4 Baruch, Proverbs split as
-    # Messale/Tägsas) come with no Greek and no English: the packet then has the Ge'ez alone.
-    return ('NESTLE1904', 'KJV') if ordinal in NT_ORDINALS else ('GRCBRENT', 'BRENTON')
+    """
+    The Greek and the English a Ge'ez book is read beside, either None. Matthew to Revelation read Nestle and the
+    KJV; Messale and Tägsas read Brenton's Proverbs through the verse map; 2 Esdras, Enoch and Jubilees have no
+    Greek and read an English made from the Latin or the Ethiopic; Meqabyan and 4 Baruch have neither.
+    """
+    if ordinal in NT_ORDINALS:
+        return ('NESTLE1904', 'KJV')
+    if ordinal == ESDRAS_2:
+        return (None, 'KJV')
+    if ordinal in (ENOCH, JUBILEES):
+        return (None, CHARLES)
+    if ordinal in range(87, 91):
+        return (None, None)
+    return ('GRCBRENT', 'BRENTON')
+
+
+def english_margin(ordinal):
+    """How many verses either side of a passage its English is taken from: Charles divides some verses otherwise."""
+    return 1 if ordinal in (ENOCH, JUBILEES) else 0
+
+
+def read_verse_map(path=VERSE_MAP, books=(MESSALE, TAGSAS)):
+    """
+    The hand-read map of the Ge'ez books the church divides its own way (Resources/Essenthos/versification/
+    geez-verse-map.tsv, the file the build places them by): {(book, chapter, verse): [(frame chapter, verse)...]}.
+    """
+    out = {}
+    for number, raw in enumerate(Path(path).read_text(encoding='utf-8').splitlines(), 1):
+        if not raw.strip() or raw.startswith('#'):
+            continue
+        fields = raw.split('\t')
+        if int(fields[0]) not in books:
+            continue
+        if int(fields[2]) != PROVERBS:
+            raise SystemExit(f'{path} line {number}: book {fields[0]} is mapped to book {fields[2]}, not Proverbs')
+        to = [] if fields[3] == '-' else _map_verses(fields[3])
+        for chapter, verse in _map_verses(fields[1]):
+            out.setdefault((int(fields[0]), chapter, verse), []).extend(to)
+    return out
+
+
+def _map_verses(written):
+    verses = []
+    for part in written.split(';'):
+        chapter, _, span = part.strip().partition(':')
+        first, _, last = span.partition('-')
+        verses += [(int(chapter), v) for v in range(int(first), int(last or first) + 1)]
+    return verses
+
+
+def place_proverbs(ordinal, rows, verse_map):
+    """
+    Brenton's Greek and English of Proverbs set at the Messale or Tägsas verse each answers, by the verse map:
+    a verse of Proverbs whose frame row the map gives a Ge'ez verse of this book stands at that verse ('c', 'v',
+    no label) and keeps its own address as 'ref'; the rest of Proverbs is left out. Every Ge'ez verse must have a
+    line or the export stops: the correspondence is checked against the loaded verses, never assumed. The map was
+    read against the frame's rows, where Swete stands beside Brenton, so a row may hold no verse of Brenton's
+    (Proverbs 1:16 is not in his Greek); 'unanswered' lists the Ge'ez verses left with no Greek or no English.
+    """
+    geez = sorted({(w['c'], w['v']) for w in rows['geez']})
+    missing = [f'{c}:{v}' for c, v in geez if (ordinal, c, v) not in verse_map]
+    if missing:
+        raise SystemExit(f"the verse map has no line for {len(missing)} Ge'ez verses of book {ordinal}: {missing[:10]}")
+    at = {}
+    for c, v in geez:
+        for row in verse_map[(ordinal, c, v)]:
+            at.setdefault(tuple(row), (c, v))
+
+    def placed(items):
+        out = []
+        for item in items:
+            to = at.get((item['fc'], item['fv']))
+            if to is not None:
+                out.append({**{k: x for k, x in item.items() if k not in ('fc', 'fv')},
+                            'c': to[0], 'v': to[1], 'label': '', 'ref': f"{item['c']}:{item['v']}{item['label']}"})
+        return sorted(out, key=lambda x: (x['c'], x['v']))   # stable: each verse keeps its words' order
+
+    greek, english = placed(rows['greek']), placed(rows['english'])
+    answered = {(g['c'], g['v']) for g in greek} & {(e['c'], e['v']) for e in english}
+    # A Ge'ez verse whose rows a neighbour took first (23:30-31 both to 23:31) is answered where that neighbour is.
+    covered = {verse for verse in geez if any(at.get(tuple(row)) in answered for row in verse_map[(ordinal, *verse)])}
+    return {'geez': rows['geez'], 'links': rows['links'], 'greek': greek, 'english': english,
+            'unanswered': [[c, v] for c, v in geez if (c, v) not in covered]}
 
 
 def book_rows(ordinal, chapter=None):
     """The Ge'ez words, their links, the Greek and the English of one book (or one chapter of it)."""
     greek, english = chapter_sources(ordinal)
     chapter_filter = f'and v.chapter_number = {int(chapter)}' if chapter is not None else ''
+    if ordinal in (MESSALE, TAGSAS):
+        data = psql_rows(PROVERBS_SQL.format(ordinal=ordinal, chapter_filter=chapter_filter, proverbs=PROVERBS))[0]
+        rows = {key: data[key] or [] for key in ('geez', 'greek', 'english')}
+        return place_proverbs(ordinal, {**rows, 'links': []}, read_verse_map())
+    if greek is None:
+        data = psql_rows(ENGLISH_SQL.format(ordinal=ordinal, chapter_filter=chapter_filter, english=english or ''))[0]
+        return {'geez': data['geez'] or [], 'links': [], 'greek': [], 'english': data['english'] or []}
     greek_chapter = f'v.chapter_number = {int(chapter)}' if chapter is not None else 'true'
     data = psql_rows(GLOSS_SQL.format(ordinal=ordinal, chapter_filter=chapter_filter, greek_chapter=greek_chapter,
                                       greek=greek, english=english))[0]
@@ -309,9 +450,15 @@ def split_book(rows, chapter):
     links = [link for link in rows['links'] if link['ge'] in ids]
     linked = {link['gr'] for link in links}
     greek = [g for g in rows['greek'] if g['c'] == chapter or g['id'] in linked]
-    verses = {(g['c'], g['v']) for g in greek}
-    english = [e for e in rows['english'] if (e['c'], e['v']) in verses]
-    return {'geez': geez, 'links': links, 'greek': greek, 'english': english}
+    if rows['greek']:
+        verses = {(g['c'], g['v']) for g in greek}
+        english = [e for e in rows['english'] if (e['c'], e['v']) in verses]
+    else:
+        english = [e for e in rows['english'] if e['c'] == chapter]
+    out = {'geez': geez, 'links': links, 'greek': greek, 'english': english}
+    if 'unanswered' in rows:
+        out['unanswered'] = rows['unanswered']
+    return out
 
 
 def export_chapter(book, ordinal, chapter, api_base, rows=None):
@@ -325,9 +472,16 @@ def export_chapter(book, ordinal, chapter, api_base, rows=None):
                 gz = word['gz']
                 dillmann[str(word['id'])] = {'headword': gz['headword'], 'latin': gz['latin'][:6],
                                              'greek': gz['greek'][:4], 'via': gz['via']}
-    return {'book': book, 'ordinal': ordinal, 'chapter': chapter, 'greek_text': greek, 'english_text': english,
-            'geez': data['geez'], 'links': data['links'], 'greek': data['greek'],
-            'english': data['english'], 'dillmann': dillmann}
+    out = {'book': book, 'ordinal': ordinal, 'chapter': chapter, 'greek_text': greek, 'english_text': english,
+           'geez': data['geez'], 'links': data['links'], 'greek': data['greek'],
+           'english': data['english'], 'dillmann': dillmann}
+    if ordinal in ENGLISH_FROM:
+        out['english_from'] = ENGLISH_FROM[ordinal]
+    if english_margin(ordinal):
+        out['english_margin'] = english_margin(ordinal)
+    if 'unanswered' in data:
+        out['unanswered'] = [f'{c}:{v}' for c, v in data['unanswered'] if c == chapter]
+    return out
 
 
 def export_gloss(run, chapters, api_base, whole_books=False):
@@ -341,7 +495,9 @@ def export_gloss(run, chapters, api_base, whole_books=False):
     # Every spelling of every loaded Dillmann headword, to check a lemma the model says is his.
     forms = psql_rows("select json_agg(distinct f order by f) from geez_lexicon_entry, unnest(forms) f")[0]
     write_json(Path(run) / 'inputs' / 'dillmann-headwords.json', forms)
-    return {'chapters': len(out), 'geez_words': sum(len(c['geez']) for c in out),
+    return {'chapters': len(out),
+            'unanswered_by_the_verse_map': [f"{c['book']} {ref}" for c in out for ref in c.get('unanswered', [])],
+            'geez_words': sum(len(c['geez']) for c in out),
             'with_dillmann': sum(len(c['dillmann']) for c in out),
             'linked': sum(len({link['ge'] for link in c['links']}) for c in out)}
 
@@ -486,16 +642,20 @@ def gloss_packet(chapter, window):
         geez_out.append(verse)
     greek_out = []
     for g in greek_words:
-        ref = f"{g['c']}:{g['v']}{g['label']}"
+        ref = g.get('ref') or f"{g['c']}:{g['v']}{g['label']}"
         if not greek_out or greek_out[-1]['ref'] != ref:
             greek_out.append({'ref': ref, 'words': []})
         word = {'g': gkeys[g['id']], 't': g['t']}
         if g.get('lemma'):
             word['lemma'] = g['lemma']
         greek_out[-1]['words'].append(word)
-    english = [{'ref': f"{e['c']}:{e['v']}{e['label']}", 't': e['t'].strip()} for e in chapter['english']
-               if first <= (e['c'], e['v']) <= last]
+    margin = chapter.get('english_margin', 0)
+    low, high = (first[0], first[1] - margin), (last[0], last[1] + margin)
+    english = [{'ref': e.get('ref') or f"{e['c']}:{e['v']}{e['label']}", 't': e['t'].strip()}
+               for e in chapter['english'] if low <= (e['c'], e['v']) <= high]
     packet = {'book': chapter['book'], "ge'ez": geez_out, 'greek': greek_out, 'english': english}
+    if chapter.get('english_from') and english:
+        packet['english_from'] = chapter['english_from']
     return packet, wkeys, {k: v for v, k in gkeys.items()}
 
 
