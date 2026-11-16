@@ -98,6 +98,19 @@ public sealed class SuppliedWordSourceTests : IDisposable
     }
 
     [Fact]
+    public void An_editions_pairs_with_the_witnesses_in_the_language_of_a_book_both_hold_are_founded_before_their_folders()
+    {
+        var store = Store();
+        Text(store, "NESTLE1904", "critical-edition", "grc", ("40.1:1", [("Βίβλος", null)]));
+        Text(store, "OTTLEY", "critical-edition", "grc", ("1.1:1", [("ἐν", null)]));
+
+        var pairs = PairSources.Pairs(new ProductTexts(store), PairSources.Laid);
+
+        pairs.Should().Contain(["RUSV-BHSA", "RUSV-NESTLE1904"]);
+        pairs.Should().NotContain("RUSV-OTTLEY", "the Synodal's Old Testament is translated from the Hebrew, and Ottley prints no Gospel");
+    }
+
+    [Fact]
     public void What_a_pair_says_names_each_texts_words_apart_though_their_places_in_the_products_are_the_same()
     {
         var store = new ProductStore(_root);
@@ -141,6 +154,12 @@ public sealed class SuppliedWordSourceTests : IDisposable
         using (var frame = store.Create(FrameFile.Product(text), ProductKind.Machine, FrameRow.Schema, "test", []))
         {
             frame.WriteAll([]);
+        }
+
+        using (var books = store.Create(TextBook.ProductOf(text), ProductKind.Machine, TextBook.Schema, "test", []))
+        {
+            books.WriteAll(verses.Select(verse => VerseKey.Parse(verse.Verse).Book).Distinct()
+                .Select((book, n) => new TextBook(book, n + 1, $"book {book}", null, null, $"b{book}")));
         }
 
         using var declaration = store.Create(TextField.ProductOf(text), ProductKind.Hand, TextField.Schema, "test", []);

@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Indexes;
@@ -117,6 +118,41 @@ internal sealed class SuppliedWordSource : IPairSource
 
     public bool Makes(string source) => SuppliedWordAbsences.Editions.Any(edition => edition.Source == source);
 
+    /// <summary>
+    /// Every catalogued edition with every catalogued witness in the language of some book both hold, whether or not the
+    /// pair has a folder yet: the marks are the edition's own, so the pair is stated as soon as both texts are there.
+    /// </summary>
+    public IEnumerable<string> Founds(ProductTexts texts)
+    {
+        var store = texts.Store;
+        var witnesses = Witnesses.Order(StringComparer.Ordinal)
+            .Where(slug => texts.Holds(slug) && store.Exists(TextBook.ProductOf(slug)))
+            .Select(slug => (Slug: slug, Declared: IndexContext.Declared(store, slug)))
+            .Where(w => w.Declared.Kind != TextKind.Translation && w.Declared.Language is Hebrew or Greek)
+            .Select(w => (w.Slug, w.Declared.Language, Books: Books(store, w.Slug)))
+            .ToList();
+        foreach (var edition in SuppliedWordAbsences.Editions.Where(e => texts.Holds(e.Slug) && store.Exists(TextBook.ProductOf(e.Slug))))
+        {
+            var books = Books(store, edition.Slug);
+            foreach (var witness in witnesses.Where(w => books.Any(book => LanguageOf(edition, book) == w.Language && w.Books.Contains(book))))
+            {
+                yield return MappingProducts.Pair(edition.Slug, witness.Slug);
+            }
+        }
+    }
+
+    private static HashSet<int> Books(ProductStore store, string slug)
+    {
+        using var reader = store.Open(TextBook.ProductOf(slug), TextBook.Schema);
+        return [.. reader.Rows().Select(book => book.Book)];
+    }
+
+    /// <summary>The language an edition's book was translated from, which the witness it is stated against must print.</summary>
+    private static string? LanguageOf(SuppliedWordAbsences.Edition edition, int book) =>
+        book <= LastOldTestamentBook ? edition.OldTestament
+        : book <= LastNewTestamentBook ? Greek
+        : edition.OldTestament == Greek ? Greek : null;
+
     public IEnumerable<string> Inputs(ProductStore store, string pair) =>
         Renderings.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>();
 
@@ -135,9 +171,7 @@ internal sealed class SuppliedWordSource : IPairSource
         var runs = new List<List<WordKey>>();
         foreach (var verse in marked.Verses)
         {
-            var language = verse.Book <= LastOldTestamentBook ? edition.OldTestament
-                : verse.Book <= LastNewTestamentBook ? Greek
-                : edition.OldTestament == Greek ? Greek : null;
+            var language = LanguageOf(edition, verse.Book);
             if (language != declared.Language || !witness.ByAddress.ContainsKey(marked.Primary(verse)))
             {
                 continue;

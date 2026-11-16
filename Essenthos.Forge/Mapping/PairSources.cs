@@ -42,7 +42,7 @@ internal interface IPairSource
     /// The pairs it brings into the mapping: pairs it states that may have no folder yet, which its file then founds. Every
     /// other pair is the mapping's only once a folder holds a method file.
     /// </summary>
-    IEnumerable<string> Founds => [];
+    IEnumerable<string> Founds(ProductTexts texts) => [];
 }
 
 /// <summary>
@@ -100,7 +100,7 @@ internal static class PairSources
     public static List<string> Pairs(ProductTexts texts, string file, IReadOnlySet<string>? only = null)
     {
         var graph = texts.Store.Exists(ProductGraph.Product) ? ProductGraph.Read(texts.Store) : null;
-        var founded = All.Where(source => source.File == file).SelectMany(source => source.Founds).ToHashSet(StringComparer.Ordinal);
+        var founded = All.Where(source => source.File == file).SelectMany(source => source.Founds(texts)).ToHashSet(StringComparer.Ordinal);
         return
         [
             .. MappingProducts.Pairs(texts.Store).Union(founded).Order(StringComparer.Ordinal)

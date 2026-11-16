@@ -86,7 +86,7 @@ internal sealed class KingJamesGreekSource : IPairSource
         MappingProducts.Split(pair) is var (from, to) && from == KingJames && (_method == MappingMethods.Stated ? Stated : Witnesses).Contains(to);
 
     /// <summary>The King James's pair with Stephanus, which only the module's positions state.</summary>
-    public IEnumerable<string> Founds => _method == MappingMethods.Stated ? [MappingProducts.Pair(KingJames, Stephanus)] : [];
+    public IEnumerable<string> Founds(ProductTexts texts) => _method == MappingMethods.Stated ? [MappingProducts.Pair(KingJames, Stephanus)] : [];
 
     public bool Makes(string source) => _method switch
     {
