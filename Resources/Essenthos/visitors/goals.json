@@ -1,5 +1,5 @@
 {
-  "about": "Goals for simulated visitors. text is what the visitor wants, in their own words, and is the only part the visitor is told besides its landing. queries are real Google autocomplete phrasings behind the goal (queries.json, fetched 2026-10-14). landing is the path on the site a search would plausibly open; the session's host is put in front of it. fits names the personas the goal suits. checks says what the session is meant to reveal, for whoever reads the results; it is never given to the visitor. kind is task for a goal with an end, explore for a visit with none. typed, when present, is what the visitor types into the site's own search after arriving on the home page (the landing); the goal's text says so in the visitor's words.",
+  "about": "Goals for simulated visitors. text is what the visitor wants, in their own words, and is the only part the visitor is told besides its landing. queries are real Google autocomplete phrasings behind the goal (queries.json, fetched 2026-10-14; for leviathan-creatures, temple-3d-en and timeline-uk, Google autocomplete fetched on 2026-11-16 and not added to queries.json). landing is the path on the site a search would plausibly open; the session's host is put in front of it. fits names the personas the goal suits. checks says what the session is meant to reveal, for whoever reads the results; it is never given to the visitor. kind is task for a goal with an end, explore for a visit with none. typed, when present, is what the visitor types into the site's own search after arriving on the home page (the landing); the goal's text says so in the visitor's words.",
   "goals": [
     {
       "id": "psalm-90-funeral",
@@ -1144,6 +1144,79 @@
         "jordan"
       ],
       "checks": "Does the Flood event page give the dates under different chronologies and say which is which, link to the text of Genesis 6-9, and does the site (sources, about) say anything on Mesopotamian flood stories or admit it has nothing?"
+    },
+    {
+      "id": "leviathan-creatures",
+      "kind": "task",
+      "language": "uk",
+      "text": "Пишу біблійну вікторину для молоді. Хочу питання про левіафана: хто це в Біблії, де про нього написано і як його називають в інших перекладах. Якщо вийде, то ще й чи справді в Біблії є єдиноріг.",
+      "queries": [
+        "левіафан в біблії",
+        "хто такий левіафан в біблії",
+        "що таке левіафан в біблії",
+        "левиафан в библии где написано",
+        "єдиноріг в біблії"
+      ],
+      "landing": "/uk/beings/leviathan",
+      "fits": [
+        "artem",
+        "kateryna",
+        "dmytro"
+      ],
+      "checks": "The creature pages of 2026-11-16: does the Leviathan page say in plain Ukrainian what the text says of it, list its verses (Job 41, Ps 104:26, Isa 27:1, Ps 74:14), and show the Septuagint's δράκων / κῆτος and the other translations' names in a way a quiz writer can use? Can he get from there, or from the site's search («єдиноріг»), to the Re'em page and see which Bibles say unicorn (KJV, Synodal) and which do not? Are the creature records named in Ukrainian, not in English?"
+    },
+    {
+      "id": "temple-3d-en",
+      "kind": "task",
+      "language": "en",
+      "text": "Tomorrow's lesson is Solomon building the temple (1 Kings 6). I want to show my kids what Solomon's temple looked like inside, going by the Bible's own description, and how it was different from the temple Jesus visited.",
+      "queries": [
+        "what did solomon's temple look like",
+        "what did solomon's temple look like inside",
+        "solomon's temple 3d model",
+        "solomon's temple model",
+        "herod's temple vs solomon's temple",
+        "herod's temple in the bible"
+      ],
+      "landing": "/objects/solomons-temple",
+      "fits": [
+        "jessica",
+        "greg",
+        "margaret"
+      ],
+      "checks": "The walkable 3D models of Solomon's and Herod's temples (TSK-1710, FTR-1728): does the model load, can a mid-comfort user turn it, go inside and walk it, and get back out of it to the page (wheel and page scroll, PRB-1122), are its parts labelled with their verses, does the full-screen button help, does the page say what comes from the text and what is reconstructed, and can she get from Solomon's Temple to Herod's Temple for the comparison?"
+    },
+    {
+      "id": "timeline-uk",
+      "kind": "task",
+      "language": "uk",
+      "text": "Готую з дітьми недільної школи заняття «від Авраама до Ісуса». Хочу показати їм хронологію: хто за ким жив і приблизно коли, щоб вони побачили, де Мойсей, де Давид, а де Ісус.",
+      "queries": [
+        "хронологія біблії",
+        "хронологія подій в біблії",
+        "хронологія біблійних подій",
+        "біблійна хронологія",
+        "хронология библии по годам"
+      ],
+      "landing": "/uk/timeline",
+      "fits": [
+        "natalia",
+        "viktor",
+        "sofiia"
+      ],
+      "checks": "The chronology timeline in its new design (TSK-1215, PRB-1383): are its eras and events named in Ukrainian, can a Sunday-school teacher find Abraham, Moses, David and Jesus on it and read their dates, does she understand how years before Christ are written and how uncertain they are, can she move along it with a mouse, and does a click lead to the person's or the event's page?"
+    },
+    {
+      "id": "expert-pronouns-records",
+      "kind": "task",
+      "language": "uk",
+      "text": "Як експертка перевір нове в читанні Старого Завіту. 1) Займенники: у Рут 1 і Буття 22 відкрий картки слів «він», «вона», «його», «їй», «їм» тощо і звір, чи рядок «Вказує на» називає саме ту особу, про яку йдеться у вірші, і чи картка гебрейського слова з займенниковим суфіксом каже, що на особу вказує суфікс. 2) Слово з двома записами: у Псалмі 87:4, Ісаї 51:9, Йова 9:13 і в Псалмі 89 (вірш про розтрощеного Рагава) відкрий картку слова «Рагав» і звір, де це Єгипет, а де морська істота, і чи її не сплутано з Рахав з Єрихону. 3) Сторінки істот (Левіятан, Рагав, Реем, Бегемот): чи грецька назва з Септуаґінти і назви в перекладах відповідають віршам. Кожну помилку запиши з адресою сторінки, тим, що показано, і тим, як має бути.",
+      "queries": [],
+      "landing": "/uk/read/ruth/1",
+      "fits": [
+        "iryna"
+      ],
+      "checks": "Data QA on what came on 2026-11-16: the Old Testament pronoun lines (TSK-0355, PRB-1727: «Вказує на →», «Its suffix refers to»), the word that carries two records (Rahab in Ps 87:4 is both the sea creature and Egypt), the creature records' Septuagint names (δράκων, κῆτος, μονόκερως) and their renderings lists, and whether any of them confuses the creature Rahab with the woman of Jericho."
     }
   ]
 }
