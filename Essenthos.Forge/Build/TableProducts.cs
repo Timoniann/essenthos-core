@@ -7,6 +7,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 using Essenthos.Core.StepBible;
 using Essenthos.Core.Strong;
@@ -63,7 +64,8 @@ internal static partial class TableProducts
         new("geez_lexicon_entry", ["id", "entry", "headword", "forms", "consonants", "latin", "greek", "source"], ["Dillmann"], [], GeezRows),
         new("commentary_entry",
             ["id", "commentary", "source", "book", "first_chapter", "first_verse", "last_chapter", "last_verse", "sequence", "body"],
-            [.. CommentaryWorks.All.Select(w => $"{CommentaryReader.Folder}/{w.Module}")], [], CommentaryRows),
+            [.. CommentaryWorks.All.Select(w => $"{CommentaryReader.Folder}/{w.Module}")], [.. ProductText.Products(LopukhinReader.Synodal)],
+            CommentaryRows),
     ];
 
     private const string StrongHebrew = "Strong/StrongHebrew.xml";
@@ -253,7 +255,9 @@ internal static partial class TableProducts
     private static Rows CommentaryRows(ProductStore store)
     {
         var unread = new Dictionary<string, int>(StringComparer.Ordinal);
-        var rows = CommentaryWorks.All.SelectMany(work => CommentaryReader.Read(store.ResourcesPath, work, unread)).ToList();
+        var rows = CommentaryWorks.All.SelectMany(work => work.Kind == CommentaryWorks.Format.FictionBook
+            ? LopukhinReader.Read(store, work, unread)
+            : CommentaryReader.Read(store.ResourcesPath, work, unread)).ToList();
         return new(Numbered(rows.Select(r => new[]
             {
                 r.Commentary, r.Source, Int(r.Book), Int(r.FirstChapter), Int(r.FirstVerse), Int(r.LastChapter), Int(r.LastVerse), Int(r.Sequence), r.Body,

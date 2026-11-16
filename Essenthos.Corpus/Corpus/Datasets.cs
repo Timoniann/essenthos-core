@@ -325,6 +325,18 @@ public static class Datasets
             + "the passage it reflects on.",
             CommentaryWorks.RiegerSource),
 
+        // Public domain by age (Saint Petersburg 1904-1913, every author named in it dead by 1944); the typed text states no
+        // terms and carries no right of its own (Resources/Commentaries/LICENCE.md).
+        new("lopukhin", "Толковая Библия, или Комментарий на все книги Священного Писания Ветхого и Нового Завета",
+            "А. П. Лопухин и его преемники, Санкт-Петербург 1904-1913; распознавание Олеся Маслова, вычитка Игорь Грушин, "
+            + "вёрстка Владимир Шнейдер, по собранию Christian Classics Ethereal Library",
+            "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://www.ccel.org/contrib/ru/xml/index.html",
+            "A comment in Russian beside every passage of the Bible and the Synodal's further books, written over the "
+            + "verses it explains, with an introduction to each book and an outline of each chapter.",
+            CommentaryWorks.LopukhinSource),
+
         new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",
