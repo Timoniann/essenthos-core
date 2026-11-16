@@ -1,0 +1,19 @@
+# producer   by hand: the words that name the seraphim of Isaiah's vision, apart from the burning serpents, applied by forge owner-rows
+# by         Essenthos: each word read against its verse in BHSA, the Septuagint (GRCBRENT), the Vulgate (VULGCLEM) and the Ge'ez (GEEZ81) by claude-opus-5-5 on 2026-11-16, on the project owner's word of 2026-11-16 that the burning serpents and the heavenly seraphim are two records
+# One row per settled word, applied by forge owner-rows; 'why' is the reading the row rests on. The seraphim are named where a witness names the heavenly beings; the Ge'ez ሱራፊን of EZK 21:21 and HOS 3:4 renders the teraphim, household images, and is left unnamed.
+entry	product	op	at	record	from	role	strong	label	why
+PRB-1729	names/BHSA	add	23.6:2.1	seraphim	\N	name	H8314	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim
+PRB-1729	names/BHSA	add	23.6:6.7	seraphim	\N	name	H8314	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim
+PRB-1729	names/GRCBRENT	add	23.6:2.2	seraphim	\N	name	\N	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim; the Septuagint σεραφίμ
+PRB-1729	names/GRCBRENT	add	23.6:6.7	seraphim	\N	name	\N	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim; the Septuagint σεραφίμ
+PRB-1729	names/VULGCLEM	add	23.6:2.1	seraphim	\N	name	\N	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim; the Vulgate Seraphim
+PRB-1729	names/VULGCLEM	add	23.6:6.7	seraphim	\N	name	\N	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim; the Vulgate seraphim
+PRB-1729	names/GEEZ81	add	23.6:2.1	seraphim	\N	name	\N	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim; the Ge'ez ሱራፌም
+PRB-1729	names/GEEZ81	add	23.6:6.4	seraphim	\N	name	\N	\N	שְׂרָפִים of Isaiah's vision, standing above the Lord (ISA 6:2, 6): the heavenly seraphim; the Ge'ez ሱራፌም
+PRB-1729	names/GEEZ81	add	1.3:24.8	seraphim	\N	name	\N	\N	the Ge'ez names the seraphim, ሱራፌል, beside the cherubim whom God set before the garden (GEN 3:24), where the Hebrew names the cherubim alone
+PRB-1729	names/GEEZ81	add	85.61:10.11	seraphim	\N	name	\N	\N	the Ge'ez names the seraphim, ሱራፌል, beside the cherubim and the ophanim among the powers of heaven (1 Enoch 61:10)
+PRB-1729	names/GEEZ81	add	85.71:7.3	seraphim	\N	name	\N	\N	the Ge'ez names the seraphim, ሱራፌል, beside the cherubim and the ophanim around the throne, who do not sleep (1 Enoch 71:7)
+PRB-1729	names/GEEZ81	add	89.4:5.20	seraphim	\N	name	\N	\N	the Ge'ez names the seraphim, ሱራፌል, beside the cherubim, spreading their wings and praising God (3 Meqabyan 4:5)
+PRB-1729	names/GEEZ81	add	89.4:6.15	seraphim	\N	name	\N	\N	the Ge'ez names the seraphim, ሱራፌል, beside the cherubim, spreading their wings and praising God (3 Meqabyan 4:6)
+PRB-1729	names/GEEZ81	add	90.9:1.46	seraphim	\N	name	\N	\N	the voice of the seraphim, ዘሱራፌል, in Jeremiah's prayer beside the incense of the cherubim (4 Baruch 9:1)
+PRB-1729	names/VULGCLEM	add	5.8:15.15	saraph-serpents	\N	name	\N	\N	שָׂרָף of the wilderness serpents (DEU 8:15): the Vulgate's serpens flatu adurens, burning as its ignitos serpentes of NUM 21:6

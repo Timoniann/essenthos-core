@@ -69,7 +69,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
 
     /// <summary>The kinds of record that have a page a reader could be sent from. Words for God are not names.</summary>
     private static readonly EntityKind[] Kinds =
-        [EntityKind.Person, EntityKind.Place, EntityKind.People, EntityKind.Object, EntityKind.Observance, EntityKind.Title];
+        [EntityKind.Person, EntityKind.Place, EntityKind.People, EntityKind.Object, EntityKind.Observance, EntityKind.Title, EntityKind.Being];
 
     private const int MostReferencesShown = 6;
 

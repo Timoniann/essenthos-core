@@ -83,6 +83,12 @@ internal sealed class WikidataItem
 
     public bool HasArticle => Articles.Count > 0;
 
+    /// <summary>
+    /// Whether the item is a man or a woman: Wikidata sorts a god, Leviathan and Behemoth among the
+    /// persons too, and only the class tells Baal the god from Baal the Reubenite.
+    /// </summary>
+    public bool IsAHuman => Classes.Any(Humans.Contains);
+
     /// <summary>people, tribe, historical ethnic group, ethnic group, Iranian peoples, extinct human group.</summary>
     private static readonly HashSet<string> Peoples = new(StringComparer.Ordinal)
     {
@@ -94,6 +100,9 @@ internal sealed class WikidataItem
     {
         "Q12404340", "Q3024240", "Q1620908", "Q6256", "Q82794",
     };
+
+    /// <summary>human, human biblical figure.</summary>
+    private static readonly HashSet<string> Humans = new(StringComparer.Ordinal) { "Q5", "Q20643955" };
 
     private static readonly HashSet<string> Supernaturals = new(StringComparer.Ordinal)
     {

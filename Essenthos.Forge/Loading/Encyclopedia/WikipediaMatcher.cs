@@ -353,6 +353,7 @@ internal sealed class WikipediaMatcher
             EntityKind.Place => item.Kind == WikidataKind.Place,
             EntityKind.People => item.Kind == WikidataKind.Other,
             EntityKind.Title => item.Kind is WikidataKind.Other or WikidataKind.Person,
+            EntityKind.Being => item.Kind == WikidataKind.Other || (item.Kind == WikidataKind.Person && !item.IsAHuman),
             _ => item.Kind == WikidataKind.Other,
         };
 
