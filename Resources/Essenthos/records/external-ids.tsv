@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
 # The ids the datasets give our records. The only place a dataset's id of a record lives; a dataset never makes a record.
 slug	dataset	external_id	relation	note
 aaron	bibledata	person:Aaron_1	same-as	\N
@@ -2455,7 +2455,7 @@ kedesh-3	openbible	adb5ae4	same-as	\N
 kedesh-4	openbible	ad74690	same-as	\N
 kedeshnaphtali	openbible	a48191b	same-as	\N
 kehelathah	openbible	a32d25a	same-as	\N
-keilah	bibledata	person:Keilah_1	same-as	\N
+keilah-2	bibledata	person:Keilah_1	folded	the id of keilah, folded into this record
 keilah-2	openbible	ad9df93	same-as	\N
 kelaiah	bibledata	person:Kelaiah_1	same-as	\N
 kelita	bibledata	person:Kelita_1	same-as	\N

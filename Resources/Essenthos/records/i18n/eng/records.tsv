@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
 # A record's line under the name, its notes and what the place is today, in English.
 slug	line	notes	modern
 aaron	brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)	\N	\N
@@ -121,6 +121,7 @@ adonikam	his sons (descendants) returned to Judah after captivity (EZR 2:13)	\N	
 adoniram	over the men subject to forced labor (1KI 4:6)	\N	\N
 adonizedek	King of Jerusalem during the time of the conquest of the Land (JOS 10:1)	King of Jerusalem	\N
 adoraim	\N	\N	Dura
+adrammelech-god	a god of Sepharvaim named in the text, to whom its people burned their children (2KI 17:31); not the son of Sennacherib	\N	\N
 adramyttium	\N	\N	Oren
 adriaticsea	\N	\N	Adriatic and Ionian Seas
 adriel	the Meholathite (1SA 18:19)	\N	\N
@@ -309,6 +310,7 @@ anaiah	stood on Ezra's right hand as he read from the Law (NEH 8:4),	named on th
 anakim	patronymic of H6061, as Strong's Dictionary derives it	\N	\N
 anamim	Anamim, a son of Mizraim and his descendants, with their country, as Strong's Dictionary describes them	\N	\N
 anamim-son-of-mizraim	son of Mizraim (GEN 10:13)	\N	\N
+anammelech	a god of Sepharvaim named in the text, to whom its people burned their children (2KI 17:31)	\N	\N
 anan	non-Levite leader (NEH 10:14)	named on the sealed document of NEH 10:1-27 (NEH 10:26)	\N
 anani	son of Elioenai (1CH 3:24)	\N	\N
 ananiah-2	\N	\N	Al Eizariya
@@ -397,6 +399,7 @@ arpad	\N	\N	Tell Rifat
 arsinoe	\N	\N	in the region between Maghfar and Lake Timsah
 artaxerxes	King of Persia (EZR 4:7)	\N	\N
 artemas	whom Paul thought to send to Titus in Crete (TIT 3:12)	\N	\N
+artemis	the goddess of the Ephesians named in the text, whose silver shrines Demetrius made (ACT 19:24-35)	\N	\N
 arubboth	\N	\N	Khirbet el Hamam
 arumah	\N	\N	Khirbet Urmah
 arvad-2	\N	\N	Arwad
@@ -424,8 +427,10 @@ ashbel	son of Benjamin (GEN 46:21)	from the list of "sons of Israel" who "went t
 ashbelites	patronymic of H788, as Strong's Dictionary derives it	\N	\N
 ashdod	\N	\N	Tel Ashdod
 ashdodites	patrial of H795, as Strong's Dictionary derives it	\N	\N
+asherah	a goddess named in the text, whose prophets ate at Jezebel's table and for whom Maachah made an image (1KI 18:19; 15:13)	\N	\N
 asherites	the tribe descended from Asher, Jacob's eighth son	\N	\N
 ashhur	son of Hezron (1CH 2:24)	\N	\N
+ashima	a god the men of Hamath made in Samaria, named in the text (2KI 17:30)	\N	\N
 ashkelon	\N	\N	Tel Ashkelon
 ashnah	Islin	\N	Islin
 ashnah-2	Idhna	\N	Idhna
@@ -433,6 +438,7 @@ ashpenaz	the chief of Nebuchadnezzar's officials (DAN 1:3)	\N	\N
 ashtaroth	\N	\N	Tell Ashtara
 ashterathites	patrial of H6252, as Strong's Dictionary derives it	\N	\N
 ashterothkarnaim	\N	First mention: GEN 14:5	Tell Ashtara
+ashtoreth	the goddess of the Zidonians named in the text, whom Solomon followed (1KI 11:5, 33), and the Ashtaroth Israel served and put away (JDG 2:13; 1SA 7:3-4)	\N	\N
 ashurites-h805	an Ashurite (collectively) or inhabitant of Ashur, a district in Palestine, as Strong's Dictionary describes them	\N	\N
 ashvath	son of Japhlet (1CH 7:33)	\N	\N
 asiel	??? (1CH 4:35), Simeonite (1CH 4:24)	\N	\N
@@ -541,7 +547,11 @@ azzur	non-Levite leader (NEH 10:14)	named on the sealed document of NEH 10:1-27 
 azzur-2	father of Hananiah (JER 28:1)	\N	\N
 baal	son of Reaiah (1CH 5:5), Reubenite (1CH 5:3)	\N	\N
 baal-2	son of Jeiel and Maacah (1CH 8:30)	\N	\N
+baal-berith	a god named in the text, whom Israel made its god after Gideon died and from whose house Shechem gave silver to Abimelech (JDG 8:33; 9:4)	\N	\N
+baal-god	a god of Canaan named in the text, served in Israel, whose prophets Elijah faced on Carmel (1KI 18:19-40)	\N	\N
+baal-peor-god	a god of Moab named in the text, to whom Israel joined itself at Shittim (NUM 25:1-5; PSA 106:28)	\N	\N
 baal-temple-jerusalem	House of Baal in the Jehoiada narrative	\N	\N
+baal-zebub	the god of Ekron named in the text, whom Ahaziah sent to ask whether he would recover (2KI 1:2-16)	\N	\N
 baalah	Tulul el Medbah	\N	Tulul el Medbah
 baalah-2	another name for Kiriath-jearim (Deir el Azar)	\N	\N
 baalath	Al Maghar	\N	Al Maghar
@@ -634,6 +644,8 @@ beerlahairoi	\N	First mention: GEN 16:14	Ain Muweileh or possibly Haluza
 beeroth	\N	\N	Khirbet el Burj
 beerothites	patrial of H881, as Strong's Dictionary derives it	\N	\N
 beersheba-2	Tel Beer Sheva	\N	Tel Beer Sheva
+behemoth	a creature named in the text, which God made as he made Job, that eats grass as an ox (JOB 40:15)	\N	\N
+bel	a god of Babylon named in the text, who bows down when the city falls (ISA 46:1; JER 50:2)	\N	\N
 bela	King of Edom, his city was Dinhabah (GEN 36:32)	\N	\N
 bela-2	son of Benjamin (GEN 46:21)	from the list of "sons of Israel" who "went to Egypt" (GEN 46:8-27), the Belaites (NUM 26:38)	\N
 bela-3	son of Azaz (1CH 5:8), Reubenite (1CH 5:3)	\N	\N
@@ -863,6 +875,7 @@ chelal	descendant of Pahath-moab who had married a foreign wife (EZR 10:30)	\N	\
 chelub-father-of-ezri	father of Ezri, who was over the tillage of the ground for King David (1CH 27:26)	Whether he is the man of that name in 1CH 4:11 the text does not say.	\N
 chelubai	son of Hezron, son of Perez (1CH 2:9)	\N	\N
 cheluhi	descendant of Bani who had married a foreign wife (EZR 10:35)	\N	\N
+chemosh	the god of Moab named in the text, whose people are called the people of Chemosh (NUM 21:29; 1KI 11:7)	\N	\N
 chenaanah	father of Zedekiah (1KI 22:11, 2CH 18:10)	\N	\N
 chenaanah-2	son of Bilhan (1CH 7:10)	\N	\N
 chenani	stood on the Levites platform (NEH 9:4)	\N	\N
@@ -886,6 +899,7 @@ chinnereth	\N	\N	Tel Kinrot
 chislon	father of Elidad (NUM 34:21)	\N	\N
 chislothtabor	\N	\N	Iksal
 chitlish	\N	\N	Khirbet Umm al Baqar
+chiun	a god named in the text, whose image Israel carried (AMO 5:26); Stephen, quoting the verse in Greek, calls it Remphan (ACT 7:43)	\N	\N
 chloe	by those of whose house Paul heard of contentions in Corinth (1CO 1:11)	\N	\N
 chorazin	\N	\N	Khirbet Karraza
 cityofdestruction	\N	\N	Tell el Yahudiye
@@ -916,6 +930,7 @@ cuth	\N	\N	Tell Ibrahim
 cyrus	King of Persia (2CH 36:22)	\N	\N
 dabbesheth	\N	\N	Tel Shem
 daberath	\N	\N	Horvat Devora
+dagon	the god of the Philistines named in the text, whose image fell before the ark in Ashdod (1SA 5:2-5)	\N	\N
 dalmanutha	\N	\N	Tabgha
 dalphon	son of Haman (EST 9:7)	\N	\N
 damaris	a woman of Athens who believed after Paul spoke at the Areopagus (ACT 17:34)	\N	\N
@@ -968,6 +983,8 @@ dimonah	\N	\N	Khirbet edh Dheiba
 dinah	daughter of Jacob (GEN 30:21), daughter of Leah	\N	\N
 dinhabah	\N	First mention: GEN 36:32	Uncertain, possibly Khirbet el Muhatta or Dannea
 dionysius	the Areopagite, who clave to Paul and believed (ACT 17:34)	\N	\N
+dionysus	a god named in the text, in whose procession the Jews were made to walk crowned with ivy (2MA 6:7)	\N	\N
+dioscuri	twin gods named in the text, the sign of the ship of Alexandria that took Paul from Malta (ACT 28:11)	\N	\N
 diotrephes	who loveth to have the preeminence and receiveth not the elder (3JN 1:9)	\N	\N
 dishan	son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)	\N	\N
 dishon	son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)	\N	\N
@@ -984,6 +1001,7 @@ doeg	the Edomite (1SA 21:7)	\N	\N
 dophkah	\N	\N	Serabit el Khadim
 dor	\N	\N	Tel Dor
 dothan	\N	First mention: GEN 37:17	Tel Dothan
+dragon-of-babylon	a great dragon named in the text, which the Babylonians worshipped and Daniel killed (BEL 1:23-27)	\N	\N
 dragonspring	\N	\N	Gihon Spring
 dumah-2	Deir ed Domeh	\N	Deir ed Domeh
 dumah-3	Dumat al Jandal	\N	Dumat al Jandal
@@ -1318,6 +1336,7 @@ gabbatha	\N	\N	within 500 m of Herod’s palace
 gabriel	instructed to give Daniel an understanding of a vision (DAN 8:16)	Gabriel is named four times. In Daniel he is sent to make Daniel understand the vision (DAN 8:16), and 'the man Gabriel' comes to him about the time of the evening oblation (DAN 9:21). In Luke he is the angel of the Lord who appeared to Zacharias (LUK 1:11) and said 'I am Gabriel, that stand in the presence of God' (LUK 1:19), and the angel sent from God to Mary in Nazareth (LUK 1:26). Tradition counts him among the archangels; the text calls him an angel, and the only archangel it names is Michael (JUD 1:9).	\N
 gad	seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid	\N	\N
 gad-2	the prophet (1SA 22:5), the seer (1CH 21:9, 1CH 29:29)	\N	\N
+gad-god	a god named in the text, for whom those who forsook the LORD set a table (ISA 65:11); not the son of Jacob	\N	\N
 gadara	\N	\N	Umm Qais
 gaddiel	1 of the 12 spies- from Zebulun (NUM 13:10)	1 of 12 spies- from Zebulun	\N
 gadi	father of Menachem (2KI 15:14)	\N	\N
@@ -1712,11 +1731,13 @@ hepher-the-mecherathite	the Mecherathite, one of David's warriors (1CH 11:36)	In
 hepherites	patronymic of H2660, as Strong's Dictionary derives it	\N	\N
 heracleopolismagna	\N	\N	Ihnasiyyah al Madinah
 heracleopolisparva	\N	\N	Tell Belim
+heracles	a god named in the text, to whose sacrifice at Tyre Jason sent silver (2MA 4:18-20)	\N	\N
 heres	the ascent by which Gideon came back from battle; the King James says the sun (JDG 8:13)	\N	in the Transjordan
 heresh	counted among the Levites carried into exile (1CH 9:15)	\N	\N
 hereth	\N	\N	Kharas
 hermas	greeted by Paul with the brethren who are with him (ROM 16:14)	\N	\N
 hermes	greeted by Paul with the brethren who are with him (ROM 16:14)	\N	\N
+hermes-god	a god named in the text, whose name the people of Lystra gave to Paul (ACT 14:12); not Hermes of Rome	\N	\N
 herod	the king (MAT 2:1)	Herod I, founder of the Herodian dynasty, son of Antipater	\N
 herod-2	the tetrarch (MAT 14:1)	Herod Antipas, tetrarch of Gailiea and Perea	\N
 herod-3	the king of Judea (ACT 12:1)	Herod Agrippa I	\N
@@ -2085,7 +2106,7 @@ jehielites	patronymic of H3171, as Strong's Dictionary derives it	\N	\N
 jehoaddah	son of Ahaz (1CH 8:36)	\N	\N
 jehoaddin	of Jerusalem, mother of Amaziah (2KI 14:2)	\N	\N
 jehoahaz	King of Israel, son of Jehu (2KI 10:35)	\N	\N
-jehoahaz-2	also called Shallum (1CH 3:15; JER 22:11)	He did evil in the sight of the LORD (2KI 23:32)	\N
+jehoahaz-2	son of Josiah who reigned three months over Judah after his father, also called Shallum (2KI 23:30-31; 1CH 3:15; JER 22:11)	He did evil in the sight of the LORD (2KI 23:32)	\N
 jehohanan	in his house, Ezra mourned over the unfaithfulness of Israel (EZR 10:6)	Levite based on NEH 12:23	\N
 jehohanan-10	Eldest son of King Josiah	\N	\N
 jehohanan-11	Post-exilic prince of the line of David	\N	\N
@@ -2453,8 +2474,7 @@ kedesh-3	Tell Abu Qedeis	\N	Tell Abu Qedeis
 kedesh-4	Khirbet Qedish	\N	Khirbet Qedish
 kedeshnaphtali	\N	\N	Khirbet Qedish
 kehelathah	\N	\N	Kuntillet Ajrud
-keilah	the Garmite, grandson of Hodiah (1CH 4:19)	\N	\N
-keilah-2	\N	\N	Khirbet Qila
+keilah-2	\N	Among the sons of the wife of Hodiah the Chronicler names 'the father of Keilah the Garmite' (1CH 4:19): the father, that is the founder, of this town, as 'the father of' names the founders of Bethlehem, Tekoa and Eshtemoa in the same chapter (1CH 4:4-5, 17). The Septuagint and the Synodal read Garmi as a name of its own.	Khirbet Qila
 kelita	explained the law to the people (NEH 8:7)	named on the sealed document of NEH 10:1-27 (NEH 10:10)	\N
 kemuel	son of Nahor (GEN 22:20-21)	\N	\N
 kemuel-2	the leader of the tribe of Ephraim (NUM 34:24) to apportion the Land (NUM 34:17)	leader of Ephraim apportioning the Land (NUM 34:24)	\N
@@ -2542,6 +2562,7 @@ levi	third-born son of Jacob (GEN 29:34), son of Leah	\N	\N
 levi-2	in the lineage of Messiah (LUK 3:24)	\N	\N
 levi-3	in the lineage of Messiah (LUK 3:29)	\N	\N
 levi-son-of-alphaeus	son of Alphaeus, a publican whom Jesus called from the receipt of custom (MRK 2:14, LUK 5:27-29)	Matthew 9:9 tells the same calling of a publican named Matthew. Whether Levi is Matthew the text does not say.	\N
+leviathan	a creature of the sea named in the text, which God made to play in it and will punish with his sword (PSA 104:26; ISA 27:1)	\N	\N
 levites	the tribe descended from Levi, Jacob's third son, set apart to the sanctuary	Strong's King James list spells the gentilic Leviite, which is a slip of the printed dictionary rather than a name anybody uses.	\N
 libnah	Tell Bornat	\N	Tell Bornat
 libnah-2	along Wadi el Beidha	\N	along Wadi el Beidha
@@ -2549,6 +2570,7 @@ libni	son of Gershon (EXO 6:17)	the Libnites (NUM 26:58)	\N
 libni-2	son of Mahli (1CH6:29)	Mahlites (from Merari, son of Levi)	\N
 libnites	patronymic of H3845, as Strong's Dictionary derives it	\N	\N
 lihki	son of Shemida (1CH 7:19)	\N	\N
+lilith	a creature of the night named in the text, that rests in the ruins of Edom (ISA 34:14)	\N	\N
 linus	who greets Timothy in Paul's last letter (2TI 4:21)	\N	\N
 loammi	son of Gomer (HOS 1:8)	\N	\N
 lodebar	\N	\N	Tel Dover
@@ -2757,6 +2779,7 @@ melchi-2	in the lineage of Messiah (LUK 3:28)	\N	\N
 melech	son of Micah (1CH 8:35)	\N	\N
 memucan	one of the seven princes of Persia and Media (EST 1:14)	\N	\N
 menachem	King of Israel (2KI 15:14)	\N	\N
+meni	a god named in the text, for whom those who forsook the LORD poured a drink offering (ISA 65:11)	\N	\N
 menorah	the seven-lamp lampstand of beaten gold that stood in the tabernacle's holy place (EXO 25:31-40)	Moses was told to make it of a talent of pure gold, beaten work: a shaft with six branches, three on each side, with bowls made like almonds, knops and flowers, and seven lamps (EXO 25:31-39); Bezaleel made it so (EXO 37:17-24). It stood in the tent of the congregation on the south side, over against the table, outside the veil (EXO 26:35; 40:24-25). Aaron was to keep its lamps burning before the LORD from evening to morning with pure beaten olive oil (EXO 27:20-21; LEV 24:1-4), lighting them so that they gave light in front of it (NUM 8:1-4). On the march the Kohathites carried it wrapped in a cloth of blue and a covering of badgers' skins (NUM 4:9-10). The text does not say what became of it; Solomon made ten lampstands of gold for the temple (1KI 7:49), and Hebrews names the lampstand first among the furnishings of the holy place (HEB 9:2).	\N
 meonothai	son of Othniel (1CH 4:13)	\N	\N
 mephaath	\N	\N	Umm ar Rasas
@@ -2776,6 +2799,7 @@ meremoth-3	Priest listed among those who came up with Zerubbabel	\N	\N
 meres	one of the seven princes of Persia and Media (EST 1:14)	\N	\N
 meribah	another name for Kadesh (Ain el Qudeirat)	\N	\N
 meribah-2	within 500 m of Rephidim	\N	within 500 m of Rephidim
+merodach	a god of Babylon named in the text, broken in pieces when Babylon is taken (JER 50:2)	\N	\N
 merom	\N	\N	Tell el Khirbeh
 meronoth	\N	\N	within 6 km of Mizpah (Tell en Nasbeh)
 meronothites	a Meronothite, or inhabitant of some (otherwise unknown) Meronoth., as Strong's Dictionary describes them	\N	\N
@@ -2868,6 +2892,7 @@ mikneiah	second rank Levite, gatekeeper (1CH 15:18)	\N	\N
 milalai	Levite with music instruments (NEH 12:36)	\N	\N
 milcah	Nahor's wife (and niece), the daughter of Haran (GEN 11:29)	\N	\N
 milcah-2	daughter of Zelophehad (NUM 26:33)	\N	\N
+milcom	the god of the Ammonites named in the text, whom Solomon followed and Josiah defiled the high place of (1KI 11:5; 2KI 23:13)	\N	\N
 millo	\N	\N	in Jerusalem
 miniamin	distributed portions to their brothers (2CH 31:15)	\N	\N
 miniamin-2	ancestor of Piltai (NEH 12:17)	As "priests" (NEH 12:12), descendants of Aaron	\N
@@ -2906,6 +2931,7 @@ moab-2	\N	First mention: GEN 36:35	Area east of the Dead Sea
 moabites	patronymic of H4124, as Strong's Dictionary derives it	\N	\N
 moadiah	ancestor of Piltai (NEH 12:17)	As "priests" (NEH 12:12), descendants of Aaron	\N
 moladah	\N	\N	Khirbet el Waten
+molech	a god named in the text, to whom children were made to pass through the fire (LEV 18:21; 2KI 23:10)	\N	\N
 molid	son of Abishur (1CH 2:29)	\N	\N
 morashthites	patrial of H4182, as Strong's Dictionary derives it	\N	\N
 mordecai	returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)	\N	\N
@@ -2984,6 +3010,7 @@ nahum	the Elkoshite, prophet of the book of Nahum (NAH 1:1)	\N	\N
 nahum-2	in the lineage of Messiah (LUK 3:25)	\N	\N
 nain	\N	\N	Nein
 naioth	\N	\N	within 2 km of Ramah (Al Ram)
+nanea	a goddess of Persia named in the text, in whose temple Antiochus was killed (2MA 1:13-15)	\N	\N
 naomi	wife of Elimelech (RUT 1:2) and mother-in-law of Ruth (RUT 1:4)	\N	\N
 naphothdor	\N	\N	region around Dor
 naphtalites	the tribe descended from Naphtali, Jacob's sixth son	\N	\N
@@ -3009,6 +3036,7 @@ neballat	\N	\N	Beit Nabala
 nebat	father of Jeroboam (1KI 11:26)	Jeroboam his son is called an Ephrathite of Zereda (1KI 11:26); of what tribe Nebat himself was the text does not say.	\N
 nebo-2	Khirbet al Mukhayyat	\N	Khirbet al Mukhayyat
 nebo-3	Nuba	A town of the return: its children came back from the captivity (EZR 2:29), Nehemiah calls it the other Nebo (NEH 7:33), and men of its families had married foreign wives (EZR 10:43).	Nuba
+nebo-god	a god of Babylon named in the text, carried away with Bel (ISA 46:1); not the mountain or the towns of that name	\N	\N
 nebuchadnezzar	King of Babylon (2KI 23:37)	\N	\N
 nebuchadnezzars-dream-image	the great image of gold, silver, brass, iron and clay that Nebuchadnezzar saw in his dream (DAN 2:31-35)	In the second year of his reign Nebuchadnezzar dreamed dreams, and his spirit was troubled (DAN 2:1). Daniel told him what he had seen: a great image, whose brightness was excellent and whose form was terrible, stood before him (DAN 2:31). Its head was of fine gold, its breast and arms of silver, its belly and thighs of brass, its legs of iron, and its feet part of iron and part of clay (DAN 2:32-33). A stone cut out without hands smote the image upon its feet and broke them to pieces; then the iron, the clay, the brass, the silver and the gold were broken together and became like the chaff of the summer threshing floors, the wind carried them away, and the stone became a great mountain and filled the whole earth (DAN 2:34-35). In the interpretation Daniel told the king, Thou art this head of gold (DAN 2:37-38); after him would arise another kingdom inferior to his, then a third of brass, and a fourth strong as iron, divided as the feet were part iron and part clay (DAN 2:39-43); and in the days of those kings the God of heaven would set up a kingdom that shall never be destroyed, as the stone broke the image in pieces (DAN 2:44-45). The text names none of the kingdoms after Nebuchadnezzar's. It is a different thing from the image of gold he set up in the plain of Dura (DAN 3:1), which the same word names.	\N
 nebuchadnezzars-image	the image of gold sixty cubits high set up in the plain of Dura (DAN 3:1)	Nebuchadnezzar made an image of gold sixty cubits high and six cubits broad and set it up in the plain of Dura in the province of Babylon (DAN 3:1). He gathered the princes, governors and officials of the provinces to its dedication (DAN 3:2-3). At the sound of the music all were to fall down and worship it, and whoever did not was to be cast into a burning fiery furnace (DAN 3:4-7). Shadrach, Meshach and Abednego refused, saying that even if their God did not deliver them they would not worship the golden image (DAN 3:12-18). It is a different thing from the great image of the king's dream in DAN 2:31-35, which the same word names.	\N
@@ -3034,6 +3062,7 @@ nephisim	forefather of a family of the Nethinims who returned from the captivity
 nephtoah	\N	\N	Lifta
 ner	\N	1 Samuel 14:50-51 makes Kish, Saul's father, and Ner, Abner's father, both sons of Abiel, so that Ner was Saul's uncle and Abner his cousin, and 1 Samuel 9:1 calls Kish the son of Abiel. 1 Chronicles 8:33 and 9:39 read 'Ner begat Kish, and Kish begat Saul', which makes Ner Saul's grandfather and Abner his uncle. The reading of 1 Samuel is the more natural one and is the one Josephus gives; Chronicles keeps the other, twice, and no way of reconciling the two can be shown.	\N
 nereus	greeted by Paul with his sister and the saints who are with them (ROM 16:15)	\N	\N
+nergal	a god the men of Cuth made in Samaria, named in the text (2KI 17:30)	\N	\N
 nergalsarezer-2	the Rab-mag [high official] (JER 39:3)	\N	\N
 neri	in the lineage of Messiah (LUK 3:27)	\N	\N
 neriah	father of Baruch (JER 32:12)	\N	\N
@@ -3059,6 +3088,7 @@ new-moon	the first day of each month, marked with trumpets and burnt offerings (
 newgate	\N	\N	in Jerusalem
 neziah	temple servant (EZR 2:54)	\N	\N
 nezib	\N	\N	Khirbet Beit Nesib esh Sharqiyyeh
+nibhaz	a god the Avites made in Samaria, named in the text (2KI 17:31)	\N	\N
 nibshan	\N	\N	Khirbet el Maqari
 nicanor	one of the seven chosen to serve the tables (ACT 6:5)	\N	\N
 nicodemus	a Pharisee and ruler of the Jews who came to Jesus by night (JHN 3:1-2) and brought myrrh and aloes for his burial (JHN 19:39)	\N	\N
@@ -3066,6 +3096,7 @@ nile	\N	First mention: GEN 15:18	Nile River
 nimrim	\N	\N	Wadi en Numeirah
 nimshi	[grand]father of Jehu, King of Israel (1KI 19:16, 2KI 9:2)	\N	\N
 nineveh	\N	First mention: GEN 10:11	Nineveh
+nisroch	the god of Sennacherib named in the text, in whose house his sons killed him (2KI 19:37; ISA 37:38)	\N	\N
 nisroch-temple	House of Nisroch	\N	\N
 noadiah	Levite present at the counting of the silver, gold, and utensils (EZR 8:33)	\N	\N
 noadiah-2	the prophetess who tried to frighten Nehemiah (NEH 6:14)	\N	\N
@@ -3282,6 +3313,7 @@ puteoli	\N	\N	Pozzuoli
 putiel	father of Eleazar's wife (EXO 6:25)	\N	\N
 puvvah	son of Issachar (GEN 46:13)	from the list of "sons of Israel" who "went to Egypt" (GEN 46:8-27), the Punites (NUM 26:23)	\N
 quartus	a brother who sends greetings to Rome (ROM 16:23)	\N	\N
+queen-of-heaven	a goddess named in the text, to whom the people of Judah made cakes and poured drink offerings (JER 7:18; 44:17-19)	\N	\N
 raamah-2	\N	\N	Rgm
 rab-mag	a title of a high Babylonian official, given with Nergal-sharezer's name when Jerusalem fell	An Akkadian title, rab mugi, of a high officer of the Babylonian court. It is written after Nergal-sharezer's name among the princes of the king of Babylon who sat in the middle gate when Jerusalem was taken (JER 39:3), and again in the list of those who released Jeremiah (JER 39:13).	\N
 rabbah	Amman	\N	Amman
@@ -3292,6 +3324,7 @@ rabshakeh	the title of a high Assyrian officer, whom Sennacherib sent to Jerusal
 rachel	daughter of Laban (GEN 29:10) and wife of Jacob (GEN 29:28)	\N	\N
 raddai	fifth-born son of Jesse (1CH 2:14)	\N	\N
 ragmat	\N	\N	Najran
+rahab-sea-monster	a creature named in the text that God smote when he stilled the sea (JOB 26:12; ISA 51:9); not the woman of Jericho	\N	\N
 rahabs-scarlet-cord	the line of scarlet thread Rahab bound in her window at Jericho as the sign agreed with the spies (JOS 2:18)	Rahab let the two spies down by a cord through her window, since her house was on the town wall (JOS 2:15). They told her to bind this line of scarlet thread in the window she had let them down by, and to gather her family into the house (JOS 2:18); anyone who went out would be responsible for his own blood (JOS 2:19). She agreed, sent them away, and bound the scarlet line in the window (JOS 2:21). The Hebrew word for the line, tiqvah, everywhere else means hope.	\N
 raham	son of Shema (1CH 2:44)	\N	\N
 rakkath	\N	\N	Tel Raqqat
@@ -3330,6 +3363,7 @@ redsea	the Red Sea that took the locusts, by which Israel camped after Elim (EXO
 redsea-2	Gulf of Suez	\N	Gulf of Suez
 redsea-3	Gulf of Aqaba	\N	Gulf of Aqaba
 reelaiah	returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Raamiah in NEH 7:7]	\N	\N
+reem	a horned creature named in the text, strong and not to be tamed (NUM 23:22; JOB 39:9-10)	\N	\N
 regem	son of Jahdai (1CH 2:47)	\N	\N
 regemmelech	emissary from Bethel seeking the favor of the LORD (ZEC 7:2)	\N	\N
 rehabiah	descendant of Eliezer (1CH 23:17)	\N	\N
@@ -3382,6 +3416,7 @@ riblah-2	Arbin	\N	Arbin
 rimmon-2	El Jai Cave	\N	El Jai Cave
 rimmon-3	Tel Halif	\N	Tel Halif
 rimmon-4	Rumana	\N	Rumana
+rimmon-god	a god of Damascus named in the text, in whose house Naaman's master bowed (2KI 5:18); not the man or the towns of that name	\N	\N
 rimmonperez	\N	\N	along Naqb al Biyar
 rinnah	son of Shimon (1CH 4:20)	\N	\N
 riphath	son of Gomer (GEN 10:3)	\N	\N
@@ -3430,6 +3465,7 @@ saparre	\N	\N	within 50 km of Nippur
 saph	among the descendants of Raphah ["the giant"?] (2SA 21:18)	\N	\N
 sarai	Abram's wife (11:29)	\N	\N
 saraph	son of Shelah, son of Judah (1CH 4:22)	\N	\N
+saraph-serpents	burning serpents named in the text, which bit Israel in the wilderness, and the flying saraph of the prophets (NUM 21:6; ISA 30:6)	\N	\N
 sardites	a Seredite (collectively) or descendants of Sered, as Strong's Dictionary describes them	\N	\N
 sargon	king of Assyria (ISA 20:1)	\N	\N
 sarid	\N	\N	Tel Shadud
@@ -3451,6 +3487,7 @@ segub	youngest son of Hiel who died when his father rebuilt Jericho (1KI 16:34)	
 segub-2	son of Hezron (1CH 2:21), father of Jair (1CH 2:22)	\N	\N
 seir	the Horite (dwelt near Mt. Hor- GEN 36:20)	\N	\N
 seirah	\N	\N	in the hills of Ephraim
+seirim	hairy beings named in the text, to which Israel sacrificed and which dance in the ruins of Babylon (LEV 17:7; ISA 13:21)	\N	\N
 sela	within 30 km of Akrabbim	\N	within 30 km of Akrabbim
 sela-2	Sela	\N	\N
 sela-3	the Sela from which the lamb is sent to the ruler of the land (ISA 16:1)	\N	\N
@@ -3831,6 +3868,7 @@ steps-of-ahaz	the steps (the King James 'dial') on which the shadow went back te
 suah	son of Zophah (1CH 7:36)	\N	\N
 succoth	\N	First mention: GEN 33:17	Tell Deir Alla
 succoth-2	\N	First mention: EXO 12:37	possibly Tell el Maskhuta or Jabal Maryam
+succoth-benoth	a god the men of Babylon made in Samaria, named in the text (2KI 17:30)	\N	\N
 suchathites	a Sukathite or descendant of an unknown Israelite named Sukah, as Strong's Dictionary describes them	\N	\N
 sukkiims	a Sukkite, or inhabitant of some place near Egypt (i.e. hut-dwellers), as Strong's Dictionary describes them	\N	\N
 suph	\N	\N	Sufeh
@@ -3878,7 +3916,9 @@ tamar-2	Absalom's sister, daughter of David (2SA 13:1)	A king's daughter, she wo
 tamar-3	daughter of Absalom (2SA 14:27)	\N	\N
 tamar-4	the town Solomon built, which the Hebrew writes Tamar where the King James prints Tadmor (1KI 9:18)	\N	En Hazeva
 tamar-5	En Hazeva	\N	En Hazeva
+tammuz	a god named in the text, for whom women sat weeping at the north gate of the house of the LORD (EZK 8:14)	\N	\N
 tanhumeth	the Netophathite, father of Seraiah, one of the captains of Judean forces (2KI 25:23)	\N	\N
+tannin	a creature named in the text, of the sea or a serpent: the great tannin God created, the serpent Aaron's rod became (GEN 1:21; EXO 7:10)	\N	\N
 taphath	daughter of Solomon, wife of Ben-abinadab (1KI 4:11)	\N	\N
 tappuah-2	Tell Abu Zarad	\N	Tell Abu Zarad
 tappuah-3	Bayt Nattif	\N	Bayt Nattif
@@ -3889,6 +3929,7 @@ tarshish-2	son of Bilhan (1CH 7:10)	\N	\N
 tarshish-3	one of the seven princes of Persia and Media (EST 1:14)	\N	\N
 tarshish-4	Sardinia	\N	Sardinia
 tarshish-5	whose ships Solomon and Jehoshaphat sent out (1KI 10:22; 1KI 22:48)	\N	\N
+tartak	a god the Avites made in Samaria, named in the text (2KI 17:31)	\N	\N
 tartan	the title of the Assyrian commander-in-chief, sent by Sennacherib (2KI 18:17) and by Sargon (ISA 20:1); the text gives no name	Akkadian turtanu, the commander of the army and the second man of the Assyrian state. The text gives the title twice without a name: Sennacherib's Tartan comes up to Jerusalem with the Rabshakeh (2KI 18:17), and Sargon's comes to Ashdod and takes it (ISA 20:1). Two reigns apart, they are unlikely to be one man.	\N
 tartessos	\N	\N	Huelva
 tattenai	governor who opposed Israel rebuilding the Temple (EZR 5:3)	\N	\N
@@ -3984,6 +4025,7 @@ troas	\N	\N	Alexandria Troas
 trogyllium	\N	\N	Cape Mycale
 tryphaena	greeted by Paul with Tryphosa, who labour in the Lord (ROM 16:12)	\N	\N
 tryphosa	greeted by Paul with Tryphena, who labour in the Lord (ROM 16:12)	\N	\N
+tsepha	a venomous serpent named in the text, whose den a weaned child will touch unharmed (ISA 11:8; PRO 23:32)	\N	\N
 tubal-2	\N	\N	Tabal
 tubalcain	the forger of all implements of bronze and iron (GEN 4:22)	\N	\N
 tyrannus	in whose school at Ephesus Paul disputed daily (ACT 19:9)	\N	\N
@@ -4232,6 +4274,7 @@ zeruiah	mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of Kin
 zetham	son of Ladan [Libni] (1CH 23:8)	\N	\N
 zethan	son of Bilhan (1CH 7:10)	\N	\N
 zethar	one of the seven eunuchs who served in the presence of King Ahasuerus (EST 1:10)	\N	\N
+zeus	a god named in the text, whose name the people of Lystra gave to Barnabas (ACT 14:12-13)	\N	\N
 zia	??? (1CH 5:13), Gadite (1CH 5:11)	\N	\N
 ziba	servant from the house of Saul (2SA 9:2)	\N	\N
 zibeon-2	son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)	\N	\N

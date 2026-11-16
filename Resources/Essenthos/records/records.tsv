@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
 # Our records. No dataset source: where a record came from is its claims; a dataset's id for it is in records/external-ids.
 slug	kind	subtype	place_kind	name	sex	sex_source	name_gender	tribe	origin	another_name_for	byname
 aaron	person	\N	\N	Aaron	male	\N	\N	Levi	\N	\N	\N
@@ -138,6 +138,7 @@ adoniram	person	\N	\N	Adoniram	male	\N	\N	\N	\N	\N	\N
 adonizedek	person	\N	\N	Adoni-zedek	male	\N	\N	\N	\N	\N	\N
 adoraim	place	\N	settlement	Adoraim	\N	\N	\N	\N	\N	\N	\N
 adrammelech	person	\N	\N	Adrammelech	male	\N	\N	\N	\N	\N	\N
+adrammelech-god	being	god	\N	Adrammelech	\N	\N	\N	\N	\N	\N	\N
 adramyttium	place	\N	settlement	Adramyttium	\N	\N	\N	\N	\N	\N	\N
 adriaticsea	place	\N	body of water	Adriatic Sea	\N	\N	\N	\N	\N	\N	\N
 adriel	person	\N	\N	Adriel	male	\N	\N	\N	\N	\N	\N
@@ -342,6 +343,7 @@ anak	person	\N	\N	Anak	male	\N	\N	\N	\N	\N	\N
 anakim	people	\N	\N	Anakim	\N	\N	\N	\N	\N	\N	\N
 anamim	people	\N	\N	Anamim	\N	\N	\N	\N	anamim	\N	\N
 anamim-son-of-mizraim	person	\N	\N	Anamim	male	relationship	\N	\N	\N	\N	\N
+anammelech	being	god	\N	Anammelech	\N	\N	\N	\N	\N	\N	\N
 anan	person	\N	\N	Anan	male	\N	\N	\N	\N	\N	\N
 anani	person	\N	\N	Anani	male	\N	\N	Judah	\N	\N	\N
 ananiah	person	\N	\N	Ananiah	male	\N	\N	\N	\N	\N	\N
@@ -459,6 +461,7 @@ arphaxad	place	\N	\N	Arphaxad	\N	\N	\N	\N	\N	\N	\N
 arsinoe	place	\N	settlement	Arsinoe	\N	\N	\N	\N	\N	\N	\N
 artaxerxes	person	\N	\N	Artaxerxes	male	\N	\N	\N	\N	\N	\N
 artemas	person	\N	\N	Artemas	male	\N	male	\N	\N	\N	\N
+artemis	being	god	\N	Artemis	\N	\N	\N	\N	\N	\N	\N
 arubboth	place	\N	settlement	Arubboth	\N	\N	\N	\N	\N	\N	\N
 arumah	place	\N	settlement	Arumah	\N	\N	\N	\N	\N	\N	\N
 arvad-2	place	\N	settlement	Arvad	\N	\N	\N	\N	\N	\N	\N
@@ -489,8 +492,10 @@ ashdodites	people	\N	\N	Ashdodites	\N	\N	\N	\N	\N	\N	\N
 ashdothpisgah	place	\N	\N	Ashdoth-pisgah	\N	\N	\N	\N	\N	\N	\N
 asher	person	\N	\N	Asher	male	\N	\N	Asher	\N	\N	\N
 asher-2	place	\N	\N	Asher	\N	\N	\N	\N	\N	\N	\N
+asherah	being	god	\N	Asherah	\N	\N	\N	\N	\N	\N	\N
 asherites	people	\N	\N	Asherites	\N	\N	\N	\N	asher	\N	\N
 ashhur	person	\N	\N	Ashhur	male	\N	\N	Judah	\N	\N	\N
+ashima	being	god	\N	Ashima	\N	\N	\N	\N	\N	\N	\N
 ashkelon	place	\N	settlement	Ashkelon	\N	\N	\N	\N	\N	\N	\N
 ashkenaz	person	\N	\N	Ashkenaz	male	\N	\N	\N	\N	\N	\N
 ashkenaz-2	place	\N	region	Ashkenaz	\N	\N	\N	\N	\N	scythia	\N
@@ -500,6 +505,7 @@ ashpenaz	person	\N	\N	Ashpenaz	male	\N	\N	\N	\N	\N	\N
 ashtaroth	place	\N	settlement	Ashtaroth	\N	\N	\N	\N	\N	\N	\N
 ashterathites	people	\N	\N	Ashterathites	\N	\N	\N	\N	\N	\N	\N
 ashterothkarnaim	place	\N	settlement	Ashteroth-karnaim	\N	\N	\N	\N	\N	ashtaroth	\N
+ashtoreth	being	god	\N	Ashtoreth	\N	\N	\N	\N	\N	\N	\N
 ashurites	place	\N	\N	Ashurites	\N	\N	\N	\N	\N	\N	\N
 ashurites-h805	people	\N	\N	Ashurites	\N	\N	\N	\N	\N	\N	\N
 ashvath	person	\N	\N	Ashvath	male	\N	\N	Asher	\N	\N	\N
@@ -620,7 +626,11 @@ azzur-2	person	\N	\N	Azzur	male	\N	\N	\N	\N	\N	\N
 azzur-3	person	\N	\N	Azzur	male	\N	\N	\N	\N	\N	\N
 baal	person	\N	\N	Baal	male	\N	\N	Reuben	\N	\N	\N
 baal-2	person	\N	\N	Baal	male	\N	\N	Benjamin	\N	\N	\N
+baal-berith	being	god	\N	Baal-berith	\N	\N	\N	\N	\N	\N	\N
+baal-god	being	god	\N	Baal	\N	\N	\N	\N	\N	\N	\N
+baal-peor-god	being	god	\N	Baal-peor	\N	\N	\N	\N	\N	\N	\N
 baal-temple-jerusalem	object	structure	\N	House of Baal in the Jehoiada narrative	\N	\N	\N	\N	\N	\N	\N
+baal-zebub	being	god	\N	Baal-zebub	\N	\N	\N	\N	\N	\N	\N
 baalah	place	\N	settlement, special	Baalah	\N	\N	\N	\N	\N	bilhah-2	\N
 baalah-2	place	\N	settlement	Baalah	\N	\N	\N	\N	\N	kiriathjearim	\N
 baalath	place	\N	hill, mountain, settlement	Baalath	\N	\N	\N	\N	\N	\N	\N
@@ -730,6 +740,8 @@ beerothbenejaakan	place	\N	settlement	Beeroth Bene-jaakan	\N	\N	\N	\N	\N	benejaa
 beerothites	people	\N	\N	Beerothites	\N	\N	\N	\N	\N	\N	\N
 beersheba-2	place	\N	settlement	Beersheba	\N	\N	\N	\N	\N	\N	\N
 beeshterah	place	\N	settlement	Beeshterah	\N	\N	\N	\N	\N	ashtaroth	\N
+behemoth	being	creature	\N	Behemoth	\N	\N	\N	\N	\N	\N	\N
+bel	being	god	\N	Bel	\N	\N	\N	\N	\N	\N	\N
 bela	person	\N	\N	Bela	male	\N	\N	Edomite	\N	\N	\N
 bela-2	person	\N	\N	Bela	male	\N	\N	Benjamin	\N	\N	\N
 bela-3	person	\N	\N	Bela	male	\N	\N	Reuben	\N	\N	\N
@@ -1000,6 +1012,7 @@ chelub	person	\N	\N	Chelub	male	\N	\N	\N	\N	\N	\N
 chelub-father-of-ezri	person	\N	\N	Chelub	male	relationship	\N	\N	\N	\N	\N
 chelubai	person	\N	\N	Chelubai	male	\N	\N	Judah	\N	\N	\N
 cheluhi	person	\N	\N	Cheluhi	male	\N	\N	\N	\N	\N	\N
+chemosh	being	god	\N	Chemosh	\N	\N	\N	\N	\N	\N	\N
 chenaanah	person	\N	\N	Chenaanah	male	\N	\N	\N	\N	\N	\N
 chenaanah-2	person	\N	\N	Chenaanah	male	\N	\N	Benjamin	\N	\N	\N
 chenani	person	\N	\N	Chenani	male	\N	\N	Levi	\N	\N	\N
@@ -1026,6 +1039,7 @@ chios	place	\N	island	Chios	\N	\N	\N	\N	\N	\N	\N
 chislon	person	\N	\N	Chislon	male	\N	\N	Benjamin	\N	\N	\N
 chislothtabor	place	\N	settlement	Chisloth-tabor	\N	\N	\N	\N	\N	chesulloth	\N
 chitlish	place	\N	settlement	Chitlish	\N	\N	\N	\N	\N	\N	\N
+chiun	being	god	\N	Chiun	\N	\N	\N	\N	\N	\N	\N
 chloe	person	\N	\N	Chloe	female	\N	female	\N	\N	\N	\N
 chorashan	place	\N	\N	Chorashan	\N	\N	\N	\N	\N	\N	\N
 chorazin	place	\N	settlement	Chorazin	\N	\N	\N	\N	\N	\N	\N
@@ -1076,6 +1090,7 @@ cyrene	place	\N	settlement	Cyrene	\N	\N	\N	\N	\N	\N	\N
 cyrus	person	\N	\N	Cyrus	male	\N	\N	\N	\N	\N	\N
 dabbesheth	place	\N	settlement	Dabbesheth	\N	\N	\N	\N	\N	\N	\N
 daberath	place	\N	settlement	Daberath	\N	\N	\N	\N	\N	\N	\N
+dagon	being	god	\N	Dagon	\N	\N	\N	\N	\N	\N	\N
 dalmanutha	place	\N	settlement	Dalmanutha	\N	\N	\N	\N	\N	magadan	\N
 dalmatia	place	\N	region	Dalmatia	\N	\N	\N	\N	\N	\N	\N
 dalphon	person	\N	\N	Dalphon	male	\N	\N	\N	\N	\N	\N
@@ -1138,6 +1153,8 @@ dimonah	place	\N	settlement	Dimonah	\N	\N	\N	\N	\N	dibon-2	\N
 dinah	person	\N	\N	Dinah	female	\N	\N	\N	\N	\N	\N
 dinhabah	place	\N	settlement	Dinhabah	\N	\N	\N	\N	\N	\N	\N
 dionysius	person	\N	\N	Dionysius	male	\N	male	\N	\N	\N	\N
+dionysus	being	god	\N	Dionysus	\N	\N	\N	\N	\N	\N	\N
+dioscuri	being	god	\N	Dioscuri	\N	\N	\N	\N	\N	\N	\N
 diotrephes	person	\N	\N	Diotrephes	male	\N	male	\N	\N	\N	\N
 dishan	person	\N	\N	Dishan	male	\N	\N	Edomite	\N	\N	\N
 dishon	person	\N	\N	Dishon	male	\N	\N	Edomite	\N	\N	\N
@@ -1154,6 +1171,7 @@ doeg	person	\N	\N	Doeg	male	\N	\N	\N	\N	\N	\N
 dophkah	place	\N	settlement	Dophkah	\N	\N	\N	\N	\N	\N	\N
 dor	place	\N	settlement	Dor	\N	\N	\N	\N	\N	\N	\N
 dothan	place	\N	settlement	Dothan	\N	\N	\N	\N	\N	\N	\N
+dragon-of-babylon	being	creature	\N	Dragon of Babylon	\N	\N	\N	\N	\N	\N	\N
 dragonspring	place	\N	spring	Dragon Spring	\N	\N	\N	\N	\N	enrogel	\N
 drusilla	person	\N	\N	Drusilla	female	\N	female	\N	\N	\N	\N
 dumah	person	\N	\N	Dumah	male	\N	\N	\N	\N	\N	\N
@@ -1518,6 +1536,7 @@ gabriel	person	\N	\N	Gabriel	male	\N	\N	\N	\N	\N	\N
 gad	person	\N	\N	Gad	male	\N	\N	Gad	\N	\N	\N
 gad-2	person	\N	\N	Gad	male	\N	\N	\N	\N	\N	\N
 gad-3	place	\N	\N	Gad	\N	\N	\N	\N	\N	\N	\N
+gad-god	being	god	\N	Gad	\N	\N	\N	\N	\N	\N	\N
 gadara	place	\N	settlement	Gadara	\N	\N	\N	\N	\N	\N	\N
 gaddi	person	\N	\N	Gaddi	male	\N	\N	Manasseh	\N	\N	\N
 gaddiel	person	\N	\N	Gaddiel	male	\N	\N	Zebulun	\N	\N	\N
@@ -1949,11 +1968,13 @@ hepherites	people	\N	\N	Hepherites	\N	\N	\N	\N	\N	\N	\N
 hephzibah	person	\N	\N	Hephzibah	female	\N	\N	\N	\N	\N	\N
 heracleopolismagna	place	\N	settlement	Heracleopolis Magna	\N	\N	\N	\N	\N	\N	\N
 heracleopolisparva	place	\N	settlement	Heracleopolis Parva	\N	\N	\N	\N	\N	\N	\N
+heracles	being	god	\N	Heracles	\N	\N	\N	\N	\N	\N	\N
 heres	place	\N	hill, natural area, settlement, special	Heres	\N	\N	\N	\N	\N	\N	\N
 heresh	person	\N	\N	Heresh	male	\N	\N	Levi	\N	\N	\N
 hereth	place	\N	forest, special	Hereth	\N	\N	\N	\N	\N	\N	\N
 hermas	person	\N	\N	Hermas	male	\N	male	\N	\N	\N	\N
 hermes	person	\N	\N	Hermes	male	\N	male	\N	\N	\N	\N
+hermes-god	being	god	\N	Hermes	\N	\N	\N	\N	\N	\N	\N
 hermogenes	person	\N	\N	Hermogenes	male	\N	male	\N	\N	\N	\N
 herod	person	\N	\N	Herod	male	\N	male	Edom	\N	\N	\N
 herod-2	person	\N	\N	Herod	male	\N	male	Edom	\N	\N	\N
@@ -2767,7 +2788,6 @@ kedesh-3	place	\N	settlement	Kedesh	\N	\N	\N	\N	\N	kishion	\N
 kedesh-4	place	\N	settlement	Kedesh	\N	\N	\N	\N	\N	kedeshnaphtali	\N
 kedeshnaphtali	place	\N	settlement	Kedesh-naphtali	\N	\N	\N	\N	\N	\N	\N
 kehelathah	place	\N	campsite, settlement	Kehelathah	\N	\N	\N	\N	\N	makheloth	\N
-keilah	person	\N	\N	Keilah	male	\N	\N	Judah	\N	\N	\N
 keilah-2	place	\N	settlement	Keilah	\N	\N	\N	\N	\N	\N	\N
 kelaiah	person	\N	\N	Kelaiah	male	\N	\N	Levi	\N	\N	\N
 kelita	person	\N	\N	Kelita	male	\N	\N	Levi	\N	\N	\N
@@ -2928,6 +2948,7 @@ levi	person	\N	\N	Levi	male	\N	\N	Levi	\N	\N	\N
 levi-2	person	\N	\N	Levi	male	\N	\N	\N	\N	\N	\N
 levi-3	person	\N	\N	Levi	male	\N	\N	\N	\N	\N	\N
 levi-son-of-alphaeus	person	\N	\N	Levi	male	grammar	male	\N	\N	\N	\N
+leviathan	being	creature	\N	Leviathan	\N	\N	\N	\N	\N	\N	\N
 levites	people	\N	\N	Levites	\N	\N	\N	\N	levi	\N	\N
 libnah	place	\N	settlement	Libnah	\N	\N	\N	\N	\N	\N	\N
 libnah-2	place	\N	campsite	Libnah	\N	\N	\N	\N	\N	\N	\N
@@ -2936,6 +2957,7 @@ libni-2	person	\N	\N	Libni	male	\N	\N	Levi	\N	\N	\N
 libnites	people	\N	\N	Libnites	\N	\N	\N	\N	\N	\N	\N
 libya	place	\N	region	Libya	\N	\N	\N	\N	\N	\N	\N
 lihki	person	\N	\N	Lihki	male	\N	\N	Manasseh	\N	\N	\N
+lilith	being	creature	\N	Lilith	\N	\N	\N	\N	\N	\N	\N
 linus	person	\N	\N	Linus	male	\N	male	\N	\N	\N	\N
 loammi	person	\N	\N	Lo-ammi	male	\N	\N	\N	\N	\N	\N
 lod	place	\N	settlement	Lod	\N	\N	\N	\N	\N	\N	\N
@@ -3183,6 +3205,7 @@ melech	person	\N	\N	Melech	male	\N	\N	Benjamin	\N	\N	\N
 memphis	place	\N	settlement	Memphis	\N	\N	\N	\N	\N	\N	\N
 memucan	person	\N	\N	Memucan	male	\N	\N	\N	\N	\N	\N
 menachem	person	\N	\N	Menachem	male	\N	\N	\N	\N	\N	\N
+meni	being	god	\N	Meni	\N	\N	\N	\N	\N	\N	\N
 menna	person	\N	\N	Menna	male	\N	\N	Judah	\N	\N	\N
 menorah	object	furnishing	\N	Golden Lampstand	\N	\N	\N	\N	\N	\N	\N
 meonothai	person	\N	\N	Meonothai	male	\N	\N	Judah	\N	\N	\N
@@ -3204,6 +3227,7 @@ meremoth-3	person	\N	\N	Meremoth	\N	\N	\N	\N	\N	\N	\N
 meres	person	\N	\N	Meres	male	\N	\N	\N	\N	\N	\N
 meribah	place	\N	settlement	Meribah	\N	\N	\N	\N	\N	kadesh	\N
 meribah-2	place	\N	campsite	Meribah	\N	\N	\N	\N	\N	\N	\N
+merodach	being	god	\N	Merodach	\N	\N	\N	\N	\N	\N	\N
 merom	place	\N	settlement	Merom	\N	\N	\N	\N	\N	\N	\N
 meronoth	place	\N	settlement	Meronoth	\N	\N	\N	\N	\N	\N	\N
 meronothites	people	\N	\N	Meronothites	\N	\N	\N	\N	\N	\N	\N
@@ -3301,6 +3325,7 @@ mikneiah	person	\N	\N	Mikneiah	male	\N	\N	Levi	\N	\N	\N
 milalai	person	\N	\N	Milalai	male	\N	\N	Levi	\N	\N	\N
 milcah	person	\N	\N	Milcah	female	\N	\N	\N	\N	\N	\N
 milcah-2	person	\N	\N	Milcah	female	\N	\N	Manasseh	\N	\N	\N
+milcom	being	god	\N	Milcom	\N	\N	\N	\N	\N	\N	\N
 miletus	place	\N	settlement	Miletus	\N	\N	\N	\N	\N	\N	\N
 millo	place	\N	fortification, settlement	Millo	\N	\N	\N	\N	\N	\N	\N
 miniamin	person	\N	\N	Miniamin	male	\N	\N	Levi	\N	\N	\N
@@ -3345,6 +3370,7 @@ moab-3	place	\N	region	Moab	\N	\N	\N	\N	\N	\N	\N
 moabites	people	\N	\N	Moabites	\N	\N	\N	\N	moab	\N	\N
 moadiah	person	\N	\N	Moadiah	male	\N	\N	Levi	\N	\N	\N
 moladah	place	\N	settlement	Moladah	\N	\N	\N	\N	\N	\N	\N
+molech	being	god	\N	Molech	\N	\N	\N	\N	\N	\N	\N
 molid	person	\N	\N	Molid	male	\N	\N	Judah	\N	\N	\N
 morashthites	people	\N	\N	Morashthites	\N	\N	\N	\N	\N	\N	\N
 mordecai	person	\N	\N	Mordecai	male	\N	\N	\N	\N	\N	\N
@@ -3441,6 +3467,7 @@ nahum	person	\N	\N	Nahum	male	\N	\N	\N	\N	\N	\N
 nahum-2	person	\N	\N	Nahum	male	\N	\N	\N	\N	\N	\N
 nain	place	\N	settlement	Nain	\N	\N	\N	\N	\N	\N	\N
 naioth	place	\N	settlement, special	Naioth	\N	\N	\N	\N	\N	\N	\N
+nanea	being	god	\N	Nanea	\N	\N	\N	\N	\N	\N	\N
 naomi	person	\N	\N	Naomi	female	\N	\N	\N	\N	\N	{"book": 8, "names": {"deu": ["Mara"], "eng": ["Mara"], "rus": ["Мара"], "spa": ["Mara"], "ukr": ["Мара"]}, "verse": 20, "chapter": 1}
 naphish	person	\N	\N	Naphish	male	\N	\N	\N	\N	\N	\N
 naphothdor	place	\N	region, settlement	Naphoth-dor	\N	\N	\N	\N	\N	dor	\N
@@ -3473,6 +3500,7 @@ neballat	place	\N	settlement	Neballat	\N	\N	\N	\N	\N	\N	\N
 nebat	person	\N	\N	Nebat	male	\N	\N	Ephraim	\N	\N	\N
 nebo-2	place	\N	settlement	Nebo	\N	\N	\N	\N	\N	\N	\N
 nebo-3	place	\N	settlement	Nebo	\N	\N	\N	\N	\N	\N	\N
+nebo-god	being	god	\N	Nebo	\N	\N	\N	\N	\N	\N	\N
 nebuchadnezzar	person	\N	\N	Nebuchadnezzar	male	\N	\N	\N	\N	\N	\N
 nebuchadnezzars-dream-image	object	image	\N	Great Image of Nebuchadnezzar's Dream	\N	\N	\N	\N	\N	\N	\N
 nebuchadnezzars-image	object	image	\N	Nebuchadnezzar's Golden Image	\N	\N	\N	\N	\N	\N	\N
@@ -3498,6 +3526,7 @@ nephisim	person	\N	\N	Nephusim	male	\N	\N	Levi	\N	\N	\N
 nephtoah	place	\N	spring	Nephtoah	\N	\N	\N	\N	\N	\N	\N
 ner	person	\N	\N	Ner	male	\N	\N	Benjamin	\N	\N	\N
 nereus	person	\N	\N	Nereus	male	\N	male	\N	\N	\N	\N
+nergal	being	god	\N	Nergal	\N	\N	\N	\N	\N	\N	\N
 nergalsarezer	person	\N	\N	Nergal-sar-ezer	male	\N	\N	\N	\N	\N	\N
 nergalsarezer-2	person	\N	\N	Nergal-sar-ezer	male	\N	\N	\N	\N	\N	\N
 neri	person	\N	\N	Neri	male	\N	\N	\N	\N	\N	\N
@@ -3525,6 +3554,7 @@ new-moon	observance	new-moon	\N	New Moon	\N	\N	\N	\N	\N	\N	\N
 newgate	place	\N	gate	New Gate	\N	\N	\N	\N	\N	\N	\N
 neziah	person	\N	\N	Neziah	male	\N	\N	Levi	\N	\N	\N
 nezib	place	\N	settlement	Nezib	\N	\N	\N	\N	\N	\N	\N
+nibhaz	being	god	\N	Nibhaz	\N	\N	\N	\N	\N	\N	\N
 nibshan	place	\N	settlement	Nibshan	\N	\N	\N	\N	\N	\N	\N
 nicanor	person	\N	\N	Nicanor	male	\N	male	\N	\N	\N	\N
 nicodemus	person	\N	\N	Nicodemus	male	\N	male	\N	\N	\N	\N
@@ -3537,6 +3567,7 @@ nimrod	person	\N	\N	Nimrod	male	\N	\N	\N	\N	\N	\N
 nimrod-2	place	\N	region	Nimrod	\N	\N	\N	\N	\N	assyria	\N
 nimshi	person	\N	\N	Nimshi	male	\N	\N	\N	\N	\N	\N
 nineveh	place	\N	settlement	Nineveh	\N	\N	\N	\N	\N	\N	\N
+nisroch	being	god	\N	Nisroch	\N	\N	\N	\N	\N	\N	\N
 nisroch-temple	object	structure	\N	House of Nisroch	\N	\N	\N	\N	\N	\N	\N
 noadiah	person	\N	\N	Noadiah	male	\N	\N	Levi	\N	\N	\N
 noadiah-2	person	\N	\N	Noadiah	female	\N	\N	\N	\N	\N	\N
@@ -3802,6 +3833,7 @@ putiel	person	\N	\N	Putiel	male	\N	\N	\N	\N	\N	\N
 puvvah	person	\N	\N	Puvvah	male	\N	\N	Issachar	\N	\N	\N
 pyrrhus	person	\N	\N	Pyrrhus	male	\N	\N	\N	\N	\N	\N
 quartus	person	\N	\N	Quartus	male	\N	male	\N	\N	\N	\N
+queen-of-heaven	being	god	\N	Queen of heaven	\N	\N	\N	\N	\N	\N	\N
 queenofsheba	person	\N	\N	Queen of Sheba	female	\N	\N	\N	\N	\N	\N
 quirinius	person	\N	\N	Quirinius	male	\N	male	\N	\N	\N	\N
 raamah	person	\N	\N	Raamah	male	\N	\N	\N	\N	\N	\N
@@ -3818,6 +3850,7 @@ raddai	person	\N	\N	Raddai	male	\N	\N	Judah	\N	\N	\N
 ragmat	place	\N	settlement	Ragmat	\N	\N	\N	\N	\N	\N	\N
 rahab	person	\N	\N	Rahab	female	\N	\N	\N	\N	\N	\N
 rahab-2	place	\N	\N	Rahab	\N	\N	\N	\N	\N	\N	\N
+rahab-sea-monster	being	creature	\N	Rahab	\N	\N	\N	\N	\N	\N	\N
 rahabs-scarlet-cord	object	implement	\N	Rahab's Scarlet Cord	\N	\N	\N	\N	\N	\N	\N
 raham	person	\N	\N	Raham	male	\N	\N	Judah	\N	\N	\N
 rakem	person	\N	\N	Rakem	male	\N	\N	Manasseh	\N	\N	\N
@@ -3859,6 +3892,7 @@ redsea	place	\N	body of water	Red Sea	\N	\N	\N	\N	\N	\N	\N
 redsea-2	place	\N	body of water, river	Red Sea	\N	\N	\N	\N	\N	\N	\N
 redsea-3	place	\N	body of water	Red Sea	\N	\N	\N	\N	\N	\N	\N
 reelaiah	person	\N	\N	Reelaiah	male	\N	\N	\N	\N	\N	\N
+reem	being	creature	\N	Re'em	\N	\N	\N	\N	\N	\N	\N
 regem	person	\N	\N	Regem	male	\N	\N	Judah	\N	\N	\N
 regemmelech	person	\N	\N	Regemmelech	male	\N	\N	\N	\N	\N	\N
 rehabiah	person	\N	\N	Rehabiah	male	\N	\N	Levi	\N	\N	\N
@@ -3914,6 +3948,7 @@ rimmon	person	\N	\N	Rimmon	male	\N	\N	Benjamin	\N	\N	\N
 rimmon-2	place	\N	natural area	Rimmon	\N	\N	\N	\N	\N	\N	\N
 rimmon-3	place	\N	settlement	Rimmon	\N	\N	\N	\N	\N	\N	\N
 rimmon-4	place	\N	settlement	Rimmon	\N	\N	\N	\N	\N	\N	\N
+rimmon-god	being	god	\N	Rimmon	\N	\N	\N	\N	\N	\N	\N
 rimmono	place	\N	settlement	Rimmono	\N	\N	\N	\N	\N	rimmon-4	\N
 rimmonparez	place	\N	\N	Rimmon-parez	\N	\N	\N	\N	\N	\N	\N
 rimmonperez	place	\N	campsite	Rimmon-perez	\N	\N	\N	\N	\N	\N	\N
@@ -3977,6 +4012,7 @@ saph	person	\N	\N	Saph	male	\N	\N	\N	\N	\N	\N
 sapphira	person	\N	\N	Sapphira	female	\N	female	\N	\N	\N	\N
 sarai	person	\N	\N	Sarai	female	\N	female	\N	\N	\N	\N
 saraph	person	\N	\N	Saraph	male	\N	\N	Judah	\N	\N	\N
+saraph-serpents	being	creature	\N	Saraph	\N	\N	\N	\N	\N	\N	\N
 sardis	place	\N	settlement	Sardis	\N	\N	\N	\N	\N	\N	\N
 sardites	people	\N	\N	Sardites	\N	\N	\N	\N	\N	\N	\N
 sarepta	place	\N	\N	Sarepta	\N	\N	\N	\N	\N	\N	\N
@@ -4006,6 +4042,7 @@ segub	person	\N	\N	Segub	male	\N	\N	\N	\N	\N	\N
 segub-2	person	\N	\N	Segub	male	\N	\N	Judah	\N	\N	\N
 seir	person	\N	\N	Seir	male	\N	\N	\N	\N	\N	\N
 seirah	place	\N	natural area, special	Seirah	\N	\N	\N	\N	\N	\N	\N
+seirim	being	creature	\N	Se'irim	\N	\N	\N	\N	\N	\N	\N
 sela	place	\N	settlement	Sela	\N	\N	\N	\N	\N	sela-2	\N
 sela-2	place	\N	settlement	Sela	\N	\N	\N	\N	\N	\N	\N
 sela-3	place	\N	settlement	Sela	\N	\N	\N	\N	\N	\N	\N
@@ -4419,6 +4456,7 @@ straightstreet	place	\N	road	Straight Street	\N	\N	\N	\N	\N	\N	\N
 suah	person	\N	\N	Suah	male	\N	\N	Asher	\N	\N	\N
 succoth	place	\N	settlement	Succoth	\N	\N	\N	\N	\N	\N	\N
 succoth-2	place	\N	settlement	Succoth	\N	\N	\N	\N	\N	\N	\N
+succoth-benoth	being	god	\N	Succoth-benoth	\N	\N	\N	\N	\N	\N	\N
 suchathites	people	\N	\N	Suchathites	\N	\N	\N	\N	\N	\N	\N
 sukkiims	people	\N	\N	Sukkiims	\N	\N	\N	\N	\N	\N	\N
 suph	place	\N	body of water, settlement	Suph	\N	\N	\N	\N	\N	redsea-3	\N
@@ -4473,7 +4511,9 @@ tamar-2	person	\N	\N	Tamar	female	\N	\N	Judah	\N	\N	\N
 tamar-3	person	\N	\N	Tamar	female	\N	\N	Judah	\N	\N	\N
 tamar-4	place	\N	settlement	Tamar	\N	\N	\N	\N	\N	tamar-5	\N
 tamar-5	place	\N	settlement	Tamar	\N	\N	\N	\N	\N	\N	\N
+tammuz	being	god	\N	Tammuz	\N	\N	\N	\N	\N	\N	\N
 tanhumeth	person	\N	\N	Tanhumeth	male	\N	\N	\N	\N	\N	\N
+tannin	being	creature	\N	Tannin	\N	\N	\N	\N	\N	\N	\N
 taphath	person	\N	\N	Taphath	female	\N	\N	Judah	\N	\N	\N
 tappuah	person	\N	\N	Tappuah	male	\N	\N	Judah	\N	\N	\N
 tappuah-2	place	\N	settlement	Tappuah	\N	\N	\N	\N	\N	\N	\N
@@ -4487,6 +4527,7 @@ tarshish-3	person	\N	\N	Tarshish	male	\N	\N	\N	\N	\N	\N
 tarshish-4	place	\N	island, region, settlement, special	Tarshish	\N	\N	\N	\N	\N	tartessos	\N
 tarshish-5	place	\N	island, region, settlement, special	Tarshish	\N	\N	\N	\N	\N	\N	\N
 tarsus	place	\N	settlement	Tarsus	\N	\N	\N	\N	\N	\N	\N
+tartak	being	god	\N	Tartak	\N	\N	\N	\N	\N	\N	\N
 tartan	title	\N	\N	Tartan	\N	\N	\N	\N	\N	\N	\N
 tartessos	place	\N	settlement	Tartessos	\N	\N	\N	\N	\N	\N	\N
 tattenai	person	\N	\N	Tattenai	male	\N	\N	\N	\N	\N	\N
@@ -4608,6 +4649,7 @@ trogyllium	place	\N	promontory	Trogyllium	\N	\N	\N	\N	\N	\N	\N
 trophimus	person	\N	\N	Trophimus	male	\N	male	\N	\N	\N	\N
 tryphaena	person	\N	\N	Tryphaena	female	\N	female	\N	\N	\N	\N
 tryphosa	person	\N	\N	Tryphosa	female	\N	female	\N	\N	\N	\N
+tsepha	being	creature	\N	Tsepha	\N	\N	\N	\N	\N	\N	\N
 tubal	person	\N	\N	Tubal	male	\N	\N	\N	\N	\N	\N
 tubal-2	place	\N	region	Tubal	\N	\N	\N	\N	\N	\N	\N
 tubalcain	person	\N	\N	Tubal-cain	male	\N	\N	\N	\N	\N	\N
@@ -4894,6 +4936,7 @@ zeruiah	person	\N	\N	Zeruiah	female	\N	\N	Judah	\N	\N	\N
 zetham	person	\N	\N	Zetham	male	\N	\N	Levi	\N	\N	\N
 zethan	person	\N	\N	Zethan	male	\N	\N	Benjamin	\N	\N	\N
 zethar	person	\N	\N	Zethar	male	\N	\N	\N	\N	\N	\N
+zeus	being	god	\N	Zeus	\N	\N	\N	\N	\N	\N	\N
 zia	person	\N	\N	Zia	male	\N	\N	Gad	\N	\N	\N
 ziba	person	\N	\N	Ziba	male	\N	\N	\N	\N	\N	\N
 zibeon-2	person	\N	\N	Zibeon	male	\N	\N	Edomite	\N	\N	\N

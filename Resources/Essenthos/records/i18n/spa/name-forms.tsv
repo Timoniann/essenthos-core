@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aarón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -138,6 +138,7 @@ adoniram	nominative	Adoram	model-reading	1	declined by claude-opus-5-5, asked 20
 adonizedek	nominative	Adonisedec	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 adoraim	nominative	Adoraim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 adrammelech	nominative	Adremelech	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+adrammelech-god	nominative	Adramelec	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 adramyttium	nominative	Adramitio	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 adriaticsea	nominative	Adriático	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 adriel	nominative	Adriel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -341,6 +342,7 @@ anak	nominative	Anac	model-reading	1	declined by claude-opus-5-5, asked 2026-10-
 anakim	nominative	Anaceos	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 anamim	nominative	Anamim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 anamim-son-of-mizraim	nominative	Anamim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+anammelech	nominative	Anamelec	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 anan	nominative	Anan	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 anani	nominative	Anani	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ananiah	nominative	Ananías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -458,6 +460,7 @@ arphaxad	nominative	Arphaxad	model-reading	1	declined by claude-opus-5-5, asked 
 arsinoe	nominative	Arsínoe	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 artaxerxes	nominative	Artajerjes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 artemas	nominative	Artemas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+artemis	nominative	Artemisa	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 arubboth	nominative	Aruboth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 arumah	nominative	Aruma	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 arvad-2	nominative	Arvad	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -488,8 +491,10 @@ ashdodites	nominative	Asdodios	stated-by-source	\N	Essenthos, as the Reina-Valer
 ashdothpisgah	nominative	Asdoth-pisga	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 asher	nominative	Aser	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 asher-2	nominative	Aser	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-asherites	nominative	Aser	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+asherah	nominative	Aserá	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+asherites	nominative	Aseritas	manual	\N	Essenthos: the project owner's word of 2026-11-16, 1CH 4:19 read in the Hebrew, the Septuagint, the Vulgate, the King James, Ohienko and the Synodal, and the Asherites' names read against Ohienko, the Synodal, Luther and Reina-Valera, by claude-opus-5-5 on 2026-11-16	\N
 ashhur	nominative	Ashur	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+ashima	nominative	Asima	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 ashkelon	nominative	Ascalón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashkenaz	nominative	Ashkenaz	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashkenaz-2	nominative	Aschênaz	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -499,6 +504,7 @@ ashpenaz	nominative	Aspenaz	model-reading	1	declined by claude-opus-5-5, asked 2
 ashtaroth	nominative	Astaroth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashterathites	nominative	Astarothita	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashterothkarnaim	nominative	Ashteroth-carnaim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+ashtoreth	nominative	Astoret	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 ashurites	nominative	Assuri	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashurites-h805	nominative	Assurim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashvath	nominative	Asvath	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -619,6 +625,10 @@ azzur-2	nominative	Azur	model-reading	1	declined by claude-opus-5-5, asked 2026-
 azzur-3	nominative	Azur	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 baal	nominative	Baal	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 baal-2	nominative	Baal	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+baal-berith	nominative	Baal-berit	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+baal-god	nominative	Baal	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+baal-peor-god	nominative	Baal-peor	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+baal-zebub	nominative	Baal-zebub	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 baalah	nominative	Baala	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 baalah-2	nominative	Baala	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 baalath	nominative	Baalath	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -728,6 +738,8 @@ beerothbenejaakan	nominative	Beerot-bene-jacaam	model-reading	1	declined by clau
 beerothites	nominative	Beeroth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 beersheba-2	nominative	Beer-seba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 beeshterah	nominative	Beestra	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+behemoth	nominative	Behemot	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+bel	nominative	Bel	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 bela	nominative	Bela	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 bela-2	nominative	Bela	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 bela-3	nominative	Bela	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -996,6 +1008,7 @@ chelub	nominative	Chêlub	model-reading	1	declined by claude-opus-5-5, asked 202
 chelub-father-of-ezri	nominative	Chêlud	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 prints it, where it was «Chêlub», checked 2026-10-31	\N
 chelubai	nominative	Chêlubai	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 cheluhi	nominative	Chêluhi	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+chemosh	nominative	Quemós	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 chenaanah	nominative	Chânaana	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chenaanah-2	nominative	Chênaana	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chenani	nominative	Chênani	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1022,6 +1035,7 @@ chios	nominative	Chîo	model-reading	1	declined by claude-opus-5-5, asked 2026-1
 chislon	nominative	Chislón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chislothtabor	nominative	Chisiloth-tabor	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chitlish	nominative	Chîtlis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+chiun	nominative	Quiún	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 chloe	nominative	Cloé	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chorashan	nominative	Chôrasán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chorazin	nominative	Corazín	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1072,6 +1086,7 @@ cyrene	nominative	Cirene	model-reading	1	declined by claude-opus-5-5, asked 2026
 cyrus	nominative	Ciro	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dabbesheth	nominative	Dabbe-seth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 daberath	nominative	Dabrath	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+dagon	nominative	Dagón	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 dalmanutha	nominative	Dalmanutha	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dalmatia	nominative	Dalmacia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dalphon	nominative	Dalphón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1134,6 +1149,8 @@ dimonah	nominative	Dimona	model-reading	1	declined by claude-opus-5-5, asked 202
 dinah	nominative	Dina	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dinhabah	nominative	Dinaba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dionysius	nominative	Dionisio	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+dionysus	nominative	Dioniso	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+dioscuri	nominative	Dioscuros	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 diotrephes	nominative	Diótrefes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dishan	nominative	Disón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dishon	nominative	Disán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1150,6 +1167,7 @@ doeg	nominative	Doeg	model-reading	1	declined by claude-opus-5-5, asked 2026-10-
 dophkah	nominative	Dophca	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dor	nominative	Dor	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dothan	nominative	Dothán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+dragon-of-babylon	nominative	Dragón de Babilonia	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 dragonspring	nominative	fuente del Dragón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 drusilla	nominative	Drusila	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 dumah	nominative	Duma	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1418,7 +1436,7 @@ ephraim-2	nominative	Efraín	model-reading	1	declined by claude-sonnet-5, asked 
 ephraim-3	nominative	Ephraim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ephraim-4	nominative	Ephraim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ephraimgate	nominative	puerta de Ephraim	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
-ephraimites	nominative	Ephraim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+ephraimites	nominative	Efraimitas	manual	\N	Essenthos: the project owner's word of 2026-11-16 (the NVI's and the Biblia de Jerusalén's efraimitas; judíos reads as the Jews), by claude-opus-5-5 on 2026-11-16	\N
 ephrath	nominative	Ephrata	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ephrath-2	nominative	Ephrata	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 ephrathah	nominative	Ephrata	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1514,6 +1532,7 @@ gabriel	nominative	Gabriel	model-reading	1	declined by claude-opus-5-5, asked 20
 gad	nominative	Gad	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 gad-2	nominative	Gad	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 gad-3	nominative	Gad	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
+gad-god	nominative	Gad	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 gadara	nominative	Gadara	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 gaddi	nominative	Gaddi	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 gaddiel	nominative	Gaddiel	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -1944,11 +1963,13 @@ hepherites	nominative	Hepheritas	model-reading	1	declined by claude-opus-5-5, as
 hephzibah	nominative	Hepsiba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 heracleopolismagna	nominative	Heracleópolis Magna	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 heracleopolisparva	nominative	Heracleópolis Parva	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+heracles	nominative	Heracles	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 heres	nominative	Heres	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 heresh	nominative	Heres	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 hereth	nominative	Hareth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 hermas	nominative	Hermas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 hermes	nominative	Hermes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+hermes-god	nominative	Hermes	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 hermogenes	nominative	Hermógenes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 herod	nominative	Herodes	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 herod-2	nominative	Herodes	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -2169,7 +2190,7 @@ ismachiah	nominative	Ismachîas	model-reading	1	declined by claude-opus-5-5, ask
 israelites	nominative	Israelitas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 issachar	nominative	Issachâr	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 issachar-2	nominative	Issachâr	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
-issacharites	nominative	Issachâr	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+issacharites	nominative	Isacaritas	manual	\N	Essenthos: the project owner's word of 2026-11-16 (the NVI's and the Biblia de Jerusalén's efraimitas; judíos reads as the Jews), by claude-opus-5-5 on 2026-11-16	\N
 isshiah	nominative	Isías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 isshiah-2	nominative	Isías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 isshiah-3	nominative	Isía	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -2673,7 +2694,7 @@ joseph-6	nominative	José	model-reading	1	declined by claude-sonnet-5, asked 202
 joseph-7	nominative	José	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 joseph-8	nominative	José	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 joseph-9	nominative	José	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-josephites	nominative	josefitas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-08	\N
+josephites	nominative	Josefitas	manual	\N	Essenthos: the project owner's word of 2026-11-16 (the NVI's and the Biblia de Jerusalén's efraimitas; judíos reads as the Jews), by claude-opus-5-5 on 2026-11-16	\N
 josephs-tunic	nominative	Ropa de diversos colores	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 joses-son-of-mary	nominative	José	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 joshah	nominative	Josías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -2717,7 +2738,7 @@ judah-4	nominative	Judá	model-reading	1	declined by claude-opus-5-5, asked 2026
 judah-5	nominative	Judá	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 judah-6	nominative	Judá	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 judah-7	nominative	Judá	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-judahites	nominative	Judá	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
+judahites	nominative	Judaítas	manual	\N	Essenthos: the project owner's word of 2026-11-16 (the NVI's and the Biblia de Jerusalén's efraimitas; judíos reads as the Jews), by claude-opus-5-5 on 2026-11-16	\N
 judas	nominative	Judas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 judas-2	nominative	Judas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 judas-3	nominative	Judas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -2759,7 +2780,6 @@ kedesh-3	nominative	Cedes	model-reading	1	declined by claude-opus-5-5, asked 202
 kedesh-4	nominative	Cedes	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kedeshnaphtali	nominative	Cedes de Nephtalí	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 kehelathah	nominative	Ceelatha	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
-keilah	nominative	Keila	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 keilah-2	nominative	Keila	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kelaiah	nominative	Kelaía	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kelita	nominative	Celita	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -2919,6 +2939,7 @@ levi	nominative	Leví	model-reading	1	declined by claude-sonnet-5, asked 2026-09
 levi-2	nominative	Leví	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 levi-3	nominative	Leví	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 levi-son-of-alphaeus	nominative	Leví	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+leviathan	nominative	Leviatán	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 levites	nominative	Levitas	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 libnah	nominative	Libna	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 libnah-2	nominative	Libna	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -2927,6 +2948,7 @@ libni-2	nominative	Libni	model-reading	1	declined by claude-opus-5-5, asked 2026
 libnites	nominative	Libni	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 libya	nominative	Libia	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 lihki	nominative	Licci	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
+lilith	nominative	Lilit	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 linus	nominative	Lino	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 loammi	nominative	Lo-ammi	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 lod	nominative	Lod	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3085,7 +3107,7 @@ manasseh-3	nominative	Manasés	model-reading	1	declined by claude-sonnet-5, aske
 manasseh-4	nominative	Manasés	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 manasseh-5	nominative	Manasés	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 manasseh-6	nominative	Manasés	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-manassites	nominative	manasitas	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
+manassites	nominative	Manasitas	manual	\N	Essenthos: the project owner's word of 2026-11-16 (the NVI's and the Biblia de Jerusalén's efraimitas; judíos reads as the Jews), by claude-opus-5-5 on 2026-11-16	\N
 manoah	nominative	Manoa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 maoch	nominative	Maoch	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 maon	nominative	Maón	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -3173,6 +3195,7 @@ melech	nominative	Melech	model-reading	1	declined by claude-opus-5-5, asked 2026
 memphis	nominative	Memphis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 memucan	nominative	Memucán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 menachem	nominative	Manahem	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+meni	nominative	Mení	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 menna	nominative	Mainán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 menorah	nominative	Candelero	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 meonothai	nominative	Maonathi	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3194,6 +3217,7 @@ meremoth-3	nominative	Meremoth	model-reading	1	declined by claude-opus-5-5, aske
 meres	nominative	Meres	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 meribah	nominative	Meriba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 meribah-2	nominative	Meriba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+merodach	nominative	Merodac	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 merom	nominative	Merom	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 meronoth	nominative	Meronoth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 meronothites	nominative	Meronothita	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3291,6 +3315,7 @@ mikneiah	nominative	Micnías	model-reading	1	declined by claude-opus-5-5, asked 
 milalai	nominative	Milalai	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 milcah	nominative	Milca	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 milcah-2	nominative	Milca	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+milcom	nominative	Milcom	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 miletus	nominative	Mileto	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 millo	nominative	Millo	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 miniamin	nominative	Benjamín	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3335,6 +3360,7 @@ moab-3	nominative	Moab	model-reading	1	declined by claude-sonnet-5, asked 2026-0
 moabites	nominative	moabitas	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 moadiah	nominative	Moadías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 moladah	nominative	Molada	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+molech	nominative	Moloc	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 molid	nominative	Molib	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 morashthites	nominative	Morasti	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mordecai	nominative	Mardochêo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3430,12 +3456,13 @@ nahum	nominative	Nahum	model-reading	1	declined by claude-opus-5-5, asked 2026-1
 nahum-2	nominative	Nahum	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 nain	nominative	Naín	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 naioth	nominative	Najoth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+nanea	nominative	Nanea	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 naomi	nominative	Noemi	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 prints it, where it was «Noemí», checked 2026-10-31	\N
 naphish	nominative	Naphis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 naphothdor	nominative	Nafot-dor	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 naphtali	nominative	Nephtalí	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 naphtali-2	nominative	Nephtalí	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-naphtalites	nominative	Nephtalí	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+naphtalites	nominative	Neftalitas	manual	\N	Essenthos: the project owner's word of 2026-11-16 (the NVI's and the Biblia de Jerusalén's efraimitas; judíos reads as the Jews), by claude-opus-5-5 on 2026-11-16	\N
 naphtuh	nominative	Naphtuhim	stated-by-source	\N	Essenthos, as the Reina-Valera 1909 prints it, where it was «Naftuh», checked 2026-10-31	\N
 naphtuhim	nominative	Naphtuhim	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 narcissus	nominative	Narciso	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3462,6 +3489,7 @@ neballat	nominative	Neballath	model-reading	1	declined by claude-opus-5-5, asked
 nebat	nominative	Nabat	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nebo-2	nominative	Nebo	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 nebo-3	nominative	Nebo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+nebo-god	nominative	Nebo	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nebuchadnezzar	nominative	Nabucodonosor	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 nebuchadnezzars-dream-image	nominative	La gran imagen del sueño de Nabucodonosor	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 nebuchadnezzars-image	nominative	Estatua de oro	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
@@ -3487,6 +3515,7 @@ nephisim	nominative	Nephusim	model-reading	1	declined by claude-opus-5-5, asked 
 nephtoah	nominative	Nephtoa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ner	nominative	Ner	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 nereus	nominative	Nereo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+nergal	nominative	Nergal	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nergalsarezer	nominative	Nergal-sarezer	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nergalsarezer-2	nominative	Nergal-sarezer	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 neri	nominative	Neri	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3514,6 +3543,7 @@ new-moon	nominative	Nueva luna	model-reading	0.93	Essenthos, read from each vers
 newgate	nominative	puerta nueva	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 neziah	nominative	Nesía	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nezib	nominative	Nesib	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+nibhaz	nominative	Nibhaz	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nibshan	nominative	Nibsan	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nicanor	nominative	Nicanor	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nicodemus	nominative	Nicodemo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3526,6 +3556,7 @@ nimrod	nominative	Nimrod	model-reading	1	declined by claude-sonnet-5, asked 2026
 nimrod-2	nominative	Nimrod	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nimshi	nominative	Nimsi	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nineveh	nominative	Nínive	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
+nisroch	nominative	Nisroc	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 noadiah	nominative	Noadías	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 noadiah-2	nominative	Noadías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 noah	nominative	Noé	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3786,6 +3817,7 @@ putiel	nominative	Phutiel	model-reading	1	declined by claude-opus-5-5, asked 202
 puvvah	nominative	Phua	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 pyrrhus	nominative	Pirro	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 quartus	nominative	Cuarto	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+queen-of-heaven	nominative	Reina del cielo	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 queenofsheba	nominative	reina de Seba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 quirinius	nominative	Cirenio	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 raamah	nominative	Raama	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -3802,6 +3834,7 @@ raddai	nominative	Radai	model-reading	1	declined by claude-opus-5-5, asked 2026-
 ragmat	nominative	Ragmat	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rahab	nominative	Rahab	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rahab-2	nominative	Rahab	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+rahab-sea-monster	nominative	Rahab	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 rahabs-scarlet-cord	nominative	Cordón de grana	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 raham	nominative	Raham	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rakem	nominative	Recem	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3843,6 +3876,7 @@ redsea	nominative	mar Bermejo	model-reading	1	declined by claude-opus-5-5, asked
 redsea-2	nominative	mar Bermejo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 redsea-3	nominative	mar Bermejo	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 reelaiah	nominative	Reelaías	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+reem	nominative	Reem	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 regem	nominative	Regem	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 regemmelech	nominative	Regem-melech	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rehabiah	nominative	Rehabía	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
@@ -3898,6 +3932,7 @@ rimmon	nominative	Rimmón	model-reading	1	declined by claude-sonnet-5, asked 202
 rimmon-2	nominative	Rimmón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rimmon-3	nominative	Rimmón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rimmon-4	nominative	Rimmón	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+rimmon-god	nominative	Rimón	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 rimmono	nominative	Rimmono	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rimmonparez	nominative	Rimmón-peres	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 rimmonperez	nominative	Rimmón-peres	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3961,6 +3996,7 @@ saph	nominative	Saph	model-reading	1	declined by claude-opus-5-5, asked 2026-10-
 sapphira	nominative	Safira	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 sarai	nominative	Sarai	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 saraph	nominative	Saraph	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+saraph-serpents	nominative	Saraf	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 sardis	nominative	Sardis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 sardites	nominative	Sereditas	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 sarepta	nominative	Sarepta	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -3990,6 +4026,7 @@ segub	nominative	Segub	model-reading	1	declined by claude-opus-5-5, asked 2026-1
 segub-2	nominative	Segub	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 seir	nominative	Seir	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 seirah	nominative	Seirath	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+seirim	nominative	Seirim	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 sela	nominative	Sela	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 sela-2	nominative	Sela	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 sela-3	nominative	Sela	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4403,6 +4440,7 @@ straightstreet	nominative	calle Derecha	model-reading	1	declined by claude-opus-
 suah	nominative	Sua	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 succoth	nominative	Succoth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 succoth-2	nominative	Succoth	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+succoth-benoth	nominative	Sucot-benot	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 suchathites	nominative	Sucatheos	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 sukkiims	nominative	Sukienos	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 suph	nominative	Suph	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4457,7 +4495,9 @@ tamar-2	nominative	Thamar	model-reading	1	declined by claude-sonnet-5, asked 202
 tamar-3	nominative	Thamar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tamar-4	nominative	Tamar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tamar-5	nominative	Tamar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+tammuz	nominative	Tamuz	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 tanhumeth	nominative	Tanhumet	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+tannin	nominative	Tanín	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 taphath	nominative	Thaphat	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 tappuah	nominative	Thaphua	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tappuah-2	nominative	Tappua	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4471,6 +4511,7 @@ tarshish-3	nominative	Tharsis	model-reading	1	declined by claude-opus-5-5, asked
 tarshish-4	nominative	Tarsis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tarshish-5	nominative	Tharsis	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tarsus	nominative	Tarso	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+tartak	nominative	Tartac	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 tartan	nominative	Thartán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tartessos	nominative	Tartessos	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tattenai	nominative	Tatnai	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4591,6 +4632,7 @@ trogyllium	nominative	Trogilio	model-reading	1	declined by claude-opus-5-5, aske
 trophimus	nominative	Trófimo	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tryphaena	nominative	Trifena	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tryphosa	nominative	Trifosa	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+tsepha	nominative	Tsefa	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 tubal	nominative	Tubal	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tubal-2	nominative	Tubal	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tubalcain	nominative	Tubal-Caín	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -4875,6 +4917,7 @@ zeruiah	nominative	Sarvia	model-reading	1	declined by claude-sonnet-5, asked 202
 zetham	nominative	Zetham	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zethan	nominative	Zethán	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zethar	nominative	Zetar	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+zeus	nominative	Zeus	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 zia	nominative	Zia	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ziba	nominative	Siba	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 zibeon-2	nominative	Zibeón	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N

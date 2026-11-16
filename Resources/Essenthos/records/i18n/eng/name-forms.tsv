@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	nominative	Aaron	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -2716,7 +2716,6 @@ kedesh-3	nominative	Kedesh	model-reading	1	read from Scripture by claude-sonnet-
 kedesh-4	nominative	Kedesh	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#bf1cb97bd83e1d39
 kedeshnaphtali	nominative	Kedesh-naphtali	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0086.jsonl#ae1983077134dadd
 kehelathah	nominative	Kehelathah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#f25b53e016220669
-keilah	nominative	Keilah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#8428c4df89706c7b
 keilah-2	nominative	Keilah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#0f4860dc02583042
 kelaiah	nominative	Kelaiah	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0006.jsonl#23aef88a9e55ed9c
 kelita	nominative	Kelita	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0006.jsonl#4c04aba5c555d918

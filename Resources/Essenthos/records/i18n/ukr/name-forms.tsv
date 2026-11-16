@@ -2,7 +2,7 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
-# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-15
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-16
 # A record's name in each grammatical case of this language.
 slug	grammatical_case	form	method	confidence	by	run
 aaron	genitive	Аарона	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0008.jsonl#00a60859927b15fe
@@ -299,6 +299,7 @@ adoraim	locative	Адораїмі	model-reading	1	read from Scripture by claude-
 adoraim	nominative	Адораїм	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0004.jsonl#7050ea27d339f771
 adrammelech	genitive	Адраммелеха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#24c2fb979fb22e2f
 adrammelech	nominative	Адраммелех	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#24c2fb979fb22e2f
+adrammelech-god	nominative	Адраммелех	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 adramyttium	genitive	Адрамітії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0004.jsonl#fbfbb5c2b30128f2
 adramyttium	locative	Адрамітії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0004.jsonl#fbfbb5c2b30128f2
 adramyttium	nominative	Адрамітія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0004.jsonl#fbfbb5c2b30128f2
@@ -740,6 +741,7 @@ anamim	genitive	Анамів	model-reading	1	read from Scripture by claude-sonne
 anamim	nominative	Анами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#f857bfb0e408da87
 anamim-son-of-mizraim	genitive	Анаміма	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#60655147e32a01a7
 anamim-son-of-mizraim	nominative	Анамім	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#60655147e32a01a7
+anammelech	nominative	Анаммелех	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 anan	genitive	Анана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0000.jsonl#4e184cd66130a01c
 anan	nominative	Анан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0000.jsonl#4e184cd66130a01c
 anani	genitive	Анані	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0008.jsonl#a01929aa9e7396c0
@@ -1012,6 +1014,7 @@ artaxerxes	genitive	Артаксеркса	model-reading	1	read from Scripture b
 artaxerxes	nominative	Артаксеркс	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0011.jsonl#cc9875baec98433d
 artemas	genitive	Артема	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0051.jsonl#4780f88dcda86ce1
 artemas	nominative	Артем	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0051.jsonl#4780f88dcda86ce1
+artemis	nominative	Артеміда	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 arubboth	genitive	Арубботу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0015.jsonl#74898bb391dbbb20
 arubboth	locative	Арубботі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0015.jsonl#74898bb391dbbb20
 arubboth	nominative	Аруббот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0015.jsonl#74898bb391dbbb20
@@ -1078,10 +1081,12 @@ asher	nominative	Асир	model-reading	1	read from Scripture by claude-sonnet-5
 asher-2	genitive	Асира	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 asher-2	locative	Асирі	model-reading	1	declined by GPT-6 (Codex), asked 2026-10-04	\N
 asher-2	nominative	Асир	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-asherites	genitive	асирців	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12	\N
-asherites	nominative	асирці	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12	\N
+asherah	nominative	Ашера	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+asherites	genitive	Асирових	manual	\N	Essenthos: the project owner's word of 2026-11-16, 1CH 4:19 read in the Hebrew, the Septuagint, the Vulgate, the King James, Ohienko and the Synodal, and the Asherites' names read against Ohienko, the Synodal, Luther and Reina-Valera, by claude-opus-5-5 on 2026-11-16	\N
+asherites	nominative	Асирові	manual	\N	Essenthos: the project owner's word of 2026-11-16, 1CH 4:19 read in the Hebrew, the Septuagint, the Vulgate, the King James, Ohienko and the Synodal, and the Asherites' names read against Ohienko, the Synodal, Luther and Reina-Valera, by claude-opus-5-5 on 2026-11-16	\N
 ashhur	genitive	Ашхура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#ce1a57801614b7e5
 ashhur	nominative	Ашхур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#ce1a57801614b7e5
+ashima	nominative	Ашіма	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 ashkelon	genitive	Ашкелону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#461b7ad99fa74843
 ashkelon	locative	Ашкелоні	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 ashkelon	nominative	Ашкелон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#461b7ad99fa74843
@@ -1107,6 +1112,7 @@ ashterathites	nominative	аштеряни	model-reading	1	read from Scripture by
 ashterothkarnaim	genitive	Аштерот-Карнаїма	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0056.jsonl#11ea7bbeef432f17
 ashterothkarnaim	locative	Аштерот-Карнаїмі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0056.jsonl#11ea7bbeef432f17
 ashterothkarnaim	nominative	Аштерот-Карнаїм	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0056.jsonl#11ea7bbeef432f17
+ashtoreth	nominative	Астарта	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 ashurites	genitive	Ашуру	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashurites	nominative	Ашур	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ashurites-h805	genitive	ашшурів	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0000.jsonl#725946d2510e3b4b
@@ -1376,7 +1382,11 @@ baal	genitive	Баала	model-reading	1	read from Scripture by claude-sonnet-5,
 baal	nominative	Баал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0069.jsonl#554e359b190aaa00
 baal-2	genitive	Баала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0001.jsonl#2d7596e1304ae54c
 baal-2	nominative	Баал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0001.jsonl#2d7596e1304ae54c
+baal-berith	nominative	Ваал-Берит	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+baal-god	nominative	Ваал	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+baal-peor-god	nominative	Ваал-Пеор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 baal-temple-jerusalem	nominative	Дім Ваала в оповіді про Єгояду	model-reading	0.93	Essenthos, model and agent readings of named places and structures, 2026-10-26	\N
+baal-zebub	nominative	Баал-Зевув	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 baalah	genitive	Баали	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0015.jsonl#017e6e2e58edcd3c
 baalah	locative	Баалі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0015.jsonl#017e6e2e58edcd3c
 baalah	nominative	Баала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0015.jsonl#017e6e2e58edcd3c
@@ -1634,6 +1644,8 @@ beersheba-2	nominative	Беер-Шева	model-reading	1	read from Scripture by 
 beeshterah	genitive	Беештери	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#66ff892989667f3c
 beeshterah	locative	Беештері	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#66ff892989667f3c
 beeshterah	nominative	Беештера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#66ff892989667f3c
+behemoth	nominative	Бегемот	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+bel	nominative	Бел	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 bela	genitive	Бели	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#4b2bdf35ffa1c9ed
 bela	nominative	Бела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#4b2bdf35ffa1c9ed
 bela-2	genitive	Бели	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#67f9a1d566637ae2
@@ -2291,6 +2303,7 @@ chelubai	genitive	Келувая	model-reading	1	read from Scripture by claude-s
 chelubai	nominative	Келувай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0027.jsonl#e377bd2e7c976fb0
 cheluhi	genitive	Келуга	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#3ce3857e8dadc69e
 cheluhi	nominative	Келуг	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#3ce3857e8dadc69e
+chemosh	nominative	Кемош	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 chenaanah	genitive	Кенаани	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0112.jsonl#001e136d49ae01ee
 chenaanah	nominative	Кенаана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0112.jsonl#001e136d49ae01ee
 chenaanah-2	genitive	Кенаани	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0112.jsonl#a3f159db79621cd7
@@ -2357,6 +2370,7 @@ chislothtabor	nominative	Кіслот-Фавор	model-reading	1	read from Scrip
 chitlish	genitive	Кітліша	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#62ce7771308bbc05
 chitlish	locative	Кітліші	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 chitlish	nominative	Кітліш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#62ce7771308bbc05
+chiun	nominative	Кійюн	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 chloe	genitive	Хлої	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#e2d87bec7473e0b8
 chloe	locative	Хлої	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#e2d87bec7473e0b8
 chloe	nominative	Хлоя	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#e2d87bec7473e0b8
@@ -2483,6 +2497,7 @@ dabbesheth	nominative	Даббешет	model-reading	1	read from Scripture by cl
 daberath	genitive	Доврату	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#b4d9dcf429ae0a00
 daberath	locative	Довраті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#b4d9dcf429ae0a00
 daberath	nominative	Доврат	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#b4d9dcf429ae0a00
+dagon	nominative	Даґон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 dalmanutha	genitive	Далманута	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#50c72d8c5e79fc8c
 dalmanutha	locative	Далмануті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#50c72d8c5e79fc8c
 dalmanutha	nominative	Далманут	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#50c72d8c5e79fc8c
@@ -2624,6 +2639,8 @@ dinhabah	locative	Дінгаві	model-reading	1	declined by claude-sonnet-5, as
 dinhabah	nominative	Дінгава	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0127.jsonl#8236c2ed18d99aca
 dionysius	genitive	Діонисія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0127.jsonl#d56ead8f8a34d12a
 dionysius	nominative	Діонисій	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0127.jsonl#d56ead8f8a34d12a
+dionysus	nominative	Діоніс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+dioscuri	nominative	Діоскури	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 diotrephes	genitive	Діотрефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0127.jsonl#9267e16e49a6e13e
 diotrephes	nominative	Діотреф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0127.jsonl#9267e16e49a6e13e
 dishan	genitive	Дішана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0127.jsonl#bf47fae3b50f673f
@@ -2661,6 +2678,7 @@ dor	nominative	Дор	model-reading	1	read from Scripture by claude-sonnet-5, as
 dothan	genitive	Дотаїну	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0039.jsonl#2712267932b6dd5c
 dothan	locative	Дотаїні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0039.jsonl#2712267932b6dd5c
 dothan	nominative	Дотаїн	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0039.jsonl#2712267932b6dd5c
+dragon-of-babylon	nominative	Вавилонський дракон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 dragonspring	genitive	Джерела Таннін	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0030.jsonl#cbbd8ae7ffea03d3
 dragonspring	locative	Джерелі Таннін	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0030.jsonl#cbbd8ae7ffea03d3
 dragonspring	nominative	Джерело Таннін	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0030.jsonl#cbbd8ae7ffea03d3
@@ -3481,6 +3499,7 @@ gad-2	genitive	Ґада	model-reading	1	read from Scripture by claude-sonnet-5, 
 gad-2	nominative	Ґад	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0040.jsonl#aad6f0a15cc228e1
 gad-3	genitive	Ґада	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 gad-3	nominative	Ґад	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
+gad-god	nominative	Ґад	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 gadara	genitive	Гадари	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0050.jsonl#1c368e547feff539
 gadara	locative	Гадарі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0050.jsonl#1c368e547feff539
 gadara	nominative	Гадара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0050.jsonl#1c368e547feff539
@@ -4491,6 +4510,7 @@ heracleopolismagna	genitive	Гераклеополя Великого	model-read
 heracleopolismagna	nominative	Гераклеополь Великий	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 heracleopolisparva	genitive	Гераклеополя Малого	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 heracleopolisparva	nominative	Гераклеополь Малий	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+heracles	nominative	Геракл	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 heres	genitive	Хереса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0219.jsonl#7073a4cd9cd5dca4
 heres	locative	Хересі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0219.jsonl#7073a4cd9cd5dca4
 heres	nominative	Херес	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0219.jsonl#7073a4cd9cd5dca4
@@ -4503,6 +4523,7 @@ hermas	genitive	Єрма	model-reading	1	read from Scripture by claude-sonnet-5,
 hermas	nominative	Єрм	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0051.jsonl#f214367122b30160
 hermes	genitive	Гермеса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0051.jsonl#802176ac49849bdf
 hermes	nominative	Гермес	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0051.jsonl#802176ac49849bdf
+hermes-god	nominative	Гермес	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 hermogenes	genitive	Гермогена	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0220.jsonl#3defbd6c8548da8d
 hermogenes	nominative	Гермоген	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0220.jsonl#3defbd6c8548da8d
 herod	genitive	Ірода	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0052.jsonl#44273ca2369faf29
@@ -6233,8 +6254,6 @@ kedeshnaphtali	nominative	Кедеш-Нефталимів	model-reading	1	read f
 kehelathah	genitive	Кегелати	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#f25b53e016220669
 kehelathah	locative	Кегелаті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#f25b53e016220669
 kehelathah	nominative	Кегелата	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#f25b53e016220669
-keilah	genitive	Кеїли	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#8428c4df89706c7b
-keilah	nominative	Кеїла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0309.jsonl#8428c4df89706c7b
 keilah-2	genitive	Кеїли	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#0f4860dc02583042
 keilah-2	locative	Кеїлі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#0f4860dc02583042
 keilah-2	nominative	Кеїла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#0f4860dc02583042
@@ -6600,6 +6619,7 @@ levi-3	genitive	Левія	model-reading	1	read from Scripture by claude-sonnet-
 levi-3	nominative	Левій	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#226bc53bbd756f9e
 levi-son-of-alphaeus	genitive	Левія	model-reading	1	declined by claude-opus-5-5, asked 2026-10-12	\N
 levi-son-of-alphaeus	nominative	Левій	model-reading	1	declined by claude-opus-5-5, asked 2026-10-12	\N
+leviathan	nominative	Левіятан	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 levites	genitive	Левитів	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#c78cbf997c443b46
 levites	nominative	Левити	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#c78cbf997c443b46
 libnah	genitive	Лівни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0064.jsonl#5683f4349f98758d
@@ -6619,6 +6639,7 @@ libya	locative	Лівії	model-reading	1	read from Scripture by claude-sonnet-5
 libya	nominative	Лівія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0328.jsonl#d3cb3537f9274530
 lihki	genitive	Лікхі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0328.jsonl#0a7e1046418473c8
 lihki	nominative	Лікхі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0328.jsonl#0a7e1046418473c8
+lilith	nominative	Ліліт	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 linus	genitive	Лина	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0328.jsonl#dcbf35d372b58d80
 linus	nominative	Лин	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0328.jsonl#dcbf35d372b58d80
 loammi	genitive	Ло-Аммі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#428fbbe8ff5d3edf
@@ -7169,6 +7190,7 @@ memucan	genitive	Мемухана	model-reading	1	read from Scripture by claude-
 memucan	nominative	Мемухан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0355.jsonl#ab52b7cf1bebd9b0
 menachem	genitive	Менахема	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1709e7d894bc3033
 menachem	nominative	Менахем	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0079.jsonl#1709e7d894bc3033
+meni	nominative	Мені	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 menna	genitive	Менни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0356.jsonl#b8933249a88ea5fd
 menna	nominative	Менна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0356.jsonl#b8933249a88ea5fd
 menorah	nominative	Свічник	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
@@ -7213,6 +7235,7 @@ meribah	nominative	Мерива	model-reading	1	read from Scripture by claude-so
 meribah-2	genitive	Мериви	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3d813e47e3d52784
 meribah-2	locative	Мериві	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3d813e47e3d52784
 meribah-2	nominative	Мерива	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0099.jsonl#3d813e47e3d52784
+merodach	nominative	Меродах	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 merom	genitive	Мерому	model-reading	1	declined by GPT-6 (Codex), asked 2026-10-04	\N
 merom	nominative	Мером	model-reading	1	declined by GPT-6 (Codex), asked 2026-10-04	\N
 meronoth	genitive	Меронота	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0080.jsonl#f21db8dddae4f71e
@@ -7435,6 +7458,7 @@ milcah	genitive	Мілки	model-reading	1	read from Scripture by claude-sonnet-
 milcah	nominative	Мілка	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0369.jsonl#43299fcb766860e7
 milcah-2	genitive	Мілки	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0082.jsonl#0fa5f2d8c451dd08
 milcah-2	nominative	Мілка	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0082.jsonl#0fa5f2d8c451dd08
+milcom	nominative	Мілком	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 miletus	genitive	Мілету	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0103.jsonl#0f591a80127aa51b
 miletus	locative	Мілеті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0103.jsonl#0f591a80127aa51b
 miletus	nominative	Мілет	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0103.jsonl#0f591a80127aa51b
@@ -7542,6 +7566,7 @@ moadiah	nominative	Моадія	model-reading	1	read from Scripture by claude-so
 moladah	genitive	Молади	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0083.jsonl#a51594607f2e87d8
 moladah	locative	Моладі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0083.jsonl#a51594607f2e87d8
 moladah	nominative	Молада	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0083.jsonl#a51594607f2e87d8
+molech	nominative	Молох	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 molid	genitive	Моліда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0374.jsonl#73b2833dcc9e01fb
 molid	nominative	Молід	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0374.jsonl#73b2833dcc9e01fb
 morashthites	genitive	морешетян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0374.jsonl#31d6944ececf1e23
@@ -7787,6 +7812,7 @@ nain	nominative	Наїн	model-reading	1	read from Scripture by claude-sonnet-5,
 naioth	genitive	Найота	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0385.jsonl#efc7fd2d078c3ee4
 naioth	locative	Найоті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0385.jsonl#efc7fd2d078c3ee4
 naioth	nominative	Найот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0385.jsonl#efc7fd2d078c3ee4
+nanea	nominative	Нанея	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 naomi	genitive	Ноомі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0386.jsonl#60d6b25661bf9f8a
 naomi	nominative	Ноомі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0386.jsonl#60d6b25661bf9f8a
 naphish	genitive	Нафіша	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0386.jsonl#1f455141330539f1
@@ -7866,6 +7892,7 @@ nebo-2	nominative	Нево	model-reading	1	read from Scripture by claude-sonnet-
 nebo-3	genitive	Нево	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0108.jsonl#1e99da2d397c7199
 nebo-3	locative	Нево	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0108.jsonl#1e99da2d397c7199
 nebo-3	nominative	Нево	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0108.jsonl#1e99da2d397c7199
+nebo-god	nominative	Нево	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nebuchadnezzar	genitive	Навуходоносора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#e8d11c5cbf47af15
 nebuchadnezzar	locative	Навуходоносорі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#e8d11c5cbf47af15
 nebuchadnezzar	nominative	Навуходоносор	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#e8d11c5cbf47af15
@@ -7920,6 +7947,7 @@ ner	genitive	Нера	model-reading	1	read from Scripture by claude-sonnet-5, as
 ner	nominative	Нер	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0391.jsonl#eb70ccaf7df933f8
 nereus	genitive	Нірея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0087.jsonl#727a3049bd2108f8
 nereus	nominative	Нірей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0087.jsonl#727a3049bd2108f8
+nergal	nominative	Нереґал	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nergalsarezer	genitive	Нерґал-Сар'ецера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0109.jsonl#b7ffb2993993208f
 nergalsarezer	nominative	Нерґал-Сар'ецер	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0109.jsonl#b7ffb2993993208f
 nergalsarezer-2	genitive	Нерґал-Сар'ецера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0109.jsonl#a71b0e6733198465
@@ -7977,6 +8005,7 @@ neziah	nominative	Неціях	model-reading	1	read from Scripture by claude-son
 nezib	genitive	Неціва	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0088.jsonl#ad4493c53af66434
 nezib	locative	Неціві	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0088.jsonl#ad4493c53af66434
 nezib	nominative	Неців	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0088.jsonl#ad4493c53af66434
+nibhaz	nominative	Нівхаз	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nibshan	genitive	Нівшана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0394.jsonl#f27d96f113ffe2a4
 nibshan	locative	Нівшані	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0394.jsonl#f27d96f113ffe2a4
 nibshan	nominative	Нівшан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0394.jsonl#f27d96f113ffe2a4
@@ -8009,6 +8038,7 @@ nimshi	nominative	Німші	model-reading	1	read from Scripture by claude-sonne
 nineveh	genitive	Ніневії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0395.jsonl#abe720d38de31c19
 nineveh	locative	Ніневії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0395.jsonl#abe720d38de31c19
 nineveh	nominative	Ніневія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0395.jsonl#abe720d38de31c19
+nisroch	nominative	Нісрох	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 nisroch-temple	nominative	Дім Нісроха	model-reading	0.93	Essenthos, model and agent readings of named places and structures, 2026-10-26	\N
 noadiah	genitive	Ноадії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0396.jsonl#e2c48f614df5149c
 noadiah	nominative	Ноадія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0396.jsonl#e2c48f614df5149c
@@ -8607,6 +8637,7 @@ pyrrhus	genitive	Пірра	model-reading	1	read from Scripture by claude-sonnet
 pyrrhus	nominative	Пірр	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#bbfa6f849a317c2b
 quartus	genitive	Кварта	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#986dd322fba6bfc9
 quartus	nominative	Кварт	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#986dd322fba6bfc9
+queen-of-heaven	nominative	Цариця небесна	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 queenofsheba	genitive	цариці Шеви	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#6bc397efbe2a4582
 queenofsheba	nominative	цариця Шеви	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#6bc397efbe2a4582
 quirinius	genitive	Квіринія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0094.jsonl#15d8301740440ca0
@@ -8646,6 +8677,7 @@ rahab	nominative	Рахав	model-reading	1	read from Scripture by claude-sonnet
 rahab-2	genitive	Рагава	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#c018b05ba96b5603
 rahab-2	locative	Рагаві	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#c018b05ba96b5603
 rahab-2	nominative	Рагав	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#c018b05ba96b5603
+rahab-sea-monster	nominative	Рагав	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 rahabs-scarlet-cord	nominative	Червоний шнурок Рахави	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 raham	genitive	Рахама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0427.jsonl#556721a3e9f2a96a
 raham	nominative	Рахам	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0427.jsonl#556721a3e9f2a96a
@@ -8748,6 +8780,7 @@ redsea-3	locative	Червоному морі	model-reading	1	declined by claude
 redsea-3	nominative	Червоне море	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0432.jsonl#87cd5fa72a26a323
 reelaiah	genitive	Реелаї	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#63e0eb4d5266b55e
 reelaiah	nominative	Реелая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#63e0eb4d5266b55e
+reem	nominative	Реем	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 regem	genitive	Реґема	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0432.jsonl#aadf8e0776b6eb89
 regem	nominative	Реґем	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0432.jsonl#aadf8e0776b6eb89
 regemmelech	genitive	Реґем-Мелеха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0085.jsonl#3930960bf02839ab
@@ -8877,6 +8910,7 @@ rimmon-3	nominative	Ріммон	model-reading	1	read from Scripture by claude-s
 rimmon-4	genitive	Ріммону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0086.jsonl#c401d22b1267b6b9
 rimmon-4	locative	Ріммоні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0086.jsonl#c401d22b1267b6b9
 rimmon-4	nominative	Ріммон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0086.jsonl#c401d22b1267b6b9
+rimmon-god	nominative	Ріммон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 rimmono	genitive	Ріммону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0086.jsonl#be811bedc8e48679
 rimmono	locative	Ріммоні	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0086.jsonl#be811bedc8e48679
 rimmono	nominative	Ріммон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0086.jsonl#be811bedc8e48679
@@ -9026,6 +9060,7 @@ sarai	genitive	Сари	model-reading	1	read from Scripture by claude-sonnet-5, 
 sarai	nominative	Сара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#4cfdaee6d3a4b39d
 saraph	genitive	Сарафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#8fedf571e5f5553c
 saraph	nominative	Сараф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#8fedf571e5f5553c
+saraph-serpents	nominative	Сараф	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 sardis	genitive	Сард	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0099.jsonl#ed57035ef7a9cffe
 sardis	locative	Сардах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0099.jsonl#ed57035ef7a9cffe
 sardis	nominative	Сарди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0099.jsonl#ed57035ef7a9cffe
@@ -9092,6 +9127,7 @@ seir	nominative	Сеїр	model-reading	1	read from Scripture by claude-sonnet-5,
 seirah	genitive	Сеїру	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#4ed4889cac009489
 seirah	locative	Сеїрі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#4ed4889cac009489
 seirah	nominative	Сеїр	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#4ed4889cac009489
+seirim	nominative	Сеїрим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 sela	genitive	Сели	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#301025abe0c18639
 sela	locative	Селі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#301025abe0c18639
 sela	nominative	Села	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#301025abe0c18639
@@ -10001,6 +10037,7 @@ succoth	nominative	Суккот	model-reading	1	read from Scripture by claude-so
 succoth-2	genitive	Суккоту	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0496.jsonl#c8f30c9f28e66d06
 succoth-2	locative	Суккоті	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0496.jsonl#c8f30c9f28e66d06
 succoth-2	nominative	Суккот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0496.jsonl#c8f30c9f28e66d06
+succoth-benoth	nominative	Суккот-Бенот	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 suchathites	genitive	сухатян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#f23e1ce3d1199056
 suchathites	nominative	сухатяни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#f23e1ce3d1199056
 sukkiims	genitive	суккійян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#56b4b34c18c4f855
@@ -10131,8 +10168,10 @@ tamar-4	nominative	Тамара	model-reading	1	read from Scripture by claude-so
 tamar-5	genitive	Тамару	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#555aefcaa0dd68c3
 tamar-5	locative	Тамарі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#555aefcaa0dd68c3
 tamar-5	nominative	Тамар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#555aefcaa0dd68c3
+tammuz	nominative	Таммуз	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 tanhumeth	genitive	Танхумета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0111.jsonl#6ad110291b49572b
 tanhumeth	nominative	Танхумет	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0111.jsonl#6ad110291b49572b
+tannin	nominative	Таннін	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 taphath	genitive	Тафат	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0502.jsonl#2c4a4ca9614d9886
 taphath	nominative	Тафат	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0502.jsonl#2c4a4ca9614d9886
 tappuah	genitive	Таппуаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0502.jsonl#4f0c5bea57f5c65d
@@ -10165,6 +10204,7 @@ tarshish-5	nominative	Таршіш	model-reading	1	read from Scripture by claude
 tarsus	genitive	Тарсу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0503.jsonl#a85a6a209fc1257c
 tarsus	locative	Тарсі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0503.jsonl#a85a6a209fc1257c
 tarsus	nominative	Тарс	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0503.jsonl#a85a6a209fc1257c
+tartak	nominative	Тартак	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 tartan	genitive	Тартана	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tartan	nominative	Тартан	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tartessos	genitive	Тартессу	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -10456,6 +10496,7 @@ tryphaena	nominative	Трифена	model-reading	1	read from Scripture by claud
 tryphosa	genitive	Трифоси	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#fe81272cea17c8fc
 tryphosa	locative	Трифосі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#fe81272cea17c8fc
 tryphosa	nominative	Трифоса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#fe81272cea17c8fc
+tsepha	nominative	Цефа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 tubal	genitive	Тувала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0515.jsonl#1ef449a95e725e8b
 tubal	nominative	Тувал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0515.jsonl#1ef449a95e725e8b
 tubal-2	genitive	Тувалу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#d7ad86b020d21b41
@@ -11112,6 +11153,7 @@ zethan	genitive	Зетана	model-reading	1	read from Scripture by claude-sonne
 zethan	nominative	Зетан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0548.jsonl#e98297c90b89a90c
 zethar	genitive	Зетара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0548.jsonl#4aac1a276afbbeba
 zethar	nominative	Зетар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0548.jsonl#4aac1a276afbbeba
+zeus	nominative	Зевс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 zia	genitive	Зії	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#80a010bbb250626b
 zia	nominative	Зія	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#80a010bbb250626b
 ziba	genitive	Ціви	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0119.jsonl#09a2fd29faa91861
