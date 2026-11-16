@@ -19,6 +19,7 @@ An item is taken if any of these holds. The first three are the `.rq` files here
 | `described-by-source` | `described-by-source.rq` | 2,236 | *described by source* (P1343) is one of those works, or Archimandrite Nicephorus's Bible Encyclopedia, Easton's, the ISBE or either Encyclopaedia Biblica |
 | `class` | `class.rq` | 2,891 | an instance of *human biblical figure* (Q20643955), *biblical character* (Q12405827) or *biblical place* (Q12404340), or of any class below them (angels, biblical city, Levitical city…) |
 | `openbible` | — | 1,626 | every QID in `Resources/OpenBible/ancient.jsonl` and `modern.jsonl` (1,638 QIDs named; 12 answered as an item another of them already names) |
+| `records` | `record-items.tsv` | 18 | the item chosen by hand for a record no query reaches, or whose item goes by none of its names: gods of the nations (Asherah, Molech, Nabu…) and creatures named by their Hebrew word (the hoopoe for the dukhiphat); `record`, `qid` and why, committed. 16 were added on 16 November 2026 with `-Add` (PRB-1744) |
 
 The Jewish Encyclopedias (Q653922, Brockhaus–Efron's Q4173137) are deliberately not sources: they
 describe Jewish persons of every century. Their identifiers are still kept on the items that have
@@ -115,6 +116,18 @@ Items counted as candidates include those without any article, because the dange
 man of the famous man's name, and the minor namesakes are mostly items with none. A record is given a row
 for each of English, Ukrainian, German and Spanish in which the item has an article, and none for a
 language it has not.
+
+## Items chosen by hand for a record
+
+`record-items.tsv` names, for a record the queries cannot reach, the item it is: a god of the nations
+Wikidata does not tie to the Bible, a creature the record names by its Hebrew word. The fetch reads
+each under the seed `records`; `./scripts/fetch-wikidata-biblical.ps1 -Add` reads only those
+`items.jsonl` lacks and appends them (and the labels they point at to `referenced.jsonl`), leaving
+every other line as it was read, so no other record's match moves; `summary.json` lists them under
+`added`. The `wikipedia` step offers such an item only to the record named with it (an item read for
+that record alone is no namesake of any other record), never ties it on its own, and lists it for the
+owner, whose answer links it. Each row is read by hand against the record's verses and line; a record
+whose identification is disputed (most of the creatures of LEV 11 and DEU 14) is given none.
 
 ## Re-running
 

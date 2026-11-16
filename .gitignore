@@ -160,10 +160,11 @@ Resources/*/*
 # machine that did the fetching.
 !Resources/WorldHistory/**
 
-# What the Wikidata fetch asked and got: its README and the four SPARQL queries. The items
+# What the Wikidata fetch asked and got: its README, the SPARQL queries and the items chosen by hand for a record. The items
 # themselves are re-fetched by scripts/fetch-wikidata-biblical.ps1 and stay out.
 !Resources/Wikidata/README.md
 !Resources/Wikidata/*.rq
+!Resources/Wikidata/record-items.tsv
 
 # The descriptor claims this project generated itself: what the encyclopedia says under a name,
 # read from Scripture rather than imported, and the only thing under Resources/ that is ours. It is
