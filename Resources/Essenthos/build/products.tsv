@@ -88,7 +88,7 @@ external/bibledata/topic-references	build	topics	BibleData2026/NavesTopicalDicti
 external/maimonides/*	build	commandments	Maimonides/commandments.tsv	@records	all
 external/periodo/*	build	lands	PeriodO/d.json	@records	all
 external/**	kept	records-export	-	@records	all
-names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/names/overrides/{text} Essenthos/texts/{text}/words Essenthos/mapping/*/final Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/i18n/*/name-forms	word_entity	text
+names/projected/{text}	build	names-project --parallel 16	Essenthos/names/* Essenthos/names/overrides/{text} Essenthos/texts/{text}/words Essenthos/texts/*/words Essenthos/mapping/*/final Essenthos/records/records Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/i18n/*/name-forms	word_entity	text
 names/bases	hand	by hand (seeded once by names-project)	-	-	none
 names/overrides/{text}	hand	by hand	-	-	none
 names/consensus/{text}	hand	by hand (written once from release 20261101a, the last database the name-consensus pass wrote)	-	-	none
