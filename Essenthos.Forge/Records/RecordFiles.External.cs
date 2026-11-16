@@ -120,9 +120,7 @@ internal static partial class RecordFiles
     private static RecordFile[] External =>
     [
         DatasetRecords("bibledata"),
-        DatasetRecords("openbible"),
         DatasetReferences("bibledata"),
-        DatasetReferences("openbible"),
 
         Chronologies("external/bibledata/chronologies", "slug = 'bibledata'"),
         Chronologies("external/ussher/chronologies", "slug = 'ussher'"),

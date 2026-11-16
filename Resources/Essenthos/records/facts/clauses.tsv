@@ -446,6 +446,7 @@ amalek	1	son-of	eliphaz	1.36:12	\N	\N	\N	model-reading	0.95	read from Scripture 
 amalek	2	ancestor-of	amalek-2	2.17:16	\N	\N	\N	model-reading	0.3	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0006.jsonl#7fa211d22a2c5332	\N
 amalek-2	1	region-of	negev	4.13:29	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0030.jsonl#e7f6ff9e8eba3f8f	\N
 amalekites	1	from-place	negev	9.30:1	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0006.jsonl#13e1f77a8546f8ba	\N
+amalekites	2	lived-in	amalek-2	9.15:7	\N	\N	\N	manual	\N	read from Scripture by an agent (claude-opus-5-5) reading the verse on the project owner's word that a land whose name stands on its people gets its verses through its people, decided 2026-11-16	\N	'And Saul smote the Amalekites from Havilah until thou comest to Shur' (1SA 15:7): the land of Amalek; the word for Amalek names the people
 amana	1	mountain-in	lebanon	22.4:8	\N	\N	\N	model-reading	0.5	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0031.jsonl#4386bd5b67987caf	\N
 amana	2	near	senir	22.4:8	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0031.jsonl#4386bd5b67987caf	\N
 amana	3	near	mounthermon	22.4:8	\N	\N	\N	model-reading	0.6	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0031.jsonl#4386bd5b67987caf	\N
@@ -513,6 +514,7 @@ ammizabad	1	son-of	benaiah	13.27:6	\N	\N	\N	model-reading	0.95	read from Scriptu
 ammon	1	near	jabbok	5.3:16	\N	\N	\N	model-reading	0.75	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0035.jsonl#407d244fd6852815	\N
 ammonites	1	ally-of	moabites	14.20:1	\N	\N	\N	model-reading	0.65	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0005.jsonl#49754db6b73637cc	\N
 ammonites	2	supporter-of	azariah-3	14.26:8	\N	\N	\N	model-reading	0.45	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0005.jsonl#49754db6b73637cc	\N
+ammonites	3	lived-in	ammon	5.2:19	\N	\N	\N	manual	\N	read from Scripture by an agent (claude-opus-5-5) reading the verse on the project owner's word that a land whose name stands on its people gets its verses through its people, decided 2026-11-16	\N	'the land of the children of Ammon ... I have given it unto the children of Lot for a possession' (DEU 2:19): the land is Ammon; the word for Ammon names the people
 amnon	1	son-of	david	10.3:2	\N	\N	\N	model-reading	0.95	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0000.jsonl#9395d8c6e4337505	\N
 amnon	2	brother-of	tamar-2	10.13:20	\N	\N	\N	model-reading	0.9	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0000.jsonl#9395d8c6e4337505	\N
 amnon	3	brother-of	absalom	10.13:4	\N	\N	\N	model-reading	0.85	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0000.jsonl#9395d8c6e4337505	\N

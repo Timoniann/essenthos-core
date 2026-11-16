@@ -16,19 +16,7 @@ internal static class ShownVerses
     /// <summary>What the source of every row the witness states starts with.</summary>
     public const string Witness = "BibleData by";
 
-    private const string OpenBible =
-        "OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0";
-
-    // Ezekiel's Tarshish stone describes the wheels' appearance, not the geographical place.
-    // Keep OpenBible's testimony stored, but do not count this lexical sense as a place reference.
-    internal static readonly Expression<Func<EntityVerse, bool>> IsShown =
-        v => !v.Source.StartsWith(Witness)
-             && !(v.Source == OpenBible && v.CanonicalBook == 26 && v.CanonicalChapter == 10 && v.CanonicalVerse == 9
-                  && v.Entity!.ExternalIds.Any(x => x.Dataset == Datasets.OpenBibleId && x.ExternalId == TarshishStone
-                                                    && x.Relation == RecordExternalRelations.SameAs));
-
-    /// <summary>OpenBible's entry for the Tarshish of Ezekiel 10:9's stone.</summary>
-    private const string TarshishStone = "a5f43dd";
+    internal static readonly Expression<Func<EntityVerse, bool>> IsShown = v => !v.Source.StartsWith(Witness);
 
     /// <summary>
     /// What the source of every row read off the settled annotations starts with, a person's or a

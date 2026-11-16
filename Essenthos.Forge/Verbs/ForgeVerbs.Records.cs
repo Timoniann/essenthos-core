@@ -101,7 +101,7 @@ internal static partial class ForgeVerbs
         var outcome = RecordVerses.Write(store, args.Contains("--force"));
         Console.WriteLine(outcome.Written
             ? $"{outcome.Rows,9}  {RecordVerses.Product} ({outcome.Records} records; {outcome.Names} names read, {outcome.Withheld} withheld, " +
-              $"{outcome.FromRelationships} from relationships, {outcome.FromGazetteer} from the gazetteer)"
+              $"{outcome.FromRelationships} from relationships)"
             : $"{RecordVerses.Product} is current");
         store.Save();
         return Task.FromResult(0);

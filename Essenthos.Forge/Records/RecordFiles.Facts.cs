@@ -11,7 +11,7 @@ internal static partial class RecordFiles
     /// <summary>The verse rows BibleData states: its references, never a served verse of a record.</summary>
     private const string WitnessVerse = "(v.source LIKE 'BibleData%')";
 
-    /// <summary>The verse rows the gazetteer states: its references, and served as the verses of the places it lists.</summary>
+    /// <summary>The verse rows the gazetteer states, which older loads served as the verses of the places it lists; never a record's verse.</summary>
     private const string GazetteerVerse = "(v.source LIKE 'OpenBible%')";
 
     /// <summary>What a row holds until its companion file fills a column a check forbids to be empty.</summary>
@@ -32,16 +32,16 @@ internal static partial class RecordFiles
         FROM s JOIN entity e ON e.slug = s.slug ORDER BY s.slug, s.ref, s.by, s.label
         """,
         product.Contains("derived", StringComparison.Ordinal) ? [] : ["entity_verse"],
-        After: Settled("entity_verse", WitnessVerse.Replace("v.", ""),
-            "a verse row credits BibleData: its verses are its references, never the served verses of a record"),
+        After: Settled("entity_verse", $"{WitnessVerse} OR {GazetteerVerse}".Replace("v.", ""),
+            "a verse row credits BibleData or the gazetteer: a dataset's verse lists are never the verses of a record"),
         About: about);
 
     private static RecordFile[] Facts =>
     [
         Verses("records/facts/verses", ProductKind.Hand, $"NOT {DerivedVerse} AND NOT {WitnessVerse} AND NOT {GazetteerVerse}",
             "Verses a reading of ours says speak of a record, where no word of ours carries it: verse readings, the passages that command a thing, rulings, terms."),
-        Verses("records/derived/verses", ProductKind.Machine, $"({DerivedVerse} OR {GazetteerVerse})",
-            "Derived: the verses our words and relationships put a record in, and the gazetteer's verses of the places it lists, each with whether a word names the record there. Regenerated from names, relationships and the gazetteer's references; never edited."),
+        Verses("records/derived/verses", ProductKind.Machine, DerivedVerse,
+            "Derived: the verses our words and relationships put a record in, each with whether a word names the record there. Regenerated from names and relationships; never edited."),
 
         new("records/facts/passages", ProductKind.Hand,
             "slug role ordinal:int book:int chapter:int verse:int? end_chapter:int end_verse:int? by",
