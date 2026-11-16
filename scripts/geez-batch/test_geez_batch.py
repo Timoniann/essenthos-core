@@ -152,8 +152,10 @@ class SubmitTests(unittest.TestCase):
 
     def test_the_cap_leaves_every_geez_label_together_inside_the_budget(self):
         with tempfile.TemporaryDirectory() as folder:
-            run = Path(folder)
+            run = Path(folder) / 'geez-gloss'
             gb.write_json(run / 'manifest.json', {'run': 'gloss', 'requests_sha256': 'h'})
+            gb.append_jsonl(Path(folder) / 'geez-other' / 'submissions.jsonl',
+                            {'batch': 'b0', 'custom_ids': ['x'], 'reserve_usd': 2.5})
             ledger = [{'at': '2026-11-16T10:00:00+00:00', 'label': 'geez-dillmann', 'usd': 30.0},
                       {'at': '2026-11-16T11:00:00+00:00', 'label': 'geez-gloss', 'usd': 5.0},
                       {'at': '2026-11-15T11:00:00+00:00', 'label': 'geez-old', 'usd': 99.0},
@@ -165,8 +167,8 @@ class SubmitTests(unittest.TestCase):
                 batch_plan=lambda pairs: {'reserve_usd': 1.0},
                 batch_submit=lambda pairs, label, cap_usd: sent.update(label=label, cap=cap_usd) or 'batch-1')
             info = gb.submit(run, client, 125, '2026-11-16T00:00:00+00:00', [{'custom_id': 'r0', 'params': {}}])
-            self.assertEqual(info['remaining_usd'], 90.0)
-            self.assertEqual(sent, {'label': 'geez-gloss', 'cap': 95.0})
+            self.assertEqual(info['remaining_usd'], 87.5)        # 125 - 35 spent - 2.5 still in flight
+            self.assertEqual(sent, {'label': 'geez-gloss', 'cap': 92.5})
             with self.assertRaises(SystemExit):     # not collected yet
                 gb.submit(run, client, 125, '2026-11-16T00:00:00+00:00', [{'custom_id': 'r1', 'params': {}}])
 

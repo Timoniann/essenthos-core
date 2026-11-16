@@ -606,11 +606,14 @@ def submit(run, client, budget, since, chosen, dry=False):
         raise SystemExit(f'batch {pending[0]["batch"]} is not collected yet: collect before submitting again')
     label = label_of(manifest)
     spent_all = geez_spent(client, since)
-    remaining = round(budget - spent_all, 4)
+    # Batches of the sibling geez-* runs not collected yet are not in the ledger: hold their reserve.
+    in_flight = round(sum(s.get('reserve_usd', 0) for sibling in run.parent.glob(LABEL_PREFIX + '*')
+                          if sibling != run for s in pending_batches(sibling)), 4)
+    remaining = round(budget - spent_all - in_flight, 4)
     cap = round(client.spent(label) + remaining, 4)
     pairs = [(r['custom_id'], r['params']) for r in chosen]
     plan = client.batch_plan(pairs)
-    info = {'label': label, 'requests': len(pairs), 'reserve_usd': plan['reserve_usd'],
+    info = {'label': label, 'requests': len(pairs), 'reserve_usd': plan['reserve_usd'], 'in_flight_usd': in_flight,
             'spent_geez_usd': spent_all, 'remaining_usd': remaining, 'cap_for_label_usd': cap}
     if dry or not pairs:
         return info
@@ -828,6 +831,50 @@ def collect(run, client=None, wait=False, fake=None):
     return report
 
 
+TAB, NEWLINE = chr(9), chr(10)
+
+
+def compare(run, other, out):
+    """
+    One TSV line per Ge'ez word of two gloss runs over the same packets: the word, the read-time
+    Dillmann match, each run's lemma, sense, line and Greek, and whether they agree. For reading.
+    """
+    def by_word(folder):
+        return {row['word_id']: row for row in read_jsonl(Path(folder) / 'clean.jsonl')}
+
+    mine, theirs = by_word(run), by_word(other)
+    texts, dillmann, greek = {}, {}, {}
+    for chapter in read_jsonl(Path(run) / 'inputs' / 'gloss-chapters.jsonl'):
+        for word in chapter['geez']:
+            texts[word['id']] = (chapter['book'], f"{word['c']}:{word['v']}{word['label']}", word['t'])
+        greek.update({g['id']: g['t'] for g in chapter['greek']})
+        dillmann.update({k: v['headword'] for k, v in chapter['dillmann'].items()})
+    stats = {'words': len(texts), 'both': 0, 'lemma_agree': 0, 'greek_agree': 0, 'with_dillmann': 0,
+             'a_lemma_is_dillmann_match': 0, 'b_lemma_is_dillmann_match': 0}
+    lines = [TAB.join(['book', 'ref', 'geez', 'dillmann_match', 'a_lemma', 'b_lemma', 'a_sense', 'b_sense',
+                         'a_line', 'b_line', 'a_greek', 'b_greek', 'a_conf', 'b_conf', 'lemma', 'greek'])]
+    for word_id, (book, ref, text) in texts.items():
+        a, b = mine.get(word_id, {}), theirs.get(word_id, {})
+        ga = ' '.join(greek.get(g, '?') for g in a.get('greek_word_ids', []))
+        gb_ = ' '.join(greek.get(g, '?') for g in b.get('greek_word_ids', []))
+        same_lemma = bool(a and b) and nfc(a['lemma']) == nfc(b['lemma'])
+        same_greek = bool(a and b) and a['greek_word_ids'] == b['greek_word_ids']
+        if a and b:
+            stats['both'] += 1
+            stats['lemma_agree'] += same_lemma
+            stats['greek_agree'] += same_greek
+        if word_id in dillmann:
+            stats['with_dillmann'] += 1
+            stats['a_lemma_is_dillmann_match'] += bool(a) and nfc(a['lemma']) == nfc(dillmann[word_id])
+            stats['b_lemma_is_dillmann_match'] += bool(b) and nfc(b['lemma']) == nfc(dillmann[word_id])
+        lines.append(TAB.join([book, ref, text, dillmann.get(word_id, ''), a.get('lemma', ''), b.get('lemma', ''),
+                                a.get('sense_en', ''), b.get('sense_en', ''), a.get('en', ''), b.get('en', ''), ga, gb_,
+                                a.get('conf', ''), b.get('conf', ''), 'same' if same_lemma else 'DIFF',
+                                'same' if same_greek else 'DIFF']))
+    Path(out).write_text(NEWLINE.join(lines) + NEWLINE, encoding='utf-8')
+    return stats
+
+
 # ---------------------------------------------------------------------------------------------------
 
 def default_run(name, repo=REPO):
@@ -837,7 +884,7 @@ def default_run(name, repo=REPO):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('command', choices=['export-dillmann', 'export-gloss', 'build', 'estimate', 'submit',
-                                            'collect', 'report'])
+                                            'collect', 'report', 'compare'])
     parser.add_argument('--run', required=True, help='run folder, or a bare name under Resources/Essenthos/generation')
     parser.add_argument('--repo', default=str(REPO), help='checkout whose claude_api, ledger and .env are used')
     parser.add_argument('--resources', help='Resources folder (default <repo>/Resources)')
@@ -859,6 +906,8 @@ def main(argv=None):
     parser.add_argument('--force', action='store_true')
     parser.add_argument('--wait', action='store_true', help='collect: wait for the batches to end')
     parser.add_argument('--fake', help='collect: validate these hand-written raw rows instead of the API')
+    parser.add_argument('--other', help='compare: the second gloss run (same packets)')
+    parser.add_argument('--out', help='compare: the TSV to write')
     args = parser.parse_args(argv)
 
     run = Path(args.run) if ('/' in args.run or '\\' in args.run) else default_run(args.run, args.repo)
@@ -885,6 +934,9 @@ def main(argv=None):
     elif args.command == 'collect':
         client = None if args.fake else claude_api(args.repo)
         print(json.dumps(collect(run, client, args.wait, args.fake), indent=1))
+    elif args.command == 'compare':
+        other = Path(args.other) if ('/' in args.other or chr(92) in args.other) else default_run(args.other, args.repo)
+        print(json.dumps(compare(run, other, args.out or run / f'compare-{other.name}.tsv'), indent=1))
     elif args.command == 'report':
         client = claude_api(args.repo)
         print(client.format_summary(client.summary(label_of(read_json(run / 'manifest.json'))), run.name))
