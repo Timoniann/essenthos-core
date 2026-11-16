@@ -29,16 +29,25 @@ public sealed class HebrewReferentTests : IDisposable
         _db = database.NewContext();
         _transaction = _db.Database.BeginTransaction();
 
-        // God ... his work ... his father ... his hand ... his work ... he (a pronoun as a whole) ... his seed, rendered "seed" alone.
+        // God ... his work ... his father ... his hand ... his work ... he (a pronoun as a whole) ... his seed, rendered "seed" alone
+        // ... the Philistine, him ... here am I, here am I.
         _hebrew = Corpus.Add(_db, "BHSA", TextKind.PrintedEdition, "hbo",
-            (2, 2, ["אֱלֹהִים", "מְלַאכְתּוֹ", "אָבִיו", "יָדוֹ", "מְלַאכְתּוֹ", "הוּא", "זַרְעוֹ", "לוֹ", "לוֹ"]));
+            (2, 2, ["אֱלֹהִים", "מְלַאכְתּוֹ", "אָבִיו", "יָדוֹ", "מְלַאכְתּוֹ", "הוּא", "זַרְעוֹ", "לוֹ", "לוֹ", "הַפְּלִשְׁתִּי", "לוֹ", "הִנֵּנִי", "הִנֵּנִי"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
-            (2, 2, ["God", "his", "work", "his", "father", "his", "hand", "his", "work", "he", "seed", "unto", "him", "him"]));
+            (2, 2, ["God", "his", "work", "his", "father", "his", "hand", "his", "work", "he", "seed", "unto", "him", "him", "Philistine", "him",
+                "Here", "Here"]));
         _db.SaveChanges();
 
         var god = new Entity { Kind = EntityKind.Person, Slug = "god", Name = "God" };
         _db.Entities.Add(god);
+        var philistines = new Entity { Kind = EntityKind.People, Slug = "philistines", Name = "Philistines" };
+        _db.Entities.Add(philistines);
         _db.SaveChanges();
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = Hebrew(10).Id, EntityId = philistines.Id, Method = LinkMethod.StatedBySource, Source = "a test", Role = WordEntityRoles.People,
+        });
+        Hebrew(10).Morphology = JsonDocument.Parse("""{"pos":"adjv","number":"sg","lexicalSet":"gntl"}""");
         foreach (var word in new[] { Hebrew(1), English(1) })
         {
             _db.WordEntities.Add(new WordEntity
@@ -56,13 +65,22 @@ public sealed class HebrewReferentTests : IDisposable
         Parsed(Hebrew(7), "noun", "זֶרַע", "3ms", true);
         Parsed(Hebrew(8), "prep", "לְ", "3ms", true);
         Parsed(Hebrew(9), "prep", "לְ", "3ms", true);
-        for (var position = 2; position <= 9; position++)
+        Parsed(Hebrew(10), "adj", "פְּלִשְׁתִּי", null, false);
+        Parsed(Hebrew(11), "prep", "לְ", "3ms", true);
+        Parsed(Hebrew(12), "ij", "הִנֵּה", "1cs", true);
+        Parsed(Hebrew(13), "ij", "הִנֵּה", "1cs", true);
+        foreach (var position in new[] { 2, 3, 4, 5, 6, 7, 8, 9, 12, 13 })
         {
             _db.WordReferents.Add(new WordReferent
             {
                 WordId = Hebrew(position).Id, ReferentWordId = Hebrew(1).Id, Method = LinkMethod.StatedBySource, Source = Macula,
             });
         }
+
+        _db.WordReferents.Add(new WordReferent
+        {
+            WordId = Hebrew(11).Id, ReferentWordId = Hebrew(10).Id, Method = LinkMethod.StatedBySource, Source = Macula,
+        });
 
         Align([English(1)], Hebrew(1));
         Align([English(2), English(3)], Hebrew(2));
@@ -73,6 +91,10 @@ public sealed class HebrewReferentTests : IDisposable
         Align([English(11)], Hebrew(7));
         Align([English(12), English(13)], Hebrew(8));
         Align([English(14)], Hebrew(9));
+        Align([English(15)], Hebrew(10));
+        Align([English(16)], Hebrew(11));
+        Align([English(17)], Hebrew(12));
+        Align([English(18)], Hebrew(13));
         _db.SaveChanges();
     }
 
@@ -123,6 +145,20 @@ public sealed class HebrewReferentTests : IDisposable
     {
         var word = await Read(_english, 10);
         word.Referents.Should().ContainSingle().Which.Should().Be(new ReferentResponse("person", "god", "אֱלֹהִים", Macula) { Language = "hbo" });
+    }
+
+    [Fact]
+    public async Task ASingularGentilicReferredToIsNotItsPeople()
+    {
+        (await Read(_hebrew, 11)).Referents.Should().BeNull("the Philistine is one man; the word names his people only");
+        (await Read(_english, 16)).Referents.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task AnInterjectionsOwnWordIsNotItsSuffix()
+    {
+        (await Read(_hebrew, 12)).Referents.Should().ContainSingle().Which.Slug.Should().Be("god");
+        (await Read(_english, 17)).Referents.Should().BeNull("Here of 'Here am I' renders the particle, though it renders it again");
     }
 
     private async Task<TextWordResponse> Read(Text text, int position)

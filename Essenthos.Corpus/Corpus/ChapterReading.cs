@@ -414,10 +414,12 @@ internal static class ChapterReading
 
         var referred = direct.Values.SelectMany(list => list.Select(r => r.Referent)).Distinct().ToList();
         var named = await Annotations.AllOf(db, referred, cancellationToken);
-        var surfaces = await db.Words
+        var referredWords = await db.Words
             .Where(w => referred.Contains(w.Id))
-            .Select(w => new { w.Id, w.Surface })
-            .ToDictionaryAsync(w => w.Id, w => w.Surface, cancellationToken);
+            .Select(w => new { w.Id, w.Surface, w.Morphology })
+            .ToListAsync(cancellationToken);
+        var surfaces = referredWords.ToDictionary(w => w.Id, w => w.Surface);
+        var members = referredWords.Where(w => OneOfAPeople(w.Morphology)).Select(w => w.Id).ToHashSet();
         var sources = direct.Values.SelectMany(list => list.Select(r => r.Source)).Distinct().ToList();
         var classed = direct.Keys.Concat(referred).Concat(witnesses.SelectMany(group => group)).Distinct().ToList();
         var parsings = await db.WordParsings
@@ -456,8 +458,11 @@ internal static class ChapterReading
             }
         }
 
+        // "The Philistine" (הַפְּלִשְׁתִּי) referred to is one man, Goliath, not the Philistines: a singular gentilic stands for a
+        // person only by a name of its own, never by its people.
         var people = named
-            .Select(pair => (pair.Key, Card: pair.Value.FirstOrDefault(c => c.Role != WordEntityRoles.Title)))
+            .Select(pair => (pair.Key, Card: pair.Value.FirstOrDefault(c => c.Role != WordEntityRoles.Title
+                                                                            && !(c.Role == WordEntityRoles.People && members.Contains(pair.Key)))))
             .Where(pair => pair.Card is not null)
             .ToDictionary(pair => pair.Key, pair => pair.Card!);
         var answers = new Dictionary<long, IReadOnlyList<ReferentResponse>>();
@@ -501,6 +506,15 @@ internal static class ChapterReading
 
         return answers;
     }
+
+    /// <summary>
+    /// Whether the word is a singular gentilic (BHSA's <c>lexicalSet: gntl</c>, <c>number: sg</c>): <em>the Philistine</em>,
+    /// <em>the Hittite</em>, which the text uses for one man of that people as often as for the people.
+    /// </summary>
+    private static bool OneOfAPeople(JsonDocument? morphology) =>
+        morphology?.RootElement is { ValueKind: JsonValueKind.Object } root
+        && root.TryGetProperty("lexicalSet", out var set) && set.ValueKind == JsonValueKind.String && set.GetString() == "gntl"
+        && root.TryGetProperty("number", out var number) && number.ValueKind == JsonValueKind.String && number.GetString() == "sg";
 
     /// <summary>
     /// The parsing's key for the person, gender and number of a pronoun suffix on the word (<c>3ms</c>), and its value of
@@ -671,21 +685,25 @@ internal static class ChapterReading
     }
 
     /// <summary>
+    /// The classes of word a translation renders by the pronoun alone (<em>him</em> for <c>אֹתוֹ</c>, <em>йому</em> for
+    /// <c>לוֹ</c>), so that the same lemma rendered again is a sign of the suffix; of any other class (a noun, a verb, the
+    /// interjection <c>הִנֵּה</c>, whose <em>Here</em> of "Here am I" renders the particle) it is not.
+    /// </summary>
+    private static readonly HashSet<string> PronounCarriers = new(StringComparer.Ordinal) { "prep", "om" };
+
+    /// <summary>
     /// Whether a word rendering an original's word that refers by a pronoun suffix (<c>מְלַאכְתּוֹ</c> "his work", by its
     /// <c>וֹ</c>) renders that suffix: <em>his</em>, not <em>work</em>; <em>him</em> of "saw him", not <em>saw</em>.
     /// <para>
     /// Every word of the reading rendering the original's word is weighed, and what decides is the text's own links in the
     /// same reading: of all its form's other renderings of words the source parses, how many render a word carrying a suffix
-    /// of the same person, gender and number on another lemma (any lemma, where the host is a preposition or a particle). <em>his</em> renders "his nostrils", "his father", "his
+    /// of the same person, gender and number on another lemma (any lemma, where the host is a preposition or the object marker). <em>his</em> renders "his nostrils", "his father", "his
     /// wife" in the chapter, each with that suffix and none of them work; <em>work</em> renders only work. The word whose
     /// form does so most often keeps the referent, and only when it does so in at least half its renderings and no other
     /// word of the run does as often. A word the mapping attaches to another word of the run is not the suffix. Where the
     /// word renders more than one referring word of the original, nothing is shown.
     /// </para>
     /// </summary>
-    /// <summary>The classes of word whose own lemma, rendered again, says nothing of a suffix on it.</summary>
-    private static readonly HashSet<string> ContentClasses = new(StringComparer.Ordinal) { "noun", "verb", "adj", "num" };
-
     private static bool SuffixWord(
         long word,
         List<long> referring,
@@ -702,9 +720,9 @@ internal static class ChapterReading
         }
 
         // Of a noun's or a verb's renderings, one on the same lemma is no sign of the suffix: "work" of "his work" thrice. A
-        // preposition or particle carrying the suffix is rendered by the pronoun alone often enough (йому for לוֹ, him for אֹתוֹ)
-        // that its own lemma counts.
-        var content = classes.TryGetValue(referring[0], out var kind) && ContentClasses.Contains(kind);
+        // preposition or the object marker carrying the suffix is rendered by the pronoun alone often enough (йому for לוֹ,
+        // him for אֹתוֹ) that its own lemma counts.
+        var content = !(classes.TryGetValue(referring[0], out var kind) && PronounCarriers.Contains(kind));
         var run = (renderers.GetValueOrDefault(referring[0]) ?? []).Append(word).Distinct().ToList();
         if (heads[word].Any(run.Contains))
         {
