@@ -146,14 +146,16 @@ internal static class Annotating
     /// <summary>A property and not a field, because the statements above are fields and are built first.</summary>
     private static string Title => EnumSpelling.Of(EntityKind.Title);
 
+    private static string Being => EnumSpelling.Of(EntityKind.Being);
+
     /// <summary>The standing of an answer a person ruled, as a property for the same reason.</summary>
     private static string Ruled => ClaimStanding.Of(LinkMethod.Manual).ToString(CultureInfo.InvariantCulture);
 
     /// <summary>
     /// Whether one word names both records without either answering for the other: a title and a
     /// record joined to it as its bearer, a person and a people, a place and a people a person
-    /// ruled on the word together, or things one ruling names on the word together
-    /// (<c>Annotations.Together</c>). Two men on one word, or a man and a town, are two answers to one
+    /// ruled on the word together, or records one ruling names on the word together: two things, or a creature and
+    /// the nation or ruler the text calls by its name (<c>Annotations.Together</c>). Two men on one word, or a man and a town, are two answers to one
     /// question, and the lower is the one the higher outranked. <paramref name="one"/> and
     /// <paramref name="other"/> are the column prefixes of the two answers (<c>r.</c> and <c>r.next_</c>).
     /// </summary>
@@ -171,7 +173,8 @@ internal static class Annotating
               AND {otherKind} IN ('{EnumSpelling.Of(EntityKind.Place)}', '{EnumSpelling.Of(EntityKind.People)}')
               AND {kind} <> {otherKind}
               AND {standing} = {Ruled} AND {otherStanding} = {Ruled})
-          OR ({kind} = '{EnumSpelling.Of(EntityKind.Object)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.Object)}'
+          OR ((({kind} = '{EnumSpelling.Of(EntityKind.Object)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.Object)}')
+               OR (({kind} = '{Being}') <> ({otherKind} = '{Being}')))
               AND {standing} = {Ruled} AND {otherStanding} = {Ruled}
               AND {source} = {otherSource} AND {note} = {otherNote})
           OR ({kind} = '{Title}' AND EXISTS (

@@ -306,6 +306,46 @@ public sealed class WordNamesSeveralTests : IDisposable
         (await Settled(Greek(2, 1))).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// Rahab where PSA 87:4 calls Egypt so, and the great tannin that EZK 29:3 calls Pharaoh: one ruling names the creature
+    /// and the nation or ruler on the word, and both are shown, the creature first, read of the word and carried alike.
+    /// </summary>
+    [Fact]
+    public async Task ACreatureAndTheNationOneRulingNamesByItAreBothShownTheCreatureFirst()
+    {
+        var egypt = Add("egypt", EntityKind.Place);
+        var rahab = Add("rahab-sea-monster", EntityKind.Being);
+        var pharaoh = Add("pharaoh", EntityKind.Person);
+        var tannin = Add("tannin", EntityKind.Being);
+        Annotate(Greek(4, 1), egypt, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(4, 1), rahab, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(3, 1), pharaoh, LinkMethod.Manual, 0.98, WordEntityRoles.Name, WordEntityOrigins.Projected, "through BHSA word 7", Decision);
+        Annotate(Greek(3, 1), tannin, LinkMethod.Manual, 0.98, WordEntityRoles.Name, WordEntityOrigins.Projected, "through BHSA word 7", Decision);
+
+        (await Shown(Greek(4, 1))).Should().Equal("rahab-sea-monster", "egypt");
+        (await Shown(Greek(3, 1))).Should().Equal("tannin", "pharaoh");
+        (await Settled(Greek(4, 1))).Should().ContainSingle();
+        (await Settled(Greek(3, 1))).Should().ContainSingle();
+    }
+
+    /// <summary>Two creatures one ruling names on one word are two answers, and a creature and a nation two decisions name are rivals.</summary>
+    [Fact]
+    public async Task TwoCreaturesOrTwoDecisionsAreStillOneAnswer()
+    {
+        var egypt = Add("egypt", EntityKind.Place);
+        var rahab = Add("rahab-sea-monster", EntityKind.Being);
+        var tannin = Add("tannin", EntityKind.Being);
+        Annotate(Greek(4, 1), rahab, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(4, 1), tannin, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(3, 1), rahab, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: Decision);
+        Annotate(Greek(3, 1), egypt, LinkMethod.Manual, null, WordEntityRoles.Name, WordEntityOrigins.Settled, source: "another decision");
+
+        (await Shown(Greek(4, 1))).Should().BeEmpty();
+        (await Shown(Greek(3, 1))).Should().BeEmpty();
+        (await Settled(Greek(4, 1))).Should().BeEmpty();
+        (await Settled(Greek(3, 1))).Should().BeEmpty();
+    }
+
     private Task<List<int>> Settled(Word word) =>
         _db.Database
             .SqlQueryRaw<int>($"WITH {Annotating.Settled} SELECT entity_id AS \"Value\" FROM settled WHERE word_id = {word.Id}")
