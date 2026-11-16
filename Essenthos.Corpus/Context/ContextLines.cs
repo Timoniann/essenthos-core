@@ -28,12 +28,12 @@ internal sealed record ContextLineBody(
     /// <summary>
     /// The record's name in the language of names as a chapter shows it, and the chapter's own name for it in the
     /// headword's language where that is still to be said: the heading's name where the chapter calls the person by it
-    /// (<paramref name="chapterName"/>, or the headword where that is null), else <see cref="LocalName"/>.
+    /// (<paramref name="called"/>, else <paramref name="chapterName"/>, else the headword), else <see cref="LocalName"/>.
     /// </summary>
-    public (string? LocalName, string? ChapterName) InChapter(string headword, string? chapterName)
+    public (string? LocalName, string? ChapterName) InChapter(string headword, string? chapterName, string? called = null)
     {
         if (Renamed is not { } renamed
-            || ChapterSalience.Head(chapterName ?? headword) != ChapterSalience.Head(renamed.Name))
+            || ChapterSalience.Head(called ?? chapterName ?? headword) != ChapterSalience.Head(renamed.Name))
         {
             return (LocalName, chapterName);
         }

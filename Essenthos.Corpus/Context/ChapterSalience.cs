@@ -92,6 +92,34 @@ internal static class ChapterSalience
         }
     }
 
+    /// <summary>
+    /// The label BibleData gives most of each person's verses in the chapter, the first verse breaking a tie: which name the
+    /// chapter calls the person by (<see cref="SkeletonRecord.Called"/>). Its verses are kept apart from the ones a reader
+    /// is shown (<see cref="ExternalReferences"/>), but each still says which name it uses.
+    /// </summary>
+    public static async Task<Dictionary<string, string>> Called(
+        AppDbContext db,
+        int book,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.Database.SqlQueryRaw<CalledRow>(
+                $"SELECT e.slug AS slug, r.label AS label, count(DISTINCT r.canonical_verse)::int AS verses, " +
+                $"min(r.canonical_verse) AS first FROM {ExternalReferences.Table} r JOIN entity e ON e.id = r.entity_id " +
+                $"WHERE r.dataset = '{ExternalReferences.BibleData}' AND r.canonical_book = {{0}} AND r.canonical_chapter = {{1}} " +
+                "AND r.label IS NOT NULL AND r.label <> '' AND NOT r.disputed GROUP BY 1, 2",
+                book, chapter)
+            .ToListAsync(cancellationToken);
+        return rows
+            .GroupBy(r => r.Slug, StringComparer.Ordinal)
+            .ToDictionary(
+                g => g.Key,
+                g => g.OrderByDescending(r => r.Verses).ThenBy(r => r.First).ThenBy(r => r.Label, StringComparer.Ordinal).First().Label,
+                StringComparer.Ordinal);
+    }
+
+    private sealed record CalledRow(string Slug, string Label, int Verses, int First);
+
     /// <summary>The labels the chapter's verses give each record, and each record's proper names.</summary>
     public static async Task<Dictionary<string, NamesUsedHere>> NamesUsed(
         AppDbContext db,

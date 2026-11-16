@@ -269,7 +269,7 @@ internal static class ContextEndpoints
                 .ToDictionaryAsync(e => e.Slug, e => e.Subtype, StringComparer.Ordinal, cancellationToken);
 
         // A renamed person is shown by the name the chapter calls him by (PRB-1770): Genesis 22's Авраам, Genesis 12's Аврам.
-        var inChapter = records.ToDictionary(r => r.Slug, r => Line(r.Slug).InChapter(r.Name, r.ChapterName), StringComparer.Ordinal);
+        var inChapter = records.ToDictionary(r => r.Slug, r => Line(r.Slug).InChapter(r.Name, r.ChapterName, r.Called), StringComparer.Ordinal);
         var entities = records
             .Select(r => new ContextEntityResponse(r.Slug, r.Kind, r.Name, r.Distinguisher, [.. verses[r.Slug]])
             {

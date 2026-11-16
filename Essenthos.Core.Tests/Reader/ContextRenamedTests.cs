@@ -24,6 +24,14 @@ public sealed class ContextRenamedTests
         Abraham.InChapter("Abram", null).Should().Be(("Аврам", (string?)null));
     }
 
+    /// <summary>The chapter's own labels decide where the panel's name for the chapter is empty, as it is in Genesis 22.</summary>
+    [Fact]
+    public void The_name_the_chapter_s_verses_are_labelled_with_decides()
+    {
+        Abraham.InChapter("Abram", null, "Abraham").Should().Be(("Авраам", (string?)null));
+        Abraham.InChapter("Abram", null, "Abram").Should().Be(("Аврам", (string?)null));
+    }
+
     [Fact]
     public void A_person_not_renamed_keeps_the_name_and_the_chapter_s_name()
     {
