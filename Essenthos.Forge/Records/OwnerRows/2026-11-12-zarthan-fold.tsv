@@ -1,5 +1,5 @@
 # producer   by hand: Zarthan folded into Zarethan, one town of the Jordan valley written twice (PRB-1418), applied by forge owner-rows
-# by         Essenthos: Zarthan, the record Strong's headword H6891 made, folded into Zarethan, the gazetteer's record of the same town, read against the three verses both hold by claude-opus-5-5 on 2026-11-12 (PRB-1418)
+# by         Essenthos: Zarthan, the record Strong's headword H6891 made, folded into Zarethan, the gazetteer's record of the same town, read against the three verses both hold by claude-opus-5-5 on 2026-11-12
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1418	names/BHSA	remove	6.3:16.22	zarthan	\N	\N	\N	\N	6.3:16.22 names Zarthan, the town of the Jordan valley, which is the gazetteer's Zarethan: zarthan folded into zarethan

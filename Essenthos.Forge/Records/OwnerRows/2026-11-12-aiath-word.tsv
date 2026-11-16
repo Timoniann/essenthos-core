@@ -1,5 +1,5 @@
 # producer   by hand: the word of Isaiah 10:28 that names Aiath moved from the gazetteer's Aija (Nehemiah 11:31) to its Aiath (PRB-1418), applied by forge owner-rows
-# by         Essenthos: the gazetteer's two records of Ai's other names, Aiath (ISA 10:28) and Aija (NEH 11:31), read against their verses by claude-opus-5-5 on 2026-11-12 (PRB-1418): the Isaiah word stood on Aija
+# by         Essenthos: the gazetteer's two records of Ai's other names, Aiath (ISA 10:28) and Aija (NEH 11:31), read against their verses by claude-opus-5-5 on 2026-11-12: the Isaiah word stood on Aija
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1418	names/BHSA	remove	23.10:28.3	aija	\N	\N	\N	\N	23.10:28.3 is Aiath on the Assyrian's road to Jerusalem (ISA 10:28, 'He is come to Aiath, he is passed to Migron'), the gazetteer's Aiath; Aija is the gazetteer's town of Nehemiah 11:31

@@ -1,5 +1,5 @@
 # producer   by hand: the gods the texts name and the creatures whose identity the translations dispute, each its own record (FTR-1725, FTR-0672), applied by forge owner-rows
-# by         Essenthos: each word read against its verse in BHSA, the Septuagint (GRCBRENT), the Vulgate (VULGCLEM), the Samaritan Pentateuch, the Ge'ez, NESTLE1904 and TR1894 by claude-opus-5-5 on 2026-11-16, on the project owner's word of 2026-11-16 that the gods the texts name and the contested creatures get pages of their own (FTR-1725, FTR-0672)
+# by         Essenthos: each word read against its verse in BHSA, the Septuagint (GRCBRENT), the Vulgate (VULGCLEM), the Samaritan Pentateuch, the Ge'ez, NESTLE1904 and TR1894 by claude-opus-5-5 on 2026-11-16, on the project owner's word of 2026-11-16 that the gods the texts name and the contested creatures get pages of their own
 # One row per settled word, applied by forge owner-rows; 'why' is the reading the row rests on. A god is named where a witness names a god (Priapus, Adonis, Fortune and Moloch included) and not where it makes a thing of it (a grove, a ruler, vain things); a creature is named by whatever word a witness renders it with.
 entry	product	op	at	record	from	role	strong	label	why
 FTR-1725	names/BHSA	remove	5.4:3.17	baalpeor	\N	\N	\N	\N	the god Israel followed (DEU 4:3, the second), not the place

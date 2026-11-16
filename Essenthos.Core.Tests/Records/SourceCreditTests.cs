@@ -154,6 +154,89 @@ public sealed partial class SourceCreditTests
         found.Should().BeEmpty("a decided row's values and credit are written into the record files as they stand");
     }
 
+    /// <summary>
+    /// The names files the build reads, every column of every row: a settled row's source and note become the source and
+    /// the note of the word's name, which the API serves on every word.
+    /// </summary>
+    [Fact]
+    public void No_names_file_row_credits_a_ticket_or_an_instruction()
+    {
+        var found = new List<string>();
+        var names = TestResources.Checkout("Resources", "Essenthos", "names");
+        foreach (var file in Directory.GetFiles(names, "*.tsv", SearchOption.AllDirectories))
+        {
+            string[]? header = null;
+            foreach (var line in File.ReadLines(file))
+            {
+                if (line.Length == 0 || line.StartsWith('#'))
+                {
+                    continue;
+                }
+
+                var cells = line.Split('	');
+                if (header is null)
+                {
+                    header = cells;
+                    continue;
+                }
+
+                for (var i = 0; i < cells.Length && i < header.Length; i++)
+                {
+                    if (TsvEscaping.Unescape(cells[i]) is { } text)
+                    {
+                        Check(found, $"{Path.GetRelativePath(names, file)} {header[i]}", text, header[i] == "source");
+                    }
+                }
+            }
+        }
+
+        found.Should().BeEmpty("a names file's row is the source and the note of a name the API serves on the word");
+    }
+
+    /// <summary>
+    /// The owner's decided rows of the names files, which write those files at the next build: the credit their file gives
+    /// (<c># by</c>), written as the source of every row they put, and the reading each row rests on (<c>why</c>), written
+    /// as its note.
+    /// </summary>
+    [Fact]
+    public void No_decided_name_row_credits_a_ticket_or_an_instruction()
+    {
+        var found = new List<string>();
+        var folder = TestResources.Checkout("Essenthos.Forge", "Records", "OwnerRows");
+        foreach (var file in Directory.GetFiles(folder, "*.tsv").Where(f => !f.EndsWith(".records.tsv", StringComparison.Ordinal)))
+        {
+            var name = Path.GetFileName(file);
+            var why = -1;
+            foreach (var line in File.ReadLines(file))
+            {
+                if (line.StartsWith("# by ", StringComparison.Ordinal))
+                {
+                    Check(found, $"{name} # by", line[5..].Trim(), credit: true);
+                    continue;
+                }
+
+                if (line.Length == 0 || line.StartsWith('#'))
+                {
+                    continue;
+                }
+
+                var cells = line.Split('	');
+                if (why < 0)
+                {
+                    why = Array.IndexOf(cells, "why");
+                    continue;
+                }
+
+                if (why < cells.Length && TsvEscaping.Unescape(cells[why]) is { } reading)
+                {
+                    Check(found, $"{name} why", reading);
+                }
+            }
+        }
+
+        found.Should().BeEmpty("a decided name row's credit and reading are written into the names files as they stand");
+    }
+
     private static void Walk(List<string> found, string where, JsonElement element, HashSet<string> properties)
     {
         switch (element.ValueKind)

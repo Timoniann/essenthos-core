@@ -1,5 +1,5 @@
 # producer   by hand: Jeshua son of Jozadak folded into Joshua son of Jehozadak (PRB-1421), applied by forge owner-rows
-# by         Essenthos, the project owner's ruling of 2026-11-09 that Jeshua son of Jozadak and Joshua son of Jehozadak are one man ('Так, це логічно'), jeshua-3 folded into joshua-4 by claude-opus-5-5 on his instruction
+# by         Essenthos, the project owner's ruling of 2026-11-09 that Jeshua son of Jozadak and Joshua son of Jehozadak are one man, jeshua-3 folded into joshua-4 by claude-opus-5-5 on his instruction
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	at	record	from	role	strong	label	why
 PRB-1421	names/BHSA	remove	15.2:2.5	jeshua-3	\N	\N	\N	\N	15.2:2.5 names Jeshua son of Jozadak, who is Joshua son of Jehozadak: jeshua-3 folded into joshua-4 on the project owner's ruling of 2026-11-09
