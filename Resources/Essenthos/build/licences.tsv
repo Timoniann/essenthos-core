@@ -42,6 +42,7 @@ ClearBible/data/hau	text	content	CC-BY-SA-4.0	share-alike	text:OHCB	ClearBible/L
 ClearBible/data/hau	alignment	derived	CC-BY-4.0	permitted-with-attribution	dataset:clearbible	ClearBible/LICENCE.md	-	-
 Commentaries/MHC	commentary	content	Public Domain	public-domain	dataset:henry	Commentaries/LICENCE.md	-	-
 Commentaries/Rieger	commentary	content	Public Domain	public-domain	dataset:rieger	Commentaries/LICENCE.md	-	-
+Commentaries/Lopukhin	commentary	content	Public Domain	public-domain	dataset:lopukhin	Commentaries/LICENCE.md	-	-
 CrossWireKJV	strong	content	GPL	share-alike	dataset:crosswire-kjv	CrossWireKJV/LICENCE.md	-	The King James New Testament's Strong numbers and italics, served on KJV's words, and the places of the Greek words, served as links (owner, 2026-11-13, PRB-1332). The module's own wording is not read: the text is bible4u's. GPL binds this layer and what is derived from it, not the code that reads it (NOT-0226).
 DarbyFrench	text	content	Public Domain	public-domain	text:JND2024	DarbyFrench/LICENCE.md	-	-
 DarbyFrench	strong	derived	the module says Public Domain; concordance.bible reserves its data	unknown	dataset:concordance-darby-strong	DarbyFrench/LICENCE.md	TSK-1443 TSK-1331	The owner, 2026-11-04 (TSK-1443): numbers whose terms are unclear are used for the mapping only and never served; a replacement is sought (TSK-1331).
