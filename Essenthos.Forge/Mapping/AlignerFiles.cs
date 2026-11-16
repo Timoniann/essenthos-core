@@ -291,10 +291,31 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         var file = pool is null
             ? await pipeline.Align(fromSlug, toSlug, Path.Combine(Root, workspace), modelType, addresses, source, target, cancellationToken)
             : await pipeline.AlignPooled(fromSlug, pool, Path.Combine(Root, workspace), Path.Combine(Root, $"{fromSlug}-{string.Join('-', pool)}"),
-                modelType, addresses, source, target,
-                partner => AlignedWords.Read(texts[partner], AlignmentPipeline.Pooled, lettered: true, primaryOnly: true, strong: Served(partner)),
-                cancellationToken);
+                modelType, addresses, source, target, PoolPartners(fromSlug, sourceForm), cancellationToken);
         return new Stored(file, addresses, source, target);
+    }
+
+    /// <summary>
+    /// A text of the source's pool as the pool's model reads it: the source's words as the source's own pair with that text reads
+    /// them (its lettered verses where the two number alike, less the chapters their verse links leave out), and the text's words
+    /// at their primary addresses. Whichever pair of the pool asks, the model trains on the same lines.
+    /// </summary>
+    private Func<string, AlignmentPipeline.PoolPartner> PoolPartners(string fromSlug, Func<WordForms, string> sourceForm)
+    {
+        var read = new Dictionary<bool, Dictionary<(int, int, int), List<Word>>>();
+        return partner =>
+        {
+            var lettered = AlignerSource.Pairs.Any(pair => pair.From == fromSlug && pair.To == partner && pair.Outside is not null)
+                           || SameVersification(fromSlug, partner);
+            if (!read.TryGetValue(lettered, out var source))
+            {
+                read[lettered] = source = AlignedWords.Read(texts[fromSlug], sourceForm, lettered, strong: Served(fromSlug));
+            }
+
+            return new AlignmentPipeline.PoolPartner(
+                AlignmentPipeline.Unmet(source, Refused(fromSlug, partner)),
+                AlignedWords.Read(texts[partner], AlignmentPipeline.Pooled, lettered: true, primaryOnly: true, strong: Served(partner)));
+        };
     }
 
     /// <summary>
