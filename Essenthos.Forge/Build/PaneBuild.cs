@@ -55,8 +55,8 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     public static string Product(string text) => $"panes/{text}";
 
     /// <summary>
-    /// The panes of the texts named (every text when null). A text whose product is current for its inputs is only matched in
-    /// the table; any other has the key of each of its chapters worked out, and a chapter is read from the database where its
+    /// The panes of the texts named (every text when null). A text whose product is current for its inputs and was made under
+    /// this pane format and <see cref="PaneInputs.Version"/> is only matched in the table; any other has the key of each of its chapters worked out, and a chapter is read from the database where its
     /// key moved, the product lacks it or <paramref name="force"/> is set.
     /// </summary>
     public async Task<IReadOnlyList<PaneOutcome>> Run(IReadOnlyCollection<string>? only, bool force, int parallel, CancellationToken cancellationToken)
@@ -73,7 +73,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
             var text = named[i];
             var inputs = Inputs(text, texts, pairs);
             var product = Product(text.Slug);
-            if (!force && Stored(product) && !store.NeedsBuild(product, ProductKind.Machine, inputs))
+            if (!force && Current(product, inputs))
             {
                 current.Add((i, text));
                 continue;
@@ -243,6 +243,23 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         using var reader = store.Open(product);
         return reader.Columns.Select(c => c.Name).SequenceEqual(PaneRow.Columns);
+    }
+
+    /// <summary>
+    /// Whether the text's product keeps its panes, was made from these inputs and under this pane format and
+    /// <see cref="PaneInputs.Version"/>: a raised version changes no input, yet every chapter's key, so the text is keyed again.
+    /// </summary>
+    private bool Current(string product, IReadOnlyList<ProductInput> inputs)
+    {
+        if (!Stored(product) || store.NeedsBuild(product, ProductKind.Machine, inputs))
+        {
+            return false;
+        }
+
+        using var reader = store.Open(product);
+        var notes = reader.Header?.Notes.ToDictionary(n => n.Key, n => n.Value, StringComparer.Ordinal) ?? [];
+        return notes.GetValueOrDefault("pane-format") == Panes.Format.ToString(CultureInfo.InvariantCulture)
+               && notes.GetValueOrDefault("pane-inputs") == PaneInputs.Version.ToString(CultureInfo.InvariantCulture);
     }
 
     /// <summary>A text's stored panes, with their bodies or without (an empty body), or null where its product keeps none.</summary>

@@ -243,6 +243,56 @@ public sealed class PaneBuildTests : IDisposable
         (await Held("ASV")).Should().Be(2);
     }
 
+    [Fact]
+    public async Task ARaisedPaneVersionReadsEveryPaneOnceThoughNoInputMoved()
+    {
+        await using (var db = _database.NewContext())
+        {
+            Corpus.Add(db, "WEB", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning"]), (2, 1, ["Thus"]));
+            db.SaveChanges();
+        }
+
+        var store = new ProductStore(_root);
+        Make(store, "texts/WEB/words", "one");
+        (await Run(store, "WEB")).Single().Read.Should().Be(2);
+
+        MadeUnderAnEarlierVersion(store, PaneBuild.Product("WEB"));
+        var raised = (await Run(store, "WEB")).Single();
+        raised.Should().Match<PaneOutcome>(o => o.Made && o.Read == 2, "the product was made under an earlier version, so no chapter's key is current");
+
+        (await Run(store, "WEB")).Single().Should().Match<PaneOutcome>(o => !o.Made && o.Read == 0, "the product is now made under this version");
+        (await Held("WEB")).Should().Be(2);
+    }
+
+    /// <summary>
+    /// The product rewritten as the version before this one left it: the same inputs, an earlier <c>pane-inputs</c> note and
+    /// other chapter keys (a key holds the version).
+    /// </summary>
+    private static void MadeUnderAnEarlierVersion(ProductStore store, string product)
+    {
+        List<PaneRow> rows;
+        ProductHeader header;
+        using (var reader = store.Open(product, PaneRow.Schema))
+        {
+            header = reader.Header!;
+            rows = [.. reader.Rows()];
+        }
+
+        var earlier = (PaneInputs.Version - 1).ToString(System.Globalization.CultureInfo.InvariantCulture);
+        using (var writer = store.Create(product, ProductKind.Machine, PaneRow.Schema, header.Producer, header.Inputs,
+                   annotate => annotate.Notes.AddRange(header.Notes.Select(n => n.Key == "pane-inputs" ? new KeyValuePair<string, string>(n.Key, earlier) : n))))
+        {
+            foreach (var row in rows)
+            {
+                writer.Write(row with { Inputs = "earlier " + row.Inputs });
+            }
+
+            writer.Complete();
+        }
+
+        store.Save();
+    }
+
     private void Make(ProductStore store, string product, string value)
     {
         using var writer = store.Create(product, ProductKind.Machine, Schema, "test", []);
