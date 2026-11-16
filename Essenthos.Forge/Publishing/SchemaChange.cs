@@ -30,9 +30,7 @@ internal sealed partial record SchemaChange(
     /// The change from <paramref name="before"/>'s schema to <paramref name="after"/>'s, or the reason it
     /// cannot be made by whole tables, in which case the release is restored whole.
     /// </summary>
-    /// <param name="alsoWhole">Tables of the same definition in both that go whole all the same: most of their rows changed.</param>
-    public static (SchemaChange? Change, string? Refusal) Of(
-        IReadOnlyList<DumpArchive.Entry> before, IReadOnlyList<DumpArchive.Entry> after, IReadOnlyCollection<string>? alsoWhole = null)
+    public static (SchemaChange? Change, string? Refusal) Of(IReadOnlyList<DumpArchive.Entry> before, IReadOnlyList<DumpArchive.Entry> after)
     {
         var earlier = Keyed(before);
         var later = Keyed(after);
@@ -40,7 +38,7 @@ internal sealed partial record SchemaChange(
         var tablesAfter = after.Where(entry => entry.Kind == "TABLE").Select(entry => entry.Name).ToHashSet(StringComparer.Ordinal);
         IReadOnlySet<string> whole = after.Where(entry => entry.Kind == "TABLE"
                 && (!earlier.TryGetValue(Key(entry), out var was) || Normal(was.Definition) != Normal(entry.Definition)))
-            .Select(entry => entry.Name).Concat((alsoWhole ?? []).Where(tablesAfter.Contains)).ToHashSet(StringComparer.Ordinal);
+            .Select(entry => entry.Name).ToHashSet(StringComparer.Ordinal);
         var gone = tablesBefore.Where(table => !tablesAfter.Contains(table)).Order(StringComparer.Ordinal).ToList();
         IReadOnlySet<string> replaced = whole.Concat(gone).ToHashSet(StringComparer.Ordinal);
 
@@ -91,13 +89,51 @@ internal sealed partial record SchemaChange(
     /// <summary>The statements dropping <see cref="Dropped"/>, foreign keys pointing at them included.</summary>
     public string Drop => string.Concat(Dropped.Select(table => $"DROP TABLE IF EXISTS public.{TargetHost.Identifier(table)} CASCADE;\n"));
 
-    /// <summary>The tables some other table's foreign key points at.</summary>
-    public static IReadOnlySet<string> Referenced(IReadOnlyList<DumpArchive.Entry> entries) =>
-        entries.Where(entry => entry.Kind == "FK CONSTRAINT")
-            .Select(entry => (Owner: FirstObject().Match(entry.Definition), Target: References().Match(entry.Definition)))
-            .Where(pair => pair.Owner.Success && pair.Target.Success
-                && Unquote(pair.Owner.Groups["name"].Value) != Unquote(pair.Target.Groups["table"].Value))
-            .Select(pair => Unquote(pair.Target.Groups["table"].Value)).ToHashSet(StringComparer.Ordinal);
+    /// <summary>
+    /// How <paramref name="table"/>, whose definition is the same in both releases, has its rows replaced
+    /// rather than patched (<see cref="TableReplacement"/>), from the release's own definitions. The foreign
+    /// keys to it that a table sent whole brings back itself are left to that table.
+    /// </summary>
+    public static TableReplacement Replace(IReadOnlyList<DumpArchive.Entry> after, string table, IReadOnlySet<string> whole)
+    {
+        var owners = Owners(after);
+        var identifier = TargetHost.Identifier(table);
+        var drop = new StringBuilder();
+        var build = new StringBuilder();
+        var foreign = new StringBuilder();
+        var target = new HashSet<string>(StringComparer.Ordinal) { table };
+        foreach (var entry in after.Where(entry => PointsAt(entry, target)))
+        {
+            var owner = owners.GetValueOrDefault(entry.DumpId) ?? throw new InvalidDataException($"No table owns {entry.Kind} {entry.Name}.");
+            if (whole.Contains(owner))
+            {
+                continue;
+            }
+
+            drop.Append($"ALTER TABLE ONLY public.{TargetHost.Identifier(owner)} DROP CONSTRAINT {ConstraintName(entry)};\n");
+            foreign.Append(entry.Definition.TrimEnd()).Append('\n');
+        }
+
+        foreach (var entry in after.Where(entry => entry.Kind is "CONSTRAINT" or "INDEX" && owners.GetValueOrDefault(entry.DumpId) == table))
+        {
+            drop.Append(entry.Kind == "INDEX"
+                ? $"DROP INDEX public.{IndexName(entry)};\n"
+                : $"ALTER TABLE ONLY public.{identifier} DROP CONSTRAINT {ConstraintName(entry)};\n");
+            build.Append(entry.Definition.TrimEnd()).Append('\n');
+        }
+
+        return new TableReplacement(drop + $"TRUNCATE ONLY public.{identifier};\n", build.ToString(), foreign.ToString());
+    }
+
+    private static string ConstraintName(DumpArchive.Entry entry) =>
+        AddConstraint().Match(entry.Definition) is { Success: true } match
+            ? match.Groups["name"].Value
+            : throw new InvalidDataException($"No constraint name in {entry.Definition}");
+
+    private static string IndexName(DumpArchive.Entry entry) =>
+        CreateIndex().Match(entry.Definition) is { Success: true } match
+            ? match.Groups["name"].Value
+            : throw new InvalidDataException($"No index name in {entry.Definition}");
 
     /// <summary>A foreign key to one of <paramref name="tables"/>: dropped with it, and created again after its rows.</summary>
     private static bool PointsAt(DumpArchive.Entry entry, IReadOnlySet<string> tables) =>
@@ -162,6 +198,25 @@ internal sealed partial record SchemaChange(
     [GeneratedRegex(@"ALTER SEQUENCE public\.(?<sequence>""(?:[^""]|"""")+""|[A-Za-z_][A-Za-z0-9_$]*) OWNED BY public\.(?<table>""(?:[^""]|"""")+""|[A-Za-z_][A-Za-z0-9_$]*)\.")]
     private static partial Regex OwnedBy();
 
+    [GeneratedRegex(@"ADD CONSTRAINT (?<name>""(?:[^""]|"""")+""|[A-Za-z_][A-Za-z0-9_$]*)")]
+    private static partial Regex AddConstraint();
+
+    [GeneratedRegex(@"^CREATE (?:UNIQUE )?INDEX (?<name>""(?:[^""]|"""")+""|[A-Za-z_][A-Za-z0-9_$]*) ON ")]
+    private static partial Regex CreateIndex();
+
     [GeneratedRegex(@"REFERENCES public\.(?<table>""(?:[^""]|"""")+""|[A-Za-z_][A-Za-z0-9_$]*)\(")]
     private static partial Regex References();
 }
+
+/// <summary>
+/// A table most of whose rows changed, filled again rather than patched: deleting and inserting millions of
+/// rows through every index costs many times what a restore pays to copy them into an empty table and build
+/// the indexes once. The table itself stays, with its definition, triggers, grants and the
+/// foreign keys it holds (which <c>session_replication_role = replica</c> keeps quiet while its rows go in);
+/// its keys and indexes and the foreign keys pointing at it are dropped, it is truncated, every row of the
+/// release is copied in, and they are built again as the release builds them.
+/// </summary>
+/// <param name="Drop">Before its rows: the foreign keys to it, its keys and indexes, and the truncation.</param>
+/// <param name="Build">After its rows: its keys and indexes.</param>
+/// <param name="Foreign">After every table's rows: the foreign keys to it, each validated as a restore validates it.</param>
+internal sealed record TableReplacement(string Drop, string Build, string Foreign);

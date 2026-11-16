@@ -194,8 +194,7 @@ internal readonly record struct TableSum(long Rows, Int128 High, Int128 Low)
     /// The statement that computes the same sum over a table on a server: <paramref name="columns"/> as the
     /// COPY names them. The session must render values as pg_dump's does (<see cref="ReleaseDifference.Settings"/>).
     /// </summary>
-    public static string Sql(string table, string columns, string? into = null) =>
+    public static string Sql(string table, string columns) =>
         "SELECT count(*), coalesce(sum(('x' || substr(row_md5, 1, 16))::bit(64)::bigint), 0), coalesce(sum(('x' || substr(row_md5, 17, 16))::bit(64)::bigint), 0)" +
-        (into is null ? string.Empty : $" INTO {into}") +
         $" FROM (SELECT md5(ROW({columns})::text) AS row_md5 FROM {table}) AS rows";
 }
