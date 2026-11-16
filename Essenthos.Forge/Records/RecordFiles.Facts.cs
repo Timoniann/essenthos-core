@@ -18,7 +18,8 @@ internal static partial class RecordFiles
     private const string Pending = "pending:records-load";
 
     private static string Settled(string table, string condition, string what) =>
-        $"DO $$ BEGIN IF EXISTS (SELECT 1 FROM {table} WHERE {condition}) THEN RAISE EXCEPTION '{what}'; END IF; END $$";
+        // The message is a SQL literal: an apostrophe in it (a dataset's) broke the whole build (landing 1116m).
+        $"DO $$ BEGIN IF EXISTS (SELECT 1 FROM {table} WHERE {condition}) THEN RAISE EXCEPTION '{what.Replace("'", "''", StringComparison.Ordinal)}'; END IF; END $$";
 
     private static RecordFile Verses(string product, ProductKind kind, string which, string about) => new(product, kind,
         "slug ref:ref label? names:bool disputed:bool withheld:bool by",

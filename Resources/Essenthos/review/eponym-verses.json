@@ -2,40 +2,6 @@
   "about": "Verses BibleData files under a man a people is named after — Jacob for Israel, Ben-ammi for the Ammonites, Judah, Levi, Ephraim — that the rule reading the Hebrew and the Greek could not settle. A verse whose words name the people is moved to the people's record on every load; these are the ones the words do not decide: the name in a collective phrase while the man was still alive, the name standing on its own after his death, and verses that do not print the name at all. Each entry is one man, one name the dataset uses for him and one of those three. Answering with the people's record moves every verse of the entry to the people on the next load of Essenthos.Forge; 'leave as it is' keeps them with the man. The load rewrites the open entries and keeps the answered ones; an answer taken back after a load has applied it does not move the verses back.",
   "entries": [
     {
-      "record": "amalek",
-      "label": "Amalek",
-      "strong": "H6002",
-      "references": [
-        "EXO 17:14",
-        "EXO 17:16",
-        "NUM 13:29",
-        "DEU 25:19",
-        "JDG 3:13",
-        "1SA 15:2",
-        "1SA 15:3",
-        "1SA 28:18",
-        "2SA 8:12"
-      ],
-      "question": "BibleData files these verses under Amalek as 'Amalek'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Amalekites?",
-      "options": [
-        "amalekites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "benammi",
-      "label": "Ben-ammi",
-      "strong": "H5983",
-      "references": [
-        "GEN 19:38"
-      ],
-      "question": "BibleData files these verses under Ben-ammi as 'Ben-ammi', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Ben-ammi's own lifetime, when it can mean his own children. Do they name the man, or the Ammonites?",
-      "options": [
-        "ammonites",
-        "leave as it is"
-      ]
-    },
-    {
       "record": "benammi",
       "label": "Ammon",
       "strong": "H5983",
@@ -398,19 +364,6 @@
     {
       "record": "levi",
       "label": "Levi",
-      "strong": "H3878",
-      "references": [
-        "MAL 2:8"
-      ],
-      "question": "BibleData files these verses under Levi as 'Levi'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Levites?",
-      "options": [
-        "levites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "levi",
-      "label": "Levi",
       "strong": "G3017",
       "references": [
         "HEB 7:9"
@@ -460,20 +413,6 @@
       "question": "BibleData files these verses under Moab as 'Moab'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Moabites?",
       "options": [
         "moabites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "muppim",
-      "label": "Shuppim",
-      "strong": "H8309",
-      "references": [
-        "1CH 7:12",
-        "1CH 7:15"
-      ],
-      "question": "BibleData files these verses under Muppim as 'Shuppim', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Shuphamites, or nobody of the name?",
-      "options": [
-        "shuphamites",
         "leave as it is"
       ]
     },

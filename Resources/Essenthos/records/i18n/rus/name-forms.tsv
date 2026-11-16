@@ -324,6 +324,7 @@ aeneas	nominative	Эней	model-reading	1	read from Scripture by claude-sonnet-
 aenon	genitive	Енона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0016.jsonl#f3249da1b7bbdca3
 aenon	locative	Еноне	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 aenon	nominative	Енон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0016.jsonl#f3249da1b7bbdca3
+aetos	nominative	Аэтос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 agabus	genitive	Агава	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#13e2177d4abeb455
 agabus	nominative	Агав	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#13e2177d4abeb455
 agag	genitive	Агага	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0004.jsonl#b00e373ad4a2d456
@@ -340,6 +341,7 @@ agrippa	genitive	Агриппы	model-reading	1	read from Scripture by claude-so
 agrippa	nominative	Агриппа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0017.jsonl#6e1b8f14bf1658d0
 agur	genitive	Агура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0017.jsonl#cded7de992c55aa8
 agur	nominative	Агур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0017.jsonl#cded7de992c55aa8
+agur-bird	nominative	Агур	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ahab	genitive	Ахава	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0004.jsonl#a87d31d1a334e48a
 ahab	nominative	Ахав	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0004.jsonl#a87d31d1a334e48a
 ahab-2	genitive	Ахава	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0017.jsonl#3adaec33a3ed969c
@@ -516,6 +518,10 @@ akan	nominative	Акан	model-reading	1	read from Scripture by claude-sonnet-5,
 akeldama	genitive	Акелдамы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#55dafe2803d31f89
 akeldama	locative	Акелдаме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#55dafe2803d31f89
 akeldama	nominative	Акелдама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#55dafe2803d31f89
+akhbar	nominative	Ахбар	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+akhshuv	nominative	Ахшув	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+akkavish	nominative	Аккавиш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+akko	nominative	Акко	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 akkub	genitive	Аккува	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#a50cae9cbf91e671
 akkub	nominative	Аккув	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#a50cae9cbf91e671
 akkub-2	genitive	Аккува	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#864d245399d9e9c2
@@ -527,6 +533,8 @@ akkub-5	nominative	Аккув	model-reading	1	read from Scripture by claude-sonn
 akrabbim	genitive	Акравима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
 akrabbim	locative	Акравиме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
 akrabbim	nominative	Акравим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#44d5f40ad2f687f0
+akris	nominative	Акрис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+alektor	nominative	Алектор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 alemeth	genitive	Алемефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth	nominative	Алемеф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0027.jsonl#090e453f8c46592e
 alemeth-2	genitive	Алемефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0028.jsonl#0c8022e9871a0970
@@ -563,6 +571,7 @@ almon	nominative	Алмон	model-reading	1	read from Scripture by claude-sonnet
 almondiblathaim	genitive	Алмон-Дивлафаима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#51302bbaa0cd319a
 almondiblathaim	locative	Алмон-Дивлафаиме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#51302bbaa0cd319a
 almondiblathaim	nominative	Алмон-Дивлафаим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#51302bbaa0cd319a
+alopex	nominative	Алопекс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 alphaeus	genitive	Алфея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#d5c811e93353bd1c
 alphaeus	nominative	Алфей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#d5c811e93353bd1c
 altar-el-elohe-israel	nominative	Жертвенник Эл-Элогей-Израиль	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
@@ -570,6 +579,7 @@ altar-of-incense	nominative	Жертвенник курения	model-reading	0.
 altar-of-witness	nominative	Жертвенник Ед	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 altar-the-lord-is-my-banner	nominative	Жертвенник Иегова-Нисси	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 altar-the-lord-is-peace	nominative	Жертвенник Иегова-Шалом	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
+aluqah	nominative	Алука	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 alush	genitive	Алуша	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#229e76e892921739
 alush	locative	Алуше	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#229e76e892921739
 alush	nominative	Алуш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0029.jsonl#229e76e892921739
@@ -756,6 +766,8 @@ ananias-2	genitive	Анании	model-reading	1	read from Scripture by claude-so
 ananias-2	nominative	Анания	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0039.jsonl#460050cedb8921c3
 ananias-3	genitive	Анании	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#d824d684c38f5349
 ananias-3	nominative	Анания	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-09-23	zz-reask4-0013.jsonl#d824d684c38f5349
+anaphah	nominative	Анафа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+anaqah	nominative	Анака	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 anath	genitive	Анафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0008.jsonl#31c8037c37e2a31f
 anath	nominative	Анаф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0008.jsonl#31c8037c37e2a31f
 anathoth	genitive	Анафофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0039.jsonl#4e9e5a4616fbced6
@@ -846,6 +858,7 @@ apphia	genitive	Апфии	model-reading	1	read from Scripture by claude-sonnet-
 apphia	locative	Апфии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0009.jsonl#065a339c08aee174
 apphia	nominative	Апфия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0009.jsonl#065a339c08aee174
 appointed-times	nominative	Праздники Господни	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
+aqrav	nominative	Акрав	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 aquila	genitive	Акилы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0043.jsonl#8f552f71e57b3bf3
 aquila	nominative	Акила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0043.jsonl#8f552f71e57b3bf3
 ar	genitive	Ара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0043.jsonl#06920ec57e51cfe1
@@ -902,6 +915,7 @@ arba	genitive	Арбы	model-reading	1	read from Scripture by claude-sonnet-5, a
 arba	nominative	Арба	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0046.jsonl#db6347b7e9685001
 arbahites	genitive	Арбатитян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0046.jsonl#d0637ee9a8f4a6f2
 arbahites	nominative	Арбатитяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0046.jsonl#d0637ee9a8f4a6f2
+arbeh	nominative	Арбе	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 arbela	genitive	Арбелы	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 arbela	nominative	Арбела	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 arbites	genitive	Арбитян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0046.jsonl#7a7d6d307c56fe64
@@ -925,6 +939,7 @@ areli	genitive	Арелия	model-reading	1	read from Scripture by claude-sonnet
 areli	nominative	Арелий	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0047.jsonl#5617ea0611028f20
 arelites	genitive	арелитов	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0000.jsonl#be1df656705f2e7a
 arelites	nominative	арелиты	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0000.jsonl#be1df656705f2e7a
+aren	nominative	Арен	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 areopagus	genitive	ареопага	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0047.jsonl#7b6f3e3c8b3904b1
 areopagus	locative	ареопаге	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0047.jsonl#7b6f3e3c8b3904b1
 areopagus	nominative	ареопаг	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0047.jsonl#7b6f3e3c8b3904b1
@@ -969,6 +984,7 @@ arkite-son-of-canaan	genitive	Аркея	model-reading	1	read from Scripture by 
 arkite-son-of-canaan	nominative	Аркей	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#8c8e114263c6e3b1
 arkites	genitive	Аркеев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#276d7a139caa5127
 arkites	nominative	Аркеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#276d7a139caa5127
+arkos	nominative	Аркос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 armageddon	genitive	Армагеддона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#94e2cd1a58eb7b5c
 armageddon	locative	Армагеддоне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#94e2cd1a58eb7b5c
 armageddon	nominative	Армагеддон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#94e2cd1a58eb7b5c
@@ -976,9 +992,12 @@ armoni	genitive	Армона	model-reading	1	read from Scripture by claude-sonne
 armoni	nominative	Армон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#89104343b5c6bbff
 arnan	genitive	Арнана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#b2e6b7f1b1b38bcb
 arnan	nominative	Арнан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#b2e6b7f1b1b38bcb
+arnevet	nominative	Арневет	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+arnion	nominative	Арнион	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 arnon	genitive	Арнона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#60e0aeb9b77e1166
 arnon	locative	Арноне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#60e0aeb9b77e1166
 arnon	nominative	Арнон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0049.jsonl#60e0aeb9b77e1166
+arod	nominative	Арод	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 arodi	genitive	Ароди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#48eed08d2b0db086
 arodi	nominative	Ароди	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#48eed08d2b0db086
 arodites	genitive	Ародитов	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#e58959fac9722906
@@ -997,6 +1016,7 @@ aroer-4	locative	Ароере	model-reading	1	read from Scripture by claude-sonn
 aroer-4	nominative	Ароер	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0015.jsonl#84aa2ce159f18ee5
 aroerites	genitive	ароерянина	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#20ee35ebb2fd6548
 aroerites	nominative	ароерянин	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#20ee35ebb2fd6548
+arov	nominative	Аров	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 arpachshad	genitive	Арфаксада	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#4ed2953ba7beb1cf
 arpachshad	nominative	Арфаксад	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0050.jsonl#4ed2953ba7beb1cf
 arpad	genitive	Арпада	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0015.jsonl#6c23cb16a6aa3b01
@@ -1024,6 +1044,7 @@ arvadite-son-of-canaan	genitive	Арвадея	model-reading	1	read from Scriptu
 arvadite-son-of-canaan	nominative	Арвадей	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#b91b8669cb2345f9
 arvadites	genitive	Арвадитян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#1a4d0e9ae7515d49
 arvadites	nominative	Арвадитяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#1a4d0e9ae7515d49
+aryeh	nominative	Арье	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 arza	genitive	Арсы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0052.jsonl#205abbef7914517d
 arza	nominative	Арса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0052.jsonl#205abbef7914517d
 asa	genitive	Асы	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-zz-zz-zz-zz-kin3-0000.jsonl#3c2953d92c5a2d6d
@@ -1056,6 +1077,7 @@ asarel	genitive	Асареела	model-reading	1	read from Scripture by claude-s
 asarel	nominative	Асареел	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0053.jsonl#ada71c93fffc4a88
 asenath	genitive	Асенефы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0054.jsonl#5af8161bf9f6d405
 asenath	nominative	Асенефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0054.jsonl#5af8161bf9f6d405
+ash-moth	nominative	Аш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ashan	genitive	Ашана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#bd932a3ae0220d95
 ashan	locative	Ашане	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#bd932a3ae0220d95
 ashan	nominative	Ашан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#bd932a3ae0220d95
@@ -1125,6 +1147,7 @@ asnah	nominative	Асна	model-reading	1	read from Scripture by claude-sonnet-5
 aspatha	genitive	Асфафы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0017.jsonl#e4cce470d65f2b3e
 aspatha	locative	Асфафе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0017.jsonl#e4cce470d65f2b3e
 aspatha	nominative	Асфафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0017.jsonl#e4cce470d65f2b3e
+aspis	nominative	Аспис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 asriel	genitive	Асриила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#d3369e8b96039fbd
 asriel	nominative	Асриил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0000.jsonl#d3369e8b96039fbd
 asriel-2	genitive	Асриила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0013.jsonl#672af8becbbf1c09
@@ -1153,6 +1176,7 @@ asynchritus	nominative	Асинкрит	model-reading	1	read from Scripture by c
 atad	genitive	Атада	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0058.jsonl#60f5448af7775dc9
 atad	locative	Атаде	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0058.jsonl#60f5448af7775dc9
 atad	nominative	Атад	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0058.jsonl#60f5448af7775dc9
+atalleph	nominative	Аталеф	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 atarah	genitive	Афары	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0058.jsonl#704bdbe720f4eb02
 atarah	nominative	Афара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0058.jsonl#704bdbe720f4eb02
 ataroth	genitive	Атарофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0058.jsonl#9899aac5ee4f37b9
@@ -1192,6 +1216,7 @@ athens	locative	Афинах	model-reading	1	read from Scripture by claude-sonne
 athens	nominative	Афины	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0060.jsonl#5af1de4341a00a10
 athlai	genitive	Афлая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0060.jsonl#b9588f4c2a0f7e8c
 athlai	nominative	Афлай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0060.jsonl#b9588f4c2a0f7e8c
+aton	nominative	Атон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 atrothbethjoab	genitive	Атроф-Беф-Иоава	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 atrothbethjoab	nominative	Атроф-Беф-Иоав	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 atrothshophan	genitive	Атароф-Шофана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0013.jsonl#0843f4e8a9295fca
@@ -1206,6 +1231,7 @@ attai-3	nominative	Аттай	model-reading	1	read from Scripture by claude-sonn
 attalia	genitive	Атталии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#bf3539766ffb1c82
 attalia	locative	Атталии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#bf3539766ffb1c82
 attalia	nominative	Атталия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#bf3539766ffb1c82
+attud	nominative	Аттуд	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 aven	genitive	Авена	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#15e9f4d9a9a07b04
 aven	locative	Авене	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#15e9f4d9a9a07b04
 aven	nominative	Авен	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#15e9f4d9a9a07b04
@@ -1223,8 +1249,14 @@ avva	nominative	Авва	model-reading	1	read from Scripture by claude-sonnet-5,
 avvim	genitive	Аввима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0019.jsonl#cb29928dea1a8590
 avvim	locative	Аввиме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0019.jsonl#cb29928dea1a8590
 avvim	nominative	Аввим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0019.jsonl#cb29928dea1a8590
+ayil	nominative	Аил	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+ayir	nominative	Аир	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ayyah	genitive	Айи	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 ayyah	nominative	Айя	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+ayyah-bird	nominative	Айя	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+ayyal	nominative	Айял	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+ayyalah	nominative	Айяла	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+ayyelet	nominative	Айелет	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 azal	genitive	Асила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#69f82ae4e00bc708
 azal	locative	Асиле	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#69f82ae4e00bc708
 azal	nominative	Асил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0061.jsonl#69f82ae4e00bc708
@@ -1531,6 +1563,7 @@ barachias	genitive	Варахии	model-reading	1	read from Scripture by claude-
 barachias	nominative	Варахия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0001.jsonl#d8457573b86ef0f5
 barak	genitive	Варака	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0076.jsonl#edd43f00db4ff7f3
 barak	nominative	Варак	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0076.jsonl#edd43f00db4ff7f3
+barburim	nominative	Барбурим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 barhumites	genitive	бархюмитян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0001.jsonl#822ffa4e5e129d19
 barhumites	nominative	бархюмитяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0001.jsonl#822ffa4e5e129d19
 bariah	genitive	Бариаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0077.jsonl#a80120a095d9436b
@@ -1571,6 +1604,7 @@ bathsheba	genitive	Вирсавии	model-reading	1	read from Scripture by claud
 bathsheba	nominative	Вирсавия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0079.jsonl#6ad1cbc43b331406
 bathshua	genitive	Бат-Шуи	model-reading	1	declined by claude-opus-5-5, asked 2026-10-12	\N
 bathshua	nominative	Бат-Шуа	model-reading	1	declined by claude-opus-5-5, asked 2026-10-12	\N
+batrachos	nominative	Батрахос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 bavvai	genitive	Баввая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0001.jsonl#bf8a603499e87331
 bavvai	nominative	Баввай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0001.jsonl#bf8a603499e87331
 bazluth	genitive	Бацлуфа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0079.jsonl#3ed7c9f531b0fa38
@@ -1637,6 +1671,7 @@ beeshterah	genitive	Беештеры	model-reading	1	read from Scripture by clau
 beeshterah	locative	Беештере	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#66ff892989667f3c
 beeshterah	nominative	Беештера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#66ff892989667f3c
 behemoth	nominative	Бегемот	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+bekher	nominative	Бехер	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 bel	nominative	Вил	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 bela	genitive	Белы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#4b2bdf35ffa1c9ed
 bela	nominative	Бела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0082.jsonl#4b2bdf35ffa1c9ed
@@ -2095,6 +2130,7 @@ book-of-jashar	nominative	Книга Праведного	model-reading	0.93	Ess
 borashan	genitive	Хорашана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#97c29e23103bf5df
 borashan	locative	Хорашане	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#97c29e23103bf5df
 borashan	nominative	Хорашан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0021.jsonl#97c29e23103bf5df
+bous	nominative	Бус	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 bozez	genitive	Боцеца	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0104.jsonl#8bd677567e2b2a1f
 bozez	locative	Боцеце	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0104.jsonl#8bd677567e2b2a1f
 bozez	nominative	Боцец	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0104.jsonl#8bd677567e2b2a1f
@@ -2259,6 +2295,7 @@ cauda	nominative	Клавда	model-reading	1	read from Scripture by claude-sonn
 cenchreae	genitive	Кенхрей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0111.jsonl#c8e668f144439f2c
 cenchreae	locative	Кенхреях	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0111.jsonl#c8e668f144439f2c
 cenchreae	nominative	Кенхреи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0111.jsonl#c8e668f144439f2c
+chagav	nominative	Хагав	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 chalcis	genitive	Халкиды	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chalcis	nominative	Халкида	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 chaldea	genitive	Халдеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0024.jsonl#d9b2099360d29dd6
@@ -2266,8 +2303,13 @@ chaldea	locative	Халдее	model-reading	1	read from Scripture by claude-sonn
 chaldea	nominative	Халдея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0024.jsonl#d9b2099360d29dd6
 chaldeans	genitive	Халдеев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0026.jsonl#c0c6cc48b2b57b2b
 chaldeans	nominative	Халдеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0026.jsonl#c0c6cc48b2b57b2b
+chamor	nominative	Хамор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+chargol	nominative	Харгол	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 charmande	genitive	Харманды	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 charmande	nominative	Харманда	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+chasidah	nominative	Хасида	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+chasil	nominative	Хасил	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+chazir	nominative	Хазир	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 chebar	genitive	Ховара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0112.jsonl#effc86f55cff9b1a
 chebar	locative	Ховаре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0112.jsonl#effc86f55cff9b1a
 chebar	nominative	Ховар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0112.jsonl#effc86f55cff9b1a
@@ -2357,6 +2399,9 @@ chiun	nominative	Хиун	manual	\N	Essenthos, on the project owner's word of 20
 chloe	genitive	Хлои	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#e2d87bec7473e0b8
 chloe	locative	Хлое	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#e2d87bec7473e0b8
 chloe	nominative	Хлоя	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#e2d87bec7473e0b8
+choiros	nominative	Хойрос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+choled	nominative	Холед	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+chomet	nominative	Хомет	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 chorashan	genitive	Хорашана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#7c9f541a30469416
 chorashan	locative	Хорашане	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#7c9f541a30469416
 chorashan	nominative	Хорашан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0025.jsonl#7c9f541a30469416
@@ -2473,6 +2518,7 @@ cyrene	locative	Киринее	model-reading	1	read from Scripture by claude-son
 cyrene	nominative	Киринея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0029.jsonl#7bc248726c3d997d
 cyrus	genitive	Кира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0120.jsonl#98d80b6e32f2425b
 cyrus	nominative	Кир	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0120.jsonl#98d80b6e32f2425b
+daah	nominative	Даа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 dabbesheth	genitive	Дабешефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0036.jsonl#ad83d75077109ab9
 dabbesheth	locative	Дабешефе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0036.jsonl#ad83d75077109ab9
 dabbesheth	nominative	Дабешеф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0036.jsonl#ad83d75077109ab9
@@ -2488,6 +2534,7 @@ dalmatia	locative	Далматии	model-reading	1	read from Scripture by claude
 dalmatia	nominative	Далматия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#f44637028963f977
 dalphon	genitive	Далфона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0029.jsonl#9a88bd14f19aa5f1
 dalphon	nominative	Далфон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0029.jsonl#9a88bd14f19aa5f1
+damalis	nominative	Дамалис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 damaris	genitive	Дамари	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#f212f8a33b9a5200
 damaris	nominative	Дамарь	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0121.jsonl#f212f8a33b9a5200
 damascus	genitive	Дамаска	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0029.jsonl#0e95c7cdfe448c6d
@@ -2528,6 +2575,7 @@ david	nominative	Давид	model-reading	1	read from Scripture by gpt-5, asked 
 davids-tent-for-the-ark	nominative	Скиния Давида для ковчега	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 day-of-atonement	nominative	День очищения	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 day-of-trumpets	nominative	Праздник труб	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
+dayyah	nominative	Дайя	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 death	genitive	Смерти	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0123.jsonl#7a6c51d016e49940
 death	nominative	Смерть	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0123.jsonl#7a6c51d016e49940
 debir	genitive	Девира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0123.jsonl#3f7390ba0562acf5
@@ -2559,6 +2607,7 @@ dedanim	genitive	деданитов	model-reading	1	read from Scripture by claud
 dedanim	nominative	деданиты	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0002.jsonl#c5456f30ae16009b
 dehavites	genitive	Дагов	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#ad605bd517bf40de
 dehavites	nominative	Даги	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#ad605bd517bf40de
+dekhar	nominative	Декар	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 delaiah	genitive	Делаии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0124.jsonl#90d3f402c087580b
 delaiah	nominative	Делаия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0124.jsonl#90d3f402c087580b
 delaiah-2	genitive	Делаии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-rulings-0000.jsonl#07f9e62577291265
@@ -2580,8 +2629,10 @@ demetrius-2	nominative	Димитрий	model-reading	1	read from Scripture by c
 derbe	genitive	Дервии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0126.jsonl#09e07801895e67b8
 derbe	locative	Дервии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0126.jsonl#09e07801895e67b8
 derbe	nominative	Дервия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0126.jsonl#09e07801895e67b8
+deror	nominative	Дерор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 deuel	genitive	Регуила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0002.jsonl#a3332d103d291a74
 deuel	nominative	Регуил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	zz-words-0002.jsonl#a3332d103d291a74
+devorah-bee	nominative	Девора	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 diblaim	genitive	Дивлаима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0126.jsonl#21c7eda696417133
 diblaim	nominative	Дивлаим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0126.jsonl#21c7eda696417133
 diblath	genitive	Дивлаф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0026.jsonl#c1990cf9717c14fe
@@ -2631,6 +2682,7 @@ dishon	genitive	Дишона	model-reading	1	read from Scripture by claude-sonne
 dishon	nominative	Дишон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0128.jsonl#0d4a19f8ddeb505a
 dishon-2	genitive	Дишона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#0472d68111198663
 dishon-2	nominative	Дишон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#0472d68111198663
+dishon-animal	nominative	Дишон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 divinersoak	genitive	дуба Меонним	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0128.jsonl#8a9d4fe7ca38230e
 divinersoak	locative	дубе Меонним	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0128.jsonl#8a9d4fe7ca38230e
 divinersoak	nominative	дуб Меонним	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0128.jsonl#8a9d4fe7ca38230e
@@ -2660,12 +2712,14 @@ dor	nominative	Дор	model-reading	1	read from Scripture by claude-sonnet-5, as
 dothan	genitive	Дофана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0039.jsonl#2712267932b6dd5c
 dothan	locative	Дофаиме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0039.jsonl#2712267932b6dd5c
 dothan	nominative	Дофан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0039.jsonl#2712267932b6dd5c
+dov	nominative	Дов	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 dragon-of-babylon	nominative	Вавилонский дракон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 dragonspring	genitive	Драконова источника	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0030.jsonl#cbbd8ae7ffea03d3
 dragonspring	locative	Драконовом источнике	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0030.jsonl#cbbd8ae7ffea03d3
 dragonspring	nominative	Драконов источник	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0030.jsonl#cbbd8ae7ffea03d3
 drusilla	genitive	Друзиллы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0129.jsonl#80f493a0eda018fc
 drusilla	nominative	Друзилла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0129.jsonl#80f493a0eda018fc
+dukhiphat	nominative	Духифат	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 dumah	genitive	Думы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#de093c78369e319f
 dumah	nominative	Дума	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#de093c78369e319f
 dumah-2	genitive	Думы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0031.jsonl#21f844c1f768494d
@@ -2719,6 +2773,7 @@ ebron	nominative	Еврон	model-reading	1	read from Scripture by claude-sonnet
 ecbatana	genitive	Екбатаны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#033478385e169069
 ecbatana	locative	Екбатане	model-reading	1	declined by claude-sonnet-5, asked 2026-09-06	\N
 ecbatana	nominative	Екбатана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#033478385e169069
+echidna	nominative	Ехидна	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 eden	genitive	Едена	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#0013bbb46401b75a
 eden	nominative	Еден	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0132.jsonl#0013bbb46401b75a
 eden-2	genitive	Едема	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#77d3365fdb3b3ff4
@@ -2748,8 +2803,12 @@ edrei	nominative	Едрея	model-reading	1	read from Scripture by claude-sonnet
 edrei-2	genitive	Едреи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#76d3e6b8326f1d30
 edrei-2	locative	Едрее	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#76d3e6b8326f1d30
 edrei-2	nominative	Едрея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0032.jsonl#76d3e6b8326f1d30
+efeh	nominative	Эфе	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+efroach	nominative	Эфроах	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+egel	nominative	Эгель	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 eglah	genitive	Эглы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0134.jsonl#4ec6b1e5cc3450e1
 eglah	nominative	Эгла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0134.jsonl#4ec6b1e5cc3450e1
+eglah-animal	nominative	Эгла	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 eglaim	genitive	Эглаима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0134.jsonl#cb776903cc18ff4f
 eglaim	locative	Эглаиме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0134.jsonl#cb776903cc18ff4f
 eglaim	nominative	Эглаим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0134.jsonl#cb776903cc18ff4f
@@ -3305,6 +3364,7 @@ eri	genitive	Ерия	model-reading	1	read from Scripture by claude-sonnet-5, as
 eri	nominative	Ери	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0162.jsonl#cee9ce8226e8d91d
 eridu	genitive	Эриду	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 eridu	nominative	Эриду	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+eriphos	nominative	Эрифос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 erites	genitive	Ериевых	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 erites	nominative	Ериевы	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 esarhaddon	genitive	Асардана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0001.jsonl#a7faf96fb0ef8e8e
@@ -3390,6 +3450,7 @@ evi	genitive	Евия	model-reading	1	read from Scripture by claude-sonnet-5, as
 evi	nominative	Евий	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0039.jsonl#31ccdf7c4d92cec1
 evilmerodach	genitive	Евилмеродаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0166.jsonl#b1960c216f769f15
 evilmerodach	nominative	Евилмеродах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0166.jsonl#b1960c216f769f15
+ez	nominative	Эз	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ezbai	genitive	Езбая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0167.jsonl#34355231a24ae110
 ezbai	nominative	Езбай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0167.jsonl#34355231a24ae110
 ezbon	genitive	Эцбона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0167.jsonl#ae2f83640fa7073c
@@ -3520,6 +3581,7 @@ gallim	nominative	Галлим	model-reading	1	read from Scripture by claude-son
 gallio	genitive	Галлиона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0172.jsonl#e7bb25e54c89206f
 gallio	locative	Галлиона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0172.jsonl#e7bb25e54c89206f
 gallio	nominative	Галлион	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0172.jsonl#e7bb25e54c89206f
+gamal	nominative	Гамал	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 gamaliel	genitive	Гамалиила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0172.jsonl#53b5fa4e41cebab1
 gamaliel	locative	Гамалиила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0172.jsonl#53b5fa4e41cebab1
 gamaliel	nominative	Гамалиил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0172.jsonl#53b5fa4e41cebab1
@@ -3574,6 +3636,7 @@ gathrimmon-2	nominative	Гаф-Риммон	model-reading	1	read from Scripture 
 gaza	genitive	Газы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0174.jsonl#72deeac878dd2cdd
 gaza	locative	Газе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0174.jsonl#72deeac878dd2cdd
 gaza	nominative	Газа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0174.jsonl#72deeac878dd2cdd
+gazam	nominative	Газам	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 gazathites	genitive	газитян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0041.jsonl#b356499059174eb6
 gazathites	nominative	газитяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0041.jsonl#b356499059174eb6
 gazez	genitive	Газеза	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0174.jsonl#b43c1205e357dbb1
@@ -3639,6 +3702,8 @@ gederoth	nominative	Гедероф	model-reading	1	read from Scripture by claude
 gederothaim	genitive	Гедерофаима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0042.jsonl#3ce796af5a39bb68
 gederothaim	locative	Гедерофаиме	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 gederothaim	nominative	Гедерофаим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0042.jsonl#3ce796af5a39bb68
+gedi	nominative	Геди	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+gediyyah	nominative	Гедия	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 gedor	genitive	Гедора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0177.jsonl#75728482b6f415d2
 gedor	nominative	Гедор	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0177.jsonl#75728482b6f415d2
 gedor-2	genitive	Гедора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0177.jsonl#4e47fcdcc66430f4
@@ -3890,8 +3955,10 @@ goshen-2	nominative	Гошен	model-reading	1	read from Scripture by claude-son
 goshen-3	genitive	Гошена	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0045.jsonl#20d5ef07b94ba047
 goshen-3	locative	Гошене	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 goshen-3	nominative	Гошен	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0045.jsonl#20d5ef07b94ba047
+gov	nominative	Гов	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 governor	genitive	Правителя	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 governor	nominative	Правитель	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+gozal	nominative	Гозаль	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 gozan	genitive	Гозана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0057.jsonl#5ceb89313b1630f7
 gozan	locative	Гозане	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 gozan	nominative	Гозан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0057.jsonl#5ceb89313b1630f7
@@ -3917,6 +3984,7 @@ gunites	nominative	Гуниты	model-reading	1	read from Scripture by claude-so
 gur	genitive	Гура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0190.jsonl#3d10bc147fb78572
 gur	locative	Гуре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0190.jsonl#3d10bc147fb78572
 gur	nominative	Гур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0190.jsonl#3d10bc147fb78572
+gur-animal	nominative	Гур	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 gurbaal	genitive	Гур-Ваала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0190.jsonl#ede8c32ae4aeb021
 gurbaal	locative	Гур-Ваале	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0190.jsonl#ede8c32ae4aeb021
 gurbaal	nominative	Гур-Ваал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0190.jsonl#ede8c32ae4aeb021
@@ -4589,6 +4657,7 @@ hilkiah-at-ezras-right-hand	genitive	Хелкии	model-reading	1	read from Scri
 hilkiah-at-ezras-right-hand	nominative	Хелкия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0052.jsonl#d468333496a4fd6f
 hillel	genitive	Гиллела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0224.jsonl#cc59aaa8fc97bd6e
 hillel	nominative	Гиллел	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0224.jsonl#cc59aaa8fc97bd6e
+hippos	nominative	Иппос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 hirah	genitive	Хиры	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0224.jsonl#6e911b593d8a3762
 hirah	nominative	Хира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0224.jsonl#6e911b593d8a3762
 hiram	genitive	Хирама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0224.jsonl#99f6ab7fce744906
@@ -4782,6 +4851,8 @@ hushim-3	genitive	Хушимы	model-reading	1	read from Scripture by claude-son
 hushim-3	nominative	Хушима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0233.jsonl#278ca34313ef838a
 hymenaeus	genitive	Именея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0050.jsonl#a4bf2acb50ae7850
 hymenaeus	nominative	Именей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0050.jsonl#a4bf2acb50ae7850
+hypozygion	nominative	Ипозигион	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+hys	nominative	Ис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ibhar	genitive	Евеара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0002.jsonl#315d2d8f43d651b1
 ibhar	nominative	Евеар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0002.jsonl#315d2d8f43d651b1
 ibleam	genitive	Ивлеама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0055.jsonl#ef01fc7b26bbea87
@@ -4850,6 +4921,7 @@ imlah	genitive	Иемвлая	model-reading	1	read from Scripture by claude-sonn
 imlah	nominative	Иемвлай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0237.jsonl#2e95d0da62fd078b
 immanuel	genitive	Еммануила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0004.jsonl#21a5a8386a09a7ad
 immanuel	nominative	Еммануил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0004.jsonl#21a5a8386a09a7ad
+immar	nominative	Иммар	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 immer	genitive	Иммера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-rulings-0000.jsonl#5439451dbe15b9f9
 immer	nominative	Иммер	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-rulings-0000.jsonl#5439451dbe15b9f9
 immer-3	genitive	Иммера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0237.jsonl#e760c4a6a033e4dd
@@ -5032,6 +5104,7 @@ ivvah	nominative	Ивва	model-reading	1	read from Scripture by claude-sonnet-5
 iyeabarim	genitive	Ийе-Аварима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0247.jsonl#30b33b0a8df45d7d
 iyeabarim	locative	Ийе-Авариме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0247.jsonl#30b33b0a8df45d7d
 iyeabarim	nominative	Ийе-Аварим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0247.jsonl#30b33b0a8df45d7d
+iyyim	nominative	Иим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 izeharites	genitive	Ицгаритов	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0247.jsonl#3a18bde9546130e0
 izeharites	nominative	Ицгариты	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0247.jsonl#3a18bde9546130e0
 izhar	genitive	Ицгара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0247.jsonl#42a5fafa360ff170
@@ -6168,6 +6241,7 @@ kain	locative	Каине	model-reading	1	read from Scripture by claude-sonnet-5,
 kain	nominative	Каин	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0059.jsonl#13a144782fc6ddcb
 kallai	genitive	Каллая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0306.jsonl#4076a7345c5b23d8
 kallai	nominative	Каллай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0306.jsonl#4076a7345c5b23d8
+kamelos	nominative	Камелос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kamon	genitive	Камона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0307.jsonl#d17fc1abdad3c56a
 kamon	locative	Камоне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0307.jsonl#d17fc1abdad3c56a
 kamon	nominative	Камон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0307.jsonl#d17fc1abdad3c56a
@@ -6177,6 +6251,7 @@ kanah	nominative	Кана	model-reading	1	read from Scripture by claude-sonnet-5
 kanah-2	genitive	Каны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0070.jsonl#7e4ae45212fc81cd
 kanah-2	locative	Кане	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0070.jsonl#7e4ae45212fc81cd
 kanah-2	nominative	Кана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0070.jsonl#7e4ae45212fc81cd
+kar	nominative	Кар	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kareah	genitive	Карея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0070.jsonl#05826c8cf55c854e
 kareah	nominative	Карей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0070.jsonl#05826c8cf55c854e
 karka	genitive	Каркаи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0307.jsonl#1cee91f132c8698d
@@ -6230,6 +6305,7 @@ keilah-2	locative	Кеиле	model-reading	1	read from Scripture by claude-sonne
 keilah-2	nominative	Кеила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#0f4860dc02583042
 kelaiah	genitive	Келаии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0006.jsonl#23aef88a9e55ed9c
 kelaiah	nominative	Келаия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0006.jsonl#23aef88a9e55ed9c
+kelev	nominative	Келев	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kelita	genitive	Клиты	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0006.jsonl#4c04aba5c555d918
 kelita	nominative	Клита	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0006.jsonl#4c04aba5c555d918
 kemuel	genitive	Кемуила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#1f60f85ef4d7cf27
@@ -6253,6 +6329,7 @@ kenites	genitive	Кенеев	model-reading	1	read from Scripture by claude-sonn
 kenites	nominative	Кенеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0311.jsonl#8f46126e9291b460
 kenizzites	genitive	Кенезеев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0311.jsonl#e1dc2ce93ba2e4ed
 kenizzites	nominative	Кенезеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0311.jsonl#e1dc2ce93ba2e4ed
+kephir	nominative	Кефир	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kerenhappuch	genitive	Керенгаппух	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#b741abd8abd99edb
 kerenhappuch	nominative	Керенгаппух	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#b741abd8abd99edb
 kerioth	genitive	Кериофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0311.jsonl#e39a858ab4964aaa
@@ -6263,8 +6340,10 @@ keriothhezron	locative	Кириаф-Хецроне	model-reading	1	read from Scr
 keriothhezron	nominative	Кириаф-Хецрон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#a3311bcdec538d84
 keros	genitive	Кероса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0311.jsonl#97b6c09c369ad131
 keros	nominative	Керос	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0311.jsonl#97b6c09c369ad131
+keses	nominative	Кесев	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 keturah	genitive	Хеттуры	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#705e984195d5b245
 keturah	nominative	Хеттура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0071.jsonl#705e984195d5b245
+kevess	nominative	Кевес	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 keziah	genitive	Кассии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#e26d627e5c3cc4f8
 keziah	nominative	Кассия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0003.jsonl#e26d627e5c3cc4f8
 keziz	genitive	Кецица	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0087.jsonl#49b5d3f93e506027
@@ -6389,6 +6468,7 @@ kingshighway	nominative	Царская дорога	model-reading	1	read from Sc
 kingsvalley	genitive	Царской долины	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0061.jsonl#a6f0b65288545556
 kingsvalley	locative	Царской долине	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0061.jsonl#a6f0b65288545556
 kingsvalley	nominative	Царская долина	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0061.jsonl#a6f0b65288545556
+kinnim	nominative	Киним	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kir	genitive	Кира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#387fa7014e1f8a8d
 kir	locative	Кире	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#387fa7014e1f8a8d
 kir	nominative	Кир	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0072.jsonl#387fa7014e1f8a8d
@@ -6419,6 +6499,8 @@ kirjathbaal	nominative	Кириаф-Ваал	model-reading	1	read from Scripture
 kirjathsannah	genitive	Кириаф-Санны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0061.jsonl#de70b98cc8b84d1d
 kirjathsannah	locative	Кириаф-Санне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0061.jsonl#de70b98cc8b84d1d
 kirjathsannah	nominative	Кириаф-Санна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0061.jsonl#de70b98cc8b84d1d
+kirkarah	nominative	Киркара	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+kisbah	nominative	Кисба	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kish	genitive	Киса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0007.jsonl#64186b5cbc91e84c
 kish	nominative	Кис	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0007.jsonl#64186b5cbc91e84c
 kish-2	genitive	Киса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0007.jsonl#854f01e4079336d6
@@ -6447,9 +6529,12 @@ kittim-h3794	genitive	Киттима	model-reading	1	read from Scripture by clau
 kittim-h3794	nominative	Киттим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#a17808917a63d4c6
 kittim-son-of-javan	genitive	Киттима	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#e3773da30798e76e
 kittim-son-of-javan	nominative	Киттим	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#e3773da30798e76e
+kivsah	nominative	Кивса	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 koa	genitive	Коа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#58abe230d693dc76
 koa	locative	Коа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#58abe230d693dc76
 koa	nominative	Коа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0089.jsonl#58abe230d693dc76
+koach	nominative	Коах	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+kof	nominative	Коф	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kohath	genitive	Каафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0321.jsonl#386486df87c71d27
 kohath	nominative	Кааф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0321.jsonl#386486df87c71d27
 kohathites	genitive	Каафовых	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -6460,6 +6545,7 @@ kolaiah-2	genitive	Колии	model-reading	1	read from Scripture by claude-sonn
 kolaiah-2	nominative	Колия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0321.jsonl#67369095dd47b15b
 kolaiah-3	genitive	Колаии	model-reading	1	declined by claude-opus-5-5, asked 2026-10-12	\N
 kolaiah-3	nominative	Колаия	model-reading	1	declined by claude-opus-5-5, asked 2026-10-12	\N
+konops	nominative	Конопс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 korah	genitive	Корея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0321.jsonl#c2a9173a8f5ad9a8
 korah	nominative	Корей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0321.jsonl#c2a9173a8f5ad9a8
 korah-2	genitive	Корея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0321.jsonl#662df420086c30b8
@@ -6470,10 +6556,12 @@ korah-4	genitive	Корея	model-reading	1	read from Scripture by claude-sonnet
 korah-4	nominative	Корей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#f749d5b8371c4f9d
 korahites	genitive	Кореян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#b4ed6c8e2d2db6aa
 korahites	nominative	Кореяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#b4ed6c8e2d2db6aa
+korax	nominative	Коракс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 kore	genitive	Коре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#8798a167dae4c7f3
 kore	nominative	Коре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#8798a167dae4c7f3
 kore-2	genitive	Коре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#132da394941c51fa
 kore-2	nominative	Коре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#132da394941c51fa
+kos-owl	nominative	Кос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 koz	genitive	Коца	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#c432b541f83ee27b
 koz	nominative	Коц	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#c432b541f83ee27b
 kue	genitive	Кувы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#4e44aad7e2b70b17
@@ -6481,6 +6569,7 @@ kue	locative	Куве	model-reading	1	read from Scripture by claude-sonnet-5, as
 kue	nominative	Кува	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#4e44aad7e2b70b17
 kumidi	genitive	Кумиди	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 kumidi	nominative	Кумиди	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+kyon	nominative	Кион	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 laadah	genitive	Лаеды	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#67ea341e310299b2
 laadah	nominative	Лаеда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0322.jsonl#67ea341e310299b2
 laash	genitive	Лааша	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -6537,6 +6626,8 @@ lasha	nominative	Лаша	model-reading	1	read from Scripture by claude-sonnet-5
 lasharon	genitive	Шарона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0325.jsonl#cfc5665d20779a7f
 lasharon	locative	Шароне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0325.jsonl#cfc5665d20779a7f
 lasharon	nominative	Шарон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0325.jsonl#cfc5665d20779a7f
+lavi	nominative	Лави	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+layish	nominative	Лаиш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 lazarus	genitive	Лазаря	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0063.jsonl#6f289d6b784177cf
 lazarus	nominative	Лазарь	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0063.jsonl#6f289d6b784177cf
 lazarus-2	genitive	Лазаря	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0325.jsonl#4bf544bdc719fc14
@@ -6574,9 +6665,11 @@ lehi	locative	Лехе	model-reading	1	read from Scripture by claude-sonnet-5, a
 lehi	nominative	Леха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#9ffd18043175bb76
 lemuel	genitive	Лемуила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#e5bbb2bc70ed1bd0
 lemuel	nominative	Лемуил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#e5bbb2bc70ed1bd0
+leon	nominative	Леон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 leshem	genitive	Ласема	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0090.jsonl#011d022e14887844
 leshem	locative	Ласеме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0090.jsonl#011d022e14887844
 leshem	nominative	Ласем	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0090.jsonl#011d022e14887844
+letaah	nominative	Летаа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 letush	genitive	Летуша	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#44a338d1b6512c2c
 letush	nominative	Летуш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#44a338d1b6512c2c
 leum	genitive	Леума	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0327.jsonl#8e8d2fdbadee4f7f
@@ -7559,6 +7652,7 @@ moriah	locative	Мориа	model-reading	1	read from Scripture by claude-sonnet-
 moriah	nominative	Мориа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0105.jsonl#b012144f2b2d5ede
 mortar	genitive	Махтеша	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 mortar	nominative	Махтеш	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+moschos	nominative	Мосхос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 moseroth	genitive	Мосерофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0375.jsonl#996c87452727117e
 moseroth	locative	Мосерофе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0375.jsonl#996c87452727117e
 moseroth	nominative	Мосероф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0375.jsonl#996c87452727117e
@@ -7727,6 +7821,7 @@ nabal	genitive	Навала	model-reading	1	read from Scripture by claude-sonnet
 nabal	nominative	Навал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0085.jsonl#0a8e90b4c5c88f5d
 naboth	genitive	Навуфея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0383.jsonl#b191aab9b769d50c
 naboth	nominative	Навуфей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0383.jsonl#b191aab9b769d50c
+nachash	nominative	Нахаш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 nachon	genitive	Нахона	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#77e5c22a5c63754f
 nachon	nominative	Нахон	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-names-0000.jsonl#77e5c22a5c63754f
 nadab	genitive	Надава	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0383.jsonl#86ad0ba54a0ff753
@@ -7780,6 +7875,7 @@ nain	nominative	Наин	model-reading	1	read from Scripture by claude-sonnet-5,
 naioth	genitive	Навафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0385.jsonl#efc7fd2d078c3ee4
 naioth	locative	Навафе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0385.jsonl#efc7fd2d078c3ee4
 naioth	nominative	Наваф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0385.jsonl#efc7fd2d078c3ee4
+namer	nominative	Намер	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 nanea	nominative	Нанея	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 naomi	genitive	Ноемини	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0386.jsonl#60d6b25661bf9f8a
 naomi	nominative	Ноеминь	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0386.jsonl#60d6b25661bf9f8a
@@ -7892,6 +7988,7 @@ neiel	locative	Неиеле	model-reading	1	read from Scripture by claude-sonnet
 neiel	nominative	Неиел	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0390.jsonl#52a57212839876f3
 nekoda	genitive	Некоды	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0390.jsonl#cdd996fb7e6aa309
 nekoda	nominative	Некода	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0390.jsonl#cdd996fb7e6aa309
+nemalah	nominative	Немала	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 nemuel	genitive	Немуила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0390.jsonl#12027afd9cd47244
 nemuel	nominative	Немуил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0390.jsonl#12027afd9cd47244
 nemuelites	genitive	Немуиловых	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0007.jsonl#d87ac519a67489a7
@@ -7921,6 +8018,7 @@ neri	genitive	Нирия	model-reading	1	read from Scripture by claude-sonnet-5,
 neri	nominative	Нирий	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0392.jsonl#10588b96d2ac6f68
 neriah	genitive	Нирии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0392.jsonl#6731492ab45fbc0a
 neriah	nominative	Нирия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0392.jsonl#6731492ab45fbc0a
+nesher	nominative	Нешер	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 netaim	genitive	Нетаима	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 netaim	nominative	Нетаим	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 netanel	genitive	Нафанаила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0392.jsonl#5027c3288dec082e
@@ -7958,6 +8056,7 @@ netophah	locative	Нетофе	model-reading	1	read from Scripture by claude-son
 netophah	nominative	Нетофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0393.jsonl#e4d859d95315cd6b
 netophathites	genitive	нетофафян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0394.jsonl#038584b5267292cb
 netophathites	nominative	нетофафяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0394.jsonl#038584b5267292cb
+nets	nominative	Нец	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 new-jerusalem	genitive	Нового Иерусалима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0007.jsonl#8aa5b26d19d811a3
 new-jerusalem	locative	Новом Иерусалиме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0007.jsonl#8aa5b26d19d811a3
 new-jerusalem	nominative	Новый Иерусалим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0007.jsonl#8aa5b26d19d811a3
@@ -8046,6 +8145,8 @@ north	nominative	Север	model-reading	1	read from Scripture by claude-sonnet
 northgate	genitive	Северных ворот	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0110.jsonl#2ef81a1bb46da7e0
 northgate	locative	Северных воротах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0110.jsonl#2ef81a1bb46da7e0
 northgate	nominative	Северные ворота	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0110.jsonl#2ef81a1bb46da7e0
+nossion	nominative	Носсион	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+nossos	nominative	Носсос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 nuhashe	genitive	Нухашше	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nuhashe	nominative	Нухашше	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 nun	genitive	Навина	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0008.jsonl#01619d61b9266f42
@@ -8102,12 +8203,14 @@ obil	nominative	Овил	model-reading	1	read from Scripture by claude-sonnet-5,
 oboth	genitive	Овофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0400.jsonl#579673adc58347a0
 oboth	locative	Овофе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0400.jsonl#579673adc58347a0
 oboth	nominative	Овоф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0400.jsonl#579673adc58347a0
+ochim	nominative	Охим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 ochran	genitive	Охрана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0008.jsonl#90d6d24178b31e78
 ochran	nominative	Охран	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0008.jsonl#90d6d24178b31e78
 oded	genitive	Одеда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0089.jsonl#b07713c47e799431
 oded	nominative	Одед	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0089.jsonl#b07713c47e799431
 oded-prophet-in-samaria	genitive	Одеда	model-reading	1	declined by claude-opus-5-5, asked 2026-09-27	\N
 oded-prophet-in-samaria	nominative	Одед	model-reading	1	declined by claude-opus-5-5, asked 2026-09-27	\N
+ofer	nominative	Офер	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 og	genitive	Ога	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0089.jsonl#9eed2b32a865c96d
 og	locative	Оге	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0089.jsonl#9eed2b32a865c96d
 og	nominative	Ог	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0089.jsonl#9eed2b32a865c96d
@@ -8149,6 +8252,7 @@ onam-2	genitive	Онама	model-reading	1	read from Scripture by claude-sonnet-
 onam-2	nominative	Онам	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0008.jsonl#db13f7c78d41849a
 onan	genitive	Онана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#7b89e5435e00d6cf
 onan	nominative	Онан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#7b89e5435e00d6cf
+onarion	nominative	Онарион	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 onesimus	genitive	Онисима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#21300ab1d17dcab1
 onesimus	nominative	Онисим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#21300ab1d17dcab1
 onesiphorus	genitive	Онисифора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#44f59812b700af4b
@@ -8156,6 +8260,7 @@ onesiphorus	nominative	Онисифор	model-reading	1	read from Scripture by c
 ono	genitive	Оно	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#1e45cfc3bacd9615
 ono	locative	Оно	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#1e45cfc3bacd9615
 ono	nominative	Оно	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#1e45cfc3bacd9615
+onos	nominative	Онос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ophel	genitive	Офела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#b6e9de3c4d979bef
 ophel	locative	Офеле	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#b6e9de3c4d979bef
 ophel	nominative	Офел	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0403.jsonl#b6e9de3c4d979bef
@@ -8164,6 +8269,7 @@ ophir	nominative	Офир	model-reading	1	read from Scripture by claude-sonnet-5
 ophir-2	genitive	Офира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0404.jsonl#54c265987c42b894
 ophir-2	locative	Офире	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0404.jsonl#54c265987c42b894
 ophir-2	nominative	Офир	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0404.jsonl#54c265987c42b894
+ophis	nominative	Офис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ophni	genitive	Афни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#f68f86fcc50b6a68
 ophni	locative	Афни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#f68f86fcc50b6a68
 ophni	nominative	Афни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#f68f86fcc50b6a68
@@ -8179,8 +8285,10 @@ oreb	genitive	Орива	model-reading	1	read from Scripture by claude-sonnet-5,
 oreb	nominative	Орив	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#e4eb2076d01da97d
 oreb-2	genitive	Орива	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 oreb-2	nominative	Орив	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+oreb-raven	nominative	Орев	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 oren	genitive	Орена	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0404.jsonl#0f6d530fb79c9fe6
 oren	nominative	Орен	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0404.jsonl#0f6d530fb79c9fe6
+ornis	nominative	Орнис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 orpah	genitive	Орфы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#35d7077511a17945
 orpah	nominative	Орфа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	zz-words-0008.jsonl#35d7077511a17945
 osnappar	genitive	Аснафара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0405.jsonl#ad6ad4e51b71f54d
@@ -8195,6 +8303,7 @@ ozem-2	genitive	Оцема	model-reading	1	read from Scripture by claude-sonnet-
 ozem-2	nominative	Оцем	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0405.jsonl#2a9b9a67aa926b30
 oznites	genitive	Озниевых	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0007.jsonl#fbaf54c4f86f704e
 oznites	nominative	Озниевы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0007.jsonl#fbaf54c4f86f704e
+ozniyyah	nominative	Озния	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 paarai	genitive	Паарая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0405.jsonl#70b62661714fcb29
 paarai	nominative	Паарай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0405.jsonl#70b62661714fcb29
 paddanaram	genitive	Месопотамии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#95f692f1ce3dec65
@@ -8230,14 +8339,17 @@ pamphylia	nominative	Памфилия	model-reading	1	read from Scripture by cla
 paphos	genitive	Пафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0407.jsonl#d2949c64e02e5d32
 paphos	locative	Пафе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0407.jsonl#d2949c64e02e5d32
 paphos	nominative	Паф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0407.jsonl#d2949c64e02e5d32
+par	nominative	Пар	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 parah	genitive	Фары	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#5cf38a53746b09a0
 parah	locative	Фаре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#5cf38a53746b09a0
 parah	nominative	Фара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0090.jsonl#5cf38a53746b09a0
+parah-animal	nominative	Пара	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 paran	genitive	Фарана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0407.jsonl#d7544f27c33397bf
 paran	locative	Фаране	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0407.jsonl#d7544f27c33397bf
 paran	nominative	Фаран	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0407.jsonl#d7544f27c33397bf
 parbar	genitive	Парвара	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 parbar	nominative	Парвар	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
+pardalis	nominative	Пардалис	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 parmashta	genitive	Пармашфы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0081.jsonl#1cbebf071cfc35eb
 parmashta	locative	Пармашфе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0081.jsonl#1cbebf071cfc35eb
 parmashta	nominative	Пармашфа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0081.jsonl#1cbebf071cfc35eb
@@ -8362,6 +8474,9 @@ peoplesgate	nominative	ворота сынов народа	model-reading	1	read
 peor	genitive	Фегора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#2d462a54cbc72595
 peor	locative	Фегоре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#2d462a54cbc72595
 peor	nominative	Фегор	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#2d462a54cbc72595
+pere	nominative	Пере	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+pered	nominative	Перед	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+peres	nominative	Перес	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 peresh	genitive	Кереша	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0414.jsonl#e5b2c4855f6b82d1
 peresh	nominative	Кереш	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0414.jsonl#e5b2c4855f6b82d1
 perez	genitive	Фареса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#e281577b35b164ae
@@ -8375,6 +8490,7 @@ perga	nominative	Пергия	model-reading	1	read from Scripture by claude-sonn
 pergamum	genitive	Пергама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#325cfe3f8ccb0591
 pergamum	locative	Пергаме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#325cfe3f8ccb0591
 pergamum	nominative	Пергам	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#325cfe3f8ccb0591
+peristera	nominative	Перистера	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 perizzites	genitive	ферезеев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#2ffdb3d64576a96c
 perizzites	nominative	ферезеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#2ffdb3d64576a96c
 persia	genitive	Персии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0092.jsonl#24eb72e569a4c3e8
@@ -8386,6 +8502,7 @@ persis	genitive	Персиды	model-reading	1	read from Scripture by claude-son
 persis	nominative	Персида	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0415.jsonl#e0cef02faeb19c2c
 peruda	genitive	Феруды	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0415.jsonl#a53b696ae655b523
 peruda	nominative	Феруда	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0415.jsonl#a53b696ae655b523
+peten	nominative	Петен	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 pethahiah	genitive	Петахии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-rulings-0000.jsonl#d4f8fbe72809a24e
 pethahiah	nominative	Петахия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-rulings-0000.jsonl#d4f8fbe72809a24e
 pethahiah-2	genitive	Пафахии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#2756acb5b22c16e3
@@ -8507,6 +8624,7 @@ pirathon	locative	Пирафоне	model-reading	1	read from Scripture by claude
 pirathon	nominative	Пирафон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0421.jsonl#4744e78d1922fc38
 pirathonites	genitive	Пирафонян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0421.jsonl#e7789666c2fae3e8
 pirathonites	nominative	Пирафоняне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0421.jsonl#e7789666c2fae3e8
+pirdah	nominative	Пирда	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 pisgah	genitive	Фасги	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0421.jsonl#6e59285f49d1ddb3
 pisgah	locative	Фасге	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0421.jsonl#6e59285f49d1ddb3
 pisgah	nominative	Фасга	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0421.jsonl#6e59285f49d1ddb3
@@ -8525,6 +8643,7 @@ pithon	genitive	Пифона	model-reading	1	read from Scripture by claude-sonne
 pithon	nominative	Пифон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0422.jsonl#7b61413177030795
 pocherethhazzebaim	genitive	Похереф-Гаццебайима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0422.jsonl#ebd35a01cd8e71f6
 pocherethhazzebaim	nominative	Похереф-Гаццебайим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0422.jsonl#ebd35a01cd8e71f6
+polos	nominative	Полос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 pontus	genitive	Понта	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0094.jsonl#2a10930df097df0b
 pontus	locative	Понте	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0094.jsonl#2a10930df097df0b
 pontus	nominative	Понт	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0094.jsonl#2a10930df097df0b
@@ -8546,6 +8665,7 @@ princeofthekingdomofpersia	genitive	князя царства Персидско
 princeofthekingdomofpersia	nominative	князь царства Персидского	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#ab0b115451bf7b48
 priscilla	genitive	Прискиллы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#1146fe7012557dbd
 priscilla	nominative	Прискилла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0423.jsonl#1146fe7012557dbd
+probaton	nominative	Пробатон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 prochorus	genitive	Прохора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0117.jsonl#35ae3b49404dc9b1
 prochorus	locative	Прохоре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0117.jsonl#35ae3b49404dc9b1
 prochorus	nominative	Прохор	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0117.jsonl#35ae3b49404dc9b1
@@ -8593,6 +8713,10 @@ puvvah	genitive	Фувы	model-reading	1	read from Scripture by claude-sonnet-5,
 puvvah	nominative	Фува	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#26206e6babe83d9d
 pyrrhus	genitive	Пирра	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#bbfa6f849a317c2b
 pyrrhus	nominative	Пирр	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#bbfa6f849a317c2b
+qaat	nominative	Каат	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+qippod	nominative	Киппод	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+qippoz	nominative	Киппоз	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+qore	nominative	Коре	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 quartus	genitive	Кварта	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#986dd322fba6bfc9
 quartus	nominative	Кварт	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#986dd322fba6bfc9
 queen-of-heaven	nominative	Царица небесная	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
@@ -8600,6 +8724,7 @@ queenofsheba	genitive	царицы Савской	model-reading	1	read from Scri
 queenofsheba	nominative	царица Савская	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#6bc397efbe2a4582
 quirinius	genitive	Квириния	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0094.jsonl#15d8301740440ca0
 quirinius	nominative	Квириний	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0094.jsonl#15d8301740440ca0
+raah	nominative	Раа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 raamah	genitive	Раамы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#ddbde365576fdc4e
 raamah	nominative	Раама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0425.jsonl#ddbde365576fdc4e
 raamah-2	genitive	Раемы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#556d12a795596c7c
@@ -8624,8 +8749,10 @@ rabshakeh	nominative	Рабсак	model-reading	1	read from Scripture by claude-
 racal	genitive	Рахала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
 racal	locative	Рахале	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
 racal	nominative	Рахал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#8b1ba956b0db9962
+racham	nominative	Рахам	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 rachel	genitive	Рахили	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
 rachel	nominative	Рахиль	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0426.jsonl#03783bb2be861e8a
+rachel-ewe	nominative	Рахель	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 raddai	genitive	Раддая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#17c3e67e85d130cf
 raddai	nominative	Раддай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#17c3e67e85d130cf
 ragmat	genitive	Рагмата	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -8685,6 +8812,7 @@ rameses	locative	Раамсесе	model-reading	1	declined by claude-sonnet-5, a
 rameses	nominative	Раамсес	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0095.jsonl#b7f115b86084bd42
 ramiah	genitive	Рамаии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#ca1cd9cc1f4e074c
 ramiah	nominative	Рамаия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#ca1cd9cc1f4e074c
+rammakh	nominative	Раммах	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 ramoth	genitive	Рамофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#04e0b1b3b895821d
 ramoth	locative	Рамофе	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 ramoth	nominative	Рамоф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#04e0b1b3b895821d
@@ -8785,11 +8913,13 @@ rekem-2	nominative	Рекем	model-reading	1	read from Scripture by claude-sonn
 rekem-3	genitive	Рекема	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#49241ec3d675db11
 rekem-3	locative	Рекеме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#49241ec3d675db11
 rekem-3	nominative	Рекем	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#49241ec3d675db11
+rekhesh	nominative	Рехеш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 remaliah	genitive	Ремалии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#6b79d901931f9a04
 remaliah	nominative	Ремалия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#6b79d901931f9a04
 remeth	genitive	Ремефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#38512c17434d1d6b
 remeth	locative	Ремефе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#38512c17434d1d6b
 remeth	nominative	Ремеф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0097.jsonl#38512c17434d1d6b
+renanim	nominative	Ренаним	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 rephael	genitive	Рефаила	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0435.jsonl#8b3684e6f099ea78
 rephael	nominative	Рефаил	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0435.jsonl#8b3684e6f099ea78
 rephah	genitive	Рефая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#e810c349284be0b2
@@ -8853,6 +8983,7 @@ riblah	nominative	Ривла	model-reading	1	read from Scripture by claude-sonne
 riblah-2	genitive	Ривлы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0438.jsonl#76f398a2606cf3da
 riblah-2	locative	Ривле	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0438.jsonl#76f398a2606cf3da
 riblah-2	nominative	Ривла	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0438.jsonl#76f398a2606cf3da
+rimmah	nominative	Римма	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 rimmon	genitive	Реммона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#e9dedf861d6da261
 rimmon	locative	Реммоне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#e9dedf861d6da261
 rimmon	nominative	Реммон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#e9dedf861d6da261
@@ -8935,6 +9066,8 @@ sachia	nominative	Шахия	model-reading	1	read from Scripture by claude-sonne
 sahar	genitive	Сахара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0121.jsonl#27f442d0b85c991a
 sahar	locative	Сахаре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0121.jsonl#27f442d0b85c991a
 sahar	nominative	Сахар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0121.jsonl#27f442d0b85c991a
+sair	nominative	Саир	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+salam	nominative	Салам	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 salamis	genitive	Саламина	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
 salamis	locative	Саламине	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
 salamis	nominative	Саламин	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0442.jsonl#30d39eeefcf61e6d
@@ -9031,6 +9164,7 @@ sarid	locative	Сариде	model-reading	1	read from Scripture by claude-sonnet
 sarid	nominative	Сарид	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0087.jsonl#7433c401b609e981
 sarsekim	genitive	Сарсехима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0446.jsonl#531f506405caee58
 sarsekim	nominative	Сарсехим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0446.jsonl#531f506405caee58
+sas	nominative	Сас	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 satan	genitive	сатаны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0099.jsonl#5acd00f932e75afd
 satan	nominative	сатана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0099.jsonl#5acd00f932e75afd
 saul	genitive	Саула	model-reading	1	read from Scripture by gpt-5, asked 2026-09-22	zz-reask4-0012.jsonl#c86fd5ecade871a6
@@ -9075,11 +9209,13 @@ segub	genitive	Сегуба	model-reading	1	read from Scripture by claude-sonnet
 segub	nominative	Сегуб	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#e1a5b3a92ce04ab6
 segub-2	genitive	Сегуба	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#439cc2a7cf9bf91d
 segub-2	nominative	Сегув	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#439cc2a7cf9bf91d
+seh	nominative	Се	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 seir	genitive	Сеира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#b04279458bfbce62
 seir	nominative	Сеир	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#b04279458bfbce62
 seirah	genitive	Сеирафа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#4ed4889cac009489
 seirah	locative	Сеирафе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#4ed4889cac009489
 seirah	nominative	Сеираф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#4ed4889cac009489
+seirah-animal	nominative	Сеира	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 seirim	nominative	Сеирим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
 sela	genitive	Селы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#301025abe0c18639
 sela	locative	Селе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0448.jsonl#301025abe0c18639
@@ -9099,6 +9235,7 @@ seleucia	locative	Селевкии	model-reading	1	read from Scripture by claude
 seleucia	nominative	Селевкия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#5f805a397924d7b6
 semachiah	genitive	Семахии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#442b21602943e59e
 semachiah	nominative	Семахия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#442b21602943e59e
+semamit	nominative	Семамит	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 semein	genitive	Семеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#405f825c345f3993
 semein	nominative	Семеи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#405f825c345f3993
 senaah-2	genitive	Сенаи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0449.jsonl#f878c9f59e2c30f5
@@ -9161,6 +9298,7 @@ serpentsstone	locative	камня Зохелет	model-reading	1	read from Scrip
 serpentsstone	nominative	камень Зохелет	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0101.jsonl#69c6f57d317847ce
 serug	genitive	Серуха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0452.jsonl#9002a9e9e7a89c74
 serug	nominative	Серух	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0452.jsonl#9002a9e9e7a89c74
+ses	nominative	Сес	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 seth	genitive	Сифа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#260dbbb5338d92d4
 seth	locative	Сифе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#260dbbb5338d92d4
 seth	nominative	Сиф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#260dbbb5338d92d4
@@ -9192,11 +9330,15 @@ shaashgaz	locative	Шаазгазе	model-reading	1	read from Scripture by claud
 shaashgaz	nominative	Шаазгаз	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0101.jsonl#227b19921e2d4708
 shabbethai-2	genitive	Шавфая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#d6efac47ce5d5aa3
 shabbethai-2	nominative	Шавфай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0009.jsonl#d6efac47ce5d5aa3
+shablul	nominative	Шаблуль	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+shachal	nominative	Шахал	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+shachaph	nominative	Шахаф	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 shaharaim	genitive	Шегараима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
 shaharaim	nominative	Шегараим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#ec817865c82211b5
 shahazumah	genitive	Шагацимы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
 shahazumah	locative	Шагациме	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
 shahazumah	nominative	Шагацима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#9c9029375432643a
+shalakh	nominative	Шалах	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 shalishah	genitive	Шалиши	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#1496f94bbf033c85
 shalishah	locative	Шалише	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#1496f94bbf033c85
 shalishah	nominative	Шалиша	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0454.jsonl#1496f94bbf033c85
@@ -9288,6 +9430,7 @@ shaphan-3	nominative	Сафан	model-reading	1	read from Scripture by claude-so
 shaphan-5	genitive	Сафана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0127.jsonl#deb151c27c142c94
 shaphan-5	locative	Сафане	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0127.jsonl#deb151c27c142c94
 shaphan-5	nominative	Сафан	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0127.jsonl#deb151c27c142c94
+shaphan-animal	nominative	Шафан	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 shaphat	genitive	Сафата	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0459.jsonl#9bc6bbd68c287ce1
 shaphat	nominative	Сафат	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0459.jsonl#9bc6bbd68c287ce1
 shaphat-2	genitive	Сафата	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0459.jsonl#e656061fa02cb06f
@@ -9422,6 +9565,7 @@ shelah-2	genitive	Шелы	model-reading	1	read from Scripture by claude-sonnet-
 shelah-2	nominative	Шела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0467.jsonl#4c38845eca1f8d5c
 shelanites	genitive	шеланитов	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#26ecd312fad36d2b
 shelanites	nominative	шеланиты	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0008.jsonl#26ecd312fad36d2b
+shelav	nominative	Слав	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 shelemiah	genitive	Шелемии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#a9a4b998b3943b32
 shelemiah	nominative	Шелемия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#a9a4b998b3943b32
 shelemiah-2	genitive	Шелемиягу	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0005.jsonl#25f81596e0a9dae2
@@ -9765,6 +9909,7 @@ shomer	genitive	Шомеры	model-reading	1	read from Scripture by claude-sonne
 shomer	nominative	Шомера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0486.jsonl#291adcb78ef27ac2
 shomer-2	genitive	Шомера	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0486.jsonl#9d8f80ac03b77d75
 shomer-2	nominative	Шомер	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0486.jsonl#9d8f80ac03b77d75
+shor	nominative	Шор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 shua	genitive	Шуа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0486.jsonl#548b0e69c76fe892
 shua	nominative	Шуа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0486.jsonl#548b0e69c76fe892
 shua-2	genitive	Шуи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0486.jsonl#955e068c08ab6a44
@@ -9777,6 +9922,7 @@ shual	nominative	Шуал	model-reading	1	read from Scripture by claude-sonnet-5
 shual-2	genitive	Суали	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0487.jsonl#959c2281fdd557ff
 shual-2	locative	Суали	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0487.jsonl#959c2281fdd557ff
 shual-2	nominative	Суаль	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0487.jsonl#959c2281fdd557ff
+shual-animal	nominative	Шуал	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 shuhah	genitive	Шухи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0487.jsonl#c2e5fa3febc7ea35
 shuhah	nominative	Шуха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0487.jsonl#c2e5fa3febc7ea35
 shuhamites	genitive	Шухамовых	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
@@ -9893,6 +10039,7 @@ sirah	nominative	Сир	model-reading	1	read from Scripture by claude-sonnet-5, 
 sirion	genitive	Сириона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0095.jsonl#19268910812d5a95
 sirion	locative	Сирионе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0095.jsonl#19268910812d5a95
 sirion	nominative	Сирион	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0095.jsonl#19268910812d5a95
+sis-swift	nominative	Сус	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 sisera	genitive	Сисары	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0010.jsonl#66c47becc7c04f65
 sisera	nominative	Сисара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0010.jsonl#66c47becc7c04f65
 sisera-2	genitive	Сисары	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0492.jsonl#1364b85f7b850eb1
@@ -9904,6 +10051,8 @@ sithri	nominative	Сифри	model-reading	1	read from Scripture by claude-sonne
 sitnah	genitive	Ситны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0095.jsonl#227e2f1627a3a607
 sitnah	locative	Ситне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0095.jsonl#227e2f1627a3a607
 sitnah	nominative	Ситна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0095.jsonl#227e2f1627a3a607
+skolex	nominative	Сколекс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+skorpios	nominative	Скорпиос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 smyrna	genitive	Смирны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0109.jsonl#be15ccf32551d5a3
 smyrna	locative	Смирне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0109.jsonl#be15ccf32551d5a3
 smyrna	nominative	Смирна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0109.jsonl#be15ccf32551d5a3
@@ -9979,6 +10128,7 @@ steps-of-ahaz	nominative	Ступени Ахазовы	model-reading	0.93	Essent
 straightstreet	genitive	Прямой улицы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#7af893d3650da1ee
 straightstreet	locative	улице Прямой	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 straightstreet	nominative	Прямая улица	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#7af893d3650da1ee
+strouthion	nominative	Струтион	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 suah	genitive	Суаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0495.jsonl#7d63f40e7739684e
 suah	nominative	Суах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0495.jsonl#7d63f40e7739684e
 succoth	genitive	Сокхофа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0496.jsonl#f9b242e520f2419b
@@ -10000,9 +10150,11 @@ suphah	nominative	Суфа	model-reading	1	declined by claude-opus-5-5, asked 20
 sur	genitive	Сур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#e0981b0cbb74d155
 sur	locative	Сур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#e0981b0cbb74d155
 sur	nominative	Сур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#e0981b0cbb74d155
+sus	nominative	Сус	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 susa	genitive	Суз	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#7f7a87f2e19ac067
 susa	locative	Сузах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#7f7a87f2e19ac067
 susa	nominative	Сузы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0096.jsonl#7f7a87f2e19ac067
+susah	nominative	Суса	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 susanchites	genitive	Сусанцев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#9cf7c297e0520dc9
 susanchites	nominative	Сусанцы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#9cf7c297e0520dc9
 susanna	genitive	Сусанны	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0010.jsonl#e1992fa3f5795453
@@ -10068,6 +10220,8 @@ tabor-2	locative	Фаворе	model-reading	1	declined by claude-sonnet-5, asked
 tabor-2	nominative	Фавор	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#6b237f45580d4a82
 tabrimmon	genitive	Тавримона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0499.jsonl#515f986f645666e7
 tabrimmon	nominative	Тавримон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0499.jsonl#515f986f645666e7
+tachash	nominative	Тахаш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+tachmas	nominative	Тахмас	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tachmonites	genitive	Ахаманитян	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#a2065b5f7fa0e3fd
 tachmonites	nominative	Ахаманитяне	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-28	zz-remaining-0009.jsonl#a2065b5f7fa0e3fd
 tadmor	genitive	Фадмора	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#be20ad958377dec3
@@ -10098,6 +10252,7 @@ tahpenes	nominative	Тахпенеса	model-reading	1	read from Scripture by cl
 tahtimhodshi	genitive	Тахтим-Ходши	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#8a0f3208f435ec09
 tahtimhodshi	locative	Тахтим-Ходши	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#8a0f3208f435ec09
 tahtimhodshi	nominative	Тахтим-Ходши	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#8a0f3208f435ec09
+taleh	nominative	Тале	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 talmai	genitive	Фалмая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0500.jsonl#0e50ddc7f8b33999
 talmai	nominative	Фалмай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0500.jsonl#0e50ddc7f8b33999
 talmai-2	genitive	Фалмая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0501.jsonl#188f2f17dcf2d215
@@ -10117,6 +10272,7 @@ tamar-5	genitive	Тамары	model-reading	1	read from Scripture by claude-sonn
 tamar-5	locative	Тамаре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#555aefcaa0dd68c3
 tamar-5	nominative	Тамара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0136.jsonl#555aefcaa0dd68c3
 tammuz	nominative	Фаммуз	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+tan-jackal	nominative	Тан	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 tanhumeth	genitive	Танхумефа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0111.jsonl#6ad110291b49572b
 tanhumeth	nominative	Танхумеф	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0111.jsonl#6ad110291b49572b
 tannin	nominative	Таннин	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
@@ -10159,6 +10315,8 @@ tartessos	genitive	Тартесса	model-reading	1	declined by claude-opus-5-5,
 tartessos	nominative	Тартесс	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tattenai	genitive	Фафная	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0111.jsonl#343e03156e2ac95d
 tattenai	nominative	Фафнай	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0111.jsonl#343e03156e2ac95d
+tauros	nominative	Тавр	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tayish	nominative	Таиш	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tebah	genitive	Теваха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0006.jsonl#dc0ad2b5faf26bb8
 tebah	nominative	Тевах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0006.jsonl#dc0ad2b5faf26bb8
 tebaliah	genitive	Тевалии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0503.jsonl#4ae51fca9faa755d
@@ -10214,6 +10372,7 @@ temanites	nominative	Феманитяне	model-reading	1	read from Scripture by
 temeni	genitive	Фимни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0006.jsonl#a9bbf1ab6be6469b
 temeni	nominative	Фимни	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0006.jsonl#a9bbf1ab6be6469b
 tent-of-meeting-outside-the-camp	nominative	Скиния собрания вне стана	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
+teo	nominative	Тео	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 terah	genitive	Фарры	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0112.jsonl#1b8d50786a776d68
 terah	nominative	Фарра	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0112.jsonl#1b8d50786a776d68
 terah-2	genitive	Тараха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0506.jsonl#dcac298d428f3fb6
@@ -10322,6 +10481,7 @@ timon	genitive	Тимона	model-reading	1	read from Scripture by claude-sonnet
 timon	nominative	Тимон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0510.jsonl#c573a644b4666246
 timothy	genitive	Тимофея	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0101.jsonl#5ff91d514da4a1f2
 timothy	nominative	Тимофей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0101.jsonl#5ff91d514da4a1f2
+tinshemet	nominative	Тиншемет	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 tiphsah	genitive	Типсаха	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0101.jsonl#9e1e35d5fef94160
 tiphsah	locative	Типсахе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0101.jsonl#9e1e35d5fef94160
 tiphsah	nominative	Типсах	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0101.jsonl#9e1e35d5fef94160
@@ -10393,6 +10553,7 @@ tola	genitive	Фолы	model-reading	1	read from Scripture by claude-sonnet-5, a
 tola	nominative	Фола	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0513.jsonl#d05941ca97956cbc
 tola-2	genitive	Фолы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-zz-zz-zz-zz-zz-zz-zz-zz-offices-0000.jsonl#bd833c136fcd32d7
 tola-2	nominative	Фола	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-zz-zz-zz-zz-zz-zz-zz-zz-offices-0000.jsonl#bd833c136fcd32d7
+tolaat	nominative	Толаат	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tolad	genitive	Фолада	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#0956a7e070a7e730
 tolad	locative	Фоладе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#0956a7e070a7e730
 tolad	nominative	Фолад	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#0956a7e070a7e730
@@ -10404,6 +10565,8 @@ tophel	nominative	Тофел	model-reading	1	read from Scripture by claude-sonne
 topheth	genitive	Тофета	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0514.jsonl#a9e59e0ad295a5c3
 topheth	locative	Тофете	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0514.jsonl#a9e59e0ad295a5c3
 topheth	nominative	Тофет	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0514.jsonl#a9e59e0ad295a5c3
+tor	nominative	Тор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tor-dove	nominative	Тор	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tormah	genitive	Тормы	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tormah	nominative	Торма	model-reading	1	declined by claude-opus-5-5, asked 2026-10-14	\N
 tower-of-babel	nominative	Вавилонская башня	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
@@ -10423,6 +10586,7 @@ toweroftheovens	nominative	Печная башня	model-reading	1	read from Scr
 trachonitis	genitive	Трахонитской области	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0114.jsonl#14d9f584c7db9c7e
 trachonitis	locative	Трахонитской области	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0114.jsonl#14d9f584c7db9c7e
 trachonitis	nominative	Трахонитская область	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0114.jsonl#14d9f584c7db9c7e
+tragos	nominative	Трагос	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tree-of-knowledge-of-good-and-evil	nominative	Дерево познания добра и зла	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 tree-of-life	nominative	Дерево жизни	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
 troas	genitive	Троады	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#40310a9dad1f3a0e
@@ -10433,13 +10597,22 @@ trogyllium	locative	Трогиллии	model-reading	1	read from Scripture by cl
 trogyllium	nominative	Трогиллия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#6ad49a8bbf4d0c56
 trophimus	genitive	Трофима	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0515.jsonl#6479692dfa4d0719
 trophimus	nominative	Трофим	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0515.jsonl#6479692dfa4d0719
+trygon	nominative	Тригон	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tryphaena	genitive	Трифены	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#2120393dffd10e79
 tryphaena	locative	Трифене	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#2120393dffd10e79
 tryphaena	nominative	Трифена	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#2120393dffd10e79
 tryphosa	genitive	Трифосы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#fe81272cea17c8fc
 tryphosa	locative	Трифосе	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#fe81272cea17c8fc
 tryphosa	nominative	Трифоса	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0102.jsonl#fe81272cea17c8fc
+tsaphir	nominative	Цафир	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tsav	nominative	Цав	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+tselatsal	nominative	Целацаль	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tsepha	nominative	Цефа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+tsephardea	nominative	Цефардеа	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tsevi	nominative	Цви	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tseviyyah	nominative	Цвия	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tsirah	nominative	Цира	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+tsiyyim	nominative	Цийим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 tubal	genitive	Фувала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0515.jsonl#1ef449a95e725e8b
 tubal	nominative	Фувал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0515.jsonl#1ef449a95e725e8b
 tubal-2	genitive	Фувала	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#d7ad86b020d21b41
@@ -10447,6 +10620,7 @@ tubal-2	locative	Фувале	model-reading	1	read from Scripture by claude-sonn
 tubal-2	nominative	Фувал	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0140.jsonl#d7ad86b020d21b41
 tubalcain	genitive	Тувалкаина	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#20e8b0aaf21adb58
 tubalcain	nominative	Тувалкаин	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#20e8b0aaf21adb58
+tukkiyyim	nominative	Туккиим	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 tychicus	genitive	Тихика	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0115.jsonl#21c13778a68972c0
 tychicus	nominative	Тихик	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0115.jsonl#21c13778a68972c0
 tyrannus	genitive	Тиранна	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0516.jsonl#ebf10f85830ac0bb
@@ -10746,11 +10920,17 @@ wildgoatsrocks	genitive	скал диких коз	model-reading	1	read from Scr
 wildgoatsrocks	locative	скалах диких коз	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0105.jsonl#89a8d73f83d8c15d
 wildgoatsrocks	nominative	скалы диких коз	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0105.jsonl#89a8d73f83d8c15d
 wood-offering	nominative	Доставка дров	model-reading	0.93	Essenthos, read from each verse by a language model on 2026-09-23, on the project owner's decision that objects and appointed times are records of their own	\N
+yaanah	nominative	Яана	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+yachmur	nominative	Яхмур	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
+yael	nominative	Яэль	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+yanshuph	nominative	Яншуф	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
+yeleq	nominative	Елек	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 yhvh	genitive	Господа	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-22	zz-reask4-0011.jsonl#9ffa20590c77f81e
 yhvh	nominative	Господь	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-22	zz-reask4-0011.jsonl#9ffa20590c77f81e
 yiron	genitive	Иреона	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#269ef3c20a5ceda8
 yiron	locative	Иреоне	model-reading	1	declined by claude-sonnet-5, asked 2026-09-09	\N
 yiron	nominative	Иреон	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0116.jsonl#269ef3c20a5ceda8
+yonah-dove	nominative	Иона	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 youngeroflot	genitive	младшей	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0006.jsonl#9eda8311753625e6
 youngeroflot	nominative	младшая	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	verify-0006.jsonl#9eda8311753625e6
 zaanan	genitive	Цаана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0530.jsonl#704a646cbb018fe9
@@ -10878,6 +11058,7 @@ zarethan	nominative	Цартан	model-reading	1	read from Scripture by claude-s
 zarethshahar	genitive	Цереф-Шахара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
 zarethshahar	locative	Цереф-Шахаре	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
 zarethshahar	nominative	Цереф-Шахар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0147.jsonl#d423638d0b2316e2
+zarzir	nominative	Зарзир	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 zattu	genitive	Заттуя	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#b84494230acd140a
 zattu	nominative	Заттуй	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0011.jsonl#b84494230acd140a
 zaza	genitive	Зазы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0536.jsonl#7bf8155febd1d139
@@ -10999,6 +11180,7 @@ zedekiah-5	nominative	Седекия	model-reading	1	read from Scripture by clau
 zeeb	genitive	Зива	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0118.jsonl#1386842d7ef034d2
 zeeb	locative	Зиве	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0118.jsonl#1386842d7ef034d2
 zeeb	nominative	Зив	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0118.jsonl#1386842d7ef034d2
+zeev	nominative	Зеев	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one for each original word, collective words getting none and metaphors not standing on the animal; each record read from its verses by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 zela	genitive	Цела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0107.jsonl#e961c3f1488a0150
 zela	locative	Цела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0107.jsonl#e961c3f1488a0150
 zela	nominative	Цела	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	rest-0107.jsonl#e961c3f1488a0150
@@ -11016,6 +11198,7 @@ zemarite-son-of-canaan	genitive	Цемарея	model-reading	1	read from Scriptu
 zemarite-son-of-canaan	nominative	Цемарей	model-reading	1	read from Scripture by claude-opus-5-5, asked 2026-10-12	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#34756e4297056b39
 zemarites	genitive	Цемареев	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#3d59392b8a199edd
 zemarites	nominative	Цемареи	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-16	zz-zz-zz-zz-zz-zz-zz-nations-0000.jsonl#3d59392b8a199edd
+zemer	nominative	Земер	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, the strange and mistranslated ones first, with the old translations' renderings named; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; names in Ukrainian and Russian after Ohienko and the Synodal where they print them; lines and notes rendered by claude-opus-5-5	\N
 zemirah	genitive	Земиры	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0543.jsonl#1e24e1596fdb3b1b
 zemirah	nominative	Земира	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0543.jsonl#1e24e1596fdb3b1b
 zenan	genitive	Ценана	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0119.jsonl#a60d63b22f7ea363
@@ -11093,6 +11276,7 @@ zethan	nominative	Зефан	model-reading	1	read from Scripture by claude-sonne
 zethar	genitive	Зефара	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0548.jsonl#4aac1a276afbbeba
 zethar	nominative	Зефар	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0548.jsonl#4aac1a276afbbeba
 zeus	nominative	Зевс	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that the gods the texts name and the creatures whose identity the translations dispute get records of their own, each record read from its verses by claude-opus-5-5 on 2026-11-16; names in Ukrainian after Ohienko, in Russian after the Synodal; its lines rendered by claude-opus-5-5	\N
+zevuv	nominative	Зевув	manual	\N	Essenthos, on the project owner's word of 2026-11-16 that every creature the Bible describes gets a record, one per word of the original, collectives and metaphors left off; each record read from its verses, the lexicons and the translations by claude-opus-5-5 on 2026-11-16; lines and notes rendered by claude-opus-5-5	\N
 zia	genitive	Зии	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#80a010bbb250626b
 zia	nominative	Зия	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	zz-words-0012.jsonl#80a010bbb250626b
 ziba	genitive	Сивы	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0119.jsonl#09a2fd29faa91861
