@@ -268,11 +268,13 @@ internal static class ContextEndpoints
                 .Select(e => new { e.Slug, e.Subtype })
                 .ToDictionaryAsync(e => e.Slug, e => e.Subtype, StringComparer.Ordinal, cancellationToken);
 
+        // A renamed person is shown by the name the chapter calls him by (PRB-1770): Genesis 22's Авраам, Genesis 12's Аврам.
+        var inChapter = records.ToDictionary(r => r.Slug, r => Line(r.Slug).InChapter(r.Name, r.ChapterName, r.Called), StringComparer.Ordinal);
         var entities = records
             .Select(r => new ContextEntityResponse(r.Slug, r.Kind, r.Name, r.Distinguisher, [.. verses[r.Slug]])
             {
                 Subtype = sorts.GetValueOrDefault(r.Slug),
-                LocalName = Line(r.Slug).LocalName,
+                LocalName = inChapter[r.Slug].LocalName,
                 LocalDistinguisher = Line(r.Slug).LocalDistinguisher,
                 Descriptor = Line(r.Slug).Descriptor,
                 Meaning = r.Meaning,
@@ -281,7 +283,7 @@ internal static class ContextEndpoints
                 How = [.. how.GetValueOrDefault(r.Slug) ?? []],
                 SourceId = Datasets.Own,
                 Group = ChapterSalience.WordsForGod.Contains(r.Slug) ? ChapterSalience.GodGroup : null,
-                ChapterName = r.ChapterName,
+                ChapterName = inChapter[r.Slug].ChapterName,
                 Thumbnail = pictured.GetValueOrDefault(r.Slug),
                 Exceptions = asked
                     ? [.. exceptions.Where(x => x.Slug == r.Slug).Select(x => new ContextExceptionResponse(x.Text, x.Origin, [.. x.Verses]))]

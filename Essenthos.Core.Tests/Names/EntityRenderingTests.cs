@@ -63,6 +63,42 @@ public sealed class RenderingRuleTests
         person.Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A creature is named by a common noun in most texts (PRB-1767): the King James's <em>unicorn</em> and the Ohienko
+    /// Bible's <em>однорожця</em> are its spellings, and the Septuagint's lemma <em>μονοκέρως</em>. A being a text writes with
+    /// a capital is still read as a name, and a person's lower-case word is still no spelling of anybody.
+    /// </summary>
+    [Fact]
+    public void ABeingWrittenInLowerCaseIsSpeltByTheCommonNounThatRendersIt()
+    {
+        Renderings.IsThing("being", "unicorn").Should().BeTrue();
+        Renderings.IsThing("being", "«однорожця").Should().BeTrue();
+        Renderings.IsThing("being", "Baal").Should().BeFalse();
+        Renderings.IsThing("being", "רְאֵם").Should().BeFalse();
+        Renderings.IsThing("person", "multitude").Should().BeFalse();
+        Renderings.IsThing("object", "Ark").Should().BeTrue();
+
+        var reem = Of(null,
+            Word(1, 2, "unicorn", "eng", thing: Renderings.IsThing("being", "unicorn")),
+            Word(2, 4, "unicorns", "eng", thing: Renderings.IsThing("being", "unicorns")),
+            Word(3, 3, "unicorn", "eng", thing: Renderings.IsThing("being", "unicorn")));
+        var greek = Of(null,
+            Word(1, 2, "μονοκέρωτος", "grc", "μονοκέρως", thing: Renderings.IsThing("being", "μονοκέρωτος")),
+            Word(2, 2, "μονοκερώτων", "grc", "μονοκέρως", thing: Renderings.IsThing("being", "μονοκερώτων")));
+
+        // The Vulgate names Rahab once and renders the same word superbum three times: the name is its spelling.
+        var rahab = Of(null,
+            Word(1, 2, "superbum", "lat", thing: Renderings.IsThing("being", "superbum")),
+            Word(2, 2, "superbum", "lat", thing: Renderings.IsThing("being", "superbum")),
+            Word(3, 2, "superbum", "lat", thing: Renderings.IsThing("being", "superbum")),
+            Word(4, 3, "Rahab", "lat", thing: Renderings.IsThing("being", "Rahab")));
+        rahab.Select(r => (r.Form, r.Heading)).Should().BeEquivalentTo([("Rahab", true)]);
+
+        reem.Single(r => r.Heading).Form.Should().Be("unicorn");
+        reem.Select(r => r.Form).Should().BeEquivalentTo(["unicorn", "unicorns"]);
+        greek.Select(r => (r.Form, r.Occurrences)).Should().BeEquivalentTo([("μονοκέρως", 2)]);
+    }
+
     /// <summary>The nominative this corpus already holds wins, when the text prints it.</summary>
     [Fact]
     public void TheNominativeHeldForTheLanguageHeadsWhenTheTextPrintsIt()

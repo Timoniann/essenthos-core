@@ -74,7 +74,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         SELECT a.entity_id, hw.text_id, hw.verse_id, hw.position, hw.text, hw.trailer, hw.lemma, ht.language,
                CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE rendered.lemma END AS renders,
                CASE WHEN a.note LIKE @guessed THEN a.confidence END AS guess,
-               e.kind IN ('object', 'observance', 'title') AS thing,
+               e.kind::text AS kind,
                hw.normalised_text,
                CASE WHEN a.note LIKE @guessed THEN a.confidence >= @sure
                     ELSE a.method IN ('manual', 'stated-by-source') OR a.confidence IS NULL OR a.confidence >= @sure
@@ -357,7 +357,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                 reader.GetString(7),
                 reader.IsDBNull(8) ? null : reader.GetString(8),
                 reader.IsDBNull(9) ? null : reader.GetDouble(9),
-                reader.GetBoolean(10),
+                Renderings.IsThing(reader.GetString(10), reader.GetString(4)),
                 reader.IsDBNull(11) ? null : reader.GetString(11),
                 reader.GetBoolean(12)));
         }

@@ -580,6 +580,20 @@ internal static class TextIndexes
     /// text's pairs with the originals, as <c>EntityRenderingLoader</c> reads it through the links), and how many words of the
     /// text print its form. The names are the names layer's projection (<c>names/projected</c>).
     /// </summary>
+    /// <summary>
+    /// Raised with any change to what the spellings index says of a word (3: a being's lower-case word is a thing's, PRB-1767);
+    /// a spellings product made by another version is made again, and only it, not the text's other indexes.
+    /// </summary>
+    internal const string SpellingsVersion = "3";
+
+    internal const string SpellingsVersionNote = "spellings-version";
+
+    private static bool OtherSpellings(IndexContext context, string product)
+    {
+        using var reader = context.Store.Open(product);
+        return reader.Header?.Notes.LastOrDefault(note => note.Key == SpellingsVersionNote).Value is not SpellingsVersion;
+    }
+
     public static IndexOutcome? Spellings(IndexContext context, string text, bool force)
     {
         var clock = Stopwatch.StartNew();
@@ -611,7 +625,7 @@ internal static class TextIndexes
         }
 
         inputs.AddRange(pairs.Select(p => Product(context, MappingProducts.Of(p.Pair, MappingProducts.Final))));
-        if (!force && !context.NeedsBuild(product, inputs))
+        if (!force && !context.NeedsBuild(product, inputs) && !OtherSpellings(context, product))
         {
             return new IndexOutcome(text, IndexProducts.Spellings, false, 0, clock.Elapsed);
         }
@@ -688,7 +702,7 @@ internal static class TextIndexes
         long rows;
         var missing = 0;
         using (var writer = Create(context, product, SpellingRow.Schema(text), inputs,
-                   ("names", "the names layer's projection (names/projected)")))
+                   ("names", "the names layer's projection (names/projected)"), (SpellingsVersionNote, SpellingsVersion)))
         {
             foreach (var name in names.Where(n => n.Spellable).OrderBy(n => n.Own).ThenBy(n => n.Record, StringComparer.Ordinal))
             {

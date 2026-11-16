@@ -236,7 +236,7 @@ internal sealed class NamesFirstSource : IPairSource
     }
 
     /// <summary>
-    /// The original's words that name a person, a place or a people, from its settled names (<see cref="NamesFirstPass"/> has
+    /// The original's words that name a person, a place or a people, or a god or a creature alone, from its settled names (<see cref="NamesFirstPass"/> has
     /// why a common noun and the אֲדֹנָי beside יְהוִה are weighed but never placed).
     /// </summary>
     internal static Dictionary<long, Original> Originals(ProductStore store, ProductText to, Records records, IReadOnlyDictionary<string, int> ids)
@@ -277,6 +277,17 @@ internal sealed class NamesFirstSource : IPairSource
             named.Sort();
             originals[word] = new Original(records.Families.Of(named), EnumSpelling.ToEntityKind(records.Kinds[named[0]]),
                 Proper(to, (int)word), creatures.TryGetValue(word, out var creature) ? records.Families.Of(creature) : null);
+        }
+
+        // A word that names a god or a creature by a proper noun, and nobody else, is placed like a person's name (PRB-1769):
+        // the Ohienko Bible's «Рагава» of Psalm 89:10 was linked to nothing, though BHSA's רַהַב there is a proper noun and
+        // names the creature. A creature the original calls by a common noun (the eagle, the lion, the unicorn) is not a
+        // name of the verse at all: weighed as one, it would make a verse that names one person name two, and change how
+        // that person's name is learned and placed.
+        foreach (var (word, named) in creatures.Where(entry => !byWord.ContainsKey(entry.Key) && Proper(to, (int)entry.Key)))
+        {
+            named.Sort();
+            originals[word] = new Original(records.Families.Of(named), EntityKind.Being, Proper: true);
         }
 
         return originals;

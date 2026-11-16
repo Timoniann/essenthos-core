@@ -50,6 +50,10 @@ internal sealed record ChapterSkeleton(
 /// <param name="Kind">The record's kind as the answer spells it.</param>
 /// <param name="Canons">The canons that attest the record (<c>entity_canon</c>), which a canon mode filters by.</param>
 /// <param name="ChapterName">The name the chapter calls it by where that is not its headword (<see cref="ChapterSalience.NameUsed"/>).</param>
+/// <param name="Called">
+/// The name BibleData labels most of the chapter's verses with, whatever the headword (<see cref="ChapterSalience.Called"/>):
+/// which of a renamed person's names the chapter uses, Abraham in Genesis 22 and Abram in Genesis 12 (PRB-1770).
+/// </param>
 internal sealed record SkeletonRecord(
     string Slug,
     string Kind,
@@ -59,7 +63,8 @@ internal sealed record SkeletonRecord(
     SkeletonLocation? Location,
     string[] Canons,
     string? Meaning,
-    string? ChapterName);
+    string? ChapterName,
+    string? Called = null);
 
 internal sealed record SkeletonLocation(double Lon, double Lat, string Kind, double? Confidence);
 
@@ -99,7 +104,7 @@ internal partial class ContextDocumentJson : JsonSerializerContext;
 internal static class ChapterSkeletons
 {
     /// <summary>Raise with any change to what a skeleton holds or how it is read: a stored one is made again only when this moves.</summary>
-    public const int Version = 1;
+    public const int Version = 2;
 
     /// <summary>
     /// The one kind of period a chapter is never placed in. Eras, reigns, judgeships and the spans
@@ -163,6 +168,7 @@ internal static class ChapterSkeletons
             .ToListAsync(cancellationToken);
         var meanings = await Meanings(db, [.. rows.Select(r => r.Id)], cancellationToken);
         var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
+        var called = await ChapterSalience.Called(db, book, chapter, cancellationToken);
         var records = rows
             .OrderBy(r => r.Id)
             .Select(r => new SkeletonRecord(
@@ -174,7 +180,8 @@ internal static class ChapterSkeletons
                 r.Location,
                 [.. r.Canons.Order(StringComparer.Ordinal)],
                 meanings.GetValueOrDefault(r.Id),
-                ChapterSalience.WordsForGod.Contains(r.Slug) ? null : ChapterSalience.NameUsed(r.Name, namesUsed.GetValueOrDefault(r.Slug))))
+                ChapterSalience.WordsForGod.Contains(r.Slug) ? null : ChapterSalience.NameUsed(r.Name, namesUsed.GetValueOrDefault(r.Slug)),
+                called.GetValueOrDefault(r.Slug)))
             .ToList();
 
         var events = await db.Events

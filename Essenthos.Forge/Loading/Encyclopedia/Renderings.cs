@@ -118,6 +118,20 @@ internal static class Renderings
     private const string EnglishLanguage = "eng";
 
     /// <summary>
+    /// Whether a word naming a record of <paramref name="kind"/> is read as a thing's rendering (<see cref="NamedWord.Thing"/>):
+    /// an object, a feast or a title always; a being where the word is written in lower case (PRB-1767). A creature is
+    /// named by a common noun in most texts — the King James's <em>leviathan</em> and <em>unicorn</em>, the Ohienko Bible's
+    /// <em>однорожця</em>, the Septuagint's <em>δράκων</em> — and read as a person's name those words were no spelling at
+    /// all, so the record listed only the texts that capitalise it. A being a text writes with a capital (<em>Baal</em>,
+    /// <em>Dagon</em>) is read as a name, and still found by a search.
+    /// </summary>
+    /// <param name="kind">The record's kind as the record files write it.</param>
+    /// <param name="surface">The word as the text prints it.</param>
+    internal static bool IsThing(string kind, string surface) =>
+        kind is "object" or "observance" or "title"
+        || (kind == "being" && surface.FirstOrDefault(char.IsLetter) is var first && char.IsLower(first));
+
+    /// <summary>
     /// Every text's spellings of every entity in <paramref name="words"/>.
     /// </summary>
     /// <param name="words">The named words, in any order.</param>
@@ -147,7 +161,8 @@ internal static class Renderings
 
             var key = (first.EntityId, first.TextId);
             var best = run.Max(word => word.Guess ?? NotGuessed);
-            Count(names, key, name, best);
+            var named = run.Any(word => !word.Thing);
+            Count(names, key, name, best, named);
 
             if (best >= TrustedAt)
             {
@@ -166,7 +181,7 @@ internal static class Renderings
                     byOriginal[key] = groups = new Dictionary<string, Dictionary<string, Tally>>(StringComparer.Ordinal);
                 }
 
-                Count(groups, original, name, best);
+                Count(groups, original, name, best, named);
             }
         }
 
@@ -212,10 +227,13 @@ internal static class Renderings
     /// <summary>How sure an annotation no guess carried is, for comparing it with the ones one did.</summary>
     private const double NotGuessed = 1.0;
 
-    /// <summary>How often a spelling is printed, and the surest annotation on any word printing it.</summary>
-    private readonly record struct Tally(int Occurrences, double Best);
+    /// <summary>
+    /// How often a spelling is printed, the surest annotation on any word printing it, and whether a word printing it is
+    /// read as a name rather than a thing's common noun (<see cref="NamedWord.Thing"/>).
+    /// </summary>
+    private readonly record struct Tally(int Occurrences, double Best, bool Named = false);
 
-    private static void Count<TKey>(Dictionary<TKey, Dictionary<string, Tally>> into, TKey key, string name, double best)
+    private static void Count<TKey>(Dictionary<TKey, Dictionary<string, Tally>> into, TKey key, string name, double best, bool named)
         where TKey : notnull
     {
         if (!into.TryGetValue(key, out var counted))
@@ -224,7 +242,7 @@ internal static class Renderings
         }
 
         var tally = counted.GetValueOrDefault(name);
-        counted[name] = new Tally(tally.Occurrences + 1, Math.Max(tally.Best, best));
+        counted[name] = new Tally(tally.Occurrences + 1, Math.Max(tally.Best, best), tally.Named || named);
     }
 
     /// <summary>
@@ -360,7 +378,11 @@ internal static class Renderings
             return [];
         }
 
-        var commonest = Commonest(spellings);
+        // A being a text names with a capital somewhere is spelt by that name, and its common nouns count only where they
+        // open like it: the Vulgate's Rahab, not the superbum and the Septuagint's κῆτος that render the same word elsewhere
+        // (PRB-1767). A creature the text never names with a capital is spelt by its common noun.
+        var names = spellings.Where(c => c.Named).ToList();
+        var commonest = Commonest(names.Count > 0 ? names : spellings);
         var kept = spellings.Where(c => OpensLike(c.Folded, commonest.Folded)).ToList();
 
         var taken = kept.Select(c => c.Folded).ToHashSet(StringComparer.Ordinal);
@@ -407,7 +429,7 @@ internal static class Renderings
     /// prints firmly, and <em>Однак</em> opens like nothing the mercy seat is called anywhere.
     /// </para>
     /// </summary>
-    private static List<(string Form, string Folded, int Occurrences)> Spellings(
+    private static List<(string Form, string Folded, int Occurrences, bool Named)> Spellings(
         Dictionary<string, Tally> counted,
         IReadOnlySet<string> corroborating) =>
         [.. counted
@@ -419,21 +441,22 @@ internal static class Renderings
             .Select(g => (
                 Form: g.OrderByDescending(c => c.Value.Occurrences).ThenBy(c => c.Key, StringComparer.Ordinal).First().Key,
                 Folded: g.Key,
-                Occurrences: g.Sum(c => c.Value.Occurrences)))];
+                Occurrences: g.Sum(c => c.Value.Occurrences),
+                Named: g.Any(c => c.Value.Named)))];
 
     /// <summary>
     /// A tie goes to the longer spelling, which is the name more often than the short word an
     /// annotation spilled onto: RV1909 prints "De los Isharitas" and both ends are named once.
     /// </summary>
-    private static (string Form, string Folded, int Occurrences) Commonest(
-        List<(string Form, string Folded, int Occurrences)> spellings) =>
+    private static (string Form, string Folded, int Occurrences, bool Named) Commonest(
+        List<(string Form, string Folded, int Occurrences, bool Named)> spellings) =>
         spellings
             .OrderByDescending(c => c.Occurrences).ThenByDescending(c => c.Form.Length)
             .ThenBy(c => c.Form, StringComparer.Ordinal)
             .First();
 
-    private static IEnumerable<(string Form, string Folded, int Occurrences)> Opening(
-        List<(string Form, string Folded, int Occurrences)> spellings)
+    private static IEnumerable<(string Form, string Folded, int Occurrences, bool Named)> Opening(
+        List<(string Form, string Folded, int Occurrences, bool Named)> spellings)
     {
         var commonest = Commonest(spellings);
         return spellings.Where(c => OpensLike(c.Folded, commonest.Folded));
