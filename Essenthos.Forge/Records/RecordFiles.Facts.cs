@@ -17,8 +17,9 @@ internal static partial class RecordFiles
     /// <summary>What a row holds until its companion file fills a column a check forbids to be empty.</summary>
     private const string Pending = "pending:records-load";
 
+    /// <summary>A check run after a file loads: it fails the build with <paramref name="what"/>, whose quotes are the string's.</summary>
     private static string Settled(string table, string condition, string what) =>
-        $"DO $$ BEGIN IF EXISTS (SELECT 1 FROM {table} WHERE {condition}) THEN RAISE EXCEPTION '{what}'; END IF; END $$";
+        $"DO $$ BEGIN IF EXISTS (SELECT 1 FROM {table} WHERE {condition}) THEN RAISE EXCEPTION '{what.Replace("'", "''")}'; END IF; END $$";
 
     private static RecordFile Verses(string product, ProductKind kind, string which, string about) => new(product, kind,
         "slug ref:ref label? names:bool disputed:bool withheld:bool by",
