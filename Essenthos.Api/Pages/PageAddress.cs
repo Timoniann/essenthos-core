@@ -141,6 +141,7 @@ internal sealed record PageAddress(SiteLanguage Language, PageKind Kind, string 
         ["titles"] = EntityKind.Title,
         ["objects"] = EntityKind.Object,
         ["observances"] = EntityKind.Observance,
+        ["beings"] = EntityKind.Being,
     };
 
     public static string RecordPath(EntityKind kind, string slug) =>

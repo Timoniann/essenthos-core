@@ -59,7 +59,7 @@ internal static class RecordVerses
 
     /// <summary>The kinds whose verses are read off the words; the words for God are read off their Strong numbers elsewhere.</summary>
     private static readonly IReadOnlySet<EntityKind> Named =
-        new HashSet<EntityKind> { EntityKind.Person, EntityKind.Place, EntityKind.Title, EntityKind.Object, EntityKind.Observance };
+        new HashSet<EntityKind> { EntityKind.Person, EntityKind.Place, EntityKind.Title, EntityKind.Object, EntityKind.Observance, EntityKind.Being };
 
     /// <summary>The files besides the names and the frames that the verses are read from.</summary>
     private static readonly string[] Facts =
