@@ -1754,6 +1754,7 @@ egypt	6	Proud One	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, 
 egypt	7	Rahab-Hem-Shebeth	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 egypt	8	Wadi of Egypt	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 egypt	9	northern Egypt	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
+egypt	10	Rahab	name	\N	\N	\N	\N	H7294	\N	\N	Essenthos, read from the verses by claude-opus-5-5 on 2026-11-16, on the project owner's word of 2026-11-16 that where the text gives a creature's name to a nation the word shows the creature first and the nation below it
 egyptians	1	Egyptians	gentilic	\N	\N	\N	\N	H4713	\N	\N	\N
 ehi	1	Ehi	proper name	אֵחִי	echiy	Αγχις	Anxis	H278	\N	\N	\N
 ehi	2	Ahiram	proper name	אֲחִירָם	ahiyram	Ιαχιραν	Iaxiran	H297	\N	\N	\N
@@ -5370,7 +5371,6 @@ racal	2	Rachal	name	\N	\N	\N	\N	H7403	\N	\N	\N
 rachel	1	Rachel	proper name	רָחֵל	rachel	Ραχηλ	Raxēl	H7354	\N	\N	\N
 raddai	1	Raddai	proper name	רַדַּי	raday	Ραδδαι	Raddai	H7288	\N	\N	\N
 rahab	1	Rahab	proper name	רָחָ֖ב	rachav	Ρααβ	Raab	H7343	\N	\N	\N
-rahab-2	1	Rahab	name	\N	\N	\N	\N	H7294	\N	\N	\N
 rahab-sea-monster	1	Rahab	name	רַהַב	rahav	\N	\N	H7293	\N	\N	\N
 rahabs-scarlet-cord	1	Line of scarlet thread	name	תִּקְוַת חוּט הַשָּׁנִי	tiqvat chut hashani	\N	\N	H8615,H2339,H8144	\N	\N	\N
 raham	1	Raham	proper name	רַחַם	racham	Ραεμ	Raem	H7357	\N	\N	\N
