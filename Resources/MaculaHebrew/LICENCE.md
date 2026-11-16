@@ -79,6 +79,12 @@ sides; in the 1,099 others, nearly all where MACULA writes the qere and BHSA the
 הוצא against היצא), the two are aligned letter by letter. A morph whose letters fall in two BHSA words
 is refused (70, the article written with `לזה`), as is a verse whose letters agree in less than nine of
 ten. Where a verse was aligned past a difference, the parsing's `note` says what each side prints.
+Measured on the build: 469,254 of 469,476 morphs that have letters are placed, and 1,098 verses are
+aligned past a difference.
+
+1,372 of the table's 59,231 `participantref` ids name no row of it (GEN 6:3 refers to
+`o010060030063`, where the rows are `061`, `061ה` and `062`). A morph with such a reference gives no
+row: which morph was meant is not guessed.
 
 ## Attribution
 
