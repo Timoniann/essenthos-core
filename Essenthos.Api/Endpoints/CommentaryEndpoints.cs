@@ -35,12 +35,14 @@ internal record CommentaryEntryResponse(
     VerseRefResponse? Last,
     JsonElement Body);
 
-/// <param name="Verse">The verse asked for; null when the introductions were.</param>
+/// <param name="Verse">The first verse asked for; null when the introductions were.</param>
+/// <param name="Through">The last verse asked for, the same as <paramref name="Verse"/> for one.</param>
 internal record CommentaryPassageResponse(
     string Commentary,
     BookRefResponse Book,
     int Chapter,
     int? Verse,
+    int? Through,
     IList<CommentaryEntryResponse> Entries);
 
 /// <summary>
@@ -80,6 +82,7 @@ internal static class CommentaryEndpoints
             string book,
             int chapter,
             [FromQuery] int? verse,
+            [FromQuery] int? through,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -103,18 +106,19 @@ internal static class CommentaryEndpoints
                     $"{BookReferences.Name(ordinal.Value)} has {chapters} chapters in the shared numbering, so there is no chapter {chapter}.");
             }
 
-            if (verse is < 1)
+            if (verse is < 1 || through is not null && (verse is null || through < verse))
             {
-                return Results.BadRequest(new ProblemResponse("A verse is numbered from 1; leave verse out for the introductions."));
+                return Results.BadRequest(new ProblemResponse(
+                    "Ask for a verse from 1, or for verse=…&through=… with through at or after verse; leave both out for the introductions."));
             }
 
-            return Results.Ok(await Passage(db, commentary, ordinal.Value, chapter, verse, cancellationToken));
+            return Results.Ok(await Passage(db, commentary, ordinal.Value, chapter, verse, through ?? verse, cancellationToken));
         });
     }
 
     /// <summary>
-    /// The comments of one commentary whose passage holds the verse, in the commentary's order; without a verse, the
-    /// introductions to the chapter and to its book.
+    /// The comments of one commentary whose passage holds any of the verses, in the commentary's order; without a verse,
+    /// the introductions to the chapter and to its book.
     /// </summary>
     internal static async Task<CommentaryPassageResponse> Passage(
         AppDbContext db,
@@ -122,12 +126,14 @@ internal static class CommentaryEndpoints
         int book,
         int chapter,
         int? verse,
+        int? through,
         CancellationToken cancellationToken)
     {
         var inBook = db.CommentaryEntries.Where(e => e.Commentary == commentary && e.Book == book);
+        var last = through ?? verse;
         var found = verse is { } v
             ? inBook.Where(e => e.FirstVerse != null
-                                && (e.FirstChapter < chapter || e.FirstChapter == chapter && e.FirstVerse <= v)
+                                && (e.FirstChapter < chapter || e.FirstChapter == chapter && e.FirstVerse <= last)
                                 && (e.LastChapter > chapter || e.LastChapter == chapter && e.LastVerse >= v))
             : inBook.Where(e => e.FirstChapter == null || e.FirstChapter == chapter && e.FirstVerse == null);
         var rows = await found
@@ -140,6 +146,7 @@ internal static class CommentaryEndpoints
             new BookRefResponse(book, BookReferences.Name(book), BookReferences.Slug(book)),
             chapter,
             verse,
+            verse is null ? null : last,
             [
                 .. rows.Select(row =>
                 {

@@ -355,16 +355,25 @@ public sealed class CommentaryEndpointTests : IDisposable
     [InlineData(2, 2, "across the chapter")]
     public async Task AVerseIsGivenTheCommentWhosePassageHoldsIt(int chapter, int verse, string expected)
     {
-        var passage = await CommentaryEndpoints.Passage(_db, "henry", 1, chapter, verse, default);
+        var passage = await CommentaryEndpoints.Passage(_db, "henry", 1, chapter, verse, verse, default);
 
         passage.Entries.Should().ContainSingle().Which.Body.GetRawText().Should().Contain(expected);
         passage.Entries[0].Kind.Should().Be("verses");
     }
 
     [Fact]
+    public async Task VersesPickedTogetherAreGivenEveryCommentTouchingThem()
+    {
+        var passage = await CommentaryEndpoints.Passage(_db, "henry", 1, 1, 2, 4, default);
+
+        passage.Entries.Select(e => e.First!.Verse).Should().Equal(1, 3);
+        passage.Through.Should().Be(4);
+    }
+
+    [Fact]
     public async Task APassageSaysWhereItStartsAndEnds()
     {
-        var entry = (await CommentaryEndpoints.Passage(_db, "henry", 1, 2, 1, default)).Entries.Single();
+        var entry = (await CommentaryEndpoints.Passage(_db, "henry", 1, 2, 1, 1, default)).Entries.Single();
 
         (entry.First!.Chapter, entry.First.Verse, entry.Last!.Chapter, entry.Last.Verse).Should().Be((1, 31, 2, 3));
         entry.First.Slug.Should().Be("genesis");
@@ -373,12 +382,12 @@ public sealed class CommentaryEndpointTests : IDisposable
     [Fact]
     public async Task WithoutAVerseTheChapterAndTheBookAreIntroduced()
     {
-        var passage = await CommentaryEndpoints.Passage(_db, "henry", 1, 2, null, default);
+        var passage = await CommentaryEndpoints.Passage(_db, "henry", 1, 2, null, null, default);
 
         passage.Entries.Select(e => (e.Kind, e.Body.GetRawText())).Should().Equal(
             ("book", "[{\"p\":[\"book\"]}]"),
             ("chapter", "[{\"p\":[\"chapter two\"]}]"));
-        (await CommentaryEndpoints.Passage(_db, "rieger", 1, 1, 1, default)).Entries.Should().BeEmpty();
+        (await CommentaryEndpoints.Passage(_db, "rieger", 1, 1, 1, 1, default)).Entries.Should().BeEmpty();
     }
 
     private static CommentaryEntry Entry(int sequence, int? firstChapter, int? firstVerse, int? lastChapter, int? lastVerse, string text) =>
