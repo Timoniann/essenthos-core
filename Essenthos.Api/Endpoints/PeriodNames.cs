@@ -9,8 +9,9 @@ namespace Essenthos.Core.Endpoints;
 /// <summary>
 /// A period's name in the reader's language, said from its record where the English says no more
 /// than the record does: <em>Jacob</em> (a life) is the person's name, <em>Jehoshaphat's reign as king
-/// over Judah</em> is a set phrase around the person's name and a land. Every other period keeps its
-/// English until its names are translated (PRB-1400, a paid model run the owner has not approved).
+/// over Judah</em> is a set phrase around the person's name and a land. Every other period takes the
+/// rendering of its English name held with the other texts' renderings (<c>records/i18n/&lt;language&gt;/texts</c>),
+/// and keeps its English where none is held.
 /// </summary>
 internal static partial class PeriodNames
 {
@@ -62,8 +63,9 @@ internal static partial class PeriodNames
     }
 
     /// <summary>
-    /// Each period's name in <paramref name="language"/> (ISO 639-3) where it can be said from its record,
-    /// keyed by slug. Two reads: the people's names and, where the language declines them, their genitives.
+    /// Each period's name in <paramref name="language"/> where it can be said from its record or a rendering
+    /// of its English is held, keyed by slug. Three reads: the people's names, where the language declines
+    /// them their genitives, and the renderings of the names the records cannot say.
     /// </summary>
     public static async Task<Dictionary<string, string>> Of(
         AppDbContext db,
@@ -123,6 +125,16 @@ internal static partial class PeriodNames
             }
 
             said[period.Slug] = text;
+        }
+
+        var rendered = await TextTranslations.Of(
+            db, periods.Where(p => !said.ContainsKey(p.Slug)).Select(p => p.Name), local, cancellationToken);
+        foreach (var period in periods)
+        {
+            if (!said.ContainsKey(period.Slug) && TextTranslations.In(rendered, period.Name) is { } text)
+            {
+                said[period.Slug] = text;
+            }
         }
 
         return said;

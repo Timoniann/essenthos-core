@@ -725,13 +725,13 @@ internal sealed class PageLoader(
 
     private async Task<PageContent?> Period(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
-        var detail = await EncyclopediaEndpoints.PeriodDetail(db, address.Slug!, cancellationToken);
+        var language = address.Language;
+        var detail = await EncyclopediaEndpoints.PeriodDetail(db, address.Slug!, cancellationToken, language.Corpus);
         if (detail is null)
         {
             return null;
         }
 
-        var language = address.Language;
         var english = language.IsEnglish;
         var reckonings = await Reckonings(cancellationToken);
         var own = detail.Years.TryGetValue("", out var carried) ? carried : null;
@@ -779,24 +779,24 @@ internal sealed class PageLoader(
             person = new PageLink(PageAddress.RecordPath(entity.Kind, entity.Slug), entity.Shown);
         }
 
-        var view = new PeriodView(detail.Slug, detail.Name, shown)
+        var view = new PeriodView(detail.Slug, detail.LocalName ?? detail.Name, shown)
         {
             Kind = english ? detail.Kind : null,
             Notes = detail.Notes,
             Region = english ? detail.Region : null,
-            Parent = detail.Parent is { } parent ? new PageLink($"/periods/{parent.Slug}", parent.Name) : null,
+            Parent = detail.Parent is { } parent ? new PageLink($"/periods/{parent.Slug}", parent.LocalName ?? parent.Name) : null,
             Person = person,
             Spans = spans,
             Opens = detail.Opens is { } opens ? new PageLink($"/events/{opens.Slug}", opens.Name) : null,
             Closes = detail.Closes is { } closes ? new PageLink($"/events/{closes.Slug}", closes.Name) : null,
             Inside = inside,
             InsideTotal = total,
-            Nested = [.. detail.Inside.Select(child => new PageLink($"/periods/{child.Slug}", child.Name))],
+            Nested = [.. detail.Inside.Select(child => new PageLink($"/periods/{child.Slug}", child.LocalName ?? child.Name))],
             Source = detail.Source,
         };
         return PageViews.Period(language, wording, view) with
         {
-            Data = PageData.Of([(PageData.PeriodAddress(detail.Slug), PageData.Json(detail))]),
+            Data = PageData.Of([(PageData.PeriodAddress(detail.Slug, language), PageData.Json(detail))]),
         };
     }
 

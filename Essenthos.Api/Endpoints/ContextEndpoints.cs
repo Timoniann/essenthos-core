@@ -285,6 +285,7 @@ internal static class ContextEndpoints
 
         // An event's title in the reader's language is a machine translation into the language of words, where one is held.
         var local = EntityNames.Local(ReaderLanguages.Prose(prose, language));
+        var periods = await LocalPeriods(db, skeleton.Periods, language, cancellationToken);
         return new ChapterContextResponse(
             new BookRefResponse(skeleton.Book, BookReferences.Name(skeleton.Book), BookReferences.Slug(skeleton.Book)),
             skeleton.Chapter,
@@ -295,12 +296,32 @@ internal static class ContextEndpoints
                     LocalName = local is null ? null : e.LocalNames?.GetValueOrDefault(local),
                 }),
             ],
-            skeleton.Periods,
+            periods,
             skeleton.PeriodsFrom,
             skeleton.Measures,
             skeleton.Commandments,
             ChapterTopics.Ranked(skeleton, weights, entities),
             targets);
+    }
+
+    /// <summary>The chapter's periods, each with its name in the reader's language where one can be said.</summary>
+    private static async Task<IList<ContextPeriodResponse>> LocalPeriods(
+        AppDbContext db, IList<ContextPeriodResponse> periods, string? language, CancellationToken cancellationToken)
+    {
+        if (periods.Count == 0 || EntityNames.Local(language) is null)
+        {
+            return periods;
+        }
+
+        var slugs = periods.Select(p => p.Slug).ToList();
+        var people = await db.Periods
+            .Where(p => slugs.Contains(p.Slug))
+            .Select(p => new { p.Slug, Person = p.Entity == null ? null : p.Entity.Slug })
+            .ToDictionaryAsync(p => p.Slug, p => p.Person, StringComparer.Ordinal, cancellationToken);
+        var named = await PeriodNames.Of(
+            db, [.. periods.Select(p => (p.Slug, p.Name, p.Kind, people.GetValueOrDefault(p.Slug)))], language, cancellationToken);
+
+        return [.. periods.Select(p => p with { LocalName = named.GetValueOrDefault(p.Slug) })];
     }
 }
 
