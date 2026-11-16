@@ -666,6 +666,52 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
+    public void A_link_from_a_conjunction_holds_no_original_word()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Stated, "1.1:1.1", "1.1:1.1", source: Berean, link: 1),
+            Row(MappingMethods.Stated, "1.1:1.2", "1.1:1.2", source: Berean, link: 2),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.1", confidence: 0.9, link: 3),
+        ];
+
+        Merge(rows, words: Verse("eng", "and he swore.")).Final.Where(r => r.Settled).Select(Link).Should().Equal([1L, 2L, 3L],
+            "'and' joins the words, it does not render the verb against the word that does");
+        Merge(rows, words: Verse("eng", "lo he swore.")).Final.Where(r => r.Settled).Select(Link).Should().Equal(1, 2);
+    }
+
+    [Fact]
+    public void A_link_holds_its_original_word_only_against_a_link_no_surer_than_itself_unless_that_one_is_an_article()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Strong, "1.1:1.2", "1.1:1.2", confidence: 0.9, link: 2),
+            Row(MappingMethods.Composed, "1.1:1.3", "1.1:1.1", confidence: 0.95, source: Machine, link: 3),
+        ];
+
+        Merge(rows, words: Verse("eng", "lo he swore.")).Final.Where(r => r.Settled).Select(Link).Should().Equal([1L, 2L, 3L],
+            "the composition is surer of its word than the Strong pairing is of its own");
+        Merge(rows, words: Verse("eng", "lo he the.")).Final.Where(r => r.Settled).Select(Link).Should().Equal(1, 2);
+    }
+
+    [Fact]
+    public void The_two_halves_of_a_circumposition_are_one_rendering()
+    {
+        MappingRow[] rows =
+        [
+            Row(MappingMethods.Strong, "1.1:1.1", "1.1:1.1", confidence: 0.9, link: 1),
+            Row(MappingMethods.Strong, "1.1:1.3", "1.1:1.2", confidence: 0.9, link: 2),
+            Row(MappingMethods.Composed, "1.1:1.4", "1.1:1.1", confidence: 0.9, source: Machine, link: 3),
+        ];
+
+        Merge(rows, pair: "LUTH1912-BHSA", words: Verse("deu", "um seines Knechtes willen.", "LUTH1912"))
+            .Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L, 3L], "'um ... willen' renders one word");
+        Merge(rows, pair: "LUTH1912-BHSA", words: Verse("deu", "um seines Knechtes Haus.", "LUTH1912"))
+            .Final.Where(r => r.Settled).Select(Link).Should().BeEquivalentTo([1L, 2L]);
+    }
+
+    [Fact]
     public void In_LUTH1912_a_composition_ranks_above_an_evidentia_verdict_of_the_attached_tier()
     {
         const string Attached = "attached tier: AuxiliaryVerb of 'ausgeredet', by the parse of UDPipe's German-HDT model";

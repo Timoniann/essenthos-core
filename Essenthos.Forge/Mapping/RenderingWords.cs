@@ -23,7 +23,7 @@ internal sealed class RenderingWords
                   + "ai as a avons avez ont avais avait avions aviez avaient eus eut eûmes eûtes eurent aurai auras aura aurons aurez auront "
                   + "suis es est sommes êtes sont étais était étions étiez étaient fus fut fûmes fûtes furent serai seras sera serons serez seront "
                   + "mon ma mes ton ta tes son sa ses notre nos votre vos",
-        ["deu"] = "ich du er sie es wir ihr man sich mich dich uns euch mir dir ihm ihn ihnen nicht "
+        ["deu"] = "ich du er sie es wir ihr man wer sich mich dich uns euch mir dir ihm ihn ihnen nicht "
                   + "bin bist ist sind seid war warst waren wart sei seiest wäre wären werde wirst wird werden werdet wurde wurdest wurden ward "
                   + "habe hast hat haben habt hatte hattest hatten hätte hättest hätten will willst wollen wollt wollte wollten "
                   + "soll sollst sollen sollt sollte sollten kann kannst können könnt konnte konnten mag magst mögen möge "
@@ -65,6 +65,28 @@ internal sealed class RenderingWords
         ["por"] = "o a os as um uma uns umas",
     };
 
+    /// <summary>
+    /// Conjunctions, which join words rather than render one: a link whose words are all conjunctions or articles holds no
+    /// original word against another link (<see cref="Slight"/>).
+    /// </summary>
+    private static readonly Dictionary<string, string> JoiningWords = new(StringComparer.Ordinal)
+    {
+        ["fra"] = "et ou mais car donc",
+        ["deu"] = "und oder aber denn",
+        ["eng"] = "and or but for",
+        ["spa"] = "y e o u pero",
+        ["por"] = "e ou mas",
+        ["rus"] = "и а но или да",
+        ["ukr"] = "і й та а але або",
+    };
+
+    /// <summary>Words that open a phrase another word closes, around what they govern: "um seines Knechtes willen".</summary>
+    private static readonly Dictionary<string, string> Circumpositions = new(StringComparer.Ordinal)
+    {
+        ["deu"] = "um/willen von/wegen um/halben",
+        ["eng"] = "for/sake for/sakes",
+    };
+
     /// <summary>The particles a separable verb leaves at the end of its clause, a word apart only there.</summary>
     private static readonly Dictionary<string, string> ClosingParticles = new(StringComparer.Ordinal)
     {
@@ -78,6 +100,8 @@ internal sealed class RenderingWords
     private readonly HashSet<string> _apart;
     private readonly HashSet<string> _closing;
     private readonly HashSet<string> _beside;
+    private readonly HashSet<string> _joining;
+    private readonly HashSet<(string Opening, string Closing)> _circumposed;
 
     private RenderingWords(Dictionary<string, Word[]> verses, string language)
     {
@@ -85,6 +109,8 @@ internal sealed class RenderingWords
         _apart = Set(WrittenApartWords, language);
         _closing = Set(ClosingParticles, language);
         _beside = Set(BesideWords, language);
+        _joining = Set(JoiningWords, language);
+        _circumposed = [.. Set(Circumpositions, language).Select(p => (p[..p.IndexOf('/')], p[(p.IndexOf('/') + 1)..]))];
     }
 
     private static HashSet<string> Set(Dictionary<string, string> lists, string language) =>
@@ -184,6 +210,11 @@ internal sealed class RenderingWords
             return false;
         }
 
+        if (placed is not null && (words!.Circumposed(placed, standing, other) || words.Circumposed(placed, other, standing)))
+        {
+            return true;
+        }
+
         var bridged = true;
         for (var position = first + 1; position < last && bridged; position++)
         {
@@ -226,6 +257,23 @@ internal sealed class RenderingWords
 
         return false;
     }
+
+    /// <summary>Whether a link's translation words are all conjunctions or articles, which hold no original word against another link.</summary>
+    public bool Slight(IReadOnlyList<string> keys) =>
+        keys.Count > 0 && _verses.GetValueOrDefault(keys[0][..keys[0].LastIndexOf('.')]) is { } placed
+                       && keys.All(key => At(placed, key).Folded is { } folded && (_joining.Contains(folded) || _beside.Contains(folded)));
+
+    private bool Circumposed(Word[] placed, IReadOnlyList<string> opening, IReadOnlyList<string> closing)
+    {
+        if (opening.Count != 1 || closing.Count != 1 || Position(opening[0]) >= Position(closing[0]))
+        {
+            return false;
+        }
+
+        return _circumposed.Contains((At(placed, opening[0]).Folded ?? string.Empty, At(placed, closing[0]).Folded ?? string.Empty));
+    }
+
+    private static int Position(string key) => int.Parse(key.AsSpan(key.LastIndexOf('.') + 1), CultureInfo.InvariantCulture);
 
     private bool Beside(Word[] placed, IReadOnlyList<string> keys) => keys.All(key => At(placed, key).Folded is { } folded && _beside.Contains(folded));
 

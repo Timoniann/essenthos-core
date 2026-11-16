@@ -16,8 +16,8 @@ namespace Essenthos.Core.Mapping;
 /// whole, by the method that won; an absence a source states or a person decides wins its word over any
 /// correspondence, an EVIDENTIA verdict's absence only over the aligner's; links of equal rank stand side
 /// by side, as one source's own several links on a word do. A word of the second text is held so too, by a
-/// sure link, against a link of another method from other words of the first, unless the two are one
-/// rendering of it (<see cref="RenderingWords"/>);</item>
+/// sure link that is not all conjunctions or articles, against a link of another method from other words of the
+/// first no surer by its own confidence, unless the two are one rendering of it (<see cref="RenderingWords"/>);</item>
 /// <item>a machine's link across two verses no verse link joins is withdrawn (<see cref="CrossingRule"/>);</item>
 /// <item>where the same texts are paired the other way round too, a word one pair says has no counterpart and the other
 /// renders goes to the higher-ranked link (<see cref="WithdrawAgainstReverse"/>).</item>
@@ -690,7 +690,7 @@ internal static class MappingMerge
     /// <summary>The standing correspondences, by each word of the first text and of the second they name.</summary>
     private sealed class Held(RenderingWords? words)
     {
-        private sealed record Holder(List<string> From, HashSet<string> FromSet, HashSet<string> To, int Rank, string Method, bool Sure);
+        private sealed record Holder(List<string> From, HashSet<string> FromSet, HashSet<string> To, int Rank, string Method, bool Sure, double Certainty);
 
         private readonly Dictionary<string, List<Holder>> _byFrom = new(StringComparer.Ordinal);
         private readonly Dictionary<string, List<Holder>> _byTo = new(StringComparer.Ordinal);
@@ -698,7 +698,7 @@ internal static class MappingMerge
         public void Stand(Candidate candidate, List<string> from, List<string> to, bool sure)
         {
             var holder = new Holder(from, from.ToHashSet(StringComparer.Ordinal), to.ToHashSet(StringComparer.Ordinal), candidate.Rank,
-                candidate.Top.Row.Method, sure);
+                candidate.Top.Row.Method, sure && words?.Slight(from) != true, Certainty(candidate));
             foreach (var (index, keys) in new[] { (_byFrom, from), (_byTo, to) })
             {
                 foreach (var key in keys)
@@ -721,11 +721,13 @@ internal static class MappingMerge
         /// <summary>
         /// The highest-ranked standing link that holds a word of the second text against a correspondence of lower rank and
         /// another method from other words of the first, with which it is not one rendering; null where none does. Only a
-        /// sure link holds a word so (<see cref="MappingMethods.HoldsOriginal"/>).
+        /// sure link holds a word so (<see cref="MappingMethods.HoldsOriginal"/>), and only against a correspondence no surer
+        /// by its own confidence than the link is, unless that correspondence's words are all conjunctions or articles.
         /// </summary>
-        public (int Rank, string Method)? Original(List<string> from, List<string> to, int rank, string method)
+        public (int Rank, string Method)? Original(List<string> from, List<string> to, int rank, string method, double certainty)
         {
             (int Rank, string Method)? best = null;
+            var slight = words?.Slight(from) == true;
             foreach (var key in to)
             {
                 if (!_byTo.TryGetValue(key, out var holders))
@@ -736,6 +738,7 @@ internal static class MappingMerge
                 foreach (var holder in holders)
                 {
                     if (!holder.Sure || holder.Rank <= rank || holder.Method == method || (best is { } known && known.Rank >= holder.Rank)
+                        || (!slight && certainty > holder.Certainty)
                         || RenderingWords.OneRendering(words, holder.From, from, between => GivenElsewhere(between, rank, holder.To, to)))
                     {
                         continue;
@@ -811,7 +814,7 @@ internal static class MappingMerge
                 default:
                     Strongest(fromHeld, from, ref best);
                     Strongest(toAbsent, to, ref best);
-                    if (from.Count > 0 && held.Original(from, to, candidate.Rank, method) is { } original && original.Rank > best.Rank)
+                    if (from.Count > 0 && held.Original(from, to, candidate.Rank, method, Certainty(candidate)) is { } original && original.Rank > best.Rank)
                     {
                         best = original;
                         byOriginal = true;
@@ -862,6 +865,9 @@ internal static class MappingMerge
 
     private static bool Sure(Candidate candidate) => MappingMethods.HoldsOriginal(candidate.Top.Row, candidate.Rank >= MappingMethods.Pinned);
 
+    private static double Certainty(Candidate candidate) =>
+        candidate.Rank >= MappingMethods.Pinned ? 1 : candidate.Top.Row.Confidence ?? 1;
+
     /// <summary>
     /// A word of the FROM text that the competition left with no standing link keeps its best withdrawn
     /// link, highest rank then surest first, if that link is sure enough (<see cref="MappingMethods.KeepsOrphan"/>)
@@ -904,7 +910,7 @@ internal static class MappingMerge
                 "omits" => to.Any(renderedTo.Contains),
                 "expands" => from.Any(renderedFrom.Contains),
                 _ => from.Any(absentFrom.Contains) || to.Any(absentTo.Contains)
-                     || standing.Original(from, to, candidate.Rank, candidate.Top.Row.Method) is not null,
+                     || standing.Original(from, to, candidate.Rank, candidate.Top.Row.Method, Certainty(candidate)) is not null,
             };
         }
 
