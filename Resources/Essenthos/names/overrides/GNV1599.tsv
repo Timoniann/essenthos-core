@@ -5,3 +5,8 @@
 own	record	action	base_record	role	source	note
 42.23:6.6	galilee	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
 44.20:4.28	asia	add	\N	name	the database's names before the rework (Essenthos, read from the verses that name it)	the translation names it where its base's verse does not
+6.9:4.17	chamor	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'vpon': the word does not render the animal the ruling names; the link carried the record onto a neighbour
+11.1:33.24	pirdah	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'owne': the word does not render the animal the ruling names; the link carried the record onto a neighbour
+22.1:8.10	susah	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'troupe': the word does not render the animal the ruling names; the link carried the record onto a neighbour
+28.4:16.7	parah-animal	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'vnruly': the word does not render the animal the ruling names; the link carried the record onto a neighbour
+28.4:16.8	parah-animal	add	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'heyfer' renders the animal the ruling names; the link did not carry it
