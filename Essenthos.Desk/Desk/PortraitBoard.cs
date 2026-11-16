@@ -155,12 +155,21 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
         CommentHandling = JsonCommentHandling.Skip,
     };
 
+    /// <summary>
+    /// Who is drawn from a brief: persons, and the creatures the text names (behemoth, leviathan, the
+    /// flying saraph…), drawn as the verses describe them (FTR-1750). The gods are not.
+    /// </summary>
+    private static readonly System.Linq.Expressions.Expression<Func<Entity, bool>> Portrayed = e =>
+        e.Kind == EntityKind.Person || (e.Kind == EntityKind.Being && e.Subtype == CreatureSubtype);
+
+    private const string CreatureSubtype = "creature";
+
     public static int TierOf(int verses) => verses >= FirstTier ? 1 : verses >= SecondTier ? 2 : 3;
 
     public async Task<PortraitsResponse> List(CancellationToken cancellationToken)
     {
         var (manifest, briefs, problem) = Beside();
-        var people = await People(db.Entities.Where(e => e.Kind == EntityKind.Person), cancellationToken);
+        var people = await People(db.Entities.Where(Portrayed), cancellationToken);
         return new PortraitsResponse(
             people.Select(p => Person(p, manifest, briefs)).OrderByDescending(p => p.Verses).ThenBy(p => p.Name).ToList(),
             manifest is not null,
@@ -171,7 +180,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths, BuildFiles
     public async Task<PortraitDetail?> Detail(string slug, CancellationToken cancellationToken)
     {
         var (manifest, briefs, _) = Beside();
-        var row = (await People(db.Entities.Where(e => e.Slug == slug && e.Kind == EntityKind.Person), cancellationToken))
+        var row = (await People(db.Entities.Where(Portrayed).Where(e => e.Slug == slug), cancellationToken))
             .SingleOrDefault();
         if (row is null)
         {

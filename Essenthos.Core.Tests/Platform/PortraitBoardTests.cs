@@ -219,6 +219,24 @@ public sealed class PortraitBoardTests : IDisposable
     }
 
     [Fact]
+    public async Task ACreatureTheTextNamesIsDrawnLikeAPersonAndAGodIsNot()
+    {
+        _db.Entities.AddRange(
+            new Entity { Kind = EntityKind.Being, Subtype = "creature", Slug = "behemoth", Name = "Behemoth" },
+            new Entity { Kind = EntityKind.Being, Subtype = "god", Slug = "dagon", Name = "Dagon" });
+        await _db.SaveChangesAsync();
+        var board = new PortraitBoard(_db, _paths);
+
+        (await board.List(default)).People.Select(p => p.Slug).Should().Equal("behemoth");
+        (await board.Detail("dagon", default)).Should().BeNull();
+
+        using var webp = new MemoryStream([.. "RIFF"u8, 0, 0, 0, 0, .. "WEBP"u8, .. "VP8X"u8]);
+        var uploaded = await Editor().Upload("behemoth", "behemoth-a.webp", false, "a sauropod by the river", webp, default);
+        uploaded.Problem.Should().BeNull();
+        uploaded.Detail!.Images.Should().ContainSingle().Which.Review.Should().Be(ImageChoices.Pending);
+    }
+
+    [Fact]
     public async Task APictureListedForTwoPeopleIsOnePictureAndTheOwnersWordOnItReachesBoth()
     {
         Person("adam", verses: 18);
