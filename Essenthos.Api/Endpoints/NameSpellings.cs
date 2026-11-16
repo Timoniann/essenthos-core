@@ -1,5 +1,6 @@
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
@@ -72,6 +73,60 @@ internal static class NameSpellings
             if ((RenamedHeadings.Heading(spellings, held) ?? held) is { } spelled)
             {
                 found[name.Label] = spelled;
+            }
+        }
+
+        return NameCases.Declining.Contains(local) && found.Count > 0
+            ? await Nominatives(db, entityId, names, local, found, cancellationToken)
+            : found;
+    }
+
+    /// <summary>
+    /// A name the texts print only in other cases put back to its nominative, where a record of that name
+    /// holds one and the printed spelling is a case of it. Ohienko names Bethlehem's Ephrath only as
+    /// <em>до Ефрати</em> and <em>в Ефраті</em>, so the spelling printed most was the genitive; the record
+    /// Ephrath, of the same Strong number, holds <em>Ефрата</em> (PRB-1775). Nothing is built from a stem:
+    /// the nominative is one the corpus already holds, and a name with two such records that disagree is
+    /// left as printed.
+    /// </summary>
+    private static async Task<Dictionary<string, string>> Nominatives(
+        AppDbContext db,
+        int entityId,
+        IReadOnlyCollection<BorneName> names,
+        string local,
+        Dictionary<string, string> found,
+        CancellationToken cancellationToken)
+    {
+        var labels = found.Keys.ToList();
+        var held = await db.EntityNameForms
+            .Where(f => f.EntityId != entityId && f.Language == local && f.GrammaticalCase == GrammaticalCases.Nominative
+                        && labels.Contains(f.Entity!.Name))
+            .Select(f => new
+            {
+                f.Entity!.Name,
+                f.Form,
+                Numbers = f.Entity.Names.Select(n => new { n.HebrewStrongNumber, n.GreekStrongNumber }).ToList(),
+            })
+            .ToListAsync(cancellationToken);
+        if (held.Count == 0)
+        {
+            return found;
+        }
+
+        foreach (var label in labels)
+        {
+            var numbers = names.Where(n => n.Label == label).SelectMany(n => n.Numbers).ToHashSet(StringComparer.Ordinal);
+            var printed = found[label];
+            var nominatives = held
+                .Where(h => h.Name == label
+                            && h.Numbers.Any(n => Numbers(n.HebrewStrongNumber, n.GreekStrongNumber).Any(numbers.Contains))
+                            && NameCases.Declines(printed, h.Form))
+                .Select(h => h.Form)
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
+            if (nominatives.Count == 1)
+            {
+                found[label] = nominatives[0];
             }
         }
 

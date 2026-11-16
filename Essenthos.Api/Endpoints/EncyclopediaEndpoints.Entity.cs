@@ -168,8 +168,12 @@ internal static partial class EncyclopediaEndpoints
             .Select(Tally)
             .SingleAsync(cancellationToken);
 
+        // In the order the record file gives them: its first name heads the page and the word card
+        // (PRB-1766). Without an order Postgres returns the rows as they lie on disk, and a load that
+        // updates one row moves it to the end: Egypt's מִצְרַיִם fell behind the rare Matsor.
         var names = await db.EntityNames
             .Where(n => n.EntityId == entity.Id)
+            .OrderBy(n => n.Id)
             .Select(n => new
             {
                 n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,

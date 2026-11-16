@@ -140,6 +140,37 @@ public sealed class NameSpellingsTests : IDisposable
     }
 
     [Fact]
+    public async Task ANamePrintedOnlyInOtherCasesTakesTheNominativeARecordOfThatNameHolds()
+    {
+        // Ohienko names Bethlehem's Ephrath only «до Ефрати» and «в Ефраті»; the record Ephrath, of the
+        // same number, holds «Ефрата» (PRB-1775).
+        var ohienko = await _db.Texts.SingleAsync(t => t.Slug == "UBIO");
+        var bethlehem = new Entity { Kind = EntityKind.Place, Slug = "bethlehem", Name = "Bethlehem" };
+        var ephrath = new Entity { Kind = EntityKind.Place, Slug = "ephrath", Name = "Ephrath" };
+        ephrath.Names.Add(new EntityName { Label = "Ephrath", Kind = "proper name", HebrewStrongNumber = "H672" });
+        _db.Entities.AddRange(bethlehem, ephrath);
+        _db.SaveChanges();
+        _db.RecordSpellings.AddRange(
+            new RecordSpelling { EntityId = bethlehem.Id, TextId = ohienko.Id, StrongNumber = "H672", Form = "Ефрати", Occurrences = 4 },
+            new RecordSpelling { EntityId = bethlehem.Id, TextId = ohienko.Id, StrongNumber = "H672", Form = "Ефраті", Occurrences = 1 });
+        _db.SaveChanges();
+        BorneName[] borne = [new("Ephrath", ["H672"])];
+
+        (await NameSpellings.Of(_db, bethlehem.Id, borne, "ukr", "Віфлеєм", CancellationToken.None))
+            .Should().BeEquivalentTo(new Dictionary<string, string> { ["Ephrath"] = "Ефрати" }, "no record holds a nominative yet");
+
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = ephrath.Id, Language = "ukr", GrammaticalCase = GrammaticalCases.Nominative,
+            Form = "Ефрата", Method = LinkMethod.ModelReading, Confidence = 1, Source = "a test",
+        });
+        _db.SaveChanges();
+
+        (await NameSpellings.Of(_db, bethlehem.Id, borne, "ukr", "Віфлеєм", CancellationToken.None))
+            .Should().BeEquivalentTo(new Dictionary<string, string> { ["Ephrath"] = "Ефрата" });
+    }
+
+    [Fact]
     public void TheNumbersOfANameAreReadPastTheGapsTheSourceLeaves() =>
         NameSpellings.Numbers("H1, NONE", null, "G2500").Should().Equal("H1", "G2500");
 }

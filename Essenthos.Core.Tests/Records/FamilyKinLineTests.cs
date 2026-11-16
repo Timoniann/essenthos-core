@@ -234,6 +234,11 @@ public sealed class FamilyKinLineTests : IDisposable
         benjamin.Claims.Should().NotContain(c => c.Target.Slug == "mephibosheth");
         benjamin.Counted.Should().Contain(c => c.Relation == DescriptorRelations.AncestorOf
                                                && c.Text == "ancestor of Paul, Saul, Jonathan, Kish and others");
+
+        // Saul and Jonathan are cited by the verse that ties them to Benjamin's tribe and by the one that
+        // names each, not by Kish's verse alone (PRB-1768): Paul's, Kish's, Saul's and Jonathan's.
+        benjamin.Counted!.Single(c => c.Relation == DescriptorRelations.AncestorOf).References!
+            .Select(v => (v.BookOrdinal, v.Chapter)).Should().Equal((13, 2), (9, 9), (9, 9), (9, 9));
     }
 
     private async Task<string> Line(string slug, string language) =>

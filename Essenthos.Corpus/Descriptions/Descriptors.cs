@@ -981,7 +981,10 @@ internal static class Descriptors
                     parts.Add(new DescriptorPartResponse(DescriptorPhrasings.AndOthers(language)));
                 }
 
-                Said(relation, from, [.. shown.Select(item => VerseOf(item.First)).DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse))], placed: false);
+                // A descendant the tree reaches is cited by both verses it rests on: the one that ties him
+                // to the subject's line and the one that names him. The first alone named someone else:
+                // David's line cited 1 Kings 13:2, Josiah's verse, for Zedekiah (PRB-1768).
+                Said(relation, from, [.. shown.SelectMany(item => item.First.Verses ?? [VerseOf(item.First)]).DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse))], placed: false);
             }
             else if (relation == DescriptorRelations.TeacherOf
                      && run.Any(item => facts.Taught.Members.ContainsKey(item.First.TargetEntityId)))
