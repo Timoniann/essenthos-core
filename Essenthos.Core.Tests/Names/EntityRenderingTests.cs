@@ -86,6 +86,14 @@ public sealed class RenderingRuleTests
             Word(1, 2, "μονοκέρωτος", "grc", "μονοκέρως", thing: Renderings.IsThing("being", "μονοκέρωτος")),
             Word(2, 2, "μονοκερώτων", "grc", "μονοκέρως", thing: Renderings.IsThing("being", "μονοκερώτων")));
 
+        // The Vulgate names Rahab once and renders the same word superbum three times: the name is its spelling.
+        var rahab = Of(null,
+            Word(1, 2, "superbum", "lat", thing: Renderings.IsThing("being", "superbum")),
+            Word(2, 2, "superbum", "lat", thing: Renderings.IsThing("being", "superbum")),
+            Word(3, 2, "superbum", "lat", thing: Renderings.IsThing("being", "superbum")),
+            Word(4, 3, "Rahab", "lat", thing: Renderings.IsThing("being", "Rahab")));
+        rahab.Select(r => (r.Form, r.Heading)).Should().BeEquivalentTo([("Rahab", true)]);
+
         reem.Single(r => r.Heading).Form.Should().Be("unicorn");
         reem.Select(r => r.Form).Should().BeEquivalentTo(["unicorn", "unicorns"]);
         greek.Select(r => (r.Form, r.Occurrences)).Should().BeEquivalentTo([("μονοκέρως", 2)]);

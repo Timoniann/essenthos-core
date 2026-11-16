@@ -581,10 +581,10 @@ internal static class TextIndexes
     /// text print its form. The names are the names layer's projection (<c>names/projected</c>).
     /// </summary>
     /// <summary>
-    /// Raised with any change to what the spellings index says of a word (2: a being's lower-case word is a thing's, PRB-1767);
+    /// Raised with any change to what the spellings index says of a word (3: a being's lower-case word is a thing's, PRB-1767);
     /// a spellings product made by another version is made again, and only it, not the text's other indexes.
     /// </summary>
-    internal const string SpellingsVersion = "2";
+    internal const string SpellingsVersion = "3";
 
     internal const string SpellingsVersionNote = "spellings-version";
 
