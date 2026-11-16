@@ -125,9 +125,9 @@ introduction), and named for the rest in the list of contributors (прот. А.
 - **European Union.** Life + 70; every author with a known date died before 1956.
 - **The three unknowns.** Tychinin (Jonah), Faminsky (2 Thessalonians) and Abolensky (3 Ezra) published
   between 1909 and 1913, and no death year was found for them. Free in Russia and the United States in
-  any case; in Ukraine and the EU only if each died before 1956, which is not established. **Their books
-  are held back** (`LopukhinReader.Withheld`) until a date is found or the owner rules (question on
-  FTR-0286).
+  any case; in Ukraine and the EU only if each died before 1956, which is not established. They were
+  held back until the owner ruled on FTR-0286 (2026-11-16, «можна грузити»): published 1909-1913, the
+  risk is negligible, so they load with the rest.
 
 ### The transcription
 

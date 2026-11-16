@@ -621,7 +621,7 @@ public sealed class LopukhinCorpusTests
             "19.151:1", "19.151:2", "19.151:3", "19.151:4", "19.151:5", "19.151:6", "19.151:7",
         ]);
         tally.Dropped.Should().BeLessThanOrEqualTo(1, "only Psalm 151's comment stands over verses the corpus does not hold");
-        tally.Signatures.Should().HaveCount(18).And.Contain("40: Священник М. Фивейский").And.Contain("80: Епископ Иосиф")
+        tally.Signatures.Should().HaveCount(21).And.Contain("40: Священник М. Фивейский").And.Contain("80: Епископ Иосиф")
             .And.Contain("27: Магистр богословия / священник А. В. Петровский");
         rows.Should().NotContain(r => LopukhinReader.Withheld.ContainsKey(r.Book));
     }
@@ -665,7 +665,7 @@ public sealed class LopukhinCorpusTests
         var covered = rows.Where(r => r is { Book: <= 66, FirstVerse: not null } && r.FirstChapter == r.LastChapter)
             .SelectMany(r => Enumerable.Range(r.FirstVerse!.Value, r.LastVerse!.Value - r.FirstVerse.Value + 1).Select(v => (r.Book, r.FirstChapter, v)))
             .Distinct().Count();
-        covered.Should().BeGreaterThan(27_000, "of the 31,102 verses of the King James numbering, Jonah's and 2 Thessalonians' held back");
+        covered.Should().BeGreaterThan(27_000, "of the 31,102 verses of the King James numbering");
         rows.Where(r => r.FirstVerse is not null).Should().OnlyContain(r =>
             r.FirstChapter < r.LastChapter || (r.FirstChapter == r.LastChapter && r.FirstVerse <= r.LastVerse));
     }

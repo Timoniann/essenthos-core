@@ -38,15 +38,11 @@ internal static partial class LopukhinReader
     public const string Synodal = Sources.SynodalSlug;
 
     /// <summary>
-    /// The books whose comments are held back, and why: their authors' death years are not known, so whether their parts
-    /// are free outside Russia and the United States is not established (FTR-0286, a question to the owner).
+    /// The books whose comments are held back, and why. Empty: Jonah (П. Тычинин), 2 Thessalonians (К. Н. Фаминский) and
+    /// 3 Ezra (Н. Аболенский), whose authors' death years are not known, were held until the owner ruled
+    /// «FTR-0286 - можна грузити» (2026-11-16): published 1909-1913, they load with the rest.
     /// </summary>
-    internal static readonly Dictionary<int, string> Withheld = new()
-    {
-        [32] = "Jonah, signed П. Тычинин, whose death year is not known",
-        [53] = "2 Thessalonians, signed К. Н. Фаминский, whose death year is not known",
-        [69] = "3 Ezra (2 Esdras), signed Н. Аболенский, whose death year is not known",
-    };
+    internal static readonly Dictionary<int, string> Withheld = new();
 
     /// <summary>
     /// What the reading kept and left out, in words (runs of letters or digits). The books' own words, notes apart, are
