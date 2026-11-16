@@ -82,7 +82,7 @@ internal static class ChapterReading
                 w.Morphology, w.Elided, w.Break, w.NormalisedText))
             .ToListAsync(cancellationToken);
 
-        var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        var counterparts = await Counterparts(db, rows.Select(r => (r.Id, r.Text)), cancellationToken);
         counterparts = counterparts with
         {
             Glossed = await Glossed(
@@ -247,10 +247,16 @@ internal static class ChapterReading
     /// </summary>
     private static async Task<Reached> Counterparts(
         AppDbContext db,
-        IEnumerable<long> wordIds,
+        IEnumerable<(long Id, string Text)> words,
         CancellationToken cancellationToken)
     {
-        var ids = wordIds.Distinct().ToList();
+        var forms = new Dictionary<long, string>();
+        foreach (var (id, text) in words)
+        {
+            forms[id] = text.ToLowerInvariant();
+        }
+
+        var ids = forms.Keys.ToList();
 
         var own = await db.Words
             .Where(w => ids.Contains(w.Id) && w.Text!.Kind != TextKind.Translation)
@@ -352,7 +358,8 @@ internal static class ChapterReading
                     group => (IReadOnlyList<WordRoleResponse>)[.. group
                         .OrderBy(row => row.Person, StringComparer.Ordinal).ThenBy(row => row.Occupation, StringComparer.Ordinal)
                         .Select(row => new WordRoleResponse(row.Occupation, row.Category, row.Person))]),
-            Referents = await Referents(db, witnesses, cancellationToken),
+            Referents = await Referents(
+                db, witnesses, forms, attached.Where(row => row.Role != null).ToLookup(row => row.WordId, row => row.HeadId), cancellationToken),
         };
     }
 
@@ -377,6 +384,8 @@ internal static class ChapterReading
     private static async Task<Dictionary<long, IReadOnlyList<ReferentResponse>>> Referents(
         AppDbContext db,
         ILookup<long, long> witnesses,
+        IReadOnlyDictionary<long, string> forms,
+        ILookup<long, long> heads,
         CancellationToken cancellationToken)
     {
         var direct = new Dictionary<long, List<(long Referent, string Source)>>();
@@ -413,14 +422,16 @@ internal static class ChapterReading
         var classed = direct.Keys.Concat(referred).Concat(witnesses.SelectMany(group => group)).Distinct().ToList();
         var parsings = await db.WordParsings
             .Where(p => classed.Contains(p.WordId) && sources.Contains(p.Source))
-            .Select(p => new { p.WordId, p.Morphology })
+            .Select(p => new { p.WordId, p.Morphology, p.Lemma })
             .ToListAsync(cancellationToken);
         var classes = new Dictionary<long, string>();
+        var kinds = new Dictionary<long, string>();
         foreach (var parsing in parsings)
         {
             if (parsing.Morphology.RootElement.TryGetProperty("class", out var value) && value.GetString() is { } kind)
             {
                 classes[parsing.WordId] = kind;
+                kinds[parsing.WordId] = kind == Pronoun ? kind : $"{kind} {parsing.Lemma}";
             }
         }
 
@@ -458,7 +469,162 @@ internal static class ChapterReading
             }
         }
 
+        foreach (var word in RunWords(answers.Keys, witnesses, direct, classes, kinds, forms, heads))
+        {
+            answers.Remove(word);
+        }
+
         return answers;
+    }
+
+    /// <summary>The source's class of a pronoun, by which a run of any pronoun is judged; any other kind of word by its lemma.</summary>
+    private const string Pronoun = "pron";
+
+    /// <summary>How often a word of a run must stand alone for the referring word's kind to keep the referent beside a word not judged.</summary>
+    private const double PlainlyAlone = 0.5;
+
+    /// <summary>
+    /// The words given a referent that only go with the word rendering the referring word: a preposition or conjunction a
+    /// translation writes in one run with it (<em>for</em> of "for me", <em>and</em> of "and I" for κἀγώ, <em>को</em> of
+    /// "उस को"), which reaches the same referring word and would otherwise say whom it refers to too.
+    /// <para>
+    /// A run is the words of the text read that render nothing but referring words and reach one of them. Where the mapping
+    /// marked a word of the run as going with another word of it (<see cref="LinkWordRole"/>: <em>to</em> attached to
+    /// <em>him</em>), that word is not the pronoun. Where it did not (a source's own phrase alignment, a Strong-tagged text),
+    /// what each word is decides, from the text's own links in the same reading: how often its form elsewhere stands alone for
+    /// a word of the referring word's kind (any pronoun; any other word by its lemma, ἐκεῖ or ὧδε), among all its renderings
+    /// of words the source classes. <em>me</em> stands alone for a pronoun again and again; <em>for</em> and <em>unto</em>
+    /// never do, they come with one. The run's word standing alone most often keeps the referent; the others lose it. Nothing
+    /// is guessed: where a word of the run has no other rendering to judge it by and the best of the rest does not plainly
+    /// stand alone, or two words stand alone equally and not plainly, the whole run is given none.
+    /// </para>
+    /// </summary>
+    private static HashSet<long> RunWords(
+        IEnumerable<long> given,
+        ILookup<long, long> witnesses,
+        Dictionary<long, List<(long Referent, string Source)>> direct,
+        Dictionary<long, string> classes,
+        Dictionary<long, string> kinds,
+        IReadOnlyDictionary<long, string> forms,
+        ILookup<long, long> heads)
+    {
+        var dropped = new HashSet<long>();
+
+        // Every word of the reading by the original's word it reaches, and the candidates: the words that render nothing but
+        // referring words (and words of other originals the source does not class). A word rendering the verb with the pronoun
+        // (відповів for λέγει αὐτῷ) is no candidate.
+        var renderers = new Dictionary<long, HashSet<long>>();
+        var candidates = new Dictionary<long, List<long>>();
+        foreach (var group in witnesses)
+        {
+            var rendered = group.Where(w => w != group.Key).Distinct().ToList();
+            foreach (var witness in rendered)
+            {
+                (renderers.TryGetValue(witness, out var all) ? all : renderers[witness] = []).Add(group.Key);
+            }
+
+            if (!rendered.Any(direct.ContainsKey) || !rendered.All(w => direct.ContainsKey(w) || !classes.ContainsKey(w)))
+            {
+                continue;
+            }
+
+            foreach (var witness in rendered.Where(direct.ContainsKey))
+            {
+                (candidates.TryGetValue(witness, out var list) ? list : candidates[witness] = []).Add(group.Key);
+            }
+        }
+
+        // What each form renders across the reading: how many of its words render words the source classes, and how many of
+        // those stand alone (no other word of the reading renders what they render) for words of one kind, by that kind.
+        var classedBy = new Dictionary<string, int>(StringComparer.Ordinal);
+        var aloneBy = new Dictionary<(string Form, string Kind), int>();
+        var alone = new Dictionary<long, string?>();
+        foreach (var group in witnesses)
+        {
+            if (!forms.TryGetValue(group.Key, out var form))
+            {
+                continue;
+            }
+
+            var rendered = group.Where(w => w != group.Key && kinds.ContainsKey(w)).Distinct().ToList();
+            if (rendered.Count == 0)
+            {
+                continue;
+            }
+
+            var kind = rendered.Select(w => kinds[w]).Distinct().Count() == 1 && rendered.All(w => renderers[w].Count == 1)
+                ? kinds[rendered[0]]
+                : null;
+            alone[group.Key] = kind;
+            classedBy[form] = classedBy.GetValueOrDefault(form) + 1;
+            if (kind is not null)
+            {
+                aloneBy[(form, kind)] = aloneBy.GetValueOrDefault((form, kind)) + 1;
+            }
+        }
+
+        double? Alone(long word, IReadOnlyCollection<string> kindsOfRun)
+        {
+            if (!forms.TryGetValue(word, out var form))
+            {
+                return null;
+            }
+
+            var classed = alone.TryGetValue(word, out var own);
+            var others = classedBy.GetValueOrDefault(form) - (classed ? 1 : 0);
+            if (others == 0)
+            {
+                return null;
+            }
+
+            var standing = kindsOfRun.Sum(kind => aloneBy.GetValueOrDefault((form, kind)))
+                           - (own is not null && kindsOfRun.Contains(own) ? 1 : 0);
+            return (double)standing / others;
+        }
+
+        foreach (var word in given)
+        {
+            var referring = witnesses[word].Where(w => w != word && direct.ContainsKey(w)).Distinct().ToList();
+            var run = referring
+                .SelectMany(w => candidates.GetValueOrDefault(w) ?? [])
+                .Append(word)
+                .Distinct()
+                .ToList();
+            if (run.Count < 2)
+            {
+                continue;
+            }
+
+            if (heads[word].Any(run.Contains))
+            {
+                dropped.Add(word);
+                continue;
+            }
+
+            run.RemoveAll(other => other != word && heads[other].Any(run.Contains));
+            if (run.Count < 2)
+            {
+                continue;
+            }
+
+            var kindsOfRun = referring.Select(w => kinds.GetValueOrDefault(w)).OfType<string>().Distinct().ToList();
+            var standing = run.ToDictionary(w => w, w => Alone(w, kindsOfRun));
+            var known = standing.Values.OfType<double>().ToList();
+            if (standing[word] is not { } mine || mine < known.Max())
+            {
+                dropped.Add(word);
+                continue;
+            }
+
+            var unknown = known.Count < run.Count;
+            var shared = known.Count(value => value == mine) > 1;
+            if (mine < PlainlyAlone && (unknown || shared))
+            {
+                dropped.Add(word);
+            }
+        }
+
+        return dropped;
     }
 
     /// <summary>
@@ -893,7 +1059,7 @@ internal static class ChapterReading
                 w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break, w.NormalisedText)))
             .ToListAsync(cancellationToken);
 
-        var counterparts = await Counterparts(db, rows.Select(r => r.Id), cancellationToken);
+        var counterparts = await Counterparts(db, rows.Select(r => (r.Id, r.Text)), cancellationToken);
         counterparts = counterparts with
         {
             Glossed = await Glossed(

@@ -32,9 +32,11 @@ public sealed class WordReferentTests : IDisposable
         // Mark 5:6-7 cut down: Jesus ... him (αὐτόν) ... he (αὐτός, referring to αὐτόν) ... the man (ἄνθρωπος) ... him (αὐτῷ, to the man)
         // ... Jesus ... Legion beside a pronoun ... them (Jesus and the man) ... the man's name (a noun the source refers back).
         _greek = Corpus.Add(_db, "NESTLE1904", TextKind.PrintedEdition, "grc",
-            (5, 6, ["Ἰησοῦν", "αὐτόν", "αὐτός", "ἄνθρωπος", "αὐτῷ", "Ἰησοῦ", "αὐτῷ", "αὐτοῖς", "ὄνομα"]));
+            (5, 6, ["Ἰησοῦν", "αὐτόν", "αὐτός", "ἄνθρωπος", "αὐτῷ", "Ἰησοῦ", "αὐτῷ", "αὐτοῖς", "ὄνομα"]),
+            (5, 7, ["γὰρ", "μοι", "μοι", "σοι", "αὐτῷ"]));
         _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
-            (5, 6, ["Jesus", "him", "he", "man", "him", "Jesus", "Legion", "them", "name", "answered"]));
+            (5, 6, ["Jesus", "him", "he", "man", "him", "Jesus", "Legion", "them", "name", "answered"]),
+            (5, 7, ["for", "for", "me", "me", "unto", "thee", "to", "him"]));
         _db.SaveChanges();
 
         var jesus = Record("jesus");
@@ -66,6 +68,22 @@ public sealed class WordReferentTests : IDisposable
         Refers(Greek(9), Greek(1));
         Align(English(10), Greek(3));
         Align(English(10), Greek(4));
+
+        // Verse 7, all of it referring to Jesus: "for me" in one run for μοι, beside a "for" that renders γάρ and a "me" that
+        // renders μοι alone; "unto thee" in one run for σοι, neither word rendering anything else; "to him" for αὐτῷ, "to"
+        // marked by the mapping as going with "him".
+        Classed(Greek(1, 7), "conj");
+        for (var position = 2; position <= 5; position++)
+        {
+            Classed(Greek(position, 7), "pron");
+            Refers(Greek(position, 7), Greek(1));
+        }
+
+        Align(English(1, 7), Greek(1, 7));
+        Align([English(2, 7), English(3, 7)], Greek(2, 7));
+        Align([English(4, 7)], Greek(3, 7));
+        Align([English(5, 7), English(6, 7)], Greek(4, 7));
+        Align([English(7, 7), English(8, 7)], Greek(5, 7), attached: English(7, 7), head: English(8, 7));
         _db.SaveChanges();
     }
 
@@ -123,15 +141,36 @@ public sealed class WordReferentTests : IDisposable
     public async Task ANameLinkedTogetherWithAPronounIsNotThePronoun() =>
         (await Read(_english, 7)).Referents.Should().BeNull("the word names Legion; the pronoun it is linked with refers to Jesus");
 
-    private async Task<TextWordResponse> Read(Text text, int position)
+    [Fact]
+    public async Task APrepositionInOneRunWithThePronounIsNotThePronoun()
     {
-        var chapter = await ChapterReading.ReadChapter(_db, text.Id, 1, 5, default);
-        return chapter.Single().Words[position - 1];
+        (await Read(_english, 2, 7)).Referents.Should().BeNull("for of 'for me' renders γάρ elsewhere in the chapter");
+        (await Read(_english, 3, 7)).Referents.Should().ContainSingle().Which.Slug.Should().Be("jesus");
     }
 
-    private Word Greek(int position) => _db.WordAt(_greek, 5, 6, position);
+    [Fact]
+    public async Task ARunWhoseWordsRenderNothingElseIsGivenNothing()
+    {
+        (await Read(_english, 5, 7)).Referents.Should().BeNull("nothing tells unto from thee");
+        (await Read(_english, 6, 7)).Referents.Should().BeNull("nothing tells unto from thee");
+    }
 
-    private Word English(int position) => _db.WordAt(_english, 5, 6, position);
+    [Fact]
+    public async Task AWordTheMappingAttachesToThePronounIsNotThePronoun()
+    {
+        (await Read(_english, 7, 7)).Referents.Should().BeNull("to goes with him");
+        (await Read(_english, 8, 7)).Referents.Should().ContainSingle().Which.Slug.Should().Be("jesus");
+    }
+
+    private async Task<TextWordResponse> Read(Text text, int position, int verse = 6)
+    {
+        var chapter = await ChapterReading.ReadChapter(_db, text.Id, 1, 5, default);
+        return chapter.Single(v => v.Number == verse).Words[position - 1];
+    }
+
+    private Word Greek(int position, int verse = 6) => _db.WordAt(_greek, 5, verse, position);
+
+    private Word English(int position, int verse = 6) => _db.WordAt(_english, 5, verse, position);
 
     private Entity Record(string slug)
     {
@@ -155,11 +194,13 @@ public sealed class WordReferentTests : IDisposable
     private void Refers(Word word, Word referent) =>
         _db.WordReferents.Add(new WordReferent { WordId = word.Id, ReferentWordId = referent.Id, Method = LinkMethod.StatedBySource, Source = Macula });
 
-    private void Align(Word from, Word to)
+    private void Align(Word from, Word to) => Align([from], to);
+
+    private void Align(Word[] from, Word to, Word? attached = null, Word? head = null)
     {
         var link = new Link
         {
-            FromTextId = from.TextId,
+            FromTextId = from[0].TextId,
             ToTextId = to.TextId,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
@@ -167,7 +208,13 @@ public sealed class WordReferentTests : IDisposable
             Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
+        foreach (var word in from)
+        {
+            _db.LinkWords.Add(word == attached
+                ? new LinkWord { Link = link, Word = word, Side = LinkSide.From, Role = LinkWordRole.Attached, HeadWord = head }
+                : new LinkWord { Link = link, Word = word, Side = LinkSide.From });
+        }
+
         _db.LinkWords.Add(new LinkWord { Link = link, Word = to, Side = LinkSide.To });
     }
 }
