@@ -1,0 +1,5 @@
+# product    Essenthos/names/overrides/AVD1865.tsv
+# producer   by hand
+# edited     by hand from here on: add, suppress or differs on one word of this text
+own	record	action	base_record	role	source	note
+40.26:74.10	alektor	suppress	\N	name	Essenthos, each word read against its verse by claude-opus-5-5 on the project owner's word of 2026-11-16	'صَاحَ': the word does not render the creature's word; the link carried the record onto a neighbour
