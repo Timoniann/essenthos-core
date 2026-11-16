@@ -71,3 +71,22 @@ is aligned or guessed. The file itself says which reading belongs to which editi
 Public domain removes the obligation, not the reason. A reader of this corpus has to be able to
 tell what rests on somebody's testimony and what rests on our inference, and a fact printed without
 a name has quietly been claimed as ours. RUL-0181, PRB-0180.
+
+# scrivener/*.SCV — Robinson's plain text of Scrivener 1894, the answer key
+
+**The same editor's Scrivener 1894, text only**, from <https://github.com/byztxt/greektext-scrivener>
+(`textonly/`, commit 6049a43b), maintained by the same Dr Ulrik Sandborg-Petersen. Its `README.md`
+is again the whole of the licence:
+
+> ## License?
+>
+> Public Domain.  Copy freely.
+
+Read at the source on 2026-11-16: the repository has no `LICENSE` file (the tree holds `.gitignore`,
+`README.md` and `textonly/`) and GitHub reports `"license": null`. The 27 book files here are byte for
+byte the repository's (git blob hashes compared on 2026-11-16); its `REVISION.LST` and `TITLES.SCV`
+were not taken.
+
+**It is never loaded and nothing of it is served.** It is the answer key the extraction of Scrivener
+1894 from `parsed/` is checked against, word for word (`ScrivenerExtractionTests`), and
+`build/licences.tsv` declares it `never`, so no product may read it.
