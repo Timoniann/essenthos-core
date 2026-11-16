@@ -1,5 +1,5 @@
 # producer   by hand: the town Jiphtah, which Strong's headword H3316 wrote as a place 'Jephthah', folded into the gazetteer's Iphtah (PRB-1418), applied by forge owner-rows
-# by         Essenthos: jephthah-2, the place record Strong's headword H3316 made for the town of Joshua 15:43, folded into Iphtah, the gazetteer's record of the same town, read against the one verse both hold by claude-opus-5-5 on 2026-11-12 (PRB-1418)
+# by         Essenthos: jephthah-2, the place record Strong's headword H3316 made for the town of Joshua 15:43, folded into Iphtah, the gazetteer's record of the same town, read against the one verse both hold by claude-opus-5-5 on 2026-11-12
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1418	records/records	drop	jephthah-2	{}	Jiphtah, a town of the lowland of Judah (JOS 15:43 'And Jiphtah, and Ashnah, and Nezib'), is held twice at its one verse: as jephthah-2, a place record made from Strong's H3316 (the headword it shares with the judge Jephthah, who keeps his own record), and as the gazetteer's Iphtah; the gazetteer's record keeps its point, so jephthah-2 is folded into iphtah

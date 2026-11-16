@@ -1,5 +1,5 @@
 # producer   by hand: Zarthan folded into Zarethan, one town of the Jordan valley written twice (PRB-1418), applied by forge owner-rows
-# by         Essenthos: Zarthan, the record Strong's headword H6891 made, folded into Zarethan, the gazetteer's record of the same town, read against the three verses both hold by claude-opus-5-5 on 2026-11-12 (PRB-1418)
+# by         Essenthos: Zarthan, the record Strong's headword H6891 made, folded into Zarethan, the gazetteer's record of the same town, read against the three verses both hold by claude-opus-5-5 on 2026-11-12
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1418	records/records	drop	zarthan	{}	Zarthan (H6891) and Zarethan are one town of the Jordan valley, held by both records at the same three verses (JOS 3:16 'beside Zaretan', 1KI 4:12 'by Zartanah beneath Jezreel', 1KI 7:46 'between Succoth and Zarthan'); the gazetteer's record keeps its point, so zarthan is folded into zarethan

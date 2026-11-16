@@ -1,5 +1,5 @@
 # producer   by hand: Salcah folded into Salecah, one town of Bashan written twice (PRB-1418), applied by forge owner-rows
-# by         Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11 (PRB-1418)
+# by         Essenthos: Salcah, the record Strong's headword H5548 made, folded into Salecah, the gazetteer's record of the same town, read against the four verses both hold by claude-opus-5-5 on 2026-11-11
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1418	records/records	drop	salcah	{}	Salcah (H5548) and Salecah are one town on the eastern border of Bashan, held by both records at the same four verses (DEU 3:10, JOS 12:5, JOS 13:11, 1CH 5:11); the gazetteer's record keeps its point, so salcah is folded into salecah

@@ -1,5 +1,5 @@
 # producer   by hand: BibleData's one-sided 'possibly the same as ...?' notes taken off five persons (PRB-1570), and the Asherites named in the plural in Ukrainian (PRB-1602; those two rows were taken out on 2026-11-16, superseded by 2026-11-16-keilah-asherites, PRB-1720), applied by forge owner-rows
-# by         Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12 (PRB-1570, PRB-1602)
+# by         Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1570	records/i18n/eng/records	put	jehozadak-2	{"line": "father of Joshua the high priest (HAG 1:1)", "notes": null, "modern": null}	The note asked whether he is Jehozadak, a record folded into this one (records/folds), so the page asked whether the man is himself; BibleData's open question is taken off

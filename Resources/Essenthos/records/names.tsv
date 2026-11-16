@@ -304,7 +304,7 @@ ai-2	1	Ai	name	\N	\N	\N	\N	H5857	\N	\N	\N
 ai-3	1	Ai	name	\N	\N	\N	\N	H5857	\N	\N	\N
 aiah	1	Aiah	proper name	אַיָּה	ayah	Αιε	Aie	H345	\N	\N	\N
 aiah-2	1	Aiah	proper name	אַיָּה	ayah	Ιαλ	Ial	H345	\N	\N	\N
-aiath	1	Aiath	name	\N	\N	\N	\N	H5857	\N	\N	Essenthos: the gazetteer's two records of Ai's other names, Aiath (ISA 10:28) and Aija (NEH 11:31), read against their verses by claude-opus-5-5 on 2026-11-12 (PRB-1418): the Isaiah word stood on Aija
+aiath	1	Aiath	name	\N	\N	\N	\N	H5857	\N	\N	Essenthos: the gazetteer's two records of Ai's other names, Aiath (ISA 10:28) and Aija (NEH 11:31), read against their verses by claude-opus-5-5 on 2026-11-12: the Isaiah word stood on Aija
 aija	1	Ai	name	\N	\N	\N	\N	H5857	\N	\N	\N
 aijalon	1	Aijalon	name	\N	\N	\N	\N	H357	\N	\N	\N
 aijalon	2	Ajalon	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
@@ -563,7 +563,7 @@ ariel	1	Ariel	proper name	אַרְיֵה	arəyeh	Αριηλ	Ariēl	H745	\N	\N	\N
 ariel-2	1	Ariel	proper name	אֲרִיאֵל	ariyel	Αριηλ	Ariēl	H740	\N	\N	\N
 ariel-3	1	Ariel	name	\N	\N	\N	\N	H740	\N	\N	\N
 ariel-4	1	Ariel	proper name	\N	\N	\N	\N	H740	\N	\N	\N
-arimathea	1	Arimathaea	name	\N	\N	Ἀριμαθαία	\N	\N	G707	\N	Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
+arimathea	1	Arimathaea	name	\N	\N	Ἀριμαθαία	\N	\N	G707	\N	Essenthos: the places with verses and no word read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
 arioch	1	Arioch	proper name	אַרְי֖וֹךְ	arəiokh	Αριωχ	Ariox	H746	\N	\N	\N
 arioch	2	King of Ellasar	title	מֶ֣לֶךְ אֶלָּסָ֑ר	melek elasar	βασιλεὺς Ελλασαρ	basileùs Ellasar	H4428,H495	G995	\N	\N
 arioch-2	1	Arioch	proper name	אַרְיוֹךְ	arəiokh	Αριώχῃ	Ariṓxēͅ	H746	\N	\N	\N
@@ -1564,7 +1564,7 @@ darius	3	King Darius	title	דָּרְיָוֶשׁ מַלְכָּא	darəyavas ma
 darius	4	King of Assyria	title	מֶֽלֶךְ־אַשּׁוּר֙	melek asur	βασιλέως Ασσουρ	basiléōs Assour	H4429,H804	G935	\N	\N
 darius-2	1	Darius	proper name	דָּרְיָוֶשׁ	darəyaoes	Δαρείου	Dareíou	H1867	\N	\N	\N
 darius-3	1	Darius	proper name	\N	\N	\N	\N	H1867	\N	\N	\N
-darius-3	2	Darius the Persian	title	דָּרְיָ֥וֶשׁ הַפָּֽרְסִֽי	dareyavesh happarsi	Δαρείου τοῦ Πέρσου	Dareíou toû Pérsou	H1867,H6542	\N	\N	Essenthos: the three Darius records and their verses read by claude-opus-5-5 on 2026-11-16, on the project owner's question of 2026-11-16 whether this Darius is the same king of Persia (PRB-1708)
+darius-3	2	Darius the Persian	title	דָּרְיָ֥וֶשׁ הַפָּֽרְסִֽי	dareyavesh happarsi	Δαρείου τοῦ Πέρσου	Dareíou toû Pérsou	H1867,H6542	\N	\N	Essenthos: the three Darius records and their verses read by claude-opus-5-5 on 2026-11-16, on the project owner's question of 2026-11-16 whether this Darius is the same king of Persia
 darkon	1	Darkon	proper name	דַּרְקוֹן	darəqon	Δαρκων	Darkōn	H1874	\N	\N	\N
 dathan	1	Dathan	proper name	דָּתָן	datan	Δαθαν	Dathan	H1885	\N	\N	\N
 daughter	1	Daughter	title	בִּתִּי	bitiy	θυγάτηρ	thugátēr	H1323	G2364	\N	\N
@@ -4100,7 +4100,7 @@ lahmi	1	Lahmi	proper name	לַחְמִי	lachəmiy	Λεεμι	Leemi	H3902	\N	\N	
 laish	1	Laish	proper name	לַיִשׁ	layish	Λαις	Lais	H3919	\N	\N	\N
 laish-2	1	Laish	name	\N	\N	\N	\N	H3889	\N	\N	\N
 laish-2	2	Laish	name	\N	\N	\N	\N	H3919	\N	\N	\N
-laishah	1	Laishah	name	\N	\N	\N	\N	H3919	\N	\N	Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
+laishah	1	Laishah	name	\N	\N	\N	\N	H3919	\N	\N	Essenthos: the places with verses and no word read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
 lakkum	1	Lakum	name	\N	\N	\N	\N	H3946	\N	\N	\N
 lamech	1	Lamech	proper name	לֶמֶךְ	lemek	Λάμεχ	Lamex	H3929	G2984	\N	\N
 lamech-2	1	Lamech	proper name	לֶמֶךְ	lemek	Λαμεχ	Lamex	H3929	G2984	\N	\N
@@ -5479,7 +5479,7 @@ rimmon-3	1	Rimmon	name	\N	\N	\N	\N	H7417	\N	\N	\N
 rimmon-3	2	Remmon	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 rimmon-4	1	Rimmon	name	\N	\N	\N	\N	H7417	\N	\N	\N
 rimmon-4	2	Remmon-methoar	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
-rimmono	1	Rimmono	name	\N	\N	\N	\N	H7417	\N	\N	Essenthos: the places with verses and no word (PRB-1418's census) read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
+rimmono	1	Rimmono	name	\N	\N	\N	\N	H7417	\N	\N	Essenthos: the places with verses and no word read verse by verse against the Hebrew, the Greek and the King James by claude-opus-5-5 on 2026-11-12; at these verses the word for the gazetteer's place stood on another record of the same Strong number
 rimmonparez	1	Rimmon-parez	name	\N	\N	\N	\N	H7428	\N	\N	\N
 rimmonperez	1	Rimmon Perez	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 rinnah	1	Rinnah	proper name	רִנָּה	rinah	Ρανα	Rana	H7441	\N	\N	\N
@@ -7019,7 +7019,7 @@ zered	4	Zered Brook	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding
 zered	5	Zered Valley	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
 zeredah	1	Zereda	name	\N	\N	\N	\N	H6868	\N	\N	\N
 zeredah-2	1	Zeredathah	spelling	\N	\N	\N	\N	\N	\N	\N	OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0
-zeredah-2	2	Zeredathah	name	\N	\N	\N	\N	H6868	\N	\N	Essenthos: Zereda, the record Strong's headword H6868 made, read against its two verses by claude-opus-5-5 on 2026-11-12 (PRB-1418): Jeroboam's home in Ephraim (1KI 11:26) is the gazetteer's Zeredah, and the Zeredathah of the Jordan valley (2CH 4:17) is the gazetteer's Zeredah held as another name for Zarethan
+zeredah-2	2	Zeredathah	name	\N	\N	\N	\N	H6868	\N	\N	Essenthos: Zereda, the record Strong's headword H6868 made, read against its two verses by claude-opus-5-5 on 2026-11-12: Jeroboam's home in Ephraim (1KI 11:26) is the gazetteer's Zeredah, and the Zeredathah of the Jordan valley (2CH 4:17) is the gazetteer's Zeredah held as another name for Zarethan
 zererah	1	Zererath	name	\N	\N	\N	\N	H6888	\N	\N	\N
 zeresh	1	Zeresh	proper name	זֶרֶשׁ	zeresh	Ζωσαραν	Zōsaran	H2238	\N	\N	\N
 zereth	1	Zereth	proper name	צֶרֶת	tseret	Σαρεθ	Sareth	H6889	\N	\N	\N
