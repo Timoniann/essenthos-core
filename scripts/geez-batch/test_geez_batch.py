@@ -21,7 +21,9 @@ TEI_ENTRY = """<TEI xmlns="http://www.tei-c.org/ns/1.0"><text><body><div>
    <sense n="a"> <cit type="translation" xml:lang="la"><quote>velum</quote></cit> <ref cRef="Ex." loc="37,16">Ex. 37,16</ref>. </sense>
  </sense>
  <sense n="2"> quatenus sunt dicta, effata, verba <ref cRef="Gen." loc="1,1">Gen. 1,1</ref></sense>
+ <sense n="L" xml:id="TL"> ክዳን kǝdān cover, lid (Leslau) 285b </sense>
 </sense>
+<sense xml:id="Tmain" xml:lang="en" source="#dillmann"><sense n="L" xml:id="DL">ክዳን kǝdān lid 285b</sense></sense>
 <sense xml:id="Tmain" xml:lang="en" source="#traces"><cit type="translation" xml:lang="en"><quote>cover</quote></cit></sense>
 </entry></div></body></text></TEI>"""
 
@@ -53,7 +55,8 @@ class TeiTests(unittest.TestCase):
         self.assertEqual(senses[1]['refs'], ['Job 24,8', 'Jes. 4,6'])
         self.assertNotIn(';;', senses[1]['note'])
         self.assertEqual(senses[2]['la'], ['velum'])
-        self.assertFalse(any('cover' in s['note'] for s in senses))   # TraCES' English sense is not read
+        self.assertFalse(any('cover' in s['note'] for s in senses))   # TraCES' English senses are not read,
+        self.assertNotIn('L', [s['n'] for s in senses])                # nor Leslau's nested inside Dillmann's
 
     def test_a_meaning_stated_in_running_latin_is_asked_with_empty_glosses(self):
         senses = gb.dillmann_senses(ET.fromstring(TEI_ENTRY))
@@ -133,6 +136,8 @@ class ValidationTests(unittest.TestCase):
         self.assertTrue(errors)
         rows, errors = gb.validate_dillmann({'entries': [{'id': 'e1', 'senses': [dict(sense, de=''), empty]}]}, items)
         self.assertTrue(any('empty rendering' in e for e in errors))
+        rows, errors = gb.validate_dillmann({'entries': [{'id': 'e1', 'senses': [dict(sense, uk='pаnувати'), empty]}]}, items)
+        self.assertTrue(any('mixes Latin and Cyrillic' in e for e in errors))
         rows, errors = gb.validate_dillmann({'entries': []}, items)
         self.assertTrue(any('not answered' in e for e in errors))
 

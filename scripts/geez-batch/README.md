@@ -6,7 +6,9 @@ answer, and a cap that no send may pass (RUL-0199, RUL-0200).
 
 - **Dillmann (FTR-0824):** every loaded entry of Dillmann's *Lexicon Linguae Aethiopicae* with Latin
   glosses (9,685 of 9,910), sense by sense in his numbering, rendered into en, uk, de and es. About
-  30 entries a request, 676 requests.
+  30 entries a request, 676 requests. Only Dillmann's own senses: TraCES' blocks inside an entry
+  (`xml:id` starting with T, among them Leslau's English) are left out even where the edition marks
+  them `source="#dillmann"` (PRB-1794).
 - **Contextual gloss (FTR-1141):** each Ge'ez word of GEEZ81 in its verse: lemma (Dillmann's headword
   where it fits), its sense here (en, uk), the whole word as an interlinear line (en, uk), the Greek
   words it renders (keys from the request only), clitics and suffixes, confidence. Whole verses, about
@@ -72,7 +74,9 @@ unless it is in `rejects.jsonl` (or `--force`). `collect` downloads a batch once
 ledger is written then), rejects an answer from any model but the run's, a cut-off or refused answer,
 invalid JSON, and any answer that leaves out an item, answers one twice, names an unknown id or a Greek
 word not in its packet; it rewrites `clean.jsonl` and `rejects.jsonl` from every raw file of the run.
-`collect --fake <rows.jsonl>` runs the same checks on hand-written rows (`fixtures/`).
+A Ukrainian word with a Latin letter inside it is rejected too (Sonnet wrote "panувати" in 33 of 17,868
+senses). `collect --fake <rows.jsonl>` runs the same checks on hand-written rows (`fixtures/`). A
+request cut off at `max_tokens` (a long thinking run) is sent again with `submit --max-tokens 32000`.
 
 Tests: `python -X utf8 scripts/geez-batch/test_geez_batch.py` (offline).
 

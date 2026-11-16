@@ -158,7 +158,9 @@ def dillmann_senses(root):
     if entry is None:
         return []
     out = []
-    tops = [s for s in entry.findall(f'{TEI}sense') if _is_dillmann(s)]
+    # Some TraCES blocks are marked source="#dillmann" too (xml:id Tmain, in English, with Leslau's
+    # sense DL inside): the T id, not the source attribute, tells them apart.
+    tops = [s for s in entry.findall(f'{TEI}sense') if _is_dillmann(s) and not (s.get(XML_ID) or '').startswith('T')]
     for i, top in enumerate(tops):
         _walk(top, 'main' if i == 0 else f'main{i + 1}', out)
     return out
@@ -177,6 +179,10 @@ def _walk(sense, label, out):
 
     text(sense.text)
     for child in sense:
+        if child.tag == TEI + 'sense' and (child.get(XML_ID) or '').startswith('T'):
+            # TraCES' additions nested inside Dillmann's sense (TL Leslau's English, TG, TC): not his.
+            text(child.tail)
+            continue
         if child.tag == TEI + 'sense':
             n = child.get('n') or ''
             _walk(child, (n if label.startswith('main') else label + n) or label + '?', out)
@@ -669,6 +675,11 @@ def validate_dillmann(answer, items):
         langs = ('en', 'uk', 'de', 'es')
         bad = [s['n'] for s in entry['senses']
                if not all(_nonempty(s.get(lang)) for lang in langs) and any(_nonempty(s.get(lang)) for lang in langs)]
+        mixed = [s['n'] for s in entry['senses'] if mixed_script(s.get('uk', ''))]
+        if mixed:
+            # 33 of 17,868 Sonnet senses wrote Latin letters inside Ukrainian words ("panувати"): sent again.
+            errors.append(f'entry {key}: Ukrainian mixes Latin and Cyrillic letters in senses {mixed}')
+            continue
         if bad:
             errors.append(f'entry {key}: empty rendering in senses {bad}')
             continue
@@ -705,7 +716,7 @@ def validate_gloss(answer, item, headwords=frozenset()):
                 errors.append(f'word {key}: empty {field}')
         for field in ('sense_uk', 'uk'):
             if mixed_script(word.get(field, '')):
-                warnings.append(f'word {key}: {field} mixes Latin and Cyrillic letters in a word')
+                errors.append(f'word {key}: {field} mixes Latin and Cyrillic letters in a word')
         if word.get('lemma_source') == 'dillmann' and headwords and nfc(word.get('lemma', '')) not in headwords:
             warnings.append(f'word {key}: lemma {word.get("lemma")} is not a Dillmann headword or form')
         rows[key] = word
@@ -784,10 +795,8 @@ def judge(run, manifest, rows, headwords):
             else:
                 for key, entry in good.items():
                     info = items[key]
-                    mixed = [f"sense {sense['n']}: {lang} mixes Latin and Cyrillic letters in a word"
-                             for sense in entry['senses'] for lang in ('uk',) if mixed_script(sense.get(lang, ''))]
                     clean.append({'custom_id': cid, 'entry': info['entry'], 'headword': info['headword'],
-                                  'senses': entry['senses'], 'warnings': mixed, 'model': row['model'],
+                                  'senses': entry['senses'], 'model': row['model'],
                                   'run': manifest['run'], 'prompt_version': manifest['prompt_version']})
         elif why is None:
             good, errors, warnings = validate_gloss(answer, items, headwords)
@@ -825,6 +834,17 @@ def collect(run, client=None, wait=False, fake=None):
     all_rows = [row for path in sorted((run / 'raw').glob('*.jsonl')) for row in read_jsonl(path)]
     # A later good answer supersedes an earlier failure of the same request.
     clean, rejects = judge(run, manifest, all_rows, headword_set(run))
+    dropped = 0
+    if manifest['job'] == 'dillmann':
+        # Only senses the current export still asks are kept: a sense dropped from the export after the
+        # requests went out (TraCES' nested additions, 2026-11-16) leaves the clean file too.
+        asked = {(e['entry'], s['n']) for e in read_jsonl(run / 'inputs' / 'dillmann.jsonl')
+                 for s in e['senses'] if asked_sense(s)}
+        for line in clean:
+            kept = [s for s in line['senses'] if (line['entry'], s['n']) in asked]
+            dropped += len(line['senses']) - len(kept)
+            line['senses'] = kept
+        clean = [line for line in clean if line['senses']]
     good = {c['custom_id'] for c in clean}
     seen_clean, final_clean = set(), []
     for line in clean:
@@ -838,7 +858,7 @@ def collect(run, client=None, wait=False, fake=None):
     report = {'run': manifest['run'], 'requests': manifest['requests'], 'answered_requests': len(good),
               'rejected_requests': len({r['custom_id'] for r in final_rejects}), 'clean_items': len(final_clean),
               'warnings': sum(len(c.get('warnings', [])) for c in final_clean),
-              'submitted_requests': len(submitted_ids(run)),
+              'submitted_requests': len(submitted_ids(run)), 'senses_dropped_not_dillmann': dropped,
               'usd': round(sum(r.get('usd') or 0 for r in all_rows), 4)}
     write_json(run / 'collect-report.json', report)
     return report
@@ -916,6 +936,7 @@ def main(argv=None):
     parser.add_argument('--next', dest='take_next', type=int, help='submit: the next N unsent requests, in order')
     parser.add_argument('--ids', help='submit: comma-separated custom_ids')
     parser.add_argument('--dry', action='store_true', help='submit: print the plan, send nothing')
+    parser.add_argument('--max-tokens', type=int, help='submit: raise max_tokens of these requests (retries)')
     parser.add_argument('--force', action='store_true')
     parser.add_argument('--wait', action='store_true', help='collect: wait for the batches to end')
     parser.add_argument('--fake', help='collect: validate these hand-written raw rows instead of the API')
@@ -943,6 +964,10 @@ def main(argv=None):
         requests = read_jsonl(run / 'requests.jsonl')
         chosen = choose(run, requests, args.sample, args.take_next, args.ids.split(',') if args.ids else None,
                         args.force)
+        if args.max_tokens:
+            # A retry of an answer cut off at max_tokens (a long thinking run) gets more room; nothing else moves.
+            for request in chosen:
+                request['params']['max_tokens'] = max(request['params']['max_tokens'], args.max_tokens)
         print(json.dumps(submit(run, claude_api(args.repo), args.budget, args.since, chosen, args.dry), indent=1))
     elif args.command == 'collect':
         client = None if args.fake else claude_api(args.repo)
