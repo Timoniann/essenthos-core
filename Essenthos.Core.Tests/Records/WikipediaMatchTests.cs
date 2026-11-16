@@ -362,6 +362,29 @@ public sealed class WikipediaMatchTests : IDisposable
     }
 
     [Fact]
+    public void AGodOrACreatureMayBeAnItemWikidataCallsAPersonButNeverAManAndIsLeftForTheOwner()
+    {
+        Add("Q1", "Baal", classes: ["Q178885"], article: "Baal");
+        Add("Q2", "Baal", classes: ["Q20643955"], description: "Descendant of Reuben");
+        Add("Q3", "Leviathan", classes: ["Q12405827"], article: "Leviathan");
+        Add("Q4", "seraph", kind: "other", aliases: ["seraphim"], article: "Seraph");
+
+        var matches = Matcher().Match(
+        [
+            Record(1, "baal-god", "Baal", EntityKind.Being),
+            Record(2, "leviathan", "Leviathan", EntityKind.Being),
+            Record(3, "seraphim", "Seraphim", EntityKind.Being),
+        ]);
+
+        matches[1].Should().BeOfType<WikipediaMatch.Ambiguous>()
+            .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q1");
+        matches[2].Should().BeOfType<WikipediaMatch.Ambiguous>()
+            .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q3");
+        matches[3].Should().BeOfType<WikipediaMatch.Ambiguous>()
+            .Which.Candidates.Select(c => c.Item.Id).Should().Equal("Q4");
+    }
+
+    [Fact]
     public void AThingATextCitesIsTiedByTheChapterItIsPresentIn()
     {
         Add("Q1", "Tower of Siloam", kind: "other", article: "Tower of Siloam", claims: new() { ["P1441"] = ["Q900"] });
