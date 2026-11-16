@@ -54,6 +54,7 @@ internal sealed record ClearBibleJoined(
     int WithoutCounterpart,
     int Astray,
     int Shifted,
+    int Moved,
     int Misnumbered,
     int Overruled,
     int Trimmed,
@@ -145,14 +146,16 @@ internal static partial class ClearBibleLinks
         var shift = set.Shift is { } and
             ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
             : null;
+        var early = set.Early is { } before ? EarlyNames.Of(tokens, before, source, all) : null;
         var misnumbered = translation.InOrder is not null ? Misnumbered(all, tokens) : [];
 
         var drafts = new List<Draft>();
         int records = 0, unresolved = 0, withoutCounterpart = 0;
-        int astray = 0, shifted = 0, refused = 0, overruledRecords = 0, trimmed = 0;
+        int astray = 0, shifted = 0, moved = 0, refused = 0, overruledRecords = 0, trimmed = 0;
 
-        foreach (var record in all)
+        foreach (var stated in all)
         {
+            var record = stated;
             records++;
             if (record.Target.Any(id => misnumbered.Contains(ClearBibleAlignment.Verse(id) ?? 0)))
             {
@@ -170,6 +173,13 @@ internal static partial class ClearBibleLinks
             {
                 shifted++;
                 continue;
+            }
+
+            var named = early is not null ? Early(record, early) : null;
+            if (named is not null)
+            {
+                record = record with { Target = [named] };
+                moved++;
             }
 
             var ours = Ours(record.Source, theirSource, ClearBibleAlignment.Unit);
@@ -198,11 +208,12 @@ internal static partial class ClearBibleLinks
                 trimmed++;
             }
 
-            drafts.Add(new Draft(theirs, ours));
+            drafts.Add(new Draft(theirs, ours, named is not null));
         }
 
         return new ClearBibleJoined(
-            drafts, records, unresolved, withoutCounterpart, astray, shifted, refused, overruledRecords, trimmed, placement.Read());
+            drafts, records, unresolved, withoutCounterpart, astray, shifted, moved, refused, overruledRecords, trimmed,
+            placement.Read());
     }
 
     /// <summary>
@@ -280,6 +291,76 @@ internal static partial class ClearBibleLinks
         && !record.Source.Any(id => joining.Contains(ClearBibleAlignment.Unit(id)));
 
     /// <summary>
+    /// The name a record puts on the preposition or article before it, where it does, or null. The Reina-Valera's
+    /// set gives some four hundred names to the word before them and names the name with nothing: Genesis 14:3's
+    /// שִׂדִּים is on the <em>de</em> of <em>valle de Siddim</em>, Jeremiah 24:1's Jeconiah on the <em>á</em> of
+    /// <em>á Jechônías</em>. It is <see cref="Shifted"/>'s slip before a name instead of before a verb.
+    ///
+    /// The record's only target word has to be a preposition or an article, the word after it in its verse has to be
+    /// written as a name (a capital, then a small letter) and named by no record, every source word has to be a noun,
+    /// a verb or an adjective, never the preposition, particle or pronoun the Spanish word could render itself, and
+    /// every source word has to be that name: its letters are the name's (<see cref="NameLists.LeastLikeness"/>), or
+    /// the set pairs the same Spanish word with the same Strong number elsewhere (<em>Dios</em> and אֱלֹהִים,
+    /// <em>Siros</em> and אֲרָמִים). Without that last mark a record on a <em>de</em> before a name can be a slip of
+    /// another kind: 2 Kings 16:6's הֵשִׁיב, <em>restored</em>, is on the <em>de</em> of <em>rey de Siria</em>, and
+    /// <em>restituyó</em> renders it.
+    ///
+    /// Here the record is moved onto the name rather than refused, as the <em>and</em> is: a preposition does not render
+    /// a noun, and the word the record names is the name beside it by its letters or by the set's own pairing, so
+    /// which word the record meant is not in doubt. The rows say they were moved.
+    /// </summary>
+    internal static string? Early(ClearBibleRecord record, EarlyNames early) =>
+        record is { Target.Count: 1, Source.Count: > 0 }
+        && early.Befores.TryGetValue(ClearBibleAlignment.Word(record.Target[0]), out var name)
+        && !early.Named.Contains(name)
+        && !early.Repeated.Contains(name)
+        && record.Source.All(id =>
+            !early.RepeatedSources.Contains(ClearBibleAlignment.Unit(id))
+            && early.Content.TryGetValue(ClearBibleAlignment.Unit(id), out var word) && early.Names(word, name))
+            ? name
+            : null;
+
+    /// <summary>
+    /// The translation's prepositions and articles in <paramref name="before"/> whose next word in the verse,
+    /// punctuation left out, is written as a name, each with that word.
+    /// </summary>
+    internal static Dictionary<string, string> Befores(IEnumerable<ClearBibleToken> tokens, IReadOnlySet<string> before)
+    {
+        var befores = new Dictionary<string, string>(StringComparer.Ordinal);
+        string? pending = null;
+        int? verse = null;
+        foreach (var token in tokens)
+        {
+            if (token.Excluded)
+            {
+                continue;
+            }
+
+            var id = ClearBibleAlignment.Word(token.Id);
+            var here = ClearBibleAlignment.Verse(id);
+            if (pending is not null && here == verse && WrittenAsName(token.Text))
+            {
+                befores[pending] = id;
+            }
+
+            pending = before.Contains(token.Text.ToLowerInvariant()) ? id : null;
+            verse = here;
+        }
+
+        return befores;
+    }
+
+    /// <summary>A capital, then a small letter: <em>Siddim</em>, <em>No</em>, not <em>LOS</em> of an inscription.</summary>
+    private static bool WrittenAsName(string text) =>
+        text.Length > 1 && char.IsUpper(text[0]) && text.Skip(1).Any(char.IsLower);
+
+    /// <summary>The source edition's nouns, verbs and adjectives, whichever way the file spells the part, by unit.</summary>
+    internal static Dictionary<string, ClearBibleToken> Content(string tokens) =>
+        ClearBibleAlignment.Tokens(tokens)
+            .Where(token => token.Part is "noun" or "verb" or "adjective" or "adj")
+            .ToDictionary(token => ClearBibleAlignment.Unit(token.Id), StringComparer.Ordinal);
+
+    /// <summary>
     /// The translation's tokens that are its word for <em>and</em>, each with the token after it in
     /// its verse, punctuation left out, or null where it ends the verse.
     /// </summary>
@@ -351,6 +432,107 @@ internal static partial class ClearBibleLinks
         Dictionary<string, string?> Ands,
         HashSet<string> Joining,
         HashSet<string> Named);
+
+    /// <summary>What <see cref="Early"/> reads of a set.</summary>
+    /// <param name="Befores">See <see cref="ClearBibleLinks.Befores"/>.</param>
+    /// <param name="Content">See <see cref="ClearBibleLinks.Content"/>.</param>
+    /// <param name="Named">Every target word some record names, before any is moved.</param>
+    /// <param name="Texts">Every target word's text, folded as <see cref="Comparable"/> folds it, by word.</param>
+    /// <param name="Pairs">Every target word's folded text with the Strong number of every source word a record pairs it with.</param>
+    /// <param name="Repeated">The target words whose folded text stands more than once in their verse.</param>
+    /// <param name="RepeatedSources">
+    /// The source units whose Strong number (or, without one, whose letters) stands more than once in their verse,
+    /// kept apart from <paramref name="Repeated"/> because a New Testament unit and a target word share the same
+    /// eleven digits. Where a verse names a person or a place twice the set's records
+    /// on it are often crossed — Nehemiah 11:21's second נְתִינִים is on the <em>los</em> before the first
+    /// <em>Nethineos</em>, Ezra 6:12's second אֱלָהָא on the <em>el</em> before the first <em>Dios</em> — and a record
+    /// moved there would join the wrong mention, outranking the aligner's right one.
+    /// </param>
+    internal sealed record EarlyNames(
+        IReadOnlyDictionary<string, string> Befores,
+        IReadOnlyDictionary<string, ClearBibleToken> Content,
+        IReadOnlySet<string> Named,
+        IReadOnlyDictionary<string, string> Texts,
+        IReadOnlySet<(string Text, int Lemma)> Pairs,
+        IReadOnlySet<string> Repeated,
+        IReadOnlySet<string> RepeatedSources)
+    {
+        public static EarlyNames Of(
+            IReadOnlyList<ClearBibleToken> tokens, IReadOnlySet<string> before, string source, IReadOnlyList<ClearBibleRecord> records)
+        {
+            var strongs = new Dictionary<string, int>(StringComparer.Ordinal);
+            var sourceKeys = new Dictionary<string, (int?, string)>(StringComparer.Ordinal);
+            foreach (var token in ClearBibleAlignment.Tokens(source))
+            {
+                var unit = ClearBibleAlignment.Unit(token.Id);
+                var lemma = Lemma(token.Strong);
+                if (lemma is { } number)
+                {
+                    strongs[unit] = number;
+                }
+
+                sourceKeys[unit] = (
+                    ClearBibleAlignment.Verse(unit),
+                    lemma?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? ClearBibleLinks.Comparable(token.Text, null));
+            }
+
+            var texts = new Dictionary<string, string>(StringComparer.Ordinal);
+            var targetKeys = new Dictionary<string, (int?, string)>(StringComparer.Ordinal);
+            foreach (var token in tokens.Where(token => !token.Excluded))
+            {
+                var word = ClearBibleAlignment.Word(token.Id);
+                texts[word] = ClearBibleLinks.Comparable(token.Text, null);
+                targetKeys[word] = (ClearBibleAlignment.Verse(word), texts[word]);
+            }
+
+            var pairs = new HashSet<(string, int)>();
+            foreach (var record in records)
+            {
+                foreach (var target in record.Target)
+                {
+                    if (!texts.TryGetValue(ClearBibleAlignment.Word(target), out var text))
+                    {
+                        continue;
+                    }
+
+                    foreach (var unit in record.Source)
+                    {
+                        if (strongs.TryGetValue(ClearBibleAlignment.Unit(unit), out var lemma))
+                        {
+                            pairs.Add((text, lemma));
+                        }
+                    }
+                }
+            }
+
+            return new EarlyNames(
+                ClearBibleLinks.Befores(tokens, before), ClearBibleLinks.Content(source), ClearBibleLinks.Named(records), texts, pairs,
+                Twice(targetKeys), Twice(sourceKeys));
+        }
+
+        private static HashSet<string> Twice(Dictionary<string, (int?, string)> keys) =>
+        [
+            .. keys.GroupBy(pair => pair.Value).Where(group => group.Count() > 1).SelectMany(group => group.Select(pair => pair.Key)),
+        ];
+
+        /// <summary>Whether a source word is the translation's word: by its letters, or by the set's pairing elsewhere.</summary>
+        public bool Names(ClearBibleToken word, string name)
+        {
+            if (!Texts.TryGetValue(name, out var text))
+            {
+                return false;
+            }
+
+            if (Lemma(word.Strong) is { } lemma && Pairs.Contains((text, lemma)))
+            {
+                return true;
+            }
+
+            var letters = NameLists.Skeleton(word.Text);
+            return letters.Length > 0
+                   && NameLetters.Likeness(NameLetters.Of(text, "spa"), letters, text) >= NameLists.LeastLikeness;
+        }
+    }
 
     private static HashSet<int> Canonical(IEnumerable<int> printed, IReadOnlyDictionary<int, HashSet<int>> frame)
     {
@@ -807,7 +989,8 @@ internal static partial class ClearBibleLinks
     /// <param name="With">The morphemes compared and placed as part of this one: its suffixes.</param>
     private sealed record Token(string Id, string Folded, string? Strong, IReadOnlyList<string> With);
 
-    internal sealed record Draft(List<long> From, List<long> To);
+    /// <param name="Moved">Whether the record was moved from the word before the name onto it (<see cref="Early"/>).</param>
+    internal sealed record Draft(List<long> From, List<long> To, bool Moved = false);
 
     internal sealed class Counter
     {

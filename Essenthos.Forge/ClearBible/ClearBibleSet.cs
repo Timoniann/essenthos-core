@@ -69,6 +69,10 @@ internal enum ClearBibleNumbering
 /// it renders; null where it does not. See <see cref="Loading.Links.ClearBibleLinks.Shifted"/>.
 /// </param>
 /// <param name="Numbering">Where the numbers the records give the translation's words come from.</param>
+/// <param name="Early">
+/// The translation's prepositions and articles, where the set puts a name on the one before it and leaves the name
+/// unnamed; null where it does not. See <see cref="Loading.Links.ClearBibleLinks.Early"/>.
+/// </param>
 /// <summary>
 /// One of Clear Bible's alignments, and everything about it that differs from the others.
 ///
@@ -87,7 +91,8 @@ internal sealed record ClearBibleSet(
     ClearBibleJoin Join,
     string Statement,
     ClearBibleShift? Shift = null,
-    ClearBibleNumbering Numbering = ClearBibleNumbering.TokenFile)
+    ClearBibleNumbering Numbering = ClearBibleNumbering.TokenFile,
+    IReadOnlySet<string>? Early = null)
 {
     private const string Repository = "github.com/Clear-Bible/Alignments";
 
@@ -143,7 +148,8 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "sources", "WLCM.tsv"),
         ClearBibleJoin.Letters,
         $"Clear Bible Alignments WLCM-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand",
-        new ClearBibleShift(Spanish.And, new HashSet<int> { Hebrew.Also, Hebrew.Even }));
+        new ClearBibleShift(Spanish.And, new HashSet<int> { Hebrew.Also, Hebrew.Even }),
+        Early: Spanish.BeforeNames);
 
     /// <inheritdoc cref="ReinaValeraOldTestament"/>
     public static ClearBibleSet ReinaValeraNewTestament(string spanishSlug, string greekSlug) => new(
@@ -154,7 +160,8 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "sources", "SBLGNT.tsv"),
         ClearBibleJoin.Letters,
         $"Clear Bible Alignments SBLGNT-RV09-manual, BiblioNexus, {Repository}, CC BY 4.0, made by hand",
-        new ClearBibleShift(Spanish.And, new HashSet<int> { Greek.And }));
+        new ClearBibleShift(Spanish.And, new HashSet<int> { Greek.And }),
+        Early: Spanish.BeforeNames);
 
     /// <summary>
     /// The Segond of 1910 against the Hebrew, hand-made by Biblica's team, whole Old Testament.
@@ -352,6 +359,14 @@ internal sealed record ClearBibleSet(
     private static class Spanish
     {
         public static readonly HashSet<string> And = new(["y", "e"], StringComparer.Ordinal);
+
+        /// <summary>The prepositions and articles a name can stand after, in lower case.</summary>
+        public static readonly HashSet<string> BeforeNames = new(
+            [
+                "de", "del", "á", "a", "al", "el", "la", "los", "las", "lo", "en", "con", "por", "para", "sobre", "contra",
+                "desde", "hasta", "entre", "ante", "tras", "sin",
+            ],
+            StringComparer.Ordinal);
     }
 
     private static class French
