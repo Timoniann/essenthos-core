@@ -152,6 +152,7 @@ internal static class Bible4uTextSource
     {
         var books = new List<BookDraft>(bible.Books.Count);
         var position = 0;
+        var tagged = StrongTagged.Contains(definition.Slug);
 
         foreach (var book in bible.Books)
         {
@@ -170,7 +171,9 @@ internal static class Bible4uTextSource
                         chapter.Verses
                             .Select(verse => Draft(
                                 verse.VNumber,
-                                repairs?.Text(ordinal, chapter.CNumber, verse.VNumber, verse.Text) ?? verse.Text))
+                                repairs?.Text(ordinal, chapter.CNumber, verse.VNumber, verse.Text) ?? verse.Text,
+                                ordinal,
+                                tagged))
                             .ToList()))
                     .ToList(),
                 NameNative: book.BName,
@@ -205,11 +208,12 @@ internal static class Bible4uTextSource
     /// both of them to the King James — so it becomes the verse's stated address, and a pane of the
     /// Synodal can then say its Psalm 119 is printed as 118 the way Brenton's pane already does.
     /// </summary>
-    private static VerseDraft Draft(int number, string text) =>
-        new(number, VerseWords.Parse(text)
+    private static VerseDraft Draft(int number, string text, int ordinal, bool tagged) =>
+        new(number, VerseWords.Parse(text, tagged)
             .Select(word => new WordDraft(
                 word.Word,
                 word.Trailer,
+                StrongNumber: StrongOf(word.Tags, ordinal),
                 Elided: word.Word.Length == 0,
                 SuppliedSpan: word.SuppliedSpan))
             .ToList())
@@ -222,6 +226,45 @@ internal static class Bible4uTextSource
             MarksASuperscription = VerseWords.MarksASuperscription(text),
             OpensBeforeItsStatedAddress = VerseWords.OpensBeforeItsStatedAddress(text),
         };
+
+    /// <summary>
+    /// The files that print Strong tags inside their text (<see cref="VerseWords.Parse"/>). Ohienko's
+    /// does in sixteen verses and prints no numeral as text anywhere, so a bare number there is a tag;
+    /// the King James and the Synodal print no bare number at all and are read as they stand.
+    /// </summary>
+    private static readonly HashSet<string> StrongTagged = new([Ohienko], StringComparer.OrdinalIgnoreCase);
+
+    private const int LastOldTestamentBook = 39;
+
+    /// <summary>The last number of Strong's Hebrew lexicon; a tag above it is a tense-voice-mood code.</summary>
+    private const int LastHebrewNumber = 8674;
+
+    /// <summary>The last number of Strong's Greek lexicon.</summary>
+    private const int LastGreekNumber = 5624;
+
+    /// <summary>
+    /// The word's Strong number from the tags printed after it: the one in the lexicon's range. The
+    /// others are a tense-voice-mood code or 0, which the tagger writes where it has no number, and
+    /// say nothing about which word of the original this one renders.
+    /// </summary>
+    private static string? StrongOf(int[]? tags, int ordinal)
+    {
+        if (tags is null)
+        {
+            return null;
+        }
+
+        var (language, last) = ordinal <= LastOldTestamentBook ? ('H', LastHebrewNumber) : ('G', LastGreekNumber);
+        var numbers = tags.Where(tag => tag is > 0 && tag <= last).ToList();
+        return numbers.Count switch
+        {
+            0 => null,
+            1 => $"{language}{numbers[0]}",
+            _ => throw new InvalidOperationException(
+                $"A word of book {ordinal} is tagged {string.Join(" ", tags)}: more than one Strong number, which no "
+                + "tag of the file was measured to carry. Read which one is the word's before taking either."),
+        };
+    }
 
     /// <param name="file">
     /// What bible4u calls the download. It is not the slug and must not be derived from one: the

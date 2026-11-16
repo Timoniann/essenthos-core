@@ -90,6 +90,33 @@ public class VerseWordsTests
         VerseWords.Parse("жил 930 лет").Select(w => w.Word).Should().Equal("жил", "930", "лет");
     }
 
+    /// <summary>
+    /// Ohienko's file prints sixteen verses with their Strong tags left in the text (PRB-1789). Read as
+    /// tagged, a run of bare numbers after a word is that word's tags, and its punctuation stays.
+    /// </summary>
+    [Fact]
+    public void ATaggedVerseCarriesItsNumbersOnTheWordsAndNotAsWords()
+    {
+        const string verse = "Пророцтво 4853 про Бегемота 929 півдня 5045. В краю 776 утиску 6869, сидіти 7674 0 спокійно 7674 0!";
+
+        var words = VerseWords.Parse(verse, strongTagged: true);
+
+        words.Select(w => w.Word).Should().Equal("Пророцтво", "про", "Бегемота", "півдня", "В", "краю", "утиску", "сидіти", "спокійно");
+        words.Select(w => w.Tags is null ? "" : string.Join(" ", w.Tags)).Should().Equal(
+            "4853", "", "929", "5045", "", "776", "6869", "7674 0", "7674 0");
+        string.Concat(words.Select(w => w.Word + w.Trailer)).Should().Be(
+            "Пророцтво про Бегемота півдня. В краю утиску, сидіти спокійно!");
+        VerseWords.StripMarkup(verse, strongTagged: true).Should().Be(
+            "Пророцтво про Бегемота півдня. В краю утиску, сидіти спокійно!");
+    }
+
+    [Fact]
+    public void ANumberIsATagOnlyWhereTheFileIsReadAsTagged()
+    {
+        VerseWords.Parse("Адам 121, Сиф 8352").Select(w => w.Word).Should().Equal("Адам", "121", "Сиф", "8352");
+        VerseWords.StripMarkup("Адам 121, Сиф 8352").Should().Be("Адам 121, Сиф 8352");
+    }
+
     [Fact]
     public void AFootnoteMarkerIsNotAWord()
     {
