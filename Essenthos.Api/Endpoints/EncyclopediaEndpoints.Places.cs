@@ -36,17 +36,6 @@ internal static partial class EncyclopediaEndpoints
             detail is null or "coarse" or "fine"
                 ? Results.Ok(await Outlines(db, detail == "fine", Ids(ids), cancellationToken))
                 : ApiResults.NotFound($"There is no detail \"{detail}\". Try coarse or fine."));
-
-        // How many of the map's places a chapter names: the reader's link to the map under a chapter
-        // says so, and fetching the whole map to count them was most of what a chapter downloaded.
-        routes.MapGet("/places/map/{book}/{chapter:int}", async (
-            string book,
-            int chapter,
-            AppDbContext db,
-            CancellationToken cancellationToken) =>
-            BookReferences.ResolveOrdinal(book) is { } ordinal
-                ? Results.Ok(new ChapterPlacesResponse(await LocatedIn(db, ordinal, chapter, cancellationToken)))
-                : ApiResults.NotFound(BookReferences.FormatHint(book)));
     }
 
     /// <summary>The most outlines one request names; a place has a handful, and the whole set is asked for without names.</summary>
@@ -86,18 +75,6 @@ internal static partial class EncyclopediaEndpoints
                     ?? [])),
             ]);
     }
-
-    /// <summary>
-    /// The places with a point that a chapter names: those whose <see cref="PlacePointResponse.Chapters"/>
-    /// on the map hold it, counted without drawing the map.
-    /// </summary>
-    internal static Task<int> LocatedIn(AppDbContext db, int book, int chapter, CancellationToken cancellationToken) =>
-        db.EntityVerses.Shown()
-            .Where(v => v.CanonicalBook == book && v.CanonicalChapter == chapter)
-            .Where(v => db.PlaceLocations.Any(l => l.EntityId == v.EntityId))
-            .Select(v => v.EntityId)
-            .Distinct()
-            .CountAsync(cancellationToken);
 
     /// <summary>
     /// Every located place, alphabetical, with the number of verses that name it so a map can size
