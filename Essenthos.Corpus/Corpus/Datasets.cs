@@ -748,9 +748,10 @@ public static class Datasets
             "A second reading of every word of Nestle 1904: its part of speech, whether it is a proper "
             + "name, its lemma and its grammatical features. It is the one source here that states "
             + "outright which Greek words are names, and it is published over this same edition, so "
-            + "each reading sits on the word it was made for without any alignment. Only the word "
-            + "table is taken; the syntax trees, semantic roles and the glossing layers bound into "
-            + "the same repository are not.",
+            + "each reading sits on the word it was made for without any alignment. From the same "
+            + "word table it also gives the word each pronoun refers back to, which is how a "
+            + "pronoun is shown the person it stands for. The syntax trees, semantic roles and the "
+            + "glossing layers bound into the same repository are not taken.",
             "MACULA Greek Linguistic Datasets", Parsings: true,
             Citation: "MACULA Greek Linguistic Datasets, available at "
                 + "https://github.com/Clear-Bible/macula-greek/"),

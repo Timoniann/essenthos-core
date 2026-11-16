@@ -91,7 +91,9 @@ internal static class MaculaReader
                 Voice: Value(fields, columns, "voice"),
                 Mood: Value(fields, columns, "mood"),
                 Degree: Value(fields, columns, "degree"),
-                Surface: Field(fields, columns, "text")));
+                Surface: Field(fields, columns, "text"),
+                Id: Value(fields, columns, "xml:id") ?? "",
+                Referents: Value(fields, columns, "referent")?.Split(' ', StringSplitOptions.RemoveEmptyEntries)));
         }
 
         return words;

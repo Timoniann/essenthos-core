@@ -188,6 +188,9 @@ public class AppDbContext : DbContext
     /// </summary>
     public DbSet<WordStrong> WordStrongs { get; set; } = null!;
 
+    /// <summary>Which word a pronoun refers back to, and who says so. Not a name: the record is whatever that word names.</summary>
+    public DbSet<WordReferent> WordReferents { get; set; } = null!;
+
     /// <summary>
     /// Second analyses of a word, from a source other than the text it belongs to. Separate from
     /// <c>word.morphology</c>, which is what that word's own edition says, and never merged into
@@ -1359,6 +1362,7 @@ public class AppDbContext : DbContext
         ConfigureLink(modelBuilder);
         ConfigureVerseLink(modelBuilder);
         ConfigureWordStrong(modelBuilder);
+        ConfigureWordReferent(modelBuilder);
         ConfigureWordParsing(modelBuilder);
         ConfigureWordEntity(modelBuilder);
         ConfigureEntityDescriptor(modelBuilder);
@@ -2156,6 +2160,26 @@ public class AppDbContext : DbContext
             // The same rules the links live under, and for the same reason: a proposal that carried
             // no confidence while claiming to be inferred would read as testimony.
             entity.ToTable("word_strong", t => AddProvenanceConstraints(t, "word_strong"));
+        });
+    }
+
+    private static void ConfigureWordReferent(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<WordReferent>(entity =>
+        {
+            entity.Property(r => r.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(r => r.Word)
+                .WithMany()
+                .HasForeignKey(r => r.WordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.ReferentWord)
+                .WithMany()
+                .HasForeignKey(r => r.ReferentWordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("word_referent", t => AddProvenanceConstraints(t, "word_referent"));
         });
     }
 

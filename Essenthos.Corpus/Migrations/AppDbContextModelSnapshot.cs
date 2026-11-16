@@ -6561,6 +6561,59 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordReferent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<double?>("Confidence")
+                        .HasColumnType("double precision")
+                        .HasColumnName("confidence");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("method");
+
+                    b.Property<long>("ReferentWordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("referent_word_id");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<long>("WordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("word_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_word_referent");
+
+                    b.HasIndex("ReferentWordId")
+                        .HasDatabaseName("ix_word_referent_referent_word_id");
+
+                    b.HasIndex("WordId", "ReferentWordId", "Source")
+                        .IsUnique()
+                        .HasDatabaseName("ix_word_referent_word_id_referent_word_id_source");
+
+                    b.ToTable("word_referent", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_word_referent_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
+
+                            t.HasCheckConstraint("ck_word_referent_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
+
+                            t.HasCheckConstraint("ck_word_referent_source_not_empty", "length(btrim(\"source\")) > 0");
+
+                            t.HasCheckConstraint("ck_word_referent_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRendering", b =>
                 {
                     b.Property<long>("Id")
@@ -8308,6 +8361,27 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_word_parsing_word_word_id");
+
+                    b.Navigation("Word");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordReferent", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Word", "ReferentWord")
+                        .WithMany()
+                        .HasForeignKey("ReferentWordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_referent_word_referent_word_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Word", "Word")
+                        .WithMany()
+                        .HasForeignKey("WordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_word_referent_word_word_id");
+
+                    b.Navigation("ReferentWord");
 
                     b.Navigation("Word");
                 });

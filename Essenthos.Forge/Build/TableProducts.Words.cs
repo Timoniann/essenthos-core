@@ -40,6 +40,8 @@ internal static partial class TableProducts
             SyntaxMemberRows),
         new("word_parsing", ["id", "word_id", "lemma", "morphology", "method", "confidence", "source", "note"],
             ["MorphGnt", "Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ParsingRows),
+        new("word_referent", ["id", "word_id", "referent_word_id", "method", "confidence", "source"],
+            ["Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ReferentRows),
         new("word_strong", ["id", "word_id", "number", "method", "confidence", "source", "note"],
             [StrongHebrew, StrongGreek, BereanTables],
             [TextWord.ProductOf(Brenton), TextWord.ProductOf(Berean), FrameFile.Product(Berean), TextWord.ProductOf(KingJames), WordIdCollision.Product],
@@ -135,10 +137,7 @@ internal static partial class TableProducts
             ]);
         }
 
-        var annotated = nestle.Select(w => new MaculaAnnotation.WitnessWord(ids.Of(w.Key), w.Key.Verse.Book, w.Key.Verse.Chapter, w.Key.Verse.Verse,
-            w.Key.Position, w.Surface)).ToArray();
-        var annotation = MaculaReader.ReadFile(store.FullPath("Macula"));
-        MaculaAnnotation.Check(annotated, annotation);
+        var (annotated, annotation) = Macula(store, nestle);
         var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
         for (var at = 0; at < annotation.Count; at++)
         {
@@ -150,6 +149,30 @@ internal static partial class TableProducts
         }
 
         return new(Numbered(lines));
+    }
+
+    /// <summary>Nestle 1904's words beside MACULA's, checked to be the same words in the same order.</summary>
+    private static (MaculaAnnotation.WitnessWord[] Annotated, IReadOnlyList<MaculaWord> Annotation) Macula(ProductStore store, List<TextWord> nestle)
+    {
+        var ids = Ids(store);
+        var annotated = nestle.Select(w => new MaculaAnnotation.WitnessWord(ids.Of(w.Key), w.Key.Verse.Book, w.Key.Verse.Chapter, w.Key.Verse.Verse,
+            w.Key.Position, w.Surface)).ToArray();
+        var annotation = MaculaReader.ReadFile(store.FullPath("Macula"));
+        MaculaAnnotation.Check(annotated, annotation);
+        return (annotated, annotation);
+    }
+
+    /// <summary>MACULA's word each Nestle word refers back to, a row per word referred to (<see cref="MaculaAnnotation.Referents"/>).</summary>
+    private static Rows ReferentRows(ProductStore store)
+    {
+        var nestle = WordsOf(store, Nestle).OrderBy(w => w.Key.Verse.Book).ThenBy(w => w.Key.Verse.Chapter).ThenBy(w => w.Key.Verse.Verse)
+            .ThenBy(w => w.Key.Position).ToList();
+        var (annotated, annotation) = Macula(store, nestle);
+        var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
+        var lines = MaculaAnnotation.Referents(annotation)
+            .Select(pair => new[] { Int(annotated[pair.Word].Id), Int(annotated[pair.Referent].Id), stated, null, MaculaAnnotation.Source })
+            .ToList();
+        return new(Numbered(lines), $"{lines.Select(l => l[0]).Distinct().Count()} words refer to another");
     }
 
     private static Rows WordStrongRows(ProductStore store)

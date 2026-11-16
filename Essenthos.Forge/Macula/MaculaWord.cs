@@ -24,6 +24,12 @@ namespace Essenthos.Core.Macula;
 /// carry, so it is stored as the evidence for the features beside it and never as a second opinion
 /// about them.
 /// </param>
+/// <param name="Id">MACULA's own id of the word (<c>n40001001001</c>), which <paramref name="Referents"/> point by.</param>
+/// <param name="Referents">
+/// The ids of the words this one refers back to, where MACULA says: the antecedent of a pronoun, of a relative, of an
+/// article standing for a person. Several where it refers to several at once, and often in an earlier verse. Empty for
+/// most words.
+/// </param>
 /// <param name="Surface">
 /// The word as MACULA prints it. **Not stored.** It is here so that the placement can be checked
 /// against what this corpus prints in the same slot, and so the 193 words where the two copies of
@@ -46,4 +52,6 @@ internal sealed record MaculaWord(
     string? Voice,
     string? Mood,
     string? Degree,
-    string Surface);
+    string Surface,
+    string Id = "",
+    string[]? Referents = null);

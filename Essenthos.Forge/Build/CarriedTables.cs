@@ -45,6 +45,11 @@ internal static class CarriedTables
             "id, word_id, number, method, confidence, source, note",
             "SELECT s.id::bigint, s.word_id::bigint, s.number, s.method, s.confidence::float8, s.source, s.note FROM s " +
             "WHERE EXISTS (SELECT 1 FROM word w WHERE w.id = s.word_id::bigint)"),
+        new("word_referent",
+            "SELECT x.id::text, x.word_id::text, x.referent_word_id::text, x.method, x.confidence::text, x.source FROM word_referent x ORDER BY x.id",
+            "id, word_id, referent_word_id, method, confidence, source",
+            "SELECT s.id::bigint, s.word_id::bigint, s.referent_word_id::bigint, s.method, s.confidence::float8, s.source FROM s " +
+            "WHERE EXISTS (SELECT 1 FROM word w WHERE w.id = s.word_id::bigint) AND EXISTS (SELECT 1 FROM word w WHERE w.id = s.referent_word_id::bigint)"),
         new("text_relation",
             "SELECT x.id::text, f.slug AS from_text, t.slug AS to_text, x.relation, x.scope, x.note, x.source " +
             "FROM text_relation x JOIN text f ON f.id = x.from_text_id JOIN text t ON t.id = x.to_text_id ORDER BY x.id",

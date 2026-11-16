@@ -127,6 +127,37 @@ internal static class MaculaAnnotation
         }
     }
 
+    /// <summary>
+    /// Every word that refers back to another, by index into <paramref name="annotation"/>, in the file's order and, for a word
+    /// referring to several, in the order MACULA lists them. MACULA points by its own ids; an id that names no word of the
+    /// table stops the build rather than being dropped, since it would mean the file is not the one these rows were read from.
+    /// </summary>
+    internal static IEnumerable<(int Word, int Referent)> Referents(IReadOnlyList<MaculaWord> annotation)
+    {
+        var at = new Dictionary<string, int>(annotation.Count, StringComparer.Ordinal);
+        for (var i = 0; i < annotation.Count; i++)
+        {
+            at[annotation[i].Id] = i;
+        }
+
+        for (var i = 0; i < annotation.Count; i++)
+        {
+            foreach (var id in (annotation[i].Referents ?? []).Distinct(StringComparer.Ordinal))
+            {
+                if (!at.TryGetValue(id, out var referent))
+                {
+                    throw new InvalidDataException(
+                        $"MACULA's word {annotation[i].Id} refers to {id}, which is no word of its table. Re-run scripts/fetch-macula.ps1.");
+                }
+
+                if (referent != i)
+                {
+                    yield return (i, referent);
+                }
+            }
+        }
+    }
+
     internal static string Note(WitnessWord witness, MaculaWord annotation) =>
         $"this corpus prints {witness.Surface} where MACULA prints {annotation.Surface}";
 }
