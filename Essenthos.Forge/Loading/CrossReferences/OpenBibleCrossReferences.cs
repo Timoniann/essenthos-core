@@ -38,6 +38,9 @@ internal static class OpenBibleCrossReferences
         .Select((name, index) => (name, index))
         .ToDictionary(book => book.name, book => book.index + 1, StringComparer.Ordinal);
 
+    /// <summary>The canonical ordinal of a book by the OSIS name of the 66, or null for any other name.</summary>
+    internal static int? OsisOrdinal(string name) => Ordinals.TryGetValue(name, out var ordinal) ? ordinal : null;
+
     /// <summary>Every pair the file states, ranked within its verse; lines that do not read are counted, not guessed at.</summary>
     public static (List<CrossReferenceRow> Rows, int Unread) Read(string path)
     {

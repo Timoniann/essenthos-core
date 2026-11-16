@@ -305,6 +305,26 @@ public static class Datasets
             + "the verse they bear on, in the order the Treasury prints them.",
             CrossReferenceSets.TreasurySource),
 
+        // Commentaries, public domain by age, each module saying so in its own configuration.
+        new("henry", "Matthew Henry's Complete Commentary on the Whole Bible",
+            "Matthew Henry, 1706-1721, from CrossWire's SWORD module as prepared from the Christian Classics Ethereal Library",
+            "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=MHC",
+            "A comment beside every passage of the Bible, written over the run of verses it explains, with "
+            + "an introduction to each book and chapter.",
+            CommentaryWorks.HenrySource),
+
+        new("rieger", "Carl Heinrich Riegers Betrachtungen",
+            "Carl Heinrich Rieger, Stuttgart 1833 and 1835, digitised by Michael Bolsinger and converted by Matthias "
+            + "Ansorg, from CrossWire's SWORD module",
+            "Public Domain",
+            "https://en.wikipedia.org/wiki/Public_domain",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=Rieger",
+            "Reflections in German on the New Testament, the Psalms and the twelve minor prophets, each over "
+            + "the passage it reflects on.",
+            CommentaryWorks.RiegerSource),
+
         new("wikidata", "Wikidata", "the Wikidata contributors", "CC0",
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",

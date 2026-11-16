@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.BetaMasaheft;
+using Essenthos.Core.Commentary;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -60,6 +61,9 @@ internal static partial class TableProducts
             [CompiledHebrew, BriefGreek], [], StrongProfileRows),
         new("lexicon_gloss", ["id", "entry", "strong_number", "lemma", "gloss", "source"], [BriefGreek], [], GlossRows),
         new("geez_lexicon_entry", ["id", "entry", "headword", "forms", "consonants", "latin", "greek", "source"], ["Dillmann"], [], GeezRows),
+        new("commentary_entry",
+            ["id", "commentary", "source", "book", "first_chapter", "first_verse", "last_chapter", "last_verse", "sequence", "body"],
+            [.. CommentaryWorks.All.Select(w => $"{CommentaryReader.Folder}/{w.Module}")], [], CommentaryRows),
     ];
 
     private const string StrongHebrew = "Strong/StrongHebrew.xml";
@@ -244,6 +248,19 @@ internal static partial class TableProducts
             headword.Entry, headword.Headword, Array(headword.Forms), Array(headword.Forms.Select(GeezLexicon.ConsonantsOf).Distinct()),
             Array(headword.Latin), Array(headword.Greek), Sources.DillmannLexicon,
         })));
+
+    /// <summary>Every comment of every commentary, each commentary in its module's order.</summary>
+    private static Rows CommentaryRows(ProductStore store)
+    {
+        var unread = new Dictionary<string, int>(StringComparer.Ordinal);
+        var rows = CommentaryWorks.All.SelectMany(work => CommentaryReader.Read(store.ResourcesPath, work, unread)).ToList();
+        return new(Numbered(rows.Select(r => new[]
+            {
+                r.Commentary, r.Source, Int(r.Book), Int(r.FirstChapter), Int(r.FirstVerse), Int(r.LastChapter), Int(r.LastVerse), Int(r.Sequence), r.Body,
+            })),
+            string.Join("; ", CommentaryWorks.All.Select(w => $"{w.Id} {rows.Count(r => r.Commentary == w.Id)}"))
+            + (unread.Count == 0 ? string.Empty : "; markup not read: " + string.Join(", ", unread.Select(u => $"{u.Key} {u.Value}"))));
+    }
 
     private static Rows TextRelationRows(ProductStore store)
     {

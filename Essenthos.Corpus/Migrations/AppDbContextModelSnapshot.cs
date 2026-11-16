@@ -339,6 +339,70 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("commandment_reference", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.CommentaryEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("body");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("integer")
+                        .HasColumnName("book");
+
+                    b.Property<string>("Commentary")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("commentary");
+
+                    b.Property<int?>("FirstChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("first_chapter");
+
+                    b.Property<int?>("FirstVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("first_verse");
+
+                    b.Property<int?>("LastChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("last_chapter");
+
+                    b.Property<int?>("LastVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("last_verse");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("integer")
+                        .HasColumnName("sequence");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("Id")
+                        .HasName("pk_commentary_entry");
+
+                    b.HasIndex("Commentary", "Book", "FirstChapter", "FirstVerse")
+                        .HasDatabaseName("ix_commentary_entry_commentary_book_first_chapter_first_verse");
+
+                    b.ToTable("commentary_entry", null, t =>
+                        {
+                            t.HasComment("What a commentary wrote, one row per comment over the span it was written on, in the shared frame: a comment on verses has all four ends, a chapter's introduction its chapter and no verse, a book's introduction neither. The body is the comment as JSON blocks of marked text.");
+
+                            t.HasCheckConstraint("ck_commentary_entry_source_not_empty", "length(btrim(\"source\")) > 0");
+
+                            t.HasCheckConstraint("ck_commentary_entry_span", "(first_chapter IS NULL) = (last_chapter IS NULL) AND (first_verse IS NULL) = (last_verse IS NULL) AND (first_verse IS NULL OR first_chapter IS NOT NULL)");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.ContextChapter", b =>
                 {
                     b.Property<int>("CanonicalBook")
