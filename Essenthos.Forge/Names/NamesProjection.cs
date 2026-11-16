@@ -18,7 +18,7 @@ namespace Essenthos.Core.Names;
 internal sealed partial class NamesProjection
 {
     /// <summary>Raised with any change to what the projection writes or how; a product made by another version is made again.</summary>
-    public const string Version = "3";
+    public const string Version = "4";
 
     public const string VersionNote = "names-version";
 
@@ -185,6 +185,7 @@ internal sealed partial class NamesProjection
         public const string Suppressed = "suppressed";
         public const string Foreign = "another-record's-name";
         public const string Several = "a-link-of-several-people";
+        public const string Unprinted = "a-name-the-text-does-not-print";
     }
 
     /// <param name="Names">The text's names, sorted by key and record.</param>
@@ -244,6 +245,12 @@ internal sealed partial class NamesProjection
             if (Store.Exists(NameProducts.Settled(reference)))
             {
                 inputs.Add(Store.ProductInput(NameProducts.Settled(reference)));
+            }
+
+            // Its proper nouns, for the names a text does not print (Unprinted).
+            if (Store.Exists(TextWord.ProductOf(reference)))
+            {
+                inputs.Add(Store.ProductInput(TextWord.ProductOf(reference)));
             }
 
             foreach (var pair in ReferencePairs(text).Where(p => p.Reference == reference))
@@ -423,6 +430,12 @@ internal sealed partial class NamesProjection
                 candidates.Remove(key);
                 refused[key] = Refusals.Foreign;
             }
+        }
+
+        foreach (var key in Unprinted(candidates, words).ToList())
+        {
+            candidates.Remove(key);
+            refused[key] = Refusals.Unprinted;
         }
 
         var names = candidates.Select(c => new ProjectedName(
@@ -720,6 +733,137 @@ internal sealed partial class NamesProjection
             }
         }
     }
+
+    /// <summary>
+    /// Below this share of a text's persons carried from a proper noun onto a word written with a capital, the text does not
+    /// write names with capitals (WH1881, Sinaiticus, Vaticanus, RP2018, Alexandrinus) and <see cref="Unprinted"/> leaves it alone.
+    /// </summary>
+    internal const double CapitalisedText = 0.9;
+
+    /// <summary>
+    /// A form the text writes for a person in fewer than this share of its occurrences is no name of the text's
+    /// (<see cref="Unprinted"/>): <em>multitude</em> carries a person once in 346, <em>il</em> 94 times in 6,282.
+    /// </summary>
+    internal const double NamingForm = 0.1;
+
+    /// <summary>
+    /// A person's name carried from the base's proper noun onto a word the text does not print as a name (PRB-1719): the King
+    /// James reads the אָמוֹן of Jeremiah 46:25 as the noun <em>multitude</em>, which names nobody, so the god Amon does not go
+    /// on it. Refused where the text writes names with capitals (<see cref="CapitalisedText"/>), the word is written without one,
+    /// it is no pronoun (those have their own rule) and no part of a hyphened name, and the text gives a person to that form
+    /// in under <see cref="NamingForm"/> of its occurrences, so that a name a language writes in lower case (<em>сатана</em>,
+    /// <em>кесаря</em>, <em>херувими</em>) is kept. Most of what it takes back is a link's slip onto the word beside the name
+    /// (<em>against</em>, <em>when</em>, the <em>son</em> of <em>the son of Heli</em>).
+    /// </summary>
+    private IEnumerable<(string Own, string Record)> Unprinted(Dictionary<(string Own, string Record), Candidate> candidates, IReadOnlyDictionary<string, Word> words)
+    {
+        var persons = candidates
+            .Where(c => c.Value.Role == NameRoles.Name && Records.TryGetValue(c.Key.Record, out var record) && record.Kind == "person"
+                        && words.ContainsKey(c.Key.Own))
+            .ToList();
+        var proper = persons.Where(c => words[c.Key.Own].Cased && FromProperNoun(c.Value.Through)).ToList();
+        if (proper.Count == 0 || proper.Count(c => WrittenWithCapital(words[c.Key.Own].Surface)) < CapitalisedText * proper.Count)
+        {
+            yield break;
+        }
+
+        var occurrences = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var word in words.Values)
+        {
+            var form = Letters(word.Surface);
+            occurrences[form] = occurrences.GetValueOrDefault(form) + 1;
+        }
+
+        var named = persons.Select(c => c.Key.Own).Distinct(StringComparer.Ordinal)
+            .GroupBy(own => Letters(words[own].Surface), StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
+        foreach (var (key, _) in proper)
+        {
+            var word = words[key.Own];
+            if (WrittenWithCapital(word.Surface) || word.Pronoun || word.Joined)
+            {
+                continue;
+            }
+
+            var form = Letters(word.Surface);
+            if (named.GetValueOrDefault(form) < NamingForm * occurrences.GetValueOrDefault(form, 1))
+            {
+                yield return key;
+            }
+        }
+    }
+
+    /// <summary>The word's letters as the text writes them, case kept, with its apostrophes and hyphens: the form <see cref="Unprinted"/> counts.</summary>
+    private static string Letters(string surface) => string.Concat(surface.Where(c => char.IsLetter(c) || c is '\'' or '’' or '-'));
+
+    /// <summary>Whether a word is written with a capital: its first letter, or the one after an elided article (<em>d’Abraham</em>).</summary>
+    internal static bool WrittenWithCapital(string surface)
+    {
+        var first = surface.FirstOrDefault(char.IsLetter);
+        if (first != default && char.IsUpper(first))
+        {
+            return true;
+        }
+
+        var bare = surface.TrimStart('\'', '’', '‘', '"', '“', '„', '«', '(', '[');
+        var apostrophe = bare.IndexOfAny(['\'', '’']);
+        return apostrophe is > 0 and <= 2 && apostrophe + 1 < bare.Length && char.IsUpper(bare[apostrophe + 1]);
+    }
+
+    private readonly ConcurrentDictionary<string, Lazy<HashSet<string>>> _properNouns = new(StringComparer.Ordinal);
+
+    /// <summary>Whether a carried name's base word (<c>BHSA 24.46:25.9</c>) is a proper noun (<see cref="ProperNouns"/>).</summary>
+    private bool FromProperNoun(string through)
+    {
+        var space = through.IndexOf(' ');
+        return space > 0 && ProperNouns(through[..space]).Contains(through[(space + 1)..]);
+    }
+
+    /// <summary>
+    /// A reference text's proper nouns: a word its parsing marks so (BHSA's and the Samaritan's <c>nmpr</c>; a gentilic is
+    /// not one, for a language writes the people's word in lower case), a word whose lemma is capitalised (the Greek), or,
+    /// with neither, a word the text writes with a capital inside a sentence (the Vulgate).
+    /// </summary>
+    private HashSet<string> ProperNouns(string reference) =>
+        _properNouns.GetOrAdd(reference, r => new Lazy<HashSet<string>>(() =>
+        {
+            var proper = new HashSet<string>(StringComparer.Ordinal);
+            if (!Store.Exists(TextWord.ProductOf(r)))
+            {
+                return proper;
+            }
+
+            using var reader = Store.Open(TextWord.ProductOf(r), TextWord.Schema(r));
+            TextWord? previous = null;
+            foreach (var word in reader.Rows())
+            {
+                var pos = NameRules.PartOfSpeech(word.Morphology);
+                bool named;
+                if (pos == "nmpr")
+                {
+                    named = true;
+                }
+                else if (word.Lemma is { Length: > 0 } lemma)
+                {
+                    named = WrittenWithCapital(lemma);
+                }
+                else
+                {
+                    var trailer = previous?.Trailer.TrimEnd() ?? string.Empty;
+                    named = pos is null && previous is not null && previous.Key.Verse == word.Key.Verse
+                            && !trailer.EndsWith('.') && !trailer.EndsWith('!') && !trailer.EndsWith('?') && WrittenWithCapital(word.Surface);
+                }
+
+                if (named)
+                {
+                    proper.Add(word.Key.Own);
+                }
+
+                previous = word;
+            }
+
+            return proper;
+        })).Value;
 
     private Dictionary<string, Word> ReadWords(string text, string language)
     {

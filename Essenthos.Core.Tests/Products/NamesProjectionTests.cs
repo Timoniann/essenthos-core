@@ -297,6 +297,75 @@ public sealed class NamesProjectionTests : IDisposable
         names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(8), "moses"), "not-the-head"));
     }
 
+    private sealed record PersonRow(string Slug, string Kind);
+
+    private static readonly ProductSchema<PersonRow> PersonSchema = new ProductSchema<PersonRow>()
+        .Text("slug", r => r.Slug).Text("kind", r => r.Kind).Text("name", r => r.Slug).OptionalText("sex", _ => null).OptionalText("sex_source", _ => null)
+        .Reads(row => new PersonRow(row.Text(0), row.Text(1)));
+
+    /// <summary>
+    /// Jeremiah 46:25 as the King James prints it, <em>the multitude of No</em>, with twenty people named by name around it, a
+    /// <em>satan</em> the text writes in lower case, and a <em>king</em> rendering a common noun annotated with whom it means.
+    /// </summary>
+    [Fact]
+    public void APersonsNameIsNotCarriedFromAProperNounOntoAWordTheTextPrintsAsNoName()
+    {
+        var store = new ProductStore(_resources);
+        Declare(store, "ENG", "eng", "translation");
+        Declare(store, "BHSA", "hbo", "critical-edition");
+        string[] english = ["punish", "the", "multitude", "of", "No", .. Enumerable.Range(0, 20).Select(i => $"Name{(char)('a' + i)}"), "satan", "the", "king",
+            .. Enumerable.Repeat("multitude", 10)];
+        using (var writer = store.Create(TextWord.ProductOf("ENG"), ProductKind.Machine, TextWord.Schema("ENG"), "test", []))
+        {
+            writer.WriteAll(english.Select((surface, at) => new TextWord(new WordKey("ENG", new VerseKey(2, 3, 4), at + 1), surface, " ",
+                null, null, null, null, surface.ToLowerInvariant(), null, false, null, null, null)));
+        }
+
+        // BHSA: אָמוֹן, twenty names and שָׂטָן marked as proper nouns, and the common noun מֶלֶךְ.
+        const string properNoun = "{\"pos\": \"nmpr\"}";
+        var hebrew = Enumerable.Range(1, 22).Select(at => (Surface: $"שם{at}", Morphology: properNoun)).Append((Surface: "מֶלֶךְ", Morphology: "{\"pos\": \"subs\"}")).ToList();
+        using (var writer = store.Create(TextWord.ProductOf("BHSA"), ProductKind.Machine, TextWord.Schema("BHSA"), "test", []))
+        {
+            writer.WriteAll(hebrew.Select((word, at) => new TextWord(new WordKey("BHSA", new VerseKey(2, 3, 4), at + 1), word.Surface, " ",
+                word.Surface, null, null, word.Morphology, null, null, false, null, null, null)));
+        }
+
+        var records = new[] { "amon" }.Concat(Enumerable.Range(0, 20).Select(i => $"person-{i}")).Append("satan").Append("pharaoh").ToList();
+        using (var writer = store.Create(MappingProducts.Of("ENG-BHSA", MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "test", []))
+        {
+            var links = new List<FinalRow> { Link(1, Key(3), Key(1)) };
+            links.AddRange(Enumerable.Range(0, 20).Select(i => Link(2 + i, Key(6 + i), Key(2 + i))));
+            links.Add(Link(30, Key(26), Key(22)));
+            links.Add(Link(31, Key(28), Key(23)));
+            writer.WriteAll(links);
+        }
+
+        using (var writer = store.Create(NameProducts.Settled("BHSA"), ProductKind.Hand, SettledName.Schema("BHSA"), "test", []))
+        {
+            writer.WriteAll(records.Select((record, at) => Settled(at + 1, record)));
+        }
+
+        using (var writer = store.Create(NamesProjection.RecordsProduct, ProductKind.Hand, PersonSchema, "test", []))
+        {
+            writer.WriteAll(records.Select(record => new PersonRow(record, "person")));
+        }
+
+        using (var writer = store.Create(NameProducts.Rules, ProductKind.Hand, NameRuleRow.Schema, "test", []))
+        {
+            writer.WriteAll(NameRules.Seed());
+        }
+
+        store.Save();
+
+        var names = new NamesProjection(new ProductStore(_resources)).Project("ENG");
+
+        names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(3), "amon"), "a-name-the-text-does-not-print"),
+            "the text writes multitude eleven times and gives it a person once");
+        names.Names.Select(n => n.Record).Should().Contain(["satan", "pharaoh", "person-0", "person-19"],
+            "satan is the only way the text writes that name, and the king renders a common noun, not a name");
+        names.Names.Should().NotContain(n => n.Record == "amon");
+    }
+
     [Fact]
     public void APossessivesLoneSIsNeverTheName()
     {

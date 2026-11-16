@@ -30,6 +30,10 @@ internal enum NameSignal
 /// Whether the text marks it as a name and nothing else: a capital it writes nowhere in lower case.
 /// <em>Son</em> and <em>Senhor</em> are capitalised and also written in lower case.
 /// </param>
+/// <param name="Folded">
+/// Whether the verses named it by a record since folded into the one in <paramref name="Families"/>: the Chinese Union's
+/// 拉哈伯 was read as Rahab-2, which is Egypt now (<see cref="NameTargetWord.Given"/>).
+/// </param>
 internal sealed record NameSourceWord(
     long Id,
     string Surface,
@@ -37,7 +41,8 @@ internal sealed record NameSourceWord(
     string Form,
     IReadOnlySet<int> Families,
     bool Marked,
-    bool Named = false);
+    bool Named = false,
+    bool Folded = false);
 
 /// <summary>A word of the original annotated as naming a person, a place or a people.</summary>
 /// <param name="Index">Where it stands among the words of its verse, from 0.</param>
@@ -54,8 +59,20 @@ internal sealed record NameSourceWord(
 /// word that renders it from being learned as the father's spelling, and is never placed: it is
 /// translated, not written by its letters, and belongs to the other steps.
 /// </param>
+/// <param name="Given">
+/// The creature whose name the text gives here to the records the word names, each by its family, or null: רַהַב of Isaiah
+/// 30:7 names the creature Rahab and, below it, Egypt (FTR-1752). Such a word is a mention of its creature, not another
+/// mention of Egypt: counted with Egypt, a verse that also writes מִצְרַיִם named Egypt twice, and neither mention was placed
+/// (PRB-1758). Whom the word names, <paramref name="Families"/>, still gives it the translation's word its verses say names
+/// Egypt.
+/// </param>
 internal sealed record NameTargetWord(
-    long Id, int Index, string Letters, IReadOnlySet<int> Families, EntityKind Kind, string Spelling = "", bool Proper = true);
+    long Id, int Index, string Letters, IReadOnlySet<int> Families, EntityKind Kind, string Spelling = "", bool Proper = true,
+    IReadOnlySet<int>? Given = null)
+{
+    /// <summary>Whom the word counts as a mention of, where the verse's mentions of a record are counted.</summary>
+    public IReadOnlySet<int> Mentions => Given ?? Families;
+}
 
 /// <param name="Source">Every word of the translation's verse, in order.</param>
 /// <param name="Targets">The original's words that name someone, in order.</param>
@@ -182,7 +199,7 @@ internal static class NamePlacement
             }
 
             var families = verse.Targets.SelectMany(target => target.Families).ToHashSet();
-            var one = verse.Targets.All(target => target.Families.Overlaps(verse.Targets[0].Families))
+            var one = verse.Targets.All(target => target.Mentions.Overlaps(verse.Targets[0].Mentions))
                 ? verse.Targets[0].Families.Where(family => verse.Targets.All(target => target.Families.Contains(family))).ToList()
                 : [];
             if (one.Count > 0)
@@ -322,7 +339,19 @@ internal static class NamePlacement
                     continue;
                 }
 
-                var sameRank = namingSources.IndexOf(s) is >= 0 and var sourceRank && sourceRank == namingTargets.IndexOf(t);
+                // A word giving a creature's name to a land takes, on whom the verses say alone, only a word they named by
+                // the creature's or by an old record of that name since folded into the land (the Chinese Union's 拉哈伯, read as
+                // Rahab-2): the Elberfelder's second Ägypten (darum nenne ich dieses Ägypten Großtuer) names Egypt and renders
+                // "her"; it prints Rahab as Großtuer.
+                if (target.Given is not null && signals == NameSignal.Entity && !word.Folded && !word.Families.Overlaps(target.Given))
+                {
+                    continue;
+                }
+
+                // The order of the mentions pairs them only where both sides hold the same ones: a word that gives a creature's
+                // name to the record (Given) is no mention the translation's other words can be counted against.
+                var sameRank = namingSources.IndexOf(s) is >= 0 and var sourceRank && sourceRank == namingTargets.IndexOf(t)
+                               && (namingSources.Count == namingTargets.Count || namingTargets.All(other => verse.Targets[other].Given is null));
                 var distance = Math.Abs((s + 0.5) / verse.Source.Count - (target.Index + 0.5) / Math.Max(1, verse.TargetLength));
                 var clear = likeness >= ClearLikeness && Cased(word)
                             && verse.Targets.Count(other => other.Proper && Likeness(word, other) >= NameLists.LeastLikeness) == 1
@@ -416,19 +445,19 @@ internal static class NamePlacement
     private static int Count(NameSignal signals) =>
         ((int)signals & 1) + (((int)signals >> 1) & 1) + (((int)signals >> 2) & 1);
 
+    /// <summary>Whether the entity is named more than once in the verse on either side (<see cref="NameTargetWord.Mentions"/>).</summary>
+    private static bool Repeated(NameVerse verse, NameTargetWord target) =>
+        verse.Targets.Count(other => other.Mentions.Overlaps(target.Mentions)) > 1
+        || verse.Source.Count(word => word.Families.Overlaps(target.Mentions)) > 1;
+
     /// <summary>
     /// Whether the entity is named more than once on either side and not as often on both, so which
-    /// mention is which is not given by their order.
+    /// mention is which is not given by their order (<see cref="NameTargetWord.Mentions"/>).
     /// </summary>
-    /// <summary>Whether the entity is named more than once in the verse on either side.</summary>
-    private static bool Repeated(NameVerse verse, NameTargetWord target) =>
-        verse.Targets.Count(other => other.Families.Overlaps(target.Families)) > 1
-        || verse.Source.Count(word => word.Families.Overlaps(target.Families)) > 1;
-
     private static bool Uneven(NameVerse verse, NameTargetWord target)
     {
-        var source = verse.Source.Count(word => word.Families.Overlaps(target.Families));
-        var original = verse.Targets.Count(other => other.Families.Overlaps(target.Families));
+        var source = verse.Source.Count(word => word.Families.Overlaps(target.Mentions));
+        var original = verse.Targets.Count(other => other.Mentions.Overlaps(target.Mentions));
         return (source > 1 || original > 1) && source != original;
     }
 }

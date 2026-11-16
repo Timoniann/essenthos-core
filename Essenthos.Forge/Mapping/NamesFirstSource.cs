@@ -70,6 +70,8 @@ internal sealed class NamesFirstSource : IPairSource
     private static readonly IReadOnlySet<string> Kinds = new HashSet<string>(
         [EnumSpelling.Of(EntityKind.Person), EnumSpelling.Of(EntityKind.Place), EnumSpelling.Of(EntityKind.People)], StringComparer.Ordinal);
 
+    private static readonly string Being = EnumSpelling.Of(EntityKind.Being);
+
     private static readonly IReadOnlySet<int> Nobody = new HashSet<int>();
 
     public string Method => MappingMethods.Names;
@@ -112,11 +114,12 @@ internal sealed class NamesFirstSource : IPairSource
         var records = texts.Shared("names-first records", () => Records.Read(store));
         var (fromIds, toIds) = (PairLinkFiles.Ids(from), texts.Shared($"key ids {toText}", () => PairLinkFiles.Ids(to)));
         var originals = texts.Shared($"names-first originals {toText}", () => Originals(store, to, records, toIds));
-        var named = Named(store, from, records, fromIds);
+        var folded = new HashSet<long>();
+        var named = Named(store, from, records, fromIds, folded);
         var (linkedSources, linkedTargets) = Linked(store, pair, fromIds, toIds);
         var capitalised = Capitalised(from);
 
-        var verses = Verses(source, target, from, to, originals, named, capitalised);
+        var verses = Verses(source, target, from, to, originals, named, capitalised, folded);
         var placings = NamePlacement.Place(verses);
         var rows = Placings(placings, policy, linkedSources, linkedTargets)
             .Select(group => new MappingRow(from.Key(group.Source).Own.ToString(),
@@ -149,7 +152,8 @@ internal sealed class NamesFirstSource : IPairSource
         ProductText to,
         IReadOnlyDictionary<long, Original> originals,
         IReadOnlyDictionary<long, IReadOnlySet<int>> named,
-        IReadOnlySet<long> capitalised)
+        IReadOnlySet<long> capitalised,
+        IReadOnlySet<long>? folded = null)
     {
         var verses = new List<NameVerse>();
         foreach (var address in source.Keys.Intersect(target.Keys).Order())
@@ -161,7 +165,7 @@ internal sealed class NamesFirstSource : IPairSource
                 if (originals.TryGetValue(original[index].Id, out var annotated))
                 {
                     targets.Add(new NameTargetWord(original[index].Id, index, original[index].Letters, annotated.Families, annotated.Kind,
-                        NamesFirstPass.Spelling(original[index].Text, to.Language), annotated.Proper));
+                        NamesFirstPass.Spelling(original[index].Text, to.Language), annotated.Proper, annotated.Given));
                 }
             }
 
@@ -180,7 +184,8 @@ internal sealed class NamesFirstSource : IPairSource
                         NameLetters.Form(word.Text, from.Language),
                         named.GetValueOrDefault(word.Id) ?? Nobody,
                         word.Name is not null || capitalised.Contains(word.Id),
-                        word.Name is not null)),
+                        word.Name is not null,
+                        folded?.Contains(word.Id) == true)),
                 ],
                 targets,
                 original.Count));
@@ -192,7 +197,8 @@ internal sealed class NamesFirstSource : IPairSource
     /// <param name="Families">The records it names, each by its family.</param>
     /// <param name="Kind">The kind of the first of them in the records' order.</param>
     /// <param name="Proper">Whether it is a name and not a common noun annotated with whom it means.</param>
-    internal sealed record Original(IReadOnlySet<int> Families, EntityKind Kind, bool Proper);
+    /// <param name="Given">The creatures the word also names, whose name it gives to those records (<see cref="NameTargetWord.Given"/>), or null.</param>
+    internal sealed record Original(IReadOnlySet<int> Families, EntityKind Kind, bool Proper, IReadOnlySet<int>? Given = null);
 
     /// <summary>Each record by slug as a number, its kind, and its other names as families (<see cref="NameFamilies"/>).</summary>
     internal sealed record Records(IReadOnlyDictionary<string, int> Ids, IReadOnlyList<string> Kinds, NameFamilies Families)
@@ -239,23 +245,31 @@ internal sealed class NamesFirstSource : IPairSource
     internal static Dictionary<long, Original> Originals(ProductStore store, ProductText to, Records records, IReadOnlyDictionary<string, int> ids)
     {
         var byWord = new Dictionary<long, List<int>>();
+        var creatures = new Dictionary<long, List<int>>();
         if (store.Exists(NameProducts.Settled(to.Slug)))
         {
             using var reader = store.Open(NameProducts.Settled(to.Slug), SettledName.Schema(to.Slug));
             foreach (var row in reader.Rows())
             {
-                if (records.Ids.TryGetValue(row.Record, out var record) && Kinds.Contains(records.Kinds[record])
-                    && ids.TryGetValue(row.Own.Own, out var word))
+                if (!records.Ids.TryGetValue(row.Record, out var record) || !ids.TryGetValue(row.Own.Own, out var word))
                 {
-                    if (!byWord.TryGetValue(word, out var named))
-                    {
-                        byWord[word] = named = [];
-                    }
+                    continue;
+                }
 
-                    if (!named.Contains(record))
-                    {
-                        named.Add(record);
-                    }
+                var into = Kinds.Contains(records.Kinds[record]) ? byWord : records.Kinds[record] == Being ? creatures : null;
+                if (into is null)
+                {
+                    continue;
+                }
+
+                if (!into.TryGetValue(word, out var named))
+                {
+                    into[word] = named = [];
+                }
+
+                if (!named.Contains(record))
+                {
+                    named.Add(record);
                 }
             }
         }
@@ -265,7 +279,7 @@ internal sealed class NamesFirstSource : IPairSource
         {
             named.Sort();
             originals[word] = new Original(records.Families.Of(named), EnumSpelling.ToEntityKind(records.Kinds[named[0]]),
-                Proper(to, (int)word));
+                Proper(to, (int)word), creatures.TryGetValue(word, out var creature) ? records.Families.Of(creature) : null);
         }
 
         return originals;
@@ -311,8 +325,12 @@ internal sealed class NamesFirstSource : IPairSource
             : null;
     }
 
-    /// <summary>The translation's words its verses say name someone: the name-consensus pass's rows, folded records read as the one they went into.</summary>
-    internal static Dictionary<long, IReadOnlySet<int>> Named(ProductStore store, ProductText from, Records records, IReadOnlyDictionary<string, int> ids)
+    /// <summary>
+    /// The translation's words its verses say name someone: the name-consensus pass's rows, folded records read as the one they
+    /// went into; <paramref name="folded"/>, when given, takes the words read so (<see cref="NameSourceWord.Folded"/>).
+    /// </summary>
+    internal static Dictionary<long, IReadOnlySet<int>> Named(
+        ProductStore store, ProductText from, Records records, IReadOnlyDictionary<string, int> ids, HashSet<long>? folded = null)
     {
         var byWord = new Dictionary<long, List<int>>();
         if (store.Exists(NameProducts.Consensus(from.Slug)))
@@ -321,8 +339,14 @@ internal sealed class NamesFirstSource : IPairSource
             using var reader = store.Open(NameProducts.Consensus(from.Slug), ConsensusName.Schema(from.Slug));
             foreach (var row in reader.Rows())
             {
-                if (records.Ids.TryGetValue(Folded(row.Record, folds), out var record) && ids.TryGetValue(row.Own.Own, out var word))
+                var slug = Folded(row.Record, folds);
+                if (records.Ids.TryGetValue(slug, out var record) && ids.TryGetValue(row.Own.Own, out var word))
                 {
+                    if (slug != row.Record)
+                    {
+                        folded?.Add(word);
+                    }
+
                     if (!byWord.TryGetValue(word, out var named))
                     {
                         byWord[word] = named = [];
