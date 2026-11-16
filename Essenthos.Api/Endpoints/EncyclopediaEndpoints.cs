@@ -376,12 +376,18 @@ internal static partial class EncyclopediaEndpoints
     internal static IQueryable<Entity> Listed(IQueryable<Entity> entities) => entities.Where(e => e.Verses.Any());
 
     /// <summary>
-    /// The entities of one kind, or a refusal naming the kinds there are. Shared by the index and
-    /// its letter counts, so the two accept exactly the same words.
+    /// The entities of one kind, and of one sort where a subtype is named (the gods or the creatures
+    /// among the beings), or a refusal naming the kinds there are. Shared by the index and its letter
+    /// counts, so the two accept exactly the same words.
     /// </summary>
-    private static bool OfKind(ref IQueryable<Entity> entities, string? kind, out IResult? refusal)
+    private static bool OfKind(ref IQueryable<Entity> entities, string? kind, string? subtype, out IResult? refusal)
     {
         refusal = null;
+        if (subtype is { Length: > 0 })
+        {
+            entities = entities.Where(e => e.Subtype == subtype);
+        }
+
         if (kind is not { Length: > 0 })
         {
             return true;

@@ -80,6 +80,29 @@ public sealed class ContextEndpointTests : IDisposable
     }
 
     /// <summary>
+    /// A being says what sort it is, so the panel shows the gods and the creatures apart; a person says none.
+    /// </summary>
+    [Fact]
+    public async Task ABeingSaysWhetherItIsAGodOrACreature()
+    {
+        var noah = Record("noah", EntityKind.Person);
+        var dagon = Record("dagon", EntityKind.Being);
+        dagon.Subtype = "god";
+        var leviathan = Record("leviathan", EntityKind.Being);
+        leviathan.Subtype = "creature";
+        await _db.SaveChangesAsync();
+        NamedAt(noah, 10, 1);
+        NamedAt(dagon, 10, 2);
+        NamedAt(leviathan, 10, 3);
+        await _db.SaveChangesAsync();
+
+        var context = await ContextEndpoints.Context(_db, Genesis, 10, null, default);
+
+        context.Entities.Select(e => (e.Slug, e.Subtype)).Should().BeEquivalentTo(
+            [("noah", (string?)null), ("dagon", "god"), ("leviathan", "creature")]);
+    }
+
+    /// <summary>
     /// A person's row carries the picture the person's page leads with, small, and nothing else's
     /// does; with the site's own portraits switched off, only a credited public picture is left.
     /// </summary>

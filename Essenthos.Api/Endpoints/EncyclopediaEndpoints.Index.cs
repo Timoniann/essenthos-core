@@ -16,6 +16,7 @@ internal static partial class EncyclopediaEndpoints
         routes.MapGet("/entities", async (
             [FromQuery] string? q,
             [FromQuery] string? kind,
+            [FromQuery] string? subtype,
             [FromQuery] string? language,
             [FromQuery] string? prose,
             [FromQuery] string? sort,
@@ -51,7 +52,7 @@ internal static partial class EncyclopediaEndpoints
                 entities = Tribes.Members(db, db.Entities, await Tribes.Of(db, people.Id, people.OriginEntityId, cancellationToken));
             }
 
-            if (!OfKind(ref entities, kind, out var refusal) || !InCanon(ref entities, canon, out refusal))
+            if (!OfKind(ref entities, kind, subtype, out var refusal) || !InCanon(ref entities, canon, out refusal))
             {
                 return refusal!;
             }
@@ -199,13 +200,14 @@ internal static partial class EncyclopediaEndpoints
         // the empty ones before a reader presses them. Takes the index's own kind filter.
         routes.MapGet("/entities/letters", async (
             [FromQuery] string? kind,
+            [FromQuery] string? subtype,
             [FromQuery] string? language,
             [FromQuery] string? canon,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
             var entities = Listed(db.Entities);
-            return OfKind(ref entities, kind, out var refusal) && InCanon(ref entities, canon, out refusal)
+            return OfKind(ref entities, kind, subtype, out var refusal) && InCanon(ref entities, canon, out refusal)
                 ? Results.Ok(await Letters(EntityNames.Localised(db, entities, language), language, cancellationToken))
                 : refusal!;
         });
