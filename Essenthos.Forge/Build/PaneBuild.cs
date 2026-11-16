@@ -296,12 +296,14 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         products.AddRange(PaneInputs.RecordProducts);
         products.Add(TableProducts.Product("word_strong"));
-        if (text.Slug == PaneInputs.ReferringText || pairs.Any(p => (p.From, p.To) == (text.Slug, PaneInputs.ReferringText)
-                                                                   || (p.From, p.To) == (PaneInputs.ReferringText, text.Slug)))
+        var referring = PaneInputs.ReferringTexts
+            .Where(r => r == text.Slug || pairs.Any(p => (p.From, p.To) == (text.Slug, r) || (p.From, p.To) == (r, text.Slug)))
+            .ToList();
+        if (referring.Count > 0)
         {
             products.Add(PaneInputs.Referents);
             products.Add(TableProducts.Product("word_parsing"));
-            products.Add(NameProducts.Projected(PaneInputs.ReferringText));
+            products.AddRange(PaneInputs.ReferringTexts.Select(NameProducts.Projected));
         }
 
         if (text.Language == "grc")
