@@ -9,6 +9,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
 using GeezTextSource = Essenthos.Core.Loading.GeezTextSource;
@@ -35,6 +36,10 @@ internal static class AlignedWords
     /// <param name="books">The canonical books to read, or all of them.</param>
     /// <param name="strong">Whether the words carry their Strong numbers: only where the words product lets them be served.</param>
     /// <param name="asides">Whether a word read at a further address its verse covers says where the verse stands.</param>
+    /// <param name="hebrew">
+    /// Where lettered verses are not read, the addresses a verse of the Hebrew stands at: the lettered verses that are one of
+    /// them (<see cref="HebrewLettered"/>) are read there all the same.
+    /// </param>
     public static Dictionary<(int, int, int), List<Word>> Read(
         ProductText text,
         Func<WordForms, string> form,
@@ -42,10 +47,12 @@ internal static class AlignedWords
         bool primaryOnly = false,
         IReadOnlySet<int>? books = null,
         bool strong = true,
-        bool asides = true)
+        bool asides = true,
+        IReadOnlySet<(int, int, int)>? hebrew = null)
     {
         var features = Parsed.GetValue(text, Parse);
-        var verses = text.Verses.Where(verse => lettered || verse.VerseLabel.Length == 0)
+        var asHebrew = lettered || hebrew is null ? null : HebrewLettered(text, hebrew);
+        var verses = text.Verses.Where(verse => lettered || verse.VerseLabel.Length == 0 || asHebrew?.Contains(verse) == true)
             .Where(verse => books is null || text.Addresses(verse).Any(address => books.Contains(address.Book)))
             .ToList();
         var uncapitalised = verses.SelectMany(text.InVerse)
@@ -96,6 +103,45 @@ internal static class AlignedWords
                 .ThenBy(standing => sequence.GetValueOrDefault(standing.Verse))
                 .SelectMany(standing => text.InVerse(standing.Verse).Select(id => Word(text, id, features[id], form, uncapitalised, strong, standing.Aside)))
                 .ToList());
+    }
+
+    /// <summary>
+    /// The lettered verses of a text that are a verse of the Hebrew under the edition's letter: the frame stands each first at a
+    /// Hebrew address not its own, and no verse of the edition without a letter stands at that address (Brenton's Proverbs
+    /// 24:22f-t are the Hebrew's 30:1-14, his Joshua 9:2a-f its 8:30-35). A lettered verse at a numbered verse's address is the
+    /// Greek's own addition beside that verse, whose words the Hebrew verse does not hold: Joshua 24:31a's knives of stone beside
+    /// the burial, Psalm 144:13a's line beside the Hebrew's 145:13, Joshua 19:47a and 19:48a beside the inheritance of Dan.
+    /// </summary>
+    public static HashSet<VerseKey> HebrewLettered(ProductText text, IReadOnlySet<(int, int, int)> hebrew)
+    {
+        var numbered = text.Verses.Where(verse => verse.VerseLabel.Length == 0)
+            .SelectMany(text.Addresses)
+            .Select(address => (address.Book, address.Chapter, address.Verse))
+            .ToHashSet();
+        return
+        [
+            .. text.Verses.Where(verse => verse.VerseLabel.Length > 0
+                                          && text.Primary(verse) is var primary
+                                          && primary != (verse.Book, verse.Chapter, verse.Verse)
+                                          && hebrew.Contains(primary)
+                                          && !numbered.Contains(primary)),
+        ];
+    }
+
+    /// <summary>
+    /// Whether a text's frame stands a lettered verse first at an address not its own, read from the frame file alone: what makes
+    /// the addresses of the Hebrew decide which of its lettered verses are read (<see cref="HebrewLettered"/>).
+    /// </summary>
+    public static bool PlacesLettered(ProductStore store, string slug)
+    {
+        if (!store.Exists(FrameFile.Product(slug)))
+        {
+            return false;
+        }
+
+        using var reader = store.Open(FrameFile.Product(slug), FrameRow.Schema);
+        return reader.Rows().SelectMany(row => row.Verses())
+            .Any(verse => verse.Own.VerseLabel.Length > 0 && verse.Canonical.Count > 0 && verse.Canonical[0] != FrameFile.AtOwn(verse.Own));
     }
 
     private static Word Word(ProductText text, int id, Features features, Func<WordForms, string> form, IReadOnlySet<string> uncapitalised,
@@ -275,8 +321,10 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         var pool = asWritten || books is not null ? null : AlignmentPipeline.Pool(fromSlug, toSlug);
         Func<WordForms, string> sourceForm = asWritten ? AlignmentPipeline.Written : word => AlignmentPipeline.Reduce(word);
         Func<WordForms, string> targetForm = pool is null ? word => AlignmentPipeline.Comparable(word) : AlignmentPipeline.Pooled;
-        var source = AlignedWords.Read(texts[fromSlug], sourceForm, lettered, books: books, strong: Served(fromSlug));
-        var target = AlignedWords.Read(texts[toSlug], targetForm, lettered, pool is not null, books, Served(toSlug));
+        var source = AlignedWords.Read(texts[fromSlug], sourceForm, lettered, books: books, strong: Served(fromSlug),
+            hebrew: pool is null ? Hebrew(fromSlug, lettered) : null);
+        var target = AlignedWords.Read(texts[toSlug], targetForm, lettered, pool is not null, books, Served(toSlug),
+            hebrew: pool is null ? Hebrew(toSlug, lettered) : null);
         var refused = Refused(fromSlug, toSlug);
         source = AlignmentPipeline.Unmet(source, refused);
         target = AlignmentPipeline.Unmet(target, refused);
@@ -327,18 +375,49 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
     {
         var lettered = SameVersification(fromSlug, toSlug);
         var refused = Refused(fromSlug, toSlug);
-        var source = AlignmentPipeline.Unmet(AlignedWords.Read(texts[fromSlug], sourceForm, lettered, strong: Served(fromSlug)), refused);
-        var target = AlignmentPipeline.Unmet(AlignedWords.Read(texts[toSlug], targetForm, lettered, strong: Served(toSlug)), refused);
+        var source = AlignmentPipeline.Unmet(
+            AlignedWords.Read(texts[fromSlug], sourceForm, lettered, strong: Served(fromSlug), hebrew: Hebrew(fromSlug, lettered)), refused);
+        var target = AlignmentPipeline.Unmet(
+            AlignedWords.Read(texts[toSlug], targetForm, lettered, strong: Served(toSlug), hebrew: Hebrew(toSlug, lettered)), refused);
         return (AlignmentPipeline.Shared(fromSlug, toSlug, source, target), source, target);
     }
 
     /// <summary>Whether two texts number their verses in one tradition, so that the verses each prints with a letter meet.</summary>
-    public bool SameVersification(string one, string other) => Versification(one) == Versification(other);
+    public bool SameVersification(string one, string other) => Versification(texts.Store, one) == Versification(texts.Store, other);
 
-    private string? Versification(string slug)
+    private static string? Versification(ProductStore store, string slug)
     {
-        using var reader = texts.Store.Open(TextField.ProductOf(slug), TextField.Schema);
+        using var reader = store.Open(TextField.ProductOf(slug), TextField.Schema);
         return reader.Rows().FirstOrDefault(field => field.Field == "versification")?.Value;
+    }
+
+    /// <summary>
+    /// Whether a pair's lines read the addresses of the Hebrew: an unpooled pair of texts numbered in two traditions, written
+    /// wherever they meet, one of which stands a lettered verse at an address not its own (<see cref="AlignedWords.HebrewLettered"/>).
+    /// </summary>
+    public static bool ReadsHebrew(ProductStore store, AlignedPair pair) =>
+        pair.Outside is null
+        && AlignmentPipeline.Pool(pair.From, pair.To) is null
+        && store.Exists(TextField.ProductOf(pair.From)) && store.Exists(TextField.ProductOf(pair.To))
+        && Versification(store, pair.From) != Versification(store, pair.To)
+        && (AlignedWords.PlacesLettered(store, pair.From) || AlignedWords.PlacesLettered(store, pair.To));
+
+    /// <summary>
+    /// The addresses a verse of the Hebrew stands at, where a text's lettered verses are not read but its frame stands one at an
+    /// address not its own; null where the text has none, its lettered verses are read anyway, or the store holds no Hebrew.
+    /// </summary>
+    private IReadOnlySet<(int, int, int)>? Hebrew(string slug, bool lettered)
+    {
+        if (lettered || slug == BhsaTextSource.Slug || !texts.Holds(BhsaTextSource.Slug) || !AlignedWords.PlacesLettered(texts.Store, slug))
+        {
+            return null;
+        }
+
+        return texts.Shared<IReadOnlySet<(int, int, int)>>("hebrew-addresses", () =>
+        {
+            var bhsa = texts[BhsaTextSource.Slug];
+            return bhsa.Verses.SelectMany(bhsa.Addresses).Select(address => (address.Book, address.Chapter, address.Verse)).ToHashSet();
+        });
     }
 
     private bool Served(string slug) => TextWordLoad.StrongServed(texts.Store, slug);
@@ -530,6 +609,9 @@ internal sealed class AlignerSource : IPairSource
             .. AlignerFiles.StoredAnswers(store, pair),
             .. pool is null ? [] : AlignerFiles.StoredAnswers(store, $"{aligned.From}-{string.Join('-', pool)}").Concat(PoolStamps(store, aligned.From, pool)),
             .. aligned.To == AlignerFiles.Analysed ? AlignerFiles.SyntaxInputs(store) : [],
+            .. AlignerFiles.ReadsHebrew(store, aligned) && !read.Contains(BhsaTextSource.Slug)
+                ? ProductText.Products(BhsaTextSource.Slug).Select(store.Find).OfType<string>()
+                : [],
             .. GeezVerseMap.InputsFor(read),
         ];
     }

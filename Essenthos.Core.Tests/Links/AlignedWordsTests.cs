@@ -53,6 +53,27 @@ public sealed class AlignedWordsTests : IDisposable
         at.Select(word => word.Aside).Should().Equal(new (int, int, int)?[] { (1, 1, 1), (1, 1, 1), (1, 1, 1), null, null, null });
     }
 
+    [Fact]
+    public void ALetteredVerseTheFrameStandsAloneAtAHebrewVerseIsReadThereAndNoOtherIs()
+    {
+        // 1:3a is the Hebrew's 2:1 (Proverbs 24:22f at 30:1); 1:3b stands beside the numbered 1:4 (Joshua 24:31a); 1:3c is at
+        // its own address; 1:3d stands where the Hebrew has no verse (Esther's additions).
+        ProductCorpus.Text(_store, "LXX", "eng",
+            [("1.1:3", ["and", "god", "said"]), ("1.1:3a", ["words", "of", "agur"]), ("1.1:3b", ["knives", "of", "stone"]),
+                ("1.1:3c", ["a", "plus"]), ("1.1:3d", ["mordecai", "dreamed"]), ("1.1:4", ["they", "buried", "him"])],
+            ("1.1:3a", ["1.2:1"]), ("1.1:3b", ["1.1:4"]), ("1.1:3d", ["1.11:2"]));
+        var hebrew = new HashSet<(int, int, int)> { (1, 1, 3), (1, 1, 4), (1, 2, 1) };
+
+        var read = AlignedWords.Read(new ProductTexts(_store)["LXX"], AlignmentPipeline.Written, lettered: false, hebrew: hebrew);
+
+        read[(1, 2, 1)].Select(word => word.Text).Should().Equal("words", "of", "agur");
+        read[(1, 1, 3)].Select(word => word.Text).Should().Equal("and", "god", "said");
+        read[(1, 1, 4)].Select(word => word.Text).Should().Equal("they", "buried", "him");
+        read.Should().NotContainKey((1, 11, 2));
+        AlignedWords.HebrewLettered(new ProductTexts(_store)["LXX"], hebrew).Should().Equal(VerseKey.Parse("1.1:3a"));
+        AlignedWords.PlacesLettered(_store, "LXX").Should().BeTrue();
+    }
+
     private Dictionary<(int, int, int), List<AlignmentPipeline.Word>> Read(bool lettered) =>
         AlignedWords.Read(new ProductTexts(_store)["LXX"], AlignmentPipeline.Written, lettered);
 }
