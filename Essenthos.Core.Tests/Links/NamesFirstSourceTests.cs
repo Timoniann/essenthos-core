@@ -66,6 +66,31 @@ public sealed class NamesFirstSourceTests : IDisposable
         Write(store).Should().ContainSingle().Which.From.Should().Be("1.15:2.3", "Lord God is a title rendered word by word");
     }
 
+    /// <summary>
+    /// A creature or a god named by a proper noun is placed like a person (PRB-1769): the Ohienko Bible's «Рагава» of Psalm
+    /// 89:10 had no link to BHSA's רַהַב. A creature the original names by a common noun is weighed and never placed.
+    /// </summary>
+    [Fact]
+    public void A_being_named_by_a_proper_noun_is_placed_and_one_named_by_a_common_noun_is_not()
+    {
+        var store = new ProductStore(_root);
+        Text(store, "DRA", "eng", ("19.89:10", [("Thou", null), ("hast", null), ("humbled", null), ("Rahab", null)]));
+        Text(store, "BHSA", "hbo", ("19.89:10", [("דִכִּאתָ", "דכא"), ("רַהַב", "רַהַב")]));
+        Records(store, ("rahab-sea-monster", "being"));
+        Settled(store, ("19.89:10.2", "rahab-sea-monster"));
+        Consensus(store, "DRA", ("19.89:10.4", "rahab-sea-monster"));
+
+        Write(store).Should().ContainSingle().Which.Should().Match<MappingRow>(row => row.From == "19.89:10.4" && row.To == "19.89:10.2");
+
+        Text(store, "DRA", "eng", ("19.22:21", [("the", null), ("unicorns", null)]));
+        Text(store, "BHSA", "hbo", ("19.22:21", [("רֵמִים", null)]));
+        Records(store, ("reem", "being"));
+        Settled(store, ("19.22:21.1", "reem"));
+        Consensus(store, "DRA", ("19.22:21.2", "reem"));
+
+        Write(store).Should().BeEmpty("a common noun is weighed and never placed");
+    }
+
     [Fact]
     public void A_pair_whose_translation_has_no_consensus_file_refuses_to_run()
     {
