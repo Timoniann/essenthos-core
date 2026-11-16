@@ -1078,8 +1078,8 @@ asher	nominative	Асир	model-reading	1	read from Scripture by claude-sonnet-5
 asher-2	genitive	Асира	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
 asher-2	locative	Асирі	model-reading	1	declined by GPT-6 (Codex), asked 2026-10-04	\N
 asher-2	nominative	Асир	model-reading	1	declined by claude-sonnet-5, asked 2026-09-10	\N
-asherites	genitive	асирців	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12 (PRB-1570, PRB-1602)	\N
-asherites	nominative	асирці	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12 (PRB-1570, PRB-1602)	\N
+asherites	genitive	асирців	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12	\N
+asherites	nominative	асирці	manual	\N	Essenthos: read against the verses each note and name rests on by claude-opus-5-5 on 2026-11-12	\N
 ashhur	genitive	Ашхура	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#ce1a57801614b7e5
 ashhur	nominative	Ашхур	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-06	batch-0055.jsonl#ce1a57801614b7e5
 ashkelon	genitive	Ашкелону	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	reask-0012.jsonl#461b7ad99fa74843
@@ -8676,9 +8676,9 @@ ramah-3	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet
 ramah-4	genitive	Рами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
 ramah-4	locative	Рамі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
 ramah-4	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
-ramah-6	genitive	Рамат-Неґеву	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
-ramah-6	locative	Рамат-Неґеві	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
-ramah-6	nominative	Рамат-Неґев	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
+ramah-6	genitive	Рамат-Неґеву	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12	\N
+ramah-6	locative	Рамат-Неґеві	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12	\N
+ramah-6	nominative	Рамат-Неґев	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12	\N
 ramah-8	genitive	Рами	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd
 ramah-8	locative	Рамі	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd
 ramah-8	nominative	Рама	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd

@@ -33,3 +33,16 @@ The project's own README adds:
 
 `link.source` on every link from this file names the project rather than this filename, so
 a reader asking where a claim came from is answered with a source and not a path.
+
+# BHS-with-Strong-no-extended.csv
+
+From the same **Open Hebrew Bible Project** by **Eliran Wong**, under the same CC BY-NC 4.0 licence
+quoted above (the project README's licence section covers every work in the repository, and the BHS
+text in it stays under ETCBC's own strictly non-commercial terms). Taken from
+`002-BHS-with-Strong-no/BHS-with-Strong-no-extended.csv`; the file here is byte for byte the one at
+commit 28ae9b2b (git blob hash compared on 2026-11-16). One row per BHSA word: the word, its
+`E`-numbered BHSA word id and its Strong number, extended numbers included.
+
+**It is read by no code and nothing of it is served.** `build/licences.tsv` declares it `never`, so
+no product may read it. It is kept as the candidate a Strong number per Hebrew word could be taken
+from, and would be credited to the project and to Eliran Wong if it ever is.

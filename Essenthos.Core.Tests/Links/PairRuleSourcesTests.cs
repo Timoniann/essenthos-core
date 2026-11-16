@@ -43,23 +43,6 @@ public sealed class PairRuleSourcesTests : IDisposable
             row.From == "1.1:1.3" && row.To == "1.1:1.2" && row.Method == MappingMethods.Possessive && row.Confidence == 0.8);
     }
 
-    [Fact]
-    public void The_names_of_a_verse_no_link_joins_are_paired_where_nothing_states_the_translation_s_name()
-    {
-        var store = new ProductStore(_root);
-        Plain(store, "ASV", "eng", "translation", ("1.12:4", ["So", "Abram", "went"]), ("1.12:5", ["And", "Abram", "took"]));
-        Text(store, "BHSA", "hbo", "critical-edition",
-            ("1.12:4", [("וַיֵּלֶךְ", null), ("אַבְרָם", """{"pos": "nmpr", "consonantal": "אברם"}""")]),
-            ("1.12:5", [("וַיִּקַּח", null), ("אַבְרָם", """{"pos": "nmpr", "consonantal": "אברם"}""")]));
-        Method(store, "ASV-BHSA", MappingMethods.Composed, Row("1.12:4.3", "1.12:4.1"), Row("1.12:5.3", "1.12:5.1"));
-        Method(store, "ASV-BHSA", MappingMethods.Stated, Row("1.12:5.2", "1.12:5.1"));
-
-        var rows = Write(store, "ASV-BHSA", MappingMethods.NameList);
-
-        rows.Should().ContainSingle("a name another method answers for is left to it").Which.Should().Match<MappingRow>(row =>
-            row.From == "1.12:4.2" && row.To == "1.12:4.2" && row.Method == MappingMethods.NameList && row.Confidence == 0.9);
-    }
-
     private static List<MappingRow> Write(ProductStore store, string pair, string method)
     {
         var outcome = PairSources.Write(new ProductTexts(store), method, pair, force: true, _ => { });

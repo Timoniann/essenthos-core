@@ -35,10 +35,12 @@ CC BY-SA 4.0 from the Door43 licence file. They are not reconcilable from here, 
 bible4u's is the least supported of the three: it names no translator, no date and no
 rights holder for a translation that has all three.
 
-RUL-0105 says to believe the statement closest to the bytes and to take the most
-restrictive one actually attached to them. For **UKR** that reading is unresolved and is
-the open question on it; it is recorded here so that a reader of `UKR.xml` finds the
-contradiction beside the file rather than in a folder three directories away.
+RUL-0105 says to take the most restrictive statement actually attached to the bytes. For **UKR**
+that question is settled (PRB-0325): the Ohienko translation is served under **CC BY-SA 4.0**, the one
+grant there is, given through Wikimedia VRT (ticket 2013112610015211) for printings before 1991. Our
+copy was shown by its orthography to be such a printing, and the owner kept the text under that licence. The text's own
+declaration (`Bible4uTextSource`) carries it, with the credit and the share-alike term, and the
+`<rights>` line above is recorded only as what this file says of itself.
 
 **KJV** is out of copyright in its text; the typesetting of this particular XML is what
 bible4u's line covers. **RUSV**, the Russian Synodal Version of 1876, is likewise out of

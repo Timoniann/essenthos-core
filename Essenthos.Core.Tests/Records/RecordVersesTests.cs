@@ -224,11 +224,21 @@ public sealed class RecordVersesTests : IDisposable
             + "decisions, a word carrying each through another word, and two men are nobody");
     }
 
+    [Fact]
+    public void AGodTheWordsNameIsListedAtTheirVersesApartFromTheManOfItsName()
+    {
+        var store = Store(
+            Name("7.2:13.4", "baal-god", "name", "manual"),
+            Name("13.5:5.3", "baal", "name", "strong-number", 0.99));
+
+        Rows(store).Select(r => (r[0], r[1])).Should().Equal(("baal", "13.5:5"), ("baal-god", "7.2:13"));
+    }
+
     private ProductStore Store(params ProjectedName[] names)
     {
         var store = new ProductStore(_root);
         Write(store, "records/records",
-            Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
+            Record("anamim", "people", "Anamim"), Record("anointed", "title"), Record("baal-god", "being", "Baal"), Record("baal", "person", "Baal"), Record("azazel", "term"), Record("boaz", "person"), Record("boaz-pillar", "object"),
             Record("jachin-pillar", "object"), Record("dathan", "person"), Record("david", "person"), Record("ham", "person"), Record("izhar", "person"), Record("korah", "person"),
             Record("levi", "person"), Record("levites", "people", "Levites"), Record("mizraim", "person"), Record("moses", "person"),
             Record("absalom", "person"), Record("nathan", "person"), Record("yhvh", "person"));

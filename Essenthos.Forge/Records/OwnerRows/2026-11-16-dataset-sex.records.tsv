@@ -1,5 +1,5 @@
 # producer   by hand: the dataset's male stored for 58 of the 72 persons PRB-1412 listed, where the verses naming them do not contradict it, applied by forge owner-rows
-# by         Essenthos: the project owner's ruling of 2026-11-16 on PRB-1412 (take the dataset's sex where the text does not contradict it, review the rest), each person read against the verses that name him by claude-opus-5-5 on 2026-11-16
+# by         Essenthos: the project owner's ruling of 2026-11-16 (take the dataset's sex where the text does not contradict it, review the rest), each person read against the verses that name him by claude-opus-5-5 on 2026-11-16
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on. Left for review: death, legion, antichrist, theangelofthelord, thecaptainofthehostofthelord, princeofgreece, princeofthekingdomofpersia, amon-3, etam, meunim, nebo, gibbar, magbish, senaah.
 entry	product	op	record	values	why
 PRB-1412	records/records	amend	adin	{"sex": "male"}	BibleData says male and the text agrees: Ezra 8:6 the sons of Adin, a forefather's house of the return

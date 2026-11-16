@@ -325,8 +325,9 @@ internal static class ChapterReading
             })
             .ToListAsync(cancellationToken);
 
+        var witnesses = own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached);
         return new Reached(
-            own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached),
+            witnesses,
             strongest,
             absent,
             marked
@@ -351,7 +352,160 @@ internal static class ChapterReading
                     group => (IReadOnlyList<WordRoleResponse>)[.. group
                         .OrderBy(row => row.Person, StringComparer.Ordinal).ThenBy(row => row.Occupation, StringComparer.Ordinal)
                         .Select(row => new WordRoleResponse(row.Occupation, row.Category, row.Person))]),
+            Referents = await Referents(db, witnesses, cancellationToken),
         };
+    }
+
+    /// <summary>How many words a chain of references back is followed through before it is given up.</summary>
+    private const int ReferenceSteps = 8;
+
+    /// <summary>The source's classes of word a chain of references is followed through: a pronoun, an article standing for one.</summary>
+    private static readonly HashSet<string> Referring = new(StringComparer.Ordinal) { "pron", "det" };
+
+    /// <summary>
+    /// The records each word refers to: through every witness word it is or reaches that refers back to another word
+    /// (<see cref="WordReferent"/>), the record that word names. A word referred to that names nobody and is itself a pronoun
+    /// (by the same source's class of it) is followed to its own reference, as far as <see cref="ReferenceSteps"/>.
+    /// <para>
+    /// All or nothing: where any word referred to ends nowhere (a noun naming nobody, <em>the council</em>, or only a title),
+    /// the word is given no record at all, since <em>us</em> shown as Paul alone, when the source says Paul and the Romans,
+    /// is wrong. A noun the source gives a reference to is not a word standing for a person and is given none. Several
+    /// records where the source refers to several words that all name one. A word naming a title and its bearer (Χριστοῦ)
+    /// gives the bearer. It is not a name: the word does not name the record, it stands for a word that does.
+    /// </para>
+    /// </summary>
+    private static async Task<Dictionary<long, IReadOnlyList<ReferentResponse>>> Referents(
+        AppDbContext db,
+        ILookup<long, long> witnesses,
+        CancellationToken cancellationToken)
+    {
+        var direct = new Dictionary<long, List<(long Referent, string Source)>>();
+        var asked = new HashSet<long>();
+        var frontier = witnesses.SelectMany(group => group).Distinct().ToList();
+        for (var step = 0; step < ReferenceSteps && frontier.Count > 0; step++)
+        {
+            asked.UnionWith(frontier);
+            var rows = await db.WordReferents
+                .Where(r => frontier.Contains(r.WordId))
+                .OrderBy(r => r.Id)
+                .Select(r => new { r.WordId, r.ReferentWordId, r.Source })
+                .ToListAsync(cancellationToken);
+            foreach (var row in rows)
+            {
+                (direct.TryGetValue(row.WordId, out var list) ? list : direct[row.WordId] = []).Add((row.ReferentWordId, row.Source));
+            }
+
+            frontier = [.. rows.Select(r => r.ReferentWordId).Where(id => !asked.Contains(id)).Distinct()];
+        }
+
+        if (direct.Count == 0)
+        {
+            return [];
+        }
+
+        var referred = direct.Values.SelectMany(list => list.Select(r => r.Referent)).Distinct().ToList();
+        var named = await Annotations.AllOf(db, referred, cancellationToken);
+        var surfaces = await db.Words
+            .Where(w => referred.Contains(w.Id))
+            .Select(w => new { w.Id, w.Surface })
+            .ToDictionaryAsync(w => w.Id, w => w.Surface, cancellationToken);
+        var sources = direct.Values.SelectMany(list => list.Select(r => r.Source)).Distinct().ToList();
+        var classed = direct.Keys.Concat(referred).Concat(witnesses.SelectMany(group => group)).Distinct().ToList();
+        var parsings = await db.WordParsings
+            .Where(p => classed.Contains(p.WordId) && sources.Contains(p.Source))
+            .Select(p => new { p.WordId, p.Morphology })
+            .ToListAsync(cancellationToken);
+        var classes = new Dictionary<long, string>();
+        foreach (var parsing in parsings)
+        {
+            if (parsing.Morphology.RootElement.TryGetProperty("class", out var value) && value.GetString() is { } kind)
+            {
+                classes[parsing.WordId] = kind;
+            }
+        }
+
+        var people = named
+            .Select(pair => (pair.Key, Card: pair.Value.FirstOrDefault(c => c.Role != WordEntityRoles.Title)))
+            .Where(pair => pair.Card is not null)
+            .ToDictionary(pair => pair.Key, pair => pair.Card!);
+        var answers = new Dictionary<long, IReadOnlyList<ReferentResponse>>();
+        foreach (var group in witnesses)
+        {
+            var found = new List<ReferentResponse>();
+            // A word rendering the pronoun together with another word the source reads (відповів for λέγει αὐτῷ) is not the pronoun.
+            var whole = group.All(witness => direct.ContainsKey(witness) || !classes.ContainsKey(witness));
+            foreach (var witness in group.Distinct().Order().Where(direct.ContainsKey))
+            {
+                if (!whole || ReferredTo(direct, people, classes, witness) is not { } reached)
+                {
+                    whole = false;
+                    break;
+                }
+
+                foreach (var (referent, source) in reached)
+                {
+                    var card = people[referent];
+                    if (found.All(f => f.Slug != card.Slug))
+                    {
+                        found.Add(new ReferentResponse(card.Type, card.Slug, surfaces.GetValueOrDefault(referent) ?? "", source));
+                    }
+                }
+            }
+
+            if (whole && found.Count > 0)
+            {
+                answers[group.Key] = found;
+            }
+        }
+
+        return answers;
+    }
+
+    /// <summary>
+    /// The words naming a person that one word refers to, nearest first, each with the source of the step that reached it; null
+    /// where the word is a noun, or where any branch of its references ends at a word naming nobody that is no pronoun.
+    /// </summary>
+    private static List<(long Referent, string Source)>? ReferredTo(
+        Dictionary<long, List<(long Referent, string Source)>> direct,
+        Dictionary<long, EntityRefResponse> people,
+        Dictionary<long, string> classes,
+        long word)
+    {
+        if (classes.GetValueOrDefault(word) == "noun")
+        {
+            return null;
+        }
+
+        var reached = new List<(long, string)>();
+        var seen = new HashSet<long> { word };
+        var queue = new Queue<(long Word, int Step)>([(word, 0)]);
+        while (queue.Count > 0)
+        {
+            var (at, step) = queue.Dequeue();
+            foreach (var (referent, source) in direct.GetValueOrDefault(at) ?? [])
+            {
+                if (!seen.Add(referent))
+                {
+                    continue;
+                }
+
+                if (people.ContainsKey(referent))
+                {
+                    reached.Add((referent, source));
+                }
+                else if (step + 1 < ReferenceSteps && direct.ContainsKey(referent)
+                         && classes.TryGetValue(referent, out var kind) && Referring.Contains(kind))
+                {
+                    queue.Enqueue((referent, step + 1));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        return reached;
     }
 
     /// <summary>
@@ -440,6 +594,13 @@ internal static class ChapterReading
 
         /// <summary>For each word naming a person's occupation in a verse that says it, whose and which.</summary>
         public Dictionary<long, IReadOnlyList<WordRoleResponse>> Roles { get; init; } = [];
+
+        /// <summary>
+    /// For each word that is, or renders, a word referring back to another, the records that word names. A word that names a
+    /// record itself is given none (<see cref="Word"/>): a translation that writes the name has said it, and a name linked
+    /// together with a pronoun (<em>Jesus</em> of "Jesus answered him") is not the pronoun.
+    /// </summary>
+        public Dictionary<long, IReadOnlyList<ReferentResponse>> Referents { get; init; } = [];
     }
 
     private sealed record GlossWanted(
@@ -824,6 +985,7 @@ internal static class ChapterReading
             GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
             Attached = counterparts.Attached.GetValueOrDefault(id),
             Roles = counterparts.Roles.GetValueOrDefault(id),
+            Referents = counterparts.Named.ContainsKey(id) ? null : counterparts.Referents.GetValueOrDefault(id),
             Break = opening is { } kind ? EnumSpelling.Of(kind) : null,
             Entities = counterparts.Named.GetValueOrDefault(id) ?? [],
         };

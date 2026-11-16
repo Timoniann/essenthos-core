@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Security.Cryptography;
 using System.Text;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
@@ -25,7 +26,7 @@ namespace Essenthos.Core.Build;
 /// </summary>
 internal sealed class PaneInputs
 {
-    public const int Version = 2;
+    public const int Version = 3;
 
     /// <summary>The record files a pane reads, and the one column each names its record by.</summary>
     internal static readonly (string Product, string Column)[] RecordFiles =
@@ -38,6 +39,11 @@ internal sealed class PaneInputs
     internal const string PersonOccupations = "records/facts/person-occupations";
 
     internal const string OccupationWords = "records/derived/occupation-words";
+
+    /// <summary>The text whose words refer back to others (<c>tables/word_referent</c>), and whose names on the words referred to a pane reads.</summary>
+    internal const string ReferringText = "NESTLE1904";
+
+    internal static readonly string Referents = TableProducts.Product("word_referent");
 
     /// <summary>Every record file among a pane's inputs, which the key reads by row rather than whole.</summary>
     internal static readonly string[] RecordProducts = [.. RecordFiles.Select(f => f.Product), Occupations, PersonOccupations, OccupationWords];
@@ -176,10 +182,13 @@ internal sealed class PaneInputs
         }
 
         inputs._records = RecordRows.Read(store);
+        inputs._referents = ReferentSlices.Read(store);
         return inputs;
     }
 
     private RecordRows _records = RecordRows.Empty;
+
+    private ReferentSlices _referents = ReferentSlices.Empty;
 
     /// <summary>
     /// The key of every pane of the text at the chapters given: the text's whole inputs that are not read by row
@@ -189,6 +198,7 @@ internal sealed class PaneInputs
     {
         var slices = _texts[text];
         var whole = Whole(inputs);
+        var referring = inputs.Any(i => ProductOf(i.Path) == Referents);
         var chapters = new Dictionary<(int, int), byte[]>();
         var keys = new Dictionary<(int, int), string>();
         Span<byte> ints = stackalloc byte[20];
@@ -205,7 +215,7 @@ internal sealed class PaneInputs
                 hash.AppendData(ints);
                 if (!chapters.TryGetValue((book, chapter), out var key))
                 {
-                    chapters[(book, chapter)] = key = Chapter(slices, whole, (book, chapter));
+                    chapters[(book, chapter)] = key = Chapter(slices, whole, (book, chapter), referring);
                 }
 
                 hash.AppendData(key);
@@ -240,15 +250,22 @@ internal sealed class PaneInputs
         return dot > name.LastIndexOf('/') ? name[..dot] : name;
     }
 
-    private byte[] Chapter(Slices slices, byte[] whole, (int, int) chapter)
+    private byte[] Chapter(Slices slices, byte[] whole, (int, int) chapter, bool referring)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         hash.AppendData(whole);
         Part(hash, "links", slices.Links.GetValueOrDefault(chapter));
         Part(hash, "names", slices.Names.GetValueOrDefault(chapter));
         Part(hash, "occupation-words", slices.OccupationWords.GetValueOrDefault(chapter));
+        IEnumerable<string> records = slices.Records.GetValueOrDefault(chapter) ?? [];
+        if (referring && _referents.Chapters.TryGetValue(chapter, out var referred))
+        {
+            Part(hash, "referents", referred.Digest);
+            records = records.Union(referred.Records, StringComparer.Ordinal).Order(StringComparer.Ordinal);
+        }
+
         hash.AppendData("records\n"u8);
-        foreach (var record in slices.Records.GetValueOrDefault(chapter) ?? [])
+        foreach (var record in records)
         {
             hash.AppendData(Encoding.UTF8.GetBytes(record + "\n"));
             foreach (var file in _records.Files)
@@ -480,6 +497,127 @@ internal sealed class PaneInputs
         }
 
         public byte[] Copy(string?[] row) => Of(row).ToArray();
+    }
+
+    /// <summary>
+    /// Per canonical chapter, what the references back of <see cref="ReferringText"/>'s words standing there reach: each referring
+    /// word, every word its chain of references reaches (<see cref="ReferenceSteps"/>, whether or not the word names anybody,
+    /// so a name newly given to a word on the way moves the key), and the projected names on those words, with the records they
+    /// name. A chapter of a text paired with that text reads them, as <see cref="ChapterReading"/> does through its links.
+    /// </summary>
+    private sealed record ReferentSlices(Dictionary<(int, int), (byte[] Digest, SortedSet<string> Records)> Chapters)
+    {
+        private const int ReferenceSteps = 8;
+
+        public static readonly ReferentSlices Empty = new([]);
+
+        public static ReferentSlices Read(ProductStore store)
+        {
+            if (!store.Exists(Referents) || !store.Exists(NameProducts.Projected(ReferringText)))
+            {
+                return Empty;
+            }
+
+            var table = WordIdTable.For(store);
+            var keys = new Dictionary<long, WordKey>();
+            foreach (var key in WordIdCollisions.Keys(store, ReferringText))
+            {
+                keys[table.Of(key)] = key;
+            }
+
+            var direct = new Dictionary<WordKey, List<WordKey>>();
+            using (var reader = store.Open(Referents))
+            {
+                var columns = reader.Columns.Select(c => c.Name).ToList();
+                var (word, referent) = (Column(columns, "word_id", Referents), Column(columns, "referent_word_id", Referents));
+                foreach (var row in reader.Rows())
+                {
+                    if (keys.TryGetValue(long.Parse(row[word]!), out var from) && keys.TryGetValue(long.Parse(row[referent]!), out var to))
+                    {
+                        (direct.TryGetValue(from, out var list) ? list : direct[from] = []).Add(to);
+                    }
+                }
+            }
+
+            var names = new Dictionary<string, (List<byte[]> Rows, List<string> Records)>(StringComparer.Ordinal);
+            using (var reader = store.Open(NameProducts.Projected(ReferringText)))
+            {
+                var columns = reader.Columns.Select(c => c.Name).ToList();
+                var (own, record) = (Column(columns, "own", ReferringText), Column(columns, "record", ReferringText));
+                var bytes = new RowBytes();
+                foreach (var row in reader.Rows())
+                {
+                    var entry = names.TryGetValue(row[own]!, out var held) ? held : names[row[own]!] = ([], []);
+                    entry.Rows.Add(bytes.Copy(row));
+                    entry.Records.Add(row[record]!);
+                }
+            }
+
+            var frame = FrameChapters.Read(store, ReferringText);
+            var byChapter = new Dictionary<(int, int), List<WordKey>>();
+            foreach (var from in direct.Keys)
+            {
+                foreach (var chapter in frame.Of(from.Verse.ToString()))
+                {
+                    (byChapter.TryGetValue(chapter, out var list) ? list : byChapter[chapter] = []).Add(from);
+                }
+            }
+
+            var chapters = new Dictionary<(int, int), (byte[], SortedSet<string>)>();
+            foreach (var (chapter, referring) in byChapter)
+            {
+                using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+                var records = new SortedSet<string>(StringComparer.Ordinal);
+                foreach (var from in referring.Order())
+                {
+                    hash.AppendData(Encoding.UTF8.GetBytes(from.Own + "\n"));
+                    foreach (var reached in Reached(direct, from))
+                    {
+                        hash.AppendData(Encoding.UTF8.GetBytes(reached.Own + "\t"));
+                        if (names.TryGetValue(reached.Own, out var named))
+                        {
+                            named.Rows.ForEach(hash.AppendData);
+                            records.UnionWith(named.Records);
+                        }
+                        else
+                        {
+                            hash.AppendData(Absent);
+                        }
+                    }
+                }
+
+                chapters[chapter] = (hash.GetHashAndReset(), records);
+            }
+
+            return new ReferentSlices(chapters);
+        }
+
+        /// <summary>Every word one word's chain of references reaches, in the order the chain meets them.</summary>
+        private static List<WordKey> Reached(Dictionary<WordKey, List<WordKey>> direct, WordKey word)
+        {
+            var seen = new HashSet<WordKey> { word };
+            var reached = new List<WordKey>();
+            var frontier = new List<WordKey> { word };
+            for (var step = 0; step < ReferenceSteps && frontier.Count > 0; step++)
+            {
+                var next = new List<WordKey>();
+                foreach (var at in frontier)
+                {
+                    foreach (var referent in direct.GetValueOrDefault(at) ?? [])
+                    {
+                        if (seen.Add(referent))
+                        {
+                            reached.Add(referent);
+                            next.Add(referent);
+                        }
+                    }
+                }
+
+                frontier = next;
+            }
+
+            return reached;
+        }
     }
 
     /// <summary>The record files' rows by the record they name, and the occupation files' rows by occupation and by holder.</summary>

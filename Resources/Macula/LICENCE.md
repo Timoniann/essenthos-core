@@ -104,12 +104,20 @@ Taken, into `word_parsing` rows against Nestle 1904 words:
 | `ref`, `xml:id` | read to place the row and then dropped |
 | `text` | read only to check the placement, and then dropped |
 
+Taken, into `word_referent` rows (one per word referred to, both ends Nestle 1904 words, often across a verse):
+
+| column | why |
+|---|---|
+| `referent` | which word a pronoun, a relative or an article standing for a person refers back to; the reader shows the record that word names |
+
 Left where it is, each for a reason and each worth its own piece of work rather than a column
 smuggled in beside a morphology:
 
-- `role`, `frame`, `subjref`, `referent` — semantic role, semantic frame and participant reference.
-  These are claims about clauses and about who *he* is, not about what a word is, and they have no
-  home in a table called `word_parsing`.
+- `role`, `frame` — semantic role and semantic frame. These are claims about clauses, not about
+  what a word is, and they belong beside the syntax trees rather than in `word_parsing`.
+- `subjref` — the subject a verb's clause takes. A translation's words for that verb include the verb
+  itself and any object pronoun, so carrying it to them would put the subject on the wrong words; it
+  waits for a way to tell a translation's subject pronoun apart.
 - `domain`, `ln` — Louw-Nida semantic domains, from MARBLE, which is used by permission.
 - `english`, `mandarin`, `gloss` — three glossing layers from two other publishers, where this
   corpus already carries the Berean glosses on these very words.

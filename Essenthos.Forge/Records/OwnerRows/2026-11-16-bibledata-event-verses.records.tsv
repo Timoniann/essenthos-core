@@ -1,5 +1,5 @@
 # producer   by hand: three BibleData events placed at the verse they quote, not the miscited one their description repeats (PRB-1682), applied by forge owner-rows
-# by         Essenthos: each event's quotation read against the verse it cites and the verse it quotes (ASV word overlap over every cited BibleData event, then read by hand), by claude-opus-5-5 on 2026-11-16, on the project owner's instruction of 2026-11-16 to fix PRB-1682
+# by         Essenthos: each event's quotation read against the verse it cites and the verse it quotes (ASV word overlap over every cited BibleData event, then read by hand), by claude-opus-5-5 on 2026-11-16, on the project owner's instruction of 2026-11-16
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1682	external/bibledata/events	amend	judahwalkswaydavidsolomonbegin	{"ref": "14.11:17"}	the description quotes 2 Chronicles 11:17 (Judah walked three years in the way of David and Solomon) and cites 2CH 11:7, a verse of Rehoboam's fortified cities; the event's ref repeated the miscitation

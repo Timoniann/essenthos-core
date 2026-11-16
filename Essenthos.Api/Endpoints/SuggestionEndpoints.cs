@@ -225,7 +225,7 @@ internal static class SuggestionEndpoints
     };
 
     /// <summary>The kinds of record the encyclopedia addresses, as its routes spell them.</summary>
-    private static readonly string[] RecordKinds = ["person", "place", "people", "term", "title", "object", "observance"];
+    private static readonly string[] RecordKinds = ["person", "place", "people", "term", "title", "object", "observance", "being"];
 
     private static readonly Regex Slug = new("^[a-z0-9][a-z0-9-]*$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 

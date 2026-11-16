@@ -123,7 +123,7 @@ internal static class MappingFiles
 
         return new MappingMerge.Input(
             pair, fromText, toText, rows, rulings, hashes, manifests, ordinal, folds, CurrentFolds(store), Frames(store, pair, fromText, toText), remade, producers,
-            yielded, Floors: HandFloors.Read(store, pair));
+            yielded, Floors: HandFloors.Read(store, pair), Words: RenderingWords.Read(store, fromText));
     }
 
     /// <summary>
@@ -256,7 +256,7 @@ internal static class MappingFiles
             : null;
 
     /// <summary>
-    /// What a pair's final is made from: its method files, its rulings and hashes, and the two texts' manifests and frames where they
+    /// What a pair's final is made from: its method files, its rulings and hashes, the two texts' manifests and frames and its first text's words where they
     /// exist; and the same of the pair the other way round, where there is one.
     /// </summary>
     private static IReadOnlyList<ProductInput> Inputs(ProductStore store, string pair, List<string> methods, string fromText, string toText,
@@ -273,7 +273,9 @@ internal static class MappingFiles
             .Append(VerseManifestRow.ProductOf(fromText))
             .Append(VerseManifestRow.ProductOf(toText))
             .Append(Loading.Frame.FrameFile.Product(fromText))
-            .Append(Loading.Frame.FrameFile.Product(toText));
+            .Append(Loading.Frame.FrameFile.Product(toText))
+            .Append(TextWord.ProductOf(fromText))
+            .Concat(reverse is not null ? [TextWord.ProductOf(toText)] : []);
         return [.. products.Select(store.Find).OfType<string>().Select(store.Input)];
     }
 

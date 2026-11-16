@@ -127,7 +127,7 @@ public sealed class NamesProjectionTests : IDisposable
         {
             writer.WriteAll([
                 Link(3, "2.3:4.5", "2.3:4.3", 0.85),
-                Link(5, "2.3:4.8", "2.3:4.5", 0.85) with { Method = MappingMethods.NameList },
+                Link(5, "2.3:4.8", "2.3:4.5", 0.85) with { Method = "name-list" },
             ]);
         }
 
@@ -138,7 +138,7 @@ public sealed class NamesProjectionTests : IDisposable
         names.Names.Select(n => (n.Own.Own, n.Record)).Should().BeEquivalentTo([(Key(5), "moses")], "an aligner's 0.85 clears 0.7");
         names.Refused.Should().Contain(new KeyValuePair<(string, string), string>((Key(8), "aaron"), "below-the-floor"),
             "a name-list link needs 0.9");
-        new NameRules(NameRules.Seed()).FloorOver(MappingMethods.NameList).Should().Be(0.9);
+        new NameRules(NameRules.Seed()).FloorOver("name-list").Should().Be(0.9);
         new NameRules(NameRules.Seed()).FloorOver(MappingMethods.Composed).Should().Be(0.7);
     }
 

@@ -25,7 +25,7 @@ AmericanStandard1901	strong	never	No licence stated	unknown	-	AmericanStandard19
 BasicEnglish	text	content	Public Domain	public-domain	text:BBE	BasicEnglish/LICENCE.md	-	Public domain in the United States only; the owner chose to serve it on 2026-09-24.
 BasicEnglish	strong	never	No licence stated	unknown	-	BasicEnglish/LICENCE.md	-	The reader refuses the tags (StrongTagging.IsWordLevel).
 Berean	text	content	Public Domain	public-domain	text:BSB dataset:berean dataset:berean-interlinear	Berean/LICENCE.md	-	bsb.txt and bsb_tables.tsv, dedicated to the public domain on 2023-04-30.
-Berean/bhsa-words.tsv	data	never	not described	unknown	-	-	-	Lies in the Berean folder, which the BSB text is converted from; no code reads it and its LICENCE.md does not describe it.
+Berean/bhsa-words.tsv	data	never	CC-BY-NC-4.0	non-commercial-only	-	Berean/LICENCE.md	-	BHSA's words per verse, not the Berean Bible's; who made it is not recorded, and it stands under BHSA's terms. No code reads it.
 BetaMasaheft	text	content	CC-BY-SA-4.0	share-alike	text:GEEZ81	BetaMasaheft/LICENCE.md	-	-
 BetaMasaheft	older-editions	content	CC-BY-SA-4.0 with non-commercial transcription notices	non-commercial-only	text:GEEZ81	BetaMasaheft/LICENCE.md	-	15 books transcribed from older editions carry notices that their text may not be sold (RUL-0183).
 BibleData	data	never	CC-BY-4.0	permitted-with-attribution	-	BibleData/LICENCE.md	-	The 2024 release, kept as its only copy; nothing reads it.
@@ -110,7 +110,8 @@ Swete	text	content	CC-BY-SA-4.0	share-alike	text:SWETE text:SWETEOG text:OTTLEY 
 SweteScans	scans	never	Public Domain	public-domain	-	SweteScans/LICENCE.md	-	Read by hand to restore words.
 SynodalStrong	strong	derived	Copyright 1996 Bob Jones University: non-profit use of the work unmodified	prohibited	dataset:bju-synodal-strong	SynodalStrong/LICENCE.md	PRB-0264 TSK-1443	The owner, 2026-09-13 (PRB-0264) and 2026-11-04 (TSK-1443): mapping only, numbers never served; RUSV also takes 209 corrections of letters from it.
 SynodalWikisource	text	content	Public Domain	public-domain	text:*	SynodalWikisource/LICENCE.md	-	-
-TextusReceptus	text	content	Public Domain	public-domain	text:TR1550 text:TR1894 dataset:byztxt	TextusReceptus/LICENCE.md	-	The LICENCE.md describes parsed/; where scrivener/ came from is not recorded.
+TextusReceptus	text	content	Public Domain	public-domain	text:TR1550 text:TR1894 dataset:byztxt	TextusReceptus/LICENCE.md	-	parsed/, Robinson's composite of both editions.
+TextusReceptus/scrivener	data	never	Public Domain	public-domain	-	TextusReceptus/LICENCE.md	-	Robinson's plain Scrivener 1894 (byztxt/greektext-scrivener), the answer key the extraction from parsed/ is checked against; never loaded.
 TheographicBibleData	data	never	no licence file; reported as CC BY-SA 4.0	share-alike	-	OpenBible/LICENCE.md	-	-
 Tischendorf	text	content	Public Domain	public-domain	text:TISCH	Tischendorf/LICENCE.md	-	-
 TreasuryOfScriptureKnowledge	data	content	Public Domain	public-domain	dataset:tsk	TreasuryOfScriptureKnowledge/LICENCE.md	-	-
@@ -133,5 +134,5 @@ bible4u/KJV.xml	text	content	Everyone is permitted to copy, modify and distribut
 bible4u/RUSV.xml	text	content	Everyone is permitted to copy, modify and distribute copies of this document for free as long as it's Biblical content remains unchanged.	permitted	text:RUSV	bible4u/LICENCE.md	-	-
 bible4u/UKR.xml	text	content	CC-BY-SA-4.0	share-alike	text:UBIO	bible4u/LICENCE.md	-	The one grant there is, through Wikimedia VRT for printings before 1991; the owner kept the text under it (PRB-0325).
 etcbc	text	content	CC-BY-NC-4.0	non-commercial-only	text:BHSA	etcbc/LICENCE.md	-	-
-mapping/BHS-with-Strong-no-extended.csv	data	never	not described	unknown	-	mapping/LICENCE.md	-	The LICENCE.md covers only the King James mapping.
+mapping/BHS-with-Strong-no-extended.csv	data	never	CC-BY-NC-4.0	non-commercial-only	-	mapping/LICENCE.md	-	The Open Hebrew Bible's Strong number per BHSA word; a candidate, read by no code.
 mapping/KJV-OT-mapped-to-BHS-full-mapping.csv	alignment	content	CC-BY-NC-4.0	non-commercial-only	dataset:openhebrewbible	mapping/LICENCE.md	-	The stated links between the King James and the Hebrew, and the italics of the King James Old Testament.

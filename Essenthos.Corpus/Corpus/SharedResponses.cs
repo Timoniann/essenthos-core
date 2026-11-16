@@ -363,7 +363,20 @@ internal record TextWordResponse(
     /// is Luke's. Null for a word that names none, which is nearly every word.
     /// </summary>
     public IReadOnlyList<WordRoleResponse>? Roles { get; init; }
+
+    /// <summary>
+    /// The records this word refers to without naming them: <em>him</em> of Mark 5:6 renders the αὐτόν that refers back to
+    /// Ἰησοῦν, and so stands for Jesus. Said by a source of the original's word and carried to the words rendering it. Not a
+    /// name, and never on a word that names a record itself. Null for nearly every word.
+    /// </summary>
+    public IReadOnlyList<ReferentResponse>? Referents { get; init; }
 }
+
+/// <param name="Type">The record's kind, as <see cref="EntityRefResponse.Type"/> spells it.</param>
+/// <param name="Slug">The record.</param>
+/// <param name="Word">The word of the original referred to, as its edition prints it.</param>
+/// <param name="Source">Who says the word refers to it.</param>
+internal record ReferentResponse(string Type, string Slug, string Word, string Source);
 
 /// <param name="Occupation">The occupation's slug: <c>physician</c>.</param>
 /// <param name="Category"><c>trade</c>, <c>office</c>, <c>military_role</c>, <c>religious_role</c>, <c>heavenly_role</c> or <c>designation</c>.</param>

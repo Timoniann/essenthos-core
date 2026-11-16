@@ -1,4 +1,5 @@
 using Essenthos.Core.Build;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Names;
@@ -69,6 +70,54 @@ public sealed class PaneInputsTests : IDisposable
         paneInputs.Keys("KJV", [inputs[0], inputs[1] with { Sha256 = "cc" }], Chapters).Should().Equal(before);
         paneInputs.Keys("KJV", [inputs[0] with { Sha256 = "dd" }, inputs[1]], Chapters).Values.Should().NotIntersectWith(before.Values);
     }
+
+    /// <summary>
+    /// NESTLE1904 1.3:1.3 refers to 1.3:1.2, which refers to 1.1:1.1 (a chain across chapters). A name given to the word at the
+    /// chain's end moves the chapter where the referring words stand, for a text that reads the references, and no other.
+    /// </summary>
+    [Fact]
+    public void ANameOnAWordReferredToMovesTheChapterOfTheWordsReferringToIt()
+    {
+        var store = Store();
+        Nestle(store, null);
+        var referring = new List<ProductInput> { new($"Essenthos/{PaneInputs.Referents}.essx", "aa") };
+        var before = PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", referring, Chapters);
+        var unread = PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", [], Chapters);
+
+        Nestle(store, "adam");
+        Moved(before, PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", referring, Chapters)).Should().Equal([(1, 3)]);
+        PaneInputs.Read(store, ["KJV"], Pairs, 2).Keys("KJV", [], Chapters).Should().Equal(unread);
+    }
+
+    private static void Nestle(ProductStore store, string? named)
+    {
+        const string nestle = PaneInputs.ReferringText;
+        var keys = new[] { "1.1:1.1", "1.3:1.1", "1.3:1.2", "1.3:1.3" }.Select(k => WordKey.Parse(k, nestle)).ToList();
+        if (!store.Exists(TextWord.ProductOf(nestle)))
+        {
+            using var words = store.Create(TextWord.ProductOf(nestle), ProductKind.Machine, TextWord.Schema(nestle), "test", []);
+            words.WriteAll(keys.Select(key => new TextWord(key, "λόγος", " ", null, null, null, null, null, null, false, null, null, null)));
+            words.Complete();
+
+            var ids = WordIdTable.For(store);
+            using var referents = store.Create(PaneInputs.Referents, ProductKind.Machine, ReferentSchema, "test", []);
+            referents.Write([ids.Of(keys[3]).ToString(), ids.Of(keys[2]).ToString()]);
+            referents.Write([ids.Of(keys[2]).ToString(), ids.Of(keys[0]).ToString()]);
+            referents.Complete();
+        }
+
+        using var names = store.Create(NameProducts.Projected(nestle), ProductKind.Machine, ProjectedName.Schema(nestle), "test", []);
+        names.Write(new ProjectedName(keys[1], "jubal", "name", "settled", null, "strong-number", null, "test"));
+        if (named is not null)
+        {
+            names.Write(new ProjectedName(keys[0], named, "name", "settled", null, "strong-number", null, "test"));
+        }
+
+        names.Complete();
+    }
+
+    private static readonly ProductSchema<string?[]> ReferentSchema = new ProductSchema<string?[]>()
+        .OptionalText("word_id", row => row[0]).OptionalText("referent_word_id", row => row[1]).Reads(row => row.ToTexts());
 
     private ProductStore Store()
     {

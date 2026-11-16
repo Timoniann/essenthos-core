@@ -27,8 +27,8 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
 
     /// <summary>
     /// Verses the Masoretic numbers and the Samaritan does not: Exodus 30:1-10, which this
-    /// tradition sets after Exodus 26:35, and Deuteronomy 34:2-3, which it writes into 34:1. No
-    /// link is written for either, because the words are elsewhere rather than absent.
+    /// tradition sets after Exodus 26:35, and Deuteronomy 34:2-3, whose bounds its 34:1 gives
+    /// otherwise. Neither is aligned verse by verse: the first is placed where the Samaritan writes it.
     /// </summary>
     private const int MasoreticOnlyVerses = 12;
 

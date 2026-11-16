@@ -27,19 +27,20 @@ internal sealed record VerseLinkRow(string From, string To, string Relation, str
             MappingText.Confidence(row.TextOrNull(4)), row.Text(5), row.TextOrNull(6)));
 }
 
-/// <summary>A text's verses in print order, each with the frame addresses it stands at, the first its primary one.</summary>
+/// <summary>
+/// A text's verses in print order, each with the frame addresses it stands at, the first its primary one; an address a verse
+/// only parks on is not among them (<see cref="FrameRow.Verses"/>).
+/// </summary>
 internal sealed class TextFrame
 {
     public TextFrame(
         string slug,
         IReadOnlyList<VerseKey> verses,
-        IReadOnlyDictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> addresses,
-        IReadOnlySet<(VerseKey Verse, (int Book, int Chapter, int Verse) Address)>? parked = null)
+        IReadOnlyDictionary<VerseKey, IReadOnlyList<(int Book, int Chapter, int Verse)>> addresses)
     {
         Slug = slug;
         Verses = verses;
         Addresses = addresses;
-        Parked = parked ?? new HashSet<(VerseKey, (int, int, int))>();
         Index = verses.Select((verse, i) => (verse, i)).ToDictionary(v => v.verse, v => v.i);
     }
 
@@ -52,17 +53,9 @@ internal sealed class TextFrame
 
     public IReadOnlyDictionary<VerseKey, int> Index { get; }
 
-    /// <summary>
-    /// The addresses a verse only parks on (<see cref="FrameFile.Parks"/>): the edition has nothing for them, and the verse
-    /// holds other material.
-    /// </summary>
-    public IReadOnlySet<(VerseKey Verse, (int Book, int Chapter, int Verse) Address)> Parked { get; }
-
-    /// <summary>The further addresses a verse covers beyond its primary one, without those it only parks on.</summary>
+    /// <summary>The further addresses a verse covers beyond its primary one.</summary>
     public IEnumerable<(int Book, int Chapter, int Verse)> Covers(VerseKey verse) =>
-        Addresses.TryGetValue(verse, out var addresses)
-            ? addresses.Skip(1).Where(address => !Parked.Contains((verse, address)))
-            : [];
+        Addresses.TryGetValue(verse, out var addresses) ? addresses.Skip(1) : [];
 
     public (int Book, int Chapter, int Verse)? Primary(VerseKey verse) =>
         Addresses.TryGetValue(verse, out var addresses) ? addresses[0] : null;
@@ -77,20 +70,10 @@ internal sealed class TextFrame
         }
 
         var addresses = new Dictionary<VerseKey, IReadOnlyList<(int, int, int)>>(verses.Count);
-        var parked = new HashSet<(VerseKey, (int, int, int))>();
         if (store.Exists(FrameFile.Product(slug)))
         {
             using var reader = store.Open(FrameFile.Product(slug), FrameRow.Schema);
-            var rows = reader.ReadAll();
-            var listed = rows.SelectMany(row => row.Verses()).ToDictionary(verse => verse.Own, verse => verse.Canonical);
-            foreach (var row in rows.Where(row => FrameFile.Parked(row.Relation) > 0))
-            {
-                foreach (var (own, canonical) in row.Verses())
-                {
-                    parked.UnionWith(canonical.TakeLast(FrameFile.Parked(row.Relation)).Select(address => (own, (address.Book, address.Chapter, address.Verse))));
-                }
-            }
-
+            var listed = reader.Rows().SelectMany(row => row.Verses()).ToDictionary(verse => verse.Own, verse => verse.Canonical);
             foreach (var verse in verses)
             {
                 addresses[verse] = listed.TryGetValue(verse, out var canonical)
@@ -99,7 +82,7 @@ internal sealed class TextFrame
             }
         }
 
-        return new TextFrame(slug, verses, addresses, parked);
+        return new TextFrame(slug, verses, addresses);
     }
 }
 

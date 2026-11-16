@@ -84,7 +84,6 @@ builder.Services.AddSingleton<EvidentiaContextGlossIndex>();
 builder.Services.AddScoped<EvidentiaDictionarySenseIndex>();
 builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
 builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();
-builder.Services.AddScoped<NameListPass>();
 builder.Services.AddScoped<NamesFirstPass>();
 builder.Services.AddScoped<PossessivePass>();
 builder.Services.AddScoped<SharedWordPass>();

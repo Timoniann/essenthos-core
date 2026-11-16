@@ -36,6 +36,7 @@ internal static class EnumSpelling
         EntityKind.Title => "title",
         EntityKind.Object => "object",
         EntityKind.Observance => "observance",
+        EntityKind.Being => "being",
         _ => throw Unmapped(value),
     };
 
@@ -48,6 +49,7 @@ internal static class EnumSpelling
         "title" => EntityKind.Title,
         "object" => EntityKind.Object,
         "observance" => EntityKind.Observance,
+        "being" => EntityKind.Being,
         _ => throw Unreadable<EntityKind>(stored),
     };
 

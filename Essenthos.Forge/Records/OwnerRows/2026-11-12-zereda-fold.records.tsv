@@ -1,5 +1,5 @@
 # producer   by hand: Zereda, a record Strong's headword H6868 made over two towns, split between the gazetteer's two Zeredahs and folded into Zeredah of Ephraim (PRB-1418), applied by forge owner-rows
-# by         Essenthos: Zereda, the record Strong's headword H6868 made, read against its two verses by claude-opus-5-5 on 2026-11-12 (PRB-1418): Jeroboam's home in Ephraim (1KI 11:26) is the gazetteer's Zeredah, and the Zeredathah of the Jordan valley (2CH 4:17) is the gazetteer's Zeredah held as another name for Zarethan
+# by         Essenthos: Zereda, the record Strong's headword H6868 made, read against its two verses by claude-opus-5-5 on 2026-11-12: Jeroboam's home in Ephraim (1KI 11:26) is the gazetteer's Zeredah, and the Zeredathah of the Jordan valley (2CH 4:17) is the gazetteer's Zeredah held as another name for Zarethan
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1418	records/facts/clauses	drop	zereda	{"ordinal": 1}	Zereda's clause 'near Succoth' was read from 2CH 4:17, whose word is Zeredathah of the Jordan valley (zeredah-2), which already says it; Zereda itself is folded into Zeredah of Ephraim
