@@ -1,5 +1,5 @@
 # producer   by hand: the word of Isaiah 10:28 that names Aiath moved from the gazetteer's Aija (Nehemiah 11:31) to its Aiath (PRB-1418), applied by forge owner-rows
-# by         Essenthos: the gazetteer's two records of Ai's other names, Aiath (ISA 10:28) and Aija (NEH 11:31), read against their verses by claude-opus-5-5 on 2026-11-12 (PRB-1418): the Isaiah word stood on Aija
+# by         Essenthos: the gazetteer's two records of Ai's other names, Aiath (ISA 10:28) and Aija (NEH 11:31), read against their verses by claude-opus-5-5 on 2026-11-12: the Isaiah word stood on Aija
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1418	records/facts/clauses	drop	aija	{"ordinal": 2}	Aija's clause 'near Migron' was read from ISA 10:28, whose word is the gazetteer's Aiath, which already says it

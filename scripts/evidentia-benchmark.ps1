@@ -367,6 +367,16 @@ function Quoted([string] $argument) {
     if ($argument -match '[\s"]') { '"' + ($argument -replace '"', '\"') + '"' } else { $argument }
 }
 
+# A finished passage's file can stay held for a moment by the closing child or an indexer: retried, and
+# left behind with a warning rather than stopping the sets still to run.
+function RemoveWhenFree([string] $path) {
+    foreach ($attempt in 1..20) {
+        try { Remove-Item -LiteralPath $path -ErrorAction Stop; return }
+        catch { if ($attempt -lt 20) { Start-Sleep -Milliseconds 250 } }
+    }
+    Write-Warning "Could not remove $path; it is still in use."
+}
+
 # A set's passages, at most $Degree at once; each passage's wall seconds, and the set's own under '*'.
 function MeasureSideBySide($set) {
     $seconds = @{}
@@ -387,7 +397,7 @@ function MeasureSideBySide($set) {
             $running.Remove($finished) | Out-Null
             $seconds[$finished.Name] = $finished.Clock.Elapsed.TotalSeconds
             Get-Content -LiteralPath "$($finished.Prefix).errors.txt" | Add-Content -LiteralPath "$($finished.Prefix).report.txt"
-            Remove-Item -LiteralPath "$($finished.Prefix).errors.txt"
+            RemoveWhenFree "$($finished.Prefix).errors.txt"
             if ($finished.Process.ExitCode -ne 0) {
                 $running | ForEach-Object { $_.Process.WaitForExit() }
                 throw "$($finished.Name) failed; see $($finished.Prefix).report.txt"

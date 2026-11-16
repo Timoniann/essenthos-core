@@ -1,5 +1,5 @@
 # producer   by hand: two gazetteer records of a town written twice, folded on the owner's word to put the Ramahs right (PRB-1425): the Ramah of NEH 11:33 into Ramah of Benjamin, the Ramah of 2KI 8:29 and 2CH 22:6 into Ramoth-gilead; applied by forge owner-rows
-# by         Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13 to check the Ramahs again and put them right (PRB-1425)
+# by         Essenthos: the Ramahs of NEH 11:33, 2KI 8:29 and 2CH 22:6 read against their verses by claude-opus-5-5 on 2026-11-13, folded on the project owner's instruction of 2026-11-13
 # One row per row of a file the build reads, applied by forge owner-rows; 'why' is the reading the row rests on.
 entry	product	op	record	values	why
 PRB-1425	records/records	drop	ramah-7	{}	NEH 11:31-35 lists the towns the children of Benjamin lived in after the exile (Geba, Michmash, Aija, Bethel, Anathoth, Nob, Ananiah, Hazor, Ramah, Gittaim ...): its Ramah is Ramah of Benjamin (JOS 18:25), as EZR 2:26 and NEH 7:30 'Ramah and Gaba' already are; the gazetteer itself calls this record another name for Ramah and puts both at er-Ram (ISBE 'Ramah' 3 lists Neh 11:33 under Ramah of Benjamin)

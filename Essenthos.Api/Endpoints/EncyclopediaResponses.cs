@@ -468,9 +468,6 @@ internal record PlacePointResponse(
     public string? Outline { get; init; }
 }
 
-/// <summary>How many of the map's places a chapter names.</summary>
-internal record ChapterPlacesResponse(int Count);
-
 /// <param name="Datasets">
 /// Whose points these are, as declared dataset ids, for the credit a map owes: the gazetteer's, and
 /// every source that gave some of the coordinates.

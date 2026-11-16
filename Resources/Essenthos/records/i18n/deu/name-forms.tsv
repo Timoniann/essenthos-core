@@ -8323,8 +8323,8 @@ ramah-3	nominative	Rama	model-reading	1	read from Scripture by claude-sonnet-5, 
 ramah-4	genitive	Ramas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
 ramah-4	locative	Rama	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
 ramah-4	nominative	Rama	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-10	reask3-0118.jsonl#1238495d13e1b09d
-ramah-6	genitive	Ramaths gegen Mittag	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
-ramah-6	nominative	Ramath gegen Mittag	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12 (PRB-1623)	\N
+ramah-6	genitive	Ramaths gegen Mittag	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12	\N
+ramah-6	nominative	Ramath gegen Mittag	manual	1	Essenthos: the name the base text of the language prints at JOS 19:8, declined by claude-opus-5-5 on 2026-11-12	\N
 ramah-8	genitive	Ramas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd
 ramah-8	nominative	Rama	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0428.jsonl#165c136f6b9cd1dd
 ramah-9	genitive	Ramas	model-reading	1	read from Scripture by claude-sonnet-5, asked 2026-09-09	batch-0429.jsonl#75145dbcf94fd9f3
