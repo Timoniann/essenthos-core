@@ -785,14 +785,14 @@ internal record EntityReferenceBookResponse(BookRefResponse Book, int Count, int
 internal record EntityPlacesResponse(int Total, IList<EntityPlaceResponse> Items);
 
 /// <param name="Group">
-/// <c>story</c> where the place has a role, or a verse of Genesis to Esther, the Gospels, Acts or a
-/// book named after the record (a prophet's own book, Paul's letters for Paul) names it with the
-/// record; <c>other-books</c> where it is only named together with the record in the other books
-/// (wisdom, prophets, letters, Revelation).
+/// <c>story</c> where the place has a role, or a verse that tells what happened where names it with
+/// the record (the narrative books less their poems, oracles and laws, and the narrative episodes of
+/// the prophets, Job and the letters: <c>NarrativePassages.tsv</c>); <c>other-books</c> where it is
+/// only named together with the record elsewhere (psalms, oracles, laws, letters, Revelation).
 /// </param>
 /// <param name="SharedVerses">For a person, the distinct cited evidence verses; otherwise verses naming both records.</param>
 /// <param name="StoryVerses">
-/// For a person, the cited evidence count. For other records, shared verses in books telling a story.
+/// For a person, the cited evidence count. For other records, shared verses that tell what happened where.
 /// </param>
 /// <param name="Verses">The first of those verses, in canonical order; at most as many as asked for.</param>
 /// <param name="Roles">
