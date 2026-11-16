@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Xunit;
 
@@ -122,6 +123,21 @@ public sealed class WordReferentTests : IDisposable
     [Fact]
     public async Task ANameLinkedTogetherWithAPronounIsNotThePronoun() =>
         (await Read(_english, 7)).Referents.Should().BeNull("the word names Legion; the pronoun it is linked with refers to Jesus");
+
+    [Fact]
+    public async Task APronounReferringToSeveralRecordsShowsThemInTheOrderTheSourceListsThem()
+    {
+        var demoniac = Record("demoniac");
+        _db.SaveChanges();
+        Name(Greek(4), demoniac);
+        _db.SaveChanges();
+        var (word, jesus, man) = (Greek(8).Id, Greek(1).Id, Greek(4).Id);
+        await _db.WordReferents.Where(r => r.WordId == word)
+            .ExecuteUpdateAsync(set => set.SetProperty(r => r.Ordinal, r => r.ReferentWordId == man ? 0 : 1));
+
+        (await Read(_greek, 8)).Referents!.Select(r => r.Slug).Should().Equal(["demoniac", "jesus"], "MACULA lists the man first");
+        jesus.Should().BeLessThan(man, "the order is the source's, not the words'");
+    }
 
     private async Task<TextWordResponse> Read(Text text, int position)
     {

@@ -40,7 +40,7 @@ internal static partial class TableProducts
             SyntaxMemberRows),
         new("word_parsing", ["id", "word_id", "lemma", "morphology", "method", "confidence", "source", "note"],
             ["MorphGnt", "Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ParsingRows),
-        new("word_referent", ["id", "word_id", "referent_word_id", "method", "confidence", "source"],
+        new("word_referent", ["word_id", "referent_word_id", "ordinal", "method", "confidence", "source"],
             ["Macula"], [TextWord.ProductOf(Nestle), WordIdCollision.Product], ReferentRows),
         new("word_strong", ["id", "word_id", "number", "method", "confidence", "source", "note"],
             [StrongHebrew, StrongGreek, BereanTables],
@@ -169,10 +169,16 @@ internal static partial class TableProducts
             .ThenBy(w => w.Key.Position).ToList();
         var (annotated, annotation) = Macula(store, nestle);
         var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
-        var lines = MaculaAnnotation.Referents(annotation)
-            .Select(pair => new[] { Int(annotated[pair.Word].Id), Int(annotated[pair.Referent].Id), stated, null, MaculaAnnotation.Source })
-            .ToList();
-        return new(Numbered(lines), $"{lines.Select(l => l[0]).Distinct().Count()} words refer to another");
+        // A word's referents come together, in the order MACULA lists them; the ordinal is the place among them.
+        var lines = new List<string?[]>();
+        var (word, ordinal) = (-1, 0);
+        foreach (var pair in MaculaAnnotation.Referents(annotation))
+        {
+            (word, ordinal) = (pair.Word, pair.Word == word ? ordinal + 1 : 0);
+            lines.Add([Int(annotated[pair.Word].Id), Int(annotated[pair.Referent].Id), Int(ordinal), stated, null, MaculaAnnotation.Source]);
+        }
+
+        return new(lines, $"{lines.Select(l => l[0]).Distinct().Count()} words refer to another");
     }
 
     private static Rows WordStrongRows(ProductStore store)

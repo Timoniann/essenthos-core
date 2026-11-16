@@ -45,7 +45,8 @@ public sealed class PlaceReferenceReadingTests : IDisposable
     [Fact]
     public async Task TheGemstoneCitationIsKeptAsSourceEvidenceWithoutBecomingAPlaceOccurrence()
     {
-        var before = await _db.EntityVerses.AsNoTracking().OrderBy(v => v.Id).ToListAsync();
+        var before = await _db.EntityVerses.AsNoTracking().OrderBy(v => v.EntityId).ThenBy(v => v.CanonicalBook).ThenBy(v => v.CanonicalChapter)
+            .ThenBy(v => v.CanonicalVerse).ThenBy(v => v.Source).ToListAsync();
         var shown = await _db.EntityVerses.Shown().ToListAsync();
 
         shown.Should().HaveCount(4);
@@ -55,7 +56,8 @@ public sealed class PlaceReferenceReadingTests : IDisposable
         shown.Should().Contain(v => v.EntityId == _tarshish.Id && v.CanonicalBook == 32);
         shown.Should().Contain(v => v.EntityId == _tarshish.Id && v.Source == "another reading");
         shown.Should().Contain(v => v.EntityId != _tarshish.Id && v.CanonicalChapter == 10);
-        (await _db.EntityVerses.AsNoTracking().OrderBy(v => v.Id).ToListAsync()).Should().BeEquivalentTo(before);
+        (await _db.EntityVerses.AsNoTracking().OrderBy(v => v.EntityId).ThenBy(v => v.CanonicalBook).ThenBy(v => v.CanonicalChapter)
+            .ThenBy(v => v.CanonicalVerse).ThenBy(v => v.Source).ToListAsync()).Should().BeEquivalentTo(before);
     }
 
     [Fact]
