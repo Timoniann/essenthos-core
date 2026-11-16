@@ -472,6 +472,12 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
 
     // Hand-scored by Claude on 60 of the Ge'ez-BHSA pairs composed through Brenton, 20 per band
     // (2026-09-25): right 60% from 0.10, 75% from 0.25 and 90% from 0.40.
+    //
+    // Since the Ge'ez-Greek hop keeps a pair below 0.80 only where both directions of the model name it
+    // (AlignerFiles.Proposals, PRB-1743, PRB-1746), 5,472 of 109,461 composed pairs are gone. Hand-read
+    // 2026-11-16, seeded and stratified: of the kept pairs 59 of 60 right (15 per band, all bands), about
+    // 98% weighted; of the gone ones 10 of 20 from 0.40 to 0.50, 16 of 20 from 0.50 to 0.60 and 19 of 20
+    // from 0.60 to 0.80, about 68% weighted. The whole file went from about 97% to about 98% right.
     private static readonly Dictionary<string, MeasuredComposition> MeasuredThrough = new()
     {
         ["gez"] = new(0.4, "threshold 0.40 from a hand-scored sample, about 90% right above it"),

@@ -287,6 +287,11 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
     /// together are worth a third of a reader's trust, which is more than the threshold asks.
     /// </summary>
     /// <param name="workspace">The workspace's name under the store's alignments.</param>
+    /// <remarks>
+    /// A pooled pair whose language keeps a pair below a confidence only where both directions of the model name it
+    /// (<see cref="AlignmentPipeline.MeasuredThreshold.AgreedBelow"/>, PRB-1743) proposes under the same rule: a Ge'ez word
+    /// whose Greek link its own file drops as unreliable would otherwise still reach the Hebrew through it (PRB-1746).
+    /// </remarks>
     public async Task<IReadOnlyList<(long From, long To, double Confidence)>> Proposals(
         string fromSlug,
         string toSlug,
@@ -298,12 +303,18 @@ internal sealed class AlignerFiles(ProductTexts texts, AlignmentPipeline pipelin
         IReadOnlySet<int>? books = null,
         CancellationToken cancellationToken = default)
     {
-        var answer = await Answer(fromSlug, toSlug, workspace, modelType, asWritten, books, SameVersification(fromSlug, toSlug), cancellationToken);
         var from = texts[fromSlug];
         var to = texts[toSlug];
+        var pooled = !asWritten && books is null && AlignmentPipeline.Pool(fromSlug, toSlug) is not null;
+        var agreedBelow = pooled ? AlignmentPipeline.Measured.GetValueOrDefault(from.Language)?.AgreedBelow : null;
+        var answer = await Answer(fromSlug, toSlug, workspace, modelType, asWritten, books, SameVersification(fromSlug, toSlug), cancellationToken,
+            agreed: agreedBelow is not null);
+        var agreement = agreedBelow is { } agreedFrom
+            ? new AlignmentPipeline.Agreement(AlignmentPipeline.PairsOf(answer.Agreed!, answer.Addresses.Count), agreedFrom)
+            : null;
         var (drafts, _, _, _) = AlignmentPipeline.Read(
             answer.File, answer.Addresses, answer.Source, answer.Target, floor, selection, Syntax(toSlug),
-            AlignmentPipeline.MarksNoNames(from.Language), AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language));
+            AlignmentPipeline.MarksNoNames(from.Language), AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language), agreement: agreement);
         return [.. drafts.Select(d => (d.SourceWordId, d.TargetWordId, d.Translation))];
     }
 
