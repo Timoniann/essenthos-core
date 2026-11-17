@@ -79,18 +79,18 @@ internal static class ChapterReading
             .OrderBy(w => w.Verse!.Number).ThenBy(w => w.Verse!.Label).ThenBy(w => w.Position)
             .Select(w => new WordRow(
                 w.Verse!.Number, w.Verse!.Label, w.Id, w.Surface, w.Trailer, w.Gloss, w.Lemma, w.StrongNumber,
-                w.Morphology, w.Elided, w.Break, w.NormalisedText))
+                w.Morphology, w.Elided, w.Break, w.NormalisedText, w.VerseId))
             .ToListAsync(cancellationToken);
 
-        var counterparts = await Counterparts(db, rows.Select(r => (r.Id, r.Text)), cancellationToken);
+        var counterparts = await Counterparts(db, rows.Select(r => (r.Id, r.VerseId, r.Text)), cancellationToken);
         counterparts = counterparts with
         {
             Glossed = await Glossed(
                 db, textId,
-                [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber))],
+                [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber, r.VerseId))],
                 counterparts.Proposed, cancellationToken),
         };
-        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.Text))], counterparts, cancellationToken);
+        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.VerseId, r.Text))], counterparts, cancellationToken);
         var notes = await db.VerseNotes
             .Where(note => note.Verse!.TextId == textId
                            && note.Verse.Book!.CanonicalOrdinal == bookOrdinal
@@ -247,43 +247,51 @@ internal static class ChapterReading
     /// </summary>
     private static async Task<Reached> Counterparts(
         AppDbContext db,
-        IEnumerable<(long Id, string Text)> words,
+        IEnumerable<(long Id, int Verse, string Text)> words,
         CancellationToken cancellationToken)
     {
         var forms = new Dictionary<long, string>();
-        foreach (var (id, text) in words)
+        var verses = new HashSet<int>();
+        foreach (var (id, verse, text) in words)
         {
             forms[id] = text.ToLowerInvariant();
+            verses.Add(verse);
         }
 
         var ids = forms.Keys.ToList();
 
+        // The words are every word of their verses, so the verses name the same rows, and a chapter's verses are one range
+        // of a verse-keyed index where its words' hashed ids are as many lookups scattered over a word-keyed one.
+        var inVerses = verses.ToList();
         var own = await db.Words
-            .Where(w => ids.Contains(w.Id) && w.Text!.Kind != TextKind.Translation)
+            .Where(w => inVerses.Contains(w.VerseId) && w.Text!.Kind != TextKind.Translation)
             .Select(w => new { WordId = w.Id, Reached = w.Id })
             .ToListAsync(cancellationToken);
 
-        var reached = await db.LinkWords
-            .Where(side => ids.Contains(side.WordId))
-            .SelectMany(side => db.LinkWords
-                .Where(other => other.LinkId == side.LinkId
-                                && other.Side != side.Side
-                                && other.Word!.Text!.Kind != TextKind.Translation)
-                .Select(other => new { side.WordId, Reached = other.WordId }))
+        // The other side's text is its verse's: the row carries the verse, so no word of the other side is read for it.
+        var reaching = await (
+                from side in db.LinkWords
+                where inVerses.Contains(side.VerseId)
+                join other in db.LinkWords on side.LinkId equals other.LinkId
+                where other.Side != side.Side
+                join verse in db.Verses on other.VerseId equals verse.Id
+                where verse.Text!.Kind != TextKind.Translation
+                select new { side.WordId, side.LinkId, Reached = other.WordId })
             .ToListAsync(cancellationToken);
+        var reached = reaching.Select(row => new { row.WordId, row.Reached }).ToList();
+        var witnessed = reaching.Select(row => (row.WordId, row.LinkId)).ToHashSet();
 
         // Only the links that reach a witness, because those are the ones the highlighting is built
         // from. A translation is now linked to other translations too — the Synodal to the King
         // James, which is how it reaches the Hebrew at all — and letting one of those describe the
-        // word would report the confidence of a step the reader never sees.
-        var evidence = await db.LinkWords
-            .Where(side => ids.Contains(side.WordId)
-                           && (side.Link!.Relation == LinkRelation.Expands
-                               || db.LinkWords.Any(other => other.LinkId == side.LinkId
-                                                            && other.Side != side.Side
-                                                            && other.Word!.Text!.Kind != TextKind.Translation)))
-            .Select(side => new { side.WordId, side.LinkId, side.Link!.Method, side.Link!.Confidence, side.Link.Relation })
-            .ToListAsync(cancellationToken);
+        // word would report the confidence of a step the reader never sees. Whether a link reaches
+        // one is what the read above found.
+        var evidence = (await db.LinkWords
+                .Where(side => inVerses.Contains(side.VerseId))
+                .Select(side => new { side.WordId, side.LinkId, side.Link!.Method, side.Link!.Confidence, side.Link.Relation })
+                .ToListAsync(cancellationToken))
+            .Where(row => row.Relation == LinkRelation.Expands || witnessed.Contains((row.WordId, row.LinkId)))
+            .ToList();
 
         // Two links equally sure are told apart by the method the merge ranks higher, then by the link's id, which is derived
         // from its words: the database's row order would let the same links describe a word differently from load to load.
@@ -316,7 +324,7 @@ internal static class ChapterReading
         // A word that goes with another renders through its own link, which is already among the
         // witnesses above; what it adds is the word it goes with, so the reader can name it.
         var attached = await db.LinkWords
-            .Where(side => ids.Contains(side.WordId) && side.Role != null && side.HeadWordId != null)
+            .Where(side => inVerses.Contains(side.VerseId) && side.Role != null && side.HeadWordId != null)
             .Select(side => new { side.WordId, side.Role, HeadId = side.HeadWordId!.Value, Head = side.HeadWord!.Surface })
             .ToListAsync(cancellationToken);
 
@@ -1029,7 +1037,7 @@ internal static class ChapterReading
     }
 
     private sealed record GlossWanted(
-        long Id, string Surface, string? Folded, string? Gloss, string? Lemma, string? StrongNumber);
+        long Id, string Surface, string? Folded, string? Gloss, string? Lemma, string? StrongNumber, int VerseId);
 
     /// <summary>
     /// A short gloss for every Greek word whose edition prints none, from the lexicon, and the way
@@ -1066,10 +1074,11 @@ internal static class ChapterReading
         }
 
         var bare = wanting.Where(word => word.Lemma is null && word.StrongNumber is null).Select(word => word.Id).ToList();
+        var bareVerses = wanting.Where(word => word.Lemma is null && word.StrongNumber is null).Select(word => word.VerseId).Distinct().ToList();
         var borrowed = bare.Count == 0
             ? []
             : (await db.LinkWords
-                    .Where(side => bare.Contains(side.WordId) && side.Link!.Relation == LinkRelation.Equals)
+                    .Where(side => bareVerses.Contains(side.VerseId) && bare.Contains(side.WordId) && side.Link!.Relation == LinkRelation.Equals)
                     .SelectMany(side => db.LinkWords
                         .Where(other => other.LinkId == side.LinkId
                                         && other.Side != side.Side
@@ -1193,7 +1202,7 @@ internal static class ChapterReading
     private static async Task<Reached> Meant(
         AppDbContext db,
         int textId,
-        IReadOnlyList<(long Id, string Surface)> words,
+        IReadOnlyList<(long Id, int Verse, string Surface)> words,
         Reached counterparts,
         CancellationToken cancellationToken)
     {
@@ -1205,8 +1214,9 @@ internal static class ChapterReading
         }
 
         var ids = words.Select(word => word.Id).ToList();
+        var verses = words.Select(word => word.Verse).Distinct().ToList();
         var aligned = await db.LinkWords
-            .Where(side => ids.Contains(side.WordId)
+            .Where(side => verses.Contains(side.VerseId)
                            && side.Link!.Relation != LinkRelation.Expands
                            && side.Link.Relation != LinkRelation.Omits)
             .SelectMany(side => db.LinkWords
@@ -1277,7 +1287,7 @@ internal static class ChapterReading
         {
             var lexicon = new GeezLexicon(headwords.Select(entry => new GeezHeadword(entry.Entry, entry.Forms, entry.Greek)));
             var byEntry = headwords.ToDictionary(entry => entry.Entry, StringComparer.Ordinal);
-            foreach (var (id, surface) in words)
+            foreach (var (id, _, surface) in words)
             {
                 var greek = byWord[id].SelectMany(link => new[] { link.Lemma, link.Surface }).OfType<string>().ToList();
                 if (lexicon.Match(surface, greek) is not { } match)
@@ -1339,18 +1349,18 @@ internal static class ChapterReading
                 r.CanonicalVerse,
                 new EditionPlace(r.Verse.Book!.Position, r.Verse.ChapterNumber, r.Verse.Sequence, r.Verse.Number, r.Verse.Label),
                 w.Position, w.Id, w.Surface, w.Trailer, w.Gloss,
-                w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break, w.NormalisedText)))
+                w.Lemma, w.StrongNumber, w.Morphology, w.Elided, w.Break, w.NormalisedText, w.VerseId)))
             .ToListAsync(cancellationToken);
 
-        var counterparts = await Counterparts(db, rows.Select(r => (r.Id, r.Text)), cancellationToken);
+        var counterparts = await Counterparts(db, rows.Select(r => (r.Id, r.VerseId, r.Text)), cancellationToken);
         counterparts = counterparts with
         {
             Glossed = await Glossed(
                 db, textId,
-                [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber))],
+                [.. rows.Select(r => new GlossWanted(r.Id, r.Text, r.NormalisedText, r.Gloss, r.Lemma, r.StrongNumber, r.VerseId))],
                 counterparts.Proposed, cancellationToken),
         };
-        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.Text))], counterparts, cancellationToken);
+        counterparts = await Meant(db, textId, [.. rows.Select(r => (r.Id, r.VerseId, r.Text))], counterparts, cancellationToken);
 
         return rows
             .GroupBy(r => r.CanonicalVerse)
@@ -1476,7 +1486,7 @@ internal static class ChapterReading
 
     private sealed record WordRow(
         int VerseNumber, string Label, long Id, string Text, string Trailer, string? Gloss, string? Lemma,
-        string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break, string? NormalisedText);
+        string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break, string? NormalisedText, int VerseId);
 
     private sealed record VerseRow(int Number, string Label);
 
@@ -1491,7 +1501,7 @@ internal static class ChapterReading
     private sealed record CanonicalWordRow(
         int CanonicalVerse, EditionPlace Place, int Position, long Id, string Text, string Trailer,
         string? Gloss, string? Lemma, string? StrongNumber, JsonDocument? Morphology, bool Elided, TextBreak? Break,
-        string? NormalisedText);
+        string? NormalisedText, int VerseId);
 
     /// <summary>
     /// The chapters a chapter's rows are read from: itself, and each chapter holding a passage of it

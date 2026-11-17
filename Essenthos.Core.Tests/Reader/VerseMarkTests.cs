@@ -137,7 +137,7 @@ public sealed class VerseMarkTests : IDisposable
     [Fact]
     public async Task NamesTheWordsTheCorpusSettlesOnTheEntity()
     {
-        var naming = await VerseEndpoints.Naming(_db, Words(), _abram.Slug, default);
+        var naming = await VerseEndpoints.Naming(_db, Verses(), Words(), _abram.Slug, default);
 
         naming.Should().BeEquivalentTo([Word(2).Id]);
     }
@@ -149,8 +149,8 @@ public sealed class VerseMarkTests : IDisposable
     [Fact]
     public async Task MarksNoWordTwoEqualClaimsDisagreeAbout()
     {
-        (await VerseEndpoints.Naming(_db, Words(), "lot", default)).Should().BeEmpty();
-        (await VerseEndpoints.Naming(_db, Words(), "lotan", default)).Should().BeEmpty();
+        (await VerseEndpoints.Naming(_db, Verses(), Words(), "lot", default)).Should().BeEmpty();
+        (await VerseEndpoints.Naming(_db, Verses(), Words(), "lotan", default)).Should().BeEmpty();
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public sealed class VerseMarkTests : IDisposable
     public async Task MarksAWordForGodByTheNumberItRenders()
     {
         var hebrew = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
-        var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "God", "created"]));
+        var english = Corpus.Add(_db, "ENGTEST", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "God", "created"]));
         _db.SaveChanges();
         _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
         var elohim = new Entity { Kind = EntityKind.Term, Slug = "elohim", Name = "Elohim" };
@@ -211,10 +211,11 @@ public sealed class VerseMarkTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = god, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 3), Side = LinkSide.To });
-        _db.SaveChanges();
+        await CountedRenderings.CountStrong(_db);
 
         var words = _db.Words.Where(w => w.TextId == english.Id || w.TextId == hebrew.Id).Select(w => w.Id).ToList();
-        (await VerseEndpoints.Naming(_db, words, "elohim", default)).Should()
+        var verses = _db.Words.Where(w => w.TextId == english.Id || w.TextId == hebrew.Id).Select(w => w.VerseId).Distinct().ToList();
+        (await VerseEndpoints.Naming(_db, verses, words, "elohim", default)).Should()
             .BeEquivalentTo([god.Id, _db.WordAt(hebrew, 1, 1, 3).Id]);
     }
 
@@ -227,7 +228,7 @@ public sealed class VerseMarkTests : IDisposable
     public async Task MarksTheWordRenderingAStrongNumberWhereTheListAsksForIt()
     {
         var hebrew = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
-        var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng",
+        var english = Corpus.Add(_db, "ENGTEST", TextKind.Translation, "eng",
             (1, 1, ["In", "beginning", "God", "created", "God's", "world"]));
         _db.SaveChanges();
         _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
@@ -239,7 +240,7 @@ public sealed class VerseMarkTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 3), Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 3), Side = LinkSide.To });
-        _db.SaveChanges();
+        await CountedRenderings.CountStrong(_db);
         var key = VerseEndpoints.Address.BookStride + VerseEndpoints.Address.ChapterStride + 1;
 
         var quoted = (await VerseEndpoints.Read(_db, english.Id, [key], null, default, "H430")).Should().ContainSingle().Subject;
@@ -301,4 +302,6 @@ public sealed class VerseMarkTests : IDisposable
     private Word Word(int position) => _db.WordAt(_english, 12, 4, position);
 
     private List<long> Words() => [.. _db.Words.Where(w => w.TextId == _english.Id).Select(w => w.Id)];
+
+    private List<int> Verses() => [.. _db.Words.Where(w => w.TextId == _english.Id).Select(w => w.VerseId).Distinct()];
 }

@@ -3189,6 +3189,12 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("role");
 
+                    b.Property<int>("VerseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("verse_id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
                     b.HasKey("LinkId", "WordId", "Side")
                         .HasName("pk_link_word");
 
@@ -3198,6 +3204,11 @@ namespace Essenthos.Core.Migrations
 
                     b.HasIndex("WordId")
                         .HasDatabaseName("ix_link_word_word_id");
+
+                    b.HasIndex("VerseId", "WordId")
+                        .HasDatabaseName("ix_link_word_verse_id_word_id");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("VerseId", "WordId"), new[] { "LinkId", "Side" });
 
                     b.ToTable("link_word", null, t =>
                         {
@@ -6762,6 +6773,29 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_word_referent_source_not_empty", "length(btrim(\"source\")) > 0");
 
                             t.HasCheckConstraint("ck_word_referent_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderedStrong", b =>
+                {
+                    b.Property<int>("VerseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("verse_id");
+
+                    b.Property<long>("WordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("word_id");
+
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.HasKey("VerseId", "WordId", "StrongNumber")
+                        .HasName("pk_word_rendered_strong");
+
+                    b.ToTable("word_rendered_strong", null, t =>
+                        {
+                            t.HasComment("A Strong number a word carries, or renders through a rendering link to the edition of an original its text is counted over (texts/<SLUG>/index/strong): what a list of verses marks for a number. Written at build; it asserts nothing the words and the links do not.");
                         });
                 });
 

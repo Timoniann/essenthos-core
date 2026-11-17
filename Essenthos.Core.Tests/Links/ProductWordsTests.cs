@@ -28,5 +28,8 @@ public sealed class ProductWordsTests : IDisposable
         words.Id(kjv, WordKey.Parse("1.1:1.2", "KJV")).Should().Be(WordIds.Of(WordKey.Parse("1.1:1.2", "KJV")));
         words.Id(kjv, WordKey.Parse("1.1:1.3", "KJV")).Should().BeNull("KJV prints two words there");
         words.Id(words.TextId("BHSA")!.Value, WordKey.Parse("1.1:1.2", "KJV")).Should().BeNull("a key of one text names no word of another");
+        words.VerseOf(kjv, WordIds.Of(WordKey.Parse("1.1:1.2", "KJV"))).Should().Be(
+            TextLoad.NumberedVerses(store, "KJV", kjv).Single(v => v.Row.Own == new VerseKey(1, 1, 1, "")).Id,
+            "a word's verse is the id the text load gives its verse");
     }
 }

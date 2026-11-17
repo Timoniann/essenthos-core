@@ -841,6 +841,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
 
     public const string ClaimsKeptApart = "links or sources whose kept methods or claim count are not what their claims say";
 
+    public const string LinkWordsInAnotherVerse = "link words that carry another verse than their word's";
+
+    internal const string LinkWordsInAnotherVerseSql =
+        "SELECT count(*) FROM link_word lw JOIN word w ON w.id = lw.word_id WHERE lw.verse_id <> w.verse_id";
+
     internal const string ClaimsKeptApartSql =
         """
         SELECT (SELECT count(*) FROM link l
@@ -1013,6 +1018,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // claims by a trigger and by the mapping load. A served release has only these, so they must say what the
         // claims say.
         (ClaimsKeptApart, ClaimsKeptApartSql),
+
+        // A link word's verse is its word's, kept beside it by a trigger and by the mapping load, because the readers find a
+        // chapter's links by verse: a wrong one would hide a link from every chapter read.
+        (LinkWordsInAnotherVerse, LinkWordsInAnotherVerseSql),
 
         // The same question asked of the annotations, and here for the same reason: an annotation
         // with nothing saying what asserted it is one nobody can weigh, and a card that names a person

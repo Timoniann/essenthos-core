@@ -357,6 +357,9 @@ public class AppDbContext : DbContext
 
     public DbSet<StrongReachMethod> StrongReachMethods { get; set; } = null!;
 
+    /// <summary>The Strong numbers each word carries or renders through the edition its text is counted over, by verse, written once per load.</summary>
+    public DbSet<WordRenderedStrong> WordRenderedStrongs { get; set; } = null!;
+
     /// <summary>How often each Strong number stands in each book of an edition, counted once per load.</summary>
     public DbSet<StrongBook> StrongBooks { get; set; } = null!;
 
@@ -1825,6 +1828,11 @@ public class AppDbContext : DbContext
             });
         });
 
+        modelBuilder.Entity<WordRenderedStrong>(entity => entity.ToTable("word_rendered_strong", t => t.HasComment(
+            "A Strong number a word carries, or renders through a rendering link to the edition of an original its text is "
+            + "counted over (texts/<SLUG>/index/strong): what a list of verses marks for a number. Written at build; it "
+            + "asserts nothing the words and the links do not.")));
+
         modelBuilder.Entity<WordRenderingPlaces>(entity =>
         {
             entity.HasKey(p => p.RenderingId);
@@ -2177,6 +2185,13 @@ public class AppDbContext : DbContext
             // Only the few words that go with another are indexed, and the index is what lets a word
             // be deleted without reading every membership in the corpus to find who named it a head.
             entity.HasIndex(w => w.HeadWordId).HasFilter("head_word_id IS NOT NULL");
+
+            // The words of a chapter lie in one range of verse ids (RowIds.Verse), so their memberships are a few adjacent
+            // pages of this index, where the word id index scatters them over the whole of it. A writer that leaves the verse
+            // out has it filled from the word by the trigger the migration writes; the mapping load writes it itself.
+            entity.Property(w => w.VerseId).ValueGeneratedOnAdd()
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.NpgsqlValueGenerationStrategy.None);
+            entity.HasIndex(w => new { w.VerseId, w.WordId }).IncludeProperties(w => new { w.LinkId, w.Side });
 
             entity.ToTable("link_word", t =>
             {
