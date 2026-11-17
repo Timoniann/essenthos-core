@@ -1011,7 +1011,7 @@ internal sealed class PageLoader(
             }
 
             var list = await StrongVerseEndpoints.Page(db, canon, number, null, address.Skip, address.Take, cancellationToken);
-            books = [.. list.Books ?? (await StrongVerseEndpoints.Page(db, canon, number, list.Corpus, 0, 1, cancellationToken)).Books ?? []];
+            books = [.. list.Books ?? []];
             total = list.Total;
             wanted = [.. list.Items.Select(verse => Address(verse.Book.Ordinal, verse.Chapter, verse.Verse))];
             var word = string.Join(' ', new[] { entry.Lemma, entry.Transliteration }.Where(part => !string.IsNullOrEmpty(part)));

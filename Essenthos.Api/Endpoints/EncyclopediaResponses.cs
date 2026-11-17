@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using Essenthos.Core.Context;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -26,6 +28,20 @@ internal record EntitySummaryResponse(
     /// the language it says it is in. Null where nothing has been generated for this entity yet.
     /// </summary>
     public EntityDescriptorResponse? Descriptor { get; init; }
+
+    /// <summary>
+    /// In a list, the same line cut to what a row draws (<see cref="ContextDescriptorResponse"/>): its claims, each target a
+    /// slug into the list's <see cref="EntityListResponse.Records"/>. Null where nothing has been generated for the record.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ContextDescriptorResponse? Line { get; init; }
+
+    /// <summary>
+    /// The records <see cref="Line"/> points at that it says otherwise than the list's map: a title said of a people in
+    /// the plural. Null where the map says every one as this line does.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IDictionary<string, ContextRecordResponse>? Records { get; init; }
 
     /// <summary>
     /// The name in the language asked for, where the corpus has one; null where it has none, or
@@ -74,6 +90,14 @@ internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items
     /// (<em>Рамесес</em> for <em>Рамсес</em>); false where the rows hold what was typed.
     /// </summary>
     public bool Near { get; init; }
+
+    /// <summary>Every record the rows' lines point at, by slug; null where no line points at any.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IDictionary<string, ContextRecordResponse>? Records { get; init; }
+
+    /// <summary>The slugs asked for by name that no record has, in the order asked; null where every one was found.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<string>? Unknown { get; init; }
 }
 
 /// <summary>

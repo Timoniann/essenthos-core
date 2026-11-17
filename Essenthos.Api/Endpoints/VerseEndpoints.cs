@@ -97,6 +97,7 @@ internal static partial class VerseEndpoints
     {
         routes.MapGet("/verses", async (
             [FromQuery] string? corpus,
+            [FromQuery] string? verses,
             [FromQuery] string? refs,
             [FromQuery] string? entity,
             [FromQuery] string? strong,
@@ -110,6 +111,8 @@ internal static partial class VerseEndpoints
             ILoggerFactory loggers,
             CancellationToken cancellationToken) =>
         {
+            var addresses = verses is { Length: > 0 } ? verses : refs;
+
             IResult Refuse(string reason, IReadOnlyCollection<string> sample, string problem)
             {
                 var marking = string.Join(
@@ -121,11 +124,13 @@ internal static partial class VerseEndpoints
                     loggers.CreateLogger(LogCategory),
                     reason,
                     RequestTiming.Printable(corpus, LongestLoggedPart),
-                    (refs ?? string.Empty).Split(BetweenAddresses, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Length,
+                    (addresses ?? string.Empty).Split(BetweenAddresses, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Length,
                     RequestTiming.Printable(
                         string.Join(BetweenAddresses, sample.Take(LoggedAddresses).Select(one => RequestTiming.Printable(one, LongestLoggedPart))),
                         LongestLoggedLine),
                     marking is { Length: > 0 } ? marking : "-",
+                    ParameterNames(context.Request.Query),
+                    QueryLength(context.Request.QueryString),
                     RequestTiming.Printable(PageOf(context.Request.Headers.Referer.ToString()), LongestLoggedLine),
                     RequestTiming.Printable(context.Request.Headers.UserAgent.ToString(), LongestLoggedLine));
                 return Results.BadRequest(new ProblemResponse(problem));
@@ -141,15 +146,15 @@ internal static partial class VerseEndpoints
                     $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds.");
             }
 
-            var asked = (refs ?? string.Empty)
+            var asked = (addresses ?? string.Empty)
                 .Split(BetweenAddresses, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .ToList();
 
             if (asked.Count == 0)
             {
-                return Refuse("no-refs", [refs ?? string.Empty],
-                    "Ask for verses with refs=book:chapter:verse, separated by commas — "
-                    + "refs=genesis:11:27,exodus:4:14. The book is its name, slug or abbreviation.");
+                return Refuse("no-verses", [addresses ?? string.Empty],
+                    "Ask for verses with verses=book:chapter:verse, separated by commas — "
+                    + "verses=genesis:11:27,exodus:4:14. The book is its name, slug or abbreviation.");
             }
 
             if (asked.Count > MostAddresses)
@@ -666,9 +671,22 @@ internal static partial class VerseEndpoints
     }
 
     [LoggerMessage(EventId = 1, Level = LogLevel.Information,
-        Message = "verses refused {Reason} corpus={Corpus} asked={Asked} refs={Refs} marking={Marking} page={Page} agent={Agent}")]
+        Message = "verses refused {Reason} corpus={Corpus} asked={Asked} verses={Verses} marking={Marking} parameters={Parameters} query={QueryLength} page={Page} agent={Agent}")]
     private static partial void Refused(
-        ILogger logger, string reason, string corpus, int asked, string refs, string marking, string page, string agent);
+        ILogger logger, string reason, string corpus, int asked, string verses, string marking, string parameters, int queryLength,
+        string page, string agent);
+
+    /// <summary>
+    /// The names of the parameters a request sent, sorted, without their values: enough to see that a caller dropped or
+    /// renamed one, and nothing a reader typed.
+    /// </summary>
+    internal static string ParameterNames(IQueryCollection query) =>
+        RequestTiming.Printable(
+            string.Join(BetweenAddresses, query.Keys.Select(name => RequestTiming.Printable(name, LongestLoggedPart)).Order(StringComparer.Ordinal)),
+            LongestLoggedLine);
+
+    /// <summary>The length of the query as it arrived, without its <c>?</c>.</summary>
+    internal static int QueryLength(QueryString query) => query.HasValue ? query.Value!.Length - 1 : 0;
 
     /// <summary>The path of the page a request came from, without its query, which may hold what a reader searched for.</summary>
     internal static string PageOf(string? referer) =>

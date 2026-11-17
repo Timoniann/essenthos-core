@@ -68,9 +68,10 @@ internal static class ContextEndpoints
                 }
             }
 
+            var (names, words) = Languages(language, prose);
             return Results.Ok(await Context(
-                db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken,
-                settings.Is(SiteSettings.GeneratedImages), prose, open, shown, stored: true));
+                db, ordinal, chapter, names, await weights.Get(cancellationToken), cancellationToken,
+                settings.Is(SiteSettings.GeneratedImages), words, open, shown, stored: true));
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -87,6 +88,20 @@ internal static class ContextEndpoints
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
             return refusal ?? Results.Ok(await ChapterFamilies.Of(db, ordinal, chapter, language, cancellationToken, prose, stored: true));
         });
+    }
+
+    /// <summary>
+    /// The language of names and the language of words a chapter's context is answered in, as the corpus spells them, so a
+    /// request reaches the lines the build stored: a two-letter code is respelled (<c>uk</c> is <c>ukr</c>), none is English,
+    /// and a language the corpus speaks nothing in is answered in English as well. A language the corpus speaks is kept,
+    /// stored or not.
+    /// </summary>
+    internal static (string Names, string Words) Languages(string? language, string? prose)
+    {
+        static string Spoken(string? asked) =>
+            LanguageCodes.Normalise(asked) is { Length: > 0 } code && LanguageCodes.Speaks(code) ? code : DescriptorPhrasings.English;
+
+        return (Spoken(language), Spoken(ReaderLanguages.Prose(prose, language)));
     }
 
     /// <summary>The book's ordinal where the address names a chapter the shared numbering has, or why not.</summary>
@@ -180,7 +195,7 @@ internal static class ContextEndpoints
         CancellationToken cancellationToken)
     {
         var words = ReaderLanguages.Prose(prose, language);
-        if (language is not { Length: > 0 } || words is not { Length: > 0 })
+        if (language is not { Length: > 0 } || words is not { Length: > 0 } || !FamilyDocuments.ProseLanguages.Contains(words))
         {
             return null;
         }
