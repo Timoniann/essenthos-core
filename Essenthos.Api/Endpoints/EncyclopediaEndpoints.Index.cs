@@ -386,7 +386,7 @@ internal static partial class EncyclopediaEndpoints
             var own = new SortedDictionary<string, ContextRecordResponse>(StringComparer.Ordinal);
             foreach (var (target, record) in pointed[row.Slug])
             {
-                if (!records.TryAdd(target, record) && !SaidAlike(records[target], record))
+                if (!records.TryAdd(target, record) && !records[target].SaidAlike(record))
                 {
                     own[target] = record;
                 }
@@ -400,15 +400,6 @@ internal static partial class EncyclopediaEndpoints
 
         return (lines, records);
     }
-
-    private static bool SaidAlike(ContextRecordResponse one, ContextRecordResponse other) =>
-        one.Kind == other.Kind
-        && one.Name == other.Name
-        && one.EnglishName == other.EnglishName
-        && (one.Forms ?? []).Count == (other.Forms ?? []).Count
-        && (one.Forms ?? []).All(form => other.Forms is not null
-                                         && other.Forms.TryGetValue(form.Key, out var said)
-                                         && said == form.Value);
 
     /// <summary>A read on a connection of its own, to run beside what the request's own connection reads.</summary>
     private static async Task<T> Beside<T>(IServiceScopeFactory scopes, Func<AppDbContext, Task<T>> read)

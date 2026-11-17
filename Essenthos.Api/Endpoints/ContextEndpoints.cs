@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -255,13 +256,24 @@ internal static class ContextEndpoints
             .ToList();
         ContextLineBody Line(string slug) => lines.GetValueOrDefault(slug) ?? ContextLineBody.Empty;
 
-        // Every record a line under any of the chapter's names points at, those the canon mode hides included.
+        // Every record a line under any of the chapter's names points at, those the canon mode hides included, as the first
+        // line to point at it says it. A line that says a target otherwise keeps that target with it: a title is said of a
+        // people in the plural and of a person in the singular, so the Anakim are Giants beside Goliath's Giant.
         var targets = new SortedDictionary<string, ContextRecordResponse>(StringComparer.Ordinal);
+        var own = new Dictionary<string, IDictionary<string, ContextRecordResponse>>(StringComparer.Ordinal);
         foreach (var record in named)
         {
             foreach (var (slug, target) in Line(record.Slug).Records ?? [])
             {
-                targets.TryAdd(slug, target);
+                if (!targets.TryAdd(slug, target) && !targets[slug].SaidAlike(target))
+                {
+                    if (!own.TryGetValue(record.Slug, out var otherwise))
+                    {
+                        own[record.Slug] = otherwise = new SortedDictionary<string, ContextRecordResponse>(StringComparer.Ordinal);
+                    }
+
+                    otherwise[slug] = target;
+                }
             }
         }
 
@@ -292,6 +304,7 @@ internal static class ContextEndpoints
                 LocalName = inChapter[r.Slug].LocalName,
                 LocalDistinguisher = Line(r.Slug).LocalDistinguisher,
                 Descriptor = Line(r.Slug).Descriptor,
+                Records = own.GetValueOrDefault(r.Slug),
                 Meaning = r.Meaning,
                 PlaceKind = r.PlaceKind,
                 Location = r.Location is { } at ? new EntityLocationResponse(at.Lon, at.Lat, at.Kind, at.Confidence) : null,
@@ -392,7 +405,8 @@ internal record ContextEventResponse(
 /// </param>
 /// <param name="Records">
 /// Every record a line under a name points at, by slug, said once for the whole answer: a claim names
-/// its target by slug, and David is the target of dozens of claims in Matthew 1.
+/// its target by slug, and David is the target of dozens of claims in Matthew 1. A line that says a target otherwise
+/// carries its own (<see cref="ContextEntityResponse.Records"/>).
 /// </param>
 internal record ChapterContextResponse(
     BookRefResponse Book,
@@ -427,6 +441,13 @@ internal record ContextEntityResponse(
 
     /// <summary>The line under the name, as the claims that make it; see <see cref="ContextDescriptorResponse"/>.</summary>
     public ContextDescriptorResponse? Descriptor { get; init; }
+
+    /// <summary>
+    /// The records <see cref="Descriptor"/> points at that it says otherwise than the answer's map: a title said of a people
+    /// in the plural. Null where the map says every one as this line does.
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IDictionary<string, ContextRecordResponse>? Records { get; init; }
 
     /// <summary>What its name means, where the corpus holds a meaning for the name; in English, as the sources give it.</summary>
     public string? Meaning { get; init; }
