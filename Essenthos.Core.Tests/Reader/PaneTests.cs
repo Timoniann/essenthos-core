@@ -95,6 +95,25 @@ public sealed class PaneTests : IDisposable
     }
 
     [Fact]
+    public async Task AWordCarriesItsMarkAndTheLettersBracketedInsideIt()
+    {
+        var (english, _) = Pair();
+        var group = new WordGroup
+        {
+            TextId = english.Id, Kind = WordGroupKind.Doubtful, Position = 1, Features = JsonDocument.Parse("""{"letters": "s"}"""),
+        };
+        _db.WordGroups.Add(group);
+        _db.SaveChanges();
+        _db.WordGroupWords.Add(new WordGroupWord { WordGroupId = group.Id, WordId = _db.WordAt(english, 1, 1, 3).Id });
+        _db.SaveChanges();
+
+        var words = (await Pane(english)).GetProperty("verses")[0].GetProperty("words");
+
+        (words[2].GetProperty("m").GetString(), words[2].GetProperty("bk").GetString()).Should().Be(("doubtful", "s"));
+        words[1].TryGetProperty("bk", out _).Should().BeFalse();
+    }
+
+    [Fact]
     public async Task AChapterTheTextHasNothingInHasNoPane()
     {
         var (english, _) = Pair();

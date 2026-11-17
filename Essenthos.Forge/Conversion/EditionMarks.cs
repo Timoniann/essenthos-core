@@ -1,4 +1,6 @@
+using System.Text;
 using Essenthos.Core.Berean;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading;
 
 namespace Essenthos.Core.Conversion;
@@ -199,6 +201,11 @@ internal sealed class BereanSupplied : ITextStage
 /// 83:11), its two closing brackets for a misread letter (Jubilees 23:11 "Land", 40:2 "to]d") and the (?) Charles prints
 /// after a word he queries (Enoch 30:2), which encloses no word.
 /// </para>
+///
+/// <para>
+/// A sign printed inside a word does not cut it: "king[s]" (Jubilees 34:4) is the one word "kings", the span marks it
+/// whole, and the letters inside the signs are kept on it.
+/// </para>
 /// </summary>
 internal sealed class CharlesSigns : ITextStage
 {
@@ -239,7 +246,171 @@ internal sealed class CharlesSigns : ITextStage
 
     public void Apply(ConvertedText text, string resources)
     {
+        var joined = JoinWordsCutAtASign(text);
         var words = text.Words().Select(w => (w.Verse, w.Word)).ToList();
+        var marked = Spans(words).Where(Certain).OrderBy(span => span.Words[0]).ToList();
+        foreach (var signs in marked.SelectMany(span => new[] { span.Open, span.Close!.Value }).GroupBy(sign => sign.Word))
+        {
+            var word = words[signs.Key].Word;
+            var at = signs.Select(sign => sign.At).ToHashSet();
+            var trailer = new string([.. word.Trailer.Where((_, index) => !at.Contains(index))]);
+            while (trailer.Contains("  ", StringComparison.Ordinal))
+            {
+                trailer = trailer.Replace("  ", " ", StringComparison.Ordinal);
+            }
+
+            word.Trailer = trailer;
+        }
+
+        Number(marked, words, ['('], perVerse: true, word => word.Supplied, (word, n) => word.Supplied = n);
+        Number(marked, words, ['〈', '<'], perVerse: true, word => word.Restored, (word, n) => word.Restored = n);
+        Number(marked, words, ['['], perVerse: false, word => word.Doubtful, (word, n) => word.Doubtful = n);
+        Number(marked, words, [Dagger], perVerse: false, word => word.Corrupt, (word, n) => word.Corrupt = n);
+        Number(marked, words, ['┌'], perVerse: false, word => word.NotInEthiopic, (word, n) => word.NotInEthiopic = n);
+        Number(marked, words, ['╓'], perVerse: false, word => word.NotInGreek, (word, n) => word.NotInGreek = n);
+
+        foreach (var verse in text.Verses)
+        {
+            verse.Words.RemoveAll(word => word.Surface.Length == 0 && word.Trailer.Length == 0);
+        }
+
+        var left = text.Verses.SelectMany(verse => verse.Words).Sum(word => word.Trailer.Count(IsSign));
+        var counts = string.Join(", ", marked.GroupBy(span => Kind(span.Opener)).OrderBy(g => g.Key, StringComparer.Ordinal)
+            .Select(g => $"{g.Key} {g.Count()}"));
+        text.Provenance.Add(new("charles-signs",
+            $"Charles's signs taken out as marks, spans: {counts}; {left} sign(s) left printed; {joined} word(s) printed with signs inside joined into one"));
+    }
+
+    private static bool Certain(Span span) => span.Close is not null && span.Words.Count > 0;
+
+    /// <summary>
+    /// Joins each word Charles prints with signs inside it, which the reader cut at them (Jubilees 34:4 "king[s]" read as
+    /// "king" and "s", 50:1 "Sin[ai]"), into one word, and keeps the letters the signs enclose on it
+    /// (<see cref="ConvertedWord.Bracketed"/>). A word is joined only where every sign inside it belongs to a certain span
+    /// that stays within the word. Those signs move out round the whole word, the opening ones to the end of the trailer
+    /// before it (or an empty word heading the verse) and the closing ones to the start of its own, so the span marks the
+    /// whole word. A lone sign for a misread letter (Jubilees 40:2 "to]d") belongs to no span and stays as printed.
+    /// </summary>
+    private static int JoinWordsCutAtASign(ConvertedText text)
+    {
+        var words = text.Words().Select(w => (w.Verse, w.Word)).ToList();
+        var signs = new Dictionary<Sign, Span>();
+        foreach (var span in Spans(words).Where(Certain))
+        {
+            signs[span.Open] = span;
+            signs[span.Close!.Value] = span;
+        }
+
+        bool Inside(int i) =>
+            i + 1 < words.Count
+            && words[i].Verse == words[i + 1].Verse
+            && words[i].Word.Surface.Length > 0
+            && words[i + 1].Word.Surface.Length > 0
+            && words[i].Word.Trailer.Any(IsSign)
+            && words[i].Word.Trailer.Index().All(c => IsSign(c.Item) ? signs.ContainsKey(new Sign(i, c.Index)) : c.Item is '\'' or '’');
+
+        var chains = new List<(int First, int Last, List<Span> Spans)>();
+        for (var i = 0; i < words.Count; i++)
+        {
+            if (!Inside(i))
+            {
+                continue;
+            }
+
+            var first = i;
+            while (Inside(i))
+            {
+                i++;
+            }
+
+            var touching = Enumerable.Range(first, i - first)
+                .SelectMany(w => words[w].Word.Trailer.Index().Where(c => IsSign(c.Item)).Select(c => signs[new Sign(w, c.Index)]))
+                .Distinct()
+                .ToList();
+            if (touching.All(span => span.Open.Word >= first - 1 && span.Close!.Value.Word <= i))
+            {
+                chains.Add((first, i, touching));
+            }
+        }
+
+        foreach (var (first, last, touching) in Enumerable.Reverse(chains))
+        {
+            var (verse, word) = words[first];
+            var surface = new StringBuilder();
+            var opening = new StringBuilder();
+            var closing = new StringBuilder();
+            var letters = new List<string>();
+            var between = string.Empty;
+            var previous = false;
+            for (var w = first; w <= last; w++)
+            {
+                var part = words[w].Word;
+                surface.Append(part.Surface);
+                var enclosed = touching.Any(span => span.Open.Word < w && w <= span.Close!.Value.Word);
+                if (enclosed && previous)
+                {
+                    letters[^1] += between + part.Surface;
+                }
+                else if (enclosed)
+                {
+                    letters.Add(part.Surface);
+                }
+
+                previous = enclosed;
+                between = string.Empty;
+                if (w == last)
+                {
+                    break;
+                }
+
+                foreach (var (at, c) in part.Trailer.Index())
+                {
+                    if (!IsSign(c))
+                    {
+                        surface.Append(c);
+                        between += c;
+                    }
+                    else if (signs[new Sign(w, at)].Open == new Sign(w, at))
+                    {
+                        opening.Append(c);
+                    }
+                    else
+                    {
+                        closing.Append(c);
+                    }
+                }
+            }
+
+            word.Surface = surface.ToString();
+            word.Trailer = closing + words[last].Word.Trailer;
+            word.Normalised = WordFolding.Fold(word.Surface, text.Definition.Language);
+            word.Bracketed = string.Join(' ', letters);
+            var position = verse.Words.IndexOf(word);
+            verse.Words.RemoveRange(position + 1, last - first);
+            if (opening.Length == 0)
+            {
+                continue;
+            }
+
+            if (position > 0)
+            {
+                verse.Words[position - 1].Trailer += opening;
+            }
+            else
+            {
+                verse.Words.Insert(0, new ConvertedWord { Surface = string.Empty, Trailer = opening.ToString(), Elided = true });
+            }
+        }
+
+        return chains.Count;
+    }
+
+    /// <summary>
+    /// Every span the signs open, in the order printed, with the words inside it; a span the text never closes has no
+    /// <see cref="Span.Close"/>.
+    /// </summary>
+    private static List<Span> Spans(List<(ConvertedVerse Verse, ConvertedWord Word)> words)
+    {
         var spans = new List<Span>();
         var open = new List<Span>();
         int? book = null;
@@ -288,36 +459,7 @@ internal sealed class CharlesSigns : ITextStage
             }
         }
 
-        var marked = spans.Where(span => span.Close is not null && span.Words.Count > 0).OrderBy(span => span.Words[0]).ToList();
-        foreach (var signs in marked.SelectMany(span => new[] { span.Open, span.Close!.Value }).GroupBy(sign => sign.Word))
-        {
-            var word = words[signs.Key].Word;
-            var at = signs.Select(sign => sign.At).ToHashSet();
-            var trailer = new string([.. word.Trailer.Where((_, index) => !at.Contains(index))]);
-            while (trailer.Contains("  ", StringComparison.Ordinal))
-            {
-                trailer = trailer.Replace("  ", " ", StringComparison.Ordinal);
-            }
-
-            word.Trailer = trailer;
-        }
-
-        Number(marked, words, ['('], perVerse: true, word => word.Supplied, (word, n) => word.Supplied = n);
-        Number(marked, words, ['〈', '<'], perVerse: true, word => word.Restored, (word, n) => word.Restored = n);
-        Number(marked, words, ['['], perVerse: false, word => word.Doubtful, (word, n) => word.Doubtful = n);
-        Number(marked, words, [Dagger], perVerse: false, word => word.Corrupt, (word, n) => word.Corrupt = n);
-        Number(marked, words, ['┌'], perVerse: false, word => word.NotInEthiopic, (word, n) => word.NotInEthiopic = n);
-        Number(marked, words, ['╓'], perVerse: false, word => word.NotInGreek, (word, n) => word.NotInGreek = n);
-
-        foreach (var verse in text.Verses)
-        {
-            verse.Words.RemoveAll(word => word.Surface.Length == 0 && word.Trailer.Length == 0);
-        }
-
-        var left = text.Verses.SelectMany(verse => verse.Words).Sum(word => word.Trailer.Count(IsSign));
-        var counts = string.Join(", ", marked.GroupBy(span => Kind(span.Opener)).OrderBy(g => g.Key, StringComparer.Ordinal)
-            .Select(g => $"{g.Key} {g.Count()}"));
-        text.Provenance.Add(new("charles-signs", $"Charles's signs taken out as marks, spans: {counts}; {left} sign(s) left printed"));
+        return spans;
     }
 
     private static string Kind(char opener) => opener switch

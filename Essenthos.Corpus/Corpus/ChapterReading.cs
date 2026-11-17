@@ -319,7 +319,12 @@ internal static class ChapterReading
         // times to answer no.
         var marked = await db.WordGroupWords
             .Where(m => ids.Contains(m.WordId) && EditionMarks.Contains(m.WordGroup!.Kind))
-            .Select(m => new { m.WordId, m.WordGroup!.Kind })
+            .Select(m => new
+            {
+                m.WordId,
+                m.WordGroup!.Kind,
+                Letters = m.WordGroup.Features == null ? null : m.WordGroup.Features.RootElement.GetProperty("letters").GetString(),
+            })
             .ToListAsync(cancellationToken);
 
         // A word that goes with another renders through its own link, which is already among the
@@ -351,6 +356,10 @@ internal static class ChapterReading
             await Annotations.AllOf(db, ids, cancellationToken),
             await Proposed(db, ids, cancellationToken))
         {
+            Bracketed = marked
+                .Where(m => m.Letters != null)
+                .GroupBy(m => m.WordId)
+                .ToDictionary(group => group.Key, group => group.First().Letters!),
             Attached = attached
                 .GroupBy(row => row.WordId)
                 .ToDictionary(
@@ -1027,6 +1036,9 @@ internal static class ChapterReading
         /// <summary>For each word that goes with another word of its text, that word and how.</summary>
         public Dictionary<long, AttachedResponse> Attached { get; init; } = [];
 
+        /// <summary>The letters the edition prints between its signs inside each word that has them.</summary>
+        public Dictionary<long, string> Bracketed { get; init; } = [];
+
         /// <summary>For each word naming a person's occupation in a verse that says it, whose and which.</summary>
         public Dictionary<long, IReadOnlyList<WordRoleResponse>> Roles { get; init; } = [];
 
@@ -1440,6 +1452,7 @@ internal static class ChapterReading
             Elided = elided,
             Supplied = counterparts.Marks.TryGetValue(id, out var marks) && marks.Contains(WordGroupKind.Supplied),
             Mark = marks is null ? null : string.Join(' ', marks.Select(EnumSpelling.Of)),
+            Bracketed = counterparts.Bracketed.GetValueOrDefault(id),
             StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),

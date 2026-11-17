@@ -83,17 +83,31 @@ public sealed class SuppliedWordTests : IDisposable
             .Should().BeFalse();
     }
 
+    /// <summary>The letters an edition prints between its signs inside a word come with the word's mark, and only on it.</summary>
+    [Fact]
+    public async Task AWordWithLettersBracketedInsideItSaysWhichLetters()
+    {
+        Supply(WordGroupKind.Doubtful, """{"letters": "s"}""", 4);
+
+        var words = (await ChapterReading.ReadChapter(_db, _english.Id, 1, 1, default)).Single().Words;
+        (words[3].Mark, words[3].Bracketed).Should().Be(("doubtful", "s"));
+        words.Take(3).Should().OnlyContain(word => word.Bracketed == null);
+    }
+
     private long WordId(int position) => _db.WordAt(_english, 1, 1, position).Id;
 
     private void Supply(params int[] positions) => Supply(WordGroupKind.Supplied, positions);
 
-    private void Supply(WordGroupKind kind, params int[] positions)
+    private void Supply(WordGroupKind kind, params int[] positions) => Supply(kind, null, positions);
+
+    private void Supply(WordGroupKind kind, string? features, params int[] positions)
     {
         var group = new WordGroup
         {
             TextId = _english.Id,
             Kind = kind,
             Position = 1,
+            Features = features is null ? null : System.Text.Json.JsonDocument.Parse(features),
         };
         _db.WordGroups.Add(group);
         _db.SaveChanges();

@@ -28,7 +28,7 @@ internal sealed record PaneBody(int Book, int Chapter, byte[] Gzip, string Hash,
 ///   "verses": [{ "n": 1, "own": ["119:1"], "ref": [19, 119, 1], "stated": ["118:1"], "notes": [note], "words": [word] }] }
 /// note: { "kind", "content", "anchorWordId", "anchor" }
 /// word: { "id", "s" surface, "t" trailer, "g" gloss, "l" lemma, "n" Strong number, "w" witness word ids,
-///         "p" provenance index, "a" absence, "m" mark, "e" [card] the records the word names, "eb" [card] the base
+///         "p" provenance index, "a" absence, "m" mark, "bk" the letters bracketed inside the word, "e" [card] the records the word names, "eb" [card] the base
 ///         text's records where the translation names another (origin base-reading), "mo" morphology, "ph" phono,
 ///         "pt" phono trailer, "lg" language, "el" 1 when elided, "br" break, "sc" { "n", "m", "c" } Strong candidate,
 ///         "lx" { "g", "via" } lexicon gloss, "tg" { "corpus", "word", "lemma", "glosses", "method", "confidence" },
@@ -338,6 +338,7 @@ internal static class Panes
 
         Optional(json, "a", word.Absence);
         Optional(json, "m", word.Mark);
+        Optional(json, "bk", word.Bracketed);
         var rows = named.ToList();
         // The shared cards put the base text's reading right after a differs card; a pane carries it apart, in "eb".
         var own = word.Entities.Where(entity => entity.Origin != WordEntityOrigins.BaseReading).ToList();

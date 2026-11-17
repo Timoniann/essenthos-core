@@ -312,6 +312,13 @@ internal record TextWordResponse(
     public string? Mark { get; init; }
 
     /// <summary>
+    /// The letters the edition prints between its signs inside this word, where it prints some: <c>s</c> for Charles's
+    /// <c>king[s]</c>, which is one word, <c>kings</c>, under the <see cref="Mark"/> the signs make. Runs apart in one
+    /// word are separated by a space. Null for every other word.
+    /// </summary>
+    public string? Bracketed { get; init; }
+
+    /// <summary>
     /// A Strong number the corpus worked out for this word, where the source states none and the
     /// working out arrived at one number only. Null where the source states a number — that is
     /// <see cref="StrongNo"/> — and where the corpus proposed several or none.

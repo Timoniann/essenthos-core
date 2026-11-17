@@ -132,6 +132,14 @@ internal sealed class TextSnapshot
             };
         }
 
+        foreach (var member in wordGroups)
+        {
+            if (Feature(member.Features, "letters") is { } letters)
+            {
+                words[member.Index] = words[member.Index] with { Bracketed = letters };
+            }
+        }
+
         var verses = new List<VerseManifestRow>(32_000);
         await using (var command = Command(connection, VerseQuery, text))
         await using (var reader = await command.ExecuteReaderAsync())
