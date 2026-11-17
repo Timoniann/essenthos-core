@@ -32,7 +32,9 @@ internal sealed record PaneBody(int Book, int Chapter, byte[] Gzip, string Hash,
 ///         text's records where the translation names another (origin base-reading), "mo" morphology, "ph" phono,
 ///         "pt" phono trailer, "lg" language, "el" 1 when elided, "br" break, "sc" { "n", "m", "c" } Strong candidate,
 ///         "lx" { "g", "via" } lexicon gloss, "tg" { "corpus", "word", "lemma", "glosses", "method", "confidence" },
-///         "gz" { "headword", "latin", "greek", "via" }, "at" { "kind", "headId", "head" }, "ro" [{ "occupation",
+///         "gz" { "entry", "headword", "latin", "greek", "via" }, "gl" { "l" lemma, "ls" lemma source, "se"/"su" sense in English/
+///         Ukrainian, "e"/"u" the line under the word, "g" Greek words, "mo" morphology, "c" confidence, "by" model, "on" day }
+///         a Ge'ez word as a model read it in context, "at" { "kind", "headId", "head" }, "ro" [{ "occupation",
 ///         "category", "person" }], "rf" [{ "r" record index, "w" the original's word referred to, "src" source index, "sf" 1 when the
 ///         original's word refers by its pronoun suffix, "lg" the referring original's language where not Greek }]
 ///         the records the word refers to without naming them }
@@ -428,10 +430,28 @@ internal static class Panes
         if (word.GeezEntry is { } geez)
         {
             json.WriteStartObject("gz");
+            json.WriteString("entry", geez.Entry);
             json.WriteString("headword", geez.Headword);
             Strings(json, "latin", geez.Latin, always: true);
             Strings(json, "greek", geez.Greek, always: true);
             json.WriteString("via", geez.Via);
+            json.WriteEndObject();
+        }
+
+        if (word.GeezGloss is { } read)
+        {
+            json.WriteStartObject("gl");
+            json.WriteString("l", read.Lemma);
+            json.WriteString("ls", read.LemmaSource);
+            json.WriteString("se", read.Sense.En);
+            json.WriteString("su", read.Sense.Uk);
+            json.WriteString("e", read.Line.En);
+            json.WriteString("u", read.Line.Uk);
+            Strings(json, "g", read.Greek, always: false);
+            Optional(json, "mo", read.Morphology);
+            json.WriteString("c", read.Confidence);
+            json.WriteString("by", read.Model);
+            json.WriteString("on", read.Made);
             json.WriteEndObject();
         }
 

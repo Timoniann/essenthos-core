@@ -208,6 +208,12 @@ internal static class Sources
 
     public const string DillmannLexiconPrefix = "Lexicon Linguae Aethiopicae";
 
+    /// <summary>What every row of Dillmann's senses rendered by a model begins with; the run and model follow.</summary>
+    public const string DillmannRenderingPrefix = "Dillmann's Latin rendered by a language model for Essenthos";
+
+    /// <summary>What every row of the Ge'ez words read in context by a model begins with; the run and model follow.</summary>
+    public const string GeezGlossPrefix = "Ge'ez words read in context by a language model for Essenthos";
+
     /// <summary>The King James, the Russian Synodal and the Ohienko Ukrainian, as bible4u spells them.</summary>
     public const string KingJamesSlug = "KJV";
 

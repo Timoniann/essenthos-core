@@ -2853,6 +2853,151 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.GeezLexiconRendering", b =>
+                {
+                    b.Property<string>("Entry")
+                        .HasColumnType("text")
+                        .HasColumnName("entry");
+
+                    b.Property<int>("Ordinal")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordinal");
+
+                    b.Property<string>("De")
+                        .HasColumnType("text")
+                        .HasColumnName("de");
+
+                    b.Property<string>("En")
+                        .HasColumnType("text")
+                        .HasColumnName("en");
+
+                    b.Property<string>("Es")
+                        .HasColumnType("text")
+                        .HasColumnName("es");
+
+                    b.Property<DateOnly>("Made")
+                        .HasColumnType("date")
+                        .HasColumnName("made");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("model");
+
+                    b.Property<string>("Run")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("run");
+
+                    b.Property<string>("Sense")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("sense");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<string>("Uk")
+                        .HasColumnType("text")
+                        .HasColumnName("uk");
+
+                    b.HasKey("Entry", "Ordinal")
+                        .HasName("pk_geez_lexicon_rendering");
+
+                    b.ToTable("geez_lexicon_rendering", null, t =>
+                        {
+                            t.HasComment("Dillmann's Latin, sense by sense in his order and numbering, rendered into English, Ukrainian, German and Spanish by a language model: a machine rendering shown under his Latin, never in its place. CC BY-NC-SA 4.0, as the digital edition it is made from.");
+
+                            t.HasCheckConstraint("ck_geez_lexicon_rendering_says_something", "coalesce(en, uk, de, es) IS NOT NULL");
+
+                            t.HasCheckConstraint("ck_geez_lexicon_rendering_source_not_empty", "length(btrim(\"source\")) > 0");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.GeezWordGloss", b =>
+                {
+                    b.Property<long>("WordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("word_id");
+
+                    b.Property<string>("Confidence")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("confidence");
+
+                    b.PrimitiveCollection<long[]>("GreekWordIds")
+                        .IsRequired()
+                        .HasColumnType("bigint[]")
+                        .HasColumnName("greek_word_ids");
+
+                    b.Property<string>("Lemma")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("lemma");
+
+                    b.Property<string>("LemmaSource")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("lemma_source");
+
+                    b.Property<string>("LineEn")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("line_en");
+
+                    b.Property<string>("LineUk")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("line_uk");
+
+                    b.Property<DateOnly>("Made")
+                        .HasColumnType("date")
+                        .HasColumnName("made");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("model");
+
+                    b.Property<string>("Morphology")
+                        .HasColumnType("text")
+                        .HasColumnName("morphology");
+
+                    b.Property<string>("Run")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("run");
+
+                    b.Property<string>("SenseEn")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("sense_en");
+
+                    b.Property<string>("SenseUk")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("sense_uk");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("WordId")
+                        .HasName("pk_geez_word_gloss");
+
+                    b.ToTable("geez_word_gloss", null, t =>
+                        {
+                            t.HasComment("What a Ge'ez word means where it stands, as a language model read it with the verse's Greek and an English translation beside it: lemma, sense, the line under the word, the Greek words it renders. Nobody checked a row; the reader is told it is a model's reading.");
+
+                            t.HasCheckConstraint("ck_geez_word_gloss_confidence", "confidence IN ('high', 'medium', 'low')");
+
+                            t.HasCheckConstraint("ck_geez_word_gloss_source_not_empty", "length(btrim(\"source\")) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.LexiconGloss", b =>
                 {
                     b.Property<int>("Id")
@@ -7421,6 +7566,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("From");
 
                     b.Navigation("To");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.GeezWordGloss", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Word", "Word")
+                        .WithMany()
+                        .HasForeignKey("WordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_geez_word_gloss_word_word_id");
+
+                    b.Navigation("Word");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Link", b =>

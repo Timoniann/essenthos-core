@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Text;
 using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Commentary;
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -33,13 +34,18 @@ internal static partial class TableProducts
     /// <summary>A served table, the sources it is read from (paths under Resources/) and how its rows are made.</summary>
     /// <param name="Products">Other products it reads, by name.</param>
     /// <param name="More">Inputs read through another producer's reading of its sources, such as a text read again whole.</param>
+    /// <param name="Version">
+    /// Raised when what the reading takes from unchanged sources changes: the code is not an input, so a table whose
+    /// product carries another <c>table-version</c> note is made again.
+    /// </param>
     private sealed record Table(
         string Name,
         string[] Columns,
         string[] Sources,
         string[] Products,
         Func<ProductStore, Rows> Make,
-        Func<ProductStore, IEnumerable<ProductInput>>? More = null);
+        Func<ProductStore, IEnumerable<ProductInput>>? More = null,
+        int Version = 1);
 
     private sealed record Rows(IEnumerable<string?[]> Lines, string? Note = null);
 
@@ -61,7 +67,14 @@ internal static partial class TableProducts
             ["strong_number", "language", "part_of_speech", "gender", "occurrences", "first_book", "first_chapter", "first_verse", "source"],
             [CompiledHebrew, BriefGreek], [], StrongProfileRows),
         new("lexicon_gloss", ["id", "entry", "strong_number", "lemma", "gloss", "source"], [BriefGreek], [], GlossRows),
-        new("geez_lexicon_entry", ["id", "entry", "headword", "forms", "consonants", "latin", "greek", "source"], ["Dillmann"], [], GeezRows),
+        new("geez_lexicon_entry", ["id", "entry", "headword", "forms", "consonants", "latin", "greek", "source"], ["Dillmann"], [], GeezRows,
+            Version: 2),
+        new("geez_lexicon_rendering", ["entry", "ordinal", "sense", "en", "uk", "de", "es", "model", "run", "made", "source"], ["Dillmann"], [],
+            GeezRenderingRows, store => GeezLayerInputs(store, GeezModelLayers.Renderings)),
+        new("geez_word_gloss",
+            ["word_id", "lemma", "lemma_source", "sense_en", "sense_uk", "line_en", "line_uk", "greek_word_ids", "morphology", "confidence", "model",
+             "run", "made", "source"],
+            [], [], GeezGlossRows, store => GeezLayerInputs(store, GeezModelLayers.GlossFolder)),
         new("commentary_entry",
             ["id", "commentary", "source", "book", "first_chapter", "first_verse", "last_chapter", "last_verse", "sequence", "body"],
             [.. CommentaryWorks.All.Select(w => $"{CommentaryReader.Folder}/{w.Module}")], [.. ProductText.Products(LopukhinReader.Synodal)],
@@ -93,7 +106,7 @@ internal static partial class TableProducts
                 .. table.More?.Invoke(store) ?? [],
             ];
             inputs = [.. inputs.DistinctBy(input => input.Path)];
-            if (!force && !store.NeedsBuild(Product(table.Name), ProductKind.Machine, inputs) && SameColumns(store, table))
+            if (!force && !store.NeedsBuild(Product(table.Name), ProductKind.Machine, inputs) && SameColumns(store, table) && SameVersion(store, table))
             {
                 made.Add(new Made(table.Name, 0, true, clock.Elapsed));
                 continue;
@@ -110,7 +123,14 @@ internal static partial class TableProducts
             var rows = table.Make(store);
             long count = 0;
             using (var writer = store.Create(Product(table.Name), ProductKind.Machine, schema, ProductHeader.DescribeProducer($"forge {Producer}"), inputs,
-                       header => header.Notes.Add(new("table", table.Name))))
+                       header =>
+                       {
+                           header.Notes.Add(new("table", table.Name));
+                           if (table.Version > 1)
+                           {
+                               header.Notes.Add(new(VersionNote, table.Version.ToString(CultureInfo.InvariantCulture)));
+                           }
+                       }))
             {
                 foreach (var line in rows.Lines)
                 {
@@ -135,6 +155,16 @@ internal static partial class TableProducts
     {
         using var file = Products.Essx.EssxReader.Open(store.FullPath(store.Find(Product(table.Name))!));
         return file.Tables[0].Columns.Select(c => c.Name).SequenceEqual(table.Columns);
+    }
+
+    private const string VersionNote = "table-version";
+
+    /// <summary>Whether the product was made by the reading of this version: a version 1 table carries no note.</summary>
+    private static bool SameVersion(ProductStore store, Table table)
+    {
+        using var file = Products.Essx.EssxReader.Open(store.FullPath(store.Find(Product(table.Name))!));
+        var note = file.Header.Notes.FirstOrDefault(n => n.Key == VersionNote).Value;
+        return (note ?? "1") == table.Version.ToString(CultureInfo.InvariantCulture);
     }
 
     private static string? Int(long? value) => value?.ToString(CultureInfo.InvariantCulture);
@@ -250,6 +280,118 @@ internal static partial class TableProducts
             headword.Entry, headword.Headword, Array(headword.Forms), Array(headword.Forms.Select(GeezLexicon.ConsonantsOf).Distinct()),
             Array(headword.Latin), Array(headword.Greek), Sources.DillmannLexicon,
         })));
+
+    /// <summary>
+    /// What a table of the model's Ge'ez layers reads, where the store holds the layer: the layer itself, and for the glosses
+    /// the words they stand on and the Greek they name. A store without the layer makes the table empty.
+    /// </summary>
+    private static IEnumerable<ProductInput> GeezLayerInputs(ProductStore store, string layer)
+    {
+        if (layer == GeezModelLayers.GlossFolder)
+        {
+            var folder = $"{ProductStore.EssenthosFolder}/{layer}";
+            return !Directory.Exists(store.FullPath(folder))
+                ? []
+                :
+                [
+                    store.Input(folder),
+                    .. new[] { TextWord.ProductOf(GeezGlossRow.Text) }.Concat(GeezGreekTexts.Select(TextWord.ProductOf)).Append(WordIdCollision.Product)
+                        .Select(store.Find).OfType<string>().Select(store.Input),
+                ];
+        }
+
+        return store.Find(layer) is { } found ? [store.Input(found)] : [];
+    }
+
+    /// <summary>The Greek a Ge'ez gloss may name: Brenton's Septuagint beside the Old Testament, Nestle beside the New.</summary>
+    private static readonly string[] GeezGreekTexts = ["GRCBRENT", "NESTLE1904"];
+
+    private static string Date(DateOnly day) => day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+    /// <summary>Dillmann's senses as the model rendered them, every entry one the lexicon loads under the same headword, or none.</summary>
+    private static Rows GeezRenderingRows(ProductStore store)
+    {
+        if (store.Find(GeezModelLayers.Renderings) is null)
+        {
+            return new Rows([], "no rendering of Dillmann in the store");
+        }
+
+        using var reader = store.Open(GeezModelLayers.Renderings, DillmannRenderingRow.Schema);
+        var rows = reader.ReadAll();
+        var loaded = DillmannLexicon.Headwords(DillmannLexicon.Read(store.FullPath("Dillmann")).ToList())
+            .ToDictionary(h => h.Entry, h => h.Headword, StringComparer.Ordinal);
+        var astray = rows.Where(r => loaded.GetValueOrDefault(r.Entry) != r.Headword).Select(r => $"{r.Entry} {r.Headword}").Distinct().ToList();
+        if (astray.Count > 0)
+        {
+            throw new InvalidDataException(
+                $"{GeezModelLayers.Renderings}: {astray.Count} entr(ies) the lexicon no longer loads under that headword, e.g. "
+                + string.Join(", ", astray.Take(10)) + ". Render them again or take the run in again with forge geez-layers.");
+        }
+
+        return new Rows(rows.Select(r => new[]
+            {
+                r.Entry, Int(r.Ordinal), r.Sense, r.En, r.Uk, r.De, r.Es, r.Model, r.Run, Date(r.Made),
+                $"{Sources.DillmannRenderingPrefix}: {r.Model}, run {r.Run}, {Date(r.Made)}; CC BY-NC-SA 4.0",
+            }),
+            $"{rows.Select(r => r.Entry).Distinct().Count()} entries");
+    }
+
+    /// <summary>
+    /// The Ge'ez words as the model read them in context, each on the word its key names, by the id that key gives it. Every
+    /// word must be one the text holds, printed as the run saw it, and every Greek word one its text holds; otherwise nothing.
+    /// </summary>
+    private static Rows GeezGlossRows(ProductStore store)
+    {
+        var folder = store.FullPath($"{ProductStore.EssenthosFolder}/{GeezModelLayers.GlossFolder}");
+        var books = !Directory.Exists(folder)
+            ? []
+            : Directory.EnumerateFiles(folder).Select(file => $"{GeezModelLayers.GlossFolder}/{Path.GetFileNameWithoutExtension(file)}")
+                .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToList();
+        if (books.Count == 0)
+        {
+            return new Rows([], "no Ge'ez glosses in the store");
+        }
+
+        var rows = new List<GeezGlossRow>();
+        foreach (var book in books)
+        {
+            using var reader = store.Open(book, GeezGlossRow.Schema);
+            rows.AddRange(reader.Rows());
+        }
+
+        var printed = new Dictionary<string, Dictionary<WordKey, string>>(StringComparer.Ordinal);
+        Dictionary<WordKey, string> Words(string text)
+        {
+            if (!printed.TryGetValue(text, out var words))
+            {
+                words = WordsOf(store, text).ToDictionary(w => w.Key, w => w.Surface);
+                printed[text] = words;
+            }
+
+            return words;
+        }
+
+        var astray = rows.Where(r => Words(GeezGlossRow.Text).GetValueOrDefault(r.Word) != r.Surface).Select(r => r.Word.ToString())
+            .Concat(rows.SelectMany(r => r.Greek.Where(key => !Words(r.GreekText).ContainsKey(key)).Select(key => $"{key} (named by {r.Word})")))
+            .ToList();
+        if (astray.Count > 0 || rows.Select(r => r.Word).Distinct().Count() != rows.Count)
+        {
+            throw new InvalidDataException(
+                $"{GeezModelLayers.GlossFolder}: {astray.Count} word(s) the texts no longer hold as the run read them, e.g. "
+                + string.Join(", ", astray.Take(10)) + (astray.Count == 0 ? "; a word glossed twice" : string.Empty)
+                + ". Take the run in again with forge geez-layers, which says which.");
+        }
+
+        var ids = Ids(store);
+        return new Rows(rows.OrderBy(r => r.Word).Select(r => new[]
+            {
+                Int(ids.Of(r.Word)), r.Lemma, r.LemmaSource, r.SenseEn, r.SenseUk, r.LineEn, r.LineUk,
+                "{" + string.Join(',', r.Greek.Select(key => ids.Of(key).ToString(CultureInfo.InvariantCulture))) + "}",
+                r.Morphology, r.Confidence, r.Model, r.Run, Date(r.Made),
+                $"{Sources.GeezGlossPrefix}: {r.Model}, run {r.Run}, {Date(r.Made)}; CC BY-NC-SA 4.0",
+            }),
+            $"{rows.Count} words over {books.Count} book(s); {rows.Count(r => r.Greek.Count == 0)} without Greek");
+    }
 
     /// <summary>Every comment of every commentary, each commentary in its module's order.</summary>
     private static Rows CommentaryRows(ProductStore store)

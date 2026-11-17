@@ -99,6 +99,7 @@ public static class DatasetEndpoints
         var topics = await Counted(db.Topics.Select(t => t.Source), cancellationToken);
         var crossReferences = await Counted(db.CrossReferences.Select(r => r.Source), cancellationToken);
         var comments = await Counted(db.CommentaryEntries.Select(c => c.Source), cancellationToken);
+        var geezGlosses = await Counted(db.GeezWordGlosses.Select(g => g.Source), cancellationToken);
         var texts = await db.Texts.CountAsync(cancellationToken);
         var points = await db.PlaceCandidates
             .Where(c => c.CoordinatesDataset != null && c.Longitude != null)
@@ -126,11 +127,11 @@ public static class DatasetEndpoints
 
             // The same shape as the lemmas above: a gloss on a word carries no source of its
             // own, so the text it sits on is what makes the credit countable.
-            var wordGlosses = dataset.WordGlosses is null
+            var wordGlosses = (dataset.WordGlosses is null
                 ? 0
                 : await db.Words.CountAsync(
                     word => word.Text!.Slug == dataset.WordGlosses && word.Gloss != null,
-                    cancellationToken);
+                    cancellationToken)) + Of(geezGlosses, dataset);
 
             var lexicon = dataset.Lexicon
                 ? await db.StrongEntries.CountAsync(cancellationToken)
@@ -142,6 +143,11 @@ public static class DatasetEndpoints
                           .CountAsync(cancellationToken)
                       + await db.GeezLexiconEntries
                           .CountAsync(entry => entry.Source.StartsWith(dataset.Prefix), cancellationToken)
+                      + await db.GeezLexiconRenderings
+                          .Where(rendering => rendering.Source.StartsWith(dataset.Prefix))
+                          .Select(rendering => rendering.Entry)
+                          .Distinct()
+                          .CountAsync(cancellationToken)
                     : 0;
 
             var counts = new DatasetCounts(
@@ -185,6 +191,7 @@ public static class DatasetEndpoints
             .Concat(Undeclared(topics))
             .Concat(Undeclared(crossReferences))
             .Concat(Undeclared(comments))
+            .Concat(Undeclared(geezGlosses))
             .GroupBy(row => row.Source, StringComparer.Ordinal)
             .Select(group => new UndeclaredResponse(group.Key, group.Sum(row => row.Rows)))
             .OrderByDescending(row => row.Rows)
