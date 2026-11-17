@@ -56,6 +56,11 @@ public sealed class PossibleIdentityPageTests : IDisposable
             new TextTranslation { Language = "ukr", EnglishSha256 = back, Text = Rendered, Source = "a test rendering" },
             new TextTranslation { Language = "deu", EnglishSha256 = back, Text = "Die Maria", Source = "a test rendering" },
             new TextTranslation { Language = "spa", EnglishSha256 = back, Text = "La María", Source = "a test rendering" });
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = other.Id, Language = "ukr", GrammaticalCase = GrammaticalCases.Nominative,
+            Form = "Марія", Method = LinkMethod.ModelReading, Confidence = 1, Source = "a test",
+        });
         await _db.SaveChangesAsync();
 
         await using var app = await Host();
@@ -75,6 +80,8 @@ public sealed class PossibleIdentityPageTests : IDisposable
         answered.GetProperty("slug").GetString().Should().Be(other.Slug);
         answered.GetProperty("reason").GetString().Should().Be(Back);
         answered.GetProperty("localReason").GetString().Should().Be(Rendered);
+        answered.GetProperty("localName").GetString().Should().Be("Марія",
+            "the other record is named as the reader's texts name it, not \"Mary\" (PRB-1808)");
 
         (await Get(client, $"/v1/entities/{mary.Slug}?language=eng")).GetProperty("alternatives").EnumerateArray()
             .Single().GetProperty("localReason").ValueKind.Should().Be(JsonValueKind.Null, "the English is the reason");
