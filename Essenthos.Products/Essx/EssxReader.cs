@@ -608,22 +608,27 @@ public sealed class KeyData : EssxColumnData
     }
 }
 
-/// <summary>A row of a decoded group, as the schema reads it.</summary>
+/// <summary>
+/// A row of a decoded group, as the schema reads it. A column past the file's last is an optional one the schema
+/// added after the file was made (<see cref="ProductSchema{T}.Check"/>), and reads as null.
+/// </summary>
 public sealed class EssxRow(EssxRowGroup group) : ProductRow(group.Table.Columns)
 {
     public EssxRowGroup Group { get; } = group;
 
     public int Index { get; set; }
 
-    public override bool IsNull(int column) => Group.Column(column).IsNull(Index);
+    private bool Beyond(int column) => column >= Group.Columns.Count;
 
-    public override string? TextOrNull(int column) => Group.Column(column).Text(Index);
+    public override bool IsNull(int column) => Beyond(column) || Group.Column(column).IsNull(Index);
 
-    public override long? IntegerOrNull(int column) => Group.Column(column).Integer(Index);
+    public override string? TextOrNull(int column) => Beyond(column) ? null : Group.Column(column).Text(Index);
 
-    public override bool? BooleanOrNull(int column) => Group.Column(column).Boolean(Index);
+    public override long? IntegerOrNull(int column) => Beyond(column) ? null : Group.Column(column).Integer(Index);
 
-    public override VerseKey? VerseKeyOrNull(int column) => Group.Column(column).VerseKey(Index);
+    public override bool? BooleanOrNull(int column) => Beyond(column) ? null : Group.Column(column).Boolean(Index);
 
-    public override WordKey? WordKeyOrNull(int column, string text) => Group.Column(column).WordKey(Index, text);
+    public override VerseKey? VerseKeyOrNull(int column) => Beyond(column) ? null : Group.Column(column).VerseKey(Index);
+
+    public override WordKey? WordKeyOrNull(int column, string text) => Beyond(column) ? null : Group.Column(column).WordKey(Index, text);
 }

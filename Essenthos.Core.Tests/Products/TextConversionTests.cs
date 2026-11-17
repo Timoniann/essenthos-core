@@ -2,6 +2,7 @@ using Essenthos.Core.Conversion;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Products;
+using Essenthos.Core.XmlBible;
 using FluentAssertions;
 using Xunit;
 
@@ -416,6 +417,74 @@ public sealed class TextConversionTests : IDisposable
         words.Select(w => w.Surface + w.Trailer).Should().Equal("ἐφοβοῦντο ", "Ἀναστὰς ", "δὲ ", "ἀμήν. ");
         words.Select(w => w.Doubtful).Should().Equal(null, 1, 1, 1);
         words.Skip(1).Should().OnlyContain(w => w.Brackets == 2);
+    }
+
+    /// <summary>Charles's verses as his reader keeps them, the signs printed in the trailers, put through his stage.</summary>
+    private ConvertedText Charles(params (int Chapter, int Verse, string Text)[] verses)
+    {
+        var text = TextConverter.From(new TextSource(Definition with { Slug = CharlesTextSource.Slug },
+        [
+            new BookDraft(CharlesTextSource.Enoch, 1, "1 Enoch", "1en",
+            [
+                .. verses.GroupBy(verse => verse.Chapter).Select(chapter => new ChapterDraft(chapter.Key,
+                [
+                    .. chapter.Select(verse => new VerseDraft(verse.Verse,
+                        [.. VerseWords.Printed(verse.Text).Select(token => new WordDraft(token.Word, token.Trailer, Elided: token.Word.Length == 0))])),
+                ])),
+            ]),
+        ]));
+        new CharlesSigns().Apply(text, _resources);
+        return text;
+    }
+
+    private static string Printed(ConvertedVerse verse) => string.Concat(verse.Words.Select(word => word.Surface + word.Trailer));
+
+    private static string[] Marked(ConvertedVerse verse, Func<ConvertedWord, int?> mark) =>
+        [.. verse.Words.Where(word => mark(word) is not null).Select(word => $"{word.Surface}{mark(word)}")];
+
+    [Fact]
+    public void CharlesSignsLeaveTheWordsAndMarkTheWordsTheyEnclose()
+    {
+        var text = Charles(
+            (1, 9, "And behold! He cometh with ten thousands of ┌His┐ holy ones To execute judgement upon all, And to destroy "
+                   + "┌all┐ the ungodly: And to convict all flesh Of all the works ┌of their ungodliness┐ which they have"),
+            (3, 1, "Observe how (in the winter) all the trees ╓seem as though they had withered."),
+            (5, 1, "Observe ye╖ how the trees cover themselves: wherefore give ye heed ┌and know┐."),
+            (10, 21, "╓And all the children of men shall become righteous,╖ and 〈all〉 nations [shall offer †adoration† and] praise."));
+
+        var (nine, three, five, ten) = (text.Verses[0], text.Verses[1], text.Verses[2], text.Verses[3]);
+        Printed(nine).Should().Be("And behold! He cometh with ten thousands of His holy ones To execute judgement upon all, And to destroy "
+                                  + "all the ungodly: And to convict all flesh Of all the works of their ungodliness which they have");
+        Marked(nine, word => word.NotInEthiopic).Should().Equal("His1", "all2", "of3", "their3", "ungodliness3");
+        Printed(three).Should().Be("Observe how in the winter all the trees seem as though they had withered.");
+        Marked(three, word => word.Supplied).Should().Equal("in1", "the1", "winter1");
+        Marked(three, word => word.NotInGreek).Should().Equal("seem1", "as1", "though1", "they1", "had1", "withered1");
+        Marked(five, word => word.NotInGreek).Should().Equal("Observe1", "ye1");
+        Marked(five, word => word.NotInEthiopic).Should().Equal("and4", "know4");
+        Printed(five).Should().Be("Observe ye how the trees cover themselves: wherefore give ye heed and know.");
+
+        Printed(ten).Should().Be("And all the children of men shall become righteous, and all nations shall offer adoration and praise.");
+        ten.Words[0].Surface.Should().Be("And", "the empty word that held the opening sign goes with it");
+        Marked(ten, word => word.NotInGreek).Should().HaveCount(9).And.OnlyContain(mark => mark.EndsWith('2'));
+        Marked(ten, word => word.Restored).Should().Equal("all1");
+        Marked(ten, word => word.Doubtful).Should().Equal("shall1", "offer1", "adoration1", "and1");
+        Marked(ten, word => word.Corrupt).Should().Equal("adoration1");
+    }
+
+    [Fact]
+    public void ACharlesSignWhoseSpanIsUncertainStaysPrintedAndMarksNothing()
+    {
+        var text = Charles(
+            (30, 2, "the colour (?) of fragrant"),
+            (75, 5, "[And for the spirit of the dew† when they are opened.]"),
+            (76, 1, "and he to]d his two dreams"));
+
+        Printed(text.Verses[0]).Should().Be("the colour (?) of fragrant");
+        Printed(text.Verses[1]).Should().Be("And for the spirit of the dew† when they are opened.");
+        Marked(text.Verses[1], word => word.Doubtful).Should().HaveCount(11);
+        text.Verses[1].Words.Should().OnlyContain(word => word.Corrupt == null);
+        Printed(text.Verses[2]).Should().Be("and he to]d his two dreams");
+        text.Verses[0].Words.Concat(text.Verses[2].Words).Should().OnlyContain(word => word.Supplied == null && word.Doubtful == null);
     }
 
     [Fact]

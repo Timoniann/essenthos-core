@@ -47,7 +47,7 @@ public sealed class TsvProductReader<T> : IProductReader<T>
         if (schema is not null)
         {
             schema.Check(_names, path);
-            Columns = schema.Columns;
+            Columns = [.. schema.Columns.Take(_names.Length)];
         }
         else
         {
@@ -153,9 +153,10 @@ public sealed class TsvRow : ProductRow
 
     public string?[] Fields { get; }
 
-    public override bool IsNull(int column) => Fields[column] is null;
+    /// <summary>A column past the file's last is an optional one the schema added after the file was made, and is null.</summary>
+    public override bool IsNull(int column) => column >= Fields.Length || Fields[column] is null;
 
-    public override string? TextOrNull(int column) => Fields[column];
+    public override string? TextOrNull(int column) => column < Fields.Length ? Fields[column] : null;
 
     public string?[] CopyFields() => (string?[])Fields.Clone();
 }

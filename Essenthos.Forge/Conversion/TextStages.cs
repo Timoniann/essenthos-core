@@ -20,6 +20,7 @@ internal static class TextStages
         new MisplacedNumbers(),
         new BereanSupplied(),
         new EditionBrackets(),
+        new CharlesSigns(),
         new PrintedWords(),
     ];
 }

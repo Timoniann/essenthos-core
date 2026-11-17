@@ -29,7 +29,7 @@ internal sealed class TextSnapshot
         """
         SELECT gw.word_id, g.id, g.kind, g."position", g.features::text
         FROM word_group g JOIN word_group_word gw ON gw.word_group_id = g.id
-        WHERE g.text_id = @text AND g.kind IN ('supplied', 'restored', 'doubtful', 'subscription')
+        WHERE g.text_id = @text AND g.kind IN ('supplied', 'restored', 'doubtful', 'subscription', 'corrupt', 'not-in-ethiopic', 'not-in-greek')
         """;
 
     private const string VerseQuery =
@@ -119,11 +119,17 @@ internal sealed class TextSnapshot
             }
         }
 
-        foreach (var member in wordGroups.Where(g => g.Kind is "doubtful" or "subscription"))
+        foreach (var member in wordGroups.Where(g => g.Kind is not ("supplied" or "restored")))
         {
-            words[member.Index] = member.Kind == "doubtful"
-                ? words[member.Index] with { Doubtful = member.Position, Brackets = Feature(member.Features, "brackets") is { } degree ? int.Parse(degree) : null }
-                : words[member.Index] with { Subscription = member.Position };
+            var word = words[member.Index];
+            words[member.Index] = member.Kind switch
+            {
+                "doubtful" => word with { Doubtful = member.Position, Brackets = Feature(member.Features, "brackets") is { } degree ? int.Parse(degree) : null },
+                "subscription" => word with { Subscription = member.Position },
+                "corrupt" => word with { Corrupt = member.Position },
+                "not-in-ethiopic" => word with { NotInEthiopic = member.Position },
+                _ => word with { NotInGreek = member.Position },
+            };
         }
 
         var verses = new List<VerseManifestRow>(32_000);

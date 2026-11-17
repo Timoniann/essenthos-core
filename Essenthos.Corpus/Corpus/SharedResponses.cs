@@ -302,8 +302,12 @@ internal record TextWordResponse(
     /// <summary>
     /// What the edition itself prints about this word, where it prints anything: <c>supplied</c>,
     /// <c>doubtful</c> for words its editors doubt belong to the text, <c>subscription</c> for a
-    /// scribe's note that is not the text, <c>restored</c> for words taken from other manuscripts.
-    /// Null for a word the edition prints plainly, which is nearly all of them.
+    /// scribe's note that is not the text, <c>restored</c> for words taken from other manuscripts or
+    /// restored by the editor, <c>corrupt</c> for a place the editor judges corrupt, and, in a
+    /// translation of the Ethiopic, <c>not-in-ethiopic</c> for words given from the Greek and
+    /// <c>not-in-greek</c> for words the Greek lacks. A word in two marks carries both, separated by
+    /// a space in kind order (<c>supplied doubtful</c>), as a class list is. Null for a word the
+    /// edition prints plainly, which is nearly all of them.
     /// </summary>
     public string? Mark { get; init; }
 

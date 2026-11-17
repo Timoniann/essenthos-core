@@ -26,6 +26,9 @@ internal sealed class ConvertedWord
     public int? Doubtful { get; set; }
     public int? Brackets { get; set; }
     public int? Subscription { get; set; }
+    public int? Corrupt { get; set; }
+    public int? NotInEthiopic { get; set; }
+    public int? NotInGreek { get; set; }
 
     /// <summary>A corrections row added the word: no source printed it where it stands. Not written.</summary>
     public bool Added { get; set; }
@@ -306,6 +309,9 @@ internal static class TextConverter
                         Doubtful = word.Doubtful,
                         Brackets = word.Brackets,
                         Subscription = word.Subscription,
+                        Corrupt = word.Corrupt,
+                        NotInEthiopic = word.NotInEthiopic,
+                        NotInGreek = word.NotInGreek,
                     };
                     hasher.Add(row.Hashed);
                     writer.Write(row);

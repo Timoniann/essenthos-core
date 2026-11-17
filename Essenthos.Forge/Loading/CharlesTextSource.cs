@@ -18,10 +18,11 @@ namespace Essenthos.Core.Loading;
 /// Ethiopic and is kept, <c>( … )Gg</c>, <c>Gᵍ</c>, <c>Gr</c> and <c>L</c> are the Akhmim Greek, Syncellus, another Greek
 /// fragment and the Latin, and are left out (where the module's editors keyed the Greek or Latin itself, it goes with
 /// them). Notes, cross-references, chapter titles and summaries, section headings, Jubilees' prologue and the
-/// anno mundi dates Charles sets in square brackets in Jubilees are not verses. Every other mark is his and stays as
-/// printed: ┌ ┐ round words the Greek has and the Ethiopic lacks, ╓ ╖ round words the Ethiopic has and the Greek
-/// lacks, † † round a corruption, 〈 〉 and &lt; &gt; round a restoration, [ ] round an interpolation, ( ) round
-/// words supplied for the sense.
+/// anno mundi dates Charles sets in square brackets in Jubilees are not verses. Every other mark is his, and the
+/// reader keeps it printed for the converter's <see cref="Conversion.CharlesSigns"/>, which takes it out of the words
+/// and keeps it as a mark on the words it encloses: ┌ ┐ round words the Greek has and the Ethiopic lacks, ╓ ╖ round
+/// words the Ethiopic has and the Greek lacks, † † round a corruption, 〈 〉 and &lt; &gt; round a restoration, [ ] round
+/// an interpolation, ( ) round words supplied for the sense.
 /// </para>
 ///
 /// <para>
@@ -136,10 +137,10 @@ internal static partial class CharlesTextSource
                 + "survives whole, by R. H. Charles, who also edited the Ethiopic texts: the translation stands beside "
                 + "the Ge'ez of the Ethiopian Church's Bible verse by verse. Where Greek or Latin fragments of Enoch "
                 + "survive, Charles printed his translation of them beside the Ethiopic's; only the Ethiopic's is here. "
-                + "His marks are kept as he printed them: ┌ ┐ round words the Greek has and the Ethiopic lacks, ╓ ╖ round "
-                + "words the Ethiopic has and the Greek lacks, † † round a corrupt passage, 〈 〉 and < > round his "
-                + "restorations, square brackets round what he took for an interpolation, round brackets round words "
-                + "supplied for the sense. He numbers the verses as the Ge'ez does. Enoch 20:8, the seventh archangel, "
+                + "His signs are kept as marks on the words they enclose, and the reader says what each means: words the "
+                + "Greek has and the Ethiopic lacks (his ┌ ┐), words the Ethiopic has and the Greek lacks (╓ ╖), a corrupt "
+                + "passage († †), his restorations (〈 〉 and < >), what he took for an interpolation (square brackets) and "
+                + "words supplied for the sense (round brackets). He numbers the verses as the Ge'ez does. Enoch 20:8, the seventh archangel, "
                 + "is his translation of the Greek, which alone has it, and he has verses the Ge'ez transcription skips "
                 + "or runs into the verse before: Enoch 21:1, 28:3, 98:16 and 100:13, and Jubilees 1:18-19, 4:3-14 and "
                 + "26:33. Passages he printed out of order, to restore what he took for the original order, stand at "

@@ -71,4 +71,22 @@ public enum WordGroupKind
     /// read and searched, and this says they are not scripture.
     /// </summary>
     Subscription,
+
+    /// <summary>
+    /// Words the editor judges corrupt: the text as the witnesses have it, which he prints but does not
+    /// believe is what was written. Charles sets them between daggers, † †, in his Enoch.
+    /// </summary>
+    Corrupt,
+
+    /// <summary>
+    /// Words a translation made from the Ethiopic gives from the Greek, which has them where the Ethiopic
+    /// does not: Charles's ┌ ┐ in his Enoch. No Ethiopic word stands behind them.
+    /// </summary>
+    NotInEthiopic,
+
+    /// <summary>
+    /// Words of a translation made from the Ethiopic that the Greek lacks where it survives: Charles's
+    /// ╓ ╖ in his Enoch. They are the Ethiopic's own words, only not the Greek's.
+    /// </summary>
+    NotInGreek,
 }

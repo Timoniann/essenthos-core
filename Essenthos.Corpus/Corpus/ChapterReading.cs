@@ -19,6 +19,7 @@ internal static class ChapterReading
     private static readonly WordGroupKind[] EditionMarks =
     [
         WordGroupKind.Supplied, WordGroupKind.Restored, WordGroupKind.Doubtful, WordGroupKind.Subscription,
+        WordGroupKind.Corrupt, WordGroupKind.NotInEthiopic, WordGroupKind.NotInGreek,
     ];
 
     /// <summary>
@@ -346,7 +347,7 @@ internal static class ChapterReading
             absent,
             marked
                 .GroupBy(m => m.WordId)
-                .ToDictionary(group => group.Key, group => group.Min(m => m.Kind)),
+                .ToDictionary(group => group.Key, group => group.Select(m => m.Kind).Distinct().Order().ToArray()),
             await Annotations.AllOf(db, ids, cancellationToken),
             await Proposed(db, ids, cancellationToken))
         {
@@ -991,7 +992,8 @@ internal static class ChapterReading
     /// text supplies and the other does not have, <c>omits</c> for the reverse.
     /// </param>
     /// <param name="Marks">
-    /// What the edition itself prints about each word it marks: supplied, doubtful, a subscription. It is not <paramref name="Absent"/> read
+    /// What the edition itself prints about each word it marks, every mark in kind order: supplied, doubtful, a subscription, a
+    /// corrupt place. A word can stand in two, as Charles's supplied words inside his interpolations do. It is not <paramref name="Absent"/> read
     /// twice: that is what an alignment found, and this is what the edition printed, which is a
     /// first-hand claim about one text and names no counterpart for it.
     /// </param>
@@ -1006,7 +1008,7 @@ internal static class ChapterReading
         ILookup<long, long> Witnesses,
         Dictionary<long, string> Provenance,
         Dictionary<long, string> Absent,
-        Dictionary<long, WordGroupKind> Marks,
+        Dictionary<long, WordGroupKind[]> Marks,
         Dictionary<long, IReadOnlyList<EntityRefResponse>> Named,
         Dictionary<long, StrongCandidateResponse> Proposed)
     {
@@ -1436,8 +1438,8 @@ internal static class ChapterReading
             Feature(features, Language))
         {
             Elided = elided,
-            Supplied = counterparts.Marks.TryGetValue(id, out var mark) && mark == WordGroupKind.Supplied,
-            Mark = counterparts.Marks.ContainsKey(id) ? EnumSpelling.Of(mark) : null,
+            Supplied = counterparts.Marks.TryGetValue(id, out var marks) && marks.Contains(WordGroupKind.Supplied),
+            Mark = marks is null ? null : string.Join(' ', marks.Select(EnumSpelling.Of)),
             StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),

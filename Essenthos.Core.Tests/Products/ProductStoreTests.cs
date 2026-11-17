@@ -39,6 +39,44 @@ public sealed class ProductStoreTests : IDisposable
         writer.WriteAll(Words);
     }
 
+    private sealed record Marked(WordKey Key, string Surface, int? Mark);
+
+    private static readonly ProductSchema<Marked> Later = new ProductSchema<Marked>()
+        .OwnWordKey("own", word => word.Key)
+        .Text("surface", word => word.Surface)
+        .OptionalInteger("mark", word => word.Mark)
+        .Reads(row => new Marked(WordKey.Parse(row.Text(0), "KJV"), row.Text(1), row.Int32OrNull(2)));
+
+    /// <summary>A file made before an optional column was added at the end of its schema reads that column as null, in both formats.</summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AFileMadeBeforeATrailingOptionalColumnReadsItAsNull(bool essx)
+    {
+        var store = essx ? new ProductStore(_root) : Store();
+        Make(store, store.Inputs("bible4u/kjv.xml"));
+
+        using var reader = store.Open("texts/KJV/words", Later);
+
+        reader.ReadAll().Should().Equal(Words.Select(word => new Marked(word.Key, word.Surface, null)));
+    }
+
+    [Fact]
+    public void AFileMissingARequiredColumnIsStillRefused()
+    {
+        var store = Store();
+        Make(store, store.Inputs("bible4u/kjv.xml"));
+        var required = new ProductSchema<Marked>()
+            .OwnWordKey("own", word => word.Key)
+            .Text("surface", word => word.Surface)
+            .Integer("mark", word => word.Mark ?? 0)
+            .Reads(row => new Marked(WordKey.Parse(row.Text(0), "KJV"), row.Text(1), row.Int32(2)));
+
+        var open = () => store.Open("texts/KJV/words", required).ReadAll();
+
+        open.Should().Throw<ProductFormatException>().WithMessage("*column 3*");
+    }
+
     [Fact]
     public void AMachineProductIsNamedWithoutAnExtensionAndWrittenUnderEssenthosWithTheFormats()
     {

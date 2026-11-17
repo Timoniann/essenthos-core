@@ -264,10 +264,19 @@ public sealed class ProductSchema<T>
     public T Read(ProductRow row) =>
         (_read ?? throw new InvalidOperationException("The schema has no reader; call Reads(...)."))(row);
 
-    /// <summary>The file's columns must be the schema's, by name and in order; the message names the first difference.</summary>
+    /// <summary>
+    /// The file's columns must be the schema's, by name and in order; the message names the first difference. A file
+    /// may stop short of optional columns the schema ends with: it was made before they were added, and a row reads
+    /// each of them as null, so adding an optional column does not make every file made before it again.
+    /// </summary>
     public void Check(IReadOnlyList<string> fileColumns, string path)
     {
         var count = Math.Max(fileColumns.Count, _columns.Count);
+        if (fileColumns.Count < _columns.Count && _columns.Skip(fileColumns.Count).All(column => column.Nullable))
+        {
+            count = fileColumns.Count;
+        }
+
         for (var i = 0; i < count; i++)
         {
             var expected = i < _columns.Count ? _columns[i].Name : "(end)";
