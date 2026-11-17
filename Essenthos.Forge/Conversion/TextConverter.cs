@@ -30,6 +30,9 @@ internal sealed class ConvertedWord
     public int? NotInEthiopic { get; set; }
     public int? NotInGreek { get; set; }
 
+    /// <summary>The letters an edition prints between signs inside the word (<c>s</c> of <c>king[s]</c>), runs apart by a space.</summary>
+    public string? Bracketed { get; set; }
+
     /// <summary>A corrections row added the word: no source printed it where it stands. Not written.</summary>
     public bool Added { get; set; }
 }
@@ -312,6 +315,7 @@ internal static class TextConverter
                         Corrupt = word.Corrupt,
                         NotInEthiopic = word.NotInEthiopic,
                         NotInGreek = word.NotInGreek,
+                        Bracketed = word.Bracketed,
                     };
                     hasher.Add(row.Hashed);
                     writer.Write(row);

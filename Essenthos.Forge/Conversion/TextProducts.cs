@@ -15,6 +15,8 @@ namespace Essenthos.Core.Conversion;
 /// <see cref="NotInEthiopic"/> and <see cref="NotInGreek"/> the same for the spans a translation of the Ethiopic sets
 /// between daggers or marks as the Greek's or the Ethiopic's alone (Charles's † †, ┌ ┐ and ╓ ╖). Those three were added
 /// after the other columns, so a words file made before them stops at <c>subscription</c> and reads them as null.
+/// <see cref="Bracketed"/>, added last, holds the letters an edition prints between signs inside a word, which the
+/// word's single-word marks carry as <c>letters</c>.
 /// </remarks>
 internal sealed record TextWord(
     WordKey Key,
@@ -45,6 +47,8 @@ internal sealed record TextWord(
 
     public int? NotInGreek { get; init; }
 
+    public string? Bracketed { get; init; }
+
     public static string ProductOf(string text) => $"texts/{text}/words";
 
     public static ProductSchema<TextWord> Schema(string text) => new ProductSchema<TextWord>()
@@ -68,6 +72,7 @@ internal sealed record TextWord(
         .OptionalInteger("corrupt", w => w.Corrupt)
         .OptionalInteger("not_in_ethiopic", w => w.NotInEthiopic)
         .OptionalInteger("not_in_greek", w => w.NotInGreek)
+        .OptionalText("bracketed", w => w.Bracketed)
         .Reads(row => new TextWord(
             WordKey.Parse(row.Text(0), text),
             row.Text(1),
@@ -90,6 +95,7 @@ internal sealed record TextWord(
             Corrupt = row.Int32OrNull(17),
             NotInEthiopic = row.Int32OrNull(18),
             NotInGreek = row.Int32OrNull(19),
+            Bracketed = row.TextOrNull(20),
         });
 
     public VerseWord Hashed => new(Surface, Trailer, Lemma, Strong, Morphology, Gloss);

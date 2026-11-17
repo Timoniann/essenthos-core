@@ -194,6 +194,7 @@ internal static class TextLoad
         var spans = new Dictionary<(string Kind, VerseKey Verse, int Number), (string? Mark, List<long> Words)>();
         var marks = new SortedDictionary<(string Kind, int Position), (int? Brackets, List<long> Words)>();
         var spanOrder = new List<(string Kind, VerseKey Verse, int Number)>();
+        var bracketed = new Dictionary<long, string>();
         long written = 0;
 
         await using var connection = new NpgsqlConnection(connectionString);
@@ -226,6 +227,10 @@ internal static class TextLoad
                 await Write(copy, word.Graphical, NpgsqlDbType.Text, cancellationToken);
                 await Write(copy, word.Break, NpgsqlDbType.Text, cancellationToken);
                 written++;
+                if (word.Bracketed is { } letters)
+                {
+                    bracketed[id] = letters;
+                }
 
                 if (word.Supplied is { } supplied)
                 {
@@ -273,13 +278,13 @@ internal static class TextLoad
             foreach (var span in kind)
             {
                 var (mark, members) = spans[span];
-                groups.Rows.Add((text.Id, span.Kind, ++position, mark is null ? null : JsonSerializer.Serialize(new { mark }), [.. members]));
+                groups.Rows.Add((text.Id, span.Kind, ++position, Features(("mark", mark), ("letters", Letters(members))), [.. members]));
             }
         }
 
         foreach (var ((kind, position), (brackets, members)) in marks)
         {
-            groups.Rows.Add((text.Id, kind, position, brackets is { } count ? $"{{\"brackets\": {count}}}" : null, [.. members]));
+            groups.Rows.Add((text.Id, kind, position, Features(("brackets", brackets), ("letters", Letters(members))), [.. members]));
         }
 
         var notes = await LoadNotes(connection, store, text, byKey, cancellationToken);
@@ -296,6 +301,9 @@ internal static class TextLoad
             span.Words.Add(id);
         }
 
+        // The letters printed between signs inside a word belong to the mark those signs made, which holds that word alone.
+        string? Letters(List<long> members) => members.Count == 1 ? bracketed.GetValueOrDefault(members[0]) : null;
+
         void Mark((string Kind, int Position) key, int? brackets, long id)
         {
             if (!marks.TryGetValue(key, out var mark))
@@ -305,6 +313,12 @@ internal static class TextLoad
 
             mark.Words.Add(id);
         }
+    }
+
+    private static string? Features(params (string Name, object? Value)[] features)
+    {
+        var present = features.Where(f => f.Value is not null).ToDictionary(f => f.Name, f => f.Value);
+        return present.Count == 0 ? null : JsonSerializer.Serialize(present);
     }
 
     private static async Task<long> LoadNotes(NpgsqlConnection connection, ProductStore store, LoadedText text, Dictionary<WordKey, long> words,

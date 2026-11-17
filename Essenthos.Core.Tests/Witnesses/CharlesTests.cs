@@ -160,6 +160,13 @@ public sealed class CharlesTests
         string.Concat(nine.Select(word => word.Surface + word.Trailer)).Should().Contain("And to destroy all the ungodly:");
         nine.Where(word => word.NotInEthiopic is not null).Select(word => word.Surface).Should().Equal(
             "His", "all", "of", "their", "ungodliness", "And", "of", "all", "the", "hard", "things", "which", "have", "spoken");
+
+        text.Verses
+            .SelectMany(verse => verse.Words.Where(word => word.Bracketed is not null)
+                .Select(word => $"{verse.Key.Book} {verse.Key.Chapter}:{verse.Key.Verse} {word.Surface} {word.Bracketed} {word.Doubtful is not null}"))
+            .Should().Equal(
+                "86 34:4 kings s True", "86 34:4 kings s True", "86 34:4 kings s True", "86 34:4 kings s True", "86 34:4 kings s True",
+                "86 34:7 Gaga'as ga True", "86 50:1 Sinai ai True");
     }
 
     private static ((int Chapter, int Verse)[] Only, (int Chapter, int Verse)[] Lacking) Against(int book)

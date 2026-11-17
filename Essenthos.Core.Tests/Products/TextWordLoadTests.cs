@@ -50,7 +50,7 @@ public sealed class TextWordLoadTests(WitnessDatabase database) : IDisposable
                 own_verse_label text NOT NULL, own_position int NOT NULL, surface text NOT NULL, trailer text NOT NULL, lemma text,
                 strong text, gloss text, morphology text, normalised text, graphical text, elided boolean NOT NULL, break text, supplied int,
                 restored int, supplied_mark text, doubtful int, brackets int, subscription int, corrupt int, not_in_ethiopic int,
-                not_in_greek int)
+                not_in_greek int, bracketed text)
             """);
 
         foreach (var slug in (string[])["RUSV", "KJV"])

@@ -488,6 +488,41 @@ public sealed class TextConversionTests : IDisposable
     }
 
     [Fact]
+    public void ACharlesSignInsideAWordLeavesItOneWordMarkedWholeWithTheLettersItEncloses()
+    {
+        var text = Charles(
+            (34, 4, "there came the king[s] of Taphu and the king[s] of 'Aresa, and"),
+            (34, 7, "Amani-sakir and Ga[ga]'as, and he"),
+            (40, 2, "and he to]d his two dreams"),
+            (50, 1, "the desert of Sin[ai], which is between Elim and Sinai."),
+            (51, 1, "[S]inai is far"),
+            (52, 1, "Ki[ng]s are (there)"));
+
+        static string[] Bracketed(ConvertedVerse verse) =>
+            [.. verse.Words.Where(word => word.Bracketed is not null).Select(word => $"{word.Surface}:{word.Bracketed}")];
+
+        var verses = text.Verses;
+        Printed(verses[0]).Should().Be("there came the kings of Taphu and the kings of 'Aresa, and");
+        Marked(verses[0], word => word.Doubtful).Should().Equal("kings1", "kings2");
+        Bracketed(verses[0]).Should().Equal("kings:s", "kings:s");
+        verses[0].Words.Single(word => word.Surface == "kings" && word.Doubtful == 1).Normalised.Should().Be("kings");
+        Printed(verses[1]).Should().Be("Amani-sakir and Gaga'as, and he");
+        Marked(verses[1], word => word.Doubtful).Should().Equal("Gaga'as3");
+        Bracketed(verses[1]).Should().Equal("Gaga'as:ga");
+        Printed(verses[2]).Should().Be("and he to]d his two dreams", "a closing sign with no opening one is a misread letter");
+        verses[2].Words.Should().OnlyContain(word => word.Bracketed == null);
+        Printed(verses[3]).Should().Be("the desert of Sinai, which is between Elim and Sinai.");
+        Bracketed(verses[3]).Should().Equal("Sinai:ai");
+        Printed(verses[4]).Should().Be("Sinai is far");
+        Bracketed(verses[4]).Should().Equal("Sinai:S");
+        Marked(verses[4], word => word.Doubtful).Should().Equal("Sinai5");
+        Printed(verses[5]).Should().Be("Kings are there");
+        verses[5].Words[0].Surface.Should().Be("Kings", "the empty word made to hold the opening sign goes with it");
+        Bracketed(verses[5]).Should().Equal("Kings:ng");
+        Marked(verses[5], word => word.Supplied).Should().Equal("there1");
+    }
+
+    [Fact]
     public void AMorphologyIsWrittenAsPostgresPrintsAJsonb()
     {
         JsonbText.Canonical("""{"pos":"art","language":"hbo","x":{"bb":1,"a":[1,2]}}""")

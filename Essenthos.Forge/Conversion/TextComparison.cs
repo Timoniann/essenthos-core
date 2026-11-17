@@ -45,6 +45,7 @@ internal static class TextComparison
         ("corrupt", w => w.Corrupt?.ToString()),
         ("not_in_ethiopic", w => w.NotInEthiopic?.ToString()),
         ("not_in_greek", w => w.NotInGreek?.ToString()),
+        ("bracketed", w => w.Bracketed),
     ];
 
     public static List<TextDifference> Compare(TextSnapshot corpus, IReadOnlyList<TextWord> words, IReadOnlyList<VerseManifestRow> verses,
