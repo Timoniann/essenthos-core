@@ -154,7 +154,7 @@ internal static class StrongEndpoints
 
             var paging = new OccurrencePaging(Math.Max(0, skip ?? 0), Math.Clamp(take ?? 50, 1, MostPerPage), from, until);
 
-            var words = db.Words.Where(w => w.StrongNumber == canonical);
+            var places = db.StrongOccurrences.Where(o => o.StrongNumber == canonical);
             if (rendering is { Length: > 0 } && renderedIn is not { Length: > 0 })
             {
                 return Results.BadRequest(new ProblemResponse(
@@ -199,12 +199,13 @@ internal static class StrongEndpoints
                         ? []
                         : await StrongRenderingCounts.NotRendered(
                             db, canonical, translation.Id, witness.Id, cancellationToken);
-                    words = words.Where(w => missed.Contains(w.Id));
+                    places = places.Where(o => missed.Contains(o.WordId));
                 }
                 else
                 {
                     // A text joined to no edition holding the number has no places to answer with.
-                    words = words.Where(w => w.TextId == (witness == null ? 0 : witness.Id));
+                    var edition = witness?.Slug ?? "";
+                    places = places.Where(o => o.Corpus == edition);
                 }
             }
 
@@ -219,15 +220,16 @@ internal static class StrongEndpoints
                         $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds."));
                 }
 
-                words = words.Where(w => w.TextId == named.Id);
+                places = places.Where(o => o.Corpus == named.Slug);
             }
 
+            // By the frame's book, the book every place is answered in.
             if (book is { } ordinal)
             {
-                words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal == ordinal);
+                places = places.Where(o => o.Book == ordinal);
             }
 
-            var page = await OccurrencePage(db, canonical, words, paging, cancellationToken);
+            var page = await OccurrencePage(db, canonical, places, paging, cancellationToken);
             if (renderedBy is not { } translationId)
             {
                 return Results.Ok(page);
@@ -403,7 +405,7 @@ internal static class StrongEndpoints
         start = Math.Clamp(start, 0, listed.Count);
         end = Math.Clamp(end, start, listed.Count);
         var page = listed[start..end];
-        var placed = await Placed(db, canonical, byText, db.Words.Where(w => page.Contains(w.Id)), new OccurrencePaging(0, Math.Max(1, page.Count)), cancellationToken);
+        var placed = await Placed(db, canonical, byText, Keys(db, db.Words.Where(w => page.Contains(w.Id))), new OccurrencePaging(0, Math.Max(1, page.Count)), cancellationToken);
         return placed with
         {
             Items = [.. placed.Items.Select(item => item with { Rendered = phrase })],
@@ -414,14 +416,14 @@ internal static class StrongEndpoints
 
     /// <summary>
     /// How many words carry the number in each text, most first: every edition of the original and every translation that
-    /// tags its own words with it. Read off the index on the words' text and number alone.
+    /// tags its own words with it. Read off the number's range of <c>strong_occurrence</c>.
     /// </summary>
     internal static async Task<List<StrongTextCountResponse>> TextCounts(
         AppDbContext db, string canonical, CancellationToken cancellationToken) =>
     [
-        .. (await db.Words
-                .Where(w => w.StrongNumber == canonical)
-                .GroupBy(w => w.Text!.Slug)
+        .. (await db.StrongOccurrences
+                .Where(o => o.StrongNumber == canonical)
+                .GroupBy(o => o.Corpus)
                 .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
                 .ToListAsync(cancellationToken))
             .OrderByDescending(text => text.Count)
@@ -453,25 +455,51 @@ internal static class StrongEndpoints
             .GroupBy(w => w.Text!.Slug)
             .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
             .ToListAsync(cancellationToken);
-        return await Placed(db, canonical, byText, words, paging, cancellationToken);
+        return await Placed(db, canonical, byText, Keys(db, words), paging, cancellationToken);
     }
 
     /// <summary>
-    /// A page of <paramref name="words"/> at their places, under the counts per text they were counted with. The page is chosen
-    /// on the words' places alone (text, frame address, position, id), after or before a cursor or from an offset, and only the
-    /// page's words are read whole.
+    /// One page of a number's places as the build stored them in list order (<see cref="StrongOccurrence"/>), with how many
+    /// stand in each text: the page is a range of one index, whatever the number's size.
+    /// </summary>
+    internal static async Task<StrongOccurrenceListResponse> OccurrencePage(
+        AppDbContext db,
+        string canonical,
+        IQueryable<StrongOccurrence> places,
+        OccurrencePaging paging,
+        CancellationToken cancellationToken)
+    {
+        var byText = await places
+            .GroupBy(o => o.Corpus)
+            .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
+            .ToListAsync(cancellationToken);
+        var keys = places.Select(o => new OccurrenceKey
+        {
+            Corpus = o.Corpus,
+            Book = o.Book,
+            Chapter = o.Chapter,
+            Verse = o.Verse,
+            Position = o.Position,
+            Id = o.WordId,
+        });
+        return await Placed(db, canonical, byText, keys, paging, cancellationToken);
+    }
+
+    /// <summary>
+    /// A page of words at their places (<paramref name="keys"/>), under the counts per text they were counted with. The page is
+    /// chosen on the words' places alone (text, frame address, position, id), after or before a cursor or from an offset, and
+    /// only the page's words are read whole.
     /// </summary>
     private static async Task<StrongOccurrenceListResponse> Placed(
         AppDbContext db,
         string canonical,
         List<StrongTextCountResponse> byText,
-        IQueryable<Word> words,
+        IQueryable<OccurrenceKey> keys,
         OccurrencePaging paging,
         CancellationToken cancellationToken)
     {
         var total = byText.Sum(text => text.Count);
         var counted = byText.OrderByDescending(text => text.Count).ThenBy(text => text.Corpus, StringComparer.Ordinal).ToList();
-        var keys = Keys(db, words);
         List<OccurrenceKey> page;
         bool earlier, later;
         if (paging.Before is { } until)
@@ -748,9 +776,9 @@ internal static class StrongEndpoints
         AppDbContext db,
         IReadOnlyCollection<string> numbers,
         CancellationToken cancellationToken) =>
-        db.Words
-            .Where(w => w.StrongNumber != null && numbers.Contains(w.StrongNumber))
-            .GroupBy(w => w.StrongNumber!)
+        db.StrongOccurrences
+            .Where(o => numbers.Contains(o.StrongNumber))
+            .GroupBy(o => o.StrongNumber)
             .Select(g => new { Number = g.Key, Count = g.Count() })
             .ToDictionaryAsync(row => row.Number, row => row.Count, cancellationToken);
 

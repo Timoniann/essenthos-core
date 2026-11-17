@@ -65,6 +65,7 @@ public sealed class VerseListTests : IDisposable
         }
 
         _db.SaveChanges();
+        _db.WriteStoredStrong().GetAwaiter().GetResult();
         _services = new ServiceCollection().AddScoped(_ => database.NewContext()).BuildServiceProvider();
     }
 

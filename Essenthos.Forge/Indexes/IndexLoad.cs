@@ -176,6 +176,8 @@ internal static class IndexLoad
                          DELETE FROM strong_reach WHERE text_id = ANY(@texts);
                          DELETE FROM strong_book_reach WHERE text_id = ANY(@texts);
                          DELETE FROM strong_book WHERE witness_id = ANY(@editions);
+                         DELETE FROM text_book_linked WHERE text_id = ANY(@texts);
+                         DELETE FROM strong_book_words WHERE witness_id = ANY(@editions);
                          CREATE TEMP TABLE phrase_stage (text_id int, strong_number text, phrase text, uses int) ON COMMIT DROP;
                          """, connection, transaction))
         {
@@ -332,6 +334,23 @@ internal static class IndexLoad
             }
 
             await writer.CompleteAsync(cancellationToken);
+        }
+
+        // What the Strong map reads per book whatever the number: the books each text is linked in, and each edition's
+        // numbered words per book with the ETCBC prefix morphemes left out, the denominator of its rate.
+        await using (var sums = new NpgsqlCommand(
+                         """
+                         INSERT INTO text_book_linked (text_id, book)
+                         SELECT DISTINCT text_id, book FROM strong_book_reach WHERE text_id = ANY(@texts);
+                         INSERT INTO strong_book_words (witness_id, book, words)
+                         SELECT witness_id, book, sum(occurrences) FROM strong_book
+                         WHERE witness_id = ANY(@editions) AND strong_number NOT LIKE 'H9%'
+                         GROUP BY witness_id, book;
+                         """, connection, transaction))
+        {
+            sums.Parameters.AddWithValue("texts", textIds);
+            sums.Parameters.AddWithValue("editions", editionIds);
+            await sums.ExecuteNonQueryAsync(cancellationToken);
         }
 
         if (transaction is not null)

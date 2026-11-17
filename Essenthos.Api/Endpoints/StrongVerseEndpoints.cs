@@ -57,20 +57,19 @@ internal static class StrongVerseEndpoints
         var slug = corpus is { Length: > 0 }
             ? (await canon.Text(corpus, cancellationToken))?.Slug
             : await Edition(db, byText, cancellationToken);
-        var textId = slug is null ? 0 : (await canon.Text(slug, cancellationToken))?.Id ?? 0;
+        var edition = slug ?? "";
 
+        // The number's places in the edition as the build stored them (strong_occurrence): one range of one index.
         const int bookStride = EncyclopediaEndpoints.BookStride;
         const int chapterStride = EncyclopediaEndpoints.ChapterStride;
-        var placed =
-            from w in db.Words
-            join r in db.VerseReferences on w.VerseId equals r.VerseId
-            where w.StrongNumber == canonical && w.TextId == textId && r.IsPrimary
-            select new
+        var placed = db.StrongOccurrences
+            .Where(o => o.StrongNumber == canonical && o.Corpus == edition)
+            .Select(o => new
             {
-                Address = (r.CanonicalBook * bookStride) + (r.CanonicalChapter * chapterStride) + r.CanonicalVerse,
-                w.Position,
-                w.Surface,
-            };
+                Address = (o.Book * bookStride) + (o.Chapter * chapterStride) + o.Verse,
+                o.Position,
+                o.WordId,
+            });
         var addresses = placed.Select(p => p.Address).Distinct();
 
         var total = await addresses.CountAsync(cancellationToken);
@@ -79,10 +78,12 @@ internal static class StrongVerseEndpoints
             .Skip(Math.Max(0, skip))
             .Take(Math.Clamp(take, 1, EncyclopediaEndpoints.MostReferencesPerPage))
             .ToListAsync(cancellationToken);
-        var words = await placed
-            .Where(p => wanted.Contains(p.Address))
-            .OrderBy(p => p.Address).ThenBy(p => p.Position)
-            .Select(p => new { p.Address, p.Surface })
+        var words = await (
+                from p in placed
+                where wanted.Contains(p.Address)
+                join w in db.Words on p.WordId equals w.Id
+                orderby p.Address, p.Position, p.WordId
+                select new { p.Address, w.Surface })
             .ToListAsync(cancellationToken);
 
         List<EntityReferenceBookResponse> books =

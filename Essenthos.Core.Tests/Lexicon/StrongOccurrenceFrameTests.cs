@@ -42,6 +42,7 @@ public sealed class StrongOccurrenceFrameTests : IDisposable
         placed.CanonicalChapter = 4;
         placed.CanonicalVerse = 1;
         _db.SaveChanges();
+        _db.WriteStoredStrong().GetAwaiter().GetResult();
     }
 
     public void Dispose()
@@ -66,5 +67,5 @@ public sealed class StrongOccurrenceFrameTests : IDisposable
 
     private Task<StrongOccurrenceListResponse> Page() =>
         StrongEndpoints.OccurrencePage(
-            _db, Number, _db.Words.Where(w => w.StrongNumber == Number), null, null, default);
+            _db, Number, _db.StrongOccurrences.Where(o => o.StrongNumber == Number), new OccurrencePaging(0, 50), default);
 }
