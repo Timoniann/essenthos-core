@@ -1,3 +1,4 @@
+using Essenthos.Core.Conversion;
 using Essenthos.Core.Loading;
 using FluentAssertions;
 using Xunit;
@@ -127,6 +128,38 @@ public sealed class CharlesTests
             .Chapters.Single(c => c.Number == chapter).Verses.Select(verse => verse.Number);
 
         verses.Should().StartWith(Enumerable.Range(1, last));
+    }
+
+    /// <summary>
+    /// The converter takes every sign whose span is certain out of the words and keeps it as a mark; what stays printed is
+    /// the scan's seven odd daggers, its two closing brackets for a misread letter and Charles's (?) after Enoch 30:2's word.
+    /// </summary>
+    [Fact]
+    public void EverySignWhoseSpanIsCertainBecomesAMark()
+    {
+        var text = TextConverter.From(Reading.Value.Source);
+        new CharlesSigns().Apply(text, string.Empty);
+
+        var left = text.Verses
+            .SelectMany(verse => verse.Words.Where(word => word.Trailer.Any(CharlesSigns.IsSign))
+                .Select(word => $"{verse.Key.Book} {verse.Key.Chapter}:{verse.Key.Verse} {word.Surface}{word.Trailer}"))
+            .ToList();
+        left.Should().Equal(
+            "85 30:2 colour (?) ", "85 39:1 it †", "85 39:1 children †", "85 39:1 seed† ", "85 75:5 dew† ", "85 83:11 as †",
+            "85 83:11 known† ", "85 83:11 east, †", "86 23:11 away].", "86 40:2 to]");
+        var words = text.Words().Select(w => w.Word).ToList();
+        int Spans(Func<ConvertedWord, int?> mark) => words.Where(word => mark(word) is not null).Select(mark).Distinct().Count();
+        new
+        {
+            Corrupt = Spans(word => word.Corrupt), NotInEthiopic = Spans(word => word.NotInEthiopic),
+            NotInGreek = Spans(word => word.NotInGreek), Doubtful = Spans(word => word.Doubtful),
+        }.Should().BeEquivalentTo(new { Corrupt = 60, NotInEthiopic = 67, NotInGreek = 46, Doubtful = 113 });
+        text.Verses.SelectMany(verse => verse.Words).Should().NotContain(word => word.Surface.Length == 0 && word.Trailer.Length == 0);
+
+        var nine = text.Verses.Single(verse => verse.Key is { Book: CharlesTextSource.Enoch, Chapter: 1, Verse: 9 }).Words;
+        string.Concat(nine.Select(word => word.Surface + word.Trailer)).Should().Contain("And to destroy all the ungodly:");
+        nine.Where(word => word.NotInEthiopic is not null).Select(word => word.Surface).Should().Equal(
+            "His", "all", "of", "their", "ungodliness", "And", "of", "all", "the", "hard", "things", "which", "have", "spoken");
     }
 
     private static ((int Chapter, int Verse)[] Only, (int Chapter, int Verse)[] Lacking) Against(int book)

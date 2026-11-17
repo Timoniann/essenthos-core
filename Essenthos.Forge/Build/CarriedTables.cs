@@ -19,7 +19,7 @@ internal static class CarriedTables
 
     public sealed record Outcome(string Table, long Exported, long Loaded, long LeftOut, TimeSpan Elapsed);
 
-    private const string Kept = "('supplied', 'restored', 'doubtful', 'subscription')";
+    private const string Kept = "('supplied', 'restored', 'doubtful', 'subscription', 'corrupt', 'not-in-ethiopic', 'not-in-greek')";
 
     public static readonly IReadOnlyList<Carried> All =
     [

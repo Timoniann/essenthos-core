@@ -67,6 +67,9 @@ internal static class EnumSpelling
         WordGroupKind.Restored => "restored",
         WordGroupKind.Doubtful => "doubtful",
         WordGroupKind.Subscription => "subscription",
+        WordGroupKind.Corrupt => "corrupt",
+        WordGroupKind.NotInEthiopic => "not-in-ethiopic",
+        WordGroupKind.NotInGreek => "not-in-greek",
         _ => throw Unmapped(value),
     };
 
@@ -84,6 +87,9 @@ internal static class EnumSpelling
         "restored" => WordGroupKind.Restored,
         "doubtful" => WordGroupKind.Doubtful,
         "subscription" => WordGroupKind.Subscription,
+        "corrupt" => WordGroupKind.Corrupt,
+        "not-in-ethiopic" => WordGroupKind.NotInEthiopic,
+        "not-in-greek" => WordGroupKind.NotInGreek,
         _ => throw Unreadable<WordGroupKind>(stored),
     };
 

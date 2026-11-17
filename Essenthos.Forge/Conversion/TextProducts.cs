@@ -11,7 +11,10 @@ namespace Essenthos.Core.Conversion;
 /// <remarks>
 /// The edition's other marks: <see cref="SuppliedMark"/> is the bracket the Berean prints a supplied span in;
 /// <see cref="Doubtful"/> and <see cref="Subscription"/> number, through the whole text, the spans an edition
-/// brackets as doubtful (with <see cref="Brackets"/>, how many brackets) or as a subscription.
+/// brackets as doubtful (with <see cref="Brackets"/>, how many brackets) or as a subscription; <see cref="Corrupt"/>,
+/// <see cref="NotInEthiopic"/> and <see cref="NotInGreek"/> the same for the spans a translation of the Ethiopic sets
+/// between daggers or marks as the Greek's or the Ethiopic's alone (Charles's † †, ┌ ┐ and ╓ ╖). Those three were added
+/// after the other columns, so a words file made before them stops at <c>subscription</c> and reads them as null.
 /// </remarks>
 internal sealed record TextWord(
     WordKey Key,
@@ -36,6 +39,12 @@ internal sealed record TextWord(
 
     public int? Subscription { get; init; }
 
+    public int? Corrupt { get; init; }
+
+    public int? NotInEthiopic { get; init; }
+
+    public int? NotInGreek { get; init; }
+
     public static string ProductOf(string text) => $"texts/{text}/words";
 
     public static ProductSchema<TextWord> Schema(string text) => new ProductSchema<TextWord>()
@@ -56,6 +65,9 @@ internal sealed record TextWord(
         .OptionalInteger("doubtful", w => w.Doubtful)
         .OptionalInteger("brackets", w => w.Brackets)
         .OptionalInteger("subscription", w => w.Subscription)
+        .OptionalInteger("corrupt", w => w.Corrupt)
+        .OptionalInteger("not_in_ethiopic", w => w.NotInEthiopic)
+        .OptionalInteger("not_in_greek", w => w.NotInGreek)
         .Reads(row => new TextWord(
             WordKey.Parse(row.Text(0), text),
             row.Text(1),
@@ -75,6 +87,9 @@ internal sealed record TextWord(
             Doubtful = row.Int32OrNull(14),
             Brackets = row.Int32OrNull(15),
             Subscription = row.Int32OrNull(16),
+            Corrupt = row.Int32OrNull(17),
+            NotInEthiopic = row.Int32OrNull(18),
+            NotInGreek = row.Int32OrNull(19),
         });
 
     public VerseWord Hashed => new(Surface, Trailer, Lemma, Strong, Morphology, Gloss);

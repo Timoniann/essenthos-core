@@ -247,6 +247,21 @@ internal static class TextLoad
                     // The Stephanus prints each subscription in one pair of brackets, which is all the edition-marks step recorded.
                     Mark(("subscription", subscription), 1, id);
                 }
+
+                if (word.Corrupt is { } corrupt)
+                {
+                    Mark(("corrupt", corrupt), null, id);
+                }
+
+                if (word.NotInEthiopic is { } notInEthiopic)
+                {
+                    Mark(("not-in-ethiopic", notInEthiopic), null, id);
+                }
+
+                if (word.NotInGreek is { } notInGreek)
+                {
+                    Mark(("not-in-greek", notInGreek), null, id);
+                }
             }
 
             await copy.CompleteAsync(cancellationToken);
