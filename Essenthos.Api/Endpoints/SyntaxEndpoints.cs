@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -24,34 +24,6 @@ internal static class SyntaxEndpoints
 
     public static void MapSyntax(this IEndpointRouteBuilder routes)
     {
-        // What a word is part of, innermost first, which is how a reader reads it: this word is the
-        // subject of this phrase, in this clause, in this sentence.
-        routes.MapGet("/words/{id:long}/syntax", async (
-            long id,
-            AppDbContext db,
-            CancellationToken cancellationToken) =>
-        {
-            var groups = await db.WordGroupWords
-                .Where(m => m.WordId == id)
-                .Select(m => new
-                {
-                    m.WordGroup!.Id,
-                    m.WordGroup.Kind,
-                    m.WordGroup.Features,
-                    Words = m.WordGroup.Words.Count,
-                })
-                .ToListAsync(cancellationToken);
-
-            return groups.Count == 0
-                ? Results.NotFound(new ProblemResponse(
-                    $"Word {id} is in no group. Either it does not exist, or its text has no syntax loaded."))
-                : Results.Ok(groups
-                    .OrderBy(g => g.Words)
-                    .Select(g => new SyntaxGroupResponse(
-                        g.Id, EnumSpelling.Of(g.Kind), g.Words, Features(g.Features), null))
-                    .ToList());
-        });
-
         routes.MapGet("/syntax/{id:long}", async (
             long id,
             AppDbContext db,
