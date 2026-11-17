@@ -1,4 +1,5 @@
 using Essenthos.Core.Configuration;
+using Essenthos.Core.Context;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -25,12 +26,23 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] int? take,
             [FromQuery] string? canon,
             [FromQuery] string? tribe,
+            [FromQuery] string? slugs,
             AppDbContext db,
             IServiceScopeFactory scopes,
             SiteSettingsFile settings,
             [FromServices] PlacePictures? places,
             CancellationToken cancellationToken) =>
         {
+            // The cards of the records named, in the order named: the rows a page of the list holds, for a client that knows
+            // which records it shows. What orders, narrows or pages a list has nothing to do here and is refused, not ignored.
+            if (slugs is not null)
+            {
+                return new[] { q, kind, subtype, sort, letter, canon, tribe }.Any(p => !string.IsNullOrEmpty(p)) || skip is not null || take is not null
+                    ? Results.BadRequest(new ProblemResponse(
+                        "slugs names the records whose cards are asked for, and takes only language and prose beside it."))
+                    : await Named(db, scopes, slugs, language, prose, settings, places, cancellationToken);
+            }
+
             if (sort is { Length: > 0 } && !Sorts.Contains(sort))
             {
                 return Results.BadRequest(new ProblemResponse(
@@ -92,60 +104,12 @@ internal static partial class EncyclopediaEndpoints
                 .Select(l => new { l.Entity.Id, l.Entity.Slug, l.LocalName })
                 .ToListAsync(cancellationToken);
 
-            var slugs = named.Select(row => row.Slug).ToList();
-            var words = ReaderLanguages.Prose(prose, language);
-
-            // What each row says under its name is read beside the rest, on a connection of its own: it
-            // takes a dozen small reads, and after the rest it was most of the time Go To waited for a page of five.
-            var describing = Beside(scopes, other => Descriptors.Of(other, slugs, words, cancellationToken, language));
-
-            // The summaries in a second read, by slug: the projection is an expression the provider
-            // cannot put beside the name the first read ordered by.
-            var summaries = await db.Entities
-                .Where(e => slugs.Contains(e.Slug))
-                .Select(Summary)
-                .ToDictionaryAsync(row => row.Slug, cancellationToken);
-            var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], words, cancellationToken);
-            var renamed = await RenamedHeadings.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
-            var headed = named.ToDictionary(
-                row => row.Id,
-                row => renamed.TryGetValue(row.Id, out var heads)
-                    ? summaries[row.Slug] with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled }
-                    : summaries[row.Slug] with { LocalName = row.LocalName });
-            var foundAs = q is { Length: > 0 }
-                ? await EntityNames.FoundAs(
-                    db, headed.ToDictionary(row => row.Key, row => row.Value.LocalName ?? row.Value.Name), q, cancellationToken, renamed)
-                : [];
-            var page = named
-                .Select(row => headed[row.Id] with
-                {
-                    LocalDistinguisher = lines.GetValueOrDefault(row.Id),
-                    Matched = foundAs.GetValueOrDefault(row.Id),
-                })
-                .ToList();
-
-            var described = await describing;
-            var pictured = await ImageEndpoints.Leading(
-                db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages), places, words);
-            var undescribed = named
-                .Where(row => !described.ContainsKey(row.Slug)
-                              && page.First(e => e.Slug == row.Slug) is { Distinguisher: null, LocalDistinguisher: null })
-                .ToDictionary(row => row.Id, row => row.Slug);
-            var first = (await FirstVerses(db, undescribed.Keys, cancellationToken))
-                .ToDictionary(pair => undescribed[pair.Key], pair => pair.Value);
-
-            return Results.Ok(new EntityListResponse(
-                total,
-                [
-                    .. page.Select(e => e with
-                    {
-                        Descriptor = described.GetValueOrDefault(e.Slug),
-                        Thumbnail = pictured.GetValueOrDefault(e.Slug),
-                        FirstVerse = first.GetValueOrDefault(e.Slug),
-                    }),
-                ])
+            var cards = await Cards(
+                db, scopes, [.. named.Select(row => (row.Id, row.Slug, row.LocalName))], language, prose, q, settings, places, cancellationToken);
+            return Results.Ok(new EntityListResponse(total, cards.Items)
             {
                 Near = found?.Near ?? false,
+                Records = cards.Records,
             });
         });
 
@@ -253,6 +217,198 @@ internal static partial class EncyclopediaEndpoints
                 : Results.Text(family.Body, "application/json; charset=utf-8");
         }).KeptUntilRelease();
     }
+
+    /// <summary>The cards of the records a client names, in the order it names them, and the slugs no record has.</summary>
+    private static async Task<IResult> Named(
+        AppDbContext db,
+        IServiceScopeFactory scopes,
+        string slugs,
+        string? language,
+        string? prose,
+        SiteSettingsFile settings,
+        PlacePictures? places,
+        CancellationToken cancellationToken)
+    {
+        var asked = slugs.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        if (asked.Count is 0 or > MostPerPage)
+        {
+            return Results.BadRequest(new ProblemResponse($"Name between 1 and {MostPerPage} records, as slugs=moses,aaron."));
+        }
+
+        var rows = await EntityNames.Localised(db, db.Entities.Where(e => asked.Contains(e.Slug)), language)
+            .Select(l => new { l.Entity.Id, l.Entity.Slug, l.LocalName })
+            .ToDictionaryAsync(row => row.Slug, StringComparer.Ordinal, cancellationToken);
+        var held = asked.Where(rows.ContainsKey).Select(slug => (rows[slug].Id, slug, rows[slug].LocalName)).ToList();
+        var cards = await Cards(db, scopes, held, language, prose, null, settings, places, cancellationToken);
+        var unknown = asked.Where(slug => !rows.ContainsKey(slug)).ToList();
+        return Results.Ok(new EntityListResponse(held.Count, cards.Items)
+        {
+            Records = cards.Records,
+            Unknown = unknown.Count > 0 ? unknown : null,
+        });
+    }
+
+    /// <summary>
+    /// What a row of the list shows of each record, in the order given: its summary and heading in the reader's languages,
+    /// the line under its name, its picture, and the first verse that names a record nothing else tells apart. The line is
+    /// the one the build stored for the pair of languages (<c>context_line</c>), its targets in the one map of records
+    /// returned beside the rows.
+    /// </summary>
+    private static async Task<(IList<EntitySummaryResponse> Items, IDictionary<string, ContextRecordResponse>? Records)> Cards(
+        AppDbContext db,
+        IServiceScopeFactory scopes,
+        IReadOnlyList<(int Id, string Slug, string? LocalName)> named,
+        string? language,
+        string? prose,
+        string? q,
+        SiteSettingsFile settings,
+        PlacePictures? places,
+        CancellationToken cancellationToken)
+    {
+        var slugs = named.Select(row => row.Slug).ToList();
+        var ids = named.Select(row => row.Id).ToList();
+        var words = ReaderLanguages.Prose(prose, language);
+        var (lines, records) = await CardLines(db, scopes, named, language, words, cancellationToken);
+
+        // The summaries in a second read, by slug: the projection is an expression the provider
+        // cannot put beside the name the first read ordered by.
+        var summaries = await db.Entities
+            .Where(e => slugs.Contains(e.Slug))
+            .Select(Summary)
+            .ToDictionaryAsync(row => row.Slug, cancellationToken);
+        var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
+        var headed = named.ToDictionary(
+            row => row.Id,
+            row => renamed.TryGetValue(row.Id, out var heads)
+                ? summaries[row.Slug] with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled }
+                : summaries[row.Slug] with { LocalName = row.LocalName });
+        var foundAs = q is { Length: > 0 }
+            ? await EntityNames.FoundAs(
+                db, headed.ToDictionary(row => row.Key, row => row.Value.LocalName ?? row.Value.Name), q, cancellationToken, renamed)
+            : [];
+        var page = named
+            .Select(row => headed[row.Id] with
+            {
+                LocalDistinguisher = lines[row.Slug].LocalDistinguisher,
+                Line = lines[row.Slug].Descriptor,
+                Records = lines[row.Slug].Records,
+                Matched = foundAs.GetValueOrDefault(row.Id),
+            })
+            .ToList();
+
+        var pictured = await ImageEndpoints.Leading(
+            db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages), places, words);
+        var undescribed = page
+            .Zip(named)
+            .Where(pair => pair.First is { Line: null, Distinguisher: null, LocalDistinguisher: null })
+            .ToDictionary(pair => pair.Second.Id, pair => pair.Second.Slug);
+        var first = (await FirstVerses(db, undescribed.Keys, cancellationToken))
+            .ToDictionary(pair => undescribed[pair.Key], pair => pair.Value);
+
+        return (
+            [
+                .. page.Select(e => e with
+                {
+                    Thumbnail = pictured.GetValueOrDefault(e.Slug),
+                    FirstVerse = first.GetValueOrDefault(e.Slug),
+                }),
+            ],
+            records.Count > 0 ? records : null);
+    }
+
+    /// <summary>
+    /// A record's line under its name in a list, its own line in the language of words, and the records its line points at
+    /// where it says them otherwise than the list's map does.
+    /// </summary>
+    private sealed record CardLine(
+        ContextDescriptorResponse? Descriptor,
+        string? LocalDistinguisher,
+        IDictionary<string, ContextRecordResponse>? Records = null);
+
+    /// <summary>
+    /// The line under each record's name and its own line, as the build stored them for this pair of languages, in one
+    /// statement. A record the build stored no line for (a language of names it holds none in, a record made since) is
+    /// composed as the stored ones were, its descriptor read beside the rest on a connection of its own.
+    ///
+    /// <para>
+    /// The list's map holds each target as the first row to point at it says it; a row that says a target otherwise keeps
+    /// that target with it. A title is said of a people in the plural and of a person in the singular, so the Anakim are
+    /// <em>Giants</em> beside a giant whose line says <em>Giant</em>.
+    /// </para>
+    /// </summary>
+    private static async Task<(Dictionary<string, CardLine> Lines, SortedDictionary<string, ContextRecordResponse> Records)> CardLines(
+        AppDbContext db,
+        IServiceScopeFactory scopes,
+        IReadOnlyList<(int Id, string Slug, string? LocalName)> named,
+        string? language,
+        string? words,
+        CancellationToken cancellationToken)
+    {
+        var lines = new Dictionary<string, CardLine>(StringComparer.Ordinal);
+        var pointed = new Dictionary<string, IReadOnlyDictionary<string, ContextRecordResponse>>(StringComparer.Ordinal);
+
+        var slugs = named.Select(row => row.Slug).ToList();
+        if (slugs.Count > 0 && language is { Length: > 0 } && words is { Length: > 0 })
+        {
+            var stored = await db.ContextLines
+                .Where(l => l.Prose == words && l.Names == language && slugs.Contains(l.Slug))
+                .Select(l => new { l.Slug, l.Body })
+                .ToListAsync(cancellationToken);
+            foreach (var row in stored)
+            {
+                var line = ContextLines.Read(row.Body);
+                lines[row.Slug] = new CardLine(line.Descriptor, line.LocalDistinguisher);
+                pointed[row.Slug] = line.Records ?? [];
+            }
+        }
+
+        var missing = named.Where(row => !lines.ContainsKey(row.Slug)).ToList();
+        if (missing.Count > 0)
+        {
+            var describing = Beside(scopes, other => Descriptors.Of(other, missing.Select(row => row.Slug), words, cancellationToken, language));
+            var distinguishers = await EntityDistinguishers.Of(db, [.. missing.Select(row => row.Id)], words, cancellationToken);
+            var described = await describing;
+            foreach (var row in missing)
+            {
+                var slim = described.TryGetValue(row.Slug, out var descriptor)
+                    ? ContextDescriptors.Slim(new Dictionary<string, EntityDescriptorResponse>(StringComparer.Ordinal) { [row.Slug] = descriptor })
+                    : null;
+                lines[row.Slug] = new CardLine(slim?.Lines.GetValueOrDefault(row.Slug), distinguishers.GetValueOrDefault(row.Id));
+                pointed[row.Slug] = slim is null ? [] : new Dictionary<string, ContextRecordResponse>(slim.Records, StringComparer.Ordinal);
+            }
+        }
+
+        var records = new SortedDictionary<string, ContextRecordResponse>(StringComparer.Ordinal);
+        foreach (var row in named)
+        {
+            var own = new SortedDictionary<string, ContextRecordResponse>(StringComparer.Ordinal);
+            foreach (var (target, record) in pointed[row.Slug])
+            {
+                if (!records.TryAdd(target, record) && !SaidAlike(records[target], record))
+                {
+                    own[target] = record;
+                }
+            }
+
+            if (own.Count > 0)
+            {
+                lines[row.Slug] = lines[row.Slug] with { Records = own };
+            }
+        }
+
+        return (lines, records);
+    }
+
+    private static bool SaidAlike(ContextRecordResponse one, ContextRecordResponse other) =>
+        one.Kind == other.Kind
+        && one.Name == other.Name
+        && one.EnglishName == other.EnglishName
+        && (one.Forms ?? []).Count == (other.Forms ?? []).Count
+        && (one.Forms ?? []).All(form => other.Forms is not null
+                                         && other.Forms.TryGetValue(form.Key, out var said)
+                                         && said == form.Value);
 
     /// <summary>A read on a connection of its own, to run beside what the request's own connection reads.</summary>
     private static async Task<T> Beside<T>(IServiceScopeFactory scopes, Func<AppDbContext, Task<T>> read)
