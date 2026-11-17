@@ -252,6 +252,23 @@ public sealed class WikipediaMatchTests : IDisposable
         LinkedTo(matches, 2).Should().Be("Q1 by name");
     }
 
+    // PRB-1807: Q302 is a deity and a human; the guard dropped him, and the title Christ won on Mary.
+    [Fact]
+    public void AnItemThatIsAHumanAsWellAsAGodStaysAMansCandidate()
+    {
+        Add("Q302", "Jesus Christ", aliases: ["Jesus"], classes: ["Q178885", "Q5"], sex: "male",
+            claims: new() { ["P25"] = ["Q345"] }, article: "Jesus");
+        Add("Q642420", "Christ", aliases: ["Jesus"], classes: ["Q2634521"], sex: "male",
+            claims: new() { ["P25"] = ["Q345"], ["P361"] = ["Q302"] }, article: "Christ (title)");
+        Add("Q345", "Mary", sex: "female");
+
+        var matches = Matcher().Match(
+            [Record(1, "jesus", "Jesus", line: "of Nazareth", sex: "male", relatives: Kin("son-of", "Mary"))]);
+
+        matches[1].Should().BeOfType<WikipediaMatch.Ambiguous>("both items name his mother, so the owner chooses")
+            .Which.Candidates.Select(c => c.Item.Id).Should().Contain("Q302");
+    }
+
     [Fact]
     public void ADisambiguationPageIsNotAnItem()
     {

@@ -387,8 +387,10 @@ internal sealed class WikipediaMatcher
             return false;
         }
 
-        // A man is not an angel because an angel's alias is his name: Rephael is not Raphael.
-        return !item.Supernatural || SaysSupernatural(record.Line);
+        // A man is not an angel because an angel's alias is his name: Rephael is not Raphael. But an item
+        // Wikidata holds to be a human as well as a god is a man the guard has no business with: Jesus
+        // Christ is both, and without him the title Christ, which shares his mother, won Jesus (PRB-1807).
+        return !item.Supernatural || item.IsAHuman || SaysSupernatural(record.Line);
     }
 
     private static readonly string[] SupernaturalWords =
