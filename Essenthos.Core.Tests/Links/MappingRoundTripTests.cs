@@ -92,6 +92,7 @@ public sealed class MappingRoundTripTests : IDisposable
         after.Should().BeEquivalentTo(before.Where(r => !r.Contains("aligned as stems")),
             "every link the merge kept is loaded with its words, roles and claims");
         (await Scalar(CorpusCheck.ClaimsKeptApartSql)).Should().Be(0, "with the triggers off the load writes what they would");
+        (await Scalar(OtherVerse)).Should().Be(0, "with the triggers off the load writes each word's verse itself");
         (await Scalar("SELECT max(methods) FROM link")).Should().Be(LinkMethods.Bit(LinkMethod.StrongNumber) | LinkMethods.Bit(LinkMethod.Aligner),
             "the link the Strong numbers drew and the aligner reached keeps both methods");
         using (var final = store.Open(MappingProducts.Of("KJV-BHSA", MappingProducts.Final), FinalRow.Schema))
@@ -155,7 +156,12 @@ public sealed class MappingRoundTripTests : IDisposable
         after.Where(c => c.Link == strong).Select(c => c.Id).Should().NotIntersectWith(claims.Where(c => c.Link == strong).Select(c => c.Id));
         (await Stored()).Should().ContainSingle(row => row.Contains("0.95"));
         (await Scalar(CorpusCheck.ClaimsKeptApartSql)).Should().Be(0);
+        (await Scalar(OtherVerse)).Should().Be(0);
     }
+
+    /// <summary>Link words that carry another verse than their word's, or none of the words at all.</summary>
+    private const string OtherVerse =
+        "SELECT count(*) FROM link_word lw LEFT JOIN word w ON w.id = lw.word_id WHERE w.verse_id IS DISTINCT FROM lw.verse_id";
 
     private async Task<long> Scalar(string sql)
     {

@@ -336,9 +336,9 @@ internal static partial class VerseEndpoints
         var naming = named is not null && occupation is { Length: > 0 }
             ? await Working(db, wordIds, named, occupation, cancellationToken)
             : named is not null
-                ? await Naming(db, wordIds, named, cancellationToken)
+                ? await Naming(db, verseIds, wordIds, named, cancellationToken)
                 : strong is not null
-                    ? await Numbered(db, wordIds, [strong], cancellationToken)
+                    ? await Numbered(db, verseIds, [strong], cancellationToken)
                     : printed is not null
                         ? [.. words.Values.SelectMany(list => list)
                             .Where(word => !word.Elided && word.NormalisedText is not null && printed.Contains(word.NormalisedText))
@@ -461,8 +461,10 @@ internal static partial class VerseEndpoints
     /// themselves or render one that does.
     /// </para>
     /// </summary>
+    /// <param name="verseIds">The verses <paramref name="wordIds"/> are every word of.</param>
     internal static async Task<HashSet<long>> Naming(
         AppDbContext db,
+        IReadOnlyCollection<int> verseIds,
         IEnumerable<long> wordIds,
         string slug,
         CancellationToken cancellationToken)
@@ -478,7 +480,7 @@ internal static partial class VerseEndpoints
             .ToList();
         if (numbers.Count > 0)
         {
-            return await Numbered(db, ids, numbers, cancellationToken);
+            return await Numbered(db, verseIds, numbers, cancellationToken);
         }
 
         return (await Annotations.AllOf(db, ids, cancellationToken))
@@ -559,62 +561,21 @@ internal static partial class VerseEndpoints
         return spelled;
     }
 
-    /// <summary>The words among these that carry one of the numbers, or render or equal a word that does.</summary>
+    /// <summary>
+    /// The words of these verses that carry one of the numbers or render a word of an original that does, as the build wrote
+    /// them (<see cref="Database.Entities.WordRenderedStrong"/>): one read of the verses' rows, the numbers matched in it. A word no rendering
+    /// link reaches carries nothing and is not marked.
+    /// </summary>
     private static async Task<HashSet<long>> Numbered(
         AppDbContext db,
-        IReadOnlyCollection<long> wordIds,
-        IReadOnlyCollection<string> numbers,
-        CancellationToken cancellationToken)
-    {
-        // Every read is bounded by ids and the numbers are matched here, never in a query: given a
-        // common number (G2316, G4151, H853) the planner starts from every word carrying it in every
-        // text and reads their links, 22 s on the server for a page of a hundred verses.
-        var own = await Carrying(db, wordIds, numbers, cancellationToken);
-
-        var sides = await db.LinkWords
-            .Where(side => wordIds.Contains(side.WordId))
-            .Select(side => new { side.LinkId, side.WordId, side.Side })
-            .ToListAsync(cancellationToken);
-        var linkIds = sides.Select(side => side.LinkId).Distinct().ToList();
-        var others = await db.LinkWords
-            .Where(other => linkIds.Contains(other.LinkId))
-            .Select(other => new { other.LinkId, other.WordId, other.Side })
-            .ToListAsync(cancellationToken);
-        var asked = wordIds.ToHashSet();
-        var numbered = await Carrying(
-            db, [.. others.Select(other => other.WordId).Where(id => !asked.Contains(id)).Distinct()], numbers, cancellationToken);
-        numbered.UnionWith(own);
-        var carrying = others
-            .Where(other => numbered.Contains(other.WordId))
-            .Select(other => (other.LinkId, other.Side))
-            .ToHashSet();
-        var opposite = sides
-            .Where(side => carrying.Contains((side.LinkId, side.Side == LinkSide.From ? LinkSide.To : LinkSide.From)))
-            .ToList();
-
-        var candidates = opposite.Select(side => side.LinkId).Distinct().ToList();
-        var rendering = (await db.Links
-                .Where(link => candidates.Contains(link.Id)
-                               && (link.Relation == LinkRelation.Renders || link.Relation == LinkRelation.Equals))
-                .Select(link => link.Id)
-                .ToListAsync(cancellationToken))
-            .ToHashSet();
-        return [.. own, .. opposite.Where(side => rendering.Contains(side.LinkId)).Select(side => side.WordId)];
-    }
-
-    /// <summary>The words among these that carry one of the numbers, read by id alone.</summary>
-    private static async Task<HashSet<long>> Carrying(
-        AppDbContext db,
-        IReadOnlyCollection<long> wordIds,
+        IReadOnlyCollection<int> verseIds,
         IReadOnlyCollection<string> numbers,
         CancellationToken cancellationToken) =>
         [
-            .. (await db.Words
-                    .Where(w => wordIds.Contains(w.Id))
-                    .Select(w => new { w.Id, w.StrongNumber })
-                    .ToListAsync(cancellationToken))
-                .Where(w => w.StrongNumber is not null && numbers.Contains(w.StrongNumber))
-                .Select(w => w.Id),
+            .. await db.WordRenderedStrongs
+                .Where(r => verseIds.Contains(r.VerseId) && numbers.Contains(r.StrongNumber))
+                .Select(r => r.WordId)
+                .ToListAsync(cancellationToken),
         ];
 
     /// <summary>

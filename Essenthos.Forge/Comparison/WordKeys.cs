@@ -163,6 +163,8 @@ internal sealed class WordKeys : Mapping.ILinkWords
     /// <summary>The id of the word's verse.</summary>
     public int VerseOf(long word) => _verseId[Verse(word)];
 
+    public int VerseOf(int textId, long word) => VerseOf(word);
+
     public int TextOf(long word) => _verseText[Verse(word)];
 
     public VerseKey VerseKeyOf(int verse) => _verseKey[_verseIndex[verse]];

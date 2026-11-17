@@ -364,6 +364,20 @@ public sealed class CorpusCheckTests : IDisposable
         (await Integrity(CorpusCheck.ClaimsKeptApart)).Should().Be(2, "the build holds the kept methods to the claims");
     }
 
+    /// <summary>
+    /// A link word written without its verse takes its word's from the database; one that carries another verse would hide the
+    /// link from every chapter read by verse, and is found.
+    /// </summary>
+    [Fact]
+    public async Task ALinkWordCarriesItsWordsVerse()
+    {
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        (await Integrity(CorpusCheck.LinkWordsInAnotherVerse)).Should().Be(0, "a writer that leaves the verse out has it filled from the word");
+
+        await _db.Database.ExecuteSqlRawAsync("UPDATE link_word SET verse_id = verse_id + 1");
+        (await Integrity(CorpusCheck.LinkWordsInAnotherVerse)).Should().Be(2);
+    }
+
     /// <summary>A Strong number is a letter and digits; anything else reached the column by mistake.</summary>
     [Fact]
     public async Task AMalformedStrongNumberIsFound()

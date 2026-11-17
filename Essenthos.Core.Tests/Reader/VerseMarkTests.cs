@@ -137,7 +137,7 @@ public sealed class VerseMarkTests : IDisposable
     [Fact]
     public async Task NamesTheWordsTheCorpusSettlesOnTheEntity()
     {
-        var naming = await VerseEndpoints.Naming(_db, Words(), _abram.Slug, default);
+        var naming = await VerseEndpoints.Naming(_db, Verses(), Words(), _abram.Slug, default);
 
         naming.Should().BeEquivalentTo([Word(2).Id]);
     }
@@ -149,8 +149,8 @@ public sealed class VerseMarkTests : IDisposable
     [Fact]
     public async Task MarksNoWordTwoEqualClaimsDisagreeAbout()
     {
-        (await VerseEndpoints.Naming(_db, Words(), "lot", default)).Should().BeEmpty();
-        (await VerseEndpoints.Naming(_db, Words(), "lotan", default)).Should().BeEmpty();
+        (await VerseEndpoints.Naming(_db, Verses(), Words(), "lot", default)).Should().BeEmpty();
+        (await VerseEndpoints.Naming(_db, Verses(), Words(), "lotan", default)).Should().BeEmpty();
     }
 
     /// <summary>
@@ -196,7 +196,7 @@ public sealed class VerseMarkTests : IDisposable
     public async Task MarksAWordForGodByTheNumberItRenders()
     {
         var hebrew = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
-        var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "God", "created"]));
+        var english = Corpus.Add(_db, "ENGTEST", TextKind.Translation, "eng", (1, 1, ["In", "beginning", "God", "created"]));
         _db.SaveChanges();
         _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
         var elohim = new Entity { Kind = EntityKind.Term, Slug = "elohim", Name = "Elohim" };
@@ -211,10 +211,11 @@ public sealed class VerseMarkTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = god, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 3), Side = LinkSide.To });
-        _db.SaveChanges();
+        await _db.WriteStoredStrong();
 
         var words = _db.Words.Where(w => w.TextId == english.Id || w.TextId == hebrew.Id).Select(w => w.Id).ToList();
-        (await VerseEndpoints.Naming(_db, words, "elohim", default)).Should()
+        var verses = _db.Words.Where(w => w.TextId == english.Id || w.TextId == hebrew.Id).Select(w => w.VerseId).Distinct().ToList();
+        (await VerseEndpoints.Naming(_db, verses, words, "elohim", default)).Should()
             .BeEquivalentTo([god.Id, _db.WordAt(hebrew, 1, 1, 3).Id]);
     }
 
@@ -227,7 +228,7 @@ public sealed class VerseMarkTests : IDisposable
     public async Task MarksTheWordRenderingAStrongNumberWhereTheListAsksForIt()
     {
         var hebrew = Corpus.Add(_db, "BHSA", TextKind.CriticalEdition, "hbo", (1, 1, ["בְּרֵאשִׁית", "בָּרָא", "אֱלֹהִים"]));
-        var english = Corpus.Add(_db, "test-english", TextKind.Translation, "eng",
+        var english = Corpus.Add(_db, "ENGTEST", TextKind.Translation, "eng",
             (1, 1, ["In", "beginning", "God", "created", "God's", "world"]));
         _db.SaveChanges();
         _db.WordAt(hebrew, 1, 1, 3).StrongNumber = "H430";
@@ -239,7 +240,7 @@ public sealed class VerseMarkTests : IDisposable
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 3), Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 3), Side = LinkSide.To });
-        _db.SaveChanges();
+        await _db.WriteStoredStrong();
         var key = VerseEndpoints.Address.BookStride + VerseEndpoints.Address.ChapterStride + 1;
 
         var quoted = (await VerseEndpoints.Read(_db, english.Id, [key], null, default, "H430")).Should().ContainSingle().Subject;
@@ -254,6 +255,50 @@ public sealed class VerseMarkTests : IDisposable
             .Which.Marks.Should().BeEmpty();
         (await VerseEndpoints.Read(_db, english.Id, [key], null, default)).Should().ContainSingle()
             .Which.Marks.Should().BeNull();
+    }
+
+    /// <summary>
+    /// A word renders the number of every edition of an original its links reach, not only of the one a Strong page counts
+    /// over: a translation joined to the Textus Receptus marks what it renders there though its counted edition is the
+    /// critical one. Another translation's own tags mark nothing, and a word of an original keeps its own number against a
+    /// variant's on a linked edition (TSK-1822).
+    /// </summary>
+    [Fact]
+    public async Task MarksWhatAWordRendersOfAnyEditionButNotATranslationsTagsNorAVariantsNumber()
+    {
+        var critical = Corpus.Add(_db, "CRIT", TextKind.CriticalEdition, "grc", (1, 1, ["ὁ", "θεός"]));
+        var printed = Corpus.Add(_db, "PRINT", TextKind.PrintedEdition, "grc", (1, 1, ["ο", "θεος"]));
+        var tagged = Corpus.Add(_db, "TAGGED", TextKind.Translation, "eng", (1, 1, ["the", "God"]));
+        var english = Corpus.Add(_db, "ENGTEST", TextKind.Translation, "eng", (1, 1, ["God", "the", "Lord"]));
+        _db.SaveChanges();
+        (_db.WordAt(critical, 1, 1, 1).StrongNumber, _db.WordAt(critical, 1, 1, 2).StrongNumber) = ("G3588", "G2316");
+        (_db.WordAt(printed, 1, 1, 1).StrongNumber, _db.WordAt(printed, 1, 1, 2).StrongNumber) = ("G3588", "G2316");
+        _db.WordAt(tagged, 1, 1, 2).StrongNumber = "G2316";
+        void Join(Text from, int fromAt, Text to, int toAt, LinkRelation relation)
+        {
+            var link = new Link
+            {
+                FromTextId = from.Id, ToTextId = to.Id, Relation = relation,
+                Method = LinkMethod.Aligner, Confidence = 0.9, Provenance = new() { Source = "a test" },
+            };
+            _db.Links.Add(link);
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(from, 1, 1, fromAt), Side = LinkSide.From });
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(to, 1, 1, toAt), Side = LinkSide.To });
+        }
+
+        Join(english, 1, printed, 2, LinkRelation.Renders);
+        Join(english, 2, critical, 1, LinkRelation.Renders);
+        Join(english, 3, tagged, 2, LinkRelation.Renders);
+        Join(critical, 1, printed, 2, LinkRelation.Equals);
+        await _db.WriteStoredStrong();
+        var key = VerseEndpoints.Address.BookStride + VerseEndpoints.Address.ChapterStride + 1;
+
+        var quoted = (await VerseEndpoints.Read(_db, english.Id, [key], null, default, "G2316")).Should().ContainSingle().Subject;
+        quoted.Marks.Should().Equal(new VerseMarkResponse(0, 3));
+
+        var own = (await VerseEndpoints.Read(_db, critical.Id, [key], null, default, "G2316")).Should().ContainSingle().Subject;
+        own.Marks.Should().ContainSingle();
+        own.Text[own.Marks![0].Start..own.Marks[0].End].Should().Be("θεός");
     }
 
     [Fact]
@@ -301,4 +346,6 @@ public sealed class VerseMarkTests : IDisposable
     private Word Word(int position) => _db.WordAt(_english, 12, 4, position);
 
     private List<long> Words() => [.. _db.Words.Where(w => w.TextId == _english.Id).Select(w => w.Id)];
+
+    private List<int> Verses() => [.. _db.Words.Where(w => w.TextId == _english.Id).Select(w => w.VerseId).Distinct()];
 }

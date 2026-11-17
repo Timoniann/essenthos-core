@@ -20,6 +20,13 @@ public class LinkWord
 
     public Word? Word { get; set; }
 
+    /// <summary>
+    /// The verse of <see cref="WordId"/>, carried on the row so a chapter's links are read as one range of a verse-keyed index
+    /// rather than a lookup per word: word ids are hashes of keys and lie nowhere near each other. The database fills it from
+    /// the word where a writer leaves it out.
+    /// </summary>
+    public int VerseId { get; set; }
+
     public LinkSide Side { get; set; }
 
     /// <summary>

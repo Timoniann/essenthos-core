@@ -37,6 +37,32 @@ internal static class TextLoad
     public static IReadOnlyList<string> Slugs(ProductStore store) =>
         [.. TextCatalogue.All.Select(t => t.Slug).Where(slug => store.Exists(TextWord.ProductOf(slug)))];
 
+    /// <summary>
+    /// Every verse of a text in key order with the id the load gives it: its place among its chapter's verses
+    /// (<see cref="RowIds.Verse"/>). What the links read a word's verse from before the words are in.
+    /// </summary>
+    public static IEnumerable<(VerseManifestRow Row, int Id)> NumberedVerses(ProductStore store, string slug, int textId)
+    {
+        using var reader = store.Open(VerseManifestRow.ProductOf(slug), VerseManifestRow.Schema);
+        (int Book, int Chapter)? chapter = null;
+        var place = 0;
+        foreach (var row in reader.Rows().OrderBy(r => r.Own))
+        {
+            if (row.Own.ChapterLabel.Length > 0)
+            {
+                throw new InvalidOperationException($"{slug} {row.Own}: the verse table holds no chapter label.");
+            }
+
+            if (chapter != (row.Own.Book, row.Own.Chapter))
+            {
+                chapter = (row.Own.Book, row.Own.Chapter);
+                place = 0;
+            }
+
+            yield return (row, RowIds.Verse(textId, row.Own.Book, row.Own.Chapter, place++));
+        }
+    }
+
     public static async Task<(Outcome Outcome, Groups Groups)> Run(string connectionString, ProductStore store, int parallel,
         CancellationToken cancellationToken)
     {
@@ -77,30 +103,19 @@ internal static class TextLoad
                     }
                 }
 
-                using (var reader = store.Open(VerseManifestRow.ProductOf(slugs[i]), VerseManifestRow.Schema))
+                foreach (var (row, verse) in NumberedVerses(store, slugs[i], textId))
                 {
-                    var place = 0;
-                    foreach (var row in reader.Rows().OrderBy(r => r.Own))
+                    var book = loaded.Books.TryGetValue(row.Own.Book, out var known)
+                        ? known
+                        : throw new InvalidOperationException($"{slugs[i]} {row.Own}: its book is not in the text's books product.");
+                    if (!loaded.Chapters.TryGetValue((row.Own.Book, row.Own.Chapter), out var chapter))
                     {
-                        if (row.Own.ChapterLabel.Length > 0)
-                        {
-                            throw new InvalidOperationException($"{slugs[i]} {row.Own}: the verse table holds no chapter label.");
-                        }
-
-                        var book = loaded.Books.TryGetValue(row.Own.Book, out var known)
-                            ? known
-                            : throw new InvalidOperationException($"{slugs[i]} {row.Own}: its book is not in the text's books product.");
-                        if (!loaded.Chapters.TryGetValue((row.Own.Book, row.Own.Chapter), out var chapter))
-                        {
-                            loaded.Chapters[(row.Own.Book, row.Own.Chapter)] = chapter = RowIds.Chapter(textId, row.Own.Book, row.Own.Chapter);
-                            chapters.Add((chapter, textId, book, row.Own.Chapter));
-                            place = 0;
-                        }
-
-                        var verse = RowIds.Verse(textId, row.Own.Book, row.Own.Chapter, place++);
-                        loaded.Verses[row.Own] = verse;
-                        verses.Add((verse, textId, book, chapter, row));
+                        loaded.Chapters[(row.Own.Book, row.Own.Chapter)] = chapter = RowIds.Chapter(textId, row.Own.Book, row.Own.Chapter);
+                        chapters.Add((chapter, textId, book, row.Own.Chapter));
                     }
+
+                    loaded.Verses[row.Own] = verse;
+                    verses.Add((verse, textId, book, chapter, row));
                 }
 
                 texts.Add(loaded);

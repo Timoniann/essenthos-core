@@ -17,7 +17,7 @@ namespace Essenthos.Core.Mapping;
 /// resolved to the word the database holds at it. The four tables' indexes and keys are dropped first and built
 /// again after the rows are in, so the rows go in by COPY alone; a failure anywhere rolls all of it back and
 /// leaves the tables as they were. With the triggers off it writes what they would: each link's fingerprint and
-/// set of methods, and each source's count of claims.
+/// set of methods, each link word's verse, and each source's count of claims.
 /// </summary>
 /// <remarks>
 /// Provenance carries the source alone: what a source's note said is evidence, and evidence stays in the method
@@ -34,7 +34,7 @@ internal static class MappingLoad
     private sealed record PairRows(
         string Pair,
         List<(long Id, int From, int To, string Relation, string Method, double? Confidence, int Provenance, Guid Shape)> Links,
-        List<(long Link, long Word, bool From, long? Head, string? Role)> Words,
+        List<(long Link, long Word, int Verse, bool From, long? Head, string? Role)> Words,
         List<(long Link, string Method, double? Confidence, int Provenance)> Claims,
         long Unresolved,
         List<string> Sources);
@@ -238,7 +238,7 @@ internal static class MappingLoad
             var all = Read(store, pair, keys);
             var wanted = Signatures(
                 all.Links.Select(l => (l.Id, l.Relation, l.Method, l.Confidence, all.Sources[l.Provenance - 1], l.Shape)),
-                all.Words,
+                all.Words.Select(w => (w.Link, w.Word, w.From, w.Head, w.Role)),
                 all.Claims.Select(c => (c.Link, c.Method, c.Confidence, all.Sources[c.Provenance - 1])));
             var held = await Held(db, fromId, toId, cancellationToken);
             var gone = held.Where(h => !wanted.TryGetValue(h.Key, out var signature) || signature != h.Value).Select(h => h.Key).ToArray();
@@ -374,7 +374,7 @@ internal static class MappingLoad
         var fromId = keys.TextId(fromText) ?? throw new InvalidDataException($"The database has no text {fromText}.");
         var toId = keys.TextId(toText) ?? throw new InvalidDataException($"The database has no text {toText}.");
         var links = new List<(long, int, int, string, string, double?, int, Guid)>();
-        var words = new List<(long, long, bool, long?, string?)>();
+        var words = new List<(long, long, int, bool, long?, string?)>();
         var claims = new List<(long, string, double?, int)>();
         long unresolved = 0;
         long current = -1;
@@ -405,12 +405,12 @@ internal static class MappingLoad
                 foreach (var word in from!)
                 {
                     var role = roles.GetValueOrDefault(word);
-                    words.Add((row.Id, word, true, role.Head, role.Role));
+                    words.Add((row.Id, word, keys.VerseOf(fromId, word), true, role.Head, role.Role));
                 }
 
                 foreach (var word in to!)
                 {
-                    words.Add((row.Id, word, false, null, null));
+                    words.Add((row.Id, word, keys.VerseOf(toId, word), false, null, null));
                 }
             }
             else if (row.Settled)
@@ -541,13 +541,14 @@ internal static class MappingLoad
 
         var fromSide = EnumSpelling.Of(LinkSide.From);
         var toSide = EnumSpelling.Of(LinkSide.To);
-        using (var import = db.BeginBinaryImport($"COPY link_word (link_id, word_id, side, head_word_id, role) FROM STDIN ({options})"))
+        using (var import = db.BeginBinaryImport($"COPY link_word (link_id, word_id, verse_id, side, head_word_id, role) FROM STDIN ({options})"))
         {
-            foreach (var (link, word, from, head, role) in rows.Words)
+            foreach (var (link, word, verse, from, head, role) in rows.Words)
             {
                 import.StartRow();
                 import.Write(link, NpgsqlDbType.Bigint);
                 import.Write(word, NpgsqlDbType.Bigint);
+                import.Write(verse, NpgsqlDbType.Integer);
                 import.Write(from ? fromSide : toSide, NpgsqlDbType.Text);
                 if (head is { } h) import.Write(h, NpgsqlDbType.Bigint); else import.WriteNull();
                 if (role is not null) import.Write(role, NpgsqlDbType.Text); else import.WriteNull();
