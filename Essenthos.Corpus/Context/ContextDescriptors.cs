@@ -134,4 +134,14 @@ internal record ContextRecordResponse(string Kind, string Name)
     /// <summary>The name in every case a pass produced for the language, keyed by case.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Dictionary<string, string>? Forms { get; init; }
+
+    /// <summary>Whether the other says the record in the same words: its kind, its name and every form of it.</summary>
+    internal bool SaidAlike(ContextRecordResponse other) =>
+        Kind == other.Kind
+        && Name == other.Name
+        && EnglishName == other.EnglishName
+        && (Forms ?? []).Count == (other.Forms ?? []).Count
+        && (Forms ?? []).All(form => other.Forms is not null
+                                     && other.Forms.TryGetValue(form.Key, out var said)
+                                     && said == form.Value);
 }
