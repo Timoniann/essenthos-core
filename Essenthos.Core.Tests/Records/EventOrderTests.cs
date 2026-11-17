@@ -63,6 +63,39 @@ public sealed class EventOrderTests
             .Should().Equal("battleatramothgilead", "deathahab1", "endahab1reign", "jehuprophecytojeshoshaphat");
 
     [Fact]
+    public void AReignHandedOverInLifeEndsAtTheHandoverBeforeTheSuccessorBegins() =>
+        Ordered(
+                Told("deathdavid1", "Death", 11, 2, 10) with { EntityId = 3 },
+                Told("enddavidreignjerusalem", "End", 10, 5, 5) with { EntityId = 3 },
+                Told("beginsolomon1reign", "Begin", 11, 1, 39) with { EntityId = 4 },
+                Told("enddavid1reign", "End", 11, 2, 10) with { EntityId = 3 })
+            .Should().Equal("enddavid1reign", "enddavidreignjerusalem", "beginsolomon1reign", "deathdavid1");
+
+    [Fact]
+    public void AReignEndsWhereTheTextEndsItNotAtAnotherKingsDeathFiledUnderIt() =>
+        Ordered(
+                Told("endjehoram1reign", "End", 12, 8, 17) with { EntityId = 5 },
+                Told("deathjehoram1", "Death", 12, 9, 24) with { EntityId = 5 },
+                Told("beginahaziah2reign", "Begin", 12, 8, 25))
+            .Should().Equal("endjehoram1reign", "beginahaziah2reign", "deathjehoram1");
+
+    [Fact]
+    public void TheRankOfANarrowedListIsTheWholeListsRank()
+    {
+        EventOrder.Facts[] all =
+        [
+            Told("endahab1reign", "End", 11, 16, 29) with { EntityId = 7 },
+            Told("battleatramothgilead", "Battle", 11, 22, 3),
+            Told("deathahab1", "Death", 11, 22, 37) with { EntityId = 7 },
+        ];
+
+        var rank = EventOrder.Rank(all);
+
+        all.Where(e => e.Kind != "Death").OrderBy(e => rank[e.Slug]).Select(e => e.Slug)
+            .Should().Equal("battleatramothgilead", "endahab1reign");
+    }
+
+    [Fact]
     public void ABirthComesBeforeADeathAtOneVerse() =>
         Ordered(Told("deathrachel1", "Death", 1, 35, 18), Told("birthbenjamin1", "Birth", 1, 35, 18))
             .Should().Equal("birthbenjamin1", "deathrachel1");

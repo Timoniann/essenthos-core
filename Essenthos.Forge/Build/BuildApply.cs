@@ -2,6 +2,7 @@
 using System.Globalization;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Database;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Mapping;
@@ -201,6 +202,12 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
                 Done(moved ? "names, spellings and record words moved to the records' new ids" : "names, spellings and record words kept: no record's id moved");
                 spellings = true;
+            }
+            else if (await StoredEventOrder.Write(connection, transaction, cancellationToken) is var ordered and > 0)
+            {
+                // The events' order is read by code as well as from the files: a change to it reaches the database here.
+                rows += ordered;
+                Done($"the events' order ({ordered} rows)");
             }
 
             if (strong.Count > 0)

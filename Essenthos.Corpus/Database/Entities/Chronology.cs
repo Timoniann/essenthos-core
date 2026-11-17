@@ -100,6 +100,14 @@ public class EventDate
     /// </summary>
     public int? StatedYear { get; set; }
 
+    /// <summary>
+    /// The year on the astronomical axis, where 1 BCE is 0: <see cref="StatedYear"/> where the work printed one (a
+    /// negative year one more, there being no year zero), and otherwise <see cref="Year"/> less the chronology's
+    /// <see cref="Chronology.LastYearBeforeTheCommonEra"/>. Only on this axis can two reckonings' years be compared.
+    /// Written by the build as the events are loaded; null where the reckoning gives no year.
+    /// </summary>
+    public int? AxisYear { get; set; }
+
     /// <summary>The bounds, where the reckoning gives a range instead of a year.</summary>
     public int? EarliestYear { get; set; }
 

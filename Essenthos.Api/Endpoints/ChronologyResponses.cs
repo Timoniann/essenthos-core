@@ -176,7 +176,7 @@ internal readonly record struct EventLocation(string Name, int? Book, int? Chapt
 
 /// <param name="Total">How many events the narrowing holds.</param>
 /// <param name="Items">The page of them asked for.</param>
-internal record EventListResponse(int Total, IList<EventResponse> Items)
+internal record EventListResponse(int Total, IList<EventListItemResponse> Items)
 {
     /// <summary>Where the page starts in the whole list: the skip asked for, or where <c>around</c> put it.</summary>
     public int Skip { get; init; }
@@ -198,7 +198,70 @@ internal record EventCenturyResponse(int Century, int Count, int First);
 /// Where an event stands in a narrowed and ordered list, counting from one, and its neighbours there.
 /// The position is null where the narrowing leaves the event out; a neighbour is null at an end.
 /// </summary>
-internal record EventStepResponse(int? Position, int Total, EventResponse? Previous, EventResponse? Next);
+internal record EventStepResponse(int? Position, int Total, EventNeighbourResponse? Previous, EventNeighbourResponse? Next)
+{
+    /// <summary>The events around this one in the same list and order, this one among them; empty where it is not in the list.</summary>
+    public IList<EventListItemResponse> Near { get; init; } = [];
+
+    /// <summary>Where <see cref="Near"/> starts in the whole list, counting from zero.</summary>
+    public int NearSkip { get; init; }
+}
+
+/// <summary>A neighbour in a list: what a link to it names.</summary>
+internal record EventNeighbourResponse(string Slug, string Name, string? LocalName);
+
+/// <summary>
+/// One event as a line of a list names it: its title, kind, place, first verse, the year each reckoning gives it and
+/// the reckoning it is shown by. The description, the notes and each reckoning's arithmetic are the event's own answer's
+/// (<c>/v1/events/{slug}</c>); a list is for finding the event.
+/// </summary>
+internal record EventListItemResponse(
+    string Slug,
+    string Name,
+    string? Kind,
+    string Realm,
+    int? YearFromCreation,
+    VerseRefResponse? Reference,
+    string? Location,
+    string? Region,
+    string Source,
+    string? SourceId,
+    IList<EventListDateResponse> Dates)
+{
+    public string? LocalName { get; init; }
+
+    public string? LocalLocation { get; init; }
+
+    public string? LocationSlug { get; init; }
+
+    public string? LocalRegion { get; init; }
+
+    /// <summary>The reckoning whose year the list orders and shows it by; null where the list was not ordered by reckonings.</summary>
+    public string? ShownBy { get; init; }
+
+    public IList<VerseRefResponse> Quoted { get; init; } = [];
+
+    public string? Mark { get; init; }
+
+    public EntityWikipediaResponse? Wikipedia { get; init; }
+
+    public static EventListItemResponse Of(EventResponse e, string? shownBy) =>
+        new(e.Slug, e.Name, e.Kind, e.Realm, e.YearFromCreation, e.Reference, e.Location, e.Region, e.Source, e.SourceId,
+            [.. e.Dates.Select(d => new EventListDateResponse(d.Chronology, d.Name, d.Year, d.BceYear, d.Era))])
+        {
+            LocalName = e.LocalName,
+            LocalLocation = e.LocalLocation,
+            LocationSlug = e.LocationSlug,
+            LocalRegion = e.LocalRegion,
+            ShownBy = shownBy,
+            Quoted = e.Quoted,
+            Mark = e.Mark,
+            Wikipedia = e.Wikipedia,
+        };
+}
+
+/// <summary>One reckoning's year for an event in a list, as <see cref="EventDateResponse"/> gives it, without the workings.</summary>
+internal record EventListDateResponse(string Chronology, string Name, int? Year, int? BceYear, string Era);
 
 internal record EventRefResponse(string Slug, string Name);
 
