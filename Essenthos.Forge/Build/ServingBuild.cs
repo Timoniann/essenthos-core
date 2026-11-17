@@ -151,6 +151,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             frame,
             verseLinks,
             Indexes(null, true, false, cancellationToken),
+            Timed("load", "strong numbers", () => StrongNumberFiles.Load(connectionString, store, parallel, cancellationToken)),
             textIndexes,
             verseIndexes);
 

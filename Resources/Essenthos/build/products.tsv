@@ -15,6 +15,7 @@ product	maker	producer	inputs	tables	scope
 build/products	hand	by hand	-	-	none
 build/licences	hand	by hand (the licence of every source the build reads)	-	-	none
 build/served/*	build	build	Essenthos/**	-	none
+build/strong-disagreements	build	strong-numbers --parallel 16	Essenthos/texts/*/numbers	-	none
 build/report-*	build	build	-	-	none
 texts/strong-terms	hand	by hand	-	-	none
 texts/{text}/corrections	hand	by hand (seeded once by texts corrections)	-	-	none
@@ -27,6 +28,7 @@ texts/{text}/titles	build	convert all --parallel 16	{sources} Essenthos/texts/{t
 texts/{text}/text	build	convert all --parallel 16	{sources} Essenthos/texts/{text}/corrections	text	text
 texts/{text}/frame	build	frame-files	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/titles	verse_reference	text
 texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/frame Essenthos/mapping/*/final	strong_rendering strong_rendering_place strong_reach strong_reach_method	text
+texts/{text}/numbers	build	strong-numbers --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/numbers Essenthos/mapping/*/final	word_rendered_strong	text
 texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
 texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text
 texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/projected/* Essenthos/names/rules Essenthos/records/derived/kinds Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
