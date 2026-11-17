@@ -264,6 +264,14 @@ internal record EntityResponse(
     public string? LocalNotes { get; init; }
 
     /// <summary>
+    /// Whether the text sets this person among the kings: a prophet in a ruler's days or a ruler a prophet spoke under, a
+    /// ruler of a nation the text brings into a king's reign or a king it came against, a king who began to reign in a year
+    /// of the other kingdom's king or one in whose years another began. A page draws its section on the kings, and asks
+    /// for <c>/v1/timeline/kings</c>, only where this is true.
+    /// </summary>
+    public bool AmongKings { get; init; }
+
+    /// <summary>
     /// True where <see cref="LocalNotes"/> is a machine translation of a source's notes rather than a
     /// rendering of our own, so the page can say it is one.
     /// </summary>

@@ -29,18 +29,40 @@ internal sealed class PageValidator(IServiceScopeFactory scopes, SiteSettingsFil
 
     private Task<string>? _release;
 
-    /// <summary>The validator of every page written now from this shell.</summary>
-    public async Task<PageValidity> For(ShellReading shell, CancellationToken cancellationToken)
+    /// <summary>
+    /// The validator of every page written now from this shell; a record's page also names its place's picture, which is drawn
+    /// without a release, so a page whose picture was drawn or redrawn is not taken for the one a crawler holds.
+    /// </summary>
+    public async Task<PageValidity> For(ShellReading shell, PlacePicture? picture, CancellationToken cancellationToken)
     {
         var release = await Release().WaitAsync(cancellationToken);
         var settingsAt = settings.WrittenAt;
         var downloadsAt = downloads.WrittenAt;
-        var state = string.Join('|', release, Build.Commit ?? Build.BuiltAt?.Ticks.ToString(CultureInfo.InvariantCulture) ?? "",
-            shell.Version, settingsAt.Ticks.ToString(CultureInfo.InvariantCulture), downloadsAt.Ticks.ToString(CultureInfo.InvariantCulture));
-        var tag = $"\"p{Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(state)))[..20]}\"";
-        var modified = new[] { Started, Seconds(shell.ReadAt), Seconds(settingsAt), Seconds(downloadsAt) }.Max();
+        string[] state = [release, Built, shell.Version, settingsAt.Ticks.ToString(CultureInfo.InvariantCulture),
+            downloadsAt.Ticks.ToString(CultureInfo.InvariantCulture)];
+        var tag = Tag('p', picture is null ? state : [.. state, picture.Tag]);
+        var modified = new[]
+        {
+            Started, Seconds(shell.ReadAt), Seconds(settingsAt), Seconds(downloadsAt), Seconds(picture?.WrittenAt ?? DateTime.MinValue),
+        }.Max();
         return new PageValidity(tag, modified);
     }
+
+    /// <summary>
+    /// The validator of an API answer that is a function of the corpus release, this API's build and the owner's switches, and
+    /// of whatever else the caller names that changes without a release (the address asked for, a place's picture): a quoted
+    /// <c>ETag</c>, the same for every answer of one such state. Only the first call of a process reads the database.
+    /// </summary>
+    public async Task<string> AnswerTag(char kind, IEnumerable<string?> parts, CancellationToken cancellationToken)
+    {
+        var release = await Release().WaitAsync(cancellationToken);
+        return Tag(kind, [release, Built, settings.WrittenAt.Ticks.ToString(CultureInfo.InvariantCulture), .. parts.Select(part => part is null ? "-" : "=" + part)]);
+    }
+
+    private static string Built => Build.Commit ?? Build.BuiltAt?.Ticks.ToString(CultureInfo.InvariantCulture) ?? "";
+
+    private static string Tag(char kind, params string[] state) =>
+        $"\"{kind}{Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('|', state))))[..20]}\"";
 
     /// <summary>The release being served, read once: it cannot change under a running process. A failed read is tried again.</summary>
     private Task<string> Release()
@@ -84,19 +106,26 @@ internal sealed record PageValidity(string ETag, DateTimeOffset LastModified)
     /// </summary>
     public bool HeldBy(HttpRequest request)
     {
-        var matches = request.Headers.IfNoneMatch;
-        if (matches.Count > 0)
+        if (request.Headers.IfNoneMatch.Count > 0)
         {
-            return matches
-                .SelectMany(value => (value ?? "").Split(','))
-                .Select(tag => tag.Trim())
-                .Any(tag => tag == "*" || (tag.StartsWith("W/", StringComparison.Ordinal) ? tag[2..] : tag) == ETag);
+            return Names(request, ETag, star: true);
         }
 
         return request.Headers.IfModifiedSince.Count > 0
                && HeaderUtilities.TryParseDate(request.Headers.IfModifiedSince.ToString(), out var since)
                && LastModified <= since;
     }
+
+    /// <summary>
+    /// Whether the request's <c>If-None-Match</c> names this tag, compared weakly, since a proxy that compresses an answer
+    /// marks its tag weak; with <paramref name="star"/>, also where it asks for any (<c>*</c>), which only an address known
+    /// to exist may answer.
+    /// </summary>
+    public static bool Names(HttpRequest request, string tag, bool star = false) =>
+        request.Headers.IfNoneMatch
+            .SelectMany(value => (value ?? "").Split(','))
+            .Select(held => held.Trim())
+            .Any(held => (star && held == "*") || (held.StartsWith("W/", StringComparison.Ordinal) ? held[2..] : held) == tag);
 
     public void WriteTo(HttpResponse response)
     {

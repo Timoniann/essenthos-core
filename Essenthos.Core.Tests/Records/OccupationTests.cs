@@ -466,6 +466,7 @@ public sealed class OccupationTests : IDisposable
         await Load(File());
         var builder = WebApplication.CreateBuilder();
         builder.Services.AddScoped(_ => _database.NewContext());
+        builder.Services.AddPageServices();
         builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default));
         builder.WebHost.UseUrls("http://127.0.0.1:0");
         await using var app = builder.Build();

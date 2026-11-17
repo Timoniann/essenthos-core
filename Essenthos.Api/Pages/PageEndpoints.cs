@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Text;
+using Essenthos.Core.Endpoints;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Essenthos.Core.Pages;
@@ -36,6 +38,7 @@ internal static class PageEndpoints
             PageShell shell,
             PageCache cache,
             PageValidator validator,
+            [FromServices] PlacePictures? places,
             IConfiguration configuration,
             CancellationToken cancellationToken) =>
         {
@@ -64,7 +67,8 @@ internal static class PageEndpoints
             // A page is a function of the release, the build and the shell, so a client that holds it as it
             // would be written now is told so before anything is read. Only an indexed page gives out a
             // validator, and only with a 200, so a client can hold one only for an address that exists.
-            var validity = address.Indexed ? await validator.For(reading, cancellationToken) : null;
+            var picture = address.Kind == PageKind.Record && address.Slug is { } slug ? places?.For(slug, address.Language.Corpus) : null;
+            var validity = address.Indexed ? await validator.For(reading, picture, cancellationToken) : null;
             context.Response.Headers.CacheControl = "no-cache";
             if (validity is not null && validity.HeldBy(request))
             {
@@ -77,7 +81,7 @@ internal static class PageEndpoints
             // reader opens a chapter in are theirs too: the page a search engine keeps names none.
             var wording = reading.WordingFor(address.Language);
             var page = address.Indexed && address.Texts.Count == 0
-                ? await cache.Remember($"page:{address.Language.Code}:{address.Kind}:{address.English}", PageCache.Page,
+                ? await cache.Remember($"page:{address.Language.Code}:{address.Kind}:{address.English}:{picture?.Tag}", PageCache.Page,
                     () => loader.Load(address, wording, cancellationToken), made => made.Bytes, CacheItemPriority.Normal)
                 : await loader.Load(address, wording, cancellationToken);
             if (page.MovedTo is { } moved)

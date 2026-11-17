@@ -5,7 +5,14 @@ using SkiaSharp;
 namespace Essenthos.Core.Endpoints;
 
 /// <summary>A place's picture drawn from the site's map, in one language: its path under the pictures' folder, its digest and size.</summary>
-internal sealed record PlacePicture(string File, string Digest, int Width, int Height);
+internal sealed record PlacePicture(string File, string Digest, int Width, int Height)
+{
+    /// <summary>When the file was last written, in UTC: a page that shows the picture cannot have changed before it.</summary>
+    public DateTime WrittenAt { get; init; }
+
+    /// <summary>The picture as a validator names it: its file and digest.</summary>
+    public string Tag => $"{File}:{Digest}";
+}
 
 /// <summary>
 /// The pictures of the places drawn from the site's own map, one per language the site speaks, which
@@ -98,7 +105,10 @@ internal sealed class PlacePictures(string folder)
             if (codec is { Info: { Width: > 0, Height: > 0 } size })
             {
                 picture = new PlacePicture(
-                    file, Convert.ToHexStringLower(SHA256.HashData(bytes))[..DigestLength], size.Width, size.Height);
+                    file, Convert.ToHexStringLower(SHA256.HashData(bytes))[..DigestLength], size.Width, size.Height)
+                {
+                    WrittenAt = info.LastWriteTimeUtc,
+                };
             }
         }
         catch (IOException)

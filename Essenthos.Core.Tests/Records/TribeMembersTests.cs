@@ -91,6 +91,7 @@ public sealed class TribeMembersTests : IDisposable
         var builder = WebApplication.CreateBuilder();
         builder.Services.AddScoped(_ => _database.NewContext());
         builder.Services.AddSingleton(new SiteSettingsFile(settings, NullLogger<SiteSettingsFile>.Instance));
+        builder.Services.AddPageServices();
         builder.Services.Configure<JsonOptions>(options =>
             options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default));
         builder.WebHost.UseUrls("http://127.0.0.1:0");

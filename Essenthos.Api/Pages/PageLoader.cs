@@ -141,16 +141,33 @@ internal sealed class PageLoader(
         return PageViews.OccupationCatalogue(address.Language, wording, catalogue, address.Indexed);
     }
 
+    /// <summary>How many of an occupation's people its page lists.</summary>
+    private const int OccupationPeopleListed = 100;
+
     private async Task<PageContent?> Occupation(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
-        var occupation = await OccupationEndpoints.Detail(db, address.Slug!, address.Language.Corpus,
-            address.Language.Corpus, take: 100, cancellationToken: cancellationToken);
-        if (occupation is null) return null;
+        var language = address.Language;
+        var document = await StoredOccupation(address.Slug!, language, cancellationToken)
+                       ?? await OccupationDocument(address.Slug!, language, cancellationToken);
+        if (document is null) return null;
+        var occupation = document.Occupation;
         var references = occupation.People.SelectMany(p => p.Verses).Distinct().ToList();
         var labels = new Dictionary<VerseRefResponse, string>();
         foreach (var reference in references)
-            labels[reference] = wording.Reference(await BookName(address.Language, wording, reference.BookOrdinal, cancellationToken),
+            labels[reference] = wording.Reference(await BookName(language, wording, reference.BookOrdinal, cancellationToken),
                 reference.Chapter, reference.Verse);
+        return PageViews.Occupation(language, wording, occupation, labels) with { Data = document.Data };
+    }
+
+    /// <summary>
+    /// What an occupation's page in this language is written from, composed from the database as a page asked for composes
+    /// it; null where there is no such occupation in this language. The build stores it (TSK-1819).
+    /// </summary>
+    internal async Task<OccupationDocument?> OccupationDocument(string slug, SiteLanguage language, CancellationToken cancellationToken)
+    {
+        var occupation = await OccupationEndpoints.Detail(db, slug, language.Corpus, language.Corpus,
+            take: OccupationPeopleListed, cancellationToken: cancellationToken);
+        if (occupation is null) return null;
         // The reader's page asks for the first people a page at a time; they are the first of these,
         // so that answer is carried as it would be given rather than asked of the database again.
         var first = occupation with
@@ -158,11 +175,27 @@ internal sealed class PageLoader(
             Take = PageData.OccupationPeople,
             People = [.. occupation.People.Take(PageData.OccupationPeople)],
         };
-        return PageViews.Occupation(address.Language, wording, occupation, labels) with
+        return new OccupationDocument(PageDocuments.Version, PageDocuments.Build, occupation, await Conditions(null, language, cancellationToken))
         {
-            Data = PageData.Of([(PageData.OccupationAddress(occupation.Occupation.Slug, address.Language), PageData.Json(first))]),
+            Data = PageData.Of([(PageData.OccupationAddress(occupation.Occupation.Slug, language), PageData.Json(first))]),
         };
     }
+
+    /// <summary>An occupation's stored document, where it may be read as things stand.</summary>
+    private async Task<OccupationDocument?> StoredOccupation(string slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        await Stored(PageDocuments.OccupationKind, language, slug, PageDocuments.Occupation, cancellationToken) is { } stored
+        && await Holds(stored.Conditions, null, language, cancellationToken)
+            ? stored
+            : null;
+
+    /// <summary>
+    /// The first page of an occupation's people as <c>/v1/occupations/{slug}</c> answers it in this language, read from the
+    /// occupation's stored document; null where there is none that may be read as things stand.
+    /// </summary>
+    internal async Task<ReadOnlyMemory<byte>?> StoredOccupationAnswer(string slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        await StoredOccupation(slug, language, cancellationToken) is { } stored
+            ? PageData.Answer(stored.Data, PageData.OccupationAddress(slug, language))
+            : null;
 
     /// <summary>
     /// What a page in this language calls a book: the name a reader of the language cites it by, where
@@ -394,8 +427,7 @@ internal sealed class PageLoader(
     private async Task<PageContent?> Record(PageAddress address, PageWording wording, CancellationToken cancellationToken)
     {
         var language = address.Language;
-        if (await Stored(PageDocuments.RecordKind, language, address.Slug!, PageDocuments.Record, cancellationToken) is { } stored
-            && await Holds(stored.Conditions, stored.Slug, language, cancellationToken))
+        if (await StoredRecord(address.Slug!, language, cancellationToken) is { } stored)
         {
             return await Written(stored, language, wording, cancellationToken);
         }
@@ -422,6 +454,25 @@ internal sealed class PageLoader(
 
         return await Written(await Composed(entity, language, cancellationToken), language, wording, cancellationToken);
     }
+
+    /// <summary>A record's stored document, where it may be read as things stand.</summary>
+    private async Task<RecordDocument?> StoredRecord(string slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        await Stored(PageDocuments.RecordKind, language, slug, PageDocuments.Record, cancellationToken) is { } stored
+        && await Holds(stored.Conditions, stored.Slug, language, cancellationToken)
+            ? stored
+            : null;
+
+    /// <summary>
+    /// The record as <c>/v1/entities/{slug}?language=&amp;prose=</c> answers it in this language, read from the record's
+    /// stored document; null where there is none that may be read as things stand, or where the answer it carries is another
+    /// record's, whose picture the document's conditions do not speak for.
+    /// </summary>
+    internal async Task<ReadOnlyMemory<byte>?> StoredEntityAnswer(string slug, SiteLanguage language, CancellationToken cancellationToken) =>
+        await StoredRecord(slug, language, cancellationToken) is { } stored
+        && PageData.Answer(stored.Data, PageData.EntityAddress(slug, language)) is { } answer
+        && PageData.Slug(answer.Span) == stored.Slug
+            ? answer
+            : (ReadOnlyMemory<byte>?)null;
 
     /// <summary>
     /// What a record's page in this language is written from, composed from the database as a page asked for composes it;
@@ -471,6 +522,7 @@ internal sealed class PageLoader(
         var coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null;
         return new RecordDocument(
             PageDocuments.Version,
+            PageDocuments.Build,
             entity.Kind,
             entity.Slug,
             entity.Shown,
@@ -540,14 +592,14 @@ internal sealed class PageLoader(
     private async Task<PageConditions> Conditions(string? slug, SiteLanguage language, CancellationToken cancellationToken) =>
         new((await Chosen(language, cancellationToken))?.Slug,
             settings.Is(SiteSettings.GeneratedImages),
-            slug is not null && places?.For(slug, language.Corpus) is { } picture ? $"{picture.File}:{picture.Digest}" : null);
+            slug is not null && places?.For(slug, language.Corpus) is { } picture ? picture.Tag : null);
 
     private async Task<bool> Holds(PageConditions conditions, string? slug, SiteLanguage language, CancellationToken cancellationToken) =>
         conditions == await Conditions(slug, language, cancellationToken);
 
     /// <summary>
-    /// The stored document of a page, read in one statement; null where the build made none, made it with another version,
-    /// or the database predates the table.
+    /// The stored document of a page, read in one statement; null where the build made none, made it with another version or
+    /// by other code than this (<see cref="PageDocuments.Build"/>), or the database predates the table.
     /// </summary>
     private async Task<T?> Stored<T>(string kind, SiteLanguage language, string address, JsonTypeInfo<T> info, CancellationToken cancellationToken)
         where T : class
@@ -573,8 +625,10 @@ internal sealed class PageLoader(
         var (document, data) = PageDocuments.Unpack(body, info);
         return document switch
         {
-            RecordDocument { Version: PageDocuments.Version } record => (T)(object)(record with { Data = data }),
-            StrongDocument { Version: PageDocuments.Version } strong => (T)(object)(strong with { Data = data }),
+            RecordDocument record when PageDocuments.Readable(record.Version, record.Build) => (T)(object)(record with { Data = data }),
+            StrongDocument strong when PageDocuments.Readable(strong.Version, strong.Build) => (T)(object)(strong with { Data = data }),
+            OccupationDocument occupation when PageDocuments.Readable(occupation.Version, occupation.Build) =>
+                (T)(object)(occupation with { Data = data }),
             _ => null,
         };
     }
@@ -830,7 +884,7 @@ internal sealed class PageLoader(
         var answers = new List<(string, string)> { (PageData.StrongAddress(number, language), PageData.Json(entry)) };
         if (entry.Morpheme)
         {
-            return new StrongDocument(PageDocuments.Version, number, null, null, entry.Definition, null, null, false, null, null, [], [], conditions)
+            return new StrongDocument(PageDocuments.Version, PageDocuments.Build, number, null, null, entry.Definition, null, null, false, null, null, [], [], conditions)
             {
                 Data = PageData.Of(answers),
             };
@@ -840,6 +894,7 @@ internal sealed class PageLoader(
         // for them in that text: both are carried, and both are written out for whoever runs no script.
         var document = new StrongDocument(
             PageDocuments.Version,
+            PageDocuments.Build,
             entry.StrongNumber,
             entry.Lemma,
             entry.Transliteration,

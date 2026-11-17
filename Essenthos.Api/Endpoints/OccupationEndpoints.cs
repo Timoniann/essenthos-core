@@ -2,6 +2,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Pages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,10 +42,19 @@ internal static class OccupationEndpoints
                 return Results.BadRequest(new ProblemResponse("Occupation search is limited to 120 characters."));
             return Results.Ok(await Catalogue(db, language, prose, q, category, skip, take, cancellationToken));
         });
+        // The first page in a site language, asked exactly as the reader's script asks it, is answered from the occupation's
+        // stored page document, which holds this very answer as the build composed it; any other page is answered as asked.
         routes.MapGet("/occupations/{slug}", async (string slug, [FromQuery] string? language,
             [FromQuery] string? prose, [FromQuery] int? skip, [FromQuery] int? take,
-            AppDbContext db, CancellationToken cancellationToken) =>
+            HttpContext context, AppDbContext db, PageLoader pages, CancellationToken cancellationToken) =>
         {
+            if (skip == 0 && take == PageData.OccupationPeople
+                && PageData.Carried(context.Request.Query, language, prose, "skip", "take") is { } site
+                && await pages.StoredOccupationAnswer(slug, site, cancellationToken) is { } stored)
+            {
+                return Results.Bytes(stored, "application/json; charset=utf-8");
+            }
+
             var result = await Detail(db, slug, language, prose, skip, take, cancellationToken);
             return result is null ? ApiResults.NotFound("This occupation was not found.") : Results.Ok(result);
         });

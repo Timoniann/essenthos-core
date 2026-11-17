@@ -79,6 +79,76 @@ internal static class PageData
         return data.Length > 1 ? Encoding.UTF8.GetBytes(data.Append('}').ToString()) : null;
     }
 
+    /// <summary>
+    /// The site language whose carried answer a request asks for exactly: <c>language</c> and <c>prose</c> both that
+    /// language's corpus code, as the reader's script writes them, each once, and no parameter but those and the
+    /// <paramref name="others"/> named. A request spelled any other way is answered as it asks, which is also how a stored
+    /// answer is held to the live one.
+    /// </summary>
+    public static SiteLanguage? Carried(IQueryCollection query, string? language, string? prose, params string[] others)
+    {
+        if (language is null || language != prose
+            || query.Any(pair => pair.Value.Count != 1 || !(pair.Key is "language" or "prose" || others.Contains(pair.Key))))
+        {
+            return null;
+        }
+
+        return SiteLanguage.All.FirstOrDefault(site => site.Corpus == language);
+    }
+
+    /// <summary>The answer carried under exactly this address, as UTF-8 JSON; null where none is.</summary>
+    public static ReadOnlyMemory<byte>? Answer(byte[]? data, string address)
+    {
+        if (data is null)
+        {
+            return null;
+        }
+
+        var reader = new Utf8JsonReader(data);
+        if (!reader.Read() || reader.TokenType != JsonTokenType.StartObject)
+        {
+            return null;
+        }
+
+        while (reader.Read() && reader.TokenType == JsonTokenType.PropertyName)
+        {
+            var named = reader.ValueTextEquals(address);
+            reader.Read();
+            var start = (int)reader.TokenStartIndex;
+            reader.Skip();
+            if (named)
+            {
+                return data.AsMemory(start, (int)reader.BytesConsumed - start);
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>The <c>slug</c> an answer names at its top level; null where it names none.</summary>
+    public static string? Slug(ReadOnlySpan<byte> answer)
+    {
+        var reader = new Utf8JsonReader(answer);
+        if (!reader.Read() || reader.TokenType != JsonTokenType.StartObject)
+        {
+            return null;
+        }
+
+        while (reader.Read() && reader.TokenType == JsonTokenType.PropertyName)
+        {
+            var named = reader.ValueTextEquals("slug");
+            reader.Read();
+            if (named)
+            {
+                return reader.TokenType == JsonTokenType.String ? reader.GetString() : null;
+            }
+
+            reader.Skip();
+        }
+
+        return null;
+    }
+
     public static string Element(byte[] data) =>
         $"<script type=\"application/json\" id=\"{ElementId}\">{Encoding.UTF8.GetString(data)}</script>";
 }
