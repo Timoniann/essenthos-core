@@ -159,6 +159,7 @@ internal static class StrongBookEndpoints
             canonical,
             edition is { } slug ? named.GetValueOrDefault(slug) : null,
             rows.Values.Sum(),
+            await StrongEndpoints.TextCounts(db, canonical, cancellationToken),
             [
                 .. rows.OrderBy(row => row.Key).Select(row => new StrongBookRowResponse(
                     row.Key,
@@ -259,10 +260,15 @@ internal static class StrongBookState
 
 /// <param name="Edition">The edition of the original the occurrences are counted in, as its slug.</param>
 /// <param name="Occurrences">Every word of the edition carrying the number, the sum of the rows.</param>
+/// <param name="ByText">
+/// How many words carry the number in each text, most first, the editions of the original and the translations that tag
+/// their own words alike: what a page chooses whose words to list by.
+/// </param>
 internal record StrongBookMapResponse(
     string StrongNumber,
     string? Edition,
     int Occurrences,
+    IList<StrongTextCountResponse> ByText,
     IList<StrongBookRowResponse> Books,
     IList<StrongBookTextResponse> Texts);
 

@@ -41,6 +41,9 @@ internal static class LanguageCodes
         request.Query = new QueryCollection(query);
     }
 
+    /// <summary>Whether the corpus speaks this language, spelled as it spells it: the language of a reader's page or of a text.</summary>
+    public static bool Speaks(string code) => ThreeLetter.Values.Contains(code, StringComparer.Ordinal);
+
     public static string? Normalise(string? language)
     {
         if (string.IsNullOrWhiteSpace(language))

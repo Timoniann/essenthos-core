@@ -88,7 +88,7 @@ internal static class PageDocuments
     public const string StrongKind = "strong";
 
     /// <summary>Raise with any change to what a document holds or how a page is written from it, so older rows are not read.</summary>
-    public const int Version = 1;
+    public const int Version = 2;
 
     private const byte Separator = 0x1E;
 

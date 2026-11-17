@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Text.Json;
 using Essenthos.Core.Build;
 using Essenthos.Core.Corpus;
@@ -9,6 +10,7 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Products;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
@@ -124,9 +126,74 @@ public sealed class ContextBuildTests : IDisposable
             (await db.ContextLines.Select(l => l.Prose).Distinct().CountAsync()).Should().Be(FamilyDocuments.ProseLanguages.Length);
         }
 
+        await TwoLetterAndUnspokenLanguagesReadTheStoredLines();
+
         var again = await Run(store);
         again.Made.Should().Be(0, "nothing it was made from moved");
         again.Rows.Should().Be(0, "the tables already hold the products");
+    }
+
+    /// <summary>
+    /// A request naming its languages by two letters, by none, or by one the corpus speaks nothing in reads the stored chapter
+    /// and lines in as many statements as one naming the stored pair, and is answered as that pair is; a language the corpus
+    /// speaks keeps its own names, and words in a language the build stored none in are composed as before.
+    /// </summary>
+    private async Task TwoLetterAndUnspokenLanguagesReadTheStoredLines()
+    {
+        var statements = new Statements();
+        await using var connection = _database.NewConnection();
+        await using var db = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(connection.ConnectionString).AddInterceptors(statements).Options);
+        var weights = await ContextWeights.Count(db, default);
+
+        async Task<(string Json, int Statements)> Asked(string? language, string? prose)
+        {
+            var (names, words) = ContextEndpoints.Languages(language, prose);
+            statements.Count = 0;
+            var context = await ContextEndpoints.Context(db, Genesis, 10, names, weights, default, prose: words, stored: true);
+            return (Json(context), statements.Count);
+        }
+
+        var english = await Asked("eng", "eng");
+        var ukrainian = await Asked("ukr", "ukr");
+        foreach (var (language, prose, expected) in new (string?, string?, (string Json, int Statements))[]
+                 {
+                     ("en", null, english),
+                     ("eng", "en", english),
+                     ("EN", "en", english),
+                     (null, null, english),
+                     ("xx", null, english),
+                     ("eng", "xx", english),
+                     ("xx", "fra", english),
+                     ("uk", null, ukrainian),
+                     ("ukr", "uk", ukrainian),
+                     ("uk", "uk", ukrainian),
+                 })
+        {
+            var asked = await Asked(language, prose);
+            asked.Statements.Should().Be(expected.Statements, $"names {language}, words {prose} read the stored lines");
+            asked.Json.Should().Be(expected.Json, $"names {language}, words {prose}");
+        }
+
+        ContextEndpoints.Languages("rus", "ukr").Should().Be(("rus", "ukr"), "a language the corpus speaks keeps its names");
+        ContextEndpoints.Languages("ru", "uk").Should().Be(("rus", "ukr"));
+        ContextEndpoints.Languages("ukr", "rus").Should().Be(("ukr", "rus"), "words in a language the corpus speaks are its own");
+        var unstored = await Asked("ukr", "rus");
+        unstored.Statements.Should().BeGreaterThan(ukrainian.Statements, "the build stored no lines in Russian words");
+        unstored.Json.Should().Be(Json(await ContextEndpoints.Context(db, Genesis, 10, "ukr", weights, default, prose: "rus")));
+    }
+
+    private sealed class Statements : DbCommandInterceptor
+    {
+        public int Count { get; set; }
+
+        public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(
+            DbCommand command, CommandEventData eventData, InterceptionResult<DbDataReader> result,
+            CancellationToken cancellationToken = default)
+        {
+            Count++;
+            return base.ReaderExecutingAsync(command, eventData, result, cancellationToken);
+        }
     }
 
     private async Task<ContextOutcome> Run(ProductStore store)
