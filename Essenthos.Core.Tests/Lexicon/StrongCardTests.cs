@@ -58,6 +58,7 @@ public sealed class StrongCardTests : IDisposable
         Renders((1, 1, [3]), (1, 1, [3, 4]));
         Renders((1, 2, [1]), (1, 2, [1]));
         _db.SaveChanges();
+        _db.WriteStoredStrong().GetAwaiter().GetResult();
     }
 
     public void Dispose()
@@ -204,6 +205,24 @@ public sealed class StrongCardTests : IDisposable
         (await StrongEndpoints.RenderedPlaces(_db, God, _english.Id, "lord", null, null, null, null, default)).Items.Should().BeEmpty();
     }
 
+    /// <summary>
+    /// The book map reads what the build counted beside the numbers' books: Genesis's four numbered Hebrew words as the rate's
+    /// denominator, the King James linked there and rendering all three of H430's words there.
+    /// </summary>
+    [Fact]
+    public async Task TheBookMapReadsTheBooksTheBuildCounted()
+    {
+        await CountedRenderings.CountStrong(_db);
+
+        var map = await StrongBookEndpoints.Map(_db, God, [new TextEntry(_english.Id, "KJV", [1], true)], default);
+
+        map.Edition.Should().Be("BHSA");
+        map.Books.Should().Equal(new StrongBookRowResponse(1, BookReferences.Name(1), BookReferences.Slug(1), 3, 4));
+        map.Texts.Single().Cells.Should().Equal(new StrongBookCellResponse(1, StrongBookState.Counted, 3));
+        (await _db.TextBooksLinked.Where(b => b.TextId == _english.Id).Select(b => b.Book).ToListAsync()).Should().Equal(1);
+        (await _db.StrongBookWords.SingleAsync(b => b.WitnessId == _hebrew.Id)).Words.Should().Be(4);
+    }
+
     /// <summary>Verify holds the words listed behind each phrase against the links, and finds one listed out of its place.</summary>
     [Fact]
     public async Task VerifyFindsAListedWordTheLinksDoNotPutThere()
@@ -227,12 +246,17 @@ public sealed class StrongCardTests : IDisposable
         (await Broken()).Should().BeGreaterThan(0);
     }
 
+    /// <summary>
+    /// The build counts each text's links to every edition that is not a translation, both ways: the King James's four to
+    /// the Hebrew, and nothing for a text linked to none or to translations only.
+    /// </summary>
     [Fact]
-    public async Task ATextsNeighboursAreTheTextsLinkedToItEitherWay()
+    public async Task ATextsOriginalsAreTheEditionsLinkedToItEitherWay()
     {
-        (await LinkedOriginals.Neighbours(_db, _english.Id, default)).Should().Equal(_hebrew.Id);
-        (await LinkedOriginals.Neighbours(_db, _hebrew.Id, default)).Should().Equal(_english.Id);
-        (await LinkedOriginals.Neighbours(_db, _greek.Id, default)).Should().BeEmpty();
+        (await LinkedOriginals.Of(_db, _english.Id, default)).Should().ContainSingle()
+            .Which.Should().Be(new LinkedOriginal(_hebrew.Id, "BHSA", _hebrew.Name, "hbo", TextKind.ManuscriptTradition, 4));
+        (await LinkedOriginals.Of(_db, _hebrew.Id, default)).Should().BeEmpty();
+        (await LinkedOriginals.Of(_db, _greek.Id, default)).Should().BeEmpty();
     }
 
     private void Tag(Text text, int chapter, int verse, int position, string number) =>

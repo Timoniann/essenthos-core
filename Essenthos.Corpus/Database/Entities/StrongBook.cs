@@ -41,3 +41,35 @@ public class StrongBookReach
 
     public int Reached { get; set; }
 }
+
+/// <summary>
+/// The words of one book of an edition that carry any Strong number, the ETCBC prefix morphemes (H9…) left out: the
+/// denominator the Strong map's rate per ten thousand words is taken over. Summed from <see cref="StrongBook"/> as the
+/// build writes it, so the map reads one row a book instead of every number's row of the book.
+/// </summary>
+[PrimaryKey(nameof(WitnessId), nameof(Book))]
+public class StrongBookWords
+{
+    public int WitnessId { get; set; }
+
+    public Text? Witness { get; set; }
+
+    public int Book { get; set; }
+
+    public int Words { get; set; }
+}
+
+/// <summary>
+/// A book in which some link of the text renders some numbered word of the edition it is counted over: the books of
+/// <see cref="StrongBookReach"/> for any number, written beside it by the build. A book the text holds with no row here is
+/// one it is not linked in at all.
+/// </summary>
+[PrimaryKey(nameof(TextId), nameof(Book))]
+public class TextBookLinked
+{
+    public int TextId { get; set; }
+
+    public Text? Text { get; set; }
+
+    public int Book { get; set; }
+}

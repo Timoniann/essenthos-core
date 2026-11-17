@@ -12,75 +12,36 @@ internal sealed record LinkedOriginal(int Id, string Slug, string Name, string L
 
 /// <summary>
 /// The originals a text is linked to, which is what every count of how a translation renders an
-/// original word is counted over. Shared by the API, which counts as it is asked, and the load,
-/// which counts the lexicon's cards ahead of it, so the two cannot count over different editions.
+/// original word is counted over. Shared by the API, which reads the pairs the build counted, and
+/// the indexes, which count the same pairs from the files, so the two cannot count over different editions.
 /// </summary>
 internal static class LinkedOriginals
 {
     /// <summary>
-    /// The texts this one is linked to by anything at all, asked as one existence probe per text
-    /// on the index that leads with both ends of a link. The distinct over the link table it
-    /// replaces read every one of the King James's 2.3 million links to learn eight numbers.
-    /// </summary>
-    public static Task<List<int>> Neighbours(AppDbContext db, int textId, CancellationToken cancellationToken) =>
-        db.Texts
-            .Where(t => t.Id != textId
-                        && (db.Links.Any(l => l.FromTextId == textId && l.ToTextId == t.Id)
-                            || db.Links.Any(l => l.FromTextId == t.Id && l.ToTextId == textId)))
-            .Select(t => t.Id)
-            .ToListAsync(cancellationToken);
-
-    /// <summary>
     /// The originals a text is linked to, in the order a reader is likeliest to mean them: the
     /// critical editions first, then whichever the text is most fully joined to. The first of each
     /// language is the one a single count is made against, so that the Strong page's renderings and
-    /// the rendering page's first answer are counted over the same edition.
+    /// the rendering page's first answer are counted over the same edition. Read from what the build
+    /// counted (<c>text_pair_links</c>): counting the pairs' links as asked read about 35 MB of index.
     /// </summary>
     public static async Task<List<LinkedOriginal>> Of(
         AppDbContext db,
         int textId,
-        CancellationToken cancellationToken)
-    {
-        if (Kept.Value is { } kept)
-        {
-            if (!kept.TryGetValue(textId, out var counted))
+        CancellationToken cancellationToken) =>
+        Ordered(await db.TextPairLinks
+            .AsNoTracking()
+            .Where(p => p.TextId == textId)
+            .Select(p => new LinkedOriginal(
+                p.EditionId,
+                p.Edition!.Slug,
+                p.Edition.Name,
+                p.Edition.Language,
+                p.Edition.Kind,
+                p.Links)
             {
-                counted = await Counted(db, textId, cancellationToken);
-                kept.TryAdd(textId, counted);
-            }
-
-            return [.. counted];
-        }
-
-        return await Counted(db, textId, cancellationToken);
-    }
-
-    /// <summary>
-    /// Where set, the counts <see cref="Of"/> makes are kept for the flow that set it and read again from there. The build
-    /// sets it while it composes every page of a corpus that cannot change under it (TSK-1670); a request never does.
-    /// </summary>
-    public static readonly AsyncLocal<System.Collections.Concurrent.ConcurrentDictionary<int, List<LinkedOriginal>>?> Kept = new();
-
-    private static async Task<List<LinkedOriginal>> Counted(AppDbContext db, int textId, CancellationToken cancellationToken)
-    {
-        var neighbours = await Neighbours(db, textId, cancellationToken);
-        var originals = await db.Texts
-            .Where(t => neighbours.Contains(t.Id) && t.Kind != TextKind.Translation)
-            .Select(t => new LinkedOriginal(
-                t.Id,
-                t.Slug,
-                t.Name,
-                t.Language,
-                t.Kind,
-                db.Links.Count(l => l.FromTextId == textId && l.ToTextId == t.Id)
-                + db.Links.Count(l => l.FromTextId == t.Id && l.ToTextId == textId))
-            {
-                Numbered = db.Words.Any(w => w.TextId == t.Id && w.StrongNumber != null),
+                Numbered = p.Numbered,
             })
-            .ToListAsync(cancellationToken);
-
-        return Ordered(originals);
-    }
+            .ToListAsync(cancellationToken));
 
     /// <summary>
     /// The non-translation texts linked to a text, in <see cref="Of"/>'s order, for a caller that has

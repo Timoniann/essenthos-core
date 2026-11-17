@@ -156,6 +156,9 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
         sizes = await Sizes(cancellationToken);
         await Timed("database", "indexes", () => MakeIndexes(indexes, sizes, parallel, cancellationToken));
+
+        // Counted over the links and the frame once both are whole and indexed; the pages composed below read them.
+        await Timed("load", "stored Strong answers", () => StoredStrong.Write(connectionString, cancellationToken));
         await Timed("database", "analyze", async () =>
         {
             await Execute(connectionString, "ANALYZE", cancellationToken);
@@ -353,7 +356,11 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
     /// <summary>Texts whose strength is counted at once: each reads all its link words in one statement.</summary>
     private const int StrengthParallelism = 8;
 
-    /// <summary>The frame of the texts named, or of every text with a frame file, each text replaced in a transaction of its own.</summary>
+    /// <summary>
+    /// The frame of the texts named, or of every text with a frame file, each text replaced in a transaction of its own. A text
+    /// named takes its numbered words' places in <c>strong_occurrence</c> with it; a fill of every text leaves that table to
+    /// <see cref="StoredStrong"/>, once the frame is whole.
+    /// </summary>
     public async Task<long> Frame(IReadOnlyCollection<string>? only, CancellationToken cancellationToken)
     {
         using var scope = services.CreateScope();
@@ -364,7 +371,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         {
             if ((only is null || only.Contains(text.Slug)) && store.Exists(Loading.Frame.FrameFile.Product(text.Slug)))
             {
-                var outcome = await loader.Fill(text, store, cancellationToken);
+                var outcome = await loader.Fill(text, store, occurrences: only is not null, cancellationToken);
                 rows += outcome.References;
             }
         }

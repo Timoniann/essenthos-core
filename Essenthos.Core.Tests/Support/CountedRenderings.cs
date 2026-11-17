@@ -128,6 +128,7 @@ internal static class CountedRenderings
                 await connection.OpenAsync();
             }
 
+            await db.WriteStoredStrong();
             if (strong)
             {
                 await IndexLoad.Strong(connection, store, [.. texts.Select(t => t.Slug)], CancellationToken.None);
