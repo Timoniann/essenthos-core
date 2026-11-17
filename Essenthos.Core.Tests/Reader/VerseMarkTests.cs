@@ -258,13 +258,13 @@ public sealed class VerseMarkTests : IDisposable
     }
 
     /// <summary>
-    /// A word renders the number of every edition of an original its links reach, not only of the one a Strong page counts
+    /// A word renders the number of any edition of an original its links reach, not only of the one a Strong page counts
     /// over: a translation joined to the Textus Receptus marks what it renders there though its counted edition is the
-    /// critical one. Another translation's own tags mark nothing, and a word of an original keeps its own number against a
-    /// variant's on a linked edition (TSK-1822).
+    /// critical one. A word joined only to another translation takes the number that translation's word carries, and a word
+    /// of an original keeps its own number against a variant's on a linked edition (TSK-1822).
     /// </summary>
     [Fact]
-    public async Task MarksWhatAWordRendersOfAnyEditionButNotATranslationsTagsNorAVariantsNumber()
+    public async Task MarksWhatAWordRendersOfAnyEditionOrThroughATranslationButNeverOverItsOwnNumber()
     {
         var critical = Corpus.Add(_db, "CRIT", TextKind.CriticalEdition, "grc", (1, 1, ["ὁ", "θεός"]));
         var printed = Corpus.Add(_db, "PRINT", TextKind.PrintedEdition, "grc", (1, 1, ["ο", "θεος"]));
@@ -294,7 +294,8 @@ public sealed class VerseMarkTests : IDisposable
         var key = VerseEndpoints.Address.BookStride + VerseEndpoints.Address.ChapterStride + 1;
 
         var quoted = (await VerseEndpoints.Read(_db, english.Id, [key], null, default, "G2316")).Should().ContainSingle().Subject;
-        quoted.Marks.Should().Equal(new VerseMarkResponse(0, 3));
+        quoted.Marks.Should().Equal(new VerseMarkResponse(0, 3), new VerseMarkResponse(8, 12));
+        quoted.Text[8..12].Should().Be("Lord");
 
         var own = (await VerseEndpoints.Read(_db, critical.Id, [key], null, default, "G2316")).Should().ContainSingle().Subject;
         own.Marks.Should().ContainSingle();

@@ -19,7 +19,7 @@ internal sealed record Applied(IReadOnlyList<string> Changed, IReadOnlyCollectio
 
 /// <summary>
 /// <c>forge build --apply</c>, the daily path (DOC-0224 §13, NOT-0216 D13): the configured database takes only what moved
-/// since <c>build/served/&lt;db&gt;</c> says it was built. The pairs whose final moved, the records, and the Strong and
+/// since <c>build/served/&lt;db&gt;</c> says it was built. The pairs whose final moved, the records, the Strong numbers and the Strong and
 /// forms indexes of the texts whose index moved are replaced in one transaction; the names on words and the spellings,
 /// which a records load empties, are kept across it by record slug. The spellings are then counted again and the names of
 /// the texts whose projection moved replaced each in a transaction of its own, so every commit leaves a whole database. A text whose words moved, or
@@ -86,6 +86,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var verses = new SortedSet<string>(StringComparer.Ordinal);
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         var strength = new SortedSet<string>(StringComparer.Ordinal);
+        var numbers = new SortedSet<string>(StringComparer.Ordinal);
         var names = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, spellings = false;
         foreach (var product in changed)
@@ -117,6 +118,9 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 case "texts/{text}/index/strong" or "texts/{text}/index/occurrences":
                     strong.Add(bound["text"]);
                     break;
+                case "texts/{text}/numbers":
+                    numbers.Add(bound["text"]);
+                    break;
                 case "texts/{text}/index/forms":
                     forms.Add(bound["text"]);
                     break;
@@ -145,7 +149,7 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         }
 
         var serving = new ServingBuild(connectionString, store, services, logger);
-        await serving.Timed("apply", $"transaction: {pairs.Count} pairs, records {(records ? "yes" : "no")}, strong {strong.Count}, forms {forms.Count}, renderings {renderings.Count}", async () =>
+        await serving.Timed("apply", $"transaction: {pairs.Count} pairs, records {(records ? "yes" : "no")}, strong {strong.Count}, numbers {numbers.Count}, forms {forms.Count}, renderings {renderings.Count}", async () =>
         {
             await using var connection = new NpgsqlConnection(connectionString);
             await connection.OpenAsync(cancellationToken);
@@ -172,8 +176,13 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 var paired = pairs.Select(MappingProducts.Split).SelectMany(p => new[] { p.From, p.To }).Distinct().ToArray();
                 var pairedIds = await TextIds(connection, paired, cancellationToken);
                 rows += await StoredStrong.WritePairLinks(connection, transaction, pairedIds, cancellationToken);
-                rows += await StoredStrong.WriteRendered(connection, transaction, pairedIds, cancellationToken);
-                Done($"links of the pairs touching {paired.Length} texts, and the numbers their words render");
+                Done($"links of the pairs touching {paired.Length} texts");
+            }
+
+            if (numbers.Count > 0)
+            {
+                rows += await StrongNumberFiles.Load(connection, transaction, store, numbers, cancellationToken);
+                Done($"the Strong numbers of {numbers.Count} texts");
             }
 
             if (verses.Count > 0)
