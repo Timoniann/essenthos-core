@@ -366,6 +366,18 @@ public class AppDbContext : DbContext
     /// <summary>How many of those each text renders, book by book, counted once per load.</summary>
     public DbSet<StrongBookReach> StrongBookReaches { get; set; } = null!;
 
+    /// <summary>The numbered words of each book of an edition, the map's denominator, written by the build.</summary>
+    public DbSet<StrongBookWords> StrongBookWords { get; set; } = null!;
+
+    /// <summary>The books in which each text renders some numbered word, written by the build.</summary>
+    public DbSet<TextBookLinked> TextBooksLinked { get; set; } = null!;
+
+    /// <summary>How many links join each text to each edition of the original, written by the build.</summary>
+    public DbSet<TextPairLinks> TextPairLinks { get; set; } = null!;
+
+    /// <summary>Every numbered word in the order a list of the number's places runs, written by the build.</summary>
+    public DbSet<StrongOccurrence> StrongOccurrences { get; set; } = null!;
+
     /// <summary>What each text's Strong counts were last counted from, so a load counts only what moved.</summary>
     public DbSet<StrongCountMark> StrongCountMarks { get; set; } = null!;
 
@@ -1883,6 +1895,43 @@ public class AppDbContext : DbContext
                     "How many of a Strong number's words in one book of the edition a text is counted over the "
                     + "text's links render. Only books where it renders some; derived and rebuilt with strong_reach.");
             });
+        });
+
+        modelBuilder.Entity<StrongBookWords>(entity =>
+        {
+            entity.HasOne(b => b.Witness).WithMany().HasForeignKey(b => b.WitnessId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("strong_book_words", t => t.HasComment(
+                "The words of one book of an edition carrying any Strong number, the ETCBC prefix morphemes (H9...) left out: "
+                + "the Strong map's denominator. Summed from strong_book by the build beside it."));
+        });
+
+        modelBuilder.Entity<TextBookLinked>(entity =>
+        {
+            entity.HasOne(b => b.Text).WithMany().HasForeignKey(b => b.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("text_book_linked", t => t.HasComment(
+                "The books in which some link of a text renders some numbered word of the edition it is counted over: the "
+                + "books of strong_book_reach for any number, written by the build beside it."));
+        });
+
+        modelBuilder.Entity<TextPairLinks>(entity =>
+        {
+            entity.HasOne(p => p.Text).WithMany().HasForeignKey(p => p.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(p => p.Edition).WithMany().HasForeignKey(p => p.EditionId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("text_pair_links", t =>
+            {
+                t.HasCheckConstraint("ck_text_pair_links_links", "links > 0");
+                t.HasComment(
+                    "How many links join a text to an edition that is not a translation, both ways, and whether any word of "
+                    + "the edition carries a Strong number: what a count of the text's renderings is counted over is chosen by. "
+                    + "Written by the build from link.");
+            });
+        });
+
+        modelBuilder.Entity<StrongOccurrence>(entity =>
+        {
+            entity.ToTable("strong_occurrence", t => t.HasComment(
+                "Every word carrying a Strong number, keyed in list order: the text's slug, the frame address of its verse's "
+                + "primary reference, its position, its id. Written by the build from word and verse_reference."));
         });
 
         modelBuilder.Entity<TableWrite>(entity =>

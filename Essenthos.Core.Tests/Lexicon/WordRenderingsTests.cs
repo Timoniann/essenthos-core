@@ -75,6 +75,7 @@ public sealed class WordRenderingsTests : IDisposable
         Tag(_russian, 1, 1, 1, Agapao);
         Renders(_russian, (1, 1, [1]), (1, 1, [2]), LinkMethod.Aligner);
         _db.SaveChanges();
+        _db.WriteStoredStrong().GetAwaiter().GetResult();
     }
 
     public void Dispose()

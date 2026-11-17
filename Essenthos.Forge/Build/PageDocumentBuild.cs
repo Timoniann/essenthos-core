@@ -94,9 +94,7 @@ internal sealed class PageDocumentBuild(
             ["settings"] = $"{settings.Choices[SiteSettings.ReaderTranslation]}|{settings.Is(SiteSettings.GeneratedImages)}",
         };
 
-        // Every count of how a text renders an original is counted over the same links for every page of this corpus, and every
-        // line that names descendants reads the same family tree.
-        LinkedOriginals.Kept.Value = new ConcurrentDictionary<int, List<LinkedOriginal>>();
+        // Every line that names descendants reads the same family tree for every page of this corpus.
         KinFacts.Kept.Value = new KinFacts.KeptDescents();
         using var stopping = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var workers = parallel is > 0 ? parallel.Value : Parallelism;
@@ -168,7 +166,6 @@ internal sealed class PageDocumentBuild(
         }
         finally
         {
-            LinkedOriginals.Kept.Value = null;
             KinFacts.Kept.Value = null;
         }
     }

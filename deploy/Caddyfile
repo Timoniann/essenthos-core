@@ -402,6 +402,14 @@ import ip-site-{$IP_SITE}
 		import pages api web
 	}
 
+	# www is the same site under another name: DNS points it here, so a link or a typed address with
+	# www gets a certificate and a permanent redirect to the domain, path and query kept, rather than a
+	# failed handshake. Nothing is served under www itself, so a search engine keeps one address a page.
+	www.{$SITE_DOMAIN} {
+		import access-log
+		redir https://{$SITE_DOMAIN}{uri} permanent
+	}
+
 	{$API_DOMAIN} {
 		import site off
 		import unlisted

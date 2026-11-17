@@ -168,6 +168,10 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
                 rows += outcome.Links;
                 Done($"{pairs.Count} pairs");
+
+                var paired = pairs.Select(MappingProducts.Split).SelectMany(p => new[] { p.From, p.To }).Distinct().ToArray();
+                rows += await StoredStrong.WritePairLinks(connection, transaction, await TextIds(connection, paired, cancellationToken), cancellationToken);
+                Done($"links of the pairs touching {paired.Length} texts");
             }
 
             if (verses.Count > 0)
@@ -322,6 +326,20 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
     /// Before a records load: every record's id by slug written down, and the keys from <see cref="OnRecords"/> to the records
     /// taken off, so the load's CASCADE leaves those tables as they are. Returns the keys, to put back.
     /// </summary>
+    private static async Task<int[]> TextIds(NpgsqlConnection connection, string[] slugs, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand("SELECT id FROM text WHERE slug = ANY(@slugs)", connection);
+        command.Parameters.AddWithValue("slugs", slugs);
+        var ids = new List<int>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            ids.Add(reader.GetInt32(0));
+        }
+
+        return [.. ids];
+    }
+
     private static async Task<List<(string Table, string Name, string Definition)>> Detach(NpgsqlConnection connection, CancellationToken cancellationToken)
     {
         var keys = new List<(string, string, string)>();

@@ -12,8 +12,8 @@ namespace Essenthos.Core.Endpoints;
 /// Where a Strong number stands, book by book, and how one or two texts render it there.
 ///
 /// <para>
-/// The map is read from what the load counted (<c>strong_book</c>, <c>strong_book_reach</c>), a few
-/// hundred rows off one index per text. The phrases of one book are counted as they are asked,
+/// The map is read from what the build counted (<c>strong_book</c>, <c>strong_book_reach</c>,
+/// <c>strong_book_words</c>, <c>text_book_linked</c>), a few hundred rows off one index per text. The phrases of one book are counted as they are asked,
 /// because they are bounded by the number and the book: the words of one lexeme in one book and the
 /// links of two texts on them, never the corpus.
 /// </para>
@@ -24,9 +24,6 @@ internal static class StrongBookEndpoints
     private const int MostTexts = 2;
 
     private const int PhrasesPerBook = 20;
-
-    /// <summary>The ETCBC prefix morphemes, which a rate per numbered word leaves out of its denominator.</summary>
-    private const string Morpheme = "H9";
 
     public static void MapStrongBooks(this IEndpointRouteBuilder routes)
     {
@@ -125,11 +122,9 @@ internal static class StrongBookEndpoints
             : [];
         var books = rows.Keys.ToList();
         var numbered = edition is { } over
-            ? await db.StrongBooks
-                .Where(b => b.WitnessId == over && books.Contains(b.Book) && !b.StrongNumber.StartsWith(Morpheme))
-                .GroupBy(b => b.Book)
-                .Select(g => new { Book = g.Key, Words = g.Sum(b => b.Occurrences) })
-                .ToDictionaryAsync(g => g.Book, g => g.Words, cancellationToken)
+            ? await db.StrongBookWords
+                .Where(b => b.WitnessId == over && books.Contains(b.Book))
+                .ToDictionaryAsync(b => b.Book, b => b.Words, cancellationToken)
             : [];
 
         var columns = new List<StrongBookTextResponse>();
@@ -138,8 +133,8 @@ internal static class StrongBookEndpoints
             var text = texts[at];
             var held = (await db.Books.Where(b => b.TextId == text.Id).Select(b => b.CanonicalOrdinal)
                 .ToListAsync(cancellationToken)).ToHashSet();
-            var linked = (await db.StrongBookReaches.Where(b => b.TextId == text.Id && books.Contains(b.Book))
-                .Select(b => b.Book).Distinct().ToListAsync(cancellationToken)).ToHashSet();
+            var linked = (await db.TextBooksLinked.Where(b => b.TextId == text.Id && books.Contains(b.Book))
+                .Select(b => b.Book).ToListAsync(cancellationToken)).ToHashSet();
             var reached = await db.StrongBookReaches
                 .Where(b => b.TextId == text.Id && b.StrongNumber == canonical)
                 .ToDictionaryAsync(b => b.Book, b => b.Reached, cancellationToken);

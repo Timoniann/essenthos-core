@@ -46,6 +46,7 @@ public sealed class StrongOccurrencePagingTests : IDisposable
         placed.CanonicalVerse = 1;
         _ = english;
         _db.SaveChanges();
+        _db.WriteStoredStrong().GetAwaiter().GetResult();
     }
 
     public void Dispose()
@@ -115,5 +116,5 @@ public sealed class StrongOccurrencePagingTests : IDisposable
     }
 
     private Task<StrongOccurrenceListResponse> Page(OccurrencePaging paging) =>
-        StrongEndpoints.OccurrencePage(_db, Number, _db.Words.Where(w => w.StrongNumber == Number), paging, default);
+        StrongEndpoints.OccurrencePage(_db, Number, _db.StrongOccurrences.Where(o => o.StrongNumber == Number), paging, default);
 }

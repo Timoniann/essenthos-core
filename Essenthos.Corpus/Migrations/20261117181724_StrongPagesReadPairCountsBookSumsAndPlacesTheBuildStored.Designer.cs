@@ -14,8 +14,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261117183408_TranslationWordsCarryTheStrongNumbersTheyRender")]
-    partial class TranslationWordsCarryTheStrongNumbersTheyRender
+    [Migration("20261117181724_StrongPagesReadPairCountsBookSumsAndPlacesTheBuildStored")]
+    partial class StrongPagesReadPairCountsBookSumsAndPlacesTheBuildStored
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -3192,12 +3192,6 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("role");
 
-                    b.Property<int>("VerseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("verse_id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
-
                     b.HasKey("LinkId", "WordId", "Side")
                         .HasName("pk_link_word");
 
@@ -3207,11 +3201,6 @@ namespace Essenthos.Core.Migrations
 
                     b.HasIndex("WordId")
                         .HasDatabaseName("ix_link_word_word_id");
-
-                    b.HasIndex("VerseId", "WordId")
-                        .HasDatabaseName("ix_link_word_verse_id_word_id");
-
-                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("VerseId", "WordId"), new[] { "LinkId", "Side" });
 
                     b.ToTable("link_word", null, t =>
                         {
@@ -5077,6 +5066,29 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongBookWords", b =>
+                {
+                    b.Property<int>("WitnessId")
+                        .HasColumnType("integer")
+                        .HasColumnName("witness_id");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("integer")
+                        .HasColumnName("book");
+
+                    b.Property<int>("Words")
+                        .HasColumnType("integer")
+                        .HasColumnName("words");
+
+                    b.HasKey("WitnessId", "Book")
+                        .HasName("pk_strong_book_words");
+
+                    b.ToTable("strong_book_words", null, t =>
+                        {
+                            t.HasComment("The words of one book of an edition carrying any Strong number, the ETCBC prefix morphemes (H9...) left out: the Strong map's denominator. Summed from strong_book by the build beside it.");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongCountMark", b =>
                 {
                     b.Property<int>("TextId")
@@ -5317,6 +5329,49 @@ namespace Essenthos.Core.Migrations
                         .HasDatabaseName("ix_strong_gentilic_strong_number");
 
                     b.ToTable("strong_gentilic", (string)null);
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongOccurrence", b =>
+                {
+                    b.Property<string>("StrongNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("strong_number");
+
+                    b.Property<string>("Corpus")
+                        .HasColumnType("text")
+                        .HasColumnName("corpus");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("integer")
+                        .HasColumnName("book");
+
+                    b.Property<int>("Chapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("chapter");
+
+                    b.Property<int>("Verse")
+                        .HasColumnType("integer")
+                        .HasColumnName("verse");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
+
+                    b.Property<long>("WordId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("word_id");
+
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.HasKey("StrongNumber", "Corpus", "Book", "Chapter", "Verse", "Position", "WordId")
+                        .HasName("pk_strong_occurrence");
+
+                    b.ToTable("strong_occurrence", null, t =>
+                        {
+                            t.HasComment("Every word carrying a Strong number, keyed in list order: the text's slug, the frame address of its verse's primary reference, its position, its id. Written by the build from word and verse_reference.");
+                        });
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongProfile", b =>
@@ -5761,6 +5816,25 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("text", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TextBookLinked", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("integer")
+                        .HasColumnName("book");
+
+                    b.HasKey("TextId", "Book")
+                        .HasName("pk_text_book_linked");
+
+                    b.ToTable("text_book_linked", null, t =>
+                        {
+                            t.HasComment("The books in which some link of a text renders some numbered word of the edition it is counted over: the books of strong_book_reach for any number, written by the build beside it.");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.TextForm", b =>
                 {
                     b.Property<int>("TextId")
@@ -5797,6 +5871,38 @@ namespace Essenthos.Core.Migrations
                             t.HasComment("Every word form a text prints, as a search compares it, with its stem and how often the text prints it: a typed word is matched through its stem's forms, and a missing one is answered with a near spelling. Derived from word; rebuilt by the load's search-forms step.");
 
                             t.HasCheckConstraint("ck_text_form_occurrences", "occurrences > 0");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TextPairLinks", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<int>("EditionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("edition_id");
+
+                    b.Property<int>("Links")
+                        .HasColumnType("integer")
+                        .HasColumnName("links");
+
+                    b.Property<bool>("Numbered")
+                        .HasColumnType("boolean")
+                        .HasColumnName("numbered");
+
+                    b.HasKey("TextId", "EditionId")
+                        .HasName("pk_text_pair_links");
+
+                    b.HasIndex("EditionId")
+                        .HasDatabaseName("ix_text_pair_links_edition_id");
+
+                    b.ToTable("text_pair_links", null, t =>
+                        {
+                            t.HasComment("How many links join a text to an edition that is not a translation, both ways, and whether any word of the edition carries a Strong number: what a count of the text's renderings is counted over is chosen by. Written by the build from link.");
+
+                            t.HasCheckConstraint("ck_text_pair_links_links", "links > 0");
                         });
                 });
 
@@ -6776,29 +6882,6 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_word_referent_source_not_empty", "length(btrim(\"source\")) > 0");
 
                             t.HasCheckConstraint("ck_word_referent_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
-                        });
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.WordRenderedStrong", b =>
-                {
-                    b.Property<int>("VerseId")
-                        .HasColumnType("integer")
-                        .HasColumnName("verse_id");
-
-                    b.Property<long>("WordId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("word_id");
-
-                    b.Property<string>("StrongNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("strong_number");
-
-                    b.HasKey("VerseId", "WordId", "StrongNumber")
-                        .HasName("pk_word_rendered_strong");
-
-                    b.ToTable("word_rendered_strong", null, t =>
-                        {
-                            t.HasComment("A Strong number a word carries, or renders through a rendering link to the edition of an original its text is counted over (texts/<SLUG>/index/strong): what a list of verses marks for a number. Written at build; it asserts nothing the words and the links do not.");
                         });
                 });
 
@@ -8142,6 +8225,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Text");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongBookWords", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Witness")
+                        .WithMany()
+                        .HasForeignKey("WitnessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_strong_book_words_texts_witness_id");
+
+                    b.Navigation("Witness");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongCountMark", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
@@ -8239,6 +8334,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Witness");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TextBookLinked", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_text_book_linked_text_text_id");
+
+                    b.Navigation("Text");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.TextForm", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
@@ -8247,6 +8354,27 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_text_form_text_text_id");
+
+                    b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TextPairLinks", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Edition")
+                        .WithMany()
+                        .HasForeignKey("EditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_text_pair_links_texts_edition_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_text_pair_links_texts_text_id");
+
+                    b.Navigation("Edition");
 
                     b.Navigation("Text");
                 });
