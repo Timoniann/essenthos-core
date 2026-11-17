@@ -107,15 +107,18 @@ request cut off at `max_tokens` (a long thinking run) is sent again with `submit
 
 Tests: `python -X utf8 scripts/geez-batch/test_geez_batch.py` (offline).
 
-## How the results would be loaded and shown (not built yet)
+## How the results are loaded and shown
 
-The checked lines of a finished run are committed as record files the build reads, never written to the
-database alone: the Dillmann renderings as one file keyed by Dillmann's entry id and sense number beside
-`geez_lexicon_entry`, the contextual glosses as one file per book keyed by GEEZ81 word id. The reader
-would show a Ge'ez word's own gloss line from the contextual file, marked as made by a model (credited
-with model, date and run, CC BY-NC-SA like the Dillmann layer it builds on), and fall back to today's
-≈ line through the aligned Greek where a word has none; the word card would show Dillmann's Latin with
-the rendering in the reader's language under it, labelled as a machine rendering of his Latin. Where the
-model's lemma and the read-time Dillmann match disagree, the word goes on a review list rather than
-either one being silently preferred. Raw run folders go to the archive afterwards
+A finished run's checked lines (`clean.jsonl`) are taken into the build store by hand with
+`forge geez-layers --gloss <run> --dillmann <run>`: `geez/glosses/<book>` (keyed by GEEZ81 word key, the
+Greek by its own keys) and `geez/dillmann-renderings` (entry id and sense number). Every line must land on
+the word or entry it names today, or nothing is written. They are `kept` products: out of git like the
+Strong translations (the owner's word, NOT-0209), kept by the store and the backup, with their run, model,
+prompt and day in each header and `geez/LICENCE.md` beside them. The build makes `tables/geez_word_gloss` and
+`tables/geez_lexicon_rendering` from them. The reader shows a Ge'ez word's own line from the gloss, dotted and
+said to be a model's, and falls back to the ≈ line through the aligned Greek where a word has none; the word
+card shows Dillmann's Latin with the rendering in the reader's language under it, labelled as a machine
+rendering (`/v1/geez/dillmann/{entry}`). Both layers are credited CC BY-NC-SA 4.0. A later tranche of the run
+is taken in the same way, then `forge build` and `build --into`. Not built: a review list where the model's
+lemma and the read-time Dillmann match disagree. Raw run folders go to the archive afterwards
 (`scripts/archive_generation.py`, guide `generated-corpus-data`).
