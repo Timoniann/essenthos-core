@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Database.Entities;
 
 /// <summary>
-/// A Strong number a word of a text carries or renders: the word's own number, and each number of the edition of an original
-/// the text is counted over (<c>texts/&lt;SLUG&gt;/index/strong</c>, the same rows as <see cref="StrongRendering"/>) whose
-/// word a rendering link of the text joins it to. Keyed by verse first, so the words a list of verses marks for a number are
-/// one read of the verses asked. A word no such link reaches carries no row and is marked nowhere.
+/// A Strong number a list of verses marks on a word: the word's own number, and the number of each word of an edition of an
+/// original (any text that is not a translation, not only the one a Strong page counts over) that a renders or equals link
+/// joins it to, on every word of a translation and on a word of an original only where it carries no number of its own.
+/// Written by the build (<c>StoredStrong</c>). Keyed by verse first, so the words a list of verses marks for a number are one
+/// read of the verses asked. A word no such link reaches, and a word reached only through another translation's own tags,
+/// carries no row and is marked nowhere.
 /// </summary>
 [PrimaryKey(nameof(VerseId), nameof(WordId), nameof(StrongNumber))]
 public class WordRenderedStrong

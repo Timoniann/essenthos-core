@@ -1841,9 +1841,9 @@ public class AppDbContext : DbContext
         });
 
         modelBuilder.Entity<WordRenderedStrong>(entity => entity.ToTable("word_rendered_strong", t => t.HasComment(
-            "A Strong number a word carries, or renders through a rendering link to the edition of an original its text is "
-            + "counted over (texts/<SLUG>/index/strong): what a list of verses marks for a number. Written at build; it "
-            + "asserts nothing the words and the links do not.")));
+            "A Strong number a list of verses marks on a word: its own, and the number of each word of an edition of an "
+            + "original that a renders or equals link joins it to, on every word of a translation and on a word of an "
+            + "original that carries none. Written at build from the words and the links; it asserts nothing they do not.")));
 
         modelBuilder.Entity<WordRenderingPlaces>(entity =>
         {

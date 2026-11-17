@@ -22,5 +22,6 @@ internal static class StoredStrongAnswers
 
         await StoredStrong.WritePairLinks(connection, null, null, CancellationToken.None);
         await StoredStrong.WriteOccurrences(connection, null, null, CancellationToken.None);
+        await StoredStrong.WriteRendered(connection, null, null, CancellationToken.None);
     }
 }

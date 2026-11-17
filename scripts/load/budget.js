@@ -29,7 +29,7 @@ const ROUTES = [
   ["strong-verses", "/v1/strong/H430/verses?corpus=BSB&skip=0&take=40", 5],
   ["strong-occurrences", "/v1/strong/G2316/occurrences?skip=40&take=20", 4],
   ["strong-renderings", "/v1/strong/G2316/renderings?corpus=KJV", 5],
-  ["verses-marked", "/v1/verses?corpus=BSB&verses=genesis:1:1,genesis:1:2&strong=H430", 8],
+  ["verses-marked", "/v1/verses?corpus=BSB&verses=genesis:1:1,genesis:1:2&strong=H430", 4], // 8 until TSK-1822 (one read of word_rendered_strong)
   ["entity", "/v1/entities/david?language=eng&prose=eng", 1],
   ["entity-references", "/v1/entities/david/references?skip=0&take=50", 6],
   ["entity-places", "/v1/entities/david/places?language=eng", 7],

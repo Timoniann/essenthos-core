@@ -54,9 +54,6 @@ internal static class IndexLoad
         List<(string Number, int Book, int Reached)> Books)
     {
         public List<Placed> Places { get; init; } = [];
-
-        /// <summary>Each number of a row of the index with the text's words that render it, as the index keys them.</summary>
-        public List<(string Number, string Keys)> Rendered { get; init; } = [];
     }
 
     /// <summary>A row of <c>strong_rendering_place</c>: the words of one edition carrying a number that a text renders, in list order.</summary>
@@ -156,7 +153,6 @@ internal static class IndexLoad
             countedBy[i] = Count(ids[text].Id, ids[text].Language, rows, Note(notes, "hebrew"), Note(notes, "greek"), ids, occurrences, lexical) with
             {
                 Places = Places(rows, ids, wordIds, out unknown[i]),
-                Rendered = [.. rows.Where(r => r.Keys.Length > 0).Select(r => (r.Number, r.Keys))],
             };
         });
 
@@ -357,104 +353,15 @@ internal static class IndexLoad
             await sums.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        var marked = texts.Where(ids.ContainsKey).Distinct(StringComparer.Ordinal).Select(slug => (slug, ids[slug].Id)).ToList();
-        var renderedBy = indexed.Select((text, i) => (text, countedBy[i].Rendered)).ToDictionary(t => t.text, t => t.Rendered, StringComparer.Ordinal);
-        var rendered = await RenderedStrong(connection, transaction, marked, renderedBy, cancellationToken);
-
         if (transaction is not null)
         {
             await transaction.CommitAsync(cancellationToken);
         }
 
-        return new Outcome("strong_*", renderings + rendered + counted.Sum(c => (long)c.Reach.Count + c.Methods.Count + c.Books.Count + c.Places.Count),
+        return new Outcome("strong_*", renderings + counted.Sum(c => (long)c.Reach.Count + c.Methods.Count + c.Books.Count + c.Places.Count),
             counted.Count, clock.Elapsed,
             $"{renderings} phrases kept, {places} words behind every phrase, {counted.Sum(c => c.Reach.Count)} reach, {counted.Sum(c => c.Methods.Count)} methods, {counted.Sum(c => c.Books.Count)} by book, " +
-            $"{editions.Count} editions by book, {rendered} numbers on the words of {marked.Count} texts; counted from the files in {countedIn.TotalSeconds:0.0} s");
-    }
-
-    /// <summary>
-    /// <c>word_rendered_strong</c> of the texts, replaced: each word's own number, and each number of a row of the text's strong
-    /// index on the text's words that row keys, resolved to the words the database holds. A text's rows go in verse order, so a
-    /// verse's rows lie together. A key the database has no word at fails the load.
-    /// </summary>
-    private static async Task<long> RenderedStrong(
-        NpgsqlConnection connection,
-        NpgsqlTransaction? transaction,
-        IReadOnlyList<(string Slug, int Id)> texts,
-        IReadOnlyDictionary<string, List<(string Number, string Keys)>> rendered,
-        CancellationToken cancellationToken)
-    {
-        await using (var delete = new NpgsqlCommand(
-                         "DELETE FROM word_rendered_strong r USING verse v WHERE v.id = r.verse_id AND v.text_id = ANY(@texts)", connection, transaction)
-                     { CommandTimeout = 0 })
-        {
-            delete.Parameters.AddWithValue("texts", texts.Select(t => t.Id).ToArray());
-            await delete.ExecuteNonQueryAsync(cancellationToken);
-        }
-
-        long written = 0;
-        foreach (var (slug, textId) in texts)
-        {
-            var renders = rendered.GetValueOrDefault(slug) ?? [];
-            var words = new Dictionary<Addressed, (long Id, int Verse)>();
-            var marks = new HashSet<(int Verse, long Word, string Number)>();
-            await using (var command = new NpgsqlCommand(
-                             """
-                             SELECT w.id, w.verse_id, b.canonical_ordinal, v.chapter_number, v.number, v.label, w.position, w.strong_number
-                             FROM word w
-                             JOIN verse v ON v.id = w.verse_id
-                             JOIN book b ON b.id = v.book_id
-                             WHERE w.text_id = @text
-                             """, connection, transaction) { CommandTimeout = 0 })
-            {
-                command.Parameters.AddWithValue("text", textId);
-                await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-                while (await reader.ReadAsync(cancellationToken))
-                {
-                    var (id, verse) = (reader.GetInt64(0), reader.GetInt32(1));
-                    if (!reader.IsDBNull(7))
-                    {
-                        marks.Add((verse, id, reader.GetString(7)));
-                    }
-
-                    if (renders.Count > 0)
-                    {
-                        words[new Addressed(textId, reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetString(5), reader.GetInt32(6))] =
-                            (id, verse);
-                    }
-                }
-            }
-
-            foreach (var (number, keys) in renders)
-            {
-                foreach (var own in keys.Split(' ', StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var key = WordKey.Parse(own, slug);
-                    if (!words.TryGetValue(new Addressed(textId, key.Verse.Book, key.Verse.Chapter, key.Verse.Verse, key.Verse.VerseLabel, key.Position),
-                            out var word))
-                    {
-                        throw new InvalidDataException(
-                            $"texts/{slug}/index/strong names {key}, which the database does not hold: load the text's words before the indexes.");
-                    }
-
-                    marks.Add((word.Verse, word.Id, number));
-                }
-            }
-
-            await using var writer = await connection.BeginBinaryImportAsync(
-                "COPY word_rendered_strong (verse_id, word_id, strong_number) FROM STDIN (FORMAT BINARY)", cancellationToken);
-            foreach (var (verse, word, number) in marks.OrderBy(m => m.Verse).ThenBy(m => m.Word).ThenBy(m => m.Number, StringComparer.Ordinal))
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(verse, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(word, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(number, NpgsqlDbType.Text, cancellationToken);
-            }
-
-            written += (long)await writer.CompleteAsync(cancellationToken);
-        }
-
-        return written;
+            $"{editions.Count} editions by book; counted from the files in {countedIn.TotalSeconds:0.0} s");
     }
 
     private static string? Note(IEnumerable<KeyValuePair<string, string>> notes, string key) =>

@@ -170,8 +170,10 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 Done($"{pairs.Count} pairs");
 
                 var paired = pairs.Select(MappingProducts.Split).SelectMany(p => new[] { p.From, p.To }).Distinct().ToArray();
-                rows += await StoredStrong.WritePairLinks(connection, transaction, await TextIds(connection, paired, cancellationToken), cancellationToken);
-                Done($"links of the pairs touching {paired.Length} texts");
+                var pairedIds = await TextIds(connection, paired, cancellationToken);
+                rows += await StoredStrong.WritePairLinks(connection, transaction, pairedIds, cancellationToken);
+                rows += await StoredStrong.WriteRendered(connection, transaction, pairedIds, cancellationToken);
+                Done($"links of the pairs touching {paired.Length} texts, and the numbers their words render");
             }
 
             if (verses.Count > 0)
