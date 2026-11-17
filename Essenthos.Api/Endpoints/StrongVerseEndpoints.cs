@@ -9,7 +9,7 @@ namespace Essenthos.Core.Endpoints;
 
 /// <summary>
 /// Every verse of one edition where a Strong number stands, a page at a time and as the books run,
-/// each with the words that carry it and, on the first page, how many verses of each book there are.
+/// each with the words that carry it and how many verses of each book there are.
 /// The occurrences list counts words; this counts verses, which is what a reader reading them asks for.
 /// </summary>
 internal static class StrongVerseEndpoints
@@ -52,12 +52,7 @@ internal static class StrongVerseEndpoints
         int take,
         CancellationToken cancellationToken)
     {
-        var byText = await db.Words
-            .Where(w => w.StrongNumber == canonical)
-            .GroupBy(w => w.Text!.Slug)
-            .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
-            .ToListAsync(cancellationToken);
-        byText = [.. byText.OrderByDescending(text => text.Count).ThenBy(text => text.Corpus, StringComparer.Ordinal)];
+        var byText = await StrongEndpoints.TextCounts(db, canonical, cancellationToken);
 
         var slug = corpus is { Length: > 0 }
             ? (await canon.Text(corpus, cancellationToken))?.Slug
@@ -90,20 +85,16 @@ internal static class StrongVerseEndpoints
             .Select(p => new { p.Address, p.Surface })
             .ToListAsync(cancellationToken);
 
-        List<EntityReferenceBookResponse>? books = null;
-        if (skip <= 0)
-        {
-            books =
-            [
-                .. (await addresses
-                        .GroupBy(address => address / bookStride)
-                        .Select(g => new { Book = g.Key, Count = g.Count(), First = g.Min() })
-                        .ToListAsync(cancellationToken))
-                    .OrderBy(book => book.Book)
-                    .Select(book => new EntityReferenceBookResponse(
-                        Book(book.Book), book.Count, book.First % bookStride / chapterStride, book.First % chapterStride)),
-            ];
-        }
+        List<EntityReferenceBookResponse> books =
+        [
+            .. (await addresses
+                    .GroupBy(address => address / bookStride)
+                    .Select(g => new { Book = g.Key, Count = g.Count(), First = g.Min() })
+                    .ToListAsync(cancellationToken))
+                .OrderBy(book => book.Book)
+                .Select(book => new EntityReferenceBookResponse(
+                    Book(book.Book), book.Count, book.First % bookStride / chapterStride, book.First % chapterStride)),
+        ];
 
         var byAddress = words.GroupBy(w => w.Address).ToDictionary(g => g.Key, g => g.Select(w => w.Surface).ToList());
         return new StrongVerseListResponse(
@@ -149,7 +140,7 @@ internal record StrongVerseListResponse(
     IList<StrongTextCountResponse> ByText,
     IList<StrongVerseResponse> Items)
 {
-    /// <summary>Every book the verses are in, in canonical order, with how many and the first. On the first page only.</summary>
+    /// <summary>Every book the verses are in, in canonical order, with how many and the first, on every page.</summary>
     public IList<EntityReferenceBookResponse>? Books { get; init; }
 }
 

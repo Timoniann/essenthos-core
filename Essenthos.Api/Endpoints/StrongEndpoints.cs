@@ -412,6 +412,22 @@ internal static class StrongEndpoints
         };
     }
 
+    /// <summary>
+    /// How many words carry the number in each text, most first: every edition of the original and every translation that
+    /// tags its own words with it. Read off the index on the words' text and number alone.
+    /// </summary>
+    internal static async Task<List<StrongTextCountResponse>> TextCounts(
+        AppDbContext db, string canonical, CancellationToken cancellationToken) =>
+    [
+        .. (await db.Words
+                .Where(w => w.StrongNumber == canonical)
+                .GroupBy(w => w.Text!.Slug)
+                .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
+                .ToListAsync(cancellationToken))
+            .OrderByDescending(text => text.Count)
+            .ThenBy(text => text.Corpus, StringComparer.Ordinal),
+    ];
+
     /// <summary>One page of the words carrying a number, with how many stand in each text.</summary>
     internal static Task<StrongOccurrenceListResponse> OccurrencePage(
         AppDbContext db,

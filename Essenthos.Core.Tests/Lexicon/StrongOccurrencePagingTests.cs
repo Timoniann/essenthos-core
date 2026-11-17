@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -90,6 +91,17 @@ public sealed class StrongOccurrencePagingTests : IDisposable
         backward.Should().Equal(whole);
 
         (await Page(new OccurrencePaging(4, 2))).Items.Select(i => i.WordId).Should().Equal(whole[4..6], "an offset still answers for one release");
+    }
+
+    [Fact]
+    public async Task TheBookMapCountsTheWordsOfEachTextAsTheListDoes()
+    {
+        var kjv = _db.Texts.Single(t => t.Slug == "KJV");
+
+        var map = await StrongBookEndpoints.Map(_db, Number, [new TextEntry(kjv.Id, kjv.Slug, [1, 2], true)], default);
+
+        map.ByText.Select(t => (t.Corpus, t.Count)).Should().Equal(("BHSA", 4), ("KJV", 2));
+        map.ByText.Should().Equal((await Page(new OccurrencePaging(0, 1))).ByText);
     }
 
     [Fact]

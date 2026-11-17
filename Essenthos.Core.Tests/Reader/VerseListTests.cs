@@ -125,6 +125,8 @@ public sealed class VerseListTests : IDisposable
         list.Total.Should().Be(2);
         list.Items.Select(v => (v.Book.Ordinal, v.Chapter, v.Verse, v.Words.Count)).Should().Equal((1, 1, 1, 2), (Psalms, 49, 1, 1));
         list.Books!.Select(b => (b.Book.Ordinal, b.Count)).Should().Equal((1, 1), (Psalms, 1));
+        (await StrongVerseEndpoints.Page(_db, Canon(), "H430", null, 1, 1, default)).Books.Should()
+            .BeEquivalentTo(list.Books, options => options.WithStrictOrdering(), "every page says how many verses each book holds");
 
         var page = await Load("/strong/H430/verses");
         page.Body.Should().Contain("<h1>אֱלֹהִים ʼĕlôhîym (H430): all verses</h1>").And.Contain("In the beginning God");
