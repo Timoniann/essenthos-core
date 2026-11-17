@@ -1,3 +1,6 @@
+using System.Net;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization.Metadata;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -5,23 +8,32 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Pages;
 using FluentAssertions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
+using SkiaSharp;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Reader;
 
 /// <summary>
-/// A record's or a Strong number's page written from the document the build stores (TSK-1670) is the page composed as it
-/// is asked, byte for byte, in every site language; the stored document is what is read once it is there; and a document
-/// composed under another choice of the page's text, or by another version, is not read.
+/// A record's, a Strong number's or an occupation's page written from the document the build stores (TSK-1670, TSK-1819) is
+/// the page composed as it is asked, byte for byte, in every site language; the stored document is what is read once it is
+/// there; and a document composed under another choice of the page's text, by another version or by other code, is not
+/// read. The record's and the occupation's API answers are read from the same documents under the same conditions, and the
+/// record's carries a validator answered with 304 before anything is read.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class PageDocumentTests : IDisposable
 {
     private const string Shell = "<!doctype html><html lang=\"en\"><head><title>Essenthos</title></head><body><div id=\"root\"></div></body></html>";
 
+    private const string OtherCommit = "0000000000000000000000000000000000000000";
+
+    private readonly WitnessDatabase _database;
     private readonly AppDbContext _db;
     private readonly ServiceProvider _services;
     private readonly string _folder = Directory.CreateTempSubdirectory("page-documents-").FullName;
@@ -30,10 +42,18 @@ public sealed class PageDocumentTests : IDisposable
 
     private static readonly string[] Numbers = ["H1", "G2"];
 
+    private static readonly string[] Occupations = ["shepherd"];
+
+    private string Settings => Path.Combine(_folder, "settings.json");
+
+    private string Images => Path.Combine(_folder, "images");
+
     public PageDocumentTests(WitnessDatabase database)
     {
+        _database = database;
         _db = database.NewContext();
-        _db.Database.ExecuteSqlRaw("DELETE FROM page_document; DELETE FROM text; DELETE FROM entity; DELETE FROM strong_entry");
+        _db.Database.ExecuteSqlRaw(
+            "DELETE FROM page_document; DELETE FROM occupation; DELETE FROM reign_statement; DELETE FROM text; DELETE FROM entity; DELETE FROM strong_entry");
 
         Corpus.Add(_db, "test-english", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning"]), (1, 2, ["And", "Gibbar", "went"]));
         Corpus.Add(_db, "test-other", TextKind.Translation, "eng", (1, 1, ["At", "first"]), (1, 2, ["Then", "Gibbar", "left"]));
@@ -51,7 +71,32 @@ public sealed class PageDocumentTests : IDisposable
         _db.StrongEntries.AddRange(
             new StrongEntry { StrongNumber = "H1", Lemma = "אָב", Transliteration = "ʼâb", Definition = "father", Derivation = "a primitive word" },
             new StrongEntry { StrongNumber = "G2", Lemma = "Ἀαρών", Transliteration = "Aarṓn", Definition = "Aaron" });
+        var shepherd = new Occupation { Slug = "shepherd", Category = "trade" };
+        _db.Occupations.Add(shepherd);
         _db.SaveChanges();
+        foreach (var language in SiteLanguage.All)
+        {
+            _db.OccupationLabels.Add(new OccupationLabel
+            {
+                OccupationId = shepherd.Id, Language = language.Corpus, Name = $"shepherd ({language.Code})", Masculine = "shepherd",
+                Feminine = "shepherdess", Description = "one who keeps sheep",
+            });
+        }
+
+        _db.PersonOccupations.Add(new PersonOccupation
+        {
+            PersonId = gibbar.Id, OccupationId = shepherd.Id, Source = "test",
+            Witnesses =
+            [
+                new OccupationWitness
+                {
+                    Kind = "profession", Text = "test-english", Reference = "GEN 1:2", CanonicalBook = 1, CanonicalChapter = 1,
+                    CanonicalVerse = 2, Quote = "Gibbar went",
+                },
+            ],
+        });
+        _db.SaveChanges();
+        Directory.CreateDirectory(Images);
 
         _services = new ServiceCollection().AddScoped(_ => database.NewContext()).BuildServiceProvider();
     }
@@ -65,21 +110,21 @@ public sealed class PageDocumentTests : IDisposable
 
     private PageLoader Loader(PageCache cache, string? settings = null)
     {
-        var path = Path.Combine(_folder, "settings.json");
         if (settings is not null)
         {
-            File.WriteAllText(path, settings);
+            File.WriteAllText(Settings, settings);
         }
 
         return new PageLoader(_db, new CanonIndex(_services.GetRequiredService<IServiceScopeFactory>()),
-            new SiteSettingsFile(path, NullLogger<SiteSettingsFile>.Instance), cache,
-            new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance));
+            new SiteSettingsFile(Settings, NullLogger<SiteSettingsFile>.Instance), cache,
+            new DownloadsCatalogue(null, null, NullLogger<DownloadsCatalogue>.Instance), new PlacePictures(Images));
     }
 
     private static IEnumerable<(SiteLanguage Language, string Path)> Pages() =>
         from language in SiteLanguage.All
         from path in Records.Select(slug => $"/{(slug == "bether" ? "places" : "people")}/{slug}")
             .Concat(Numbers.Select(number => $"/strong/{number}"))
+            .Concat(Occupations.Select(slug => $"/occupations/{slug}"))
         select (language, language.Path(path));
 
     private async Task<string> Html(string path)
@@ -108,6 +153,12 @@ public sealed class PageDocumentTests : IDisposable
                 var document = (await loader.StrongDocument(number, language, default))!;
                 Add(PageDocuments.StrongKind, language, number, PageDocuments.Pack(document, document.Data, PageDocuments.Strong));
             }
+
+            foreach (var slug in Occupations)
+            {
+                var document = (await loader.OccupationDocument(slug, language, default))!;
+                Add(PageDocuments.OccupationKind, language, slug, PageDocuments.Pack(document, document.Data, PageDocuments.Occupation));
+            }
         }
 
         await _db.SaveChangesAsync();
@@ -129,7 +180,7 @@ public sealed class PageDocumentTests : IDisposable
         }
 
         await Store();
-        _db.PageDocuments.Count().Should().Be(SiteLanguage.All.Count * (Records.Length + Numbers.Length));
+        _db.PageDocuments.Count().Should().Be(SiteLanguage.All.Count * (Records.Length + Numbers.Length + Occupations.Length));
 
         // What the documents hold is what is read: a name changed in the tables after they were made does not show.
         _db.Database.ExecuteSqlRaw("UPDATE entity SET name = 'Changed' WHERE slug = 'gibbar'; UPDATE strong_entry SET definition = 'changed'");
@@ -139,6 +190,7 @@ public sealed class PageDocumentTests : IDisposable
         }
 
         composed.Values.Should().Contain(html => html.Contains("page-data"));
+        composed["/occupations/shepherd"].Should().Contain("Gibbar");
     }
 
     /// <summary>
@@ -181,9 +233,226 @@ public sealed class PageDocumentTests : IDisposable
         var (document, data) = PageDocuments.Unpack(stale.Body, PageDocuments.Record);
         stale.Body = PageDocuments.Pack(document with { Version = PageDocuments.Version + 1 }, data, PageDocuments.Record).Body;
         await _db.SaveChangesAsync();
-        File.Delete(Path.Combine(_folder, "settings.json"));
+        File.Delete(Settings);
         using var fresh = new PageCache();
         (await Loader(fresh).Load(PageAddress.Parse("/people/gibbar"), PageWording.Compiled("en"), default))
             .Heading.Should().Contain("Changed", "a document of another version is composed again");
+    }
+
+    [Fact]
+    public async Task ADocumentComposedByOtherCodeIsNotRead()
+    {
+        PageDocuments.Build.Should().NotBeNull("a test build of a checkout knows its commit");
+        await Store();
+        _db.Database.ExecuteSqlRaw("UPDATE entity SET name = 'Changed' WHERE slug = 'gibbar'");
+        (await Heading("/people/gibbar")).Should().NotContain("Changed", "the document this build composed is read");
+
+        await Restamp(PageDocuments.RecordKind, "gibbar", OtherCommit);
+        (await Heading("/people/gibbar")).Should().Contain("Changed", "a document another commit composed is composed again");
+
+        await Restamp(PageDocuments.RecordKind, "gibbar", null);
+        (await Heading("/people/gibbar")).Should().Contain("Changed", "a document that names no commit is composed again");
+
+        await using var app = await Host();
+        using var client = Client(app);
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=eng")).Should().Be("Changed", "the answer is composed as asked too");
+    }
+
+    [Fact]
+    public async Task TheRecordAnswerIsTheStoredOneExactlyWhereThePageWouldReadIt()
+    {
+        await Store();
+        await using var app = await Host();
+        using var client = Client(app);
+        foreach (var language in SiteLanguage.All)
+        {
+            foreach (var slug in Records)
+            {
+                var asked = $"/v1/entities/{slug}?language={language.Corpus}&prose={language.Corpus}";
+                JsonNode.DeepEquals(await Answer(client, asked), await Answer(client, asked + "&live=1")).Should().BeTrue(asked);
+            }
+        }
+
+        // What the documents hold is what is read: a name changed in the tables after they were made does not show, except
+        // to an address the reader's script never writes, which is composed as asked.
+        _db.Database.ExecuteSqlRaw("UPDATE entity SET name = 'Changed' WHERE slug IN ('gibbar', 'bether')");
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=eng")).Should().Be("Gibbar");
+        (await Name(client, "/v1/entities/gibbar?prose=eng&language=eng")).Should().Be("Gibbar", "the order of the two is no other address");
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=eng&live=1")).Should().Be("Changed");
+        (await Name(client, "/v1/entities/gibbar?language=eng")).Should().Be("Changed");
+        (await Name(client, "/v1/entities/gibbar?language=en&prose=en")).Should().Be("Changed", "a language is not normalised");
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=ukr")).Should().Be("Changed");
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=eng&prose=eng")).Should().Be("Changed");
+
+        // Our own pictures switched off: the answer the documents carry would show them.
+        File.WriteAllText(Settings, "{\"settings\":{\"generatedImages\":false}}");
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=eng")).Should().Be("Changed");
+        File.Delete(Settings);
+        (await Name(client, "/v1/entities/gibbar?language=eng&prose=eng")).Should().Be("Gibbar");
+
+        // A place's picture drawn after the documents were made leads its pictures, which the stored answer does not hold.
+        (await Name(client, "/v1/entities/bether?language=eng&prose=eng")).Should().Be("Bether");
+        Picture("eng", "bether");
+        var drawn = await Answer(client, "/v1/entities/bether?language=eng&prose=eng");
+        drawn["name"]!.GetValue<string>().Should().Be("Changed");
+        drawn["images"]![0]!["kind"]!.GetValue<string>().Should().Be(PlacePictures.Kind);
+        (await Name(client, "/v1/entities/bether?language=ukr&prose=ukr")).Should().Be("Changed", "the English picture stands in for a language with none");
+    }
+
+    [Fact]
+    public async Task TheRecordAnswerCarriesAValidatorAnsweredBeforeAnythingIsRead()
+    {
+        await Store();
+        await using var app = await Host();
+        using var client = Client(app);
+        const string asked = "/v1/entities/gibbar?language=eng&prose=eng";
+        var first = await client.GetAsync(asked);
+        first.StatusCode.Should().Be(HttpStatusCode.OK);
+        first.Headers.CacheControl!.NoCache.Should().BeTrue();
+        var tag = first.Headers.ETag!.Tag;
+        (await client.GetAsync("/v1/entities/bether?language=eng&prose=eng")).Headers.ETag!.Tag.Should().NotBe(tag, "the tag is the record's own");
+
+        (await Held(client, asked, tag)).StatusCode.Should().Be(HttpStatusCode.NotModified);
+        (await Held(client, asked, "W/" + tag)).StatusCode.Should().Be(HttpStatusCode.NotModified, "a compressing proxy weakens the tag");
+        (await Held(client, asked, "\"another\"")).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await Held(client, "/v1/entities/missing?language=eng&prose=eng", "*")).StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        // Nothing is read for a client that holds the answer: with the record and its document gone it is still told it has it.
+        _db.Database.ExecuteSqlRaw("DELETE FROM page_document; DELETE FROM person_occupation; DELETE FROM entity WHERE slug = 'gibbar'");
+        var held = await Held(client, asked, tag);
+        held.StatusCode.Should().Be(HttpStatusCode.NotModified);
+        held.Headers.ETag!.Tag.Should().Be(tag);
+
+        // The owner's switches move the tag.
+        File.WriteAllText(Settings, "{\"settings\":{\"generatedImages\":false}}");
+        (await Held(client, asked, tag)).StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task APersonAmongTheKingsSaysSo()
+    {
+        var uzziah = new Entity { Slug = "uzziah", Name = "Uzziah", Kind = EntityKind.Person, Sex = "male" };
+        var nehemiah = new Entity { Slug = "nehemiah", Name = "Nehemiah", Kind = EntityKind.Person, Sex = "male" };
+        _db.Entities.AddRange(uzziah, nehemiah);
+        await _db.SaveChangesAsync();
+        var gibbar = await _db.Entities.SingleAsync(e => e.Slug == "gibbar");
+        _db.ReignStatements.AddRange(
+            new ReignStatement
+            {
+                EntityId = gibbar.Id, RulerEntityId = uzziah.Id, Role = ReignRoles.Prophet, Kind = ReignStatementKinds.Superscription,
+                CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 1, Source = "test",
+            },
+            new ReignStatement
+            {
+                EntityId = nehemiah.Id, RulerEntityId = uzziah.Id, Role = ReignRoles.Subject, Kind = ReignStatementKinds.Dated,
+                CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = 2, Source = "test",
+            });
+        await _db.SaveChangesAsync();
+
+        await using var app = await Host();
+        using var client = Client(app);
+        foreach (var (slug, among) in new[] { ("gibbar", true), ("uzziah", true), ("nehemiah", false), ("bether", false) })
+        {
+            (await Answer(client, $"/v1/entities/{slug}?language=eng&prose=eng"))["amongKings"]!.GetValue<bool>().Should().Be(among, slug);
+        }
+    }
+
+    [Fact]
+    public async Task TheOccupationsFirstPageIsTheStoredOneExactlyWhereThePageWouldReadIt()
+    {
+        await Store();
+        await using var app = await Host();
+        using var client = Client(app);
+        foreach (var language in SiteLanguage.All)
+        {
+            var asked = $"/v1/occupations/shepherd?language={language.Corpus}&prose={language.Corpus}&skip=0&take={PageData.OccupationPeople}";
+            JsonNode.DeepEquals(await Answer(client, asked), await Answer(client, asked + "&live=1")).Should().BeTrue(asked);
+        }
+
+        _db.Database.ExecuteSqlRaw("UPDATE entity SET name = 'Changed' WHERE slug = 'gibbar'");
+        var stored = $"/v1/occupations/shepherd?language=eng&prose=eng&skip=0&take={PageData.OccupationPeople}";
+        (await Practitioner(client, stored)).Should().Be("Gibbar");
+        (await Practitioner(client, stored + "&live=1")).Should().Be("Changed");
+        (await Practitioner(client, "/v1/occupations/shepherd?language=eng&prose=eng")).Should().Be("Changed");
+        (await Practitioner(client, "/v1/occupations/shepherd?language=eng&prose=eng&skip=0&take=20")).Should().Be("Changed");
+        (await Heading("/occupations/shepherd")).Should().NotBeNull();
+
+        await Restamp(PageDocuments.OccupationKind, "shepherd", OtherCommit);
+        (await Practitioner(client, stored)).Should().Be("Changed", "a document another commit composed is not read");
+    }
+
+    private async Task<string> Heading(string path)
+    {
+        using var cache = new PageCache();
+        var address = PageAddress.Parse(path);
+        return (await Loader(cache).Load(address, PageWording.Compiled(address.Language.Code), default)).Heading;
+    }
+
+    /// <summary>Every document of one address rewritten as though composed by <paramref name="build"/>.</summary>
+    private async Task Restamp(string kind, string address, string? build)
+    {
+        foreach (var row in await _db.PageDocuments.Where(d => d.Kind == kind && d.Address == address).ToListAsync())
+        {
+            row.Body = kind == PageDocuments.RecordKind
+                ? Restamped(row.Body, PageDocuments.Record, document => document with { Build = build })
+                : Restamped(row.Body, PageDocuments.Occupation, document => document with { Build = build });
+        }
+
+        await _db.SaveChangesAsync();
+
+        static byte[] Restamped<T>(byte[] body, JsonTypeInfo<T> info, Func<T, T> change)
+        {
+            var (document, data) = PageDocuments.Unpack(body, info);
+            return PageDocuments.Pack(change(document), data, info).Body;
+        }
+    }
+
+    private void Picture(string language, string slug)
+    {
+        var folder = Path.Combine(Images, PlacePictures.Folder, language);
+        Directory.CreateDirectory(folder);
+        using var bitmap = new SKBitmap(4, 3);
+        bitmap.Erase(SKColors.SteelBlue);
+        using var data = bitmap.Encode(SKEncodedImageFormat.Webp, 80);
+        File.WriteAllBytes(Path.Combine(folder, $"{slug}.webp"), data.ToArray());
+    }
+
+    private async Task<WebApplication> Host()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.Services.AddScoped(_ => _database.NewContext());
+        builder.Services.AddSingleton(new SiteSettingsFile(Settings, NullLogger<SiteSettingsFile>.Instance));
+        builder.Services.AddSingleton(new PlacePictures(Images));
+        builder.Services.AddPageServices();
+        builder.Services.Configure<JsonOptions>(options =>
+            options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default));
+        builder.WebHost.UseUrls("http://127.0.0.1:0");
+        var app = builder.Build();
+        app.MapGroup("/v1").MapEncyclopedia();
+        await app.StartAsync();
+        return app;
+    }
+
+    private static HttpClient Client(WebApplication app) => new() { BaseAddress = new Uri(app.Urls.Single()) };
+
+    private static async Task<JsonNode> Answer(HttpClient client, string path)
+    {
+        var response = await client.GetAsync(path);
+        var body = await response.Content.ReadAsStringAsync();
+        response.StatusCode.Should().Be(HttpStatusCode.OK, $"{path}: {body}");
+        response.Content.Headers.ContentType!.MediaType.Should().Be("application/json");
+        return JsonNode.Parse(body)!;
+    }
+
+    private static async Task<string> Name(HttpClient client, string path) => (await Answer(client, path))["name"]!.GetValue<string>();
+
+    private static async Task<string> Practitioner(HttpClient client, string path) =>
+        (await Answer(client, path))["people"]![0]!["person"]!["name"]!.GetValue<string>();
+
+    private static Task<HttpResponseMessage> Held(HttpClient client, string path, string tag)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, path);
+        request.Headers.TryAddWithoutValidation("If-None-Match", tag);
+        return client.SendAsync(request);
     }
 }

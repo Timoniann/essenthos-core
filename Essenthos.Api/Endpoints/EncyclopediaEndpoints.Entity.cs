@@ -3,6 +3,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Pages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,21 +86,60 @@ internal static partial class EncyclopediaEndpoints
         return new EntityTribeResponse(slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(found.Id));
     }
 
-    /// <summary>One entity's page.</summary>
+    /// <summary>
+    /// One entity's page. The answer is a function of the corpus release, this build, the owner's switches and the place's
+    /// picture, so it carries a validator of them, and a client that holds it is answered 304 before anything is read. A
+    /// record's own address in a site language, asked exactly as the reader's script asks it, is answered from the record's
+    /// stored page document, which holds this very answer as the build composed it; any other address, and any document that
+    /// may not be read as things stand, is answered as it is asked.
+    /// </summary>
     private static void MapEntity(IEndpointRouteBuilder routes)
     {
         routes.MapGet("/entities/{slug}", async (
             string slug,
             [FromQuery] string? language,
             [FromQuery] string? prose,
+            HttpContext context,
             AppDbContext db,
             SiteSettingsFile settings,
             [FromServices] PlacePictures? places,
+            PageLoader pages,
+            PageValidator validator,
             CancellationToken cancellationToken) =>
-            await Detail(db, settings, places, slug, language, prose, cancellationToken) is { } entity
-                ? Results.Ok(entity)
-                : ApiResults.NotFound($"There is no person, place or people \"{slug}\"."));
+        {
+            var picture = places?.For(slug, ReaderLanguages.Prose(prose, language));
+            var tag = await validator.AnswerTag(
+                'e', [slug, language, prose, picture is null ? null : $"{picture.File}:{picture.Digest}"], cancellationToken);
+            context.Response.Headers.CacheControl = "no-cache";
+            if (PageValidity.Names(context.Request, tag))
+            {
+                context.Response.Headers.ETag = tag;
+                return Results.StatusCode(StatusCodes.Status304NotModified);
+            }
+
+            if (PageData.Carried(context.Request.Query, language, prose) is { } site
+                && await pages.StoredEntityAnswer(slug, site, cancellationToken) is { } stored)
+            {
+                context.Response.Headers.ETag = tag;
+                return Results.Bytes(stored, Json);
+            }
+
+            if (await Detail(db, settings, places, slug, language, prose, cancellationToken) is not { } entity)
+            {
+                return ApiResults.NotFound($"There is no person, place or people \"{slug}\".");
+            }
+
+            // An old address answers with the record it was folded into, whose picture the tag does not speak for.
+            if (entity.Slug == slug)
+            {
+                context.Response.Headers.ETag = tag;
+            }
+
+            return Results.Ok(entity);
+        });
     }
+
+    private const string Json = "application/json; charset=utf-8";
 
     /// <summary>
     /// One entity's page as <c>/v1/entities/{slug}</c> answers it, by any address it has had; null where
@@ -483,8 +523,13 @@ internal static partial class EncyclopediaEndpoints
                     BookReferences.At(o.CanonicalBook, o.CanonicalChapter, o.CanonicalVerse)!, o.Note)),
             ],
             KnownFor = await KnownForClauses.Of(db, entity.Id, words, cancellationToken),
+            AmongKings = await db.ReignStatements.AnyAsync(
+                s => (s.EntityId == entity.Id || s.RulerEntityId == entity.Id) && KingsRoles.Contains(s.Role), cancellationToken),
         };
     }
+
+    /// <summary>What a verse may state of a person that sets them among the kings; a subject dated by a ruler's year is not.</summary>
+    private static readonly string[] KingsRoles = [ReignRoles.Prophet, ReignRoles.Nation, ReignRoles.Accession];
 
     /// <summary>
     /// The Hebrew of each name that carries one Hebrew Strong number and no Hebrew of its own: the

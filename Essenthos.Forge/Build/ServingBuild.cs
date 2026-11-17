@@ -333,7 +333,7 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         });
 
     /// <summary>
-    /// The documents record and Strong pages are written from (<see cref="PageDocumentBuild"/>), composed from the tables as they
+    /// The documents record, Strong and occupation pages are written from (<see cref="PageDocumentBuild"/>), composed from the tables as they
     /// now stand where what the database was built from, the site's switches or the API's code moved (always with
     /// <paramref name="force"/>), copied from the products where not. Last, since a page reads whatever the rest wrote.
     /// Returns the rows the table took.

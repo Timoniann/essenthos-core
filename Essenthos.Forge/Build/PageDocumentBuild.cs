@@ -31,11 +31,13 @@ internal sealed record PageDocumentRow(string Address, string Hash, long Bytes, 
 internal sealed record PageDocumentOutcome(int Made, long Rows, long Documents, long Bytes, long Compressed, TimeSpan Elapsed);
 
 /// <summary>
-/// The documents record and Strong pages are written from (TSK-1670), products of the serving stage (<c>build/products</c>,
-/// maker <c>serve</c>): <c>page-documents/{kind}/{language}</c> holds every record's (kind <c>record</c>) or Strong number's
-/// (kind <c>strong</c>) document in one site language, composed by the API's own <see cref="PageLoader"/> from the database
-/// as it now stands, loaded as <c>page_document</c>. A product is made again where any product the database was built from
-/// moved, where the owner's switches the pages are composed under moved, or where the API's code did (its module version);
+/// The documents record, Strong and occupation pages are written from (TSK-1670, TSK-1819), products of the serving stage
+/// (<c>build/products</c>, maker <c>serve</c>): <c>page-documents/{kind}/{language}</c> holds every record's (kind
+/// <c>record</c>), Strong number's (kind <c>strong</c>) or occupation's (kind <c>occupation</c>) document in one site language,
+/// composed by the API's own <see cref="PageLoader"/> from the database as it now stands, loaded as <c>page_document</c>.
+/// Each document names the commit that composed it (<see cref="PageDocuments.Build"/>), and only an API built from that
+/// commit reads it. A product is made again where any product the database was built from moved, where the owner's switches
+/// the pages are composed under moved, or where the API's code did (its module version, which moves with the commit too);
 /// a table that does not hold the rows of a current product takes them from it, and nothing is composed.
 /// <para>
 /// Every page of every product that must be made, and every page the check composes again, goes through one set of workers,
@@ -47,7 +49,7 @@ internal sealed record PageDocumentOutcome(int Made, long Rows, long Documents, 
 internal sealed class PageDocumentBuild(
     string connectionString, ProductStore store, IServiceProvider services, IConfiguration configuration, ILogger logger)
 {
-    public static readonly string[] Kinds = [PageDocuments.RecordKind, PageDocuments.StrongKind];
+    public static readonly string[] Kinds = [PageDocuments.RecordKind, PageDocuments.StrongKind, PageDocuments.OccupationKind];
 
     public static string Product(string kind, SiteLanguage language) => $"page-documents/{kind}/{language.Code}";
 
@@ -64,7 +66,7 @@ internal sealed class PageDocumentBuild(
         ? configured
         : Math.Max(1, Environment.ProcessorCount / 2);
 
-    /// <summary>The products a page document does not read: itself, and the panes and strength, which no record or Strong page reads.</summary>
+    /// <summary>The products a page document does not read: itself, and the panes and strength, which no record, Strong or occupation page reads.</summary>
     private static readonly string[] Unread = ["Essenthos/page-documents/", "Essenthos/panes/", "Essenthos/strength/"];
 
     /// <summary>The manifest and the hashes are one per store, so one product at a time is written and saved.</summary>
@@ -88,6 +90,7 @@ internal sealed class PageDocumentBuild(
         {
             ["version"] = PageDocuments.Version.ToString(CultureInfo.InvariantCulture),
             ["api"] = typeof(PageLoader).Assembly.ManifestModule.ModuleVersionId.ToString("N"),
+            ["build"] = PageDocuments.Build ?? "",
             ["settings"] = $"{settings.Choices[SiteSettings.ReaderTranslation]}|{settings.Is(SiteSettings.GeneratedImages)}",
         };
 
@@ -102,12 +105,15 @@ internal sealed class PageDocumentBuild(
         {
             List<string> slugs;
             List<string> numbers;
+            List<string> occupations;
             using (var scope = services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 slugs = await db.Entities.AsNoTracking().OrderBy(e => e.Slug).Select(e => e.Slug).ToListAsync(cancellationToken);
                 numbers = await db.StrongEntries.AsNoTracking().Select(s => s.StrongNumber).Distinct().ToListAsync(cancellationToken);
                 numbers.Sort(StringComparer.Ordinal);
+                occupations = await db.Occupations.AsNoTracking().Select(o => o.Slug).ToListAsync(cancellationToken);
+                occupations.Sort(StringComparer.Ordinal);
             }
 
             // Whether each product is current is asked of the store one after another, and the pages of those to be made are
@@ -118,7 +124,12 @@ internal sealed class PageDocumentBuild(
                 let product = Product(kind, language)
                 let made = force || !IsCurrent(product, inputs, notes)
                 select (kind, language, product, Composed: made
-                    ? pool.Compose(kind, language, kind == PageDocuments.RecordKind ? slugs : numbers)
+                    ? pool.Compose(kind, language, kind switch
+                    {
+                        PageDocuments.RecordKind => slugs,
+                        PageDocuments.StrongKind => numbers,
+                        _ => occupations,
+                    })
                     : null)).ToList();
             logger.LogInformation("Page documents: {Made} of {Products} products to compose, {Workers} pages at once",
                 plans.Count(p => p.Composed is not null), plans.Count, workers);
@@ -217,13 +228,18 @@ internal sealed class PageDocumentBuild(
     private static async Task<PageDocumentRow?> Packed(
         PageLoader loader, string kind, SiteLanguage language, string address, CancellationToken cancellationToken)
     {
-        var (body, hash, length) = kind == PageDocuments.RecordKind
-            ? await loader.RecordDocument(address, language, cancellationToken) is { } record
+        var (body, hash, length) = kind switch
+        {
+            PageDocuments.RecordKind => await loader.RecordDocument(address, language, cancellationToken) is { } record
                 ? Pack(record, record.Data, PageDocuments.Record)
-                : default
-            : await loader.StrongDocument(address, language, cancellationToken) is { } strong
+                : default,
+            PageDocuments.StrongKind => await loader.StrongDocument(address, language, cancellationToken) is { } strong
                 ? Pack(strong, strong.Data, PageDocuments.Strong)
-                : default;
+                : default,
+            _ => await loader.OccupationDocument(address, language, cancellationToken) is { } occupation
+                ? Pack(occupation, occupation.Data, PageDocuments.Occupation)
+                : default,
+        };
         return body is null ? null : new PageDocumentRow(address, hash, length, Convert.ToBase64String(body));
     }
 
@@ -329,9 +345,12 @@ internal sealed class PageDocumentBuild(
         {
             var row = sample[i];
             var body = Convert.FromBase64String(row.Body);
-            var reread = kind == PageDocuments.RecordKind
-                ? Reread(body, PageDocuments.Record)
-                : Reread(body, PageDocuments.Strong);
+            var reread = kind switch
+            {
+                PageDocuments.RecordKind => Reread(body, PageDocuments.Record),
+                PageDocuments.StrongKind => Reread(body, PageDocuments.Strong),
+                _ => Reread(body, PageDocuments.Occupation),
+            };
             if (again[i]?.Hash != row.Hash || reread != row.Hash)
             {
                 differences.Add(row.Address);

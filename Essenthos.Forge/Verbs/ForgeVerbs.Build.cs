@@ -385,7 +385,7 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary><c>pages [--force] [--parallel n]</c>: the documents record and Strong pages are written from, for the configured database.</summary>
+    /// <summary><c>pages [--force] [--parallel n]</c>: the documents record, Strong and occupation pages are written from, for the configured database.</summary>
     private static async Task<int> PagesVerb(ForgeRun forge, string[] args)
     {
         ServingBuild.Refuse(new NpgsqlConnectionStringBuilder(forge.DatabaseConnection).Database ?? "");

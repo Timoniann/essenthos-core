@@ -53,7 +53,7 @@ internal static partial class ForgeVerbs
             + "copying them from the products where not. Never writes the live corpus or the snapshot.",
             ContextVerb, Most: 1),
         new("pages", "[--force] [--parallel <n>]",
-            "Compose the document every record's and Strong number's page is written from, in each site language (page_document, "
+            "Compose the document every record's, Strong number's and occupation's page is written from, in each site language (page_document, "
             + "page-documents/<kind>/<language>), from the configured database where what it was built from, the site's switches or "
             + "the API's code moved (all with --force), copying them from the products where not; n pages at once (Pages:Parallel, "
             + "else half the cores). Never writes the live corpus or the snapshot.",
