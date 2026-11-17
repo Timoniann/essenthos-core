@@ -51,6 +51,11 @@ public sealed class EventListOrderTests : IDisposable
         var ussherFirst = await Get(client, "/v1/events?reckonings=ussher,bibledata&take=10");
         Slugs(ussherFirst).Should().Equal("flood", "abram-born", "abram-dies", "temple");
         ShownBy(ussherFirst).Should().Equal("bibledata", "bibledata", "bibledata", "ussher");
+        var line = ussherFirst.GetProperty("items")[3];
+        line.TryGetProperty("description", out _).Should().BeFalse();
+        line.GetProperty("dates")[0].TryGetProperty("calculation", out _).Should().BeFalse();
+        line.GetProperty("dates").EnumerateArray().Select(d => d.GetProperty("bceYear").GetInt32()).Should().Equal(1000, 900);
+        ussherFirst.GetProperty("centuries").EnumerateArray().Select(c => c.GetProperty("century").GetInt32()).Should().Equal(-16, -14, -12, -10);
 
         var bibleDataFirst = await Get(client, "/v1/events?reckonings=bibledata,ussher&take=10");
         ShownBy(bibleDataFirst).Should().AllBe("bibledata");
@@ -103,7 +108,13 @@ public sealed class EventListOrderTests : IDisposable
         step.GetProperty("total").GetInt32().Should().Be(4);
         step.GetProperty("previous").GetProperty("slug").GetString().Should().Be("abram-born");
         step.GetProperty("next").GetProperty("slug").GetString().Should().Be("temple");
-        step.GetProperty("next").GetProperty("shownBy").GetString().Should().Be("ussher");
+        step.GetProperty("nearSkip").GetInt32().Should().Be(0);
+        Slugs(step, "near").Should().Equal("flood", "abram-born", "abram-dies", "temple");
+        step.GetProperty("near").EnumerateArray().Last().GetProperty("shownBy").GetString().Should().Be("ussher");
+
+        var three = await Get(client, "/v1/events/abram-dies/step?reckonings=ussher,bibledata&near=3");
+        three.GetProperty("nearSkip").GetInt32().Should().Be(1);
+        Slugs(three, "near").Should().Equal("abram-born", "abram-dies", "temple");
 
         var narrowed = await Get(client, "/v1/events/temple/step?reckonings=ussher,bibledata&notKind=Birth,Death");
         narrowed.GetProperty("position").GetInt32().Should().Be(2);
@@ -113,6 +124,7 @@ public sealed class EventListOrderTests : IDisposable
         var leftOut = await Get(client, "/v1/events/abram-born/step?notKind=Birth");
         leftOut.GetProperty("position").ValueKind.Should().Be(JsonValueKind.Null);
         leftOut.GetProperty("total").GetInt32().Should().Be(3);
+        leftOut.GetProperty("near").GetArrayLength().Should().Be(0);
 
         (await client.GetAsync("/v1/events/nobody/step")).StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
@@ -154,10 +166,11 @@ public sealed class EventListOrderTests : IDisposable
             new EventDate { EventId = temple.Id, ChronologyId = bibleData.Id, Year = 3062 },
             new EventDate { EventId = temple.Id, ChronologyId = ussher.Id, Year = 3004, StatedYear = -1000 });
         await _db.SaveChangesAsync();
+        await StoredEvents.Order(_db);
     }
 
-    private static IEnumerable<string?> Slugs(JsonElement list) =>
-        list.GetProperty("items").EnumerateArray().Select(item => item.GetProperty("slug").GetString());
+    private static IEnumerable<string?> Slugs(JsonElement list, string property = "items") =>
+        list.GetProperty(property).EnumerateArray().Select(item => item.GetProperty("slug").GetString());
 
     private static IEnumerable<string?> ShownBy(JsonElement list) =>
         list.GetProperty("items").EnumerateArray().Select(item => item.GetProperty("shownBy").GetString());

@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Products;
 using Npgsql;
 using NpgsqlTypes;
@@ -115,6 +116,7 @@ internal static partial class RecordFiles
         await Execute(db, transaction, SchemaSql, cancellationToken);
         var loaded = await LoadFiles(db, transaction, store, All, cancellationToken, took);
         loaded.Add((RecordCanons.Product, await RecordCanons.Load(db, transaction, store, cancellationToken)));
+        await StoredEventOrder.Write(db, transaction, cancellationToken);
         return loaded;
     }
 

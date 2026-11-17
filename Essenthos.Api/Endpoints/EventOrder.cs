@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
 
@@ -33,8 +32,15 @@ namespace Essenthos.Core.Endpoints;
 /// A reign that begins and ends at the same verse (Zimri's seven days) begins first. A reign or a time that
 /// ends in the year its person dies ends at the death, after it: the source reads such an end from the verse
 /// that counts the reign (Ahab's from 1 Kings 16:29, where he begins), which would put it before the battle
-/// he dies in. <see cref="Later"/>
-/// holds the few events that follow everything else told at their verse.
+/// he dies in. Where the text shows the reign ended before the death, by a handover or otherwise, the end stands where
+/// it ended instead (<see cref="EndedElsewhere"/>). <see cref="Later"/> holds the few events that follow everything else
+/// told at their verse.
+/// </para>
+///
+/// <para>
+/// Both rules that read another event, the end at the death and the end right after its own beginning, read it among
+/// all the events, so <see cref="Rank"/> is one order over the whole corpus and a narrowed list keeps the order the
+/// whole one has: hiding the deaths does not move a reign's end.
 /// </para>
 /// </summary>
 internal static class EventOrder
@@ -52,19 +58,6 @@ internal static class EventOrder
         int? SequenceInYear,
         int? YearFromCreation,
         int? EntityId = null);
-
-    public static readonly Expression<Func<Event, Facts>> Read = e => new Facts(
-        e.Slug,
-        e.Realm,
-        e.Source,
-        e.Kind,
-        e.CanonicalBook,
-        e.CanonicalChapter,
-        e.CanonicalVerse,
-        e.CanonicalBook == null && e.Realm == Realms.Scripture ? e.Description : null,
-        e.SequenceInYear,
-        e.YearFromCreation,
-        e.EntityId);
 
     /// <summary>An event's place in its year; compare two with <see cref="InYear"/>.</summary>
     internal readonly record struct Place(int Part, int Book, int Chapter, int Verse, int Moment, string Span, int SpanEnd, int? Sequence, string Slug);
@@ -93,6 +86,21 @@ internal static class EventOrder
         ["endjonah1prophesying"] = "2KI 14:29",
         // "Ended with his defeat by Cyrus": "In that night was Belshazzar the king of the Chaldeans slain".
         ["endbelshazzar1reign"] = "DAN 5:30",
+    };
+
+    /// <summary>
+    /// Reigns that ended where the text says, not at the death the year of the end would put them at, each at the verse
+    /// that tells the end (BibleData's book codes).
+    /// </summary>
+    private static readonly Dictionary<string, string> EndedElsewhere = new(StringComparer.Ordinal)
+    {
+        // David handed the kingdom over while he lived: "they anointed Solomon … God save king Solomon" (1 Kings 1:39;
+        // "he made Solomon his son king over Israel", 1 Chronicles 23:1), before "David slept with his fathers" (2:10).
+        ["enddavid1reign"] = "1KI 1:39",
+        ["enddavidreignjerusalem"] = "1KI 1:39",
+        // Jehoram of Judah ended at his death: "Joram slept with his fathers … and Ahaziah his son reigned in his stead"
+        // (2 Kings 8:24). The death row filed under him quotes 9:24, Jehu's arrow in Joram king of Israel (9:21).
+        ["endjehoram1reign"] = "2KI 8:24",
     };
 
     /// <summary>Events that follow everything else told at their verse.</summary>
@@ -125,7 +133,7 @@ internal static class EventOrder
             .Where(e => e.Kind == "Death" && e.EntityId is not null && verses[e.Slug] is not null)
             .GroupBy(e => (e.EntityId, e.YearFromCreation))
             .ToDictionary(g => g.Key, g => verses[g.First().Slug]);
-        foreach (var e in events.Where(e => e.Kind == "End" && e.EntityId is not null))
+        foreach (var e in events.Where(e => e.Kind == "End" && e.EntityId is not null && !EndedElsewhere.ContainsKey(e.Slug)))
         {
             if (deaths.TryGetValue((e.EntityId, e.YearFromCreation), out var died))
             {
@@ -174,6 +182,14 @@ internal static class EventOrder
         return places;
     }
 
+    /// <summary>Each event's rank among these in the text's order, from 0; ranks of two events compare as <see cref="InYear"/> does.</summary>
+    public static Dictionary<string, int> Rank(IReadOnlyCollection<Facts> events)
+    {
+        var places = Of(events);
+        return places.Values.Order(InYear).Select((place, rank) => (place.Slug, rank))
+            .ToDictionary(p => p.Slug, p => p.rank, StringComparer.Ordinal);
+    }
+
     /// <summary>Two events of one year in the text's order.</summary>
     public static readonly IComparer<Place> InYear = Comparer<Place>.Create((x, y) =>
     {
@@ -213,9 +229,17 @@ internal static class EventOrder
         _ => 4,
     };
 
-    /// <summary>The verse an event is read from: its reference, the first verse its description cites, or <see cref="Placed"/>.</summary>
+    /// <summary>
+    /// The verse an event is read from: where the text ends it (<see cref="EndedElsewhere"/>), its reference, the first
+    /// verse its description cites, or <see cref="Placed"/>.
+    /// </summary>
     private static (int Book, int Chapter, int Verse)? Verse(Facts e)
     {
+        if (EndedElsewhere.TryGetValue(e.Slug, out var ended) && QuotedVerses.Passages(ended) is [var end, ..])
+        {
+            return (end.Book, end.Chapter, end.Verse);
+        }
+
         if (e.Book is { } book && e.Chapter is { } chapter && e.Verse is { } verse)
         {
             return (book, chapter, verse);

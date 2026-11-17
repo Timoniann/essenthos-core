@@ -848,6 +848,13 @@ public class Event
     /// </summary>
     public int? SequenceInYear { get; set; }
 
+    /// <summary>
+    /// Where this event stands among all the events in the order the text tells them, which orders the events of one
+    /// year: one rank over every event, so a narrowed list keeps the order the whole one has. Written by the build as
+    /// the events are loaded, from the order the API's EventOrder reads; never a date.
+    /// </summary>
+    public int? InYearRank { get; set; }
+
     /// <summary>The arithmetic, in a sentence, so the year can be checked rather than believed.</summary>
     public string? Calculation { get; set; }
 

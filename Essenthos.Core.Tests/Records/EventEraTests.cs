@@ -172,6 +172,7 @@ public sealed class EventEraTests : IDisposable
         Dated("ordering-1000", oneYear, statedBceYear: null, sequenceInYear: 1000);
         Dated("ordering-999", oneYear, statedBceYear: null, sequenceInYear: 999);
 
+        await StoredEvents.Order(_db);
         var drawn = await EncyclopediaEndpoints.InOrder(_db.Events.Where(e => e.Slug.StartsWith("ordering-")), default);
 
         drawn.Should().Equal("ordering-999", "ordering-1000", "ordering-none");

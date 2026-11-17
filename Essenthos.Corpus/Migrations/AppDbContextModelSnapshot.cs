@@ -2063,6 +2063,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("entity_id");
 
+                    b.Property<int?>("InYearRank")
+                        .HasColumnType("integer")
+                        .HasColumnName("in_year_rank");
+
                     b.Property<string>("Kind")
                         .HasColumnType("text")
                         .HasColumnName("kind");
@@ -2159,6 +2163,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AxisYear")
+                        .HasColumnType("integer")
+                        .HasColumnName("axis_year");
 
                     b.Property<string>("Calculation")
                         .HasColumnType("text")
