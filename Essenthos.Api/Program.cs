@@ -169,6 +169,7 @@ v1.MapRenderings();
 v1.MapLinkChecks();
 v1.MapSyntax();
 v1.MapWords();
+v1.MapGeez();
 v1.MapSearch();
 v1.MapEncyclopedia();
 v1.MapLandPeriods();

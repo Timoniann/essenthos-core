@@ -956,6 +956,35 @@ public static class Datasets
                 + "form of which entry, and anything made from the entries, is shared under CC BY-NC-SA 4.0 "
                 + "too."),
 
+        // Two layers a language model made over the Ge'ez for this project. Both are built on Dillmann's
+        // lexicon as Beta maṣāḥǝft digitised it, so its ShareAlike reaches them: CC BY-NC-SA 4.0, not the licence
+        // the owner sets for the rest of this project's own work, which is why neither is marked as own work.
+        new("dillmann-rendering", "Dillmann's Latin in English, Ukrainian, German and Spanish",
+            "this project; rendered by a language model (Claude Sonnet 5.5, Anthropic) on 16 November 2026",
+            "CC BY-NC-SA 4.0",
+            "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "https://essenthos.org",
+            "Each sense of Dillmann's Lexicon Linguae Aethiopicae rendered from his Latin into English, Ukrainian, "
+            + "German and Spanish by a language model, sense by sense in his order and numbering, and shown under "
+            + "his Latin as a machine rendering of it. Checked by hand on a sample, not entry by entry; his Latin "
+            + "stays what the entry says.",
+            Sources.DillmannRenderingPrefix, Glossary: true,
+            Obliges: "Attribution, non-commercial use only, and ShareAlike, as the digital edition of Dillmann it "
+                + "is made from."),
+        new("geez-gloss", "The Ge'ez words read in context",
+            "this project; read by a language model (Claude Opus 5.5, Anthropic) on 16 November 2026",
+            "CC BY-NC-SA 4.0",
+            "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "https://essenthos.org",
+            "What each word of the Ethiopic Bible means where it stands, as a language model read it with the "
+            + "verse's Greek and an English translation beside it and Dillmann's lexicon to name its dictionary "
+            + "form: the dictionary form, its sense in the verse, the line under the word in English and Ukrainian, "
+            + "and the Greek words it renders, each with how sure the model was. Genesis to Numbers and Deuteronomy "
+            + "to 2:33 so far. Checked by hand on a sample, not word by word.",
+            Sources.GeezGlossPrefix,
+            Obliges: "Attribution, non-commercial use only, and ShareAlike, as Dillmann's lexicon it names its "
+                + "dictionary forms by."),
+
         // The links an EVIDENTIA run proposed and a reviewer accepted: this project's own work, under the
         // one licence the owner set for all of it (2026-10-29). UDPipe's analysis is evidence the rules
         // read, credited in the description, and is not what is published.

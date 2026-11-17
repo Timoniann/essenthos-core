@@ -182,6 +182,12 @@ public class AppDbContext : DbContext
     public DbSet<LexiconGloss> LexiconGlosses { get; set; } = null!;
     public DbSet<GeezLexiconEntry> GeezLexiconEntries { get; set; } = null!;
 
+    /// <summary>Dillmann's senses rendered from his Latin into the reader's languages by a language model.</summary>
+    public DbSet<GeezLexiconRendering> GeezLexiconRenderings { get; set; } = null!;
+
+    /// <summary>What a Ge'ez word means where it stands, as a language model read it beside the Greek.</summary>
+    public DbSet<GeezWordGloss> GeezWordGlosses { get; set; } = null!;
+
     /// <summary>What a commentary wrote, each comment over the span of the text it was written on.</summary>
     public DbSet<CommentaryEntry> CommentaryEntries { get; set; } = null!;
 
@@ -1175,6 +1181,37 @@ public class AppDbContext : DbContext
             // A chapter's words are looked up by every set of consonants they could be read as at
             // once, which is an overlap against the array and nothing a b-tree answers.
             entity.HasIndex(e => e.Consonants).HasMethod("gin");
+        });
+
+        modelBuilder.Entity<GeezLexiconRendering>(entity =>
+        {
+            entity.ToTable("geez_lexicon_rendering", table =>
+            {
+                table.HasCheckConstraint("ck_geez_lexicon_rendering_source_not_empty", "length(btrim(\"source\")) > 0");
+                table.HasCheckConstraint("ck_geez_lexicon_rendering_says_something", "coalesce(en, uk, de, es) IS NOT NULL");
+                table.HasComment(
+                    "Dillmann's Latin, sense by sense in his order and numbering, rendered into English, Ukrainian, German "
+                    + "and Spanish by a language model: a machine rendering shown under his Latin, never in its place. "
+                    + "CC BY-NC-SA 4.0, as the digital edition it is made from.");
+            });
+        });
+
+        modelBuilder.Entity<GeezWordGloss>(entity =>
+        {
+            entity.HasOne(g => g.Word)
+                .WithMany()
+                .HasForeignKey(g => g.WordId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("geez_word_gloss", table =>
+            {
+                table.HasCheckConstraint("ck_geez_word_gloss_source_not_empty", "length(btrim(\"source\")) > 0");
+                table.HasCheckConstraint("ck_geez_word_gloss_confidence", "confidence IN ('high', 'medium', 'low')");
+                table.HasComment(
+                    "What a Ge'ez word means where it stands, as a language model read it with the verse's Greek and an "
+                    + "English translation beside it: lemma, sense, the line under the word, the Greek words it renders. "
+                    + "Nobody checked a row; the reader is told it is a model's reading.");
+            });
         });
 
         modelBuilder.Entity<LexiconGloss>(entity =>

@@ -63,8 +63,38 @@ public sealed class GeezMeaningTests : IDisposable
     [Fact]
     public async Task DillmannsEntryIsGivenWhereTheLettersOrTheGreekSettleIt()
     {
-        (await Read(1)).GeezEntry.Should().BeEquivalentTo(new GeezEntryResponse("ቃል", ["vox", "verbum"], ["λαλιά"], "form"));
-        (await Read(2)).GeezEntry.Should().BeEquivalentTo(new GeezEntryResponse("ገብረ", ["fecit"], ["ποιεῖν"], "greek"));
+        (await Read(1)).GeezEntry.Should().BeEquivalentTo(new GeezEntryResponse("Lword", "ቃል", ["vox", "verbum"], ["λαλιά"], "form"));
+        (await Read(2)).GeezEntry.Should().BeEquivalentTo(new GeezEntryResponse("Lmade", "ገብረ", ["fecit"], ["ποιεῖν"], "greek"));
+    }
+
+    [Fact]
+    public async Task AWordAModelReadInItsVerseCarriesWhatItReadWithTheGreekWordsItNamed()
+    {
+        var greek = _db.Texts.Single(text => text.Slug == "GRCBRENT");
+        _db.GeezWordGlosses.Add(new GeezWordGloss
+        {
+            WordId = _db.WordAt(_geez, 1, 1, 1).Id,
+            Lemma = "ቃል",
+            LemmaSource = "dillmann",
+            SenseEn = "word, speech",
+            SenseUk = "слово, мова",
+            LineEn = "my word",
+            LineUk = "моє слово",
+            GreekWordIds = [_db.WordAt(greek, 1, 1, 1).Id],
+            Morphology = "noun + suffix 1 sg.",
+            Confidence = "high",
+            Model = "claude-opus-5-5",
+            Run = "geez-gloss-test",
+            Made = new DateOnly(2026, 11, 16),
+            Source = "a test",
+        });
+        await _db.SaveChangesAsync();
+
+        (await Read(1)).GeezGloss.Should().BeEquivalentTo(new GeezGlossResponse(
+            "ቃል", "dillmann", new GeezGlossLanguages("word, speech", "слово, мова"), new GeezGlossLanguages("my word", "моє слово"),
+            ["λόγος"], "noun + suffix 1 sg.", "high", "claude-opus-5-5", "2026-11-16"));
+        (await Read(2)).GeezGloss.Should().BeNull("no model read it, so the line under it stays the Greek word's meaning");
+        (await Read(2)).ThroughGreek.Should().NotBeNull();
     }
 
     [Fact]
@@ -73,6 +103,7 @@ public sealed class GeezMeaningTests : IDisposable
         var word = await Read(3);
         word.ThroughGreek.Should().BeNull();
         word.GeezEntry.Should().BeNull();
+        word.GeezGloss.Should().BeNull();
     }
 
     private async Task<TextWordResponse> Read(int position)

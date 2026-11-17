@@ -175,6 +175,11 @@ Resources/*/*
 # the backup rather than here, at the owner's word (NOT-0209). This line must stay below the one above it.
 Resources/Essenthos/lexicon/strong-*.jsonl
 
+# The Ge'ez layers a language model made (Dillmann rendered, the words read in context): kept products of the build store,
+# out of git like the Strong translations above and for the same reason; the backup keeps them. Only their licence is carried.
+Resources/Essenthos/geez/*
+!Resources/Essenthos/geez/LICENCE.md
+
 # Raw model output of generation runs: tens to hundreds of MB, rewritten while a run works. A run writes under
 # Resources/Essenthos/generation/<run>/ (the backup mirrors Resources/ whole, so it is kept there while it works); what a
 # loader reads from it is committed under its own path, and the finished run folder moves to

@@ -89,6 +89,27 @@ public class GeezLexiconTests
     }
 
     [Fact]
+    public void TheAdditionsTheEditionMarksAsDillmannsAreNotReadAsHis()
+    {
+        var entry = DillmannLexicon.Parse(XDocument.Parse(
+            """
+            <TEI xmlns="http://www.tei-c.org/ns/1.0"><text><body><div>
+              <entry xml:id="Lh" n="1"><form><foreign xml:lang="gez">ሐረመ</foreign></form>
+                <sense xml:id="Dmain" xml:lang="la" source="#dillmann"><cit type="translation" xml:lang="la"><quote>prohibuit</quote></cit>
+                  <foreign xml:lang="grc">ἀπεῖπεν</foreign>
+                  <sense n="G" xml:id="TG"><cit type="translation" xml:lang="la"><quote>illicitum esse censuit</quote></cit>
+                    <foreign xml:lang="grc">ἀπηγόρευσεν</foreign></sense>
+                  <sense n="L" xml:id="TL"><cit type="translation" xml:lang="la"><quote>vetuit</quote></cit></sense>, <cit type="translation" xml:lang="la"><quote>interdixit</quote></cit></sense>
+                <sense xml:id="Tmain" xml:lang="en" source="#dillmann"><cit type="translation" xml:lang="la"><quote>sacrum fecit</quote></cit>
+                  <foreign xml:lang="grc">ἀνάθεμα</foreign></sense>
+              </entry></div></body></text></TEI>
+            """))!;
+
+        entry.Latin.Should().Equal("prohibuit", "interdixit");
+        entry.Greek.Should().Equal("ἀπεῖπεν");
+    }
+
+    [Fact]
     public void AnEntryThatOnlySendsTheReaderElsewhereBecomesASpellingOfThatEntry()
     {
         var pointer = DillmannLexicon.Parse(XDocument.Parse(

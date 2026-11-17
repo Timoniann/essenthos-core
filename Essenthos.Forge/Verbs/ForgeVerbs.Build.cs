@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Build;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Mapping;
@@ -466,6 +467,39 @@ internal static partial class ForgeVerbs
 
         store.Save();
         return Task.FromResult(0);
+    }
+
+    /// <summary><c>geez-layers [--gloss &lt;run&gt;] [--dillmann &lt;run&gt;] [--into &lt;Resources&gt;]</c>: a model run over the Ge'ez into the store.</summary>
+    private static Task<int> GeezLayersVerb(ForgeRun forge, string[] args)
+    {
+        var store = new ProductStore(Option(args, "--into") ?? forge.Resources);
+        var (gloss, dillmann) = (Option(args, "--gloss"), Option(args, "--dillmann"));
+        if (gloss is null && dillmann is null)
+        {
+            Console.Error.WriteLine("geez-layers takes --gloss <run>, --dillmann <run> or both: a run folder, or its name under Resources/Essenthos/generation.");
+            return Task.FromResult(1);
+        }
+
+        string Folder(string run) =>
+            Directory.Exists(run) ? run : Path.Combine(store.ResourcesPath, ProductStore.EssenthosFolder, "generation", run);
+
+        var failed = false;
+        if (dillmann is not null)
+        {
+            var lexicon = DillmannLexicon.Headwords([.. DillmannLexicon.Read(store.FullPath("Dillmann"))]);
+            var outcome = GeezModelLayers.ImportRenderings(store, Folder(dillmann), lexicon);
+            Console.WriteLine(outcome);
+            failed |= outcome.Failed;
+        }
+
+        if (gloss is not null)
+        {
+            var outcome = GeezModelLayers.ImportGlosses(store, Folder(gloss));
+            Console.WriteLine(outcome);
+            failed |= outcome.Failed;
+        }
+
+        return Task.FromResult(failed ? 1 : 0);
     }
 
     /// <summary><c>carried-export [--into &lt;Resources&gt;] [--all]</c>: the served tables no producer makes yet (every one with --all), from the configured database.</summary>

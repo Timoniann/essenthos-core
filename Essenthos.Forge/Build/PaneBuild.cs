@@ -333,6 +333,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
         {
             products.Add(TableProducts.Product("lexicon_gloss"));
             products.Add(TableProducts.Product("geez_lexicon_entry"));
+            products.Add(TableProducts.Product("geez_word_gloss"));
         }
 
         return [.. store.Inputs(products.Distinct(StringComparer.Ordinal).Select(store.Find).OfType<string>().Order(StringComparer.Ordinal))];

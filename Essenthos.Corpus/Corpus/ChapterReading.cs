@@ -1011,6 +1011,9 @@ internal static class ChapterReading
         /// <summary>For each Ge'ez word, the entry of Dillmann's lexicon it is a form of.</summary>
         public Dictionary<long, GeezEntryResponse> GeezEntries { get; init; } = [];
 
+        /// <summary>For each Ge'ez word a model read in its verse, what it read.</summary>
+        public Dictionary<long, GeezGlossResponse> GeezGlosses { get; init; } = [];
+
         /// <summary>For each word that goes with another word of its text, that word and how.</summary>
         public Dictionary<long, AttachedResponse> Attached { get; init; } = [];
 
@@ -1182,7 +1185,10 @@ internal static class ChapterReading
     /// without choosing, the aligned Greek words' forms serving as the evidence where several
     /// headwords could be meant.
     ///
-    /// Four queries for a chapter, and one for a text in another language.
+    /// In context: what a language model read the word as in its verse, beside the Greek, where a
+    /// run has read it, with the Greek words it named.
+    ///
+    /// Six queries for a chapter, and one for a text in another language.
     /// </summary>
     private static async Task<Reached> Meant(
         AppDbContext db,
@@ -1281,6 +1287,7 @@ internal static class ChapterReading
 
                 var entry = byEntry[match.Entry];
                 geezEntries[id] = new GeezEntryResponse(
+                    entry.Entry,
                     entry.Headword,
                     [.. entry.Latin.Take(LatinShown)],
                     [
@@ -1292,7 +1299,27 @@ internal static class ChapterReading
             }
         }
 
-        return counterparts with { ThroughGreek = throughGreek, GeezEntries = geezEntries };
+        var glosses = await db.GeezWordGlosses.Where(gloss => ids.Contains(gloss.WordId)).ToListAsync(cancellationToken);
+        var named = glosses.SelectMany(gloss => gloss.GreekWordIds).Distinct().ToList();
+        var greekWords = named.Count == 0
+            ? []
+            : await db.Words.Where(word => named.Contains(word.Id))
+                .Select(word => new { word.Id, word.Surface })
+                .ToDictionaryAsync(word => word.Id, word => word.Surface, cancellationToken);
+        var geezGlosses = glosses.ToDictionary(
+            gloss => gloss.WordId,
+            gloss => new GeezGlossResponse(
+                gloss.Lemma,
+                gloss.LemmaSource,
+                new GeezGlossLanguages(gloss.SenseEn, gloss.SenseUk),
+                new GeezGlossLanguages(gloss.LineEn, gloss.LineUk),
+                [.. gloss.GreekWordIds.Select(greekWords.GetValueOrDefault).OfType<string>()],
+                gloss.Morphology,
+                gloss.Confidence,
+                gloss.Model,
+                gloss.Made.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)));
+
+        return counterparts with { ThroughGreek = throughGreek, GeezEntries = geezEntries, GeezGlosses = geezGlosses };
     }
 
     /// <summary>Reads the verses of one text that sit at the given canonical addresses.</summary>
@@ -1405,6 +1432,7 @@ internal static class ChapterReading
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
             GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
+            GeezGloss = counterparts.GeezGlosses.GetValueOrDefault(id),
             Attached = counterparts.Attached.GetValueOrDefault(id),
             Roles = counterparts.Roles.GetValueOrDefault(id),
             Referents = counterparts.Named.ContainsKey(id) ? null : counterparts.Referents.GetValueOrDefault(id),

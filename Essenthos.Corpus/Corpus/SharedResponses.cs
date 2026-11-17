@@ -337,6 +337,12 @@ internal record TextWordResponse(
     public GeezEntryResponse? GeezEntry { get; init; }
 
     /// <summary>
+    /// What a language model read this Ge'ez word as in its verse, beside the Greek: its own meaning here, where the
+    /// <see cref="ThroughGreek"/> line is only the Greek word's. A model's reading, said to be one wherever it is shown.
+    /// </summary>
+    public GeezGlossResponse? GeezGloss { get; init; }
+
+    /// <summary>
     /// Every record the word names, in a fixed order, <see cref="Entity"/> first: <em>Christ</em> names
     /// the title and the man who bears it, <em>the Shunammite</em> Abishag and her people. Empty for a
     /// word that names nothing. <see cref="Entity"/> stays for a client that reads one.
@@ -434,7 +440,29 @@ internal record ThroughGreekResponse(
 /// is taken off; <c>greek</c> where several headwords could be meant and the Greek it is aligned to
 /// is Dillmann's Greek for this one.
 /// </param>
-internal record GeezEntryResponse(string Headword, string[] Latin, string[] Greek, string Via);
+internal record GeezEntryResponse(string Entry, string Headword, string[] Latin, string[] Greek, string Via);
+
+/// <param name="Lemma">The dictionary form the model gave, Dillmann's headword where one fits (<paramref name="LemmaSource"/> <c>dillmann</c>).</param>
+/// <param name="Sense">The lemma's meaning in this verse.</param>
+/// <param name="Line">The whole word as a line under it reads, its particles and endings rendered.</param>
+/// <param name="Greek">The words of the Greek beside it that it renders, as their text prints them; empty where none.</param>
+/// <param name="Morphology">What is written onto the stem and its form, in the model's English.</param>
+/// <param name="Confidence"><c>high</c>, <c>medium</c> or <c>low</c>, as the model rated its reading.</param>
+/// <param name="Model">The model, as its maker names it: <c>claude-opus-5-5</c>.</param>
+/// <param name="Made">The day it was read, <c>2026-11-16</c>.</param>
+internal record GeezGlossResponse(
+    string Lemma,
+    string LemmaSource,
+    GeezGlossLanguages Sense,
+    GeezGlossLanguages Line,
+    string[] Greek,
+    string? Morphology,
+    string Confidence,
+    string Model,
+    string Made);
+
+/// <summary>The same reading in each language the model wrote it in.</summary>
+internal record GeezGlossLanguages(string En, string Uk);
 
 /// <param name="Method">What produced the number, spelled as a link's method is: <c>lexical</c>.</param>
 /// <param name="Confidence">How sure, between 0 and 1; null only where a source stated it.</param>

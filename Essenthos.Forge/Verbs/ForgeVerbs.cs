@@ -66,6 +66,13 @@ internal static partial class ForgeVerbs
         new("tables", "[<table,...>] [--from <Resources>] [--force]",
             "Write the served tables made whole from files (the lexicon, text relations, ...) as tables/<table>, each only when its sources moved. Reads no database.",
             TablesVerb),
+        new("geez-layers", "[--gloss <run>] [--dillmann <run>] [--into <Resources>]",
+            "Take a finished model run over the Ge'ez into the store as the files the build reads: its contextual glosses as "
+            + "geez/glosses/<book> by word key (--gloss), Dillmann's senses rendered into the reader's languages as "
+            + "geez/dillmann-renderings (--dillmann). A run is a folder, or its name under Resources/Essenthos/generation. "
+            + "Only the run's checked lines; any line it cannot place on today's words or entries stops it before a file is written. "
+            + "Reads no database.",
+            GeezLayersVerb),
         new("carried-export", "[--into <Resources>] [--all]",
             "Write the served tables no producer makes yet (every one with --all, for a comparison) from the configured database as carried/<table>.",
             CarriedExport),

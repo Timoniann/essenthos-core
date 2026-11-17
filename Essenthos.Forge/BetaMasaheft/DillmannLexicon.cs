@@ -32,7 +32,9 @@ internal sealed record DillmannHeadword(
 /// Only Dillmann's own sense is read — the one marked <c>source="#dillmann"</c>. The TraCES project
 /// added English senses to some entries and entries of its own from later literature, several
 /// glossed from Leslau's dictionary; those are not taken, so what the reader is shown under
-/// Dillmann's name is Dillmann's.
+/// Dillmann's name is Dillmann's. The edition marks some of those additions <c>#dillmann</c> too, a
+/// whole sense of their own or one nested inside his; an <c>xml:id</c> starting with T tells them
+/// apart (<c>Tmain</c>, Leslau's <c>TL</c>, <c>TG</c>, <c>TC</c>), so no such sense is read, nor anything inside one.
 /// </para>
 ///
 /// <para>
@@ -81,7 +83,7 @@ internal static class DillmannLexicon
         var headword = entry?.Element(Tei + "form")?.Element(Tei + "foreign") is { } form
             ? GeezStemmer.Bare(form.Value)
             : string.Empty;
-        var senses = entry?.Elements(Tei + "sense").Where(sense => (string?)sense.Attribute("source") == Dillmann).ToList() ?? [];
+        var senses = entry?.Elements(Tei + "sense").Where(sense => (string?)sense.Attribute("source") == Dillmann && !IsTraces(sense)).ToList() ?? [];
         if (entry is null || headword.Length == 0 || senses.Count == 0)
         {
             return null;
@@ -93,7 +95,7 @@ internal static class DillmannLexicon
         {
             Glosses(sense, 0, latin);
             greek.AddRange(sense.Descendants(Tei + "foreign")
-                .Where(foreign => Language(foreign) == "grc")
+                .Where(foreign => Language(foreign) == "grc" && !foreign.Ancestors(Tei + "sense").TakeWhile(above => above != sense).Any(IsTraces))
                 .Select(foreign => Collapse(foreign.Value))
                 .Where(text => text.Length > 0));
         }
@@ -205,6 +207,8 @@ internal static class DillmannLexicon
                     break;
                 case XElement { Name.LocalName: "cit" }:
                     break;
+                case XElement { Name.LocalName: "sense" } traces when IsTraces(traces):
+                    break;
                 case XElement child:
                     depth = Glosses(child, depth, latin);
                     break;
@@ -240,6 +244,8 @@ internal static class DillmannLexicon
             }
         }
     }
+
+    private static bool IsTraces(XElement sense) => ((string?)sense.Attribute(Xml + "id"))?.StartsWith('T') == true;
 
     private static string? Language(XElement element) => (string?)element.Attribute(Xml + "lang");
 

@@ -65,6 +65,9 @@ internal static class CarriedTables
             order: "strong_number, language"),
         Plain("lexicon_gloss", "id:int, entry, strong_number, lemma, gloss, source"),
         Plain("geez_lexicon_entry", "id:int, entry, headword, forms:text[], consonants:text[], latin:text[], greek:text[], source"),
+        Plain("geez_lexicon_rendering", "entry, ordinal:int, sense, en, uk, de, es, model, run, made:date, source", order: "entry, ordinal"),
+        Plain("geez_word_gloss", "word_id:bigint, lemma, lemma_source, sense_en, sense_uk, line_en, line_uk, greek_word_ids:bigint[], morphology, " +
+                                 "confidence, model, run, made:date, source", order: "word_id"),
         Plain("commentary_entry", "id:int, commentary, source, book:int, first_chapter:int, first_verse:int, last_chapter:int, last_verse:int, sequence:int, body"),
     ];
 
