@@ -29,15 +29,22 @@ internal sealed class PageValidator(IServiceScopeFactory scopes, SiteSettingsFil
 
     private Task<string>? _release;
 
-    /// <summary>The validator of every page written now from this shell.</summary>
-    public async Task<PageValidity> For(ShellReading shell, CancellationToken cancellationToken)
+    /// <summary>
+    /// The validator of every page written now from this shell; a record's page also names its place's picture, which is drawn
+    /// without a release, so a page whose picture was drawn or redrawn is not taken for the one a crawler holds.
+    /// </summary>
+    public async Task<PageValidity> For(ShellReading shell, PlacePicture? picture, CancellationToken cancellationToken)
     {
         var release = await Release().WaitAsync(cancellationToken);
         var settingsAt = settings.WrittenAt;
         var downloadsAt = downloads.WrittenAt;
-        var tag = Tag('p', release, Built, shell.Version, settingsAt.Ticks.ToString(CultureInfo.InvariantCulture),
-            downloadsAt.Ticks.ToString(CultureInfo.InvariantCulture));
-        var modified = new[] { Started, Seconds(shell.ReadAt), Seconds(settingsAt), Seconds(downloadsAt) }.Max();
+        string[] state = [release, Built, shell.Version, settingsAt.Ticks.ToString(CultureInfo.InvariantCulture),
+            downloadsAt.Ticks.ToString(CultureInfo.InvariantCulture)];
+        var tag = Tag('p', picture is null ? state : [.. state, picture.Tag]);
+        var modified = new[]
+        {
+            Started, Seconds(shell.ReadAt), Seconds(settingsAt), Seconds(downloadsAt), Seconds(picture?.WrittenAt ?? DateTime.MinValue),
+        }.Max();
         return new PageValidity(tag, modified);
     }
 

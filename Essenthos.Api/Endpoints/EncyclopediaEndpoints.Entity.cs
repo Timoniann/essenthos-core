@@ -109,7 +109,7 @@ internal static partial class EncyclopediaEndpoints
         {
             var picture = places?.For(slug, ReaderLanguages.Prose(prose, language));
             var tag = await validator.AnswerTag(
-                'e', [slug, language, prose, picture is null ? null : $"{picture.File}:{picture.Digest}"], cancellationToken);
+                'e', [slug, language, prose, picture?.Tag], cancellationToken);
             context.Response.Headers.CacheControl = "no-cache";
             if (PageValidity.Names(context.Request, tag))
             {

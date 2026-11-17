@@ -592,7 +592,7 @@ internal sealed class PageLoader(
     private async Task<PageConditions> Conditions(string? slug, SiteLanguage language, CancellationToken cancellationToken) =>
         new((await Chosen(language, cancellationToken))?.Slug,
             settings.Is(SiteSettings.GeneratedImages),
-            slug is not null && places?.For(slug, language.Corpus) is { } picture ? $"{picture.File}:{picture.Digest}" : null);
+            slug is not null && places?.For(slug, language.Corpus) is { } picture ? picture.Tag : null);
 
     private async Task<bool> Holds(PageConditions conditions, string? slug, SiteLanguage language, CancellationToken cancellationToken) =>
         conditions == await Conditions(slug, language, cancellationToken);

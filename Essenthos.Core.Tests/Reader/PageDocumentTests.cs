@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using SkiaSharp;
@@ -381,6 +382,31 @@ public sealed class PageDocumentTests : IDisposable
         (await Practitioner(client, stored)).Should().Be("Changed", "a document another commit composed is not read");
     }
 
+    [Fact]
+    public async Task ARecordPagesValidatorMovesWithItsPlacesPicture()
+    {
+        await using var app = await Host();
+        using var client = Client(app);
+        const string page = "/v1/pages/places/bether";
+        var first = await client.GetAsync(page);
+        first.StatusCode.Should().Be(HttpStatusCode.OK);
+        var tag = first.Headers.ETag!.Tag;
+        (await Held(client, page, tag)).StatusCode.Should().Be(HttpStatusCode.NotModified);
+
+        // A picture drawn after the page was given out is not the page the crawler holds, and the page written now shows it.
+        Picture("eng", "bether");
+        var drawn = await Held(client, page, tag);
+        drawn.StatusCode.Should().Be(HttpStatusCode.OK, "a place's picture drawn since moves its page's validator");
+        drawn.Headers.ETag!.Tag.Should().NotBe(tag);
+        var picture = new PlacePictures(Images).For("bether", "eng")!;
+        (await drawn.Content.ReadAsStringAsync()).Should().Contain(picture.Digest);
+        drawn.Content.Headers.LastModified!.Value.Should().BeOnOrAfter(
+            new DateTimeOffset(picture.WrittenAt.AddTicks(-(picture.WrittenAt.Ticks % TimeSpan.TicksPerSecond)), TimeSpan.Zero));
+        (await Held(client, page, drawn.Headers.ETag!.Tag)).StatusCode.Should().Be(HttpStatusCode.NotModified);
+        (await Held(client, "/v1/pages/people/gibbar", tag)).StatusCode.Should().Be(HttpStatusCode.NotModified, "a page with no picture is untouched");
+        (await Held(client, "/v1/pages/people/gibbar", drawn.Headers.ETag!.Tag)).StatusCode.Should().Be(HttpStatusCode.OK, "a picture's tag is its page's own");
+    }
+
     private async Task<string> Heading(string path)
     {
         using var cache = new PageCache();
@@ -423,12 +449,20 @@ public sealed class PageDocumentTests : IDisposable
         builder.Services.AddScoped(_ => _database.NewContext());
         builder.Services.AddSingleton(new SiteSettingsFile(Settings, NullLogger<SiteSettingsFile>.Instance));
         builder.Services.AddSingleton(new PlacePictures(Images));
+        var shell = Path.Combine(_folder, "index.html");
+        await File.WriteAllTextAsync(shell, Shell);
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+            { [PageShell.ConfigurationKey] = shell, [PageEndpoints.OriginKey] = "https://essenthos.test" });
+        builder.Services.AddSingleton<PageShell>();
+        builder.Services.AddScoped<Sitemaps>();
+        builder.Services.AddSingleton<SitemapDates>();
         builder.Services.AddPageServices();
         builder.Services.Configure<JsonOptions>(options =>
             options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default));
         builder.WebHost.UseUrls("http://127.0.0.1:0");
         var app = builder.Build();
         app.MapGroup("/v1").MapEncyclopedia();
+        app.MapGroup("/v1").MapPages();
         await app.StartAsync();
         return app;
     }
