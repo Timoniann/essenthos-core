@@ -669,6 +669,9 @@ internal record EntityAlternativeResponse(
     /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
 
+    /// <summary>The counterpart's name in the reader's language, where the texts give one.</summary>
+    public string? LocalName { get; init; }
+
     /// <summary>
     /// True where this is said here because the question is about the other record: whether the Mary of
     /// Matthew 27:56 is this Mary. Who this record is is not in doubt.

@@ -254,6 +254,7 @@ internal static partial class EncyclopediaEndpoints
             .Where(a => a.EntityId == entity.Id)
             .Select(a => new
             {
+                AlternativeId = a.Alternative == null ? (int?)null : a.Alternative.Id,
                 Slug = a.Alternative == null ? null : a.Alternative.Slug,
                 Name = a.Alternative == null ? null : a.Alternative.Name,
                 Distinguisher = a.Alternative == null ? null : a.Alternative.Distinguisher,
@@ -264,12 +265,19 @@ internal static partial class EncyclopediaEndpoints
             })
             .ToListAsync(cancellationToken);
         var reasons = await TextTranslations.Of(db, held.Select(a => a.Reason), words, cancellationToken);
+        // The other record's name as the reader's texts call it: a Ukrainian reader asks whether this Яків
+        // is that Яків, never whether he is "James" (PRB-1808).
+        var alternativeIds = held.Where(a => a.AlternativeId is not null).Select(a => a.AlternativeId!.Value).ToList();
+        var alternativeNames = alternativeIds.Count == 0
+            ? []
+            : await EntityNames.Of(db, alternativeIds, language, cancellationToken);
         var alternatives = held
             .Select(a => new EntityAlternativeResponse(
                 a.Slug, a.Name, a.Distinguisher, a.Describes, a.Reason, a.Source, Datasets.Of(a.Source))
             {
                 Back = a.Back,
                 LocalReason = TextTranslations.In(reasons, a.Reason),
+                LocalName = a.AlternativeId is { } id ? alternativeNames.GetValueOrDefault(id) : null,
             })
             .ToList();
 
