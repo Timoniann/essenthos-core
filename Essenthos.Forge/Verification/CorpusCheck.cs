@@ -1392,8 +1392,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         // Word ids are hashes of their keys, so the word table's id order is no order on disk: a merge join that walks it by id
         // reads its pages at random. Hashed instead, unaligned took 48 s where it took 108 s, contention 54 s where 76 s and
         // stranded 45 s where 52 s (2026-11-11, the same rows); reach and coverage gain nothing and stay as they are.
+        // Not on a served target (one core, 16 MB of work memory): there the planner thinks the claimed words are 3.4 million
+        // where they are 19 million, hashes them anyway, and unaligned ran past the 30-minute timeout on the rehearsal of
+        // 20261117a; merged instead it took 57 s.
         var unaligned = sessions.Read("unaligned", UnalignedSql, reader => new Unaligned(
-            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)), hashed: true);
+            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)),
+            hashed: !served, merged: served);
 
         var pairing = sessions.Read("pairing", PairingSql, reader => new Pairing(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
@@ -1559,7 +1563,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             Action<NpgsqlCommand>? parameters = null,
             bool singleThreaded = false,
             bool integrity = false,
-            bool hashed = false)
+            bool hashed = false,
+            bool merged = false)
         {
             if (!Wanted(what) && !(integrity && Wanted(IntegrityName)))
             {
@@ -1571,7 +1576,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             {
                 try
                 {
-                    result.SetResult(await Measure(what, sql, row, parameters, singleThreaded, hashed));
+                    result.SetResult(await Measure(what, sql, row, parameters, singleThreaded, hashed, merged));
                 }
                 catch (Exception exception)
                 {
@@ -1608,7 +1613,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             Func<NpgsqlDataReader, T> row,
             Action<NpgsqlCommand>? parameters,
             bool singleThreaded,
-            bool hashed)
+            bool hashed,
+            bool merged)
         {
             var took = Stopwatch.StartNew();
             await using var opened = Degree > 1 ? own.CloneWith(own.ConnectionString) : null;
@@ -1628,6 +1634,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                 await Execute(connection, "SET enable_mergejoin = off");
             }
 
+            if (merged)
+            {
+                await Execute(connection, "SET enable_hashjoin = off");
+            }
+
             List<T> rows;
             try
             {
@@ -1643,6 +1654,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
                 if (hashed)
                 {
                     await Execute(connection, "RESET enable_mergejoin");
+                }
+
+                if (merged)
+                {
+                    await Execute(connection, "RESET enable_hashjoin");
                 }
             }
 
