@@ -2,7 +2,9 @@
 # inputs     
 # producer   forge records-export   (Essenthos.Forge 1.0.0+2e96249ef632-dirty)
 # exported   from essenthos_core
+# owner-rows  rows settled on the owner's review lists, applied by forge owner-rows, last on 2026-11-17
 # Events as the dataset gives them; record names the record of ours an event is about.
 slug	name	description	kind	record	year_from_creation	bce_year	age_at_event	calculation	ref	location	location_ref	uri	notes	realm	region	region_at_the_time	name_source	sequence_in_year	by
 birthofcainan	Birth of Cainan	Cainan, son of Arphaxad and father of Shelah, stands in the Septuagint's Genesis 11:12–13 and in Luke 3:36 and not in the Hebrew, so only the Septuagint reckonings date him.	Birth	cainan	\N	\N	\N	\N	1.11:12	\N	\N	\N	\N	scripture	\N	\N	source	\N	Essenthos, from the Septuagint's Genesis 11:12–13 and Luke 3:36
+deathjehoram2	Death of Jehoram	And Jehu drew a bow with his full strength, and smote Jehoram between his arms, and the arrow went out at his heart, and he sunk down in his chariot. (2KI 9:24)	Death	jehoram-2	3121	841	\N	The year of Jehoram's death is the year his reign over Israel ended = 3121 (BibleData's endjehoram2reign)	12.9:24	Jezreel	12.9:21	\N	\N	scripture	\N	\N	source	\N	Essenthos, from 2 Kings 9:21-24
 deathofcainan	Death of Cainan	Cainan, son of Arphaxad and father of Shelah, stands in the Septuagint's Genesis 11:12–13 and in Luke 3:36 and not in the Hebrew, so only the Septuagint reckonings date him.	Death	cainan	\N	\N	\N	\N	1.11:13	\N	\N	\N	\N	scripture	\N	\N	source	\N	Essenthos, from the Septuagint's Genesis 11:12–13 and Luke 3:36
