@@ -30,8 +30,11 @@ internal static class Relationships
         string? language,
         CancellationToken cancellationToken)
     {
-        var rows = await Rows(db, entityId, cancellationToken);
-        var merged = await Placed(db, Merged(rows), cancellationToken);
+        var (rows, merged) = await SharedReads.Once($"relationships:{entityId}", async () =>
+        {
+            var read = await Rows(db, entityId, cancellationToken);
+            return (read, await Placed(db, Merged(read), cancellationToken));
+        });
 
         // The counterpart's name in the case the reader's language puts it in. Without it the
         // section is English on a Ukrainian page, because the phrase and the case are one decision
@@ -45,7 +48,7 @@ internal static class Relationships
 
         var forms = await Forms(db, counterparts, language, cancellationToken);
         return forms.Count == 0
-            ? merged
+            ? [.. merged]
             : [.. merged.Select(row => row with { Forms = forms.GetValueOrDefault(row.Slug) })];
     }
 

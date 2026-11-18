@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -263,14 +264,14 @@ internal static class ImageEndpoints
         PlacePictures? places = null,
         string? language = null)
     {
-        var primaries = await db.EntityImages
+        var primaries = await SharedReads.Once($"leading:{generated}:{string.Join('\u001f', slugs)}", () => db.EntityImages
             .Where(i => i.Role == Primary && slugs.Contains(i.Entity!.Slug) && (generated || i.Kind != Generated))
             .Select(i => new
             {
                 i.Entity!.Slug, i.File, i.Digest, i.Kind, i.Width, i.Height, i.FocusX, i.FocusY, i.BustX, i.BustY,
                 i.BustWidth, i.BustHeight,
             })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
         var leading = primaries
             .GroupBy(i => i.Slug)

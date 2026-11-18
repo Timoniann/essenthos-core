@@ -41,9 +41,13 @@ internal sealed record PageDocumentOutcome(int Made, long Rows, long Documents, 
 /// a table that does not hold the rows of a current product takes them from it, and nothing is composed.
 /// <para>
 /// Every page of every product that must be made, and every page the check composes again, goes through one set of workers,
-/// each with a database connection of its own, so the eight products are composed at once and the machine is held to the
-/// number of workers asked for (<see cref="ParallelKey"/>, half the cores where unset). A product is written, loaded and
-/// checked as soon as its last page is composed, beside the pages of the others.
+/// each with a database connection of its own, and the machine is held to the number of workers asked for
+/// (<see cref="ParallelKey"/>, half the cores where unset). One record's or Strong number's pages in every language to be made
+/// are one piece of work, composed one after another so that what they read alike is read once (<see cref="SharedReads"/>);
+/// what every page reads alike, a text's own facts and the verses record pages quote, is read once per run
+/// (<see cref="SharedReads.Corpus"/>). The pages the check
+/// composes again are queued first, each language on its own and reading everything itself as a request does, so they also
+/// hold the shared reading to the plain one; a product is then written, loaded and checked as soon as its last page is composed.
 /// </para>
 /// </summary>
 internal sealed class PageDocumentBuild(
@@ -94,8 +98,10 @@ internal sealed class PageDocumentBuild(
             ["settings"] = $"{settings.Choices[SiteSettings.ReaderTranslation]}|{settings.Is(SiteSettings.GeneratedImages)}",
         };
 
-        // Every line that names descendants reads the same family tree for every page of this corpus.
+        // Every line that names descendants reads the same family tree for every page of this corpus, and every record page
+        // quotes its verses from the same few texts.
         KinFacts.Kept.Value = new KinFacts.KeptDescents();
+        SharedReads.Corpus.Value = new SharedReads.CorpusReads();
         using var stopping = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var workers = parallel is > 0 ? parallel.Value : Parallelism;
         var pool = new PageWorkers(services, settings, cache, downloads, places, workers, stopping.Token);
@@ -114,28 +120,48 @@ internal sealed class PageDocumentBuild(
                 occupations.Sort(StringComparer.Ordinal);
             }
 
-            // Whether each product is current is asked of the store one after another, and the pages of those to be made are
-            // queued in this order, the record pages (the slowest) first.
-            var plans = (
+            IReadOnlyList<string> Addresses(string kind) => kind switch
+            {
+                PageDocuments.RecordKind => slugs,
+                PageDocuments.StrongKind => numbers,
+                _ => occupations,
+            };
+
+            // Whether each product is current is asked of the store one after another. The pages the check composes again go
+            // first, each language on its own, so a product is checked the moment its last page is in; then every record's
+            // pages (the slowest), each record in every language to be made at once, then the Strong numbers', then the
+            // occupations'.
+            var current = (
                 from kind in Kinds
                 from language in SiteLanguage.All
                 let product = Product(kind, language)
-                let made = force || !IsCurrent(product, inputs, notes)
-                select (kind, language, product, Composed: made
-                    ? pool.Compose(kind, language, kind switch
-                    {
-                        PageDocuments.RecordKind => slugs,
-                        PageDocuments.StrongKind => numbers,
-                        _ => occupations,
-                    })
-                    : null)).ToList();
+                select (kind, language, product, Made: force || !IsCurrent(product, inputs, notes))).ToList();
+            var samples = current.ToDictionary(plan => plan.product, plan =>
+            {
+                var sample = Sampled(Addresses(plan.kind));
+                return new PageSample(sample, pool.Compose(plan.kind, [plan.language], sample, together: false));
+            });
+            var composed = new Dictionary<string, (List<SiteLanguage> Languages, Task<PageDocumentRow?[][]> Pages)>();
+            foreach (var kind in Kinds)
+            {
+                var languages = current.Where(p => p.kind == kind && p.Made).Select(p => p.language).ToList();
+                if (languages.Count > 0)
+                {
+                    composed[kind] = (languages, pool.Compose(kind, languages, Addresses(kind), together: true));
+                }
+            }
+
             logger.LogInformation("Page documents: {Made} of {Products} products to compose, {Workers} pages at once",
-                plans.Count(p => p.Composed is not null), plans.Count, workers);
-            var outcomes = await Task.WhenAll(plans.Select(plan => Task.Run(async () =>
+                current.Count(p => p.Made), current.Count, workers);
+            var outcomes = await Task.WhenAll(current.Select(plan => Task.Run(async () =>
             {
                 try
                 {
-                    return await Make(plan.kind, plan.language, plan.product, plan.Composed, inputs, notes, pool, clock, stopping.Token);
+                    var pages = plan.Made && composed.TryGetValue(plan.kind, out var made)
+                        ? Slice(made.Pages, made.Languages.IndexOf(plan.language))
+                        : null;
+                    return await Make(plan.kind, plan.language, plan.product, pages,
+                        samples[plan.product], inputs, notes, clock, stopping.Token);
                 }
                 catch
                 {
@@ -167,18 +193,31 @@ internal sealed class PageDocumentBuild(
         finally
         {
             KinFacts.Kept.Value = null;
+            SharedReads.Corpus.Value = null;
         }
     }
 
     private sealed record ProductOutcome(bool Made, long Rows, long Documents, long Bytes, long Compressed);
+
+    /// <summary>The pages of a product the check composes again, and their documents, each composed on its own.</summary>
+    private sealed record PageSample(IReadOnlyList<string> Addresses, Task<PageDocumentRow?[][]> Composed);
+
+    /// <summary>The addresses the check composes again: <see cref="Sample"/> of them, drawn from every part of the list.</summary>
+    private static List<string> Sampled(IReadOnlyList<string> addresses)
+    {
+        var count = Math.Min(Sample, addresses.Count);
+        return [.. Enumerable.Range(0, count).Select(i => addresses[(int)((long)i * addresses.Count / count)])];
+    }
+
+    private static async Task<PageDocumentRow?[]> Slice(Task<PageDocumentRow?[][]> pages, int language) => (await pages)[language];
 
     /// <summary>
     /// One product: its pages as the workers composed them (read from the product where it is current), the product written,
     /// the table made to hold its rows, and the check.
     /// </summary>
     private async Task<ProductOutcome> Make(
-        string kind, SiteLanguage language, string product, Task<PageDocumentRow?[]>? composed, IReadOnlyList<ProductInput> inputs,
-        IReadOnlyDictionary<string, string> notes, PageWorkers pool, Stopwatch clock, CancellationToken cancellationToken)
+        string kind, SiteLanguage language, string product, Task<PageDocumentRow?[]>? composed, PageSample sample,
+        IReadOnlyList<ProductInput> inputs, IReadOnlyDictionary<string, string> notes, Stopwatch clock, CancellationToken cancellationToken)
     {
         List<PageDocumentRow> stored;
         if (composed is null)
@@ -206,7 +245,7 @@ internal sealed class PageDocumentBuild(
         }
 
         var rows = await Match(kind, language, stored, cancellationToken);
-        await Check(kind, language, stored, pool);
+        await Check(kind, language, stored, sample);
         return new ProductOutcome(composed is not null, rows, stored.Count, stored.Sum(r => r.Bytes), stored.Sum(r => (long)r.Body.Length * 3 / 4));
     }
 
@@ -325,22 +364,31 @@ internal sealed class PageDocumentBuild(
 
     /// <summary>
     /// A sample of the stored documents held to the pages composed again from the tables as they stand, drawn from every part
-    /// of the list: the same document, and one that reads back as itself. A difference fails the run, naming the pages.
+    /// of the list and each composed on its own, apart from the other languages: the same document (or none where the product
+    /// has none), and one that reads back as itself. A difference fails the run, naming the pages.
     /// </summary>
-    private async Task Check(string kind, SiteLanguage language, IReadOnlyList<PageDocumentRow> stored, PageWorkers pool)
+    private async Task Check(string kind, SiteLanguage language, IReadOnlyList<PageDocumentRow> stored, PageSample sample)
     {
-        if (stored.Count == 0)
+        var again = (await sample.Composed)[0];
+        if (sample.Addresses.Count == 0)
         {
             return;
         }
 
-        var count = Math.Min(Sample, stored.Count);
-        var sample = Enumerable.Range(0, count).Select(i => stored[(int)((long)i * stored.Count / count)]).ToList();
-        var again = await pool.Compose(kind, language, [.. sample.Select(row => row.Address)]);
+        var held = stored.ToDictionary(row => row.Address, StringComparer.Ordinal);
         var differences = new List<string>();
-        for (var i = 0; i < sample.Count; i++)
+        for (var i = 0; i < sample.Addresses.Count; i++)
         {
-            var row = sample[i];
+            if (held.GetValueOrDefault(sample.Addresses[i]) is not { } row)
+            {
+                if (again[i] is not null)
+                {
+                    differences.Add(sample.Addresses[i]);
+                }
+
+                continue;
+            }
+
             var body = Convert.FromBase64String(row.Body);
             var reread = kind switch
             {
@@ -361,7 +409,8 @@ internal sealed class PageDocumentBuild(
                 + "Raise PageDocuments.Version with a change to what a page is composed from, then build again.");
         }
 
-        logger.LogInformation("Page check {Kind}/{Language}: {Count} documents composed again equal the stored ones", kind, language.Code, count);
+        logger.LogInformation("Page check {Kind}/{Language}: {Count} documents composed again equal the stored ones", kind, language.Code,
+            sample.Addresses.Count);
 
         static string Reread<T>(byte[] body, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> info)
         {
@@ -379,7 +428,7 @@ internal sealed class PageDocumentBuild(
         private readonly Channel<Func<PageLoader, Task>> _queue =
             Channel.CreateUnbounded<Func<PageLoader, Task>>(new UnboundedChannelOptions { SingleReader = false, SingleWriter = false });
 
-        private readonly ConcurrentQueue<TaskCompletionSource<PageDocumentRow?[]>> _waiting = new();
+        private readonly ConcurrentQueue<TaskCompletionSource<PageDocumentRow?[][]>> _waiting = new();
 
         private readonly Task[] _workers;
 
@@ -430,11 +479,16 @@ internal sealed class PageDocumentBuild(
             ];
         }
 
-        /// <summary>The documents of these pages, in their order; null for an address that is no page.</summary>
-        public Task<PageDocumentRow?[]> Compose(string kind, SiteLanguage language, IReadOnlyList<string> addresses)
+        /// <summary>
+        /// The documents of these pages in each of these languages, in their order; null for an address that is no page. Each
+        /// address is one piece of work, its languages composed one after another; <paramref name="together"/> lets them read
+        /// what they read alike once (<see cref="SharedReads"/>), and without it each page reads everything itself, as a request
+        /// does, the run's kept reads included.
+        /// </summary>
+        public Task<PageDocumentRow?[][]> Compose(string kind, IReadOnlyList<SiteLanguage> languages, IReadOnlyList<string> addresses, bool together)
         {
-            var rows = new PageDocumentRow?[addresses.Count];
-            var done = new TaskCompletionSource<PageDocumentRow?[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var rows = languages.Select(_ => new PageDocumentRow?[addresses.Count]).ToArray();
+            var done = new TaskCompletionSource<PageDocumentRow?[][]>(TaskCreationOptions.RunContinuationsAsynchronously);
             if (addresses.Count == 0)
             {
                 done.SetResult(rows);
@@ -453,9 +507,20 @@ internal sealed class PageDocumentBuild(
                         return;
                     }
 
+                    SharedReads.Current.Value = together ? new SharedReads() : null;
+                    if (!together)
+                    {
+                        // Composed as a request composes it, reading everything itself.
+                        SharedReads.Corpus.Value = null;
+                        KinFacts.Kept.Value = null;
+                    }
+
                     try
                     {
-                        rows[index] = await Packed(loader, kind, language, addresses[index], _token);
+                        for (var language = 0; language < languages.Count; language++)
+                        {
+                            rows[language][index] = await Packed(loader, kind, languages[language], addresses[index], _token);
+                        }
                     }
                     catch (Exception failure)
                     {

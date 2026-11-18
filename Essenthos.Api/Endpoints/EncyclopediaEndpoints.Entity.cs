@@ -22,7 +22,8 @@ internal static partial class EncyclopediaEndpoints
         AppDbContext db, string? tribe, string? language, CancellationToken cancellationToken, string? self = null)
     {
         if (string.IsNullOrWhiteSpace(tribe)) return null;
-        if (!(await Tribes.Resolve(db, [tribe], cancellationToken)).TryGetValue(tribe, out var found) || found.Slug == self)
+        if (!(await SharedReads.Once($"tribe:{tribe}", () => Tribes.Resolve(db, [tribe], cancellationToken))).TryGetValue(tribe, out var found)
+            || found.Slug == self)
         {
             return null;
         }
@@ -35,9 +36,12 @@ internal static partial class EncyclopediaEndpoints
     private static async Task<EntityMembersResponse?> Members(
         AppDbContext db, int people, int? origin, CancellationToken cancellationToken)
     {
-        var membership = await Tribes.Of(db, people, origin, cancellationToken);
-        var count = await Tribes.Members(db, db.Entities, membership).CountAsync(cancellationToken);
-        return count == 0 ? null : new EntityMembersResponse(count, membership.Tribe);
+        return await SharedReads.Once($"members:{people}:{origin}", async () =>
+        {
+            var membership = await Tribes.Of(db, people, origin, cancellationToken);
+            var count = await Tribes.Members(db, db.Entities, membership).CountAsync(cancellationToken);
+            return count == 0 ? null : new EntityMembersResponse(count, membership.Tribe);
+        });
     }
 
     /// <summary>
@@ -52,8 +56,8 @@ internal static partial class EncyclopediaEndpoints
             return null;
         }
 
-        var found = await db.Entities.Where(e => e.Id == id)
-            .Select(e => new { e.Slug, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken);
+        var found = await SharedReads.Once($"another-name-for:{id}", () => db.Entities.Where(e => e.Id == id)
+            .Select(e => new { e.Slug, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken));
         if (found is null || found.Name == name)
         {
             return null;
@@ -75,8 +79,8 @@ internal static partial class EncyclopediaEndpoints
             return null;
         }
 
-        var found = await db.Entities.Where(e => e.Slug == slug)
-            .Select(e => new { e.Id, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken);
+        var found = await SharedReads.Once($"shared-site:{slug}", () => db.Entities.Where(e => e.Slug == slug)
+            .Select(e => new { e.Id, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken));
         if (found is null)
         {
             return null;
@@ -156,7 +160,9 @@ internal static partial class EncyclopediaEndpoints
     {
         slug = await MergedAddresses.Current(db, slug, cancellationToken);
         var words = ReaderLanguages.Prose(prose, language);
-        var entity = await db.Entities
+        // Every read that names no language is made once for all the languages a page is composed in, where the build shares
+        // its reads (SharedReads); a request reads each as it always did.
+        var entity = await SharedReads.Once($"entity:{slug}", () => db.Entities
             .Where(e => e.Slug == slug)
             .Select(e => new
             {
@@ -196,22 +202,22 @@ internal static partial class EncyclopediaEndpoints
                         CoordinatesBy = e.Location.CoordinatesDataset,
                     },
             })
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken));
 
         if (entity is null)
         {
             return null;
         }
 
-        var tally = await db.Entities
+        var tally = await SharedReads.Once($"tally:{entity.Id}", () => db.Entities
             .Where(e => e.Id == entity.Id)
             .Select(Tally)
-            .SingleAsync(cancellationToken);
+            .SingleAsync(cancellationToken));
 
         // In the order the record file gives them: its first name heads the page and the word card
         // (PRB-1766). Without an order Postgres returns the rows as they lie on disk, and a load that
         // updates one row moves it to the end: Egypt's מִצְרַיִם fell behind the rare Matsor.
-        var names = await db.EntityNames
+        var names = await SharedReads.Once($"names:{entity.Id}", () => db.EntityNames
             .Where(n => n.EntityId == entity.Id)
             .OrderBy(n => n.Id)
             .Select(n => new
@@ -219,23 +225,26 @@ internal static partial class EncyclopediaEndpoints
                 n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,
                 n.Meaning, n.HebrewStrongNumber, n.GreekStrongNumber, n.Kind,
             })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
         var related = await Relationships.Of(db, entity.Id, language, cancellationToken);
         var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
-        var theirs = db.Events.Where(e => e.EntityId == entity.Id);
-        var events = await Aged(db, Ordered(
-            await theirs.Select(Rows).ToListAsync(cancellationToken),
-            await InOrder(theirs, cancellationToken),
-            row => row.Event.Slug), cancellationToken);
-        var placesNamed = await PlacesNamed(db, events.Select(row => EventLocation.Of(row.Event)), cancellationToken);
+        var (events, placesNamed) = await SharedReads.Once($"events:{entity.Id}", async () =>
+        {
+            var theirs = db.Events.Where(e => e.EntityId == entity.Id);
+            var aged = await Aged(db, Ordered(
+                await theirs.Select(Rows).ToListAsync(cancellationToken),
+                await InOrder(theirs, cancellationToken),
+                row => row.Event.Slug), cancellationToken);
+            return (aged, await PlacesNamed(db, aged.Select(row => EventLocation.Of(row.Event)), cancellationToken));
+        });
 
         // Who says the text names this entity where it does — which is not always whoever
         // supplied the entity. A place can come from one dataset and be referenced by another,
         // and a page reporting 955 verses under the first one's credit would attribute the
         // second one's work to it.
-        var stated = await db.EntityVerses.Shown()
+        var stated = await SharedReads.Once($"stated:{entity.Id}", () => db.EntityVerses.Shown()
             .Where(v => v.EntityId == entity.Id)
             .GroupBy(v => v.Source)
             .Select(g => new
@@ -249,18 +258,18 @@ internal static partial class EncyclopediaEndpoints
                     .Count(),
             })
             .OrderByDescending(row => row.Mentions)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
         // What established the record, and who else it might be. Both are empty for every
         // record a dataset supplied, which is nearly all of them — the cost is two indexed
         // reads that come back with nothing, and the gain is that a record this corpus wrote
         // for itself can never reach a reader looking like one it merely carried.
-        var established = await db.EntityClaims
+        var established = await SharedReads.Once($"established:{entity.Id}", () => db.EntityClaims
             .Where(c => c.EntityId == entity.Id)
             .Select(c => new { c.Method, c.Confidence, c.Source })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
-        var bearers = await db.TitleBearers
+        var bearers = await SharedReads.Once($"bearers:{entity.Id}", () => db.TitleBearers
             .Where(b => b.TitleEntityId == entity.Id)
             .OrderBy(b => b.CanonicalBook).ThenBy(b => b.CanonicalChapter).ThenBy(b => b.CanonicalVerse)
             .Select(b => new
@@ -268,9 +277,9 @@ internal static partial class EncyclopediaEndpoints
                 b.BearerEntityId, b.Bearer!.Slug, b.Bearer.Kind, b.Bearer.Name, b.Bearer.Distinguisher,
                 b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Note,
             })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
-        var titles = await db.TitleBearers
+        var titles = await SharedReads.Once($"titles:{entity.Id}", () => db.TitleBearers
             .Where(b => b.BearerEntityId == entity.Id)
             .OrderBy(b => b.Title!.Name)
             .Select(b => new
@@ -278,19 +287,19 @@ internal static partial class EncyclopediaEndpoints
                 b.TitleEntityId, b.Title!.Slug, b.Title.Kind, b.Title.Name, b.Title.Distinguisher,
                 b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse, b.Note,
             })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
-        var passages = await db.EntityPassages
+        var passages = await SharedReads.Once($"passages:{entity.Id}", () => db.EntityPassages
             .Where(p => p.EntityId == entity.Id)
             .OrderBy(p => p.Ordinal)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
-        var times = await db.ObservanceTimes
+        var times = await SharedReads.Once($"times:{entity.Id}", () => db.ObservanceTimes
             .Where(o => o.EntityId == entity.Id)
             .OrderBy(o => o.Id)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
 
-        var held = await db.EntityAlternatives
+        var held = await SharedReads.Once($"alternatives:{entity.Id}", () => db.EntityAlternatives
             .Where(a => a.EntityId == entity.Id)
             .Select(a => new
             {
@@ -303,7 +312,7 @@ internal static partial class EncyclopediaEndpoints
                 a.Source,
                 a.Back,
             })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
         var reasons = await TextTranslations.Of(db, held.Select(a => a.Reason), words, cancellationToken);
         // The other record's name as the reader's texts call it: a Ukrainian reader asks whether this Яків
         // is that Яків, never whether he is "James" (PRB-1808).
@@ -389,7 +398,8 @@ internal static partial class EncyclopediaEndpoints
             ? []
             : await NameSpellings.Of(
                 db, entity.Id, otherNames, language, localNames.GetValueOrDefault(entity.Id), cancellationToken);
-        var lemmas = await HebrewLemmas(db, names.Where(n => n.Hebrew is null).Select(n => n.HebrewStrongNumber), cancellationToken);
+        var lemmas = await SharedReads.Once($"lemmas:{entity.Id}",
+            () => HebrewLemmas(db, names.Where(n => n.Hebrew is null).Select(n => n.HebrewStrongNumber), cancellationToken));
         var glosses = await EntityNameTranslations.Of(
             db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
 
@@ -480,8 +490,8 @@ internal static partial class EncyclopediaEndpoints
             LocalDistinguisher = (await EntityDistinguishers.Of(db, [entity.Id], words, cancellationToken))
                 .GetValueOrDefault(entity.Id),
             OwnLine = entity.Distinguisher is not null
-                && await EntityDistinguishers.IsOwn(db, entity.Id, cancellationToken),
-            Renderings = await Renderings(db, entity.Id, cancellationToken),
+                && await SharedReads.Once($"own-line:{entity.Id}", () => EntityDistinguishers.IsOwn(db, entity.Id, cancellationToken)),
+            Renderings = await SharedReads.Once($"renderings:{entity.Id}", () => Renderings(db, entity.Id, cancellationToken)),
             Images = await ImageEndpoints.Of(
                 db, entity.Id, cancellationToken, settings.Is(SiteSettings.GeneratedImages), language,
                 entity.Kind == EntityKind.Place ? places?.For(entity.Slug, words) : null),
@@ -523,8 +533,8 @@ internal static partial class EncyclopediaEndpoints
                     BookReferences.At(o.CanonicalBook, o.CanonicalChapter, o.CanonicalVerse)!, o.Note)),
             ],
             KnownFor = await KnownForClauses.Of(db, entity.Id, words, cancellationToken),
-            AmongKings = await db.ReignStatements.AnyAsync(
-                s => (s.EntityId == entity.Id || s.RulerEntityId == entity.Id) && KingsRoles.Contains(s.Role), cancellationToken),
+            AmongKings = await SharedReads.Once($"among-kings:{entity.Id}", () => db.ReignStatements.AnyAsync(
+                s => (s.EntityId == entity.Id || s.RulerEntityId == entity.Id) && KingsRoles.Contains(s.Role), cancellationToken)),
         };
     }
 

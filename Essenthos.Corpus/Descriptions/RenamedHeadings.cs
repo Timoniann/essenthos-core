@@ -93,6 +93,48 @@ internal static class RenamedHeadings
             return [];
         }
 
+        // Who is headed by another name than the one their record is filed under, which no language changes: read once for
+        // every language a page is composed in where the build shares its reads.
+        var renamed = await SharedReads.Once($"renamed:{string.Join(',', ids)}", () => Renamed(db, ids, cancellationToken));
+        if (renamed.Count == 0)
+        {
+            return [];
+        }
+
+        var local = EntityNames.Local(language);
+        if (local is null)
+        {
+            return renamed.ToDictionary(r => r.Key, r => new RenamedHeading(r.Value.Name, null, r.Value.Former, null));
+        }
+
+        var held = await EntityNames.Of(db, renamed.Keys, language, cancellationToken);
+        var spellings = await db.EntityRenderings
+            .Where(r => renamed.Keys.Contains(r.EntityId) && r.Text!.Language == local)
+            .Select(r => new { r.EntityId, r.Form, r.Folded, r.Occurrences })
+            .ToListAsync(cancellationToken);
+
+        return renamed.ToDictionary(
+            r => r.Key,
+            r =>
+            {
+                var former = held.GetValueOrDefault(r.Key);
+                var family = Family(
+                    [.. spellings.Where(s => s.EntityId == r.Key).Select(s => (s.Form, s.Folded, s.Occurrences))],
+                    former);
+                var printed = family is null ? null : Heading(family);
+                return new RenamedHeading(r.Value.Name, printed ?? former, r.Value.Former, printed is null ? null : former)
+                {
+                    LocalGenitive = printed is null ? null : NameCases.Genitive(local, family!, printed),
+                };
+            });
+    }
+
+    /// <summary>The people among these records whose verses name them most by another name: that name, and the filed one.</summary>
+    private static async Task<Dictionary<int, (string Name, string Former)>> Renamed(
+        AppDbContext db,
+        IReadOnlyCollection<int> ids,
+        CancellationToken cancellationToken)
+    {
         var people = await db.Entities
             .Where(e => ids.Contains(e.Id) && e.Kind == EntityKind.Person)
             .Select(e => new
@@ -154,37 +196,7 @@ internal static class RenamedHeadings
             }
         }
 
-        if (renamed.Count == 0)
-        {
-            return [];
-        }
-
-        var local = EntityNames.Local(language);
-        if (local is null)
-        {
-            return renamed.ToDictionary(r => r.Key, r => new RenamedHeading(r.Value.Name, null, r.Value.Former, null));
-        }
-
-        var held = await EntityNames.Of(db, renamed.Keys, language, cancellationToken);
-        var spellings = await db.EntityRenderings
-            .Where(r => renamed.Keys.Contains(r.EntityId) && r.Text!.Language == local)
-            .Select(r => new { r.EntityId, r.Form, r.Folded, r.Occurrences })
-            .ToListAsync(cancellationToken);
-
-        return renamed.ToDictionary(
-            r => r.Key,
-            r =>
-            {
-                var former = held.GetValueOrDefault(r.Key);
-                var family = Family(
-                    [.. spellings.Where(s => s.EntityId == r.Key).Select(s => (s.Form, s.Folded, s.Occurrences))],
-                    former);
-                var printed = family is null ? null : Heading(family);
-                return new RenamedHeading(r.Value.Name, printed ?? former, r.Value.Former, printed is null ? null : former)
-                {
-                    LocalGenitive = printed is null ? null : NameCases.Genitive(local, family!, printed),
-                };
-            });
+        return renamed;
     }
 
     /// <summary>

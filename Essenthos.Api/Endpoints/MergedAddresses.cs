@@ -20,7 +20,10 @@ namespace Essenthos.Core.Endpoints;
 /// </summary>
 internal static class MergedAddresses
 {
-    public static async Task<string> Current(AppDbContext db, string slug, CancellationToken cancellationToken)
+    public static Task<string> Current(AppDbContext db, string slug, CancellationToken cancellationToken) =>
+        SharedReads.Once($"current:{slug}", () => Read(db, slug, cancellationToken));
+
+    private static async Task<string> Read(AppDbContext db, string slug, CancellationToken cancellationToken)
     {
         var folded = await db.MergedRecords
             .Where(m => m.Slug == slug)

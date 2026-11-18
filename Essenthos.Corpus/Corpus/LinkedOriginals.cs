@@ -24,11 +24,11 @@ internal static class LinkedOriginals
     /// the rendering page's first answer are counted over the same edition. Read from what the build
     /// counted (<c>text_pair_links</c>): counting the pairs' links as asked read about 35 MB of index.
     /// </summary>
-    public static async Task<List<LinkedOriginal>> Of(
+    public static Task<List<LinkedOriginal>> Of(
         AppDbContext db,
         int textId,
         CancellationToken cancellationToken) =>
-        Ordered(await db.TextPairLinks
+        SharedReads.Kept($"linked-originals:{textId}", async () => Ordered(await db.TextPairLinks
             .AsNoTracking()
             .Where(p => p.TextId == textId)
             .Select(p => new LinkedOriginal(
@@ -41,7 +41,7 @@ internal static class LinkedOriginals
             {
                 Numbered = p.Numbered,
             })
-            .ToListAsync(cancellationToken));
+            .ToListAsync(cancellationToken)));
 
     /// <summary>
     /// The non-translation texts linked to a text, in <see cref="Of"/>'s order, for a caller that has

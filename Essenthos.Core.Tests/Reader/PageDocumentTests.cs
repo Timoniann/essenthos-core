@@ -196,6 +196,59 @@ public sealed class PageDocumentTests : IDisposable
     }
 
     /// <summary>
+    /// The build composes a record's or a Strong number's pages in every language one after another, reading what they read
+    /// alike once, and the verses and texts every page reads alike once per run; the documents are those each page composes
+    /// alone.
+    /// </summary>
+    [Fact]
+    public async Task DocumentsComposedWithTheBuildsSharedReadsAreThoseComposedAlone()
+    {
+        using var cache = new PageCache();
+        var loader = Loader(cache);
+        var alone = new List<string>();
+        foreach (var address in Records.Concat(Numbers))
+        {
+            alone.AddRange(await Composed(address));
+        }
+
+        var together = new List<string>();
+        SharedReads.Corpus.Value = new SharedReads.CorpusReads();
+        try
+        {
+            foreach (var address in Records.Concat(Numbers))
+            {
+                SharedReads.Current.Value = new SharedReads();
+                together.AddRange(await Composed(address));
+                together.AddRange(await Composed(address));
+            }
+        }
+        finally
+        {
+            SharedReads.Current.Value = null;
+            SharedReads.Corpus.Value = null;
+        }
+
+        together.Should().Equal(alone.Chunk(SiteLanguage.All.Count).SelectMany(one => one.Concat(one)));
+
+        async Task<List<string>> Composed(string address)
+        {
+            var hashes = new List<string>();
+            foreach (var language in SiteLanguage.All)
+            {
+                hashes.Add(Numbers.Contains(address)
+                    ? await loader.StrongDocument(address, language, default) is { } strong
+                        ? PageDocuments.Pack(strong, strong.Data, PageDocuments.Strong).Hash
+                        : "none"
+                    : await loader.RecordDocument(address, language, default) is { } record
+                        ? PageDocuments.Pack(record, record.Data, PageDocuments.Record).Hash
+                        : "none");
+            }
+
+            return hashes;
+        }
+    }
+
+    /// <summary>
     /// Where two verses of the text stand at one address, the page quotes the verse whose own address it is, whichever
     /// the database would return first.
     /// </summary>

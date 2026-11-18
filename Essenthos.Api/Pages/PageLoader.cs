@@ -506,17 +506,17 @@ internal sealed class PageLoader(
         var english = language.IsEnglish ? entity.Distinguisher : null;
         var line = new[] { localDistinguisher, described, english }
             .FirstOrDefault(said => !string.IsNullOrWhiteSpace(said));
-        var references = own?.References ?? (await db.Entities
+        var references = own?.References ?? (await SharedReads.Once($"tally:{entity.Id}", () => db.Entities
             .Where(e => e.Id == entity.Id)
             .Select(EncyclopediaEndpoints.Tally)
-            .SingleAsync(cancellationToken)).References;
-        var first = await db.EntityVerses.Shown()
+            .SingleAsync(cancellationToken))).References;
+        var first = await SharedReads.Once($"first-verses:{entity.Id}", () => db.EntityVerses.Shown()
             .Where(v => v.EntityId == entity.Id)
             .Select(v => new { v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse })
             .Distinct()
             .OrderBy(v => v.CanonicalBook).ThenBy(v => v.CanonicalChapter).ThenBy(v => v.CanonicalVerse)
             .Take(VersesNamed)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
         var quoted = await TextsAt(
             language, [.. first.Select(v => Address(v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse))], cancellationToken);
         var coordinates = entity.Kind == EntityKind.Place ? await Coordinates(entity.Id, cancellationToken) : null;
@@ -658,21 +658,21 @@ internal sealed class PageLoader(
     }
 
     private async Task<(double Latitude, double Longitude)?> Coordinates(int entityId, CancellationToken cancellationToken) =>
-        await db.PlaceLocations
+        await SharedReads.Once($"coordinates:{entityId}", () => db.PlaceLocations
             .Where(l => l.EntityId == entityId)
             .Select(l => new { l.Latitude, l.Longitude })
-            .FirstOrDefaultAsync(cancellationToken) is { } at
+            .FirstOrDefaultAsync(cancellationToken)) is { } at
             ? (at.Latitude, at.Longitude)
             : null;
 
     /// <summary>The record's Wikidata item and its Wikipedia articles in the site's languages.</summary>
     private async Task<IReadOnlyList<string>> SameAs(int entityId, CancellationToken cancellationToken)
     {
-        var articles = await db.EntityWikipedia
+        var articles = await SharedReads.Once($"same-as:{entityId}", () => db.EntityWikipedia
             .Where(w => w.EntityId == entityId)
             .OrderBy(w => w.Language)
             .Select(w => new { w.Language, w.Title, w.Qid })
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken));
         return
         [
             .. articles.Select(a => a.Qid).Where(qid => !string.IsNullOrEmpty(qid)).Distinct()
@@ -1077,20 +1077,15 @@ internal sealed class PageLoader(
 
                 var chapters = missing.Select(at => at % EncyclopediaEndpoints.BookStride / EncyclopediaEndpoints.ChapterStride)
                     .Distinct().ToList();
-                var placed = await db.VerseReferences
-                    .Where(r => r.IsPrimary && r.CanonicalBook == inBook.Key && chapters.Contains(r.CanonicalChapter)
-                                && r.Verse!.TextId == text.Id)
-                    .Select(r => new
-                    {
-                        r.CanonicalChapter,
-                        r.CanonicalVerse,
-                        r.VerseId,
-                        r.Verse!.ChapterNumber,
-                        r.Verse.Number,
-                        r.Verse.Label,
-                        r.Verse.Sequence,
-                    })
-                    .ToListAsync(cancellationToken);
+                // Where the build keeps the run's reads, a text's places are read whole once, by the first page to quote it.
+                var placed = SharedReads.Corpus.Value is not null
+                    ? [.. (await SharedReads.Kept($"placed:{text.Id}", async () =>
+                            (await PlacedIn(db.VerseReferences.Where(r => r.Verse!.TextId == text.Id)).ToListAsync(cancellationToken))
+                            .ToLookup(p => p.CanonicalBook)))[inBook.Key]
+                        .Where(p => chapters.Contains(p.CanonicalChapter))]
+                    : await PlacedIn(db.VerseReferences
+                        .Where(r => r.CanonicalBook == inBook.Key && chapters.Contains(r.CanonicalChapter) && r.Verse!.TextId == text.Id))
+                        .ToListAsync(cancellationToken);
 
                 // Where two verses of the text share an address, the one whose own address it is, then the first printed.
                 var verses = placed
@@ -1176,10 +1171,10 @@ internal sealed class PageLoader(
         var name = renamed?.Name ?? entity.Name;
         return new ShownEntity(entity.Id, entity.Slug, entity.Kind, string.IsNullOrEmpty(local) ? name : local, entity.Distinguisher);
 
-        Task<StoredEntity?> Shown(string address) => db.Entities
+        Task<StoredEntity?> Shown(string address) => SharedReads.Once($"shown:{address}", () => db.Entities
             .Where(e => e.Slug == address)
             .Select(e => new StoredEntity(e.Id, e.Slug, e.Kind, e.Name, e.Distinguisher))
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken));
     }
 
     private sealed record StoredEntity(int Id, string Slug, EntityKind Kind, string Name, string? Distinguisher);
@@ -1444,18 +1439,55 @@ internal sealed class PageLoader(
             shown);
     }
 
+    /// <summary>The primary places of these references, as a quoted verse is chosen among them.</summary>
+    private static IQueryable<PlacedVerse> PlacedIn(IQueryable<Database.Entities.VerseReference> references) =>
+        references
+            .Where(r => r.IsPrimary)
+            .Select(r => new PlacedVerse(
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+                r.VerseId,
+                r.Verse!.ChapterNumber,
+                r.Verse.Number,
+                r.Verse.Label,
+                r.Verse.Sequence));
+
     private async Task<Dictionary<int, string>> Said(List<int> verseIds, CancellationToken cancellationToken)
     {
-        var words = await db.Words
-            .Where(w => verseIds.Contains(w.VerseId) && !w.Elided)
-            .OrderBy(w => w.VerseId).ThenBy(w => w.Position)
-            .Select(w => new { w.VerseId, w.Surface, w.Trailer })
-            .ToListAsync(cancellationToken);
-        return words
-            .GroupBy(w => w.VerseId)
-            .Select(verse => (verse.Key, Text: PageHtml.Plain(string.Concat(verse.Select(w => w.Surface + w.Trailer)))))
-            .Where(verse => verse.Text.Length > 0)
-            .ToDictionary(verse => verse.Key, verse => verse.Text);
+        if (SharedReads.Corpus.Value is not { } kept)
+        {
+            return await Read(verseIds);
+        }
+
+        // Each verse's text is its own words alone, so a verse read for one page is the same for the next.
+        var unread = verseIds.Where(id => !kept.Quoted.ContainsKey(id)).ToList();
+        if (unread.Count > 0)
+        {
+            var read = await Read(unread);
+            foreach (var id in unread)
+            {
+                kept.Quoted.TryAdd(id, read.GetValueOrDefault(id));
+            }
+        }
+
+        return verseIds.Distinct()
+            .Where(id => kept.Quoted[id] is not null)
+            .ToDictionary(id => id, id => kept.Quoted[id]!);
+
+        async Task<Dictionary<int, string>> Read(List<int> ids)
+        {
+            var words = await db.Words
+                .Where(w => ids.Contains(w.VerseId) && !w.Elided)
+                .OrderBy(w => w.VerseId).ThenBy(w => w.Position)
+                .Select(w => new { w.VerseId, w.Surface, w.Trailer })
+                .ToListAsync(cancellationToken);
+            return words
+                .GroupBy(w => w.VerseId)
+                .Select(verse => (verse.Key, Text: PageHtml.Plain(string.Concat(verse.Select(w => w.Surface + w.Trailer)))))
+                .Where(verse => verse.Text.Length > 0)
+                .ToDictionary(verse => verse.Key, verse => verse.Text);
+        }
     }
 
     private async Task<ReaderText?> Chosen(SiteLanguage language, CancellationToken cancellationToken) =>
@@ -1490,3 +1522,7 @@ internal sealed class PageLoader(
 
     private sealed record ShownEntity(int Id, string Slug, EntityKind Kind, string Shown, string? Distinguisher);
 }
+
+/// <summary>A verse's primary place in the frame, with what decides which of two verses sharing it a page quotes.</summary>
+internal sealed record PlacedVerse(
+    int CanonicalBook, int CanonicalChapter, int CanonicalVerse, int VerseId, int ChapterNumber, int Number, string Label, int Sequence);

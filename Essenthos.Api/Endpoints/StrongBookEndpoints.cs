@@ -114,27 +114,36 @@ internal static class StrongBookEndpoints
         }
 
         var edition = witnesses.FirstOrDefault(w => w is not null);
-        var named = await db.Texts.Where(t => witnesses.Contains(t.Id)).ToDictionaryAsync(t => t.Id, t => t.Slug, cancellationToken);
+        // What names no language and no text of the page's own is read once for all the languages a page is composed in,
+        // and what is a text's alone once for the run, where the build shares its reads (SharedReads).
+        var named = await SharedReads.Kept($"text-slugs:{string.Join(',', witnesses)}",
+            () => db.Texts.Where(t => witnesses.Contains(t.Id)).ToDictionaryAsync(t => t.Id, t => t.Slug, cancellationToken));
         var rows = edition is { } counted
-            ? await db.StrongBooks.Where(b => b.WitnessId == counted && b.StrongNumber == canonical)
+            ? await SharedReads.Once($"strong-books:{counted}:{canonical}", () => db.StrongBooks
+                .Where(b => b.WitnessId == counted && b.StrongNumber == canonical)
                 .OrderBy(b => b.Book)
-                .ToDictionaryAsync(b => b.Book, b => b.Occurrences, cancellationToken)
+                .ToDictionaryAsync(b => b.Book, b => b.Occurrences, cancellationToken))
             : [];
         var books = rows.Keys.ToList();
         var numbered = edition is { } over
-            ? await db.StrongBookWords
+            ? await SharedReads.Once($"strong-book-words:{over}:{string.Join(',', books)}", () => db.StrongBookWords
                 .Where(b => b.WitnessId == over && books.Contains(b.Book))
-                .ToDictionaryAsync(b => b.Book, b => b.Words, cancellationToken)
+                .ToDictionaryAsync(b => b.Book, b => b.Words, cancellationToken))
             : [];
 
         var columns = new List<StrongBookTextResponse>();
         for (var at = 0; at < texts.Count; at++)
         {
             var text = texts[at];
-            var held = (await db.Books.Where(b => b.TextId == text.Id).Select(b => b.CanonicalOrdinal)
-                .ToListAsync(cancellationToken)).ToHashSet();
-            var linked = (await db.TextBooksLinked.Where(b => b.TextId == text.Id && books.Contains(b.Book))
-                .Select(b => b.Book).ToListAsync(cancellationToken)).ToHashSet();
+            var held = await SharedReads.Kept($"books-held:{text.Id}", async () => (await db.Books
+                .Where(b => b.TextId == text.Id).Select(b => b.CanonicalOrdinal)
+                .ToListAsync(cancellationToken)).ToHashSet());
+            // Asked only of the number's own books, so the text's whole set answers the same where the run keeps it.
+            var linked = SharedReads.Corpus.Value is not null
+                ? await SharedReads.Kept($"books-linked:{text.Id}", async () => (await db.TextBooksLinked
+                    .Where(b => b.TextId == text.Id).Select(b => b.Book).ToListAsync(cancellationToken)).ToHashSet())
+                : (await db.TextBooksLinked.Where(b => b.TextId == text.Id && books.Contains(b.Book))
+                    .Select(b => b.Book).ToListAsync(cancellationToken)).ToHashSet();
             var reached = await db.StrongBookReaches
                 .Where(b => b.TextId == text.Id && b.StrongNumber == canonical)
                 .ToDictionaryAsync(b => b.Book, b => b.Reached, cancellationToken);
