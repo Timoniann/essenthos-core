@@ -791,6 +791,148 @@ def sample(args):
                   + context([w['hid']] + ([by['hid']] if by else [])))
 
 
+# ------------------------------------------------------------------------------------------- verse check
+
+VERSE_SYSTEM = """You check links of a hand-made word alignment between a Biblical Hebrew verse and an English translation of it.
+
+For each numbered item you get:
+- the Hebrew word in question: lemma, Strong number, gloss and Strong's definition;
+- the Hebrew verse as a word-by-word English gloss, with that word in [[double brackets]] and any other Hebrew words of the same link in (parentheses);
+- the English verse, with the English words linked to that Hebrew word in [[double brackets]].
+
+You do NOT judge the translation. A translator may read a word differently from the gloss (a place name for a common noun, a rare sense, an emendation, a free or even a poor rendering): that is the translation's choice, and its link is still right. The only question is which Hebrew word the bracketed English stands for in this verse.
+
+- right: the bracketed English is this translation's rendering of the bracketed Hebrew word, however free, by an idiom or paraphrase, as a pronoun or title, or together with the words in parentheses. Translations reorder sentences; the gloss line is only a crib, so do not judge by word order.
+- wrong: the bracketed English plainly stands for ANOTHER Hebrew word of this verse, which you can point to in the gloss line (for example the English says "cords" where the verse's word for cords is another glossed word), or another English word of the verse plainly stands for this Hebrew word. You must name that other word in w, exactly as it appears in the gloss line or the English verse.
+- unsure: when you suspect a mislink but cannot point to the other word.
+
+Small words beside the main English word (and, then, the, a, of, to, in, with, a pronoun) never make a link wrong: they often belong to Hebrew prefixes. Judge the main word.
+
+Answer with the JSON only: for each item its number n, its verdict v; when v is wrong, w, the other word; when v is not right, a reason r of at most twenty words."""
+
+VERDICTS = ['right', 'wrong', 'unsure']
+VERSE_SCHEMA = {'type': 'object', 'additionalProperties': False, 'required': ['items'],
+                'properties': {'items': {'type': 'array', 'items': {
+                    'type': 'object', 'additionalProperties': False, 'required': ['n', 'v'],
+                    'properties': {'n': {'type': 'integer'}, 'v': {'type': 'string', 'enum': VERDICTS},
+                                   'w': {'type': 'string'}, 'r': {'type': 'string'}}}}}}
+VERSE_CHUNK = 12
+# Stage 2 reads the verse at the effort of stage 1; stage 3 thinks, at a high effort, over what stage 2 kept.
+STAGES = {2: {'effort': 'low', 'thinking': False}, 3: {'effort': 'high', 'thinking': True}}
+
+
+class VerseContext:
+    """Both verses of a link, as the verse check and the samples show them."""
+
+    def __init__(self, work, run):
+        data = work / 'data'
+        self.hebrew, self.by_verse, self.refs, self.book_of = load_bhsa(data)
+        self.pair = Pair(data, run.split('-')[0])
+        self.h_by_verse = {v: [(p, w['id']) for p, w in ws.items()] for v, ws in self.by_verse.items()}
+        self.glosses_of = {hid: w['gloss'] for hid, w in self.hebrew.items()}
+
+    def __call__(self, hids):
+        pair, hebrew = self.pair, self.hebrew
+        verse = hebrew[hids[0]]['verse']
+        together = set().union(*(pair.together[h] for h in hids)) - set(hids)
+        heb = show_verse(self.h_by_verse, together, set(hids), verse, self.glosses_of)
+        linked = set().union(*(pair.rendered.get(h, set()) for h in hids))
+        e_verses = pair.verses_of(linked) or pair.verses_of(
+            set().union(*(pair.rendered.get(n['id'], set()) for n in self.by_verse[verse].values())))[:1]
+        eng = ' / '.join(pair.refs[v] + ' ' + ' '.join((f'[[{pair.english[e][2]}]]' if e in linked else pair.english[e][2])
+                                                       for _, e in pair.by_verse[v]) for v in e_verses)
+        return self.refs[verse], heb, eng
+
+
+def verse_items(args, work):
+    """The occurrences a stage judges: stage 2 every occurrence of a rendering stage 1 scored below 0.5,
+    stage 3 the occurrences stage 2 did not call right."""
+    if args.stage == 2:
+        for entry, item, (s, c, r) in scored_items(work, args.run, args.scores):
+            if s is not None and s < 0.5:
+                for hid in item['hids']:
+                    yield entry, item, hid, {'s': s, 'c': c, 'r': r}
+    else:
+        before = load_json(work / f'{args.run}-v2.json')
+        for entry, item, hid, prior in verse_items(argparse.Namespace(**{**vars(args), 'stage': 2}), work):
+            got = before.get(str(hid))
+            if got is not None and got['v'] != 'right':
+                yield entry, item, hid, {**prior, 'v2': got['v'], 'r2': got.get('r')}
+
+
+def verse_requests(args):
+    work = work_dir(args)
+    api = client_module(args.repo)
+    context = VerseContext(work, args.run)
+    done = load_json(work / f'{args.run}-v{args.stage}.json')
+    by_lemma = collections.defaultdict(list)
+    for entry, item, hid, prior in verse_items(args, work):
+        if str(hid) not in done:
+            by_lemma[(entry['strong'], entry['lemma'])].append((entry, item, hid))
+    stage = STAGES[args.stage]
+    requests, index = [], {}
+    for (strong, lemma), occurrences in sorted(by_lemma.items(), key=lambda kv: (str(kv[0][0]), kv[0][1])):
+        for start in range(0, len(occurrences), VERSE_CHUNK):
+            part = occurrences[start:start + VERSE_CHUNK]
+            entry = part[0][0]
+            lines = [f"Hebrew word: {lemma} ({strong}), {POS_NAMES.get(entry['pos'], entry['pos'])}; gloss: {entry['gloss']}"]
+            if entry['definition']:
+                lines.append(f"Strong's definition: {entry['definition'][:500]}")
+            for n, (_, item, hid) in enumerate(part, 1):
+                ref, heb, eng = context([hid])
+                lines += [f'{n}. {ref}', f'   Hebrew glosses: {heb}', f'   English: {eng}']
+            custom = f"{args.run}-v{args.stage}-{len(requests)}"
+            params = api.build_params('\n'.join(lines), system=VERSE_SYSTEM, model=MODEL, effort=stage['effort'],
+                                      schema=VERSE_SCHEMA, max_tokens=(4000 if stage['thinking'] else 0) + 200 + 60 * len(part))
+            params['thinking'] = {'type': 'adaptive'} if stage['thinking'] else {'type': 'disabled'}
+            requests.append((custom, params))
+            index[custom] = [hid for _, _, hid in part]
+    return api, requests, index
+
+
+def verse_score(args):
+    api, requests, index = verse_requests(args)
+    if args.limit:
+        requests = requests[:args.limit]
+    if args.estimate or not requests:
+        plan = api.batch_plan(requests) if requests else {'reserve_usd': 0}
+        print(f"stage {args.stage}: {len(requests)} requests over {sum(len(index[c]) for c, _ in requests)} occurrences, "
+              f"reserve ${plan['reserve_usd']:.2f}; spent so far under {LABEL}: ${api.spent(LABEL):.2f} of ${CAP_USD:.2f}")
+        return
+    answers, failures = api.run_batch(requests, label=LABEL, cap_usd=CAP_USD, poll=30)
+    path = work_dir(args) / f'{args.run}-v{args.stage}.json'
+    verdicts = load_json(path)
+    for custom, text in answers.items():
+        try:
+            for e in json.loads(text)['items']:
+                v = e['v'] if e['v'] != 'wrong' or e.get('w') else 'unsure'
+                verdicts[str(index[custom][e['n'] - 1])] = {'v': v, 'w': e.get('w'), 'r': e.get('r')}
+        except (ValueError, KeyError, TypeError, IndexError):
+            failures[custom] = 'unreadable answer'
+    path.write_text(json.dumps(verdicts, ensure_ascii=False), encoding='utf-8')
+    print(f'{len(answers)} answered, {len(failures)} failed: {list(failures.items())[:5]}')
+
+
+def verse_report(args):
+    """The occurrences a stage judged, with both verses, and what is left for a person after it."""
+    work = work_dir(args)
+    context = VerseContext(work, args.run)
+    verdicts = load_json(work / f'{args.run}-v{args.stage}.json')
+    counts = collections.Counter()
+    with open(work / f'{args.run}-v{args.stage}.tsv', 'w', encoding='utf-8', newline='') as handle:
+        out = csv.writer(handle, delimiter='\t', lineterminator='\n')
+        out.writerow(['verdict', 'ref', 'lemma', 'strong', 'gloss', 'rendering', 'stage1', 'reason', 'hebrew', 'english'])
+        for entry, item, hid, prior in verse_items(args, work):
+            got = verdicts.get(str(hid))
+            v = got['v'] if got else 'unjudged'
+            counts[v] += 1
+            ref, heb, eng = context([hid])
+            out.writerow([v, ref, entry['lemma'], entry['strong'], entry['gloss'], item['raw'],
+                          f"{prior['s']} {prior['c'] or ''}", ((got or {}).get('w') or '') + ' | ' + ((got or {}).get('r') or ''), heb, eng])
+    print(f"{args.run} stage {args.stage}: {dict(counts.most_common())}; left for a person: "
+          f"{counts['wrong'] + counts['unsure'] + counts['unjudged']}")
+
+
 # ------------------------------------------------------------------------------------------- evaluation
 
 def key_items(args):
@@ -898,6 +1040,12 @@ def main():
     p.add_argument('--skip-books', help='comma-separated BHSA books to leave out, e.g. Gen')
     p.add_argument('--per-lemma', type=int, default=2); p.add_argument('--scores', default='scores')
     p.set_defaults(go=sample)
+    p = sub.add_parser('vscore', help='stage 2 or 3: judge each low-scored occurrence in its verse')
+    p.add_argument('run'); p.add_argument('--stage', type=int, choices=[2, 3], default=2)
+    p.add_argument('--limit', type=int); p.add_argument('--estimate', action='store_true')
+    p.add_argument('--scores', default='scores'); p.set_defaults(go=verse_score)
+    p = sub.add_parser('vreport'); p.add_argument('run'); p.add_argument('--stage', type=int, choices=[2, 3], default=2)
+    p.add_argument('--scores', default='scores'); p.set_defaults(go=verse_report)
     for name, go in (('evaluate', evaluate), ('abscore', abscore)):
         p = sub.add_parser(name); p.add_argument('--key', required=True); p.add_argument('--runs', required=True)
         p.add_argument('--scores', default='scores'); p.add_argument('--verbose', action='store_true')
