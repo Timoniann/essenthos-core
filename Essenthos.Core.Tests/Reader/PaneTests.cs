@@ -4,6 +4,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Indexes;
 using Essenthos.Core.Names;
 using Essenthos.Core.Products;
 using FluentAssertions;
@@ -135,6 +136,37 @@ public sealed class PaneTests : IDisposable
         (words[1].GetProperty("n").GetString(), words[1].TryGetProperty("rn", out _)).Should().Be(("H3091", false), "its own number is written once");
         words[2].TryGetProperty("rn", out _).Should().BeFalse("no link gives it a number");
         hebrewWords[0].TryGetProperty("rn", out _).Should().BeFalse("an original's word shows only its own number");
+    }
+
+    /// <summary>
+    /// «twelve» renders שְׁנֵים and עָשָׂר as one word and carries both numbers, in the order the Hebrew words stand, though the
+    /// table holds them in another; a text whose numbers are withheld writes none, in the pane and in the parallel view alike.
+    /// </summary>
+    [Fact]
+    public async Task AWordCarriesEveryNumberItRendersInItsOriginalsOrderAndAWithheldTextNone()
+    {
+        var (english, hebrew) = Pair();
+        _db.WordAt(hebrew, 1, 1, 1).StrongNumber = "H8147";
+        _db.WordAt(hebrew, 1, 1, 2).StrongNumber = "H6240";
+        Link(english, 1, hebrew, 1, 0.9);
+        Link(english, 1, hebrew, 2, 0.9);
+        var synodal = Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (1, 1, ["двенадцать"]));
+        _db.SaveChanges();
+        var twelve = _db.WordAt(english, 1, 1, 1);
+        var withheld = _db.WordAt(synodal, 1, 1, 1);
+        _db.WordRenderedStrongs.AddRange(
+            new WordRenderedStrong { VerseId = twelve.VerseId, WordId = twelve.Id, StrongNumber = "H8147" },
+            new WordRenderedStrong { VerseId = twelve.VerseId, WordId = twelve.Id, StrongNumber = "H6240" },
+            new WordRenderedStrong { VerseId = withheld.VerseId, WordId = withheld.Id, StrongNumber = "H8147" });
+        _db.SaveChanges();
+
+        (await Pane(english)).GetProperty("verses")[0].GetProperty("words")[0].GetProperty("rn").GetString().Should().Be("H8147 H6240");
+        (await ChapterReading.ReadByCanonicalVerse(_db, english.Id, 1, 1, default))[1][0].RenderedStrong.Should().Be("H8147 H6240");
+        (await Pane(synodal)).GetProperty("verses")[0].GetProperty("words")[0].TryGetProperty("rn", out _).Should().BeFalse();
+        (await ChapterReading.ReadByCanonicalVerse(_db, synodal.Id, 1, 1, default))[1].Single().RenderedStrong.Should().BeNull();
+        RenderedNumbers.Join(["H430", "H1004", "G26"]).Should().Be("G26 H430 H1004", "numbers no original word carries go in number order");
+        RenderedNumbers.Join(["G3638", "G5144"], [("G5144", 5, 3), ("G2532", 5, 4), ("G03638", 5, 5)])
+            .Should().Be("G5144 G3638", "«thirty-eight» over τριάκοντα καὶ ὀκτώ");
     }
 
     [Fact]
@@ -284,6 +316,32 @@ public sealed class PaneBuildTests : IDisposable
         var outcome = (await Run(store, "ASV")).Single();
         outcome.Should().Match<PaneOutcome>(o => o.Made && o.Read == 1 && o.Copied == 2, "Genesis 1's names moved and Genesis 2's inputs did not");
         (await Held("ASV")).Should().Be(2);
+    }
+
+    [Fact]
+    public async Task AWithheldTextsPanesDoNotReadItsNumbers()
+    {
+        await using (var db = _database.NewContext())
+        {
+            Corpus.Add(db, "YLT", TextKind.Translation, "eng", (1, 1, ["In", "the", "beginning"]));
+            Corpus.Add(db, "RUSV", TextKind.Translation, "rus", (1, 1, ["В", "начале"]));
+            db.SaveChanges();
+        }
+
+        var store = new ProductStore(_root);
+        Make(store, "texts/YLT/words", "one");
+        Make(store, "texts/RUSV/words", "one");
+        (await Run(store, "YLT", "RUSV")).Should().OnlyContain(o => o.Made);
+
+        foreach (var text in new[] { "YLT", "RUSV" })
+        {
+            using var numbers = store.Create(StrongNumberFiles.Product(text), ProductKind.Machine, StrongNumberRow.Schema(text), "test", []);
+            numbers.Write(new StrongNumberRow(WordKey.Parse("1.1:1.3", text), "H7225", 1, "BHSA 1.1:1.1", null, null, null));
+            numbers.Complete();
+        }
+
+        store.Save();
+        (await Run(store, "YLT", "RUSV")).Where(o => o.Made).Select(o => o.Text).Should().Equal("YLT");
     }
 
     [Fact]
