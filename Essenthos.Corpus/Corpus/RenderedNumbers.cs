@@ -16,7 +16,7 @@ internal static class RenderedNumbers
     /// list the taggings. The verse lists still mark these texts' words by <c>word_rendered_strong</c>, which this leaves as
     /// it is.
     /// </summary>
-    internal static readonly string[] Withheld = ["RUSV", "RV1909", "LSG1910", "JND2024", "SCH1951", "CUV", "LUTH1912"];
+    internal static readonly string[] Withheld = ["RUSV", "RV1909", "LSG1910", "JND2024", "SCH1951", "CUV", "CUVS", "LUTH1912"];
 
     /// <summary>Whether a reader is given the numbers this text's words render.</summary>
     public static bool Shown(string slug) => !Withheld.Contains(slug, StringComparer.Ordinal);
