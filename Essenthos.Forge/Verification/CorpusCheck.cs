@@ -874,6 +874,13 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
     private static readonly HashSet<string> HashedChecks = new(StringComparer.Ordinal) { "word links crossing a verse pair no verse link joins" };
 
     /// <summary>
+    /// The integrity checks hashed on a build's server but not on a served target (see unaligned). With core-db's settings
+    /// (64 MB of work memory, a 12 GB cache) the planner merges link_word with word by walking both id indexes, reading the
+    /// word table at random: 1,005 s where hashed takes 73 s, on a copy of a fresh build with those settings (2026-11-18).
+    /// </summary>
+    private static readonly HashSet<string> HashedOffServed = new(StringComparer.Ordinal) { "link words whose text disagrees with the link's own" };
+
+    /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
     /// </summary>
@@ -1393,14 +1400,16 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         var stranded = sessions.Read("stranded", StrandedSql, reader => new Stranded(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)), hashed: true);
 
+        // Word ids are hashes of their keys, so the word table's id order is no order on disk: a merge join that walks it by id
+        // reads its pages at random. Hashed instead, unaligned took 48 s where it took 108 s, contention 54 s where 76 s and
+        // stranded 45 s where 52 s (2026-11-11, the same rows); reach gains nothing and stays as it is. Coverage is planned as
+        // a merge over pk_word only with core-db's settings (a 12 GB cache), and took 184 s there against 108 s hashed
+        // (2026-11-18, a copy of a fresh build).
         var coverage = sessions.Read("coverage", CoverageSql, reader => new Coverage(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6),
-            (int)reader.GetInt64(7), (int)reader.GetInt64(8)));
+            (int)reader.GetInt64(7), (int)reader.GetInt64(8)), hashed: !served);
 
-        // Word ids are hashes of their keys, so the word table's id order is no order on disk: a merge join that walks it by id
-        // reads its pages at random. Hashed instead, unaligned took 48 s where it took 108 s, contention 54 s where 76 s and
-        // stranded 45 s where 52 s (2026-11-11, the same rows); reach and coverage gain nothing and stay as they are.
         // Not on a served target (one core, 16 MB of work memory): there the planner thinks the claimed words are 3.4 million
         // where they are 19 million, hashes them anyway, and unaligned ran past the 30-minute timeout on the rehearsal of
         // 20261117a; merged instead it took 57 s.
@@ -1428,7 +1437,8 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
             .Select(check => served && OnServedCopy.TryGetValue(check.Breaks, out var asked) ? (check.Breaks, Sql: asked) : (check.Breaks, Sql: (string?)check.Sql))
             .Where(check => check.Sql is not null)
             .Select(check => sessions.Read(check.Breaks, check.Sql!,
-                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true, integrity: true, hashed: HashedChecks.Contains(check.Breaks)))
+                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true, integrity: true,
+                hashed: HashedChecks.Contains(check.Breaks) || (!served && HashedOffServed.Contains(check.Breaks))))
             .ToList();
 
         var reach = sessions.Read("reach", ReachSql,
@@ -1533,30 +1543,30 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, 
         CancellationToken cancellationToken)
     {
         /// <summary>
-        /// Seconds each measure took on the whole corpus with six sessions (2026-11-11), so the longest
-        /// start first and the last to start are short. Only the order they start in comes from here.
+        /// Seconds each measure took on the whole corpus with six sessions, beside a build's page documents (2026-11-18), so
+        /// the longest start first and the last to start are short. Only the order they start in comes from here.
         /// </summary>
         private static readonly Dictionary<string, double> Expected = new(StringComparer.Ordinal)
         {
-            ["unaligned"] = 50,
-            ["contention"] = 55,
-            ["reach"] = 64,
-            ["coverage"] = 58,
-            ["word links crossing a verse pair no verse link joins"] = 57,
-            ["stranded"] = 45,
-            ["link words whose text disagrees with the link's own"] = 47,
-            ["words shown as having no counterpart and as rendered at once"] = 31,
-            ["crowding"] = 28,
-            ["pairing"] = 19,
-            ["agreement"] = 15,
-            ["absences whose relation contradicts the side the words are on"] = 14,
-            ["links naming no word on either side"] = 12,
-            ["cross references and topic verses naming a verse no text places"] = 12,
-            ["links no claim stands on, so nothing says what asserted them"] = 9,
-            ["words going with a word of another text, or on a link that renders nothing"] = 7,
-            ["absence"] = 6,
-            ["variation"] = 6,
-            ["verse links saying again what another link of the same pair says"] = 6,
+            ["reach"] = 258,
+            ["unaligned"] = 252,
+            ["contention"] = 231,
+            ["word links crossing a verse pair no verse link joins"] = 215,
+            ["coverage"] = 191,
+            ["link words whose text disagrees with the link's own"] = 183,
+            ["stranded"] = 119,
+            ["words shown as having no counterpart and as rendered at once"] = 69,
+            ["crowding"] = 55,
+            ["pairing"] = 40,
+            ["verse links saying again what another link of the same pair says"] = 38,
+            ["variation"] = 33,
+            ["links naming no word on either side"] = 27,
+            ["absences whose relation contradicts the side the words are on"] = 26,
+            ["words going with a word of another text, or on a link that renders nothing"] = 25,
+            ["cross references and topic verses naming a verse no text places"] = 21,
+            ["absence"] = 17,
+            ["agreement"] = 8,
+            ["links no claim stands on, so nothing says what asserted them"] = 8,
         };
 
         private readonly List<(double Expected, Func<Task> Start)> _waiting = [];

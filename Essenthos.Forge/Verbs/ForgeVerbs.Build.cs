@@ -141,23 +141,38 @@ internal static partial class ForgeVerbs
             await serving.Create(args.Contains("--replace"), CancellationToken.None);
             await serving.Fill(parallel, CancellationToken.None);
 
-            // The whole verification reads nothing build/served holds, so it runs while the foreign keys are validated; the
-            // essentials hold the database to build/served and find every key validated, so they wait for both. build/served is
-            // written only once every key holds.
+            // The whole verification reads nothing build/served holds and nothing the page documents write, so it runs beside the
+            // pages and the count after them, while the foreign keys are validated; its run is recorded only once the count is
+            // taken, so build/served does not count it. The essentials hold the database to build/served and find every key
+            // validated, so they wait for all three. build/served is written only once every key holds.
+            var counted = serving.PagesThenCount(CancellationToken.None);
             var verify = Stopwatch.StartNew();
+            var measured = TimeSpan.Zero;
             var verifying = level == BuildVerify.Essentials
                 ? null
                 : BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, null, CorpusCheck.RenderedFloor,
-                    forge.Logger, analyzed: true);
+                    forge.Logger, analyzed: true, beforeRecord: () =>
+                    {
+                        measured = verify.Elapsed;
+                        return counted;
+                    });
+            await counted;
             await serving.Validating;
             var keys = await ForeignKeys(forge.DatabaseConnection);
             ServedState.Write(store, graph, serving.Database, serving.Rows, keys, $"forge build --into {serving.Database}");
             stages.AddRange(serving.Stages);
-            verified = verifying is not null
-                ? await verifying
-                : await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, null, CorpusCheck.RenderedFloor,
+            if (verifying is not null)
+            {
+                verified = await verifying;
+                stages.Add(new BuildStage("verify", level, measured, 0, (verified ? "passed" : "FAILED") + "; beside the page documents"));
+            }
+            else
+            {
+                verify.Restart();
+                verified = await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, null, CorpusCheck.RenderedFloor,
                     forge.Logger, analyzed: true);
-            stages.Add(new BuildStage("verify", level, verify.Elapsed, 0, verified ? "passed" : "FAILED"));
+                stages.Add(new BuildStage("verify", level, verify.Elapsed, 0, verified ? "passed" : "FAILED"));
+            }
         }
         else if (args.Contains("--apply"))
         {
@@ -212,8 +227,24 @@ internal static partial class ForgeVerbs
     /// </summary>
     private static async Task<bool?> Apply(ForgeRun forge, ProductStore store, ProductGraph graph, string level, List<BuildStage> stages)
     {
+        // The whole verification reads nothing the page documents write, so it runs beside them; the essentials hold the
+        // database to build/served, which is written after them.
+        var verify = new Stopwatch();
+        var measured = TimeSpan.Zero;
+        Func<IReadOnlyCollection<string>, Task, Task<bool>>? beside = level == BuildVerify.All
+            ? (pairs, counted) =>
+            {
+                verify.Start();
+                return BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, pairs, CorpusCheck.RenderedFloor,
+                    forge.Logger, beforeRecord: () =>
+                    {
+                        measured = verify.Elapsed;
+                        return counted;
+                    });
+            }
+            : null;
         var apply = new BuildApply(forge.DatabaseConnection, store, graph, forge.Scope().ServiceProvider, forge.Logger);
-        var applied = await apply.Run(CancellationToken.None);
+        var applied = await apply.Run(CancellationToken.None, beside);
         stages.AddRange(apply.Stages);
         if (applied is null)
         {
@@ -225,7 +256,13 @@ internal static partial class ForgeVerbs
             return true;
         }
 
-        var verify = Stopwatch.StartNew();
+        if (applied.Verified is { } passed)
+        {
+            stages.Add(new BuildStage("verify", level, measured, 0, (passed ? "passed" : "FAILED") + "; beside the page documents"));
+            return passed;
+        }
+
+        verify.Restart();
         var verified = await BuildVerify.Run(forge.Scope().ServiceProvider, forge.DatabaseConnection, store, level, null, null, applied.Pairs,
             CorpusCheck.RenderedFloor, forge.Logger);
         stages.Add(new BuildStage("verify", level, verify.Elapsed, 0, verified ? "passed" : "FAILED"));

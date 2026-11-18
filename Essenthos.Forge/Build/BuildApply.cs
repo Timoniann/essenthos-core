@@ -14,8 +14,11 @@ using Npgsql;
 
 namespace Essenthos.Core.Build;
 
-/// <summary>What an apply replaced: the products that moved and the pairs among them.</summary>
-internal sealed record Applied(IReadOnlyList<string> Changed, IReadOnlyCollection<string> Pairs);
+/// <summary>
+/// What an apply replaced: the products that moved and the pairs among them; and whether the verification run beside the
+/// page documents passed, when one ran.
+/// </summary>
+internal sealed record Applied(IReadOnlyList<string> Changed, IReadOnlyCollection<string> Pairs, bool? Verified = null);
 
 /// <summary>
 /// <c>forge build --apply</c>, the daily path (DOC-0224 §13, NOT-0216 D13): the configured database takes only what moved
@@ -32,7 +35,11 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
     private static readonly string[] TextLayer =
         ["texts/{text}/words", "texts/{text}/verses", "texts/{text}/notes", "texts/{text}/books", "texts/{text}/text", WordIdCollision.Product];
 
-    public async Task<Applied?> Run(CancellationToken cancellationToken)
+    /// <summary>
+    /// Applies what moved. <paramref name="beside"/>, when given and anything moved, is a verification started beside the page
+    /// documents with the pairs applied and the count of the tables after the pages, which it records its run after.
+    /// </summary>
+    public async Task<Applied?> Run(CancellationToken cancellationToken, Func<IReadOnlyCollection<string>, Task, Task<bool>>? beside = null)
     {
         var database = new NpgsqlConnectionStringBuilder(connectionString).Database!;
         ServingBuild.Refuse(database);
@@ -295,11 +302,12 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         await serving.Families(false, cancellationToken);
         await serving.Context(false, cancellationToken);
         await serving.Strength(null, false, cancellationToken, strength);
-        await serving.Pages(false, cancellationToken);
-        await serving.Count(cancellationToken);
+        var counted = serving.PagesThenCount(cancellationToken);
+        var verifying = beside?.Invoke(pairs, counted);
+        await counted;
         await WriteServed(database, serving.Rows, cancellationToken);
         Stages.AddRange(serving.Stages);
-        return new Applied(changed, pairs);
+        return new Applied(changed, pairs, verifying is null ? null : await verifying);
     }
 
     /// <summary>How many panes are read at once.</summary>

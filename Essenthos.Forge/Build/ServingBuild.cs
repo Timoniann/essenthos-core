@@ -120,8 +120,9 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
 
         // The texts' tables take no more rows, so their indexes are made while the rest loads; those of the verses, books
         // and chapters wait for the frame and the verse links, which read the verses without an order and so would number
-        // their rows in the order another plan gives.
-        var sizes = await Sizes(cancellationToken);
+        // their rows in the order another plan gives. Only the texts' tables are sized here: the links' transaction still
+        // holds its tables, and a size asked of one of them would wait for it to commit.
+        var sizes = await Sizes(TextLoad.Tables, cancellationToken);
         var textIndexes = Timed("database", "indexes of the texts' tables", () =>
             MakeIndexes([.. indexes.Where(i => TextLoad.Tables.Contains(i.Table) && !VerseTables.Contains(i.Table))], sizes, parallel, cancellationToken));
         var frame = Timed("load", "frame", () => Frame(null, cancellationToken));
@@ -155,16 +156,12 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             textIndexes,
             verseIndexes);
 
-        sizes = await Sizes(cancellationToken);
+        sizes = await Sizes(null, cancellationToken);
         await Timed("database", "indexes", () => MakeIndexes(indexes, sizes, parallel, cancellationToken));
 
         // Counted over the links and the frame once both are whole and indexed; the pages composed below read them.
         await Timed("load", "stored Strong answers", () => StoredStrong.Write(connectionString, cancellationToken));
-        await Timed("database", "analyze", async () =>
-        {
-            await Execute(connectionString, "ANALYZE", cancellationToken);
-            return 0;
-        });
+        await Timed("database", "analyze", () => Analyze(sizes, parallel, cancellationToken));
 
         // Every foreign key goes back unvalidated, which takes no time and enforces it on every row written from here on; the
         // rows already in are validated meanwhile, beside the panes and the record words (which read the filled tables and
@@ -178,8 +175,20 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
             Context(false, cancellationToken));
         // After the panes and the record words, which save the store as each text is written.
         await Strength(null, false, cancellationToken);
+    }
+
+    /// <summary>
+    /// The page documents, then every table counted into <see cref="Rows"/>: the last load of a build or an apply. A page reads
+    /// whatever the loads before it wrote and nothing else reads <c>page_document</c>, so the caller may verify beside it.
+    /// </summary>
+    public async Task PagesThenCount(CancellationToken cancellationToken)
+    {
         await Pages(false, cancellationToken);
-        await Count(cancellationToken);
+        await Timed("database", "count", async () =>
+        {
+            await Count(cancellationToken);
+            return (long)Rows.Count;
+        });
     }
 
     private async Task RecordsThenNames(CancellationToken cancellationToken)
@@ -455,13 +464,23 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         return (indexes, keys);
     }
 
-    /// <summary>Each table's size, for making the indexes and keys of the largest first.</summary>
-    private async Task<Dictionary<string, long>> Sizes(CancellationToken cancellationToken)
+    /// <summary>
+    /// The size of each table named (every table when null), for making the indexes and keys of the largest first. A size takes
+    /// the table's lock, so it waits for any transaction that holds the table exclusively.
+    /// </summary>
+    private async Task<Dictionary<string, long>> Sizes(IReadOnlyCollection<string>? tables, CancellationToken cancellationToken)
     {
         var sizes = new Dictionary<string, long>(StringComparer.Ordinal);
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
-        await using var command = new NpgsqlCommand("SELECT relname, pg_total_relation_size(oid) FROM pg_class WHERE relkind = 'r' AND relnamespace = 'public'::regnamespace", connection);
+        await using var command = new NpgsqlCommand(
+            "SELECT relname, pg_total_relation_size(oid) FROM pg_class WHERE relkind = 'r' AND relnamespace = 'public'::regnamespace"
+            + (tables is null ? "" : " AND relname = ANY(@tables)"), connection);
+        if (tables is not null)
+        {
+            command.Parameters.AddWithValue("tables", tables.ToArray());
+        }
+
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
@@ -563,25 +582,57 @@ internal sealed class ServingBuild(string connectionString, ProductStore store, 
         return present;
     }
 
+    /// <summary>
+    /// Every table ANALYZEd on its own, <paramref name="parallel"/> at once and the largest first, which is what one ANALYZE of
+    /// the whole database does one table after another. The system catalogues are included, as ANALYZE alone includes them.
+    /// </summary>
+    private async Task<long> Analyze(Dictionary<string, long> sizes, int parallel, CancellationToken cancellationToken)
+    {
+        var tables = await Tables("relnamespace IN ('public'::regnamespace, 'pg_catalog'::regnamespace)", cancellationToken);
+        await Parallel.ForEachAsync(tables.OrderByDescending(t => sizes.GetValueOrDefault(t.Name)),
+            new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
+            async (table, token) => await Execute(connectionString, $"ANALYZE {table.Qualified}", token));
+        return tables.Count;
+    }
+
+    /// <summary>Every table's rows, counted <see cref="CountParallelism"/> tables at once.</summary>
     public async Task Count(CancellationToken cancellationToken)
     {
+        var counted = new ConcurrentDictionary<string, long>(StringComparer.Ordinal);
+        await Parallel.ForEachAsync(await Tables("relnamespace = 'public'::regnamespace", cancellationToken),
+            new ParallelOptions { MaxDegreeOfParallelism = CountParallelism, CancellationToken = cancellationToken }, async (table, token) =>
+            {
+                await using var connection = new NpgsqlConnection(connectionString);
+                await connection.OpenAsync(token);
+                await using var command = new NpgsqlCommand($"SELECT count(*) FROM {table.Qualified}", connection) { CommandTimeout = 0 };
+                counted[table.Name] = Convert.ToInt64(await command.ExecuteScalarAsync(token), CultureInfo.InvariantCulture);
+            });
+        foreach (var (table, rows) in counted)
+        {
+            Rows[table] = rows;
+        }
+    }
+
+    /// <summary>Tables counted at once: a count is one scan, and the largest tables take seconds each.</summary>
+    private const int CountParallelism = 8;
+
+    private sealed record Table(string Name, string Qualified);
+
+    private async Task<List<Table>> Tables(string where, CancellationToken cancellationToken)
+    {
+        var tables = new List<Table>();
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync(cancellationToken);
-        var tables = new List<string>();
-        await using (var command = new NpgsqlCommand("SELECT relname FROM pg_class WHERE relkind = 'r' AND relnamespace = 'public'::regnamespace ORDER BY relname", connection))
-        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        await using var command = new NpgsqlCommand(
+            $"SELECT c.relname, format('%I.%I', n.nspname, c.relname) FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace WHERE c.relkind = 'r' AND {where} ORDER BY c.relname",
+            connection);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
         {
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                tables.Add(reader.GetString(0));
-            }
+            tables.Add(new Table(reader.GetString(0), reader.GetString(1)));
         }
 
-        foreach (var table in tables)
-        {
-            await using var command = new NpgsqlCommand($"SELECT count(*) FROM \"{table}\"", connection);
-            Rows[table] = Convert.ToInt64(await command.ExecuteScalarAsync(cancellationToken), CultureInfo.InvariantCulture);
-        }
+        return tables;
     }
 
     public async Task<T> Timed<T>(string stage, string what, Func<Task<T>> run)
