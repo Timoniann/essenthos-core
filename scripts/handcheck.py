@@ -808,6 +808,8 @@ You do NOT judge the translation. A translator may read a word differently from 
 
 Small words beside the main English word (and, then, the, a, of, to, in, with, a pronoun) never make a link wrong: they often belong to Hebrew prefixes. Judge the main word.
 
+Groups: the Hebrew words in (parentheses) belong to the SAME link as the bracketed word. A free translation often renders a whole Hebrew phrase by a whole English phrase, and links them as one group: then the bracketed English renders the group together, not each Hebrew word one by one (e.g. "anointed you with the oil of gladness" rendered "has made you so happy"; "the day of the LORD" rendered "when Yahweh comes"). Judge such a link by the group: it is right when the English phrase renders the group's meaning as a whole, even if no English word matches the bracketed Hebrew word alone. Call it wrong only when the English plainly renders a Hebrew word OUTSIDE the group, or a word inside the group is plainly rendered by English left outside the brackets.
+
 Answer with the JSON only: for each item its number n, its verdict v; when v is wrong, w, the other word; when v is not right, a reason r of at most twenty words."""
 
 VERDICTS = ['right', 'wrong', 'unsure']
@@ -872,8 +874,9 @@ def verse_requests(args):
     stage = STAGES[args.stage]
     requests, index = [], {}
     for (strong, lemma), occurrences in sorted(by_lemma.items(), key=lambda kv: (str(kv[0][0]), kv[0][1])):
-        for start in range(0, len(occurrences), VERSE_CHUNK):
-            part = occurrences[start:start + VERSE_CHUNK]
+        chunk = VERSE_CHUNK // 2 if stage['thinking'] else VERSE_CHUNK
+        for start in range(0, len(occurrences), chunk):
+            part = occurrences[start:start + chunk]
             entry = part[0][0]
             lines = [f"Hebrew word: {lemma} ({strong}), {POS_NAMES.get(entry['pos'], entry['pos'])}; gloss: {entry['gloss']}"]
             if entry['definition']:
@@ -883,7 +886,7 @@ def verse_requests(args):
                 lines += [f'{n}. {ref}', f'   Hebrew glosses: {heb}', f'   English: {eng}']
             custom = f"{args.run}-v{args.stage}-{len(requests)}"
             params = api.build_params('\n'.join(lines), system=VERSE_SYSTEM, model=MODEL, effort=stage['effort'],
-                                      schema=VERSE_SCHEMA, max_tokens=(4000 if stage['thinking'] else 0) + 200 + 60 * len(part))
+                                      schema=VERSE_SCHEMA, max_tokens=(16000 if stage['thinking'] else 0) + 200 + 60 * len(part))
             params['thinking'] = {'type': 'adaptive'} if stage['thinking'] else {'type': 'disabled'}
             requests.append((custom, params))
             index[custom] = [hid for _, _, hid in part]
