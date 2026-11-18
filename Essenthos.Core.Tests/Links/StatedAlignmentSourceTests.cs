@@ -1,6 +1,8 @@
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Products;
 using FluentAssertions;
@@ -54,6 +56,40 @@ public sealed class StatedAlignmentSourceTests : IDisposable
         source.States("IRV2019-BHSA").Should().BeTrue();
         source.States("KJV-BHSA").Should().BeFalse();
     }
+
+    [Fact]
+    public void A_file_written_from_an_earlier_release_is_made_again_and_keeps_only_the_rows_of_other_sources()
+    {
+        var store = new ProductStore(_root);
+        var now = InterlinearLinkLoader.UnfoldingWordSource;
+        var before = now.Replace(", release 92,", ", release 90,", StringComparison.Ordinal);
+        const string other = "Clear Bible alignment, release 3";
+        var product = MappingProducts.Of("ULT-NESTLE1904", MappingMethods.Stated);
+        using (var writer = store.Create(product, ProductKind.Machine, MappingRow.Schema, "test", []))
+        {
+            writer.WriteAll([Stated("50.1:16.1", "50.1:16.4", before), Stated("50.1:16.2", "50.1:16.3", before), Stated("50.1:17.1", "50.1:17.2", other)]);
+        }
+
+        var source = new Door43AlignmentSource();
+        var made = Stated("50.1:16.1", "50.1:16.4", now);
+        var written = MethodFiles.Write(store, "ULT-NESTLE1904", MappingMethods.Stated, [made], "test", [], source.Makes);
+
+        using var reader = store.Open(product, MappingRow.Schema);
+        reader.ReadAll().Should().BeEquivalentTo([made, Stated("50.1:17.1", "50.1:17.2", other)]);
+        reader.Header!.Notes.Where(note => note.Key == MethodFiles.KeptNote).Select(note => note.Value).Should().Equal(other);
+        written.Carried.Should().Be(1);
+        written.Kept.Should().Be(1, "the shape release 90 stated is stated again");
+        written.Gone.Should().Be(1);
+        source.Makes(InterlinearLinkLoader.Interlinear(Door43TextSource.Simplified).Source.Replace(", release 92,", ", release 91,", StringComparison.Ordinal))
+            .Should().BeTrue();
+        source.Makes(InterlinearLinkLoader.Interlinear(Bible4uTextSource.Ohienko).Source).Should().BeTrue();
+        source.Makes(now.Replace("Literal Text", "Lexical Text", StringComparison.Ordinal)).Should().BeFalse();
+        Datasets.Of(now).Should().Be("unfoldingword-ult").And.Be(Datasets.Of(before));
+        Datasets.Of(InterlinearLinkLoader.Interlinear(Door43TextSource.Simplified).Source).Should().Be("unfoldingword-ust");
+    }
+
+    private static MappingRow Stated(string from, string to, string source) =>
+        new(from, to, "renders", MappingMethods.Stated, null, source, null, null, null);
 
     [Fact]
     public void The_Berean_set_lays_its_Greek_verse_on_the_witness_words_of_the_Bereans_verse_of_that_number()

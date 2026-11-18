@@ -65,7 +65,7 @@ internal sealed record Door43AlignedBible(string Folder, string Slug, string Sou
             + "Testament, made in translationCore, release v2, git.door43.org/Door43-Catalog/ur-deva_irv, CC BY-SA 4.0"),
         new("en_ust", Door43TextSource.Simplified,
             "unfoldingWord Simplified Text alignment to unfoldingWord's Hebrew Bible and Greek New Testament, "
-            + "release 91, git.door43.org/unfoldingWord/en_ust, CC BY-SA 4.0"),
+            + "release 92, git.door43.org/unfoldingWord/en_ust, CC BY-SA 4.0"),
         new("vi_glt", Door43TextSource.VietnameseLiteral,
             "Door43 alignment of the Vietnamese Literal Text to unfoldingWord's Hebrew Bible and Greek New Testament, "
             + "made in translationCore, release v1, git.door43.org/vi_gl/vi_glt, CC BY-SA 4.0"),

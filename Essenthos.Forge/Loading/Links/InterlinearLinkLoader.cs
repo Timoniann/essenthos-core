@@ -61,7 +61,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     /// </summary>
     public const string UnfoldingWordSource =
         "unfoldingWord Literal Text alignment to unfoldingWord's Hebrew Bible and Greek New Testament, "
-        + "release 90, git.door43.org/unfoldingWord/en_ult, CC BY-SA 4.0";
+        + "release 92, git.door43.org/unfoldingWord/en_ult, CC BY-SA 4.0";
 
     /// <summary>
     /// The links this join makes, as word ids, without writing them: an answer key a measurement can

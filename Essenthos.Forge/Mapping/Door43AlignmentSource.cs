@@ -40,7 +40,7 @@ internal sealed class Door43AlignmentSource : IPairSource
         Bible4uTextSource.Ohienko, Bible4uTextSource.Synodal, UnfoldingWordTextSource.Slug, .. Door43AlignedBible.All.Select(bible => bible.Slug),
     ];
 
-    private static readonly HashSet<string> Sources = Translations.Select(slug => InterlinearLinkLoader.Interlinear(slug).Source).ToHashSet(StringComparer.Ordinal);
+    private static readonly HashSet<string> Lines = Translations.Select(slug => Line(InterlinearLinkLoader.Interlinear(slug).Source)).ToHashSet(StringComparer.Ordinal);
 
     public string Method => MappingMethods.Stated;
 
@@ -51,7 +51,15 @@ internal sealed class Door43AlignmentSource : IPairSource
         && Translations.Contains(from)
         && (to == NestleTextSource.Slug || (to == BhsaTextSource.Slug && WithHebrew.Contains(from)));
 
-    public bool Makes(string source) => Sources.Contains(source);
+    /// <summary>
+    /// A source names the release its alignment was taken from, so the rows of an earlier release of the same alignment are
+    /// this producer's too: they are made again from the release the store holds, never carried beside its rows.
+    /// </summary>
+    public bool Makes(string source) => Lines.Contains(Line(source));
+
+    /// <summary>A source without the release it names: the text up to <c>, release </c>, or the whole source where it names none.</summary>
+    internal static string Line(string source) =>
+        source.IndexOf(", release ", StringComparison.Ordinal) is var at and >= 0 ? source[..at] : source;
 
     public IEnumerable<string> Inputs(ProductStore store, string pair)
     {
