@@ -338,19 +338,36 @@ internal static class IndexLoad
 
         // What the Strong map reads per book whatever the number: the books each text is linked in, and each edition's
         // numbered words per book with the ETCBC prefix morphemes left out, the denominator of its rate.
-        await using (var sums = new NpgsqlCommand(
-                         """
-                         INSERT INTO text_book_linked (text_id, book)
-                         SELECT DISTINCT text_id, book FROM strong_book_reach WHERE text_id = ANY(@texts);
-                         INSERT INTO strong_book_words (witness_id, book, words)
-                         SELECT witness_id, book, sum(occurrences) FROM strong_book
-                         WHERE witness_id = ANY(@editions) AND strong_number NOT LIKE 'H9%'
-                         GROUP BY witness_id, book;
-                         """, connection, transaction))
+        await using (var writer = await connection.BeginBinaryImportAsync("COPY text_book_linked (text_id, book) FROM STDIN (FORMAT BINARY)", cancellationToken))
         {
-            sums.Parameters.AddWithValue("texts", textIds);
-            sums.Parameters.AddWithValue("editions", editionIds);
-            await sums.ExecuteNonQueryAsync(cancellationToken);
+            foreach (var text in counted)
+            {
+                foreach (var book in text.Books.Select(b => b.Book).Distinct())
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(text.TextId, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(book, NpgsqlDbType.Integer, cancellationToken);
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY strong_book_words (witness_id, book, words) FROM STDIN (FORMAT BINARY)", cancellationToken))
+        {
+            foreach (var edition in editions.Where(e => ids.ContainsKey(e) && occurrences.ContainsKey(e)).Order(StringComparer.Ordinal))
+            {
+                foreach (var book in occurrences[edition].Where(r => !r.Number.StartsWith(PrefixMorphemes, StringComparison.Ordinal)).GroupBy(r => r.Book))
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(ids[edition].Id, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(book.Key, NpgsqlDbType.Integer, cancellationToken);
+                    await writer.WriteAsync(book.Sum(r => r.Words), NpgsqlDbType.Integer, cancellationToken);
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
         }
 
         if (transaction is not null)
@@ -363,6 +380,9 @@ internal static class IndexLoad
             $"{renderings} phrases kept, {places} words behind every phrase, {counted.Sum(c => c.Reach.Count)} reach, {counted.Sum(c => c.Methods.Count)} methods, {counted.Sum(c => c.Books.Count)} by book, " +
             $"{editions.Count} editions by book; counted from the files in {countedIn.TotalSeconds:0.0} s");
     }
+
+    /// <summary>The ETCBC prefix morphemes' numbers (H9001 the article, ...), left out of an edition's numbered words per book.</summary>
+    private const string PrefixMorphemes = "H9";
 
     private static string? Note(IEnumerable<KeyValuePair<string, string>> notes, string key) =>
         notes.LastOrDefault(n => n.Key == key).Value is { } value && value != "-" ? value : null;

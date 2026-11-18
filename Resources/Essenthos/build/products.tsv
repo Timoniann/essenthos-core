@@ -29,6 +29,8 @@ texts/{text}/text	build	convert all --parallel 16	{sources} Essenthos/texts/{tex
 texts/{text}/frame	build	frame-files	Versification/TVTMS.txt Essenthos/versification/* Essenthos/texts/{text}/words Essenthos/texts/{text}/verses Essenthos/texts/{text}/titles	verse_reference	text
 texts/{text}/index/strong	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/frame Essenthos/mapping/*/final	strong_rendering strong_rendering_place strong_reach strong_reach_method	text
 texts/{text}/numbers	build	strong-numbers --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/texts/*/numbers Essenthos/mapping/*/final	word_rendered_strong	text
+texts/{text}/strong-occurrences	build	stored-strong --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/frame	strong_occurrence	text
+texts/{text}/pair-links	build	stored-strong --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/mapping/*/final	text_pair_links	text
 texts/{text}/index/occurrences	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	strong_book strong_book_reach	text
 texts/{text}/index/forms	build	indexes --parallel 16	Essenthos/texts/{text}/words Essenthos/texts/{text}/text	text_form	text
 texts/{text}/index/spellings	build	indexes --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/text Essenthos/names/projected/* Essenthos/names/rules Essenthos/records/derived/kinds Essenthos/mapping/*/final	entity_rendering entity_search_spelling	all
