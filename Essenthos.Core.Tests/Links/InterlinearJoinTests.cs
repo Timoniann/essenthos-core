@@ -335,6 +335,115 @@ public class InterlinearJoinTests
         account.SpansOnlySupplied.Should().Be(1);
     }
 
+    /// <summary>
+    /// 1 Kings 20:33: BHSA prints בֶן־הֲדַ֔ד as one word, the source prints בֶן and הֲדַ֔ד and aligns each over its own
+    /// English. Neither part is a word of the witness, so the two spans are one link of both English words to the name.
+    /// </summary>
+    [Fact]
+    public void TwoSpansOverThePartsOfANameBhsaPrintsAsOneWordAreOneLinkToIt()
+    {
+        var (pairs, account) = Join(
+            [English("Ben"), English("Hadad"), English("came")],
+            [Hebrew("אָחִ֣יךָ"), Hebrew("בֶן־הֲדַ֔ד"), Attached(Hebrew("וַ")), Hebrew("יֵּצֵ֤א")],
+            Span("בֶן", "Ben"),
+            Span("הֲדַ֔ד", "Hadad"),
+            Span("וַ⁠יֵּצֵ֤א", "came"));
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1,2", "102"), ("3", "103,104"));
+        account.CompoundsJoined.Should().Be(1);
+        account.SpansJoined.Should().Be(3);
+        account.SpanFailures.Values.Sum().Should().Be(0);
+    }
+
+    [Fact]
+    public void TheNameTheCorpusPrintsAsOneEnglishWordIsLinkedOnce()
+    {
+        var (pairs, _) = Join(
+            [English("Ben-Hadad")],
+            [Hebrew("בֶן־הֲדַ֔ד")],
+            Span("בֶן", "Ben") with { Glue = [new(false, ["Hadad"])] },
+            Span("הֲדַ֔ד", "Hadad") with { Glue = [new(true, [])] });
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1", "101"));
+    }
+
+    /// <summary>Judges 1:7: the source sets «Adoni» over בֶ֗זֶק and «Bezek» over אֲדֹֽנִי; together they are BHSA's one word.</summary>
+    [Fact]
+    public void PartsTheSourceAlignsInTheOtherOrderStillJoinTheirWord()
+    {
+        var (pairs, _) = Join(
+            [English("Adoni"), English("Bezek")],
+            [Hebrew("אֲדֹֽנִי־בֶ֗זֶק")],
+            Span("בֶ֗זֶק", "Adoni"),
+            Span("אֲדֹֽנִי", "Bezek"));
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1,2", "101"));
+    }
+
+    /// <summary>
+    /// Joshua 19:27 (UST): «El» over אֵ֥ל found אֶל, «to», by the bare letters, and «Iphtah» nothing. Counted as the source
+    /// counts, part by part, אֵ֥ל is the second part of יִפְתַּח־אֵ֥ל.
+    /// </summary>
+    [Fact]
+    public void APartTheBareLettersPutOnAnotherWordJoinsItsNameInstead()
+    {
+        var (pairs, _) = Join(
+            [English("Iphtah"), English("El"), English("to"), English("Cabul")],
+            [Hebrew("יִפְתַּח־אֵ֥ל"), Hebrew("אֶל"), Hebrew("כָּב֖וּל")],
+            Span("יִפְתַּח", "Iphtah"),
+            Span("אֵ֥ל", "El"),
+            Span("אֶל", "to"),
+            Span("כָּב֖וּל", "Cabul"));
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1,2", "101"), ("3", "102"), ("4", "103"));
+    }
+
+    /// <summary>
+    /// 1 Kings 20:33 (ULT): the source points the first Ben-Hadad's בֶּן with a dagesh and BHSA the second. By their own
+    /// counts the parts land on different words, so neither name is joined.
+    /// </summary>
+    [Fact]
+    public void PartsWhoseCountsPlaceThemOnDifferentWordsAreRefused()
+    {
+        var (pairs, account) = Join(
+            [English("Ben"), English("Hadad"), English("to"), English("Ben"), English("Hadad")],
+            [Hebrew("בֶן־הֲדַ֔ד"), Hebrew("אֵלָיו֙"), Hebrew("בֶּן־הֲדַ֔ד")],
+            Span("בֶּן", "Ben", occurrence: 1, occurrences: 1),
+            Span("הֲדַ֔ד", "Hadad", occurrence: 1, occurrences: 2),
+            Span("אֵלָיו֙", "to"),
+            Span("בֶן", "Ben", occurrence: 1, occurrences: 1),
+            Span("הֲדַ֔ד", "Hadad", occurrence: 2, occurrences: 2));
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("3", "102"));
+        account.CompoundsJoined.Should().Be(0);
+    }
+
+    /// <summary>Judges 1:27: «Beth» over the nest אֶת + בֵּית, «Shan» over שְׁאָ֣ן.</summary>
+    [Fact]
+    public void APartInsideANestJoinsWithTheRestOfItsNest()
+    {
+        var (pairs, _) = Join(
+            [English("Beth"), English("Shan")],
+            [Hebrew("אֶת"), Hebrew("בֵּית־שְׁאָ֣ן")],
+            Span("בֵּית", "Beth") with { Nest = [new AlignedOriginal("H0853", "אֶת", 1, 1)] },
+            Span("שְׁאָ֣ן", "Shan"));
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1,2", "101,102"));
+    }
+
+    /// <summary>Judges 1:33: BHSA prints the second Beth Anath as one word with a space inside.</summary>
+    [Fact]
+    public void ANameBhsaPrintsWithASpaceInsideJoinsLikeOneWithAMaqaf()
+    {
+        var (pairs, _) = Join(
+            [English("and"), English("Beth"), English("Anath")],
+            [Attached(Hebrew("וּ")), Hebrew("בֵ֣ית עֲנָ֔ת")],
+            Span("וּ⁠בֵ֣ית", "and", "Beth"),
+            Span("עֲנָ֔ת", "Anath"));
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1,2,3", "101,102"));
+    }
+
     private static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Join(
         IReadOnlyList<string> translated,
         IReadOnlyList<string> original,
