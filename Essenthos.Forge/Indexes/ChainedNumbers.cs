@@ -21,7 +21,9 @@ namespace Essenthos.Core.Indexes;
 /// <para>
 /// A translation's word joined to an original takes only what the group rules (<see cref="GroupNumbers"/>, PRB-1869) give it over
 /// those links: a link holding several original words or several of its words no longer hands a function word the content
-/// word's number, nor a content word a prefix's. A word the translation marks as supplied takes none.
+/// word's number, nor a content word a prefix's. A word the translation marks as supplied takes none. A word that renders
+/// several original words as one unit («twelve» over שְׁתֵּי עֶשְׂרֵה, P7) carries all their numbers, the first as its number and the
+/// rest in <see cref="Numbered.Also"/>, and lends them so to the translations after it.
 /// </para>
 /// </summary>
 internal static class ChainedNumbers
@@ -42,12 +44,19 @@ internal static class ChainedNumbers
     /// <summary>A text whose words a text's links reach, with the numbers it lends: by own key, the number and the links it took to reach it.</summary>
     /// <param name="classes">The class of each number of the originals (<see cref="OriginalWords"/>); a number it lacks is a content word's.</param>
     /// <param name="finite">The keys of the text's words that are finite verbs.</param>
+    /// <param name="names">The numbers of the originals that are proper names'.</param>
+    /// <param name="also">By own key, the further numbers a word carries with its first, rendering several words as one (P7).</param>
     internal sealed class Lender(
         bool original,
         IReadOnlyDictionary<string, (string Number, int Hops)> numbers,
         IReadOnlyDictionary<string, WordClass>? classes = null,
-        IReadOnlySet<string>? finite = null)
+        IReadOnlySet<string>? finite = null,
+        IReadOnlySet<string>? names = null,
+        IReadOnlyDictionary<string, string[]>? also = null)
     {
+        /// <summary>The further numbers the word carries with its first; empty where none.</summary>
+        public IReadOnlyList<string> Also(string key) => also?.GetValueOrDefault(key) ?? [];
+
         private readonly Lazy<Dictionary<string, int>> _occurrences = new(() =>
             numbers.Values.GroupBy(n => n.Number, StringComparer.Ordinal).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal));
 
@@ -70,7 +79,7 @@ internal static class ChainedNumbers
         public GroupNumbers.Original Word(string key, string number) =>
             new(key, number,
                 OriginalWords.Prefixes.Contains(number) ? WordClass.Prefix : classes?.GetValueOrDefault(number, WordClass.Content) ?? WordClass.Content,
-                finite?.Contains(key) == true);
+                finite?.Contains(key) == true, names?.Contains(number) == true);
 
         /// <summary>Whether the text is an edition of an original (any text that is not a translation).</summary>
         public bool Original => original;
@@ -91,10 +100,17 @@ internal static class ChainedNumbers
     /// link of <see cref="Confidence"/> (null where stated or ruled). On a word with its own number, <see cref="Linked"/> is the
     /// number a sure link gives it where none of the sure links gives its own, and <see cref="LinkedSource"/> the word lending it.
     /// </summary>
-    internal sealed record Numbered(string Key, string Number, int Hops, string? Source, double? Confidence, string? Linked, string? LinkedSource);
+    internal sealed record Numbered(string Key, string Number, int Hops, string? Source, double? Confidence, string? Linked, string? LinkedSource)
+    {
+        /// <summary>The further numbers the word carries with <see cref="Number"/>, each with the word lending it (P7); null where none.</summary>
+        public IReadOnlyList<(string Number, string Source)>? Also { get; init; }
+    }
 
     private sealed record Candidate(string Number, int Hops, bool Original, double? Confidence, string Source, int Occurrences)
     {
+        /// <summary>The further numbers taken with this one, each with the word lending it; null where none.</summary>
+        public IReadOnlyList<(string Number, string Source)>? Also { get; init; }
+
         public double Sureness => Confidence ?? 1.0;
 
         public bool Sure => Sureness >= Reliable;
@@ -126,8 +142,11 @@ internal static class ChainedNumbers
                     continue;
                 }
 
-                var candidate = new Candidate(lent.Number, lent.Hops + 1, lender.Original, link.Confidence, $"{link.Other} {theirs}",
-                    lender.Occurrences(lent.Number));
+                var source = $"{link.Other} {theirs}";
+                var candidate = new Candidate(lent.Number, lent.Hops + 1, lender.Original, link.Confidence, source, lender.Occurrences(lent.Number))
+                {
+                    Also = lender.Also(theirs) is { Count: > 0 } also ? [.. also.Select(n => (n, source))] : null,
+                };
                 foreach (var mine in link.Mine)
                 {
                     if (!candidates.TryGetValue(mine, out var held))
@@ -173,7 +192,7 @@ internal static class ChainedNumbers
             }
             else if (reached is not null && Best(reached, Usual) is { } best)
             {
-                numbered.Add(new Numbered(key, best.Number, best.Hops, best.Source, best.Confidence, null, null));
+                numbered.Add(new Numbered(key, best.Number, best.Hops, best.Source, best.Confidence, null, null) { Also = best.Also });
             }
         }
 
@@ -233,9 +252,13 @@ internal static class ChainedNumbers
                     ruled[word.Key] = held = [];
                 }
 
-                if (taken.TryGetValue(word.Key, out var original) && lender.TryGet(original.Key, out var lent))
+                if (taken.TryGetValue(word.Key, out var originals) && originals.Count > 0 && originals[0] is var first && lender.TryGet(first.Key, out var lent))
                 {
-                    held.Add(new Candidate(lent.Number, lent.Hops + 1, true, link.Confidence, $"{link.Other} {original.Key}", lender.Occurrences(lent.Number)));
+                    var also = originals.Skip(1).Where(o => lender.TryGet(o.Key, out _)).Select(o => (o.Number, $"{link.Other} {o.Key}")).ToList();
+                    held.Add(new Candidate(lent.Number, lent.Hops + 1, true, link.Confidence, $"{link.Other} {first.Key}", lender.Occurrences(lent.Number))
+                    {
+                        Also = also.Count > 0 ? also : null,
+                    });
                 }
             }
         }

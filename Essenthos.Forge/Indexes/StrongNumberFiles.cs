@@ -12,7 +12,8 @@ using NpgsqlTypes;
 namespace Essenthos.Core.Indexes;
 
 /// <summary>
-/// One row of <c>texts/&lt;SLUG&gt;/numbers</c>: a word and the one Strong number it carries for marking (<see cref="ChainedNumbers"/>).
+/// One row of <c>texts/&lt;SLUG&gt;/numbers</c>: a word and a Strong number it carries for marking (<see cref="ChainedNumbers"/>). A word
+/// rendering several original words as one unit (P7) has a row per number, its first number's first.
 /// </summary>
 /// <param name="Hops">0 for the word's own number, else the links between it and the word whose own number it is.</param>
 /// <param name="Source">The word it took the number from, <c>TEXT key</c>; null for its own.</param>
@@ -58,7 +59,7 @@ internal sealed record StrongDisagreementRow(string Text, long Own, long FromOri
 internal static class StrongNumberFiles
 {
     /// <summary>Raised with any change to the rule; a file made by another version is made again whatever its inputs say.</summary>
-    public const string Version = "3";
+    public const string Version = "4";
 
     /// <summary>The editions whose words' parts of speech class every number of the originals (<see cref="OriginalWords"/>).</summary>
     private static readonly string[] Classing = [Loading.BhsaTextSource.Slug, Loading.NestleTextSource.Slug];
@@ -92,7 +93,7 @@ internal static class StrongNumberFiles
         }
 
         var lenders = new ConcurrentDictionary<(string Text, bool Numbered), Lazy<ChainedNumbers.Lender>>();
-        var classes = new Lazy<Dictionary<string, WordClass>>(() => Classes(context.Store));
+        var classes = new Lazy<(Dictionary<string, WordClass> Classes, HashSet<string> Names)>(() => Classes(context.Store));
         var outcomes = new ConcurrentBag<IndexOutcome>();
         foreach (var texts in order.GroupBy(text => wave[text]).OrderBy(g => g.Key))
         {
@@ -107,7 +108,7 @@ internal static class StrongNumberFiles
 
     private static IndexOutcome Make(
         IndexContext context, string text, Dictionary<string, int> place, ConcurrentDictionary<(string, bool), Lazy<ChainedNumbers.Lender>> lenders,
-        Lazy<Dictionary<string, WordClass>> classes, bool force)
+        Lazy<(Dictionary<string, WordClass> Classes, HashSet<string> Names)> classes, bool force)
     {
         var clock = Stopwatch.StartNew();
         var store = context.Store;
@@ -141,13 +142,14 @@ internal static class StrongNumberFiles
         }
 
         var lending = others.ToDictionary(other => other, other => lenders.GetOrAdd((other, Before(other)), key => new Lazy<ChainedNumbers.Lender>(() =>
-            Original(key.Item1)
-                ? new ChainedNumbers.Lender(true,
-                    key.Item2 ? Numbers(store, key.Item1) : context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal),
-                    classes.Value, Finite(store, key.Item1))
-                : new ChainedNumbers.Lender(false,
-                    key.Item2 ? Numbers(store, key.Item1) : context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal)))).Value,
-            StringComparer.Ordinal);
+        {
+            var (numbers, also) = key.Item2
+                ? Numbers(store, key.Item1)
+                : (context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal), null);
+            return Original(key.Item1)
+                ? new ChainedNumbers.Lender(true, numbers, classes.Value.Classes, Finite(store, key.Item1), classes.Value.Names, also)
+                : new ChainedNumbers.Lender(false, numbers, also: also);
+        })).Value, StringComparer.Ordinal);
         var words = new List<(WordKey Key, string? Own, string Form)>();
         var supplied = new HashSet<string>(StringComparer.Ordinal);
         using (var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text)))
@@ -179,6 +181,7 @@ internal static class StrongNumberFiles
                    header.Notes.Add(new("from-originals", Count(numbered, n => n.Hops > 0 && lending[Text(n.Source!)].Original)));
                    header.Notes.Add(new("from-translations", Count(numbered, n => n.Hops > 0 && !lending[Text(n.Source!)].Original)));
                    header.Notes.Add(new("chained", Count(numbered, n => n.Hops > 1)));
+                   header.Notes.Add(new("several", Count(numbered, n => n.Also is not null)));
                    header.Notes.Add(new("disagreements", disagreeing.Count.ToString(CultureInfo.InvariantCulture)));
                    header.Notes.Add(new("examples", disagreeing.Count == 0 ? "-" : string.Join(" | ", examples)));
                }))
@@ -186,6 +189,10 @@ internal static class StrongNumberFiles
             foreach (var n in numbered)
             {
                 writer.Write(new StrongNumberRow(keys[n.Key], n.Number, n.Hops, n.Source, n.Confidence, n.Linked, n.LinkedSource));
+                foreach (var (number, source) in n.Also ?? [])
+                {
+                    writer.Write(new StrongNumberRow(keys[n.Key], number, n.Hops, source, n.Confidence, null, null));
+                }
             }
 
             writer.Complete();
@@ -218,10 +225,14 @@ internal static class StrongNumberFiles
     /// </summary>
     internal static bool Supplied(TextWord word) => word.Supplied is not null && word.SuppliedMark != "{}";
 
-    /// <summary>The class of every number of the originals, by the part of speech most of its words in BHSA and Nestle 1904 have.</summary>
-    private static Dictionary<string, WordClass> Classes(ProductStore store)
+    /// <summary>
+    /// The class of every number of the originals, by the part of speech most of its words in BHSA and Nestle 1904 have, and the
+    /// numbers most of whose words are proper names.
+    /// </summary>
+    private static (Dictionary<string, WordClass> Classes, HashSet<string> Names) Classes(ProductStore store)
     {
         var parts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+        var named = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var slug in Classing.Where(slug => store.Exists(TextWord.ProductOf(slug))))
         {
             using var reader = store.Open(TextWord.ProductOf(slug), TextWord.Schema(slug));
@@ -234,10 +245,15 @@ internal static class StrongNumberFiles
                 }
 
                 counted[part] = counted.GetValueOrDefault(part) + 1;
+                if (OriginalWords.Name(part, word.Surface))
+                {
+                    named[word.Strong!] = named.GetValueOrDefault(word.Strong!) + 1;
+                }
             }
         }
 
-        return parts.ToDictionary(p => p.Key, p => OriginalWords.Of(p.Key, p.Value.MaxBy(c => c.Value).Key), StringComparer.Ordinal);
+        return (parts.ToDictionary(p => p.Key, p => OriginalWords.Of(p.Key, p.Value.MaxBy(c => c.Value).Key), StringComparer.Ordinal),
+            parts.Where(p => named.GetValueOrDefault(p.Key) * 2 > p.Value.Values.Sum()).Select(p => p.Key).ToHashSet(StringComparer.Ordinal));
     }
 
     /// <summary>The keys of an original's words that are finite verbs.</summary>
@@ -261,11 +277,26 @@ internal static class StrongNumberFiles
         return reader.Header?.Notes.LastOrDefault(note => note.Key == VersionNote).Value != Version;
     }
 
-    /// <summary>The numbers a text's file gives its words, by own key.</summary>
-    private static Dictionary<string, (string Number, int Hops)> Numbers(ProductStore store, string text)
+    /// <summary>The numbers a text's file gives its words, by own key: the first, and the further ones a word carries with it.</summary>
+    private static (Dictionary<string, (string Number, int Hops)> Numbers, Dictionary<string, string[]>? Also) Numbers(ProductStore store, string text)
     {
+        var numbers = new Dictionary<string, (string Number, int Hops)>(StringComparer.Ordinal);
+        var also = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         using var reader = store.Open(Product(text), StrongNumberRow.Schema(text));
-        return reader.Rows().ToDictionary(r => r.Key.Own, r => (r.Number, r.Hops), StringComparer.Ordinal);
+        foreach (var row in reader.Rows())
+        {
+            if (!numbers.TryAdd(row.Key.Own, (row.Number, row.Hops)))
+            {
+                if (!also.TryGetValue(row.Key.Own, out var further))
+                {
+                    also[row.Key.Own] = further = [];
+                }
+
+                further.Add(row.Number);
+            }
+        }
+
+        return (numbers, also.Count == 0 ? null : also.ToDictionary(a => a.Key, a => a.Value.ToArray(), StringComparer.Ordinal));
     }
 
     /// <summary>One line per text, in the order they are numbered, from each file's header.</summary>
