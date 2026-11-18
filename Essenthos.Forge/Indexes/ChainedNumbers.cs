@@ -51,6 +51,21 @@ internal static class ChainedNumbers
         private readonly Lazy<Dictionary<string, int>> _occurrences = new(() =>
             numbers.Values.GroupBy(n => n.Number, StringComparer.Ordinal).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal));
 
+        private readonly Lazy<Dictionary<string, HashSet<string>>> _verses = new(() => numbers
+            .GroupBy(n => VerseOf(n.Key), StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Select(n => StrongSynonyms.Canonical(n.Value.Number)).ToHashSet(StringComparer.Ordinal), StringComparer.Ordinal));
+
+        /// <summary>The numbers of the words of the verses the keys stand in, synonyms counted as one.</summary>
+        public IReadOnlySet<string> NumbersOfTheVerses(IEnumerable<string> keys)
+        {
+            var verses = keys.Select(VerseOf).Distinct(StringComparer.Ordinal).ToList();
+            return verses.Count == 1
+                ? _verses.Value.GetValueOrDefault(verses[0]) ?? []
+                : verses.SelectMany(v => _verses.Value.GetValueOrDefault(v) ?? []).ToHashSet(StringComparer.Ordinal);
+        }
+
+        private static string VerseOf(string key) => key.LastIndexOf('.') is var dot and >= 0 ? key[..dot] : string.Empty;
+
         /// <summary>A word of the text as the group rules see it.</summary>
         public GroupNumbers.Original Word(string key, string number) =>
             new(key, number,
@@ -201,16 +216,16 @@ internal static class ChainedNumbers
             }
 
             grouped.Add((link, lender, mine, theirs));
-            if (mine.Count == 1)
+            if (rules.Rendering(mine, theirs) is { } one)
             {
-                rules.Learn(mine[0].Form, theirs);
+                rules.Learn(one.Form, theirs);
             }
         }
 
         var ruled = new Dictionary<string, List<Candidate>>(StringComparer.Ordinal);
         foreach (var (link, lender, mine, theirs) in grouped)
         {
-            var taken = rules.Decide(mine, theirs);
+            var taken = rules.Decide(mine, theirs, lender.NumbersOfTheVerses(link.Theirs));
             foreach (var word in mine.Where(w => w.Own is null))
             {
                 if (!ruled.TryGetValue(word.Key, out var held))

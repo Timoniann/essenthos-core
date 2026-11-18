@@ -259,6 +259,33 @@ public sealed class StrongNumberFileTests : IDisposable
             .Select(n => (n.Key, n.Number)).Should().Equal(("a", "H559"));
     }
 
+    /// <summary>
+    /// «pass» renders עָבַר wherever it stands alone, yet «it came to pass» over הָיָה is one rendering of הָיָה: every word takes it.
+    /// Where עָבַר stands in the verse, «pass» is taken to render that word and is given none. «of» over ל + דָּוִד takes ל.
+    /// </summary>
+    [Fact]
+    public void AWordUsuallyRenderingAnotherNumberTakesThePhrasesUnlessTheVerseHoldsThatNumber()
+    {
+        var lender = Hebrew(("1.1:1.1", "H1961"), ("1.2:1.1", "H5674"), ("1.2:1.2", "H5674"), ("1.2:1.3", "H5674"), ("1.2:1.4", "H5674"),
+            ("1.2:1.5", "H5674"), ("1.3:1.1", "H1961"), ("1.3:1.2", "H5674"), ("1.4:1.1", "H9005"), ("1.4:1.2", "H1732"));
+        List<(string, string?, string)> words =
+        [
+            ("a", null, "it"), ("b", null, "came"), ("c", null, "to"), ("d", null, "pass"), ("p1", null, "pass"), ("p2", null, "pass"),
+            ("p3", null, "pass"), ("p4", null, "pass"), ("p5", null, "pass"), ("e", null, "came"), ("f", null, "to"), ("g", null, "pass"),
+            ("h", null, "of"), ("i", "H1732", "david"),
+        ];
+        List<ChainedNumbers.Joined> links =
+        [
+            new(["a", "b", "c", "d"], "HEB", ["1.1:1.1"], null), new(["p1"], "HEB", ["1.2:1.1"], null), new(["p2"], "HEB", ["1.2:1.2"], null),
+            new(["p3"], "HEB", ["1.2:1.3"], null), new(["p4"], "HEB", ["1.2:1.4"], null), new(["p5"], "HEB", ["1.2:1.5"], null),
+            new(["e", "f", "g"], "HEB", ["1.3:1.1"], null), new(["h", "i"], "HEB", ["1.4:1.1", "1.4:1.2"], null),
+        ];
+
+        ChainedNumbers.Resolve(words, links, new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender }, new GroupNumbers("eng"))
+            .Where(n => !n.Key.StartsWith('p')).Select(n => (n.Key, n.Number)).Should().Equal(
+                ("a", "H1961"), ("b", "H1961"), ("c", "H1961"), ("d", "H1961"), ("e", "H1961"), ("f", "H1961"), ("h", "H9005"), ("i", "H1732"));
+    }
+
     [Fact]
     public void SynonymNumbersAreTheSameNumberInChecks()
     {

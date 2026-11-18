@@ -113,7 +113,8 @@ internal static class OriginalWords
 /// word of the original is left, every word left takes its number, function words too («he said» for וַיֹּאמֶר, «who was about
 /// to marry» for ἀνήρ); where two or more are left, none does; where the link holds no content word, its one function word left
 /// (P3 and P5, the owner's answers of 2026-11-18, <see cref="LeftoverTakesTheOneContentWord"/>). A content word whose form
-/// renders another number most of the time elsewhere is not given the phrase's (<see cref="UsualShare"/>).</item>
+/// renders another number most of the time elsewhere, and never the phrase's, is not given the phrase's where another word of
+/// the verse holds that other number (<see cref="UsualShare"/>).</item>
 /// </list>
 /// A form is a function word by the English list, or in another language where most of what it renders alone is function
 /// words of the original.
@@ -152,9 +153,11 @@ internal sealed class GroupNumbers
         ["and"] = ["H9000"], ["but"] = ["H9000"], ["then"] = ["H9000"], ["now"] = ["H9000"], ["so"] = ["H9000"], ["yet"] = ["H9000"],
         ["or"] = ["H9000"],
         ["in"] = ["H9003"], ["with"] = ["H9003"], ["by"] = ["H9003"], ["on"] = ["H9003"], ["at"] = ["H9003"], ["upon"] = ["H9003"],
-        ["among"] = ["H9003"], ["within"] = ["H9003"], ["through"] = ["H9003"], ["into"] = ["H9003", "H9005"],
-        ["like"] = ["H9004"], ["as"] = ["H9004"], ["according"] = ["H9004"],
-        ["to"] = ["H9005"], ["for"] = ["H9005"], ["unto"] = ["H9005"],
+        ["among"] = ["H9003"], ["within"] = ["H9003"], ["through"] = ["H9003"], ["into"] = ["H9003", "H9005"], ["while"] = ["H9003"],
+        ["when"] = ["H9003", "H9004"], ["against"] = ["H9003", "H9005"], ["over"] = ["H9003", "H9005"],
+        ["like"] = ["H9004"], ["as"] = ["H9004"], ["according"] = ["H9004"], ["about"] = ["H9004"],
+        ["to"] = ["H9005"], ["for"] = ["H9005"], ["unto"] = ["H9005"], ["of"] = ["H9005"], ["toward"] = ["H9005"], ["towards"] = ["H9005"],
+        ["concerning"] = ["H9005"],
         ["whether"] = ["H9008"],
         ["the"] = ["H9009"],
     };
@@ -259,10 +262,37 @@ internal sealed class GroupNumbers
             ? EnglishFunction.Contains(form)
             : _rendered.GetValueOrDefault(form) is var all && all >= FunctionAtLeast && _functionEvidence.GetValueOrDefault(form) >= FunctionShare * all;
 
-    /// <summary>Whether the form renders a number the link does not hold so often that a leftover's number would be a guess.</summary>
-    private bool UsuallyElse(string form, IReadOnlyList<Original> originals)
+    /// <summary>
+    /// The one word of a link that renders what it holds, for learning what forms render: its only word, or in English its only
+    /// word besides «the» and the words that take a prefix of the link («the LORD» over יְהוָה, «and Abraham» over ו + אַבְרָהָם).
+    /// </summary>
+    public Translated? Rendering(IReadOnlyList<Translated> words, IReadOnlyList<Original> originals)
     {
-        if (!_renders.TryGetValue(form, out var numbers))
+        if (words.Count == 1)
+        {
+            return words[0];
+        }
+
+        if (!_english)
+        {
+            return null;
+        }
+
+        var rest = words.Where(w => w.Form != "the" && !originals.Any(o => o.Class == WordClass.Prefix
+            && EnglishPrefixes.TryGetValue(w.Form, out var renders) && renders.Contains(o.Number))).ToList();
+        return rest.Count == 1 ? rest[0] : null;
+    }
+
+    /// <summary>
+    /// Whether the form renders a number the link does not hold so often that a leftover's number would be a guess: another word
+    /// of the verse holds that number («Joseph» over ὤν where Ἰωσήφ stands in the verse, «thus» of «thus saith» over אָמַר beside כֹּה).
+    /// A form whose usual number the verse does not hold renders this link's word in it («pass» of «came to pass» over הָיָה), and
+    /// so does a form that renders the given number alone elsewhere too («lord» over אֲדֹנִי beside יְהוָה).
+    /// </summary>
+    private bool UsuallyElse(string form, Original given, IReadOnlyList<Original> originals, IReadOnlySet<string>? verse)
+    {
+        if (!_renders.TryGetValue(form, out var numbers)
+            || numbers.GetValueOrDefault(Prefixes(given.Number) ? given.Number : StrongSynonyms.Canonical(given.Number)) >= ConfidentAtLeast)
         {
             return false;
         }
@@ -277,13 +307,15 @@ internal sealed class GroupNumbers
 
         var (usual, count) = same.MaxBy(n => n.Value);
         return count >= UsualAtLeast && count >= UsualShare * same.Sum(n => n.Value)
+            && (verse is null || verse.Contains(usual))
             && !originals.Any(o => string.Equals(Prefixes(o.Number) ? o.Number : StrongSynonyms.Canonical(o.Number), usual, StringComparison.Ordinal));
     }
 
     /// <summary>
     /// The original word each word of a link takes its number from, by the rules above; a word the rules give none is left out.
     /// </summary>
-    public Dictionary<string, Original> Decide(IReadOnlyList<Translated> words, IReadOnlyList<Original> originals)
+    /// <param name="verse">The numbers of the original words of the link's verses (synonyms counted as one); null where not known.</param>
+    public Dictionary<string, Original> Decide(IReadOnlyList<Translated> words, IReadOnlyList<Original> originals, IReadOnlySet<string>? verse = null)
     {
         var taken = new Dictionary<string, Original>(StringComparer.Ordinal);
         if (originals.Count == 0)
@@ -364,7 +396,7 @@ internal sealed class GroupNumbers
                 given = null;
             }
 
-            if (given is not null && !function && UsuallyElse(word.Form, originals))
+            if (given is { } phrased && !function && UsuallyElse(word.Form, phrased, originals, verse))
             {
                 given = null;
             }
