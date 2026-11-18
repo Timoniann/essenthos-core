@@ -97,6 +97,8 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         var recordWords = new SortedSet<string>(StringComparer.Ordinal);
         var strength = new SortedSet<string>(StringComparer.Ordinal);
         var numbers = new SortedSet<string>(StringComparer.Ordinal);
+        var occurrences = new SortedSet<string>(StringComparer.Ordinal);
+        var pairLinks = new SortedSet<string>(StringComparer.Ordinal);
         var names = new SortedSet<string>(StringComparer.Ordinal);
         bool records = false, spellings = false;
         foreach (var product in changed)
@@ -138,6 +140,12 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                     break;
                 case "texts/{text}/numbers":
                     numbers.Add(bound["text"]);
+                    break;
+                case "texts/{text}/strong-occurrences":
+                    occurrences.Add(bound["text"]);
+                    break;
+                case "texts/{text}/pair-links":
+                    pairLinks.Add(bound["text"]);
                     break;
                 case "texts/{text}/index/forms":
                     forms.Add(bound["text"]);
@@ -185,9 +193,16 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             }
         }
 
-        if (reloads.Numbers)
+        if (reloads.Numbers || reloads.StoredStrong)
         {
-            numbers.UnionWith(await Slugs(cancellationToken));
+            var slugs = await Slugs(cancellationToken);
+            foreach (var (whole, texts) in new[] { (reloads.Numbers, numbers), (reloads.StoredStrong, occurrences), (reloads.StoredStrong, pairLinks) })
+            {
+                if (whole)
+                {
+                    texts.UnionWith(slugs);
+                }
+            }
         }
 
         var serving = new ServingBuild(connectionString, store, services, logger);
@@ -229,17 +244,18 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
                 rows += outcome.Links;
                 Done($"{pairs.Count} pairs");
-
-                var paired = pairs.Select(MappingProducts.Split).SelectMany(p => new[] { p.From, p.To }).Distinct().ToArray();
-                var pairedIds = await TextIds(connection, paired, cancellationToken);
-                rows += await StoredStrong.WritePairLinks(connection, transaction, pairedIds, cancellationToken);
-                Done($"links of the pairs touching {paired.Length} texts");
             }
 
             if (numbers.Count > 0)
             {
                 rows += await StrongNumberFiles.Load(connection, transaction, store, numbers, cancellationToken);
                 Done($"the Strong numbers of {numbers.Count} texts");
+            }
+
+            if (occurrences.Count > 0 || pairLinks.Count > 0)
+            {
+                rows += await StoredStrongFiles.Load(connection, transaction, store, occurrences, pairLinks, cancellationToken);
+                Done($"Strong occurrences of {occurrences.Count} texts, pair links of {pairLinks.Count}");
             }
 
             if (verses.Count > 0 || reloads.VerseLinks)
@@ -338,11 +354,6 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         else if (frames.Count > 0)
         {
             await serving.Timed("apply", $"frame of {string.Join(",", frames)}", () => serving.Frame(frames, cancellationToken));
-        }
-
-        if (reloads.StoredStrong)
-        {
-            await serving.Timed("apply", "stored Strong answers of every text", () => StoredStrong.Write(connectionString, cancellationToken));
         }
 
         await serving.Timed("apply", "analyze", async () =>
@@ -445,20 +456,6 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
     /// Before a records load: every record's id by slug written down, and the keys from <see cref="OnRecords"/> to the records
     /// taken off, so the load's CASCADE leaves those tables as they are. Returns the keys, to put back.
     /// </summary>
-    private static async Task<int[]> TextIds(NpgsqlConnection connection, string[] slugs, CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand("SELECT id FROM text WHERE slug = ANY(@slugs)", connection);
-        command.Parameters.AddWithValue("slugs", slugs);
-        var ids = new List<int>();
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            ids.Add(reader.GetInt32(0));
-        }
-
-        return [.. ids];
-    }
-
     private static async Task<List<(string Table, string Name, string Definition)>> Detach(NpgsqlConnection connection, CancellationToken cancellationToken)
     {
         var keys = new List<(string, string, string)>();

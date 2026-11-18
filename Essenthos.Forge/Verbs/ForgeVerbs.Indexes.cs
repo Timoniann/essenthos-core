@@ -54,6 +54,21 @@ internal static partial class ForgeVerbs
         return Task.FromResult(0);
     }
 
+    /// <summary>Makes every text's stored Strong files where an input moved: <c>stored-strong [--force]</c>.</summary>
+    private static Task<int> StoredStrongVerb(ForgeRun forge, string[] args)
+    {
+        var clock = Stopwatch.StartNew();
+        var context = new IndexContext(new ProductStore(Option(args, "--from") ?? forge.Resources));
+        var outcomes = StoredStrongFiles.Make(context, args.Contains("--force"), Parallelism(args, 16));
+        foreach (var outcome in outcomes.Where(o => o.Made))
+        {
+            Console.WriteLine($"{outcome.Text,-14} {outcome.Index,-12} {outcome.Rows,9} rows {outcome.Elapsed.TotalSeconds,7:0.00} s");
+        }
+
+        Console.WriteLine($"stored-strong: {outcomes.Count(o => o.Made)} made, {outcomes.Count(o => !o.Made)} current in {clock.Elapsed}");
+        return Task.FromResult(0);
+    }
+
     /// <summary>Puts the indexes into the database the Forge is pointed at (never live): <c>indexes-load [--texts A,B] [--only strong,forms,renderings,spellings]</c>.</summary>
     private static async Task<int> IndexesLoadVerb(ForgeRun forge, string[] args)
     {

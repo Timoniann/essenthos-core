@@ -31,7 +31,7 @@ internal sealed class ApplyReloads
 
     public bool VerseLinks { get; private set; }
 
-    /// <summary>The links counted per pair and the numbered words in list order (<see cref="StoredStrong"/>), counted again for every text.</summary>
+    /// <summary>The links counted per pair and the numbered words in list order, loaded from every text's files.</summary>
     public bool StoredStrong { get; private set; }
 
     /// <summary>Tables loaded whole from <c>tables/&lt;t&gt;</c> or <c>carried/&lt;t&gt;</c>, replaced each from its product.</summary>
@@ -57,19 +57,17 @@ internal sealed class ApplyReloads
         [nameof(Forms)] = ["text_form"],
         [nameof(Renderings)] = ["word_rendering", "word_rendering_place", "word_rendering_witness", "word_rendering_source"],
         [nameof(VerseLinks)] = ["verse_link", "verse_link_verse"],
+        [nameof(StoredStrong)] = ["strong_occurrence", "text_pair_links"],
     };
 
     /// <summary>
-    /// Tables the build writes that no line of <c>build/products</c> names: the Strong index load's two counts per book, and
-    /// what <see cref="Build.StoredStrong"/> counts from the links and the frame. Bookkeeping that differs between any two builds
-    /// is named with no load.
+    /// Tables the build writes that no line of <c>build/products</c> names: the Strong index load's two counts per book.
+    /// Bookkeeping that differs between any two builds is named with no load.
     /// </summary>
     private static readonly IReadOnlyDictionary<string, string?> Undeclared = new Dictionary<string, string?>(StringComparer.Ordinal)
     {
         ["text_book_linked"] = nameof(Strong),
         ["strong_book_words"] = nameof(Strong),
-        ["text_pair_links"] = nameof(StoredStrong),
-        ["strong_occurrence"] = nameof(StoredStrong),
         ["table_write"] = null,
         ["verification_run"] = null,
     };
@@ -111,6 +109,7 @@ internal sealed class ApplyReloads
                 "mapping/{from}-{to}/final" => throw new Refused($"{table} is filled by the links' load ({p})"),
                 "texts/{text}/index/strong" or "texts/{text}/index/occurrences" => nameof(Strong),
                 "texts/{text}/numbers" => nameof(Numbers),
+                "texts/{text}/strong-occurrences" or "texts/{text}/pair-links" => nameof(StoredStrong),
                 "texts/{text}/index/forms" => nameof(Forms),
                 "texts/{text}/index/renderings" or "texts/{text}/index/rendered" => nameof(Renderings),
                 "texts/{text}/index/spellings" => nameof(Spellings),
@@ -182,8 +181,7 @@ internal sealed class ApplyReloads
             case nameof(Numbers): Numbers = true; break;
             case nameof(Forms): Forms = true; break;
             case nameof(Renderings): Renderings = true; break;
-            // The numbered words in list order stand at their frame address, so a frame loaded again counts them again.
-            case nameof(Frames): Frames = true; StoredStrong = true; break;
+            case nameof(Frames): Frames = true; break;
             case nameof(VerseLinks): VerseLinks = true; break;
             case nameof(StoredStrong): StoredStrong = true; break;
             default: throw new ArgumentOutOfRangeException(nameof(group), group, null);
@@ -200,6 +198,7 @@ internal sealed class ApplyReloads
         nameof(Forms) => Forms,
         nameof(Renderings) => Renderings,
         nameof(VerseLinks) => VerseLinks,
+        nameof(StoredStrong) => StoredStrong,
         _ => false,
     };
 
