@@ -20,7 +20,7 @@ internal static partial class ForgeVerbs
 
         // The build, the corpus measures and the releases.
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
-        new("build", "[--into <database> [--seed <database>] [--replace]] [--apply] [--owner-rows [--rows <file>]...] [--level skip|essentials|all] [--parallel <n>] [--no-products]",
+        new("build", "[--into <database> [--seed <database>] [--replace]] [--apply] [--owner-rows [--rows <file>]...] [--level skip|essentials|all] [--parallel <n>] [--producers <n>] [--no-products]",
             "Apply the owner's decided rows to the store when asked (--owner-rows, as owner-rows does); make every product whose inputs moved, "
             + "in the order build/products declares, and fail on a read it does not declare; then fill a new database of the configured server "
             + "from the products (--into), or clone the seed into it and replace there what moved since the seed was built (--into --seed, the "

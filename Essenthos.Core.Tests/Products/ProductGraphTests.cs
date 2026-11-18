@@ -113,6 +113,26 @@ public sealed class ProductGraphTests : IDisposable
     }
 
     [Fact]
+    public void Producers_that_read_nothing_of_each_other_need_nothing_of_each_other()
+    {
+        var graph = new ProductGraph(
+        [
+            new("texts/{text}/words", ProductMaker.Build, "convert all", ["bible4u/*"], ["word"], "text"),
+            new("texts/{text}/frame", ProductMaker.Build, "frame-files", ["Essenthos/texts/{text}/words"], ["verse_reference"], "text"),
+            new("tables/word_strong", ProductMaker.Build, "tables", ["Essenthos/texts/BSB/words"], ["word_strong"], "all"),
+            new("mapping/{from}-{to}/final", ProductMaker.Build, "merge --all", ["Essenthos/texts/{from}/frame", "Essenthos/tables/word_strong"], ["link"], "pair"),
+        ]);
+
+        var needs = graph.Needs();
+
+        needs.Keys.Should().Equal("convert all", "frame-files", "tables", "merge --all");
+        needs["convert all"].Should().BeEmpty();
+        needs["frame-files"].Should().BeEquivalentTo(["convert all"]);
+        needs["tables"].Should().BeEquivalentTo(["convert all"]);
+        needs["merge --all"].Should().BeEquivalentTo(["frame-files", "tables"]);
+    }
+
+    [Fact]
     public void A_missing_kept_product_the_manifest_records_is_named()
     {
         var store = new ProductStore(_root);

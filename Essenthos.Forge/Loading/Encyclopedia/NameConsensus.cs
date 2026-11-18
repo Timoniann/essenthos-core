@@ -362,42 +362,23 @@ internal static class NameConsensus
         var findings = new List<NameFinding>();
         var read = new Dictionary<int, (int[] Mine, HashSet<int> Forms, Dictionary<int, int> Particular)>();
 
-        foreach (var (entity, addresses) in question.Entities.OrderBy(entry => entry.Key))
+        // Each entity is named apart from the others, so they are read at once and gathered in entity order.
+        var entries = question.Entities.OrderBy(entry => entry.Key).ToList();
+        var named = new (NameFinding Finding, int[] Mine, HashSet<int> Forms, Dictionary<int, int> Particular)?[entries.Count];
+        using (var stamps = new ThreadLocal<TextIndex.Stamp>(() => new TextIndex.Stamp(verses.Count)))
         {
-            var mine = text.VersesAt(addresses);
-            if (mine.Length == 0)
-            {
-                continue;
-            }
-
-            var namesakeOnly = question.Namesakes.TryGetValue(entity, out var namesakes)
-                ? text.VersesAt(namesakes
-                        .Where(question.Entities.ContainsKey)
-                        .SelectMany(namesake => question.Entities[namesake])
-                        .Where(address => !addresses.Contains(address))
-                        .ToHashSet())
-                    .Except(mine)
-                    .ToArray()
-                : [];
-
-            var kind = question.KindOf(entity);
-            var rules = ConsensusRules.For(kind);
-            var (finding, forms, particular, scored) = text.Name(entity, mine, namesakeOnly, rules);
-            var spellings = question.Spellings?.GetValueOrDefault(entity);
-            finding = finding with { Likeness = Likeness(finding.Name, spellings), Kind = kind };
-            if (kind is EntityKind.Person or EntityKind.Place && spellings is { Count: > 0 })
-            {
-                (finding, forms) = SpeltApart(finding, forms, scored, spellings);
-            }
-
-            if (question.Attested?.GetValueOrDefault(entity) is { Count: > 0 } attested)
-            {
-                (finding, forms) = AttestedApart(finding, forms, scored, attested);
-            }
-
-            findings.Add(finding);
-            read[entity] = (mine, forms, particular);
+            Parallel.For(0, entries.Count, at => named[at] = NameOne(entries[at].Key, entries[at].Value, stamps.Value!));
         }
+
+        foreach (var one in named)
+        {
+            if (one is { } found)
+            {
+                findings.Add(found.Finding);
+                read[found.Finding.Entity] = (found.Mine, found.Forms, found.Particular);
+            }
+        }
+
 
         var standing = new Dictionary<int, List<int>>();
         foreach (var (entity, (mine, _, _)) in read)
@@ -413,12 +394,19 @@ internal static class NameConsensus
             }
         }
 
-        var claims = new List<ConsensusWord>();
-        foreach (var (entity, (mine, forms, particular)) in read.OrderBy(entry => entry.Key))
+        var claiming = read.OrderBy(entry => entry.Key).ToList();
+        var claimed = new List<ConsensusWord>[claiming.Count];
+        Parallel.For(0, claiming.Count, at => claimed[at] = Claims(claiming[at].Key, claiming[at].Value.Mine, claiming[at].Value.Forms, claiming[at].Value.Particular));
+        var claims = claimed.SelectMany(words => words).ToList();
+
+        return (findings, claims);
+
+        List<ConsensusWord> Claims(int entity, int[] mine, HashSet<int> forms, Dictionary<int, int> particular)
         {
+            var words = new List<ConsensusWord>();
             if (forms.Count == 0)
             {
-                continue;
+                return words;
             }
 
             var rules = ConsensusRules.For(question.KindOf(entity));
@@ -437,12 +425,48 @@ internal static class NameConsensus
                         continue;
                     }
 
-                    claims.Add(new ConsensusWord(verses[verse].Words[at].Word, entity, verse));
+                    words.Add(new ConsensusWord(verses[verse].Words[at].Word, entity, verse));
                 }
             }
+
+            return words;
         }
 
-        return (findings, claims);
+        (NameFinding Finding, int[] Mine, HashSet<int> Forms, Dictionary<int, int> Particular)? NameOne(int entity, IReadOnlySet<int> addresses, TextIndex.Stamp stamp)
+        {
+            var mine = text.VersesAt(addresses);
+            if (mine.Length == 0)
+            {
+                return null;
+            }
+
+            var namesakeOnly = question.Namesakes.TryGetValue(entity, out var namesakes)
+                ? text.VersesAt(namesakes
+                        .Where(question.Entities.ContainsKey)
+                        .SelectMany(namesake => question.Entities[namesake])
+                        .Where(address => !addresses.Contains(address))
+                        .ToHashSet())
+                    .Except(mine)
+                    .ToArray()
+                : [];
+
+            var kind = question.KindOf(entity);
+            var rules = ConsensusRules.For(kind);
+            var (finding, forms, particular, scored) = text.Name(entity, mine, namesakeOnly, rules, stamp);
+            var spellings = question.Spellings?.GetValueOrDefault(entity);
+            finding = finding with { Likeness = Likeness(finding.Name, spellings), Kind = kind };
+            if (kind is EntityKind.Person or EntityKind.Place && spellings is { Count: > 0 })
+            {
+                (finding, forms) = SpeltApart(finding, forms, scored, spellings);
+            }
+
+            if (question.Attested?.GetValueOrDefault(entity) is { Count: > 0 } attested)
+            {
+                (finding, forms) = AttestedApart(finding, forms, scored, attested);
+            }
+
+            return (finding, mine, forms, particular);
+        }
 
         // Another entity the verse names has as good a claim on the form. A namesake does whenever its
         // own verses print the form too. Another entity of the same kind does when the form is its own
@@ -748,8 +772,21 @@ internal static class NameConsensus
         private readonly List<string> _forms = [];
         private readonly List<int[]> _printedIn = [];
         private readonly List<bool> _lowerCase = [];
-        private readonly int[] _stamp;
-        private int _generation;
+
+        /// <summary>
+        /// What one worker marks while it names an entity: the verses counted for the core it scores now, and the entity's own
+        /// verses. Each worker keeps its own.
+        /// </summary>
+        public sealed class Stamp(int verses)
+        {
+            public int[] Seen { get; } = new int[verses];
+
+            public int Generation { get; set; }
+
+            public int[] Mine { get; } = new int[verses];
+
+            public int Entity { get; set; }
+        }
 
         public TextIndex(IReadOnlyList<ConsensusVerse> verses)
         {
@@ -819,7 +856,6 @@ internal static class NameConsensus
             }
 
             _printedIn = printedIn.Select(list => list.ToArray()).ToList();
-            _stamp = new int[verses.Count];
             _lowerCase = Enumerable.Range(0, occurrences.Count)
                 .Select(type => lower[type] > 0 && capitals[type] < Capitalised * occurrences[type])
                 .ToList();
@@ -852,11 +888,14 @@ internal static class NameConsensus
             int entity,
             int[] mine,
             int[] namesakeOnly,
-            ConsensusRules rules)
+            ConsensusRules rules,
+            Stamp stamp)
         {
+            var entityMark = ++stamp.Entity;
             var inMine = new Dictionary<int, int>();
             foreach (var verse in mine)
             {
+                stamp.Mine[verse] = entityMark;
                 foreach (var type in Tokens[verse].Where(type => type >= 0).Distinct())
                 {
                     inMine[type] = inMine.GetValueOrDefault(type) + 1;
@@ -906,7 +945,7 @@ internal static class NameConsensus
 
             var excluded = namesakeOnly.ToHashSet();
             var scored = byCore
-                .Select(entry => Score(entry.Key, entry.Value, mine, excluded))
+                .Select(entry => Score(entry.Key, entry.Value, mine, excluded, stamp))
                 .OrderByDescending(scoredCore => scoredCore.Cluster.Score)
                 .ThenByDescending(scoredCore => scoredCore.Cluster.Core.Length)
                 .ThenBy(scoredCore => scoredCore.Cluster.Core, StringComparer.Ordinal)
@@ -940,23 +979,28 @@ internal static class NameConsensus
             string core,
             HashSet<int> types,
             int[] mine,
-            HashSet<int> excluded)
+            HashSet<int> excluded,
+            Stamp stamp)
         {
-            var reached = mine.Count(verse => Tokens[verse].Any(types.Contains));
-
-            _generation++;
+            // Every verse printing one of the forms is counted once; those of the entity's own verses are the ones it reaches.
+            var generation = ++stamp.Generation;
             var printed = 0;
+            var reached = 0;
             foreach (var type in types)
             {
                 foreach (var verse in _printedIn[type])
                 {
-                    if (_stamp[verse] == _generation || excluded.Contains(verse))
+                    if (stamp.Seen[verse] == generation || excluded.Contains(verse))
                     {
                         continue;
                     }
 
-                    _stamp[verse] = _generation;
+                    stamp.Seen[verse] = generation;
                     printed++;
+                    if (stamp.Mine[verse] == stamp.Entity)
+                    {
+                        reached++;
+                    }
                 }
             }
 

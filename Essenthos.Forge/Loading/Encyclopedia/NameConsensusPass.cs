@@ -141,8 +141,16 @@ internal static class NameConsensusPass
         [.. context.Texts.Keys.Where(slug => !Unread.Contains(slug)).Order(StringComparer.Ordinal)];
 
     /// <summary>
-    /// Writes every text's <c>names/consensus/&lt;SLUG&gt;</c> where an input moved, or measures only: a run at another
-    /// precision or bar than the build's reports and writes no product.
+    /// One language's texts that are not measured, read one after another, the one holding the most verses first: each is read
+    /// against the names the measured texts of its language and the texts before it attest.
+    /// </summary>
+    private sealed record Chain(string Language, IReadOnlyList<string> Texts);
+
+    /// <summary>
+    /// Writes every text's <c>names/consensus/&lt;SLUG&gt;</c> whose inputs moved, or measures only: a run at another
+    /// precision or bar than the build's reports and writes no product. A text's file names what can change its rows: the
+    /// originals, the records' kinds and titles, every measured text (they choose the bars), the texts before it in its
+    /// language and its own; a language none of whose texts moved is not read.
     /// </summary>
     /// <param name="precision">The precision each kind's bar must reach on the measured texts.</param>
     /// <param name="bar">One bar for every kind, or null to choose each on the measured texts.</param>
@@ -161,40 +169,54 @@ internal static class NameConsensusPass
         var projection = new NamesProjection(store);
         var context = projection.Context;
         var texts = Texts(context);
-        var inputs = Inputs(store, projection, texts);
-        if (writes && !force && !NeedsBuild(store, texts, inputs))
+        var chains = Chains(store, context, texts);
+        var inputs = Inputs(store, projection, texts, chains);
+        var stale = texts.Where(slug => !writes || force || NeedsBuild(store, slug, inputs[slug])).ToHashSet(StringComparer.Ordinal);
+        if (stale.Count == 0)
         {
             return new Outcome(false, texts.Count, 0, "names/consensus is current");
         }
 
+        var everything = !writes || output is not null;
         var records = Records.Read(store);
         var question = Question(store, records);
         log($"question: {question.Entities.Count} entities the originals name, {question.Namesakes.Count} with namesakes ({started.Elapsed:mm\\:ss})");
-
-        var report = new StringBuilder();
-        var table = new StringBuilder()
-            .AppendLine("| text | language | entities named | of them new to the text | words | agree | new | disagree | verses reached before | after | new by kind (person, place, people, title, object, observance) | written |")
-            .AppendLine("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|");
-        var examples = new StringBuilder();
         if (output is not null)
         {
             Directory.CreateDirectory(output);
         }
 
-        var measured = texts.Where(Measured.Contains)
-            .AsParallel().AsOrdered().WithDegreeOfParallelism(Math.Max(1, parallel))
-            .Select(slug => Read(store, projection, slug, question, records, true, log))
+        // How far each language is read: to its last text that moved; a text before it is read for what it attests.
+        var reach = chains.ToDictionary(
+            chain => chain.Language,
+            chain => everything ? chain.Texts.Count : chain.Texts.Select((slug, at) => stale.Contains(slug) ? at + 1 : 0).Max(),
+            StringComparer.Ordinal);
+        var measuredTexts = texts.Where(Measured.Contains).ToList();
+        var order = measuredTexts
+            .Concat(chains.SelectMany(chain => chain.Texts.Take(reach[chain.Language]).Select((slug, at) => (Slug: slug, At: at, Length: chain.Texts.Count)))
+                .OrderBy(text => text.At).ThenByDescending(text => text.Length).Select(text => text.Slug))
             .ToList();
-        log($"read the {measured.Count} measured texts ({started.Elapsed:mm\\:ss})");
 
-        var bars = Report(report, measured, precision, bar);
+        // Preparing a text (its words, the names the earlier methods carry, a measured text's stated names) reads nothing of
+        // another text, so every text is prepared at once, as many at a time as asked, in the order they are needed.
+        using var gate = new SemaphoreSlim(Math.Max(1, parallel));
+        var prepared = order.ToDictionary(
+            slug => slug,
+            slug => Gated(gate, () => Prepare(store, projection, slug, question, records, Measured.Contains(slug))),
+            StringComparer.Ordinal);
 
-        var results = new ConcurrentDictionary<string, (Reading Reading, IReadOnlyList<ConsensusWord> Words, string Row, string Example)>(StringComparer.Ordinal);
-        void Add(Reading reading)
+        var report = new StringBuilder();
+        var results = new ConcurrentDictionary<string, (IReadOnlyList<ConsensusName>? Rows, string Row, string Example)>(StringComparer.Ordinal);
+        void Add(Reading reading, ConsensusBars bars)
         {
             var words = Written(reading, bars);
             var (row, example) = Addition(reading, bars, records.Slugs, words.Count);
-            results[reading.Slug] = (reading, words, row, example);
+            IReadOnlyList<ConsensusName>? rows = writes && stale.Contains(reading.Slug)
+                ? [.. words.Select(word => new ConsensusName(reading.Keys[(int)word.Word], records.Slugs[word.Entity]))
+                    .OrderBy(name => name.Own)
+                    .ThenBy(name => name.Record, StringComparer.Ordinal)]
+                : null;
+            results[reading.Slug] = (rows, row, example);
             if (output is not null)
             {
                 Write(output, reading, bars, records.Slugs);
@@ -206,41 +228,53 @@ internal static class NameConsensusPass
             }
         }
 
-        var attested = new Dictionary<string, Dictionary<int, HashSet<string>>>(StringComparer.Ordinal);
-        foreach (var reading in measured)
+        var chosen = Task.Run(async () =>
         {
-            if (!attested.TryGetValue(reading.Language, out var language))
+            var measured = await Task.WhenAll(measuredTexts.Select(slug => Task.Run(async () => Consense(await prepared[slug], question, log))));
+            log($"read the {measured.Length} measured texts ({started.Elapsed:mm\\:ss})");
+            var bars = Report(report, measured, precision, bar);
+            var attested = new Dictionary<string, Dictionary<int, HashSet<string>>>(StringComparer.Ordinal);
+            foreach (var reading in measured)
             {
-                attested[reading.Language] = language = [];
+                if (!attested.TryGetValue(reading.Language, out var language))
+                {
+                    attested[reading.Language] = language = [];
+                }
+
+                NameConsensus.Witness(language, reading.Findings, bars);
             }
 
-            NameConsensus.Witness(language, reading.Findings, bars);
-        }
-
-        foreach (var reading in measured)
-        {
-            Add(reading);
-        }
-
-        // A text is read against the fuller texts of its language before it: each language's texts in turn, the one holding
-        // the most verses first, the languages at once.
-        var rest = texts.Where(slug => !Measured.Contains(slug))
-            .Select(slug => (Slug: slug, context.Texts[slug].Language, Verses: VerseCount(store, slug)))
-            .GroupBy(text => text.Language, StringComparer.Ordinal)
-            .ToList();
-        Parallel.ForEach(rest, new ParallelOptions { MaxDegreeOfParallelism = Math.Max(1, parallel) }, language =>
-        {
-            var witnessed = attested.GetValueOrDefault(language.Key) ?? [];
-            foreach (var text in language.OrderByDescending(text => text.Verses).ThenBy(text => text.Slug, StringComparer.Ordinal))
+            foreach (var reading in measured)
             {
-                var reading = Read(store, projection, text.Slug, question with { Attested = witnessed }, records, false, log);
-                Add(reading);
-                NameConsensus.Witness(witnessed, reading.Findings, bars);
-                log($"read {text.Slug} ({started.Elapsed:mm\\:ss})");
+                Add(reading, bars);
             }
+
+            return (Bars: bars, Attested: attested);
         });
 
-        foreach (var slug in texts)
+        // A language with no measured text has nothing attested before its first text, which is read before the bars are chosen.
+        var measuredLanguages = measuredTexts.Select(slug => context.Texts[slug].Language).ToHashSet(StringComparer.Ordinal);
+        var languages = chains.Where(chain => reach[chain.Language] > 0).Select(chain => Task.Run(async () =>
+        {
+            var witnessed = measuredLanguages.Contains(chain.Language)
+                ? (await chosen).Attested.GetValueOrDefault(chain.Language) ?? []
+                : new Dictionary<int, HashSet<string>>();
+            foreach (var slug in chain.Texts.Take(reach[chain.Language]))
+            {
+                var reading = Consense(await prepared[slug], question with { Attested = witnessed }, log);
+                var bars = (await chosen).Bars;
+                Add(reading, bars);
+                NameConsensus.Witness(witnessed, reading.Findings, bars);
+                log($"read {slug} ({started.Elapsed:mm\\:ss})");
+            }
+        })).ToList();
+        Task.WaitAll([chosen, .. languages]);
+
+        var table = new StringBuilder()
+            .AppendLine("| text | language | entities named | of them new to the text | words | agree | new | disagree | verses reached before | after | new by kind (person, place, people, title, object, observance) | written |")
+            .AppendLine("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|");
+        var examples = new StringBuilder();
+        foreach (var slug in texts.Where(results.ContainsKey))
         {
             table.AppendLine(results[slug].Row);
             examples.AppendLine(results[slug].Example);
@@ -259,36 +293,47 @@ internal static class NameConsensusPass
         }
 
         long rows = 0;
-        if (writes)
+        var written = 0;
+        foreach (var slug in texts.Where(slug => results.TryGetValue(slug, out var result) && result.Rows is not null))
         {
-            foreach (var slug in texts)
-            {
-                rows += WriteFile(store, slug, results[slug].Reading, results[slug].Words, records.Slugs, inputs);
-            }
+            rows += WriteFile(store, slug, results[slug].Rows!, inputs[slug]);
+            written++;
         }
 
-        report.AppendLine().AppendLine($"Read {texts.Count} texts in {started.Elapsed:hh\\:mm\\:ss}" +
-                                       (writes ? $"; {rows} words written to names/consensus." : "; measured only, nothing written."));
-        return new Outcome(writes, texts.Count, rows, report.ToString());
+        report.AppendLine().AppendLine($"Read {results.Count} of {texts.Count} texts in {started.Elapsed:hh\\:mm\\:ss}" +
+                                       (writes ? $"; {written} files, {rows} words written to names/consensus." : "; measured only, nothing written."));
+        return new Outcome(writes && written > 0, texts.Count, rows, report.ToString());
     }
+
+    private static async Task<T> Gated<T>(SemaphoreSlim gate, Func<T> work)
+    {
+        await gate.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            return await Task.Run(work).ConfigureAwait(false);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    /// <summary>Each language's texts that are not measured, the one holding the most verses first.</summary>
+    private static List<Chain> Chains(ProductStore store, IndexContext context, IReadOnlyList<string> texts) =>
+        [.. texts.Where(slug => !Measured.Contains(slug))
+            .Select(slug => (Slug: slug, context.Texts[slug].Language, Verses: VerseCount(store, slug)))
+            .GroupBy(text => text.Language, StringComparer.Ordinal)
+            .Select(language => new Chain(language.Key, [.. language
+                .OrderByDescending(text => text.Verses)
+                .ThenBy(text => text.Slug, StringComparer.Ordinal)
+                .Select(text => text.Slug)]))];
 
     /// <summary>The words a text's file holds: what the bars settle, on the words nothing the earlier methods carry names.</summary>
     private static IReadOnlyList<ConsensusWord> Written(Reading reading, ConsensusBars bars) =>
         [.. NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts).Where(word => !reading.Annotated.ContainsKey(word.Word))];
 
-    private static long WriteFile(
-        ProductStore store,
-        string slug,
-        Reading reading,
-        IReadOnlyList<ConsensusWord> words,
-        IReadOnlyList<string> slugs,
-        IReadOnlyList<ProductInput> inputs)
+    private static long WriteFile(ProductStore store, string slug, IReadOnlyList<ConsensusName> rows, IReadOnlyList<ProductInput> inputs)
     {
-        var rows = words
-            .Select(word => new ConsensusName(reading.Keys[(int)word.Word], slugs[word.Entity]))
-            .OrderBy(row => row.Own)
-            .ThenBy(row => row.Record, StringComparer.Ordinal)
-            .ToList();
         using var writer = store.Create(NameProducts.Consensus(slug), ProductKind.Machine, ConsensusName.Schema(slug),
             ProductHeader.DescribeProducer(Producer), inputs,
             header =>
@@ -302,37 +347,38 @@ internal static class NameConsensusPass
         return writer.Rows;
     }
 
-    private static bool NeedsBuild(ProductStore store, IReadOnlyList<string> texts, IReadOnlyList<ProductInput> inputs)
+    private static bool NeedsBuild(ProductStore store, string slug, IReadOnlyList<ProductInput> inputs)
     {
-        foreach (var slug in texts)
+        var product = NameProducts.Consensus(slug);
+        if (store.NeedsBuild(product, ProductKind.Machine, inputs))
         {
-            var product = NameProducts.Consensus(slug);
-            if (store.NeedsBuild(product, ProductKind.Machine, inputs))
-            {
-                return true;
-            }
-
-            using var reader = store.Open(product);
-            if (reader.Header?.Notes.LastOrDefault(note => note.Key == VersionNote).Value != Version)
-            {
-                return true;
-            }
+            return true;
         }
 
-        return false;
+        using var reader = store.Open(product);
+        return reader.Header?.Notes.LastOrDefault(note => note.Key == VersionNote).Value != Version;
     }
 
     /// <summary>
-    /// What the run reads: every text's words, frame and declaration, the originals' settled names, the records' kinds and
-    /// titles, and what the names projection reads of each text: the earlier method files of the pairs names-pairs places,
-    /// and a measured text's stated and Strong files of every pair.
+    /// What each text's file reads: the originals' words, frames, declarations and settled names, the records' kinds and titles,
+    /// what every measured text reads, and what each text of its language up to itself reads. What a text reads is its words,
+    /// frame and declaration and what the names projection reads of it: the earlier method files of the pairs names-pairs
+    /// places, and a measured text's stated and Strong files of every pair.
     /// </summary>
-    private static IReadOnlyList<ProductInput> Inputs(ProductStore store, NamesProjection projection, IReadOnlyList<string> texts)
+    private static Dictionary<string, IReadOnlyList<ProductInput>> Inputs(
+        ProductStore store,
+        NamesProjection projection,
+        IReadOnlyList<string> texts,
+        IReadOnlyList<Chain> chains)
     {
-        var read = new SortedSet<string>(StringComparer.Ordinal);
-        foreach (var slug in texts.Concat(Originals).Distinct(StringComparer.Ordinal)
-                     .Where(slug => projection.Context.Texts.ContainsKey(slug) && (!NameProducts.IsReference(slug) || store.Exists(NameProducts.Settled(slug)))))
+        SortedSet<string> Own(string slug)
         {
+            var read = new SortedSet<string>(StringComparer.Ordinal);
+            if (!projection.Context.Texts.ContainsKey(slug) || (NameProducts.IsReference(slug) && !store.Exists(NameProducts.Settled(slug))))
+            {
+                return read;
+            }
+
             read.UnionWith(ProductText.Products(slug).Append(VerseManifestRow.ProductOf(slug)).Select(store.Find).OfType<string>());
             read.UnionWith(projection.InputsOf(slug).Select(input => input.Path)
                 .Where(path => Path.GetFileNameWithoutExtension(path) != MappingProducts.Final));
@@ -341,10 +387,31 @@ internal static class NameConsensusPass
                 IEnumerable<string> methods = NamesFirstSource.Placed.Contains(pair) ? NamesFirstSource.Before : Measured.Contains(slug) ? StatedMethods : [];
                 read.UnionWith(methods.Select(method => store.Find(MappingProducts.Of(pair, method))).OfType<string>());
             }
+
+            return read;
         }
 
-        read.UnionWith(Originals.Select(NameProducts.Settled).Append(KindsProduct).Append(TitlesProduct).Select(store.Find).OfType<string>());
-        return store.Inputs(read);
+        var shared = new SortedSet<string>(StringComparer.Ordinal);
+        foreach (var slug in Originals.Concat(texts.Where(Measured.Contains)))
+        {
+            shared.UnionWith(Own(slug));
+        }
+
+        shared.UnionWith(Originals.Select(NameProducts.Settled).Append(KindsProduct).Append(TitlesProduct).Select(store.Find).OfType<string>());
+        var read = texts.Where(Measured.Contains).ToDictionary(slug => slug, _ => shared, StringComparer.Ordinal);
+        foreach (var chain in chains)
+        {
+            var before = new SortedSet<string>(shared, StringComparer.Ordinal);
+            foreach (var slug in chain.Texts)
+            {
+                before.UnionWith(Own(slug));
+                read[slug] = new SortedSet<string>(before, StringComparer.Ordinal);
+            }
+        }
+
+        var all = read.Values.SelectMany(paths => paths).Distinct(StringComparer.Ordinal).ToList();
+        var hashed = all.Zip(store.Inputs(all)).ToDictionary(entry => entry.First, entry => entry.Second, StringComparer.Ordinal);
+        return read.ToDictionary(entry => entry.Key, entry => (IReadOnlyList<ProductInput>)[.. entry.Value.Select(path => hashed[path])], StringComparer.Ordinal);
     }
 
     private static int VerseCount(ProductStore store, string slug)
@@ -561,19 +628,23 @@ internal static class NameConsensusPass
         ConsensusBar? fixedBar)
     {
         var candidates = fixedBar is null ? Bars().ToList() : [fixedBar];
-        var tallies = measured.ToDictionary(
-            reading => reading.Slug,
-            reading => candidates.ToDictionary(
-                bar => bar,
-                bar =>
-                {
-                    var words = NameConsensus.Settle(reading.Findings, reading.Claims, bar);
-                    var small = reading.Findings.Where(finding => finding.Verses < FewVerses).Select(finding => finding.Entity).ToHashSet();
-                    var fewWords = words.Where(word => small.Contains(word.Entity)).ToList();
-                    return Kinds.ToDictionary(
-                        kind => kind,
-                        kind => (All: Score(reading, words, kind), Few: Score(reading, fewWords, kind)));
-                }));
+        var tallied = measured
+            .SelectMany(reading => candidates.Select(bar => (Reading: reading, Bar: bar)))
+            .AsParallel()
+            .Select(entry =>
+            {
+                var (reading, bar) = entry;
+                var words = NameConsensus.Settle(reading.Findings, reading.Claims, bar);
+                var small = reading.Findings.Where(finding => finding.Verses < FewVerses).Select(finding => finding.Entity).ToHashSet();
+                var fewWords = words.Where(word => small.Contains(word.Entity)).ToList();
+                return (reading.Slug, bar, Kinds: Kinds.ToDictionary(
+                    kind => kind,
+                    kind => (All: Score(reading, words, kind), Few: Score(reading, fewWords, kind))));
+            })
+            .ToList();
+        var tallies = tallied
+            .GroupBy(entry => entry.Slug)
+            .ToDictionary(text => text.Key, text => text.ToDictionary(entry => entry.bar, entry => entry.Kinds));
 
         ConsensusBar Choose(IReadOnlyList<string> on, EntityKind kind) =>
             candidates
@@ -1228,17 +1299,31 @@ internal static class NameConsensusPass
     private static int Address(int book, int chapter, int verse) => book * AddressBook + chapter * AddressChapter + verse;
 
     /// <summary>
-    /// One text read: its verses at every frame address they stand at, what the consensus finds in them, the names the
-    /// projection carries over the earlier method files, and for a measured text what its stated and Strong files carry.
+    /// A text ready to be read: its verses at every frame address they stand at, the names the projection carries over the
+    /// earlier method files, and for a measured text what its stated and Strong files carry, with how long each took.
     /// </summary>
-    private static Reading Read(
+    private sealed record Prepared(
+        string Slug,
+        string Language,
+        IReadOnlyList<ConsensusVerse> Verses,
+        IReadOnlyDictionary<long, HashSet<int>> Annotated,
+        IReadOnlySet<(long Word, int Entity)> Gold,
+        IReadOnlyDictionary<(int Verse, int Entity), HashSet<string>> GoldForms,
+        IReadOnlySet<long> GoldWords,
+        IReadOnlyDictionary<EntityKind, int> GoldNames,
+        IReadOnlyList<WordKey> Keys,
+        TimeSpan Words,
+        TimeSpan Carried,
+        TimeSpan Stated);
+
+    /// <summary>A text prepared: everything a reading needs but what the consensus finds, which depends on what is attested before it.</summary>
+    private static Prepared Prepare(
         ProductStore store,
         NamesProjection projection,
         string slug,
         ConsensusQuestion question,
         Records records,
-        bool measured,
-        Action<string> log)
+        bool measured)
     {
         var clock = Stopwatch.StartNew();
         var text = ProductText.Read(store, slug);
@@ -1310,12 +1395,19 @@ internal static class NameConsensusPass
             }
         }
 
-        var scored = clock.Elapsed;
-        var (findings, claims) = NameConsensus.Read(verses, question);
-        log($"{slug}: words {read.TotalSeconds:0.0} s, carried names {(carried - read).TotalSeconds:0.0} s, " +
-            $"stated names {(scored - carried).TotalSeconds:0.0} s, consensus {(clock.Elapsed - scored).TotalSeconds:0.0} s");
+        return new Prepared(slug, text.Language, verses, annotated, gold, goldForms, goldWords, goldNames, [.. text.Words.Select(word => word.Key)],
+            read, carried - read, clock.Elapsed - carried);
+    }
+
+    /// <summary>One text read: what the consensus finds in its verses, against what <paramref name="question"/> attests.</summary>
+    private static Reading Consense(Prepared text, ConsensusQuestion question, Action<string> log)
+    {
+        var clock = Stopwatch.StartNew();
+        var (findings, claims) = NameConsensus.Read(text.Verses, question);
+        log($"{text.Slug}: words {text.Words.TotalSeconds:0.0} s, carried names {text.Carried.TotalSeconds:0.0} s, " +
+            $"stated names {text.Stated.TotalSeconds:0.0} s, consensus {clock.Elapsed.TotalSeconds:0.0} s");
         return new Reading(
-            slug, text.Language, verses, findings, claims, annotated, gold, goldForms, goldWords, goldNames,
-            question.Entities.Keys.ToDictionary(entity => entity, question.KindOf), [.. text.Words.Select(word => word.Key)]);
+            text.Slug, text.Language, text.Verses, findings, claims, text.Annotated, text.Gold, text.GoldForms, text.GoldWords, text.GoldNames,
+            question.Entities.Keys.ToDictionary(entity => entity, question.KindOf), text.Keys);
     }
 }
