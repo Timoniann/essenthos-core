@@ -57,10 +57,10 @@ internal static partial class TableProducts
         new("strong_entry",
             ["id", "strong_number", "lemma", "transliteration", "pronunciation", "definition", "derivation", "kjv_definition", "morphology",
              "detailed_definition", "see_also", "source_language", "twot_reference"],
-            [StrongHebrew, StrongGreek], [], StrongEntryRows),
+            [StrongHebrew, StrongGreek], [Prefixes], StrongEntryRows),
         new("strong_entry_translation",
             ["id", "strong_number", "language", "definition", "derivation", "kjv_definition", "detailed_definition", "method", "confidence", "source", "note"],
-            [StrongHebrew, StrongGreek, "Essenthos/lexicon"], [], StrongTranslationRows),
+            [StrongHebrew, StrongGreek, "Essenthos/lexicon"], [Prefixes], StrongTranslationRows),
         new("strong_relation", ["id", "from_number", "to_number", "kind", "hedged", "position", "statement", "source"],
             [StrongHebrew, StrongGreek, CompiledHebrew], [], StrongRelationRows),
         new("strong_profile",
@@ -213,13 +213,18 @@ internal static partial class TableProducts
     private static List<StrongParsedEntry> StrongByNumber(ProductStore store) =>
         [.. StrongEntries(store).GroupBy(entry => entry.StrongNumber).Select(number => number.First())];
 
-    private static Rows StrongEntryRows(ProductStore store) =>
-        new(Numbered(StrongByNumber(store).Select(e => new[]
+    /// <summary>Strong's entries, then the prefixes' after them, so that no entry of the dictionary changes its row.</summary>
+    private static Rows StrongEntryRows(ProductStore store)
+    {
+        var entries = StrongByNumber(store);
+        var prefixes = PrefixRows(store, entries.Select(e => e.StrongNumber).ToHashSet(StringComparer.Ordinal));
+        return new(Numbered(entries.Select(e => new[]
         {
             e.StrongNumber, Optional(e.Lemma), Optional(e.Transliteration), Optional(e.Pronunciation), Optional(e.Definition), Optional(e.Derivation),
             Optional(e.KjvDefinition), Optional(e.Morphology), Optional(e.DetailedDefinition), Optional(e.SeeAlso), Optional(e.SourceLanguage),
             Optional(e.TwotReference),
-        })));
+        }).Concat(PrefixEntryLines(prefixes))), $"{prefixes.Count(p => p.IsEntry)} prefix entries");
+    }
 
     private static Rows StrongTranslationRows(ProductStore store)
     {
@@ -229,7 +234,9 @@ internal static partial class TableProducts
             return new Rows([], "no translated lexicon files");
         }
 
-        var english = StrongByNumber(store).ToDictionary(e => e.StrongNumber, e => new StrongEntry
+        var strongs = StrongByNumber(store);
+        var prefixes = PrefixRows(store, strongs.Select(e => e.StrongNumber).ToHashSet(StringComparer.Ordinal));
+        var english = strongs.ToDictionary(e => e.StrongNumber, e => new StrongEntry
         {
             StrongNumber = e.StrongNumber,
             Definition = Optional(e.Definition),
@@ -243,8 +250,8 @@ internal static partial class TableProducts
             {
                 t.StrongNumber, t.Language, t.Definition, t.Derivation, t.KjvDefinition, t.DetailedDefinition, EnumSpelling.Of(t.Method),
                 Float(t.Confidence), t.Source, t.Note,
-            })),
-            $"{records.Count} records over {files} files, {replaced} superseded; refused: {refused}");
+            }).Concat(PrefixTranslationLines(prefixes))),
+            $"{records.Count} records over {files} files, {replaced} superseded; refused: {refused}; {prefixes.Count(p => !p.IsEntry)} prefix translations");
     }
 
     private static Rows StrongRelationRows(ProductStore store)

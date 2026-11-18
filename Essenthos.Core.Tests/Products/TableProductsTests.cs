@@ -45,6 +45,35 @@ public sealed class TableProductsTests : IDisposable
         store.Exists(TableProducts.Relations).Should().BeTrue("the hand file is seeded from the Forge's list where it is missing");
     }
 
+    [Fact]
+    public void The_prefixes_file_gives_every_prefix_number_bhsa_carries_an_entry_and_its_three_other_languages()
+    {
+        var store = new ProductStore(Path.Combine(Checkout(), "Resources"));
+
+        var rows = TableProducts.PrefixRows(store, new HashSet<string>());
+
+        rows.Where(r => r.IsEntry).Select(r => (r.Number, r.Lemma)).Should().Equal(
+            ("H9000", "וְ"), ("H9003", "בְּ"), ("H9004", "כְּ"), ("H9005", "לְ"), ("H9008", "הֲ"), ("H9009", "הַ"));
+        rows.GroupBy(r => r.Number).Should().AllSatisfy(number =>
+            number.Select(r => r.Language).Should().BeEquivalentTo("eng", "ukr", "deu", "spa"));
+        rows.Should().AllSatisfy(r => r.DetailedDefinition.Should().Contain("Open Hebrew Bible"));
+    }
+
+    [Fact]
+    public void A_prefix_row_standing_in_for_an_entry_of_strongs_dictionary_is_refused()
+    {
+        var store = new ProductStore(_root);
+        using (var writer = store.Create(TableProducts.Prefixes, ProductKind.Hand, TableProducts.PrefixRow.Schema, ProductHeader.ByHand, []))
+        {
+            writer.Write(new TableProducts.PrefixRow("H9005", "eng", "לְ", "lə", "prep", "to, for", "1) to", "test"));
+            writer.Complete();
+        }
+
+        var read = () => TableProducts.PrefixRows(store, new HashSet<string> { "H9005" });
+
+        read.Should().Throw<InvalidDataException>().WithMessage("*H9005 eng is an entry of Strong's dictionary*");
+    }
+
     private static string Checkout()
     {
         for (var folder = new DirectoryInfo(AppContext.BaseDirectory); folder is not null; folder = folder.Parent)
