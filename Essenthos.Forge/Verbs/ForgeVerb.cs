@@ -38,6 +38,9 @@ internal sealed class ForgeRun(IServiceProvider services, ILogger logger, string
 
     public IServiceScope Scope() => services.CreateScope();
 
+    /// <summary>The same run, its log naming <paramref name="tag"/> on every message: a producer running beside others.</summary>
+    public ForgeRun Tagged(string tag) => new(services, new Build.TaggedLogger(logger, tag), resources, databaseConnection);
+
     /// <summary>
     /// The vacuum a step that wrote millions of rows ends with, so the next step plans against the tables as
     /// they now are rather than as autovacuum last saw them.

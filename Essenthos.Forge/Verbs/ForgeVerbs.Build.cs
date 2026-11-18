@@ -23,9 +23,15 @@ internal static partial class ForgeVerbs
             : connection;
 
     /// <summary>
+    /// How many producers <c>forge build</c> runs at once when they need nothing of each other. Most use many cores themselves,
+    /// so a few at once fill the gaps a producer working on one core leaves.
+    /// </summary>
+    private const int ProducersAtOnce = 4;
+
+    /// <summary>
     /// <c>build [--into &lt;db&gt; [--seed &lt;db&gt;] [--replace]] [--apply] [--owner-rows [--rows &lt;file&gt;]...] [--level skip|essentials|all]
-    /// [--parallel n] [--no-products]</c>: the owner's decided rows applied to the store when asked; every product whose inputs
-    /// moved is made again by its producer, in the order the declared graph gives, and the graph is held against what each
+    /// [--parallel n] [--producers n] [--no-products]</c>: the owner's decided rows applied to the store when asked; every product whose
+    /// inputs moved is made again by its producer, as soon as the declared graph lets it (<c>--producers</c> at once), and the graph is held against what each
     /// producer read; then a fresh database is filled from the products (<c>--into</c>), or the seed is cloned into it and takes
     /// what moved since the seed was built (<c>--into --seed</c>, the daily path), or the configured one takes what moved since it
     /// was built (<c>--apply</c>); then verify at the level asked; then <c>build/report-&lt;n&gt;</c>.
@@ -87,7 +93,7 @@ internal static partial class ForgeVerbs
 
         if (!args.Contains("--no-products"))
         {
-            var made = await BuildProducts(forge, stages);
+            var made = await BuildProducts(forge, stages, Option(args, "--producers") is { } producers ? int.Parse(producers, CultureInfo.InvariantCulture) : ProducersAtOnce);
             if (!made)
             {
                 return 1;
@@ -244,8 +250,11 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary>Every build producer of the declared graph run once, in order, then the graph held against what was read.</summary>
-    private static async Task<bool> BuildProducts(ForgeRun forge, List<BuildStage> stages)
+    /// <summary>
+    /// Every build producer of the declared graph run once, each as soon as every producer whose products it reads has ended,
+    /// <paramref name="atOnce"/> at a time; then the graph held against what was read. Each producer's lines begin with its name.
+    /// </summary>
+    private static async Task<bool> BuildProducts(ForgeRun forge, List<BuildStage> stages, int atOnce)
     {
         var graph = ProductGraph.Read(new ProductStore(forge.Resources));
         foreach (var gone in graph.Forget(new ProductStore(forge.Resources)))
@@ -253,21 +262,44 @@ internal static partial class ForgeVerbs
             forge.Logger.LogInformation("products: {Product} is declared by no line and gone from the store; the manifest forgets it", gone);
         }
 
-        foreach (var producer in graph.Order())
+        var needs = graph.Needs();
+        var verbs = needs.Keys.ToDictionary(producer => producer, producer =>
+            Find(producer.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0])
+            ?? throw new InvalidDataException($"{ProductGraph.Product} names a producer no verb answers to: {producer}"));
+        var console = Console.Out;
+        Console.SetOut(new TaggedWriter(console));
+        try
         {
-            var arguments = producer.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var verb = Find(arguments[0]) ?? throw new InvalidDataException($"{ProductGraph.Product} names a producer no verb answers to: {producer}");
-            var clock = Stopwatch.StartNew();
-            forge.Logger.LogInformation("products: {Producer}", producer);
-            var exit = await verb.Run(forge, arguments);
-            stages.Add(new BuildStage("products", producer, clock.Elapsed, 0, exit == 0 ? "" : $"exit {exit}"));
-            if (exit != 0)
+            return await ProducerSchedule.Run(needs, atOnce, async producer =>
             {
-                forge.Logger.LogError("products: {Producer} failed with {Exit}", producer, exit);
-                return false;
-            }
-        }
+                var tag = producer.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
+                TaggedWriter.Tag.Value = tag;
+                var clock = Stopwatch.StartNew();
+                forge.Logger.LogInformation("products: {Producer} starts", producer);
+                var exit = await verbs[producer].Run(forge.Tagged(tag), producer.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                lock (stages)
+                {
+                    stages.Add(new BuildStage("products", producer, clock.Elapsed, 0, exit == 0 ? "" : $"exit {exit}"));
+                }
 
+                if (exit != 0)
+                {
+                    forge.Logger.LogError("products: {Producer} failed with {Exit}", producer, exit);
+                    return false;
+                }
+
+                forge.Logger.LogInformation("products: {Producer} ended in {Seconds:0.0} s", producer, clock.Elapsed.TotalSeconds);
+                return true;
+            }) && CheckGraph(forge, graph, stages);
+        }
+        finally
+        {
+            Console.SetOut(console);
+        }
+    }
+
+    private static bool CheckGraph(ForgeRun forge, ProductGraph graph, List<BuildStage> stages)
+    {
         var checkedStore = new ProductStore(forge.Resources);
         foreach (var outdated in graph.ForgetOutdatedServed(checkedStore))
         {

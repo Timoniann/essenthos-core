@@ -58,6 +58,43 @@ public sealed class NameConsensusFilesTests : IDisposable
     }
 
     [Fact]
+    public void A_text_whose_inputs_did_not_move_is_not_written_again_when_another_languages_text_moved()
+    {
+        var store = Store();
+        Text(store, "UBIO", "ukr", [
+            .. Enumerable.Range(1, Verses).Select(verse => ($"1.12:{verse}", new (string, string?)[] { ("і", null), ("Аврам", null), ("пішов", null) })),
+        ]);
+        using (var writer = store.Create(NameProducts.Bases, ProductKind.Hand, NameBase.Schema, "test", []))
+        {
+            writer.WriteAll([new NameBase("DRA", "1-39", "BHSA", "a test"), new NameBase("UBIO", "1-39", "BHSA", "a test")]);
+        }
+
+        using (var writer = store.Create(MappingProducts.Of("UBIO-BHSA", MappingProducts.Final), ProductKind.Machine, FinalRow.Schema, "test", []))
+        {
+            writer.WriteAll([]);
+        }
+
+        store.Save();
+        NameConsensusPass.Write(store, force: true, NameConsensusPass.Precision, null, null, 2, _ => { }).Written.Should().BeTrue();
+        store.Save();
+        var ubio = store.FullPath(store.Find(NameProducts.Consensus("UBIO"))!);
+        var written = File.GetLastWriteTimeUtc(ubio);
+        var bytes = File.ReadAllBytes(ubio);
+
+        Text(store, "DRA", "eng", [
+            .. Enumerable.Range(1, Verses).Select(verse => ($"1.12:{verse}", new (string, string?)[] { ("and", null), ("Abram", null), ("walked", null) })),
+        ]);
+        store.Save();
+        var again = NameConsensusPass.Write(new ProductStore(_root), force: false, NameConsensusPass.Precision, null, null, 2, _ => { });
+
+        again.Written.Should().BeTrue("the Douay's words moved");
+        again.Report.Should().Contain("1 files");
+        File.GetLastWriteTimeUtc(ubio).Should().Be(written, "nothing the Ukrainian text's file names moved");
+        File.ReadAllBytes(ubio).Should().Equal(bytes);
+        NameConsensusPass.Write(new ProductStore(_root), force: false, NameConsensusPass.Precision, null, null, 2, _ => { }).Written.Should().BeFalse();
+    }
+
+    [Fact]
     public void Every_translation_names_first_places_is_a_text_the_consensus_names()
     {
         var originals = NamesFirstSource.Placed.Select(pair => MappingProducts.Split(pair).From).Distinct().ToList();

@@ -110,6 +110,32 @@ internal sealed partial class ProductGraph
     /// </summary>
     public IReadOnlyList<string> Order()
     {
+        var needs = Needs();
+        var producers = needs.Keys.ToList();
+        var ordered = new List<string>();
+        var done = new HashSet<string>();
+        while (ordered.Count < producers.Count)
+        {
+            var ready = producers.Where(p => !done.Contains(p) && needs[p].All(done.Contains)).ToList();
+            if (ready.Count == 0)
+            {
+                throw new InvalidDataException(
+                    $"{Product} has a cycle among {string.Join(", ", producers.Where(p => !done.Contains(p)))}.");
+            }
+
+            ordered.AddRange(ready);
+            done.UnionWith(ready);
+        }
+
+        return ordered;
+    }
+
+    /// <summary>
+    /// Every build producer, in the order the lines first name them, with the producers whose products it reads: what must
+    /// end before it starts. Producers that need nothing of each other may run at once.
+    /// </summary>
+    public IReadOnlyDictionary<string, IReadOnlySet<string>> Needs()
+    {
         // The build's own state (served, report) is written by the build verb itself, never run as a producer.
         var producers = Declarations.Where(d => d.Maker == ProductMaker.Build && d.Producer != SelfProducer).Select(d => d.Producer).Distinct().ToList();
         var needs = producers.ToDictionary(p => p, _ => new HashSet<string>());
@@ -130,22 +156,7 @@ internal sealed partial class ProductGraph
             }
         }
 
-        var ordered = new List<string>();
-        var done = new HashSet<string>();
-        while (ordered.Count < producers.Count)
-        {
-            var ready = producers.Where(p => !done.Contains(p) && needs[p].All(done.Contains)).ToList();
-            if (ready.Count == 0)
-            {
-                throw new InvalidDataException(
-                    $"{Product} has a cycle among {string.Join(", ", producers.Where(p => !done.Contains(p)))}.");
-            }
-
-            ordered.AddRange(ready);
-            done.UnionWith(ready);
-        }
-
-        return ordered;
+        return producers.ToDictionary(p => p, p => (IReadOnlySet<string>)needs[p]);
     }
 
     /// <summary>Every product of the manifest, held against its line: undeclared products and undeclared inputs.</summary>
