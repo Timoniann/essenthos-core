@@ -95,83 +95,12 @@ internal static class Descriptors
         };
         var named = string.IsNullOrWhiteSpace(names) ? spoken : names.Trim();
 
-        // Everything the target contributes is taken along this join rather than looked up per
-        // clause: a subquery in a projection is evaluated once per joined row, which is what took
-        // /v1/corpora from a millisecond to 46 seconds.
-        var own = await db.EntityDescriptors
-            .Where(d => wanted.Contains(d.Entity!.Slug))
-            .OrderBy(d => d.EntityId).ThenBy(d => d.Ordinal)
-            .Select(d => new Clause(
-                d.Entity!.Slug,
-                d.Ordinal,
-                d.Relation,
-                d.TargetEntityId,
-                d.Target!.Kind,
-                d.Target.Slug,
-                d.Target.Name,
-                d.Target.Distinguisher,
-                d.CanonicalBook,
-                d.CanonicalChapter,
-                d.CanonicalVerse,
-                d.Method,
-                d.Confidence,
-                d.Source)
-            {
-                Citation = d.Citation,
-                Witness = d.Witness,
-                Original = d.Original,
-                SubjectId = d.EntityId,
-                SubjectSex = d.Entity.Sex,
-                TargetSex = d.Target.Sex,
-            })
-            .ToListAsync(cancellationToken);
-
-        // The same ties written on the other person, with that person as the target.
-        var written = await db.EntityDescriptors
-            .Where(d => wanted.Contains(d.Target!.Slug)
-                        && FamilyTies.Turnable.Contains(d.Relation)
-                        && d.EntityId != d.TargetEntityId
-                        && !ChapterFamily.Deities.Contains(d.Entity!.Slug)
-                        && !ChapterFamily.Deities.Contains(d.Target.Slug))
-            .OrderBy(d => d.CanonicalBook).ThenBy(d => d.CanonicalChapter).ThenBy(d => d.CanonicalVerse)
-            .ThenBy(d => d.EntityId).ThenBy(d => d.Ordinal)
-            .Select(d => new Clause(
-                d.Target!.Slug,
-                d.Ordinal,
-                d.Relation,
-                d.EntityId,
-                d.Entity!.Kind,
-                d.Entity.Slug,
-                d.Entity.Name,
-                d.Entity.Distinguisher,
-                d.CanonicalBook,
-                d.CanonicalChapter,
-                d.CanonicalVerse,
-                d.Method,
-                d.Confidence,
-                d.Source)
-            {
-                Citation = d.Citation,
-                Witness = d.Witness,
-                Original = d.Original,
-                SubjectId = d.TargetEntityId,
-                SubjectSex = d.Target.Sex,
-                TargetSex = d.Entity.Sex,
-                Stated = d.Relation,
-            })
-            .ToListAsync(cancellationToken);
-
-        var subjects = await db.Entities
-            .Where(e => wanted.Contains(e.Slug))
-            .Select(e => new { e.Id, e.Slug, e.Kind, e.Sex, e.Byname })
-            .ToListAsync(cancellationToken);
-        var people = subjects.Where(e => e.Kind == EntityKind.Person && !ChapterFamily.Deities.Contains(e.Slug))
-            .Select(e => e.Id)
-            .ToList();
-        var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
-        var siblings = await SharedParents.Siblings(db, people, cancellationToken);
+        // What the line is made of before any of it is put into words, which no language changes: read once for every
+        // language a page is composed in where the build shares its reads (SharedReads).
+        var key = string.Join('\u001f', wanted);
+        var (own, written, subjects, people, statedCounts, places, siblings) =
+            await SharedReads.Once($"descriptor-reads:{key}", () => Read(db, wanted, cancellationToken));
         var work = await OccupationLines.Of(db, people, spoken, cancellationToken);
-        own.AddRange(await Descents(db, subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id).ToList(), own, cancellationToken));
 
         if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0 && work.Count == 0
             && subjects.All(e => e.Kind != EntityKind.Place && e.Byname is null))
@@ -179,74 +108,9 @@ internal static class Descriptors
             return [];
         }
 
-        var turned = written
-            .Select(c => FamilyTies.Turn(c.Relation, c.SubjectSex) is { } relation
-                ? c with { Relation = relation, TargetSex = FamilyTies.SexOfTheWriter(c.Relation) ?? c.TargetSex }
-                : null)
-            .OfType<Clause>()
-            .ToList();
-        var clauses = FamilyTies.Folded([.. own, .. turned]);
-        clauses = await OneAncestorOnce(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id)], cancellationToken);
-        clauses = await PlaceLines.Located(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id)], cancellationToken);
-
-        // The brothers and sisters the parents give, where no clause says so of the pair already.
-        var subjectSex = subjects.ToDictionary(e => e.Id, e => e.Sex);
-        var subjectSlugs = subjects.ToDictionary(e => e.Id, e => e.Slug);
-        var tied = clauses.Where(c => FamilyTies.Siblings.Contains(c.Relation))
-            .Select(c => (c.SubjectId, c.TargetEntityId))
-            .ToHashSet();
-        var unsaid = siblings
-            .Where(s => !tied.Contains((s.Subject, s.Sibling))
-                        && subjectSex.GetValueOrDefault(s.Subject) is SharedParents.Male or SharedParents.Female)
-            .ToList();
-        var kin = await Persons(db, unsaid.Select(s => s.Sibling), cancellationToken);
-        clauses.AddRange(unsaid.Where(s => kin.ContainsKey(s.Sibling)).Select(s => Derived(
-            subjectSlugs[s.Subject],
-            s.Subject,
-            subjectSex[s.Subject],
-            subjectSex[s.Subject] == SharedParents.Male ? DescriptorRelations.BrotherOf : DescriptorRelations.SisterOf,
-            kin[s.Sibling],
-            [s.Theirs, s.Mine],
-            s.Confidence,
-            ByTheParents)));
-
-        var ancestors = await Ancestors(db, people, clauses, subjectSlugs, subjectSex, cancellationToken);
-        clauses = ancestors.Clauses;
-
-        // A brother or sister whom the recorded parents show to be a half-sibling is said so.
-        var full = clauses
-            .Where(c => c.Relation is DescriptorRelations.BrotherOf or DescriptorRelations.SisterOf)
-            .Select(c => (c.SubjectId, c.TargetEntityId))
-            .Distinct()
-            .ToList();
-        var halved = await SharedParents.Halved(db, full, cancellationToken);
-        clauses = [.. clauses.Select(c => c.Relation is DescriptorRelations.BrotherOf or DescriptorRelations.SisterOf
-                                          && halved.Contains((c.SubjectId, c.TargetEntityId))
-            ? c with
-            {
-                Relation = c.Relation == DescriptorRelations.BrotherOf
-                    ? DescriptorRelations.HalfBrotherOf
-                    : DescriptorRelations.HalfSisterOf,
-            }
-            : c)];
-
-        var halves = clauses
-            .Where(c => c.Relation is DescriptorRelations.HalfBrotherOf or DescriptorRelations.HalfSisterOf)
-            .Select(c => (c.Slug, c.TargetEntityId))
-            .Distinct()
-            .ToList();
-        var sharing = await SharedParents.Of(db, halves, cancellationToken);
-        clauses = [.. clauses.Select(c => sharing.TryGetValue((c.Slug, c.TargetEntityId), out var parent)
-            ? c with { SharedParent = parent }
-            : c)];
-
-        var marriages = await InLaws.Through(db, clauses, cancellationToken);
-        clauses = [.. clauses.Select(c => c.Relation is DescriptorRelations.BrotherInLawOf or DescriptorRelations.SisterInLawOf
-                                          && marriages.TryGetValue((c.SubjectId, c.TargetEntityId), out var spouse)
-            ? c with { ThroughSpouse = spouse }
-            : c)];
-
-        var taught = await Companies(db, clauses, cancellationToken);
+        var (clauses, ancestors, taught, subjectSex, subjectSlugs) =
+            await SharedReads.Once($"descriptor-clauses:{key}", () => Worked(db, own, written, subjects, people, siblings, cancellationToken));
+        clauses = [.. clauses];
         var targets = clauses.Select(c => c.TargetEntityId)
             .Concat(taught.Members.Values.SelectMany(members => members.Select(m => m.Id)))
             .Distinct()
@@ -332,6 +196,189 @@ internal static class Descriptors
         }
 
         return lines;
+    }
+
+    /// <summary>A record a line is asked for: its id, address, kind, sex and byname.</summary>
+    private sealed record Subject(int Id, string Slug, EntityKind Kind, string? Sex, string? Byname);
+
+    /// <summary>The rows a line is read from, for the records asked: none of them depends on the language it is said in.</summary>
+    private sealed record LineReads(
+        List<Clause> Own,
+        List<Clause> Written,
+        List<Subject> Subjects,
+        List<int> People,
+        Dictionary<int, ChildrenCount> StatedCounts,
+        Dictionary<(int Child, int Parent), PlaceAmongChildren> Places,
+        List<SiblingByParents> Siblings);
+
+    /// <summary>The clauses worked out from <see cref="LineReads"/>, before any is put into words.</summary>
+    private sealed record LineClauses(
+        List<Clause> Clauses,
+        (List<Clause> Clauses, Dictionary<int, List<int>> Shown, HashSet<int> More) Ancestors,
+        Taught Taught,
+        Dictionary<int, string?> SubjectSex,
+        Dictionary<int, string> SubjectSlugs);
+
+    private static async Task<LineReads> Read(AppDbContext db, List<string> wanted, CancellationToken cancellationToken)
+    {
+        // Everything the target contributes is taken along this join rather than looked up per
+        // clause: a subquery in a projection is evaluated once per joined row, which is what took
+        // /v1/corpora from a millisecond to 46 seconds.
+        var own = await db.EntityDescriptors
+            .Where(d => wanted.Contains(d.Entity!.Slug))
+            .OrderBy(d => d.EntityId).ThenBy(d => d.Ordinal)
+            .Select(d => new Clause(
+                d.Entity!.Slug,
+                d.Ordinal,
+                d.Relation,
+                d.TargetEntityId,
+                d.Target!.Kind,
+                d.Target.Slug,
+                d.Target.Name,
+                d.Target.Distinguisher,
+                d.CanonicalBook,
+                d.CanonicalChapter,
+                d.CanonicalVerse,
+                d.Method,
+                d.Confidence,
+                d.Source)
+            {
+                Citation = d.Citation,
+                Witness = d.Witness,
+                Original = d.Original,
+                SubjectId = d.EntityId,
+                SubjectSex = d.Entity.Sex,
+                TargetSex = d.Target.Sex,
+            })
+            .ToListAsync(cancellationToken);
+
+        // The same ties written on the other person, with that person as the target.
+        var written = await db.EntityDescriptors
+            .Where(d => wanted.Contains(d.Target!.Slug)
+                        && FamilyTies.Turnable.Contains(d.Relation)
+                        && d.EntityId != d.TargetEntityId
+                        && !ChapterFamily.Deities.Contains(d.Entity!.Slug)
+                        && !ChapterFamily.Deities.Contains(d.Target.Slug))
+            .OrderBy(d => d.CanonicalBook).ThenBy(d => d.CanonicalChapter).ThenBy(d => d.CanonicalVerse)
+            .ThenBy(d => d.EntityId).ThenBy(d => d.Ordinal)
+            .Select(d => new Clause(
+                d.Target!.Slug,
+                d.Ordinal,
+                d.Relation,
+                d.EntityId,
+                d.Entity!.Kind,
+                d.Entity.Slug,
+                d.Entity.Name,
+                d.Entity.Distinguisher,
+                d.CanonicalBook,
+                d.CanonicalChapter,
+                d.CanonicalVerse,
+                d.Method,
+                d.Confidence,
+                d.Source)
+            {
+                Citation = d.Citation,
+                Witness = d.Witness,
+                Original = d.Original,
+                SubjectId = d.TargetEntityId,
+                SubjectSex = d.Target.Sex,
+                TargetSex = d.Entity.Sex,
+                Stated = d.Relation,
+            })
+            .ToListAsync(cancellationToken);
+
+        var subjects = await db.Entities
+            .Where(e => wanted.Contains(e.Slug))
+            .Select(e => new Subject(e.Id, e.Slug, e.Kind, e.Sex, e.Byname))
+            .ToListAsync(cancellationToken);
+        var people = subjects.Where(e => e.Kind == EntityKind.Person && !ChapterFamily.Deities.Contains(e.Slug))
+            .Select(e => e.Id)
+            .ToList();
+        var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
+        var siblings = await SharedParents.Siblings(db, people, cancellationToken);
+        own.AddRange(await Descents(db, subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id).ToList(), own, cancellationToken));
+
+        return new LineReads(own, written, subjects, people, statedCounts, places, siblings);
+    }
+
+    private static async Task<LineClauses> Worked(
+        AppDbContext db,
+        List<Clause> own,
+        List<Clause> written,
+        List<Subject> subjects,
+        List<int> people,
+        List<SiblingByParents> siblings,
+        CancellationToken cancellationToken)
+    {
+        var turned = written
+            .Select(c => FamilyTies.Turn(c.Relation, c.SubjectSex) is { } relation
+                ? c with { Relation = relation, TargetSex = FamilyTies.SexOfTheWriter(c.Relation) ?? c.TargetSex }
+                : null)
+            .OfType<Clause>()
+            .ToList();
+        var clauses = FamilyTies.Folded([.. own, .. turned]);
+        clauses = await OneAncestorOnce(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.People).Select(e => e.Id)], cancellationToken);
+        clauses = await PlaceLines.Located(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id)], cancellationToken);
+
+        // The brothers and sisters the parents give, where no clause says so of the pair already.
+        var subjectSex = subjects.ToDictionary(e => e.Id, e => e.Sex);
+        var subjectSlugs = subjects.ToDictionary(e => e.Id, e => e.Slug);
+        var tied = clauses.Where(c => FamilyTies.Siblings.Contains(c.Relation))
+            .Select(c => (c.SubjectId, c.TargetEntityId))
+            .ToHashSet();
+        var unsaid = siblings
+            .Where(s => !tied.Contains((s.Subject, s.Sibling))
+                        && subjectSex.GetValueOrDefault(s.Subject) is SharedParents.Male or SharedParents.Female)
+            .ToList();
+        var kin = await Persons(db, unsaid.Select(s => s.Sibling), cancellationToken);
+        clauses.AddRange(unsaid.Where(s => kin.ContainsKey(s.Sibling)).Select(s => Derived(
+            subjectSlugs[s.Subject],
+            s.Subject,
+            subjectSex[s.Subject],
+            subjectSex[s.Subject] == SharedParents.Male ? DescriptorRelations.BrotherOf : DescriptorRelations.SisterOf,
+            kin[s.Sibling],
+            [s.Theirs, s.Mine],
+            s.Confidence,
+            ByTheParents)));
+
+        var ancestors = await Ancestors(db, people, clauses, subjectSlugs, subjectSex, cancellationToken);
+        clauses = ancestors.Clauses;
+
+        // A brother or sister whom the recorded parents show to be a half-sibling is said so.
+        var full = clauses
+            .Where(c => c.Relation is DescriptorRelations.BrotherOf or DescriptorRelations.SisterOf)
+            .Select(c => (c.SubjectId, c.TargetEntityId))
+            .Distinct()
+            .ToList();
+        var halved = await SharedParents.Halved(db, full, cancellationToken);
+        clauses = [.. clauses.Select(c => c.Relation is DescriptorRelations.BrotherOf or DescriptorRelations.SisterOf
+                                          && halved.Contains((c.SubjectId, c.TargetEntityId))
+            ? c with
+            {
+                Relation = c.Relation == DescriptorRelations.BrotherOf
+                    ? DescriptorRelations.HalfBrotherOf
+                    : DescriptorRelations.HalfSisterOf,
+            }
+            : c)];
+
+        var halves = clauses
+            .Where(c => c.Relation is DescriptorRelations.HalfBrotherOf or DescriptorRelations.HalfSisterOf)
+            .Select(c => (c.Slug, c.TargetEntityId))
+            .Distinct()
+            .ToList();
+        var sharing = await SharedParents.Of(db, halves, cancellationToken);
+        clauses = [.. clauses.Select(c => sharing.TryGetValue((c.Slug, c.TargetEntityId), out var parent)
+            ? c with { SharedParent = parent }
+            : c)];
+
+        var marriages = await InLaws.Through(db, clauses, cancellationToken);
+        clauses = [.. clauses.Select(c => c.Relation is DescriptorRelations.BrotherInLawOf or DescriptorRelations.SisterInLawOf
+                                          && marriages.TryGetValue((c.SubjectId, c.TargetEntityId), out var spouse)
+            ? c with { ThroughSpouse = spouse }
+            : c)];
+
+        var taught = await Companies(db, clauses, cancellationToken);
+        return new LineClauses(clauses, ancestors, taught, subjectSex, subjectSlugs);
     }
 
     /// <summary>Whom a clause the line works out rather than reads off a record is credited to.</summary>

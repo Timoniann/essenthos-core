@@ -33,18 +33,20 @@ internal static class StrongEndpoints
     internal static async Task<StrongEntryResponse?> Detail(
         AppDbContext db, string canonical, string? language, CancellationToken cancellationToken)
     {
-        var entry = await db.StrongEntries
+        // Every read that names no language is made once for all the languages a page is composed in, where the build shares
+        // its reads (SharedReads); a request reads each as it always did.
+        var entry = await SharedReads.Once($"strong:{canonical}", () => db.StrongEntries
             .Where(e => e.StrongNumber == canonical)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken));
 
         if (entry is not null)
         {
             var (relations, kin) = await Relations(db, canonical, cancellationToken, language);
-            return Response(entry, await Gentilic(db, canonical, cancellationToken)) with
+            return Response(entry, await SharedReads.Once($"strong-gentilic:{canonical}", () => Gentilic(db, canonical, cancellationToken))) with
             {
                 Relations = relations,
                 Kin = kin,
-                Profile = await Profile(db, canonical, cancellationToken),
+                Profile = await SharedReads.Once($"strong-profile:{canonical}", () => Profile(db, canonical, cancellationToken)),
                 Translation = await Translation(db, canonical, language, cancellationToken),
             };
         }
@@ -418,17 +420,18 @@ internal static class StrongEndpoints
     /// How many words carry the number in each text, most first: every edition of the original and every translation that
     /// tags its own words with it. Read off the number's range of <c>strong_occurrence</c>.
     /// </summary>
-    internal static async Task<List<StrongTextCountResponse>> TextCounts(
+    internal static Task<List<StrongTextCountResponse>> TextCounts(
         AppDbContext db, string canonical, CancellationToken cancellationToken) =>
-    [
-        .. (await db.StrongOccurrences
-                .Where(o => o.StrongNumber == canonical)
-                .GroupBy(o => o.Corpus)
-                .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
-                .ToListAsync(cancellationToken))
-            .OrderByDescending(text => text.Count)
-            .ThenBy(text => text.Corpus, StringComparer.Ordinal),
-    ];
+        SharedReads.Once($"strong-text-counts:{canonical}", async () => (List<StrongTextCountResponse>)
+        [
+            .. (await db.StrongOccurrences
+                    .Where(o => o.StrongNumber == canonical)
+                    .GroupBy(o => o.Corpus)
+                    .Select(g => new StrongTextCountResponse(g.Key, g.Count()))
+                    .ToListAsync(cancellationToken))
+                .OrderByDescending(text => text.Count)
+                .ThenBy(text => text.Corpus, StringComparer.Ordinal),
+        ]);
 
     /// <summary>One page of the words carrying a number, with how many stand in each text.</summary>
     internal static Task<StrongOccurrenceListResponse> OccurrencePage(
@@ -801,7 +804,8 @@ internal static class StrongEndpoints
         }
 
         var counted = take <= StrongRenderingCounts.Kept
-                      && await db.StrongRenderings.AnyAsync(r => r.TextId == textId, cancellationToken)
+                      && await SharedReads.Kept($"strong-renderings-kept:{textId}",
+                          () => db.StrongRenderings.AnyAsync(r => r.TextId == textId, cancellationToken))
             ? await db.StrongRenderings
                 .Where(r => r.TextId == textId && numbers.Contains(r.StrongNumber) && r.Rank <= take)
                 .OrderBy(r => r.StrongNumber).ThenBy(r => r.Rank)
@@ -886,21 +890,24 @@ internal static class StrongEndpoints
         CancellationToken cancellationToken,
         string? language = null)
     {
-        var stated = await db.StrongRelations
-            .AsNoTracking()
-            .Where(r => r.FromNumber == canonical || r.ToNumber == canonical)
-            .OrderBy(r => r.Source).ThenBy(r => r.FromNumber).ThenBy(r => r.Position)
-            .ToListAsync(cancellationToken);
+        var (stated, others, entries) = await SharedReads.Once($"strong-relations:{canonical}", async () =>
+        {
+            var read = await db.StrongRelations
+                .AsNoTracking()
+                .Where(r => r.FromNumber == canonical || r.ToNumber == canonical)
+                .OrderBy(r => r.Source).ThenBy(r => r.FromNumber).ThenBy(r => r.Position)
+                .ToListAsync(cancellationToken);
 
-        var others = stated
-            .Select(r => r.FromNumber == canonical ? r.ToNumber : r.FromNumber)
-            .OfType<string>()
-            .Distinct()
-            .ToList();
-        var entries = await db.StrongEntries
-            .Where(e => others.Contains(e.StrongNumber))
-            .Select(e => new { e.StrongNumber, e.Lemma, e.Definition })
-            .ToDictionaryAsync(e => e.StrongNumber, cancellationToken);
+            var named = read
+                .Select(r => r.FromNumber == canonical ? r.ToNumber : r.FromNumber)
+                .OfType<string>()
+                .Distinct()
+                .ToList();
+            return (read, named, await db.StrongEntries
+                .Where(e => named.Contains(e.StrongNumber))
+                .Select(e => new { e.StrongNumber, e.Lemma, e.Definition })
+                .ToDictionaryAsync(e => e.StrongNumber, cancellationToken));
+        });
         var glosses = await Glosses(db, others, language, cancellationToken);
 
         StrongRelationResponse Of(Database.Entities.StrongRelation relation, string? other) => new(
