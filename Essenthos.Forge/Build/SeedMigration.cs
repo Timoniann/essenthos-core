@@ -225,7 +225,7 @@ internal static partial class SeedMigration
             """
             SELECT c.relname,
                    coalesce((SELECT string_agg(a.attname || ' ' || format_type(a.atttypid, a.atttypmod) || CASE WHEN a.attnotnull THEN ' not null' ELSE '' END
-                                               || coalesce(' default ' || pg_get_expr(d.adbin, d.adrelid), '') || ' ' || a.attidentity || a.attgenerated, ', ' ORDER BY a.attnum)
+                                               || coalesce(' default ' || pg_get_expr(d.adbin, d.adrelid), '') || ' ' || a.attidentity::text || a.attgenerated::text, ', ' ORDER BY a.attnum)
                              FROM pg_attribute a LEFT JOIN pg_attrdef d ON d.adrelid = a.attrelid AND d.adnum = a.attnum
                              WHERE a.attrelid = c.oid AND a.attnum > 0 AND NOT a.attisdropped), '')
                    || ' | ' || coalesce((SELECT string_agg(pg_get_constraintdef(k.oid), ', ' ORDER BY pg_get_constraintdef(k.oid))
