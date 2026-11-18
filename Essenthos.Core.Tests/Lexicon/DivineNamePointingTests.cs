@@ -35,4 +35,13 @@ public class DivineNamePointingTests
         BhsaStrongNumbers.Relative("אֲשֶׁר").Should().BeNull();
         BhsaStrongNumbers.Relative(null).Should().BeNull();
     }
+
+    [Fact]
+    public void EtIsNumberedByItsLexeme()
+    {
+        BhsaStrongNumbers.Et("אֵת", "<object marker>").Should().Be("H853");
+        BhsaStrongNumbers.Et("אֵת", "together with").Should().Be("H854");
+        BhsaStrongNumbers.Et("אֵת", "ploughshare").Should().BeNull();
+        BhsaStrongNumbers.Et("עִם", "together with").Should().BeNull();
+    }
 }
