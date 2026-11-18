@@ -287,6 +287,23 @@ public class InterlinearJoinTests
         account.TranslatedPiecesJoined.Should().Be(2);
     }
 
+    /// <summary>
+    /// PRB-1887: Amos 6:3 prints a dash against its first word, and the corpus keeps <c>—the</c> as one word where
+    /// the source names <c>the</c>; the span joins that word and not the later <c>the</c>.
+    /// </summary>
+    [Fact]
+    public void ACorpusWordThatOpensWithADashIsTheWordTheSourceNames()
+    {
+        var (pairs, account) = Join(
+            [English("—the"), English("ones"), English("the"), English("day")],
+            [Hebrew("הַֽמְנַדִּים"), Hebrew("יֹום")],
+            Span("הַֽמְנַדִּים", "the", "ones"),
+            Span("יֹום", "the", "day"));
+
+        pairs.Select(pair => (string.Join(',', pair.From), pair.To.Single())).Should().Equal(("1,2", 101L), ("3,4", 102L));
+        account.SpansJoined.Should().Be(2);
+    }
+
     [Fact]
     public void APieceOfAHyphenatedNameInAnotherSpanJoinsTheNameToItsWordToo()
     {
