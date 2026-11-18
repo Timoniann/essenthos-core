@@ -185,6 +185,94 @@ public sealed class StrongNumberFileTests : IDisposable
             new ChainedNumbers.Numbered("h", "H1961", 1, "HEB 6", null, null, null));
     }
 
+    private static readonly Dictionary<string, WordClass> Classes = new(StringComparer.Ordinal)
+    {
+        ["H5175"] = WordClass.Content, ["H6086"] = WordClass.Content, ["H559"] = WordClass.Content, ["H413"] = WordClass.Function,
+        ["H6440"] = WordClass.Content, ["G846"] = WordClass.Function, ["G1510"] = WordClass.Content, ["G2501"] = WordClass.Content,
+        ["G3588"] = WordClass.Function, ["G435"] = WordClass.Content, ["H3130"] = WordClass.Content, ["G1161"] = WordClass.Function,
+    };
+
+    private static ChainedNumbers.Lender Hebrew(params (string Key, string Number)[] words) =>
+        new(true, words.ToDictionary(w => w.Key, w => (w.Number, 0), StringComparer.Ordinal), Classes, new HashSet<string>(["v"], StringComparer.Ordinal));
+
+    /// <summary>
+    /// PRB-1869, the owner's rules inside a group link: «Now the snake» over ו + ה + נחש gives «Now» the conjunction, «the» the
+    /// article and «snake» the noun; «the» over a noun alone takes none, and «trees in» over the noun both take it, as one phrase;
+    /// «before» over ל + פני takes the noun its form renders elsewhere, never ל; a supplied word takes nothing.
+    /// </summary>
+    [Fact]
+    public void InAGroupAFunctionWordTakesItsOwnPrefixAndThePhraseTheMainNumber()
+    {
+        var lender = Hebrew(("1", "H9000"), ("2", "H9009"), ("3", "H5175"), ("4", "H6086"), ("5", "H9005"), ("6", "H6440"), ("7", "H9005"),
+            ("8", "H6440"), ("9", "H9005"), ("10", "H6440"));
+        var numbered = ChainedNumbers.Resolve(
+            [("a", null, "now"), ("b", null, "the"), ("c", null, "snake"), ("d", null, "the"), ("e", null, "trees"), ("f", null, "in"),
+             ("g", null, "before"), ("h", null, "before"), ("i", null, "before"), ("j", null, "fruit")],
+            [new ChainedNumbers.Joined(["a", "b", "c"], "HEB", ["1", "2", "3"], null),
+             new ChainedNumbers.Joined(["d", "e", "f", "j"], "HEB", ["4"], null),
+             new ChainedNumbers.Joined(["g"], "HEB", ["5", "6"], null), new ChainedNumbers.Joined(["h"], "HEB", ["7", "8"], null),
+             new ChainedNumbers.Joined(["i"], "HEB", ["9", "10"], null)],
+            new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender },
+            new GroupNumbers("eng"), new HashSet<string>(["j"], StringComparer.Ordinal));
+
+        numbered.Select(n => (n.Key, n.Number)).Should().Equal(
+            ("a", "H9000"), ("b", "H9009"), ("c", "H5175"), ("e", "H6086"), ("f", "H6086"), ("g", "H6440"), ("h", "H6440"), ("i", "H6440"));
+    }
+
+    /// <summary>
+    /// The owner's answers (2026-11-18): «he asked» over וַ + יֹּאמֶר + אֶל both take the verb (P3); «who was about to marry her» over
+    /// ὁ + ἀνήρ + αὐτῆς: «her» takes αὐτός, which it renders alone elsewhere, and every other word ἀνήρ, the one content word left
+    /// (P5). «Joseph» over ὤν is not given εἰμί, its form rendering Ἰωσήφ elsewhere. With P5 off only P3 is left: «he» takes the
+    /// finite verb and «asked», a content word left in a group, nothing.
+    /// </summary>
+    [Fact]
+    public void TheWordsLeftInAGroupTakeTheOneContentWordLeft()
+    {
+        var lender = Hebrew(("1", "H9000"), ("v", "H559"), ("3", "H413"), ("g0", "G3588"), ("g1", "G435"), ("g2", "G846"), ("g3", "G846"),
+            ("g4", "G846"), ("g5", "G1510"), ("j1", "G2501"), ("j2", "G2501"), ("j3", "G2501"), ("j4", "G2501"), ("j5", "G2501"), ("s1", "H559"), ("s2", "H559"), ("s3", "H559"), ("h1", "H3130"),
+            ("h2", "H3130"), ("h3", "H3130"), ("h4", "H3130"), ("h5", "H3130"), ("h6", "H3130"), ("g6", "G2501"), ("g7", "G1161"));
+        List<(string, string?, string)> words =
+        [
+            ("a", null, "he"), ("b", null, "asked"), ("c", null, "who"), ("d", null, "was"), ("e", null, "about"), ("f", null, "to"),
+            ("g", null, "marry"), ("h", null, "her"), ("i", null, "her"), ("k", null, "her"), ("l", null, "joseph"), ("m", null, "usually"),
+            ("n", null, "joseph"), ("o", null, "joseph"), ("p", null, "joseph"), ("q", null, "joseph"), ("r", null, "joseph"),
+            ("s", null, "he"), ("t", null, "said"), ("u", null, "said"), ("w", null, "said"), ("x", null, "joseph"), ("y", null, "joseph"),
+            ("z", null, "joseph"), ("x2", null, "joseph"), ("x3", null, "joseph"), ("x4", null, "joseph"), ("x5", null, "joseph"),
+        ];
+        List<ChainedNumbers.Joined> links =
+        [
+            new(["a", "b"], "HEB", ["1", "v", "3"], null), new(["c", "d", "e", "f", "g", "h"], "HEB", ["g0", "g1", "g2"], null),
+            new(["i"], "HEB", ["g3"], null), new(["k"], "HEB", ["g4"], null), new(["l", "m"], "HEB", ["g5"], null),
+            new(["n"], "HEB", ["j1"], null), new(["o"], "HEB", ["j2"], null), new(["p"], "HEB", ["j3"], null), new(["q"], "HEB", ["j4"], null),
+            new(["r"], "HEB", ["j5"], null), new(["s", "t"], "HEB", ["1", "s1"], null), new(["u"], "HEB", ["s2"], null),
+            new(["w"], "HEB", ["s3"], null), new(["y"], "HEB", ["h1"], null), new(["z"], "HEB", ["h2"], null), new(["x2"], "HEB", ["h3"], null),
+            new(["x3"], "HEB", ["h4"], null), new(["x4"], "HEB", ["h5"], null), new(["x5"], "HEB", ["h6"], null),
+            new(["x"], "HEB", ["g6", "g7"], null),
+        ];
+        var lenders = new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender };
+        string[] read = ["a", "b", "c", "d", "e", "f", "g", "h", "l", "m", "s", "t", "x"];
+
+        ChainedNumbers.Resolve(words, links, lenders, new GroupNumbers("eng")).Where(n => read.Contains(n.Key))
+            .Select(n => (n.Key, n.Number)).Should().Equal(("a", "H559"), ("b", "H559"), ("c", "G435"), ("d", "G435"), ("e", "G435"),
+                ("f", "G435"), ("g", "G435"), ("h", "G846"), ("m", "G1510"), ("s", "H559"), ("t", "H559"), ("x", "G2501"));
+        ChainedNumbers.Resolve(words, links, lenders, new GroupNumbers("eng", leftovers: false)).Where(n => n.Key is "a" or "b" or "m")
+            .Select(n => (n.Key, n.Number)).Should().Equal(("a", "H559"));
+    }
+
+    [Fact]
+    public void SynonymNumbersAreTheSameNumberInChecks()
+    {
+        StrongSynonyms.Same("G5210", "G4771").Should().BeTrue();
+        StrongSynonyms.Same("G3361", "G3756").Should().BeTrue();
+        StrongSynonyms.Same("G2248", "G1473").Should().BeTrue();
+        StrongSynonyms.Same("G846", "G1473").Should().BeFalse();
+
+        var lender = new ChainedNumbers.Lender(true, new Dictionary<string, (string, int)> { ["1"] = ("G5210", 0) });
+        ChainedNumbers.Resolve([("a", "G4771", "ὑμῶν")], [new ChainedNumbers.Joined(["a"], "TIS", ["1"], null)],
+                new Dictionary<string, ChainedNumbers.Lender> { ["TIS"] = lender })
+            .Should().Equal(new ChainedNumbers.Numbered("a", "G4771", 0, null, null, null, null));
+    }
+
     /// <summary>
     /// Editions of an original come before translations, the second text of a pair before the first, and a pair that would
     /// close a cycle is left out, so a text never reads numbers that were worked out from its own.

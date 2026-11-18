@@ -18,6 +18,11 @@ namespace Essenthos.Core.Indexes;
 /// one word, the noun's), then the number and the word lending it in ordinal order. The relative שֶׁ is counted with אֲשֶׁר in
 /// both counts (<see cref="CountedAs"/>).
 /// </para>
+/// <para>
+/// A translation's word joined to an original takes only what the group rules (<see cref="GroupNumbers"/>, PRB-1869) give it over
+/// those links: a link holding several original words or several of its words no longer hands a function word the content
+/// word's number, nor a content word a prefix's. A word the translation marks as supplied takes none.
+/// </para>
 /// </summary>
 internal static class ChainedNumbers
 {
@@ -35,10 +40,22 @@ internal static class ChainedNumbers
         count(number) + (CountedAs.TryGetValue(number, out var with) ? count(with) : 0);
 
     /// <summary>A text whose words a text's links reach, with the numbers it lends: by own key, the number and the links it took to reach it.</summary>
-    internal sealed class Lender(bool original, IReadOnlyDictionary<string, (string Number, int Hops)> numbers)
+    /// <param name="classes">The class of each number of the originals (<see cref="OriginalWords"/>); a number it lacks is a content word's.</param>
+    /// <param name="finite">The keys of the text's words that are finite verbs.</param>
+    internal sealed class Lender(
+        bool original,
+        IReadOnlyDictionary<string, (string Number, int Hops)> numbers,
+        IReadOnlyDictionary<string, WordClass>? classes = null,
+        IReadOnlySet<string>? finite = null)
     {
         private readonly Lazy<Dictionary<string, int>> _occurrences = new(() =>
             numbers.Values.GroupBy(n => n.Number, StringComparer.Ordinal).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal));
+
+        /// <summary>A word of the text as the group rules see it.</summary>
+        public GroupNumbers.Original Word(string key, string number) =>
+            new(key, number,
+                OriginalWords.Prefixes.Contains(number) ? WordClass.Prefix : classes?.GetValueOrDefault(number, WordClass.Content) ?? WordClass.Content,
+                finite?.Contains(key) == true);
 
         /// <summary>Whether the text is an edition of an original (any text that is not a translation).</summary>
         public bool Original => original;
@@ -70,11 +87,21 @@ internal static class ChainedNumbers
 
     /// <summary>The numbers of a text's words, in the order the words come; a word that has none and takes none is left out.</summary>
     /// <param name="words">The text's words: own key, own number, and the form a word is told by (folded, lower-cased).</param>
+    /// <param name="rules">
+    /// For a translation, the group rules (<see cref="GroupNumbers"/>): a word without a number of its own that a link joins to an
+    /// original takes only what they give it over those links; the choice above decides only among what they give, and for a word
+    /// that reaches translations alone.
+    /// </param>
+    /// <param name="supplied">The keys of the words the translation marks as its translators' own, which take no number.</param>
     public static List<Numbered> Resolve(
-        IEnumerable<(string Key, string? Own, string Form)> words, IEnumerable<Joined> links, IReadOnlyDictionary<string, Lender> lenders)
+        IEnumerable<(string Key, string? Own, string Form)> words, IEnumerable<Joined> links, IReadOnlyDictionary<string, Lender> lenders,
+        GroupNumbers? rules = null, IReadOnlySet<string>? supplied = null)
     {
+        var listed = words as IReadOnlyList<(string Key, string? Own, string Form)> ?? [.. words];
+        var joined = links as IReadOnlyList<Joined> ?? [.. links];
         var candidates = new Dictionary<string, List<Candidate>>(StringComparer.Ordinal);
-        foreach (var link in links)
+        var ruled = rules is null ? null : Ruled(listed, joined, lenders, rules, supplied);
+        foreach (var link in joined)
         {
             var lender = lenders[link.Other];
             foreach (var theirs in link.Theirs)
@@ -98,7 +125,6 @@ internal static class ChainedNumbers
             }
         }
 
-        var listed = words as IReadOnlyList<(string Key, string? Own, string Form)> ?? [.. words];
         var usual = new Dictionary<(string Form, string Number), int>();
         foreach (var (key, own, form) in listed)
         {
@@ -115,7 +141,12 @@ internal static class ChainedNumbers
         var numbered = new List<Numbered>();
         foreach (var (key, own, form) in listed)
         {
-            var reached = candidates.GetValueOrDefault(key);
+            if (supplied?.Contains(key) == true)
+            {
+                continue;
+            }
+
+            var reached = ruled is not null && own is null && ruled.TryGetValue(key, out var given) ? given : candidates.GetValueOrDefault(key);
             int Usual(Candidate c) =>
                 CountedAs.TryGetValue(c.Number, out var with) && usual.GetValueOrDefault((form, with)) == most.GetValueOrDefault(form, -1)
                     ? Counted(c.Number, n => usual.GetValueOrDefault((form, n)))
@@ -139,7 +170,62 @@ internal static class ChainedNumbers
     {
         var sure = reached.Where(c => c.Sure).ToList();
         var level = sure.Any(c => c.Original) ? sure.Where(c => c.Original).ToList() : sure;
-        return level.Count == 0 || level.Any(c => c.Number == own) ? null : Best(level, usual);
+        return level.Count == 0 || level.Any(c => StrongSynonyms.Same(c.Number, own)) ? null : Best(level, usual);
+    }
+
+    /// <summary>
+    /// For every word without a number of its own that a link joins to a numbered word of an original, the numbers the group
+    /// rules give it over those links (none where they give none).
+    /// </summary>
+    private static Dictionary<string, List<Candidate>> Ruled(
+        IReadOnlyList<(string Key, string? Own, string Form)> words, IReadOnlyList<Joined> links, IReadOnlyDictionary<string, Lender> lenders,
+        GroupNumbers rules, IReadOnlySet<string>? supplied)
+    {
+        var byKey = words.ToDictionary(w => w.Key, w => w, StringComparer.Ordinal);
+        var grouped = new List<(Joined Link, Lender Lender, List<GroupNumbers.Translated> Mine, List<GroupNumbers.Original> Theirs)>();
+        foreach (var link in links)
+        {
+            var lender = lenders[link.Other];
+            if (!lender.Original)
+            {
+                continue;
+            }
+
+            var theirs = link.Theirs.Select(key => lender.TryGet(key, out var lent) ? lender.Word(key, lent.Number) : (GroupNumbers.Original?)null)
+                .OfType<GroupNumbers.Original>().ToList();
+            var mine = link.Mine.Where(key => supplied?.Contains(key) != true && byKey.ContainsKey(key))
+                .Select(key => new GroupNumbers.Translated(key, byKey[key].Form, byKey[key].Own)).ToList();
+            if (theirs.Count == 0 || mine.Count == 0)
+            {
+                continue;
+            }
+
+            grouped.Add((link, lender, mine, theirs));
+            if (mine.Count == 1)
+            {
+                rules.Learn(mine[0].Form, theirs);
+            }
+        }
+
+        var ruled = new Dictionary<string, List<Candidate>>(StringComparer.Ordinal);
+        foreach (var (link, lender, mine, theirs) in grouped)
+        {
+            var taken = rules.Decide(mine, theirs);
+            foreach (var word in mine.Where(w => w.Own is null))
+            {
+                if (!ruled.TryGetValue(word.Key, out var held))
+                {
+                    ruled[word.Key] = held = [];
+                }
+
+                if (taken.TryGetValue(word.Key, out var original) && lender.TryGet(original.Key, out var lent))
+                {
+                    held.Add(new Candidate(lent.Number, lent.Hops + 1, true, link.Confidence, $"{link.Other} {original.Key}", lender.Occurrences(lent.Number)));
+                }
+            }
+        }
+
+        return ruled;
     }
 
     private static Candidate? Best(IEnumerable<Candidate> reached, Func<Candidate, int> usual) =>

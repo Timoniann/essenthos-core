@@ -136,13 +136,26 @@ internal sealed class BereanTableSource : IPairSource
             verses++;
         }
 
+        // A word the English prints in brackets is the translators' own and renders nothing, so it is not linked, and a
+        // rendering of nothing else is not written: Gen 6:11's second הָאָרֶץ is «[and]» in the table.
+        var supplied = drafts.Sum(draft => draft.From.Count(id => Bracketed(english, id)));
+        var onlySupplied = drafts.Count(draft => draft.From.Count > 0 && draft.From.All(id => Bracketed(english, id)));
+        drafts = [.. drafts
+            .Select(draft => draft with { From = [.. draft.From.Where(id => !Bracketed(english, id))] })
+            .Where(draft => draft.Relation != LinkRelation.Renders || draft.From.Count > 0)];
         log($"{verses} verses, {drafts.Count} links; {silences.Absent} absent, {silences.Moved} moved, {silences.Joined} joined, "
             + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled; {divided} divided, {drifted} drifted, {disputed} disputed, "
-            + $"{unframed} at an address the witness lacks");
+            + $"{unframed} at an address the witness lacks; {supplied} bracketed words left unlinked, {onlySupplied} renderings of nothing else");
         return drafts.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(english.Key)),
             MappingText.Keys(draft.To.Select(witnessText.Key)),
             draft.Relation.ToString().ToLowerInvariant(), Method, null, Source, null, null, null));
     }
+
+    /// <summary>
+    /// Whether the Berean prints the word in brackets, as one it supplies. Its braces mark the auxiliaries a verb's tense or
+    /// mood implies («{will}», «{let}»), which render that verb and stay linked.
+    /// </summary>
+    private static bool Bracketed(ProductText text, long id) => text.Words[(int)id].SuppliedMark == "[]";
 
     private static List<BereanLinks.Word> Words(ProductText text, IEnumerable<int> ids) =>
         [.. ids.Select(id => new BereanLinks.Word(id, 0, text.Words[id].Surface, text.Words[id].Strong))];

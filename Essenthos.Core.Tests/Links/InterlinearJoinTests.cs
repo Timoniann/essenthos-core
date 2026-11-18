@@ -233,6 +233,40 @@ public class InterlinearJoinTests
         pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((1L, 101L), (1L, 102L), (2L, 103L));
     }
 
+    /// <summary>
+    /// PRB-1869 P1: a word the translators set in braces is read as theirs and not linked; a span of nothing else states no
+    /// link, and the spans after it still find their words (UST Gen 3:1 «{One day} he asked», «{fruit} from any of»).
+    /// </summary>
+    [Fact]
+    public void WordsTheTranslatorsSuppliedInBracesAreNotLinked()
+    {
+        const string braced =
+            """
+            \c 3
+            \v 1 {\zaln-s |x-strong="c:H0559" x-occurrence="1" x-occurrences="1" x-content="וַ⁠יֹּ֨אמֶר֙"\*\w One|x-occurrence="1" x-occurrences="1"\w*
+            \w day|x-occurrence="1" x-occurrences="1"\w*}
+            \w he|x-occurrence="1" x-occurrences="1"\w*
+            \w asked|x-occurrence="1" x-occurrences="1"\w*\zaln-e\* {\zaln-s |x-strong="H0398" x-occurrence="1" x-occurrences="1" x-content="תֹֽאכְל֔וּ"\*\w fruit|x-occurrence="1" x-occurrences="1"\w*}\zaln-e\*
+            \zaln-s |x-strong="H3605" x-occurrence="1" x-occurrences="1" x-content="כֹּ֖ל"\*\w all|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+
+        var verse = Usfm3AlignmentReader.Read(braced).Single();
+        verse.Spans[0].Supplied.Should().Equal(true, true, false, false);
+        verse.Spans[2].Supplied.Should().BeNull();
+
+        var pairs = new List<InterlinearPair>();
+        var account = new InterlinearJoinAccount();
+        InterlinearJoin.Verse("test 3:1", verse,
+            [Word(1, English("One")), Word(2, English("day")), Word(3, English("he")), Word(4, English("asked")), Word(5, English("fruit")),
+             Word(6, English("all"))],
+            [Word(101, Attached(Hebrew("וַ"))), Word(102, Hebrew("יֹּ֨אמֶר֙")), Word(103, Hebrew("תֹֽאכְל֔וּ")), Word(104, Hebrew("כֹּ֖ל"))],
+            pairs, account);
+
+        pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("3,4", "101,102"), ("6", "104"));
+        account.SuppliedWordsLeftOut.Should().Be(3);
+        account.SpansOnlySupplied.Should().Be(1);
+    }
+
     private static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Join(
         IReadOnlyList<string> translated,
         IReadOnlyList<string> original,

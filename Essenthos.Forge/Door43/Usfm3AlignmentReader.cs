@@ -49,6 +49,10 @@ internal readonly record struct WordGlue(bool Joined, IReadOnlyList<string> Afte
 /// the innermost: every word of the group renders the whole phrase, and the source says no more than that.
 /// </param>
 /// <param name="Glue">For each of <paramref name="Words"/>, how it is printed against its neighbours.</param>
+/// <param name="Supplied">
+/// For each of <paramref name="Words"/>, whether the translators set it in braces as their own: <c>{One day} he asked</c>
+/// over וַיֹּאמֶר אֶל. Such a word renders no original word; null where the span has none.
+/// </param>
 internal sealed record AlignmentSpan(
     string Strong,
     string Content,
@@ -57,7 +61,8 @@ internal sealed record AlignmentSpan(
     int Occurrences = 0,
     IReadOnlyList<(int Occurrence, int Occurrences)>? WordOccurrences = null,
     IReadOnlyList<AlignedOriginal>? Nest = null,
-    IReadOnlyList<WordGlue>? Glue = null)
+    IReadOnlyList<WordGlue>? Glue = null,
+    IReadOnlyList<bool>? Supplied = null)
 {
     /// <summary>Every original word the span's words render: the nest's, outermost first, then its own.</summary>
     public IReadOnlyList<AlignedOriginal> Originals =>
@@ -109,6 +114,8 @@ internal static partial class Usfm3AlignmentReader
         var wordsInVerse = 0;
         var run = new List<(OpenSpan? Span, int Index)>();
         var lastWordEnd = -1;
+        var lastTokenEnd = 0;
+        var braced = false;
 
         void CloseVerse()
         {
@@ -138,6 +145,13 @@ internal static partial class Usfm3AlignmentReader
 
         foreach (Match token in Tokens().Matches(content))
         {
+            // The translators' braces stand between the markers, never inside one.
+            foreach (var c in content.AsSpan(lastTokenEnd, token.Index - lastTokenEnd))
+            {
+                braced = c switch { '{' => true, '}' => false, _ => braced };
+            }
+
+            lastTokenEnd = token.Index + token.Length;
             if (token.Groups["chapter"].Success)
             {
                 CloseVerse();
@@ -206,6 +220,7 @@ internal static partial class Usfm3AlignmentReader
                     into.WordOccurrences.Add(
                         (Occurrence(attributes, "x-occurrence"), Occurrence(attributes, "x-occurrences")));
                     into.Glue.Add((joined, []));
+                    into.Supplied.Add(braced);
                 }
                 else if (number > 0)
                 {
@@ -270,6 +285,8 @@ internal static partial class Usfm3AlignmentReader
 
         public List<(bool Joined, List<string> After)> Glue { get; } = [];
 
+        public List<bool> Supplied { get; } = [];
+
         public AlignmentSpan Span()
         {
             var own = Original ?? Nest[^1];
@@ -278,7 +295,8 @@ internal static partial class Usfm3AlignmentReader
                 nest.Count > 0 ? nest : null,
                 Glue.Any(glue => glue.Joined || glue.After.Count > 0)
                     ? [.. Glue.Select(glue => new WordGlue(glue.Joined, glue.After))]
-                    : null);
+                    : null,
+                Supplied.Contains(true) ? Supplied : null);
         }
     }
 }
