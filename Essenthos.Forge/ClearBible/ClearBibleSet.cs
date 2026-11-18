@@ -286,9 +286,16 @@ internal sealed record ClearBibleSet(
 
     /// <summary>
     /// Young's Literal Translation against the Hebrew, hand-made by Clear Bible's own team, whole Old
-    /// Testament. Its Hebrew is the Westminster Leningrad Codex word by word rather than the morpheme
-    /// edition the other sets use: the same identifiers, a pronominal suffix written as a pronoun of its
-    /// own and told apart only by its morphology, and the letters with their accents.
+    /// Testament.
+    ///
+    /// The set calls its source <c>WLC</c>, and the release ships a <c>WLC.tsv</c>, but the records are
+    /// numbered by the morpheme edition the other sets use: every source identifier they name is a row of
+    /// <c>WLCM.tsv</c>, and 2,705 of them are no row of <c>WLC.tsv</c>. The two number a verse alike only
+    /// until <c>WLC.tsv</c> writes two words as one (<em>גֵ֣יא~בֶנ־הִנֹּ֔ם</em> where the morpheme
+    /// edition has גֵיא, בֶן and הִנֹּם, <em>בֵֽית־אֵ֖ל</em> where it has בֵית and אֵל) or a word as more
+    /// morphemes (the article of <em>בָּאֵשׁ</em>); from there every identifier names a later word in one
+    /// file than in the other. Read by <c>WLC.tsv</c>, Jeremiah 7:31's <em>To burn</em> stood on
+    /// בְּנֵיהֶם and <em>daughters</em> on אֲשֶׁר; Genesis 12:8's <em>Beth-El</em> took the וַ after it.
     ///
     /// Its target is eBible's <c>engylt</c>, the file this corpus loads, and the token file numbers a
     /// psalm's title as verse 0 where that file prints it at the head of verse 1.
@@ -298,7 +305,7 @@ internal sealed record ClearBibleSet(
         hebrewSlug,
         Path.Combine("data", "eng", "alignments", "YLT", "WLC-YLT-manual.json"),
         Path.Combine("data", "eng", "targets", "YLT", "ot_YLT.tsv"),
-        Path.Combine("data", "sources", "WLC.tsv"),
+        Path.Combine("data", "sources", "WLCM.tsv"),
         ClearBibleJoin.Letters,
         $"Clear Bible Alignments WLC-YLT-manual, Clear Bible, {Repository}, CC BY 4.0, made by hand");
 

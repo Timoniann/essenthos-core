@@ -100,7 +100,6 @@ internal static class ClearBibleAlignment
         var renders = Array.IndexOf(header, "source_verse");
         var rendersTo = Array.IndexOf(header, "source_verse_range_end");
         var parts = Array.IndexOf(header, "pos");
-        var morphology = Array.IndexOf(header, "morph");
 
         while (reader.ReadLine() is { } line)
         {
@@ -117,26 +116,12 @@ internal static class ClearBibleAlignment
                 || (punctuation >= 0 && cells.Length > punctuation && cells[punctuation].Trim() is "True"),
                 strongs >= 0 && cells.Length > strongs ? cells[strongs] : null,
                 Number(cells, renders) is { } first ? (first, Number(cells, rendersTo) ?? first) : null,
-                Part(cells, parts, morphology));
+                parts >= 0 && cells.Length > parts ? cells[parts] : null);
         }
     }
 
     /// <summary>What the Westminster morphology calls a pronominal suffix in its part-of-speech column.</summary>
     public const string Suffix = "suffix";
-
-    /// <summary>
-    /// A source row's part of speech, with a pronominal suffix called one whichever edition the file
-    /// is. The morpheme edition says <c>suffix</c>; the Westminster Leningrad Codex says <c>pron</c>
-    /// and tells a suffix from a free pronoun only in its morphology, <c>psn3ms</c> against
-    /// <c>pp3ms</c>, so read alone its suffixes would be compared as words of their own.
-    /// </summary>
-    private static string? Part(string[] cells, int parts, int morphology)
-    {
-        var part = parts >= 0 && cells.Length > parts ? cells[parts] : null;
-        return morphology >= 0 && cells.Length > morphology && cells[morphology].StartsWith("ps", StringComparison.Ordinal)
-            ? Suffix
-            : part;
-    }
 
     private static int? Number(string[] cells, int column) =>
         column >= 0 && cells.Length > column && int.TryParse(cells[column], out var verse) ? verse : null;

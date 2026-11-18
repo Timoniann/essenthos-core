@@ -10,10 +10,8 @@ using Xunit;
 namespace Essenthos.Core.Tests.Links;
 
 /// <summary>
-/// The shape of Clear Bible's Young's Literal Translation set, which differs from the others in both
-/// of its files: the target marks punctuation in an <c>isPunc</c> column rather than <c>exclude</c>,
-/// and the source is the Westminster Leningrad Codex word by word, whose pronominal suffix is a
-/// pronoun told apart from a free one only by its morphology.
+/// The shape of Clear Bible's Young's Literal Translation set, whose target file marks punctuation in an
+/// <c>isPunc</c> column rather than <c>exclude</c>.
 /// </summary>
 public sealed class ClearBibleYoungTokenTests : IDisposable
 {
@@ -29,27 +27,51 @@ public sealed class ClearBibleYoungTokenTests : IDisposable
         var path = Path.Combine(_folder, "target.tsv");
         File.WriteAllLines(path,
         [
-            "id\taltId\ttext\ttransType\tisPunc\tisPrimary",
-            "01001001001\tIn-1\tIn\tk\tFalse\tTrue",
-            "01001001002\t,-1\t,\t\tTrue\tFalse",
+            "id	altId	text	transType	isPunc	isPrimary",
+            "01001001001	In-1	In	k	False	True",
+            "01001001002	,-1	,		True	False",
         ]);
 
         ClearBibleAlignment.Tokens(path).Select(token => token.Excluded).Should().Equal(false, true);
     }
+}
+
+/// <summary>
+/// The Old Testament set's records are numbered by the morpheme edition, though the set calls its source
+/// <c>WLC</c>: read by the release's <c>WLC.tsv</c>, which writes גֵ֣יא~בֶנ־הִנֹּ֔ם as one word, every
+/// identifier after such a word named a later one.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public sealed class ClearBibleYoungNumberingTests
+{
+    private static readonly string Folder = TestResources.ClearBibleFolder;
+
+    private static readonly ClearBibleSet Set = ClearBibleSet.YoungOldTestament("YLT", "BHSA");
 
     [Fact]
-    public void APronounTheMorphologyCallsASuffixIsOne()
+    public void EverySourceWordTheRecordsNameIsARowOfTheSetsTokenFile()
     {
-        var path = Path.Combine(_folder, "source.tsv");
-        File.WriteAllLines(path,
-        [
-            "id\taltId\ttext\tstrongs\tgloss\tgloss2\tlemma\tpos\tmorph",
-            "o010010110151\tזַרְע-1\tזַרְע\tH2233\tseed\t\tזֶרַע\tnoun\tncmsc",
-            "o010010110152\tוֹ־-1\tוֹ־\tH9023\tits\t\t\tpron\tpsn3ms",
-            "o010010110161\tהוּא-1\tהוּא\tH1931\the\t\tהוּא\tpron\tpp3ms",
-        ]);
+        var rows = ClearBibleAlignment.Tokens(Path.Combine(Folder, Set.Source)).Select(token => token.Id).ToHashSet();
 
-        ClearBibleAlignment.Tokens(path).Select(token => token.Part)
-            .Should().Equal("noun", ClearBibleAlignment.Suffix, "pron");
+        ClearBibleAlignment.Records(Path.Combine(Folder, Set.Alignment))
+            .SelectMany(record => record.Source)
+            .Where(id => !rows.Contains(id))
+            .Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// Jeremiah 7:31: <em>the valley of the son of Hinnom</em> names three source words and <em>To burn</em>
+    /// the two after them, which are the ל and the verb, not בְּנֵי and its suffix.
+    /// </summary>
+    [Fact]
+    public void JeremiahSevenThirtyOnesToBurnIsTheInfinitive()
+    {
+        var tokens = ClearBibleAlignment.Tokens(Path.Combine(Folder, Set.Source)).ToDictionary(token => token.Id);
+        var toBurn = ClearBibleAlignment.Records(Path.Combine(Folder, Set.Alignment))
+            .Where(record => record.Target.Count == 1 && record.Target[0] is "24007031023" or "24007031024")
+            .SelectMany(record => record.Source)
+            .Select(id => ClearBibleLinks.Comparable(tokens[id].Text, "hbo"));
+
+        toBurn.Should().Equal("ל", "שרף");
     }
 }

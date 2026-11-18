@@ -180,12 +180,15 @@ New Ukrainian Translation this corpus holds says in all three of eBible's places
 recorded as CC BY-SA 4.0, the more restrictive. That Biblica statement was not read at Biblica's own
 site for the Hausa in this session; it is the one thing here asserted rather than read.
 
-**The YLT set is keyed to the Westminster Leningrad Codex word by word (`WLC.tsv`), not the morpheme
-edition.** Its pronominal suffix is a row of its own with part of speech `pron` and morphology
-`ps…` (45,618 of them), told from a free pronoun (`pp…`) only by the morphology; the reader calls it a
-suffix, so it is compared as part of the word before it, as `WLCM`'s `suffix` rows are. Its target file
-marks punctuation in an `isPunc` column rather than `exclude`, and is read by it. In the New Testament
-file `isPunc` is `False` on all but 79 marks of punctuation; they place on no word and nothing names them.
+**The YLT Old Testament set is numbered by the morpheme edition (`WLCM.tsv`), though it calls its
+source `WLC`.** Every source identifier its records name is a row of `WLCM.tsv`, and 2,705 of them are
+no row of the `WLC.tsv` shipped beside it. `WLC.tsv` writes some words joined (`גֵ֣יא~בֶנ־הִנֹּ֔ם`,
+`בֵֽית־אֵ֖ל`) and some as more morphemes (the article of `בָּאֵשׁ`), so from such a word on the two
+files give one identifier to different words: 5,405 verses. Read by `WLC.tsv` until PRB-1870, the set's
+links stood on later words there (Jeremiah 7:31's "To burn" on בְּנֵיהֶם, "daughters" on אֲשֶׁר) or on
+BHSA's empty article instead of its noun. Its target file marks punctuation in an `isPunc` column rather
+than `exclude`, and is read by it. In the New Testament file `isPunc` is `False` on all but 79 marks of
+punctuation; they place on no word and nothing names them.
 
 **The Hausa Old Testament alignment does not exist.** `WLCM-OHCB-manual.json` is
 `SBLGNT-OHCB-manual.json` byte for byte (MD5 `338dba9f459f301fcade73f0c4aefe5c`): the same 63,852
@@ -201,7 +204,7 @@ Measured on a scratch copy (`essenthos_core_s38`, dropped), each set alone:
 
 | set | records | unresolved | words placed (theirs) | links written | words of ours linked |
 |---|---:|---:|---|---:|---|
-| WLC-YLT | 437,255 | 6,692 | 474,671/475,012 source, 602,053/602,056 target | 430,563 | OT 91.8% |
+| WLC-YLT (read by WLCM, PRB-1870) | 437,255 | 4,031 | 469,213/469,476 source, 602,053/602,056 target | 433,224 | OT 92.4% |
 | SBLGNT-YLT | 127,902 | 835 | 137,205/137,741 source, 184,506/223,800 target | 127,067 | NT 94.9% |
 | SBLGNT-IRVBen | 80,185 | 356 (2 astray) | 156,628/158,069 target | 79,827 | NT 82.0% |
 | SBLGNT-IRVAsm | 89,883 | 956 | 153,090/157,977 target, 38 verses refused | 88,927 | NT 85.3% |
