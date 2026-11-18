@@ -174,6 +174,7 @@ own	kind	before	after	why
 23.28:15.13	strong	שֹׁוטֵ֤ף H7752	H7857	שׁטף is H7857; the mapping file prints H7752 here, a number the word beside it carries
 23.30:10.5	strong	רֹאִים֙ H7200	H7203	רֹאֶה is H7203; the mapping file prints H7200 here, the number of תִרְא֔וּ
 23.32:8.3	strong	נְדִיבֹ֣ות H5081	H5082	נְדִיבָה is H5082; the mapping file prints H5081 here, the number of נָדִ֖יב
+23.32:8.8	strong	נְדִיבֹ֥ות H5081	H5082	נְדִיבָה is H5082, as MACULA has it and as the same word earlier in the verse is corrected; the mapping file prints H5081 here, the number of נָדִ֖יב
 23.38:3.27	strong	בְּכִ֥י H1058	H1065	בְּכִי is H1065; the mapping file prints H1058 here, the number of יֵּ֥בְךְּ
 23.65:7.23	strong	חֵיקָֽם H413	H2436	חֵיק is H2436; the mapping file prints H413 here, a number the word beside it carries
 24.3:19.22	strong	לִ֔י H7121	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H7121 here, the number of תקראו
@@ -201,6 +202,7 @@ own	kind	before	after	why
 34.1:3.6	strong	כֹּ֔חַ H1419	H3581	כֹּחַ is H3581; the mapping file prints H1419 here, the number of גדול
 34.2:1.20	strong	בָּ֥ךְ H5674	H9003	בְּ is H9003; every other בְּ with a suffix is H9003; the mapping file prints H5674 here, the number of עבור
 34.3:8.3	strong	מִ H4996	H4480	מִן is H4480; the mapping file prints H4996 here, a number the word beside it carries
+34.3:8.4	strong	נֹּ֣א אָמֹ֔ון H528	H4996	נֹא אָמוֹן is Thebes, H4996 (MACULA's first number, as נֹא is numbered in Jeremiah 46:25 and Ezekiel 30:14-16); the mapping file gives this word the number of אָמוֹן and the city's number to the מִ before it
 35.2:18.14	strong	יִצְרֹו֙ H3335	H3336	יֵצֶר is H3336; the mapping file prints H3335 here, the number of יֹצֵ֤ר
 1.27:3.16	strong	צידה H6720	H6718	ketiv: BHSA lemmatises it under the qere's word צַיִד, which is H6718, as MACULA numbers it; the mapping file numbers the ketiv as written (H6720)
 1.39:20.14	strong	אסורי H631	H615	ketiv: BHSA lemmatises it under the qere's word אָסִיר, which is H615, as MACULA numbers it; the mapping file numbers the ketiv as written (H631)
@@ -329,4 +331,5 @@ own	kind	before	after	why
 14.24:27.3	strong	ורב H7230	H7235	ketiv: BHSA lemmatises it under the qere's word רבה, which is H7235, as MACULA numbers it; the mapping file numbers the ketiv as written (H7230)
 14.29:8.12	strong	זועה H2113	H2189	ketiv: BHSA lemmatises it under the qere's word זַעֲוָה, which is H2189, as MACULA numbers it; the mapping file numbers the ketiv as written (H2113)
 14.33:16.2	strong	יכן H3559	H1129	ketiv: BHSA lemmatises it under the qere's word בנה, which is H1129, as MACULA numbers it; the mapping file numbers the ketiv as written (H3559)
+25.5:18.5	strong	שָּׁמֵ֔ם H8076	H8074	שָׁמֵם here is the verb, "which is desolate", H8074 as MACULA has it; the mapping file gives the verb's number to the relative שֶׁ before it
 35.2:18.6	strong	יֹֽצְרֹ֔ו H3336	H3335	יֹצֵר, the participle of יצר, is H3335, as MACULA numbers it; the mapping file prints H3336 here, the number of יִצְרֹו֙ eight words on

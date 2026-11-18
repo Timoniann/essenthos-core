@@ -1,0 +1,7 @@
+# product    Essenthos/mapping/SCH1951-BHSA/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	25.5:18.5	25.5:18.4			Lamentations 5:18: drawn from the Strong numbers the Open Hebrew Bible prints one word along, where it joins the relative שֶׁ with the next word, so the links after it stand one word early; 'verwüstet' renders שָׁמֵם; the relative שֶׁ carries its own number (read by hand)
+accept	25.5:18.5	25.5:18.5	renders		Lamentations 5:18: drawn from the Strong numbers the Open Hebrew Bible prints one word along, where it joins the relative שֶׁ with the next word, so the links after it stand one word early; 'verwüstet' renders שָׁמֵם; the relative שֶׁ carries its own number (read by hand)

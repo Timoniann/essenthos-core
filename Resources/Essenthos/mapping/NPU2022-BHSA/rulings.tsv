@@ -1,0 +1,7 @@
+# product    Essenthos/mapping/NPU2022-BHSA/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	19.123:6.3	19.124:6.3			Psalms 124:6: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (לֹּ֥א (H3808) beside שֶׁ (H7945))
+accept	19.123:6.3	19.124:6.3 19.124:6.4	renders		Psalms 124:6: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (לֹּ֥א (H3808) beside שֶׁ (H7945))
