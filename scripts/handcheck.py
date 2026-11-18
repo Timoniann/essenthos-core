@@ -20,7 +20,8 @@ stated link that holds it, in order. Its key drops articles, possessives, pronou
 `and` and prepositions, which in BHSA's tokenisation belong to the prefix words beside it. A
 rendering is accepted when a key word matches a gloss word (BHSA gloss, Strong's definition and
 KJV renderings, MACULA's gloss and contextual English) by a crude stem; a name when it is close to
-the gloss; or by one of the exact function-word rules in RULES. A rule never accepts a rendering
+the gloss; by one of the exact function-word rules (rule_for); or when another content word of the
+same link carries the meaning (shared-link: the source states that the words render it together). A rule never accepts a rendering
 while an unlinked English word of the verse matches the Hebrew word's gloss (an orphan): that is
 the shape of a lost link. Anything else is only suspected: rare, carried by a neighbour (the
 shift shape of PRB-1851), or disagreeing with another alignment of the same word.
@@ -386,6 +387,9 @@ def run_pass(args):
         o = {'raw': raw, 'words': key.split(), 'key': key, 'ok': judge(key.split(), w), 'rule': None, 'orphans': []}
         if not o['ok']:
             o['rule'] = rule_for(w, words_of(raw), pair.together[hid], by_verse)
+            if not o['rule'] and any(judge(o['words'], hebrew[h]) for h in pair.together[hid]
+                                     if h != hid and h in hebrew and hebrew[h]['pos'] not in FUNCTION_POS):
+                o['rule'] = 'shared-link'
             o['orphans'] = [s for _, s in pair.orphans(pair.verses_of(eng_ids)) if judge(key_words(s), w)]
             if o['orphans']:
                 o['rule'] = None
