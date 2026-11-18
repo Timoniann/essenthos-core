@@ -58,7 +58,11 @@ internal sealed record ClearBibleJoined(
     int Misnumbered,
     int Overruled,
     int Trimmed,
-    ClearBiblePlacement Placed);
+    ClearBiblePlacement Placed,
+    int Edited = 0,
+    int Renumbered = 0,
+    int Unplaced = 0,
+    int Crossed = 0);
 
 /// <summary>
 /// Clear Bible's hand-made alignments: a second opinion on the Berean, and the only opinion anybody
@@ -118,7 +122,8 @@ internal static partial class ClearBibleLinks
         ClearBibleSet set,
         ClearBibleSide translation,
         ClearBibleSide witness,
-        IReadOnlySet<long> overruled)
+        IReadOnlySet<long> overruled,
+        IReadOnlyList<ClearBibleSourceEdits.Edition>? editions = null)
     {
         var alignment = Path.Combine(directory, set.Alignment);
         var target = Path.Combine(directory, set.Target);
@@ -138,11 +143,12 @@ internal static partial class ClearBibleLinks
                 ClearBibleJoin.Letters, translation, tokens, ClearBibleAlignment.Word, placement.Target);
         }
 
-        var theirSource = Placed(
-            set.Join, witness, [.. ClearBibleAlignment.Tokens(source)], ClearBibleAlignment.Unit, placement.Source);
+        var sourceTokens = ClearBibleAlignment.Tokens(source).ToList();
+        var theirSource = Placed(set.Join, witness, sourceTokens, ClearBibleAlignment.Unit, placement.Source);
 
         var renders = Renders(tokens);
         var all = ClearBibleAlignment.Records(alignment).ToList();
+        var edits = set.Edited ? ClearBibleSourceEdits.Of(all, sourceTokens, tokens, editions ?? [], witness.Language) : null;
         var shift = set.Shift is { } and
             ? new Shift(Ands(tokens, and.And), Joining(source, and.Also), Named(all))
             : null;
@@ -151,12 +157,28 @@ internal static partial class ClearBibleLinks
 
         var drafts = new List<Draft>();
         int records = 0, unresolved = 0, withoutCounterpart = 0;
-        int astray = 0, shifted = 0, moved = 0, refused = 0, overruledRecords = 0, trimmed = 0;
+        int astray = 0, shifted = 0, moved = 0, refused = 0, overruledRecords = 0, trimmed = 0, renumbered = 0, unplaced = 0;
 
         foreach (var stated in all)
         {
             var record = stated;
             records++;
+            if (edits is not null)
+            {
+                var sources = Edited(record.Source, edits.Placed);
+                if (sources is null)
+                {
+                    unplaced++;
+                    continue;
+                }
+
+                if (!ReferenceEquals(sources, record.Source))
+                {
+                    record = record with { Source = sources };
+                    renumbered++;
+                }
+            }
+
             if (record.Target.Any(id => misnumbered.Contains(ClearBibleAlignment.Verse(id) ?? 0)))
             {
                 refused++;
@@ -213,7 +235,37 @@ internal static partial class ClearBibleLinks
 
         return new ClearBibleJoined(
             drafts, records, unresolved, withoutCounterpart, astray, shifted, moved, refused, overruledRecords, trimmed,
-            placement.Read());
+            placement.Read(), edits?.Verses ?? 0, renumbered, unplaced, edits?.Crossed ?? 0);
+    }
+
+    /// <summary>
+    /// A record's source words as the edited numbering places them (<see cref="ClearBibleSourceEdits"/>): the same list
+    /// where none moves, another where some do, or null where any is placed on nothing.
+    /// </summary>
+    internal static IReadOnlyList<string>? Edited(IReadOnlyList<string> source, IReadOnlyDictionary<string, string?> placed)
+    {
+        List<string>? edited = null;
+        for (var index = 0; index < source.Count; index++)
+        {
+            if (!placed.TryGetValue(ClearBibleAlignment.Unit(source[index]), out var unit))
+            {
+                edited?.Add(source[index]);
+                continue;
+            }
+
+            if (unit is null)
+            {
+                return null;
+            }
+
+            edited ??= [.. source.Take(index)];
+            if (!edited.Contains(unit))
+            {
+                edited.Add(unit);
+            }
+        }
+
+        return edited ?? source;
     }
 
     /// <summary>

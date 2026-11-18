@@ -1,4 +1,5 @@
 using Essenthos.Core.ClearBible;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Products;
 
@@ -52,6 +53,7 @@ internal sealed class ClearBibleSource : IPairSource
         [
             .. new[] { set.Alignment, set.Target, set.Source }.Where(path => path.Length > 0).Select(Relative),
             .. store.Find(MappingProducts.Of(pair, MappingProducts.Rulings)) is { } rulings ? [rulings] : Array.Empty<string>(),
+            .. set.Edited ? ProductText.Products(Sources.ScrivenerSlug).Select(store.Find).OfType<string>() : [],
         ];
     }
 
@@ -82,11 +84,13 @@ internal sealed class ClearBibleSource : IPairSource
                 retokenised ? InOrder(translation) : null,
                 Frame(translation)),
             new ClearBibleSide(witness.Language, edition ? Placed(witness, translation) : Printed(witness), null, edition ? null : Frame(witness)),
-            overruled);
+            overruled,
+            set.Edited ? Editions(texts, witness) : null);
 
         log($"{joined.Records} records, {joined.Drafts.Count} resolved; {joined.Unresolved} unresolved ({joined.WithoutCounterpart} "
             + $"without a counterpart), {joined.Astray} astray, {joined.Shifted} shifted, {joined.Moved} moved onto the name after them, "
-            + $"{joined.Misnumbered} misnumbered, "
+            + $"{joined.Misnumbered} misnumbered, {joined.Renumbered} renumbered and {joined.Unplaced} placed on nothing over "
+            + $"{joined.Edited} verses numbered over an edited source ({joined.Crossed} identifiers crossed), "
             + $"{joined.Overruled} overruled ({joined.Trimmed} trimmed); {joined.Placed}");
 
         var rows = new Dictionary<string, MappingRow>(StringComparer.Ordinal);
@@ -100,6 +104,24 @@ internal sealed class ClearBibleSource : IPairSource
 
         return rows.Values;
     }
+
+    /// <summary>
+    /// The editions whose readings a set's edited source text takes (<see cref="ClearBibleSourceEdits"/>): the witness
+    /// itself, and the Textus Receptus Young translated, at a higher cost because the edited text follows it less often.
+    /// </summary>
+    private static List<ClearBibleSourceEdits.Edition> Editions(ProductTexts texts, ProductText witness) =>
+    [
+        new(Readings(witness), WitnessCost),
+        new(Readings(texts[Sources.ScrivenerSlug]), ReceivedCost),
+    ];
+
+    /// <summary>What a word added or taken out where the witness, or the Textus Receptus, reads so costs the edited text, as a logarithm.</summary>
+    private const double WitnessCost = 2, ReceivedCost = 4;
+
+    private static Dictionary<int, List<ClearBibleSourceEdits.Reading>> Readings(ProductText text) =>
+        Printed(text).ToDictionary(
+            verse => ClearBibleAlignment.Verse(verse.Key.Item1, verse.Key.Item2, verse.Key.Item3),
+            verse => verse.Value.Select(word => new ClearBibleSourceEdits.Reading(word.Folded, word.Strong)).ToList());
 
     private static ClearBibleSet? Set(string pair) => Sets.FirstOrDefault(set => $"{set.From}-{set.To}" == pair);
 

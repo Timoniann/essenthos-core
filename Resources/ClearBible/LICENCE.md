@@ -190,6 +190,16 @@ BHSA's empty article instead of its noun. Its target file marks punctuation in a
 than `exclude`, and is read by it. In the New Testament file `isPunc` is `False` on all but 79 marks of
 punctuation; they place on no word and nothing names them.
 
+**The YLT New Testament set is numbered over the SBLGNT as Clear's team edited it, mostly toward the
+Nestle-Aland, and no file in the release holds that text.** In about 340 verses a word is added (Matthew
+3:16's bracketed αὐτῷ, τό, τοῦ and καί), taken out (Matthew 12:46's δέ, Revelation 5:4's ἐγώ) or moved
+(John 16:23's δώσει ὑμῖν), and every identifier after it names an `SBLGNT.tsv` word one place out; 367 of
+them, in 266 verses, are no row of `SBLGNT.tsv` at all. Since PRB-1881 the edited numbering is read back
+from the records' own English against the words each Strong number is rendered with across the set, the
+SBLGNT gloss, and where Nestle 1904 or the Textus Receptus read otherwise (`ClearBibleSourceEdits`): 2,804
+records are moved onto the word they name, 507 are placed on nothing (a word the SBLGNT lacks, a word
+whose place is not twenty to one certain, or two or three records that read far better in another order).
+
 **The Hausa Old Testament alignment does not exist.** `WLCM-OHCB-manual.json` is
 `SBLGNT-OHCB-manual.json` byte for byte (MD5 `338dba9f459f301fcade73f0c4aefe5c`): the same 63,852
 records, every one naming a Greek word. Only the New Testament set is loaded.
@@ -205,7 +215,7 @@ Measured on a scratch copy (`essenthos_core_s38`, dropped), each set alone:
 | set | records | unresolved | words placed (theirs) | links written | words of ours linked |
 |---|---:|---:|---|---:|---|
 | WLC-YLT (read by WLCM, PRB-1870) | 437,255 | 4,031 | 469,213/469,476 source, 602,053/602,056 target | 433,224 | OT 92.4% |
-| SBLGNT-YLT | 127,902 | 835 | 137,205/137,741 source, 184,506/223,800 target | 127,067 | NT 94.9% |
+| SBLGNT-YLT (edited numbering read back, PRB-1881) | 127,902 | 964 (457 unresolved, 507 placed on nothing) | 137,205/137,741 source, 184,506/223,800 target | 126,938 | NT 94.9% |
 | SBLGNT-IRVBen | 80,185 | 356 (2 astray) | 156,628/158,069 target | 79,827 | NT 82.0% |
 | SBLGNT-IRVAsm | 89,883 | 956 | 153,090/157,977 target, 38 verses refused | 88,927 | NT 85.3% |
 | SBLGNT-OHCB | 63,852 | 183 | 182,377/182,498 target | 63,669 | NT 36.4% |

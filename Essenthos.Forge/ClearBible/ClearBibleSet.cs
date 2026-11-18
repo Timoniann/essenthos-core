@@ -73,6 +73,10 @@ internal enum ClearBibleNumbering
 /// The translation's prepositions and articles, where the set puts a name on the one before it and leaves the name
 /// unnamed; null where it does not. See <see cref="Loading.Links.ClearBibleLinks.Early"/>.
 /// </param>
+/// <param name="Edited">
+/// Whether the records are numbered over the source edition as the team edited it verse by verse, words added and
+/// taken out, rather than over its token file. See <see cref="ClearBibleSourceEdits"/>.
+/// </param>
 /// <summary>
 /// One of Clear Bible's alignments, and everything about it that differs from the others.
 ///
@@ -92,7 +96,8 @@ internal sealed record ClearBibleSet(
     string Statement,
     ClearBibleShift? Shift = null,
     ClearBibleNumbering Numbering = ClearBibleNumbering.TokenFile,
-    IReadOnlySet<string>? Early = null)
+    IReadOnlySet<string>? Early = null,
+    bool Edited = false)
 {
     private const string Repository = "github.com/Clear-Bible/Alignments";
 
@@ -313,6 +318,14 @@ internal sealed record ClearBibleSet(
     /// Young's Literal Translation against the Greek, hand-made by Clear Bible's team, whole New
     /// Testament. Young translated the Textus Receptus and the set is keyed to the SBLGNT, so a verse
     /// the critical text omits has no record, and a word only Young's Greek has is rendered by nothing.
+    ///
+    /// Except where the team edited the SBLGNT first, mostly toward the Nestle-Aland. In some 340 verses the
+    /// records are numbered over the verse with a word added (Matthew 3:16's bracketed αὐτῷ after ἠνεῴχθησαν,
+    /// Acts 3:6's ἔγειρε καί), taken out (Matthew 12:46's δέ, Revelation 5:4's ἐγώ) or moved (John 16:23's
+    /// δώσει ὑμῖν, Galatians 1:3's ἡμῶν), and every number after it names a word one place out: read by
+    /// <c>SBLGNT.tsv</c>, Matthew 3:16's <em>the heavens</em> stood on καί and <em>he saw</em> on πνεῦμα, and
+    /// 367 identifiers in 266 verses name no word at all. No file in the release holds the edited text, so it is
+    /// read back from the records (<see cref="ClearBibleSourceEdits"/>).
     /// </summary>
     public static ClearBibleSet YoungNewTestament(string englishSlug, string greekSlug) => new(
         englishSlug,
@@ -321,7 +334,8 @@ internal sealed record ClearBibleSet(
         Path.Combine("data", "eng", "targets", "YLT", "nt_YLT.tsv"),
         Path.Combine("data", "sources", "SBLGNT.tsv"),
         ClearBibleJoin.Letters,
-        $"Clear Bible Alignments SBLGNT-YLT-manual, Clear Bible, {Repository}, CC BY 4.0, made by hand");
+        $"Clear Bible Alignments SBLGNT-YLT-manual, Clear Bible, {Repository}, CC BY 4.0, made by hand",
+        Edited: true);
 
     /// <summary>
     /// The Indian Revised Version in Bengali against the Greek, hand-made by NLCI, whole New Testament.
