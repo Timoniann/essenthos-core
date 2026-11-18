@@ -78,6 +78,74 @@ public class InterlinearJoinTests
         pairs.Single().To.Should().Equal(101);
     }
 
+    /// <summary>
+    /// 2 Samuel 2:14: the source counts יוֹאָ֔ב and יוֹאָ֖ב as two spellings, once each; BHSA puts the holam on the
+    /// yod (יֹואָב), so no printed form matches and the bare letters stand twice. The accents tell the two apart.
+    /// </summary>
+    [Fact]
+    public void TwoSpellingsTheAccentsTellApartJoinWhereTheVowelsStandOnAnotherLetter()
+    {
+        var (pairs, account) = Join(
+            [English("Joab"), English("said"), English("Joab")],
+            [Hebrew("אֶל"), Hebrew(BhsaJoab + Zaqef + "\u05D1"), Hebrew("יָק֤וּמוּ"), Attached(Hebrew("וַ")), Hebrew("יֹּ֥אמֶר"),
+             Hebrew(BhsaJoab + Tipcha + "\u05D1")],
+            Span(SourceJoab + Zaqef + "\u05D1", "Joab", occurrence: 1, occurrences: 1),
+            Span(SourceJoab + Tipcha + "\u05D1", "Joab", occurrence: 1, occurrences: 1));
+
+        pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((1L, 102L), (3L, 106L));
+        account.SpansJoinedOnTheLooseFold.Should().Be(0);
+    }
+
+    [Fact]
+    public void AccentsThatDoNotTellTheWordsApartStillRefuse()
+    {
+        var (pairs, account) = Join(
+            [English("Joab")],
+            [Hebrew(BhsaJoab + Tipcha + "\u05D1"), Attached(Hebrew("וַ")), Hebrew("יֹּ֥אמֶר"), Hebrew(BhsaJoab + Tipcha + "\u05D1")],
+            Span(SourceJoab + Tipcha + "\u05D1", "Joab", occurrence: 1, occurrences: 1));
+
+        pairs.Should().BeEmpty();
+        account.SpanFailures[InterlinearSpanFailure.OriginalOccurrenceUnresolved].Should().Be(1);
+    }
+
+    /// <summary>
+    /// 2 Kings 13:25 (UST): «he» over the nest יְהוֹאָשׁ בֶּן יְהוֹאָחָ֗ז. The accents place the second name, and בֶּן,
+    /// which the source counts three times and BHSA prints apart twice, is the one place between the two names.
+    /// </summary>
+    [Fact]
+    public void ANestWordTheCountCannotPlaceFillsTheGapBetweenTheRestOfItsNest()
+    {
+        const string sourceJehoash = "\u05D9\u05B0\u05D4\u05D5\u05B9\u05D0\u05B8\u05A3\u05E9\u05C1";
+        const string bhsaJehoash = "\u05D9\u05B0\u05D4\u05B9\u05D5\u05D0\u05B8\u05A3\u05E9\u05C1";
+        const string sourceJehoahaz = "\u05D9\u05B0\u05D4\u05D5\u05B9\u05D0\u05B8\u05D7\u05B8";
+        const string bhsaJehoahaz = "\u05D9\u05B0\u05D4\u05B9\u05D5\u05D0\u05B8\u05D7\u05B8";
+        var (pairs, account) = Join(
+            [English("he")],
+            [Hebrew(bhsaJehoash), Hebrew("בֶּן"), Hebrew(bhsaJehoahaz + Revia + "\u05D6"), Hebrew("אָבִ֖יו"), Hebrew("בֶּן"),
+             Hebrew(bhsaJehoahaz + Merkha + "\u05D6")],
+            Span(sourceJehoahaz + Revia + "\u05D6", "he") with
+            {
+                Nest = [new AlignedOriginal("H3060", sourceJehoash, 1, 1), new AlignedOriginal("H1121a", "בֶּן", 1, 3)],
+            });
+
+        pairs.Single().To.Should().Equal(101, 102, 103);
+        account.NestWordsPlacedBeside.Should().Be(1);
+    }
+
+    private const string Revia = "\u0597";
+
+    private const string Merkha = "\u05A5";
+
+    /// <summary>יוֹאָ up to its accent as the source points it: holam on the vav.</summary>
+    private const string SourceJoab = "\u05D9\u05D5\u05B9\u05D0\u05B8";
+
+    /// <summary>The same as BHSA points it: holam on the yod.</summary>
+    private const string BhsaJoab = "\u05D9\u05B9\u05D5\u05D0\u05B8";
+
+    private const string Zaqef = "\u0594";
+
+    private const string Tipcha = "\u0596";
+
     [Fact]
     public void AnArticleBhsaHoldsWithNothingPrintedGoesWithTheWordItStandsIn()
     {

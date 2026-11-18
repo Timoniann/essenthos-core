@@ -242,7 +242,7 @@ public class InterlinearNumberTests
     {
         var (pairs, _) = Join(
             [Word(1, "eng", "day")],
-            [Word(101, "hbo", "יֹ֥ום", "H3117"), Word(102, "hbo", "יֹֽום", "H3117")],
+            [Word(101, "hbo", "יֹ֥ום", "H3117"), Word(102, "hbo", "יֹ֖ום", "H3117")],
             [("H3117", "יוֹם", 1)],
             new AlignmentSpan("H3117", "יוֹם", ["day"], 1, 1));
 

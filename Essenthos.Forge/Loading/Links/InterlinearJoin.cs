@@ -361,7 +361,7 @@ internal static class InterlinearJoin
     /// <list type="bullet">
     /// <item>A word the witness prints more often than the source counts it (a variant elsewhere in the verse:
     /// Nestle has two τὸν in Mark 9:2 where the source has three) is the one place of it standing right beside the
-    /// rest of the nest, if there is exactly one: the nest's words stand together.</item>
+    /// rest of the nest or between its words, if there is exactly one: the nest's words stand together.</item>
     /// <item>The nest's words spelled together may be one word of the witness: בֵּית + אֵל is BHSA's one word
     /// בֵּית־אֵל.</item>
     /// <item>In the Greek an outer word of the nest is another edition's reading and is left out (Nestle prints no
@@ -451,7 +451,8 @@ internal static class InterlinearJoin
 
     /// <summary>
     /// The one place of an original word that stands right before or right after the words the rest of its nest
-    /// stands on; null where none or several do.
+    /// stands on, or in a gap between them (בֶּן of יְהוֹאָשׁ בֶּן יְהוֹאָחָז once both names are placed); null where
+    /// none or several do.
     /// </summary>
     private static List<int>? Beside(IReadOnlyList<InterlinearWord> words, AlignedOriginal one, List<int> nest, string language)
     {
@@ -463,7 +464,8 @@ internal static class InterlinearJoin
         var (first, last) = (nest.Min(), nest.Max());
         var folded = one.Morphemes.Select(morpheme => WordFolding.Fold(morpheme, language)).ToArray();
         var touching = Places(words.Count, folded, at => words[at].Folded)
-            .Where(place => place[^1] == first - 1 || place[0] == last + 1)
+            .Where(place => place[^1] == first - 1 || place[0] == last + 1
+                            || (place[0] > first && place[^1] < last && !place.Any(nest.Contains)))
             .ToList();
         return touching.Count == 1 ? touching[0] : null;
     }
@@ -474,10 +476,12 @@ internal static class InterlinearJoin
     /// prints the word as many times as the source counts, because a count taken over another edition
     /// means nothing otherwise.
     ///
-    /// The count is tried on the printed form first and on the bare letters second. The source counts
-    /// spellings: <c>καὶ</c> and <c>καί</c> are two words to it, and so are two Hebrew words that
-    /// differ in an accent. The bare letters join those, which is right only where they give the same
-    /// total the source gives.
+    /// The count is tried on the printed form first, then, in Hebrew, on the letters and their accents,
+    /// and on the bare letters last. The source counts spellings: <c>καὶ</c> and <c>καί</c> are two
+    /// words to it, and so are two Hebrew words that differ in an accent. The bare letters join those,
+    /// which is right only where they give the same total the source gives. The accents tell them apart
+    /// again where the printed form cannot because the two editions put a vowel on another letter
+    /// (BHSA's יֹואָב, the source's יוֹאָב).
     /// </summary>
     private static (List<int> Words, bool Loose, InterlinearSpanFailure Failure) FindOriginal(
         IReadOnlyList<InterlinearWord> words,
@@ -497,23 +501,31 @@ internal static class InterlinearJoin
         var stated = span.Occurrences > 0 ? span.Occurrences : 1;
         var occurrence = span.Occurrence > 0 ? span.Occurrence : 1;
         var byWriting = Places(words.Count, written, at => writings[at]);
+        var byAccents = byWriting.Count == stated || language is not ("hbo" or "arc")
+            ? []
+            : ByAccents(words, morphemes);
         var (places, loose) = byWriting.Count == stated
             ? (byWriting, false)
-            : byLetters.Count == stated
-                ? (byLetters, true)
-                : (null, false);
+            : byAccents.Count == stated
+                ? (byAccents, false)
+                : byLetters.Count == stated
+                    ? (byLetters, true)
+                    : (null, false);
         if (places is null)
         {
             // The source counts whole printed words: אֶת standing alone is another spelling to it than the
             // אֶת of וְאֶת, which the witness holds as a word of its own after the conjunction.
             bool Whole(List<int> place) => (place[0] == 0 || !words[place[0] - 1].Attached) && !words[place[^1]].Attached;
             var wholeByWriting = byWriting.Where(Whole).ToList();
+            var wholeByAccents = byAccents.Where(Whole).ToList();
             var wholeByLetters = byLetters.Where(Whole).ToList();
             (places, loose) = wholeByWriting.Count == stated
                 ? (wholeByWriting, false)
-                : wholeByLetters.Count == stated
-                    ? (wholeByLetters, true)
-                    : (null, false);
+                : wholeByAccents.Count == stated
+                    ? (wholeByAccents, false)
+                    : wholeByLetters.Count == stated
+                        ? (wholeByLetters, true)
+                        : (null, false);
         }
 
         return places is null || occurrence > places.Count
@@ -689,6 +701,33 @@ internal static class InterlinearJoin
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// The places of a Hebrew word by its letters and cantillation accents. The accents are the
+    /// Masoretes' marks of how a word stands in its verse, so two editions of the same text agree on
+    /// them far more than on where they print a vowel; the vowels, dagesh, meteg and other points are
+    /// dropped.
+    /// </summary>
+    private static List<List<int>> ByAccents(IReadOnlyList<InterlinearWord> words, string[] morphemes)
+    {
+        var accented = words.Select(word => Accented(word.Written)).ToArray();
+        return Places(words.Count, [.. morphemes.Select(Accented)], at => accented[at]);
+    }
+
+    /// <summary>The letters and accents of a Hebrew word: <see cref="WordFolding.Fold"/>, keeping U+0591-U+05AF.</summary>
+    private static string Accented(string word)
+    {
+        var kept = new StringBuilder(word.Length);
+        foreach (var character in UnicodeNormalization.Composed(word))
+        {
+            if (character is <= '\u05AF' or > '\u05C7')
+            {
+                kept.Append(character);
+            }
+        }
+
+        return kept.ToString();
     }
 
     /// <summary>
