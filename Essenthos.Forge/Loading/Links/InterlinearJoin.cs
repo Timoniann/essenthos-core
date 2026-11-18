@@ -676,11 +676,11 @@ internal static class InterlinearJoin
     /// means nothing otherwise.
     ///
     /// The count is tried on the printed form first, then, in Hebrew, on the letters and their accents,
-    /// and on the bare letters last. The source counts spellings: <c>καὶ</c> and <c>καί</c> are two
-    /// words to it, and so are two Hebrew words that differ in an accent. The bare letters join those,
-    /// which is right only where they give the same total the source gives. The accents tell them apart
-    /// again where the printed form cannot because the two editions put a vowel on another letter
-    /// (BHSA's יֹואָב, the source's יוֹאָב).
+    /// then on those and the meteg, and on the bare letters last. The source counts spellings: <c>καὶ</c>
+    /// and <c>καί</c> are two words to it, and so are two Hebrew words that differ in an accent. The bare
+    /// letters join those, which is right only where they give the same total the source gives. The
+    /// accents tell them apart again where the printed form cannot because the two editions put a vowel
+    /// on another letter (BHSA's יֹואָב, the source's יוֹאָב).
     /// </summary>
     private static (List<int> Words, bool Loose, InterlinearSpanFailure Failure) FindOriginal(
         IReadOnlyList<InterlinearWord> words,
@@ -702,14 +702,19 @@ internal static class InterlinearJoin
         var byWriting = Places(words.Count, written, at => writings[at]);
         var byAccents = byWriting.Count == stated || language is not ("hbo" or "arc")
             ? []
-            : ByAccents(words, morphemes);
+            : ByAccents(words, morphemes, meteg: false);
+        var byMeteg = byWriting.Count == stated || byAccents.Count == stated || language is not ("hbo" or "arc")
+            ? []
+            : ByAccents(words, morphemes, meteg: true);
         var (places, loose) = byWriting.Count == stated
             ? (byWriting, false)
             : byAccents.Count == stated
                 ? (byAccents, false)
-                : byLetters.Count == stated
-                    ? (byLetters, true)
-                    : (null, false);
+                : byMeteg.Count == stated
+                    ? (byMeteg, false)
+                    : byLetters.Count == stated
+                        ? (byLetters, true)
+                        : (null, false);
         if (places is null)
         {
             // The source counts whole printed words: אֶת standing alone is another spelling to it than the
@@ -717,14 +722,17 @@ internal static class InterlinearJoin
             bool Whole(List<int> place) => (place[0] == 0 || !words[place[0] - 1].Attached) && !words[place[^1]].Attached;
             var wholeByWriting = byWriting.Where(Whole).ToList();
             var wholeByAccents = byAccents.Where(Whole).ToList();
+            var wholeByMeteg = byMeteg.Where(Whole).ToList();
             var wholeByLetters = byLetters.Where(Whole).ToList();
             (places, loose) = wholeByWriting.Count == stated
                 ? (wholeByWriting, false)
                 : wholeByAccents.Count == stated
                     ? (wholeByAccents, false)
-                    : wholeByLetters.Count == stated
-                        ? (wholeByLetters, true)
-                        : (null, false);
+                    : wholeByMeteg.Count == stated
+                        ? (wholeByMeteg, false)
+                        : wholeByLetters.Count == stated
+                            ? (wholeByLetters, true)
+                            : (null, false);
         }
 
         return places is null || occurrence > places.Count
@@ -905,22 +913,26 @@ internal static class InterlinearJoin
     /// <summary>
     /// The places of a Hebrew word by its letters and cantillation accents. The accents are the
     /// Masoretes' marks of how a word stands in its verse, so two editions of the same text agree on
-    /// them far more than on where they print a vowel; the vowels, dagesh, meteg and other points are
-    /// dropped.
+    /// them far more than on where they print a vowel; the vowels, dagesh and other points are dropped,
+    /// and the meteg too unless <paramref name="meteg"/> keeps it. The source counts אוֹ and אֽוֹ as two
+    /// spellings, and once the holam is dropped only the meteg tells them apart (Leviticus 25:49).
     /// </summary>
-    private static List<List<int>> ByAccents(IReadOnlyList<InterlinearWord> words, string[] morphemes)
+    private static List<List<int>> ByAccents(IReadOnlyList<InterlinearWord> words, string[] morphemes, bool meteg)
     {
-        var accented = words.Select(word => Accented(word.Written)).ToArray();
-        return Places(words.Count, [.. morphemes.Select(Accented)], at => accented[at]);
+        var accented = words.Select(word => Accented(word.Written, meteg)).ToArray();
+        return Places(words.Count, [.. morphemes.Select(morpheme => Accented(morpheme, meteg))], at => accented[at]);
     }
 
-    /// <summary>The letters and accents of a Hebrew word: <see cref="WordFolding.Fold"/>, keeping U+0591-U+05AF.</summary>
-    private static string Accented(string word)
+    /// <summary>
+    /// The letters and accents of a Hebrew word, and its meteg where asked: <see cref="WordFolding.Fold"/>,
+    /// keeping U+0591-U+05AF.
+    /// </summary>
+    private static string Accented(string word, bool meteg)
     {
         var kept = new StringBuilder(word.Length);
         foreach (var character in UnicodeNormalization.Composed(word))
         {
-            if (character is <= '\u05AF' or > '\u05C7')
+            if (character is <= '\u05AF' or > '\u05C7' || (meteg && character == '\u05BD'))
             {
                 kept.Append(character);
             }

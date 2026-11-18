@@ -444,6 +444,27 @@ public class InterlinearJoinTests
         pairs.Select(pair => (string.Join(',', pair.From), string.Join(',', pair.To))).Should().Equal(("1,2,3", "101,102"));
     }
 
+    /// <summary>
+    /// Leviticus 25:49: the source counts אוֹ, א֤וֹ and אֽוֹ as three spellings. BHSA puts the holam on the alef, so the
+    /// printed forms never match, and with the meteg dropped the accents cannot tell אוֹ from אֽוֹ.
+    /// </summary>
+    [Fact]
+    public void TheMetegTellsApartSpellingsTheAccentsCannot()
+    {
+        const string bhsaPlain = "אֹו";
+        const string bhsaMahapakh = "אֹ֤ו";
+        const string bhsaMeteg = "אֹֽו";
+        var (pairs, _) = Join(
+            [English("or"), English("or"), English("or"), English("or")],
+            [Hebrew(bhsaPlain), Hebrew("דֹדֹ֞ו"), Hebrew(bhsaMahapakh), Hebrew(bhsaMeteg), Hebrew(bhsaMeteg)],
+            Span("אוֹ", "or", occurrence: 1, occurrences: 1),
+            Span("א֤וֹ", "or", occurrence: 1, occurrences: 1),
+            Span("אֽוֹ", "or", occurrence: 1, occurrences: 2),
+            Span("אֽוֹ", "or", occurrence: 2, occurrences: 2));
+
+        pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((1L, 101L), (2L, 103L), (3L, 104L), (4L, 105L));
+    }
+
     private static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Join(
         IReadOnlyList<string> translated,
         IReadOnlyList<string> original,
