@@ -286,6 +286,72 @@ public sealed class StrongNumberFileTests : IDisposable
                 ("a", "H1961"), ("b", "H1961"), ("c", "H1961"), ("d", "H1961"), ("e", "H1961"), ("f", "H1961"), ("h", "H9005"), ("i", "H1732"));
     }
 
+    /// <summary>
+    /// P7 (owner, 2026-11-18): one word over two content words takes what it renders. «twelve» over שְׁנֵים עָשָׂר carries both, «12»
+    /// too; «eleven» over them, or «twelve» over numerals a word outside the link parts, none. «Lebo-hamath» over לְ + בֹא + חֲמָת
+    /// carries בּוֹא and חֲמָת, «hamath» rendering חֲמָת alone; «Sepharvaim» over עִיר סְפַרְוַיִם takes the name alone, its usual
+    /// rendering. «Israelites» over בְּנֵי יִשְׂרָאֵל is not how the text renders יִשְׂרָאֵל alone, so it takes none.
+    /// </summary>
+    [Fact]
+    public void OneWordOverSeveralContentWordsTakesWhatItRendersByMeaning()
+    {
+        (string, string)[] words =
+        [
+            ("1.1:1.1", "H8147"), ("1.1:1.2", "H6240"), ("1.2:1.1", "H5892"), ("1.2:1.2", "H5617"), ("1.3:1.1", "H9005"), ("1.3:1.2", "H935"),
+            ("1.3:1.3", "H2574"), ("1.4:1.1", "H5617"), ("1.5:1.1", "H2574"), ("1.6:1.1", "H1121"), ("1.6:1.2", "H3478"), ("1.7:1.1", "H3478"),
+            ("1.8:1.1", "H8147"), ("1.8:1.2", "H776"), ("1.8:1.3", "H6240"), ("1.9:1.1", "H8147"), ("1.9:1.2", "H6240"),
+            ("1.10:1.1", "H8147"), ("1.10:1.2", "H6240"),
+        ];
+        var lender = new ChainedNumbers.Lender(true, words.ToDictionary(w => w.Item1, w => (w.Item2, 0), StringComparer.Ordinal),
+            names: new HashSet<string>(["H5617", "H2574", "H3478"], StringComparer.Ordinal));
+        List<ChainedNumbers.Joined> links =
+        [
+            new(["a"], "HEB", ["1.1:1.1", "1.1:1.2"], null), new(["b"], "HEB", ["1.2:1.1", "1.2:1.2"], null),
+            new(["c", "d"], "HEB", ["1.3:1.1", "1.3:1.2", "1.3:1.3"], null), new(["e"], "HEB", ["1.4:1.1"], null),
+            new(["f"], "HEB", ["1.5:1.1"], null), new(["g"], "HEB", ["1.6:1.1", "1.6:1.2"], null), new(["h"], "HEB", ["1.7:1.1"], null),
+            new(["i"], "HEB", ["1.8:1.1", "1.8:1.3"], null), new(["j"], "HEB", ["1.9:1.1", "1.9:1.2"], null),
+            new(["k"], "HEB", ["1.10:1.1", "1.10:1.2"], null),
+        ];
+        List<(string, string?, string)> english =
+        [
+            ("a", null, "twelve"), ("b", null, "sepharvaim"), ("c", null, "to"), ("d", null, "lebo-hamath"), ("e", null, "sepharvaim"),
+            ("f", null, "hamath"), ("g", null, "israelites"), ("h", null, "israel"), ("i", null, "twelve"), ("j", null, "eleven"), ("k", null, "12"),
+        ];
+        var lenders = new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender };
+
+        ChainedNumbers.Resolve(english, links, lenders, new GroupNumbers("eng")).Where(n => n.Key is "a" or "b" or "c" or "d" or "g" or "i" or "j" or "k")
+            .Select(n => (n.Key, n.Number, Also: string.Join(" ", n.Also?.Select(a => $"{a.Number} {a.Source}") ?? [])))
+            .Should().Equal(("a", "H8147", "H6240 HEB 1.1:1.2"), ("b", "H5617", ""), ("c", "H9005", ""), ("d", "H935", "H2574 HEB 1.3:1.3"),
+                ("k", "H8147", "H6240 HEB 1.10:1.2"));
+        ChainedNumbers.Resolve(english, links, lenders, new GroupNumbers("eng", byMeaning: false)).Where(n => n.Key is "a" or "b" or "d")
+            .Should().BeEmpty();
+    }
+
+    /// <summary>A word carrying two numbers has a row for each in its text's file, and a translation reading that file takes both.</summary>
+    [Fact]
+    public void AWordCarryingTwoNumbersHasARowForEachAndLendsBoth()
+    {
+        var store = new ProductStore(_resources);
+        Declare(store, "HEB", "hbo", "critical-edition");
+        Declare(store, "ENG", "eng", "translation");
+        Declare(store, "RUS", "rus", "translation");
+        Words(store, "HEB", ("שְׁנֵים", "H8147"), ("עָשָׂר", "H6240"));
+        Words(store, "ENG", ("twelve", null));
+        Words(store, "RUS", ("двенадцать", null));
+        Final(store, "ENG-HEB", Link(1, "1.1:1.1", "1.1:1.1 1.1:1.2"));
+        Final(store, "RUS-ENG", Link(2, "1.1:1.1", "1.1:1.1"));
+        store.Save();
+
+        StrongNumberFiles.Make(new IndexContext(store), force: false, parallel: 2);
+
+        Numbers(store, "ENG").Should().Equal(
+            new StrongNumberRow(Key("ENG", 1), "H8147", 1, "HEB 1.1:1.1", null, null, null),
+            new StrongNumberRow(Key("ENG", 1), "H6240", 1, "HEB 1.1:1.2", null, null, null));
+        Numbers(store, "RUS").Should().Equal(
+            new StrongNumberRow(Key("RUS", 1), "H8147", 2, "ENG 1.1:1.1", null, null, null),
+            new StrongNumberRow(Key("RUS", 1), "H6240", 2, "ENG 1.1:1.1", null, null, null));
+    }
+
     [Fact]
     public void SynonymNumbersAreTheSameNumberInChecks()
     {
