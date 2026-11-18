@@ -1,0 +1,335 @@
+# product    Essenthos/texts/BHSA/corrections.tsv
+# producer   by hand
+# kinds      strong: the word's Strong number becomes after (none where after is \N); before is the word and, after a space, the number it carries until then
+# note       numbers the Open Hebrew Bible mapping (mapping/KJV-OT-mapped-to-BHS-full-mapping.csv) prints one word along: neighbours swapped, or a run carrying the next word's number (1 Chronicles 12:18-41), or a single word carrying the number of the word beside it (next to a ketiv the file numbers apart, a duplicate of a neighbour's number). Found where a word's number contradicts its BHSA lemma and fits a neighbour's, read against the lemma, Strong's dictionary, MACULA Hebrew and the King James tags by hand (PRB-1851)
+own	kind	before	after	why
+2.23:22.13	strong	אָֽיַבְתִּי֙ H341	H340	איב is H340 (אָיַב); the mapping file prints H341 (אֹיֵב) here, the number of אֹ֣יְבֶ֔יךָ
+2.23:22.15	strong	אֹ֣יְבֶ֔יךָ H340	H341	איב is H341 (אֹיֵב); the mapping file prints H340 (אָיַב) here, the number of אָֽיַבְתִּי֙
+3.7:9.14	strong	מַּרְחֶ֖שֶׁת H4227	H4802	מַרְחֶשֶׁת is H4802 (מַרְחֶשֶׁת); the mapping file prints H4227 (מַחֲבַת) here, the number of מַחֲבַ֑ת
+3.7:9.17	strong	מַחֲבַ֑ת H4802	H4227	מַחֲבַת is H4227 (מַחֲבַת); the mapping file prints H4802 (מַרְחֶשֶׁת) here, the number of מַּרְחֶ֖שֶׁת
+3.11:26.10	strong	שֶׁ֣סַע H8156	H8157	שֶׁסַע is H8157 (שֶׁסַע); the mapping file prints H8156 (שָׁסַע) here, the number of שֹׁסַ֗עַת
+3.11:26.12	strong	שֹׁסַ֗עַת H8157	H8156	שׁסע is H8156 (שָׁסַע); the mapping file prints H8157 (שֶׁסַע) here, the number of שֶׁ֣סַע
+3.15:19.5	strong	זָבָ֔ה H2101	H2100	זוב is H2100 (זוּב); the mapping file prints H2101 (זוֹב) here, the number of זֹבָ֖הּ
+3.15:19.8	strong	זֹבָ֖הּ H2100	H2101	זֹוב is H2101 (זוֹב); the mapping file prints H2100 (זוּב) here, the number of זָבָ֔ה
+3.19:26.7	strong	תְנַחֲשׁ֖וּ H6049	H5172	נחשׁ is H5172 (נָחַשׁ); the mapping file prints H6049 (עָנַן) here, the number of תְעֹונֵֽנוּ
+3.19:26.10	strong	תְעֹונֵֽנוּ H5172	H6049	ענן is H6049 (עָנַן); the mapping file prints H5172 (נָחַשׁ) here, the number of תְנַחֲשׁ֖וּ
+4.15:28.9	strong	שֹּׁגֶ֛גֶת H7684	H7683	שׁגג is H7683 (שָׁגַג); the mapping file prints H7684 (שְׁגָגָה) here, the number of שְׁגָגָ֖ה
+4.15:28.13	strong	שְׁגָגָ֖ה H7683	H7684	שְׁגָגָה is H7684 (שְׁגָגָה); the mapping file prints H7683 (שָׁגַג) here, the number of שֹּׁגֶ֛גֶת
+5.18:10.11	strong	קֹסֵ֣ם H7081	H7080	קסם is H7080 (קָסַם); the mapping file prints H7081 (קֶסֶם) here, the number of קְסָמִ֔ים
+5.18:10.12	strong	קְסָמִ֔ים H7080	H7081	קֶסֶם is H7081 (קֶסֶם); the mapping file prints H7080 (קָסַם) here, the number of קֹסֵ֣ם
+7.5:12.11	strong	שֲׁבֵ֥ה H7628	H7617	שׁבה is H7617 (שָׁבָה); the mapping file prints H7628 (שְׁבִי) here, the number of שֶׁבְיְךָ֖
+7.5:12.12	strong	שֶׁבְיְךָ֖ H7617	H7628	שְׁבִי is H7628 (שְׁבִי); the mapping file prints H7617 (שָׁבָה) here, the number of שֲׁבֵ֥ה
+8.3:17.13	strong	אַל H413	H408	אַל is H408 (אַל); the mapping file prints H413 (אֵל) here, a number no word of the verse carries
+8.3:17.16	strong	אֶל H408	H413	אֶל is H413 (אֵל); the mapping file prints H408 (אַל) here, the number of אַל
+10.10:6.36	strong	אֶ֖לֶף H376	H505	אֶלֶף is H505 (אֶלֶף); the mapping file prints H376 (אִישׁ) here, the number of אִֽישׁ
+10.10:6.37	strong	אִֽישׁ H505	H376	אִישׁ is H376 (אִישׁ); the mapping file prints H505 (אֶלֶף) here, the number of אֶ֖לֶף
+11.21:8.8	strong	תַּחְתֹּ֖ם H2368	H2856	חתם is H2856 (חָתַם); the mapping file prints H2368 (חוֹתָם) here, the number of חֹתָמֹ֑ו
+11.21:8.10	strong	חֹתָמֹ֑ו H2856	H2368	חֹותָם is H2368 (חוֹתָם); the mapping file prints H2856 (חָתַם) here, the number of תַּחְתֹּ֖ם
+13.10:13.5	strong	מַֽעֲלֹו֙ H4603	H4604	מַעַל is H4604 (מַעַל); the mapping file prints H4603 (מָעַל) here, the number of מָעַ֣ל
+13.10:13.7	strong	מָעַ֣ל H4604	H4603	מעל is H4603 (מָעַל); the mapping file prints H4604 (מַעַל) here, the number of מַֽעֲלֹו֙
+13.12:18.2	strong	יֵּצֵ֣א H1732	H3318	יצא is H3318 (יָצָא); the mapping file prints H1732 (דָּוִד) here, the number of דָוִיד֮
+13.12:18.3	strong	דָוִיד֮ H3318	H1732	דָּוִד is H1732 (דָּוִד); the mapping file prints H3318 (יָצָא) here, the number of יֵּצֵ֣א
+13.12:20.5	strong	עַל H5307	H5921	עַל is H5921 (עַל); the mapping file prints H5307 (נָפַל) here, the number of נָפְל֣וּ
+13.12:20.11	strong	עַל H4421	H5921	עַל is H5921 (עַל); the mapping file prints H4421 (מִלְחָמָה) here, the number of מִּלְחָמָ֖ה
+13.12:20.12	strong	שָׁא֛וּל H5921	H7586	שָׁאוּל is H7586 (שָׁאוּל); the mapping file prints H5921 (עַל) here, the number of עַל
+13.12:20.15	strong	מִּלְחָמָ֖ה H7586	H4421	מִלְחָמָה is H4421 (מִלְחָמָה); the mapping file prints H7586 (שָׁאוּל) here, the number of שָׁא֛וּל
+13.12:20.17	strong	לֹ֣א H5826	H3808	לֹא is H3808 (לֹא); the mapping file prints H5826 (עָזַר) here, the number of עֲזָרֻ֑ם
+13.12:22.11	strong	חַ֖יִל H3605	H2428	חַיִל is H2428 (חַיִל); the mapping file prints H3605 (כֹּל) here, the number of כֻּלָּ֑ם
+13.12:22.12	strong	כֻּלָּ֑ם H2428	H3605	כֹּל is H3605 (כֹּל); the mapping file prints H2428 (חַיִל) here, the number of חַ֖יִל
+13.12:31.15	strong	בֵ֥ית H1	H1004	בַּיִת is H1004 (בַּיִת); the mapping file prints H1 (אָב) here, the number of אֲבֹותָֽם
+13.12:31.16	strong	אֲבֹותָֽם H1004	H1	אָב is H1 (אָב); the mapping file prints H1004 (בַּיִת) here, the number of בֵ֥ית
+13.12:35.4	strong	שָׂרִ֣ים H505	H8269	שַׂר is H8269 (שַׂר); the mapping file prints H505 (אֶלֶף) here, the number of אָ֑לֶף
+13.12:35.5	strong	אָ֑לֶף H8269	H505	אֶלֶף is H505 (אֶלֶף); the mapping file prints H8269 (שַׂר) here, the number of שָׂרִ֣ים
+13.12:39.8	strong	לֵבָ֤ב H8003	H3824	לֵבָב is H3824 (לֵבָב); the mapping file prints H8003 (שָׁלֵם) here, the number of שָׁלֵם֙
+13.12:39.9	strong	שָׁלֵם֙ H3824	H8003	שָׁלֵם is H8003 (שָׁלֵם); the mapping file prints H3824 (לֵבָב) here, the number of לֵבָ֤ב
+13.12:40.4	strong	עִם H1732	H5973	עִם is H5973 (עִם); the mapping file prints H1732 (דָּוִד) here, the number of דָּוִיד֙
+13.12:40.5	strong	דָּוִיד֙ H3117	H1732	דָּוִד is H1732 (דָּוִד); the mapping file prints H3117 (יוֹם) here, the number of יָמִ֣ים
+13.12:40.6	strong	יָמִ֣ים H7969	H3117	יֹום is H3117 (יוֹם); the mapping file prints H7969 (שָׁלוֹשׁ) here, the number of שְׁלֹושָׁ֔ה
+13.12:40.7	strong	שְׁלֹושָׁ֔ה H398	H7969	שָׁלֹשׁ is H7969 (שָׁלוֹשׁ); the mapping file prints H398 (אָכַל) here, the number of אֹכְלִ֖ים
+13.12:40.8	strong	אֹכְלִ֖ים H8354	H398	אכל is H398 (אָכַל); the mapping file prints H8354 (שָׁתָה) here, the number of שֹׁותִ֑ים
+13.12:40.11	strong	כִּֽי H3559	H3588	כִּי is H3588 (כִּי); the mapping file prints H3559 (כּוּן) here, the number of הֵכִ֥ינוּ
+13.12:41.2	strong	גַ֣ם H7138	H1571	גַּם is H1571 (גַּם); the mapping file prints H7138 (קָרוֹב) here, the number of קְּרֹֽובִים
+13.12:41.5	strong	אֲ֠לֵיהֶם H5704	H413	אֶל is H413 (אֵל); the mapping file prints H5704 (עַד) here, the number of עַד
+13.12:41.6	strong	עַד H3485	H5704	עַד is H5704 (עַד); the mapping file prints H3485 (יִשָּׂשכָר) here, the number of יִשָׂשכָ֨ר
+13.12:41.7	strong	יִשָׂשכָ֨ר H2074	H3485	יִשָּׂשׂכָר is H3485 (יִשָּׂשכָר); the mapping file prints H2074 (זְבוּלוּן) here, the number of זְבֻל֜וּן
+13.12:41.9	strong	זְבֻל֜וּן H5321	H2074	זְבוּלֻן is H2074 (זְבוּלוּן); the mapping file prints H5321 (נַפְתָּלִי) here, the number of נַפְתָּלִ֗י
+13.12:41.11	strong	נַפְתָּלִ֗י H935	H5321	נַפְתָּלִי is H5321 (נַפְתָּלִי); the mapping file prints H935 (בּוֹא) here, the number of מְבִיאִ֣ים
+13.12:41.12	strong	מְבִיאִ֣ים H3899	H935	בוא is H935 (בּוֹא); the mapping file prints H3899 (לֶחֶם) here, the number of לֶ֡חֶם
+13.12:41.13	strong	לֶ֡חֶם H2543	H3899	לֶחֶם is H3899 (לֶחֶם); the mapping file prints H2543 (חֲמוֹר) here, the number of חֲמֹורִ֣ים
+13.12:41.16	strong	חֲמֹורִ֣ים H1581	H2543	חֲמֹור is H2543 (חֲמוֹר); the mapping file prints H1581 (גָּמָל) here, the number of גְּמַלִּ֣ים
+13.12:41.20	strong	גְּמַלִּ֣ים H6505	H1581	גָּמָל is H1581 (גָּמָל); the mapping file prints H6505 (פֶּרֶד) here, the number of פְּרָדִ֣ים
+13.12:41.24	strong	פְּרָדִ֣ים H1241	H6505	פֶּרֶד is H6505 (פֶּרֶד); the mapping file prints H1241 (בָּקָר) here, the number of בָּקָ֡ר
+13.12:41.28	strong	בָּקָ֡ר H7230	H1241	בָּקָר is H1241 (בָּקָר); the mapping file prints H7230 (רֹב) here, a number no word of the verse carries
+13.12:41.29	strong	מַאֲכָ֡ל H7058	H3978	מַאֲכָל is H3978 (מַאֲכָל); the mapping file prints H7058 (קֶמַח) here, the number of קֶ֠מַח
+13.12:41.33	strong	צִמּוּקִ֧ים H1690	H6778	צִמּוּקִים is H6778 (צַמּוּק); the mapping file prints H1690 (דְּבֵלָה) here, the number of דְּבֵלִ֨ים
+13.12:41.35	strong	יַֽיִן H6778	H3196	יַיִן is H3196 (יַיִן); the mapping file prints H6778 (צַמּוּק) here, the number of צִמּוּקִ֧ים
+13.12:41.37	strong	שֶׁ֛מֶן H3196	H8081	שֶׁמֶן is H8081 (שֶׁמֶן); the mapping file prints H3196 (יַיִן) here, the number of יַֽיִן
+13.12:41.39	strong	בָקָ֥ר H8081	H1241	בָּקָר is H1241 (בָּקָר); the mapping file prints H8081 (שֶׁמֶן) here, the number of שֶׁ֛מֶן
+13.12:41.41	strong	צֹ֖אן H1241	H6629	צֹאן is H6629 (צֹאן); the mapping file prints H1241 (בָּקָר) here, the number of בָקָ֥ר
+13.12:41.43	strong	רֹ֑ב H6629	H7230	רֹב is H7230 (רֹב); the mapping file prints H6629 (צֹאן) here, the number of צֹ֖אן
+14.6:22.9	strong	אָלָ֖ה H422	H423	אָלָה is H423 (אָלָה); the mapping file prints H422 (אָלָה) here, the number of הַֽאֲלֹתֹ֑ו
+14.6:22.11	strong	הַֽאֲלֹתֹ֑ו H423	H422	אלה is H422 (אָלָה); the mapping file prints H423 (אָלָה) here, the number of אָלָ֖ה
+14.30:22.10	strong	מַּשְׂכִּילִ֥ים H7922	H7919	שׂכל is H7919 (שָׂכַל); the mapping file prints H7922 (שֶׂכֶל) here, the number of שֵֽׂכֶל
+14.30:22.11	strong	שֵֽׂכֶל H7919	H7922	שֶׂכֶל is H7922 (שֶׂכֶל); the mapping file prints H7919 (שָׂכַל) here, the number of מַּשְׂכִּילִ֥ים
+18.38:41.9	strong	אֶל H410	H413	אֶל is H413 (אֵל); the mapping file prints H410 (אֵל) here, the number of אֵ֣ל
+18.38:41.10	strong	אֵ֣ל H413	H410	אֵל is H410 (אֵל); the mapping file prints H413 (אֵל) here, the number of אֶל
+18.42:5.2	strong	שֵֽׁמַע H8085	H8088	שֵׁמַע is H8088 (שֵׁמַע); the mapping file prints H8085 (שָׁמַע) here, the number of שְׁמַעְתִּ֑יךָ
+18.42:5.4	strong	שְׁמַעְתִּ֑יךָ H8088	H8085	שׁמע is H8085 (שָׁמַע); the mapping file prints H8088 (שֵׁמַע) here, the number of שֵֽׁמַע
+19.25:19.6	strong	שִׂנְאַ֖ת H8130	H8135	שִׂנְאָה is H8135 (שִׂנְאָה); the mapping file prints H8130 (שָׂנֵא) here, the number of שְׂנֵאֽוּנִי
+19.25:19.8	strong	שְׂנֵאֽוּנִי H8135	H8130	שׂנא is H8130 (שָׂנֵא); the mapping file prints H8135 (שִׂנְאָה) here, the number of שִׂנְאַ֖ת
+19.64:7.4	strong	חֵ֣פֶשׂ H2664	H2665	חֵפֶשׂ is H2665 (חֵפֶשׂ); the mapping file prints H2664 (חָפַשׂ) here, the number of מְחֻפָּ֑שׂ
+19.64:7.5	strong	מְחֻפָּ֑שׂ H2665	H2664	חפשׂ is H2664 (חָפַשׂ); the mapping file prints H2665 (חֵפֶשׂ) here, the number of חֵ֣פֶשׂ
+19.68:14.12	strong	אֶבְרֹותֶ֗יהָ H3422	H84	אֶבְרָה is H84 (אֶבְרָה); the mapping file prints H3422 (יְרַקְרַק) here, the number of ירַקְרַ֥ק
+19.68:14.14	strong	ירַקְרַ֥ק H84	H3422	יְרַקְרַק is H3422 (יְרַקְרַק); the mapping file prints H84 (אֶבְרָה) here, the number of אֶבְרֹותֶ֗יהָ
+19.83:18.4	strong	עֲדֵי H5703	H5704	עַד is H5704 (עַד); the mapping file prints H5703 (עַד) here, the number of עַ֗ד
+19.83:18.5	strong	עַ֗ד H5704	H5703	עַד is H5703 (עַד); the mapping file prints H5704 (עַד) here, the number of עֲדֵי
+19.92:8.13	strong	עֲדֵי H5703	H5704	עַד is H5704 (עַד); the mapping file prints H5703 (עַד) here, the number of עַֽד
+19.92:8.14	strong	עַֽד H5704	H5703	עַד is H5703 (עַד); the mapping file prints H5704 (עַד) here, the number of עֲדֵי
+19.129:7.2	strong	לֹּ֤א H4390	H3808	לֹא is H3808 (לֹא); the mapping file prints H4390 (מָלֵא) here, the number of מִלֵּ֖א
+19.144:9.2	strong	שִׁ֣יר H7891	H7892	שִׁיר is H7892 (שִׁיר); the mapping file prints H7891 (שִׁיר) here, the number of אָשִׁ֣ירָה
+19.144:9.4	strong	אָשִׁ֣ירָה H7892	H7891	שׁיר is H7891 (שִׁיר); the mapping file prints H7892 (שִׁיר) here, the number of שִׁ֣יר
+20.3:29.2	strong	תַּחֲרֹ֣שׁ H7451	H2790	חרשׁ is H2790 (חָרַשׁ); the mapping file prints H7451 (רַע) here, the number of רָעָ֑ה
+20.3:29.5	strong	רָעָ֑ה H2790	H7451	רָעָה is H7451 (רַע); the mapping file prints H2790 (חָרַשׁ) here, the number of תַּחֲרֹ֣שׁ
+20.5:22.8	strong	חַבְלֵ֥י H8551	H2256	חֶבֶל is H2256 (חֶבֶל); the mapping file prints H8551 (תָּמַךְ) here, the number of יִתָּמֵֽךְ
+20.5:22.10	strong	יִתָּמֵֽךְ H2256	H8551	תמך is H8551 (תָּמַךְ); the mapping file prints H2256 (חֶבֶל) here, the number of חַבְלֵ֥י
+20.24:31.5	strong	קִמְּשֹׂנִ֗ים H2738	H7063	קִמָּשֹׂון is H7063 (קִמָּשׁוֹן); the mapping file prints H2738 (חָרוּל) here, the number of חֲרֻלִּ֑ים
+20.24:31.8	strong	חֲרֻלִּ֑ים H7063	H2738	חָרוּל is H2738 (חָרוּל); the mapping file prints H7063 (קִמָּשׁוֹן) here, the number of קִמְּשֹׂנִ֗ים
+20.25:9.1	strong	רִֽ֭יבְךָ H7378	H7379	רִיב is H7379 (רִיב); the mapping file prints H7378 (רִיב) here, the number of רִ֣יב
+20.25:9.2	strong	רִ֣יב H7379	H7378	ריב is H7378 (רִיב); the mapping file prints H7379 (רִיב) here, the number of רִֽ֭יבְךָ
+23.30:10.19	strong	חֲז֖וּ H4123	H2372	חזה is H2372 (חָזָה); the mapping file prints H4123 (מַהֲתַלָּה) here, the number of מַהֲתַלֹּֽות
+23.30:10.20	strong	מַהֲתַלֹּֽות H2372	H4123	מַהֲתַלֹּות is H4123 (מַהֲתַלָּה); the mapping file prints H2372 (חָזָה) here, the number of חֲז֖וּ
+23.65:18.6	strong	עֲדֵי H5703	H5704	עַד is H5704 (עַד); the mapping file prints H5703 (עַד) here, the number of עַ֔ד
+23.65:18.7	strong	עַ֔ד H5704	H5703	עַד is H5703 (עַד); the mapping file prints H5704 (עַד) here, the number of עֲדֵי
+24.7:31.13	strong	בְּנֵיהֶ֥ם H1323	H1121	בֵּן is H1121 (בֵּן); the mapping file prints H1323 (בַּת) here, the number of בְּנֹתֵיהֶ֖ם
+24.7:31.16	strong	בְּנֹתֵיהֶ֖ם H1121	H1323	בַּת is H1323 (בַּת); the mapping file prints H1121 (בֵּן) here, the number of בְּנֵיהֶ֥ם
+24.12:1.17	strong	בֹּ֥גְדֵי H899	H898	בגד is H898 (בָּגַד); the mapping file prints H899 (בֶּגֶד) here, the number of בָֽגֶד
+24.12:1.18	strong	בָֽגֶד H898	H899	בֶּגֶד is H899 (בֶּגֶד); the mapping file prints H898 (בָּגַד) here, the number of בֹּ֥גְדֵי
+24.12:11.3	strong	שְׁמָמָ֔ה H8076	H8077	שְׁמָמָה is H8077 (שְׁמָמָה); the mapping file prints H8076 (שָׁמֵם) here, the number of שְׁמֵמָ֑ה
+24.12:11.6	strong	שְׁמֵמָ֑ה H8077	H8076	שָׁמֵם is H8076 (שָׁמֵם); the mapping file prints H8077 (שְׁמָמָה) here, the number of שְׁמָמָ֔ה
+24.14:17.19	strong	שֶׁ֨בֶר H7665	H7667	שֶׁבֶר is H7667 (שֶׁבֶר); the mapping file prints H7665 (שָׁבַר) here, the number of נִשְׁבְּרָ֗ה
+24.14:17.21	strong	נִשְׁבְּרָ֗ה H7667	H7665	שׁבר is H7665 (שָׁבַר); the mapping file prints H7667 (שֶׁבֶר) here, the number of שֶׁ֨בֶר
+24.29:17.23	strong	תְּאֵנִים֙ H8182	H8384	תְּאֵנָה is H8384 (תְּאֵן); the mapping file prints H8182 (שֹׁעָר) here, the number of שֹּׁ֣עָרִ֔ים
+24.29:17.25	strong	שֹּׁ֣עָרִ֔ים H8384	H8182	שֹׁעָר is H8182 (שֹׁעָר); the mapping file prints H8384 (תְּאֵן) here, the number of תְּאֵנִים֙
+24.44:21.5	strong	קִּטֵּ֗ר H6999	H7002	קִטֵּר is H7002 (קִטֵּר); the mapping file prints H6999 (קָטַר) here, the number of קִטַּרְתֶּ֜ם
+24.44:21.7	strong	קִטַּרְתֶּ֜ם H7002	H6999	קטר is H6999 (קָטַר); the mapping file prints H7002 (קִטֵּר) here, the number of קִּטֵּ֗ר
+26.17:20.16	strong	מַעֲלֹ֖ו H4603	H4604	מַעַל is H4604 (מַעַל); the mapping file prints H4603 (מָעַל) here, the number of מָֽעַל
+26.17:20.18	strong	מָֽעַל H4604	H4603	מעל is H4603 (מָעַל); the mapping file prints H4604 (מַעַל) here, the number of מַעֲלֹ֖ו
+26.18:24.28	strong	מַעֲלֹ֧ו H4603	H4604	מַעַל is H4604 (מַעַל); the mapping file prints H4603 (מָעַל) here, the number of מָעַ֛ל
+26.18:24.30	strong	מָעַ֛ל H4604	H4603	מעל is H4603 (מָעַל); the mapping file prints H4604 (מַעַל) here, the number of מַעֲלֹ֧ו
+26.20:27.21	strong	מַעֲלָ֥ם H4604	H4603	מעל is H4603 (מָעַל); the mapping file prints H4604 (מַעַל) here, the number of מָֽעַל
+26.20:27.23	strong	מָֽעַל H4603	H4604	מַעַל is H4604 (מַעַל); the mapping file prints H4603 (מָעַל) here, the number of מַעֲלָ֥ם
+26.21:15.2	strong	טְבֹ֤חַ H2874	H2873	טבח is H2873 (טָבַח); the mapping file prints H2874 (טֶבַח) here, the number of טֶ֨בַח֙
+26.21:15.3	strong	טֶ֨בַח֙ H2873	H2874	טֶבַח is H2874 (טֶבַח); the mapping file prints H2873 (טָבַח) here, the number of טְבֹ֤חַ
+26.21:31.20	strong	גָּבֹ֖הַ H8213	H1364	גָּבֹהַּ is H1364 (גָּבֹהַּ); the mapping file prints H8213 (שָׁפֵל) here, the number of הַשְׁפִּֽיל
+26.21:31.21	strong	הַשְׁפִּֽיל H1364	H8213	שׁפל is H8213 (שָׁפֵל); the mapping file prints H1364 (גָּבֹהַּ) here, the number of גָּבֹ֖הַ
+26.24:5.11	strong	רַתַּ֣ח H7571	H7570	רתח is H7570 (רָתַח); the mapping file prints H7571 (רֶתַח) here, the number of רְתָחֶ֔יהָ
+26.24:5.12	strong	רְתָחֶ֔יהָ H7570	H7571	רֶתַח is H7571 (רֶתַח); the mapping file prints H7570 (רָתַח) here, the number of רַתַּ֣ח
+26.28:8.6	strong	מַ֛תָּה H4463	H4191	מות is H4191 (מוּת); the mapping file prints H4463 (מָמוֹת) here, the number of מְמֹותֵ֥י
+26.28:8.7	strong	מְמֹותֵ֥י H4191	H4463	מְמֹותִים is H4463 (מָמוֹת); the mapping file prints H4191 (מוּת) here, the number of מַ֛תָּה
+26.32:16.1	strong	קִינָ֥ה H6969	H7015	קִינָה is H7015 (קִינָה); the mapping file prints H6969 (קוּן) here, the number of קֹ֣ונְנ֔וּהָ
+26.32:16.4	strong	קֹ֣ונְנ֔וּהָ H7015	H6969	קין is H6969 (קוּן); the mapping file prints H7015 (קִינָה) here, the number of קִינָ֥ה
+26.39:26.8	strong	מַעֲלָ֖ם H4603	H4604	מַעַל is H4604 (מַעַל); the mapping file prints H4603 (מָעַל) here, the number of מָעֲלוּ
+26.39:26.10	strong	מָעֲלוּ H4604	H4603	מעל is H4603 (מָעַל); the mapping file prints H4604 (מַעַל) here, the number of מַעֲלָ֖ם
+29.3:1.17	strong	חֲלֹמֹ֣ות H2492	H2472	חֲלֹום is H2472 (חֲלוֹם); the mapping file prints H2492 (חָלַם) here, the number of יַחֲלֹמ֔וּן
+29.3:1.18	strong	יַחֲלֹמ֔וּן H2472	H2492	חלם is H2492 (חָלַם); the mapping file prints H2472 (חֲלוֹם) here, the number of חֲלֹמֹ֣ות
+2.39:6.11	strong	פִּתּוּחֵ֣י H6605	H6603	פִּתּוּחַ is H6603; the mapping file prints H6605 here, the number of מְפֻתָּחֹת֙
+3.5:23.11	strong	גְּזֵלָ֜ה H1497	H1500	גְּזֵלָה is H1500; the mapping file prints H1497 here, the number of גָּזָ֗ל
+3.5:23.25	strong	הָפְקַ֖ד H6487	H6485	פקד is H6485; the mapping file prints H6487 here, the number of פִּקָּדֹ֔ון
+3.26:10.6	strong	יָשָׁ֕ן H3462	H3465	יָשָׁן is H3465; the mapping file prints H3462 here, the number of נֹושָׁ֑ן
+3.26:40.12	strong	מָֽעֲלוּ H4604	H4603	מעל is H4603; the mapping file prints H4604 here, the number of מַעֲלָ֖ם
+3.26:43.12	strong	מֵהֶ֔ם H1992	H4480	מִן is H4480; the mapping file prints H1992 here, the number of הֵ֖ם
+4.23:13.6	strong	נָּ֨א H1980	H4994	נָא is H4994; the mapping file prints H1980 here, the number of לך
+4.25:11.16	strong	קַנְאֹ֥ו H7068	H7065	קנא is H7065; the mapping file prints H7068 here, the number of קִנְאָתִ֖י
+5.21:10.16	strong	שִׁבְיֹֽו H7617	H7628	שְׁבִי is H7628; the mapping file prints H7617 here, the number of שָׁבִ֥יתָ
+6.6:15.11	strong	עֲלֹ֣ות H7837	H5927	עלה is H5927; the mapping file prints H7837 here, the number of שַּׁ֔חַר
+6.9:7.16	strong	לְךָ֥ H3772	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H3772 here, the number of אכרות
+6.19:13.15	strong	מְּתֹאָ֖ר H7417	H8388	תאר is H8388; the mapping file prints H7417 here, the number of רִמֹּ֥ון
+8.4:6.9	strong	לִ֔י H1350	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H1350 here, the number of גאול
+9.20:24.17	strong	לֶּ֖חֶם H413	H3899	לֶחֶם is H3899; the mapping file prints H413 here, a number the word beside it carries
+9.28:8.24	strong	נָ֥א H7080	H4994	נָא is H4994; the mapping file prints H7080 here, the number of קסומי
+10.14:7.38	strong	אִישִׁ֛י H7760	H376	אִישׁ is H376; the mapping file prints H7760 here, the number of שׂום
+12.16:17.17	strong	כִּיֹּ֔ר H853	H3595	כִּיֹּור is H3595; the mapping file prints H853 here, the number of ואת
+12.20:3.25	strong	בְּכִ֥י H1058	H1065	בְּכִי is H1065; the mapping file prints H1058 here, the number of יֵּ֥בְךְּ
+13.9:4.11	strong	בְּנֵי H1137	H1121	בֵּן is H1121; the mapping file prints H1137 here, a number the word beside it carries
+14.11:18.9	strong	יְרִימֹ֖ות H1323	H3406	יְרִימֹות is H3406; the mapping file prints H1323 here, a number the word beside it carries
+14.16:14.21	strong	מְרֻקָּחִ֖ים H4842	H7543	רקח is H7543; the mapping file prints H4842 here, the number of מִרְקַ֣חַת
+14.28:3.19	strong	הֹרִ֣ישׁ H3068	H3423	ירשׁ is H3423; the mapping file prints H3068 here, the number of יְהוָ֔ה
+14.30:3.17	strong	מַ H1767	H4100	מָה is H4100; the mapping file prints H1767 here, the number of דַּ֔י
+14.36:14.12	strong	מַ֔עַל H4603	H4604	מַעַל is H4604; the mapping file prints H4603 here, the number of מעול
+15.5:11.21	strong	מִ H6928	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H6928 here, the number of קַּדְמַ֤ת
+15.6:8.19	strong	מִ H5232	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H5232 here, the number of נִּכְסֵ֣י
+18.7:1.7	strong	אָ֑רֶץ H5921	H776	אֶרֶץ is H776; the mapping file prints H5921 here, the number of על
+18.9:30.5	strong	שָׁ֑לֶג H4325	H7950	שֶׁלֶג is H7950; the mapping file prints H4325 here, the number of מו
+19.30:4.9	strong	בֹֽור H3381	H953	בֹּור is H953; the mapping file prints H3381 here, the number of יורדי
+19.38:21.9	strong	טֹֽוב H7291	H2896	טֹוב is H2896; the mapping file prints H7291 here, the number of רדופי
+19.132:12.11	strong	עֲדֵי H5703	H5704	עַד is H5704; the mapping file prints H5703 here, the number of עַ֑ד
+19.132:14.3	strong	עֲדֵי H5703	H5704	עַד is H5704; the mapping file prints H5703 here, the number of עַ֑ד
+20.22:8.4	strong	אָ֑וֶן H7114	H205	אָוֶן is H205; the mapping file prints H7114 here, the number of יקצור
+20.22:14.8	strong	שָֽׁם H5307	H8033	שָׁם is H8033; the mapping file prints H5307 here, the number of יפול
+23.9:5.21	strong	אֲבִי H5703	H1	אָב is H1; the mapping file prints H5703 here, the number of עַ֖ד
+23.10:32.12	strong	צִיֹּ֔ון H1323	H6726	צִיֹּון is H6726; the mapping file prints H1323 here, a number the word beside it carries
+23.19:11.6	strong	יֹעֲצֵ֣י H6098	H3289	יעץ is H3289; the mapping file prints H6098 here, the number of עֵצָ֖ה
+23.21:5.6	strong	צָּפִ֖ית H6823	H6844	צָפִית is H6844; the mapping file prints H6823 here, the number of צָפֹ֥ה
+23.26:20.16	strong	זָֽעַם H5674	H2195	זַעַם is H2195; the mapping file prints H5674 here, the number of יעבור
+23.28:15.13	strong	שֹׁוטֵ֤ף H7752	H7857	שׁטף is H7857; the mapping file prints H7752 here, a number the word beside it carries
+23.30:10.5	strong	רֹאִים֙ H7200	H7203	רֹאֶה is H7203; the mapping file prints H7200 here, the number of תִרְא֔וּ
+23.32:8.3	strong	נְדִיבֹ֣ות H5081	H5082	נְדִיבָה is H5082; the mapping file prints H5081 here, the number of נָדִ֖יב
+23.32:8.8	strong	נְדִיבֹ֥ות H5081	H5082	נְדִיבָה is H5082, as MACULA has it and as the same word earlier in the verse is corrected; the mapping file prints H5081 here, the number of נָדִ֖יב
+23.38:3.27	strong	בְּכִ֥י H1058	H1065	בְּכִי is H1065; the mapping file prints H1058 here, the number of יֵּ֥בְךְּ
+23.65:7.23	strong	חֵיקָֽם H413	H2436	חֵיק is H2436; the mapping file prints H413 here, a number the word beside it carries
+24.3:19.22	strong	לִ֔י H7121	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H7121 here, the number of תקראו
+24.5:7.5	strong	לָ֔ךְ H5545	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H5545 here, the number of אסלוח
+24.10:11.13	strong	מֵֽ H772	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H772 here, the number of אַרְעָ֛א
+24.33:8.13	strong	עֲוֹנֹֽותֵיהֶם֙ H3605	H5771	עָוֹן is H5771; the mapping file prints H3605 here, the number of כול
+24.51:3.12	strong	אַֽל H413	H408	אַל is H408; the mapping file prints H413 here, the number of אֶל
+24.52:11.20	strong	פְּקֻדֹּ֖ת H1004	H6486	פְּקֻדָּה is H6486; the mapping file prints H1004 here, the number of בבית
+25.1:6.5	strong	צִיֹּ֖ון H1323	H6726	צִיֹּון is H6726; the mapping file prints H1323 here, the number of בת
+26.9:5.15	strong	תָּחֹ֥ס H408	H2347	חוס is H2347; the mapping file prints H408 here, the number of אַל
+26.13:7.9	strong	אֲמַרְתֶּ֑ם H1696	H559	אמר is H559; the mapping file prints H1696 here, a number the word beside it carries
+26.13:18.33	strong	לָכֶ֥נָה H2421	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H2421 here, the number of תְחַיֶּֽינָה
+26.21:28.6	strong	שָׁוְא֙ H7080	H7723	שָׁוְא is H7723; the mapping file prints H7080 here, the number of קסום
+26.24:2.4	strong	לְךָ֙ H3789	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H3789 here, the number of כתוב
+26.37:22.24	strong	עֹוד֙ H1961	H5750	עֹוד is H5750; the mapping file prints H1961 here, the number of יהיה
+26.44:3.10	strong	לֶ֖חֶם H398	H3899	לֶחֶם is H3899; the mapping file prints H398 here, the number of אכול
+27.2:38.21	strong	ה֔וּא H607	H1932	הוּא is H1932; the Aramaic הוּא, as its 12 other words are; the mapping file prints H607 here, the number of אנתה
+27.4:19.2	strong	ה֣וּא H607	H1932	הוּא is H1932; the Aramaic הוּא, as its 12 other words are; the mapping file prints H607 here, the number of אנתה
+27.4:30.17	strong	מִ H2920	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H2920 here, the number of טַּ֥ל
+27.5:13.14	strong	ה֤וּא H607	H1932	הוּא is H1932; the Aramaic הוּא, as its 12 other words are; the mapping file prints H607 here, the number of אנתה
+27.8:18.15	strong	עָמְדִֽי H5975	H5977	עֹמֶד is H5977; the mapping file prints H5975 here, the number of יַּֽעֲמִידֵ֖נִי
+27.10:11.18	strong	עָמְדֶ֔ךָ H5975	H5977	עֹמֶד is H5977; the mapping file prints H5975 here, the number of עֲמֹ֣ד
+28.9:16.7	strong	יַעֲשׂ֑וּן H1077	H6213	עשׂה is H6213; the mapping file prints H1077 here, a number the word beside it carries
+30.8:4.10	strong	אָֽרֶץ H6041	H776	אֶרֶץ is H776; the mapping file prints H6041 here, a number the word beside it carries
+34.1:3.6	strong	כֹּ֔חַ H1419	H3581	כֹּחַ is H3581; the mapping file prints H1419 here, the number of גדול
+34.2:1.20	strong	בָּ֥ךְ H5674	H9003	בְּ is H9003; every other בְּ with a suffix is H9003; the mapping file prints H5674 here, the number of עבור
+34.3:8.3	strong	מִ H4996	H4480	מִן is H4480; the mapping file prints H4996 here, a number the word beside it carries
+34.3:8.4	strong	נֹּ֣א אָמֹ֔ון H528	H4996	נֹא אָמוֹן is Thebes, H4996 (MACULA's first number, as נֹא is numbered in Jeremiah 46:25 and Ezekiel 30:14-16); the mapping file gives this word the number of אָמוֹן and the city's number to the מִ before it
+35.2:18.14	strong	יִצְרֹו֙ H3335	H3336	יֵצֶר is H3336; the mapping file prints H3335 here, the number of יֹצֵ֤ר
+1.27:3.16	strong	צידה H6720	H6718	ketiv: BHSA lemmatises it under the qere's word צַיִד, which is H6718, as MACULA numbers it; the mapping file numbers the ketiv as written (H6720)
+1.39:20.14	strong	אסורי H631	H615	ketiv: BHSA lemmatises it under the qere's word אָסִיר, which is H615, as MACULA numbers it; the mapping file numbers the ketiv as written (H631)
+2.37:8.23	strong	קצוותו H7118	H7098	ketiv: BHSA lemmatises it under the qere's word קָצָה, which is H7098, as MACULA numbers it; the mapping file numbers the ketiv as written (H7118)
+2.39:4.7	strong	קצוותו H7118	H7098	ketiv: BHSA lemmatises it under the qere's word קָצָה, which is H7098, as MACULA numbers it; the mapping file numbers the ketiv as written (H7118)
+4.1:16.2	strong	קריאי H7148	H7121	ketiv: BHSA lemmatises it under the qere's word קרא, which is H7121, as MACULA numbers it; the mapping file numbers the ketiv as written (H7148)
+5.28:27.9	strong	עפלים H6076	H2914	ketiv: BHSA lemmatises it under the qere's word טְחֹרִים, which is H2914, as MACULA numbers it; the mapping file numbers the ketiv as written (H6076)
+5.33:2.24	strong	דת H799	H1881	ketiv: BHSA lemmatises it under the qere's word דָּת, which is H1881, as MACULA numbers it; the mapping file numbers the ketiv as written (H799)
+6.8:16.9	strong	עיר H5892	H5857	ketiv: BHSA lemmatises it under the qere's word עַי, which is H5857, as MACULA numbers it; the mapping file numbers the ketiv as written (H5892)
+6.15:47.16	strong	גבול H1366	H1419	ketiv: BHSA lemmatises it under the qere's word גָּדֹול, which is H1419, as MACULA numbers it; the mapping file numbers the ketiv as written (H1366)
+7.11:37.28	strong	רעיתי H7474	H7464	ketiv: BHSA lemmatises it under the qere's word רֵעָה, which is H7464, as MACULA numbers it; the mapping file numbers the ketiv as written (H7474)
+9.4:13.10	strong	יך H5221	H3027	ketiv: BHSA lemmatises it under the qere's word יָד, which is H3027, as MACULA numbers it; the mapping file numbers the ketiv as written (H5221)
+9.5:6.15	strong	עפלים H6076	H2914	ketiv: BHSA lemmatises it under the qere's word טְחֹרִים, which is H2914, as MACULA numbers it; the mapping file numbers the ketiv as written (H6076)
+9.5:9.30	strong	עפלים H6076	H2914	ketiv: BHSA lemmatises it under the qere's word טְחֹרִים, which is H2914, as MACULA numbers it; the mapping file numbers the ketiv as written (H6076)
+9.5:12.10	strong	עפלים H6076	H2914	ketiv: BHSA lemmatises it under the qere's word טְחֹרִים, which is H2914, as MACULA numbers it; the mapping file numbers the ketiv as written (H6076)
+9.6:4.15	strong	עפלי H6076	H2914	ketiv: BHSA lemmatises it under the qere's word טְחֹרִים, which is H2914, as MACULA numbers it; the mapping file numbers the ketiv as written (H6076)
+9.6:5.4	strong	עפליכם H6076	H2914	ketiv: BHSA lemmatises it under the qere's word טְחֹרִים, which is H2914, as MACULA numbers it; the mapping file numbers the ketiv as written (H6076)
+9.14:27.33	strong	תראנה H7200	H215	ketiv: BHSA lemmatises it under the qere's word אור, which is H215, as MACULA numbers it; the mapping file numbers the ketiv as written (H7200)
+9.17:7.2	strong	חץ H2671	H6086	ketiv: BHSA lemmatises it under the qere's word עֵץ, which is H6086, as MACULA numbers it; the mapping file numbers the ketiv as written (H2671)
+9.17:23.18	strong	מערות H4630	H4634	ketiv: BHSA lemmatises it under the qere's word מַעֲרָכָה, which is H4634, as MACULA numbers it; the mapping file numbers the ketiv as written (H4630)
+9.20:24.15	strong	על H5921	H413	ketiv: BHSA lemmatises it under the qere's word אֶל, which is H413, as MACULA numbers it; the mapping file numbers the ketiv as written (H5921)
+9.20:38.17	strong	חצי H2678	H2671	ketiv: BHSA lemmatises it under the qere's word חֵץ, which is H2671, as MACULA numbers it; the mapping file numbers the ketiv as written (H2678)
+10.3:25.17	strong	מבואך H3996	H4126	ketiv: BHSA lemmatises it under the qere's word מֹובָא, which is H4126, as MACULA numbers it; the mapping file numbers the ketiv as written (H3996)
+10.11:24.2	strong	יראו H3372	H3384	ketiv: BHSA lemmatises it under the qere's word ירה, which is H3384, as MACULA numbers it; the mapping file numbers the ketiv as written (H3372)
+10.13:37.9	strong	עמיחור H5991	H5989	ketiv: BHSA lemmatises it under the qere's word עַמִּיהוּד, which is H5989, as MACULA numbers it; the mapping file numbers the ketiv as written (H5991)
+10.15:28.5	strong	עברות H5679	H6160	ketiv: BHSA lemmatises it under the qere's word עֲרָבָה, which is H6160, as MACULA numbers it; the mapping file numbers the ketiv as written (H5679)
+10.16:10.11	strong	כי H3588	H3541	ketiv: BHSA lemmatises it under the qere's word כֹּה, which is H3541, as MACULA numbers it; the mapping file numbers the ketiv as written (H3588)
+10.16:12.5	strong	עוני H5771	H5869	ketiv: BHSA lemmatises it under the qere's word עַיִן, which is H5869, as MACULA numbers it; the mapping file numbers the ketiv as written (H5771)
+10.20:14.16	strong	יקלהו H7035	H6950	ketiv: BHSA lemmatises it under the qere's word קהל, which is H6950, as MACULA numbers it; the mapping file numbers the ketiv as written (H7035)
+10.20:23.14	strong	כרי H3746	H3774	ketiv: BHSA lemmatises it under the qere's word כְּרֵתִי, which is H3774, as MACULA numbers it; the mapping file numbers the ketiv as written (H3746)
+10.21:12.26	strong	תלום H8518	H8511	ketiv: BHSA lemmatises it under the qere's word תלא, which is H8511, as MACULA numbers it; the mapping file numbers the ketiv as written (H8518)
+10.23:20.7	strong	חי H2416	H2428	ketiv: BHSA lemmatises it under the qere's word חַיִל, which is H2428, as MACULA numbers it; the mapping file numbers the ketiv as written (H2416)
+11.7:23.24	strong	קוה H6961	H6957	ketiv: BHSA lemmatises it under the qere's word קָו, which is H6957, as MACULA numbers it; the mapping file numbers the ketiv as written (H6961)
+11.12:33.25	strong	לבד H905	H3820	ketiv: BHSA lemmatises it under the qere's word לֵב, which is H3820, as MACULA numbers it; the mapping file numbers the ketiv as written (H905)
+12.3:24.18	strong	יבו H935	H5221	ketiv: BHSA lemmatises it under the qere's word נכה, which is H5221, as MACULA numbers it; the mapping file numbers the ketiv as written (H935)
+12.16:6.22	strong	ארמים H726	H130	ketiv: BHSA lemmatises it under the qere's word אֲדֹמִי, which is H130, as MACULA numbers it; the mapping file numbers the ketiv as written (H726)
+12.17:21.15	strong	ידא H5077	H5080	ketiv: BHSA lemmatises it under the qere's word נדח, which is H5080, as MACULA numbers it; the mapping file numbers the ketiv as written (H5077)
+12.17:31.22	strong	אלה H433	H430	ketiv: BHSA lemmatises it under the qere's word אֱלֹהִים, which is H430, as MACULA numbers it; the mapping file numbers the ketiv as written (H433)
+12.18:27.38	strong	יניהם H7890	H7272	ketiv: BHSA lemmatises it under the qere's word רֶגֶל, which is H7272, as MACULA numbers it; the mapping file numbers the ketiv as written (H7890)
+12.19:23.9	strong	רכב H7393	H7230	ketiv: BHSA lemmatises it under the qere's word רֹב, which is H7230, as MACULA numbers it; the mapping file numbers the ketiv as written (H7393)
+12.20:4.6	strong	העיר H5892	H2691	ketiv: BHSA lemmatises it under the qere's word חָצֵר, which is H2691, as MACULA numbers it; the mapping file numbers the ketiv as written (H5892)
+12.24:15.21	strong	אולי H193	H352	ketiv: BHSA lemmatises it under the qere's word אַיִל, which is H352, as MACULA numbers it; the mapping file numbers the ketiv as written (H193)
+23.10:32.11	strong	בית H1004	H1323	ketiv: BHSA lemmatises it under the qere's word בַּת, which is H1323, as MACULA numbers it; the mapping file numbers the ketiv as written (H1004)
+23.25:10.17	strong	במי H4325	H1119	ketiv: BHSA lemmatises it under the qere's word בְּמֹו, which is H1119, as MACULA numbers it; the mapping file numbers the ketiv as written (H4325)
+23.32:7.10	strong	ענוים H6035	H6041	ketiv: BHSA lemmatises it under the qere's word עָנִי, which is H6041, as MACULA numbers it; the mapping file numbers the ketiv as written (H6035)
+23.36:12.31	strong	חראיהם H2716	H6675	ketiv: BHSA lemmatises it under the qere's word צֹאָה, which is H6675, as MACULA numbers it; the mapping file numbers the ketiv as written (H2716)
+23.36:12.37	strong	ניהם H7890	H7272	ketiv: BHSA lemmatises it under the qere's word רֶגֶל, which is H7272, as MACULA numbers it; the mapping file numbers the ketiv as written (H7890)
+23.44:24.20	strong	מי H4325	H4480	ketiv: BHSA lemmatises it under the qere's word מִן, which is H4480, as MACULA numbers it; the mapping file numbers the ketiv as written (H4325)
+23.49:6.14	strong	נצירי H5336	H5341	ketiv: BHSA lemmatises it under the qere's word נצר, which is H5341, as MACULA numbers it; the mapping file numbers the ketiv as written (H5336)
+23.54:16.1	strong	הן H2005	H2009	ketiv: BHSA lemmatises it under the qere's word הִנֵּה, which is H2009, as MACULA numbers it; the mapping file numbers the ketiv as written (H2005)
+23.65:4.17	strong	פרק H6564	H4839	ketiv: BHSA lemmatises it under the qere's word מָרָק, which is H4839, as MACULA numbers it; the mapping file numbers the ketiv as written (H6564)
+23.65:7.22	strong	על H5921	H413	ketiv: BHSA lemmatises it under the qere's word אֶל, which is H413, as MACULA numbers it; the mapping file numbers the ketiv as written (H5921)
+24.2:20.11	strong	אעבד H5647	H5674	ketiv: BHSA lemmatises it under the qere's word עבר, which is H5674, as MACULA numbers it; the mapping file numbers the ketiv as written (H5647)
+24.2:25.6	strong	גורנך H1637	H1627	ketiv: BHSA lemmatises it under the qere's word גָּרֹון, which is H1627, as MACULA numbers it; the mapping file numbers the ketiv as written (H1637)
+24.4:19.3	strong	אחולה H2342	H3176	ketiv: BHSA lemmatises it under the qere's word יחל, which is H3176, as MACULA numbers it; the mapping file numbers the ketiv as written (H2342)
+24.15:4.4	strong	זועה H2113	H2189	ketiv: BHSA lemmatises it under the qere's word זַעֲוָה, which is H2189, as MACULA numbers it; the mapping file numbers the ketiv as written (H2113)
+24.17:8.15	strong	ירא H3372	H7200	ketiv: BHSA lemmatises it under the qere's word ראה, which is H7200, as MACULA numbers it; the mapping file numbers the ketiv as written (H3372)
+24.18:3.8	strong	הו H2009	H1931	ketiv: BHSA lemmatises it under the qere's word הוּא, which is H1931, as MACULA numbers it; the mapping file numbers the ketiv as written (H2009)
+24.24:9.4	strong	זועה H2113	H2189	ketiv: BHSA lemmatises it under the qere's word זַעֲוָה, which is H2189, as MACULA numbers it; the mapping file numbers the ketiv as written (H2113)
+24.26:18.1	strong	מיכיה H4320	H4318	ketiv: BHSA lemmatises it under the qere's word מִיכָה, which is H4318, as MACULA numbers it; the mapping file numbers the ketiv as written (H4320)
+24.29:18.17	strong	זועה H2113	H2189	ketiv: BHSA lemmatises it under the qere's word זַעֲוָה, which is H2189, as MACULA numbers it; the mapping file numbers the ketiv as written (H2113)
+24.29:23.24	strong	וידע H1931	H3045	ketiv: BHSA lemmatises it under the qere's word ידע, which is H3045, as MACULA numbers it; the mapping file numbers the ketiv as written (H1931)
+24.31:39.4	strong	קוה H6961	H6957	ketiv: BHSA lemmatises it under the qere's word קָו, which is H6957, as MACULA numbers it; the mapping file numbers the ketiv as written (H6961)
+24.34:17.39	strong	זועה H2113	H2189	ketiv: BHSA lemmatises it under the qere's word זַעֲוָה, which is H2189, as MACULA numbers it; the mapping file numbers the ketiv as written (H2113)
+24.42:6.11	strong	אנו H580	H587	ketiv: BHSA lemmatises it under the qere's word אֲנַחְנוּ, which is H587, as MACULA numbers it; the mapping file numbers the ketiv as written (H580)
+24.48:44.2	strong	ניס H5211	H5127	ketiv: BHSA lemmatises it under the qere's word נוס, which is H5127, as MACULA numbers it; the mapping file numbers the ketiv as written (H5211)
+24.49:28.9	strong	נבוכדראצור H5020	H5019	ketiv: BHSA lemmatises it under the qere's word נְבוּכַדְרֶאצַּר, which is H5019, as MACULA numbers it; the mapping file numbers the ketiv as written (H5020)
+26.4:6.10	strong	ימוני H3227	H3233	ketiv: BHSA lemmatises it under the qere's word יְמָנִי, which is H3233, as MACULA numbers it; the mapping file numbers the ketiv as written (H3227)
+26.9:5.14	strong	על H5921	H408	ketiv: BHSA lemmatises it under the qere's word אַל, which is H408, as MACULA numbers it; the mapping file numbers the ketiv as written (H5921)
+26.25:7.10	strong	בג H897	H957	ketiv: BHSA lemmatises it under the qere's word בַּז, which is H957, as MACULA numbers it; the mapping file numbers the ketiv as written (H897)
+26.41:8.9	strong	מיסדות H3245	H4145	ketiv: BHSA lemmatises it under the qere's word מוּסָדָה, which is H4145, as MACULA numbers it; the mapping file numbers the ketiv as written (H3245)
+26.42:9.9	strong	מבוא H3996	H935	ketiv: BHSA lemmatises it under the qere's word בוא, which is H935, as MACULA numbers it; the mapping file numbers the ketiv as written (H3996)
+26.42:16.10	strong	אמות H520	H3967	ketiv: BHSA lemmatises it under the qere's word מֵאָה, which is H3967, as MACULA numbers it; the mapping file numbers the ketiv as written (H520)
+28.8:12.3	strong	רבו H7239	H7230	ketiv: BHSA lemmatises it under the qere's word רֹב, which is H7230, as MACULA numbers it; the mapping file numbers the ketiv as written (H7239)
+28.9:16.6	strong	בלי H1097	H1077	ketiv: BHSA lemmatises it under the qere's word בַּל, which is H1077, as MACULA numbers it; the mapping file numbers the ketiv as written (H1097)
+28.10:10.13	strong	עינתם H5868	H5771	ketiv: BHSA lemmatises it under the qere's word עָוֹן, which is H5771, as MACULA numbers it; the mapping file numbers the ketiv as written (H5868)
+30.8:4.9	strong	ענוי H6035	H6041	ketiv: BHSA lemmatises it under the qere's word עָנִי, which is H6041, as MACULA numbers it; the mapping file numbers the ketiv as written (H6035)
+38.1:16.17	strong	קוה H6961	H6957	ketiv: BHSA lemmatises it under the qere's word קָו, which is H6957, as MACULA numbers it; the mapping file numbers the ketiv as written (H6961)
+38.11:2.16	strong	בצור H1219	H1210	ketiv: BHSA lemmatises it under the qere's word בָּצִיר, which is H1210, as MACULA numbers it; the mapping file numbers the ketiv as written (H1219)
+19.9:13.9	strong	עניים H6041	H6035	ketiv: BHSA lemmatises it under the qere's word עָנָו, which is H6035, as MACULA numbers it; the mapping file numbers the ketiv as written (H6041)
+19.9:19.8	strong	ענוים H6035	H6041	ketiv: BHSA lemmatises it under the qere's word עָנִי, which is H6041, as MACULA numbers it; the mapping file numbers the ketiv as written (H6035)
+19.10:12.8	strong	עניים H6041	H6035	ketiv: BHSA lemmatises it under the qere's word עָנָו, which is H6035, as MACULA numbers it; the mapping file numbers the ketiv as written (H6041)
+19.17:14.14	strong	צפינך H6840	H6845	ketiv: BHSA lemmatises it under the qere's word צפן, which is H6845, as MACULA numbers it; the mapping file numbers the ketiv as written (H6840)
+19.18:51.1	strong	מגדל H2167	H1431	ketiv: BHSA lemmatises it under the qere's word גדל, which is H1431, as MACULA numbers it; the mapping file numbers the ketiv as written (H2167)
+19.49:15.17	strong	צירם H6736	H6697	ketiv: BHSA lemmatises it under the qere's word צוּר, which is H6697, as MACULA numbers it; the mapping file numbers the ketiv as written (H6736)
+19.55:16.2	strong	מות H3451	H4194	ketiv: BHSA lemmatises it under the qere's word מָוֶת, which is H4194, as MACULA numbers it; the mapping file numbers the ketiv as written (H3451)
+19.60:7.7	strong	עננו H6032	H6030	ketiv: BHSA lemmatises it under the qere's word ענה, which is H6030, as MACULA numbers it; the mapping file numbers the ketiv as written (H6032)
+18.6:2.6	strong	היתי H1962	H1942	ketiv: BHSA lemmatises it under the qere's word הַוָּה, which is H1942, as MACULA numbers it; the mapping file numbers the ketiv as written (H1962)
+18.21:13.1	strong	יבלו H1086	H3615	ketiv: BHSA lemmatises it under the qere's word כלה, which is H3615, as MACULA numbers it; the mapping file numbers the ketiv as written (H1086)
+18.33:19.8	strong	ריב H7379	H7230	ketiv: BHSA lemmatises it under the qere's word רֹב, which is H7230, as MACULA numbers it; the mapping file numbers the ketiv as written (H7379)
+20.3:34.9	strong	עניים H6041	H6035	ketiv: BHSA lemmatises it under the qere's word עָנָו, which is H6035, as MACULA numbers it; the mapping file numbers the ketiv as written (H6041)
+20.14:21.7	strong	עניים H6041	H6035	ketiv: BHSA lemmatises it under the qere's word עָנָו, which is H6035, as MACULA numbers it; the mapping file numbers the ketiv as written (H6041)
+20.15:14.6	strong	פני H6440	H6310	ketiv: BHSA lemmatises it under the qere's word פֶּה, which is H6310, as MACULA numbers it; the mapping file numbers the ketiv as written (H6440)
+20.16:19.5	strong	עניים H6041	H6035	ketiv: BHSA lemmatises it under the qere's word עָנָו, which is H6035, as MACULA numbers it; the mapping file numbers the ketiv as written (H6041)
+20.17:27.5	strong	וקר H7119	H3368	ketiv: BHSA lemmatises it under the qere's word יָקָר, which is H3368, as MACULA numbers it; the mapping file numbers the ketiv as written (H7119)
+20.19:19.1	strong	גרל H1632	H1419	ketiv: BHSA lemmatises it under the qere's word גָּדֹול, which is H1419, as MACULA numbers it; the mapping file numbers the ketiv as written (H1632)
+20.20:21.2	strong	מבחלת H973	H926	ketiv: BHSA lemmatises it under the qere's word בהל, which is H926, as MACULA numbers it; the mapping file numbers the ketiv as written (H973)
+20.20:30.3	strong	תמריק H4838	H8562	ketiv: BHSA lemmatises it under the qere's word תַּמְרוּק, which is H8562, as MACULA numbers it; the mapping file numbers the ketiv as written (H4838)
+20.21:29.9	strong	יכין H3559	H995	ketiv: BHSA lemmatises it under the qere's word בין, which is H995, as MACULA numbers it; the mapping file numbers the ketiv as written (H3559)
+20.23:26.8	strong	תרצנה H7521	H5341	ketiv: BHSA lemmatises it under the qere's word נצר, which is H5341, as MACULA numbers it; the mapping file numbers the ketiv as written (H7521)
+20.23:31.10	strong	כיס H3599	H3563	ketiv: BHSA lemmatises it under the qere's word כֹּוס, which is H3563, as MACULA numbers it; the mapping file numbers the ketiv as written (H3599)
+20.27:10.3	strong	רעה H7463	H7453	ketiv: BHSA lemmatises it under the qere's word רֵעַ, which is H7453, as MACULA numbers it; the mapping file numbers the ketiv as written (H7463)
+20.31:4.15	strong	או H176	H335	ketiv: BHSA lemmatises it under the qere's word אֵי, which is H335, as MACULA numbers it; the mapping file numbers the ketiv as written (H176)
+8.2:1.4	strong	מידע H3045	H4129	ketiv: BHSA lemmatises it under the qere's word מֹדָע, which is H4129, as MACULA numbers it; the mapping file numbers the ketiv as written (H3045)
+8.3:14.10	strong	טרום H2958	H2962	ketiv: BHSA lemmatises it under the qere's word טֶרֶם, which is H2962, as MACULA numbers it; the mapping file numbers the ketiv as written (H2958)
+21.9:4.4	strong	יבחר H977	H2266	ketiv: BHSA lemmatises it under the qere's word חבר, which is H2266, as MACULA numbers it; the mapping file numbers the ketiv as written (H977)
+21.12:6.4	strong	ירחק H7368	H7576	ketiv: BHSA lemmatises it under the qere's word רתק, which is H7576, as MACULA numbers it; the mapping file numbers the ketiv as written (H7368)
+25.1:11.7	strong	מחמודיהם H4262	H4261	ketiv: BHSA lemmatises it under the qere's word מַחְמָד, which is H4261, as MACULA numbers it; the mapping file numbers the ketiv as written (H4262)
+25.4:17.1	strong	עודינה H5751	H5750	ketiv: BHSA lemmatises it under the qere's word עֹוד, which is H5750, as MACULA numbers it; the mapping file numbers the ketiv as written (H5751)
+17.8:13.22	strong	עתודים H6259	H6264	ketiv: BHSA lemmatises it under the qere's word עָתִיד, which is H6264, as MACULA numbers it; the mapping file numbers the ketiv as written (H6259)
+27.9:24.16	strong	חתם H2856	H8552	ketiv: BHSA lemmatises it under the qere's word תמם, which is H8552, as MACULA numbers it; the mapping file numbers the ketiv as written (H2856)
+15.2:1.14	strong	נבוכדנצור H5020	H5019	ketiv: BHSA lemmatises it under the qere's word נְבוּכַדְנֶאצַּר, which is H5019, as MACULA numbers it; the mapping file numbers the ketiv as written (H5020)
+15.8:14.7	strong	זבוד H2072	H2139	ketiv: BHSA lemmatises it under the qere's word זַכּוּר, which is H2139, as MACULA numbers it; the mapping file numbers the ketiv as written (H2072)
+15.8:17.2	strong	אוצאה H3318	H6680	ketiv: BHSA lemmatises it under the qere's word צוה, which is H6680, as MACULA numbers it; the mapping file numbers the ketiv as written (H3318)
+16.3:20.6	strong	זבי H2079	H2140	ketiv: BHSA lemmatises it under the qere's word זַכָּי, which is H2140, as MACULA numbers it; the mapping file numbers the ketiv as written (H2079)
+16.4:7.15	strong	צחחיים H6708	H6706	ketiv: BHSA lemmatises it under the qere's word צָחִיחַ, which is H6706, as MACULA numbers it; the mapping file numbers the ketiv as written (H6708)
+16.9:6.6	strong	את H853	H859	ketiv: BHSA lemmatises it under the qere's word אַתָּה, which is H859, as MACULA numbers it; the mapping file numbers the ketiv as written (H853)
+13.4:7.6	strong	צחר H3328	H6714	ketiv: BHSA lemmatises it under the qere's word צֹחַר, which is H6714, as MACULA numbers it; the mapping file numbers the ketiv as written (H3328)
+13.9:4.9	strong	בני H1144	H1137	ketiv: BHSA lemmatises it under the qere's word בָּנִי, which is H1137, as MACULA numbers it; the mapping file numbers the ketiv as written (H1144)
+13.9:33.13	strong	פטירים H6358	H6362	ketiv: BHSA lemmatises it under the qere's word פטר, which is H6362, as MACULA numbers it; the mapping file numbers the ketiv as written (H6358)
+13.25:1.18	strong	נביאים H5030	H5012	ketiv: BHSA lemmatises it under the qere's word נבא, which is H5012, as MACULA numbers it; the mapping file numbers the ketiv as written (H5030)
+14.3:17.22	strong	ימיני H3227	H3233	ketiv: BHSA lemmatises it under the qere's word יְמָנִי, which is H3233, as MACULA numbers it; the mapping file numbers the ketiv as written (H3227)
+14.8:10.5	strong	נציבים H5333	H5324	ketiv: BHSA lemmatises it under the qere's word נצב, which is H5324, as MACULA numbers it; the mapping file numbers the ketiv as written (H5333)
+14.11:18.8	strong	בן H1121	H1323	ketiv: BHSA lemmatises it under the qere's word בַּת, which is H1323, as MACULA numbers it; the mapping file numbers the ketiv as written (H1121)
+14.18:8.11	strong	מיכהו H4318	H4321	ketiv: BHSA lemmatises it under the qere's word מִיכָיְהוּ, which is H4321, as MACULA numbers it; the mapping file numbers the ketiv as written (H4318)
+14.24:27.3	strong	ורב H7230	H7235	ketiv: BHSA lemmatises it under the qere's word רבה, which is H7235, as MACULA numbers it; the mapping file numbers the ketiv as written (H7230)
+14.29:8.12	strong	זועה H2113	H2189	ketiv: BHSA lemmatises it under the qere's word זַעֲוָה, which is H2189, as MACULA numbers it; the mapping file numbers the ketiv as written (H2113)
+14.33:16.2	strong	יכן H3559	H1129	ketiv: BHSA lemmatises it under the qere's word בנה, which is H1129, as MACULA numbers it; the mapping file numbers the ketiv as written (H3559)
+25.5:18.5	strong	שָּׁמֵ֔ם H8076	H8074	שָׁמֵם here is the verb, "which is desolate", H8074 as MACULA has it; the mapping file gives the verb's number to the relative שֶׁ before it
+35.2:18.6	strong	יֹֽצְרֹ֔ו H3336	H3335	יֹצֵר, the participle of יצר, is H3335, as MACULA numbers it; the mapping file prints H3336 here, the number of יִצְרֹו֙ eight words on

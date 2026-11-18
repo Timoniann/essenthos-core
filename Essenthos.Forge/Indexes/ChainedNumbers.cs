@@ -15,13 +15,24 @@ namespace Essenthos.Core.Indexes;
 /// stated or ruled counts as sure), then the shorter chain, then the number the same form of the text carries most often
 /// where it carries one number alone (a source joining 神 to אֱלֹהִים מִן הָעֲבֹדָה gives it God's number, as 神 takes everywhere
 /// else), then the number fewer words of the lending text carry (of an article and the noun it governs, joined in one link to
-/// one word, the noun's), then the number and the word lending it in ordinal order.
+/// one word, the noun's), then the number and the word lending it in ordinal order. The relative שֶׁ is counted with אֲשֶׁר in
+/// both counts (<see cref="CountedAs"/>).
 /// </para>
 /// </summary>
 internal static class ChainedNumbers
 {
     /// <summary>The confidence from which a link is sure enough for a word's own number to be held against the number it gives.</summary>
     public const double Reliable = 0.9;
+
+    /// <summary>
+    /// Numbers counted with another's for the tie-breaks: the relative שֶׁ (H7945) is the short form of אֲשֶׁר (H834), so a form
+    /// whose most usual number is אֲשֶׁר's takes it, and against a content word joined with it in one link it counts as common as
+    /// אֲשֶׁר.
+    /// </summary>
+    private static readonly Dictionary<string, string> CountedAs = new(StringComparer.Ordinal) { ["H7945"] = "H834" };
+
+    private static int Counted(string number, Func<string, int> count) =>
+        count(number) + (CountedAs.TryGetValue(number, out var with) ? count(with) : 0);
 
     /// <summary>A text whose words a text's links reach, with the numbers it lends: by own key, the number and the links it took to reach it.</summary>
     internal sealed class Lender(bool original, IReadOnlyDictionary<string, (string Number, int Hops)> numbers)
@@ -37,7 +48,7 @@ internal static class ChainedNumbers
 
         public bool TryGet(string key, out (string Number, int Hops) lent) => numbers.TryGetValue(key, out lent);
 
-        public int Occurrences(string number) => _occurrences.Value.GetValueOrDefault(number);
+        public int Occurrences(string number) => Counted(number, n => _occurrences.Value.GetValueOrDefault(n));
     }
 
     /// <summary>A renders or equals link of the text: its words in it, the other text and the other text's words in it.</summary>
@@ -99,11 +110,16 @@ internal static class ChainedNumbers
             }
         }
 
+        var most = usual.GroupBy(u => u.Key.Form).ToDictionary(g => g.Key, g => g.Max(u => u.Value));
+
         var numbered = new List<Numbered>();
         foreach (var (key, own, form) in listed)
         {
             var reached = candidates.GetValueOrDefault(key);
-            int Usual(Candidate c) => usual.GetValueOrDefault((form, c.Number));
+            int Usual(Candidate c) =>
+                CountedAs.TryGetValue(c.Number, out var with) && usual.GetValueOrDefault((form, with)) == most.GetValueOrDefault(form, -1)
+                    ? Counted(c.Number, n => usual.GetValueOrDefault((form, n)))
+                    : usual.GetValueOrDefault((form, c.Number));
             if (own is not null)
             {
                 var disagreeing = reached is null ? null : Disagreeing(own, reached, Usual);

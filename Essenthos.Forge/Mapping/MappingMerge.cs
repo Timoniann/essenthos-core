@@ -166,6 +166,7 @@ internal static class MappingMerge
         var pinned = Rule(input, entries);
         Floor(input, entries);
         Supersede(entries);
+        Pin(input, entries);
         if (laid)
         {
             NarrowLaidStrong(entries, pinned, input.Yielded ?? [], report);
@@ -593,6 +594,26 @@ internal static class MappingMerge
         }
     }
 
+    /// <summary>
+    /// An accepted shape no standing claim proposes becomes a link of method ruling. Run after the steps that withdraw
+    /// claims (floors, supersession), so a shape proposed only by a claim they withdraw still stands.
+    /// </summary>
+    private static void Pin(Input input, List<Entry> entries)
+    {
+        foreach (var ruling in input.Rulings.Where(r => r.Action == RulingRow.Accept))
+        {
+            var from = Normal(ruling.From, input.FromText);
+            var to = Normal(ruling.To, input.ToText);
+            var shape = from + "|" + to;
+            if (!entries.Any(e => e.Status is null && e.Row.Shape == shape))
+            {
+                entries.Add(new Entry(MappingMethods.Ruling, -1, new MappingRow(from, to,
+                    ruling.Relation.Length == 0 ? "renders" : ruling.Relation, MappingMethods.Ruling, null,
+                    "a ruling of this project: " + ruling.Reason, null, null, null), false));
+            }
+        }
+    }
+
     /// <summary>Applies the rulings; returns the pinned shapes.</summary>
     private static HashSet<string> Rule(Input input, List<Entry> entries)
     {
@@ -605,15 +626,7 @@ internal static class MappingMerge
             bool Related(Entry e) => ruling.Relation.Length == 0 || e.Row.Relation == ruling.Relation;
             if (ruling.Action == RulingRow.Accept)
             {
-                var shape = from + "|" + to;
-                pinned.Add(shape);
-                if (!entries.Any(e => e.Status is null && e.Row.Shape == shape))
-                {
-                    entries.Add(new Entry(MappingMethods.Ruling, -1, new MappingRow(from, to,
-                        ruling.Relation.Length == 0 ? "renders" : ruling.Relation, MappingMethods.Ruling, null,
-                        "a ruling of this project: " + ruling.Reason, null, null, null), false));
-                }
-
+                pinned.Add(from + "|" + to);
                 continue;
             }
 

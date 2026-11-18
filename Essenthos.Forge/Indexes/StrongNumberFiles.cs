@@ -58,7 +58,7 @@ internal sealed record StrongDisagreementRow(string Text, long Own, long FromOri
 internal static class StrongNumberFiles
 {
     /// <summary>Raised with any change to the rule; a file made by another version is made again whatever its inputs say.</summary>
-    public const string Version = "1";
+    public const string Version = "2";
 
     public const string VersionNote = "numbers-version";
 

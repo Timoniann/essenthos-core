@@ -153,6 +153,39 @@ public sealed class StrongNumberFileTests : IDisposable
     }
 
     /// <summary>
+    /// The relative שֶׁ is counted with אֲשֶׁר: a word joined in one link to שֶׁ and the verb after it takes the verb's number,
+    /// though שֶׁ is the rarer, unless אֲשֶׁר is the number its form most usually carries; a form that renders אֲשֶׁר only
+    /// sometimes ('is' of 'which is') still takes the verb's.
+    /// </summary>
+    [Fact]
+    public void TheRelativeParticleIsCountedWithAsherWhenAWordIsJoinedToItAndAVerb()
+    {
+        var lender = new ChainedNumbers.Lender(true, new Dictionary<string, (string, int)>
+        {
+            ["1"] = ("H7945", 0), ["2"] = ("H1961", 0), ["3"] = ("H834", 0), ["4"] = ("H834", 0), ["5"] = ("H834", 0), ["6"] = ("H1961", 0),
+            ["7"] = ("H2654", 0), ["8"] = ("H7945", 0),
+        });
+        var numbered = ChainedNumbers.Resolve(
+            [("a", null, "preceded"), ("b", null, "which"), ("c", null, "which"), ("d", null, "which"), ("e", null, "is"), ("f", null, "is"),
+             ("g", null, "is"), ("h", null, "is")],
+            [new ChainedNumbers.Joined(["a", "b"], "HEB", ["1", "2"], null), new ChainedNumbers.Joined(["c"], "HEB", ["3"], null),
+             new ChainedNumbers.Joined(["d"], "HEB", ["4"], null), new ChainedNumbers.Joined(["e"], "HEB", ["8", "7"], null),
+             new ChainedNumbers.Joined(["f"], "HEB", ["5"], null), new ChainedNumbers.Joined(["g"], "HEB", ["2"], null),
+             new ChainedNumbers.Joined(["h"], "HEB", ["6"], null)],
+            new Dictionary<string, ChainedNumbers.Lender> { ["HEB"] = lender });
+
+        numbered.Should().Equal(
+            new ChainedNumbers.Numbered("a", "H1961", 1, "HEB 2", null, null, null),
+            new ChainedNumbers.Numbered("b", "H7945", 1, "HEB 1", null, null, null),
+            new ChainedNumbers.Numbered("c", "H834", 1, "HEB 3", null, null, null),
+            new ChainedNumbers.Numbered("d", "H834", 1, "HEB 4", null, null, null),
+            new ChainedNumbers.Numbered("e", "H2654", 1, "HEB 7", null, null, null),
+            new ChainedNumbers.Numbered("f", "H834", 1, "HEB 5", null, null, null),
+            new ChainedNumbers.Numbered("g", "H1961", 1, "HEB 2", null, null, null),
+            new ChainedNumbers.Numbered("h", "H1961", 1, "HEB 6", null, null, null));
+    }
+
+    /// <summary>
     /// Editions of an original come before translations, the second text of a pair before the first, and a pair that would
     /// close a cycle is left out, so a text never reads numbers that were worked out from its own.
     /// </summary>
