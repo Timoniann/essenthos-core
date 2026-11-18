@@ -100,7 +100,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         var clock = Stopwatch.StartNew();
         var keys = PaneInputs.Read(store, [.. keyed.Select(m => m.Text.Slug)], pairs, parallel,
-            [.. keyed.Where(m => m.Text.Translation).Select(m => m.Text.Slug)]);
+            [.. keyed.Where(m => m.Text.Numbered).Select(m => m.Text.Slug)]);
         logger.LogInformation("Panes: the chapters' inputs of {Texts} texts read in {Seconds:0.0} s", keyed.Count, clock.Elapsed.TotalSeconds);
         await Parallel.ForEachAsync(keyed, new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
             async (making, token) => await Plan(making, keys, force, token));
@@ -210,7 +210,11 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     }
 
     /// <summary>A text as its panes need it.</summary>
-    internal sealed record TextRow(int Id, string Slug, string Language, bool Translation);
+    internal sealed record TextRow(int Id, string Slug, string Language, bool Translation)
+    {
+        /// <summary>Whether its panes write the Strong numbers its words render: a translation's, unless they are withheld.</summary>
+        public bool Numbered => Translation && RenderedNumbers.Shown(Slug);
+    }
 
     private async Task<List<TextRow>> Texts(CancellationToken cancellationToken)
     {
@@ -295,7 +299,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     /// <summary>
     /// The products the tables a text's panes read were loaded from, where this store holds them: the text's own
     /// products and names; every pair it is in, with the other text's words and text (whose kind decides a witness);
-    /// the records; the Strong candidates; for a translation, the Strong number each of its words renders; the word ids'
+    /// the records; the Strong candidates; for a translation whose numbers are shown, the Strong number each of its words renders; the word ids'
     /// collisions; for Greek, every Greek text's words (a gloss by spelling) and the lexicon; for Ge'ez, the lexicons; for a
     /// text paired with the text whose words refer back to others, those references, the same source's parsings and that
     /// text's names on the words referred to.
@@ -317,7 +321,7 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         products.AddRange(PaneInputs.RecordProducts);
         products.Add(TableProducts.Product("word_strong"));
-        if (text.Translation)
+        if (text.Numbered)
         {
             products.Add(StrongNumberFiles.Product(text.Slug));
         }

@@ -345,15 +345,36 @@ internal static class ChapterReading
             })
             .ToListAsync(cancellationToken);
 
-        // A translation's word carries the number it renders, read by the verses as the marked verse lists read it.
-        var rendered = (await (
+        // A translation's word carries the numbers it renders, read by the verses as the marked verse lists read them, except
+        // in the texts whose numbers are withheld.
+        var withheld = RenderedNumbers.Withheld;
+        var renderedRows = (await (
                 from row in db.WordRenderedStrongs
                 where inVerses.Contains(row.VerseId)
                 join verse in db.Verses on row.VerseId equals verse.Id
-                where verse.Text!.Kind == TextKind.Translation
+                where verse.Text!.Kind == TextKind.Translation && !withheld.Contains(verse.Text.Slug)
                 select new { row.WordId, row.StrongNumber })
             .ToListAsync(cancellationToken))
-            .ToDictionary(row => row.WordId, row => row.StrongNumber);
+            .GroupBy(row => row.WordId)
+            .ToDictionary(group => group.Key, group => group.Select(row => row.StrongNumber).ToList());
+
+        // A word carrying several numbers renders several original words as one; the table keeps no order among its rows, so
+        // they are put in the order the original words it reaches stand in, as the numbers file lists them.
+        var several = renderedRows.Where(pair => pair.Value.Count > 1).Select(pair => pair.Key).ToHashSet();
+        var reachedBy = reaching.Where(row => several.Contains(row.WordId)).ToLookup(row => row.WordId, row => row.Reached);
+        var reachedIds = reachedBy.SelectMany(group => group).Distinct().ToList();
+        var placed = reachedIds.Count == 0
+            ? []
+            : await db.Words
+                .Where(word => reachedIds.Contains(word.Id) && word.StrongNumber != null)
+                .Select(word => new { word.Id, word.VerseId, word.Position, word.StrongNumber })
+                .ToDictionaryAsync(word => word.Id, cancellationToken);
+        var rendered = renderedRows.ToDictionary(
+            pair => pair.Key,
+            pair => RenderedNumbers.Join(pair.Value, several.Contains(pair.Key)
+                ? [.. reachedBy[pair.Key].Where(placed.ContainsKey).Select(id => placed[id])
+                    .Select(word => (word.StrongNumber!, word.VerseId, word.Position))]
+                : null));
 
         var witnesses = own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached);
         return new Reached(
@@ -1035,7 +1056,10 @@ internal static class ChapterReading
         /// <summary>The lexicon's gloss for each Greek word its edition does not gloss, and how it was reached.</summary>
         public Dictionary<long, LexiconGlossResponse> Glossed { get; init; } = [];
 
-        /// <summary>For each word of a translation, the one Strong number it renders through its links, its own among them.</summary>
+        /// <summary>
+        /// For each word of a translation whose numbers are shown, the Strong numbers it renders through its links, its own among
+        /// them (<see cref="RenderedNumbers.Join"/>).
+        /// </summary>
         public Dictionary<long, string> Rendered { get; init; } = [];
 
         /// <summary>For each Ge'ez word, the meaning of the Greek word it is aligned to.</summary>
