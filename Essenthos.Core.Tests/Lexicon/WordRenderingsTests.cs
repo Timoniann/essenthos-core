@@ -17,6 +17,7 @@ namespace Essenthos.Core.Tests.Lexicon;
 /// once per edition, says what it counted over, and never mistakes another translation for an
 /// original, whatever spellings a request adds up.
 /// </summary>
+[LongRunning]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class WordRenderingsTests : IDisposable
 {

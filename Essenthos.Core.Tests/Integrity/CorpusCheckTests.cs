@@ -21,6 +21,7 @@ namespace Essenthos.Core.Tests.Integrity;
 /// separate is arranged deliberately: a word rendered, a word whose absence is stated, a word
 /// nothing reaches, and a text nothing has been aligned to at all.
 /// </summary>
+[LongRunning]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class CorpusCheckTests : IDisposable
 {

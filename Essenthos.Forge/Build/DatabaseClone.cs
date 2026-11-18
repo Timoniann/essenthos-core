@@ -72,6 +72,23 @@ internal static class DatabaseClone
         return clock.Elapsed;
     }
 
+    /// <summary>
+    /// Only <c>build/served/&lt;to&gt;</c> from <c>build/served/&lt;from&gt;</c>, for a copy of <paramref name="from"/> made on
+    /// another server by restoring a dump of it: it holds what the original held, so it was served from the same products, and
+    /// <c>build --into &lt;x&gt; --seed &lt;to&gt;</c> there applies what moved since. The test seed on core-test-db is made so.
+    /// </summary>
+    public static void Served(ProductStore store, string from, string to, ILogger logger)
+    {
+        ServingBuild.Refuse(to);
+        if (ServedState.Read(store, from) is null)
+        {
+            throw new InvalidOperationException($"No build/served/{from} under {store.ResourcesPath} to copy.");
+        }
+
+        ServedState.Copy(store, from, to);
+        logger.LogInformation("build/served/{To} copied from build/served/{From}; no database touched", to, from);
+    }
+
     private static async Task<bool> Exists(NpgsqlConnection connection, string database, CancellationToken cancellationToken)
     {
         await using var command = new NpgsqlCommand("SELECT 1 FROM pg_database WHERE datname = @name", connection);

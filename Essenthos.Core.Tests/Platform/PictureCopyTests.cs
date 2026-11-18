@@ -15,6 +15,7 @@ namespace Essenthos.Core.Tests.Platform;
 /// the cache after, and never made for an address that does not name a picture's own bytes at one of
 /// the widths the API copies at.
 /// </summary>
+[LongRunning]
 public sealed class PictureCopyTests : IAsyncLifetime
 {
     private const int PictureWidth = 600;

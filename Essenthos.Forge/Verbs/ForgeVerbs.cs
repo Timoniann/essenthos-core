@@ -27,11 +27,12 @@ internal static partial class ForgeVerbs
             + "daily path), or replace in the configured one what moved since it was built (--apply); then verify at the level asked and write "
             + "build/report-<n>. Never builds into the live corpus or the snapshot.",
             BuildVerb),
-        new("clone", "<from> <to> [--replace]",
+        new("clone", "<from> <to> [--replace] [--served-only]",
             "Copy a database build --into or --apply made into another of the configured server (CREATE DATABASE ... TEMPLATE, nobody may be "
             + "connected to the first) with its build/served state, so build --apply on the copy takes only what moved. Before a swap: "
-            + "clone the next database into the seed. Never copies into or from the live corpus or the snapshot.",
-            CloneVerb, Least: 2, Most: 3),
+            + "clone the next database into the seed. Never copies into or from the live corpus or the snapshot. --served-only copies the "
+            + "build/served state alone and touches no database: for a database restored whole on another server from a dump of <from>.",
+            CloneVerb, Least: 2, Most: 4),
         new("panes", "[<text,...>] [--force] [--parallel <n>]",
             "Write the parallel view's panes (one row of pane per text and canonical chapter) from the configured database, for the texts "
             + "named or every text whose inputs moved, and panes/<SLUG> beside them. Never writes the live corpus or the snapshot.",
