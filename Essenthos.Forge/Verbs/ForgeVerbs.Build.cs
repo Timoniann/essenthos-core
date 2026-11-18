@@ -239,6 +239,12 @@ internal static partial class ForgeVerbs
     /// </summary>
     private static async Task<int> CloneVerb(ForgeRun forge, string[] args)
     {
+        if (args.Contains("--served-only"))
+        {
+            DatabaseClone.Served(new ProductStore(forge.Resources), args[1], args[2], forge.Logger);
+            return 0;
+        }
+
         await DatabaseClone.Run(forge.DatabaseConnection, new ProductStore(forge.Resources), args[1], args[2], args.Contains("--replace"), forge.Logger,
             CancellationToken.None);
         return 0;

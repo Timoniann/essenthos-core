@@ -22,6 +22,7 @@ using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
 
+[LongRunning]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class OccupationTests : IDisposable
 {

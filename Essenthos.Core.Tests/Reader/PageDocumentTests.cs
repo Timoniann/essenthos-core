@@ -27,6 +27,7 @@ namespace Essenthos.Core.Tests.Reader;
 /// read. The record's and the occupation's API answers are read from the same documents under the same conditions, and the
 /// record's carries a validator answered with 304 before anything is read.
 /// </summary>
+[LongRunning]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class PageDocumentTests : IDisposable
 {

@@ -9,6 +9,7 @@ namespace Essenthos.Core.Tests.Platform;
 /// The filter the smaller copies are made with: fine detail keeps its contrast however far the picture
 /// is shrunk, a flat colour stays that colour, and a transparent part does not darken what it borders.
 /// </summary>
+[LongRunning]
 public sealed class PictureResamplerTests
 {
     /// <summary>

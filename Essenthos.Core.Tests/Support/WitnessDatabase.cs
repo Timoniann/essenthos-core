@@ -1,8 +1,12 @@
 ﻿using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Xunit;
@@ -31,9 +35,16 @@ namespace Essenthos.Core.Tests;
 /// </para>
 ///
 /// <para>
-/// **Each class has a database of its own**, copied from a template the run migrates once. When the
-/// classes shared one they had to run one after another, and that queue was the suite: ten minutes
-/// of it while everything else was done in two.
+/// **Each class has a database of its own**, copied from a migrated template. When the classes
+/// shared one they had to run one after another, and that queue was the suite: ten minutes of it
+/// while everything else was done in two.
+/// </para>
+///
+/// <para>
+/// **The template outlives the run.** Migrating it took ten seconds of every run, and no class that
+/// asks Postgres could start before it was done. It is kept on the server under a name that carries
+/// a hash of what the migrations do, so a run copies the one an earlier run made with the same
+/// migrations, and migrates a new one only when they changed.
 /// </para>
 /// </summary>
 public sealed class WitnessDatabase : IAsyncLifetime
@@ -48,8 +59,15 @@ public sealed class WitnessDatabase : IAsyncLifetime
 
     private static readonly string RunPrefix = $"{NamePrefix}{Environment.ProcessId}_";
 
-    /// <summary>The migrated, empty database each class's own is copied from.</summary>
-    private static readonly string TemplateName = $"{RunPrefix}template";
+    /// <summary>
+    /// The kept templates start with this, then the hash of the migrations. Unlike
+    /// <see cref="NamePrefix"/> it names no process: a template belongs to every run that has the same
+    /// migrations.
+    /// </summary>
+    private const string TemplatePrefix = "essenthos_core_template_";
+
+    /// <summary>A template no run has copied for this long is dropped by the next run.</summary>
+    private static readonly TimeSpan TemplateUnusedFor = TimeSpan.FromDays(2);
 
     /// <summary>
     /// How many classes hold a database at once. Each keeps a few connections open, and the classes
@@ -67,7 +85,7 @@ public sealed class WitnessDatabase : IAsyncLifetime
 
     private static readonly SemaphoreSlim Slots = new(MostAtOnce);
 
-    private static readonly Lazy<Task<Server>> Run = new(Prepare);
+    private static readonly Lazy<Task<(Server Server, string Template)>> Run = new(Prepare);
 
     private static int _made;
 
@@ -81,12 +99,12 @@ public sealed class WitnessDatabase : IAsyncLifetime
     /// </summary>
     public async Task InitializeAsync()
     {
-        _server = await Run.Value;
+        (_server, var template) = await Run.Value;
         await Slots.WaitAsync();
         try
         {
             var name = $"{RunPrefix}{Interlocked.Increment(ref _made)}";
-            await _server.Execute($"CREATE DATABASE \"{name}\" TEMPLATE \"{TemplateName}\" STRATEGY WAL_LOG");
+            await _server.Execute($"CREATE DATABASE \"{name}\" TEMPLATE \"{template}\" STRATEGY WAL_LOG");
             _name = name;
             _connectionString = _server.Scratch(name);
         }
@@ -98,10 +116,10 @@ public sealed class WitnessDatabase : IAsyncLifetime
     }
 
     /// <summary>
-    /// Once per run: drops what runs no longer alive left behind, migrates the template, and has the
-    /// template go when the process does.
+    /// Once per run: drops what runs no longer alive left behind, has what this run makes go when the
+    /// process does, and finds the template for these migrations, migrating it if no run has.
     /// </summary>
-    private static async Task<Server> Prepare()
+    private static async Task<(Server Server, string Template)> Prepare()
     {
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
@@ -115,20 +133,49 @@ public sealed class WitnessDatabase : IAsyncLifetime
 
         var server = new Server(DatabaseConnection.Read(configuration));
         await server.DropLeftovers();
+        AppDomain.CurrentDomain.ProcessExit += (_, _) => server.DropRun();
 
-        var template = server.Scratch(TemplateName);
-        await using (var context = NewContext(template))
+        var template = await server.Template(TemplatePrefix + MigrationsHash(), Migrate);
+        return (server, template);
+    }
+
+    private static async Task Migrate(string connectionString)
+    {
+        await using (var context = NewContext(connectionString))
         {
             await context.Database.MigrateAsync();
             await context.Database.ExecuteSqlRawAsync(ExternalReferences.Schema);
             await context.Database.ExecuteSqlRawAsync(NoAutovacuumSql);
         }
 
-        // Postgres refuses to copy a database anybody is connected to, and the pool is somebody.
-        NpgsqlConnection.ClearPool(new NpgsqlConnection(template));
+        // Postgres refuses to rename or copy a database anybody is connected to, and the pool is somebody.
+        NpgsqlConnection.ClearPool(new NpgsqlConnection(connectionString));
+    }
 
-        AppDomain.CurrentDomain.ProcessExit += (_, _) => server.DropRun();
-        return server;
+    /// <summary>
+    /// What the migrations do, as the SQL each one generates, and what <see cref="Migrate"/> adds after
+    /// them: two runs with the same hash build the same template. The SQL rather than the migration
+    /// files, because a migration may build its SQL from code elsewhere (<c>link_method_bit</c> is
+    /// written from the <c>LinkMethod</c> enum). Generated without a model, so nothing connects
+    /// and no migration's target model is built: about a second, where the full script takes six.
+    /// </summary>
+    private static string MigrationsHash()
+    {
+        using var context = NewContext("Host=localhost;Database=none");
+        var migrations = context.GetService<IMigrationsAssembly>();
+        var generator = context.GetService<IMigrationsSqlGenerator>();
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        foreach (var (id, type) in migrations.Migrations.OrderBy(m => m.Key, StringComparer.Ordinal))
+        {
+            hash.AppendData(Encoding.UTF8.GetBytes(id));
+            foreach (var command in generator.Generate(migrations.CreateMigration(type, context.Database.ProviderName!).UpOperations))
+            {
+                hash.AppendData(Encoding.UTF8.GetBytes(command.CommandText));
+            }
+        }
+
+        hash.AppendData(Encoding.UTF8.GetBytes(ExternalReferences.Schema + NoAutovacuumSql));
+        return Convert.ToHexStringLower(hash.GetHashAndReset())[..16];
     }
 
     /// <summary>
@@ -278,6 +325,85 @@ public sealed class WitnessDatabase : IAsyncLifetime
         public Task Drop(string name) => Execute($"DROP DATABASE IF EXISTS \"{name}\" WITH (FORCE)");
 
         /// <summary>
+        /// The kept template called <paramref name="name"/>, migrated first if no run has made it.
+        ///
+        /// <para>
+        /// Runs that start together take turns on a lock named after it, so one migrates and the rest
+        /// copy what it made. It is migrated under a name of this run's and renamed when it is whole, so
+        /// no run copies a half-migrated template, and one a crashed run left half-made is among that
+        /// run's leftovers. Connections to it are refused: Postgres will not copy a database somebody is
+        /// connected to, and one session left open on it would stop every run on the machine.
+        /// </para>
+        ///
+        /// <para>
+        /// Each run dates the template it copies, and drops the others no run has copied for
+        /// <see cref="TemplateUnusedFor"/>: one per change to the migrations would pile up otherwise.
+        /// </para>
+        /// </summary>
+        public async Task<string> Template(string name, Func<string, Task> migrate)
+        {
+            await using var connection = new NpgsqlConnection(
+                new NpgsqlConnectionStringBuilder(_maintenance) { Pooling = false }.ConnectionString);
+            await connection.OpenAsync();
+            await Scalar(connection, "SELECT pg_advisory_lock(hashtext($1))", name);
+            if (await Scalar(connection, "SELECT 1 FROM pg_database WHERE datname = $1", name) is null)
+            {
+                var building = $"{RunPrefix}template";
+                await migrate(Scratch(building));
+                await Scalar(connection, $"ALTER DATABASE \"{building}\" WITH ALLOW_CONNECTIONS false");
+                await Scalar(connection, $"ALTER DATABASE \"{building}\" RENAME TO \"{name}\"");
+            }
+
+            await Scalar(connection, $"COMMENT ON DATABASE \"{name}\" IS '{DateTime.UtcNow:yyyy-MM-dd}'");
+            await Scalar(connection, "SELECT pg_advisory_unlock(hashtext($1))", name);
+
+            var unused = new List<string>();
+            await using (var command = new NpgsqlCommand(
+                             """
+                             SELECT datname FROM pg_database
+                             WHERE starts_with(datname, $1) AND datname <> $2
+                               AND coalesce(shobj_description(oid, 'pg_database'), '') < $3
+                             """,
+                             connection))
+            {
+                command.Parameters.AddWithValue(TemplatePrefix);
+                command.Parameters.AddWithValue(name);
+                command.Parameters.AddWithValue($"{DateTime.UtcNow - TemplateUnusedFor:yyyy-MM-dd}");
+                await using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    unused.Add(reader.GetString(0));
+                }
+            }
+
+            // A run copying one of them right now holds it; it is left for a later run, not waited for.
+            await Scalar(connection, "SET lock_timeout = '1s'");
+            foreach (var old in unused)
+            {
+                try
+                {
+                    await Scalar(connection, $"DROP DATABASE IF EXISTS \"{old}\" WITH (FORCE)");
+                }
+                catch (PostgresException)
+                {
+                }
+            }
+
+            return name;
+        }
+
+        private static async Task<object?> Scalar(NpgsqlConnection connection, string sql, string? parameter = null)
+        {
+            await using var command = new NpgsqlCommand(sql, connection);
+            if (parameter is not null)
+            {
+                command.Parameters.AddWithValue(parameter);
+            }
+
+            return await command.ExecuteScalarAsync();
+        }
+
+        /// <summary>
         /// Every scratch database of a run that is no longer alive, and this process's own from a
         /// crashed run whose id it inherited. A live run's databases are its own business.
         /// </summary>
@@ -294,8 +420,9 @@ public sealed class WitnessDatabase : IAsyncLifetime
         }
 
         /// <summary>
-        /// The template, and whatever a class failed to drop, as the process exits. A failure here
-        /// is left to the next run's <see cref="DropLeftovers"/> rather than thrown into the exit.
+        /// Whatever a class failed to drop, and a template this run did not finish migrating, as the
+        /// process exits. A failure here is left to the next run's <see cref="DropLeftovers"/> rather
+        /// than thrown into the exit.
         /// </summary>
         public void DropRun()
         {

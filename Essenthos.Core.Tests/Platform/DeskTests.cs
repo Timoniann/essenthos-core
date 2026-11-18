@@ -20,6 +20,7 @@ namespace Essenthos.Core.Tests.Platform;
 /// taken back exactly when he takes it back — and that every change is in the change log. The
 /// files are temporary copies and avioniq is a stand-in that records what it was asked.
 /// </summary>
+[LongRunning]
 public sealed class DeskTests : IAsyncLifetime
 {
     private const string Origin = "http://localhost:5280";
@@ -207,7 +208,7 @@ public sealed class DeskTests : IAsyncLifetime
 
         var started = await Json<RunStarted>(await _http.PostAsync("/desk-api/operations/core-images/runs", null));
         await Finished(started.Run!.Id);
-        await Task.Delay(200);
+        await LoggedAs(ChangeLog.Apply);
         await log.Append("pictures", "choice", "jerusalem openbible/b.jpg", null, null, null, "images");
 
         var read = await Json<ChangeLogResponse>(await _http.GetAsync("/desk-api/history"));
@@ -819,6 +820,31 @@ public sealed class DeskTests : IAsyncLifetime
 
     private IReadOnlyList<ChangeEntry> Logged() =>
         new ChangeLog(DeskPaths.Read(_app!.Services.GetRequiredService<IConfiguration>())).Read().Entries.Reverse().ToList();
+
+    /// <summary>
+    /// A run's end reaches the change log by a write of its own after the run is seen finished; this
+    /// waits for it. Reading while that write holds the file open fails, and is tried again.
+    /// </summary>
+    private async Task LoggedAs(string section)
+    {
+        for (var attempt = 0; attempt < 100; attempt++)
+        {
+            try
+            {
+                if (Logged().Any(e => e.Section == section))
+                {
+                    return;
+                }
+            }
+            catch (IOException)
+            {
+            }
+
+            await Task.Delay(100);
+        }
+
+        throw new TimeoutException($"Nothing was logged as {section} in ten seconds.");
+    }
 
     private async Task<RunLog> Finished(string id)
     {

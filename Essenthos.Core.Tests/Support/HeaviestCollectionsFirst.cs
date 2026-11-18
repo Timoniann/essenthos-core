@@ -64,8 +64,11 @@ public sealed class HeaviestCollectionsFirst : ITestCollectionOrderer
 }
 
 /// <summary>
-/// A class whose tests together take most of a minute or more. The run starts these before the rest,
-/// so that one of them does not begin when everything else is done and keep the run waiting.
+/// A class that takes several seconds or more from its first test to its last, even when its tests
+/// are quick, because it waits for a processor the rest of the run is using. The run starts these
+/// before the rest, so that one of them does not begin when everything else is done and keep the
+/// run waiting: started in the middle, five such classes made the last fifteen seconds of a
+/// forty-second run.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = true)]
 public sealed class LongRunningAttribute : Attribute
