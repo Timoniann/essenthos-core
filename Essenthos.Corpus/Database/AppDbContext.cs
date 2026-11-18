@@ -19,6 +19,17 @@ namespace Essenthos.Core.Database;
 /// </summary>
 public class AppDbContext : DbContext
 {
+    /// <summary>
+    /// The collation of the folded forms a search matches (<see cref="Word.NormalisedText"/>, <see cref="Word.GraphicalText"/>,
+    /// <see cref="TextForm.Form"/>, <see cref="WordRendering.Form"/>, <see cref="WordRenderingWitness.Form"/>): they are only
+    /// compared for equality, LIKE and grouping, and every order shown to a reader is made in code by code point. Under the
+    /// database's en_US.utf8 an index on them sorts every script through strcoll; in C it compares bytes, and the word index
+    /// builds in a seventh to a twelfth of the time. The columns compared with each other share it, so a join between them
+    /// keeps its index: a column of the default collation compared with one of these is compared in C, and its own index
+    /// cannot serve that comparison.
+    /// </summary>
+    public const string FormCollation = "C";
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
@@ -1363,6 +1374,8 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(w => w.Break).HasConversion(EnumStorage.TextBreak);
+            entity.Property(w => w.NormalisedText).UseCollation(FormCollation);
+            entity.Property(w => w.GraphicalText).UseCollation(FormCollation);
 
             // Every dictionary form a spelling is given anywhere in the corpus, read without touching
             // the table: a word no edition lemmatises is glossed by how the words spelt like it are.
@@ -1814,6 +1827,7 @@ public class AppDbContext : DbContext
             entity.HasOne(r => r.AllPlaces).WithOne(p => p.Rendering).HasForeignKey<WordRenderingPlaces>(p => p.RenderingId)
                 .OnDelete(DeleteBehavior.Cascade);
             entity.Property(r => r.Id).ValueGeneratedNever();
+            entity.Property(r => r.Form).UseCollation(FormCollation);
             entity.HasIndex(r => new { r.TextId, r.Form, r.WitnessId });
             entity.ToTable("word_rendering", t =>
             {
@@ -1856,6 +1870,7 @@ public class AppDbContext : DbContext
         {
             entity.HasOne(r => r.Text).WithMany().HasForeignKey(r => r.TextId).OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(r => r.Witness).WithMany().HasForeignKey(r => r.WitnessId).OnDelete(DeleteBehavior.Cascade);
+            entity.Property(r => r.Form).UseCollation(FormCollation);
             entity.ToTable("word_rendering_witness", t =>
             {
                 t.HasCheckConstraint("ck_word_rendering_witness_counts", "occurrences >= 0 AND reached >= 0 AND links >= 0");
@@ -2071,6 +2086,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<TextForm>(entity =>
         {
             entity.HasOne(f => f.Text).WithMany().HasForeignKey(f => f.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.Property(f => f.Form).UseCollation(FormCollation);
 
             // A near spelling is looked for among the forms of one text, as a trigram neighbour.
             entity.HasIndex(f => f.Form)

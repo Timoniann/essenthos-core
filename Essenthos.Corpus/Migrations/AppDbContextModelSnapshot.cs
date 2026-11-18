@@ -5851,7 +5851,8 @@ namespace Essenthos.Core.Migrations
 
                     b.Property<string>("Form")
                         .HasColumnType("text")
-                        .HasColumnName("form");
+                        .HasColumnName("form")
+                        .UseCollation("C");
 
                     b.Property<int>("Occurrences")
                         .HasColumnType("integer")
@@ -6528,7 +6529,8 @@ namespace Essenthos.Core.Migrations
 
                     b.Property<string>("GraphicalText")
                         .HasColumnType("text")
-                        .HasColumnName("graphical_text");
+                        .HasColumnName("graphical_text")
+                        .UseCollation("C");
 
                     b.Property<string>("Lemma")
                         .HasColumnType("text")
@@ -6540,7 +6542,8 @@ namespace Essenthos.Core.Migrations
 
                     b.Property<string>("NormalisedText")
                         .HasColumnType("text")
-                        .HasColumnName("normalised_text");
+                        .HasColumnName("normalised_text")
+                        .UseCollation("C");
 
                     b.Property<int>("Position")
                         .HasColumnType("integer")
@@ -6925,7 +6928,8 @@ namespace Essenthos.Core.Migrations
                     b.Property<string>("Form")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("form");
+                        .HasColumnName("form")
+                        .UseCollation("C");
 
                     b.Property<string>("Lemma")
                         .HasColumnType("text")
@@ -7038,7 +7042,8 @@ namespace Essenthos.Core.Migrations
 
                     b.Property<string>("Form")
                         .HasColumnType("text")
-                        .HasColumnName("form");
+                        .HasColumnName("form")
+                        .UseCollation("C");
 
                     b.Property<int>("WitnessId")
                         .HasColumnType("integer")
