@@ -33,3 +33,10 @@ statement about the English and not about this file.
 
 The English, next to it. A Ukrainian gloss standing alone reads as Strong saying it, and
 Strong did not say it -- a machine did, once, and nobody has checked that row.
+
+## prefixes.tsv
+
+Not Strong's and not a translation of him. The entries of the six prefixes BHSA writes as words and numbers from the
+Open Hebrew Bible (H9000 וְ, H9003 בְּ, H9004 כְּ, H9005 לְ, H9008 הֲ, H9009 הַ), which Strong's dictionary has no entry
+for: short grammar notes in English, Ukrainian, German and Spanish, written for this project by a language model
+(claude-opus-5-5, 2026-11-18), as every row's `source` says. This project's own work.

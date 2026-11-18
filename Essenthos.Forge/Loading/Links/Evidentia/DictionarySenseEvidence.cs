@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Essenthos.Core.Database;
+using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Links.Evidentia;
@@ -68,7 +69,8 @@ internal sealed partial class EvidentiaDictionarySenseIndex(
         var (entries, provenance) = await Entries(language, cancellationToken);
         var numbersByKey = new Dictionary<RenderingKey, HashSet<string>>();
         var keysByForm = new Dictionary<string, IReadOnlyList<RenderingKey>>(StringComparer.Ordinal);
-        foreach (var entry in entries)
+        // The prefixes' entries are a grammar note with examples, not a lexeme's senses: their words would file "earth" under הַ.
+        foreach (var entry in entries.Where(e => !StrongMorphemeCodes.IsMorphemeCode(e.StrongNumber)))
         {
             foreach (var form in Words(entry.Definition, entry.KjvDefinition, entry.DetailedDefinition).Distinct())
             {

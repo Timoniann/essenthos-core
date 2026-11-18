@@ -11,8 +11,9 @@ namespace Essenthos.Core.Database.Entities;
 /// H430 is <em>elohim</em> wherever it stands, in BHSA and in a Greek edition tagged from the same
 /// concordance — so the entry is a fact about the language, and the word rows reach it by number
 /// rather than by a foreign key. That is deliberate: 121,077 words in this corpus carry a number
-/// that has no entry and never will, because ETCBC assigns the H9000 range to prefix morphemes
-/// Strong never catalogued, and a foreign key would make those words unloadable.
+/// Strong never catalogued, because the H9000 range numbers the prefixes BHSA writes as words, and
+/// a foreign key would make a word unloadable whenever its number's entry is missing. The prefixes'
+/// entries here are this project's own, from <c>Essenthos/lexicon/prefixes.tsv</c>.
 /// </summary>
 [Index(nameof(StrongNumber), IsUnique = true)]
 public class StrongEntry

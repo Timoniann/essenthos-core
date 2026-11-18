@@ -53,8 +53,8 @@ internal static class StrongEndpoints
 
         // A prefix morpheme is not a missing entry. ETCBC numbers the conjunction, the article
         // and the inseparable prepositions in the H9000 range, and Strong never catalogued them
-        // because a concordance has nothing to say about a letter. Answering 404 would report
-        // 121,077 words of this corpus as broken.
+        // because a concordance has nothing to say about a letter. The prefixes BHSA carries have
+        // entries of the project's own; a number of the range without one is still answered.
         return StrongMorphemeCodes.GetDescription(canonical) is { } morpheme
             ? new StrongEntryResponse(canonical, null, null, null, morpheme, null, null,
                 null, null, null, null, null, true, null)

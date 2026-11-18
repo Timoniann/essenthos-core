@@ -98,8 +98,8 @@ names/overrides/{text}	hand	by hand	-	-	none
 names/consensus/{text}	build	names-consensus --parallel 16	Essenthos/texts/*/words Essenthos/texts/*/frame Essenthos/texts/*/text Essenthos/texts/*/verses Essenthos/names/* Essenthos/names/overrides/* Essenthos/mapping/*/stated Essenthos/mapping/*/strong Essenthos/mapping/*/aligner Essenthos/mapping/*/composed Essenthos/mapping/*/lexical Essenthos/mapping/*/possessive Essenthos/records/records Essenthos/records/derived/kinds Essenthos/records/names Essenthos/records/facts/titles Essenthos/records/i18n/*/name-forms	-	none
 names/{text}	hand	by hand (the settled names; owner-rows edits them, keeping the words product the export once named)	Essenthos/texts/{text}/words	-	none
 tables/text_relation	build	tables	Essenthos/texts/relations	text_relation	all
-tables/strong_entry	build	tables	Strong/*	strong_entry	all
-tables/strong_entry_translation	build	tables	Strong/* Essenthos/lexicon	strong_entry_translation	all
+tables/strong_entry	build	tables	Strong/* Essenthos/lexicon/prefixes	strong_entry	all
+tables/strong_entry_translation	build	tables	Strong/* Essenthos/lexicon Essenthos/lexicon/prefixes	strong_entry_translation	all
 tables/strong_relation	build	tables	Strong/* BibleData2026/*	strong_relation	all
 tables/strong_profile	build	tables	BibleData2026/* STEPBibleLexicons/*	strong_profile	all
 tables/lexicon_gloss	build	tables	STEPBibleLexicons/*	lexicon_gloss	all
@@ -123,4 +123,5 @@ strength/{text}	serve	strength	Essenthos/texts/{text}/words Essenthos/texts/{tex
 page-documents/{kind}/{language}	serve	pages	Essenthos/**	page_document	all
 geez/**	kept	geez-layers (by hand, from a finished model run under generation/; the store and its backup are its only copy)	-	-	none
 texts/relations	hand	by hand (seeded once by tables from the Forge's list)	-	-	none
+lexicon/prefixes	hand	by hand (the prefixes Strong's dictionary lacks; read by tables)	-	-	none
 carried/{table}	export	carried-export	-	{table}	all
