@@ -51,16 +51,15 @@ public class Usfm3AlignmentTests
         // marks the boundary itself. That is what makes this a join rather than an alignment.
         var spans = Usfm3AlignmentReader.Read(Esther)[0]!.Spans;
 
-        spans[0]!.Morphemes.Should().HaveCount(2);
-        spans[1]!.Morphemes.Should().HaveCount(2);
-        spans[2]!.Morphemes.Should().ContainSingle();
+        spans[0]!.Originals.Single().Morphemes.Should().HaveCount(2);
+        spans[1]!.Originals.Single().Morphemes.Should().HaveCount(2);
+        spans[2]!.Originals.Single().Morphemes.Should().ContainSingle();
     }
 
     /// <summary>
     /// Titus 1:1 as the Synodal alignment writes it. Two things differ from the Ukrainian above and
     /// both would break a reader that only ever saw one file: the milestone puts a space after its
-    /// pipe, and the last span here is a nest — two Greek words over one Russian word, where only
-    /// the inner one names it.
+    /// pipe, and the last span here is a nest — two Greek words over one Russian word.
     /// </summary>
     private const string Titus =
         """
@@ -82,15 +81,58 @@ public class Usfm3AlignmentTests
     }
 
     [Fact]
-    public void OnlyTheInnermostSpanOfANestClaimsTheWord()
+    public void AWordInsideANestRendersEveryOriginalWordOfIt()
     {
-        // τῆς and κατ' both stand over относящейся, and only κατ' is the word it renders. An outer
-        // milestone covers several original words at once and says nothing about which is which.
+        // τῆς and κατ' both stand over относящейся: translationCore's group of two Greek words over one
+        // Russian word. The source says the word renders the two together, and nothing finer.
         var spans = Usfm3AlignmentReader.Read(Titus)[0]!.Spans;
 
-        spans[2]!.Strong.Should().Be("G25960");
+        spans.Should().HaveCount(3);
         spans[2]!.Words.Should().Equal(["относящейся"]);
-        spans.Should().NotContain(span => span.Strong == "G35880");
+        spans[2]!.Originals.Select(original => original.Strong).Should().Equal("G35880", "G25960");
+    }
+
+    [Fact]
+    public void ANestKeepsItsOuterWordWhenTheInnerOneIsRead()
+    {
+        // Genesis 8:10 in the unfoldingWord Literal Text: «Then he waited» renders וַיָּחֶל and עוֹד together.
+        const string waited =
+            """
+            \c 8
+            \v 10 \zaln-s |x-strong="c:H2342a" x-occurrence="1" x-occurrences="1" x-content="וַ⁠יָּ֣חֶל"\*\zaln-s |x-strong="H5750" x-occurrence="1" x-occurrences="1" x-content="ע֔וֹד"\*\w Then|x-occurrence="1" x-occurrences="1"\w*
+            \w he|x-occurrence="1" x-occurrences="1"\w*
+            \w waited|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*\zaln-e\*
+            \zaln-s |x-strong="H0312" x-occurrence="1" x-occurrences="1" x-content="אֲחֵרִ֑ים"\*\w another|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+
+        var spans = Usfm3AlignmentReader.Read(waited).Single().Spans;
+
+        spans.Should().HaveCount(2);
+        spans[0].Words.Should().Equal("Then", "he", "waited");
+        spans[0].Originals.Select(original => original.Strong).Should().Equal("c:H2342a", "H5750");
+        spans[1].Originals.Select(original => original.Strong).Should().Equal("H0312");
+    }
+
+    [Fact]
+    public void WordsPrintedAsOneAreMarkedJoined()
+    {
+        // «the bird{s}» and «he-goats»: the source cuts each printed word in two, and the text prints it whole.
+        const string pieces =
+            """
+            \c 1
+            \v 22 \zaln-s |x-strong="c:d:H5775" x-occurrence="1" x-occurrences="1" x-content="וְ⁠הָ⁠ע֖וֹף"\*\w the|x-occurrence="3" x-occurrences="4"\w*
+            \w bird|x-occurrence="1" x-occurrences="1"\w*{\w s|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*}
+            \zaln-s |x-strong="H7235a" x-occurrence="1" x-occurrences="1" x-content="יִ֥רֶב"\*\w multiply|x-occurrence="2" x-occurrences="2"\w*\zaln-e\*
+            \zaln-s |x-strong="H7344" x-occurrence="1" x-occurrences="1" x-content="רְחֹבֹ֥ת"\*\w Rehoboth|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*-\zaln-s |x-strong="H5892b" x-occurrence="1" x-occurrences="1" x-content="עִ֖יר"\*\w Ir|x-occurrence="1" x-occurrences="1"\w*\zaln-e\*
+            """;
+
+        var spans = Usfm3AlignmentReader.Read(pieces).Single().Spans;
+
+        spans[0].Glue!.Select(glue => (glue.Joined, string.Join(' ', glue.After)))
+            .Should().Equal((false, ""), (false, "s"), (true, ""));
+        spans[1].Glue.Should().BeNull();
+        spans[2].Glue!.Single().Should().Match<WordGlue>(glue => !glue.Joined && glue.After.Single() == "Ir");
+        spans[3].Glue!.Single().Joined.Should().BeTrue();
     }
 
     [Fact]

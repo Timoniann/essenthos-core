@@ -201,6 +201,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
                 w.NormalisedText,
                 Written = w.Surface,
                 w.StrongNumber,
+                w.Trailer,
                 Language = w.Text!.Language,
             }))
             .ToListAsync(cancellationToken);
@@ -210,7 +211,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             .ToDictionary(
                 group => group.Key,
                 group => group.OrderBy(r => r.Position)
-                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written, r.StrongNumber))
+                    .Select(r => new InterlinearWord(r.Id, r.NormalisedText ?? string.Empty, r.Language, r.Written, r.StrongNumber, r.Trailer.Length == 0))
                     .ToList());
     }
 
