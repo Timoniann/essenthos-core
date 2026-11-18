@@ -31,7 +31,7 @@ def old_word(w):
     sc, lx, tg, gz, at = (w.get(k) for k in ('strongCandidate', 'lexiconGloss', 'throughGreek', 'geezEntry', 'attached'))
     entity = w.get('entity')
     return {
-        'id': w['id'], 's': w['text'], 't': w.get('trailer', ''), 'g': w.get('gloss'), 'l': w.get('lexeme'), 'n': w.get('strongNo'),
+        'id': w['id'], 's': w.get('text', ''), 't': w.get('trailer', ''), 'g': w.get('gloss'), 'l': w.get('lexeme'), 'n': w.get('strongNo'), 'rn': w.get('renderedStrong'),
         'w': sorted(w.get('originalWordIds', [])), 'p': w.get('mappingProvenance'), 'a': w.get('absence'), 'm': w.get('mark'),
         'supplied': w.get('supplied', False),
         'e': [card(e) for e in w.get('entities', []) if e.get('origin') != BASE_READING],
@@ -90,7 +90,7 @@ def new_word(w, pane):
     cards = [pane_card(c, rec, src) for c in w.get('e', [])]
     base = [pane_card(c, rec, src, base=True) for c in w.get('eb', [])]
     return {
-        'id': w['id'], 's': w['s'], 't': w.get('t', ''), 'g': w.get('g'), 'l': w.get('l'), 'n': w.get('n'),
+        'id': w['id'], 's': w['s'], 't': w.get('t', ''), 'g': w.get('g'), 'l': w.get('l'), 'n': w.get('n'), 'rn': w.get('rn'),
         'w': sorted(w.get('w', [])), 'p': prov[w['p']] if 'p' in w else None, 'a': w.get('a'), 'm': w.get('m'),
         'supplied': w.get('m') == 'supplied', 'e': cards, 'eb': base, 'entity': cards[0] if cards else None,
         'mo': None if m is None else {k: m.get(k) for k in ('pos', 'case', 'gender', 'number', 'person', 'state', 'stem', 'tense',

@@ -331,6 +331,14 @@ internal record TextWordResponse(
     public StrongCandidateResponse? StrongCandidate { get; init; }
 
     /// <summary>
+    /// The one Strong number a translation's word renders through its links (<c>word_rendered_strong</c>, the rule of
+    /// <c>texts/&lt;SLUG&gt;/numbers</c>): what the word is marked by on a Strong number's verse list. Null where the word
+    /// carries its own number (<see cref="StrongNo"/>), on every word of a text that is not a translation, and where no link
+    /// gives it one.
+    /// </summary>
+    public string? RenderedStrong { get; init; }
+
+    /// <summary>
     /// A lexicon's short gloss for a Greek word its edition does not gloss, and how the word reached
     /// it. Null where the edition glosses the word itself — that is <see cref="Gloss"/> — and where
     /// no way reached an entry.

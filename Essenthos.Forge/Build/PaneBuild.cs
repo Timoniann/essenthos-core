@@ -4,6 +4,8 @@ using System.Globalization;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Indexes;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Names;
 using Essenthos.Core.Products;
@@ -97,7 +99,8 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
         }
 
         var clock = Stopwatch.StartNew();
-        var keys = PaneInputs.Read(store, [.. keyed.Select(m => m.Text.Slug)], pairs, parallel);
+        var keys = PaneInputs.Read(store, [.. keyed.Select(m => m.Text.Slug)], pairs, parallel,
+            [.. keyed.Where(m => m.Text.Translation).Select(m => m.Text.Slug)]);
         logger.LogInformation("Panes: the chapters' inputs of {Texts} texts read in {Seconds:0.0} s", keyed.Count, clock.Elapsed.TotalSeconds);
         await Parallel.ForEachAsync(keyed, new ParallelOptions { MaxDegreeOfParallelism = parallel, CancellationToken = cancellationToken },
             async (making, token) => await Plan(making, keys, force, token));
@@ -207,13 +210,13 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     }
 
     /// <summary>A text as its panes need it.</summary>
-    internal sealed record TextRow(int Id, string Slug, string Language);
+    internal sealed record TextRow(int Id, string Slug, string Language, bool Translation);
 
     private async Task<List<TextRow>> Texts(CancellationToken cancellationToken)
     {
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        return await db.Texts.AsNoTracking().OrderBy(t => t.Slug).Select(t => new TextRow(t.Id, t.Slug, t.Language)).ToListAsync(cancellationToken);
+        return await db.Texts.AsNoTracking().OrderBy(t => t.Slug).Select(t => new TextRow(t.Id, t.Slug, t.Language, t.Kind == TextKind.Translation)).ToListAsync(cancellationToken);
     }
 
     /// <summary>The hash of every pane the table holds, per text and chapter.</summary>
@@ -292,9 +295,10 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
     /// <summary>
     /// The products the tables a text's panes read were loaded from, where this store holds them: the text's own
     /// products and names; every pair it is in, with the other text's words and text (whose kind decides a witness);
-    /// the records; the Strong candidates; the word ids' collisions; for Greek, every Greek text's words (a gloss by
-    /// spelling) and the lexicon; for Ge'ez, the lexicons; for a text paired with the text whose words refer back to others, those
-    /// references, the same source's parsings and that text's names on the words referred to.
+    /// the records; the Strong candidates; for a translation, the Strong number each of its words renders; the word ids'
+    /// collisions; for Greek, every Greek text's words (a gloss by spelling) and the lexicon; for Ge'ez, the lexicons; for a
+    /// text paired with the text whose words refer back to others, those references, the same source's parsings and that
+    /// text's names on the words referred to.
     /// </summary>
     internal List<ProductInput> Inputs(TextRow text, IReadOnlyList<TextRow> texts, IReadOnlyList<(string From, string To)> pairs)
     {
@@ -313,6 +317,11 @@ internal sealed class PaneBuild(string connectionString, ProductStore store, ISe
 
         products.AddRange(PaneInputs.RecordProducts);
         products.Add(TableProducts.Product("word_strong"));
+        if (text.Translation)
+        {
+            products.Add(StrongNumberFiles.Product(text.Slug));
+        }
+
         var referring = PaneInputs.ReferringTexts
             .Where(r => r == text.Slug || pairs.Any(p => (p.From, p.To) == (text.Slug, r) || (p.From, p.To) == (r, text.Slug)))
             .ToList();

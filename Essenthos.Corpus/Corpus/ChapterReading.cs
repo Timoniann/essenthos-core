@@ -345,6 +345,16 @@ internal static class ChapterReading
             })
             .ToListAsync(cancellationToken);
 
+        // A translation's word carries the number it renders, read by the verses as the marked verse lists read it.
+        var rendered = (await (
+                from row in db.WordRenderedStrongs
+                where inVerses.Contains(row.VerseId)
+                join verse in db.Verses on row.VerseId equals verse.Id
+                where verse.Text!.Kind == TextKind.Translation
+                select new { row.WordId, row.StrongNumber })
+            .ToListAsync(cancellationToken))
+            .ToDictionary(row => row.WordId, row => row.StrongNumber);
+
         var witnesses = own.Concat(reached).ToLookup(row => row.WordId, row => row.Reached);
         return new Reached(
             witnesses,
@@ -356,6 +366,7 @@ internal static class ChapterReading
             await Annotations.AllOf(db, ids, cancellationToken),
             await Proposed(db, ids, cancellationToken))
         {
+            Rendered = rendered,
             Bracketed = marked
                 .Where(m => m.Letters != null)
                 .GroupBy(m => m.WordId)
@@ -1024,6 +1035,9 @@ internal static class ChapterReading
         /// <summary>The lexicon's gloss for each Greek word its edition does not gloss, and how it was reached.</summary>
         public Dictionary<long, LexiconGlossResponse> Glossed { get; init; } = [];
 
+        /// <summary>For each word of a translation, the one Strong number it renders through its links, its own among them.</summary>
+        public Dictionary<long, string> Rendered { get; init; } = [];
+
         /// <summary>For each Ge'ez word, the meaning of the Greek word it is aligned to.</summary>
         public Dictionary<long, ThroughGreekResponse> ThroughGreek { get; init; } = [];
 
@@ -1454,6 +1468,7 @@ internal static class ChapterReading
             Mark = marks is null ? null : string.Join(' ', marks.Select(EnumSpelling.Of)),
             Bracketed = counterparts.Bracketed.GetValueOrDefault(id),
             StrongCandidate = strongNumber is null ? counterparts.Proposed.GetValueOrDefault(id) : null,
+            RenderedStrong = strongNumber is null ? counterparts.Rendered.GetValueOrDefault(id) : null,
             LexiconGloss = counterparts.Glossed.GetValueOrDefault(id),
             ThroughGreek = counterparts.ThroughGreek.GetValueOrDefault(id),
             GeezEntry = counterparts.GeezEntries.GetValueOrDefault(id),
