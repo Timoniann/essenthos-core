@@ -103,7 +103,7 @@ public class InterlinearJoinTests
     }
 
     [Fact]
-    public void TheReaderCountsWhatItStatesAndDoesNotKeep()
+    public void ANestJoinsItsWordsToEveryOriginalWordOfIt()
     {
         const string nest =
             """
@@ -113,10 +113,124 @@ public class InterlinearJoinTests
             """;
 
         var verse = Usfm3AlignmentReader.Read(nest).Single();
+        var pairs = new List<InterlinearPair>();
+        var account = new InterlinearJoinAccount();
+        InterlinearJoin.Verse("test 1:1", verse,
+            [Word(1, Ukrainian("поправді")), Word(2, Ukrainian("вільне"))],
+            [Word(101, Greek("ἀγαπῶ")), Word(102, Greek("ἐν")), Word(103, Greek("ἀληθείᾳ"))],
+            pairs, account);
 
-        verse.SharedOriginals.Should().Be(1);
         verse.UnalignedWords.Should().Be(1);
         verse.Spans.Single().WordOccurrences.Should().Equal((1, 1));
+        pairs.Single().From.Should().Equal(1);
+        pairs.Single().To.Should().Equal(102, 103);
+        account.SpansOverANestJoined.Should().Be(1);
+    }
+
+    [Fact]
+    public void ANestWhoseOuterWordTheWitnessLacksIsRefusedWhole()
+    {
+        // Linking «Then he waited» to עוֹד alone would say עוֹד means it; the source says the two words do.
+        var (pairs, account) = Join(
+            [English("Then"), English("he"), English("waited")],
+            [Hebrew("עֹ֔וד")],
+            Span("ע֔וֹד", "Then", "he", "waited") with { Nest = [new AlignedOriginal("H2342a", "וַ⁠יָּ֣חֶל", 1, 1)] });
+
+        pairs.Should().BeEmpty();
+        account.SpanFailures[InterlinearSpanFailure.OriginalWordAbsent].Should().Be(1);
+    }
+
+    [Fact]
+    public void ANestTheWitnessPrintsAsOneWordJoinsThatWord()
+    {
+        // Genesis 35:7: the source groups בֵּית + אֵל under «Bethel»; BHSA prints בֵּית־אֵל as one word.
+        var (pairs, _) = Join(
+            [English("Bethel")],
+            [Hebrew("אֵל"), Hebrew("בֵּֽית־אֵ֑ל")],
+            Span("אֵ֑ל", "Bethel") with { Nest = [new AlignedOriginal("H1008", "בֵּֽית", 1, 1)] });
+
+        pairs.Single().To.Should().Equal(102);
+    }
+
+    [Fact]
+    public void AnOuterGreekWordOfANestTheWitnessDoesNotPrintIsLeftOut()
+    {
+        // Matthew 14:10: the source groups τὸν + Ἰωάννην under «John»; Nestle prints no article there.
+        var (pairs, account) = Join(
+            [English("John")],
+            [Greek("ἀπεκεφάλισεν"), Greek("Ἰωάννην")],
+            Span("Ἰωάννην", "John") with { Nest = [new AlignedOriginal("G35880", "τὸν", 1, 1)] });
+
+        pairs.Single().To.Should().Equal(102);
+        account.NestWordsTheWitnessLacks.Should().Be(1);
+    }
+
+    [Fact]
+    public void ANestWordTheWitnessPrintsMoreOrLessOftenIsTheOneBesideTheRestOfItsNest()
+    {
+        // Mark 9:2: the source has three τὸν (before Peter, James and John), Nestle two, so the count places none.
+        var (pairs, account) = Join(
+            [English("Peter")],
+            [Greek("τὸν"), Greek("Πέτρον"), Greek("καὶ"), Greek("τὸν"), Greek("Ἰάκωβον"), Greek("καὶ"), Greek("Ἰωάνην")],
+            Span("Πέτρον", "Peter") with { Nest = [new AlignedOriginal("G35880", "τὸν", 1, 3)] });
+
+        pairs.Single().To.Should().Equal(101, 102);
+        account.NestWordsPlacedBeside.Should().Be(1);
+    }
+
+    [Fact]
+    public void TheInnermostGreekWordOfANestIsNeverLeftOut()
+    {
+        // Matthew 3:14: «John» over ὁ + Ἰωάννης where the witness spells the name otherwise would land on ὁ.
+        var (pairs, _) = Join(
+            [English("John")],
+            [Greek("ὁ"), Greek("Ἰωάνης")],
+            Span("Ἰωάννης", "John") with { Nest = [new AlignedOriginal("G35880", "ὁ", 1, 1)] });
+
+        pairs.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AWordTheSourceCountsAloneIsNotCountedInsideAnotherPrintedWord()
+    {
+        // Genesis 10:13: אֶת לוּדִים «the Ludim», then וְאֶת עֲנָמִים. The source counts the first אֶת once,
+        // and the אֶת of וְאֶת is another spelling to it; BHSA holds that one as a word after the conjunction.
+        var (pairs, _) = Join(
+            [English("the"), English("Ludim")],
+            [Hebrew("אֶת"), Hebrew("לוּדִים"), Attached(Hebrew("וְ")), Hebrew("אֶת"), Hebrew("עֲנָמִים")],
+            Span("לוּדִים", "the", "Ludim") with { Nest = [new AlignedOriginal("H0853", "אֶת", 1, 1)] });
+
+        pairs.Single().From.Should().Equal(1, 2);
+        pairs.Single().To.Should().Equal(101, 102);
+    }
+
+    [Fact]
+    public void PiecesOfAWordTheCorpusPrintsWholeJoinThatWord()
+    {
+        // Genesis 1:22 and 32:14: «the bird{s}» and «he-goats».
+        var (pairs, account) = Join(
+            [English("the"), English("birds"), English("multiply"), English("he-goats")],
+            [Hebrew("הָעֹוף"), Hebrew("יִרֶב"), Hebrew("תְיָשִׁים")],
+            Span("הָעוֹף", "the", "bird", "s") with { Glue = [new(false, []), new(false, ["s"]), new(true, [])] },
+            Span("יִרֶב", "multiply"),
+            Span("תְיָשִׁים", "he", "goats") with { Glue = [new(false, ["goats"]), new(true, [])] });
+
+        pairs.Select(pair => (string.Join(',', pair.From), pair.To.Single())).Should().Equal(("1,2", 101L), ("3", 102L), ("4", 103L));
+        account.TranslatedPiecesJoined.Should().Be(2);
+    }
+
+    [Fact]
+    public void APieceOfAHyphenatedNameInAnotherSpanJoinsTheNameToItsWordToo()
+    {
+        // Genesis 10:11: Rehoboth renders רְחֹבֹת and Ir renders עִיר; the corpus prints Rehoboth-Ir.
+        var (pairs, _) = Join(
+            [English("Rehoboth-Ir"), English("and")],
+            [Hebrew("רְחֹבֹת"), Hebrew("עִיר"), Hebrew("וְ")],
+            Span("רְחֹבֹת", "Rehoboth") with { Glue = [new(false, ["Ir"])] },
+            Span("עִיר", "Ir") with { Glue = [new(true, [])] },
+            Span("וְ", "and"));
+
+        pairs.Select(pair => (pair.From.Single(), pair.To.Single())).Should().Equal((1L, 101L), (1L, 102L), (2L, 103L));
     }
 
     private static (List<InterlinearPair> Pairs, InterlinearJoinAccount Account) Join(
@@ -144,14 +258,20 @@ public class InterlinearJoinTests
 
     private static string Ukrainian(string word) => $"ukr|{word}";
 
+    private static string English(string word) => $"eng|{word}";
+
     private static string Greek(string word) => $"grc|{word}";
 
     private static string Hebrew(string word) => $"hbo|{word}";
 
+    /// <summary>A word printed against the next one, as BHSA prints a conjunction before its word.</summary>
+    private static string Attached(string tagged) => $"{tagged}+";
+
     private static InterlinearWord Word(long id, string tagged)
     {
         var language = tagged[..3];
-        var written = tagged[4..];
-        return new InterlinearWord(id, WordFolding.Fold(written, language), language, written);
+        var attached = tagged.EndsWith('+');
+        var written = attached ? tagged[4..^1] : tagged[4..];
+        return new InterlinearWord(id, WordFolding.Fold(written, language), language, written, Attached: attached);
     }
 }

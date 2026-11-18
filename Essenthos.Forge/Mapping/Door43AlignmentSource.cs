@@ -92,7 +92,9 @@ internal sealed class Door43AlignmentSource : IPairSource
             }
         }
 
-        log($"{total.VersesJoined} of {total.VersesRead} verses joined, {total.TranslatedWordsJoined} translated words, {rows.Count} links");
+        log($"{total.VersesJoined} of {total.VersesRead} verses joined, {total.TranslatedWordsJoined} translated words, {rows.Count} links; "
+            + $"{total.SpansOverANestJoined} of {total.SpansOverANest} spans over a nest joined ({total.NestsJoinedAsOneWord} as one word of the witness, {total.NestWordsPlacedBeside} words placed beside their nest, {total.NestWordsTheWitnessLacks} Greek words the witness lacks left out), "
+            + $"{total.TranslatedPiecesJoined} pieces of a word the corpus prints whole joined to it, {total.TranslatedFragments} left");
         return rows.Values;
     }
 
@@ -141,6 +143,6 @@ internal sealed class Door43AlignmentSource : IPairSource
     private static InterlinearWord Word(ProductText text, int id)
     {
         var word = text.Words[id];
-        return new InterlinearWord(id, word.Normalised ?? string.Empty, text.Language, word.Surface, word.Strong);
+        return new InterlinearWord(id, word.Normalised ?? string.Empty, text.Language, word.Surface, word.Strong, word.Trailer.Length == 0);
     }
 }

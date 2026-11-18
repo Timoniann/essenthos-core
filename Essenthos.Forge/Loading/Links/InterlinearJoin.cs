@@ -10,7 +10,8 @@ namespace Essenthos.Core.Loading.Links;
 /// the corpus prints, which is what a source's occurrence count is a count of.
 /// </summary>
 /// <param name="Strong">The Strong number the corpus gives the word, where it gives one.</param>
-internal sealed record InterlinearWord(long Id, string Folded, string Language, string Written = "", string? Strong = null);
+/// <param name="Attached">Whether the next word is printed against it with nothing between, as BHSA prints וְ before its word.</param>
+internal sealed record InterlinearWord(long Id, string Folded, string Language, string Written = "", string? Strong = null, bool Attached = false);
 
 /// <summary>One stated span that found its words on both sides.</summary>
 internal sealed record InterlinearPair(List<long> From, List<long> To);
@@ -66,12 +67,17 @@ internal sealed class InterlinearJoinAccount
     public int SpansJoinedOnTheLooseFold { get; set; }
     public int SpansJoinedByNumber { get; set; }
     public int SpansSharingAnOriginal { get; set; }
+    public int SpansOverANest { get; set; }
+    public int SpansOverANestJoined { get; set; }
+    public int NestWordsTheWitnessLacks { get; set; }
+    public int NestsJoinedAsOneWord { get; set; }
+    public int NestWordsPlacedBeside { get; set; }
+    public int TranslatedPiecesJoined { get; set; }
     public int TranslatedFragments { get; set; }
     public int TranslatedWords { get; set; }
     public int TranslatedWordsJoined { get; set; }
     public int TranslatedWordsInMissingVerses { get; set; }
     public int TranslatedWordsOnAnotherOccurrence { get; set; }
-    public int SharedOriginals { get; set; }
     public int UnalignedTranslatedWords { get; set; }
 
     public IReadOnlyDictionary<string, List<string>> Examples => examples;
@@ -107,12 +113,17 @@ internal sealed class InterlinearJoinAccount
         SpansJoinedOnTheLooseFold += other.SpansJoinedOnTheLooseFold;
         SpansJoinedByNumber += other.SpansJoinedByNumber;
         SpansSharingAnOriginal += other.SpansSharingAnOriginal;
+        SpansOverANest += other.SpansOverANest;
+        SpansOverANestJoined += other.SpansOverANestJoined;
+        NestWordsTheWitnessLacks += other.NestWordsTheWitnessLacks;
+        NestsJoinedAsOneWord += other.NestsJoinedAsOneWord;
+        NestWordsPlacedBeside += other.NestWordsPlacedBeside;
+        TranslatedPiecesJoined += other.TranslatedPiecesJoined;
         TranslatedFragments += other.TranslatedFragments;
         TranslatedWords += other.TranslatedWords;
         TranslatedWordsJoined += other.TranslatedWordsJoined;
         TranslatedWordsInMissingVerses += other.TranslatedWordsInMissingVerses;
         TranslatedWordsOnAnotherOccurrence += other.TranslatedWordsOnAnotherOccurrence;
-        SharedOriginals += other.SharedOriginals;
         UnalignedTranslatedWords += other.UnalignedTranslatedWords;
         foreach (var (kind, list) in other.examples)
         {
@@ -136,6 +147,7 @@ internal sealed class InterlinearJoinAccount
             .Append($"{SpansJoinedOnTheLooseFold:N0} of them told apart only by the bare letters, ")
             .Append($"{SpansJoinedByNumber:N0} by a Strong number the verse holds once on each side, ")
             .Append($"{SpansSharingAnOriginal:N0} on an original word another span also stands on; ")
+            .Append($"{SpansOverANestJoined:N0}/{SpansOverANest:N0} over a nest of several original words joined, {NestsJoinedAsOneWord:N0} of them as one word of the witness, {NestWordsPlacedBeside:N0} nest words placed beside the rest of their nest, and {NestWordsTheWitnessLacks:N0} words of a Greek nest the witness verse does not print left out; ")
             .Append($"{SpansInMissingVerses:N0} in a verse missing on one side; ")
             .AppendLine(string.Join("; ", Enum.GetValues<InterlinearSpanFailure>()
                 .Where(failure => failure != InterlinearSpanFailure.None)
@@ -144,9 +156,9 @@ internal sealed class InterlinearJoinAccount
             .Append($"({Share(TranslatedWordsJoined, TranslatedWords)}); ")
             .Append($"{TranslatedWordsInMissingVerses:N0} in a verse missing on one side; ")
             .Append($"{TranslatedWordsOnAnotherOccurrence:N0} joined to another occurrence than the source counts; ")
-            .AppendLine($"{TranslatedFragments:N0} pieces of an apostrophe word the source split and the corpus prints whole, not joined")
-            .Append($"stated but not kept by the reader: {SharedOriginals:N0} original words in a nest over an inner span's words; ")
-            .Append($"{UnalignedTranslatedWords:N0} translated words outside every span");
+            .Append($"{TranslatedPiecesJoined:N0} pieces of a word the source split and the corpus prints whole, joined to that word; ")
+            .AppendLine($"{TranslatedFragments:N0} pieces after an apostrophe in another span than the word's stem, not joined")
+            .Append($"stated but not kept: {UnalignedTranslatedWords:N0} translated words outside every span");
 
         if (withExamples)
         {
@@ -195,7 +207,6 @@ internal static class InterlinearJoin
         InterlinearJoinAccount account)
     {
         account.VersesRead++;
-        account.SharedOriginals += verse.SharedOriginals;
         account.UnalignedTranslatedWords += verse.UnalignedWords;
         var spanWords = verse.Spans.Sum(span => span.Words.Count);
         account.Spans += verse.Spans.Count;
@@ -220,38 +231,68 @@ internal static class InterlinearJoin
         }
 
         var made = 0;
-        var here = 0;
+        var here = new TranslatedCursor(0, string.Empty);
         var taken = new HashSet<int>();
         var language = original[0].Language;
         var writings = original.Select(word => Written(word.Written, language)).ToArray();
 
         foreach (var span in verse.Spans)
         {
-            var (ours, afterOurs, fragments, failure) = FindTranslated(translated, span.Words, translated[0].Language, here);
+            var nested = span.Nest is { Count: > 0 };
+            if (nested)
+            {
+                account.SpansOverANest++;
+            }
+
+            var (matched, afterOurs, fragments, failure) = FindTranslated(translated, span, translated[0].Language, here);
             var theirs = new List<int>();
             var loose = false;
             var byNumber = false;
+            AlignedOriginal? missing = null;
+            IReadOnlyList<AlignedOriginal> lacking = [];
             if (failure == InterlinearSpanFailure.None)
             {
-                (theirs, loose, failure) = FindOriginal(original, writings, span, language);
-                if (failure != InterlinearSpanFailure.None
-                    && ByNumber(original, span, verse.Originals, language) is { Count: > 0 } numbered)
+                (theirs, loose, byNumber, failure, missing, lacking, var asOne, var beside) =
+                    FindOriginals(original, writings, span, verse.Originals, language);
+                if (asOne)
                 {
-                    (theirs, failure, byNumber) = (numbered, InterlinearSpanFailure.None, true);
+                    account.NestsJoinedAsOneWord++;
                 }
+
+                account.NestWordsPlacedBeside += beside;
             }
 
             if (failure != InterlinearSpanFailure.None)
             {
                 account.SpanFailures[failure] = account.SpanFailures.GetValueOrDefault(failure) + 1;
+                var failed = missing ?? span.Originals[^1];
                 account.Example(failure.ToString(),
-                    $"{where} {string.Join(' ', span.Words)} = {span.Content} ({span.Strong}, " +
-                    $"occurrence {span.Occurrence}/{span.Occurrences})");
+                    $"{where} {string.Join(' ', span.Words)} = {failed.Content} ({failed.Strong}, " +
+                    $"occurrence {failed.Occurrence}/{failed.Occurrences})"
+                    + (nested ? $" in the nest {string.Join(" + ", span.Originals.Select(one => one.Content))}" : string.Empty));
+                // The words of a span that failed stand between the last word found and the next span,
+                // so the next span's first piece cannot be the rest of that word.
+                here = here with { Rest = string.Empty };
                 continue;
             }
 
-            CheckTranslatedOccurrences(where, span, translated, ours, account);
+            var ours = matched.Select(match => match.Word).Distinct().ToList();
+            CheckTranslatedOccurrences(where, span, translated, matched, account);
             account.TranslatedFragments += fragments;
+            account.TranslatedPiecesJoined += matched.Count - ours.Count;
+            if (nested)
+            {
+                account.SpansOverANestJoined++;
+            }
+
+            if (lacking.Count > 0)
+            {
+                account.NestWordsTheWitnessLacks += lacking.Count;
+                account.Example("nest word the witness lacks",
+                    $"{where} {string.Join(' ', span.Words)} = {string.Join(" + ", span.Originals.Select(one => one.Content))}, "
+                    + $"without {string.Join(" + ", lacking.Select(one => one.Content))}");
+            }
+
             // One original word over two groups of translated words that do not stand together is
             // written as two spans with the same occurrence, so the second one landing on the same
             // witness word is the source's statement, not a collision.
@@ -267,7 +308,7 @@ internal static class InterlinearJoin
             here = afterOurs;
             made += ours.Count;
             account.SpansJoined++;
-            account.TranslatedWordsJoined += ours.Count;
+            account.TranslatedWordsJoined += matched.Count;
             if (loose)
             {
                 account.SpansJoinedOnTheLooseFold++;
@@ -294,6 +335,123 @@ internal static class InterlinearJoin
     }
 
     /// <summary>
+    /// The witness words all of a span's original words stand on. A nest is one statement: its phrase renders
+    /// every original word of it, so it joins only where each of them is found, and never as a part of itself
+    /// (<c>Then he waited</c> on עוֹד alone would say עוֹד means it).
+    ///
+    /// Two editions divide and read some words differently, so a word of a nest that is not found is looked at
+    /// again, in this order:
+    /// <list type="bullet">
+    /// <item>A word the witness prints more often than the source counts it (a variant elsewhere in the verse:
+    /// Nestle has two τὸν in Mark 9:2 where the source has three) is the one place of it standing right beside the
+    /// rest of the nest, if there is exactly one: the nest's words stand together.</item>
+    /// <item>The nest's words spelled together may be one word of the witness: בֵּית + אֵל is BHSA's one word
+    /// בֵּית־אֵל.</item>
+    /// <item>In the Greek an outer word of the nest is another edition's reading and is left out (Nestle prints no
+    /// τὸν before Ἰωάνην in Matthew 14:10, so «John» is Ἰωάνην). The innermost word, and any word of a Hebrew nest,
+    /// is not: there the missing word is mostly one the witness divides or spells otherwise, and the phrase would
+    /// land on the word beside it (Bethel on אֵל, «John» on the article).</item>
+    /// </list>
+    /// </summary>
+    private static (List<int> Words, bool Loose, bool ByNumber, InterlinearSpanFailure Failure, AlignedOriginal? Missing,
+        IReadOnlyList<AlignedOriginal> Lacking, bool AsOneWord, int Beside) FindOriginals(
+        IReadOnlyList<InterlinearWord> original,
+        string[] writings,
+        AlignmentSpan span,
+        IReadOnlyList<(string Strong, string Content, int Occurrence)>? originals,
+        string language)
+    {
+        var all = span.Originals;
+        var theirs = new List<int>();
+        var loose = false;
+        var byNumber = false;
+        var failed = new List<(AlignedOriginal Original, InterlinearSpanFailure Failure)>();
+        foreach (var one in all)
+        {
+            var (words, wordLoose, failure) = FindOriginal(original, writings, one, language);
+            if (failure != InterlinearSpanFailure.None
+                && ByNumber(original, one, originals, language) is { Count: > 0 } numbered)
+            {
+                (words, failure, byNumber) = (numbered, InterlinearSpanFailure.None, true);
+            }
+
+            if (failure != InterlinearSpanFailure.None)
+            {
+                failed.Add((one, failure));
+                continue;
+            }
+
+            theirs.AddRange(words);
+            loose |= wordLoose;
+        }
+
+        if (failed.Count == 0)
+        {
+            return ([.. theirs.Distinct().Order()], loose, byNumber, InterlinearSpanFailure.None, null, [], false, 0);
+        }
+
+        if (all.Count == 1)
+        {
+            return ([], false, false, failed[0].Failure, failed[0].Original, [], false, 0);
+        }
+
+        var beside = 0;
+        foreach (var (one, failure) in failed.ToList())
+        {
+            if (failure == InterlinearSpanFailure.OriginalOccurrenceUnresolved
+                && Beside(original, one, theirs, language) is { } place)
+            {
+                theirs.AddRange(place);
+                failed.Remove((one, failure));
+                beside++;
+            }
+        }
+
+        if (failed.Count > 0 && failed.Any(one => one.Failure == InterlinearSpanFailure.OriginalWordAbsent))
+        {
+            // BHSA prints some names as one word with a space inside: נֹּא אָמֹון, Thebes.
+            var unspaced = original.Select(word => word with
+            {
+                Folded = word.Folded.Replace(" ", string.Empty), Written = word.Written.Replace(" ", string.Empty),
+            }).ToList();
+            var together = new AlignedOriginal(all[^1].Strong, string.Join('\u2060', all.Select(one => one.Content)), 1, 1);
+            var (whole, wholeLoose, wholeFailure) = FindOriginal(
+                unspaced, [.. unspaced.Select(word => Written(word.Written, language))], together, language);
+            if (wholeFailure == InterlinearSpanFailure.None && whole.Count > 0)
+            {
+                return (whole, wholeLoose, false, InterlinearSpanFailure.None, null, [], true, 0);
+            }
+        }
+
+        if (failed.Count > 0 && (language != "grc" || failed.Any(one => one.Original == all[^1]) || theirs.Count == 0))
+        {
+            return ([], false, false, failed[0].Failure, failed[0].Original, [], false, 0);
+        }
+
+        return ([.. theirs.Distinct().Order()], loose, byNumber, InterlinearSpanFailure.None, null,
+            [.. failed.Select(one => one.Original)], false, beside);
+    }
+
+    /// <summary>
+    /// The one place of an original word that stands right before or right after the words the rest of its nest
+    /// stands on; null where none or several do.
+    /// </summary>
+    private static List<int>? Beside(IReadOnlyList<InterlinearWord> words, AlignedOriginal one, List<int> nest, string language)
+    {
+        if (nest.Count == 0)
+        {
+            return null;
+        }
+
+        var (first, last) = (nest.Min(), nest.Max());
+        var folded = one.Morphemes.Select(morpheme => WordFolding.Fold(morpheme, language)).ToArray();
+        var touching = Places(words.Count, folded, at => words[at].Folded)
+            .Where(place => place[^1] == first - 1 || place[0] == last + 1)
+            .ToList();
+        return touching.Count == 1 ? touching[0] : null;
+    }
+
+    /// <summary>
     /// The witness words a span's original word stands on. Its morphemes have to stand side by side,
     /// and of the places they do, the source's occurrence picks one - but only where the witness
     /// prints the word as many times as the source counts, because a count taken over another edition
@@ -307,7 +465,7 @@ internal static class InterlinearJoin
     private static (List<int> Words, bool Loose, InterlinearSpanFailure Failure) FindOriginal(
         IReadOnlyList<InterlinearWord> words,
         string[] writings,
-        AlignmentSpan span,
+        AlignedOriginal span,
         string language)
     {
         var morphemes = span.Morphemes;
@@ -327,6 +485,20 @@ internal static class InterlinearJoin
             : byLetters.Count == stated
                 ? (byLetters, true)
                 : (null, false);
+        if (places is null)
+        {
+            // The source counts whole printed words: אֶת standing alone is another spelling to it than the
+            // אֶת of וְאֶת, which the witness holds as a word of its own after the conjunction.
+            bool Whole(List<int> place) => (place[0] == 0 || !words[place[0] - 1].Attached) && !words[place[^1]].Attached;
+            var wholeByWriting = byWriting.Where(Whole).ToList();
+            var wholeByLetters = byLetters.Where(Whole).ToList();
+            (places, loose) = wholeByWriting.Count == stated
+                ? (wholeByWriting, false)
+                : wholeByLetters.Count == stated
+                    ? (wholeByLetters, true)
+                    : (null, false);
+        }
+
         return places is null || occurrence > places.Count
             ? ([], false, InterlinearSpanFailure.OriginalOccurrenceUnresolved)
             : (places[occurrence - 1], loose, InterlinearSpanFailure.None);
@@ -342,7 +514,7 @@ internal static class InterlinearJoin
     /// </summary>
     private static List<int> ByNumber(
         IReadOnlyList<InterlinearWord> words,
-        AlignmentSpan span,
+        AlignedOriginal span,
         IReadOnlyList<(string Strong, string Content, int Occurrence)>? originals,
         string language)
     {
@@ -522,30 +694,30 @@ internal static class InterlinearJoin
         string where,
         AlignmentSpan span,
         IReadOnlyList<InterlinearWord> translated,
-        List<int> ours,
+        List<(int Token, int Word)> matched,
         InterlinearJoinAccount account)
     {
-        for (var i = 0; i < ours.Count; i++)
+        foreach (var (token, word) in matched)
         {
-            if (span.WordOccurrences is not { } occurrences || i >= occurrences.Count
-                || occurrences[i] is not { Occurrence: > 0, Occurrences: > 0 } stated)
+            if (span.WordOccurrences is not { } occurrences || token >= occurrences.Count
+                || occurrences[token] is not { Occurrence: > 0, Occurrences: > 0 } stated)
             {
                 continue;
             }
 
-            var spelling = span.Words[i];
-            var printed = translated.Count(word => word.Written == spelling);
+            var spelling = span.Words[token];
+            var printed = translated.Count(one => one.Written == spelling);
             if (printed != stated.Occurrences)
             {
                 continue;
             }
 
-            if (translated[ours[i]].Written != spelling)
+            if (translated[word].Written != spelling)
             {
                 continue;
             }
 
-            var at = translated.Take(ours[i] + 1).Count(word => word.Written == spelling);
+            var at = translated.Take(word + 1).Count(one => one.Written == spelling);
             if (at != stated.Occurrence)
             {
                 account.TranslatedWordsOnAnotherOccurrence++;
@@ -556,41 +728,80 @@ internal static class InterlinearJoin
     }
 
     /// <summary>
-    /// The translated words of a span, found in order from the cursor. Answers an empty list when
-    /// any one of them is missing, so the caller can leave the cursor where it was, and says whether
-    /// the one that was missing is nowhere in the verse or only behind the cursor.
-    ///
-    /// The source tokenises at an apostrophe and the corpus does not: <c>Шім’ї</c> is two words
-    /// there and one here. The piece before the apostrophe finds the corpus word; a piece after it,
-    /// standing on the word just found, is counted and not joined, because the source has been seen
-    /// to align that piece to a different original word from its stem and the corpus word cannot be
-    /// both.
+    /// Where the search for a span's translated words starts: the first word no span has taken, and
+    /// what is left unread of the word before it, where the source cut that word into pieces.
     /// </summary>
-    private static (List<int> Words, int After, int Fragments, InterlinearSpanFailure Failure) FindTranslated(
+    private readonly record struct TranslatedCursor(int At, string Rest);
+
+    /// <summary>
+    /// The translated words of a span, found in order from the cursor, each with the word of the span
+    /// it stands for. Answers an empty list when any one of them is missing, so the caller can leave the
+    /// cursor where it was, and says whether the one that was missing is nowhere in the verse or only
+    /// behind the cursor.
+    ///
+    /// The source cuts one printed word into several where its parts render different things or a part
+    /// is supplied, and the corpus prints the word whole: <c>bird{s}</c> is <c>bird</c> and <c>s</c>
+    /// there and <c>birds</c> here, <c>he-goats</c> is <c>he</c> and <c>goats</c>. A word printed against
+    /// the ones after it finds the corpus word they spell together, and each piece after it stands on that
+    /// word too. A piece in another span joins the word to that span's original word as well: the corpus
+    /// word renders both, as <c>Rehoboth-Ir</c> renders רְחֹבֹת and עִיר.
+    ///
+    /// Except after an apostrophe: <c>Шім’ї</c>, <c>brother’s</c>. The piece before the apostrophe finds
+    /// the corpus word; a piece after it in another span is counted and not joined, because the source
+    /// aligns it to a different original word from its stem (the possessive <c>s</c> to the noun in the
+    /// construct state, <c>brother’s blood</c>), and the corpus word renders its stem.
+    /// </summary>
+    private static (List<(int Token, int Word)> Words, TranslatedCursor After, int Fragments, InterlinearSpanFailure Failure) FindTranslated(
         IReadOnlyList<InterlinearWord> words,
-        IReadOnlyList<string> wanted,
+        AlignmentSpan span,
         string? language,
-        int from)
+        TranslatedCursor from)
     {
-        var found = new List<int>(wanted.Count);
-        var at = from;
+        var wanted = span.Words;
+        var found = new List<(int Token, int Word)>(wanted.Count);
+        var at = from.At;
+        var rest = from.Rest;
         var fragments = 0;
 
-        foreach (var one in wanted)
+        for (var token = 0; token < wanted.Count; token++)
         {
-            var folded = Apostrophe(WordFolding.Fold(one, language));
+            var folded = Apostrophe(WordFolding.Fold(wanted[token], language));
+            var glue = span.Glue is { } glues && token < glues.Count ? glues[token] : default;
+            var piece = Unpunctuated(folded);
             if (at > 0 && Pieces(words[at - 1]).Skip(1).Contains(folded))
             {
-                fragments++;
+                if (found.Count > 0 && found[^1].Word == at - 1)
+                {
+                    found.Add((token, at - 1));
+                }
+                else
+                {
+                    fragments++;
+                }
+
+                rest = rest.StartsWith(piece, StringComparison.Ordinal) ? rest[piece.Length..] : string.Empty;
+                continue;
+            }
+
+            if (glue.Joined && piece.Length > 0 && rest.StartsWith(piece, StringComparison.Ordinal))
+            {
+                found.Add((token, at - 1));
+                rest = rest[piece.Length..];
                 continue;
             }
 
             var next = -1;
+            rest = string.Empty;
             for (var i = at; i < words.Count && next < 0; i++)
             {
                 if (Apostrophe(words[i].Folded) == folded || Pieces(words[i]) is [var stem, _, ..] && stem == folded)
                 {
                     next = i;
+                }
+                else if (Spelled(Unpunctuated(Apostrophe(words[i].Folded)), piece, glue.After, language) is { } left)
+                {
+                    next = i;
+                    rest = left;
                 }
             }
 
@@ -601,14 +812,48 @@ internal static class InterlinearJoin
                     : InterlinearSpanFailure.TranslatedWordAbsent);
             }
 
-            found.Add(next);
+            found.Add((token, next));
             at = next + 1;
         }
 
         return found.Count == 0
             ? ([], from, 0, InterlinearSpanFailure.TranslatedWordAbsent)
-            : (found, at, fragments, InterlinearSpanFailure.None);
+            : (found, new TranslatedCursor(at, rest), fragments, InterlinearSpanFailure.None);
     }
+
+    /// <summary>
+    /// What is left of a corpus word after its first piece, where the piece and some of the words printed
+    /// against it after it spell the whole word; null where they do not.
+    /// </summary>
+    private static string? Spelled(string word, string piece, IReadOnlyList<string>? after, string? language)
+    {
+        if (after is not { Count: > 0 } || piece.Length == 0 || word.Length <= piece.Length
+            || !word.StartsWith(piece, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var spelled = piece;
+        foreach (var next in after)
+        {
+            spelled += Unpunctuated(Apostrophe(WordFolding.Fold(next, language)));
+            if (spelled.Length == word.Length && spelled == word)
+            {
+                return word[piece.Length..];
+            }
+
+            if (!word.StartsWith(spelled, StringComparison.Ordinal))
+            {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>A word without its punctuation: what two ways of cutting the same printed word agree on.</summary>
+    private static string Unpunctuated(string word) =>
+        string.Concat(word.Where(character => !char.IsPunctuation(character) && !char.IsSymbol(character) && !char.IsWhiteSpace(character)));
 
     private static string[] Pieces(InterlinearWord word) =>
         word.Written.ToLowerInvariant().Split(Apostrophes, StringSplitOptions.RemoveEmptyEntries);
