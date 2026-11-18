@@ -23,6 +23,10 @@ namespace Essenthos.Core.Berean;
 /// together with the word whose English follows, and its <c>. . .</c> where a
 /// rendering has moved elsewhere in the verse.
 /// </param>
+/// <param name="Parsing">
+/// The word's parts as the file spells them out, prefixes first and separated by <c>|</c> or <c>,</c>:
+/// <c>Conjunctive waw | Verb - Qal - Consecutive imperfect - third person masculine singular</c>.
+/// </param>
 internal readonly record struct BereanRow(
     double OriginalOrder,
     int EnglishOrder,
@@ -32,7 +36,8 @@ internal readonly record struct BereanRow(
     string Sigla,
     string StrongNumber,
     string Reference,
-    string English)
+    string English,
+    string Parsing = "")
 {
     public bool IsGreek => Language is "Greek";
 
@@ -68,6 +73,7 @@ internal static class BereanTable
     private const int Language = 4;
     private const int Word = 5;
     private const int WithSigla = 6;
+    private const int Parsing = 9;
     private const int StrongHebrew = 10;
     private const int StrongGreek = 11;
     private const int Reference = 12;
@@ -145,7 +151,8 @@ internal static class BereanTable
                 cells[WithSigla].Trim(),
                 Strong(cells[greek ? StrongGreek : StrongHebrew], greek),
                 cells[Reference].Trim(),
-                cells[Rendering]);
+                cells[Rendering],
+                cells[Parsing].Trim());
         }
     }
 

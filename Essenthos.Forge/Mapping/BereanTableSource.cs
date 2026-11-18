@@ -33,6 +33,9 @@ internal sealed class BereanTableSource : IPairSource
     /// <summary>How much of a verse's Strong numbers must agree before its order is believed (<see cref="BereanLinks"/>).</summary>
     private const double Agreeing = 0.5;
 
+    /// <summary>BHSA's number for the conjunction ו, which it writes as a word of its own.</summary>
+    private const string Waw = "H9000";
+
     /// <summary>The verse a psalm's title stands inside where the tables print one.</summary>
     private const int FirstVerse = 1;
 
@@ -127,7 +130,10 @@ internal sealed class BereanTableSource : IPairSource
                 continue;
             }
 
-            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled))
+            var conjunctions = greekWitness
+                ? null
+                : run.SelectMany(words => words).Where(id => witnessText.Words[(int)id].Strong == Waw).ToHashSet();
+            if (!BereanLinks.Pair(rows, ours, run, drafts, silences, overruled, conjunctions))
             {
                 drifted++;
                 continue;
@@ -137,15 +143,18 @@ internal sealed class BereanTableSource : IPairSource
         }
 
         // A word the English prints in brackets is the translators' own and renders nothing, so it is not linked, and a
-        // rendering of nothing else is not written: Gen 6:11's second הָאָרֶץ is «[and]» in the table.
-        var supplied = drafts.Sum(draft => draft.From.Count(id => Bracketed(english, id)));
-        var onlySupplied = drafts.Count(draft => draft.From.Count > 0 && draft.From.All(id => Bracketed(english, id)));
+        // rendering of nothing else is not written: Gen 6:11's second הָאָרֶץ is «[and]» in the table. The exception is the
+        // bracketed words a conjunction leaves to a word, «And [he]» on יְהוֹשֻׁעַ (BereanLinks.Supplied).
+        var supplied = drafts.Where(draft => !draft.Bracketed).Sum(draft => draft.From.Count(id => Bracketed(english, id)));
+        var onlySupplied = drafts.Count(draft => !draft.Bracketed && draft.From.Count > 0 && draft.From.All(id => Bracketed(english, id)));
         drafts = [.. drafts
-            .Select(draft => draft with { From = [.. draft.From.Where(id => !Bracketed(english, id))] })
+            .Select(draft => draft.Bracketed ? draft : draft with { From = [.. draft.From.Where(id => !Bracketed(english, id))] })
             .Where(draft => draft.Relation != LinkRelation.Renders || draft.From.Count > 0)];
         log($"{verses} verses, {drafts.Count} links; {silences.Absent} absent, {silences.Moved} moved, {silences.Joined} joined, "
             + $"{silences.Unmarked} unmarked, {silences.Overruled} overruled; {divided} divided, {drifted} drifted, {disputed} disputed, "
-            + $"{unframed} at an address the witness lacks; {supplied} bracketed words left unlinked, {onlySupplied} renderings of nothing else");
+            + $"{unframed} at an address the witness lacks; {supplied} bracketed words left unlinked, {onlySupplied} renderings of nothing else; "
+            + $"{silences.ConjunctionsMoved + silences.ConjunctionsUnlinked} words rendered by bracketed words beside a conjunction, "
+            + $"{silences.ConjunctionsMoved} of the conjunctions moved to the waw beside, {silences.ConjunctionsUnlinked} left unlinked");
         return drafts.Select(draft => new MappingRow(MappingText.Keys(draft.From.Select(english.Key)),
             MappingText.Keys(draft.To.Select(witnessText.Key)),
             draft.Relation.ToString().ToLowerInvariant(), Method, null, Source, null, null, null));

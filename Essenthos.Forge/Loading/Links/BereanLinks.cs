@@ -182,6 +182,11 @@ internal static class BereanLinks
     /// is wrong about, so the table's word on it is left out: an absence is not written, and a
     /// rendering names the row's other words or is not written either.
     /// </para>
+    ///
+    /// <para>
+    /// <paramref name="conjunctions"/> are the witness's words that are the conjunction ו, which BHSA writes apart from the word
+    /// it is prefixed to; given them, a row of a conjunction and bracketed words is read as <see cref="Supplied"/> says.
+    /// </para>
     /// </summary>
     internal static bool Pair(
         IReadOnlyList<BereanRow> rows,
@@ -189,7 +194,8 @@ internal static class BereanLinks
         IReadOnlyList<List<long>> witness,
         List<Draft> drafts,
         Silences silences,
-        IReadOnlySet<long>? overruled = null)
+        IReadOnlySet<long>? overruled = null,
+        IReadOnlySet<long>? conjunctions = null)
     {
         if (Claims(rows, ours) is not { } claimed)
         {
@@ -233,7 +239,23 @@ internal static class BereanLinks
 
                 if (theirs.Count > 0)
                 {
-                    drafts.Add(new Draft(LinkRelation.Renders, mine, theirs));
+                    if (conjunctions is not null && Supplied(rows, claimed, witness, conjunctions, i) is { } supplied)
+                    {
+                        drafts.Add(new Draft(LinkRelation.Renders, [.. mine.Skip(1)], theirs, Bracketed: true));
+                        if (supplied.Waw is { } to)
+                        {
+                            drafts.Add(new Draft(LinkRelation.Renders, [mine[0]], [to]));
+                            silences.ConjunctionsMoved++;
+                        }
+                        else
+                        {
+                            silences.ConjunctionsUnlinked++;
+                        }
+                    }
+                    else
+                    {
+                        drafts.Add(new Draft(LinkRelation.Renders, mine, theirs));
+                    }
                 }
 
                 continue;
@@ -272,6 +294,109 @@ internal static class BereanLinks
 
         return true;
     }
+
+    /// <summary>
+    /// A row whose English is a conjunction and bracketed words and nothing else, on a word with no conjunction of its own.
+    /// Joshua 3:6 gives יְהוֹשֻׁעַ «And [he]» and וַיֹּאמֶר before it «said»: the bracketed words are what the translators
+    /// wrote for the word, so they render it, and the conjunction renders the ו of the word beside it, which BHSA writes as a
+    /// word of its own.
+    ///
+    /// <para>
+    /// Which ו: the one of the word before, which opens the clause the row's word stands in (a verb before its subject) or
+    /// joins the phrase it ends (וְאֵשֶׁת נֹחַ). Only where the word before has no ו, the one of a verb right after, which
+    /// opens the next clause the bracketed words stand in (2 Kings 23:6, «and [there] ground»). A ו counts only where its
+    /// word renders something and its English does not open with a conjunction of its own; otherwise the conjunction is
+    /// left unlinked. «For» renders a preposition or כִּי, never a ו, and is left unlinked too.
+    /// </para>
+    ///
+    /// <para>
+    /// A row whose word is or carries a conjunction, a preposition or an adverb is not read so: there the conjunction renders
+    /// the word's own ו or the word itself («for» over לוֹ, «so» over כֵּן), and the bracketed words often stand for a word
+    /// further on (Judges 19:25 gives לוֹ «So [the Levite]» for הָאִישׁ after it).
+    /// </para>
+    /// </summary>
+    /// <returns>Null where the row is not of this shape; otherwise the ו its conjunction renders, if one is found.</returns>
+    private static Conjunction? Supplied(
+        IReadOnlyList<BereanRow> rows,
+        List<long>[] claimed,
+        IReadOnlyList<List<long>> witness,
+        IReadOnlySet<long> conjunctions,
+        int at)
+    {
+        if (ConjunctionAndBracketed(rows[at].English) is not { } conjunction
+            || Parts(rows[at].Parsing).ToList() is not { Count: > 0 } parts
+            || !parts.All(SubjectPart))
+        {
+            return null;
+        }
+
+        if (!WawConjunctions.Contains(conjunction))
+        {
+            return new Conjunction(null);
+        }
+
+        var before = at > 0 ? witness[at - 1].Where(conjunctions.Contains).ToList() : [];
+        if (before.Count > 0)
+        {
+            return new Conjunction(Free(at - 1) ? before.Single() : null);
+        }
+
+        return at + 1 < rows.Count
+               && witness[at + 1].Where(conjunctions.Contains).ToList() is [var after]
+               && Parts(rows[at + 1].Parsing).Contains("Verb")
+               && Free(at + 1)
+            ? new Conjunction(after)
+            : new Conjunction(null);
+
+        bool Free(int row) =>
+            witness[row].Count(conjunctions.Contains) == 1
+            && claimed[row] is { Count: > 0 }
+            && BereanWords.Rendering(rows[row].English) is [var first, ..]
+            && !OpeningConjunctions.Contains(first);
+    }
+
+    /// <summary>The conjunction of a phrase that is one conjunction and one bracketed span, «And [he]»; null for any other.</summary>
+    private static string? ConjunctionAndBracketed(string english)
+    {
+        var phrase = english.Trim();
+        var space = phrase.IndexOf(' ');
+        if (space < 0)
+        {
+            return null;
+        }
+
+        var span = phrase[(space + 1)..].TrimStart();
+        return SuppliedConjunctions.Contains(phrase[..space])
+               && span.Length > 2
+               && span[0] == '['
+               && span[^1] == ']'
+               && span.AsSpan(1, span.Length - 2).IndexOfAny('[', ']') < 0
+               && BereanWords.Rendering(span).Count > 0
+            ? phrase[..space]
+            : null;
+    }
+
+    /// <summary>The head of each part the table's parsing names: <c>Conjunctive waw, Preposition-b | Noun - …</c> is three.</summary>
+    private static IEnumerable<string> Parts(string parsing) =>
+        parsing.Split('|', ',').Select(part => part.Split(" - ")[0].Trim()).Where(part => part.Length > 0);
+
+    private static bool SubjectPart(string part) => SubjectParts.Contains(part) || part.Contains(" person", StringComparison.Ordinal);
+
+    private static readonly HashSet<string> SuppliedConjunctions =
+        new(["and", "so", "then", "but", "now", "yet", "for"], StringComparer.OrdinalIgnoreCase);
+
+    private static readonly HashSet<string> WawConjunctions =
+        new(["and", "so", "then", "but", "now", "yet"], StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>The English a ו is rendered by, or a word that may stand for one: a row opening with one has its ו rendered.</summary>
+    private static readonly HashSet<string> OpeningConjunctions =
+        new(["and", "so", "then", "but", "now", "yet", "or", "for"], StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>The parts of a word that can stand for a person or thing the translators named with a pronoun or a name.</summary>
+    private static readonly HashSet<string> SubjectParts =
+        new(["Noun", "Article", "Pronoun", "Verb", "Number", "Adjective"], StringComparer.Ordinal);
+
+    private readonly record struct Conjunction(long? Waw);
 
     /// <summary>
     /// For each row the table marks <c>vvv</c>, the row whose English renders it together with its
@@ -353,9 +478,13 @@ internal static class BereanLinks
 
     internal sealed record Word(long Id, int VerseId, string Surface, string? Strong);
 
-    internal sealed record Draft(LinkRelation Relation, List<long> From, List<long> To);
+    /// <param name="Bracketed">Whether the words the English brackets render here, which they do nowhere else (<see cref="Supplied"/>).</param>
+    internal sealed record Draft(LinkRelation Relation, List<long> From, List<long> To, bool Bracketed = false);
 
-    /// <summary>The rows with no English of their own, by what the table says about each.</summary>
+    /// <summary>
+    /// The rows with no English of their own, by what the table says about each, and where the conjunctions of the rows
+    /// <see cref="Supplied"/> reads went.
+    /// </summary>
     internal sealed class Silences
     {
         public int Absent { get; set; }
@@ -367,5 +496,11 @@ internal static class BereanLinks
         public int Unmarked { get; set; }
 
         public int Overruled { get; set; }
+
+        /// <summary>Conjunctions of a conjunction and bracketed words moved to the ו beside the word (<see cref="Supplied"/>).</summary>
+        public int ConjunctionsMoved { get; set; }
+
+        /// <summary>Conjunctions of such a row for which no ו beside the word could be told, left unlinked.</summary>
+        public int ConjunctionsUnlinked { get; set; }
     }
 }
