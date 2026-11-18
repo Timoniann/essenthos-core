@@ -114,6 +114,30 @@ public sealed class PaneTests : IDisposable
     }
 
     [Fact]
+    public async Task ATranslationsWordCarriesTheNumberItRendersAndAnOriginalsWordOnlyItsOwn()
+    {
+        var (english, hebrew) = Pair();
+        var and = _db.WordAt(english, 1, 1, 1);
+        var joshua = _db.WordAt(english, 1, 1, 2);
+        joshua.StrongNumber = "H3091";
+        var conjunction = _db.WordAt(hebrew, 1, 1, 1);
+        _db.WordRenderedStrongs.AddRange(
+            new WordRenderedStrong { VerseId = and.VerseId, WordId = and.Id, StrongNumber = "H9000" },
+            new WordRenderedStrong { VerseId = joshua.VerseId, WordId = joshua.Id, StrongNumber = "H3091" },
+            new WordRenderedStrong { VerseId = conjunction.VerseId, WordId = conjunction.Id, StrongNumber = "H9000" });
+        _db.SaveChanges();
+
+        var words = (await Pane(english)).GetProperty("verses")[0].GetProperty("words");
+        var hebrewWords = (await Pane(hebrew)).GetProperty("verses")[0].GetProperty("words");
+
+        words[0].GetProperty("rn").GetString().Should().Be("H9000");
+        words[0].TryGetProperty("n", out _).Should().BeFalse();
+        (words[1].GetProperty("n").GetString(), words[1].TryGetProperty("rn", out _)).Should().Be(("H3091", false), "its own number is written once");
+        words[2].TryGetProperty("rn", out _).Should().BeFalse("no link gives it a number");
+        hebrewWords[0].TryGetProperty("rn", out _).Should().BeFalse("an original's word shows only its own number");
+    }
+
+    [Fact]
     public async Task AChapterTheTextHasNothingInHasNoPane()
     {
         var (english, _) = Pair();

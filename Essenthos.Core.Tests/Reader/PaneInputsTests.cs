@@ -1,5 +1,6 @@
 using Essenthos.Core.Build;
 using Essenthos.Core.Conversion;
+using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Names;
@@ -69,6 +70,35 @@ public sealed class PaneInputsTests : IDisposable
 
         paneInputs.Keys("KJV", [inputs[0], inputs[1] with { Sha256 = "cc" }], Chapters).Should().Equal(before);
         paneInputs.Keys("KJV", [inputs[0] with { Sha256 = "dd" }, inputs[1]], Chapters).Values.Should().NotIntersectWith(before.Values);
+    }
+
+    /// <summary>
+    /// A word's number moves the chapter it stands in, for a text whose panes read its numbers, and nothing else; how the word
+    /// came by the number is not in a pane and moves no key.
+    /// </summary>
+    [Fact]
+    public void ANumberMovesOnlyTheChapterOfItsWordAndOnlyWhereThePanesReadTheNumbers()
+    {
+        var store = Store();
+        var numbered = new List<ProductInput> { new($"Essenthos/{StrongNumberFiles.Product("KJV")}.essx", "aa") };
+        Numbers(store, "H430", hops: 1);
+        var before = PaneInputs.Read(store, ["KJV"], Pairs, 2, ["KJV"]).Keys("KJV", numbered, Chapters);
+        var unread = Keys(store, "KJV");
+
+        Numbers(store, "H430", hops: 2);
+        PaneInputs.Read(store, ["KJV"], Pairs, 2, ["KJV"]).Keys("KJV", numbered, Chapters).Should().Equal(before);
+
+        Numbers(store, "H3068", hops: 1);
+        Moved(before, PaneInputs.Read(store, ["KJV"], Pairs, 2, ["KJV"]).Keys("KJV", numbered, Chapters)).Should().Equal([(1, 3)]);
+        Keys(store, "KJV").Should().Equal(unread);
+    }
+
+    private static void Numbers(ProductStore store, string third, int hops)
+    {
+        using var writer = store.Create(StrongNumberFiles.Product("KJV"), ProductKind.Machine, StrongNumberRow.Schema("KJV"), "test", []);
+        writer.Write(new StrongNumberRow(WordKey.Parse("1.1:1.1", "KJV"), "H7225", 1, "BHSA 1.1:1.1", null, null, null));
+        writer.Write(new StrongNumberRow(WordKey.Parse("1.3:1.2", "KJV"), third, hops, "BHSA 1.3:1.1", 0.9, null, null));
+        writer.Complete();
     }
 
     /// <summary>

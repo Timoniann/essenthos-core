@@ -27,7 +27,8 @@ internal sealed record PaneBody(int Book, int Chapter, byte[] Gzip, string Hash,
 ///   "headings": [{ "verse": 1, "heading": "…", "notes": [note] }],
 ///   "verses": [{ "n": 1, "own": ["119:1"], "ref": [19, 119, 1], "stated": ["118:1"], "notes": [note], "words": [word] }] }
 /// note: { "kind", "content", "anchorWordId", "anchor" }
-/// word: { "id", "s" surface, "t" trailer, "g" gloss, "l" lemma, "n" Strong number, "w" witness word ids,
+/// word: { "id", "s" surface, "t" trailer, "g" gloss, "l" lemma, "n" Strong number, "rn" the Strong number a translation's
+///         word without one of its own renders through its links, "w" witness word ids,
 ///         "p" provenance index, "a" absence, "m" mark, "bk" the letters bracketed inside the word, "e" [card] the records the word names, "eb" [card] the base
 ///         text's records where the translation names another (origin base-reading), "mo" morphology, "ph" phono,
 ///         "pt" phono trailer, "lg" language, "el" 1 when elided, "br" break, "sc" { "n", "m", "c" } Strong candidate,
@@ -319,6 +320,7 @@ internal static class Panes
         Optional(json, "g", word.Gloss);
         Optional(json, "l", word.Lexeme);
         Optional(json, "n", word.StrongNo);
+        Optional(json, "rn", word.RenderedStrong);
         if (word.OriginalWordIds.Length > 0)
         {
             // A set the reader intersects; in order, so the same corpus writes the same body.

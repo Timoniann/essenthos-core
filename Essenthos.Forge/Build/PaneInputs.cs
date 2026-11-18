@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Essenthos.Core.Conversion;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Indexes;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Mapping;
 using Essenthos.Core.Names;
@@ -15,9 +16,10 @@ namespace Essenthos.Core.Build;
 /// under is copied, not read again from the database. The key holds every product of the text's input list that a pane
 /// cannot be told apart by (the text's own products, the other texts' words and kinds, the Strong candidates, the lexicons)
 /// whole, and of the rest only the rows that reach the chapter: the rows of each final that name a word of the text in it,
-/// the projected names on its words, the record files' rows of the records those names and its occupation words name, and
-/// the occupation rows of those words. A word is in every canonical chapter its verse stands at (the frame, every address,
-/// not only the primary one), and a pane is in every chapter it reads (<see cref="ChapterReading.Held"/>).
+/// the projected names on its words, the record files' rows of the records those names and its occupation words name, the
+/// occupation rows of those words, and for a translation the Strong number each of its words there renders. A word is in
+/// every canonical chapter its verse stands at (the frame, every address, not only the primary one), and a pane is in every
+/// chapter it reads (<see cref="ChapterReading.Held"/>).
 /// <para>
 /// Raise <see cref="Version"/> whenever what a pane reads changes (<see cref="Panes"/>, <see cref="ChapterReading"/>,
 /// <see cref="Annotations"/>): a key is a function of the products, not of the code, and a pane whose key did not move is
@@ -26,7 +28,7 @@ namespace Essenthos.Core.Build;
 /// </summary>
 internal sealed class PaneInputs
 {
-    public const int Version = 9;
+    public const int Version = 10;
 
     /// <summary>The record files a pane reads, and the one column each names its record by.</summary>
     internal static readonly (string Product, string Column)[] RecordFiles =
@@ -63,10 +65,15 @@ internal sealed class PaneInputs
     public static bool Sliced(string product) =>
         (product.StartsWith("mapping/", StringComparison.Ordinal) && product.EndsWith("/" + MappingProducts.Final, StringComparison.Ordinal))
         || product.StartsWith(NameProducts.Projected(""), StringComparison.Ordinal)
-        || RecordProducts.Contains(product, StringComparer.Ordinal);
+        || RecordProducts.Contains(product, StringComparer.Ordinal)
+        || (product.StartsWith("texts/", StringComparison.Ordinal) && product == StrongNumberFiles.Product(product.Split('/')[1]));
 
-    /// <summary>The slices of the texts named, every final of a pair holding one of them read once.</summary>
-    public static PaneInputs Read(ProductStore store, IReadOnlyCollection<string> texts, IReadOnlyList<(string From, string To)> pairs, int parallel)
+    /// <summary>
+    /// The slices of the texts named, every final of a pair holding one of them read once, and the Strong numbers of the
+    /// <paramref name="numbered"/> among them (the translations, whose panes write the number each word renders).
+    /// </summary>
+    public static PaneInputs Read(ProductStore store, IReadOnlyCollection<string> texts, IReadOnlyList<(string From, string To)> pairs, int parallel,
+        IReadOnlyCollection<string>? numbered = null)
     {
         var inputs = new PaneInputs();
         foreach (var text in texts.Order(StringComparer.Ordinal))
@@ -157,6 +164,32 @@ internal sealed class PaneInputs
             slices.Names = hashes.Finish();
         });
 
+        // Only the number counts: how a word came by it (hops, source, confidence) is not written in a pane.
+        Parallel.ForEach(inputs._texts.Where(t => numbered?.Contains(t.Key) == true), new ParallelOptions { MaxDegreeOfParallelism = parallel }, entry =>
+        {
+            var (text, slices) = (entry.Key, entry.Value);
+            if (!store.Exists(StrongNumberFiles.Product(text)))
+            {
+                return;
+            }
+
+            using var reader = store.Open(StrongNumberFiles.Product(text));
+            var columns = reader.Columns.Select(c => c.Name).ToList();
+            var (own, number) = (Column(columns, "own", text), Column(columns, "number", text));
+            var hashes = new ChapterHashes();
+            var bytes = new RowBytes();
+            var chapters = new List<(int, int)>();
+            var pair = new string?[2];
+            foreach (var row in reader.Rows())
+            {
+                Each(slices.Frame, row[own], chapters);
+                (pair[0], pair[1]) = (row[own], row[number]);
+                hashes.Add(chapters, bytes.Of(pair));
+            }
+
+            slices.Numbers = hashes.Finish();
+        });
+
         if (store.Exists(OccupationWords))
         {
             using var reader = store.Open(OccupationWords);
@@ -202,6 +235,7 @@ internal sealed class PaneInputs
         var slices = _texts[text];
         var whole = Whole(inputs);
         var referring = inputs.Any(i => ProductOf(i.Path) == Referents);
+        var numbered = inputs.Any(i => ProductOf(i.Path) == StrongNumberFiles.Product(text));
         var chapters = new Dictionary<(int, int), byte[]>();
         var keys = new Dictionary<(int, int), string>();
         Span<byte> ints = stackalloc byte[20];
@@ -218,7 +252,7 @@ internal sealed class PaneInputs
                 hash.AppendData(ints);
                 if (!chapters.TryGetValue((book, chapter), out var key))
                 {
-                    chapters[(book, chapter)] = key = Chapter(slices, whole, (book, chapter), referring);
+                    chapters[(book, chapter)] = key = Chapter(slices, whole, (book, chapter), referring, numbered);
                 }
 
                 hash.AppendData(key);
@@ -253,13 +287,18 @@ internal sealed class PaneInputs
         return dot > name.LastIndexOf('/') ? name[..dot] : name;
     }
 
-    private byte[] Chapter(Slices slices, byte[] whole, (int, int) chapter, bool referring)
+    private byte[] Chapter(Slices slices, byte[] whole, (int, int) chapter, bool referring, bool numbered)
     {
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         hash.AppendData(whole);
         Part(hash, "links", slices.Links.GetValueOrDefault(chapter));
         Part(hash, "names", slices.Names.GetValueOrDefault(chapter));
         Part(hash, "occupation-words", slices.OccupationWords.GetValueOrDefault(chapter));
+        if (numbered)
+        {
+            Part(hash, "numbers", slices.Numbers.GetValueOrDefault(chapter));
+        }
+
         IEnumerable<string> records = slices.Records.GetValueOrDefault(chapter) ?? [];
         if (referring && _referents.Chapters.TryGetValue(chapter, out var referred))
         {
@@ -382,6 +421,8 @@ internal sealed class PaneInputs
         public Dictionary<(int, int), byte[]> Names { get; set; } = [];
 
         public Dictionary<(int, int), byte[]> OccupationWords { get; set; } = [];
+
+        public Dictionary<(int, int), byte[]> Numbers { get; set; } = [];
 
         public Dictionary<(int, int), SortedSet<string>> Records { get; } = [];
 
