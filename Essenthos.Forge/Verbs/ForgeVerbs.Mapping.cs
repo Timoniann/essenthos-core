@@ -107,7 +107,8 @@ internal static partial class ForgeVerbs
             .ToList();
         var outcomes = new System.Collections.Concurrent.ConcurrentBag<MethodFileComparison.Outcome>();
         System.Threading.Tasks.Parallel.ForEach(work, new ParallelOptions { MaxDegreeOfParallelism = Parallelism(args, 4) },
-            item => outcomes.Add(MethodFileComparison.Compare(before, after, item.pair, item.m)));
+            item => outcomes.Add(MethodFileComparison.Compare(before, after, item.pair, item.m,
+                Option(args, "--examples") is { } shown ? int.Parse(shown, CultureInfo.InvariantCulture) : 4)));
         var groups = outcomes.SelectMany(o => o.Groups).OrderBy(g => g.Pair, StringComparer.Ordinal).ThenBy(g => g.Method, StringComparer.Ordinal)
             .ThenBy(g => g.Source, StringComparer.Ordinal).ToList();
         var summary = MethodFileComparison.Summary(groups);
