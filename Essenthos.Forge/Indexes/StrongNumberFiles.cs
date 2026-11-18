@@ -58,7 +58,10 @@ internal sealed record StrongDisagreementRow(string Text, long Own, long FromOri
 internal static class StrongNumberFiles
 {
     /// <summary>Raised with any change to the rule; a file made by another version is made again whatever its inputs say.</summary>
-    public const string Version = "2";
+    public const string Version = "3";
+
+    /// <summary>The editions whose words' parts of speech class every number of the originals (<see cref="OriginalWords"/>).</summary>
+    private static readonly string[] Classing = [Loading.BhsaTextSource.Slug, Loading.NestleTextSource.Slug];
 
     public const string VersionNote = "numbers-version";
 
@@ -89,11 +92,12 @@ internal static class StrongNumberFiles
         }
 
         var lenders = new ConcurrentDictionary<(string Text, bool Numbered), Lazy<ChainedNumbers.Lender>>();
+        var classes = new Lazy<Dictionary<string, WordClass>>(() => Classes(context.Store));
         var outcomes = new ConcurrentBag<IndexOutcome>();
         foreach (var texts in order.GroupBy(text => wave[text]).OrderBy(g => g.Key))
         {
             Parallel.ForEach(texts, new ParallelOptions { MaxDegreeOfParallelism = parallel }, text =>
-                outcomes.Add(Make(context, text, place, lenders, force)));
+                outcomes.Add(Make(context, text, place, lenders, classes, force)));
         }
 
         outcomes.Add(Summarise(context, order, force));
@@ -102,19 +106,32 @@ internal static class StrongNumberFiles
     }
 
     private static IndexOutcome Make(
-        IndexContext context, string text, Dictionary<string, int> place, ConcurrentDictionary<(string, bool), Lazy<ChainedNumbers.Lender>> lenders, bool force)
+        IndexContext context, string text, Dictionary<string, int> place, ConcurrentDictionary<(string, bool), Lazy<ChainedNumbers.Lender>> lenders,
+        Lazy<Dictionary<string, WordClass>> classes, bool force)
     {
         var clock = Stopwatch.StartNew();
         var store = context.Store;
         var product = Product(text);
         var pairs = context.PairsOf(text).OrderBy(p => p.Pair, StringComparer.Ordinal).ToList();
         var others = pairs.Select(p => p.Other).Distinct().Order(StringComparer.Ordinal).ToList();
+        var translation = context.Texts[text].Kind == TextKind.Translation;
         bool Before(string other) => place[other] < place[text];
+        bool Original(string other) => context.Texts[other].Kind != TextKind.Translation;
         var inputs = new List<ProductInput> { store.ProductInput(TextField.ProductOf(text)), store.ProductInput(TextWord.ProductOf(text)) };
         foreach (var other in others)
         {
             inputs.Add(store.ProductInput(TextField.ProductOf(other)));
             inputs.Add(store.ProductInput(Before(other) ? Product(other) : TextWord.ProductOf(other)));
+            if (translation && Before(other) && Original(other))
+            {
+                inputs.Add(store.ProductInput(TextWord.ProductOf(other)));
+            }
+        }
+
+        if (translation)
+        {
+            inputs.AddRange(Classing.Where(slug => store.Exists(TextWord.ProductOf(slug)) && !others.Contains(slug))
+                .Select(slug => store.ProductInput(TextWord.ProductOf(slug))));
         }
 
         inputs.AddRange(pairs.Select(p => store.ProductInput(MappingProducts.Of(p.Pair, MappingProducts.Final))));
@@ -124,18 +141,31 @@ internal static class StrongNumberFiles
         }
 
         var lending = others.ToDictionary(other => other, other => lenders.GetOrAdd((other, Before(other)), key => new Lazy<ChainedNumbers.Lender>(() =>
-            new ChainedNumbers.Lender(context.Texts[key.Item1].Kind != TextKind.Translation,
-                key.Item2 ? Numbers(store, key.Item1) : context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal)))).Value,
+            Original(key.Item1)
+                ? new ChainedNumbers.Lender(true,
+                    key.Item2 ? Numbers(store, key.Item1) : context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal),
+                    classes.Value, Finite(store, key.Item1))
+                : new ChainedNumbers.Lender(false,
+                    key.Item2 ? Numbers(store, key.Item1) : context.EditionOf(key.Item1).Numbers.ToDictionary(n => n.Key, n => (n.Value, 0), StringComparer.Ordinal)))).Value,
             StringComparer.Ordinal);
         var words = new List<(WordKey Key, string? Own, string Form)>();
+        var supplied = new HashSet<string>(StringComparer.Ordinal);
         using (var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text)))
         {
             var served = StrongTerms.MayServe(reader.Header);
-            words.AddRange(reader.Rows().Select(word => (word.Key, served ? word.Strong : null, word.Normalised ?? word.Surface.ToLowerInvariant())));
+            foreach (var word in reader.Rows())
+            {
+                words.Add((word.Key, served ? word.Strong : null, word.Normalised ?? word.Surface.ToLowerInvariant()));
+                if (translation && Supplied(word))
+                {
+                    supplied.Add(word.Key.Own);
+                }
+            }
         }
 
         var keys = words.ToDictionary(w => w.Key.Own, w => w.Key, StringComparer.Ordinal);
-        var numbered = ChainedNumbers.Resolve(words.Select(w => (w.Key.Own, w.Own, w.Form)).ToList(), Links(store, pairs, lending), lending);
+        var numbered = ChainedNumbers.Resolve(words.Select(w => (w.Key.Own, w.Own, w.Form)).ToList(), Links(store, pairs, lending), lending,
+            translation ? new GroupNumbers(context.Texts[text].Language) : null, translation ? supplied : null);
         var disagreeing = numbered.Where(n => n.Linked is not null).ToList();
         var examples = Enumerable.Range(0, Math.Min(Examples, disagreeing.Count))
             .Select(i => disagreeing[(int)((long)i * disagreeing.Count / Math.Min(Examples, disagreeing.Count))])
@@ -181,6 +211,41 @@ internal static class StrongNumberFiles
     }
 
     private static string Text(string source) => source[..source.IndexOf(' ', StringComparison.Ordinal)];
+
+    /// <summary>
+    /// Whether a translation marks the word as its translators' own (P1, PRB-1869): a supplied run, but not the Berean's braces,
+    /// which mark the auxiliaries a verb's tense implies («{will}») and render that verb.
+    /// </summary>
+    internal static bool Supplied(TextWord word) => word.Supplied is not null && word.SuppliedMark != "{}";
+
+    /// <summary>The class of every number of the originals, by the part of speech most of its words in BHSA and Nestle 1904 have.</summary>
+    private static Dictionary<string, WordClass> Classes(ProductStore store)
+    {
+        var parts = new Dictionary<string, Dictionary<string, int>>(StringComparer.Ordinal);
+        foreach (var slug in Classing.Where(slug => store.Exists(TextWord.ProductOf(slug))))
+        {
+            using var reader = store.Open(TextWord.ProductOf(slug), TextWord.Schema(slug));
+            foreach (var word in reader.Rows().Where(w => w.Strong is not null))
+            {
+                var part = OriginalWords.Part(word.Morphology) ?? string.Empty;
+                if (!parts.TryGetValue(word.Strong!, out var counted))
+                {
+                    parts[word.Strong!] = counted = new Dictionary<string, int>(StringComparer.Ordinal);
+                }
+
+                counted[part] = counted.GetValueOrDefault(part) + 1;
+            }
+        }
+
+        return parts.ToDictionary(p => p.Key, p => OriginalWords.Of(p.Key, p.Value.MaxBy(c => c.Value).Key), StringComparer.Ordinal);
+    }
+
+    /// <summary>The keys of an original's words that are finite verbs.</summary>
+    private static HashSet<string> Finite(ProductStore store, string text)
+    {
+        using var reader = store.Open(TextWord.ProductOf(text), TextWord.Schema(text));
+        return reader.Rows().Where(w => OriginalWords.Finite(w.Morphology)).Select(w => w.Key.Own).ToHashSet(StringComparer.Ordinal);
+    }
 
     private static string Count(List<ChainedNumbers.Numbered> numbered, Func<ChainedNumbers.Numbered, bool> which) =>
         numbered.Count(which).ToString(CultureInfo.InvariantCulture);

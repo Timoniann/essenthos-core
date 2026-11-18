@@ -74,6 +74,8 @@ internal sealed class InterlinearJoinAccount
     public int NestWordsPlacedBeside { get; set; }
     public int TranslatedPiecesJoined { get; set; }
     public int TranslatedFragments { get; set; }
+    public int SuppliedWordsLeftOut { get; set; }
+    public int SpansOnlySupplied { get; set; }
     public int TranslatedWords { get; set; }
     public int TranslatedWordsJoined { get; set; }
     public int TranslatedWordsInMissingVerses { get; set; }
@@ -120,6 +122,8 @@ internal sealed class InterlinearJoinAccount
         NestWordsPlacedBeside += other.NestWordsPlacedBeside;
         TranslatedPiecesJoined += other.TranslatedPiecesJoined;
         TranslatedFragments += other.TranslatedFragments;
+        SuppliedWordsLeftOut += other.SuppliedWordsLeftOut;
+        SpansOnlySupplied += other.SpansOnlySupplied;
         TranslatedWords += other.TranslatedWords;
         TranslatedWordsJoined += other.TranslatedWordsJoined;
         TranslatedWordsInMissingVerses += other.TranslatedWordsInMissingVerses;
@@ -157,7 +161,8 @@ internal sealed class InterlinearJoinAccount
             .Append($"{TranslatedWordsInMissingVerses:N0} in a verse missing on one side; ")
             .Append($"{TranslatedWordsOnAnotherOccurrence:N0} joined to another occurrence than the source counts; ")
             .Append($"{TranslatedPiecesJoined:N0} pieces of a word the source split and the corpus prints whole, joined to that word; ")
-            .AppendLine($"{TranslatedFragments:N0} pieces after an apostrophe in another span than the word's stem, not joined")
+            .AppendLine($"{TranslatedFragments:N0} pieces after an apostrophe in another span than the word's stem, not joined; "
+                + $"{SuppliedWordsLeftOut:N0} words the translators supplied in braces left unlinked, {SpansOnlySupplied:N0} spans of nothing else")
             .Append($"stated but not kept: {UnalignedTranslatedWords:N0} translated words outside every span");
 
         if (withExamples)
@@ -276,7 +281,19 @@ internal static class InterlinearJoin
                 continue;
             }
 
-            var ours = matched.Select(match => match.Word).Distinct().ToList();
+            // A word the translators set in braces renders nothing, so it is not linked; a word printed whole whose
+            // braced piece is only a part of it (bird{s}) still renders through its other pieces.
+            var ours = matched.Where(match => !Supplied(span, match.Token)).Select(match => match.Word).Distinct().ToList();
+            var leftOut = matched.Select(match => match.Word).Distinct().Count() - ours.Count;
+            account.SuppliedWordsLeftOut += leftOut;
+            if (ours.Count == 0)
+            {
+                account.SpansOnlySupplied++;
+                account.Example("span of supplied words only", $"{where} {string.Join(' ', span.Words)}");
+                here = afterOurs;
+                continue;
+            }
+
             CheckTranslatedOccurrences(where, span, translated, matched, account);
             account.TranslatedFragments += fragments;
             account.TranslatedPiecesJoined += matched.Count - ours.Count;
@@ -751,6 +768,8 @@ internal static class InterlinearJoin
     /// aligns it to a different original word from its stem (the possessive <c>s</c> to the noun in the
     /// construct state, <c>brother’s blood</c>), and the corpus word renders its stem.
     /// </summary>
+    private static bool Supplied(AlignmentSpan span, int token) => span.Supplied is { } supplied && token < supplied.Count && supplied[token];
+
     private static (List<(int Token, int Word)> Words, TranslatedCursor After, int Fragments, InterlinearSpanFailure Failure) FindTranslated(
         IReadOnlyList<InterlinearWord> words,
         AlignmentSpan span,

@@ -211,3 +211,7 @@ refuse	21.10:14.11	21.10:14.11			Ecclesiastes 10:14: the Open Hebrew Bible numbe
 accept	21.10:14.11	21.10:14.11 21.10:14.12	renders		Ecclesiastes 10:14: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (יִּֽהְיֶ֔ה (H1961) beside שֶׁ (H7945))
 refuse	22.3:7.5	22.3:7.3			Song of Songs 3:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (לִּ (H9005) שְׁלֹמֹ֔ה (H8010) beside שֶׁ (H7945))
 accept	22.3:7.5	22.3:7.3 22.3:7.4 22.3:7.5	renders		Song of Songs 3:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (לִּ (H9005) שְׁלֹמֹ֔ה (H8010) beside שֶׁ (H7945))
+refuse	14.28:3.29	14.28:3.19			2 Chronicles 28:3: 'LORD' renders יְהוָה (H3068), not הֹרִישׁ (H3423), which 'cast out' renders (PRB-1869, read by hand)
+accept	14.28:3.29	14.28:3.20	renders		2 Chronicles 28:3: 'LORD' renders יְהוָה (H3068), not הֹרִישׁ (H3423), which 'cast out' renders (PRB-1869, read by hand)
+refuse	19.132:12.23	19.132:12.11			Psalms 132:12: 'forever' renders עֲדֵי־עַד, the two words together, not עֲדֵי (H5704) alone (PRB-1869, read by hand)
+accept	19.132:12.23	19.132:12.11 19.132:12.12	renders		Psalms 132:12: 'forever' renders עֲדֵי־עַד, the two words together, not עֲדֵי (H5704) alone (PRB-1869, read by hand)

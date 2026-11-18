@@ -118,3 +118,5 @@ refuse	21.12:7.9	21.12:7.9			Ecclesiastes 12:7: the Open Hebrew Bible numbers th
 accept	21.12:7.9	21.12:7.9 21.12:7.10	renders		Ecclesiastes 12:7: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (הָיָ֑ה (H1961) beside שֶׁ (H7945))
 refuse	32.4:10.18	32.4:10.16			Jonah 4:10: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (בִּן (H1121) beside שֶׁ (H7945))
 accept	32.4:10.18	32.4:10.16 32.4:10.17	renders		Jonah 4:10: the Open Hebrew Bible numbers the relative שֶׁ and the word after it as one word, which BHSA divides; its link names both (בִּן (H1121) beside שֶׁ (H7945))
+refuse	19.92:7.14	19.92:8.13			Psalms 92:8: 'веки' renders עַד (H5703), its own number, not עֲדֵי (H5704) (PRB-1869, read by hand)
+accept	19.92:7.14	19.92:8.14	renders		Psalms 92:8: 'веки' renders עַד (H5703), its own number, not עֲדֵי (H5704) (PRB-1869, read by hand)
