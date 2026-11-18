@@ -94,20 +94,16 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             rows = reader.ReadAll();
         }
 
-        return await Fill(text, framed.Verses, framed.Existing, rows, started, occurrences: true, cancellationToken);
+        return await Fill(text, framed.Verses, framed.Existing, rows, started, cancellationToken);
     }
 
-    /// <summary>
-    /// Fills the text's rows of <c>verse_reference</c> from its frame file. With <paramref name="occurrences"/> the text's
-    /// numbered words are placed again in <c>strong_occurrence</c> in the same transaction; a build filling every text writes
-    /// that table once, after.
-    /// </summary>
-    public async Task<FrameOutcome> Fill(Text text, ProductStore store, bool occurrences, CancellationToken cancellationToken = default)
+    /// <summary>Fills the text's rows of <c>verse_reference</c> from its frame file.</summary>
+    public async Task<FrameOutcome> Fill(Text text, ProductStore store, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var (verses, existing) = await Held(text, cancellationToken, lengths: false);
         using var reader = store.Open(FrameFile.Product(text.Slug), FrameRow.Schema);
-        return await Fill(text, verses, existing, reader.ReadAll(), started, occurrences, cancellationToken);
+        return await Fill(text, verses, existing, reader.ReadAll(), started, cancellationToken);
     }
 
     /// <summary>The file's rows: every verse it lists at its addresses, every other verse at its own.</summary>
@@ -140,7 +136,6 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
         IReadOnlyList<ReferenceDraft> existing,
         IReadOnlyList<FrameRow> rows,
         Stopwatch started,
-        bool occurrences,
         CancellationToken cancellationToken)
     {
         var expected = Drafts(verses, rows);
@@ -174,11 +169,6 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             }
 
             await writer.CompleteAsync(cancellationToken);
-        }
-
-        if (occurrences)
-        {
-            await Build.StoredStrong.WriteOccurrences(connection, null, [text.Id], cancellationToken);
         }
 
         await transaction.CommitAsync(cancellationToken);

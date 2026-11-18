@@ -1,4 +1,3 @@
-using Essenthos.Core.Build;
 using Essenthos.Core.Database;
 using Essenthos.Core.Indexes;
 using Microsoft.EntityFrameworkCore;
@@ -7,12 +6,35 @@ using Npgsql;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// What the build writes for the Strong pages from the links, the words and the frame (<see cref="StoredStrong"/>), and the
-/// number each word carries for marking (<see cref="ChainedNumbers"/>, which the build reads from files), written for a
-/// test's database on its connection and transaction, replacing what the tables held.
+/// What the build loads for the Strong pages from files (<see cref="StoredStrongFiles"/>: the pairs' link counts and every
+/// numbered word at its frame place) and the number each word carries for marking (<see cref="ChainedNumbers"/>), worked out
+/// from what a test put in its database and written on its connection and transaction, replacing what the tables held.
 /// </summary>
 internal static class StoredStrongAnswers
 {
+    private const string PairLinks = """
+        DELETE FROM text_pair_links;
+        INSERT INTO text_pair_links (text_id, edition_id, links, numbered)
+        SELECT t.id, e.id, c.links, EXISTS (SELECT 1 FROM word w WHERE w.text_id = e.id AND w.strong_number IS NOT NULL)
+        FROM text t
+        JOIN text e ON e.id <> t.id AND e.kind <> 'translation'
+        CROSS JOIN LATERAL (
+            SELECT (SELECT count(*) FROM link l WHERE l.from_text_id = t.id AND l.to_text_id = e.id)
+                 + (SELECT count(*) FROM link l WHERE l.from_text_id = e.id AND l.to_text_id = t.id) AS links
+        ) c
+        WHERE c.links > 0;
+        """;
+
+    private const string Occurrences = """
+        DELETE FROM strong_occurrence;
+        INSERT INTO strong_occurrence (strong_number, corpus, book, chapter, verse, position, word_id, text_id)
+        SELECT w.strong_number, t.slug, r.canonical_book, r.canonical_chapter, r.canonical_verse, w.position, w.id, w.text_id
+        FROM word w
+        JOIN text t ON t.id = w.text_id
+        JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+        WHERE w.strong_number IS NOT NULL;
+        """;
+
     public static async Task WriteStoredStrong(this AppDbContext db)
     {
         await db.SaveChangesAsync();
@@ -22,8 +44,12 @@ internal static class StoredStrongAnswers
             await connection.OpenAsync();
         }
 
-        await StoredStrong.WritePairLinks(connection, null, null, CancellationToken.None);
-        await StoredStrong.WriteOccurrences(connection, null, null, CancellationToken.None);
+        foreach (var sql in new[] { PairLinks, Occurrences })
+        {
+            await using var command = new NpgsqlCommand(sql, connection);
+            await command.ExecuteNonQueryAsync();
+        }
+
         await WriteNumbers(connection);
     }
 
