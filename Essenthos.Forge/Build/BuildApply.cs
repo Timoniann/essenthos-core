@@ -25,14 +25,17 @@ internal sealed record Applied(IReadOnlyList<string> Changed, IReadOnlyCollectio
 /// since <c>build/served/&lt;db&gt;</c> says it was built. The pairs whose final moved, the records, the Strong numbers and the Strong and
 /// forms indexes of the texts whose index moved are replaced in one transaction; the names on words and the spellings,
 /// which a records load empties, are kept across it by record slug. The spellings are then counted again and the names of
-/// the texts whose projection moved replaced each in a transaction of its own, so every commit leaves a whole database. A text whose words moved, or
-/// a carried table or one made whole from files (<c>tables/</c>), needs <c>build --into</c>.
+/// the texts whose projection moved replaced each in a transaction of its own, so every commit leaves a whole database. A
+/// database behind this Forge's migrations is migrated first (<see cref="SeedMigration"/>); the tables a migration touched,
+/// and a table loaded whole from files (<c>tables/</c>) whose product moved, are loaded again whole (<see cref="ApplyReloads"/>).
+/// A text whose words moved, or a migration touching what only a fresh build fills, needs <c>build --into</c>.
 /// </summary>
 internal sealed class BuildApply(string connectionString, ProductStore store, ProductGraph graph, IServiceProvider services, ILogger logger)
 {
     public List<BuildStage> Stages { get; } = [];
 
-    private static readonly string[] TextLayer =
+    /// <summary>The products of a text's own layer: only a fresh build loads them.</summary>
+    internal static readonly string[] TextLayer =
         ["texts/{text}/words", "texts/{text}/verses", "texts/{text}/notes", "texts/{text}/books", "texts/{text}/text", WordIdCollision.Product];
 
     /// <summary>
@@ -49,21 +52,21 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             return null;
         }
 
-        // A migration may change what the loads write into tables nothing here replaces, so a database behind this Forge's
-        // migrations (a seed cloned before they were merged) is built again, not applied.
-        using (var scope = services.CreateScope())
+        // A database behind this Forge's migrations (a seed cloned before they were merged) is migrated, and every table a
+        // migration touched is loaded again whole below; one only a fresh build can fill refuses the apply.
+        var migrating = Stopwatch.StartNew();
+        if (await SeedMigration.Run(connectionString, services, graph, logger, cancellationToken) is not { } reloads)
         {
-            var pending = (await scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.GetPendingMigrationsAsync(cancellationToken)).ToList();
-            if (pending.Count > 0)
-            {
-                logger.LogError("{Database} lacks {Count} migration(s) of this Forge ({Migrations}): build --into a new database", database, pending.Count,
-                    string.Join(", ", pending));
-                return null;
-            }
+            return null;
+        }
+
+        if (reloads.Migrations.Count > 0)
+        {
+            Stages.Add(new BuildStage("apply", "migrate", migrating.Elapsed, reloads.Migrations.Count, string.Join(", ", reloads.Migrations)));
         }
 
         var changed = Changed(served.Header);
-        if (changed.Count == 0)
+        if (changed.Count == 0 && reloads.IsEmpty)
         {
             logger.LogInformation("Nothing {Database} was built from has moved", database);
             Stages.Add(new BuildStage("apply", "nothing moved", TimeSpan.Zero, 0));
@@ -109,9 +112,17 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             logger.LogInformation("moved: {Product}", product);
             switch (declaration.Product)
             {
-                case var p when TextLayer.Contains(p) || p.StartsWith("carried/", StringComparison.Ordinal) || p.StartsWith("tables/", StringComparison.Ordinal):
-                    logger.LogError("{Product} moved: a text's words or a table loaded whole is not applied in place; build --into a new database", product);
+                case var p when TextLayer.Contains(p):
+                    logger.LogError("{Product} moved: a text's words are not applied in place; build --into a new database", product);
                     return null;
+                case var p when p.StartsWith("carried/", StringComparison.Ordinal) || p.StartsWith("tables/", StringComparison.Ordinal):
+                    if (reloads.Reload(bound.TryGetValue("table", out var table) ? [table] : declaration.Tables, graph, $"{product} moved") is { } refused)
+                    {
+                        logger.LogError("{Product} moved and is not applied in place: {Refused}; build --into a new database", product, refused);
+                        return null;
+                    }
+
+                    break;
                 case "mapping/{from}-{to}/final":
                     pairs.Add($"{bound["from"]}-{bound["to"]}");
                     break;
@@ -163,6 +174,37 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             }
         }
 
+        foreach (var because in reloads.Because)
+        {
+            logger.LogInformation("loaded again whole: {Because}", because);
+        }
+
+        records |= reloads.Records;
+        spellings |= reloads.Spellings;
+        if (reloads.Strong || reloads.Forms || reloads.Renderings)
+        {
+            var indexed = new IndexContext(store).Texts.Keys;
+            foreach (var (whole, texts) in new[] { (reloads.Strong, strong), (reloads.Forms, forms), (reloads.Renderings, renderings) })
+            {
+                if (whole)
+                {
+                    texts.UnionWith(indexed);
+                }
+            }
+        }
+
+        if (reloads.Numbers || reloads.StoredStrong)
+        {
+            var slugs = await Slugs(cancellationToken);
+            foreach (var (whole, texts) in new[] { (reloads.Numbers, numbers), (reloads.StoredStrong, occurrences), (reloads.StoredStrong, pairLinks) })
+            {
+                if (whole)
+                {
+                    texts.UnionWith(slugs);
+                }
+            }
+        }
+
         var serving = new ServingBuild(connectionString, store, services, logger);
         await serving.Timed("apply", $"transaction: {pairs.Count} pairs, records {(records ? "yes" : "no")}, strong {strong.Count}, numbers {numbers.Count}, forms {forms.Count}, renderings {renderings.Count}", async () =>
         {
@@ -175,6 +217,21 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             {
                 logger.LogInformation("apply: {What} in {Seconds:0.0} s", what, step.Elapsed.TotalSeconds);
                 step.Restart();
+            }
+
+            foreach (var table in reloads.Carried)
+            {
+                var outcome = await CarriedTables.Replace(connection, transaction, connectionString, store, table, cancellationToken);
+                rows += outcome.Loaded;
+                Done($"{table} replaced whole from its product ({outcome.Loaded} rows, {outcome.LeftOut} left out)");
+            }
+
+            // A group loaded again whole is emptied first and filled for every text, as a fresh build fills it.
+            string[] emptied = [.. ApplyReloads.Emptied.Where(e => reloads.Whole(e.Key)).SelectMany(e => e.Value)];
+            if (emptied.Length > 0)
+            {
+                await ApplyReloads.Empty(connection, transaction, emptied, cancellationToken);
+                Done($"emptied {string.Join(", ", emptied)}");
             }
 
             if (pairs.Count > 0)
@@ -201,16 +258,16 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
                 Done($"Strong occurrences of {occurrences.Count} texts, pair links of {pairLinks.Count}");
             }
 
-            if (verses.Count > 0)
+            if (verses.Count > 0 || reloads.VerseLinks)
             {
-                var outcome = await VerseLinkFiles.Load(connection, store, verses, cancellationToken);
+                var outcome = await VerseLinkFiles.Load(connection, store, reloads.VerseLinks ? null : verses, cancellationToken);
                 if (outcome.LeftOut > 0)
                 {
                     throw new InvalidOperationException($"{outcome.LeftOut} verse links name a verse the database does not hold.");
                 }
 
                 rows += outcome.Links;
-                Done($"verse links of {verses.Count} pairs");
+                Done(reloads.VerseLinks ? "verse links of every pair" : $"verse links of {verses.Count} pairs");
             }
 
             if (records)
@@ -275,17 +332,26 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
 
         // Only the texts whose projection moved are replaced, by their words; when most moved, the whole table is loaded again
         // without its indexes, which is then the faster way (PRB-1484).
-        if (names.Count > 0)
+        if (names.Count > 0 || reloads.Names)
         {
             var projection = new NamesProjection(store);
             var texts = projection.Texts.Where(t => store.Exists(NameProducts.Projected(t))).ToList();
-            var whole = names.Count * 2 > texts.Count;
+            var whole = reloads.Names || names.Count * 2 > texts.Count;
             await serving.Timed("apply", whole ? "names of every text" : $"names of {string.Join(",", names)}", async () => whole
                 ? (await NamesLoad.Run(connectionString, projection.Store, texts, cancellationToken, readBack: false)).Rows
                 : (await NamesLoad.Replace(connectionString, projection.Store, [.. names], cancellationToken)).Rows);
         }
 
-        if (frames.Count > 0)
+        if (reloads.Frames)
+        {
+            // A text whose rows already stand where its frame puts them is left as it is, so the table is emptied first.
+            await serving.Timed("apply", "frame of every text", async () =>
+            {
+                await Empty(["verse_reference"], cancellationToken);
+                return await serving.Frame(null, cancellationToken);
+            });
+        }
+        else if (frames.Count > 0)
         {
             await serving.Timed("apply", $"frame of {string.Join(",", frames)}", () => serving.Frame(frames, cancellationToken));
         }
@@ -298,6 +364,17 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
             await command.ExecuteNonQueryAsync(cancellationToken);
             return 0;
         });
+
+        // A serving table a migration touched is emptied, and its step fills it as it fills a fresh database's: from the
+        // products where they are current, composed again where not.
+        if (reloads.Serve.Count > 0)
+        {
+            await serving.Timed("apply", $"emptied {string.Join(", ", reloads.Serve)}", async () =>
+            {
+                await Empty(reloads.Serve, cancellationToken);
+                return 0L;
+            });
+        }
 
         // The panes and what a record page reads of the words read what the steps above left, so they come last: a pane is read
         // again only where its chapter's inputs moved, and the table takes every pane of the products it lacks.
@@ -316,7 +393,32 @@ internal sealed class BuildApply(string connectionString, ProductStore store, Pr
         await counted;
         await WriteServed(database, serving.Rows, cancellationToken);
         Stages.AddRange(serving.Stages);
-        return new Applied(changed, pairs, verifying is null ? null : await verifying);
+        return new Applied([.. changed, .. reloads.Migrations.Select(m => $"migration {m}")], pairs, verifying is null ? null : await verifying);
+    }
+
+    /// <summary>Tables emptied in a transaction of their own.</summary>
+    private async Task Empty(IReadOnlyCollection<string> tables, CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
+        await ApplyReloads.Empty(connection, transaction, tables, cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+    }
+
+    private async Task<List<string>> Slugs(CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync(cancellationToken);
+        await using var command = new NpgsqlCommand("SELECT slug FROM text", connection);
+        var slugs = new List<string>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            slugs.Add(reader.GetString(0));
+        }
+
+        return slugs;
     }
 
     /// <summary>How many panes are read at once.</summary>

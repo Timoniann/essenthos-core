@@ -197,6 +197,45 @@ internal static class CarriedTables
     private static async Task<Outcome> LoadOne(string connectionString, Carried carried, string path, CancellationToken cancellationToken)
     {
         var clock = Stopwatch.StartNew();
+        var (stage, copied) = await Stage(connectionString, carried, path, cancellationToken);
+        var loaded = await Execute(connectionString, Insert(carried, stage), cancellationToken);
+        await Execute(connectionString, $"DROP TABLE {stage}", cancellationToken);
+        return new Outcome(carried.Table, copied, loaded, copied - loaded, clock.Elapsed);
+    }
+
+    /// <summary>
+    /// One table replaced from its product inside the caller's transaction (<c>build --apply</c>): the product staged over
+    /// connections of its own first, then the table emptied and filled as a fresh build fills it, its identity set past its rows.
+    /// </summary>
+    public static async Task<Outcome> Replace(NpgsqlConnection connection, NpgsqlTransaction transaction, string connectionString, ProductStore store, string table,
+        CancellationToken cancellationToken)
+    {
+        var clock = Stopwatch.StartNew();
+        var carried = All.Single(c => c.Table == table);
+        var relative = store.Find(TableProducts.Product(table)) ?? store.Find(Product(table))
+                       ?? throw new InvalidOperationException($"No tables/{table} or carried/{table} in this store to load {table} from.");
+        var (stage, copied) = await Stage(connectionString, carried, store.FullPath(relative), cancellationToken);
+        await ApplyReloads.Empty(connection, transaction, [table], cancellationToken);
+        var loaded = await Execute(connection, transaction, Insert(carried, stage), cancellationToken);
+        if (carried.Columns.StartsWith("id,", StringComparison.Ordinal))
+        {
+            await Execute(connection, transaction,
+                $"SELECT setval(pg_get_serial_sequence('{table}', 'id'), greatest(coalesce((SELECT max(id) FROM {table}), 0), 1))", cancellationToken);
+        }
+
+        // The stage is read in the transaction, so it is dropped there too: a drop from another connection would wait for the commit.
+        await Execute(connection, transaction, $"DROP TABLE {stage}", cancellationToken);
+        return new Outcome(table, copied, loaded, copied - loaded, clock.Elapsed);
+    }
+
+    private static async Task<long> Execute(NpgsqlConnection connection, NpgsqlTransaction transaction, string sql, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(sql, connection, transaction) { CommandTimeout = 0 };
+        return await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private static async Task<(string Stage, long Rows)> Stage(string connectionString, Carried carried, string path, CancellationToken cancellationToken)
+    {
         string[] names;
         using (var file = Products.Essx.EssxReader.Open(path))
         {
@@ -207,11 +246,11 @@ internal static class CarriedTables
         await Execute(connectionString, $"DROP TABLE IF EXISTS {stage}; CREATE UNLOGGED TABLE {stage} ({string.Join(", ", names.Select(n => $"\"{n}\" text"))})",
             cancellationToken);
         var copied = await EssxCopy.Load(connectionString, path, stage, null, Streams, CopyMode.Text, cancellation: cancellationToken);
-        var loaded = await Execute(connectionString,
-            $"INSERT INTO {carried.Table} ({carried.Columns}) {carried.Load.Replace(" FROM s", $" FROM {stage} s", StringComparison.Ordinal)}", cancellationToken);
-        await Execute(connectionString, $"DROP TABLE {stage}", cancellationToken);
-        return new Outcome(carried.Table, copied.Rows, loaded, copied.Rows - loaded, clock.Elapsed);
+        return (stage, copied.Rows);
     }
+
+    private static string Insert(Carried carried, string stage) =>
+        $"INSERT INTO {carried.Table} ({carried.Columns}) {carried.Load.Replace(" FROM s", $" FROM {stage} s", StringComparison.Ordinal)}";
 
     private static async Task<long> Execute(string connectionString, string sql, CancellationToken cancellationToken)
     {
