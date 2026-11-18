@@ -10,11 +10,11 @@
     that word's Strong number, lemma and morphology. The same USFM is both the text the corpus
     loads and the statement its links are drawn from.
 
-    It takes a tagged release, not the working branch. Release v90 of 2026-08-17 carries the books
-    unfoldingWord has finished checking — 56 of the 66; Numbers, 1 and 2 Chronicles, Ecclesiastes,
-    Isaiah, Jeremiah, Ezekiel, Daniel, Amos and Zechariah are still being worked on in the
-    repository and are not in it. The archive is pinned to the hash it had when the decision to take
-    it was made, so a moved tag is a question for a person and not a download.
+    It takes a tagged release, not the working branch. Release v92 of 2026-11-18 carries the books
+    unfoldingWord has finished checking — 61 of the 66; 1 and 2 Chronicles, Isaiah, Jeremiah and
+    Ezekiel are still being worked on in the repository and are not in it. The archive is pinned to
+    the hash it had when the decision to take it was made, so a moved tag is a question for a person
+    and not a download.
 
     The terms are read at the source before anything is replaced: LICENSE.md must still say CC BY-SA
     4.0 and the manifest must still say the same. Resources/Door43/LICENCE.md says what the licence
@@ -33,17 +33,17 @@ param(
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 
-$Release = 'v90'
+$Release = 'v92'
 $Archive = "https://git.door43.org/unfoldingWord/en_ult/archive/$Release.zip"
-$Sha256 = 'a89587587717d1cb30d1f9d4727a206e2ee5488291a3c2425cc0529ceecad509'
+$Sha256 = '07151aafda1e40c372934c482411d3b9fc745935d30ebd587124227ff0a2473e'
 
 $ExpectedLicence = 'Creative Commons Attribution-ShareAlike 4.0 International License'
 $ExpectedRights = 'rights: CC BY-SA 4.0'
 
-# What release v90 holds: its scripture books and the alignment milestones across them. A different
+# What release v92 holds: its scripture books and the alignment milestones across them. A different
 # count is a different release, or a partial download.
-$Books = 56
-$Milestones = 357632
+$Books = 61
+$Milestones = 390550
 
 $staging = Join-Path ([IO.Path]::GetTempPath()) "en_ult-$([guid]::NewGuid().ToString('n'))"
 New-Item -ItemType Directory -Force -Path $staging | Out-Null
@@ -58,7 +58,7 @@ try {
 
     $hash = (Get-FileHash -Algorithm SHA256 $zip).Hash.ToLowerInvariant()
     if ($hash -ne $Sha256) {
-        throw "en_ult $Release hashes to $hash, where it hashed to $Sha256 on 2026-09-25. A release tag " +
+        throw "en_ult $Release hashes to $hash, where it hashed to $Sha256 on 2026-11-18. A release tag " +
               'should not move; read what changed before taking it. Nothing was replaced.'
     }
 

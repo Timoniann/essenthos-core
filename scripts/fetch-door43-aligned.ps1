@@ -34,7 +34,8 @@ $ProgressPreference = 'SilentlyContinue'
 
 $ShareAlike = 'Creative Commons Attribution-ShareAlike 4.0 International'
 
-# Folder, repository and tag, the archive's hash on the day it was read, what its licence and its
+# Folder, repository and tag, the archive's hash on the day it was read (2026-10-01 unless Read says
+# otherwise), what its licence and its
 # manifest have to keep saying, and what the release holds: its books and the alignment milestones
 # across them. A different count is a different release, or a partial download.
 $Releases = @(
@@ -112,10 +113,12 @@ $Releases = @(
         Drop = @(); Books = 66; Milestones = 119570
     },
     @{
-        Folder = 'en_ust'; Repository = 'unfoldingWord/en_ust'; Tag = 'v91'
-        Sha256 = '0c7c3f9747f58a08a9901d1acfc26cd1356aebdb161671a3becfc403dca3d28c'
+        # 61 of the 66 books; 1 and 2 Chronicles, Isaiah, Jeremiah and Ezekiel are still being checked
+        # and are not in the release.
+        Folder = 'en_ust'; Repository = 'unfoldingWord/en_ust'; Tag = 'v92'; Read = '2026-11-18'
+        Sha256 = '1946ae720f4e82a734cbb5d773128b010aece8f95b113c43eba89acba29cc487'
         Licence = $ShareAlike; Rights = 'rights: CC BY-SA 4.0'
-        Drop = @(); Books = 59; Milestones = 397226
+        Drop = @(); Books = 61; Milestones = 420233
     },
     @{
         Folder = 'vi_glt'; Repository = 'vi_gl/vi_glt'; Tag = 'v1'
@@ -157,7 +160,8 @@ foreach ($release in $Releases | Where-Object { $_.Folder -in $wanted }) {
 
         $hash = (Get-FileHash -Algorithm SHA256 $zip).Hash.ToLowerInvariant()
         if ($hash -ne $release.Sha256) {
-            throw "$name $($release.Tag) hashes to $hash, where it hashed to $($release.Sha256) on 2026-10-01. " +
+            $read = if ($release.Read) { $release.Read } else { '2026-10-01' }
+            throw "$name $($release.Tag) hashes to $hash, where it hashed to $($release.Sha256) on $read. " +
                   'A release tag should not move; read what changed before taking it. Nothing was replaced.'
         }
 

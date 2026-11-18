@@ -415,7 +415,7 @@ public static class Datasets
             "https://creativecommons.org/licenses/by-sa/4.0/",
             "https://git.door43.org/unfoldingWord/en_ult",
             "Which English word of the unfoldingWord Literal Text renders which Hebrew or Greek word, stated "
-            + "by the translators who made it, in 56 books. unfoldingWord aligned it to its own Hebrew Bible "
+            + "by the translators who made it, in 61 books. unfoldingWord aligned it to its own Hebrew Bible "
             + "and Greek New Testament, not to BHSA and Nestle 1904, so a tie is carried over only where the "
             + "same word stands in the same verse of ours and cannot be mistaken for another.",
             "unfoldingWord Literal Text", Links: true,
@@ -459,7 +459,7 @@ public static class Datasets
             "https://creativecommons.org/licenses/by-sa/4.0/",
             "https://git.door43.org/unfoldingWord/en_ust",
             "Which English word of the unfoldingWord Simplified Text renders which Hebrew or Greek word, stated "
-            + "by the translators who made it, in 59 books.",
+            + "by the translators who made it, in 61 books.",
             "unfoldingWord Simplified Text alignment", Links: true,
             Obliges: "ShareAlike: re-serialising these alignments is a derivative work, so the corpus's own "
                 + "form of these links is offered under CC BY-SA 4.0 in turn, with the credit \"The original "

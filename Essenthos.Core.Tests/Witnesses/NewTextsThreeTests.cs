@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Essenthos.Core.Tests.Witnesses;
 
-/// <summary>Read once: the Almeida is parsed from a five-megabyte book, the ULT from 56 aligned files.</summary>
+/// <summary>Read once: the Almeida is parsed from a five-megabyte book, the ULT from 61 aligned files.</summary>
 public sealed class ThirdBatchTexts
 {
     internal TextSource Almeida { get; } = AlmeidaTextSource.Read(TestResources.Folder(AlmeidaTextSource.Folder));
@@ -140,7 +140,7 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
     [Fact]
     public void TheLiteralTextReadsAsPrinted()
     {
-        texts.Literal.Books.Should().HaveCount(56);
+        texts.Literal.Books.Should().HaveCount(61);
         WorldTexts.Text(texts.Literal, 1, 1, 1).Should().Be("In the beginning God created the heavens and the earth.");
         WorldTexts.Text(texts.Literal, 43, 1, 1).Should().StartWith("In the beginning was the Word");
         WorldTexts.Text(texts.Literal, 19, 3, 1).Should().StartWith("A psalm of David, when he fled from the face of Absalom his son Yahweh, how many");
@@ -206,7 +206,7 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
     private const int ALMEIDA_TITLES = 116;
     private const int ALMEIDA_REFERENCES = 20_287;
     private const int ALMEIDA_RENDERINGS = 1_070;
-    private const int LITERAL_VERSES = 23_186;
+    private const int LITERAL_VERSES = 25_410;
 }
 
 /// <summary>

@@ -100,18 +100,28 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
 
 ---
 
-## `en_ult` — unfoldingWord® Literal Text, release 90
+## `en_ult` — unfoldingWord® Literal Text, release 92
 
-- **Where** <https://git.door43.org/unfoldingWord/en_ult>, tag `v90` (2026-08-17), archive
-  `archive/v90.zip`, SHA-256 `a89587587717d1cb30d1f9d4727a206e2ee5488291a3c2425cc0529ceecad509`,
-  fetched by `scripts/fetch-door43-ult.ps1` on 2026-09-25 with the owner's approval (NOT-0195,
-  DOC-0207 §6 item 9). `LICENSE.md` and `manifest.yaml` of the release are kept beside the books.
-- **What** the English ULT, an open revision of the ASV 1901, in the 56 books unfoldingWord has
-  finished checking (Numbers, 1-2 Chronicles, Ecclesiastes, Isaiah, Jeremiah, Ezekiel, Daniel, Amos
-  and Zechariah are not in the release). Every English word stands in a `\zaln-s` milestone naming
-  the word of unfoldingWord's Hebrew Bible (`hbo/uhb` 2.1.26) or Greek New Testament
-  (`el-x-koine/ugnt` 0.26) it renders: 357,632 milestones. The same files are loaded as the text
-  `ULT` (23,186 verses, 568,381 words) and read for its links.
+- **Where** <https://git.door43.org/unfoldingWord/en_ult>, tag `v92` (manifest `issued`
+  2026-11-17, released 2026-11-18), archive `archive/v92.zip`, SHA-256
+  `07151aafda1e40c372934c482411d3b9fc745935d30ebd587124227ff0a2473e`, fetched by
+  `scripts/fetch-door43-ult.ps1` on 2026-11-18 with the owner's approval of that day (TSK-1879).
+  `LICENSE.md` and `manifest.yaml` of the release are kept beside the books; `LICENSE.md` is byte
+  for byte the one release 90 carried.
+- **What** the English ULT, an open revision of the ASV 1901, in the 61 books unfoldingWord has
+  finished checking (1-2 Chronicles, Isaiah, Jeremiah and Ezekiel are not in the release). Every
+  English word stands in a `\zaln-s` milestone naming the word of unfoldingWord's Hebrew Bible
+  (`hbo/uhb` 2.1.26) or Greek New Testament (`el-x-koine/ugnt` 0.26) it renders: 390,550
+  milestones. The same files are loaded as the text `ULT` and read for its links.
+- **Before.** Release 90 (2026-08-17, SHA-256
+  `a89587587717d1cb30d1f9d4727a206e2ee5488291a3c2425cc0529ceecad509`), fetched on 2026-09-25 with
+  the owner's approval (NOT-0195, DOC-0207 §6 item 9): 56 books, 357,632 milestones, loaded as
+  23,186 verses and 568,381 words. Release 92 adds Numbers (17,596 milestones), Ecclesiastes
+  (3,318), Daniel (6,426), Amos (2,225) and Zechariah (3,352). Of the 56 books already held, 26 are
+  unchanged byte for byte; in the rest 53 verses read differently (*Negev* became *Negeb*,
+  *cherubim* *cherubs*, a few words and punctuation) and 48 verses' alignment moved, with one
+  milestone more in all (2 Samuel). The rest is markup: translationStudio's `\ts\*` chunk marks
+  and the acrostic headings of Lamentations, now `\w`-wrapped as Psalm 119's already were.
 - **Licence: CC BY-SA 4.0.** `manifest.yaml` states `rights: CC BY-SA 4.0`; `LICENSE.md` reads:
 
   > This work is made available under the Creative Commons Attribution-ShareAlike 4.0 International
@@ -130,8 +140,9 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   joined where its original word is spelled, morpheme by morpheme, in the same canonical verse of
   ours with the occurrence it states; otherwise by its Strong number only where that lemma stands
   once in the source verse and once in ours, with any prefix spelled by the words before it; anything
-  else is refused. Measured on a scratch copy on 2026-09-25: 331,393 of 338,583 spans joined
-  (97.9%, 808 of them by number), 98.0% of the Old and 98.4% of the New Testament's words linked.
+  else is refused. Measured on release 90 on a scratch copy on 2026-09-25: 331,393 of 338,583
+  spans joined (97.9%, 808 of them by number), 98.0% of the Old and 98.4% of the New Testament's
+  words linked.
 
 ---
 
@@ -158,7 +169,7 @@ at the tag before anything was kept, and both are kept beside its books.
 | `ta_irv` | `Door43-Catalog/ta_irv` v3 | `61ab8aaa43020343d06faee82e0c656a0f92385a4f9b128da7a19c8d29224c9b` | 66 | 102,597 | `IRVTAM`, loaded from it |
 | `te_irv` | `Door43-Catalog/te_irv` v2 | `b8be7a8e6483da9ff4b541cc7b09e6402c559c68ab8bc323ff9ccd43e29226bd` | 27 | 96,367 | `IRVTEL`, loaded from it |
 | `ur-deva_irv` | `Door43-Catalog/ur-deva_irv` v2 | `1c54f758117f89a60811c5ba443a8eafb34c6fddb00007f67490f93505b11920` | 66 | 119,570 | `IRVURD`, loaded from it |
-| `en_ust` | `unfoldingWord/en_ust` v91 | `0c7c3f9747f58a08a9901d1acfc26cd1356aebdb161671a3becfc403dca3d28c` | 59 | 397,226 | `UST`, loaded from it |
+| `en_ust` | `unfoldingWord/en_ust` v92 (taken 2026-11-18, see below) | `1946ae720f4e82a734cbb5d773128b010aece8f95b113c43eba89acba29cc487` | 61 | 420,233 | `UST`, loaded from it |
 | `vi_glt` | `vi_gl/vi_glt` v1 | `a3c056905e1d7a17285479e336425c196e628200bebb1d9f76277127f1444a4f` | 28 | 123,933 | `VIGLT`, loaded from it |
 
 All align to unfoldingWord's Hebrew Bible and Greek New Testament and are joined to BHSA and Nestle
@@ -196,6 +207,18 @@ fetch takes the books and both files flat into the folder.
   *unfoldingWord® Simplified Text, Copyright © 2022 by unfoldingWord*, CC BY-SA 4.0 with the same
   trademark conditions as the Literal Text and the credit *"The original work by unfoldingWord is
   available from unfoldingword.org/ust"*.
+
+  **Release 92, taken 2026-11-18** with the owner's approval of that day (TSK-1879), by the same
+  script: tag `v92` (manifest `issued` 2026-11-17), archive SHA-256
+  `1946ae720f4e82a734cbb5d773128b010aece8f95b113c43eba89acba29cc487`, 61 books, 420,233 milestones;
+  1-2 Chronicles, Isaiah, Jeremiah and Ezekiel are not in it. Its `LICENSE.md` is byte for byte
+  release 91's and its manifest still says `rights: CC BY-SA 4.0`. Release 91 (2026-09-26, taken
+  2026-10-01, SHA-256 `0c7c3f9747f58a08a9901d1acfc26cd1356aebdb161671a3becfc403dca3d28c`) held 59
+  books and 397,226 milestones; 92 adds Numbers (18,975) and Ecclesiastes (3,690). Of the 59 books
+  held, 26 are unchanged byte for byte; in the rest 14 verses read differently and about 150 verses'
+  alignment moved, most in the Gospels and Acts (milestones +54 in Leviticus, +151 Luke, +52 John,
+  +49 Ephesians, -13 Acts, -14 Revelation; 342 more in the books held). The other changes are
+  `\ts\*` chunk marks and Lamentations' acrostic headings, now `\w`-wrapped.
 - **`vi_glt`.** `manifest.yaml`: `rights: CC BY-SA 4.0`, publisher *Far East Broadcasting Company*;
   `LICENSE.md` the CC BY-SA 4.0 summary.
 - **`fr_lsg`.** `ingredients/license.md` is the full legal code of CC BY-SA 4.0, and `metadata.json`

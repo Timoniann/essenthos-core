@@ -54,7 +54,7 @@ internal static class Door43TextSource
                 Direction: TextDirection.LeftToRight,
                 Versification: Versification.English,
                 PublishedYear: 2022,
-                SourceUrl: "https://git.door43.org/unfoldingWord/en_ust/src/tag/v91",
+                SourceUrl: "https://git.door43.org/unfoldingWord/en_ust/src/tag/v92",
                 RightsHolder: "unfoldingWord",
                 Licence: "CC-BY-SA-4.0",
                 LicenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -62,7 +62,7 @@ internal static class Door43TextSource
                 TextualFamily: "Alexandrian")
             {
                 Translators = "unfoldingWord's translation team and the Door43 World Missions Community",
-                Edition = "Release 91 of 2026-09-26: the 59 books unfoldingWord has finished checking",
+                Edition = "Release 92 of 2026-11-18: the 61 books unfoldingWord has finished checking",
                 EditionYear = 2026,
                 About =
                     "The companion of the unfoldingWord Literal Text: an open-licensed English translation that says "
@@ -70,7 +70,8 @@ internal static class Door43TextSource
                     + "turning figures of speech into what they stand for, made to show a translator the meaning "
                     + "where the Literal Text shows the form. Every one of its words is tied by hand to the word of "
                     + "unfoldingWord's own Hebrew Bible or Greek New Testament it renders, and those ties are loaded "
-                    + "as the links beside it. The release holds 59 books. Its Greek is a critical text: Acts 8:37 "
+                    + "as the links beside it. The release holds 61 books; 1 and 2 Chronicles, Isaiah, Jeremiah and "
+                    + "Ezekiel are still being checked and are not in it. Its Greek is a critical text: Acts 8:37 "
                     + "stands only in a note.",
                 RightsNote =
                     "Copyright 2022 by unfoldingWord, under Creative Commons Attribution-ShareAlike 4.0, stated in the "
@@ -80,7 +81,7 @@ internal static class Door43TextSource
                     + "unfoldingWord is available from unfoldingword.org/ust. The section headings of the release are "
                     + "not loaded.",
                 Citation =
-                    "unfoldingWord® Simplified Text, release 91, copyright 2022 by unfoldingWord, CC BY-SA 4.0, "
+                    "unfoldingWord® Simplified Text, release 92, copyright 2022 by unfoldingWord, CC BY-SA 4.0, "
                     + "git.door43.org/unfoldingWord/en_ust. Based on A Translation for Translators by Ellis W. "
                     + "Deibler, Jr., CC BY-SA 4.0, git.door43.org/Door43/T4T.",
             },

@@ -30,7 +30,7 @@ internal static partial class UnfoldingWordTextSource
         Direction: TextDirection.LeftToRight,
         Versification: Versification.English,
         PublishedYear: 2022,
-        SourceUrl: "https://git.door43.org/unfoldingWord/en_ult/src/tag/v90",
+        SourceUrl: "https://git.door43.org/unfoldingWord/en_ult/src/tag/v92",
         RightsHolder: "unfoldingWord",
         Licence: "CC-BY-SA-4.0",
         LicenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -40,16 +40,15 @@ internal static partial class UnfoldingWordTextSource
         Translators =
             "unfoldingWord's translation team and the Door43 World Missions Community, revising the American "
             + "Standard Version of 1901",
-        Edition = "Release 90 of 2026-08-17: the 56 books unfoldingWord has finished checking",
+        Edition = "Release 92 of 2026-11-18: the 61 books unfoldingWord has finished checking",
         EditionYear = 2026,
         About =
             "An open-licensed revision of the American Standard Version made to show a translator the form of "
             + "the Hebrew and Greek: it keeps their word order and structure wherever English will bear it. "
             + "Every one of its words is tied by hand to the word of unfoldingWord's own Hebrew Bible or Greek "
             + "New Testament it renders, and those ties are loaded as the links beside it. The release holds "
-            + "56 books; Numbers, 1 and 2 Chronicles, Ecclesiastes, Isaiah, Jeremiah, Ezekiel, Daniel, Amos "
-            + "and Zechariah are still being checked and are not in it. Its Greek is a critical text: the "
-            + "heavenly witnesses of 1 John 5:7 are absent.",
+            + "61 books; 1 and 2 Chronicles, Isaiah, Jeremiah and Ezekiel are still being checked and are not "
+            + "in it. Its Greek is a critical text: the heavenly witnesses of 1 John 5:7 are absent.",
         RightsNote =
             "Copyright 2022 by unfoldingWord, under Creative Commons Attribution-ShareAlike 4.0, stated in the "
             + "release's LICENSE.md and its manifest. The text is served unchanged and keeps unfoldingWord's name "
@@ -57,7 +56,7 @@ internal static partial class UnfoldingWordTextSource
             + "searchable form, and not the texts it is read beside. The original work by unfoldingWord is "
             + "available from unfoldingword.org/ult. The section headings of the release are not loaded.",
         Citation =
-            "unfoldingWord® Literal Text, release 90, copyright 2022 by unfoldingWord, CC BY-SA 4.0, "
+            "unfoldingWord® Literal Text, release 92, copyright 2022 by unfoldingWord, CC BY-SA 4.0, "
             + "git.door43.org/unfoldingWord/en_ult.",
     };
 
