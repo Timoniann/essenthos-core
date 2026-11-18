@@ -15,7 +15,8 @@ namespace Essenthos.Core.Build;
 /// </summary>
 internal static class CarriedTables
 {
-    public sealed record Carried(string Table, string Export, string Columns, string Load);
+    /// <summary>A table loaded whole; <paramref name="After"/> names the table whose rows its load reads, which is loaded first.</summary>
+    public sealed record Carried(string Table, string Export, string Columns, string Load, string? After = null);
 
     public sealed record Outcome(string Table, long Exported, long Loaded, long LeftOut, TimeSpan Elapsed);
 
@@ -34,7 +35,8 @@ internal static class CarriedTables
             $"WHERE g.kind NOT IN {Kept} ORDER BY x.word_group_id, x.word_id",
             "word_group_id, word_id",
             "SELECT s.word_group_id::bigint, s.word_id::bigint FROM s WHERE EXISTS (SELECT 1 FROM word w WHERE w.id = s.word_id::bigint) " +
-            "AND EXISTS (SELECT 1 FROM word_group g WHERE g.id = s.word_group_id::bigint)"),
+            "AND EXISTS (SELECT 1 FROM word_group g WHERE g.id = s.word_group_id::bigint)",
+            After: "word_group"),
         new("word_parsing",
             "SELECT x.id::text, x.word_id::text, x.lemma, x.morphology::text, x.method, x.confidence::text, x.source, x.note FROM word_parsing x ORDER BY x.id",
             "id, word_id, lemma, morphology, method, confidence, source, note",
@@ -133,35 +135,51 @@ internal static class CarriedTables
     }
 
     /// <summary>
-    /// Loads every table there is a product of, in list order, through a staging table each: the one made from files
-    /// (<see cref="TableProducts"/>) where there is one, else the carried copy.
+    /// Loads every table there is a product of through a staging table each: the one made from files
+    /// (<see cref="TableProducts"/>) where there is one, else the carried copy. <see cref="TablesAtOnce"/> load at once, the
+    /// largest file first, each after the table it reads (<see cref="Carried.After"/>); the outcomes come in list order.
     /// </summary>
     public static async Task<List<Outcome>> Load(string connectionString, ProductStore store, IReadOnlySet<string>? only, CancellationToken cancellationToken)
     {
-        var outcomes = new List<Outcome>();
-        foreach (var carried in All.Where(c => only is null || only.Contains(c.Table)))
+        var found = All.Where(c => only is null || only.Contains(c.Table))
+            .Select(c => (Carried: c, Relative: store.Find(TableProducts.Product(c.Table)) ?? store.Find(Product(c.Table))))
+            .Where(c => c.Relative is not null)
+            .Select(c => (c.Carried, Path: store.FullPath(c.Relative!)))
+            .ToList();
+        var loaded = found.ToDictionary(c => c.Carried.Table, _ => new TaskCompletionSource<Outcome>(TaskCreationOptions.RunContinuationsAsynchronously),
+            StringComparer.Ordinal);
+        using var slots = new SemaphoreSlim(TablesAtOnce);
+
+        async Task LoadAfter(Carried carried, string path)
         {
-            if ((store.Find(TableProducts.Product(carried.Table)) ?? store.Find(Product(carried.Table))) is not { } relative)
+            try
             {
-                continue;
-            }
+                if (carried.After is { } after && loaded.TryGetValue(after, out var first))
+                {
+                    await first.Task;
+                }
 
-            var clock = Stopwatch.StartNew();
-            var path = store.FullPath(relative);
-            string[] names;
-            using (var file = Products.Essx.EssxReader.Open(path))
+                await slots.WaitAsync(cancellationToken);
+                try
+                {
+                    loaded[carried.Table].SetResult(await LoadOne(connectionString, carried, path, cancellationToken));
+                }
+                finally
+                {
+                    slots.Release();
+                }
+            }
+            catch (Exception exception)
             {
-                names = [.. file.Tables[0].Columns.Select(c => c.Name)];
+                loaded[carried.Table].TrySetException(exception);
             }
+        }
 
-            var stage = $"carried_stage_{carried.Table}";
-            await Execute(connectionString, $"DROP TABLE IF EXISTS {stage}; CREATE UNLOGGED TABLE {stage} ({string.Join(", ", names.Select(n => $"\"{n}\" text"))})",
-                cancellationToken);
-            var copied = await EssxCopy.Load(connectionString, path, stage, null, 8, CopyMode.Text, cancellation: cancellationToken);
-            var loaded = await Execute(connectionString,
-                $"INSERT INTO {carried.Table} ({carried.Columns}) {carried.Load.Replace(" FROM s", $" FROM {stage} s", StringComparison.Ordinal)}", cancellationToken);
-            await Execute(connectionString, $"DROP TABLE {stage}", cancellationToken);
-            outcomes.Add(new Outcome(carried.Table, copied.Rows, loaded, copied.Rows - loaded, clock.Elapsed));
+        await Task.WhenAll(found.OrderByDescending(c => new FileInfo(c.Path).Length).Select(c => LoadAfter(c.Carried, c.Path)).ToList());
+        var outcomes = new List<Outcome>(found.Count);
+        foreach (var (carried, _) in found)
+        {
+            outcomes.Add(await loaded[carried.Table].Task);
         }
 
         await Execute(connectionString,
@@ -169,6 +187,30 @@ internal static class CarriedTables
                 $"SELECT setval(pg_get_serial_sequence('{c.Table}', 'id'), greatest(coalesce((SELECT max(id) FROM {c.Table}), 0), 1))")),
             cancellationToken);
         return outcomes;
+    }
+
+    /// <summary>Tables loaded at once. Each copies into its staging table over up to <see cref="Streams"/> connections.</summary>
+    private const int TablesAtOnce = 4;
+
+    private const int Streams = 8;
+
+    private static async Task<Outcome> LoadOne(string connectionString, Carried carried, string path, CancellationToken cancellationToken)
+    {
+        var clock = Stopwatch.StartNew();
+        string[] names;
+        using (var file = Products.Essx.EssxReader.Open(path))
+        {
+            names = [.. file.Tables[0].Columns.Select(c => c.Name)];
+        }
+
+        var stage = $"carried_stage_{carried.Table}";
+        await Execute(connectionString, $"DROP TABLE IF EXISTS {stage}; CREATE UNLOGGED TABLE {stage} ({string.Join(", ", names.Select(n => $"\"{n}\" text"))})",
+            cancellationToken);
+        var copied = await EssxCopy.Load(connectionString, path, stage, null, Streams, CopyMode.Text, cancellation: cancellationToken);
+        var loaded = await Execute(connectionString,
+            $"INSERT INTO {carried.Table} ({carried.Columns}) {carried.Load.Replace(" FROM s", $" FROM {stage} s", StringComparison.Ordinal)}", cancellationToken);
+        await Execute(connectionString, $"DROP TABLE {stage}", cancellationToken);
+        return new Outcome(carried.Table, copied.Rows, loaded, copied.Rows - loaded, clock.Elapsed);
     }
 
     private static async Task<long> Execute(string connectionString, string sql, CancellationToken cancellationToken)

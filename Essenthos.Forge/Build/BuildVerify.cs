@@ -89,7 +89,8 @@ internal static class ServedState
 /// holds every table to the rows the build left in it and the words and verses to their products' counts, finds every
 /// foreign key in place and validated, measures coverage against the floor, and pairing on the pairs a build touched;
 /// <c>all</c> is the whole verification, recorded for <c>/v1/health</c> as before; <c>--only</c> measures the ones named
-/// (<c>integrity</c> for every integrity check); <c>--texts</c> keeps the measures of those texts.
+/// (<c>integrity</c> for every integrity check); <c>--texts</c> keeps the measures of those texts. A build that measures
+/// <c>all</c> while it still writes passes <c>beforeRecord</c>, so the run is recorded only once the build has counted its tables.
 /// </summary>
 internal static class BuildVerify
 {
@@ -107,7 +108,8 @@ internal static class BuildVerify
         IReadOnlyCollection<string>? touchedPairs,
         double floor,
         ILogger logger,
-        bool analyzed = false)
+        bool analyzed = false,
+        Func<Task>? beforeRecord = null)
     {
         if (level == Skip && only is null)
         {
@@ -127,6 +129,11 @@ internal static class BuildVerify
         if (level == All)
         {
             var measures = await check.Measure(null, CancellationToken.None, analyzed);
+            if (beforeRecord is not null)
+            {
+                await beforeRecord();
+            }
+
             await check.Record(measures);
             measures = Keep(measures, texts);
             logger.LogInformation("\n{Report}", measures.Describe());
