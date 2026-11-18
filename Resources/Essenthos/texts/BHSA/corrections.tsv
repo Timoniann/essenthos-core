@@ -1,7 +1,7 @@
 # product    Essenthos/texts/BHSA/corrections.tsv
 # producer   by hand
 # kinds      strong: the word's Strong number becomes after (none where after is \N); before is the word and, after a space, the number it carries until then
-# note       numbers the Open Hebrew Bible mapping (mapping/KJV-OT-mapped-to-BHS-full-mapping.csv) prints one word along: neighbours swapped, or a run carrying the next word's number (1 Chronicles 12:18-41). Found where a word's number contradicts its BHSA lemma and fits a neighbour's, read against the lemma, Strong's dictionary, MACULA Hebrew and the King James tags by hand (PRB-1851)
+# note       numbers the Open Hebrew Bible mapping (mapping/KJV-OT-mapped-to-BHS-full-mapping.csv) prints one word along: neighbours swapped, or a run carrying the next word's number (1 Chronicles 12:18-41), or a single word carrying the number of the word beside it (next to a ketiv the file numbers apart, a duplicate of a neighbour's number). Found where a word's number contradicts its BHSA lemma and fits a neighbour's, read against the lemma, Strong's dictionary, MACULA Hebrew and the King James tags by hand (PRB-1851)
 own	kind	before	after	why
 2.23:22.13	strong	אָֽיַבְתִּי֙ H341	H340	איב is H340 (אָיַב); the mapping file prints H341 (אֹיֵב) here, the number of אֹ֣יְבֶ֔יךָ
 2.23:22.15	strong	אֹ֣יְבֶ֔יךָ H340	H341	איב is H341 (אֹיֵב); the mapping file prints H340 (אָיַב) here, the number of אָֽיַבְתִּי֙
@@ -139,3 +139,73 @@ own	kind	before	after	why
 26.39:26.10	strong	מָעֲלוּ H4604	H4603	מעל is H4603 (מָעַל); the mapping file prints H4604 (מַעַל) here, the number of מַעֲלָ֖ם
 29.3:1.17	strong	חֲלֹמֹ֣ות H2492	H2472	חֲלֹום is H2472 (חֲלוֹם); the mapping file prints H2492 (חָלַם) here, the number of יַחֲלֹמ֔וּן
 29.3:1.18	strong	יַחֲלֹמ֔וּן H2472	H2492	חלם is H2492 (חָלַם); the mapping file prints H2472 (חֲלוֹם) here, the number of חֲלֹמֹ֣ות
+2.39:6.11	strong	פִּתּוּחֵ֣י H6605	H6603	פִּתּוּחַ is H6603; the mapping file prints H6605 here, the number of מְפֻתָּחֹת֙
+3.5:23.11	strong	גְּזֵלָ֜ה H1497	H1500	גְּזֵלָה is H1500; the mapping file prints H1497 here, the number of גָּזָ֗ל
+3.5:23.25	strong	הָפְקַ֖ד H6487	H6485	פקד is H6485; the mapping file prints H6487 here, the number of פִּקָּדֹ֔ון
+3.26:10.6	strong	יָשָׁ֕ן H3462	H3465	יָשָׁן is H3465; the mapping file prints H3462 here, the number of נֹושָׁ֑ן
+3.26:40.12	strong	מָֽעֲלוּ H4604	H4603	מעל is H4603; the mapping file prints H4604 here, the number of מַעֲלָ֖ם
+3.26:43.12	strong	מֵהֶ֔ם H1992	H4480	מִן is H4480; the mapping file prints H1992 here, the number of הֵ֖ם
+4.23:13.6	strong	נָּ֨א H1980	H4994	נָא is H4994; the mapping file prints H1980 here, the number of לך
+4.25:11.16	strong	קַנְאֹ֥ו H7068	H7065	קנא is H7065; the mapping file prints H7068 here, the number of קִנְאָתִ֖י
+5.21:10.16	strong	שִׁבְיֹֽו H7617	H7628	שְׁבִי is H7628; the mapping file prints H7617 here, the number of שָׁבִ֥יתָ
+6.6:15.11	strong	עֲלֹ֣ות H7837	H5927	עלה is H5927; the mapping file prints H7837 here, the number of שַּׁ֔חַר
+6.9:7.16	strong	לְךָ֥ H3772	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H3772 here, the number of אכרות
+6.19:13.15	strong	מְּתֹאָ֖ר H7417	H8388	תאר is H8388; the mapping file prints H7417 here, the number of רִמֹּ֥ון
+8.4:6.9	strong	לִ֔י H1350	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H1350 here, the number of גאול
+9.20:24.17	strong	לֶּ֖חֶם H413	H3899	לֶחֶם is H3899; the mapping file prints H413 here, a number the word beside it carries
+9.28:8.24	strong	נָ֥א H7080	H4994	נָא is H4994; the mapping file prints H7080 here, the number of קסומי
+10.14:7.38	strong	אִישִׁ֛י H7760	H376	אִישׁ is H376; the mapping file prints H7760 here, the number of שׂום
+12.16:17.17	strong	כִּיֹּ֔ר H853	H3595	כִּיֹּור is H3595; the mapping file prints H853 here, the number of ואת
+12.20:3.25	strong	בְּכִ֥י H1058	H1065	בְּכִי is H1065; the mapping file prints H1058 here, the number of יֵּ֥בְךְּ
+13.9:4.11	strong	בְּנֵי H1137	H1121	בֵּן is H1121; the mapping file prints H1137 here, a number the word beside it carries
+14.11:18.9	strong	יְרִימֹ֖ות H1323	H3406	יְרִימֹות is H3406; the mapping file prints H1323 here, a number the word beside it carries
+14.16:14.21	strong	מְרֻקָּחִ֖ים H4842	H7543	רקח is H7543; the mapping file prints H4842 here, the number of מִרְקַ֣חַת
+14.28:3.19	strong	הֹרִ֣ישׁ H3068	H3423	ירשׁ is H3423; the mapping file prints H3068 here, the number of יְהוָ֔ה
+14.30:3.17	strong	מַ H1767	H4100	מָה is H4100; the mapping file prints H1767 here, the number of דַּ֔י
+14.36:14.12	strong	מַ֔עַל H4603	H4604	מַעַל is H4604; the mapping file prints H4603 here, the number of מעול
+15.5:11.21	strong	מִ H6928	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H6928 here, the number of קַּדְמַ֤ת
+15.6:8.19	strong	מִ H5232	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H5232 here, the number of נִּכְסֵ֣י
+18.7:1.7	strong	אָ֑רֶץ H5921	H776	אֶרֶץ is H776; the mapping file prints H5921 here, the number of על
+18.9:30.5	strong	שָׁ֑לֶג H4325	H7950	שֶׁלֶג is H7950; the mapping file prints H4325 here, the number of מו
+19.30:4.9	strong	בֹֽור H3381	H953	בֹּור is H953; the mapping file prints H3381 here, the number of יורדי
+19.38:21.9	strong	טֹֽוב H7291	H2896	טֹוב is H2896; the mapping file prints H7291 here, the number of רדופי
+19.132:12.11	strong	עֲדֵי H5703	H5704	עַד is H5704; the mapping file prints H5703 here, the number of עַ֑ד
+19.132:14.3	strong	עֲדֵי H5703	H5704	עַד is H5704; the mapping file prints H5703 here, the number of עַ֑ד
+20.22:8.4	strong	אָ֑וֶן H7114	H205	אָוֶן is H205; the mapping file prints H7114 here, the number of יקצור
+20.22:14.8	strong	שָֽׁם H5307	H8033	שָׁם is H8033; the mapping file prints H5307 here, the number of יפול
+23.9:5.21	strong	אֲבִי H5703	H1	אָב is H1; the mapping file prints H5703 here, the number of עַ֖ד
+23.10:32.12	strong	צִיֹּ֔ון H1323	H6726	צִיֹּון is H6726; the mapping file prints H1323 here, a number the word beside it carries
+23.19:11.6	strong	יֹעֲצֵ֣י H6098	H3289	יעץ is H3289; the mapping file prints H6098 here, the number of עֵצָ֖ה
+23.21:5.6	strong	צָּפִ֖ית H6823	H6844	צָפִית is H6844; the mapping file prints H6823 here, the number of צָפֹ֥ה
+23.26:20.16	strong	זָֽעַם H5674	H2195	זַעַם is H2195; the mapping file prints H5674 here, the number of יעבור
+23.28:15.13	strong	שֹׁוטֵ֤ף H7752	H7857	שׁטף is H7857; the mapping file prints H7752 here, a number the word beside it carries
+23.30:10.5	strong	רֹאִים֙ H7200	H7203	רֹאֶה is H7203; the mapping file prints H7200 here, the number of תִרְא֔וּ
+23.32:8.3	strong	נְדִיבֹ֣ות H5081	H5082	נְדִיבָה is H5082; the mapping file prints H5081 here, the number of נָדִ֖יב
+23.38:3.27	strong	בְּכִ֥י H1058	H1065	בְּכִי is H1065; the mapping file prints H1058 here, the number of יֵּ֥בְךְּ
+23.65:7.23	strong	חֵיקָֽם H413	H2436	חֵיק is H2436; the mapping file prints H413 here, a number the word beside it carries
+24.3:19.22	strong	לִ֔י H7121	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H7121 here, the number of תקראו
+24.5:7.5	strong	לָ֔ךְ H5545	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H5545 here, the number of אסלוח
+24.10:11.13	strong	מֵֽ H772	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H772 here, the number of אַרְעָ֛א
+24.33:8.13	strong	עֲוֹנֹֽותֵיהֶם֙ H3605	H5771	עָוֹן is H5771; the mapping file prints H3605 here, the number of כול
+24.51:3.12	strong	אַֽל H413	H408	אַל is H408; the mapping file prints H413 here, the number of אֶל
+24.52:11.20	strong	פְּקֻדֹּ֖ת H1004	H6486	פְּקֻדָּה is H6486; the mapping file prints H1004 here, the number of בבית
+25.1:6.5	strong	צִיֹּ֖ון H1323	H6726	צִיֹּון is H6726; the mapping file prints H1323 here, the number of בת
+26.9:5.15	strong	תָּחֹ֥ס H408	H2347	חוס is H2347; the mapping file prints H408 here, the number of אַל
+26.13:7.9	strong	אֲמַרְתֶּ֑ם H1696	H559	אמר is H559; the mapping file prints H1696 here, a number the word beside it carries
+26.13:18.33	strong	לָכֶ֥נָה H2421	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H2421 here, the number of תְחַיֶּֽינָה
+26.21:28.6	strong	שָׁוְא֙ H7080	H7723	שָׁוְא is H7723; the mapping file prints H7080 here, the number of קסום
+26.24:2.4	strong	לְךָ֙ H3789	H9005	לְ is H9005; every other לְ with a suffix is H9005; the mapping file prints H3789 here, the number of כתוב
+26.37:22.24	strong	עֹוד֙ H1961	H5750	עֹוד is H5750; the mapping file prints H1961 here, the number of יהיה
+26.44:3.10	strong	לֶ֖חֶם H398	H3899	לֶחֶם is H3899; the mapping file prints H398 here, the number of אכול
+27.2:38.21	strong	ה֔וּא H607	H1932	הוּא is H1932; the Aramaic הוּא, as its 12 other words are; the mapping file prints H607 here, the number of אנתה
+27.4:19.2	strong	ה֣וּא H607	H1932	הוּא is H1932; the Aramaic הוּא, as its 12 other words are; the mapping file prints H607 here, the number of אנתה
+27.4:30.17	strong	מִ H2920	H4481	מִן is H4481; the Aramaic מִן, as its 115 other words are; the mapping file prints H2920 here, the number of טַּ֥ל
+27.5:13.14	strong	ה֤וּא H607	H1932	הוּא is H1932; the Aramaic הוּא, as its 12 other words are; the mapping file prints H607 here, the number of אנתה
+27.8:18.15	strong	עָמְדִֽי H5975	H5977	עֹמֶד is H5977; the mapping file prints H5975 here, the number of יַּֽעֲמִידֵ֖נִי
+27.10:11.18	strong	עָמְדֶ֔ךָ H5975	H5977	עֹמֶד is H5977; the mapping file prints H5975 here, the number of עֲמֹ֣ד
+28.9:16.7	strong	יַעֲשׂ֑וּן H1077	H6213	עשׂה is H6213; the mapping file prints H1077 here, a number the word beside it carries
+30.8:4.10	strong	אָֽרֶץ H6041	H776	אֶרֶץ is H776; the mapping file prints H6041 here, a number the word beside it carries
+34.1:3.6	strong	כֹּ֔חַ H1419	H3581	כֹּחַ is H3581; the mapping file prints H1419 here, the number of גדול
+34.2:1.20	strong	בָּ֥ךְ H5674	H9003	בְּ is H9003; every other בְּ with a suffix is H9003; the mapping file prints H5674 here, the number of עבור
+34.3:8.3	strong	מִ H4996	H4480	מִן is H4480; the mapping file prints H4996 here, a number the word beside it carries
+35.2:18.14	strong	יִצְרֹו֙ H3335	H3336	יֵצֶר is H3336; the mapping file prints H3335 here, the number of יֹצֵ֤ר

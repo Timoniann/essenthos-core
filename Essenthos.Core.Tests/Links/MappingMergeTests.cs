@@ -475,6 +475,23 @@ public sealed class MappingMergeTests
     }
 
     [Fact]
+    public void An_accepted_shape_only_a_superseded_verdict_proposes_is_written_as_a_ruling()
+    {
+        MappingRow Verdict(int run, string from, string to, long id) =>
+            Row(MappingMethods.Evidentia, from, to, confidence: 0.8, source: $"EVIDENTIA run {run} (1.0.0)", link: id, evidence: $"decision {id}, safe tier: rule");
+
+        var output = Merge(
+            [Verdict(5, "1.1:1.3", "1.1:1.4", 1), Verdict(28, "1.1:1.3", "1.1:1.2", 2), Verdict(28, "1.1:1.5", "1.1:1.5", 3)],
+            [
+                new RulingRow(RulingRow.Refuse, "1.1:1.3", "1.1:1.2", string.Empty, string.Empty, "crossed"),
+                new RulingRow(RulingRow.Accept, "1.1:1.3", "1.1:1.4", "renders", string.Empty, "read in the verse"),
+            ]);
+
+        output.Final.Where(r => r.Settled).Select(r => (r.From, r.To, r.Method)).Should().Equal(
+            ("1.1:1.3", "1.1:1.4", MappingMethods.Ruling), ("1.1:1.5", "1.1:1.5", MappingMethods.Evidentia));
+    }
+
+    [Fact]
     public void A_lower_link_inside_a_standing_link_on_both_sides_stands_as_a_refinement()
     {
         var output = Merge([

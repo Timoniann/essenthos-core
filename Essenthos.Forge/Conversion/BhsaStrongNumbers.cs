@@ -14,10 +14,17 @@ namespace Essenthos.Core.Conversion;
 /// The divine name is numbered by its own pointing, not by the file: Strong's H3069 is the name pointed with the
 /// vowels of Elohim (a hireq under the vav), read so where it stands beside אֲדֹנָי; every other spelling is H3068.
 /// The file gives H3069 to several hundred words pointed to be read Adonai, and H3068 to some pointed as Elohim.
+/// The relative particle שֶׁ is H7945 wherever it stands: the file gives most of its words the number of the word
+/// after them (Song of Songs 3:1-3, Ecclesiastes, Psalms 122-146).
 /// </summary>
 internal sealed class BhsaStrongNumbers : ITextStage
 {
     private const string Mapping = "mapping/KJV-OT-mapped-to-BHS-full-mapping.csv";
+
+    /// <summary>BHSA's lexeme of the relative particle שֶׁ.</summary>
+    private const string RelativeLemma = "שַׁ";
+
+    private const string RelativeNumber = "H7945";
 
     /// <summary>How many glosses in a row must agree before the two sides are taken to be in step again.</summary>
     private const int Resync = 3;
@@ -59,8 +66,19 @@ internal sealed class BhsaStrongNumbers : ITextStage
             }
         }
 
+        var relatives = 0;
+        foreach (var word in words)
+        {
+            if (Relative(word.Lemma) is { } number && word.Strong != number)
+            {
+                word.Strong = number;
+                relatives++;
+            }
+        }
+
         text.Provenance.Add(new("strong", $"{Mapping} (Open Hebrew Bible, CC BY-NC 4.0): {numbered} words by running number"));
         text.Provenance.Add(new("strong-pointed", $"{pointed} numbers of the divine name set by its pointing (H3069 pointed as Elohim, else H3068)"));
+        text.Provenance.Add(new("strong-relative", $"{relatives} relative particles שֶׁ set to {RelativeNumber}, where the file gave another word's number"));
     }
 
     /// <summary>The number of a word of the divine name by its pointing: H3069 with a hireq under the vav, else H3068; null for any other lemma.</summary>
@@ -75,6 +93,9 @@ internal sealed class BhsaStrongNumbers : ITextStage
         var he = surface.LastIndexOf('ה');
         return vav >= 0 && he > vav && surface.AsSpan(vav + 1, he - vav - 1).Contains('ִ') ? "H3069" : "H3068";
     }
+
+    /// <summary>The number of the relative particle שֶׁ; null for any other lemma.</summary>
+    public static string? Relative(string? lemma) => lemma == RelativeLemma ? RelativeNumber : null;
 
     private static string Consonants(string word) => string.Concat(word.Where(c => c is >= 'א' and <= 'ת'));
 

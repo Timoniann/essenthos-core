@@ -1,0 +1,7 @@
+# product    Essenthos/mapping/LUTH1912-BHSA/rulings.tsv
+# inputs     
+# producer   by hand
+# Rulings on this pair, kept by hand. refuse with both sides: that shape is never a link, whatever proposes it (source: only from that source). refuse with one side and a source: those words leave that source's rows. accept: the shape is pinned and wins every competition.
+action	from	to	relation	source	reason
+refuse	21.2:13.5	21.2:13.4			Ecclesiastes 2:13: drawn from the Strong numbers the Open Hebrew Bible prints one word along (texts/BHSA/corrections); the words render מִן (H4480), not שֶׁ (H7945) (the number this word carries elsewhere in the text)
+accept	21.2:13.5	21.2:13.10	renders		Ecclesiastes 2:13: drawn from the Strong numbers the Open Hebrew Bible prints one word along (texts/BHSA/corrections); the words render מִן (H4480), not שֶׁ (H7945) (the number this word carries elsewhere in the text)

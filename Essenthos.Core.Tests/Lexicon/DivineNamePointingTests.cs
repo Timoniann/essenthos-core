@@ -27,4 +27,12 @@ public class DivineNamePointingTests
         BhsaStrongNumbers.DivineName("אֲדֹנָי", "אֲדֹנָ֣י").Should().BeNull();
         BhsaStrongNumbers.DivineName(null, "יְהוָ֑ה").Should().BeNull();
     }
+
+    [Fact]
+    public void TheRelativeParticleIsAlwaysItsOwnNumber()
+    {
+        BhsaStrongNumbers.Relative("שַׁ").Should().Be("H7945");
+        BhsaStrongNumbers.Relative("אֲשֶׁר").Should().BeNull();
+        BhsaStrongNumbers.Relative(null).Should().BeNull();
+    }
 }
