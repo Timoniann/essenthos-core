@@ -34,6 +34,9 @@ internal static class MaxfieldAsvEdition
     /// <summary>What every link drawn from the numbering begins with, and what the dataset declaration claims.</summary>
     public const string Credit = Sources.MaxfieldAsvStrongCredit;
 
+    /// <summary>The language of the edition's words, whose function words it is read with.</summary>
+    public const string Language = "eng";
+
     /// <summary>
     /// The witnesses the numbers are matched against: the Hebrew, and Nestle 1904 for a New Testament revised on the
     /// critical Greek of 1881. They are the two pairs the ASV has today.
@@ -57,11 +60,14 @@ internal static class MaxfieldAsvEdition
 
     /// <summary>The file read verse by verse, with the clause particles' misplaced numbers left out.</summary>
     /// <param name="clauseParticles">The numbers dropped from an English content word (<see cref="StrongNumberLists.ClauseParticles"/>).</param>
-    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(string path, IReadOnlySet<string> clauseParticles) =>
-        Read(path, clauseParticles, out _);
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(
+        string path, IReadOnlySet<string> clauseParticles, Func<string, bool> functionWord) =>
+        Read(path, clauseParticles, functionWord, out _);
 
+    /// <param name="functionWord">Whether an English word is a function word (<see cref="Mapping.FunctionWords"/>).</param>
     /// <param name="dropped">How many numbers the clause particles left out.</param>
-    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(string path, IReadOnlySet<string> clauseParticles, out int dropped)
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Read(
+        string path, IReadOnlySet<string> clauseParticles, Func<string, bool> functionWord, out int dropped)
     {
         if (!File.Exists(path))
         {
@@ -94,7 +100,7 @@ internal static class MaxfieldAsvEdition
                 }
 
                 var number = Number(reader.IsDBNull(3) ? null : reader.GetString(3), reader.IsDBNull(4) ? 0 : reader.GetInt64(4));
-                if (number is not null && clauseParticles.Contains(number) && !tokens.All(EnglishFunctionWords.Contains))
+                if (number is not null && clauseParticles.Contains(number) && !tokens.All(functionWord))
                 {
                     number = null;
                     dropped++;
@@ -147,32 +153,6 @@ internal static class MaxfieldAsvEdition
             $"{path}: its copyright table no longer says \"{Terms}\". Read the terms again and record them in "
             + "Resources/AmericanStandard1901Strong/LICENCE.md before the numbers are used.");
     }
-}
-
-/// <summary>
-/// English words that render no Hebrew or Greek word of their own, or only a particle: articles, pronouns,
-/// prepositions, auxiliaries, conjunctions and the connectives of the King James's English (<em>therefore</em>,
-/// <em>wherefore</em>, <em>howbeit</em>, <em>verily</em>). The list the ASV's Strong layers were measured with (TSK-1890).
-/// </summary>
-internal static class EnglishFunctionWords
-{
-    private static readonly HashSet<string> Words = new(
-        ("a an the and or but nor for so yet of to in into unto on upon at by with from as than that this these those "
-         + "which who whom whose what when where whither whence why how there here then thus also even not no "
-         + "he him his she her hers it its they them their theirs i me my mine we us our ours you your yours ye thou thee thy thine "
-         + "himself herself itself themselves myself ourselves yourselves thyself "
-         + "is am are was were be been being shall should will would may might must can could do does did doth hath have has had "
-         + "let lest if because though although neither either all any every each some such same own very "
-         + "o oh lo behold out up down over under through about after before again "
-         + "therefore wherefore now indeed verily yea nay howbeit nevertheless notwithstanding moreover furthermore likewise "
-         + "else otherwise since whereas while whilst until till unless except save whether inasmuch insomuch namely truly "
-         + "surely too only both still already hence thence wherein whereby whereupon thereof therein thereby wherewith "
-         + "whosoever whatsoever whoever whatever soever haply perhaps rather besides")
-        .Split(' ', StringSplitOptions.RemoveEmptyEntries),
-        StringComparer.OrdinalIgnoreCase);
-
-    /// <summary>Whether a word, as printed (its case and any apostrophe aside), is one of them.</summary>
-    public static bool Contains(string word) => Words.Contains(word.Trim('\'', '’', '‘'));
 }
 
 /// <summary>

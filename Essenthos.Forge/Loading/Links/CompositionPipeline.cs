@@ -556,7 +556,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
         string fromSlug, string toSlug, string[] viaSlugs, IReadOnlyList<RoutedLink> merged, string? note)
     {
         var stated = _links.Stated(fromSlug, toSlug);
-        var claimed = _links.Statements(fromSlug, toSlug, rules: true).Keys.ToHashSet();
+        var claimed = _links.Answered(fromSlug, toSlug);
         var unrendered = _links.Unrendered(fromSlug, toSlug);
         var rejected = aligner.Rejected(fromSlug, toSlug);
         var (fresh, agreeing) = Split(
@@ -593,7 +593,7 @@ internal sealed class CompositionPipeline(ProductTexts texts, AlignerFiles align
     /// </para>
     /// </summary>
     /// <param name="claimed">
-    /// Every source word a link that is not the aligner's names against the target, whatever its
+    /// Every source word an answer stands on (<see cref="MappingLinks.Answered"/>), whatever its
     /// shape: a phrase a source states answers for each of its words as much as a pair does.
     /// </param>
     internal static (

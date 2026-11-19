@@ -20,6 +20,7 @@ internal sealed class MappingLinks(ProductTexts texts)
 
     private readonly ConcurrentDictionary<string, Lazy<List<FinalLink>>> _finals = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, Lazy<Dictionary<string, int>>> _ids = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, Lazy<TargetKind[]>> _kinds = new(StringComparer.Ordinal);
 
     /// <summary>
     /// The finals a composition of the pair may read, and their statuses, relative to Resources: its own, its middle texts', and
@@ -39,7 +40,8 @@ internal sealed class MappingLinks(ProductTexts texts)
     /// <summary>
     /// What a composition reads as the middle text's links to the target, each at its confidence and its specificity. Every
     /// word of a phrase is carried, since the phrase renders the target words together: <em>he</em> of the King James's
-    /// <em>he gave</em> reaches ἔδωκεν as <em>gave</em> does (<see cref="Targets"/>).
+    /// <em>he gave</em> reaches ἔδωκεν as <em>gave</em> does (<see cref="Targets"/>); but a phrase's article, conjunction,
+    /// connective or particle only to a target word of its own kind.
     /// </summary>
     /// <param name="aligned">
     /// Whether the middle text's own aligner links count, at their confidence, and EVIDENTIA's rule-based ones with them: for a
@@ -49,10 +51,13 @@ internal sealed class MappingLinks(ProductTexts texts)
     public ILookup<long, (long To, double Confidence)> Carried(string viaSlug, string toSlug, bool aligned)
     {
         var (via, to) = (texts[viaSlug], texts[toSlug]);
+        var functions = FunctionWords.Of(texts.Store);
+        var kinds = Kinds(toSlug);
         return Links(viaSlug, toSlug)
             .Where(l => l.To.Length > 0 && (aligned || l.Method is not (LinkMethod.Aligner or LinkMethod.RuleBased)))
-            .SelectMany(l => l.From.SelectMany(f => Targets(via.Words[(int)f].Strong, l.To, t => to.Words[(int)t].Strong).Select(t => (Bridge: f, To: t,
-                Confidence: (l.Confidence ?? 1) * CompositionPipeline.SpecificityOf(l.From.Length)))))
+            .SelectMany(l => l.From.SelectMany(f => Targets(via.Words[(int)f].Strong, l.From.Length > 1 ? functions.Kind(via.Language, via.Words[(int)f].Surface) : FunctionKind.None,
+                    l.To, t => to.Words[(int)t].Strong, t => kinds[(int)t])
+                .Select(t => (Bridge: f, To: t, Confidence: (l.Confidence ?? 1) * CompositionPipeline.SpecificityOf(l.From.Length)))))
             .ToLookup(r => r.Bridge, r => (r.To, r.Confidence));
     }
 
@@ -64,9 +69,27 @@ internal sealed class MappingLinks(ProductTexts texts)
     /// <em>Spirit</em> as the noun. A word with no number of its own, or one the target words do not carry (<em>of</em> in
     /// <em>of the Spirit</em>, which renders the case), reaches the words that are not the article, since the case and the
     /// person a function word renders are the content word's; and every target word where all are articles.
+    ///
+    /// <para>
+    /// A phrase's article, conjunction, connective or particle (<paramref name="kind"/>) is the exception: it renders a word of
+    /// its own kind or none, never the case or person of a content word. Carried to the content word, the King James's
+    /// <em>and pray</em> over δεόμενοι put the Synodal's «и» on the participle, and the Synodal's words with no Strong number,
+    /// which no statement measures, were composed so about six times in ten right. So it reaches the target words
+    /// its number names, else those of its kind (<see cref="Fits"/>), else none.
+    /// </para>
     /// </summary>
-    internal static IEnumerable<long> Targets(string? own, long[] targets, Func<long, string?> strong)
+    /// <param name="kind">What the middle word is, where it is one word of a phrase; <see cref="FunctionKind.None"/> otherwise.</param>
+    /// <param name="carries">What each target word is, by its morphology.</param>
+    internal static IEnumerable<long> Targets(
+        string? own, FunctionKind kind, long[] targets, Func<long, string?> strong, Func<long, TargetKind> carries)
     {
+        if (kind is FunctionKind.Article or FunctionKind.Conjunction or FunctionKind.Connective or FunctionKind.Particle)
+        {
+            return own is not null && targets.Where(t => strong(t) == own).ToList() is { Count: > 0 } numbered
+                ? numbered
+                : targets.Where(t => Fits(kind, carries(t))).ToList();
+        }
+
         if (targets.Length == 1)
         {
             return targets;
@@ -80,7 +103,37 @@ internal sealed class MappingLinks(ProductTexts texts)
         return targets.Where(t => strong(t) != Article).ToList() is { Count: > 0 } content ? content : targets;
     }
 
+    /// <summary>Whether a target word is of the kind a middle text's function word renders.</summary>
+    internal static bool Fits(FunctionKind kind, TargetKind target) => kind switch
+    {
+        FunctionKind.Article => target == TargetKind.Article,
+        FunctionKind.Conjunction => target == TargetKind.Conjunction,
+        FunctionKind.Connective => target is TargetKind.Conjunction or TargetKind.Adverb,
+        FunctionKind.Particle => target == TargetKind.Particle,
+        _ => true,
+    };
+
+    /// <summary>What a target word is, for a middle text's function word: read from its morphology (<see cref="TargetKinds.Of"/>).</summary>
+    private TargetKind[] Kinds(string slug) =>
+        _kinds.GetOrAdd(slug, s => new Lazy<TargetKind[]>(() => texts[s].Words.Select(word => TargetKinds.Of(word.Morphology)).ToArray())).Value;
+
     private const string Article = "G3588";
+
+    /// <summary>
+    /// The source words an answer stands on, which a composition writes no guess beside: every word a link that is not the
+    /// aligner's names, EVIDENTIA's rule-based ones included, except a Strong pairing that only guessed which occurrence of its
+    /// number the word is (<see cref="StrongNumberMatch.PairedInOrder"/> and below). The number is right but the occurrence is
+    /// not stated, and read so the matcher's order outranked what the readings agreed on: the Synodal's «крещусь» stood on
+    /// βαπτισθῆναι and «креститься» on βαπτίζομαι where all three readings had them the other way. The merge settles a guess
+    /// written there against the pairing as against any claim.
+    /// </summary>
+    public HashSet<long> Answered(string fromSlug, string toSlug) =>
+        Links(fromSlug, toSlug)
+            .Where(l => l.Method != LinkMethod.Aligner && !(l.Method == LinkMethod.StrongNumber && OccurrenceGuessed(l.Confidence)))
+            .SelectMany(l => l.From)
+            .ToHashSet();
+
+    private static bool OccurrenceGuessed(double? confidence) => confidence is { } c && c <= StrongNumberMatch.PairedInOrder + 1e-9;
 
     /// <summary>
     /// The target words each source word is joined to by a link that is not the aligner's: the words that already have an

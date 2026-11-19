@@ -114,6 +114,7 @@ internal sealed class ComposedSource : IPairSource
             .. composed.To == AlignerFiles.Analysed ? AlignerFiles.SyntaxInputs(store) : [],
             .. floors is null ? [] : new[] { floors },
             .. rulings is null ? [] : new[] { rulings },
+            FunctionWords.Source,
         ];
     }
 

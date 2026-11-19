@@ -73,7 +73,7 @@ internal sealed class StrongNumberSource : IPairSource
         new(EbibleTextSource.ReinaValera, ReinaValeraStrongLinkLoader.Witnesses, ReinaValeraStrongLinkLoader.Credit),
         .. CrossWireNumberings.All.Select(numbering => new StrongNumberSource(numbering.Slug, numbering.Witnesses, numbering.Credit)),
         new(EnglishTextSource.AmericanStandard, MaxfieldAsvEdition.Witnesses, MaxfieldAsvEdition.Credit,
-            new LaidRules(OneOccurrence: true, FunctionWord: EnglishFunctionWords.Contains, Supplied: true,
+            new LaidRules(OneOccurrence: true, FunctionWords: true, Supplied: true,
                 AddedNoun: EnglishAddedNouns.Contains, SeveralPhrases: StrongNumbers.Hebrew)),
     ];
 
@@ -85,9 +85,9 @@ internal sealed class StrongNumberSource : IPairSource
     /// A match whose number names several words of the witness's verse that the order does not pair off is left out, rather
     /// than kept as one link over all of them (<see cref="StrongMatchDraft.SeveralOccurrences"/>; NOT-0228).
     /// </param>
-    /// <param name="FunctionWord">
-    /// The translation's words whose number only supports a link another method proposes and never makes one of its own
-    /// (<see cref="MappingMethods.SupportOnly"/>): measured on their disagreements, the ASV's function words' numbers are
+    /// <param name="FunctionWords">
+    /// Whether the translation's function words (<see cref="Mapping.FunctionWords"/>) are words whose number only supports a link
+    /// another method proposes and never makes one of its own (<see cref="MappingMethods.SupportOnly"/>): measured on their disagreements, the ASV's function words' numbers are
     /// no better than its composed links.
     /// </param>
     /// <param name="Supplied">
@@ -110,7 +110,7 @@ internal sealed class StrongNumberSource : IPairSource
     /// </param>
     internal sealed record LaidRules(
         bool OneOccurrence,
-        Func<string, bool>? FunctionWord,
+        bool FunctionWords,
         bool Supplied = false,
         Func<string, bool>? AddedNoun = null,
         char? SeveralPhrases = null);
@@ -171,6 +171,11 @@ internal sealed class StrongNumberSource : IPairSource
                 inputs.Add(StrongNumberLists.Source);
             }
 
+            if (SideStrongNumbers.ReadsFunctionWords(_translation) || _rules?.FunctionWords == true)
+            {
+                inputs.Add(FunctionWords.Source);
+            }
+
             if (stated && store.Find(TextNote.ProductOf(_translation)) is { } notes)
             {
                 inputs.Add(notes);
@@ -190,6 +195,7 @@ internal sealed class StrongNumberSource : IPairSource
         var source = Named(store, pair, toText);
         var tags = Laid ? _tags.GetValue(texts, t => new Lazy<Dictionary<long, WordTag>>(() => LaidTags(t, log))).Value : null;
         var german = translation.Language == "deu";
+        var functions = _rules?.FunctionWords == true ? FunctionWords.Of(store) : null;
 
         var verses = new List<(List<StrongNumberMatch.TaggedWord> Tagged, Dictionary<long, List<long>> Members, List<(long Id, StrongNumberMatch.WitnessWord Word)> Against)>(32_000);
         int tagged = 0, unplaced = 0;
@@ -295,7 +301,7 @@ internal sealed class StrongNumberSource : IPairSource
                     // A match naming exactly a stated link's words is a claim on that link, as the database's loader made it.
                     row = row with { Evidence = TaggedTextLinkLoader.CorroborationNote };
                 }
-                else if (_rules?.FunctionWord is { } function && ids.All(id => function(translation.Words[(int)id].Surface)))
+                else if (functions is not null && ids.All(id => functions.Contains(translation.Language, translation.Words[(int)id].Surface)))
                 {
                     row = row with { Evidence = MappingMethods.SupportOnly };
                     supporting++;
