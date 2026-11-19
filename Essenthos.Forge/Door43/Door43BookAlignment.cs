@@ -6,15 +6,16 @@ namespace Essenthos.Core.Door43;
 /// One book of a text aligned in somebody's own translationCore project on Door43, outside the release the text's
 /// interlinear comes from: the same base text, the same USFM 3 alignment, a different person and often different terms.
 /// The Ohienko's interlinear (<c>uk_ts/uk_ubio</c>) aligns parts of eight New Testament books; these projects align
-/// Romans, Philippians and Revelation nearly whole, about a quarter of John's words, and more verses of 1 Peter, which the
-/// interlinear holds a part of.
+/// Romans, Philippians and Revelation nearly whole, and more verses of 1 Peter, which the interlinear holds a part of.
 ///
 /// Each project is pinned to the commit its file was taken at (<c>scripts/fetch-door43-ohienko-books.ps1</c>), and the
 /// file stands in <c>Door43/<see cref="Folder"/></c> under the Paratext name of its book, beside the project's licence and
 /// manifest. Nobody checked these projects: no checker is listed in any manifest, so a book is listed here only after 40
 /// of its links were read by hand and about 95% of them were right. Hebrews (IlliaTs) and Luke (AndreyParf) are fetched
 /// and not listed: about one link in eight read was wrong, most of them a small word tied to the next Greek word in order
-/// (TSK-1905, Resources/Door43/LICENCE.md).
+/// (TSK-1905, Resources/Door43/LICENCE.md). John (davidmax) is fetched and not listed either: 74 of 78 links read were
+/// right, at the line, and where its links differ from the composed ones the composed side was right in 8 of 10, so it
+/// would take more right links than it gives (NOT-0228).
 /// </summary>
 /// <param name="Slug">The text whose words the alignment ties.</param>
 /// <param name="File">The file under <c>Door43/<see cref="Folder"/></c>.</param>
@@ -42,8 +43,6 @@ internal sealed record Door43BookAlignment(string Slug, string File, string Book
 
     public static IReadOnlyList<Door43BookAlignment> All { get; } =
     [
-        new(Bible4uTextSource.Ohienko, "44-JHN.usfm", "John", "davidmax/uk_ubi_jhn_book",
-            "356181788046b9a96bf601cb8366befaf3ea90fa", "CC0 1.0"),
         new(Bible4uTextSource.Ohienko, "46-ROM.usfm", "Romans", "ViraVlasiuk/uk_ubio_rom_book",
             "10f17542785e4fa33a8a54373b06bb6131f760bf", "CC0 1.0"),
         new(Bible4uTextSource.Ohienko, "51-PHP.usfm", "Philippians", "ViraVlasiuk/uk_ubio_php_book",

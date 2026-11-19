@@ -61,7 +61,7 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   | `67-REV.usfm` | `ViraVlasiuk/uk_ogi_rev_book` | `324455619b1e` | 2025-01-25 | CC BY-SA 4.0 | 89.9% | yes |
   | `46-ROM.usfm` | `ViraVlasiuk/uk_ubio_rom_book` | `10f17542785e` | 2024-08-31 | CC0 1.0 | 88.5% | yes |
   | `51-PHP.usfm` | `ViraVlasiuk/uk_ubio_php_book` | `07959c15f22a` | 2025-07-02 | CC BY-SA 4.0 | 87.9% | yes |
-  | `44-JHN.usfm` | `davidmax/uk_ubi_jhn_book` | `356181788046` | 2024-10-10 | CC0 1.0 | 28.7% | yes |
+  | `44-JHN.usfm` | `davidmax/uk_ubi_jhn_book` | `356181788046` | 2024-10-10 | CC0 1.0 | 28.7% | no |
   | `61-1PE.usfm` | `AndreyParf/uk_ubio_1pe_book` | `241510b52609` | 2026-09-11 | CC BY-SA 4.0 | 22.7% | yes |
   | `59-HEB.usfm` | `IlliaTs/uk_ubio_heb_book` | `a4cdbb27d5c6` | 2024-09-17 | CC0 1.0 | 98.2% | no |
   | `43-LUK.usfm` | `AndreyParf/uk_ubio_luk_book` | `c76126f181b7` | 2026-08-24 | CC BY-SA 4.0 | 11.7% | no |
@@ -130,8 +130,11 @@ Everything quoted below was read from the files themselves, on 2026-09-04 for `r
   Philippians 1,388 / 1,393, John 4,233 / 4,275, 1 Peter 193 / 195 (16 verses read from the project). Hebrews
   4,193 / 4,222 and Luke 1,405 / 1,411 before they were left out.
 - **Read by hand before taking** (TSK-1905; strict: any word on the wrong Greek word counts wrong). Revelation 40 of
-  40, 1 Peter 40 of 40, Romans 76 of 80, John 74 of 78, Philippians 75 of 80 (78 counting three half right: a
-  preposition on the noun of its phrase, and two neighbouring adjectives swapped) — taken. Hebrews 34 of 40 and Luke 35 of 40 — not taken: their errors are mostly a small
+  40, 1 Peter 40 of 40, Romans 76 of 80, Philippians 75 of 80 (78 counting three half right: a
+  preposition on the noun of its phrase, and two neighbouring adjectives swapped) — taken. John 74 of 78 — not taken:
+  right at the line, and of 10 verses where its links differ from the composed links the composed side was right in 8
+  (mostly «Я» on ἐμοί/ἐμέ where it renders ἐγώ), so it would replace more right links than wrong ones (NOT-0228; the
+  lead, 2026-11-19). Hebrews 34 of 40 and Luke 35 of 40 — not taken: their errors are mostly a small
   word tied to the next Greek word in order (Heb 2:14 «став» on παραπλησίως, Luke 2:37 «що» on ἕως), the mark of an
   alignment made by walking both texts word by word. Their files stay here so the reading can be repeated on the same
   bytes; `Door43BookAlignment` does not list them, so no product reads them.
